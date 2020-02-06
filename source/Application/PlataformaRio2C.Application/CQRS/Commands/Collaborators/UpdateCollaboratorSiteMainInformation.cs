@@ -116,6 +116,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<CollaboratorRole> roles,
             List<LanguageDto> languagesDtos, 
             List<EditionDto> editionsDtos, 
+            int currentEditionId,
             bool isJobTitleRequired, 
             bool isMiniBioRequired, 
             bool isImageRequired,
@@ -125,8 +126,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateGenders(genders, userInterfaceLanguage);
             this.UpdateIndustries(industries, userInterfaceLanguage);
             this.UpdateRoles(roles, userInterfaceLanguage);
-            this.UpdateEditions(editionsDtos, entity.Collaborator);
-            this.Editions = editionsDtos;
+            this.UpdateEditions(editionsDtos, entity.Collaborator, currentEditionId);
 
             this.FirstName = entity?.Collaborator?.FirstName;
             this.LastNames = entity?.Collaborator?.LastNames;
@@ -136,26 +136,14 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.BirthDate = entity?.Collaborator?.BirthDate;
             this.HasAnySpecialNeeds = entity?.Collaborator?.HasAnySpecialNeeds;
             this.SpecialNeedsDescription = entity?.Collaborator?.SpecialNeedsDescription;
-            this.CollaboratorGenderUid = entity?.Collaborator?.Gender.Uid;
+            this.CollaboratorGenderUid = entity?.Collaborator?.Gender?.Uid;
             this.CollaboratorGenderAdditionalInfo = entity?.Collaborator?.CollaboratorGenderAdditionalInfo;
-            this.CollaboratorIndustryUid = entity?.Collaborator?.Industry.Uid;
+            this.CollaboratorIndustryUid = entity?.Collaborator?.Industry?.Uid;
             this.CollaboratorIndustryAdditionalInfo = entity?.Collaborator?.CollaboratorIndustryAdditionalInfo;
-            this.CollaboratorRoleUid = entity?.Collaborator?.Role.Uid;
+            this.CollaboratorRoleUid = entity?.Collaborator?.Role?.Uid;
             this.CollaboratorRoleAdditionalInfo = entity?.Collaborator?.CollaboratorRoleAdditionalInfo;
         }
-
-        private void UpdateEditions(IEnumerable<EditionDto> editions, Collaborator collaborator)
-        {
-            if (!collaborator.EditionParticipantions.Any())
-            {
-                EditionsUids = new List<Guid>();
-                return;
-            }
-
-            HaveYouBeenToRio2CBefore = true;
-            EditionsUids = editions.Where(e => collaborator.EditionParticipantions.Any(p => p.EditionId == e.Id)).Select(e => e.Uid).ToList();
-        }
-
+        
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorSiteMainInformation"/> class.</summary>
         public UpdateCollaboratorSiteMainInformation()
         {
@@ -180,7 +168,26 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, userInterfaceLanguage);
         }
 
-        
+        /// <summary>
+        /// Updates the editions.
+        /// </summary>
+        /// <param name="editions">The editions.</param>
+        /// <param name="collaborator">The collaborator.</param>
+        /// <param name="currentEditionId">The current edition identifier.</param>
+        private void UpdateEditions(IEnumerable<EditionDto> editions, Collaborator collaborator, int currentEditionId)
+        {
+            this.Editions = editions.Where(e => e.Id != currentEditionId).ToList();
+
+            if (!collaborator.EditionParticipantions.Any())
+            {
+                EditionsUids = new List<Guid>();
+                return;
+            }           
+            
+            HaveYouBeenToRio2CBefore = true;
+            EditionsUids = editions.Where(e => collaborator.EditionParticipantions.Any(p => p.EditionId == e.Id)).Select(e => e.Uid).ToList();
+        }
+
         /// <summary>
         /// Updates the genders.
         /// </summary>

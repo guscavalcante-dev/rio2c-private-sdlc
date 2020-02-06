@@ -67,6 +67,141 @@
         </div>
     </div>
 </div>
+
+
+<div class="kt-section">
+    <div class="kt-section__content mt-3">
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.CollaboratorIndustryUid, new { @class = "control-label" })
+                <select name="CollaboratorIndustryUid" id="CollaboratorIndustryUid" class="form-control enable-select2" @Html.GetUnobtrusiveValidationAttributesFor(m => m.CollaboratorIndustryUid)>
+                    <option value="">@($"{Labels.Choose}...")</option>
+                    @if (Model.CollaboratorIndustries != null)
+                    {
+                        foreach (var industry in Model.CollaboratorIndustries)
+                        {
+                            <option value="@industry.Uid" @(Model.CollaboratorIndustryUid == industry.Uid ? "selected" : "") data-aditionalinfo="@industry.HasAdditionalInfo">
+                                @industry.Name
+                            </option>
+                        }
+                    }
+                </select>
+                @Html.ValidationMessageFor(m => m.CollaboratorIndustryUid, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-6" data-additionalinfo="CollaboratorIndustryUid">
+                @Html.LabelFor(m => m.CollaboratorIndustryAdditionalInfo, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.CollaboratorIndustryAdditionalInfo, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CollaboratorIndustryAdditionalInfo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="kt-section">
+    <div class="kt-section__content mt-3">
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.CollaboratorRoleUid, new { @class = "control-label" })
+                <select name="CollaboratorRoleUid" id="CollaboratorRoleUid" class="form-control enable-select2" @Html.GetUnobtrusiveValidationAttributesFor(m => m.CollaboratorRoleUid)>
+                    <option value="">@($"{Labels.Choose}...")</option>
+                    @if (Model.CollaboratorRoles != null)
+                    {
+                        foreach (var role in Model.CollaboratorRoles)
+                        {
+                            <option value="@role.Uid" @(Model.CollaboratorRoleUid == role.Uid ? "selected" : "") data-aditionalinfo="@role.HasAdditionalInfo">
+                                @role.Name
+                            </option>
+                        }
+                    }
+                </select>
+                @Html.ValidationMessageFor(m => m.CollaboratorRoleUid, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-6" data-additionalinfo="CollaboratorRoleUid">
+                @Html.LabelFor(m => m.CollaboratorRoleAdditionalInfo, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.CollaboratorRoleAdditionalInfo, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CollaboratorRoleAdditionalInfo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="kt-section">
+    <div class="kt-section__content mt-3">
+        @Html.LabelFor(m => m.BirthDate, new { @class = "control-label" })
+        @Html.TextBox("BirthDate", Model.BirthDate?.ToShortDateString(), new { @class = "form-control enable-datepicker", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.BirthDate, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="kt-section">
+    <div class="kt-section__content mt-3">
+        <div class="row">
+            <div class="col-md-6">
+                @Html.LabelFor(m => m.CollaboratorGenderUid, new { @class = "control-label" })
+                <select name="CollaboratorGenderUid" id="CollaboratorGenderUid" class="form-control enable-select2" @Html.GetUnobtrusiveValidationAttributesFor(m => m.CollaboratorGenderUid)>
+                    <option value="">@($"{Labels.Choose}...")</option>
+                    @if (Model.CollaboratorGenders != null)
+                    {
+                        foreach (var gender in Model.CollaboratorGenders)
+                        {
+                            <option value="@gender.Uid" @(Model.CollaboratorGenderUid == gender.Uid ? "selected" : "") data-aditionalinfo="@gender.HasAdditionalInfo">
+                                @gender.Name
+                            </option>
+                        }
+                    }
+                </select>
+                @Html.ValidationMessageFor(m => m.CollaboratorGenderUid, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-6" data-additionalinfo="CollaboratorGenderUid">
+                @Html.LabelFor(m => m.CollaboratorGenderAdditionalInfo, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.CollaboratorGenderAdditionalInfo, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CollaboratorGenderAdditionalInfo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="kt-checkbox-inline">
+        <label class="kt-checkbox">
+            <input type="checkbox" name="HasAnySpecialNeeds" id="HasAnySpecialNeeds" value="true" @if (Model.HasAnySpecialNeeds ?? false) { <text> checked</text> }> @Labels.HasAnySpecialNeeds
+            <input type="hidden" value="false" name="HasAnySpecialNeeds" />
+            <span></span>
+        </label>
+    </div>
+    @Html.ValidationMessageFor(m => m.HasAnySpecialNeeds, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group" data-additionalinfo="HasAnySpecialNeeds">
+    @Html.LabelFor(m => m.SpecialNeedsDescription, new { @class = "control-label" })
+    @Html.TextBoxFor(m => m.SpecialNeedsDescription, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.SpecialNeedsDescription, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group">
+    <div class="kt-checkbox-inline">        
+        <label class="kt-checkbox">
+            <input type="checkbox" name="HaveYouBeenToRio2CBefore" id="HaveYouBeenToRio2CBefore" value="true" @if (Model.HaveYouBeenToRio2CBefore ?? false) { <text> checked</text> }> @Labels.HaveYouBeenToRio2CBefore
+            <input type="hidden" value="false" name="HaveYouBeenToRio2CBefore" />
+            <span></span>
+        </label>
+    </div>
+    @Html.ValidationMessageFor(m => m.HaveYouBeenToRio2CBefore, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group" data-additionalinfo="HaveYouBeenToRio2CBefore">    
+    <label class="control-label">@Labels.InWhatEditions</label>
+    <div class="kt-checkbox-inline">        
+        @foreach(var edition in Model.Editions)
+        {            
+            <label class="kt-checkbox">
+                <input type="checkbox" name="EditionsUids" id="EditionsUids" value="@edition.Uid" @if (Model.EditionsUids.Contains(edition.Uid)) { <text> checked</text> }> @edition.Name
+                <span></span>
+            </label>
+        }
+    </div>
+</div>
+
 <div class="kt-section pt-4">
     <h3 class="kt-section__title mb-0">@Labels.JobTitles</h3>
     @Html.ValidationMessage("JobTitles", new { @class = "text-danger" })

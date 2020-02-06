@@ -446,6 +446,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
+                await this.CommandBus.Send(new FindAllEditionsByIsActive()),
+                EditionDto.Id,
                 true,
                 true,
                 true,
@@ -479,8 +481,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             try
             {
-                var isExecutive = this.UserAccessControlDto?.HasAnyCollaboratorType(PlataformaRio2C.Domain.Constants.CollaboratorType.Executives) == true;
-                var isIndustry = this.UserAccessControlDto?.HasCollaboratorType(PlataformaRio2C.Domain.Constants.CollaboratorType.Industry) == true;
+                var isExecutive = this.UserAccessControlDto?.HasAnyCollaboratorType(Constants.CollaboratorType.Executives) == true;
+                var isIndustry = this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true;
 
                 // Field SharePublicEmail does not exist for this types of users
                 if (!isExecutive && !isIndustry)
@@ -517,14 +519,28 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
-                this.StatusMessageToastr(ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                this.StatusMessageToastr(ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);                
+                cmd.UpdateData(                
+                    await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllEditionsByIsActive()),
+                    EditionDto.Id,
+                    UserInterfaceLanguage);
 
                 return View(cmd);
             }
             catch (Exception ex)
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);                
+                cmd.UpdateData(                
+                    await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllEditionsByIsActive()),
+                    EditionDto.Id,
+                    UserInterfaceLanguage);
 
                 return View(cmd);
             }

@@ -46,8 +46,6 @@
     </div>
 </div>
 
-
-
 <div class="kt-section">
     <div class="kt-section__content mt-3">
         <div class="row">
@@ -103,6 +101,7 @@
         </div>
     </div>
 </div>
+
 <div class="kt-section">
     <div class="kt-section__content mt-3">
         @Html.LabelFor(m => m.BirthDate, new { @class = "control-label" })
@@ -150,9 +149,7 @@
     @Html.ValidationMessageFor(m => m.HasAnySpecialNeeds, "", new { @class = "text-danger" })
 </div>
 
-
 <div class="form-group" data-additionalinfo="HasAnySpecialNeeds">    
-    <label class="control-label">@Labels.InWhatEditions</label>    
     @Html.LabelFor(m => m.SpecialNeedsDescription, new { @class = "control-label" })
     @Html.TextBoxFor(m => m.SpecialNeedsDescription, new { @class = "form-control" })
     @Html.ValidationMessageFor(m => m.SpecialNeedsDescription, "", new { @class = "text-danger" })

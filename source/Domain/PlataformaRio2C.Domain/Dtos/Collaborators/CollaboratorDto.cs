@@ -11,6 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Entities;
+using System;
 using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Dtos
@@ -23,7 +25,20 @@ namespace PlataformaRio2C.Domain.Dtos
         public string Twitter { get; set; }
         public string Instagram { get; set; }
         public string Youtube { get; set; }
-
+        
+        public DateTime? BirthDate { get; set; }
+        public int? CollaboratorGenderId { get; set; }
+        public CollaboratorGender Gender { get; set; }
+        public string CollaboratorGenderAdditionalInfo { get; set; }
+        public int? CollaboratorRoleId { get; set; }
+        public CollaboratorRole Role { get; set; }
+        public string CollaboratorRoleAdditionalInfo { get; set; }
+        public int? CollaboratorIndustryId { get; set; }
+        public CollaboratorIndustry Industry { get; set; }
+        public string CollaboratorIndustryAdditionalInfo { get; set; }
+        public bool? HasAnySpecialNeeds { get; set; }
+        public string SpecialNeedsDescription { get; set; }
+        public List<Guid> EditionsUids { get; set; }
         public int CreateUserId { get; set; }
         public int UpdateUserId { get; set; }
 

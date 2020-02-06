@@ -14,6 +14,7 @@
 using System;
 using System.Collections.Generic;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 
@@ -49,20 +50,36 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, 
             List<LanguageDto> languagesDtos, 
             List<CountryBaseDto> countriesBaseDtos, 
+            List<CollaboratorGender> genders, 
+            List<CollaboratorIndustry> industries, 
+            List<CollaboratorRole> roles,
+            List<EditionDto> editionsDtos,
+            int currentEditionId,
             bool? isAddingToCurrentEdition, 
             bool isJobTitleRequired,
             bool isMiniBioRequired, 
-            bool isImageRequired)
+            bool isImageRequired,
+            string userInterfaceLanguage)
         {
             if (entity == null)
             {
                 throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Player, Labels.FoundM));
             }
 
+            this.BirthDate = entity?.BirthDate;
+            this.HasAnySpecialNeeds = entity?.HasAnySpecialNeeds;
+            this.SpecialNeedsDescription = entity?.SpecialNeedsDescription;
+            this.CollaboratorGenderUid = entity?.Gender?.Uid;
+            this.CollaboratorGenderAdditionalInfo = entity?.CollaboratorGenderAdditionalInfo;
+            this.CollaboratorIndustryUid = entity?.Industry?.Uid;
+            this.CollaboratorIndustryAdditionalInfo = entity?.CollaboratorIndustryAdditionalInfo;
+            this.CollaboratorRoleUid = entity?.Role?.Uid;
+            this.CollaboratorRoleAdditionalInfo = entity?.CollaboratorRoleAdditionalInfo;
+
             this.CollaboratorUid = entity.Uid;
             this.IsAddingToCurrentEdition = isAddingToCurrentEdition ?? false;
-            this.UpdateBaseProperties(entity, attendeeOrganizationsBaseDtos, languagesDtos, countriesBaseDtos, isJobTitleRequired, isMiniBioRequired, isImageRequired);
-            this.UpdateDropdownProperties(entity, attendeeOrganizationsBaseDtos, countriesBaseDtos);
+            this.UpdateBaseProperties(entity, attendeeOrganizationsBaseDtos, languagesDtos, genders, industries, roles, editionsDtos, currentEditionId, isJobTitleRequired, isMiniBioRequired, isImageRequired, userInterfaceLanguage);
+            this.UpdateDropdownProperties(entity, attendeeOrganizationsBaseDtos, genders, industries, roles, editionsDtos, currentEditionId, userInterfaceLanguage);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaborator"/> class.</summary>
@@ -77,7 +94,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public void UpdateDropdownProperties(
             CollaboratorDto entity,
             List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos,
-            List<CountryBaseDto> countriesBaseDtos)
+            List<CollaboratorGender> genders, 
+            List<CollaboratorIndustry> industries, 
+            List<CollaboratorRole> roles,
+            List<EditionDto> editionsDtos,
+            int currentEditionId,
+            string userInterfaceLanguage)
         {
             this.WelcomeEmailSendDate = entity.EditionAttendeeCollaboratorBaseDto?.WelcomeEmailSendDate;
             this.OnboardingStartDate = entity.EditionAttendeeCollaboratorBaseDto?.OnboardingStartDate;
@@ -88,7 +110,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.ProducerTermsAcceptanceDate = entity.EditionAttendeeCollaboratorBaseDto?.ProducerTermsAcceptanceDate;
             this.UpdaterBaseDto = entity.UpdaterDto;
             this.UpdateDate = entity.UpdateDate;
-            this.UpdateDropdownProperties(attendeeOrganizationsBaseDtos, countriesBaseDtos);
+            this.UpdateDropdownProperties(attendeeOrganizationsBaseDtos, genders, industries, roles, editionsDtos, currentEditionId, userInterfaceLanguage);
         }
     }
 }

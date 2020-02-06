@@ -135,6 +135,16 @@ namespace PlataformaRio2C.Domain.Entities
             List<AttendeeOrganization> attendeeOrganizations,
             Edition edition,
             CollaboratorType collaboratorType,
+            DateTime? birthDate,
+            CollaboratorGender collaboratorGender,
+            string collaboratorGenderAdditionalInfo,
+            CollaboratorRole collaboratorRole,
+            string collaboratorRoleAdditionalInfo,
+            CollaboratorIndustry collaboratorIndustry,
+            string collaboratorIndustryAdditionalInfo,
+            bool hasAnySpecialNeeds,
+            string specialNeedsDescription,
+            List<Edition> editionsParticipated,
             string firstName,
             string lastNames,
             string badge,
@@ -165,6 +175,20 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
+
+            this.UpdateEditions(editionsParticipated, userId);
+            this.BirthDate = birthDate;
+            this.Gender = collaboratorGender;
+            this.Industry = collaboratorIndustry;
+            this.Role = collaboratorRole;
+            this.CollaboratorGenderId = collaboratorGender?.Id;
+            this.CollaboratorGenderAdditionalInfo =  collaboratorGenderAdditionalInfo;
+            this.CollaboratorRoleId = collaboratorRole?.Id;
+            this.CollaboratorRoleAdditionalInfo = collaboratorRoleAdditionalInfo;
+            this.CollaboratorIndustryId = collaboratorIndustry?.Id;
+            this.CollaboratorIndustryAdditionalInfo = collaboratorIndustryAdditionalInfo;
+            this.HasAnySpecialNeeds = hasAnySpecialNeeds;
+            this.SpecialNeedsDescription = specialNeedsDescription;
 
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
@@ -299,6 +323,16 @@ namespace PlataformaRio2C.Domain.Entities
             List<AttendeeOrganization> attendeeOrganizations,
             Edition edition,
             CollaboratorType collaboratorType,
+            DateTime? birthDate,
+            CollaboratorGender collaboratorGender,
+            string collaboratorGenderAdditionalInfo,
+            CollaboratorRole collaboratorRole,
+            string collaboratorRoleAdditionalInfo,
+            CollaboratorIndustry collaboratorIndustry,
+            string collaboratorIndustryAdditionalInfo,
+            bool hasAnySpecialNeeds,
+            string specialNeedsDescription,
+            List<Edition> editionsParticipated,
             string firstName,
             string lastNames,
             string badge,
@@ -328,6 +362,20 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdatePublicEmail(sharePublicEmail, publicEmail);
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
+
+            this.UpdateEditions(editionsParticipated, userId);
+            this.BirthDate = birthDate;
+            this.Gender = collaboratorGender;
+            this.Industry = collaboratorIndustry;
+            this.Role = collaboratorRole;
+            this.CollaboratorGenderId = collaboratorGender?.Id;
+            this.CollaboratorGenderAdditionalInfo =  collaboratorGenderAdditionalInfo;
+            this.CollaboratorRoleId = collaboratorRole?.Id;
+            this.CollaboratorRoleAdditionalInfo = collaboratorRoleAdditionalInfo;
+            this.CollaboratorIndustryId = collaboratorIndustry?.Id;
+            this.CollaboratorIndustryAdditionalInfo = collaboratorIndustryAdditionalInfo;
+            this.HasAnySpecialNeeds = hasAnySpecialNeeds;
+            this.SpecialNeedsDescription = specialNeedsDescription;
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
@@ -464,13 +512,13 @@ namespace PlataformaRio2C.Domain.Entities
         {
             DeleteCollaboratorParticipation(editionsParticipated, userId);
 
-            foreach(var participation in editionsParticipated)
+            foreach(var edition in editionsParticipated)
             {
-                var existing = EditionParticipantions.FirstOrDefault(e => e.Id == participation.Id);
+                var existing = EditionParticipantions.FirstOrDefault(e => e.EditionId == edition.Id);
 
                 if(existing == null)
                 {
-                    EditionParticipantions.Add(new CollaboratorEditionParticipation(participation, this, userId));
+                    EditionParticipantions.Add(new CollaboratorEditionParticipation(edition, this, userId));
                     continue;
                 }
 
@@ -1311,6 +1359,7 @@ namespace PlataformaRio2C.Domain.Entities
             string collaboratorIndustryAdditionalInfo,
             bool hasAnySpecialNeeds,
             string specialNeedsDescription,
+            List<Edition> editionsParticipated,
             string website,
             string linkedin,
             string twitter,
@@ -1323,6 +1372,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
             this.OnboardAttendeeCollaboratorData(edition, userId);
+            this.UpdateEditions(editionsParticipated, userId);
+
             this.Website = website?.Trim();
             this.Linkedin = linkedin?.Trim();
             this.Twitter = twitter?.Trim();
@@ -1391,10 +1442,10 @@ namespace PlataformaRio2C.Domain.Entities
             //this.ValidateAddress();
             this.ValidateUser();
             this.ValidateAttendeeCollaborators();
-            this.ValidateGender();
-            this.ValidateIndustry();
-            this.ValidateRole();
-            this.ValidateBirthDate();
+            //this.ValidateGender();
+            //this.ValidateIndustry();
+            //this.ValidateRole();
+            //this.ValidateBirthDate();
 
             return this.ValidationResult.IsValid;
         }

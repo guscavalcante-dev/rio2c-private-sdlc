@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,6 +36,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly ICollaboratorTypeRepository collaboratorTypeRepo;
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly ILanguageRepository languageRepo;
+        private readonly ICollaboratorGenderRepository genderRepo;
+        private readonly ICollaboratorIndustryRepository industryRepo;
+        private readonly ICollaboratorRoleRepository roleRepo;
 
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
@@ -53,7 +57,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IEditionRepository editionRepository,
             ICollaboratorTypeRepository collaboratorTypeRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
-            ILanguageRepository languageRepository)
+            ILanguageRepository languageRepository,
+            ICollaboratorGenderRepository genderRepo,
+            ICollaboratorIndustryRepository industryRepo,
+            ICollaboratorRoleRepository roleRepo)
             : base(eventBus, uow, collaboratorRepository)
         {
             this.userRepo = userRepository;
@@ -61,6 +68,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.collaboratorTypeRepo = collaboratorTypeRepository;
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.languageRepo = languageRepository;
+            this.genderRepo = genderRepo;
+            this.industryRepo = industryRepo;
+            this.languageRepo = languageRepository;
+            this.roleRepo = roleRepo;
         }
 
         /// <summary>Handles the specified update collaborator.</summary>
@@ -90,6 +101,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
+            if(cmd.EditionsUids == null)
+            {
+                cmd.EditionsUids = new List<Guid>();
+            }
+
             // Before update values
             var beforeImageUploadDate = collaborator.ImageUploadDate;
 
@@ -99,6 +115,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 await this.attendeeOrganizationRepo.FindAllByUidsAsync(cmd.AttendeeOrganizationBaseCommands?.Where(aobc => aobc.AttendeeOrganizationUid.HasValue)?.Select(aobc => aobc.AttendeeOrganizationUid.Value)?.ToList()),
                 await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
                 await this.collaboratorTypeRepo.FindByNameAsunc(cmd.CollaboratorTypeName),
+                cmd.BirthDate,
+                genderRepo.Get(cmd.CollaboratorGenderUid ?? Guid.Empty),
+                cmd.CollaboratorGenderAdditionalInfo,
+                roleRepo.Get(cmd.CollaboratorRoleUid ?? Guid.Empty),
+                cmd.CollaboratorRoleAdditionalInfo,
+                industryRepo.Get(cmd.CollaboratorIndustryUid ?? Guid.Empty),
+                cmd.CollaboratorIndustryAdditionalInfo,
+                cmd.HasAnySpecialNeeds ?? false,
+                cmd.SpecialNeedsDescription,
+                this.editionRepo.GetAll(e => cmd.EditionsUids.Contains(e.Uid)).ToList(),
                 cmd.FirstName,
                 cmd.LastNames,
                 cmd.Badge,
@@ -118,6 +144,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.MiniBios?.Select(d => new CollaboratorMiniBio(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 true, // TODO: Get isAddingToCurrentEdition from command for UpdateCollaborator
                 cmd.UserId);
+
             if (!collaborator.IsValid())
             {
                 this.AppValidationResult.Add(collaborator.ValidationResult);

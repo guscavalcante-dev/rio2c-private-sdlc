@@ -318,10 +318,15 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             var cmd = new CreateCollaborator(
                 await this.CommandBus.Send(new FindAllAttendeeOrganizationsBaseDtosByEditionUidAsync(this.EditionDto.Id, false, this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
-                await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
+                await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
+                await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
+                await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
+                await this.CommandBus.Send(new FindAllEditionsByIsActive()),
+                EditionDto.Id,
                 false,
                 false,
-                false);
+                false,
+                UserInterfaceLanguage);
 
             return Json(new
             {
@@ -371,7 +376,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd.UpdateDropdownProperties(
                     await this.CommandBus.Send(new FindAllAttendeeOrganizationsBaseDtosByEditionUidAsync(this.EditionDto.Id, false, this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)));
+                    await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllEditionsByIsActive()),
+                    EditionDto.Id,
+                    UserInterfaceLanguage);
 
                 return Json(new
                 {
@@ -412,10 +422,16 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     await this.CommandBus.Send(new FindAllAttendeeOrganizationsBaseDtosByEditionUidAsync(this.EditionDto.Id, false, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllEditionsByIsActive()),
+                    EditionDto.Id,
                     isAddingToCurrentEdition,
                     false,
                     false,
-                    false);
+                    false,                    
+                    UserInterfaceLanguage);
             }
             catch (DomainException ex)
             {
@@ -471,7 +487,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 cmd.UpdateDropdownProperties(
                     await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(cmd.CollaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllAttendeeOrganizationsBaseDtosByEditionUidAsync(this.EditionDto.Id, false, this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)));
+                    await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllEditionsByIsActive()),
+                    EditionDto.Id,
+                    UserInterfaceLanguage);
 
                 return Json(new
                 {

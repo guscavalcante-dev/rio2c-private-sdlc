@@ -383,6 +383,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 PhoneNumber = c.PhoneNumber,
                                 CellPhone = c.CellPhone,
                                 PublicEmail = c.PublicEmail,
+                                BirthDate = c.BirthDate,
+                                Gender = c.Gender,
+                                Industry = c.Industry,
+                                Role = c.Role,
+                                CollaboratorGenderAdditionalInfo = c.CollaboratorGenderAdditionalInfo,
+                                CollaboratorIndustryAdditionalInfo = c.CollaboratorIndustryAdditionalInfo,
+                                CollaboratorRoleAdditionalInfo = c.CollaboratorRoleAdditionalInfo,
+                                HasAnySpecialNeeds = c.HasAnySpecialNeeds,
+                                SpecialNeedsDescription = c.SpecialNeedsDescription,
+                                EditionsUids = c.EditionParticipantions.Where(p => !p.IsDeleted).Select(p => p.Edition.Uid).ToList(),
                                 //HoldingBaseDto = new HoldingBaseDto
                                 //{
                                 //    Id = c.Holding.Id,

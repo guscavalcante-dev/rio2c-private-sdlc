@@ -99,6 +99,15 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [RequiredIf("HasAnySpecialNeeds", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string SpecialNeedsDescription { get; set; }
+        
+        [Display(Name = "HaveYouBeenToRio2CBefore", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public bool? HaveYouBeenToRio2CBefore { get; set; }
+        
+        [Display(Name = "PreviousEditions", ResourceType = typeof(Labels))]
+        public IEnumerable<Guid> EditionsUids { get; set; }
+
+        public IEnumerable<EditionDto> Editions { get; set; }
 
         public List<CollaboratorJobTitleBaseCommand> JobTitles { get; set; }
         public List<CollaboratorMiniBioBaseCommand> MiniBios { get; set; }
@@ -112,10 +121,22 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
         /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
-        public OnboardCollaboratorData(CollaboratorDto collaborator, List<CollaboratorGender> genders, List<CollaboratorIndustry> industries, List<CollaboratorRole> roles, List<LanguageDto> languagesDtos, bool isJobTitleRequired, bool isMiniBioRequired, bool isImageRequired, string userInterfaceLanguage)
+        public OnboardCollaboratorData(
+            CollaboratorDto collaborator, 
+            List<CollaboratorGender> genders, 
+            List<CollaboratorIndustry> industries, 
+            List<CollaboratorRole> roles, 
+            List<LanguageDto> languagesDtos, 
+            List<EditionDto> editionsDtos, 
+            int currentEditionId,
+            bool isJobTitleRequired, 
+            bool isMiniBioRequired, 
+            bool isImageRequired, 
+            string userInterfaceLanguage)
         {
             this.SharePublicEmail = !string.IsNullOrEmpty(collaborator.PublicEmail) ? (bool?)true : null;
             this.PublicEmail = collaborator?.PublicEmail;
+            this.UpdateEditions(editionsDtos, currentEditionId);
             this.UpdateGenders(genders, userInterfaceLanguage);
             this.UpdateIndustries(industries, userInterfaceLanguage);
             this.UpdateRoles(roles, userInterfaceLanguage);
@@ -123,7 +144,40 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateMiniBios(collaborator, languagesDtos, isMiniBioRequired);            
             this.UpdateCropperImage(collaborator, isImageRequired);
         }
-        
+
+        /// <summary>
+        /// Updates the editions.
+        /// </summary>
+        /// <param name="editionsDtos">The editions dtos.</param>
+        private void UpdateEditions(List<EditionDto> editionsDtos, int currentEditionId)
+        {
+            if(this.EditionsUids == null)
+                this.EditionsUids = new List<Guid>();
+
+            this.Editions = editionsDtos.Where(e => e.Id != currentEditionId).ToList();
+        }
+
+        /// <summary>
+        /// Updates the data.
+        /// </summary>
+        /// <param name="genders">The genders.</param>
+        /// <param name="industries">The industries.</param>
+        /// <param name="roles">The roles.</param>
+        /// <param name="editionsDtos">The editions dtos.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public void UpdateData(List<CollaboratorGender> genders, 
+            List<CollaboratorIndustry> industries, 
+            List<CollaboratorRole> roles, 
+            List<EditionDto> editionsDtos, 
+            int editionId,
+            string userInterfaceLanguage)
+        {            
+            this.UpdateEditions(editionsDtos, editionId);
+            this.UpdateGenders(genders, userInterfaceLanguage);
+            this.UpdateIndustries(industries, userInterfaceLanguage);
+            this.UpdateRoles(roles, userInterfaceLanguage);            
+        }
+
         /// <summary>Initializes a new instance of the <see cref="OnboardCollaboratorData"/> class.</summary>
         public OnboardCollaboratorData()
         {

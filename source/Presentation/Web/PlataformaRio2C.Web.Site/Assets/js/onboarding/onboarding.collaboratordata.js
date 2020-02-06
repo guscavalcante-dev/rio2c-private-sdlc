@@ -35,6 +35,7 @@ var OnboardingCollaboratorData = function () {
         enableDropdownChangeEvent("CollaboratorRoleUid");
         enableDropdownChangeEvent("CollaboratorIndustryUid");
         enableCheckboxChangeEvent("HasAnySpecialNeeds");
+        enableCheckboxChangeEvent("HaveYouBeenToRio2CBefore");
         AddressesForm.init();
     };
 
@@ -54,16 +55,22 @@ var OnboardingCollaboratorData = function () {
     };
     
     // Enable change events -----------------------------------------------------------------------
-    var enableCheckboxChangeEvent = function (elementId) {
+var enableCheckboxChangeEvent = function (elementId) {
         var element = $('#' + elementId);
-
-        element.not('.change-event-enabled').on('click', function () {            
+        
+        function toggleChanged(element) {       
             if (element.prop('checked')) {
                 $("[data-additionalinfo='"+ element.attr("id") +"']").removeClass('d-none');
             }
             else {
                 $("[data-additionalinfo='"+element.attr("id")+"']").addClass('d-none');
             }
+        }
+        
+        toggleChanged(element);
+
+        element.not('.change-event-enabled').on('click', function () {   
+            toggleChanged(element);  
         });
 
         element.addClass('change-event-enabled');
@@ -72,13 +79,19 @@ var OnboardingCollaboratorData = function () {
     var enableDropdownChangeEvent = function (elementId) {
         var element = $('#' + elementId);
 
-        element.not('.change-event-enabled').on('change', function () {            
+        function toggleChanged(element) {
             if (element.find(':selected').data('aditionalinfo') === "True") {
                 $("[data-additionalinfo='"+ element.attr("id") +"']").removeClass('d-none');
             }
             else {
                 $("[data-additionalinfo='"+element.attr("id")+"']").addClass('d-none');
             }
+        }
+
+        toggleChanged(element);
+
+        element.not('.change-event-enabled').on('change', function () {            
+            toggleChanged(element);
         });
 
         element.addClass('change-event-enabled');

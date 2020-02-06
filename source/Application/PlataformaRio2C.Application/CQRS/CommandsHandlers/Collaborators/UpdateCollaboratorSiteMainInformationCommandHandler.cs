@@ -103,7 +103,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.HasAnySpecialNeeds ?? false,
                 cmd.SpecialNeedsDescription,
                 this.editionRepo.GetAll(e => cmd.EditionsUids.Contains(e.Uid)).ToList(),
-                await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty), cmd.CropperImage?.ImageFile != null,
+                await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty), 
+                cmd.CropperImage?.ImageFile != null,
                 cmd.UserId);
 
             if (!collaborator.IsValid())

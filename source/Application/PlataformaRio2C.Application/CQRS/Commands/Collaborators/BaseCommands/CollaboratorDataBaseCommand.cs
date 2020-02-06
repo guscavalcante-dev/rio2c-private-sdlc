@@ -11,11 +11,13 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
@@ -65,6 +67,53 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(300, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Youtube { get; set; }
 
+        [Display(Name = "BirthDate", ResourceType = typeof(Labels))]
+        public DateTime? BirthDate { get; set; }
+
+        [Display(Name = "Gender", ResourceType = typeof(Labels))]
+        public Guid? CollaboratorGenderUid  { get; set; }
+
+        public IEnumerable<CollaboratorGender> CollaboratorGenders { get; set; }
+        
+        [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
+        [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string CollaboratorGenderAdditionalInfo  { get; set; }
+        
+        [Display(Name = "Role", ResourceType = typeof(Labels))]
+        public Guid? CollaboratorRoleUid { get; set; }
+
+        public IEnumerable<CollaboratorRole> CollaboratorRoles { get; set; }
+
+        [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
+        [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string CollaboratorRoleAdditionalInfo  { get; set; }
+
+        [Display(Name = "CollaboratorIndustry", ResourceType = typeof(Labels))]
+        public Guid? CollaboratorIndustryUid { get; set; }
+
+        public IEnumerable<CollaboratorIndustry> CollaboratorIndustries { get; set; }
+
+        [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
+        [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string CollaboratorIndustryAdditionalInfo  { get; set; }
+
+        [Display(Name = "HasAnySpecialNeeds", ResourceType = typeof(Labels))]
+        public bool? HasAnySpecialNeeds { get; set; }
+
+        [Display(Name = "WhichSpecialNeedsQ", ResourceType = typeof(Labels))]
+        [RequiredIf("HasAnySpecialNeeds", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string SpecialNeedsDescription { get; set; }
+        
+        
+        [Display(Name = "HaveYouBeenToRio2CBefore", ResourceType = typeof(Labels))]
+        public bool? HaveYouBeenToRio2CBefore { get; set; }
+        
+        [Display(Name = "PreviousEditions", ResourceType = typeof(Labels))]
+        public IEnumerable<Guid> EditionsUids { get; set; }
+
+        public IEnumerable<EditionDto> Editions { get; set; }
+
         public List<AttendeeOrganizationBaseCommand> AttendeeOrganizationBaseCommands { get; set; }
         public List<CollaboratorJobTitleBaseCommand> JobTitles { get; set; }
         public List<CollaboratorMiniBioBaseCommand> MiniBios { get; set; }
@@ -89,10 +138,15 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             CollaboratorDto entity, 
             List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, 
             List<LanguageDto> languagesDtos, 
-            List<CountryBaseDto> countriesBaseDtos, 
+            List<CollaboratorGender> genders, 
+            List<CollaboratorIndustry> industries, 
+            List<CollaboratorRole> roles,
+            List<EditionDto> editionsDtos, 
+            int currentEditionId,
             bool isJobTitleRequired, 
             bool isMiniBioRequired, 
-            bool isImageRequired)
+            bool isImageRequired,
+            string userInterfaceLanguage)
         {
             this.UpdateBaseProperties(entity);
             this.Badge = entity?.Badge;
@@ -105,11 +159,74 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Twitter = entity?.Twitter;
             this.Instagram = entity?.Instagram;
             this.Youtube = entity?.Youtube;
+            this.EditionsUids = entity?.EditionsUids;
+            this.HaveYouBeenToRio2CBefore = entity?.EditionsUids?.Any() ?? false;
             this.UpdateOrganizations(entity, attendeeOrganizationsBaseDtos);
             this.UpdateJobTitles(entity, languagesDtos, isJobTitleRequired);
             this.UpdateMiniBios(entity, languagesDtos, isMiniBioRequired);
             this.UpdateCropperImage(entity, isImageRequired);
-            this.UpdateDropdownProperties(attendeeOrganizationsBaseDtos, countriesBaseDtos);
+            this.UpdateDropdownProperties(attendeeOrganizationsBaseDtos, genders, industries, roles, editionsDtos, currentEditionId, userInterfaceLanguage);
+        }
+        
+        /// <summary>
+        /// Updates the editions.
+        /// </summary>
+        /// <param name="editions">The editions.</param>
+        /// <param name="collaborator">The collaborator.</param>
+        /// <param name="currentEditionId">The current edition identifier.</param>
+        private void UpdateEditions(IEnumerable<EditionDto> editions, int currentEditionId)
+        {
+            if(this.EditionsUids == null)
+            {
+                this.EditionsUids = new List<Guid>();
+            }
+            
+            this.Editions = editions.Where(e => e.Id != currentEditionId).ToList();
+
+            //if (!collaborator.EditionParticipantions.Any())
+            //{
+            //    EditionsUids = new List<Guid>();
+            //    return;
+            //}           
+            
+            //HaveYouBeenToRio2CBefore = true;
+            //EditionsUids = editions.Where(e => collaborator.EditionParticipantions.Any(p => p.EditionId == e.Id)).Select(e => e.Uid).ToList();
+        }
+
+        /// <summary>
+        /// Updates the genders.
+        /// </summary>
+        /// <param name="genders">The genders.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void UpdateGenders(List<CollaboratorGender> genders, string userInterfaceLanguage)
+        {
+            genders.ForEach(g => g.Translate(userInterfaceLanguage));
+            this.CollaboratorGenders = genders.OrderBy(e => e.Name);
+        }
+
+        /// <summary>
+        /// Updates the genders.
+        /// </summary>
+        /// <param name="genders">The genders.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void UpdateIndustries(List<CollaboratorIndustry> industries, string userInterfaceLanguage)
+        {
+            industries.ForEach(g => g.Translate(userInterfaceLanguage));
+            this.CollaboratorIndustries = industries.OrderBy(e => e.Name);
+        }
+
+        /// <summary>
+        /// Updates the genders.
+        /// </summary>
+        /// <param name="genders">The genders.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void UpdateRoles(List<CollaboratorRole> roles, string userInterfaceLanguage)
+        {
+            roles.ForEach(g => g.Translate(userInterfaceLanguage));
+            this.CollaboratorRoles = roles.OrderBy(e => e.Name);
         }
 
         /// <summary>Updates the organizations.</summary>
@@ -183,7 +300,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Updates the dropdown properties.</summary>
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
-        public void UpdateDropdownProperties(List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, List<CountryBaseDto> countriesBaseDtos)
+        public void UpdateDropdownProperties(List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, 
+            List<CollaboratorGender> genders, 
+            List<CollaboratorIndustry> industries, 
+            List<CollaboratorRole> roles,
+            List<EditionDto> editionsDtos,
+            int currentEditionId,
+            string userInterfaceLanguage)
         {
             // Attendee organizations
             foreach (var attendeeOrganizationBaseCommand in this.AttendeeOrganizationBaseCommands)
@@ -191,7 +314,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 attendeeOrganizationBaseCommand.UpdateDropdownProperties(attendeeOrganizationsBaseDtos);
             }
 
-            this.UpdateOrganizationTemplate(attendeeOrganizationsBaseDtos);
+            this.UpdateOrganizationTemplate(attendeeOrganizationsBaseDtos);            
+            this.UpdateGenders(genders, userInterfaceLanguage);
+            this.UpdateIndustries(industries, userInterfaceLanguage);
+            this.UpdateRoles(roles, userInterfaceLanguage);
+            this.UpdateEditions(editionsDtos, currentEditionId);
         }
     }
 }

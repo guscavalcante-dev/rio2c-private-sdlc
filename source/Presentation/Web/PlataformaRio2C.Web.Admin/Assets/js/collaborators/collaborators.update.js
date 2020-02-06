@@ -29,13 +29,63 @@ var CollaboratorsUpdate = function () {
         }
 
         MyRio2cCropper.init({ formIdOrClass: formId });
-        MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });        
+        MyRio2cCommon.enableDatePicker({ inputIdOrClass: formId + ' .enable-datepicker' });        
         AttendeeOrganizationsForm.init(formId);
         AddressesForm.init();
         //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-jobtitle', maxCharCount: 81 });
         //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-minibio', maxCharCount: 710 });
+        enableDropdownChangeEvent("CollaboratorGenderUid");
+        enableDropdownChangeEvent("CollaboratorRoleUid");
+        enableDropdownChangeEvent("CollaboratorIndustryUid");
+        enableCheckboxChangeEvent("HasAnySpecialNeeds");
+        enableCheckboxChangeEvent("HaveYouBeenToRio2CBefore");
         enableAjaxForm();
         enableFormValidation();
+    };
+
+    
+    // Enable change events -----------------------------------------------------------------------
+    var enableCheckboxChangeEvent = function (elementId) {
+        var element = $('#' + elementId);
+        
+        function toggleChanged(element) {       
+            if (element.prop('checked')) {
+                $("[data-additionalinfo='"+ element.attr("id") +"']").removeClass('d-none');
+            }
+            else {
+                $("[data-additionalinfo='"+element.attr("id")+"']").addClass('d-none');
+            }
+        }
+        
+        toggleChanged(element);
+
+        element.not('.change-event-enabled').on('click', function () {   
+            toggleChanged(element);  
+        });
+
+        element.addClass('change-event-enabled');
+    };
+
+    var enableDropdownChangeEvent = function (elementId) {
+        var element = $('#' + elementId);
+
+        function toggleChanged(element) {
+            if (element.find(':selected').data('aditionalinfo') === "True") {
+                $("[data-additionalinfo='"+ element.attr("id") +"']").removeClass('d-none');
+            }
+            else {
+                $("[data-additionalinfo='"+element.attr("id")+"']").addClass('d-none');
+            }
+        }
+
+        toggleChanged(element);
+
+        element.not('.change-event-enabled').on('change', function () {            
+            toggleChanged(element);
+        });
+
+        element.addClass('change-event-enabled');
     };
 
     // Show modal ---------------------------------------------------------------------------------
