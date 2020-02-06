@@ -31,11 +31,11 @@ var OnboardingCollaboratorData = function () {
         MyRio2cCropper.init({ formIdOrClass: formId });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });                    
         MyRio2cCommon.enableDatePicker({ inputIdOrClass: formId + ' .enable-datepicker' });
-        enableDropdownChangeEvent("CollaboratorGenderUid");
-        enableDropdownChangeEvent("CollaboratorRoleUid");
-        enableDropdownChangeEvent("CollaboratorIndustryUid");
-        enableCheckboxChangeEvent("HasAnySpecialNeeds");
-        enableCheckboxChangeEvent("HaveYouBeenToRio2CBefore");
+        MyRio2cCommon.enableDropdownChangeEvent("CollaboratorGenderUid", "CollaboratorGenderAdditionalInfo");
+        MyRio2cCommon.enableDropdownChangeEvent("CollaboratorRoleUid", "CollaboratorRoleAdditionalInfo");
+        MyRio2cCommon.enableDropdownChangeEvent("CollaboratorIndustryUid", "CollaboratorIndustryAdditionalInfo");
+        MyRio2cCommon.enableCheckboxChangeEvent("HasAnySpecialNeeds");
+        MyRio2cCommon.enableCheckboxChangeEvent("HaveYouBeenToRio2CBefore");
         AddressesForm.init();
     };
 
@@ -66,19 +66,3 @@ var OnboardingCollaboratorData = function () {
         },
     };
 }();
-
-    //// Enable change events -----------------------------------------------------------------------
-    //var enableCountryChangeEvent = function () {
-    //    countryUidElement.not('.change-event-enabled').on('change', function () {
-    //        toggleState(true);
-    //        toggleCity(true);
-    //        enableStateSelect2(true);
-    //        enableZipCodeMask();
-
-    //        if (typeof (MyRio2cCompanyDocument) !== 'undefined') {
-    //            MyRio2cCompanyDocument.enableCompanyNumberMask(countryUid, '#Document');
-    //            MyRio2cCompanyDocument.changeIsRequired(countryUid);
-    //        }
-    //    });
-    //    countryUidElement.addClass('change-event-enabled');
-    //};
