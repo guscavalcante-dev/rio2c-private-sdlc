@@ -2,13 +2,15 @@
 @{
     Layout = "~/Views/Themes/Metronic/_Internal.cshtml";
     ViewBag.Title = Labels.Welcome;
+    var isSpeaker = ViewBag.IsSpeaker as bool? ?? false;
+    var menuIndex = 3 + (isSpeaker ? 1 : 0);
 }
 <div class="kt-portlet">
     <div class="kt-portlet__body kt-portlet__body--fit">
         <div class="kt-grid  kt-wizard-v2 kt-wizard-v2--white" id="kt_wizard_v2" data-ktwizard-state="first">
             <div class="kt-grid__item kt-wizard-v2__aside">
                 <!--begin: Form Wizard Nav -->
-                @Html.Partial("Shared/_OnboardingMenu", 3)
+                @Html.Partial("Shared/_OnboardingMenu", menuIndex)
                 <!--end: Form Wizard Nav -->
             </div>
             <div class="kt-grid__item kt-grid__item--fluid kt-wizard-v2__wrapper">
