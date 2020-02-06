@@ -7,9 +7,10 @@
     ViewBag.Title = Labels.Welcome;
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var playerAttendeeOrganizations = ViewBag.PlayerAttendeeOrganizations as List<AttendeeOrganization>;
-    var isPlayer = ViewBag.IsPlayer as bool?;
+    var isPlayer = ViewBag.IsPlayer as bool? ?? false;
+    var isSpeaker = ViewBag.IsSpeaker as bool? ?? false;
     var player = playerAttendeeOrganizations?.FirstOrDefault(pao => pao.Organization.Uid == Model.OrganizationUid)?.Organization;
-    var initialPlayerIndex = 4 + (isPlayer == true ? 1 : 0);
+    var initialPlayerIndex = 4 + (isSpeaker ? 1 : 0) + (isPlayer ? 1 : 0);
     var playerIndex = playerAttendeeOrganizations?.FindIndex(pao => pao.Organization.Uid == Model.OrganizationUid) ?? 0;
     var additionIndex = playerIndex == 0 ? 0 : 1;
 }

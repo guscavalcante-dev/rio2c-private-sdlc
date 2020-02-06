@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-30-2020
+// Last Modified On : 02-06-2020
 // ***********************************************************************
 // <copyright file="AttendeeCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -229,9 +229,9 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.SpeakerTermsAcceptanceDate = DateTime.Now;
 
-            if (!this.OnboardingFinishDate.HasValue)
+            if (!this.OnboardingStartDate.HasValue)
             {
-                this.OnboardingFinishDate = DateTime.Now;
+                this.OnboardingStartDate = this.SpeakerTermsAcceptanceDate;
             }
 
             this.IsDeleted = false;
@@ -256,7 +256,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.OnboardingCollaboratorDate = DateTime.Now;
 
-            if (!this.HasCollaboratorType(Constants.CollaboratorType.Speaker) && !this.OnboardingFinishDate.HasValue)
+            if (!this.OnboardingFinishDate.HasValue)
             {
                 this.OnboardingFinishDate = DateTime.Now;
             }

@@ -4,7 +4,7 @@
 // Created          : 08-29-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-19-2019
+// Last Modified On : 02-06-2020
 // ***********************************************************************
 // <copyright file="OnboardingController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -69,7 +69,13 @@ namespace PlataformaRio2C.Web.Site.Controllers
             // Redirect if onboarding is not pending
             if (this.UserAccessControlDto?.IsOnboardingPending() != true)
             {
-                //return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home");
+            }
+
+            // Redirect if speaker terms acceptance pending
+            if (this.UserAccessControlDto?.IsSpeakerTermsAcceptanceFinished() != true)
+            {
+                return RedirectToAction("SpeakerTermsAcceptance", "Onboarding");
             }
 
             // Redirect to access data if not finished
@@ -109,12 +115,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return RedirectToAction("CompanyInfo", "Onboarding");
             }
 
-            // Redirect if speaker terms acceptance pending
-            if (this.UserAccessControlDto?.IsSpeakerTermsAcceptanceFinished() != true)
-            {
-                return RedirectToAction("SpeakerTermsAcceptance", "Onboarding");
-            }
-
             return RedirectToAction("Index", "Home");
         }
 
@@ -130,14 +130,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return RedirectToAction("Index", "Onboarding");
             }
 
-            await this.CommandBus.Send(new OnboardCollaborator(
-                this.UserAccessControlDto.Collaborator.Uid,
-                this.UserAccessControlDto.User.Id,
-                this.UserAccessControlDto.User.Uid,
-                this.EditionDto.Id,
-                this.EditionDto.Uid,
-                this.UserInterfaceLanguage));
-
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.WelcomeTitle, new List<BreadcrumbItemHelper> {
@@ -145,6 +137,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
             });
 
             #endregion
+
+            await this.CommandBus.Send(new OnboardCollaborator(
+                this.UserAccessControlDto.Collaborator.Uid,
+                this.UserAccessControlDto.User.Id,
+                this.UserAccessControlDto.User.Uid,
+                this.EditionDto.Id,
+                this.EditionDto.Uid,
+                this.UserInterfaceLanguage));
 
             this.SetViewBags();
 
@@ -340,6 +340,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
             });
 
             #endregion
+
+            await this.CommandBus.Send(new OnboardCollaborator(
+                this.UserAccessControlDto.Collaborator.Uid,
+                this.UserAccessControlDto.User.Id,
+                this.UserAccessControlDto.User.Uid,
+                this.EditionDto.Id,
+                this.EditionDto.Uid,
+                this.UserInterfaceLanguage));
 
             this.SetViewBags();
 
@@ -968,6 +976,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
                                                                                               && aot.OrganizationType.Name == Constants.OrganizationType.AudiovisualBuyer) == true)?
                                                                 .ToList();
             }
+
+            ViewBag.IsIndustry = this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true;
+            ViewBag.IsTicketBuyer = this.UserAccessControlDto?.HasAnyCollaboratorType(Constants.CollaboratorType.TicketBuyers) == true;
+            ViewBag.IsExecutive = this.UserAccessControlDto?.HasAnyCollaboratorType(Constants.CollaboratorType.Executives);
+            ViewBag.IsSpeaker = this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Speaker) == true;
         }
 
         #endregion
