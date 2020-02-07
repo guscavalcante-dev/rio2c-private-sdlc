@@ -229,11 +229,6 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.SpeakerTermsAcceptanceDate = DateTime.Now;
 
-            if (!this.OnboardingStartDate.HasValue)
-            {
-                this.OnboardingStartDate = this.SpeakerTermsAcceptanceDate;
-            }
-
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
