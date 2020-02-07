@@ -85,9 +85,21 @@ var SpeakersMainInformationWidget = function () {
         MyRio2cCommon.enableDropdownChangeEvent("CollaboratorIndustryUid", "CollaboratorIndustryAdditionalInfo");
         MyRio2cCommon.enableCheckboxChangeEvent("HasAnySpecialNeeds");
         MyRio2cCommon.enableCheckboxChangeEvent("HaveYouBeenToRio2CBefore");
+        changePreviousEditionsRequired();
         enableAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
+    
+    var changePreviousEditionsRequired = function(){
+        function toggleChanged() {
+            var editionsSelected = $('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox:checked').length > 0;
+            $("#HasEditionSelected").val(editionsSelected ? "True" : null);
+        }
+
+        $('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox').on('click', function () {   
+            toggleChanged();
+        });
+    }
 
     var showUpdateModal = function () {
         MyRio2cCommon.block({ isModal: true });
