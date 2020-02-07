@@ -177,7 +177,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             HaveYouBeenToRio2CBefore = true;
             EditionsUids = editions.Where(e => collaborator.EditionParticipantions.Any(p => p.EditionId == e.Id && !p.IsDeleted)).Select(e => e.Uid).ToList();
         }
-
+        
         /// <summary>
         /// Updates the genders.
         /// </summary>
@@ -187,7 +187,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         private void UpdateGenders(List<CollaboratorGender> genders, string userInterfaceLanguage)
         {
             genders.ForEach(g => g.Translate(userInterfaceLanguage));
-            this.CollaboratorGenders = genders.OrderBy(e => e.Name);
+            this.CollaboratorGenders = genders.OrderBy(e => e.HasAdditionalInfo).ThenBy(e => e.Name);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         private void UpdateIndustries(List<CollaboratorIndustry> industries, string userInterfaceLanguage)
         {
             industries.ForEach(g => g.Translate(userInterfaceLanguage));
-            this.CollaboratorIndustries = industries.OrderBy(e => e.Name);
+            this.CollaboratorIndustries = industries.OrderBy(e => e.HasAdditionalInfo).ThenBy(e => e.Name);
         }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         private void UpdateRoles(List<CollaboratorRole> roles, string userInterfaceLanguage)
         {
             roles.ForEach(g => g.Translate(userInterfaceLanguage));
-            this.CollaboratorRoles = roles.OrderBy(e => e.Name);
+            this.CollaboratorRoles = roles.OrderBy(e => e.HasAdditionalInfo).ThenBy(e => e.Name);
         }
 
         /// <summary>Updates the pre send properties.</summary>
