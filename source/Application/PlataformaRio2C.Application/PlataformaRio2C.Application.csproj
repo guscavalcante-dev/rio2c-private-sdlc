@@ -384,7 +384,6 @@
     <Compile Include="CQRS\QueriesHandlers\Users\FindAdminAccessControlDtoQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Users\FindUserLanguageDtoQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Users\FindUserAccessControlDtoQueryHandler.cs" />
-    <Compile Include="CQRS\QueriesHandlers\AttendeeOrganizations\FindAllAttendeeOrganizationsBaseDtosByEditionUidAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Cities\FindAllCitiesBaseDtosByStateUidAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Collaborators\FindCollaboratorDtoByUidAndByEditionIdAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\States\FindAllStatesBaseDtosByCountryUidAsyncQueryHandler.cs" />
@@ -404,7 +403,6 @@
     <Compile Include="CQRS\Queries\Users\FindAdminAccessControlDto.cs" />
     <Compile Include="CQRS\Queries\Users\FindUserLanguageDto.cs" />
     <Compile Include="CQRS\Queries\Users\FindUserAccessControlDto.cs" />
-    <Compile Include="CQRS\Queries\AttendeeOrganizations\FindAllAttendeeOrganizationsBaseDtosByEditionUidAsync.cs" />
     <Compile Include="CQRS\Queries\BaseQuery.cs" />
     <Compile Include="CQRS\Queries\Cities\FindAllCitiesBaseDtosByStateUidAsync.cs" />
     <Compile Include="CQRS\Queries\Collaborators\FindCollaboratorDtoByUidAndByEditionIdAsync.cs" />

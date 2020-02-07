@@ -4,8 +4,7 @@
     Layout = "~/Views/Themes/Metronic/_Internal.cshtml";
     ViewBag.Title = Labels.Welcome;
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
-    var isSpeaker = ViewBag.IsSpeaker as bool? ?? false;
-    var menuIndex = 1 + (isSpeaker ? 1 : 0);
+    var menuIndex = 1;
 }
 <div class="kt-portlet">
     <div class="kt-portlet__body kt-portlet__body--fit">
