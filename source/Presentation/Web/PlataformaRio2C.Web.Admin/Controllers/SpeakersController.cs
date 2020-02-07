@@ -204,7 +204,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllEditionsByIsActive()),
+                    await this.CommandBus.Send(new FindAllEditionsByIsActive(true)),
                     EditionDto.Id,
                     UserInterfaceLanguage);
             }

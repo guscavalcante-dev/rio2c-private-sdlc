@@ -2038,8 +2038,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Gênero</comment>
   </data>
   <data name="HasAnySpecialNeeds" xml:space="preserve">
-    <value>Tem Necessidades Especiais</value>
-    <comment>Tem Necessidades Especiais</comment>
+    <value>Possui necessidades especiais?</value>
+    <comment>Possui necessidades especiais?</comment>
   </data>
   <data name="CollaboratorIndustry" xml:space="preserve">
     <value>Área de Atuação</value>

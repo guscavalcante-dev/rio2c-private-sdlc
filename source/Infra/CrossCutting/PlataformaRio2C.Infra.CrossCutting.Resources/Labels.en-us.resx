@@ -2031,8 +2031,8 @@
     <comment>Gênero</comment>
   </data>
   <data name="HasAnySpecialNeeds" xml:space="preserve">
-    <value>Has Any Special Needs</value>
-    <comment>Tem necessidades especiais</comment>
+    <value>Do you have any special needs?</value>
+    <comment>Possui necessidades especiais?</comment>
   </data>
   <data name="CollaboratorIndustry" xml:space="preserve">
     <value>Industry</value>

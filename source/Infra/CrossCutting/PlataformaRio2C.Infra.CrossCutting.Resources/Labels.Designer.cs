@@ -1762,7 +1762,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tem Necessidades Especiais.
+        ///   Looks up a localized string similar to Possui necessidades especiais?.
         /// </summary>
         public static string HasAnySpecialNeeds {
             get {

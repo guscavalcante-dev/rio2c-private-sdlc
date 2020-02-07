@@ -166,15 +166,15 @@
             <span></span>
         </label>
         <div class="row">
-            <div class="col-10 ml-5">
-                @foreach(var edition in Model.Editions)
-                {            
+            @foreach(var edition in Model.Editions)
+            {            
+                <div class="col-10 ml-5">
                     <label class="kt-checkbox" data-additionalinfo="HaveYouBeenToRio2CBefore">
                         <input type="checkbox" name="EditionsUids" id="EditionsUids" value="@edition.Uid" @if (Model.EditionsUids.Contains(edition.Uid)) { <text> checked</text> }> @edition.Name
                         <span></span>
                     </label>
-                }
-            </div>
+                </div>
+            }
         </div>
     </div>
     @Html.ValidationMessageFor(m => m.HaveYouBeenToRio2CBefore, "", new { @class = "text-danger" })
