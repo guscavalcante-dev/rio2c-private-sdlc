@@ -601,6 +601,10 @@ var MyRio2cCommon = function () {
             autoclose: options.autoclose,
             language: MyRio2cCommon.getGlobalVariable('userInterfaceLanguage')
         });
+                
+        $(options.inputIdOrClass).inputmask("datetime", {
+            inputFormat: $.fn.datepicker.dates[MyRio2cCommon.getGlobalVariable('userInterfaceLanguage')].format
+        });
     };
 
     var enableTimePicker = function (options) {

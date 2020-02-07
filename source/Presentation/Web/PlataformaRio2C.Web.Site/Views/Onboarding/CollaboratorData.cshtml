@@ -103,7 +103,7 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     @Html.LabelFor(m => m.BirthDate, new { @class = "control-label" })
-                                                    @Html.TextBox("BirthDate", Model.BirthDate?.ToShortDateString(), new { @class = "form-control enable-datepicker", @readonly = "readonly" })
+                                                    @Html.TextBox("BirthDate", Model.BirthDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
                                                     @Html.ValidationMessageFor(m => m.BirthDate, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
@@ -287,6 +287,7 @@
     @Scripts.Render("~/bundles/js/select2.js")
     @Scripts.Render("~/bundles/js/bootstrap-datepicker.js")
     @Scripts.Render("~/bundles/js/addresses.form.js")
+    @Scripts.Render("~/bundles/js/inputmask.js")
     @Scripts.Render("~/bundles/js/onboarding.collaboratordata.js")
     <script>
         jQuery(document).ready(function () {

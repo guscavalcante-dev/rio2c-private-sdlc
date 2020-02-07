@@ -548,12 +548,16 @@ var MyRio2cCommon = function () {
             var val = moment(value).toDate();
             return this.optional(element) || (val);
         }
-
+        
         $(options.inputIdOrClass).datepicker({
             todayHighlight: true,
             orientation: options.orientation,
             autoclose: options.autoclose,
             language: MyRio2cCommon.getGlobalVariable('userInterfaceLanguage')
+        });
+                
+        $(options.inputIdOrClass).inputmask("datetime", {
+            inputFormat: $.fn.datepicker.dates[MyRio2cCommon.getGlobalVariable('userInterfaceLanguage')].format
         });
     };
 
