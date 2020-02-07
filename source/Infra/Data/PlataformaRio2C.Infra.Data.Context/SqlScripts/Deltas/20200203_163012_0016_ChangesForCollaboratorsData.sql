@@ -394,3 +394,10 @@ INSERT [dbo].[CollaboratorRoles] ([Id], [Uid], [Name], [HasAdditionalInfo], [IsD
 GO
 SET IDENTITY_INSERT [dbo].[CollaboratorRoles] OFF
 GO
+
+SET IDENTITY_INSERT [dbo].[Editions] ON 
+GO
+INSERT [dbo].[Editions] ([Id], [Uid], [Name], [UrlCode], [IsCurrent], [IsActive], [StartDate], [EndDate], [SellStartDate], [SellEndDate], [ProjectSubmitStartDate], [ProjectSubmitEndDate], [ProjectEvaluationStartDate], [ProjectEvaluationEndDate], [OneToOneMeetingsScheduleDate], [NegotiationStartDate], [NegotiationEndDate], [AttendeeOrganizationMaxSellProjectsCount], [ProjectMaxBuyerEvaluationsCount], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (3, N'96485f4a-56b3-4d03-8847-26d864544fab', N'Rio2C 2018', 2018, 0, 1, CAST(N'2018-05-05 00:00:00.000' AS DateTime), CAST(N'2018-05-10 23:59:59.000' AS DateTime), CAST(N'2018-06-15 00:00:00.000' AS DateTime), CAST(N'2018-05-10 23:59:59.000' AS DateTime), CAST(N'2017-11-01 00:00:00.000' AS DateTime), CAST(N'2017-12-31 23:59:59.000' AS DateTime), CAST(N'2018-01-01 00:00:00.000' AS DateTime), CAST(N'2018-02-15 23:59:59.000' AS DateTime), CAST(N'2018-03-23 00:00:00.000' AS DateTime), CAST(N'2018-05-05 00:00:00.000' AS DateTime), CAST(N'2018-05-10 23:59:59.000' AS DateTime), 3, 5, 0, CAST(N'2018-08-05 14:31:28.980' AS DateTime), 1, CAST(N'2018-08-05 14:31:28.980' AS DateTime), 1)
+GO
+SET IDENTITY_INSERT [dbo].[Editions] OFF
+GO
