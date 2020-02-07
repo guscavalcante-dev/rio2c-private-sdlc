@@ -1,7 +1,9 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateTicketBuyerOrganizationData
+﻿@using PlataformaRio2C.Domain.Dtos
+@model PlataformaRio2C.Application.CQRS.Commands.CreateTicketBuyerOrganizationData
 @{
     Layout = "~/Views/Themes/Metronic/_Internal.cshtml";
-    ViewBag.Title = Labels.Welcome;
+    var editionDto = ViewBag.EditionDto as EditionDto;
+    ViewBag.Title = string.Format(Labels.Welcome, editionDto?.UrlCode);
     var isSpeaker = ViewBag.IsSpeaker as bool? ?? false;
     var menuIndex = 3 + (isSpeaker ? 1 : 0);
 }

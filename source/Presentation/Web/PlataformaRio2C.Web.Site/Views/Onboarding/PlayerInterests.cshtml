@@ -1,10 +1,10 @@
-﻿@using System.Globalization
-@using PlataformaRio2C.Domain.Dtos
+﻿@using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Domain.Entities
 @model PlataformaRio2C.Application.CQRS.Commands.OnboardPlayerInterests
 @{
     Layout = "~/Views/Themes/Metronic/_Internal.cshtml";
-    ViewBag.Title = Labels.Welcome;
+    var editionDto = ViewBag.EditionDto as EditionDto;
+    ViewBag.Title = string.Format(Labels.Welcome, editionDto?.UrlCode);
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var playerAttendeeOrganizations = ViewBag.PlayerAttendeeOrganizations as List<AttendeeOrganization>;
     var isPlayer = ViewBag.IsPlayer as bool? ?? false;
