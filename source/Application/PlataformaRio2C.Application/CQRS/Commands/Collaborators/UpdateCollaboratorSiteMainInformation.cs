@@ -106,6 +106,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public bool? HaveYouBeenToRio2CBefore { get; set; }
         
+        [RequiredIf("HaveYouBeenToRio2CBefore", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneOption")]
+        public bool? HasEditionSelected { get;set; }
+
         [Display(Name = "PreviousEditions", ResourceType = typeof(Labels))]
         public IEnumerable<Guid> EditionsUids { get; set; }
 

@@ -116,6 +116,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public IEnumerable<EditionDto> Editions { get; set; }
 
+        [RequiredIf("HaveYouBeenToRio2CBefore", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneOption")]
+        public bool? HasEditionSelected { get;set; }
+
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorAdminMainInformation"/> class.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>

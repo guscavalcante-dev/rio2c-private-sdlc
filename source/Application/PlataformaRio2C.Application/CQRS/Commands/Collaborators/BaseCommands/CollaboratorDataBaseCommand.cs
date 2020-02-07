@@ -127,6 +127,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public IEnumerable<Guid> EditionsUids { get; set; }
 
         public IEnumerable<EditionDto> Editions { get; set; }
+        
+        [RequiredIf("HaveYouBeenToRio2CBefore", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneOption")]
+        public bool? HasEditionSelected { get;set; }
 
         public List<AttendeeOrganizationBaseCommand> AttendeeOrganizationBaseCommands { get; set; }
         public List<CollaboratorJobTitleBaseCommand> JobTitles { get; set; }

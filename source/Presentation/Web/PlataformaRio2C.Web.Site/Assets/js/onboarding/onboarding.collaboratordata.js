@@ -36,8 +36,20 @@ var OnboardingCollaboratorData = function () {
         MyRio2cCommon.enableDropdownChangeEvent("CollaboratorIndustryUid", "CollaboratorIndustryAdditionalInfo");
         MyRio2cCommon.enableCheckboxChangeEvent("HasAnySpecialNeeds");
         MyRio2cCommon.enableCheckboxChangeEvent("HaveYouBeenToRio2CBefore");
+        changePreviousEditionsRequired();
         AddressesForm.init();
     };
+
+    var changePreviousEditionsRequired = function(){
+        function toggleChanged() {
+            var editionsSelected = $('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox:checked').length > 0;
+            $("#HasEditionSelected").val(editionsSelected ? "True" : null);
+        }
+
+        $('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox').on('click', function () {   
+            toggleChanged();
+        });
+    }
 
     var changeIsRequired = function (originDropdownIdOrClass) {
         var element = $(originDropdownIdOrClass);

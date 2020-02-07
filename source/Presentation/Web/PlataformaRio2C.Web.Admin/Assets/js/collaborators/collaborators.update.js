@@ -41,10 +41,22 @@ var CollaboratorsUpdate = function () {
         MyRio2cCommon.enableDropdownChangeEvent("CollaboratorIndustryUid", "CollaboratorIndustryAdditionalInfo");
         MyRio2cCommon.enableCheckboxChangeEvent("HasAnySpecialNeeds");
         MyRio2cCommon.enableCheckboxChangeEvent("HaveYouBeenToRio2CBefore");
+        changePreviousEditionsRequired();
         enableAjaxForm();
         enableFormValidation();
     };
     
+    var changePreviousEditionsRequired = function(){
+        function toggleChanged() {
+            var editionsSelected = $('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox:checked').length > 0;
+            $("#HasEditionSelected").val(editionsSelected ? "True" : null);
+        }
+
+        $('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox').on('click', function () {   
+            toggleChanged();
+        });
+    }
+
     // Show modal ---------------------------------------------------------------------------------
     var showModal = function (collaboratorUid, isAddingToCurrentEdition) {
         MyRio2cCommon.block({ isModal: true });
