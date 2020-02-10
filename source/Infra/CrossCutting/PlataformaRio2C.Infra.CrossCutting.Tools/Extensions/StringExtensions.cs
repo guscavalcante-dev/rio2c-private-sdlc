@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified On : 02-10-2020
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -63,6 +64,22 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                 result += value[i];
             }
             return result;
+        }
+
+        /// <summary>Removes the filename invalid chars.</summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public static string RemoveFilenameInvalidChars(this string value)
+        {
+            return string.Concat(value.Split(Path.GetInvalidFileNameChars()));
+        }
+
+        /// <summary>Replaces the filename invalid chars.</summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public static string ReplaceFilenameInvalidChars(this string value)
+        {
+            return string.Join("_", value.Split(Path.GetInvalidFileNameChars()));
         }
 
         /// <summary>Removes the accents.</summary>
