@@ -784,6 +784,36 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+CREATE TABLE [dbo].[ConferencePillars](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[ConferenceId] [int] NOT NULL,
+	[PillarId] [int] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_ConferencePillars] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ConferencePillars_ConferenceId_PillarId] UNIQUE NONCLUSTERED 
+(
+	[ConferenceId] ASC,
+	[PillarId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ConferencePillars_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 CREATE TABLE [dbo].[ConferencePresentationFormats](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
@@ -1744,6 +1774,36 @@ CREATE TABLE [dbo].[OrganizationTypes](
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
  CONSTRAINT [IDX_UQ_OrganizationTypes_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Pillars](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[EditionId] [int] NOT NULL,
+	[Name] [varchar](600) NOT NULL,
+	[Color] [varchar](10) NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetime] NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_Pillars] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_Pillars_Uid] UNIQUE NONCLUSTERED 
 (
 	[Uid] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -2936,6 +2996,11 @@ CREATE NONCLUSTERED INDEX [IDX_ConferenceParticipantRoles_IsLecturer] ON [dbo].[
 	[IsLecturer] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
+CREATE NONCLUSTERED INDEX [IDX_ConferencePillars_PillarId] ON [dbo].[ConferencePillars]
+(
+	[PillarId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
 CREATE NONCLUSTERED INDEX [IDX_ConferencePresentationFormats_PresentationFormatId] ON [dbo].[ConferencePresentationFormats]
 (
 	[PresentationFormatId] ASC
@@ -3038,6 +3103,19 @@ GO
 CREATE NONCLUSTERED INDEX [IDX_OrganizationTypes_RelatedProjectTypeId] ON [dbo].[OrganizationTypes]
 (
 	[RelatedProjectTypeId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_Pillars_EditionId] ON [dbo].[Pillars]
+(
+	[EditionId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+CREATE NONCLUSTERED INDEX [IDX_Pillars_Name] ON [dbo].[Pillars]
+(
+	[Name] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
 CREATE NONCLUSTERED INDEX [IDX_PresentationFormats_EditionId] ON [dbo].[PresentationFormats]
@@ -3631,6 +3709,26 @@ REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[ConferenceParticipants] CHECK CONSTRAINT [FK_Users_ConferenceParticipants_UpdateUserId]
 GO
+ALTER TABLE [dbo].[ConferencePillars]  WITH CHECK ADD  CONSTRAINT [FK_Conferences_ConferencePillars_ConferenceId] FOREIGN KEY([ConferenceId])
+REFERENCES [dbo].[Conferences] ([Id])
+GO
+ALTER TABLE [dbo].[ConferencePillars] CHECK CONSTRAINT [FK_Conferences_ConferencePillars_ConferenceId]
+GO
+ALTER TABLE [dbo].[ConferencePillars]  WITH CHECK ADD  CONSTRAINT [FK_Pillars_ConferencePillars_PillarId] FOREIGN KEY([PillarId])
+REFERENCES [dbo].[Pillars] ([Id])
+GO
+ALTER TABLE [dbo].[ConferencePillars] CHECK CONSTRAINT [FK_Pillars_ConferencePillars_PillarId]
+GO
+ALTER TABLE [dbo].[ConferencePillars]  WITH CHECK ADD  CONSTRAINT [FK_Users_ConferencePillars_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ConferencePillars] CHECK CONSTRAINT [FK_Users_ConferencePillars_CreateUserId]
+GO
+ALTER TABLE [dbo].[ConferencePillars]  WITH CHECK ADD  CONSTRAINT [FK_Users_ConferencePillars_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ConferencePillars] CHECK CONSTRAINT [FK_Users_ConferencePillars_UpdateUserId]
+GO
 ALTER TABLE [dbo].[ConferencePresentationFormats]  WITH CHECK ADD  CONSTRAINT [FK_Conferences_ConferencePresentationFormats_ConferenceId] FOREIGN KEY([ConferenceId])
 REFERENCES [dbo].[Conferences] ([Id])
 GO
@@ -4160,6 +4258,21 @@ ALTER TABLE [dbo].[OrganizationTypes]  WITH CHECK ADD  CONSTRAINT [FK_Users_Orga
 REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[OrganizationTypes] CHECK CONSTRAINT [FK_Users_OrganizationTypes_UpdateUserId]
+GO
+ALTER TABLE [dbo].[Pillars]  WITH CHECK ADD  CONSTRAINT [FK_Editions_Pillars_EditionId] FOREIGN KEY([EditionId])
+REFERENCES [dbo].[Editions] ([Id])
+GO
+ALTER TABLE [dbo].[Pillars] CHECK CONSTRAINT [FK_Editions_Pillars_EditionId]
+GO
+ALTER TABLE [dbo].[Pillars]  WITH CHECK ADD  CONSTRAINT [FK_Users_Pillars_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[Pillars] CHECK CONSTRAINT [FK_Users_Pillars_CreateUserId]
+GO
+ALTER TABLE [dbo].[Pillars]  WITH CHECK ADD  CONSTRAINT [FK_Users_Pillars_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[Pillars] CHECK CONSTRAINT [FK_Users_Pillars_UpdateUserId]
 GO
 ALTER TABLE [dbo].[Places]  WITH CHECK ADD  CONSTRAINT [FK_Addresses_Places_AddressId] FOREIGN KEY([AddressId])
 REFERENCES [dbo].[Addresses] ([Id])
