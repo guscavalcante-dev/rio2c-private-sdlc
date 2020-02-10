@@ -2,7 +2,8 @@
 @model PlataformaRio2C.Application.CQRS.Commands.OnboardPlayerTermsAcceptance
 @{
     Layout = "~/Views/Themes/Metronic/_Internal.cshtml";
-    ViewBag.Title = Labels.Welcome;
+    var editionDto = ViewBag.EditionDto as EditionDto;
+    ViewBag.Title = string.Format(Labels.Welcome, editionDto?.UrlCode);
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var isSpeaker = ViewBag.IsSpeaker as bool? ?? false;
     var menuIndex = 2 + (isSpeaker ? 1 : 0);

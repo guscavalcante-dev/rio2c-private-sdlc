@@ -1,7 +1,9 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.OnboardSpeakerTermsAcceptance
+﻿@using PlataformaRio2C.Domain.Dtos
+@model PlataformaRio2C.Application.CQRS.Commands.OnboardSpeakerTermsAcceptance
 @{
     Layout = "~/Views/Themes/Metronic/_Internal.cshtml";
-    ViewBag.Title = Labels.Welcome;
+    var editionDto = ViewBag.EditionDto as EditionDto;
+    ViewBag.Title = string.Format(Labels.Welcome, editionDto?.UrlCode);
     //var menuIndex = !isPlayer ? 4 : 
     //                            3 + ((playerAttendeeOrganizations?.Count ?? 0) * 2) + 1;
     var menuIndex = 2;

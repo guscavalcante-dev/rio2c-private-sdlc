@@ -1,7 +1,9 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.OnboardCollaboratorData
+﻿@using PlataformaRio2C.Domain.Dtos
+@model PlataformaRio2C.Application.CQRS.Commands.OnboardCollaboratorData
 @{
     Layout = "~/Views/Themes/Metronic/_Internal.cshtml";
-    ViewBag.Title = Labels.Welcome;
+    var editionDto = ViewBag.EditionDto as EditionDto;
+    ViewBag.Title = string.Format(Labels.Welcome, editionDto?.UrlCode);
     var isPlayer = ViewBag.IsPlayer as bool? ?? false;
     var isExecutive = ViewBag.IsExecutive as bool? ?? false;
     var isIndustry = ViewBag.IsIndustry as bool? ?? false;
