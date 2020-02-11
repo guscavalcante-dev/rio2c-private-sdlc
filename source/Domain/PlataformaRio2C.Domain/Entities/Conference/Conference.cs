@@ -60,6 +60,7 @@ namespace PlataformaRio2C.Domain.Entities
             List<ConferenceTitle> conferenceTitles,
             List<ConferenceSynopsis> conferenceSynopses,
             List<Track> tracks,
+            List<Pillar> pillars,
             List<PresentationFormat> presentationFormats,
             int userId)
         {
@@ -73,6 +74,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeConferenceTitles(conferenceTitles, userId);
             this.SynchronizeConferenceSynopses(conferenceSynopses, userId);
             this.SynchronizeConferenceTracks(tracks, userId);
+            this.SynchronizeConferencePillars(pillars, userId);
             this.SynchronizeConferencePresentationFormats(presentationFormats, userId);
 
             this.IsDeleted = false;
@@ -122,9 +124,10 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="tracks">The tracks.</param>
         /// <param name="presentationFormats">The presentation formats.</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateTracksAndPresentationFormats(List<Track> tracks, List<PresentationFormat> presentationFormats, int userId)
+        public void UpdateTracksAndPresentationFormats(List<Track> tracks, List<Pillar> pillars, List<PresentationFormat> presentationFormats, int userId)
         {
             this.SynchronizeConferenceTracks(tracks, userId);
+            this.SynchronizeConferencePillars(pillars, userId);
             this.SynchronizeConferencePresentationFormats(presentationFormats, userId);
 
             this.IsDeleted = false;
@@ -303,6 +306,56 @@ namespace PlataformaRio2C.Domain.Entities
         private void CreateConferenceTrack(Track track, int userId)
         {
             this.ConferenceTracks.Add(new ConferenceTrack(Guid.NewGuid(), this, track, userId));
+        }
+        
+
+        private void SynchronizeConferencePillars(List<Pillar> pillars, int userId)
+        {
+            if (this.ConferencePillars == null)
+            {
+                this.ConferencePillars = new List<ConferencePillar>();
+            }
+
+            this.DeleteConferencePillars(pillars, userId);
+
+            if (pillars?.Any() != true)
+            {
+                return;
+            }
+
+            // Create or update
+            foreach (var pillar in pillars)
+            {
+                var pillarDb = this.ConferencePillars.FirstOrDefault(a => a.Pillar.Uid == pillar.Uid);
+                if (pillarDb != null)
+                {
+                    pillarDb.Update(userId);
+                }
+                else
+                {
+                    this.CreateConferencePillar(pillar, userId);
+                }
+            }
+        }
+
+        /// <summary>Deletes the conference pillars.</summary>
+        /// <param name="newPillars">The new pillars.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteConferencePillars(List<Pillar> newPillars, int userId)
+        {
+            var conferencePillarsToDelete = this.ConferencePillars.Where(db => newPillars?.Select(a => a.Uid)?.Contains(db.Pillar.Uid) == false && !db.IsDeleted).ToList();
+            foreach (var conferencePillarToDelete in conferencePillarsToDelete)
+            {
+                conferencePillarToDelete.Delete(userId);
+            }
+        }
+
+        /// <summary>Creates the conference pillar.</summary>
+        /// <param name="pillar">The pillar.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void CreateConferencePillar(Pillar pillar, int userId)
+        {
+            this.ConferencePillars.Add(new ConferencePillar(this, pillar, userId));
         }
 
         #endregion

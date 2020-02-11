@@ -68,6 +68,36 @@
     </div>
 </div>
 <!--end: Main Information-->
+<!--begin: Pillars -->
+<div class="kt-section">
+    <h5>@Labels.Pillars</h5>
+    @Html.ValidationMessage("PillarUids", new { @class = "text-danger" })
+    <div class="kt-section__content mt-3">
+        @if (Model.Pillars?.Any() == true)
+        {
+            <div class="kt-checkbox-list">
+                <div class="row">
+                    @foreach (var pillar in Model.Pillars?.OrderBy(vt => vt.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')))
+                    {
+                        <div class="col-md-6">
+                            <label class="kt-checkbox">
+                                <input type="checkbox"
+                                       name="PillarUids"
+                                       value="@pillar.Uid"
+                                       @if (Model.PillarUids?.Contains(pillar.Uid) == true) { <text> checked </text> } /> @pillar.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                                <span></span>
+                            </label>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        else
+        {
+            <span>@string.Format(Messages.EntityNotAction, Labels.Pillars, Labels.FoundFP)</span>
+        }
+    </div>
+</div>
 <!--begin: Tracks and Presentation Formats-->
 <div class="kt-section">
     <h5>@Labels.Tracks</h5>

@@ -361,6 +361,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     ConferenceTrack = cvt,
                                     Track = cvt.Track
                                 }),
+                                ConferencePillarDtos = c.ConferencePillars.Where(cvt => !cvt.IsDeleted).Select(cvt => new ConferencePillarDto()
+                                {
+                                    ConferencePillar = cvt,
+                                    Pillar = cvt.Pillar
+                                }),
                                 ConferencePresentationFormatDtos = c.ConferencePresentationFormats.Where(cht => !cht.IsDeleted).Select(cht => new ConferencePresentationFormatDto
                                 {
                                     ConferencePresentationFormat = cht,

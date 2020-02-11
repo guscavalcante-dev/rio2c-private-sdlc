@@ -31,6 +31,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly ILanguageRepository languageRepo;
         private readonly IRoomRepository roomRepo;
         private readonly ITrackRepository trackRepo;
+        private readonly IPillarRepository pillarRepo;
         private readonly IPresentationFormatRepository presentationFormatRepo;
 
         /// <summary>Initializes a new instance of the <see cref="CreateConferenceCommandHandler"/> class.</summary>
@@ -50,13 +51,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             ILanguageRepository languageRepository,
             IRoomRepository roomRepository,
             ITrackRepository trackRepository,
-            IPresentationFormatRepository presentationFormatRepository)
+            IPillarRepository pillarRepo,
+        IPresentationFormatRepository presentationFormatRepository)
             : base(eventBus, uow, conferenceRepository)
         {
             this.editionEventRepo = editionEventRepository;
             this.languageRepo = languageRepository;
             this.roomRepo = roomRepository;
             this.trackRepo = trackRepository;
+            this.pillarRepo = pillarRepo;
             this.presentationFormatRepo = presentationFormatRepository;
         }
 
@@ -82,6 +85,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.Titles?.Select(d => new ConferenceTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.Synopsis?.Select(d => new ConferenceSynopsis(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.TrackUids?.Any() == true ? await this.trackRepo.FindAllByUidsAsync(cmd.TrackUids) : new List<Track>(),
+                cmd.PillarUids?.Any() == true ? await this.pillarRepo.FindAllByUidsAsync(cmd.PillarUids) : new List<Pillar>(),
                 cmd.PresentationFormatUids?.Any() == true ? await this.presentationFormatRepo.FindAllByUidsAsync(cmd.PresentationFormatUids) : new List<PresentationFormat>(),
                 cmd.UserId);
             if (!conference.IsValid())

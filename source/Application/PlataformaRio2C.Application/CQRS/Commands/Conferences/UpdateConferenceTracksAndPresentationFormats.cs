@@ -24,9 +24,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         public Guid ConferenceUid { get; set; }
 
+        public List<Guid> PillarUids { get; set; }
         public List<Guid> TrackUids { get; set; }
         public List<Guid> PresentationFormatUids { get; set; }
-
+        
+        public List<Pillar> Pillars { get; private set; }
         public List<Track> Tracks { get; private set; }
         public List<PresentationFormat> PresentationFormats { get; private set; }
 
@@ -37,13 +39,15 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public UpdateConferenceTracksAndPresentationFormats(
             ConferenceDto conferenceDto,
             List<Track> tracks,
+            List<Pillar> pillars,
             List<PresentationFormat> presentationFormats)
         {
             this.ConferenceUid = conferenceDto?.Conference?.Uid ?? Guid.Empty;
             this.TrackUids = conferenceDto?.ConferenceTrackDtos?.Select(cvtd => cvtd.Track.Uid)?.ToList();
+            this.PillarUids = conferenceDto?.ConferencePillarDtos?.Select(cvtd => cvtd.Pillar.Uid)?.ToList();
             this.PresentationFormatUids = conferenceDto?.ConferencePresentationFormatDtos?.Select(chtd => chtd.PresentationFormat.Uid)?.ToList();
 
-            this.UpdateDropdowns(tracks, presentationFormats);
+            this.UpdateDropdowns(tracks, pillars, presentationFormats);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateConferenceTracksAndPresentationFormats"/> class.</summary>
@@ -56,9 +60,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="presentationFormats">The presentation formats.</param>
         public void UpdateDropdowns(
             List<Track> tracks,
+            List<Pillar> pillars,
             List<PresentationFormat> presentationFormats)
         {
             this.Tracks = tracks;
+            this.Pillars = pillars;
             this.PresentationFormats = presentationFormats;
         }
     }

@@ -43,6 +43,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         private readonly IEditionEventRepository editionEventRepo;
         private readonly ILanguageRepository languageRepo;
         private readonly ITrackRepository trackRepo;
+        private readonly IPillarRepository pillarRepo;
         private readonly IPresentationFormatRepository presentationFormatRepo;
         private readonly IRoomRepository roomRepo;
 
@@ -64,6 +65,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             IEditionEventRepository editionEventRepository,
             ILanguageRepository languageRepository,
             ITrackRepository trackRepository,
+            IPillarRepository pillarRepo,
             IPresentationFormatRepository presentationFormatRepository,
             IRoomRepository roomRepository)
             : base(commandBus, identityController)
@@ -73,6 +75,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             this.editionEventRepo = editionEventRepository;
             this.languageRepo = languageRepository;
             this.trackRepo = trackRepository;
+            this.pillarRepo = pillarRepo;
             this.presentationFormatRepo = presentationFormatRepository;
             this.roomRepo = roomRepository;
         }
@@ -368,6 +371,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 cmd = new UpdateConferenceTracksAndPresentationFormats(
                     tracksWidgetDto,
                     await this.trackRepo.FindAllByEditionIdAsync(this.EditionDto.Id),
+                    await this.pillarRepo.FindAllByEditionIdAsync(this.EditionDto.Id),
                     await this.presentationFormatRepo.FindAllByEditionIdAsync(this.EditionDto.Id));
             }
             catch (DomainException ex)
@@ -422,6 +426,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd.UpdateDropdowns(
                     await this.trackRepo.FindAllByEditionIdAsync(this.EditionDto.Id),
+                    await this.pillarRepo.FindAllByEditionIdAsync(this.EditionDto.Id),
                     await this.presentationFormatRepo.FindAllByEditionIdAsync(this.EditionDto.Id));
 
                 return Json(new
@@ -738,6 +743,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 await this.languageRepo.FindAllDtosAsync(),
                 await this.roomRepo.FindAllDtoByEditionIdAsync(this.EditionDto.Id),
                 await this.trackRepo.FindAllByEditionIdAsync(this.EditionDto.Id),
+                await this.pillarRepo.FindAllByEditionIdAsync(this.EditionDto.Id),
                 await this.presentationFormatRepo.FindAllByEditionIdAsync(this.EditionDto.Id),
                 this.UserInterfaceLanguage);
 
@@ -790,6 +796,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     await this.editionEventRepo.FindAllByEditionIdAsync(this.EditionDto.Id),
                     await this.roomRepo.FindAllDtoByEditionIdAsync(this.EditionDto.Id),
                     await this.trackRepo.FindAllByEditionIdAsync(this.EditionDto.Id),
+                    await this.pillarRepo.FindAllByEditionIdAsync(this.EditionDto.Id),
                     await this.presentationFormatRepo.FindAllByEditionIdAsync(this.EditionDto.Id),
                     this.UserInterfaceLanguage);
 

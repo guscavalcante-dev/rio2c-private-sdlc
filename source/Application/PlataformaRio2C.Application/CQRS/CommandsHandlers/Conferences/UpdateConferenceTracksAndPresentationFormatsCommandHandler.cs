@@ -27,6 +27,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     public class UpdateConferenceTracksAndPresentationFormatsCommandHandler : ConferenceBaseCommandHandler, IRequestHandler<UpdateConferenceTracksAndPresentationFormats, AppValidationResult>
     {
         private readonly ITrackRepository trackRepo;
+        private readonly IPillarRepository pillarRepo;
         private readonly IPresentationFormatRepository presentationFormatRepo;
 
         /// <summary>Initializes a new instance of the <see cref="UpdateConferenceTracksAndPresentationFormatsCommandHandler"/> class.</summary>
@@ -40,10 +41,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IUnitOfWork uow,
             IConferenceRepository conferenceRepository,
             ITrackRepository trackRepository,
+            IPillarRepository pillarRepository,
             IPresentationFormatRepository presentationFormatRepository)
             : base(eventBus, uow, conferenceRepository)
         {
             this.trackRepo = trackRepository;
+            this.pillarRepo = pillarRepository;
             this.presentationFormatRepo = presentationFormatRepository;
         }
 
@@ -69,6 +72,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             conference.UpdateTracksAndPresentationFormats(
                 cmd.TrackUids?.Any() == true ? await this.trackRepo.FindAllByUidsAsync(cmd.TrackUids) : new List<Track>(),
+                cmd.PillarUids?.Any() == true ? await this.pillarRepo.FindAllByUidsAsync(cmd.PillarUids) : new List<Pillar>(),
                 cmd.PresentationFormatUids?.Any() == true ? await this.presentationFormatRepo.FindAllByUidsAsync(cmd.PresentationFormatUids) : new List<PresentationFormat>(),
                 cmd.UserId);
             if (!conference.IsValid())
