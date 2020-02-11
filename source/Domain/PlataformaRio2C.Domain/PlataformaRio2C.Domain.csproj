@@ -189,6 +189,8 @@
     <Compile Include="Dtos\BaseDto.cs" />
     <Compile Include="Dtos\Languages\LanguageDto.cs" />
     <Compile Include="Dtos\Languages\LanguageBaseDto.cs" />
+    <Compile Include="Dtos\Pillars\PillarDto.cs" />
+    <Compile Include="Dtos\Pillars\PillarJsonDto.cs" />
     <Compile Include="Dtos\Users\AdminAccessControlDto.cs" />
     <Compile Include="Dtos\Users\UserUnsubscribedListDto.cs" />
     <Compile Include="Dtos\Users\UserEmailSettingsDto.cs" />
@@ -212,7 +214,10 @@
     <Compile Include="Entities\Collaborator\CollaboratorSpeaker.cs" />
     <Compile Include="Entities\Collaborator\CollaboratorRole.cs" />
     <Compile Include="Entities\Common\InterestGroup.cs" />
+    <Compile Include="Entities\Common\Pillar.cs" />
+    <Compile Include="Entities\Common\PillarName.cs" />
     <Compile Include="Entities\Conference\ConferencePresentationFormat.cs" />
+    <Compile Include="Entities\Conference\ConferencePillar.cs" />
     <Compile Include="Entities\Conference\ConferenceTrack.cs" />
     <Compile Include="Entities\Conference\ConferenceParticipantRole.cs" />
     <Compile Include="Entities\Conference\ConferenceParticipant.cs" />
@@ -304,6 +309,7 @@
     <Compile Include="Interfaces\Repositories\Collaborators\ICollaboratorTypeRepository.cs" />
     <Compile Include="Interfaces\Repositories\Collaborators\ICollaboratorGenderRepository.cs" />
     <Compile Include="Interfaces\Repositories\Common\IPresentationFormatRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Common\IPillarRepository.cs" />
     <Compile Include="Interfaces\Repositories\Common\ITrackRepository.cs" />
     <Compile Include="Interfaces\Repositories\Conferences\IConferenceParticipantRoleRepository.cs" />
     <Compile Include="Interfaces\Repositories\Conferences\ILecturerJobTitleRepository.cs" />

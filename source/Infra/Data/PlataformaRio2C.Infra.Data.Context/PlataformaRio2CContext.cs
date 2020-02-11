@@ -122,6 +122,7 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new ConferenceParticipantRoleMap());
             modelBuilder.Configurations.Add(new ConferenceParticipantRoleTitleMap());
             modelBuilder.Configurations.Add(new ConferenceTrackMap());
+            modelBuilder.Configurations.Add(new ConferencePillarMap());
             modelBuilder.Configurations.Add(new ConferencePresentationFormatMap());
 
             // Common
@@ -134,6 +135,7 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new RoomNameMap());
             modelBuilder.Configurations.Add(new TrackMap());
             modelBuilder.Configurations.Add(new PresentationFormatMap());
+            modelBuilder.Configurations.Add(new PillarMap());
 
             // TODO: Old mapping that must be reviewed
 

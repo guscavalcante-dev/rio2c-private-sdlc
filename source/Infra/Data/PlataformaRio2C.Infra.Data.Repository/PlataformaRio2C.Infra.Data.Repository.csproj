@@ -153,6 +153,7 @@
     <Compile Include="Repositories\Collaborator\CollaboratorGenderRepository.cs" />
     <Compile Include="Repositories\Common\EditionEventRepository.cs" />
     <Compile Include="Repositories\Common\PresentationFormatRepository.cs" />
+    <Compile Include="Repositories\Common\PillarRepository.cs" />
     <Compile Include="Repositories\Common\TrackRepository.cs" />
     <Compile Include="Repositories\Conference\ConferenceParticipantRoleRepository.cs" />
     <Compile Include="Repositories\Conference\LecturerJobTitleRepository.cs" />

@@ -36,6 +36,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<ConferenceParticipant> ConferenceParticipants { get; private set; }
         public virtual ICollection<ConferenceTrack> ConferenceTracks { get; private set; }
         public virtual ICollection<ConferencePresentationFormat> ConferencePresentationFormats { get; private set; }
+        public virtual ICollection<ConferencePillar> ConferencePillars { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Conference"/> class.</summary>
         /// <param name="conferenceUid">The conference uid.</param>

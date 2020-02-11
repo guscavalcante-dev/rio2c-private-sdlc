@@ -2066,4 +2066,12 @@
     <value>Enter your role</value>
     <comment>Informe sua função</comment>
   </data>
+  <data name="Pillar" xml:space="preserve">
+    <value>Pillar</value>
+    <comment>Pilar</comment>
+  </data>
+  <data name="Pillars" xml:space="preserve">
+    <value>Pillars</value>
+    <comment>Pilares</comment>
+  </data>
 </root>

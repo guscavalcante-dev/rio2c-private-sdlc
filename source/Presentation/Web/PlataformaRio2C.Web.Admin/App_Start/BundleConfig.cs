@@ -492,6 +492,28 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+
+            #region Pillars
+
+            bundles.Add(new ScriptBundle("~/bundles/js/pillars.list.js").Include(
+                "~/Assets/js/pillars/pillars.totalcount.widget.js",
+                "~/Assets/js/pillars/pillars.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/pillars.editioncount.js").Include(
+                "~/Assets/js/pillars/pillars.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/pillars.create.js").Include(
+                "~/Assets/js/pillars/pillars.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/pillars.details.js").Include(
+                "~/Assets/js/pillars/pillars.maininformation.widget.js",
+                "~/Assets/js/pillars/pillars.conferences.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/pillars.delete.js").Include(
+                "~/Assets/js/pillars/pillars.delete.js"));
+
+            #endregion
+
             #region Presentation Formats
 
             bundles.Add(new ScriptBundle("~/bundles/js/presentationformats.list.js").Include(

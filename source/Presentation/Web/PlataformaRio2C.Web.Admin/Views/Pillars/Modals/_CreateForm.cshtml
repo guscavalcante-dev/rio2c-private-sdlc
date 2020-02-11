@@ -1,0 +1,15 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.CreatePillar
+<div class="kt-section pt-2">
+    <h3 class="kt-section__title mb-0">@Labels.Names</h3>
+    @Html.ValidationMessage("Names", new { @class = "text-danger" })
+    <div class="kt-section__content mt-3">
+        @Html.EditorFor(m => m.Names)
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-12">
+        @Html.LabelFor(m => m.Color, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Color, new { @class = "form-control enable-colorpicker" })
+        @Html.ValidationMessageFor(m => m.Color, "", new { @class = "text-danger", })
+    </div>
+</div>

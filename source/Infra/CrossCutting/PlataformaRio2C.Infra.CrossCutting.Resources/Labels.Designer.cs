@@ -2788,6 +2788,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pilar.
+        /// </summary>
+        public static string Pillar {
+            get {
+                return ResourceManager.GetString("Pillar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pilares.
+        /// </summary>
+        public static string Pillars {
+            get {
+                return ResourceManager.GetString("Pillars", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pitching.
         /// </summary>
         public static string Pitching {

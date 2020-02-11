@@ -258,6 +258,10 @@
     <Compile Include="CQRS\CommandsHandlers\PresentationFormats\DeletePresentationFormatCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\PresentationFormats\UpdatePresentationFormatMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\PresentationFormats\PresentationFormatBaseCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Pillars\CreatePillarCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Pillars\DeletePillarCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Pillars\PillarBaseCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Pillars\UpdatePillarMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Tracks\UpdateTrackMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Tracks\CreateTrackCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Tracks\DeleteTrackCommandHandler.cs" />
@@ -371,6 +375,10 @@
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\ProcessPendingPlatformWebhookRequestsAsync.cs" />
     <Compile Include="CQRS\Commands\SalesPlatformWebhookRequests\CreateSalesPlatformWebhookRequest.cs" />
     <Compile Include="CQRS\BaseUserRequest.cs" />
+    <Compile Include="CQRS\Commands\Pillars\BaseCommands\PillarNameBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Pillars\CreatePillar.cs" />
+    <Compile Include="CQRS\Commands\Pillars\DeletePillar.cs" />
+    <Compile Include="CQRS\Commands\Pillars\UpdatePillarMainInformation.cs" />
     <Compile Include="CQRS\Commands\User\UpdateUserEmailSettings.cs" />
     <Compile Include="CQRS\Commands\User\UpdateUserInterfaceLanguage.cs" />
     <Compile Include="CQRS\Commands\PresentationFormats\BaseCommands\PresentationFormatNameBaseCommand.cs" />
@@ -662,6 +670,7 @@
     <Compile Include="ViewModels\Common\Player\PlayerAppViewModel.cs" />
     <Compile Include="ViewModels\Site\Player\PlayerDetailWithInterestAppViewModel.cs" />
     <Compile Include="ViewModels\PresentationFormats\PresentationFormatSearchViewModel.cs" />
+    <Compile Include="ViewModels\PIllars\PillarSearchViewModel.cs" />
     <Compile Include="ViewModels\Tracks\TrackSearchViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -87,7 +87,9 @@
     <Compile Include="Mapping\Collaborator\CollaboratorEditionParticipationMap.cs" />
     <Compile Include="Mapping\Common\ActivityMap.cs" />
     <Compile Include="Mapping\Addresses\AddressMap.cs" />
+    <Compile Include="Mapping\Common\PillarMap.cs" />
     <Compile Include="Mapping\Conference\ConferencePresentationFormatMap.cs" />
+    <Compile Include="Mapping\Conference\ConferencePillarMap.cs" />
     <Compile Include="Mapping\Conference\ConferenceTrackMap.cs" />
     <Compile Include="Mapping\Conference\ConferenceParticipantRoleTitleMap.cs" />
     <Compile Include="Mapping\Conference\ConferenceParticipantRoleMap.cs" />
