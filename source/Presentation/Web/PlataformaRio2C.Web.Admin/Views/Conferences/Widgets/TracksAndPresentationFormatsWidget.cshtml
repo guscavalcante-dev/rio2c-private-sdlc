@@ -23,7 +23,7 @@
                 {
                     foreach (var conferencePillarDto in Model.ConferencePillarDtos.OrderBy(cvtd => cvtd.Pillar.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')))
                     {
-                        <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@conferencePillarDto.Pillar.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
+                        <span class="kt-badge kt-badge--inline kt-badge--info mt-1" style="color: #ffffff; background: @conferencePillarDto.Pillar.Color">@conferencePillarDto.Pillar.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
                     }
                 }
                 else
@@ -42,7 +42,7 @@
                 {
                     foreach (var conferenceTrackDto in Model.ConferenceTrackDtos.OrderBy(cvtd => cvtd.Track.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')))
                     {
-                        <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@conferenceTrackDto.Track.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
+                        <span class="kt-badge kt-badge--inline kt-badge--info mt-1" style="color: #ffffff; background: @conferenceTrackDto.Track.Color">@conferenceTrackDto.Track.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
                     }
                 }
                 else

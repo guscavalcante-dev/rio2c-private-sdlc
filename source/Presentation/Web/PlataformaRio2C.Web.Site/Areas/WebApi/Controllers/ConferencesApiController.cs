@@ -146,17 +146,17 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                         Uid = c.RoomDto.Room.Uid,
                         Name = c.RoomDto.GetRoomNameByLanguageCode(requestLanguage?.Code ?? defaultLanguage?.Code)?.RoomName?.Value?.Trim()
                     } : null,
-                    Tracks = c.ConferenceTrackDtos?.Select(ctd => new TrackBaseApiResponse
-                    {
-                        Uid = ctd.Track.Uid,
-                        Name = ctd.Track.Name?.GetSeparatorTranslation(requestLanguage?.Code ?? defaultLanguage?.Code, Language.Separator)?.Trim(),
-                        Color = ctd.Track.Color
-                    })?.ToList(),
                     Pillars = c.ConferencePillarDtos?.Select(ctd => new PillarBaseApiResponse()
                     {
                         Uid = ctd.Pillar.Uid,
                         Name = ctd.Pillar.Name?.GetSeparatorTranslation(requestLanguage?.Code ?? defaultLanguage?.Code, Language.Separator)?.Trim(),
                         Color = ctd.Pillar.Color
+                    })?.ToList(),
+                    Tracks = c.ConferenceTrackDtos?.Select(ctd => new TrackBaseApiResponse
+                    {
+                        Uid = ctd.Track.Uid,
+                        Name = ctd.Track.Name?.GetSeparatorTranslation(requestLanguage?.Code ?? defaultLanguage?.Code, Language.Separator)?.Trim(),
+                        Color = ctd.Track.Color
                     })?.ToList(),
                     PresentationFormats = c.ConferencePresentationFormatDtos?.Select(cpfd => new PresentationFormatBaseApiResponse
                     {
@@ -215,13 +215,13 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                         Uid = rd.Room.Uid,
                         Name = rd.GetRoomNameByLanguageCode(request?.Culture)?.RoomName?.Value
                     })?.OrderBy(c => c.Name)?.ToList(),
-                    TracksApiResponses = tracks?.Select(t => new TrackBaseApiResponse
+                    PillarsApiResponses = pillars?.Select(t => new PillarBaseApiResponse
                     {
                         Uid = t.Uid,
                         Name = t.Name.GetSeparatorTranslation(request?.Culture, Language.Separator),
                         Color = t.Color
                     })?.OrderBy(c => c.Name)?.ToList(),
-                    PillarsApiResponses = pillars?.Select(t => new PillarBaseApiResponse
+                    TracksApiResponses = tracks?.Select(t => new TrackBaseApiResponse
                     {
                         Uid = t.Uid,
                         Name = t.Name.GetSeparatorTranslation(request?.Culture, Language.Separator),
