@@ -54,12 +54,12 @@ namespace PlataformaRio2C.Domain.ApiModels
         [JsonProperty("durationMinutes", Order = 109)]
         public int DurationMinutes { get; set; }
 
-        [JsonProperty("tracks", Order = 701)]
-        public List<TrackBaseApiResponse> Tracks { get; set; }
-
-        [JsonProperty("pillars", Order = 702)]
+        [JsonProperty("pillars", Order = 701)]
         public List<PillarBaseApiResponse> Pillars { get; set; }
 
+        [JsonProperty("tracks", Order = 702)]
+        public List<TrackBaseApiResponse> Tracks { get; set; }
+        
         [JsonProperty("presentationFormats", Order = 703)]
         public List<PresentationFormatBaseApiResponse> PresentationFormats { get; set; }
 
