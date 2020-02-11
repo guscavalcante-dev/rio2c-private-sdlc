@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-10-2020
+// Last Modified On : 01-11-2020
 // ***********************************************************************
 // <copyright file="ConferenceRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -113,6 +113,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionEventsUids">The edition events uids.</param>
         /// <param name="roomsUids">The rooms uids.</param>
         /// <param name="tracksUids">The tracks uids.</param>
+        /// <param name="pillarsUids">The pillars uids.</param>
         /// <param name="presentationFormatsUids">The presentation formats uids.</param>
         /// <returns></returns>
         internal static IQueryable<Conference> FindByApiFilters(this IQueryable<Conference> query, List<DateTime> editionDates, List<Guid> editionEventsUids, List<Guid> roomsUids, List<Guid> tracksUids, List<Guid> pillarsUids, List<Guid> presentationFormatsUids)
@@ -518,6 +519,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionEventsUids">The edition events uids.</param>
         /// <param name="roomsUids">The rooms uids.</param>
         /// <param name="tracksUids">The tracks uids.</param>
+        /// <param name="pillarsUids">The pillars uids.</param>
         /// <param name="presentationFormatsUids">The presentation formats uids.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
