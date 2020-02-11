@@ -117,7 +117,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<Conference> FindByApiFilters(this IQueryable<Conference> query, List<DateTime> editionDates, List<Guid> editionEventsUids, List<Guid> roomsUids, List<Guid> tracksUids, List<Guid> pillarsUids, List<Guid> presentationFormatsUids)
         {
-            if (editionDates?.Any() == true || editionEventsUids?.Any() == true || roomsUids?.Any() == true || tracksUids?.Any() == true || presentationFormatsUids?.Any() == true)
+            if (editionDates?.Any() == true || editionEventsUids?.Any() == true || roomsUids?.Any() == true || pillarsUids?.Any() == true || tracksUids?.Any() == true || presentationFormatsUids?.Any() == true)
             {
                 var outerWhere = PredicateBuilder.New<Conference>(false);
                 var innerEditionDatesWhere = PredicateBuilder.New<Conference>(true);
