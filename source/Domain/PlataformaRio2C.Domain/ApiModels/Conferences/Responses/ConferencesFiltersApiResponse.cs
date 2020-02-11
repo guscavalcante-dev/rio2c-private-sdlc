@@ -31,8 +31,11 @@ namespace PlataformaRio2C.Domain.ApiModels
 
         [JsonProperty("tracks", Order = 104)]
         public List<TrackBaseApiResponse> TracksApiResponses { get; set; }
+        
+        [JsonProperty("pillars", Order = 105)]
+        public List<PillarBaseApiResponse> PillarsApiResponses { get; set; }
 
-        [JsonProperty("presentationFormats", Order = 105)]
+        [JsonProperty("presentationFormats", Order = 106)]
         public List<ConferencesFilterItemApiResponse> PresentationFormatsApiResponses { get; set; }
     }
 

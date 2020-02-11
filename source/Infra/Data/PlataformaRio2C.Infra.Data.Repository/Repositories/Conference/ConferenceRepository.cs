@@ -115,7 +115,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="tracksUids">The tracks uids.</param>
         /// <param name="presentationFormatsUids">The presentation formats uids.</param>
         /// <returns></returns>
-        internal static IQueryable<Conference> FindByApiFilters(this IQueryable<Conference> query, List<DateTime> editionDates, List<Guid> editionEventsUids, List<Guid> roomsUids, List<Guid> tracksUids, List<Guid> presentationFormatsUids)
+        internal static IQueryable<Conference> FindByApiFilters(this IQueryable<Conference> query, List<DateTime> editionDates, List<Guid> editionEventsUids, List<Guid> roomsUids, List<Guid> tracksUids, List<Guid> pillarsUids, List<Guid> presentationFormatsUids)
         {
             if (editionDates?.Any() == true || editionEventsUids?.Any() == true || roomsUids?.Any() == true || tracksUids?.Any() == true || presentationFormatsUids?.Any() == true)
             {
@@ -124,6 +124,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 var innerEditionEventsUidsWhere = PredicateBuilder.New<Conference>(true);
                 var innerRoomsUidsWhere = PredicateBuilder.New<Conference>(true);
                 var innerTracksUidsWhere = PredicateBuilder.New<Conference>(true);
+                var innerPillarsUidsWhere = PredicateBuilder.New<Conference>(true);
                 var innerPresentationFormatsUidsWhere = PredicateBuilder.New<Conference>(true);
 
                 if (editionDates?.Any() == true)
@@ -146,6 +147,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                     innerTracksUidsWhere = innerTracksUidsWhere.Or(c => c.ConferenceTracks.Any(ct => tracksUids.Contains(ct.Track.Uid) && !ct.IsDeleted));
                 }
 
+                if (pillarsUids?.Any() == true)
+                {
+                    innerPillarsUidsWhere = innerPillarsUidsWhere.Or(c => c.ConferencePillars.Any(ct => pillarsUids.Contains(ct.Pillar.Uid) && !ct.IsDeleted));
+                }
+
                 if (presentationFormatsUids?.Any() == true)
                 {
                     innerPresentationFormatsUidsWhere = innerPresentationFormatsUidsWhere.Or(c => c.ConferencePresentationFormats.Any(cpf => presentationFormatsUids.Contains(cpf.PresentationFormat.Uid) && !cpf.IsDeleted));
@@ -155,6 +161,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 outerWhere = outerWhere.And(innerEditionEventsUidsWhere);
                 outerWhere = outerWhere.And(innerRoomsUidsWhere);
                 outerWhere = outerWhere.And(innerTracksUidsWhere);
+                outerWhere = outerWhere.And(innerPillarsUidsWhere);
                 outerWhere = outerWhere.And(innerPresentationFormatsUidsWhere);
                 query = query.Where(outerWhere);
                 //query = query.AsExpandable().Where(predicate);
@@ -517,13 +524,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             List<Guid> editionEventsUids,
             List<Guid> roomsUids,
             List<Guid> tracksUids,
+            List<Guid> pillarsUids,
             List<Guid> presentationFormatsUids,
             int page,
             int pageSize)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(false, editionId)
-                                .FindByApiFilters(editionDates, editionEventsUids, roomsUids, tracksUids, presentationFormatsUids);
+                                .FindByApiFilters(editionDates, editionEventsUids, roomsUids, tracksUids, pillarsUids, presentationFormatsUids);
 
             return await query
                             .Select(c => new ConferenceDto
@@ -570,6 +578,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 {
                                     ConferenceTrack = cvt,
                                     Track = cvt.Track
+                                }),
+                                ConferencePillarDtos = c.ConferencePillars.Where(cvt => !cvt.IsDeleted).Select(cvt => new ConferencePillarDto
+                                {
+                                    ConferencePillar = cvt,
+                                    Pillar = cvt.Pillar
                                 }),
                                 ConferencePresentationFormatDtos = c.ConferencePresentationFormats.Where(cht => !cht.IsDeleted).Select(cht => new ConferencePresentationFormatDto
                                 {

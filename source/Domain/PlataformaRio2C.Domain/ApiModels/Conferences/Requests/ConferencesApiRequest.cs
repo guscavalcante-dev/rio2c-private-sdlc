@@ -30,6 +30,9 @@ namespace PlataformaRio2C.Domain.ApiModels
         [JsonProperty("tracksUids")]
         public string TracksUids { get; set; }
 
+        [JsonProperty("pillarsUids")]
+        public string PillarsUids { get; set; }
+
         [JsonProperty("presentationFormatsUids")]
         public string PresentationFormatsUids { get; set; }
     }

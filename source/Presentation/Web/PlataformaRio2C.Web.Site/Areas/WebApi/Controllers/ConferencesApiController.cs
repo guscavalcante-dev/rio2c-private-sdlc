@@ -35,6 +35,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         private readonly IEditionEventRepository editionEventRepo;
         private readonly IRoomRepository roomRepo;
         private readonly ITrackRepository trackRepo;
+        private readonly IPillarRepository pillarRepo;
         private readonly IPresentationFormatRepository presentationFormatRepo;
         private readonly ILanguageRepository languageRepo;
         private readonly IFileRepository fileRepo;
@@ -54,6 +55,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             IEditionEventRepository editionEventRepository,
             IRoomRepository roomRepository,
             ITrackRepository trackRepository,
+            IPillarRepository pillarRepo,
             IPresentationFormatRepository presentationFormatRepository,
             ILanguageRepository languageRepository,
             IFileRepository fileRepository)
@@ -66,6 +68,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             this.presentationFormatRepo = presentationFormatRepository;
             this.languageRepo = languageRepository;
             this.fileRepo = fileRepository;
+            this.pillarRepo = pillarRepo;
         }
 
         #region List
@@ -107,6 +110,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 request?.EventsUids?.ToListGuid(','),
                 request?.RoomsUids?.ToListGuid(','),
                 request?.TracksUids?.ToListGuid(','),
+                request?.PillarsUids?.ToListGuid(','),
                 request?.PresentationFormatsUids?.ToListGuid(','),
                 request?.Page ?? 1,
                 request?.PageSize ?? 10);
@@ -148,6 +152,12 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                         Name = ctd.Track.Name?.GetSeparatorTranslation(requestLanguage?.Code ?? defaultLanguage?.Code, Language.Separator)?.Trim(),
                         Color = ctd.Track.Color
                     })?.ToList(),
+                    Pillars = c.ConferencePillarDtos?.Select(ctd => new PillarBaseApiResponse()
+                    {
+                        Uid = ctd.Pillar.Uid,
+                        Name = ctd.Pillar.Name?.GetSeparatorTranslation(requestLanguage?.Code ?? defaultLanguage?.Code, Language.Separator)?.Trim(),
+                        Color = ctd.Pillar.Color
+                    })?.ToList(),
                     PresentationFormats = c.ConferencePresentationFormatDtos?.Select(cpfd => new PresentationFormatBaseApiResponse
                     {
                         Uid = cpfd.PresentationFormat.Uid,
@@ -183,6 +193,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 var roomDtos = await this.roomRepo.FindAllDtoByEditionIdAsync(edition.Id);
                 var tracks = await this.trackRepo.FindAllByEditionIdAsync(edition.Id);
                 var presentationFormats = await this.presentationFormatRepo.FindAllByEditionIdAsync(edition.Id);
+                var pillars = await this.pillarRepo.FindAllByEditionIdAsync(edition.Id);
 
                 return await Json(new ConferencesFiltersApiResponse
                 {
@@ -205,6 +216,12 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                         Name = rd.GetRoomNameByLanguageCode(request?.Culture)?.RoomName?.Value
                     })?.OrderBy(c => c.Name)?.ToList(),
                     TracksApiResponses = tracks?.Select(t => new TrackBaseApiResponse
+                    {
+                        Uid = t.Uid,
+                        Name = t.Name.GetSeparatorTranslation(request?.Culture, Language.Separator),
+                        Color = t.Color
+                    })?.OrderBy(c => c.Name)?.ToList(),
+                    PillarsApiResponses = pillars?.Select(t => new PillarBaseApiResponse
                     {
                         Uid = t.Uid,
                         Name = t.Name.GetSeparatorTranslation(request?.Culture, Language.Separator),

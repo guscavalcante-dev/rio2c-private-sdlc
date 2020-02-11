@@ -90,6 +90,7 @@
     <Compile Include="ApiModels\Rooms\Responses\RoomBaseApiResponse.cs" />
     <Compile Include="ApiModels\Speakers\Requests\SpeakerApiRequest.cs" />
     <Compile Include="ApiModels\Speakers\Responses\SpeakerApiResponse.cs" />
+    <Compile Include="ApiModels\Pillars\Responses\PillarBaseApiResponse.cs" />
     <Compile Include="ApiModels\Tracks\Responses\TrackBaseApiResponse.cs" />
     <Compile Include="Constants\CookieName.cs" />
     <Compile Include="Constants\Culture.cs" />
@@ -133,6 +134,7 @@
     <Compile Include="Dtos\Conferences\ConferenceTitleDto.cs" />
     <Compile Include="Dtos\Conferences\ConferenceJsonDto.cs" />
     <Compile Include="Dtos\Conferences\ConferencePresentationFormatDto.cs" />
+    <Compile Include="Dtos\Conferences\ConferencePillarDto.cs" />
     <Compile Include="Dtos\Conferences\ConferenceTrackDto.cs" />
     <Compile Include="Dtos\EditionEvents\EditionEventDto.cs" />
     <Compile Include="Dtos\Editions\EditionBaseDto.cs" />
