@@ -108,8 +108,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         
         [RequiredIf("HaveYouBeenToRio2CBefore", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneOption")]
         public bool? HasEditionSelected { get;set; }
-
-        [Display(Name = "PreviousEditions", ResourceType = typeof(Labels))]
+        
         public IEnumerable<Guid> EditionsUids { get; set; }
 
         public IEnumerable<EditionDto> Editions { get; set; }
@@ -147,6 +146,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.BirthDate = entity?.Collaborator?.BirthDate;
             this.HasAnySpecialNeeds = entity?.Collaborator?.HasAnySpecialNeeds;
             this.SpecialNeedsDescription = entity?.Collaborator?.SpecialNeedsDescription;
+            this.HaveYouBeenToRio2CBefore = entity?.EditionParticipationDtos?.Any() ?? false;
             this.CollaboratorGenderUid = entity?.Collaborator?.Gender?.Uid;
             this.CollaboratorGenderAdditionalInfo = entity?.Collaborator?.CollaboratorGenderAdditionalInfo;
             this.CollaboratorIndustryUid = entity?.Collaborator?.Industry?.Uid;

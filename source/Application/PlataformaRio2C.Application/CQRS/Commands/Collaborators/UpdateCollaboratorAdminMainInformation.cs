@@ -111,7 +111,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public bool? HaveYouBeenToRio2CBefore { get; set; }
         
-        [Display(Name = "PreviousEditions", ResourceType = typeof(Labels))]
         public IEnumerable<Guid> EditionsUids { get; set; }
 
         public IEnumerable<EditionDto> Editions { get; set; }
@@ -147,6 +146,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             
             this.BirthDate = entity?.Collaborator?.BirthDate;
             this.HasAnySpecialNeeds = entity?.Collaborator?.HasAnySpecialNeeds;
+            this.HaveYouBeenToRio2CBefore = entity?.EditionParticipationDtos?.Any();
             this.SpecialNeedsDescription = entity?.Collaborator?.SpecialNeedsDescription;
             this.CollaboratorGenderUid = entity?.Collaborator?.Gender?.Uid;
             this.CollaboratorGenderAdditionalInfo = entity?.Collaborator?.CollaboratorGenderAdditionalInfo;

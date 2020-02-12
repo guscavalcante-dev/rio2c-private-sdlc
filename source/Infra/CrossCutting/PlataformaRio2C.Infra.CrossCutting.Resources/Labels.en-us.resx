@@ -2043,8 +2043,8 @@
     <comment>Função</comment>
   </data>
   <data name="WhichSpecialNeedsQ" xml:space="preserve">
-    <value>Please, inform</value>
-    <comment>Quais?</comment>
+    <value>Please, inform.</value>
+    <comment>Qual?</comment>
   </data>
   <data name="HaveYouBeenToRio2CBefore" xml:space="preserve">
     <value>Have you been to Rio2C before?</value>
@@ -2073,5 +2073,9 @@
   <data name="Pillars" xml:space="preserve">
     <value>Pillars</value>
     <comment>Pilares</comment>
+  </data>
+  <data name="WhichEditionQ" xml:space="preserve">
+    <value>When?</value>
+    <comment>Em qual edição?</comment>
   </data>
 </root>

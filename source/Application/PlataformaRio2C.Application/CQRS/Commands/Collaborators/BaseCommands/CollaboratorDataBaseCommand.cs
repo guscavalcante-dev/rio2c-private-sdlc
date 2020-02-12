@@ -123,7 +123,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public bool? HaveYouBeenToRio2CBefore { get; set; }
         
-        [Display(Name = "PreviousEditions", ResourceType = typeof(Labels))]
         public IEnumerable<Guid> EditionsUids { get; set; }
 
         public IEnumerable<EditionDto> Editions { get; set; }
@@ -177,7 +176,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Instagram = entity?.Instagram;
             this.Youtube = entity?.Youtube;
             this.EditionsUids = entity?.EditionsUids;
-            this.HaveYouBeenToRio2CBefore = entity?.EditionsUids?.Any() ?? false;
+            this.HaveYouBeenToRio2CBefore = entity?.EditionsUids?.Any();
             this.UpdateOrganizations(entity, attendeeOrganizationsBaseDtos);
             this.UpdateJobTitles(entity, languagesDtos, isJobTitleRequired);
             this.UpdateMiniBios(entity, languagesDtos, isMiniBioRequired);

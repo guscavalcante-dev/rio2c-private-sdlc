@@ -52,7 +52,7 @@
                 <span class="form-text text-muted">@Messages.EmailInputMessage</span>
                 @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
             </div>
-        </div>        
+        </div>
         <div class="form-group row">
             <div class="col-md-6">
                 @Html.LabelFor(m => m.CellPhone, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
@@ -167,48 +167,6 @@
     </div>
 </div>
 
-<div class="form-group">
-    <div class="kt-checkbox-inline">
-        <label class="kt-checkbox">
-            <input type="checkbox" name="HasAnySpecialNeeds" id="HasAnySpecialNeeds" value="true" @if (Model.HasAnySpecialNeeds ?? false) { <text> checked</text> }> @Labels.HasAnySpecialNeeds
-            <input type="hidden" value="false" name="HasAnySpecialNeeds" />
-            <span></span>
-        </label>
-    </div>
-    @Html.ValidationMessageFor(m => m.HasAnySpecialNeeds, "", new { @class = "text-danger" })
-
-    <div data-additionalinfo="HasAnySpecialNeeds">    
-        @*@Html.LabelFor(m => m.SpecialNeedsDescription, new { @class = "control-label" })*@
-        @Html.TextBoxFor(m => m.SpecialNeedsDescription, new { @class = "form-control", placeholder=Labels.WhichSpecialNeedsQ })
-        @Html.ValidationMessageFor(m => m.SpecialNeedsDescription, "", new { @class = "text-danger" })
-    </div>
-</div>
-
-<div class="form-group">
-    <div class="kt-checkbox-inline">
-        <label class="kt-checkbox">
-            <input type="checkbox" name="HaveYouBeenToRio2CBefore" id="HaveYouBeenToRio2CBefore" value="true" @if (Model.HaveYouBeenToRio2CBefore ?? false) { <text> checked</text> }> @Labels.HaveYouBeenToRio2CBefore
-            <input type="hidden" value="false" name="HaveYouBeenToRio2CBefore" />
-            <span></span>
-        </label>
-    </div>
-    <div class="row">                                          
-        @foreach (var edition in Model.Editions)
-        {
-            <div class="col-10 ml-5">
-                <label class="kt-checkbox" data-additionalinfo="HaveYouBeenToRio2CBefore">
-                    <input type="checkbox" name="EditionsUids" id="EditionsUids" value="@edition.Uid" @if (Model.EditionsUids.Contains(edition.Uid)) { <text> checked</text> }  @Html.GetUnobtrusiveValidationAttributesFor(m => m.CollaboratorGenderUid)> @edition.Name
-                    <span></span>
-                </label>
-            </div>
-        }
-        <div class="col-md-12">
-            @Html.ValidationMessageFor(m => m.HasEditionSelected, "", new { @class = "text-danger" })
-            @Html.HiddenFor(m => m.HasEditionSelected)
-        </div>  
-    </div>
-</div>
-
 <div class="kt-section pt-4">
     <h3 class="kt-section__title mb-0">@Labels.JobTitles</h3>
     @Html.ValidationMessage("JobTitles", new { @class = "text-danger" })
@@ -217,11 +175,11 @@
     </div>
 </div>
 @*<div class="kt-section pt-4">
-    <h3 class="kt-section__title mb-0">@Labels.Address <span class="form-optional-input text-muted">@Labels.Optional</span></h3>
-    <div class="kt-section__content mt-3">
-        @Html.EditorFor(m => m.Address)
-    </div>
-</div>*@
+        <h3 class="kt-section__title mb-0">@Labels.Address <span class="form-optional-input text-muted">@Labels.Optional</span></h3>
+        <div class="kt-section__content mt-3">
+            @Html.EditorFor(m => m.Address)
+        </div>
+    </div>*@
 <div class="kt-section pt-4">
     <h3 class="kt-section__title mb-0">@Labels.MiniBios</h3>
     @Html.ValidationMessage("MiniBios", new { @class = "text-danger" })
@@ -246,14 +204,14 @@
         @Html.TextBoxFor(m => m.PublicEmail, Model.SharePublicEmail == true ? (object)new { @class = "form-control" } : (object)new { @class = "form-control", disabled = "" })
         @Html.ValidationMessageFor(m => m.PublicEmail, "", new { @class = "text-danger" })
     </div>
-</div>        
+</div>
 <div class="kt-section mt-50 mb-0">
     <h3 class="kt-heading kt-heading--md">@Labels.SocialNetworks</h3>
     <div class="kt-section__content mt-3">
         <div class="row">
             <div class="form-group col-xl-6">
                 @Html.LabelFor(m => m.Website, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
-                @Html.TextBoxFor(m => m.Website, new { @class = "form-control" }) 
+                @Html.TextBoxFor(m => m.Website, new { @class = "form-control" })
                 <span class="form-text text-muted">@Messages.WebsiteUrl</span>
                 <span class="form-text text-muted">@Labels.Eg: site.com @Labels.Or www.site.com</span>
                 @Html.ValidationMessageFor(m => m.Website, "", new { @class = "text-danger" })
@@ -293,6 +251,65 @@
         </div>
     </div>
 </div>
+
+
+<div class="form-group">
+    <label class="control-label">@Labels.HasAnySpecialNeeds</label>
+    <div class="kt-radio-list ml-5" data-id="HasAnySpecialNeeds">
+        <label class="kt-radio">
+            @Html.RadioButtonFor(m => m.HasAnySpecialNeeds, true) @Labels.Yes
+            <span></span>
+        </label>
+        <label class="kt-radio">
+            @Html.RadioButtonFor(m => m.HasAnySpecialNeeds, false) @Labels.No
+            <span></span>
+        </label>
+    </div>
+    @Html.ValidationMessageFor(m => m.HasAnySpecialNeeds, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group" data-additionalinfo="HasAnySpecialNeeds">
+    <label class="control-label">@Labels.WhichSpecialNeedsQ</label>
+    <div class="ml-5">
+        @Html.TextBoxFor(m => m.SpecialNeedsDescription, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.SpecialNeedsDescription, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label">@Labels.HaveYouBeenToRio2CBefore</label>
+    <div class="kt-radio-list ml-5" data-id="HaveYouBeenToRio2CBefore">
+        <label class="kt-radio">
+            @Html.RadioButtonFor(m => m.HaveYouBeenToRio2CBefore, true) @Labels.Yes
+            <span></span>
+        </label>
+        <label class="kt-radio">
+            @Html.RadioButtonFor(m => m.HaveYouBeenToRio2CBefore, false) @Labels.No
+            <span></span>
+        </label>
+    </div>
+    @Html.ValidationMessageFor(m => m.HaveYouBeenToRio2CBefore, "", new { @class = "text-danger" })
+</div>
+
+<div class="form-group" data-additionalinfo="HaveYouBeenToRio2CBefore">
+    <label class="control-label">@Labels.WhichEditionQ</label>
+    <div class="row">
+        @foreach (var edition in Model.Editions)
+        {
+            <div class="col-10 ml-5">
+                <label class="kt-checkbox">
+                    <input type="checkbox" name="EditionsUids" id="EditionsUids" value="@edition.Uid" @if (Model.EditionsUids.Contains(edition.Uid)) { <text> checked</text> } @Html.GetUnobtrusiveValidationAttributesFor(m => m.CollaboratorGenderUid)> @edition.Name
+                    <span></span>
+                </label>
+            </div>
+        }
+        <div class="col-md-12">
+            @Html.ValidationMessageFor(m => m.HasEditionSelected, "", new { @class = "text-danger" })
+            @Html.HiddenFor(m => m.HasEditionSelected)
+        </div>
+    </div>
+</div>
+
 <!-- BEGIN TEMPLATE INSTALLMENT -->
 <div id="atendeeorganization-template" style="display: none">
     @Html.EditorFor(m => m.TemplateAttendeeOrganizationBaseCommands)

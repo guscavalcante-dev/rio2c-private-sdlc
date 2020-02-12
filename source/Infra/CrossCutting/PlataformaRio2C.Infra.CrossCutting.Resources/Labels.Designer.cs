@@ -4723,7 +4723,16 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quais?.
+        ///   Looks up a localized string similar to Em qual edição?.
+        /// </summary>
+        public static string WhichEditionQ {
+            get {
+                return ResourceManager.GetString("WhichEditionQ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Qual?.
         /// </summary>
         public static string WhichSpecialNeedsQ {
             get {

@@ -34,8 +34,8 @@ var OnboardingCollaboratorData = function () {
         MyRio2cCommon.enableDropdownChangeEvent("CollaboratorGenderUid", "CollaboratorGenderAdditionalInfo");
         MyRio2cCommon.enableDropdownChangeEvent("CollaboratorRoleUid", "CollaboratorRoleAdditionalInfo");
         MyRio2cCommon.enableDropdownChangeEvent("CollaboratorIndustryUid", "CollaboratorIndustryAdditionalInfo");
-        MyRio2cCommon.enableCheckboxChangeEvent("HasAnySpecialNeeds");
-        MyRio2cCommon.enableCheckboxChangeEvent("HaveYouBeenToRio2CBefore");
+        MyRio2cCommon.enableYesNoRadioEvent("HasAnySpecialNeeds");
+        MyRio2cCommon.enableYesNoRadioEvent("HaveYouBeenToRio2CBefore");
         changePreviousEditionsRequired();
         AddressesForm.init();
     };

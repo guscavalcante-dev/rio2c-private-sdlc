@@ -2050,8 +2050,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Função</comment>
   </data>
   <data name="WhichSpecialNeedsQ" xml:space="preserve">
-    <value>Quais?</value>
-    <comment>Quais?</comment>
+    <value>Qual?</value>
+    <comment>Qual?</comment>
   </data>
   <data name="HaveYouBeenToRio2CBefore" xml:space="preserve">
     <value>Já esteve em outras edições do Rio2C?</value>
@@ -2080,5 +2080,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Pillars" xml:space="preserve">
     <value>Pilares</value>
     <comment>Pilares</comment>
+  </data>
+  <data name="WhichEditionQ" xml:space="preserve">
+    <value>Em qual edição?</value>
+    <comment>Em qual edição?</comment>
   </data>
 </root>

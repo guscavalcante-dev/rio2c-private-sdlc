@@ -660,25 +660,44 @@ var MyRio2cCommon = function () {
         
     // Enable change events -----------------------------------------------------------------------
     var enableCheckboxChangeEvent = function (elementId) {
-            var element = $('#' + elementId);
-        
-            function toggleChanged(element) {       
-                if (element.prop('checked')) {
-                    $("[data-additionalinfo='"+ element.attr("id") +"']").removeClass('d-none');
-                }
-                else {
-                    $("[data-additionalinfo='"+element.attr("id")+"']").addClass('d-none');
-                }
+	    var element = $('#' + elementId);
+
+	    function toggleChanged(element) {
+		    if (element.prop('checked')) {
+			    $("[data-additionalinfo='" + element.attr("id") + "']").removeClass('d-none');
+		    }
+		    else {
+			    $("[data-additionalinfo='" + element.attr("id") + "']").addClass('d-none');
+		    }
+	    }
+
+	    toggleChanged(element);
+
+	    element.not('.change-event-enabled').on('click', function () {
+		    toggleChanged(element);
+	    });
+
+	    element.addClass('change-event-enabled');
+    };
+
+    var enableYesNoRadioEvent = function (elementId) {
+        function toggleChanged(radio) {
+            if (radio === "True") {
+                $("[data-additionalinfo='"+ elementId +"']").removeClass('d-none');
             }
-        
-            toggleChanged(element);
+            else {
+                $("[data-additionalinfo='"+ elementId +"']").addClass('d-none');
+            }
+        }
 
-            element.not('.change-event-enabled').on('click', function () {   
-                toggleChanged(element);  
-            });
+        toggleChanged($("[data-id='" + elementId + "']").find(":checked").val());
 
-            element.addClass('change-event-enabled');
-        };
+        var selector = $("[data-id='" + elementId + "'] input");
+        selector.not('.change-event-enabled').change(function () {
+			toggleChanged($(this).val());
+        });
+        selector.addClass('change-event-enabled');
+    };
 
     var enableDropdownChangeEvent = function (elementId, requiredFieldId) {
         var element = $('#' + elementId);
@@ -1418,8 +1437,11 @@ var MyRio2cCommon = function () {
         enableDropdownChangeEvent: function (elementId, requiredFieldId) {
             enableDropdownChangeEvent(elementId, requiredFieldId);
         },
+        enableYesNoRadioEvent: function (elementId) {
+	        enableYesNoRadioEvent(elementId);
+        },
         enableCheckboxChangeEvent: function (elementId) {
-            enableCheckboxChangeEvent(elementId);
+	        enableCheckboxChangeEvent(elementId);
         }
     };
 }();

@@ -35,22 +35,19 @@ var CollaboratorsCreate = function () {
         MyRio2cCommon.enableDropdownChangeEvent("CollaboratorGenderUid", "CollaboratorGenderAdditionalInfo");
         MyRio2cCommon.enableDropdownChangeEvent("CollaboratorRoleUid", "CollaboratorRoleAdditionalInfo");
         MyRio2cCommon.enableDropdownChangeEvent("CollaboratorIndustryUid", "CollaboratorIndustryAdditionalInfo");
-        MyRio2cCommon.enableCheckboxChangeEvent("HasAnySpecialNeeds");
-        MyRio2cCommon.enableCheckboxChangeEvent("HaveYouBeenToRio2CBefore");
+        MyRio2cCommon.enableYesNoRadioEvent("HasAnySpecialNeeds");
+        MyRio2cCommon.enableYesNoRadioEvent("HaveYouBeenToRio2CBefore");
         changePreviousEditionsRequired();
         enableAjaxForm();
         enableFormValidation();
     };
-    
-    var changePreviousEditionsRequired = function(){
-        function toggleChanged() {
-            var editionsSelected = $('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox:checked').length > 0;
-            $("#HasEditionSelected").val(editionsSelected ? "True" : null);
-        }
 
-        $('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox').on('click', function () {   
-            toggleChanged();
-        });
+    var changePreviousEditionsRequired = function () {
+	    $("#HasEditionSelected").val($('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox:checked').length > 0 ? "True" : null);
+
+	    $('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox').on('click', function () {
+		    $("#HasEditionSelected").val($('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox:checked').length > 0 ? "True" : null);
+	    });
     }
 
     // Show modal ---------------------------------------------------------------------------------

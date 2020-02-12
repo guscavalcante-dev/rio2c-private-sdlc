@@ -119,6 +119,25 @@ var MyRio2cCommon = function () {
 
         element.addClass('change-event-enabled');
     };
+    
+    var enableYesNoRadioEvent = function (elementId) {
+	    function toggleChanged(radio) {
+		    if (radio === "True") {
+			    $("[data-additionalinfo='" + elementId + "']").removeClass('d-none');
+		    }
+		    else {
+			    $("[data-additionalinfo='" + elementId + "']").addClass('d-none');
+		    }
+	    }
+
+	    toggleChanged($("[data-id='" + elementId + "']").find(":checked").val());
+
+	    var selector = $("[data-id='" + elementId + "'] input");
+	    selector.not('.change-event-enabled').change(function () {
+		    toggleChanged($(this).val());
+	    });
+	    selector.addClass('change-event-enabled');
+    };
 
     //var fixCkEditorValidation = function () {
     //    if (typeof (CKEDITOR) === "undefined") {
@@ -1420,6 +1439,9 @@ var MyRio2cCommon = function () {
         },
         enableCheckboxChangeEvent: function (elementId) {
             enableCheckboxChangeEvent(elementId);
+        },
+        enableYesNoRadioEvent: function(elementId) {
+	        enableYesNoRadioEvent(elementId);
         }
     };
 }();
