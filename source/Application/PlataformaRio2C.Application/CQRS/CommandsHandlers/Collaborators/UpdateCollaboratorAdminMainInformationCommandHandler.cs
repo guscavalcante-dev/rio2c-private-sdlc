@@ -111,6 +111,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.CollaboratorIndustryAdditionalInfo,
                 cmd.HasAnySpecialNeeds ?? false,
                 cmd.SpecialNeedsDescription,
+                cmd.HaveYouBeenToRio2CBefore,
                 this.editionRepo.GetAll(e => cmd.EditionsUids.Contains(e.Uid)).ToList(),
                 await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
                 cmd.UserId);

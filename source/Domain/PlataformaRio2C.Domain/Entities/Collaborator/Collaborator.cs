@@ -142,8 +142,9 @@ namespace PlataformaRio2C.Domain.Entities
             string collaboratorRoleAdditionalInfo,
             CollaboratorIndustry collaboratorIndustry,
             string collaboratorIndustryAdditionalInfo,
-            bool hasAnySpecialNeeds,
+            bool? hasAnySpecialNeeds,
             string specialNeedsDescription,
+            bool? haveYouBeenToRio2CBefore,
             List<Edition> editionsParticipated,
             string firstName,
             string lastNames,
@@ -176,7 +177,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
 
-            this.UpdateEditions(editionsParticipated, userId);
+            this.UpdateEditions(haveYouBeenToRio2CBefore, editionsParticipated, userId);
             this.BirthDate = birthDate;
             this.Gender = collaboratorGender;
             this.Industry = collaboratorIndustry;
@@ -332,6 +333,7 @@ namespace PlataformaRio2C.Domain.Entities
             string collaboratorIndustryAdditionalInfo,
             bool hasAnySpecialNeeds,
             string specialNeedsDescription,
+            bool? haveYouBeenToRio2CBefore,
             List<Edition> editionsParticipated,
             string firstName,
             string lastNames,
@@ -363,7 +365,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
 
-            this.UpdateEditions(editionsParticipated, userId);
+            this.UpdateEditions(haveYouBeenToRio2CBefore, editionsParticipated, userId);
             this.BirthDate = birthDate;
             UpdateGender(collaboratorGender, collaboratorGenderAdditionalInfo);
             UpdateRole(collaboratorRole, collaboratorRoleAdditionalInfo);
@@ -419,6 +421,7 @@ namespace PlataformaRio2C.Domain.Entities
             string collaboratorIndustryAdditionalInfo,
             bool hasAnySpecialNeeds,
             string specialNeedsDescription,
+            bool? haveYouBeenToRio2CBefore,
             List<Edition> editionsParticipated,
             Edition edition,
             int userId)
@@ -434,7 +437,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
             this.OnboardAttendeeCollaboratorData(edition, userId);
-            this.UpdateEditions(editionsParticipated, userId);
+            this.UpdateEditions(haveYouBeenToRio2CBefore, editionsParticipated, userId);
                         
             this.BirthDate = birthDate;
             UpdateGender(collaboratorGender, collaboratorGenderAdditionalInfo);
@@ -479,6 +482,7 @@ namespace PlataformaRio2C.Domain.Entities
             string collaboratorIndustryAdditionalInfo,
             bool hasAnySpecialNeeds,
             string specialNeedsDescription,
+            bool? haveYouBeenToRio2CBefore,
             List<Edition> editionsParticipated,
             Edition edition,
             bool isImageUploaded,
@@ -491,7 +495,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CellPhone = cellPhone?.Trim();
             this.UpdatePublicEmail(sharePublicEmail, publicEmail);
             this.UpdateImageUploadDate(isImageUploaded, false);
-            this.UpdateEditions(editionsParticipated, userId);
+            this.UpdateEditions(haveYouBeenToRio2CBefore, editionsParticipated, userId);
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
             this.OnboardAttendeeCollaboratorData(edition, userId);
@@ -558,11 +562,20 @@ namespace PlataformaRio2C.Domain.Entities
         /// Updates the editions.
         /// </summary>
         /// <param name="editionsParticipated">The editions participated.</param>
-        private void UpdateEditions(List<Edition> editionsParticipated, int userId)
+        private void UpdateEditions(bool? haveYouBeenToRio2CBefore, List<Edition> editionsParticipated, int userId)
         {
             DeleteCollaboratorParticipation(editionsParticipated, userId);
 
-            foreach(var edition in editionsParticipated)
+            // No selection was made
+            if (!haveYouBeenToRio2CBefore.HasValue)
+                return;
+
+            if (editionsParticipated == null || !editionsParticipated.Any())
+                return;
+
+            if(this.EditionParticipantions == null) this.EditionParticipantions = new List<CollaboratorEditionParticipation>();
+
+            foreach (var edition in editionsParticipated)
             {
                 var existing = EditionParticipantions.FirstOrDefault(e => e.EditionId == edition.Id);
 
@@ -581,6 +594,9 @@ namespace PlataformaRio2C.Domain.Entities
 
         private void DeleteCollaboratorParticipation(List<Edition> editionsParticipated, int userId)
         {
+            if (EditionParticipantions == null)
+                return;
+
             foreach(var participation in EditionParticipantions)
             {
                 if(editionsParticipated.All(e => e.Id != participation.Id && !e.IsDeleted))
@@ -1409,6 +1425,7 @@ namespace PlataformaRio2C.Domain.Entities
             string collaboratorIndustryAdditionalInfo,
             bool hasAnySpecialNeeds,
             string specialNeedsDescription,
+            bool? haveYouBeenToRio2CBefore,
             List<Edition> editionsParticipated,
             string website,
             string linkedin,
@@ -1422,7 +1439,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
             this.OnboardAttendeeCollaboratorData(edition, userId);
-            this.UpdateEditions(editionsParticipated, userId);
+            this.UpdateEditions(haveYouBeenToRio2CBefore, editionsParticipated, userId);
 
             this.Website = website?.Trim();
             this.Linkedin = linkedin?.Trim();

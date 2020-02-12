@@ -68,11 +68,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string Youtube { get; set; }
         
         [Display(Name = "BirthDate", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]        
         public DateTime? BirthDate { get; set; }
         
         [Display(Name = "CollaboratorIndustry", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? CollaboratorIndustryUid { get; set; }
 
         public IEnumerable<CollaboratorIndustry> CollaboratorIndustries { get; set; }
@@ -85,7 +83,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string CollaboratorIndustryAdditionalInfo  { get; set; }
 
         [Display(Name = "Gender", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? CollaboratorGenderUid  { get; set; }
 
         public IEnumerable<CollaboratorGender> CollaboratorGenders { get; set; }
@@ -98,7 +95,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string CollaboratorGenderAdditionalInfo  { get; set; }
         
         [Display(Name = "Role", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? CollaboratorRoleUid { get; set; }
 
         public IEnumerable<CollaboratorRole> CollaboratorRoles { get; set; }
@@ -111,7 +107,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string CollaboratorRoleAdditionalInfo { get; set; }
         
         [Display(Name = "HasAnySpecialNeeds", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public bool? HasAnySpecialNeeds { get; set; }
 
         [Display(Name = "WhichSpecialNeedsQ", ResourceType = typeof(Labels))]
@@ -120,7 +115,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string SpecialNeedsDescription { get; set; }
                 
         [Display(Name = "HaveYouBeenToRio2CBefore", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public bool? HaveYouBeenToRio2CBefore { get; set; }
         
         public IEnumerable<Guid> EditionsUids { get; set; }

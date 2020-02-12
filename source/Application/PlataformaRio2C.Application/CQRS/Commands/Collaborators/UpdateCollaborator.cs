@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -75,7 +76,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.CollaboratorIndustryAdditionalInfo = entity?.CollaboratorIndustryAdditionalInfo;
             this.CollaboratorRoleUid = entity?.Role?.Uid;
             this.CollaboratorRoleAdditionalInfo = entity?.CollaboratorRoleAdditionalInfo;
-
             this.CollaboratorUid = entity.Uid;
             this.IsAddingToCurrentEdition = isAddingToCurrentEdition ?? false;
             this.UpdateBaseProperties(entity, attendeeOrganizationsBaseDtos, languagesDtos, genders, industries, roles, editionsDtos, currentEditionId, isJobTitleRequired, isMiniBioRequired, isImageRequired, userInterfaceLanguage);

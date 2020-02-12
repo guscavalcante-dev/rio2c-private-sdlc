@@ -40,15 +40,24 @@ var OnboardingCollaboratorData = function () {
         AddressesForm.init();
     };
 
-    var changePreviousEditionsRequired = function(){
-        function toggleChanged() {
-            var editionsSelected = $('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox:checked').length > 0;
-            $("#HasEditionSelected").val(editionsSelected ? "True" : null);
-        }
 
-        $('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox').on('click', function () {   
-            toggleChanged();
-        });
+    var changePreviousEditionsRequired = function () {
+	    $("#HasEditionSelected").val($('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox:checked').length > 0 ? "True" : null);
+	    var dataValMsgFor = $('[data-valmsg-for="HasEditionSelected"]');
+
+	    $('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox').on('click', function () {
+		    if ($('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox:checked').length > 0) {
+			    $("#HasEditionSelected").val("True");
+			    dataValMsgFor.html('');
+			    dataValMsgFor.addClass('field-validation-valid');
+			    dataValMsgFor.removeClass('field-validation-error');
+		    } else {
+			    $("#HasEditionSelected").val("False");
+			    dataValMsgFor.html('<span for="' + name + '" generated="true" class="">' + labels.selectAtLeastOneOption + '</span>');
+			    dataValMsgFor.removeClass('field-validation-valid');
+			    dataValMsgFor.addClass('field-validation-error');
+		    }
+	    });
     }
 
     var changeIsRequired = function (originDropdownIdOrClass) {

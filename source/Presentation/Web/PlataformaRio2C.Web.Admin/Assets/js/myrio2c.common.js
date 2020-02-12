@@ -101,15 +101,15 @@ var MyRio2cCommon = function () {
 
         function toggleChanged(element) {
             var hasAdditionalInfo = element.find(':selected').data('additionalinfo');
+
             if (hasAdditionalInfo === "True") {
-                $("[data-additionalinfo='"+ element.attr("id") +"']").removeClass('d-none');
+                $("[data-additionalinfo='" + element.attr("id") + "']").removeClass('d-none');
+                $('#' + requiredFieldId + 'Required').val("True");
             }
             else {
-                $("[data-additionalinfo='"+element.attr("id")+"']").addClass('d-none');                
+                $("[data-additionalinfo='" + element.attr("id") + "']").addClass('d-none');
+                $('#' + requiredFieldId + 'Required').val("False");
             }
-
-            if(requiredFieldId)
-                $('#' + requiredFieldId + 'Required').val(hasAdditionalInfo);
         }
 
         toggleChanged(element);

@@ -90,11 +90,23 @@ var SpeakersMainInformationWidget = function () {
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
 
+
     var changePreviousEditionsRequired = function () {
 	    $("#HasEditionSelected").val($('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox:checked').length > 0 ? "True" : null);
+	    var dataValMsgFor = $('[data-valmsg-for="HasEditionSelected"]');
 
 	    $('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox').on('click', function () {
-		    $("#HasEditionSelected").val($('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox:checked').length > 0 ? "True" : null);
+		    if ($('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox:checked').length > 0) {
+			    $("#HasEditionSelected").val("True");
+			    dataValMsgFor.html('');
+			    dataValMsgFor.addClass('field-validation-valid');
+			    dataValMsgFor.removeClass('field-validation-error');
+		    } else {
+			    $("#HasEditionSelected").val("False");
+			    dataValMsgFor.html('<span for="' + name + '" generated="true" class="">' + labels.selectAtLeastOneOption + '</span>');
+			    dataValMsgFor.removeClass('field-validation-valid');
+			    dataValMsgFor.addClass('field-validation-error');
+		    }
 	    });
     }
 
