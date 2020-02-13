@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 02-12-2020
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -162,6 +162,34 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 outerWhere = outerWhere.Or(innerJobTitleWhere);
                 outerWhere = outerWhere.Or(innerOrganizationNameWhere);
                 query = query.Where(outerWhere);
+            }
+
+            return query;
+        }
+
+        /// <summary>Finds the by collaborator role uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="collaboratorRoleUid">The collaborator role uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeCollaborator> FindByCollaboratorRoleUid(this IQueryable<AttendeeCollaborator> query, Guid? collaboratorRoleUid)
+        {
+            if (collaboratorRoleUid.HasValue)
+            {
+                query = query.Where(ac => ac.Collaborator.Role.Uid == collaboratorRoleUid && !ac.Collaborator.Role.IsDeleted);
+            }
+
+            return query;
+        }
+
+        /// <summary>Finds the by collaborator industry uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="collaboratorIndustryUid">The collaborator industry uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeCollaborator> FindByCollaboratorIndustryUid(this IQueryable<AttendeeCollaborator> query, Guid? collaboratorIndustryUid)
+        {
+            if (collaboratorIndustryUid.HasValue)
+            {
+                query = query.Where(ac => ac.Collaborator.Industry.Uid == collaboratorIndustryUid && !ac.Collaborator.Role.IsDeleted);
             }
 
             return query;
@@ -488,16 +516,26 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>Finds all network dto by edition identifier paged asynchronous.</summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="keywords">The keywords.</param>
+        /// <param name="collaboratorRoleUid">The collaborator role uid.</param>
+        /// <param name="collaboratorIndustryUid">The collaborator industry uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<AttendeeCollaboratorNetworkDto>> FindAllNetworkDtoByEditionIdPagedAsync(int editionId, string keywords, int page, int pageSize)
+        public async Task<IPagedList<AttendeeCollaboratorNetworkDto>> FindAllNetworkDtoByEditionIdPagedAsync(
+            int editionId, 
+            string keywords, 
+            Guid? collaboratorRoleUid, 
+            Guid? collaboratorIndustryUid, 
+            int page, 
+            int pageSize)
         {
             var query = this.GetBaseQuery(true)
                                 .FindByEditionId(editionId, false)
                                 .IsOnboardingFinished()
                                 .IsNetworkParticipant()
-                                .FindByKeywords(keywords);
+                                .FindByKeywords(keywords)
+                                .FindByCollaboratorRoleUid(collaboratorRoleUid)
+                                .FindByCollaboratorIndustryUid(collaboratorIndustryUid);
 
             return await query
                             .Select(ac => new AttendeeCollaboratorNetworkDto

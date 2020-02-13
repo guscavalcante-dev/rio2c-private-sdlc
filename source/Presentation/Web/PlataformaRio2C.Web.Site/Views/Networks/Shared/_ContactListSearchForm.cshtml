@@ -1,0 +1,21 @@
+﻿<div class="kt-portlet">
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="form-group col-12 d-flex">
+                @Html.Hidden("Page", ViewBag.Page as int?)
+                @Html.Hidden("PageSize", ViewBag.PageSize as int?)
+                @Html.Hidden("IsModal", ViewBag.IsModal as bool? ?? false)
+                @Html.TextBox("ContactsSearchKeywords", ViewBag.SearchKeywords as string, new { @class = "form-control mr-1", type = "search", placeholder = Labels.Search })
+                <button type="button" class="btn btn-primary btn-icon" onclick="NetworksContacts.search();"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-6 mb-sm-0">
+                @Html.DropDownList("CollaboratorRoleUid", new SelectList(ViewBag.CollaboratorRoles, "Uid", "Name", ViewBag.CollaboratorRoleUid), Labels.Select + "...", new { @class = "form-control enable-select2" })
+            </div>
+            <div class="form-group col-sm-6 mb-0">
+                @Html.DropDownList("CollaboratorIndustryUid", new SelectList(ViewBag.CollaboratorIndustries, "Uid", "Name", ViewBag.CollaboratorIndustryUid), Labels.Select + "...", new { @class = "form-control enable-select2" })
+            </div>
+        </div>
+    </div>
+</div>

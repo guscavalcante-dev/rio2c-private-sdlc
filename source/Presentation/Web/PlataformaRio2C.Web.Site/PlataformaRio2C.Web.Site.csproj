@@ -7275,6 +7275,7 @@
     <Content Include="Views\Companies\Widgets\SocialNetworksWidget.cshtml" />
     <Content Include="Views\Companies\Modals\UpdateSocialNetworksModal.cshtml" />
     <Content Include="Views\Companies\Modals\UpdateSocialNetworksForm.cshtml" />
+    <Content Include="Views\Networks\Shared\_ContactListSearchForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

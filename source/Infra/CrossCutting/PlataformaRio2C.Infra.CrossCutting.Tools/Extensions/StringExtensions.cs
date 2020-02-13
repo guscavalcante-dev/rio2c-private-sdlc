@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-10-2020
+// Last Modified On : 02-12-2020
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -179,33 +179,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             }
 
             return code?.ToUpperInvariant();
-        }
-
-        /// <summary>Gets the separator translation.</summary>
-        /// <param name="s">The s.</param>
-        /// <param name="culture">The culture.</param>
-        /// <param name="separator">The separator.</param>
-        /// <returns></returns>
-        public static string GetSeparatorTranslation(this string s, string culture, char separator)
-        {
-            if (string.IsNullOrEmpty(s))
-            {
-                return string.Empty;
-            }
-
-            var splitName = s.Split(separator);
-
-            if (culture?.ToLowerInvariant() == "pt-br")
-            {
-                return splitName[0].Trim();
-            }
-
-            if (culture?.ToLowerInvariant() == "en-us" && splitName.Length == 2)
-            {
-                return splitName[1].Trim();
-            }
-
-            return splitName[0].Trim();
         }
 
         /// <summary>Gets the splitted word.</summary>

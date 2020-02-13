@@ -4,7 +4,7 @@
 // Created          : 11-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-06-2019
+// Last Modified On : 02-12-2020
 // ***********************************************************************
 // <copyright file="NetworksController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,6 +22,7 @@ using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Site.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
@@ -36,6 +37,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
         private readonly IUserRepository userRepo;
         private readonly IMessageRepository messageRepo;
+        private readonly ICollaboratorRoleRepository collaboratorRoleRepo;
+        private readonly ICollaboratorIndustryRepository collaboratorIndustryRepo;
 
         /// <summary>Initializes a new instance of the <see cref="NetworksController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -43,29 +46,41 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
         /// <param name="userRepository">The user repository.</param>
         /// <param name="messageRepository">The message repository.</param>
+        /// <param name="collaboratorRoleRepository">The collaborator role repository.</param>
+        /// <param name="collaboratorIndustryRepository">The collaborator industry repository.</param>
         public NetworksController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
             IUserRepository userRepository,
-            IMessageRepository messageRepository)
+            IMessageRepository messageRepository,
+            ICollaboratorRoleRepository collaboratorRoleRepository,
+            ICollaboratorIndustryRepository collaboratorIndustryRepository)
             : base(commandBus, identityController)
         {
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
             this.userRepo = userRepository;
             this.messageRepo = messageRepository;
+            this.collaboratorRoleRepo = collaboratorRoleRepository;
+            this.collaboratorIndustryRepo = collaboratorIndustryRepository;
         }
 
         #region Contacts list
 
         /// <summary>Indexes the specified search keywords.</summary>
         /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="collaboratorRoleUid">The collaborator role uid.</param>
+        /// <param name="collaboratorIndustryUid">The collaborator industry uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.Industry)]
-        public async Task<ActionResult> Index(string searchKeywords, int? page = 1, int? pageSize = 15)
+        public async Task<ActionResult> Index(
+            string searchKeywords,
+            Guid? collaboratorRoleUid,
+            Guid? collaboratorIndustryUid,
+            int? page = 1, 
+            int? pageSize = 15)
         {
             #region Breadcrumb
 
@@ -75,25 +90,28 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             #endregion
 
-            ViewBag.Page = page;
-            ViewBag.PageSize = pageSize;
-            ViewBag.SearchKeywords = searchKeywords;
+            await this.SetSearchFormViewBags(searchKeywords, collaboratorRoleUid, collaboratorIndustryUid, page.Value, pageSize.Value);
 
             return View();
         }
 
         /// <summary>Shows the contacts list modal.</summary>
         /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="collaboratorRoleUid">The collaborator role uid.</param>
+        /// <param name="collaboratorIndustryUid">The collaborator industry uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowContactsListModal(string searchKeywords, int? page = 1, int? pageSize = 6)
+        public async Task<ActionResult> ShowContactsListModal(
+            string searchKeywords,
+            Guid? collaboratorRoleUid,
+            Guid? collaboratorIndustryUid, 
+            int? page = 1, 
+            int? pageSize = 6)
         {
-            ViewBag.Page = page;
-            ViewBag.PageSize = pageSize;
-            ViewBag.SearchKeywords = searchKeywords;
             ViewBag.IsModal = true;
+            await this.SetSearchFormViewBags(searchKeywords, collaboratorRoleUid, collaboratorIndustryUid, page.Value, pageSize.Value);
 
             return Json(new
             {
@@ -107,18 +125,30 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         /// <summary>Shows the contacts list widget.</summary>
         /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="collaboratorRoleUid">The collaborator role uid.</param>
+        /// <param name="collaboratorIndustryUid">The collaborator industry uid.</param>
         /// <param name="isModal">The is modal.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowContactsListWidget(string searchKeywords, bool? isModal = false, int? page = 1, int? pageSize = 15)
+        public async Task<ActionResult> ShowContactsListWidget(
+            string searchKeywords,
+            Guid? collaboratorRoleUid,
+            Guid? collaboratorIndustryUid, 
+            bool? isModal = false, 
+            int? page = 1, int? 
+            pageSize = 15)
         {
-            var attendeeCollaboratos = await this.attendeeCollaboratorRepo.FindAllNetworkDtoByEditionIdPagedAsync(this.EditionDto.Id, searchKeywords, page.Value, pageSize.Value);
+            var attendeeCollaboratos = await this.attendeeCollaboratorRepo.FindAllNetworkDtoByEditionIdPagedAsync(
+                this.EditionDto.Id, 
+                searchKeywords, 
+                collaboratorRoleUid, 
+                collaboratorIndustryUid, 
+                page.Value, 
+                pageSize.Value);
 
-            ViewBag.Page = page;
-            ViewBag.PageSize = pageSize;
-            ViewBag.SearchKeywords = searchKeywords;
+            await this.SetSearchFormViewBags(searchKeywords, collaboratorRoleUid, collaboratorIndustryUid, page.Value, pageSize.Value);
             ViewBag.IsModal = isModal;
 
             return Json(new
@@ -129,6 +159,36 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     new { page = this.RenderRazorViewToString("Widgets/ContactsWidget", attendeeCollaboratos), divIdOrClass = "#NetworksContactsListWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Sets the search form view bags.</summary>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="collaboratorRoleUid">The collaborator role uid.</param>
+        /// <param name="collaboratorIndustryUid">The collaborator industry uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        private async Task SetSearchFormViewBags(
+            string searchKeywords,
+            Guid? collaboratorRoleUid,
+            Guid? collaboratorIndustryUid,
+            int page,
+            int pageSize)
+        {
+            ViewBag.Page = page;
+            ViewBag.PageSize = pageSize;
+            ViewBag.SearchKeywords = searchKeywords;
+            ViewBag.CollaboratorRoleUid = collaboratorRoleUid;
+            ViewBag.CollaboratorIndustryUid = collaboratorIndustryUid;
+
+            ViewBag.CollaboratorRoles = (await this.collaboratorRoleRepo.FindAllAsync())?
+                                            .GetSeparatorTranslation(cr => cr.Name, this.UserInterfaceLanguage, '|')?
+                                            .OrderBy(cr => cr.HasAdditionalInfo)
+                                            .ThenBy(cr => cr.Name);
+
+            ViewBag.CollaboratorIndustries = (await this.collaboratorIndustryRepo.FindAllAsync())?
+                                                .GetSeparatorTranslation(ci => ci.Name, this.UserInterfaceLanguage, '|')
+                                                .OrderBy(ci => ci.HasAdditionalInfo)
+                                                .ThenBy(ci => ci.Name);
         }
 
         #endregion
