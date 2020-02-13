@@ -107,25 +107,6 @@
                 </div>
             }
 
-            @if (Model.Collaborator?.Gender?.HasAdditionalInfo == true)
-            {
-                <div class="kt-widget__item">
-                    <div class="kt-widget__details">
-                        <span class="kt-widget__title">@Labels.Gender / @Labels.Others</span>
-                        <span class="kt-widget__value"><span>@(Model.Collaborator?.CollaboratorGenderAdditionalInfo ?? "-")</span></span>
-                    </div>
-                </div>
-            }
-            else
-            {
-                <div class="kt-widget__item">
-                    <div class="kt-widget__details">
-                        <span class="kt-widget__title">@Labels.Gender</span>
-                        <span class="kt-widget__value"><span>@(Model.Collaborator?.Gender?.Name.GetSeparatorTranslation(Culture, '|') ?? "-")</span></span>
-                    </div>
-                </div>
-            }
-
             @if (Model.Collaborator?.Role?.HasAdditionalInfo == true)
             {
                 <div class="kt-widget__item">
@@ -141,6 +122,25 @@
                     <div class="kt-widget__details">
                         <span class="kt-widget__title">@Labels.Role</span>
                         <span class="kt-widget__value"><span>@(Model.Collaborator?.Role?.Name.GetSeparatorTranslation(Culture, '|') ?? "-")</span></span>
+                    </div>
+                </div>
+            }
+
+            @if (Model.Collaborator?.Gender?.HasAdditionalInfo == true)
+            {
+                <div class="kt-widget__item">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.Gender / @Labels.Others</span>
+                        <span class="kt-widget__value"><span>@(Model.Collaborator?.CollaboratorGenderAdditionalInfo ?? "-")</span></span>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="kt-widget__item">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.Gender</span>
+                        <span class="kt-widget__value"><span>@(Model.Collaborator?.Gender?.Name.GetSeparatorTranslation(Culture, '|') ?? "-")</span></span>
                     </div>
                 </div>
             }

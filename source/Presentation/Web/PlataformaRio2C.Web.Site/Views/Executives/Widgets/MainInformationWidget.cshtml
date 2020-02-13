@@ -22,7 +22,7 @@
                         @(Model.Collaborator?.GetDisplayNameAbbreviation() ?? "-")
                     </div>
                 }
-            </div> 
+            </div>
             <div class="kt-widget__content" style="overflow: hidden;">
                 <div class="kt-widget__head">
                     <span class="kt-widget__username">
@@ -63,9 +63,9 @@
                 </div>
             </div>
         </div>
-        @if (isCurrentUser)
-        {
-            <div class="kt-widget__bottom">
+        <div class="kt-widget__bottom">
+            @if (isCurrentUser)
+            {
                 <div class="kt-widget__item">
                     <div class="kt-widget__details">
                         <span class="kt-widget__title">@Labels.FullName</span>
@@ -90,40 +90,63 @@
                         <span class="kt-widget__value"><span>@(Model.Collaborator?.PublicEmail ?? "-")</span></span>
                     </div>
                 </div>
-                
+
                 <div class="kt-widget__item">
                     <div class="kt-widget__details">
                         <span class="kt-widget__title">@Labels.BirthDate</span>
                         <span class="kt-widget__value"><span>@(Model.Collaborator?.BirthDate?.ToShortDateString() ?? "-")</span></span>
                     </div>
-                </div>    
-                @if (Model.Collaborator?.Industry?.HasAdditionalInfo == true)
-                {
-                    <div class="kt-widget__item">
-                        <div class="kt-widget__details">
-                            <span class="kt-widget__title">@Labels.CollaboratorIndustry / @Labels.Others</span>
-                            <span class="kt-widget__value"><span>@(Model.Collaborator?.CollaboratorIndustryAdditionalInfo ?? "-")</span></span>
-                        </div>
-                    </div>  
-                }
-                else
-                {
-                    <div class="kt-widget__item">
-                        <div class="kt-widget__details">
-                            <span class="kt-widget__title">@Labels.CollaboratorIndustry</span>
-                            <span class="kt-widget__value"><span>@(Model.Collaborator?.Industry?.Name?.GetSeparatorTranslation(Culture, '|') ?? "-")</span></span>
-                        </div>
+                </div>
+            }
+
+            @if (Model.Collaborator?.Industry?.HasAdditionalInfo == true)
+            {
+                <div class="kt-widget__item">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.CollaboratorIndustry / @Labels.Others</span>
+                        <span class="kt-widget__value"><span>@(Model.Collaborator?.CollaboratorIndustryAdditionalInfo ?? "-")</span></span>
                     </div>
-                }
-                         
-                @if(Model.Collaborator?.Gender?.HasAdditionalInfo == true)
+                </div>
+            }
+            else
+            {
+                <div class="kt-widget__item">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.CollaboratorIndustry</span>
+                        <span class="kt-widget__value"><span>@(Model.Collaborator?.Industry?.Name?.GetSeparatorTranslation(Culture, '|') ?? "-")</span></span>
+                    </div>
+                </div>
+            }
+
+            @if (Model.Collaborator?.Role?.HasAdditionalInfo == true)
+            {
+                <div class="kt-widget__item">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.Role / @Labels.Others</span>
+                        <span class="kt-widget__value"><span>@(Model.Collaborator?.CollaboratorRoleAdditionalInfo ?? "-")</span></span>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="kt-widget__item">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.Role</span>
+                        <span class="kt-widget__value"><span>@(Model.Collaborator?.Role?.Name.GetSeparatorTranslation(Culture, '|') ?? "-")</span></span>
+                    </div>
+                </div>
+            }
+
+            @if (isCurrentUser)
+            {
+                if (Model.Collaborator?.Gender?.HasAdditionalInfo == true)
                 {
                     <div class="kt-widget__item">
                         <div class="kt-widget__details">
                             <span class="kt-widget__title">@Labels.Gender / @Labels.Others</span>
                             <span class="kt-widget__value"><span>@(Model.Collaborator?.CollaboratorGenderAdditionalInfo ?? "-")</span></span>
                         </div>
-                    </div>  
+                    </div>
                 }
                 else
                 {
@@ -132,36 +155,17 @@
                             <span class="kt-widget__title">@Labels.Gender</span>
                             <span class="kt-widget__value"><span>@(Model.Collaborator?.Gender?.Name.GetSeparatorTranslation(Culture, '|') ?? "-")</span></span>
                         </div>
-                    </div>  
-                }
-                
-                @if(Model.Collaborator?.Role?.HasAdditionalInfo == true)
-                {
-                    <div class="kt-widget__item">
-                        <div class="kt-widget__details">
-                            <span class="kt-widget__title">@Labels.Role / @Labels.Others</span>
-                            <span class="kt-widget__value"><span>@(Model.Collaborator?.CollaboratorRoleAdditionalInfo ?? "-")</span></span>
-                        </div>
-                    </div>  
-                }
-                else
-                {
-                    <div class="kt-widget__item">
-                        <div class="kt-widget__details">
-                            <span class="kt-widget__title">@Labels.Role</span>
-                            <span class="kt-widget__value"><span>@(Model.Collaborator?.Role?.Name.GetSeparatorTranslation(Culture, '|') ?? "-")</span></span>
-                        </div>
                     </div>
                 }
-                
-                @if(Model.Collaborator?.HasAnySpecialNeeds == true)
+
+                if (Model.Collaborator?.HasAnySpecialNeeds == true)
                 {
                     <div class="kt-widget__item">
                         <div class="kt-widget__details">
                             <span class="kt-widget__title">@Labels.HasAnySpecialNeeds</span>
                             <span class="kt-widget__value"><span>@(Model.Collaborator?.SpecialNeedsDescription ?? "-")</span></span>
                         </div>
-                    </div>  
+                    </div>
                 }
                 else
                 {
@@ -172,13 +176,13 @@
                         </div>
                     </div>
                 }
-                
-                @if(Model.EditionParticipationDtos?.Any() == true)
-                {                    
+
+                if (Model.EditionParticipationDtos?.Any() == true)
+                {
                     <div class="kt-widget__item">
                         <div class="kt-widget__details">
-                            <span class="kt-widget__title">@Labels.HaveYouBeenToRio2CBefore</span>                            
-                            @foreach(var edition in Model.EditionParticipationDtos)
+                            <span class="kt-widget__title">@Labels.HaveYouBeenToRio2CBefore</span>
+                            @foreach (var edition in Model.EditionParticipationDtos)
                             {
                                 <span class="kt-badge  kt-badge--info kt-badge--inline">
                                     @edition.EditionName
@@ -196,7 +200,7 @@
                         </div>
                     </div>
                 }
-            </div>
-        }
+            }
+        </div>
     </div>
 </div>
