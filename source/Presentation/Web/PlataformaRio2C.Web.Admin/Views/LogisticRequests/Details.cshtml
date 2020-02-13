@@ -4,190 +4,380 @@
     ViewBag.Title = Labels.Logistics;
 }
 @Html.Hidden("Uid", Model.Uid)
+
+<!--begin:Main Information Widget-->
 <div class="row">
-    <div class="col-md-12">
-        <!--begin:Main Information Widget-->
-        <div class="row">
-            <div class="col-12">
-                <div id="ConferenceMainInformationWidget" class="kt-portlet" style="min-height: 250px;">
-                    <div class="kt-portlet__body">
-                        <div class="kt-widget kt-widget--user-profile-3">
-                            <div class="kt-widget__top">
+    <div class="col-12">
+        <div id="ConferenceMainInformationWidget" class="kt-portlet">
+            <div class="kt-portlet__body">
+                <div class="kt-widget kt-widget--user-profile-3">
+                    <div class="kt-widget__top">
 
-                                <div class="kt-widget__content pl-0" style="overflow: hidden;">
-                                    <div class="kt-widget__head">
-                                        <span class="kt-widget__username">
-                                            Satya Nadella
-                                        </span>
-                                        <div class="kt-widget__action">
-                                            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="ConferencesMainInformationWidget.showUpdateModal();">
-                                                <i class="flaticon2-edit"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <div class="kt-widget__subhead d-none">
-                                        <a onclick="return false;"><i class="flaticon-event-calendar-symbol"></i>Conferência</a>
-
-                                        <a onclick="return false;"><i class="flaticon-placeholder"></i>Casa das Marcas</a>
-                                    </div>
-                                    <div class="kt-widget__info d-none" style="display: block;">
-
-                                        <div class="kt-widget__desc" style="word-wrap: break-word;">
-
-                                        </div>
-                                    </div>
+                        <div class="kt-widget__content pl-0" style="overflow: hidden;">
+                            <div class="kt-widget__head">
+                                <span class="kt-widget__username">
+                                    Satya Nadella
+                                </span>
+                                <div class="kt-widget__action">
+                                    <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="ConferencesMainInformationWidget.showUpdateModal();">
+                                        <i class="flaticon2-edit"></i>
+                                    </button>
                                 </div>
                             </div>
-                            <div class="kt-widget__bottom">
-                                <div class="kt-widget__item">
-                                    <div class="kt-widget__details">
-                                        <span class="kt-widget__title">Aéreo</span>
-                                        <span class="kt-widget__value"><span>Rio2C</span></span>
-                                    </div>
+
+                            <div class="kt-widget__subhead d-none">
+                                <a onclick="return false;"><i class="flaticon-event-calendar-symbol"></i>Conferência</a>
+
+                                <a onclick="return false;"><i class="flaticon-placeholder"></i>Casa das Marcas</a>
+                            </div>
+                            <div class="kt-widget__info d-none" style="display: block;">
+
+                                <div class="kt-widget__desc" style="word-wrap: break-word;">
+
                                 </div>
-                                <div class="kt-widget__item">
-                                    <div class="kt-widget__details">
-                                        <span class="kt-widget__title">Hospedagem</span>
-                                        <span class="kt-widget__value"><span>APEX</span></span>
-                                    </div>
-                                </div>
-                                <div class="kt-widget__item">
-                                    <div class="kt-widget__details">
-                                        <span class="kt-widget__title">Transporte</span>
-                                        <span class="kt-widget__value"><span>Patrocinado por outras instituições</span></span>
-                                    </div>
-                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kt-widget__bottom">
+                        <div class="kt-widget__item">
+                            <div class="kt-widget__details">
+                                <span class="kt-widget__title">Aéreo</span>
+                                <span class="kt-widget__value"><span>Rio2C</span></span>
+                            </div>
+                        </div>
+                        <div class="kt-widget__item">
+                            <div class="kt-widget__details">
+                                <span class="kt-widget__title">Hospedagem</span>
+                                <span class="kt-widget__value"><span>APEX</span></span>
+                            </div>
+                        </div>
+                        <div class="kt-widget__item">
+                            <div class="kt-widget__details">
+                                <span class="kt-widget__title">Transporte</span>
+                                <span class="kt-widget__value"><span>Patrocinado por outras instituições</span></span>
+                            </div>
+                        </div>
+                        <div class="kt-widget__item">
+                            <div class="kt-widget__details">
+                                <span class="kt-widget__title">Transfer Cidade</span>
+                                <span class="kt-widget__value"><span>Sim</span></span>
+                            </div>
+                        </div>
+                        <div class="kt-widget__item">
+                            <div class="kt-widget__details">
+                                <span class="kt-widget__title">Veículo à disposição</span>
+                                <span class="kt-widget__value"><span>Sim</span></span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!--end:Main Information Widget-->
-        <!--begin:Tracks and Presentation Formats Widget-->
-        <div class="row">
-            <div class="col-12">
-                <div id="ConferenceTracksAndPresentationFormatsWidget" class="kt-portlet" style="min-height: 250px; position: relative; zoom: 1;">
-                    <div class="kt-portlet__head">
-                        <div class="kt-portlet__head-label">
-                            <h3 class="kt-portlet__head-title">
-                                Tracks e Formatos
-                            </h3>
-                        </div>
-                        <div class="kt-portlet__head-toolbar">
-                            <div class="kt-portlet__head-actions">
-                                <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="ConferencesTracksAndPresentationFormatsWidget.showUpdateModal();">
-                                    <i class="flaticon2-edit"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="kt-portlet__body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="kt-widget4">
-                                    <h3 class="kt-heading kt-heading--sm mb-0 mt-0">Tracks</h3>
-                                    <span class="text-center">Tracks não selecionadas.</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="kt-widget4">
-                                    <h3 class="kt-heading kt-heading--sm mb-0">Formatos</h3>
-                                    <span class="text-center">Formatos não selecionadas.</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--end:Tracks and Presentation Formats Widget-->
-        <!--begin:Participants Widget-->
-        <div class="row">
-            <div class="col-12">
-                <div id="ConferenceParticipantsWidget" class="kt-portlet" style="min-height: 325px; position: relative; zoom: 1;">
-                    <div class="kt-portlet__head">
-                        <div class="kt-portlet__head-label">
-                            <h3 class="kt-portlet__head-title">
-                                Participantes
-                            </h3>
-                        </div>
-                        <div class="kt-portlet__head-toolbar">
-                            <div class="kt-portlet__head-actions">
-                                <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="ConferencesParticipantsWidget.showCreateModal();">
-                                    <i class="flaticon2-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="kt-portlet__body">
-                        <div class="row rio2c-scroll" style="height: 200px;">
-                            <div class="col-sm-6 col-xl-4">
-                                <!--Begin::Portlet-->
-                                <div class="kt-portlet kt-portlet--height-fluid">
-                                    <div class="text-right pr-2 pt-2">
-                                        <a href="#" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" data-toggle="dropdown" aria-expanded="false">
-                                            <i class="flaticon-more-1"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right" style="">
-                                            <ul class="kt-nav">
-                                                <li class="kt-nav__item">
-                                                    <a href="#" class="kt-nav__link" onclick="ConferencesParticipantsWidget.showUpdateModal('0b5949e8-7b39-40a6-bd71-ad1fb99a2e02'); return false;">
-                                                        <i class="kt-nav__link-icon flaticon2-edit"></i>
-                                                        <span class="kt-nav__link-text">Editar</span>
-                                                    </a>
-                                                </li>
-                                                <li class="kt-nav__item">
-                                                    <a href="#" class="kt-nav__link" onclick="ConferencesParticipantsWidget.showDeleteModal('0b5949e8-7b39-40a6-bd71-ad1fb99a2e02'); return false;">
-                                                        <i class="kt-nav__link-icon flaticon2-delete"></i>
-                                                        <span class="kt-nav__link-text">Remover</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                    <div class="kt-portlet__body mt-10">
-                                        <!--begin::Widget -->
-                                        <div class="kt-widget kt-widget--user-profile-2" style="flex-direction: row;">
-                                            <div class="kt-widget__head">
-                                                <div class="kt-widget__media">
-                                                    <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest">
-                                                        GM
-                                                    </div>
-                                                </div>
-                                                <div class="kt-widget__info">
-                                                    <a href="/pt-br/2020/Speakers/Details/0b5949e8-7b39-40a6-bd71-ad1fb99a2e02" class="kt-widget__username">
-                                                        Participante
-                                                    </a>
-
-                                                    <span class="kt-widget__desc">
-                                                        <a>
-                                                            <small>
-                                                                <i class="flaticon-presentation"></i> Interferência
-                                                            </small>
-                                                        </a>
-                                                    </span>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <!--end::Widget -->
-                                    </div>
-                                </div>
-                                <!--End::Portlet-->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--end:Participants Widget-->
     </div>
 </div>
+<!--end:Main Information Widget-->
+<!--begin:Airfare Widget-->
+<div class="row">
+    <div class="col-12">
+        <div id="ConferenceTracksAndPresentationFormatsWidget" class="kt-portlet" style="position: relative; zoom: 1;">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        Aéreo
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-actions">
+                        <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="ConferencesTracksAndPresentationFormatsWidget.showUpdateModal();">
+                            <i class="flaticon2-add-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-sm table-head-bg-brand table-body-scroll">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    <th class="text-center">Nacional</th>
+                                    <th class="text-center">Origem</th>
+                                    <th class="text-center">Data de Saída</th>
+                                    <th class="text-center">Destino</th>
+                                    <th class="text-center">Data de Chegada</th>
+                                    <th class="text-center">Código</th>
+                                    <th class="text-center">Data de Criação</th>
+                                    <th class="text-center">Data de Atualização</th>
+                                    <th class="text-center">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody class="rio2c-scroll kt-scroll ps rio2c-scroll-enabled" style="height: 200px; overflow: hidden;">
+                                <tr>
+                                    <td class="text-center ">
+                                        Sim
+                                    </td>
+                                    <td class="text-center ">
+                                        São Paulo
+                                    </td>
+                                    <td class="text-center ">
+                                        05/05/2020 01:00
+                                    </td>
+                                    <td class="text-center ">
+                                        São Paulo
+                                    </td>
+                                    <td class="text-center ">
+                                        05/05/2020 02:00
+                                    </td>
+                                    <td class="text-center ">
+                                        QWERTY12345
+                                    </td>
+                                    <td class="text-center ">
+                                        05/05/2020 02:00
+                                    </td>
+                                    <td class="text-center ">
+                                        05/05/2020 02:00
+                                    </td>
+                                    <td class="text-center ">
+                                        <span class="dropdown">
+                                            <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true"> <i class="la la-ellipsis-h"></i> </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center ">
+                                        Sim
+                                    </td>
+                                    <td class="text-center ">
+                                        São Paulo
+                                    </td>
+                                    <td class="text-center ">
+                                        05/05/2020 01:00
+                                    </td>
+                                    <td class="text-center ">
+                                        São Paulo
+                                    </td>
+                                    <td class="text-center ">
+                                        05/05/2020 02:00
+                                    </td>
+                                    <td class="text-center ">
+                                        QWERTY12345
+                                    </td>
+                                    <td class="text-center ">
+                                        05/05/2020 02:00
+                                    </td>
+                                    <td class="text-center ">
+                                        05/05/2020 02:00
+                                    </td>
+                                    <td class="text-center ">
+                                        <span class="dropdown">
+                                            <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true"> <i class="la la-ellipsis-h"></i> </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center ">
+                                        Sim
+                                    </td>
+                                    <td class="text-center ">
+                                        São Paulo
+                                    </td>
+                                    <td class="text-center ">
+                                        05/05/2020 01:00
+                                    </td>
+                                    <td class="text-center ">
+                                        São Paulo
+                                    </td>
+                                    <td class="text-center ">
+                                        05/05/2020 02:00
+                                    </td>
+                                    <td class="text-center ">
+                                        QWERTY12345
+                                    </td>
+                                    <td class="text-center ">
+                                        05/05/2020 02:00
+                                    </td>
+                                    <td class="text-center ">
+                                        05/05/2020 02:00
+                                    </td>
+                                    <td class="text-center ">
+                                        <span class="dropdown">
+                                            <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true"> <i class="la la-ellipsis-h"></i> </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center ">
+                                        Sim
+                                    </td>
+                                    <td class="text-center ">
+                                        São Paulo
+                                    </td>
+                                    <td class="text-center ">
+                                        05/05/2020 01:00
+                                    </td>
+                                    <td class="text-center ">
+                                        São Paulo
+                                    </td>
+                                    <td class="text-center ">
+                                        05/05/2020 02:00
+                                    </td>
+                                    <td class="text-center ">
+                                        QWERTY12345
+                                    </td>
+                                    <td class="text-center ">
+                                        05/05/2020 02:00
+                                    </td>
+                                    <td class="text-center ">
+                                        05/05/2020 02:00
+                                    </td>
+                                    <td class="text-center ">
+                                        <span class="dropdown">
+                                            <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true"> <i class="la la-ellipsis-h"></i> </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end:Airfare Widget-->
+<!--begin:Accommodations Widget-->
+<div class="row">
+    <div class="col-12">
+        <div id="ConferenceTracksAndPresentationFormatsWidget" class="kt-portlet" style="position: relative; zoom: 1;">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        Hospedagem
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-actions">
+                        <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="ConferencesTracksAndPresentationFormatsWidget.showUpdateModal();">
+                            <i class="flaticon2-add-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-sm table-head-bg-brand table-body-scroll">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    <th class="text-center">Hotel</th>
+                                    <th class="text-center">Check-in</th>
+                                    <th class="text-center">Check-out</th>
+                                    <th class="text-center">Data de Criação</th>
+                                    <th class="text-center">Data de Atualização</th>
+                                    <th class="text-center">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody class="rio2c-scroll kt-scroll ps rio2c-scroll-enabled" style="height: 200px; overflow: hidden;">
+                                <tr>
+                                    <td class="text-center ">
+                                        Ipsum Lorem Budget
+                                    </td>
+                                    <td class="text-center ">
+                                        05/05/2020 01:00
+                                    </td>
+                                    <td class="text-center ">
+                                        05/05/2020 02:00
+                                    </td>
+                                    <td class="text-center ">
+                                        05/05/2020 02:00
+                                    </td>
+                                    <td class="text-center ">
+                                        05/05/2020 02:00
+                                    </td>
+                                    <td class="text-center ">
+                                        <span class="dropdown">
+                                            <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true"> <i class="la la-ellipsis-h"></i> </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end:Airfare Widget-->
+<!--begin:Accommodations Widget-->
+<div class="row">
+    <div class="col-12">
+        <div id="ConferenceTracksAndPresentationFormatsWidget" class="kt-portlet" style="position: relative; zoom: 1;">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        Transporte
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-actions">
+                        <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="ConferencesTracksAndPresentationFormatsWidget.showUpdateModal();">
+                            <i class="flaticon2-add-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-sm table-head-bg-brand table-body-scroll">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    <th class="text-center">Origem</th>
+                                    <th class="text-center">Destino</th>
+                                    <th class="text-center">Saída</th>
+                                    <th class="text-center">Data de Criação</th>
+                                    <th class="text-center">Data de Atualização</th>
+                                    <th class="text-center">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody class="rio2c-scroll kt-scroll ps rio2c-scroll-enabled" style="height: 200px; overflow: hidden;">
+                                <tr>
+                                    <td class="text-center ">
+                                        Origem
+                                    </td>
+                                    <td class="text-center ">
+                                        Destino
+                                    </td>
+                                    <td class="text-center ">
+                                        05/05/2020 01:00
+                                    </td>
+                                    <td class="text-center ">
+                                        05/05/2020 02:00
+                                    </td>
+                                    <td class="text-center ">
+                                        05/05/2020 02:00
+                                    </td>
+                                    <td class="text-center ">
+                                        <span class="dropdown">
+                                            <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true"> <i class="la la-ellipsis-h"></i> </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end:Airfare Widget-->
+
+
 @section Styles {
     @Styles.Render("~/bundles/css/select2.css")
     @Styles.Render("~/bundles/css/bootstrap-datepicker.css")
