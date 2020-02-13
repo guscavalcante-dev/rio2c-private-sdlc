@@ -2085,4 +2085,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Em qual edição?</value>
     <comment>Em qual edição?</comment>
   </data>
+  <data name="SelectAFEntity" xml:space="preserve">
+    <value>Selecione uma {0}</value>
+    <comment>Selecione uma {0}</comment>
+  </data>
+  <data name="SelectAnFEntity" xml:space="preserve">
+    <value>Selecione uma {0}</value>
+    <comment>Selecione uma {0}</comment>
+  </data>
 </root>

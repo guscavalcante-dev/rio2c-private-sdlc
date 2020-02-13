@@ -49,7 +49,8 @@ var NetworksContacts = function () {
 
     // Plugins ------------------------------------------------------------------------------------
     var enableListPlugins = function () {
-        MyRio2cCommon.enableSelect2({ allowClear: true });
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: '#CollaboratorIndustryUid', allowClear: true, placeholder: translations.selectPlaceholderAn.replace('{0}', translations.industry) + '...' });
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: '#CollaboratorRoleUid', allowClear: true, placeholder: translations.selectPlaceholderA.replace('{0}', translations.role) + '...' });
         enableSearchEvent();
         enableRoleChangeEvent();
         enableIndustryChangeEvent();

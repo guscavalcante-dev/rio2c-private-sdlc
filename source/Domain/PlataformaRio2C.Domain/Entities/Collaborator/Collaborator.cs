@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified On : 02-12-2020
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -113,6 +113,17 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="birthDate">The birth date.</param>
+        /// <param name="collaboratorGender">The collaborator gender.</param>
+        /// <param name="collaboratorGenderAdditionalInfo">The collaborator gender additional information.</param>
+        /// <param name="collaboratorRole">The collaborator role.</param>
+        /// <param name="collaboratorRoleAdditionalInfo">The collaborator role additional information.</param>
+        /// <param name="collaboratorIndustry">The collaborator industry.</param>
+        /// <param name="collaboratorIndustryAdditionalInfo">The collaborator industry additional information.</param>
+        /// <param name="hasAnySpecialNeeds">The has any special needs.</param>
+        /// <param name="specialNeedsDescription">The special needs description.</param>
+        /// <param name="haveYouBeenToRio2CBefore">The have you been to rio2 c before.</param>
+        /// <param name="editionsParticipated">The editions participated.</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastNames">The last names.</param>
         /// <param name="badge">The badge.</param>
@@ -301,6 +312,17 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="birthDate">The birth date.</param>
+        /// <param name="collaboratorGender">The collaborator gender.</param>
+        /// <param name="collaboratorGenderAdditionalInfo">The collaborator gender additional information.</param>
+        /// <param name="collaboratorRole">The collaborator role.</param>
+        /// <param name="collaboratorRoleAdditionalInfo">The collaborator role additional information.</param>
+        /// <param name="collaboratorIndustry">The collaborator industry.</param>
+        /// <param name="collaboratorIndustryAdditionalInfo">The collaborator industry additional information.</param>
+        /// <param name="hasAnySpecialNeeds">if set to <c>true</c> [has any special needs].</param>
+        /// <param name="specialNeedsDescription">The special needs description.</param>
+        /// <param name="haveYouBeenToRio2CBefore">The have you been to rio2 c before.</param>
+        /// <param name="editionsParticipated">The editions participated.</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastNames">The last names.</param>
         /// <param name="badge">The badge.</param>
@@ -396,6 +418,17 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
         /// <param name="jobTitles">The job titles.</param>
         /// <param name="miniBios">The mini bios.</param>
+        /// <param name="birthDate">The birth date.</param>
+        /// <param name="collaboratorGender">The collaborator gender.</param>
+        /// <param name="collaboratorGenderAdditionalInfo">The collaborator gender additional information.</param>
+        /// <param name="collaboratorRole">The collaborator role.</param>
+        /// <param name="collaboratorRoleAdditionalInfo">The collaborator role additional information.</param>
+        /// <param name="collaboratorIndustry">The collaborator industry.</param>
+        /// <param name="collaboratorIndustryAdditionalInfo">The collaborator industry additional information.</param>
+        /// <param name="hasAnySpecialNeeds">if set to <c>true</c> [has any special needs].</param>
+        /// <param name="specialNeedsDescription">The special needs description.</param>
+        /// <param name="haveYouBeenToRio2CBefore">The have you been to rio2 c before.</param>
+        /// <param name="editionsParticipated">The editions participated.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="userId">The user identifier.</param>
         public void UpdateAdminMainInformation(
@@ -436,14 +469,13 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
-            this.OnboardAttendeeCollaboratorData(edition, userId);
             this.UpdateEditions(haveYouBeenToRio2CBefore, editionsParticipated, userId);
                         
             this.BirthDate = birthDate;
-            UpdateGender(collaboratorGender, collaboratorGenderAdditionalInfo);
-            UpdateRole(collaboratorRole, collaboratorRoleAdditionalInfo);
-            UpdateIndustry(collaboratorIndustry, collaboratorIndustryAdditionalInfo);
-            UpdateSpecialNeeds(hasAnySpecialNeeds, specialNeedsDescription);
+            this.UpdateGender(collaboratorGender, collaboratorGenderAdditionalInfo);
+            this.UpdateRole(collaboratorRole, collaboratorRoleAdditionalInfo);
+            this.UpdateIndustry(collaboratorIndustry, collaboratorIndustryAdditionalInfo);
+            this.UpdateSpecialNeeds(hasAnySpecialNeeds, specialNeedsDescription);
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
@@ -460,6 +492,17 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="publicEmail">The public email.</param>
         /// <param name="jobTitles">The job titles.</param>
         /// <param name="miniBios">The mini bios.</param>
+        /// <param name="birthDate">The birth date.</param>
+        /// <param name="collaboratorGender">The collaborator gender.</param>
+        /// <param name="collaboratorGenderAdditionalInfo">The collaborator gender additional information.</param>
+        /// <param name="collaboratorRole">The collaborator role.</param>
+        /// <param name="collaboratorRoleAdditionalInfo">The collaborator role additional information.</param>
+        /// <param name="collaboratorIndustry">The collaborator industry.</param>
+        /// <param name="collaboratorIndustryAdditionalInfo">The collaborator industry additional information.</param>
+        /// <param name="hasAnySpecialNeeds">if set to <c>true</c> [has any special needs].</param>
+        /// <param name="specialNeedsDescription">The special needs description.</param>
+        /// <param name="haveYouBeenToRio2CBefore">The have you been to rio2 c before.</param>
+        /// <param name="editionsParticipated">The editions participated.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="userId">The user identifier.</param>
@@ -558,28 +601,35 @@ namespace PlataformaRio2C.Domain.Entities
             this.CollaboratorGenderAdditionalInfo = collaboratorGender?.HasAdditionalInfo ?? false ? collaboratorGenderAdditionalInfo : null;
         }
 
-        /// <summary>
-        /// Updates the editions.
-        /// </summary>
+        /// <summary>Updates the editions.</summary>
+        /// <param name="haveYouBeenToRio2CBefore">The have you been to rio2 c before.</param>
         /// <param name="editionsParticipated">The editions participated.</param>
+        /// <param name="userId">The user identifier.</param>
         private void UpdateEditions(bool? haveYouBeenToRio2CBefore, List<Edition> editionsParticipated, int userId)
         {
-            DeleteCollaboratorParticipation(editionsParticipated, userId);
+            this.DeleteCollaboratorParticipation(editionsParticipated, userId);
 
             // No selection was made
             if (!haveYouBeenToRio2CBefore.HasValue)
+            {
                 return;
+            }
 
             if (editionsParticipated == null || !editionsParticipated.Any())
+            {
                 return;
+            }
 
-            if(this.EditionParticipantions == null) this.EditionParticipantions = new List<CollaboratorEditionParticipation>();
+            if (this.EditionParticipantions == null)
+            {
+                this.EditionParticipantions = new List<CollaboratorEditionParticipation>();
+            }
 
             foreach (var edition in editionsParticipated)
             {
                 var existing = EditionParticipantions.FirstOrDefault(e => e.EditionId == edition.Id);
 
-                if(existing == null)
+                if (existing == null)
                 {
                     EditionParticipantions.Add(new CollaboratorEditionParticipation(edition, this, userId));
                     continue;
@@ -592,14 +642,19 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
+        /// <summary>Deletes the collaborator participation.</summary>
+        /// <param name="editionsParticipated">The editions participated.</param>
+        /// <param name="userId">The user identifier.</param>
         private void DeleteCollaboratorParticipation(List<Edition> editionsParticipated, int userId)
         {
             if (EditionParticipantions == null)
-                return;
-
-            foreach(var participation in EditionParticipantions)
             {
-                if(editionsParticipated.All(e => e.Id != participation.Id && !e.IsDeleted))
+                return;
+            }
+
+            foreach (var participation in EditionParticipantions)
+            {
+                if (editionsParticipated.All(e => e.Id != participation.Id && !e.IsDeleted))
                 {
                     participation.Delete(userId);
                 }

@@ -93,6 +93,14 @@
     @Scripts.Render("~/bundles/js/networks.messages.js")
     @Scripts.Render("~/bundles/js/networks.contacts.js")
     <script>
+        // Page translations ----------------------------------------------------------------------
+        var translations = {
+            selectPlaceholderAn: '@Labels.SelectAnFEntity',
+            selectPlaceholderA: '@Labels.SelectAFEntity',
+            industry: '@Html.Raw(Labels.CollaboratorIndustry.ToLowerInvariant())',
+            role: '@Html.Raw(Labels.Role.ToLowerInvariant())'
+        };
+
         var messagesConfig = {
             editionId: '@(editionDto?.Id)',
             editionUid: '@(editionDto?.Uid)',

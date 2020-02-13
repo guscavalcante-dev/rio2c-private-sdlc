@@ -10,6 +10,14 @@
     @Scripts.Render("~/bundles/js/select2.js")
     @Scripts.Render("~/bundles/js/networks.contacts.js")
     <script>
+        // Page translations ----------------------------------------------------------------------
+        var translations = {
+            selectPlaceholderAn: '@Labels.SelectAnFEntity',
+            selectPlaceholderA: '@Labels.SelectAFEntity',
+            industry: '@Html.Raw(Labels.CollaboratorIndustry.ToLowerInvariant())',
+            role: '@Html.Raw(Labels.Role.ToLowerInvariant())'
+        };
+
         jQuery(document).ready(function () {
             NetworksContacts.init();
             NetworksContactsListWidget.init();

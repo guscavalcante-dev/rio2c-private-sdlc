@@ -2078,4 +2078,12 @@
     <value>When?</value>
     <comment>Em qual edição?</comment>
   </data>
+  <data name="SelectAFEntity" xml:space="preserve">
+    <value>Select a {0}</value>
+    <comment>Selecione uma {0}</comment>
+  </data>
+  <data name="SelectAnFEntity" xml:space="preserve">
+    <value>Select an {0}</value>
+    <comment>Selecione uma {0}</comment>
+  </data>
 </root>
