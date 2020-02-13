@@ -426,6 +426,7 @@
     <Content Include="Assets\img\logo-rio2c-footer.png" />
     <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
+    <Content Include="Assets\js\logisticrequests\logisticrequests.maininformation.widget.js" />
     <Content Include="Assets\js\logisticrequests\logisticrequests.create.js" />
     <Content Include="Assets\js\logisticrequests\logisticrequests.datatable.widget.js" />
     <Content Include="Assets\js\logisticrequests\logisticrequests.delete.js" />
@@ -8387,6 +8388,8 @@
     <Content Include="Views\LogisticRequests\Modals\UpdateModal.cshtml" />
     <Content Include="Views\LogisticRequests\Widgets\DataTableWidget.cshtml" />
     <Content Include="Views\LogisticRequests\Details.cshtml" />
+    <Content Include="Views\LogisticRequests\Modals\UpdateMainInformationModal.cshtml" />
+    <Content Include="Views\LogisticRequests\Modals\UpdateMainInformationForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

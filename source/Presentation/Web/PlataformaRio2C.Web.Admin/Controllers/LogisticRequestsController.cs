@@ -268,17 +268,19 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="isAddingToCurrentEdition">The is adding to current edition.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowUpdateModal(Guid? sponsorUid, bool? isAddingToCurrentEdition)
+        public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? sponsorUid, bool? isAddingToCurrentEdition)
         {
-            UpdateLogisticSponsors cmd;
+            UpdateLogisticRequest cmd;
 
             try
             {
-                cmd = new UpdateLogisticSponsors(
-                    await this.CommandBus.Send(new FindLogisticSponsorDtoByUid(sponsorUid, this.UserInterfaceLanguage)),
-                    await languageRepo.FindAllDtosAsync(),
-                    UserInterfaceLanguage,
-                    isAddingToCurrentEdition);
+                cmd = new UpdateLogisticRequest();
+
+                //cmd = new UpdateLogisticSponsors(
+                //    await this.CommandBus.Send(new FindLogisticSponsorDtoByUid(sponsorUid, this.UserInterfaceLanguage)),
+                //    await languageRepo.FindAllDtosAsync(),
+                //    UserInterfaceLanguage,
+                //    isAddingToCurrentEdition);
             }
             catch (DomainException ex)
             {
@@ -290,7 +292,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 { 
-                    new { page = this.RenderRazorViewToString("Modals/UpdateModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                    new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
