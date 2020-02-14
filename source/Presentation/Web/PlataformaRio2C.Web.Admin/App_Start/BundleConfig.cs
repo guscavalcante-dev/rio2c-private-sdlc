@@ -554,10 +554,10 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/logisticrequests.delete.js").Include(
                 "~/Assets/js/logisticrequests/logisticrequests.delete.js"));
-
-
+            
             bundles.Add(new ScriptBundle("~/bundles/js/logisticrequests.details.js").Include(
-                "~/Assets/js/logisticrequests/logisticrequests.maininformation.widget.js"));
+                "~/Assets/js/logisticrequests/logisticrequests.maininformation.widget.js",
+                "~/Assets/js/logisticrequests/logisticrequests.airfare.create.js"));
 
             #endregion
 
