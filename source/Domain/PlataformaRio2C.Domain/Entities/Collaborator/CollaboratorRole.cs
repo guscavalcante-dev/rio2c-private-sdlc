@@ -4,7 +4,7 @@
 // Created          : 09-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-19-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="TicketType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Collections.Generic;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
@@ -28,18 +27,23 @@ namespace PlataformaRio2C.Domain.Entities
         public string Name { get; private set; }
         public bool HasAdditionalInfo { get; private set; }
 
-                /// <summary>Initializes a new instance of the <see cref="CollaboratorType"/> class.</summary>
+        /// <summary>Prevents a default instance of the <see cref="CollaboratorRole"/> class from being created.</summary>
         private CollaboratorRole()
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="CollaboratorType"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="CollaboratorRole"/> class.</summary>
         /// <param name="collaboratorTypeUid">The collaborator type uid.</param>
         /// <param name="name">The name.</param>
-        public CollaboratorRole(Guid collaboratorTypeUid, string name)
+        /// <param name="userId">The user identifier.</param>
+        public CollaboratorRole(Guid collaboratorTypeUid, string name, int userId)
         {
             this.Uid = collaboratorTypeUid;
             this.Name = name?.Trim();
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
         }
 
         #region Validations

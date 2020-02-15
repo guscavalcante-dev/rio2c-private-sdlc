@@ -4,7 +4,7 @@
 // Created          : 08-22-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-15-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="Address.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -69,7 +69,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsGeoLocationUpdated = false;
             this.IsManual = IsManual;
             this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
             this.UpdateCountry(country, userId);
             this.UpdateState(country, stateUid, stateName, isManual, userId);
@@ -107,7 +107,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsGeoLocationUpdated = false;
             this.IsManual = IsManual;
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
             this.UpdateCountry(country, userId);
             this.UpdateState(country, stateUid, stateName, isManual, userId);
@@ -118,7 +118,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void Delete(int userId)
         {
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
             this.IsDeleted = true;
         }
@@ -140,7 +140,7 @@ namespace PlataformaRio2C.Domain.Entities
             }
 
             this.Country = country;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 

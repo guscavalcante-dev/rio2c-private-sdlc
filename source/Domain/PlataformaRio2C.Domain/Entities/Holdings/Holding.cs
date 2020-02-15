@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-29-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="Holding.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -44,10 +44,11 @@ namespace PlataformaRio2C.Domain.Entities
             //this.Uid = uid;
             this.Name = name?.Trim();
             this.UpdateImageUploadDate(isImageUploaded, false);
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
-            this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeDescriptions(descriptions, userId);
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
         }
 
         /// <summary>Initializes a new instance of the <see cref="Holding"/> class.</summary>
@@ -66,21 +67,24 @@ namespace PlataformaRio2C.Domain.Entities
             //this.Uid = uid;
             this.Name = name?.Trim();
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
-            this.UpdateDate = DateTime.Now;
-            this.UpdateUserId = userId;
             this.SynchronizeDescriptions(descriptions, userId);
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
         }
 
         /// <summary>Deletes the specified user identifier.</summary>
         /// <param name="userId">The user identifier.</param>
         public void Delete(int userId)
         {
-            this.IsDeleted = true;
-            this.UpdateDate = DateTime.Now;
-            this.UpdateUserId = userId;
             this.DeleteOrganizations(userId);
             this.DeleteDescriptions(null, userId);
             this.UpdateImageUploadDate(false, true);
+
+            this.IsDeleted = true;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
         }
 
         /// <summary>Updates the image upload date.</summary>
@@ -90,7 +94,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             if (isImageUploaded)
             {
-                this.ImageUploadDate = DateTime.Now;
+                this.ImageUploadDate = DateTime.UtcNow;
             }
             else if (isImageDeleted)
             {

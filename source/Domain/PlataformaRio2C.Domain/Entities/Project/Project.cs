@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-10-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="Project.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -132,7 +132,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.IsDeleted = false;
             this.CreateUserId = this.UpdateUserId = userId;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
         }
 
         /// <summary>Initializes a new instance of the <see cref="Project"/> class.</summary>
@@ -188,7 +188,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
         }
 
         /// <summary>Updates the links.</summary>
@@ -205,18 +205,18 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
         }
 
         /// <summary>Finishes the project.</summary>
         /// <param name="userId">The user identifier.</param>
         public void FinishProject(int userId)
         {
-            this.FinishDate = DateTime.Now;
+            this.FinishDate = DateTime.UtcNow;
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
         }
 
         /// <summary>Determines whether this instance is finished.</summary>
@@ -257,7 +257,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
         }
 
         /// <summary>Deletes the project buyer evaluation.</summary>
@@ -274,7 +274,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
         }
 
         /// <summary>Updates the project buyer evaluation counts.</summary>
@@ -609,7 +609,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
         }
 
         /// <summary>Synchronizes the project interests.</summary>
@@ -669,7 +669,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
         }
 
         /// <summary>Synchronizes the project target audiences.</summary>

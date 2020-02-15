@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-03-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="Message.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -52,7 +52,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Recipient = recipient;
             this.Text = text?.Trim();
 
-            this.SendDate = DateTime.Now;
+            this.SendDate = DateTime.UtcNow;
         }
 
         /// <summary>Initializes a new instance of the <see cref="Message"/> class.</summary>
@@ -68,7 +68,7 @@ namespace PlataformaRio2C.Domain.Entities
                 return;
             }
 
-            this.ReadDate = DateTime.Now;
+            this.ReadDate = DateTime.UtcNow;
         }
 
         /// <summary>Sends the notification email.</summary>
@@ -79,7 +79,7 @@ namespace PlataformaRio2C.Domain.Entities
                 return;
             }
 
-            this.NotificationEmailSendDate = DateTime.Now;
+            this.NotificationEmailSendDate = DateTime.UtcNow;
         }
 
         #region Validations

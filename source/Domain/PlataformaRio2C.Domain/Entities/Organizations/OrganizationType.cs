@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-08-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="OrganizationType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -52,10 +52,27 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Initializes a new instance of the <see cref="OrganizationType"/> class.</summary>
         /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <param name="name">The name.</param>
-        public OrganizationType(Guid organizationTypeUid, string name)
+        /// <param name="userId">The user identifier.</param>
+        public OrganizationType(Guid organizationTypeUid, string name, int userId)
         {
             this.Uid = organizationTypeUid;
             this.Name = name;
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="OrganizationType"/> class.</summary>
+        /// <param name="organizationTypeUid">The organization type uid.</param>
+        /// <param name="name">The name.</param>
+        private OrganizationType(Guid organizationTypeUid, string name)
+        {
+            this.Uid = organizationTypeUid;
+            this.Name = name;
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
         }
 
         /// <summary>Initializes a new instance of the <see cref="OrganizationType"/> class.</summary>

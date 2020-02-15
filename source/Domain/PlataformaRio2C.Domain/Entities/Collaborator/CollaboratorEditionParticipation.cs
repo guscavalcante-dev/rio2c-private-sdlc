@@ -4,7 +4,7 @@
 // Created          : 09-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-19-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="TicketType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,9 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Collections.Generic;
 using PlataformaRio2C.Domain.Validation;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -27,36 +25,25 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual Edition Edition { get; private set; }
         public virtual Collaborator Collaborator { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="CollaboratorType"/> class.</summary>
-        private CollaboratorEditionParticipation()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CollaboratorEditionParticipation"/> class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref="CollaboratorEditionParticipation"/> class.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="collaborator">The collaborator.</param>
+        /// <param name="userId">The user identifier.</param>
         public CollaboratorEditionParticipation(Edition edition, Collaborator collaborator, int userId)
         {
             this.EditionId = edition.Id;
             this.Edition = edition;
             this.CollaboratorId = collaborator.Id;
             this.Collaborator = collaborator;
-            this.CreateDate = UpdateDate = DateTime.Now;
+
+            this.IsDeleted = false;
+            this.CreateDate = UpdateDate = DateTime.UtcNow;
             this.CreateUserId = UpdateUserId = userId;
         }
-        
-        #region Validations
 
-        /// <summary>Returns true if ... is valid.</summary>
-        /// <returns>
-        ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
-        public override bool IsValid()
+        /// <summary>Initializes a new instance of the <see cref="CollaboratorType"/> class.</summary>
+        private CollaboratorEditionParticipation()
         {
-            this.ValidationResult = new ValidationResult();
-            
-            return this.ValidationResult.IsValid;
         }
 
         /// <summary>
@@ -67,14 +54,28 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.IsDeleted = true;
             this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
         }
 
+        /// <summary>Undeletes the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
         internal void Undelete(int userId)
         {
             this.IsDeleted = false;
             this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
+        }
+
+        #region Validations
+
+        /// <summary>Returns true if ... is valid.</summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
+        public override bool IsValid()
+        {
+            this.ValidationResult = new ValidationResult();
+            
+            return this.ValidationResult.IsValid;
         }
 
         #endregion

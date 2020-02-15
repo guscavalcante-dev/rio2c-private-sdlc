@@ -4,7 +4,7 @@
 // Created          : 07-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-01-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="SalesPlatformWebhookRequest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -79,7 +79,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsProcessing = false;
             this.ProcessingCount = 0;
             this.NextProcessingDate = this.GetNextProcessingDate();
-            this.CreateDate = DateTime.Now;
+            this.CreateDate = DateTime.UtcNow;
             this.SecurityStamp = Guid.NewGuid().ToString();
         }
 

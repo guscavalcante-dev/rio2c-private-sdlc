@@ -4,7 +4,7 @@
 // Created          : 09-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-19-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="TicketType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Collections.Generic;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
@@ -33,13 +32,26 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="CollaboratorType"/> class.</summary>
-        /// <param name="collaboratorTypeUid">The collaborator type uid.</param>
+        /// <summary>Initializes a new instance of the <see cref="CollaboratorIndustry"/> class.</summary>
+        /// <param name="uid">The uid.</param>
         /// <param name="name">The name.</param>
-        public CollaboratorIndustry(Guid uid, string name)
+        /// <param name="userId">The user identifier.</param>
+        public CollaboratorIndustry(Guid uid, string name, int userId)
         {
             this.Uid = uid;
             this.Name = name?.Trim();
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = UpdateUserId = userId;
+        }
+
+        /// <summary>
+        /// Translates this instance.
+        /// </summary>
+        public void Translate(string userInterfaceLanguage)
+        {
+            this.Name = this.Name?.GetSeparatorTranslation(userInterfaceLanguage, '|');
         }
 
         #region Validations
@@ -70,14 +82,6 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
         
-        /// <summary>
-        /// Translates this instance.
-        /// </summary>
-        public void Translate(string userInterfaceLanguage)
-        {
-            this.Name = this.Name?.GetSeparatorTranslation(userInterfaceLanguage, '|');
-        }
-
         #endregion
     }
 }

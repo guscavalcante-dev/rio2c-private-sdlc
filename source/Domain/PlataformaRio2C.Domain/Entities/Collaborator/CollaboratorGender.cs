@@ -4,7 +4,7 @@
 // Created          : 09-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-19-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="TicketType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Collections.Generic;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
@@ -28,18 +27,23 @@ namespace PlataformaRio2C.Domain.Entities
         public string Name { get; private set; }
         public bool HasAdditionalInfo { get; private set; }
 
-                /// <summary>Initializes a new instance of the <see cref="CollaboratorType"/> class.</summary>
-        private CollaboratorGender()
+        /// <summary>Initializes a new instance of the <see cref="CollaboratorGender"/> class.</summary>
+        /// <param name="collaboratorGenderUid">The collaborator gender uid.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="userId">The user identifier.</param>
+        public CollaboratorGender(Guid collaboratorGenderUid, string name, int userId)
         {
+            this.Uid = collaboratorGenderUid;
+            this.Name = name?.Trim();
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = UpdateUserId = userId;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="CollaboratorType"/> class.</summary>
-        /// <param name="collaboratorTypeUid">The collaborator type uid.</param>
-        /// <param name="name">The name.</param>
-        public CollaboratorGender(Guid uid, string name)
+        /// <summary>Prevents a default instance of the <see cref="CollaboratorGender"/> class from being created.</summary>
+        private CollaboratorGender()
         {
-            this.Uid = uid;
-            this.Name = name?.Trim();
         }
 
         /// <summary>

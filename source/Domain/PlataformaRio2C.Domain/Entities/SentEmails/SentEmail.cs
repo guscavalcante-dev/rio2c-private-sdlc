@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-02-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="SentEmail.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -40,7 +40,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.RecipientUserId = recipientUserId;
             this.EditionId = editionId;
             this.EmailType = emailType?.Trim();
-            this.EmailSendDate = DateTime.Now;
+            this.EmailSendDate = DateTime.UtcNow;
         }
 
         /// <summary>Initializes a new instance of the <see cref="SentEmail"/> class.</summary>

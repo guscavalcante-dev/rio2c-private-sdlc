@@ -4,7 +4,7 @@
 // Created          : 01-04-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="ConferenceTrack.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,14 +26,11 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual Conference Conference { get; private set; }
         public virtual Pillar Pillar { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="ConferenceTrack"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="ConferencePillar"/> class.</summary>
         /// <param name="conference">The conference.</param>
-        /// <param name="track">The track.</param>
+        /// <param name="pillar">The pillar.</param>
         /// <param name="userId">The user identifier.</param>
-        public ConferencePillar(
-            Conference conference,
-            Pillar pillar,
-            int userId)
+        public ConferencePillar(Conference conference, Pillar pillar, int userId)
         {
             this.ConferenceId = conference?.Id ?? 0;
             this.Conference = conference;
@@ -41,7 +38,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Pillar = pillar;
 
             this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
         }
 
@@ -50,10 +47,12 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
+        /// <summary>Updates the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
         public void Update(int userId)
         {
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -62,7 +61,7 @@ namespace PlataformaRio2C.Domain.Entities
         public void Delete(int userId)
         {
             this.IsDeleted = true;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 

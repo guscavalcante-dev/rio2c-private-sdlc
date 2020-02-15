@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-16-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="Role.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,6 +18,8 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public string Name { get; set; }
 
+        #region Validations
+
         /// <summary>Returns true if ... is valid.</summary>
         /// <returns>
         ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
@@ -25,5 +27,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             return true;
         }
+
+        #endregion
     }
 }

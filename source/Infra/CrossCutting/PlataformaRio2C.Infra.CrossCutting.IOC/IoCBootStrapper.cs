@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-24-2020
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="IoCBootStrapper.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,8 +13,6 @@
 // ***********************************************************************
 using LazyCache;
 using Microsoft.AspNet.Identity;
-using PlataformaRio2C.Application.Interfaces.Services;
-using PlataformaRio2C.Application.Services;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Configuration;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Models;
@@ -72,7 +70,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
             //container.Register<IProducerService, ProducerService>(Lifestyle.Scoped);
             //container.Register<IProducerRepository, ProducerRepository>(Lifestyle.Scoped);
 
-            container.Register<IEmailAppService, EmailAppService>(Lifestyle.Scoped);
+            //container.Register<IEmailAppService, EmailAppService>(Lifestyle.Scoped);
 
             //container.Register<IMessageAppService, MessageAppService>(Lifestyle.Scoped);
             //container.Register<IMessageService, MessageService>(Lifestyle.Scoped);
@@ -82,7 +80,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
             //container.Register<IProjectAppService, ProjectAppService>(Lifestyle.Scoped);
             //container.Register<IProjectRepository, ProjectRepository>(Lifestyle.Scoped);
 
-            container.Register<IErrorMessageService, ErrorMessageService>(Lifestyle.Scoped);
+            //container.Register<IErrorMessageService, ErrorMessageService>(Lifestyle.Scoped);
 
 
             //container.Register<IRoomService, RoomService>(Lifestyle.Scoped);

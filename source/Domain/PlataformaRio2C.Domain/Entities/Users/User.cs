@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-27-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="User.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -72,7 +72,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.TwoFactorEnabled = false;
             this.LockoutEnabled = true;
             this.AccessFailedCount = 0;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.SynchronizeRoles(roles);
         }
 
@@ -90,7 +90,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Name = fullName?.Trim();
             this.UserName = this.Email = email?.Trim();
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.SynchronizeRoles(roles);
         }
 
@@ -98,7 +98,7 @@ namespace PlataformaRio2C.Domain.Entities
         public void Delete(List<Role> roles)
         {
             this.IsDeleted = true;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.SynchronizeRoles(roles);
         }
 
@@ -109,7 +109,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.Name = fullName?.Trim();
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.PasswordHash = passwordHash;
         }
 
@@ -119,7 +119,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.UserInterfaceLanguageId = language?.Id;
             this.UserInterfaceLanguage = language;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
         }
 
         #region Roles

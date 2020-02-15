@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="CollaboratorJobTitle.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -39,7 +39,9 @@ namespace PlataformaRio2C.Domain.Entities
             this.Value = value?.Trim();
             this.Language = language;
             this.LanguageId = language?.Id ?? 0;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
         }
 
@@ -53,7 +55,7 @@ namespace PlataformaRio2C.Domain.Entities
         public void Update(CollaboratorJobTitle jobTitle)
         {
             this.Value = jobTitle.Value?.Trim();
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = jobTitle.UpdateUserId;
         }
 
@@ -62,7 +64,7 @@ namespace PlataformaRio2C.Domain.Entities
         public void Delete(int userId)
         {
             this.IsDeleted = true;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-09-2020
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="Conference.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -48,6 +48,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="conferenceTitles">The conference titles.</param>
         /// <param name="conferenceSynopses">The conference synopses.</param>
         /// <param name="tracks">The tracks.</param>
+        /// <param name="pillars">The pillars.</param>
         /// <param name="presentationFormats">The presentation formats.</param>
         /// <param name="userId">The user identifier.</param>
         public Conference(
@@ -78,7 +79,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeConferencePresentationFormats(presentationFormats, userId);
 
             this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
         }
 
@@ -116,12 +117,13 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeConferenceSynopses(conferenceSynopses, userId);
 
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
         /// <summary>Updates the tracks and presentation formats.</summary>
         /// <param name="tracks">The tracks.</param>
+        /// <param name="pillars">The pillars.</param>
         /// <param name="presentationFormats">The presentation formats.</param>
         /// <param name="userId">The user identifier.</param>
         public void UpdateTracksAndPresentationFormats(List<Track> tracks, List<Pillar> pillars, List<PresentationFormat> presentationFormats, int userId)
@@ -132,7 +134,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
         }
 
         /// <summary>Deletes the specified user identifier.</summary>
@@ -143,7 +145,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeConferenceTitles(new List<ConferenceTitle>(), userId);
             this.SynchronizeConferenceSynopses(new List<ConferenceSynopsis>(), userId);
 
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 

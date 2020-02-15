@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-12-2020
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -104,7 +104,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUser(email);
 
             this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
         }
 
@@ -185,7 +185,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateImageUploadDate(isImageUploaded, false);
 
             this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
 
             this.UpdateEditions(haveYouBeenToRio2CBefore, editionsParticipated, userId);
@@ -254,7 +254,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Badge = firstName?.Trim() + (!string.IsNullOrEmpty(lastMame) ? " " + lastMame?.Trim() : string.Empty);
             this.CellPhone = cellPhone?.Trim();
             this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeAttendeeCollaborators(
                 edition,
@@ -304,7 +304,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUser(email);
 
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -395,7 +395,7 @@ namespace PlataformaRio2C.Domain.Entities
             UpdateSpecialNeeds(hasAnySpecialNeeds, specialNeedsDescription);
 
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
 
             this.SynchronizeJobTitles(jobTitles, userId);
@@ -478,7 +478,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateSpecialNeeds(hasAnySpecialNeeds, specialNeedsDescription);
 
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -550,7 +550,7 @@ namespace PlataformaRio2C.Domain.Entities
             UpdateSpecialNeeds(hasAnySpecialNeeds, specialNeedsDescription);
 
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -683,7 +683,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Youtube = youtube?.Trim();
 
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -706,7 +706,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void Delete(Edition edition, CollaboratorType collaboratorType, int userId)
         {
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
             this.DeleteAttendeeCollaborators(edition, collaboratorType, userId);
 
@@ -725,7 +725,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             if (isImageUploaded)
             {
-                this.ImageUploadDate = DateTime.Now;
+                this.ImageUploadDate = DateTime.UtcNow;
             }
             else if (isImageDeleted)
             {
@@ -996,7 +996,7 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition?.Id ?? 0);
             attendeeCollaborator?.UpdateApiConfiguration(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
 
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -1009,7 +1009,7 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition?.Id ?? 0);
             attendeeCollaborator?.DeleteApiHighlightPosition(collaboratorType, userId);
 
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -1022,7 +1022,7 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
             attendeeCollaborator?.DeleteAttendeeOrganizationCollaborator(organizationUid, userId);
 
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -1318,7 +1318,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Badge = !string.IsNullOrEmpty(this.Badge) ? this.Badge : (firstName?.Trim() + (!string.IsNullOrEmpty(lastMame) ? " " + lastMame?.Trim() : string.Empty));
             this.CellPhone = !string.IsNullOrEmpty(this.CellPhone) ? this.CellPhone : cellPhone?.Trim();
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
             this.SynchronizeAttendeeCollaborators(
                 edition,
@@ -1377,7 +1377,7 @@ namespace PlataformaRio2C.Domain.Entities
                 barcodeUpdateDate,
                 userId);
 
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
             //this.DeleteRole(this.User.Email, role);
         }
@@ -1394,7 +1394,7 @@ namespace PlataformaRio2C.Domain.Entities
         public void Onboard(Edition edition, int userId)
         {
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
             this.OnboardAttendeeCollaborator(edition, userId);
         }
@@ -1419,7 +1419,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.OnboardUser(passwordHash);
 
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -1433,7 +1433,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.OnboardAttendeeCollaboratorPlayerTermsAcceptance(edition, userId);
 
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -1447,7 +1447,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.OnboardAttendeeCollaboratorSpeakerTermsAcceptance(edition, userId);
 
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -1516,7 +1516,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SpecialNeedsDescription = specialNeedsDescription;
 
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -1530,7 +1530,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.OnboardAttendeeCollaboratorProducerTermsAcceptance(edition, userId);
 
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 

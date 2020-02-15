@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-27-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="Negotiation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -69,7 +69,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         //public void SetSourceEvaluation(ProjectPlayerEvaluation entity)
         //{
-        //    CreateDate = DateTime.Now;
+        //    CreateDate = DateTime.UtcNow;
         //    Uid = Guid.NewGuid();
         //    Evaluation = entity;
         //    if (entity != null)
