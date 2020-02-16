@@ -4,7 +4,7 @@
 // Created          : 01-04-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 02-16-2020
 // ***********************************************************************
 // <copyright file="EditionEvent.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -46,16 +46,16 @@ namespace PlataformaRio2C.Domain.Entities
             Guid editionEventUid,
             Edition edition,
             string name,
-            DateTimeOffset startDate,
-            DateTimeOffset endDate,
+            DateTime startDate,
+            DateTime endDate,
             int userId)
         {
             //this.Uid = editionEventUid;
             this.EditionId = edition?.Id ?? 0;
             this.Edition = edition;
             this.Name = name?.Trim();
-            this.StartDate = startDate.ToUniversalTime();
-            this.EndDate = endDate.AddHours(23).AddMinutes(59).AddSeconds(59).ToUniversalTime();
+            this.StartDate = startDate.ToUtcTimeZone();
+            this.EndDate = endDate.AddHours(23).AddMinutes(59).AddSeconds(59).ToUtcTimeZone();
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
@@ -74,13 +74,13 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void UpdateMainInformation(
             string name,
-            DateTimeOffset startDate,
-            DateTimeOffset endDate,
+            DateTime startDate,
+            DateTime endDate,
             int userId)
         {
             this.Name = name?.Trim();
-            this.StartDate = startDate.ToUniversalTime();
-            this.EndDate = endDate.AddHours(23).AddMinutes(59).AddSeconds(59).ToUniversalTime();
+            this.StartDate = startDate.ToUtcTimeZone();
+            this.EndDate = endDate.AddHours(23).AddMinutes(59).AddSeconds(59).ToUtcTimeZone();
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;

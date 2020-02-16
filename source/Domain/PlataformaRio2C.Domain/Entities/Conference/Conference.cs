@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 02-16-2020
 // ***********************************************************************
 // <copyright file="Conference.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -68,8 +68,8 @@ namespace PlataformaRio2C.Domain.Entities
             //this.Uid = conferenceUid;
             this.EditionEventId = editionEvent?.Id ?? 0;
             this.EditionEvent = editionEvent;
-            this.StartDate = date.JoinDateAndTime(startTime, true).ToUniversalTime();
-            this.EndDate = date.JoinDateAndTime(endTime, true).ToUniversalTime();
+            this.StartDate = date.JoinDateAndTime(startTime, true).ToUtcTimeZone();
+            this.EndDate = date.JoinDateAndTime(endTime, true).ToUtcTimeZone();
             this.RoomId = room?.Id ?? 0;
             this.Room = room;
             this.SynchronizeConferenceTitles(conferenceTitles, userId);
@@ -109,8 +109,8 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.EditionEventId = editionEvent?.Id ?? 0;
             this.EditionEvent = editionEvent;
-            this.StartDate = date.JoinDateAndTime(startTime, true).ToUniversalTime();
-            this.EndDate = date.JoinDateAndTime(endTime, true).ToUniversalTime();
+            this.StartDate = date.JoinDateAndTime(startTime, true).ToUtcTimeZone();
+            this.EndDate = date.JoinDateAndTime(endTime, true).ToUtcTimeZone();
             this.RoomId = room?.Id ?? 0;
             this.Room = room;
             this.SynchronizeConferenceTitles(conferenceTitles, userId);

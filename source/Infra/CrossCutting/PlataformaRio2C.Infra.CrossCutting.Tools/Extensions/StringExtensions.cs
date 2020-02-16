@@ -243,7 +243,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             {
                 if (DateTime.TryParseExact(split, dateFormat, null, DateTimeStyles.None, out DateTime dateTime))
                 {
-                    list.Add(truncateTime != true ? dateTime.ToUniversalTime() : dateTime.ToUniversalTime().Date);
+                    list.Add(truncateTime != true ? dateTime.ToUtcTimeZone().DateTime : dateTime.ToUtcTimeZone().Date);
                 }
             }
 
@@ -268,9 +268,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
 
             foreach (var split in splitted)
             {
-                if (DateTimeOffset.TryParseExact(split, dateFormat, null, DateTimeStyles.None, out DateTimeOffset dateTime))
+                if (DateTime.TryParseExact(split, dateFormat, null, DateTimeStyles.None, out DateTime dateTime))
                 {
-                    list.Add(truncateTime != true ? dateTime.UtcDateTime : dateTime.UtcDateTime.Date);
+                    list.Add(truncateTime != true ? dateTime.ToUtcTimeZone() : new DateTimeOffset(dateTime.ToUtcTimeZone().Date, TimeSpan.Zero));
                 }
             }
 

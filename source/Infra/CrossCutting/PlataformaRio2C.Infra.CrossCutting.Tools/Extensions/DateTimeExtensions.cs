@@ -4,7 +4,7 @@
 // Created          : 12-13-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 02-16-2020
 // ***********************************************************************
 // <copyright file="DateTimeExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,12 +18,14 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
     /// <summary>DateTimeExtensions</summary>
     public static class DateTimeExtensions
     {
+        private const string UserTimeZone = "E. South America Standard Time";
+
         /// <summary>Converts to usertimezone.</summary>
         /// <param name="dt">The dt.</param>
         /// <returns></returns>
         public static DateTime ToUserTimeZone(this DateTimeOffset dt)
         {
-            var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time");
+            var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(UserTimeZone);
             return TimeZoneInfo.ConvertTimeFromUtc(dt.DateTime, userTimeZone);
         }
 
@@ -32,8 +34,18 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         /// <returns></returns>
         public static DateTime ToUserTimeZone(this DateTime dtUtc)
         {
-            var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time");
+            var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(UserTimeZone);
+            var teste = TimeZoneInfo.ConvertTimeFromUtc(dtUtc, userTimeZone);
             return TimeZoneInfo.ConvertTimeFromUtc(dtUtc, userTimeZone);
+        }
+
+        /// <summary>Converts to utctimezone.</summary>
+        /// <param name="dt">The dt.</param>
+        /// <returns></returns>
+        public static DateTimeOffset ToUtcTimeZone(this DateTime dt)
+        {
+            var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(UserTimeZone);
+            return TimeZoneInfo.ConvertTimeToUtc(dt, userTimeZone);
         }
 
         /// <summary>Gets the day suffix.</summary>
