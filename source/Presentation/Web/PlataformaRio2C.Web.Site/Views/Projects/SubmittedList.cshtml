@@ -220,11 +220,11 @@
                             <ul class="pl-0 mb-0">
                                 @Html.Raw(string.Format(
                                     Texts.ProducerProjectsDates,
-                                    editionDto?.ProjectSubmitStartDate.ToShortDateString(),
-                                    editionDto?.ProjectSubmitEndDate.ToShortDateString(),
-                                    editionDto?.ProjectEvaluationStartDate.ToShortDateString(),
-                                    editionDto?.ProjectEvaluationEndDate.ToShortDateString(),
-                                    editionDto?.OneToOneMeetingsScheduleDate.ToShortDateString()))
+                                    editionDto?.ProjectSubmitStartDate.ToUserTimeZone().ToShortDateString(),
+                                    editionDto?.ProjectSubmitEndDate.ToUserTimeZone().ToShortDateString(),
+                                    editionDto?.ProjectEvaluationStartDate.ToUserTimeZone().ToShortDateString(),
+                                    editionDto?.ProjectEvaluationEndDate.ToUserTimeZone().ToShortDateString(),
+                                    editionDto?.OneToOneMeetingsScheduleDate.ToUserTimeZone().ToShortDateString()))
                             </ul>
                         </div>
                     </div>

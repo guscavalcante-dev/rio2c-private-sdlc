@@ -106,7 +106,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is project submit open]; otherwise, <c>false</c>.</returns>
         public bool IsProjectSubmitOpen()
         {
-            return DateTime.Now >= this.ProjectSubmitStartDate && DateTime.Now <= this.ProjectSubmitEndDate;
+            return DateTime.UtcNow >= this.ProjectSubmitStartDate && DateTime.UtcNow <= this.ProjectSubmitEndDate;
         }
 
         /// <summary>Determines whether [is project submit started].</summary>
@@ -114,7 +114,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is project submit started]; otherwise, <c>false</c>.</returns>
         public bool IsProjectSubmitStarted()
         {
-            return DateTime.Now >= this.ProjectSubmitStartDate;
+            return DateTime.UtcNow >= this.ProjectSubmitStartDate;
         }
 
         /// <summary>Determines whether [is project submit ended].</summary>
@@ -122,7 +122,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is project submit ended]; otherwise, <c>false</c>.</returns>
         public bool IsProjectSubmitEnded()
         {
-            return DateTime.Now > this.ProjectSubmitEndDate;
+            return DateTime.UtcNow > this.ProjectSubmitEndDate;
         }
 
         #endregion
@@ -134,7 +134,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is project evaluation open]; otherwise, <c>false</c>.</returns>
         public bool IsProjectEvaluationOpen()
         {
-            return DateTime.Now >= this.ProjectEvaluationStartDate && DateTime.Now <= this.ProjectEvaluationEndDate;
+            return DateTime.UtcNow >= this.ProjectEvaluationStartDate && DateTime.UtcNow <= this.ProjectEvaluationEndDate;
         }
 
         /// <summary>Determines whether [is project evaluation started].</summary>
@@ -142,7 +142,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is project evaluation started]; otherwise, <c>false</c>.</returns>
         public bool IsProjectEvaluationStarted()
         {
-            return DateTime.Now >= this.ProjectEvaluationStartDate;
+            return DateTime.UtcNow >= this.ProjectEvaluationStartDate;
         }
 
         /// <summary>Determines whether [is project evaluation ended].</summary>
@@ -150,7 +150,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is project evaluation ended]; otherwise, <c>false</c>.</returns>
         public bool IsProjectEvaluationEnded()
         {
-            return DateTime.Now > this.ProjectEvaluationEndDate;
+            return DateTime.UtcNow > this.ProjectEvaluationEndDate;
         }
 
         #endregion

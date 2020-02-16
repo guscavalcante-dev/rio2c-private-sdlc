@@ -34,7 +34,6 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>ReportsController</summary>
-    /// <seealso cref="PlataformaRio2C.Web.Admin.Controllers.BaseController" />
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CommissionAudiovisual)]
     public class ReportsController : BaseController
@@ -274,8 +273,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     firstLine = false;
                 };
                 worksheetAudiovisual.Cells[row, column++].Value = playersSelectedForEvaluation;
-                worksheetAudiovisual.Cells[row, column++].Value = projectDto.Project.CreateDate.DateTime.ToShortDateString();
-                worksheetAudiovisual.Cells[row, column++].Value = projectDto.Project.FinishDate?.DateTime.ToShortDateString();
+                worksheetAudiovisual.Cells[row, column++].Value = projectDto.Project.CreateDate.ToUserTimeZone().ToShortDateString();
+                worksheetAudiovisual.Cells[row, column++].Value = projectDto.Project.FinishDate?.ToUserTimeZone().ToShortDateString();
 
                 firstLine = true;
                 var platforms = string.Empty;
@@ -357,7 +356,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 excelFile.SaveAs(stream);
 
                 string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                string fileName = string.Format("{0} - {1}", Labels.AudiovisualSubscriptionProjectReport, DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")) + ".xlsx";
+                string fileName = string.Format("{0} - {1}", Labels.AudiovisualSubscriptionProjectReport, DateTime.UtcNow.ToUserTimeZone().ToString("yyyyMMdd_HHmmss")) + ".xlsx";
 
                 stream.Position = 0;
 

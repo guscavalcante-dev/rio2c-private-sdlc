@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-27-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="PlataformaRio2CContext.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -74,7 +74,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SystemParameter.Context
             {
                 if (entry.State == EntityState.Added)
                 {
-                    entry.Property(nameDateField).CurrentValue = DateTime.Now;
+                    entry.Property(nameDateField).CurrentValue = DateTime.UtcNow;
                 }
 
                 if (entry.State == EntityState.Modified)

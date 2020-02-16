@@ -513,7 +513,7 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.StartDate < this.EditionEvent.StartDate || this.StartDate > this.EditionEvent.EndDate
                 || this.EndDate < this.EditionEvent.StartDate || this.EndDate > this.EditionEvent.EndDate)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.Date, this.EditionEvent.EndDate.DateTime.ToShortDateString(), this.EditionEvent.StartDate.DateTime.ToShortDateString()), new string[] { "Date" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.Date, this.EditionEvent.EndDate.ToUserTimeZone().ToShortDateString(), this.EditionEvent.StartDate.ToUserTimeZone().ToShortDateString()), new string[] { "Date" }));
             }
 
             if (this.StartDate > this.EndDate)

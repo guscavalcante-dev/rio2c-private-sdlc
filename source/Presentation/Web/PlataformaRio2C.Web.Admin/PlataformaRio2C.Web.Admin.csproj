@@ -386,7 +386,6 @@
     <Compile Include="Controllers\ManualMessageController.cs" />
     <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Controllers\ProducerController.cs" />
-    <Compile Include="Controllers\Rio2CNetworkController.cs" />
     <Compile Include="Controllers\RoleLecturerController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\ScheduleOneToOneMeetingsController.cs" />
@@ -8222,7 +8221,6 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -8238,7 +8236,6 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
-    <Content Include="Views\Shared\_LayoutBasic.cshtml" />
     <Content Include="Views\Account\DisabledUser.cshtml" />
     <Content Include="Views\Holdings\Index.cshtml" />
     <Content Include="Views\Holdings\Create.cshtml" />
@@ -8416,7 +8413,6 @@
     <Folder Include="UploadsArchives\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\PlayerProducer\" />
-    <Folder Include="Views\Rio2CNetwork\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\fonts\glyphicons-halflings-regular.woff" />

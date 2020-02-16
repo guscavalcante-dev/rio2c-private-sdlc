@@ -124,9 +124,9 @@ namespace PlataformaRio2C.Web.Site.Hub
                         RecipientUserUid = messageDto.RecipientUser.Uid,
                         RecipientEmail = messageDto.RecipientUser.Email,
                         SendDate = messageDto.Message.SendDate.ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.CurrentCulture),
-                        SendDateFormatted = messageDto.Message.SendDate.DateTime.ToShortDateString() + " " + messageDto.Message.SendDate.DateTime.ToLongTimeString(),
+                        SendDateFormatted = messageDto.Message.SendDate.ToUserTimeZone().ToShortDateString() + " " + messageDto.Message.SendDate.ToUserTimeZone().ToLongTimeString(),
                         ReadDate = messageDto.Message.ReadDate?.ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.CurrentCulture),
-                        ReadDateFormatted = messageDto.Message.ReadDate?.DateTime.ToShortDateString() + " " + messageDto.Message.ReadDate?.DateTime.ToLongTimeString(),
+                        ReadDateFormatted = messageDto.Message.ReadDate?.ToUserTimeZone().ToShortDateString() + " " + messageDto.Message.ReadDate?.ToUserTimeZone().ToLongTimeString(),
                         Text = messageDto.Message.Text
                     }
                 };

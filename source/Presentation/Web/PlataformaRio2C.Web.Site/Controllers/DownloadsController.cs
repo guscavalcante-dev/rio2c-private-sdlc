@@ -4,7 +4,7 @@
 // Created          : 11-18-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="DownloadsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,6 +22,7 @@ using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.CustomActionResults;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Web.Site.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 
@@ -91,7 +92,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 }
             }
 
-            return new ExcelResult(workbook, Labels.ExecutivesListDownload + "_" + DateTime.Now.ToString("yyyyMMdd"));
+            return new ExcelResult(workbook, Labels.ExecutivesListDownload + "_" + DateTime.UtcNow.ToUserTimeZone().ToString("yyyyMMdd"));
         }
 
         #endregion

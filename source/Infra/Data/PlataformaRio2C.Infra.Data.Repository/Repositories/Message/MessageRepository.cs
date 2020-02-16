@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-05-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="MessageRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -163,7 +163,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<Message> IsNotificationEmailNotSent(this IQueryable<Message> query)
         {
-            var date = DateTime.Now.AddMinutes(-10);
+            var date = DateTime.UtcNow.AddMinutes(-10);
 
             query = query.Where(m => !m.NotificationEmailSendDate.HasValue
                                      && m.SendDate < date);

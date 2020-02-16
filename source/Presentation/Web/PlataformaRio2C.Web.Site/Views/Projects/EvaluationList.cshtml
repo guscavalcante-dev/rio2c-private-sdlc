@@ -67,12 +67,10 @@
                 <div class="kt-iconbox__content mt-3">
                     <ul class="pl-0 mb-0">
                         @Html.Raw(string.Format(
-                            Texts.ProducerProjectsDates,
-                            editionDto?.ProjectSubmitStartDate.DateTime.ToShortDateString(),
-                            editionDto?.ProjectSubmitEndDate.DateTime.ToShortDateString(),
-                            editionDto?.ProjectEvaluationStartDate.DateTime.ToShortDateString(),
-                            editionDto?.ProjectEvaluationEndDate.DateTime.ToShortDateString(),
-                            editionDto?.OneToOneMeetingsScheduleDate.DateTime.ToShortDateString()))
+                            Texts.PlayerProjectsDates,
+                            editionDto?.ProjectEvaluationStartDate.ToUserTimeZone().ToShortDateString(),
+                            editionDto?.ProjectEvaluationEndDate.ToUserTimeZone().ToShortDateString(),
+                            editionDto?.OneToOneMeetingsScheduleDate.ToUserTimeZone().ToShortDateString()))
                     </ul>
                 </div>
             </div>

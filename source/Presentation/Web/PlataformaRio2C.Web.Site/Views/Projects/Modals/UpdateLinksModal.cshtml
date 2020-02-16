@@ -20,7 +20,7 @@
                     </div>
                     @*<div class="row">
                         <div class="col-sm-12 text-right">
-                            @Labels.LastUpdateOn <b>@Model.UpdateDate.ToShortDateString() @Model.UpdateDate.ToLongTimeString()</b> @Labels.By <b>@Model.UpdaterBaseDto.Name</b>.
+                            @Labels.LastUpdateOn <b>@Model.UpdateDate.ToUserTimeZone().ToShortDateString() @Model.UpdateDate.ToUserTimeZone().ToLongTimeString()</b> @Labels.By <b>@Model.UpdaterBaseDto.Name</b>.
                         </div>
                     </div>*@
                 }

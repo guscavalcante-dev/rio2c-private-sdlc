@@ -27,6 +27,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             return TimeZoneInfo.ConvertTimeFromUtc(dt.DateTime, userTimeZone);
         }
 
+        /// <summary>Converts to usertimezone.</summary>
+        /// <param name="dtUtc">The dt UTC.</param>
+        /// <returns></returns>
+        public static DateTime ToUserTimeZone(this DateTime dtUtc)
+        {
+            var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time");
+            return TimeZoneInfo.ConvertTimeFromUtc(dtUtc, userTimeZone);
+        }
+
         /// <summary>Gets the day suffix.</summary>
         /// <param name="dt">The dt.</param>
         /// <returns></returns>

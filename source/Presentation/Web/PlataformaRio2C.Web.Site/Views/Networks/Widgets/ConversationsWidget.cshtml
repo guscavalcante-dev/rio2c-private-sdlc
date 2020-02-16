@@ -69,7 +69,7 @@
             <div class="kt-widget__action">
                 @if (conversationDto.LastMessageDate.HasValue)
                 {
-                    <time class="timeago kt-widget__date" datetime="@conversationDto.LastMessageDate.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.CurrentCulture)">@conversationDto.LastMessageDate.Value.DateTime.ToShortDateString() @conversationDto.LastMessageDate.Value.DateTime.ToLongTimeString()</time>
+                    <time class="timeago kt-widget__date" datetime="@conversationDto.LastMessageDate.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.CurrentCulture)">@conversationDto.LastMessageDate.Value.ToUserTimeZone().ToShortDateString() @conversationDto.LastMessageDate.Value.ToUserTimeZone().ToLongTimeString()</time>
                 }
                 <span class="kt-badge kt-badge--success kt-font-bold unread-messages-count @(conversationDto.UnreadMessagesCount > 0 ? string.Empty : "d-none")">@conversationDto.UnreadMessagesCount</span>
             </div>
