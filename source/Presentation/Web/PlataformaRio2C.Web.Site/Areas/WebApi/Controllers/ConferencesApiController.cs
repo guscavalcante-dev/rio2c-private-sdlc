@@ -4,7 +4,7 @@
 // Created          : 01-08-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified On : 02-16-2020
 // ***********************************************************************
 // <copyright file="ConferencesApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -106,7 +106,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             var collaboratorsApiDtos = await this.conferenceRepo.FindAllPublicApiPaged(
                 edition.Id,
                 request?.Keywords,
-                request?.EditionDates?.ToListDateTime(',', "yyyy-MM-dd"),
+                request?.EditionDates?.ToListDateTimeOffset(',', "yyyy-MM-dd", true),
                 request?.EventsUids?.ToListGuid(','),
                 request?.RoomsUids?.ToListGuid(','),
                 request?.TracksUids?.ToListGuid(','),
@@ -137,9 +137,9 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                             c.GetConferenceTitleDtoByLanguageCode(defaultLanguage?.Code)?.ConferenceTitle?.Value?.Trim(),
                     Synopsis = c.GetConferenceSynopsisDtoByLanguageCode(requestLanguage?.Code)?.ConferenceSynopsis?.Value?.Trim() ??
                                c.GetConferenceSynopsisDtoByLanguageCode(defaultLanguage?.Code)?.ConferenceSynopsis?.Value?.Trim(),
-                    Date = c.Conference.StartDate.ToString("yyyy-MM-dd"),
-                    StartTime = c.Conference.StartDate.ToString("HH:mm"),
-                    EndTime = c.Conference.EndDate.ToString("HH:mm"),
+                    Date = c.Conference.StartDate.ToUserTimeZone().ToString("yyyy-MM-dd"),
+                    StartTime = c.Conference.StartDate.ToUserTimeZone().ToString("HH:mm"),
+                    EndTime = c.Conference.EndDate.ToUserTimeZone().ToString("HH:mm"),
                     DurationMinutes = (int) ((c.Conference.EndDate - c.Conference.StartDate).TotalMinutes),
                     Room = c.RoomDto != null ? new RoomBaseApiResponse
                     {

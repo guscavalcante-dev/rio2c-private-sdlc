@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-12-2020
+// Last Modified On : 02-16-2020
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -227,8 +227,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         /// <param name="s">The s.</param>
         /// <param name="separator">The separator.</param>
         /// <param name="dateFormat">The date format.</param>
+        /// <param name="truncateTime">The truncate time.</param>
         /// <returns></returns>
-        public static List<DateTime> ToListDateTime(this string s, char separator, string dateFormat)
+        public static List<DateTime> ToListDateTime(this string s, char separator, string dateFormat, bool? truncateTime = false)
         {
             var list = new List<DateTime>();
 
@@ -242,7 +243,34 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             {
                 if (DateTime.TryParseExact(split, dateFormat, null, DateTimeStyles.None, out DateTime dateTime))
                 {
-                    list.Add(dateTime);
+                    list.Add(truncateTime != true ? dateTime.ToUniversalTime() : dateTime.ToUniversalTime().Date);
+                }
+            }
+
+            return list;
+        }
+
+        /// <summary>Converts to listdatetimeoffset.</summary>
+        /// <param name="s">The s.</param>
+        /// <param name="separator">The separator.</param>
+        /// <param name="dateFormat">The date format.</param>
+        /// <param name="truncateTime">The truncate time.</param>
+        /// <returns></returns>
+        public static List<DateTimeOffset> ToListDateTimeOffset(this string s, char separator, string dateFormat, bool? truncateTime = false)
+        {
+            var list = new List<DateTimeOffset>();
+
+            var splitted = s?.Split(separator);
+            if (splitted == null || splitted.Length <= 0)
+            {
+                return list;
+            }
+
+            foreach (var split in splitted)
+            {
+                if (DateTimeOffset.TryParseExact(split, dateFormat, null, DateTimeStyles.None, out DateTimeOffset dateTime))
+                {
+                    list.Add(truncateTime != true ? dateTime.UtcDateTime : dateTime.UtcDateTime.Date);
                 }
             }
 

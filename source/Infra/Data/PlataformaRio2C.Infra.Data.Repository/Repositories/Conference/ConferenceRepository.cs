@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 02-16-2020
 // ***********************************************************************
 // <copyright file="ConferenceRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -116,7 +116,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="pillarsUids">The pillars uids.</param>
         /// <param name="presentationFormatsUids">The presentation formats uids.</param>
         /// <returns></returns>
-        internal static IQueryable<Conference> FindByApiFilters(this IQueryable<Conference> query, List<DateTime> editionDates, List<Guid> editionEventsUids, List<Guid> roomsUids, List<Guid> tracksUids, List<Guid> pillarsUids, List<Guid> presentationFormatsUids)
+        internal static IQueryable<Conference> FindByApiFilters(this IQueryable<Conference> query, List<DateTimeOffset> editionDates, List<Guid> editionEventsUids, List<Guid> roomsUids, List<Guid> tracksUids, List<Guid> pillarsUids, List<Guid> presentationFormatsUids)
         {
             if (editionDates?.Any() == true || editionEventsUids?.Any() == true || roomsUids?.Any() == true || pillarsUids?.Any() == true || tracksUids?.Any() == true || presentationFormatsUids?.Any() == true)
             {
@@ -130,7 +130,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
                 if (editionDates?.Any() == true)
                 {
-                    innerEditionDatesWhere = innerEditionDatesWhere.Or(c => editionDates.Contains(DbFunctions.TruncateTime(c.StartDate.DateTime).Value));
+                    innerEditionDatesWhere = innerEditionDatesWhere.Or(c => editionDates.Contains(DbFunctions.TruncateTime(c.StartDate).Value));
                 }
 
                 if (editionEventsUids?.Any() == true)
@@ -527,7 +527,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<IPagedList<ConferenceDto>> FindAllPublicApiPaged(
             int editionId,
             string keywords,
-            List<DateTime> editionDates,
+            List<DateTimeOffset> editionDates,
             List<Guid> editionEventsUids,
             List<Guid> roomsUids,
             List<Guid> tracksUids,
