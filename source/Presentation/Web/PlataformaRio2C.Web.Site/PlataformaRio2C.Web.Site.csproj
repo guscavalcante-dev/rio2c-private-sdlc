@@ -422,6 +422,7 @@
     <Content Include="Assets\components\jquery.timeago\locales\jquery.timeago.en-us.js" />
     <Content Include="Assets\components\jquery.timeago\locales\jquery.timeago.pt-br-short.js" />
     <Content Include="Assets\components\jquery.timeago\locales\jquery.timeago.pt-br.js" />
+    <Content Include="Assets\components\moment-timezone\moment-timezone-with-data.js" />
     <Content Include="Assets\css\myrio2c.common.responsive.css" />
     <Content Include="Assets\css\myrio2c.common.css" />
     <Content Include="Assets\css\pages\onboarding\wizard-2.css" />

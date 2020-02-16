@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified On : 02-16-2020
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,6 +33,7 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/themes/metronic/vendors/general/bootstrap/dist/js/bootstrap.min.js",
                 "~/Assets/themes/metronic/vendors/general/js-cookie/src/js.cookie.js",
                 "~/Assets/themes/metronic/vendors/general/moment/min/moment-with-locales.min.js",
+                "~/Assets/components/moment-timezone/moment-timezone-with-data.js",
                 "~/Assets/themes/metronic/vendors/general/tooltip.js/dist/umd/tooltip.min.js",
                 "~/Assets/themes/metronic/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js",
                 "~/Assets/themes/metronic/vendors/general/toastr/build/toastr.min.js",
@@ -405,59 +406,59 @@ namespace PlataformaRio2C.Web.Site
                 "~/Content/js/darkroom.js"));
 
 
-            #region bundlesAngular
+            //#region bundlesAngular
 
-            var bundlesAngular = new ScriptBundle("~/Scripts/angular/bundles");
-            bundlesAngular.Include("~/Scripts/angular/angular.min.js");
-            bundlesAngular.Include("~/Scripts/angular/angular-aria.min.js");
-            bundlesAngular.Include("~/Scripts/angular/angular-animate.min.js");
-            bundlesAngular.Include("~/Scripts/angular/angular-messages.min.js");
-            bundlesAngular.Include("~/Scripts/angular/angular-sanitize.min.js");
-            bundlesAngular.Include("~/Scripts/angular/angular-route.min.js");
-            bundlesAngular.Include("~/Scripts/angular/angular-cookies.min.js");
-            bundlesAngular.Include("~/Scripts/angular-ui/ui-bootstrap.min.js");
-            bundlesAngular.Include("~/Scripts/angular-ui/ui-bootstrap-tpls.min.js");
-            bundlesAngular.Include("~/Scripts/ngToast/ngToast.min.js");
-            bundlesAngular.Include("~/Scripts/MarlinToolKit/MarlinAlert/MarlinAlert.module.js");
-            bundlesAngular.Include("~/Scripts/MarlinToolKit/MarlinAlert/MarlinAlert.config.js");
-            bundlesAngular.Include("~/Scripts/MarlinToolKit/MarlinAlert/*.js");
-            bundlesAngular.Include("~/Scripts/MarlinToolKit/MarlinToolKit.module.js");
-            bundlesAngular.Include("~/Scripts/angular-vs-repeat-master/angular-vs-repeat.min.js");
-            bundlesAngular.Include("~/Scripts/Moment/moment.min.js");
-            bundlesAngular.Include("~/Scripts/Moment/moment-with-locales.min.js");
+            //var bundlesAngular = new ScriptBundle("~/Scripts/angular/bundles");
+            //bundlesAngular.Include("~/Scripts/angular/angular.min.js");
+            //bundlesAngular.Include("~/Scripts/angular/angular-aria.min.js");
+            //bundlesAngular.Include("~/Scripts/angular/angular-animate.min.js");
+            //bundlesAngular.Include("~/Scripts/angular/angular-messages.min.js");
+            //bundlesAngular.Include("~/Scripts/angular/angular-sanitize.min.js");
+            //bundlesAngular.Include("~/Scripts/angular/angular-route.min.js");
+            //bundlesAngular.Include("~/Scripts/angular/angular-cookies.min.js");
+            //bundlesAngular.Include("~/Scripts/angular-ui/ui-bootstrap.min.js");
+            //bundlesAngular.Include("~/Scripts/angular-ui/ui-bootstrap-tpls.min.js");
+            //bundlesAngular.Include("~/Scripts/ngToast/ngToast.min.js");
+            //bundlesAngular.Include("~/Scripts/MarlinToolKit/MarlinAlert/MarlinAlert.module.js");
+            //bundlesAngular.Include("~/Scripts/MarlinToolKit/MarlinAlert/MarlinAlert.config.js");
+            //bundlesAngular.Include("~/Scripts/MarlinToolKit/MarlinAlert/*.js");
+            //bundlesAngular.Include("~/Scripts/MarlinToolKit/MarlinToolKit.module.js");
+            //bundlesAngular.Include("~/Scripts/angular-vs-repeat-master/angular-vs-repeat.min.js");
+            //bundlesAngular.Include("~/Scripts/Moment/moment.min.js");
+            //bundlesAngular.Include("~/Scripts/Moment/moment-with-locales.min.js");
 
 
-            bundles.Add(bundlesAngular);
+            //bundles.Add(bundlesAngular);
 
-            #endregion
+            //#endregion
 
-            #region bundlesAngularExtensions
+            //#region bundlesAngularExtensions
 
-            var bundlesAngularExtensions = new ScriptBundle("~/Content/js/Rio2C/bundles");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2C/Rio2C.module.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2C/Rio2C.config.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2C/Rio2C.loadimage.directive.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2C/Rio2C.pluralize.filter.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2C/Project/Project.module.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2C/Project/*.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2C/Player/Player.module.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2C/Player/*.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2C/Conference/Conference.module.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2C/Conference/*.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2C/Message/Message.module.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2C/Message/*.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2C/Schedule/Schedule.module.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2C/Schedule/*.js");
-            bundles.Add(bundlesAngularExtensions);
+            //var bundlesAngularExtensions = new ScriptBundle("~/Content/js/Rio2C/bundles");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2C/Rio2C.module.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2C/Rio2C.config.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2C/Rio2C.loadimage.directive.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2C/Rio2C.pluralize.filter.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2C/Project/Project.module.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2C/Project/*.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2C/Player/Player.module.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2C/Player/*.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2C/Conference/Conference.module.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2C/Conference/*.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2C/Message/Message.module.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2C/Message/*.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2C/Schedule/Schedule.module.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2C/Schedule/*.js");
+            //bundles.Add(bundlesAngularExtensions);
 
-            #endregion
+            //#endregion
 
-            bundles.Add(new ScriptBundle("~/bundles/js/scheduleCustomScripts").Include(
-                "~/Assets/themes/metronic/vendors/custom/fullcalendar/fullcalendar.bundle.js",
-                "~/Assets/js/pages/schedule/components/calendar/basic.js"));
+            //bundles.Add(new ScriptBundle("~/bundles/js/scheduleCustomScripts").Include(
+            //    "~/Assets/themes/metronic/vendors/custom/fullcalendar/fullcalendar.bundle.js",
+            //    "~/Assets/js/pages/schedule/components/calendar/basic.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/projectSubmitCustomScripts").Include(
-"~/Assets/themes/metronic/js/demo4/pages/wizard/wizard-3.js"));
+            //bundles.Add(new ScriptBundle("~/bundles/js/projectSubmitCustomScripts").Include(
+            //    "~/Assets/themes/metronic/js/demo4/pages/wizard/wizard-3.js"));
 
             #endregion
 
@@ -487,7 +488,7 @@ namespace PlataformaRio2C.Web.Site
                 .Include("~/Assets/themes/metronic/vendors/general/bootstrap-datepicker/dist/css/bootstrap-datepicker.css", new CssRewriteUrlTransform()));
 
             bundles.Add(new ScriptBundle("~/bundles/js/bootstrap-datepicker.js").Include(                
-                "~/Assets/themes/metronic/vendors/general/moment/min/moment-with-locales.min.js",
+                //"~/Assets/themes/metronic/vendors/general/moment/min/moment-with-locales.min.js",
                 "~/Assets/themes/metronic/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.js",
                 "~/Assets/components/bootstrap-timepicker/bootstrap-datepicker.en-us.js",
                 "~/Assets/components/bootstrap-timepicker/bootstrap-datepicker.pt-br.js"));

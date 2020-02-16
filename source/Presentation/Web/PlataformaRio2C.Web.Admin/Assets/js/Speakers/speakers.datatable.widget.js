@@ -4,7 +4,7 @@
 // Created          : 12-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-06-2020
+// Last Modified On : 02-16-2020
 // ***********************************************************************
 // <copyright file="speakers.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -311,14 +311,14 @@ var SpeakersDataTableWidget = function () {
                 {
                     data: 'UpdateDate',
                     render: function (data) {
-                        return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                        return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
                 },
                 {
                     data: 'SpeakerCurrentEditionOnboardingFinishDate',
                     render: function (data) {
                         if (data !== null) {
-                            return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                            return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                         }
 
                         return '';
@@ -328,7 +328,7 @@ var SpeakersDataTableWidget = function () {
                     data: 'CurrentEditionOnboardingFinishDate',
                     render: function (data) {
                         if (data !== null) {
-                            return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                            return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                         }
 
                         return '';

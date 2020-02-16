@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-09-2020
+// Last Modified On : 02-16-2020
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,6 +20,7 @@ var MyRio2cCommon = function () {
     globalVariables.userInterfaceLanguageUppercase = '';
     globalVariables.editionUrlCode = '';
     globalVariables.bucket = '';
+    globalVariables.momentTimeZone = 'America/Sao_Paulo';
 
     var setGlobalVariables = function (userInterfaceLanguage, editionUrlCode, bucket) {
         globalVariables.userInterfaceLanguage = userInterfaceLanguage;

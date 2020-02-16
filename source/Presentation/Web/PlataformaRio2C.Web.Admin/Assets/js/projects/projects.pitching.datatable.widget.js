@@ -3,8 +3,8 @@
 // Author           : William Sergio Almado Junior
 // Created          : 12-13-2019
 //
-// Last Modified By : William Sergio Almado Junior
-// Last Modified On : 12-13-2019
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 02-16-2020
 // ***********************************************************************
 // <copyright file="projects.pitching.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -203,13 +203,13 @@ var ProjectsPitchingDataTableWidget = function () {
                 {
                     data: 'CreateDate',
                     render: function (data) {
-                        return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                        return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
                 },
                 {
                     data: 'FinishDate',
                     render: function (data) {
-                        return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                        return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
                 },
             ],

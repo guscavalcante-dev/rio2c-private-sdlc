@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified On : 02-16-2020
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,6 +33,7 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/themes/metronic/vendors/general/bootstrap/dist/js/bootstrap.min.js",
                 "~/Assets/themes/metronic/vendors/general/js-cookie/src/js.cookie.js",
                 "~/Assets/themes/metronic/vendors/general/moment/min/moment-with-locales.min.js",
+                "~/Assets/components/moment-timezone/moment-timezone-with-data.js",
                 "~/Assets/themes/metronic/vendors/general/tooltip.js/dist/umd/tooltip.min.js",
                 "~/Assets/themes/metronic/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js",
                 "~/Assets/themes/metronic/vendors/general/toastr/build/toastr.min.js",
@@ -241,7 +242,7 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/bootstrap-datepicker.js").Include(
                 "~/Assets/themes/metronic/vendors/general/inputmask/dist/jquery.inputmask.bundle.js",
-                "~/Assets/themes/metronic/vendors/general/moment/min/moment-with-locales.min.js",
+                //"~/Assets/themes/metronic/vendors/general/moment/min/moment-with-locales.min.js",
                 "~/Assets/themes/metronic/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.js",
                 "~/Assets/components/bootstrap-timepicker/bootstrap-datepicker.en-us.js",
                 "~/Assets/components/bootstrap-timepicker/bootstrap-datepicker.pt-br.js"));
@@ -588,7 +589,6 @@ namespace PlataformaRio2C.Web.Admin
                       "~/Content/assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js",
                        "~/Content/assets/bootstrap-fileupload/bootstrap-fileupload.min.js"));
 
-
             bundles.Add(new ScriptBundle("~/Content/js/bundle").Include(
                 "~/Content/js/jquery.cookie.js",
                 "~/Content/js/jquery.dcjqaccordion.2.7.min.js",
@@ -603,76 +603,75 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Content/js/advanced-form-components.js",
                 "~/Content/js/common-scripts.js"));
 
+            //#region bundlesAngular
 
-            #region bundlesAngular
+            //var bundlesAngular = new ScriptBundle("~/Scripts/angular/bundles");
+            //bundlesAngular.Include("~/Scripts/angular/angular.min.js");
+            //bundlesAngular.Include("~/Scripts/angular/angular-aria.min.js");
+            //bundlesAngular.Include("~/Scripts/angular/angular-animate.min.js");
+            //bundlesAngular.Include("~/Scripts/angular/angular-messages.min.js");
+            //bundlesAngular.Include("~/Scripts/angular/angular-sanitize.min.js");
+            //bundlesAngular.Include("~/Scripts/angular/angular-route.min.js");
+            //bundlesAngular.Include("~/Scripts/angular/angular-resource.min.js");
+            //bundlesAngular.Include("~/Scripts/angular/angular-cookies.min.js");
+            //bundlesAngular.Include("~/Scripts/angular/i18n/angular-locale_pt-br.js");            
+            //bundlesAngular.Include("~/Scripts/angular-ui/ui-bootstrap.min.js");
+            //bundlesAngular.Include("~/Scripts/angular-ui/ui-bootstrap-tpls.min.js");
+            //bundlesAngular.Include("~/Scripts/ngToast/ngToast.min.js");
+            //bundlesAngular.Include("~/Scripts/MarlinToolKit/MarlinAlert/MarlinAlert.module.js");
+            //bundlesAngular.Include("~/Scripts/MarlinToolKit/MarlinAlert/MarlinAlert.config.js");
+            //bundlesAngular.Include("~/Scripts/MarlinToolKit/MarlinAlert/*.js");
+            //bundlesAngular.Include("~/Scripts/MarlinToolKit/MarlinToolKit.module.js");
+            //bundlesAngular.Include("~/Scripts/angular-chart/Chart.min.js");
+            //bundlesAngular.Include("~/Scripts/angular-chart/angular-chart.min.js");
+            //bundlesAngular.Include("~/Scripts/angular-count-to/angular-count-to.min.js");
 
-            var bundlesAngular = new ScriptBundle("~/Scripts/angular/bundles");
-            bundlesAngular.Include("~/Scripts/angular/angular.min.js");
-            bundlesAngular.Include("~/Scripts/angular/angular-aria.min.js");
-            bundlesAngular.Include("~/Scripts/angular/angular-animate.min.js");
-            bundlesAngular.Include("~/Scripts/angular/angular-messages.min.js");
-            bundlesAngular.Include("~/Scripts/angular/angular-sanitize.min.js");
-            bundlesAngular.Include("~/Scripts/angular/angular-route.min.js");
-            bundlesAngular.Include("~/Scripts/angular/angular-resource.min.js");
-            bundlesAngular.Include("~/Scripts/angular/angular-cookies.min.js");
-            bundlesAngular.Include("~/Scripts/angular/i18n/angular-locale_pt-br.js");            
-            bundlesAngular.Include("~/Scripts/angular-ui/ui-bootstrap.min.js");
-            bundlesAngular.Include("~/Scripts/angular-ui/ui-bootstrap-tpls.min.js");
-            bundlesAngular.Include("~/Scripts/ngToast/ngToast.min.js");
-            bundlesAngular.Include("~/Scripts/MarlinToolKit/MarlinAlert/MarlinAlert.module.js");
-            bundlesAngular.Include("~/Scripts/MarlinToolKit/MarlinAlert/MarlinAlert.config.js");
-            bundlesAngular.Include("~/Scripts/MarlinToolKit/MarlinAlert/*.js");
-            bundlesAngular.Include("~/Scripts/MarlinToolKit/MarlinToolKit.module.js");
-            bundlesAngular.Include("~/Scripts/angular-chart/Chart.min.js");
-            bundlesAngular.Include("~/Scripts/angular-chart/angular-chart.min.js");
-            bundlesAngular.Include("~/Scripts/angular-count-to/angular-count-to.min.js");
+            //bundlesAngular.Include("~/Scripts/Moment/moment.min.js");
+            //bundlesAngular.Include("~/Scripts/Moment/moment-with-locales.min.js");
 
-            bundlesAngular.Include("~/Scripts/Moment/moment.min.js");
-            bundlesAngular.Include("~/Scripts/Moment/moment-with-locales.min.js");
+            //bundles.Add(bundlesAngular);
 
-            bundles.Add(bundlesAngular);
+            //#endregion
 
-            #endregion
+            //#region bundlesAngularExtensions
 
-            #region bundlesAngularExtensions
-
-            var bundlesAngularExtensions = new ScriptBundle("~/Content/js/Rio2CAdmin/bundles");
-            bundlesAngularExtensions.Include("~/Content/js/MarlinValidate/MarlinValidate.module.js");
-            bundlesAngularExtensions.Include("~/Content/js/MarlinValidate/*.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Rio2CAdmin.module.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Rio2CAdmin.loadImage.directive.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Collaborator/Collaborator.module.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Collaborator/*.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Logistics/Logistics.module.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Logistics/*.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Conference/Conference.module.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Conference/*.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Producer/Producer.module.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Producer/*.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Project/Project.module.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Project/*.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Room/Room.module.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Room/*.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/RoleLecturer/RoleLecturer.module.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/RoleLecturer/*.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Dashboard/Dashboard.module.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Dashboard/*.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/OneToOneMeetings/OneToOneMeetings.module.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/OneToOneMeetings/OneToOneMeetings.service.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/OneToOneMeetings/*.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Holding/Holding.module.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Holding/*.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/CollaboratorProducer/CollaboratorProducer.module.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/CollaboratorProducer/*.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Schedule/Schedule.module.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Schedule/*.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/FinancialReport/FinancialReport.module.js");
-            bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/FinancialReport/*.js");
+            //var bundlesAngularExtensions = new ScriptBundle("~/Content/js/Rio2CAdmin/bundles");
+            //bundlesAngularExtensions.Include("~/Content/js/MarlinValidate/MarlinValidate.module.js");
+            //bundlesAngularExtensions.Include("~/Content/js/MarlinValidate/*.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Rio2CAdmin.module.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Rio2CAdmin.loadImage.directive.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Collaborator/Collaborator.module.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Collaborator/*.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Logistics/Logistics.module.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Logistics/*.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Conference/Conference.module.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Conference/*.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Producer/Producer.module.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Producer/*.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Project/Project.module.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Project/*.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Room/Room.module.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Room/*.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/RoleLecturer/RoleLecturer.module.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/RoleLecturer/*.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Dashboard/Dashboard.module.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Dashboard/*.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/OneToOneMeetings/OneToOneMeetings.module.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/OneToOneMeetings/OneToOneMeetings.service.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/OneToOneMeetings/*.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Holding/Holding.module.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Holding/*.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/CollaboratorProducer/CollaboratorProducer.module.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/CollaboratorProducer/*.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Schedule/Schedule.module.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/Schedule/*.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/FinancialReport/FinancialReport.module.js");
+            //bundlesAngularExtensions.Include("~/Content/js/Rio2CAdmin/FinancialReport/*.js");
 
 
-            bundles.Add(bundlesAngularExtensions);
+            //bundles.Add(bundlesAngularExtensions);
 
-            #endregion
+            //#endregion
 
             #endregion
 
