@@ -860,3 +860,9 @@ set
 	StartDate = DATEADD(HOUR, 3, StartDate),
 	EndDate = DATEADD(HOUR, 3, EndDate)
 go
+
+update dbo.Conferences
+set
+	StartDate = DATEADD(HOUR, 3, StartDate),
+	EndDate = DATEADD(HOUR, 3, EndDate)
+go
