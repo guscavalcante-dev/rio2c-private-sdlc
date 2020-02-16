@@ -24,11 +24,11 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public int EditionId { get; private set; }
         public int OrganizationId { get; private set; }
-        public DateTime? OnboardingStartDate { get; private set; }
-        public DateTime? OnboardingFinishDate { get; private set; }
-        public DateTime? OnboardingOrganizationDate { get; private set; }
-        public DateTime? OnboardingInterestsDate { get; private set; }
-        public DateTime? ProjectSubmissionOrganizationDate { get; private set; }
+        public DateTimeOffset? OnboardingStartDate { get; private set; }
+        public DateTimeOffset? OnboardingFinishDate { get; private set; }
+        public DateTimeOffset? OnboardingOrganizationDate { get; private set; }
+        public DateTimeOffset? OnboardingInterestsDate { get; private set; }
+        public DateTimeOffset? ProjectSubmissionOrganizationDate { get; private set; }
         public int SellProjectsCount { get; set; }
 
         public virtual Edition Edition { get; private set; }

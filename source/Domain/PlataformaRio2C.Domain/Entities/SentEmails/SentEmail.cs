@@ -26,8 +26,8 @@ namespace PlataformaRio2C.Domain.Entities
         public int RecipientUserId { get; private set; }
         public int? EditionId { get; private set; }
         public string EmailType { get; private set; }
-        public DateTime EmailSendDate { get; private set; }
-        public DateTime? EmailReadDate { get; private set; }
+        public DateTimeOffset EmailSendDate { get; private set; }
+        public DateTimeOffset? EmailReadDate { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="SentEmail"/> class.</summary>
         /// <param name="sentEmailUid">The sent email uid.</param>

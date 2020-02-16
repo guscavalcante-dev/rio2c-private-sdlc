@@ -4,7 +4,7 @@
 // Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-16-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="CropperImageBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -47,7 +47,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="imageUid">The image uid.</param>
         /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
         /// <param name="isRequired">if set to <c>true</c> [is required].</param>
-        public CropperImageBaseCommand(DateTime? imageUploadDate, Guid? imageUid, FileRepositoryPathType fileRepositoryPathType, bool isRequired)
+        public CropperImageBaseCommand(DateTimeOffset? imageUploadDate, Guid? imageUid, FileRepositoryPathType fileRepositoryPathType, bool isRequired)
         {
             this.ImageUploadDate = imageUploadDate?.ToString("yyyyMMddHHmmss");
             this.ImageUid = imageUid;

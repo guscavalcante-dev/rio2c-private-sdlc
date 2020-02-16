@@ -26,7 +26,7 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int NameMaxLength = 81;
 
         public string Name { get; private set; }
-        public DateTime? ImageUploadDate { get; private set; }
+        public DateTimeOffset? ImageUploadDate { get; private set; }
 
         public virtual User Updater { get; private set; }
 

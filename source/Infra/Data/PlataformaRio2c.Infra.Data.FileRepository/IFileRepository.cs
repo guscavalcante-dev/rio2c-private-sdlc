@@ -4,7 +4,7 @@
 // Created          : 08-15-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-13-2020
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="IFileRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,7 +20,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
     /// <summary>IFileRepository</summary>
     public interface IFileRepository
     {
-        string GetImageUrl(FileRepositoryPathType fileRepositoryPathType, Guid? imageUid, DateTime? imageUploadDate, bool isThumbnail, string additionalFileInfo = null);
+        string GetImageUrl(FileRepositoryPathType fileRepositoryPathType, Guid? imageUid, DateTimeOffset? imageUploadDate, bool isThumbnail, string additionalFileInfo = null);
         string GetUrl(FileRepositoryPathType fileRepositoryPathType, Guid fileUid);
         void Upload(Stream inputStream, string contentType, string fileName, FileRepositoryPathType fileRepositoryPathType, params object[] args);
         void DeleteImages(Guid imageUid, FileRepositoryPathType fileRepositoryPathType, params object[] args);

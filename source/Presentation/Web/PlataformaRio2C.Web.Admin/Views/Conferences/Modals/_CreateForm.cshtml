@@ -11,7 +11,7 @@
             <option value="" data-start-date="" data-end-date="">@(Labels.Select)...</option>
             @foreach (var editionEvent in Model.EditionEvents)
             {
-                <option value="@editionEvent.Uid" @(editionEvent.Uid == Model.EditionEventUid ? "selected" : "") data-start-date="@editionEvent.StartDate.ToShortDateString()" data-end-date="@editionEvent.EndDate.ToShortDateString()">
+                <option value="@editionEvent.Uid" @(editionEvent.Uid == Model.EditionEventUid ? "selected" : "") data-start-date="@editionEvent.StartDate.ToUserTimeZone().ToShortDateString()" data-end-date="@editionEvent.EndDate.ToUserTimeZone().ToShortDateString()">
                     @editionEvent.Name
                 </option>
             }
@@ -22,10 +22,10 @@
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.Date, new { @class = "control-label" })
-        @Html.TextBox("Date", Model.Date?.ToShortDateString(), new { @class = "form-control enable-datepicker", @readonly = "readonly", data_date_start_date = editionDto?.StartDate.ToShortDateString(), data_date_end_date = editionDto?.EndDate.ToShortDateString() })
+        @Html.TextBox("Date", Model.Date?.ToShortDateString(), new { @class = "form-control enable-datepicker", @readonly = "readonly", data_date_start_date = editionDto?.StartDate.ToUserTimeZone().ToShortDateString(), data_date_end_date = editionDto?.EndDate.ToUserTimeZone().ToShortDateString() })
         @if (Model.StartDate.HasValue && Model.EndDate.HasValue)
         {
-            <span id="data-period-container" class="form-text text-muted">@string.Format(Messages.DateBetweenDates, Model.EndDate.Value.ToShortDateString(), Model.StartDate.Value.ToShortDateString())</span>
+            <span id="data-period-container" class="form-text text-muted">@string.Format(Messages.DateBetweenDates, Model.EndDate.Value.ToUserTimeZone().ToShortDateString(), Model.StartDate.Value.ToUserTimeZone().ToShortDateString())</span>
         }
         else
         {

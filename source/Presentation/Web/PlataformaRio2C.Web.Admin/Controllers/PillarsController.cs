@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="PillarsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -44,7 +44,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <summary>Initializes a new instance of the <see cref="PillarsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        /// <param name="pillarRepository">The pillar repository.</param>
+        /// <param name="pillarRepo">The pillar repo.</param>
         /// <param name="languageRepository">The language repository.</param>
         public PillarsController(
             IMediator commandBus, 

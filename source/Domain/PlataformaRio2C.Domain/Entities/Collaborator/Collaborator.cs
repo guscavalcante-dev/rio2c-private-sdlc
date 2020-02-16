@@ -49,7 +49,7 @@ namespace PlataformaRio2C.Domain.Entities
         public string Instagram { get; private set; }
         public string Youtube { get; private set; }
         public int? AddressId { get; private set; }
-        public DateTime? ImageUploadDate { get; private set; }
+        public DateTimeOffset? ImageUploadDate { get; private set; }
 
         public DateTime? BirthDate { get; private set; }
         public int? CollaboratorGenderId  { get; private set; }

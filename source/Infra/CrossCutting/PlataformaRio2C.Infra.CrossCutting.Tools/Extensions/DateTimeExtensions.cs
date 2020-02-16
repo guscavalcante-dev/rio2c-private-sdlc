@@ -4,7 +4,7 @@
 // Created          : 12-13-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-02-2020
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="DateTimeExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,6 +18,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
     /// <summary>DateTimeExtensions</summary>
     public static class DateTimeExtensions
     {
+        /// <summary>Converts to usertimezone.</summary>
+        /// <param name="dt">The dt.</param>
+        /// <returns></returns>
+        public static DateTime ToUserTimeZone(this DateTimeOffset dt)
+        {
+            var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time");
+            return TimeZoneInfo.ConvertTimeFromUtc(dt.DateTime, userTimeZone);
+        }
+
         /// <summary>Gets the day suffix.</summary>
         /// <param name="dt">The dt.</param>
         /// <returns></returns>

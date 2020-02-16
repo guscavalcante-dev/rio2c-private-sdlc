@@ -4,7 +4,7 @@
 // Created          : 09-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="OnboardPlayerInterests.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,7 +28,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public List<IGrouping<InterestGroup, Interest>> GroupedInterests { get; private set; }
         public UserBaseDto UpdaterBaseDto { get; private set; }
-        public DateTime UpdateDate { get; private set; }
+        public DateTimeOffset UpdateDate { get; private set; }
 
         // Pre send properties
         public OrganizationType OrganizationType { get; private set; }

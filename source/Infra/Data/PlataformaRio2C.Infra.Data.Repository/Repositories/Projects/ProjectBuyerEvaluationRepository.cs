@@ -4,7 +4,7 @@
 // Created          : 12-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-08-2020
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="ProjectBuyerEvaluationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -66,7 +66,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionProjectEvaluationStartDate">The edition project evaluation start date.</param>
         /// <param name="editionProjectEvaluationEndDate">The edition project evaluation end date.</param>
         /// <returns></returns>
-        internal static IQueryable<ProjectBuyerEvaluation> IsProjectFinishDateBetweenEvaluationPeriod(this IQueryable<ProjectBuyerEvaluation> query, DateTime editionProjectEvaluationStartDate, DateTime editionProjectEvaluationEndDate)
+        internal static IQueryable<ProjectBuyerEvaluation> IsProjectFinishDateBetweenEvaluationPeriod(this IQueryable<ProjectBuyerEvaluation> query, DateTimeOffset editionProjectEvaluationStartDate, DateTimeOffset editionProjectEvaluationEndDate)
         {
             query = query.Where(pbe => pbe.Project.FinishDate >= editionProjectEvaluationStartDate && pbe.Project.FinishDate <= editionProjectEvaluationEndDate);
 
@@ -130,8 +130,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<List<ProjectBuyerEvaluationEmailDto>> FindAllBuyerEmailDtosAsync(
             int editionId, 
-            DateTime editionProjectEvaluationStartDate,
-            DateTime editionProjectEvaluationEndDate)
+            DateTimeOffset editionProjectEvaluationStartDate,
+            DateTimeOffset editionProjectEvaluationEndDate)
         {
             var query = this.GetBaseQuery()
                                 .IsBuyerEvaluationEmailPending()

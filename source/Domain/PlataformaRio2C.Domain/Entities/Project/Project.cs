@@ -45,7 +45,7 @@ namespace PlataformaRio2C.Domain.Entities
         public string ValueAlreadyRaised { get; private set; }
         public string ValueStillNeeded { get; private set; }
         public bool IsPitching { get; private set; }
-        public DateTime? FinishDate { get; private set; }
+        public DateTimeOffset? FinishDate { get; private set; }
         public int ProjectBuyerEvaluationsCount { get; private set; }
 
         public virtual ProjectType ProjectType { get; private set; }

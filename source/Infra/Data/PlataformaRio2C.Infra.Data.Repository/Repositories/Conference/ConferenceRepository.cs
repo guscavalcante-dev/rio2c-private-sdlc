@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-11-2020
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="ConferenceRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -130,7 +130,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
                 if (editionDates?.Any() == true)
                 {
-                    innerEditionDatesWhere = innerEditionDatesWhere.Or(c => editionDates.Contains(DbFunctions.TruncateTime(c.StartDate).Value));
+                    innerEditionDatesWhere = innerEditionDatesWhere.Or(c => editionDates.Contains(DbFunctions.TruncateTime(c.StartDate.DateTime).Value));
                 }
 
                 if (editionEventsUids?.Any() == true)

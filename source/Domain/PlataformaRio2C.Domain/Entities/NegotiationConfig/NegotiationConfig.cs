@@ -8,7 +8,7 @@ namespace PlataformaRio2C.Domain.Entities
 {
     public class NegotiationConfig : Entity
     {
-        public DateTime? Date { get; private set; }
+        public DateTimeOffset? Date { get; private set; }
         public TimeSpan StartTime { get; private set; }
         public TimeSpan EndTime { get; private set; }        
         public int RoudsFirstTurn { get; private set; }

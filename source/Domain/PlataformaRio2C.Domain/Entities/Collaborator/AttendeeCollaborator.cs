@@ -23,15 +23,15 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public int EditionId { get; private set; }
         public int CollaboratorId { get; private set; }
-        public DateTime? WelcomeEmailSendDate { get; private set; }
-        public DateTime? OnboardingStartDate { get; private set; }
-        public DateTime? OnboardingFinishDate { get; private set; }
-        public DateTime? OnboardingUserDate { get; private set; }
-        public DateTime? OnboardingCollaboratorDate { get; private set; }
-        public DateTime? OnboardingOrganizationDataSkippedDate { get; private set; }
-        public DateTime? PlayerTermsAcceptanceDate { get; private set; }
-        public DateTime? ProducerTermsAcceptanceDate { get; private set; }
-        public DateTime? SpeakerTermsAcceptanceDate { get; private set; }
+        public DateTimeOffset? WelcomeEmailSendDate { get; private set; }
+        public DateTimeOffset? OnboardingStartDate { get; private set; }
+        public DateTimeOffset? OnboardingFinishDate { get; private set; }
+        public DateTimeOffset? OnboardingUserDate { get; private set; }
+        public DateTimeOffset? OnboardingCollaboratorDate { get; private set; }
+        public DateTimeOffset? OnboardingOrganizationDataSkippedDate { get; private set; }
+        public DateTimeOffset? PlayerTermsAcceptanceDate { get; private set; }
+        public DateTimeOffset? ProducerTermsAcceptanceDate { get; private set; }
+        public DateTimeOffset? SpeakerTermsAcceptanceDate { get; private set; }
 
         public virtual Edition Edition { get; private set; }
         public virtual Collaborator Collaborator { get; private set; }

@@ -36,7 +36,7 @@ namespace PlataformaRio2C.Domain.Entities
         public int AttendeeCollaboratorId { get; private set; }
         public int AttendeeSalesPlatformTicketTypeId { get; private set; }
         public string SalesPlatformAttendeeId { get; private set; }
-        public DateTime SalesPlatformUpdateDate { get; private set; }
+        public DateTimeOffset SalesPlatformUpdateDate { get; private set; }
         public string FirstName { get; private set; }
         public string LastNames { get; private set; }
         public string CellPhone { get; private set; }
@@ -46,7 +46,7 @@ namespace PlataformaRio2C.Domain.Entities
         public string Barcode { get; private set; }
         public bool IsBarcodePrinted { get; private set; }
         public bool IsBarcodeUsed { get; private set; }
-        public DateTime? BarcodeUpdateDate { get; private set; }
+        public DateTimeOffset? BarcodeUpdateDate { get; private set; }
 
         public virtual AttendeeCollaborator AttendeeCollaborator { get; private set; }
         public virtual AttendeeSalesPlatformTicketType AttendeeSalesPlatformTicketType { get; private set; }

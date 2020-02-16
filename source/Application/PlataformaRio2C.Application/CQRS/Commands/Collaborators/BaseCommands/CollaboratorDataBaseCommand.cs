@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="CollaboratorDataBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -309,7 +309,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Updates the dropdown properties.</summary>
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
-        /// <param name="countriesBaseDtos">The countries base dtos.</param>
+        /// <param name="genders">The genders.</param>
+        /// <param name="industries">The industries.</param>
+        /// <param name="roles">The roles.</param>
+        /// <param name="editionsDtos">The editions dtos.</param>
+        /// <param name="currentEditionId">The current edition identifier.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
         public void UpdateDropdownProperties(List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, 
             List<CollaboratorGender> genders, 
             List<CollaboratorIndustry> industries, 

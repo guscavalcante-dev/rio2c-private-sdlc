@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-12-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="UpdateCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,7 +13,6 @@
 // ***********************************************************************
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -27,25 +26,32 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public Guid CollaboratorUid { get; set; }
         public bool IsAddingToCurrentEdition { get; set; }
 
-        public DateTime? WelcomeEmailSendDate { get; private set; }
-        public DateTime? OnboardingStartDate { get; private set; }
-        public DateTime? OnboardingFinishDate { get; private set; }
-        public DateTime? OnboardingUserDate { get; private set; }
-        public DateTime? OnboardingCollaboratorDate { get; private set; }
-        public DateTime? PlayerTermsAcceptanceDate { get; private set; }
-        public DateTime? ProducerTermsAcceptanceDate { get; private set; }
+        public DateTimeOffset? WelcomeEmailSendDate { get; private set; }
+        public DateTimeOffset? OnboardingStartDate { get; private set; }
+        public DateTimeOffset? OnboardingFinishDate { get; private set; }
+        public DateTimeOffset? OnboardingUserDate { get; private set; }
+        public DateTimeOffset? OnboardingCollaboratorDate { get; private set; }
+        public DateTimeOffset? PlayerTermsAcceptanceDate { get; private set; }
+        public DateTimeOffset? ProducerTermsAcceptanceDate { get; private set; }
         public UserBaseDto UpdaterBaseDto { get; private set; }
-        public DateTime UpdateDate { get; private set; }
+        public DateTimeOffset UpdateDate { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaborator"/> class.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
+        /// <param name="genders">The genders.</param>
+        /// <param name="industries">The industries.</param>
+        /// <param name="roles">The roles.</param>
+        /// <param name="editionsDtos">The editions dtos.</param>
+        /// <param name="currentEditionId">The current edition identifier.</param>
         /// <param name="isAddingToCurrentEdition">The is adding to current edition.</param>
         /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
         /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        /// <exception cref="DomainException"></exception>
         public UpdateCollaborator(
             CollaboratorDto entity, 
             List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, 
@@ -90,7 +96,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Updates the dropdown properties.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
-        /// <param name="countriesBaseDtos">The countries base dtos.</param>
+        /// <param name="genders">The genders.</param>
+        /// <param name="industries">The industries.</param>
+        /// <param name="roles">The roles.</param>
+        /// <param name="editionsDtos">The editions dtos.</param>
+        /// <param name="currentEditionId">The current edition identifier.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
         public void UpdateDropdownProperties(
             CollaboratorDto entity,
             List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos,

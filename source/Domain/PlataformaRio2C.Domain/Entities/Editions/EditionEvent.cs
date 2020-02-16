@@ -27,8 +27,8 @@ namespace PlataformaRio2C.Domain.Entities
 
         public int EditionId { get; private set; }
         public string Name { get; private set; }
-        public DateTime StartDate { get; private set; }
-        public DateTime EndDate { get; private set; }
+        public DateTimeOffset StartDate { get; private set; }
+        public DateTimeOffset EndDate { get; private set; }
 
         public virtual Edition Edition { get; private set; }
 
@@ -45,16 +45,16 @@ namespace PlataformaRio2C.Domain.Entities
             Guid editionEventUid,
             Edition edition,
             string name,
-            DateTime startDate,
-            DateTime endDate,
+            DateTimeOffset startDate,
+            DateTimeOffset endDate,
             int userId)
         {
             //this.Uid = editionEventUid;
             this.EditionId = edition?.Id ?? 0;
             this.Edition = edition;
             this.Name = name?.Trim();
-            this.StartDate = startDate;
-            this.EndDate = endDate.AddHours(23).AddMinutes(59).AddSeconds(59);
+            this.StartDate = startDate.ToUniversalTime();
+            this.EndDate = endDate.AddHours(23).AddMinutes(59).AddSeconds(59).ToUniversalTime();
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
@@ -73,13 +73,13 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void UpdateMainInformation(
             string name,
-            DateTime startDate,
-            DateTime endDate,
+            DateTimeOffset startDate,
+            DateTimeOffset endDate,
             int userId)
         {
             this.Name = name?.Trim();
-            this.StartDate = startDate;
-            this.EndDate = endDate.AddHours(23).AddMinutes(59).AddSeconds(59);
+            this.StartDate = startDate.ToUniversalTime();
+            this.EndDate = endDate.AddHours(23).AddMinutes(59).AddSeconds(59).ToUniversalTime();
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
@@ -160,12 +160,12 @@ namespace PlataformaRio2C.Domain.Entities
         {
             if (this.StartDate < this.Edition.StartDate || this.StartDate > this.Edition.EndDate)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.StartDate, this.Edition.EndDate.ToShortDateString(), this.Edition.StartDate.ToShortDateString()), new string[] { "StartDate" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.StartDate, this.Edition.EndDate.DateTime.ToShortDateString(), this.Edition.StartDate.DateTime.ToShortDateString()), new string[] { "StartDate" }));
             }
 
             if (this.EndDate < this.Edition.StartDate || this.EndDate > this.Edition.EndDate)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.EndDate, this.Edition.EndDate.ToShortDateString(), this.Edition.StartDate.ToShortDateString()), new string[] { "EndDate" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.EndDate, this.Edition.EndDate.DateTime.ToShortDateString(), this.Edition.StartDate.DateTime.ToShortDateString()), new string[] { "EndDate" }));
             }
 
             if (this.StartDate > this.EndDate)

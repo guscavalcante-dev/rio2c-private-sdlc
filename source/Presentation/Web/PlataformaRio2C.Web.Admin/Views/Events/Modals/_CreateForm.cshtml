@@ -13,12 +13,12 @@
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.StartDate, new { @class = "control-label" })
-        @Html.TextBox("StartDate", Model.StartDate?.ToShortDateString(), new { @class = "form-control enable-datepicker", @readonly = "readonly", data_date_start_date = editionDto?.StartDate.ToShortDateString(), data_date_end_date = editionDto?.EndDate.ToShortDateString() })
+        @Html.TextBox("StartDate", Model.StartDate?.ToUserTimeZone().ToShortDateString(), new { @class = "form-control enable-datepicker", @readonly = "readonly", data_date_start_date = editionDto?.StartDate.ToUserTimeZone().ToShortDateString(), data_date_end_date = editionDto?.EndDate.ToUserTimeZone().ToShortDateString() })
         @Html.ValidationMessageFor(m => m.StartDate, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EndDate, new { @class = "control-label" })
-        @Html.TextBox("EndDate", Model.EndDate?.ToShortDateString(), new { @class = "form-control enable-datepicker", @readonly = "readonly", data_date_start_date = editionDto?.StartDate.ToShortDateString(), data_date_end_date = editionDto?.EndDate.ToShortDateString() })
+        @Html.TextBox("EndDate", Model.EndDate?.ToUserTimeZone().ToShortDateString(), new { @class = "form-control enable-datepicker", @readonly = "readonly", data_date_start_date = editionDto?.StartDate.ToUserTimeZone().ToShortDateString(), data_date_end_date = editionDto?.EndDate.ToUserTimeZone().ToShortDateString() })
         @Html.ValidationMessageFor(m => m.EndDate, "", new { @class = "text-danger" })
     </div>
 </div>

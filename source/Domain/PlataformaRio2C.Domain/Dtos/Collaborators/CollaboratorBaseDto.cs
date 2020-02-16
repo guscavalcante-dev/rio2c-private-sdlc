@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-13-2020
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="CollaboratorBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,11 +33,11 @@ namespace PlataformaRio2C.Domain.Dtos
         public string PublicEmail { get; set; }
         public HoldingBaseDto HoldingBaseDto { get; set; }
         public OrganizationBaseDto OrganizatioBaseDto { get; set; }
-        public DateTime? ImageUploadDate { get; set; }
-        public DateTime CreateDate { get; set; }
-        public DateTime UpdateDate { get; set; }
-        public DateTime? CurrentEditionOnboardingFinishDate => EditionAttendeeCollaborator?.OnboardingFinishDate;
-        public DateTime? SpeakerCurrentEditionOnboardingFinishDate => EditionAttendeeCollaborator?.SpeakerTermsAcceptanceDate;
+        public DateTimeOffset? ImageUploadDate { get; set; }
+        public DateTimeOffset CreateDate { get; set; }
+        public DateTimeOffset UpdateDate { get; set; }
+        public DateTimeOffset? CurrentEditionOnboardingFinishDate => EditionAttendeeCollaborator?.OnboardingFinishDate;
+        public DateTimeOffset? SpeakerCurrentEditionOnboardingFinishDate => EditionAttendeeCollaborator?.SpeakerTermsAcceptanceDate;
         public bool IsInCurrentEdition => EditionAttendeeCollaborator != null;
         public bool IsInOtherEdition { get; set; }
 

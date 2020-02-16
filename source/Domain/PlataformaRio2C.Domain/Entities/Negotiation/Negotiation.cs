@@ -28,7 +28,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual Room Room { get; private set; }
         public int? EvaluationId { get; private set; }
         //public virtual ProjectPlayerEvaluation Evaluation { get; private set; }
-        public DateTime? Date { get; private set; }
+        public DateTimeOffset? Date { get; private set; }
         public TimeSpan StarTime { get; private set; }
         public TimeSpan EndTime { get; private set; }
         public int TableNumber { get; private set; }

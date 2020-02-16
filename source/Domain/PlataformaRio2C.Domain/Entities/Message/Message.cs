@@ -27,9 +27,9 @@ namespace PlataformaRio2C.Domain.Entities
         public int SenderId { get; private set; }
         public int RecipientId { get; private set; }
         public string Text { get; private set; }
-        public DateTime SendDate { get; private set; }
-        public DateTime? ReadDate { get; private set; }
-        public DateTime? NotificationEmailSendDate { get; private set; }
+        public DateTimeOffset SendDate { get; private set; }
+        public DateTimeOffset? ReadDate { get; private set; }
+        public DateTimeOffset? NotificationEmailSendDate { get; private set; }
 
         public virtual Edition Edition { get; private set; }
         public virtual User Sender { get; private set; }

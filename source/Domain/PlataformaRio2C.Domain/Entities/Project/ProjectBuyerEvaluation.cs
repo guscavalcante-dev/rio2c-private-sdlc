@@ -32,8 +32,8 @@ namespace PlataformaRio2C.Domain.Entities
         public string Reason { get; private set; }
         public int SellerUserId { get; private set; }
         public int? BuyerEvaluationUserId { get; private set; }
-        public DateTime? EvaluationDate { get; private set; }
-        public DateTime? BuyerEmailSendDate { get; private set; }
+        public DateTimeOffset? EvaluationDate { get; private set; }
+        public DateTimeOffset? BuyerEmailSendDate { get; private set; }
 
         public virtual Project Project { get; private set; }
         public virtual AttendeeOrganization BuyerAttendeeOrganization { get; private set; }

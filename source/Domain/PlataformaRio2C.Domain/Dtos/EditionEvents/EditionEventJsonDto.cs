@@ -4,7 +4,7 @@
 // Created          : 01-04-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-06-2020
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="EditionEventJsonDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,8 +21,10 @@ namespace PlataformaRio2C.Domain.Dtos
         public int Id { get; set; }
         public Guid Uid { get; set; }
         public string Name { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTimeOffset StartDate { get; set; }
+        public DateTimeOffset EndDate { get; set; }
+        public DateTimeOffset CreateDate { get; set; }
+        public DateTimeOffset UpdateDate { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="RoomJsonDto"/> class.</summary>
         public EditionEventJsonDto()

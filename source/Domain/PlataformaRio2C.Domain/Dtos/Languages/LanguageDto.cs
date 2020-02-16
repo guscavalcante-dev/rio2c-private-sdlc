@@ -4,7 +4,7 @@
 // Created          : 08-14-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-16-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="LanguageDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,9 +19,9 @@ namespace PlataformaRio2C.Domain.Dtos
     /// <summary>LanguageDto</summary>
     public class LanguageDto : LanguageBaseDto
     {
-        public DateTime CreateDate { get; set; }
+        public DateTimeOffset CreateDate { get; set; }
         public int CreateUserId { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public DateTimeOffset UpdateDate { get; set; }
         public int UpdateUserId { get; set; }
 
         public UserBaseDto CreatorDto { get; set; }

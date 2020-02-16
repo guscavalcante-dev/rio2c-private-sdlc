@@ -25,8 +25,8 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public int EditionEventId { get; private set; }
         public int RoomId { get; private set; }
-        public DateTime StartDate { get; private set; }
-        public DateTime EndDate { get; private set; }
+        public DateTimeOffset StartDate { get; private set; }
+        public DateTimeOffset EndDate { get; private set; }
 
         public virtual EditionEvent EditionEvent { get; private set; }
         public virtual Room Room { get; private set; }
@@ -68,8 +68,8 @@ namespace PlataformaRio2C.Domain.Entities
             //this.Uid = conferenceUid;
             this.EditionEventId = editionEvent?.Id ?? 0;
             this.EditionEvent = editionEvent;
-            this.StartDate = date.JoinDateAndTime(startTime, true);
-            this.EndDate = date.JoinDateAndTime(endTime, true);
+            this.StartDate = date.JoinDateAndTime(startTime, true).ToUniversalTime();
+            this.EndDate = date.JoinDateAndTime(endTime, true).ToUniversalTime();
             this.RoomId = room?.Id ?? 0;
             this.Room = room;
             this.SynchronizeConferenceTitles(conferenceTitles, userId);
@@ -109,8 +109,8 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.EditionEventId = editionEvent?.Id ?? 0;
             this.EditionEvent = editionEvent;
-            this.StartDate = date.JoinDateAndTime(startTime, true);
-            this.EndDate = date.JoinDateAndTime(endTime, true);
+            this.StartDate = date.JoinDateAndTime(startTime, true).ToUniversalTime();
+            this.EndDate = date.JoinDateAndTime(endTime, true).ToUniversalTime();
             this.RoomId = room?.Id ?? 0;
             this.Room = room;
             this.SynchronizeConferenceTitles(conferenceTitles, userId);
@@ -513,7 +513,7 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.StartDate < this.EditionEvent.StartDate || this.StartDate > this.EditionEvent.EndDate
                 || this.EndDate < this.EditionEvent.StartDate || this.EndDate > this.EditionEvent.EndDate)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.Date, this.EditionEvent.EndDate.ToShortDateString(), this.EditionEvent.StartDate.ToShortDateString()), new string[] { "Date" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.Date, this.EditionEvent.EndDate.DateTime.ToShortDateString(), this.EditionEvent.StartDate.DateTime.ToShortDateString()), new string[] { "Date" }));
             }
 
             if (this.StartDate > this.EndDate)

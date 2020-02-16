@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-06-2020
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="CreateEditionEvent.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,12 +28,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = "StartDate", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public DateTime? StartDate { get; set; }
+        public DateTimeOffset? StartDate { get; set; }
 
         [Display(Name = "EndDate", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [GreaterThanOrEqualTo("StartDate", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
-        public DateTime? EndDate { get; set; }
+        public DateTimeOffset? EndDate { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CreateEditionEvent"/> class.</summary>
         /// <param name="editionEventDto">The edition event dto.</param>

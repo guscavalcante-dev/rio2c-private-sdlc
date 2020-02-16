@@ -47,7 +47,7 @@ namespace PlataformaRio2C.Domain.Entities
         public string Instagram { get; private set; }
         public string Youtube { get; private set; }
         public int? AddressId { get; private set; }
-        public DateTime? ImageUploadDate { get; private set; }
+        public DateTimeOffset? ImageUploadDate { get; private set; }
         
         public virtual Holding Holding { get; private set; }
         public virtual Address Address { get; private set; }

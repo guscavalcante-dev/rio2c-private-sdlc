@@ -4,7 +4,7 @@
 // Created          : 01-13-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-24-2020
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="ReportsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -274,8 +274,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     firstLine = false;
                 };
                 worksheetAudiovisual.Cells[row, column++].Value = playersSelectedForEvaluation;
-                worksheetAudiovisual.Cells[row, column++].Value = projectDto.Project.CreateDate.ToShortDateString();
-                worksheetAudiovisual.Cells[row, column++].Value = projectDto.Project.FinishDate?.ToShortDateString();
+                worksheetAudiovisual.Cells[row, column++].Value = projectDto.Project.CreateDate.DateTime.ToShortDateString();
+                worksheetAudiovisual.Cells[row, column++].Value = projectDto.Project.FinishDate?.DateTime.ToShortDateString();
 
                 firstLine = true;
                 var platforms = string.Empty;
