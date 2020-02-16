@@ -839,3 +839,24 @@ go
 ALTER TABLE "ConferencePillars" 
    ALTER COLUMN "UpdateDate" datetimeoffset
 go
+
+update dbo.Editions
+set
+	StartDate = DATEADD(HOUR, 3, StartDate),
+	EndDate = DATEADD(HOUR, 3, EndDate),
+	SellStartDate = DATEADD(HOUR, 3, SellStartDate),
+	SellEndDate = DATEADD(HOUR, 3, SellEndDate),
+	ProjectSubmitStartDate = DATEADD(HOUR, 3, ProjectSubmitStartDate),
+	ProjectSubmitEndDate = DATEADD(HOUR, 3, ProjectSubmitEndDate),
+	ProjectEvaluationStartDate = DATEADD(HOUR, 3, ProjectEvaluationStartDate),
+	ProjectEvaluationEndDate = DATEADD(HOUR, 3, ProjectEvaluationEndDate),
+	NegotiationStartDate = DATEADD(HOUR, 3, NegotiationStartDate),
+	NegotiationEndDate = DATEADD(HOUR, 3, NegotiationEndDate),
+	OneToOneMeetingsScheduleDate = DATEADD(HOUR, 3, OneToOneMeetingsScheduleDate)
+go
+
+update dbo.EditionEvents
+set
+	StartDate = DATEADD(HOUR, 3, StartDate),
+	EndDate = DATEADD(HOUR, 3, EndDate)
+go
