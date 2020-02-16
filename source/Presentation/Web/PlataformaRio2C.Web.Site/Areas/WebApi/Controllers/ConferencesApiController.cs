@@ -199,15 +199,15 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 {
                     Status = ApiStatus.Success,
                     Error = null,
-                    EditionDates = Enumerable.Range(0, 1 + edition.EndDate.Subtract(edition.StartDate).Days)
-                                             .Select(offset => edition.StartDate.AddDays(offset).ToString("yyyy-MM-dd"))
+                    EditionDates = Enumerable.Range(0, 1 + edition.EndDate.ToUserTimeZone().Subtract(edition.StartDate.ToUserTimeZone()).Days)
+                                             .Select(offset => edition.StartDate.ToUserTimeZone().AddDays(offset).ToString("yyyy-MM-dd"))
                                              .ToList(),
                     EventsApiResponses = editionEvents?.Select(ee => new EditionEventApiResponse
                     {
                         Uid = ee.Uid,
                         Name = ee.Name.Trim(),
-                        StartDate = ee.StartDate.ToString("yyyy-MM-dd"),
-                        EndDate = ee.EndDate.ToString("yyyy-MM-dd"),
+                        StartDate = ee.StartDate.ToUserTimeZone().ToString("yyyy-MM-dd"),
+                        EndDate = ee.EndDate.ToUserTimeZone().ToString("yyyy-MM-dd"),
                         DurationDays = (int)((ee.EndDate - ee.StartDate).TotalDays) + 1
                     })?.OrderBy(c => c.Name)?.ToList(),
                     RoomsApiResponses = roomDtos?.Select(rd => new ConferencesFilterItemApiResponse
