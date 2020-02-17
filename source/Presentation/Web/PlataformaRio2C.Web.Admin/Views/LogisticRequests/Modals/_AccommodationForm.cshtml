@@ -1,169 +1,35 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
-@model PlataformaRio2C.Application.CQRS.Commands.CreateLogisticRequest
+@model PlataformaRio2C.Application.CQRS.Commands.CreateLogisticAccomodation
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
 }
-<div class="kt-section">    
-    <div class="kt-section__content mt-3">        
-        <div class="row">
-            <div class="form-group col-md-8">
-                @*@Html.LabelFor(m => m.CollaboratorUid, new { @class = "control-label" })*@
-                <label class="control-label">Participante</label>                
-                @Html.DropDownList("CollaboratorUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control enable-collaborator-select2" })
-                @*@Html.ValidationMessageFor(m => m.CollaboratorUid, "", new { @class = "text-danger" })*@
-            </div>
-        </div>
+
+<div class="row">
+    <div class="form-group col-md-12">
+        <label class = "control-label">Hospedagem</label>
+        <select class="form-control">
+            <option></option>
+        </select>
     </div>
 </div>
 
-<!--begin: Main Information-->
-<div class="kt-section">    
-        <h3 class="kt-section__title mb-0">Aéreo</h3>
-    <div class="kt-section__content mt-3">        
-        <div class="kt-checkbox-list">
-            <div class="row">                
-                <div class="col-md-6">
-                    <label class="kt-checkbox">
-                    <input type="checkbox"
-                            name="IsAirfareTicketRequired"
-                            value="true" 
-                            checked/> Necessita
-                        <span></span>
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="kt-radio-list mt-2">
-	        <label class="kt-radio">
-		        <input type="radio" name="AirfareAttendeeLogisticSponsorId"> Rio2C
-		        <span></span>
-	        </label>
-	        <label class="kt-radio">
-		        <input type="radio" name="AirfareAttendeeLogisticSponsorId"> APEX
-		        <span></span>
-	        </label>
-	        <label class="kt-radio">
-		        <input type="radio" name="AirfareAttendeeLogisticSponsorId"> Próprio
-		        <span></span>
-	        </label>
-	        <label class="kt-radio">
-		        <input type="radio" name="AirfareAttendeeLogisticSponsorId" checked> Patrocinado por outras instituições
-		        <span></span>
-	        </label>
-            <div class="form-group">						
-				<input type="text" name="AirportTransferOtherLogisticSponsor" class="form-control" placeholder="Outra instituição" autocomplete="off" style="cursor: auto;">
-			</div>
-        </div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.CheckInDate, new { @class = "control-label" })
+        @Html.TextBox("Date", Model?.CheckInDate?.Date.ToShortDateString(), new { @class = "form-control enable-datepicker", placeholder = "dd/mm/yyyy 00:00" })
+        @Html.ValidationMessageFor(m => m.CheckInDate, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.CheckOutDate, new { @class = "control-label" })
+        @Html.TextBox("Date", Model?.CheckOutDate?.Date.ToShortDateString(), new { @class = "form-control enable-datepicker", placeholder = "dd/mm/yyyy 00:00" })
+        @Html.ValidationMessageFor(m => m.CheckOutDate, "", new { @class = "text-danger" })
     </div>
 </div>
 
-<div class="kt-section">    
-        <h3 class="kt-section__title mb-0">Hospedagem</h3>   
-    <div class="kt-section__content mt-3">     
-        <div class="kt-checkbox-list">
-            <div class="row">                
-                <div class="col-md-6">
-                    <label class="kt-checkbox">
-                    <input type="checkbox"
-                            name="IsAirfareTicketRequired"
-                            value="true" /> Necessita
-                        <span></span>
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="kt-radio-list mt-2" style="display:none;">
-	        <label class="kt-radio">
-		        <input type="radio" name="AccommodationAttendeeLogisticSponsorId"> Rio2C
-		        <span></span>
-	        </label>
-	        <label class="kt-radio">
-		        <input type="radio" name="AccommodationAttendeeLogisticSponsorId"> APEX
-		        <span></span>
-	        </label>
-	        <label class="kt-radio">
-		        <input type="radio" name="AccommodationAttendeeLogisticSponsorId"> Próprio
-		        <span></span>
-	        </label>
-	        <label class="kt-radio">
-		        <input type="radio" name="AccommodationAttendeeLogisticSponsorId"> Patrocinado por outras instituições
-		        <span></span>
-	        </label>
-        </div>
-    </div>
-</div>
-
-<div class="kt-section">    
-        <h3 class="kt-section__title mb-0">Transporte</h3>   
-    <div class="kt-section__content mt-3">     
-        <div class="kt-checkbox-list">
-            <div class="row">                
-                <div class="col-md-6">
-                    <label class="kt-checkbox">
-                    <input type="checkbox"
-                            name="IsAirfareTicketRequired"
-                            value="true" /> Necessita
-                        <span></span>
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="kt-radio-list mt-2" style="display:none;">
-	        <label class="kt-radio">
-		        <input type="radio" name="AirportTransferAttendeeLogisticSponsorId"> Rio2C
-		        <span></span>
-	        </label>
-	        <label class="kt-radio">
-		        <input type="radio" name="AirportTransferAttendeeLogisticSponsorId"> APEX
-		        <span></span>
-	        </label>
-	        <label class="kt-radio">
-		        <input type="radio" name="AirportTransferAttendeeLogisticSponsorId"> Próprio
-		        <span></span>
-	        </label>
-	        <label class="kt-radio">
-		        <input type="radio" name="AirportTransferAttendeeLogisticSponsorId"> Patrocinado por outras instituições
-		        <span></span>
-	        </label>
-        </div>
-    </div>
-</div> 
-
-<div class="kt-section">    
-        <h3 class="kt-section__title mb-0">Transfer</h3>  
-    <div class="kt-section__content mt-3">        
-        <div class="kt-checkbox-list">
-            <div class="row">                
-                <div class="col-md-6">
-                    <label class="kt-checkbox">
-                    <input type="checkbox"
-                            name="IsCityTransferRequired"
-                            value="true" 
-                            checked/> Transfer City
-                        <span></span>
-                    </label>
-                </div>
-            </div>
-        </div>
-        <span class="form-text text-muted">Residentes do Rio de Janeiro - Somente casos extremamente exceptcionais</span>
-    </div>
-</div>
-
-<div class="kt-section">    
-    <div class="kt-section__content mt-3">        
-        <div class="kt-checkbox-list">
-            <div class="row">                
-                <div class="col-md-6">
-                    <label class="kt-checkbox">
-                    <input type="checkbox"
-                            name="IsVehicleDisposalRequired"
-                            value="true" 
-                            checked/> Transfer City
-                        <span></span>
-                    </label>
-                </div>
-            </div>
-        </div>
-        <span class="form-text text-muted">Keynotes somente</span>
+<div class="row">
+    <div class="form-group col-md-12">
+        @Html.LabelFor(m => m.AdditionalInfo, new { @class = "control-label" })
+        @Html.TextAreaFor(m => m.AdditionalInfo, new { @class = "form-control", rows = 8 })
+        @Html.ValidationMessageFor(m => m.AdditionalInfo, "", new { @class = "text-danger" })
     </div>
 </div>

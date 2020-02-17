@@ -426,6 +426,8 @@
     <Content Include="Assets\img\logo-rio2c-footer.png" />
     <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
+    <Content Include="Assets\js\logisticrequests\logisticrequests.transport.create.js" />
+    <Content Include="Assets\js\logisticrequests\logisticrequests.accommodation.create.js" />
     <Content Include="Assets\js\logisticrequests\logisticrequests.airfare.create.js" />
     <Content Include="Assets\js\logisticrequests\logisticrequests.maininformation.widget.js" />
     <Content Include="Assets\js\logisticrequests\logisticrequests.create.js" />
@@ -8391,12 +8393,12 @@
     <Content Include="Views\LogisticRequests\Details.cshtml" />
     <Content Include="Views\LogisticRequests\Modals\UpdateMainInformationModal.cshtml" />
     <Content Include="Views\LogisticRequests\Modals\UpdateMainInformationForm.cshtml" />
-    <Content Include="Views\LogisticRequests\Modals\UpdateTransportModal.cshtml" />
-    <Content Include="Views\LogisticRequests\Modals\UpdateAirFareForm.cshtml" />
-    <Content Include="Views\LogisticRequests\Modals\UpdateAccommodationModal.cshtml" />
-    <Content Include="Views\LogisticRequests\Modals\UpdateTransportForm.cshtml" />
-    <Content Include="Views\LogisticRequests\Modals\UpdateAirfareModal.cshtml" />
-    <Content Include="Views\LogisticRequests\Modals\UpdateAccommodationForm.cshtml" />
+    <Content Include="Views\LogisticRequests\Modals\CreateTransportModal.cshtml" />
+    <Content Include="Views\LogisticRequests\Modals\CreateAccommodationModal.cshtml" />
+    <Content Include="Views\LogisticRequests\Modals\_AccommodationForm.cshtml" />
+    <Content Include="Views\LogisticRequests\Modals\_AirfareForm.cshtml" />
+    <Content Include="Views\LogisticRequests\Modals\_TransportForm.cshtml" />
+    <Content Include="Views\LogisticRequests\Modals\CreateAirfareModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
