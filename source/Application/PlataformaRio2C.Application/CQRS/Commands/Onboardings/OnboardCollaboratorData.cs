@@ -38,7 +38,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string PublicEmail { get; set; }
         
         [Display(Name = "BirthDate", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]        
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public DateTime? BirthDate { get; set; }
 
         [Display(Name = "Website", ResourceType = typeof(Labels))]

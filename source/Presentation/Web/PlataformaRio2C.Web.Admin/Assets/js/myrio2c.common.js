@@ -623,7 +623,8 @@ var MyRio2cCommon = function () {
         });
                 
         $(options.inputIdOrClass).inputmask("datetime", {
-            inputFormat: $.fn.datepicker.dates[MyRio2cCommon.getGlobalVariable('userInterfaceLanguage')].format
+            inputFormat: $.fn.datepicker.dates[MyRio2cCommon.getGlobalVariable('userInterfaceLanguage')].format,
+            placeholder: "__/__/____",
         });
     };
 
