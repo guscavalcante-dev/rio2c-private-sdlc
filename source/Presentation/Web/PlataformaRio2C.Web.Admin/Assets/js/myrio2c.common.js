@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-16-2020
+// Last Modified On : 02-17-2020
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,7 +24,7 @@ var MyRio2cCommon = function () {
 
     var setGlobalVariables = function (userInterfaceLanguage, editionUrlCode, bucket) {
         globalVariables.userInterfaceLanguage = userInterfaceLanguage;
-        globalVariables.userInterfaceLanguageUppercade = MyRio2cCommon.getCultureUppercase(userInterfaceLanguage);
+        globalVariables.userInterfaceLanguageUppercase = MyRio2cCommon.getCultureUppercase(userInterfaceLanguage);
         globalVariables.editionUrlCode = editionUrlCode;
         globalVariables.bucket = bucket;
     };

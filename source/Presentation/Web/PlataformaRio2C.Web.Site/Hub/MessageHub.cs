@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 02-17-2020
 // ***********************************************************************
 // <copyright file="MessageHub.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -123,10 +123,8 @@ namespace PlataformaRio2C.Web.Site.Hub
                                                                                                   null,
                         RecipientUserUid = messageDto.RecipientUser.Uid,
                         RecipientEmail = messageDto.RecipientUser.Email,
-                        SendDate = messageDto.Message.SendDate.ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.CurrentCulture),
-                        SendDateFormatted = messageDto.Message.SendDate.ToUserTimeZone().ToShortDateString() + " " + messageDto.Message.SendDate.ToUserTimeZone().ToLongTimeString(),
-                        ReadDate = messageDto.Message.ReadDate?.ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.CurrentCulture),
-                        ReadDateFormatted = messageDto.Message.ReadDate?.ToUserTimeZone().ToShortDateString() + " " + messageDto.Message.ReadDate?.ToUserTimeZone().ToLongTimeString(),
+                        SendDate = messageDto.Message.SendDate,
+                        ReadDate = messageDto.Message.ReadDate,
                         Text = messageDto.Message.Text
                     }
                 };
