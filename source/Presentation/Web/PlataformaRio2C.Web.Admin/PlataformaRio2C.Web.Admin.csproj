@@ -351,6 +351,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CompaniesController.cs" />
+    <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\PresentationFormatsController.cs" />
     <Compile Include="Controllers\ParticipantRolesController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
@@ -8330,6 +8331,10 @@
     <Content Include="Views\Pillars\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Views\Pillars\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Views\Pillars\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Views\Projects\Pitchings.cshtml" />
+    <Content Include="Views\Projects\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Views\Projects\Widgets\PitchingDataTableWidget.cshtml" />
+    <Content Include="Views\Projects\Widgets\EditionCountWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
