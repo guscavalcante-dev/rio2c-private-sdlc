@@ -608,11 +608,12 @@ var MyRio2cCommon = function () {
         if (!hasProperty(options, 'autoclose') || isNullOrEmpty(options.autoclose)) {
             options.autoclose = true;
         }
-        
+
+        var format = $.fn.datepicker.dates[MyRio2cCommon.getGlobalVariable('userInterfaceLanguage')].format;
+
         $.validator.methods.date = function (value, element) {
             moment.locale(MyRio2cCommon.getGlobalVariable('userInterfaceLanguage'));
-            var val = moment(value).toDate();
-            return this.optional(element) || (val);
+            return this.optional(element) || moment(value, format.toUpperCase(), true).isValid();
         }
 
         $(options.inputIdOrClass).datepicker({
@@ -623,7 +624,7 @@ var MyRio2cCommon = function () {
         });
                 
         $(options.inputIdOrClass).inputmask("datetime", {
-            inputFormat: $.fn.datepicker.dates[MyRio2cCommon.getGlobalVariable('userInterfaceLanguage')].format,
+            inputFormat: format,
             placeholder: "__/__/____",
         });
     };
