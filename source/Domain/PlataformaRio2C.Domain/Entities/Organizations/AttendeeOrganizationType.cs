@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-18-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="AttendeeOrganizationType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -44,7 +44,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateApiConfigurations(isApiDisplayEnabled, apiHighlightPosition);
 
             this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
         }
 
@@ -62,7 +62,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateApiConfigurations(isApiDisplayEnabled, apiHighlightPosition);
 
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -73,7 +73,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateApiConfigurations(false, null);
 
             this.IsDeleted = true;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -83,7 +83,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.ApiHighlightPosition = null;
 
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 

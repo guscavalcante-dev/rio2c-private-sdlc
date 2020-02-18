@@ -4,7 +4,7 @@
 // Created          : 01-04-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-06-2020
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="EditionEventRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -276,7 +276,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 Uid = c.Uid,
                                 Name = c.Name,
                                 StartDate = c.StartDate,
-                                EndDate = c.EndDate
+                                EndDate = c.EndDate,
+                                CreateDate = c.CreateDate,
+                                UpdateDate = c.UpdateDate
                             })
                             .ToListPagedAsync(page, pageSize);
         }

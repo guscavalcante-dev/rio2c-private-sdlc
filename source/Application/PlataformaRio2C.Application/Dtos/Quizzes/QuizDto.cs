@@ -4,7 +4,7 @@
 // Created          : 08-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-06-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="QuizDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,10 +22,10 @@ namespace PlataformaRio2C.Application.Dtos
         public int EditionId { get; private set; }
         public string Name { get; private set; }
         public bool IsActive { get; private set; }
-        public DateTime CreateDate { get; private set; }
+        public DateTimeOffset CreateDate { get; private set; }
         public int CreateUserId { get; private set; }
         public int UpdateUserId { get; private set; }
-        public DateTime UpdateDate { get; private set; }
+        public DateTimeOffset UpdateDate { get; private set; }
 
         //public UserAppViewModel Creator { get; set; }
         //public UserAppViewModel Updated { get; set; }

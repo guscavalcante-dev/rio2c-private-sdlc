@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-09-2020
+// Last Modified On : 02-17-2020
 // ***********************************************************************
 // <copyright file="collaborators.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -195,12 +195,14 @@ var CollaboratorsDataTableWidget = function () {
                     {
                         text: sendInvitationEmail,
                         action: function (e, dt, node, config) {
+                            $('.dt-button-background').remove();
                             showSendInvitationEmailsModal();
                         }
                     },
                     {
                         text: exportToEventbrite,
                         action: function (e, dt, node, config) {
+                            $('.dt-button-background').remove();
                             eventbriteCsvExport = dt.ajax.params();
                             eventbriteCsvExport.selectedCollaboratorsUids = $('#playersexecutives-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
                             eventbriteCsvExport.showAllEditions = $('#ShowAllEditions').prop('checked');
@@ -208,6 +210,20 @@ var CollaboratorsDataTableWidget = function () {
                             eventbriteCsvExport.showAllParticipants = $('#ShowAllParticipants').prop('checked');
 
                             showExportEventbriteCsvModal();
+                        }
+                    },
+                    {
+                        text: labels.selectAll,
+                        action: function (e, dt, node, config) {
+                            $('.dt-button-background').remove();
+                            table.rows().select();
+                        }
+                    },
+                    {
+                        text: labels.unselectAll,
+                        action: function (e, dt, node, config) {
+                            $('.dt-button-background').remove();
+                            table.rows().deselect();
                         }
                     }]
             }],
@@ -303,14 +319,14 @@ var CollaboratorsDataTableWidget = function () {
                 {
                     data: 'CreateDate',
                     render: function (data) {
-                        return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                        return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
 
                 },
                 {
                     data: 'UpdateDate',
                     render: function (data) {
-                        return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                        return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
                 },
                 {

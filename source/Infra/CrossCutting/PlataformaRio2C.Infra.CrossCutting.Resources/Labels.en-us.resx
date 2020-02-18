@@ -334,8 +334,8 @@
     <comment>Termo de uso</comment>
   </data>
   <data name="Welcome" xml:space="preserve">
-    <value>Welcome to Rio2C | RioContentMarket {0}!</value>
-    <comment>Bem-vindo ao Rio2C | RioContentMarket {0}!</comment>
+    <value>Welcome to Rio2C {0}</value>
+    <comment>Bem-vindo ao Rio2C {0}</comment>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>Password confirmation</value>
@@ -1974,6 +1974,38 @@
     <value>Color</value>
     <comment>Cor</comment>
   </data>
+  <data name="Reports" xml:space="preserve">
+    <value>Reports</value>
+    <comment>Relatórios</comment>
+  </data>
+  <data name="AudiovisualSubscriptionProjectReport" xml:space="preserve">
+    <value>Audiovisual Subscription Project Report</value>
+    <comment>Relatório de Inscrição de Projeto Audiovisual</comment>
+  </data>
+  <data name="ProjectSubscriptions" xml:space="preserve">
+    <value>Project Subscriptions</value>
+    <comment>Inscrições de Projeto</comment>
+  </data>
+  <data name="Pitching" xml:space="preserve">
+    <value>Pitching</value>
+    <comment>Pitching</comment>
+  </data>
+  <data name="ProducerQty" xml:space="preserve">
+    <value>QTD Producer</value>
+    <comment>QTD Produtora</comment>
+  </data>
+  <data name="ProjectId" xml:space="preserve">
+    <value>Projeto ID</value>
+    <comment>ID do Projeto</comment>
+  </data>
+  <data name="ProjectsPerProducerQty" xml:space="preserve">
+    <value>QTD Projects Per Producer</value>
+    <comment>QTD Projetos Por Produtora</comment>
+  </data>
+  <data name="ExportToExcel" xml:space="preserve">
+    <value>Export to Excel</value>
+    <comment>Exportar para Excel</comment>
+  </data>
   <data name="SocialNetworks" xml:space="preserve">
     <value>Social Networks</value>
     <comment>Redes Sociais</comment>
@@ -1985,6 +2017,82 @@
   <data name="Is" xml:space="preserve">
     <value>is</value>
     <comment>é</comment>
+  </data>
+  <data name="BirthDate" xml:space="preserve">
+    <value>Birth Date</value>
+    <comment>Data de nascimento</comment>
+  </data>
+  <data name="AdditionalInfo" xml:space="preserve">
+    <value>Additional Info</value>
+    <comment>Informações Adicionais</comment>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>Gender</value>
+    <comment>Gênero</comment>
+  </data>
+  <data name="HasAnySpecialNeeds" xml:space="preserve">
+    <value>Do you have any special needs?</value>
+    <comment>Possui necessidades especiais?</comment>
+  </data>
+  <data name="CollaboratorIndustry" xml:space="preserve">
+    <value>Industry</value>
+    <comment>Área de Atuação</comment>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Role</value>
+    <comment>Função</comment>
+  </data>
+  <data name="WhichSpecialNeedsQ" xml:space="preserve">
+    <value>Please, inform.</value>
+    <comment>Qual?</comment>
+  </data>
+  <data name="HaveYouBeenToRio2CBefore" xml:space="preserve">
+    <value>Have you been to Rio2C before?</value>
+    <comment>Já esteve em outras edições do Rio2C?</comment>
+  </data>
+  <data name="InWhatEditions" xml:space="preserve">
+    <value>When?</value>
+    <comment>Em que edição?</comment>
+  </data>
+  <data name="Others" xml:space="preserve">
+    <value>Others</value>
+    <comment>Outros</comment>
+  </data>
+  <data name="EnterYourIndustry" xml:space="preserve">
+    <value>Enter your industry</value>
+    <comment>Informe sua área de atuação</comment>
+  </data>
+  <data name="EnterYourRole" xml:space="preserve">
+    <value>Enter your role</value>
+    <comment>Informe sua função</comment>
+  </data>
+  <data name="Pillar" xml:space="preserve">
+    <value>Pillar</value>
+    <comment>Pilar</comment>
+  </data>
+  <data name="Pillars" xml:space="preserve">
+    <value>Pillars</value>
+    <comment>Pilares</comment>
+  </data>
+  <data name="WhichEditionQ" xml:space="preserve">
+    <value>When?</value>
+    <comment>Em qual edição?</comment>
+  </data>
+  <data name="SelectAFEntity" xml:space="preserve">
+    <value>Select a {0}</value>
+    <comment>Selecione uma {0}</comment>
+  </data>
+  <data name="SelectAnFEntity" xml:space="preserve">
+    <value>Select an {0}</value>
+    <comment>Selecione uma {0}</comment>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Select all</value>
+    <comment>Selecionar todos</comment>
+  </data>
+  <data name="UnselectAll" xml:space="preserve">
+    <value>Unselect all</value>
+    <comment>Deselecionar todos</comment>
   </data>
   <data name="Sponsors" xml:space="preserve">
     <value>Sponsors</value>

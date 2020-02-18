@@ -4,7 +4,7 @@
 // Created          : 01-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-09-2020
+// Last Modified On : 02-16-2020
 // ***********************************************************************
 // <copyright file="UpdateConferenceMainInformation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,6 +18,7 @@ using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -49,11 +50,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<ConferenceTitleBaseCommand> Titles { get; set; }
         public List<ConferenceSynopsisBaseCommand> Synopsis { get; set; }
 
-        public DateTime? StartDate { get; private set; }
-        public DateTime? EndDate { get; private set; }
+        public DateTimeOffset? StartDate { get; private set; }
+        public DateTimeOffset? EndDate { get; private set; }
         public List<EditionEvent> EditionEvents { get; private set; }
         public List<RoomJsonDto> Rooms { get; private set; }
 
+        /// <summary>Initializes a new instance of the <see cref="UpdateConferenceMainInformation"/> class.</summary>
+        /// <param name="conferenceDto">The conference dto.</param>
+        /// <param name="editionEvents">The edition events.</param>
+        /// <param name="languagesDtos">The languages dtos.</param>
+        /// <param name="roomDtos">The room dtos.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
         public UpdateConferenceMainInformation(
             ConferenceDto conferenceDto,
             List<EditionEvent> editionEvents,
@@ -62,9 +69,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string userInterfaceLanguage)
         {
             this.EditionEventUid = conferenceDto?.EditionEvent?.Uid;
-            this.Date = conferenceDto?.Conference?.StartDate.Date;
-            this.StartTime = conferenceDto?.Conference?.StartDate.ToShortTimeString();
-            this.EndTime = conferenceDto?.Conference?.EndDate.ToShortTimeString();
+            this.Date = conferenceDto?.Conference?.StartDate.ToUserTimeZone().Date;
+            this.StartTime = conferenceDto?.Conference?.StartDate.ToUserTimeZone().ToShortTimeString();
+            this.EndTime = conferenceDto?.Conference?.EndDate.ToUserTimeZone().ToShortTimeString();
             this.RoomUid = conferenceDto?.RoomDto?.Room?.Uid;
             this.UpdateTitles(conferenceDto, languagesDtos);
             this.UpdateSynopsis(conferenceDto, languagesDtos);
@@ -77,6 +84,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
         }
 
+        /// <summary>Updates the dropdowns.</summary>
+        /// <param name="editionEvents">The edition events.</param>
+        /// <param name="roomDtos">The room dtos.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
         public void UpdateDropdowns(
             List<EditionEvent> editionEvents,
             List<RoomDto> roomDtos,

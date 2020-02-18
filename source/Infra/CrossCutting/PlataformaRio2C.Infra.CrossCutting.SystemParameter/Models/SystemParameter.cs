@@ -68,7 +68,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SystemParameter
         [LogConfig(NoLog = true)]
         public void SetValue(string planText)
         {
-            this.DateChanges = DateTime.Now;
+            this.DateChanges = DateTime.UtcNow;
             this.SubCode = PasswordHelper.GetNewRandomPassword(5, EspecialCharRequerid: false);
             Value = planText.AesEncrypt(ComposeSalt());
         }

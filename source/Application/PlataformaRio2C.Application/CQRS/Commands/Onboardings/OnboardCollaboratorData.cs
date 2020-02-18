@@ -17,8 +17,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -34,6 +36,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(256, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         [DataType(DataType.EmailAddress)]
         public string PublicEmail { get; set; }
+        
+        [Display(Name = "BirthDate", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]        
+        public DateTime? BirthDate { get; set; }
 
         [Display(Name = "Website", ResourceType = typeof(Labels))]
         [StringLength(300, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
@@ -54,12 +60,72 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Display(Name = "YouTube")]
         [StringLength(300, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Youtube { get; set; }
+        
+        [Display(Name = "CollaboratorIndustry", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public Guid? CollaboratorIndustryUid { get; set; }
+
+        public IEnumerable<CollaboratorIndustry> CollaboratorIndustries { get; set; }
+
+        public bool CollaboratorIndustryAdditionalInfoRequired {get;set;}
+
+        [Display(Name = "EnterYourIndustry", ResourceType = typeof(Labels))]
+        [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        [RequiredIf("CollaboratorIndustryAdditionalInfoRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public string CollaboratorIndustryAdditionalInfo  { get; set; }
+
+        [Display(Name = "Gender", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public Guid? CollaboratorGenderUid  { get; set; }
+
+        public IEnumerable<CollaboratorGender> CollaboratorGenders { get; set; }
+        
+        public bool CollaboratorGenderAdditionalInfoRequired {get;set;}
+
+        [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
+        [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        [RequiredIf("CollaboratorGenderAdditionalInfoRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public string CollaboratorGenderAdditionalInfo  { get; set; }
+        
+        [Display(Name = "Role", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public Guid? CollaboratorRoleUid { get; set; }
+
+        public IEnumerable<CollaboratorRole> CollaboratorRoles { get; set; }
+        
+        public bool CollaboratorRoleAdditionalInfoRequired {get;set;}
+
+        [Display(Name = "EnterYourRole", ResourceType = typeof(Labels))]
+        [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        [RequiredIf("CollaboratorRoleAdditionalInfoRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public string CollaboratorRoleAdditionalInfo { get; set; }
+        
+        [Display(Name = "HasAnySpecialNeeds", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public bool? HasAnySpecialNeeds { get; set; }
+
+        [Display(Name = "WhichSpecialNeedsQ", ResourceType = typeof(Labels))]
+        [RequiredIf("HasAnySpecialNeeds", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [StringLength(300, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string SpecialNeedsDescription { get; set; }
+                
+        [Display(Name = "HaveYouBeenToRio2CBefore", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public bool? HaveYouBeenToRio2CBefore { get; set; }
+        
+        [Display(Name = "PreviousEditions", ResourceType = typeof(Labels))]
+        public IEnumerable<Guid> EditionsUids { get; set; }
+                
+        [RequiredIf("HaveYouBeenToRio2CBefore", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneOption")]
+        public bool? HasEditionSelected { get;set; }
+
+        public IEnumerable<EditionDto> Editions { get; set; }
 
         public List<CollaboratorJobTitleBaseCommand> JobTitles { get; set; }
         public List<CollaboratorMiniBioBaseCommand> MiniBios { get; set; }
         public CropperImageBaseCommand CropperImage { get; set; }
 
-        public Guid CollaboratorUid { get; private set; }
+        public Guid CollaboratorUid { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="OnboardCollaboratorData"/> class.</summary>
         /// <param name="collaborator">The collaborator.</param>
@@ -67,13 +133,61 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
         /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
-        public OnboardCollaboratorData(CollaboratorDto collaborator, List<LanguageDto> languagesDtos, bool isJobTitleRequired, bool isMiniBioRequired, bool isImageRequired)
+        public OnboardCollaboratorData(
+            CollaboratorDto collaborator, 
+            List<CollaboratorGender> genders, 
+            List<CollaboratorIndustry> industries, 
+            List<CollaboratorRole> roles, 
+            List<LanguageDto> languagesDtos, 
+            List<EditionDto> editionsDtos, 
+            int currentEditionId,
+            bool isJobTitleRequired, 
+            bool isMiniBioRequired, 
+            bool isImageRequired, 
+            string userInterfaceLanguage)
         {
             this.SharePublicEmail = !string.IsNullOrEmpty(collaborator.PublicEmail) ? (bool?)true : null;
             this.PublicEmail = collaborator?.PublicEmail;
+            this.UpdateEditions(editionsDtos, currentEditionId);
+            this.UpdateGenders(genders, userInterfaceLanguage);
+            this.UpdateIndustries(industries, userInterfaceLanguage);
+            this.UpdateRoles(roles, userInterfaceLanguage);
             this.UpdateJobTitles(collaborator, languagesDtos, isJobTitleRequired);
-            this.UpdateMiniBios(collaborator, languagesDtos, isMiniBioRequired);
+            this.UpdateMiniBios(collaborator, languagesDtos, isMiniBioRequired);            
             this.UpdateCropperImage(collaborator, isImageRequired);
+        }
+
+        /// <summary>
+        /// Updates the editions.
+        /// </summary>
+        /// <param name="editionsDtos">The editions dtos.</param>
+        private void UpdateEditions(List<EditionDto> editionsDtos, int currentEditionId)
+        {
+            if(this.EditionsUids == null)
+                this.EditionsUids = new List<Guid>();
+
+            this.Editions = editionsDtos.Where(e => e.Id != currentEditionId).ToList();
+        }
+
+        /// <summary>
+        /// Updates the data.
+        /// </summary>
+        /// <param name="genders">The genders.</param>
+        /// <param name="industries">The industries.</param>
+        /// <param name="roles">The roles.</param>
+        /// <param name="editionsDtos">The editions dtos.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public void UpdateData(List<CollaboratorGender> genders, 
+            List<CollaboratorIndustry> industries, 
+            List<CollaboratorRole> roles, 
+            List<EditionDto> editionsDtos, 
+            int editionId,
+            string userInterfaceLanguage)
+        {            
+            this.UpdateEditions(editionsDtos, editionId);
+            this.UpdateGenders(genders, userInterfaceLanguage);
+            this.UpdateIndustries(industries, userInterfaceLanguage);
+            this.UpdateRoles(roles, userInterfaceLanguage);            
         }
 
         /// <summary>Initializes a new instance of the <see cref="OnboardCollaboratorData"/> class.</summary>
@@ -94,6 +208,42 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 this.JobTitles.Add(jobTitle != null ? new CollaboratorJobTitleBaseCommand(jobTitle, isJobTitleRequired) :
                                                       new CollaboratorJobTitleBaseCommand(languageDto, isJobTitleRequired));
             }
+        }
+        
+        /// <summary>
+        /// Updates the genders.
+        /// </summary>
+        /// <param name="genders">The genders.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void UpdateGenders(List<CollaboratorGender> genders, string userInterfaceLanguage)
+        {
+            genders.ForEach(g => g.Translate(userInterfaceLanguage));
+            this.CollaboratorGenders = genders.OrderBy(e => e.HasAdditionalInfo).ThenBy(e => e.Name);
+        }
+
+        /// <summary>
+        /// Updates the genders.
+        /// </summary>
+        /// <param name="genders">The genders.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void UpdateIndustries(List<CollaboratorIndustry> industries, string userInterfaceLanguage)
+        {
+            industries.ForEach(g => g.Translate(userInterfaceLanguage));
+            this.CollaboratorIndustries = industries.OrderBy(e => e.HasAdditionalInfo).ThenBy(e => e.Name);
+        }
+
+        /// <summary>
+        /// Updates the genders.
+        /// </summary>
+        /// <param name="genders">The genders.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void UpdateRoles(List<CollaboratorRole> roles, string userInterfaceLanguage)
+        {
+            roles.ForEach(g => g.Translate(userInterfaceLanguage));
+            this.CollaboratorRoles = roles.OrderBy(e => e.HasAdditionalInfo).ThenBy(e => e.Name);
         }
 
         /// <summary>Updates the mini bios.</summary>
@@ -133,7 +283,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             int? editionId,
             Guid? editionUid,
             string userInterfaceLanguage)
-        {
+        {            
+            if (!HaveYouBeenToRio2CBefore ?? false)
+            {
+                EditionsUids = new List<Guid>();
+            }
+
             this.CollaboratorUid = collaboratorUid;
             this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, userInterfaceLanguage);
         }

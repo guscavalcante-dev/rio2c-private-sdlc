@@ -4,7 +4,7 @@
 // Created          : 12-18-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-19-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="CollaboratorApiListDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,10 +23,10 @@ namespace PlataformaRio2C.Domain.Dtos
         public Guid Uid { get; set; }
         public string BadgeName { get; set; }
         public string Name { get; set; }
-        public DateTime? ImageUploadDate { get; set; }
+        public DateTimeOffset? ImageUploadDate { get; set; }
         public int? ApiHighlightPosition { get; set; }
-        public DateTime CreateDate { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public DateTimeOffset CreateDate { get; set; }
+        public DateTimeOffset UpdateDate { get; set; }
 
         public IEnumerable<CollaboratorMiniBioBaseDto> MiniBiosDtos { get; set; }
         public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }

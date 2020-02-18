@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-21-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="Entity.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,9 +23,9 @@ namespace PlataformaRio2C.Domain.Entities
         public int Id { get; protected set; }
         public Guid Uid { get; set; }
         public bool IsDeleted { get; protected set; }
-        public DateTime CreateDate { get; protected set; }
+        public DateTimeOffset CreateDate { get; protected set; }
         public int CreateUserId { get; protected set; }
-        public DateTime UpdateDate { get; protected set; }
+        public DateTimeOffset UpdateDate { get; protected set; }
         public int UpdateUserId { get; protected set; }
 
         public virtual ValidationResult ValidationResult { get; set; }

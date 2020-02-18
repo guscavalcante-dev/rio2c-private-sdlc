@@ -1,0 +1,90 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model PillarDto
+<div class="kt-portlet__body">
+    <div class="kt-widget kt-widget--user-profile-3">
+        <div class="kt-widget__top">
+            @*<div style="float: right;">
+                @if (Model.Collaborator?.HasImage() == true)
+                {
+                    <div class="kt-widget__media">
+                        <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, Model.Collaborator.Uid, Model.Collaborator.ImageUploadDate, true)" alt="image">
+                    </div>
+                }
+                else
+                {
+                    <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest" style="width: 110px; height: 110px;">
+                        @(Model.Collaborator?.GetDisplayNameAbbreviation() ?? "-")
+                    </div>
+                }
+            </div>*@ 
+            <div class="kt-widget__content pl-0" style="overflow: hidden;">
+                <div class="kt-widget__head">
+                    <span class="kt-widget__username">
+                        @(Model.Pillar?.GetNameByLanguageCode(ViewBag.UserInterfaceLanguage) ?? "-")
+                        @*@if (Model.AttendeeCollaborator?.OnboardingFinishDate != null)
+                        {
+                            <i class="flaticon2-correct"></i>
+                        }*@
+                    </span>
+                    <div class="kt-widget__action">
+                        <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="PillarsMainInformationWidget.showUpdateModal();">
+                            <i class="flaticon2-edit"></i>
+                        </button>
+                    </div>
+                </div>
+                @*@{
+                    var synopsisDto = Model.GetConferenceSynopsisDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
+                }
+                @if (synopsisDto != null)
+                {
+                    <div class="kt-widget__subhead pt-0">
+                        @synopsisDto.Value
+                    </div>
+                }*@
+                @*<div class="kt-widget__subhead">
+                    <a onclick="return false;"><i class="flaticon-event-calendar-symbol"></i>@Model.EditionEvent.Name</a>
+                    @{
+                        var roomDto = Model.RoomDto?.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage);
+                    }
+                    @if (roomDto != null)
+                    {
+                        <a onclick="return false;"><i class="flaticon-placeholder"></i>@roomDto.RoomName.Value</a>
+                    }
+                </div>
+                <div class="kt-widget__info" style="display: block;">
+                    @{
+                        var synopsisDto = Model.GetConferenceSynopsisDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
+                    }
+                    @if (synopsisDto != null)
+                    {
+                        <div class="kt-widget__desc" style="word-wrap: break-word;">
+                            @Html.Raw(synopsisDto.ConferenceSynopsis.Value)
+                        </div>
+                    }
+                </div>*@
+            </div>
+        </div>
+        <div class="kt-widget__bottom">
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.CreateDate</span>
+                    <span class="kt-widget__value"><span>@(Model.Pillar.CreateDate.ToUserTimeZone().ToShortDateString()) @(Model.Pillar.CreateDate.ToUserTimeZone().ToShortTimeString())</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.UpdateDate</span>
+                    <span class="kt-widget__value"><span>@(Model.Pillar.UpdateDate.ToUserTimeZone().ToShortDateString()) @(Model.Pillar.UpdateDate.ToUserTimeZone().ToShortTimeString())</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.Color</span>
+                    <span class="kt-widget__value">
+                        <span class="kt-badge kt-badge--inline mt-1" style="color: #ffffff; background: @(Model.Pillar.Color)">@(Model.Pillar.Color)</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

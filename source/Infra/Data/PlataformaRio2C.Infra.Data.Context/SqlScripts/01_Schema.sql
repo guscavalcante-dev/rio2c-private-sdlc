@@ -12,9 +12,9 @@ CREATE TABLE [dbo].[Activities](
 	[DisplayOrder] [int] NOT NULL,
 	[HasAdditionalInfo] [bit] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NULL,
+	[CreateDate] [datetimeoffset](7) NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NULL,
+	[UpdateDate] [datetimeoffset](7) NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_Activities] PRIMARY KEY CLUSTERED 
 (
@@ -48,9 +48,9 @@ CREATE TABLE [dbo].[Addresses](
 	[Longitude] [decimal](9, 6) NULL,
 	[IsGeoLocationUpdated] [bit] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_Addresses] PRIMARY KEY CLUSTERED 
 (
@@ -70,19 +70,19 @@ CREATE TABLE [dbo].[AttendeeCollaborators](
 	[Uid] [uniqueidentifier] NOT NULL,
 	[EditionId] [int] NOT NULL,
 	[CollaboratorId] [int] NOT NULL,
-	[WelcomeEmailSendDate] [datetime] NULL,
-	[OnboardingStartDate] [datetime] NULL,
-	[OnboardingFinishDate] [datetime] NULL,
-	[OnboardingUserDate] [datetime] NULL,
-	[OnboardingCollaboratorDate] [datetime] NULL,
-	[OnboardingOrganizationDataSkippedDate] [datetime] NULL,
-	[PlayerTermsAcceptanceDate] [datetime] NULL,
-	[ProducerTermsAcceptanceDate] [datetime] NULL,
-	[SpeakerTermsAcceptanceDate] [datetime] NULL,
+	[WelcomeEmailSendDate] [datetimeoffset](7) NULL,
+	[OnboardingStartDate] [datetimeoffset](7) NULL,
+	[OnboardingFinishDate] [datetimeoffset](7) NULL,
+	[OnboardingUserDate] [datetimeoffset](7) NULL,
+	[OnboardingCollaboratorDate] [datetimeoffset](7) NULL,
+	[OnboardingOrganizationDataSkippedDate] [datetimeoffset](7) NULL,
+	[PlayerTermsAcceptanceDate] [datetimeoffset](7) NULL,
+	[ProducerTermsAcceptanceDate] [datetimeoffset](7) NULL,
+	[SpeakerTermsAcceptanceDate] [datetimeoffset](7) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_AttendeeCollaborators] PRIMARY KEY CLUSTERED 
 (
@@ -112,7 +112,7 @@ CREATE TABLE [dbo].[AttendeeCollaboratorTickets](
 	[AttendeeCollaboratorId] [int] NOT NULL,
 	[AttendeeSalesPlatformTicketTypeId] [int] NOT NULL,
 	[SalesPlatformAttendeeId] [varchar](40) NOT NULL,
-	[SalesPlatformUpdateDate] [datetime] NOT NULL,
+	[SalesPlatformUpdateDate] [datetimeoffset](7) NOT NULL,
 	[FirstName] [varchar](100) NOT NULL,
 	[LastNames] [varchar](200) NULL,
 	[CellPhone] [varchar](50) NULL,
@@ -120,11 +120,11 @@ CREATE TABLE [dbo].[AttendeeCollaboratorTickets](
 	[Barcode] [varchar](40) NULL,
 	[IsBarcodePrinted] [bit] NOT NULL,
 	[IsBarcodeUsed] [bit] NOT NULL,
-	[BarcodeUpdateDate] [datetime] NULL,
+	[BarcodeUpdateDate] [datetimeoffset](7) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_AttendeeCollaboratorTickets] PRIMARY KEY CLUSTERED 
 (
@@ -151,9 +151,9 @@ CREATE TABLE [dbo].[AttendeeCollaboratorTypes](
 	[IsApiDisplayEnabled] [bit] NOT NULL,
 	[ApiHighlightPosition] [int] NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_AttendeeCollaboratorTypes] PRIMARY KEY CLUSTERED 
 (
@@ -181,9 +181,9 @@ CREATE TABLE [dbo].[AttendeeLogisticSponsors](
 	[EditionId] [int] NOT NULL,
 	[LogisticSponsorId] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_AttendeeLogisticSponsors_Uid] PRIMARY KEY CLUSTERED 
 (
@@ -202,9 +202,9 @@ CREATE TABLE [dbo].[AttendeeOrganizationCollaborators](
 	[AttendeeOrganizationId] [int] NOT NULL,
 	[AttendeeCollaboratorId] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_AttendeeOrganizationCollaborators] PRIMARY KEY CLUSTERED 
 (
@@ -231,16 +231,16 @@ CREATE TABLE [dbo].[AttendeeOrganizations](
 	[Uid] [uniqueidentifier] NOT NULL,
 	[EditionId] [int] NOT NULL,
 	[OrganizationId] [int] NOT NULL,
-	[OnboardingStartDate] [datetime] NULL,
-	[OnboardingFinishDate] [datetime] NULL,
-	[OnboardingOrganizationDate] [datetime] NULL,
-	[OnboardingInterestsDate] [date] NULL,
-	[ProjectSubmissionOrganizationDate] [datetime] NULL,
+	[OnboardingStartDate] [datetimeoffset](7) NULL,
+	[OnboardingFinishDate] [datetimeoffset](7) NULL,
+	[OnboardingOrganizationDate] [datetimeoffset](7) NULL,
+	[OnboardingInterestsDate] [datetimeoffset](7) NULL,
+	[ProjectSubmissionOrganizationDate] [datetimeoffset](7) NULL,
 	[SellProjectsCount] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_AttendeeOrganizations] PRIMARY KEY CLUSTERED 
 (
@@ -270,9 +270,9 @@ CREATE TABLE [dbo].[AttendeeOrganizationTypes](
 	[IsApiDisplayEnabled] [bit] NOT NULL,
 	[ApiHighlightPosition] [int] NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_AttendeeOrganizationTypes] PRIMARY KEY CLUSTERED 
 (
@@ -300,9 +300,9 @@ CREATE TABLE [dbo].[AttendeePlaces](
 	[EditionId] [int] NOT NULL,
 	[PlaceId] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_AttendeePlaces] PRIMARY KEY CLUSTERED 
 (
@@ -329,9 +329,9 @@ CREATE TABLE [dbo].[AttendeeSalesPlatforms](
 	[SalesPlatformEventId] [varchar](30) NOT NULL,
 	[IsActive] [bit] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_AttendeeSalesPlatforms] PRIMARY KEY CLUSTERED 
 (
@@ -367,9 +367,9 @@ CREATE TABLE [dbo].[AttendeeSalesPlatformTicketTypes](
 	[TicketClassName] [varchar](200) NOT NULL,
 	[CollaboratorTypeId] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [date] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_AttendeeSalesPlatformTicketTypes] PRIMARY KEY CLUSTERED 
 (
@@ -402,15 +402,103 @@ CREATE TABLE [dbo].[Cities](
 	[Name] [varchar](100) NOT NULL,
 	[IsManual] [bit] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_Cities] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
  CONSTRAINT [IDX_UQ_Cities_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[CollaboratorEditionParticipations](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[CollaboratorId] [int] NOT NULL,
+	[EditionId] [int] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_CollaboratorEditionParticipations] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_CollaboratorEditionParticipations_CollaboratorId_EditionId] UNIQUE NONCLUSTERED 
+(
+	[CollaboratorId] ASC,
+	[EditionId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_CollaboratorEditionParticipations_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[CollaboratorGenders](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](300) NOT NULL,
+	[HasAdditionalInfo] [bit] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_CollaboratorGenders] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_CollaboratorGenders_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[CollaboratorIndustries](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](300) NOT NULL,
+	[HasAdditionalInfo] [bit] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_CollaboratorIndustries] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_CollaboratorIndustries_Uid] UNIQUE NONCLUSTERED 
 (
 	[Uid] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -432,9 +520,9 @@ CREATE TABLE [dbo].[CollaboratorJobTitles](
 	[LanguageId] [int] NULL,
 	[Value] [varchar](256) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_CollaboratorJobTitles] PRIMARY KEY CLUSTERED 
 (
@@ -467,9 +555,9 @@ CREATE TABLE [dbo].[CollaboratorMiniBios](
 	[LanguageId] [int] NOT NULL,
 	[Value] [varchar](8000) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_CollaboratorMiniBios] PRIMARY KEY CLUSTERED 
 (
@@ -495,12 +583,41 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_PADDING ON
 GO
+CREATE TABLE [dbo].[CollaboratorRoles](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](300) NOT NULL,
+	[HasAdditionalInfo] [bit] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_CollaboratorRoles] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_CollaboratorRoles_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
 CREATE TABLE [dbo].[Collaborators](
 	[Id] [int] NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
 	[FirstName] [varchar](100) NOT NULL,
 	[LastNames] [varchar](200) NULL,
-	[ImageUploadDate] [datetime] NULL,
+	[ImageUploadDate] [datetimeoffset](7) NULL,
 	[PhoneNumber] [varchar](50) NULL,
 	[CellPhone] [varchar](50) NULL,
 	[Badge] [varchar](50) NULL,
@@ -511,10 +628,19 @@ CREATE TABLE [dbo].[Collaborators](
 	[Twitter] [varchar](100) NULL,
 	[Youtube] [varchar](300) NULL,
 	[AddressId] [int] NULL,
+	[BirthDate] [datetime] NULL,
+	[CollaboratorGenderId] [int] NULL,
+	[CollaboratorGenderAdditionalInfo] [varchar](300) NULL,
+	[CollaboratorRoleId] [int] NULL,
+	[CollaboratorRoleAdditionalInfo] [varchar](300) NULL,
+	[CollaboratorIndustryId] [int] NULL,
+	[CollaboratorIndustryAdditionalInfo] [varchar](300) NULL,
+	[HasAnySpecialNeeds] [bit] NULL,
+	[SpecialNeedsDescription] [varchar](300) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_Collaborators] PRIMARY KEY CLUSTERED 
 (
@@ -541,9 +667,9 @@ CREATE TABLE [dbo].[CollaboratorTypes](
 	[Name] [varchar](256) NOT NULL,
 	[RoleId] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_CollaboratorTypes] PRIMARY KEY CLUSTERED 
 (
@@ -570,9 +696,9 @@ CREATE TABLE [dbo].[ConferenceParticipantRoles](
 	[Name] [varchar](256) NOT NULL,
 	[IsLecturer] [bit] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PKConferenceParticipantRoles] PRIMARY KEY CLUSTERED 
 (
@@ -600,9 +726,9 @@ CREATE TABLE [dbo].[ConferenceParticipantRoleTitles](
 	[LanguageId] [int] NOT NULL,
 	[Value] [varchar](256) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PKConferenceParticipantRoleTitles] PRIMARY KEY CLUSTERED 
 (
@@ -634,9 +760,9 @@ CREATE TABLE [dbo].[ConferenceParticipants](
 	[ConferenceParticipantRoleId] [int] NOT NULL,
 	[IsPreRegistered] [bit] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_ConferenceParticipants] PRIMARY KEY CLUSTERED 
 (
@@ -658,15 +784,45 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+CREATE TABLE [dbo].[ConferencePillars](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[ConferenceId] [int] NOT NULL,
+	[PillarId] [int] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_ConferencePillars] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ConferencePillars_ConferenceId_PillarId] UNIQUE NONCLUSTERED 
+(
+	[ConferenceId] ASC,
+	[PillarId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ConferencePillars_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 CREATE TABLE [dbo].[ConferencePresentationFormats](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
 	[ConferenceId] [int] NOT NULL,
 	[PresentationFormatId] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_ConferencePresentationFormats] PRIMARY KEY CLUSTERED 
 (
@@ -695,13 +851,13 @@ CREATE TABLE [dbo].[Conferences](
 	[Uid] [uniqueidentifier] NOT NULL,
 	[EditionEventId] [int] NOT NULL,
 	[RoomId] [int] NOT NULL,
-	[StartDate] [datetime] NOT NULL,
-	[EndDate] [datetime] NOT NULL,
+	[StartDate] [datetimeoffset](7) NOT NULL,
+	[EndDate] [datetimeoffset](7) NOT NULL,
 	[Info] [varchar](3000) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_Conferences] PRIMARY KEY CLUSTERED 
 (
@@ -725,9 +881,9 @@ CREATE TABLE [dbo].[ConferenceSynopsis](
 	[LanguageId] [int] NOT NULL,
 	[Value] [varchar](8000) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_ConferenceSynopsis] PRIMARY KEY CLUSTERED 
 (
@@ -760,9 +916,9 @@ CREATE TABLE [dbo].[ConferenceTitles](
 	[LanguageId] [int] NOT NULL,
 	[Value] [varchar](8000) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_ConferenceTitles] PRIMARY KEY CLUSTERED 
 (
@@ -792,9 +948,9 @@ CREATE TABLE [dbo].[ConferenceTracks](
 	[ConferenceId] [int] NOT NULL,
 	[TrackId] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_ConferenceTracks] PRIMARY KEY CLUSTERED 
 (
@@ -831,9 +987,9 @@ CREATE TABLE [dbo].[Countries](
 	[MobileMask] [varchar](50) NULL,
 	[IsCompanyNumberRequired] [bit] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_Countries] PRIMARY KEY CLUSTERED 
 (
@@ -859,12 +1015,12 @@ CREATE TABLE [dbo].[EditionEvents](
 	[Uid] [uniqueidentifier] NOT NULL,
 	[EditionId] [int] NOT NULL,
 	[Name] [varchar](200) NOT NULL,
-	[StartDate] [datetime] NOT NULL,
-	[EndDate] [datetime] NOT NULL,
+	[StartDate] [datetimeoffset](7) NOT NULL,
+	[EndDate] [datetimeoffset](7) NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_EditionEvents] PRIMARY KEY CLUSTERED 
 (
@@ -892,23 +1048,23 @@ CREATE TABLE [dbo].[Editions](
 	[UrlCode] [int] NOT NULL,
 	[IsCurrent] [bit] NOT NULL,
 	[IsActive] [bit] NOT NULL,
-	[StartDate] [datetime] NOT NULL,
-	[EndDate] [datetime] NOT NULL,
-	[SellStartDate] [datetime] NOT NULL,
-	[SellEndDate] [datetime] NOT NULL,
-	[ProjectSubmitStartDate] [datetime] NOT NULL,
-	[ProjectSubmitEndDate] [datetime] NOT NULL,
-	[ProjectEvaluationStartDate] [datetime] NOT NULL,
-	[ProjectEvaluationEndDate] [datetime] NOT NULL,
-	[OneToOneMeetingsScheduleDate] [datetime] NOT NULL,
-	[NegotiationStartDate] [datetime] NOT NULL,
-	[NegotiationEndDate] [datetime] NOT NULL,
+	[StartDate] [datetimeoffset](7) NOT NULL,
+	[EndDate] [datetimeoffset](7) NOT NULL,
+	[SellStartDate] [datetimeoffset](7) NOT NULL,
+	[SellEndDate] [datetimeoffset](7) NOT NULL,
+	[ProjectSubmitStartDate] [datetimeoffset](7) NOT NULL,
+	[ProjectSubmitEndDate] [datetimeoffset](7) NOT NULL,
+	[ProjectEvaluationStartDate] [datetimeoffset](7) NOT NULL,
+	[ProjectEvaluationEndDate] [datetimeoffset](7) NOT NULL,
+	[OneToOneMeetingsScheduleDate] [datetimeoffset](7) NOT NULL,
+	[NegotiationStartDate] [datetimeoffset](7) NOT NULL,
+	[NegotiationEndDate] [datetimeoffset](7) NOT NULL,
 	[AttendeeOrganizationMaxSellProjectsCount] [int] NOT NULL,
 	[ProjectMaxBuyerEvaluationsCount] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NULL,
+	[CreateDate] [datetimeoffset](7) NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_Editions] PRIMARY KEY CLUSTERED 
 (
@@ -940,9 +1096,9 @@ CREATE TABLE [dbo].[HoldingDescriptions](
 	[LanguageId] [int] NOT NULL,
 	[Value] [varchar](8000) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_HoldingDescriptions] PRIMARY KEY CLUSTERED 
 (
@@ -972,11 +1128,11 @@ CREATE TABLE [dbo].[Holdings](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
 	[Name] [varchar](100) NOT NULL,
-	[ImageUploadDate] [datetime] NULL,
+	[ImageUploadDate] [datetimeoffset](7) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_Holdings] PRIMARY KEY CLUSTERED 
 (
@@ -1005,9 +1161,9 @@ CREATE TABLE [dbo].[InterestGroups](
 	[Type] [varchar](100) NOT NULL,
 	[DisplayOrder] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_InterestGroups] PRIMARY KEY CLUSTERED 
 (
@@ -1036,9 +1192,9 @@ CREATE TABLE [dbo].[Interests](
 	[DisplayOrder] [int] NOT NULL,
 	[HasAdditionalInfo] [bit] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_Interests] PRIMARY KEY CLUSTERED 
 (
@@ -1067,9 +1223,9 @@ CREATE TABLE [dbo].[Languages](
 	[IsDefault] [bit] NOT NULL,
 	[IsActive] [bit] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_Languages] PRIMARY KEY CLUSTERED 
 (
@@ -1095,13 +1251,13 @@ CREATE TABLE [dbo].[LogisticAccommodations](
 	[Uid] [uniqueidentifier] NOT NULL,
 	[LogisticId] [int] NOT NULL,
 	[AttendeePlaceId] [int] NOT NULL,
-	[CheckInDate] [datetime] NOT NULL,
-	[CheckOutDate] [datetime] NOT NULL,
+	[CheckInDate] [datetimeoffset](7) NOT NULL,
+	[CheckOutDate] [datetimeoffset](7) NOT NULL,
 	[AdditionalInfo] [varchar](1000) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_LogisticAccommodations] PRIMARY KEY CLUSTERED 
 (
@@ -1128,16 +1284,16 @@ CREATE TABLE [dbo].[LogisticAirfares](
 	[LogisticId] [int] NOT NULL,
 	[IsNational] [bit] NOT NULL,
 	[From] [varchar](100) NOT NULL,
-	[DepartureDate] [datetime] NOT NULL,
+	[DepartureDate] [datetimeoffset](7) NOT NULL,
 	[To] [datetime] NOT NULL,
-	[ArrivalDate] [datetime] NOT NULL,
+	[ArrivalDate] [datetimeoffset](7) NOT NULL,
 	[TicketNumber] [varchar](20) NULL,
-	[TicketUploadDate] [datetime] NULL,
+	[TicketUploadDate] [datetimeoffset](7) NULL,
 	[AdditionInfo] [varchar](1000) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NULL,
+	[UpdateDate] [datetimeoffset](7) NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_LogisticAirfares] PRIMARY KEY CLUSTERED 
 (
@@ -1174,9 +1330,9 @@ CREATE TABLE [dbo].[Logistics](
 	[IsCityTransferRequired] [bit] NOT NULL,
 	[IsVehicleDisposalRequired] [bit] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_Logistics] PRIMARY KEY CLUSTERED 
 (
@@ -1204,9 +1360,9 @@ CREATE TABLE [dbo].[LogisticSponsors](
 	[IsAirfareTicketRequired] [bit] NOT NULL,
 	[IsOtherRequired] [bit] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_LogisticSponsors] PRIMARY KEY CLUSTERED 
 (
@@ -1233,13 +1389,13 @@ CREATE TABLE [dbo].[LogisticTransfers](
 	[LogisticId] [int] NOT NULL,
 	[FromAttendeePlaceId] [int] NOT NULL,
 	[ToAttendeePlaceId] [int] NOT NULL,
-	[Date] [datetime] NOT NULL,
+	[Date] [datetimeoffset](7) NOT NULL,
 	[AdditionalInfo] [varchar](1000) NULL,
 	[LogisticTransferStatusId] [int] NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_LogisticTransfers] PRIMARY KEY CLUSTERED 
 (
@@ -1265,9 +1421,9 @@ CREATE TABLE [dbo].[LogisticTransferStatuses](
 	[Uid] [uniqueidentifier] NOT NULL,
 	[Name] [varchar](300) NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_LogisticTransferStatuses] PRIMARY KEY CLUSTERED 
 (
@@ -1293,9 +1449,9 @@ CREATE TABLE [dbo].[Messages](
 	[SenderId] [int] NOT NULL,
 	[RecipientId] [int] NOT NULL,
 	[Text] [nvarchar](max) NULL,
-	[SendDate] [datetime] NOT NULL,
-	[ReadDate] [datetime] NULL,
-	[NotificationEmailSendDate] [datetime] NULL,
+	[SendDate] [datetimeoffset](7) NOT NULL,
+	[ReadDate] [datetimeoffset](7) NULL,
+	[NotificationEmailSendDate] [datetimeoffset](7) NULL,
  CONSTRAINT [PK_Messages] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -1317,17 +1473,17 @@ CREATE TABLE [dbo].[NegotiationConfigs](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
 	[EditionId] [int] NOT NULL,
-	[StartDate] [datetime] NOT NULL,
-	[EndDate] [datetime] NOT NULL,
+	[StartDate] [datetimeoffset](7) NOT NULL,
+	[EndDate] [datetimeoffset](7) NOT NULL,
 	[RoundFirstTurn] [int] NOT NULL,
 	[RoundSecondTurn] [int] NOT NULL,
 	[TimeIntervalBetweenTurn] [char](18) NULL,
 	[TimeOfEachRound] [time](7) NOT NULL,
 	[TimeIntervalBetweenRound] [time](7) NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_NegotiationConfigs] PRIMARY KEY CLUSTERED 
 (
@@ -1354,9 +1510,9 @@ CREATE TABLE [dbo].[NegotiationRoomConfigs](
 	[CountAutomaticTables] [int] NOT NULL,
 	[CountManualTables] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CrateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_NegotiationRoomConfigs] PRIMARY KEY CLUSTERED 
 (
@@ -1378,14 +1534,14 @@ CREATE TABLE [dbo].[Negotiations](
 	[Uid] [uniqueidentifier] NOT NULL,
 	[ProjectBuyerEvaluationId] [int] NOT NULL,
 	[RoomId] [int] NOT NULL,
-	[StartDate] [datetime] NOT NULL,
-	[EndDate] [datetime] NOT NULL,
+	[StartDate] [datetimeoffset](7) NOT NULL,
+	[EndDate] [datetimeoffset](7) NOT NULL,
 	[TableNumber] [int] NOT NULL,
 	[RoundNumber] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_Negotiations] PRIMARY KEY CLUSTERED 
 (
@@ -1409,9 +1565,9 @@ CREATE TABLE [dbo].[OrganizationActivities](
 	[ActivityId] [int] NOT NULL,
 	[AdditionalInfo] [nvarchar](200) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateuserId] [int] NOT NULL,
  CONSTRAINT [PK_OrganizationActivities] PRIMARY KEY CLUSTERED 
 (
@@ -1442,9 +1598,9 @@ CREATE TABLE [dbo].[OrganizationDescriptions](
 	[LanguageId] [int] NOT NULL,
 	[Value] [varchar](8000) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_OrganizationDescriptions] PRIMARY KEY CLUSTERED 
 (
@@ -1477,9 +1633,9 @@ CREATE TABLE [dbo].[OrganizationInterests](
 	[InterestId] [int] NOT NULL,
 	[AdditionalInfo] [varchar](200) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_OrganizationInterests] PRIMARY KEY CLUSTERED 
 (
@@ -1508,9 +1664,9 @@ CREATE TABLE [dbo].[OrganizationRestrictionSpecifics](
 	[LanguageId] [int] NOT NULL,
 	[Value] [varchar](8000) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_OrganizationRestrictionSpecifics] PRIMARY KEY CLUSTERED 
 (
@@ -1552,11 +1708,11 @@ CREATE TABLE [dbo].[Organizations](
 	[Youtube] [varchar](300) NULL,
 	[SocialMedia] [varchar](256) NULL,
 	[AddressId] [int] NULL,
-	[ImageUploadDate] [datetime] NULL,
+	[ImageUploadDate] [datetimeoffset](7) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_Organizations] PRIMARY KEY CLUSTERED 
 (
@@ -1581,9 +1737,9 @@ CREATE TABLE [dbo].[OrganizationTargetAudiences](
 	[OrganizationId] [int] NOT NULL,
 	[TargetAudienceId] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_OrganizationTargetAudiences] PRIMARY KEY CLUSTERED 
 (
@@ -1609,15 +1765,45 @@ CREATE TABLE [dbo].[OrganizationTypes](
 	[RelatedProjectTypeId] [int] NOT NULL,
 	[IsSeller] [bit] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_OrganizationTypes] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
  CONSTRAINT [IDX_UQ_OrganizationTypes_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Pillars](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[EditionId] [int] NOT NULL,
+	[Name] [varchar](600) NOT NULL,
+	[Color] [varchar](10) NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_Pillars] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_Pillars_Uid] UNIQUE NONCLUSTERED 
 (
 	[Uid] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -1641,9 +1827,9 @@ CREATE TABLE [dbo].[Places](
 	[Website] [varchar](300) NULL,
 	[AdditionalInfo] [varchar](1000) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_Places] PRIMARY KEY CLUSTERED 
 (
@@ -1670,9 +1856,9 @@ CREATE TABLE [dbo].[PresentationFormats](
 	[EditionId] [int] NOT NULL,
 	[Name] [varchar](600) NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_PresentationFormats] PRIMARY KEY CLUSTERED 
 (
@@ -1698,9 +1884,9 @@ CREATE TABLE [dbo].[ProjectAdditionalInformations](
 	[LanguageId] [int] NOT NULL,
 	[Value] [nvarchar](max) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_ProjectAdditionalInformations] PRIMARY KEY CLUSTERED 
 (
@@ -1734,12 +1920,12 @@ CREATE TABLE [dbo].[ProjectBuyerEvaluations](
 	[Reason] [varchar](1500) NULL,
 	[SellerUserId] [int] NOT NULL,
 	[BuyerEvaluationUserId] [int] NULL,
-	[EvaluationDate] [datetime] NULL,
-	[BuyerEmailSendDate] [datetime] NULL,
+	[EvaluationDate] [datetimeoffset](7) NULL,
+	[BuyerEmailSendDate] [datetimeoffset](7) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_ProjectBuyerEvaluations] PRIMARY KEY CLUSTERED 
 (
@@ -1767,9 +1953,9 @@ CREATE TABLE [dbo].[ProjectEvaluationRefuseReasons](
 	[HasAdditionalInfo] [bit] NOT NULL,
 	[DisplayOrder] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_ProjectEvaluationRefuseReasons] PRIMARY KEY CLUSTERED 
 (
@@ -1797,9 +1983,9 @@ CREATE TABLE [dbo].[ProjectEvaluationStatuses](
 	[Code] [varchar](50) NOT NULL,
 	[IsEvaluated] [bit] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_ProjectEvaluationStatuses] PRIMARY KEY CLUSTERED 
 (
@@ -1826,9 +2012,9 @@ CREATE TABLE [dbo].[ProjectImageLinks](
 	[ProjectId] [int] NOT NULL,
 	[Value] [varchar](3000) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_ProjectImageLinks] PRIMARY KEY CLUSTERED 
 (
@@ -1852,9 +2038,9 @@ CREATE TABLE [dbo].[ProjectInterests](
 	[InterestId] [int] NOT NULL,
 	[AdditionalInfo] [varchar](200) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_ProjectInterests] PRIMARY KEY CLUSTERED 
 (
@@ -1887,9 +2073,9 @@ CREATE TABLE [dbo].[ProjectLogLines](
 	[LanguageId] [int] NOT NULL,
 	[Value] [varchar](8000) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_ProjectLogLines] PRIMARY KEY CLUSTERED 
 (
@@ -1922,9 +2108,9 @@ CREATE TABLE [dbo].[ProjectProductionPlans](
 	[LanguageId] [int] NOT NULL,
 	[Value] [varchar](3000) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_ProjectProductionPlans] PRIMARY KEY CLUSTERED 
 (
@@ -1963,12 +2149,12 @@ CREATE TABLE [dbo].[Projects](
 	[ValueAlreadyRaised] [varchar](50) NULL,
 	[ValueStillNeeded] [varchar](50) NULL,
 	[IsPitching] [bit] NOT NULL,
-	[FinishDate] [datetime] NULL,
+	[FinishDate] [datetimeoffset](7) NULL,
 	[ProjectBuyerEvaluationsCount] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_Projects] PRIMARY KEY CLUSTERED 
 (
@@ -1994,9 +2180,9 @@ CREATE TABLE [dbo].[ProjectSummaries](
 	[LanguageId] [int] NOT NULL,
 	[Value] [nvarchar](max) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_ProjectSummaries] PRIMARY KEY CLUSTERED 
 (
@@ -2024,9 +2210,9 @@ CREATE TABLE [dbo].[ProjectTargetAudiences](
 	[ProjectId] [int] NOT NULL,
 	[TargetAudienceId] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_ProjectTargetAudiences] PRIMARY KEY CLUSTERED 
 (
@@ -2056,9 +2242,9 @@ CREATE TABLE [dbo].[ProjectTeaserLinks](
 	[ProjectId] [int] NOT NULL,
 	[Value] [varchar](3000) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_ProjectTeaserLinks] PRIMARY KEY CLUSTERED 
 (
@@ -2086,9 +2272,9 @@ CREATE TABLE [dbo].[ProjectTitles](
 	[LanguageId] [int] NOT NULL,
 	[Value] [varchar](256) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_ProjectTitles] PRIMARY KEY CLUSTERED 
 (
@@ -2119,9 +2305,9 @@ CREATE TABLE [dbo].[ProjectTypes](
 	[Uid] [uniqueidentifier] NOT NULL,
 	[Name] [varchar](50) NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_ProjectTypes] PRIMARY KEY CLUSTERED 
 (
@@ -2144,9 +2330,9 @@ CREATE TABLE [dbo].[QuizAnswers](
 	[QuizOptionId] [int] NOT NULL,
 	[Answer] [varbinary](200) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_QuizAnswers] PRIMARY KEY CLUSTERED 
 (
@@ -2174,9 +2360,9 @@ CREATE TABLE [dbo].[QuizOptions](
 	[HasText] [bit] NOT NULL,
 	[Option] [varchar](200) NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_QuizOptions] PRIMARY KEY CLUSTERED 
 (
@@ -2204,9 +2390,9 @@ CREATE TABLE [dbo].[QuizQuestions](
 	[Question] [varchar](200) NOT NULL,
 	[DisplayOrder] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_QuizQuestions] PRIMARY KEY CLUSTERED 
 (
@@ -2234,9 +2420,9 @@ CREATE TABLE [dbo].[Quizzes](
 	[Name] [varchar](50) NOT NULL,
 	[IsActive] [bit] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_Quizzes] PRIMARY KEY CLUSTERED 
 (
@@ -2286,9 +2472,9 @@ CREATE TABLE [dbo].[RoomNames](
 	[LanguageId] [int] NOT NULL,
 	[Value] [varchar](256) NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_RoomNames] PRIMARY KEY CLUSTERED 
 (
@@ -2317,9 +2503,9 @@ CREATE TABLE [dbo].[Rooms](
 	[Uid] [uniqueidentifier] NULL,
 	[EditionId] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_Rooms] PRIMARY KEY CLUSTERED 
 (
@@ -2347,9 +2533,9 @@ CREATE TABLE [dbo].[SalesPlatforms](
 	[ApiSecret] [varchar](200) NULL,
 	[MaxProcessingCount] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
 	[SecurityStamp] [varchar](36) NOT NULL,
  CONSTRAINT [PK_SalesPlatforms] PRIMARY KEY CLUSTERED 
@@ -2375,7 +2561,7 @@ CREATE TABLE [dbo].[SalesPlatformWebhookRequests](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
 	[SalesPlatformId] [int] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[Endpoint] [varchar](250) NOT NULL,
 	[Header] [varchar](1000) NULL,
 	[Payload] [varchar](max) NULL,
@@ -2383,8 +2569,8 @@ CREATE TABLE [dbo].[SalesPlatformWebhookRequests](
 	[IsProcessed] [bit] NOT NULL,
 	[IsProcessing] [bit] NOT NULL,
 	[ProcessingCount] [int] NOT NULL,
-	[LastProcessingDate] [datetime] NULL,
-	[NextProcessingDate] [datetime] NULL,
+	[LastProcessingDate] [datetimeoffset](7) NULL,
+	[NextProcessingDate] [datetimeoffset](7) NULL,
 	[ProcessingErrorCode] [varchar](10) NULL,
 	[ProcessingErrorMessage] [varchar](250) NULL,
 	[ManualProcessingUserId] [int] NULL,
@@ -2414,8 +2600,8 @@ CREATE TABLE [dbo].[SentEmails](
 	[RecipientUserId] [int] NOT NULL,
 	[EditionId] [int] NULL,
 	[EmailType] [varchar](50) NOT NULL,
-	[EmailSendDate] [datetime] NOT NULL,
-	[EmailReadDate] [datetime] NULL,
+	[EmailSendDate] [datetimeoffset](7) NOT NULL,
+	[EmailReadDate] [datetimeoffset](7) NULL,
  CONSTRAINT [PK_SentEmails] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -2439,9 +2625,9 @@ CREATE TABLE [dbo].[States](
 	[Code] [varchar](2) NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[IsManual] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_States] PRIMARY KEY CLUSTERED 
 (
@@ -2469,9 +2655,9 @@ CREATE TABLE [dbo].[SubscribeLists](
 	[Description] [varchar](2000) NULL,
 	[Code] [varchar](50) NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_SubscribeLists] PRIMARY KEY CLUSTERED 
 (
@@ -2502,7 +2688,7 @@ CREATE TABLE [dbo].[SystemParameters](
 	[TypeName] [varchar](150) NULL,
 	[Description] [varchar](256) NULL,
 	[Value] [varchar](1000) NULL,
-	[DateChanges] [datetime] NULL,
+	[DateChanges] [datetimeoffset](7) NULL,
  CONSTRAINT [PK_SystemParameters] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -2533,9 +2719,9 @@ CREATE TABLE [dbo].[TargetAudiences](
 	[Name] [varchar](50) NOT NULL,
 	[DisplayOrder] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_TargetAudiences] PRIMARY KEY CLUSTERED 
 (
@@ -2563,9 +2749,9 @@ CREATE TABLE [dbo].[Tracks](
 	[Name] [varchar](600) NOT NULL,
 	[Color] [varchar](10) NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_Tracks] PRIMARY KEY CLUSTERED 
 (
@@ -2646,8 +2832,8 @@ CREATE TABLE [dbo].[Users](
 	[PasswordNew] [varchar](50) NULL,
 	[UserInterfaceLanguageId] [int] NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
  CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -2686,9 +2872,9 @@ CREATE TABLE [dbo].[UserUnsubscribedLists](
 	[UserId] [int] NOT NULL,
 	[SubscribeListId] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
-	[UpdateDate] [datetime] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_UserUnsubscribedLists] PRIMARY KEY CLUSTERED 
 (
@@ -2775,6 +2961,30 @@ GO
 SET ANSI_PADDING ON
 
 GO
+CREATE NONCLUSTERED INDEX [IDX_CollaboratorGenders_Name] ON [dbo].[CollaboratorGenders]
+(
+	[Name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+CREATE NONCLUSTERED INDEX [IDX_CollaboratorIndustries_Name] ON [dbo].[CollaboratorIndustries]
+(
+	[Name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+CREATE NONCLUSTERED INDEX [IDX_CollaboratorRoles_Name] ON [dbo].[CollaboratorRoles]
+(
+	[Name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
 CREATE NONCLUSTERED INDEX [IDX_Collaborators_FirstName_LastNames] ON [dbo].[Collaborators]
 (
 	[FirstName] ASC,
@@ -2784,6 +2994,11 @@ GO
 CREATE NONCLUSTERED INDEX [IDX_ConferenceParticipantRoles_IsLecturer] ON [dbo].[ConferenceParticipantRoles]
 (
 	[IsLecturer] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_ConferencePillars_PillarId] ON [dbo].[ConferencePillars]
+(
+	[PillarId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
 CREATE NONCLUSTERED INDEX [IDX_ConferencePresentationFormats_PresentationFormatId] ON [dbo].[ConferencePresentationFormats]
@@ -2888,6 +3103,19 @@ GO
 CREATE NONCLUSTERED INDEX [IDX_OrganizationTypes_RelatedProjectTypeId] ON [dbo].[OrganizationTypes]
 (
 	[RelatedProjectTypeId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_Pillars_EditionId] ON [dbo].[Pillars]
+(
+	[EditionId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+CREATE NONCLUSTERED INDEX [IDX_Pillars_Name] ON [dbo].[Pillars]
+(
+	[Name] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
 CREATE NONCLUSTERED INDEX [IDX_PresentationFormats_EditionId] ON [dbo].[PresentationFormats]
@@ -3286,6 +3514,46 @@ REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[Cities] CHECK CONSTRAINT [FK_Users_Cities_UpdateUserId]
 GO
+ALTER TABLE [dbo].[CollaboratorEditionParticipations]  WITH CHECK ADD  CONSTRAINT [FK_Collaborators_CollaboratorEditionParticipations_CollaboratorId] FOREIGN KEY([CollaboratorId])
+REFERENCES [dbo].[Collaborators] ([Id])
+GO
+ALTER TABLE [dbo].[CollaboratorEditionParticipations] CHECK CONSTRAINT [FK_Collaborators_CollaboratorEditionParticipations_CollaboratorId]
+GO
+ALTER TABLE [dbo].[CollaboratorEditionParticipations]  WITH CHECK ADD  CONSTRAINT [FK_Editions_CollaboratorEditionParticipations_EditionId] FOREIGN KEY([EditionId])
+REFERENCES [dbo].[Editions] ([Id])
+GO
+ALTER TABLE [dbo].[CollaboratorEditionParticipations] CHECK CONSTRAINT [FK_Editions_CollaboratorEditionParticipations_EditionId]
+GO
+ALTER TABLE [dbo].[CollaboratorEditionParticipations]  WITH CHECK ADD  CONSTRAINT [FK_Users_CollaboratorEditionParticipations_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[CollaboratorEditionParticipations] CHECK CONSTRAINT [FK_Users_CollaboratorEditionParticipations_CreateUserId]
+GO
+ALTER TABLE [dbo].[CollaboratorEditionParticipations]  WITH CHECK ADD  CONSTRAINT [FK_Users_CollaboratorEditionParticipations_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[CollaboratorEditionParticipations] CHECK CONSTRAINT [FK_Users_CollaboratorEditionParticipations_UpdateUserId]
+GO
+ALTER TABLE [dbo].[CollaboratorGenders]  WITH CHECK ADD  CONSTRAINT [FK_Users_CollaboratorGenders_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[CollaboratorGenders] CHECK CONSTRAINT [FK_Users_CollaboratorGenders_CreateUserId]
+GO
+ALTER TABLE [dbo].[CollaboratorGenders]  WITH CHECK ADD  CONSTRAINT [FK_Users_CollaboratorGenders_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[CollaboratorGenders] CHECK CONSTRAINT [FK_Users_CollaboratorGenders_UpdateUserId]
+GO
+ALTER TABLE [dbo].[CollaboratorIndustries]  WITH CHECK ADD  CONSTRAINT [FK_Users_CollaboratorIndustries_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[CollaboratorIndustries] CHECK CONSTRAINT [FK_Users_CollaboratorIndustries_CreateUserId]
+GO
+ALTER TABLE [dbo].[CollaboratorIndustries]  WITH CHECK ADD  CONSTRAINT [FK_Users_CollaboratorIndustries_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[CollaboratorIndustries] CHECK CONSTRAINT [FK_Users_CollaboratorIndustries_UpdateUserId]
+GO
 ALTER TABLE [dbo].[CollaboratorJobTitles]  WITH CHECK ADD  CONSTRAINT [FK_Collaborators_CollaboratorJobTitles_CollaboratorId] FOREIGN KEY([CollaboratorId])
 REFERENCES [dbo].[Collaborators] ([Id])
 GO
@@ -3326,10 +3594,35 @@ REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[CollaboratorMiniBios] CHECK CONSTRAINT [FK_Users_CollaboratorMiniBios_UpdateUserId]
 GO
+ALTER TABLE [dbo].[CollaboratorRoles]  WITH CHECK ADD  CONSTRAINT [FK_Users_CollaboratorRoles_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[CollaboratorRoles] CHECK CONSTRAINT [FK_Users_CollaboratorRoles_CreateUserId]
+GO
+ALTER TABLE [dbo].[CollaboratorRoles]  WITH CHECK ADD  CONSTRAINT [FK_Users_CollaboratorRoles_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[CollaboratorRoles] CHECK CONSTRAINT [FK_Users_CollaboratorRoles_UpdateUserId]
+GO
 ALTER TABLE [dbo].[Collaborators]  WITH CHECK ADD  CONSTRAINT [FK_Addresses_Collaborators_AddressId] FOREIGN KEY([AddressId])
 REFERENCES [dbo].[Addresses] ([Id])
 GO
 ALTER TABLE [dbo].[Collaborators] CHECK CONSTRAINT [FK_Addresses_Collaborators_AddressId]
+GO
+ALTER TABLE [dbo].[Collaborators]  WITH CHECK ADD  CONSTRAINT [FK_CollaboratorGenders_Collaborators_CollaboratorGenderId] FOREIGN KEY([CollaboratorGenderId])
+REFERENCES [dbo].[CollaboratorGenders] ([Id])
+GO
+ALTER TABLE [dbo].[Collaborators] CHECK CONSTRAINT [FK_CollaboratorGenders_Collaborators_CollaboratorGenderId]
+GO
+ALTER TABLE [dbo].[Collaborators]  WITH CHECK ADD  CONSTRAINT [FK_CollaboratorIndustries_Collaborators_CollaboratorIndustryId] FOREIGN KEY([CollaboratorIndustryId])
+REFERENCES [dbo].[CollaboratorIndustries] ([Id])
+GO
+ALTER TABLE [dbo].[Collaborators] CHECK CONSTRAINT [FK_CollaboratorIndustries_Collaborators_CollaboratorIndustryId]
+GO
+ALTER TABLE [dbo].[Collaborators]  WITH CHECK ADD  CONSTRAINT [FK_CollaboratorRoles_Collaborators_CollaboratorRoleId] FOREIGN KEY([CollaboratorRoleId])
+REFERENCES [dbo].[CollaboratorRoles] ([Id])
+GO
+ALTER TABLE [dbo].[Collaborators] CHECK CONSTRAINT [FK_CollaboratorRoles_Collaborators_CollaboratorRoleId]
 GO
 ALTER TABLE [dbo].[Collaborators]  WITH CHECK ADD  CONSTRAINT [FK_Users_Collaborators_CreateUserId] FOREIGN KEY([CreateUserId])
 REFERENCES [dbo].[Users] ([Id])
@@ -3415,6 +3708,26 @@ ALTER TABLE [dbo].[ConferenceParticipants]  WITH CHECK ADD  CONSTRAINT [FK_Users
 REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[ConferenceParticipants] CHECK CONSTRAINT [FK_Users_ConferenceParticipants_UpdateUserId]
+GO
+ALTER TABLE [dbo].[ConferencePillars]  WITH CHECK ADD  CONSTRAINT [FK_Conferences_ConferencePillars_ConferenceId] FOREIGN KEY([ConferenceId])
+REFERENCES [dbo].[Conferences] ([Id])
+GO
+ALTER TABLE [dbo].[ConferencePillars] CHECK CONSTRAINT [FK_Conferences_ConferencePillars_ConferenceId]
+GO
+ALTER TABLE [dbo].[ConferencePillars]  WITH CHECK ADD  CONSTRAINT [FK_Pillars_ConferencePillars_PillarId] FOREIGN KEY([PillarId])
+REFERENCES [dbo].[Pillars] ([Id])
+GO
+ALTER TABLE [dbo].[ConferencePillars] CHECK CONSTRAINT [FK_Pillars_ConferencePillars_PillarId]
+GO
+ALTER TABLE [dbo].[ConferencePillars]  WITH CHECK ADD  CONSTRAINT [FK_Users_ConferencePillars_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ConferencePillars] CHECK CONSTRAINT [FK_Users_ConferencePillars_CreateUserId]
+GO
+ALTER TABLE [dbo].[ConferencePillars]  WITH CHECK ADD  CONSTRAINT [FK_Users_ConferencePillars_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ConferencePillars] CHECK CONSTRAINT [FK_Users_ConferencePillars_UpdateUserId]
 GO
 ALTER TABLE [dbo].[ConferencePresentationFormats]  WITH CHECK ADD  CONSTRAINT [FK_Conferences_ConferencePresentationFormats_ConferenceId] FOREIGN KEY([ConferenceId])
 REFERENCES [dbo].[Conferences] ([Id])
@@ -3945,6 +4258,21 @@ ALTER TABLE [dbo].[OrganizationTypes]  WITH CHECK ADD  CONSTRAINT [FK_Users_Orga
 REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[OrganizationTypes] CHECK CONSTRAINT [FK_Users_OrganizationTypes_UpdateUserId]
+GO
+ALTER TABLE [dbo].[Pillars]  WITH CHECK ADD  CONSTRAINT [FK_Editions_Pillars_EditionId] FOREIGN KEY([EditionId])
+REFERENCES [dbo].[Editions] ([Id])
+GO
+ALTER TABLE [dbo].[Pillars] CHECK CONSTRAINT [FK_Editions_Pillars_EditionId]
+GO
+ALTER TABLE [dbo].[Pillars]  WITH CHECK ADD  CONSTRAINT [FK_Users_Pillars_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[Pillars] CHECK CONSTRAINT [FK_Users_Pillars_CreateUserId]
+GO
+ALTER TABLE [dbo].[Pillars]  WITH CHECK ADD  CONSTRAINT [FK_Users_Pillars_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[Pillars] CHECK CONSTRAINT [FK_Users_Pillars_UpdateUserId]
 GO
 ALTER TABLE [dbo].[Places]  WITH CHECK ADD  CONSTRAINT [FK_Addresses_Places_AddressId] FOREIGN KEY([AddressId])
 REFERENCES [dbo].[Addresses] ([Id])

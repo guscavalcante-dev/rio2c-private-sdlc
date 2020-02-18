@@ -16,9 +16,8 @@
         <div class="row mb-3">
             <div class="col-md-12 text-center"><h3>@Labels.Steps</h3></div>
         </div>
-        <!--doc: Replace A tag with SPAN tag to disable the step link click -->
-        <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : 
-                                                                                              Model > counter || userAccessControlDto?.IsUserOnboardingFinished() == true ? "done" : 
+        <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" :
+                                                                                              Model > counter || userAccessControlDto?.IsUserOnboardingFinished() == true ? "done" :
                                                                                               "pending")">
             <div class="kt-wizard-v2__nav-body">
                 <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
@@ -28,13 +27,29 @@
                 </div>
             </div>
         </span>
+        @if (isSpeaker)
+        {
+            counter++;
+
+            <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" :
+                                                                                                      Model > counter || userAccessControlDto?.IsSpeakerTermsAcceptanceFinished() == true ? "done" :
+                                                                                                          "pending")">
+                <div class="kt-wizard-v2__nav-body">
+                    <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
+                    <div class="kt-wizard-v2__nav-label">
+                        <div class="kt-wizard-v2__nav-label-title">@Messages.ImageAuthorizationForm</div>
+                        <div class="kt-wizard-v2__nav-label-desc">@Messages.ToProceedYouMustAcceptTheTerm</div>
+                    </div>
+                </div>
+            </span>
+        }
         @{
             counter++;
         }
         @if (isPlayer)
         {
-            <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : 
-                                                                                                  Model > counter || userAccessControlDto?.IsPlayerTermsAcceptanceFinished() == true ? "done" : 
+            <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" :
+                                                                                                  Model > counter || userAccessControlDto?.IsPlayerTermsAcceptanceFinished() == true ? "done" :
                                                                                                   "pending")">
                 <div class="kt-wizard-v2__nav-body">
                     <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
@@ -47,8 +62,8 @@
 
             counter++;
         }
-        <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : 
-                                                                                              Model > counter || userAccessControlDto?.IsCollaboratorOnboardingFinished() == true  ? "done" : 
+        <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" :
+                                                                                              Model > counter || userAccessControlDto?.IsCollaboratorOnboardingFinished() == true  ? "done" :
                                                                                               "pending")">
             <div class="kt-wizard-v2__nav-body">
                 <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
@@ -63,8 +78,8 @@
             foreach (var playerAttendeeOrganization in playerAttendeeOrganizations)
             {
                 counter++;
-                <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : 
-                                                                                                      Model > counter || playerAttendeeOrganization.OnboardingOrganizationDate.HasValue ? "done" : 
+                <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" :
+                                                                                                      Model > counter || playerAttendeeOrganization.OnboardingOrganizationDate.HasValue ? "done" :
                                                                                                       "pending")">
                     <div class="kt-wizard-v2__nav-body">
                         <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
@@ -77,8 +92,8 @@
                     </div>
                 </span>
                 counter++;
-                <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : 
-                                                                                                      Model > counter || playerAttendeeOrganization.OnboardingInterestsDate.HasValue ? "done" : 
+                <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" :
+                                                                                                      Model > counter || playerAttendeeOrganization.OnboardingInterestsDate.HasValue ? "done" :
                                                                                                       "pending")">
                     <div class="kt-wizard-v2__nav-body">
                         <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
@@ -93,29 +108,14 @@
         else if (isTicketBuyer)
         {
             counter++;
-            <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : 
-                                                                                                  Model > counter || userAccessControlDto?.IsTicketBuyerOrganizationOnboardingPending() != true ? "done" : 
+            <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" :
+                                                                                                  Model > counter || userAccessControlDto?.IsTicketBuyerOrganizationOnboardingPending() != true ? "done" :
                                                                                                   "pending")">
                 <div class="kt-wizard-v2__nav-body">
                     <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
                     <div class="kt-wizard-v2__nav-label">
                         <div class="kt-wizard-v2__nav-label-title">@Labels.Company</div>
                         <div class="kt-wizard-v2__nav-label-desc">@Messages.CompleteCompanyrInfo</div>
-                    </div>
-                </div>
-            </span>
-        }
-        @if (isSpeaker)
-        {
-            counter++;
-            <span class="kt-wizard-v2__nav-item" data-ktwizard-type="step" data-ktwizard-state="@(Model == counter ? "current" : 
-                                                                                                  Model > counter || userAccessControlDto?.IsSpeakerTermsAcceptanceFinished() == true ? "done" : 
-                                                                                                  "pending")">
-                <div class="kt-wizard-v2__nav-body">
-                    <div class="kt-wizard-v2__nav-icon text-center" style="width: 20px;">@counter</div>
-                    <div class="kt-wizard-v2__nav-label">
-                        <div class="kt-wizard-v2__nav-label-title">@Messages.ImageAuthorizationForm</div>
-                        <div class="kt-wizard-v2__nav-label-desc">@Messages.ToProceedYouMustAcceptTheTerm</div>
                     </div>
                 </div>
             </span>

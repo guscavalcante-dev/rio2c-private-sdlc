@@ -1,13 +1,13 @@
-﻿using PlataformaRio2C.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//using PlataformaRio2C.Domain.Entities;
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
 
-namespace PlataformaRio2C.Domain.Interfaces
-{
-    public interface IQuizQuestionService : IService<QuizQuestion>
-    {
-    }
-}
+//namespace PlataformaRio2C.Domain.Interfaces
+//{
+//    public interface IQuizQuestionService : IService<QuizQuestion>
+//    {
+//    }
+//}

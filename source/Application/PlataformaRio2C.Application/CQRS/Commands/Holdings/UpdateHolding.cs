@@ -4,7 +4,7 @@
 // Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-16-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="UpdateHolding.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,7 +24,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         public Guid HoldingUid { get; set; }
         public UserBaseDto UpdaterBaseDto { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public DateTimeOffset UpdateDate { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateHolding"/> class.</summary>
         /// <param name="entity">The entity.</param>

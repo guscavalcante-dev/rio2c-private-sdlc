@@ -1,0 +1,87 @@
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Domain
+// Author           : Rafael Dantas Ruiz
+// Created          : 09-26-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 02-15-2020
+// ***********************************************************************
+// <copyright file="TicketType.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
+using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+
+namespace PlataformaRio2C.Domain.Entities
+{
+    /// <summary>CollaboratorGender</summary>
+    public class CollaboratorGender : Entity
+    {
+        public static readonly int NameMinLength = 1;
+        public static readonly int NameMaxLength = 300;
+
+        public string Name { get; private set; }
+        public bool HasAdditionalInfo { get; private set; }
+
+        /// <summary>Initializes a new instance of the <see cref="CollaboratorGender"/> class.</summary>
+        /// <param name="collaboratorGenderUid">The collaborator gender uid.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="userId">The user identifier.</param>
+        public CollaboratorGender(Guid collaboratorGenderUid, string name, int userId)
+        {
+            this.Uid = collaboratorGenderUid;
+            this.Name = name?.Trim();
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = UpdateUserId = userId;
+        }
+
+        /// <summary>Prevents a default instance of the <see cref="CollaboratorGender"/> class from being created.</summary>
+        private CollaboratorGender()
+        {
+        }
+
+        /// <summary>
+        /// Translates this instance.
+        /// </summary>
+        public void Translate(string userInterfaceLanguage)
+        {
+            this.Name = this.Name?.GetSeparatorTranslation(userInterfaceLanguage, '|');
+        }
+
+        #region Validations
+
+        /// <summary>Returns true if ... is valid.</summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
+        public override bool IsValid()
+        {
+            this.ValidationResult = new ValidationResult();
+
+            this.ValidateName();
+
+            return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>Validates the name.</summary>
+        public void ValidateName()
+        {
+            if (string.IsNullOrEmpty(this.Name?.Trim()))
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Name), new string[] { "Name" }));
+            }
+
+            if (this.Name?.Trim().Length < NameMinLength || this.Name?.Trim().Length > NameMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, NameMaxLength, NameMinLength), new string[] { "Name" }));
+            }
+        }
+
+        #endregion
+    }
+}

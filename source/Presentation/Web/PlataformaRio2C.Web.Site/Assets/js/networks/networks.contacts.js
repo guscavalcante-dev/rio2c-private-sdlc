@@ -4,7 +4,7 @@
 // Created          : 11-18-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-06-2019
+// Last Modified On : 02-12-2020
 // ***********************************************************************
 // <copyright file="networks.contacts.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -31,9 +31,29 @@ var NetworksContacts = function () {
         $('#ContactsSearchKeywords').addClass('search-event-enabled');
     };
 
+    var enableRoleChangeEvent = function() {
+        $('#CollaboratorRoleUid').not('.change-event-enabled').on('change', function () {
+            search();
+        });
+
+        $('#CollaboratorRoleUid').addClass('change-event-enabled');
+    };
+
+    var enableIndustryChangeEvent = function () {
+        $('#CollaboratorIndustryUid').not('.change-event-enabled').on('change', function () {
+            search();
+        });
+
+        $('#CollaboratorIndustryUid').addClass('change-event-enabled');
+    };
+
     // Plugins ------------------------------------------------------------------------------------
     var enableListPlugins = function () {
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: '#CollaboratorIndustryUid', allowClear: true, placeholder: translations.selectPlaceholderAn.replace('{0}', translations.industry) + '...' });
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: '#CollaboratorRoleUid', allowClear: true, placeholder: translations.selectPlaceholderA.replace('{0}', translations.role) + '...' });
         enableSearchEvent();
+        enableRoleChangeEvent();
+        enableIndustryChangeEvent();
         MyRio2cCommon.enablePaginationBlockUi();
     };
 

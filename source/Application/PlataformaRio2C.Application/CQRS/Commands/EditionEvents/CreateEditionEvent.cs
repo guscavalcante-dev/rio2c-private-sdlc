@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-06-2020
+// Last Modified On : 02-16-2020
 // ***********************************************************************
 // <copyright file="CreateEditionEvent.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,6 +16,7 @@ using System.ComponentModel.DataAnnotations;
 using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -37,12 +38,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Initializes a new instance of the <see cref="CreateEditionEvent"/> class.</summary>
         /// <param name="editionEventDto">The edition event dto.</param>
-        public CreateEditionEvent(
-            EditionEventDto editionEventDto)
+        public CreateEditionEvent(EditionEventDto editionEventDto)
         {
             this.Name = editionEventDto?.EditionEvent?.Name;
-            this.StartDate = editionEventDto?.EditionEvent?.StartDate;
-            this.EndDate = editionEventDto?.EditionEvent?.EndDate;
+            this.StartDate = editionEventDto?.EditionEvent?.StartDate.ToUserTimeZone();
+            this.EndDate = editionEventDto?.EditionEvent?.EndDate.ToUserTimeZone();
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateEditionEvent"/> class.</summary>

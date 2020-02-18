@@ -4,7 +4,7 @@
 // Created          : 12-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-08-2020
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="SendProjectsBuyersEvaluationsEmailsAsyncCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -62,7 +62,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             // Check if is project evaluation period
-            if (DateTime.Now < currentEdition.ProjectEvaluationStartDate || DateTime.Now > currentEdition.ProjectEvaluationEndDate)
+            if (DateTime.UtcNow < currentEdition.ProjectEvaluationStartDate || DateTime.UtcNow > currentEdition.ProjectEvaluationEndDate)
             {
                 return this.AppValidationResult;
             }

@@ -4,7 +4,7 @@
 // Created          : 07-22-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-31-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="SalesPlatformDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,9 +26,9 @@ namespace PlataformaRio2C.Domain.Dtos
         public string ApiSecret { get; set; }
         public int MaxProcessingCount { get; set; }
         public int CreationUserId { get; set; }
-        public DateTime CreationDate { get;  set; }
+        public DateTimeOffset CreationDate { get;  set; }
         public int UpdateUserId { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public DateTimeOffset UpdateDate { get; set; }
         public string SecurityStamp { get; set; }
 
         //public UserAppViewModel Creator { get; set; }

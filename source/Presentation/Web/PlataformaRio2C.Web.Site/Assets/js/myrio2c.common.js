@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-09-2020
+// Last Modified On : 02-17-2020
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,10 +20,11 @@ var MyRio2cCommon = function () {
     globalVariables.userInterfaceLanguageUppercase = '';
     globalVariables.editionUrlCode = '';
     globalVariables.bucket = '';
+    globalVariables.momentTimeZone = 'America/Sao_Paulo';
 
     var setGlobalVariables = function (userInterfaceLanguage, editionUrlCode, bucket) {
         globalVariables.userInterfaceLanguage = userInterfaceLanguage;
-        globalVariables.userInterfaceLanguageUppercade = MyRio2cCommon.getCultureUppercase(userInterfaceLanguage);
+        globalVariables.userInterfaceLanguageUppercase = MyRio2cCommon.getCultureUppercase(userInterfaceLanguage);
         globalVariables.editionUrlCode = editionUrlCode;
         globalVariables.bucket = bucket;
     };
@@ -543,11 +544,21 @@ var MyRio2cCommon = function () {
             options.autoclose = true;
         }
 
+        $.validator.methods.date = function (value, element) {
+            moment.locale(MyRio2cCommon.getGlobalVariable('userInterfaceLanguage'));
+            var val = moment(value).toDate();
+            return this.optional(element) || (val);
+        }
+        
         $(options.inputIdOrClass).datepicker({
             todayHighlight: true,
             orientation: options.orientation,
             autoclose: options.autoclose,
             language: MyRio2cCommon.getGlobalVariable('userInterfaceLanguage')
+        });
+                
+        $(options.inputIdOrClass).inputmask("datetime", {
+            inputFormat: $.fn.datepicker.dates[MyRio2cCommon.getGlobalVariable('userInterfaceLanguage')].format
         });
     };
 
@@ -646,6 +657,71 @@ var MyRio2cCommon = function () {
                 $(this).addClass('maxlength-enabled');
             }
         });
+    };
+        
+    // Enable change events -----------------------------------------------------------------------
+    var enableCheckboxChangeEvent = function (elementId) {
+	    var element = $('#' + elementId);
+
+	    function toggleChanged(element) {
+		    if (element.prop('checked')) {
+			    $("[data-additionalinfo='" + element.attr("id") + "']").removeClass('d-none');
+		    }
+		    else {
+			    $("[data-additionalinfo='" + element.attr("id") + "']").addClass('d-none');
+		    }
+	    }
+
+	    toggleChanged(element);
+
+	    element.not('.change-event-enabled').on('click', function () {
+		    toggleChanged(element);
+	    });
+
+	    element.addClass('change-event-enabled');
+    };
+
+    var enableYesNoRadioEvent = function (elementId) {
+        function toggleChanged(radio) {
+            if (radio === "True") {
+                $("[data-additionalinfo='"+ elementId +"']").removeClass('d-none');
+            }
+            else {
+                $("[data-additionalinfo='"+ elementId +"']").addClass('d-none');
+            }
+        }
+
+        toggleChanged($("[data-id='" + elementId + "']").find(":checked").val());
+
+        var selector = $("[data-id='" + elementId + "'] input");
+        selector.not('.change-event-enabled').change(function () {
+			toggleChanged($(this).val());
+        });
+        selector.addClass('change-event-enabled');
+    };
+
+    var enableDropdownChangeEvent = function (elementId, requiredFieldId) {
+        var element = $('#' + elementId);
+
+        function toggleChanged(element) {
+            var hasAdditionalInfo = element.find(':selected').data('additionalinfo');
+            if (hasAdditionalInfo === "True") {
+                $("[data-additionalinfo='"+ element.attr("id") +"']").removeClass('d-none');
+            }
+            else {
+                $("[data-additionalinfo='"+element.attr("id")+"']").addClass('d-none');                
+            }
+
+            if(requiredFieldId)
+                $('#' + requiredFieldId + 'Required').val(hasAdditionalInfo);
+        }
+
+        toggleChanged(element);
+        element.not('.change-event-enabled').on('change', function () {            
+            toggleChanged(element);
+        });
+
+        element.addClass('change-event-enabled');
     };
 
     // Hide/Show Element --------------------------------------------------------------------------
@@ -1357,6 +1433,16 @@ var MyRio2cCommon = function () {
         },
         enableCollaboratorSelect2: function (options) {
             enableCollaboratorSelect2(options);
+        },
+                
+        enableDropdownChangeEvent: function (elementId, requiredFieldId) {
+            enableDropdownChangeEvent(elementId, requiredFieldId);
+        },
+        enableYesNoRadioEvent: function (elementId) {
+	        enableYesNoRadioEvent(elementId);
+        },
+        enableCheckboxChangeEvent: function (elementId) {
+	        enableCheckboxChangeEvent(elementId);
         }
     };
 }();

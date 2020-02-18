@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-23-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="OrganizationBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,9 +26,9 @@ namespace PlataformaRio2C.Domain.Dtos
         public string Document { get; set; }
         public string Website { get; set; }
         public string PhoneNumber { get; set; }
-        public DateTime? ImageUploadDate { get; set; }
-        public DateTime CreateDate { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public DateTimeOffset? ImageUploadDate { get; set; }
+        public DateTimeOffset CreateDate { get; set; }
+        public DateTimeOffset UpdateDate { get; set; }
         public bool IsInCurrentEdition { get; set; }
         public bool IsInOtherEdition { get; set; }
 

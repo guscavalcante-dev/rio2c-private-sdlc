@@ -4,7 +4,7 @@
 // Created          : 01-04-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-09-2020
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="TrackRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -283,12 +283,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 },
                                 new List<string> { "CreateDate", "UpdateDate" },
                                 "CreateDate")
-                            .Select(r => new TrackJsonDto
+                            .Select(t => new TrackJsonDto
                             {
-                                Id = r.Id,
-                                Uid = r.Uid,
-                                Name = r.Name,
-                                Color = r.Color
+                                Id = t.Id,
+                                Uid = t.Uid,
+                                Name = t.Name,
+                                Color = t.Color,
+                                CreateDate = t.CreateDate,
+                                UpdateDate = t.UpdateDate
                             })
                             .ToListPagedAsync(page, pageSize);
         }

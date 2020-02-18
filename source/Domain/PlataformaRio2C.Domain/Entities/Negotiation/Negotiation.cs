@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-27-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="Negotiation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,7 +28,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual Room Room { get; private set; }
         public int? EvaluationId { get; private set; }
         //public virtual ProjectPlayerEvaluation Evaluation { get; private set; }
-        public DateTime? Date { get; private set; }
+        public DateTimeOffset? Date { get; private set; }
         public TimeSpan StarTime { get; private set; }
         public TimeSpan EndTime { get; private set; }
         public int TableNumber { get; private set; }
@@ -69,7 +69,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         //public void SetSourceEvaluation(ProjectPlayerEvaluation entity)
         //{
-        //    CreateDate = DateTime.Now;
+        //    CreateDate = DateTime.UtcNow;
         //    Uid = Guid.NewGuid();
         //    Evaluation = entity;
         //    if (entity != null)

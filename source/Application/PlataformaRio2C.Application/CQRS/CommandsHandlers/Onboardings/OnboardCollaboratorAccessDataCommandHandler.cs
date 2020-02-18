@@ -83,6 +83,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.PhoneNumber,
                 cmd.PasswordHash,
                 cmd.UserId);
+
             if (!collaborator.IsValid())
             {
                 this.AppValidationResult.Add(collaborator.ValidationResult);

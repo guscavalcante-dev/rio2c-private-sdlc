@@ -4,7 +4,7 @@
 // Created          : 10-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-11-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="ApplicationCookieControl.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,7 +34,7 @@ namespace PlataformaRio2C.Application.Common
             {
                 cookie = new HttpCookie(cookieName);
                 cookie.Value = culture;
-                cookie.Expires = DateTime.Now.AddYears(1);
+                cookie.Expires = DateTime.UtcNow.AddYears(1);
             }
 
             return cookie;

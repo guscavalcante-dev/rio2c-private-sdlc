@@ -4,7 +4,7 @@
 // Created          : 09-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-19-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="TicketType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -51,8 +51,17 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeSalesPlatformTicketType> AttendeeSalesPlatformTicketTypes { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="CollaboratorType"/> class.</summary>
-        private CollaboratorType()
+        /// <param name="collaboratorTypeUid">The collaborator type uid.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="userId">The user identifier.</param>
+        public CollaboratorType(Guid collaboratorTypeUid, string name, int userId)
         {
+            this.Uid = collaboratorTypeUid;
+            this.Name = name?.Trim();
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
         }
 
         /// <summary>Initializes a new instance of the <see cref="CollaboratorType"/> class.</summary>
@@ -62,6 +71,14 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.Uid = collaboratorTypeUid;
             this.Name = name?.Trim();
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="CollaboratorType"/> class.</summary>
+        private CollaboratorType()
+        {
         }
 
         #region Validations

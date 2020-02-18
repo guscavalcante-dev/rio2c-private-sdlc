@@ -358,6 +358,7 @@
     <Compile Include="Controllers\NetworksController.cs" />
     <Compile Include="Controllers\StatesController.cs" />
     <Compile Include="Filters\AuthorizeCollaboratorTypeAttribute.cs" />
+    <Compile Include="Helpers\DateTimeBinder.cs" />
     <Compile Include="Helpers\OnboardingAllowedRoutesHelper.cs" />
     <Compile Include="Hub\SimpleInjectorHubActivator.cs" />
     <Compile Include="Services\TalentPlatformService.cs" />
@@ -365,7 +366,6 @@
     <Compile Include="Controllers\OnboardingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuizController.cs" />
-    <Compile Include="Controllers\Rio2CNetworkController.cs" />
     <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Controllers\ProducerController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
@@ -390,6 +390,8 @@
     <Content Include="Areas\Producer\Views\Collaborator\ProfileDetails.cshtml" />
     <Content Include="Areas\Producer\Views\Collaborator\ProfileEdit.cshtml" />
     <Content Include="Assets\components\bootstrap-maxlength\src\bootstrap-maxlength.js" />
+    <Content Include="Assets\components\bootstrap-timepicker\bootstrap-datepicker.en-us.js" />
+    <Content Include="Assets\components\bootstrap-timepicker\bootstrap-datepicker.pt-br.js" />
     <Content Include="Assets\components\cropper\demo\css\main.css" />
     <Content Include="Assets\components\cropper\demo\index.html" />
     <Content Include="Assets\components\cropper\demo\js\main.js" />
@@ -420,6 +422,7 @@
     <Content Include="Assets\components\jquery.timeago\locales\jquery.timeago.en-us.js" />
     <Content Include="Assets\components\jquery.timeago\locales\jquery.timeago.pt-br-short.js" />
     <Content Include="Assets\components\jquery.timeago\locales\jquery.timeago.pt-br.js" />
+    <Content Include="Assets\components\moment-timezone\moment-timezone-with-data.js" />
     <Content Include="Assets\css\myrio2c.common.responsive.css" />
     <Content Include="Assets\css\myrio2c.common.css" />
     <Content Include="Assets\css\pages\onboarding\wizard-2.css" />
@@ -6640,6 +6643,7 @@
     <Content Include="Scripts\ckeditor\skins\moono\images\close.png" />
     <Content Include="Scripts\ckeditor\skins\moono\readme.md" />
     <Content Include="postsharp.config" />
+    <Content Include="libman.json" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
@@ -7084,7 +7088,6 @@
     <Content Include="Views\Shared\EditorTemplates\HttpPostedFileBase.cshtml" />
     <Content Include="Views\Shared\_LayoutModal.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
-    <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Player\Index.cshtml" />
     <Content Include="Views\Shared\_TabsCollaboratorProfileEditor.cshtml" />
     <Content Include="Views\Player\ListPlayersInterests.cshtml" />
@@ -7097,8 +7100,6 @@
     <Content Include="Views\Producer\ProfileDetails.cshtml" />
     <Content Include="Views\Producer\ProfileEdit.cshtml" />
     <Content Include="Views\Conference\Detail.cshtml" />
-    <Content Include="Views\Rio2CNetwork\Index.cshtml" />
-    <Content Include="Views\Rio2CNetwork\_Painel.cshtml" />
     <Content Include="Views\Producer\Details.cshtml" />
     <Content Include="Views\Schedule\_Schedule.cshtml" />
     <Content Include="Views\Schedule\Disabled.cshtml" />
@@ -7271,6 +7272,7 @@
     <Content Include="Views\Companies\Widgets\SocialNetworksWidget.cshtml" />
     <Content Include="Views\Companies\Modals\UpdateSocialNetworksModal.cshtml" />
     <Content Include="Views\Companies\Modals\UpdateSocialNetworksForm.cshtml" />
+    <Content Include="Views\Networks\Shared\_ContactListSearchForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

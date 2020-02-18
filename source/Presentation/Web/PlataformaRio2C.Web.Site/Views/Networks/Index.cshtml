@@ -1,25 +1,23 @@
 ﻿@{
     ViewBag.Title = Labels.Contacts;
 }
-<div class="kt-portlet">
-    <div class="kt-portlet__body">
-        <div class="row">
-            <div class="col-12 d-flex">
-                @Html.Hidden("Page", ViewBag.Page as int?)
-                @Html.Hidden("PageSize", ViewBag.PageSize as int?)
-                @Html.Hidden("IsModal", ViewBag.IsModal as bool? ?? false)
-                @Html.TextBox("ContactsSearchKeywords", null, new { @class = "form-control mr-1", type = "search", placeholder = Labels.Search })
-                <button type="button" class="btn btn-primary btn-icon" onclick="NetworksContacts.search();"><i class="fa fa-search"></i></button>
-            </div>
-        </div>
-    </div>
-</div>
+@Html.Partial("Shared/_ContactListSearchForm")
 <div id="NetworksContactsListWidget" class="kt-grid__item kt-grid__item--fluid"></div>
 @section Styles {
+    @Styles.Render("~/bundles/css/select2.css")
 }
 @section Scripts {
+    @Scripts.Render("~/bundles/js/select2.js")
     @Scripts.Render("~/bundles/js/networks.contacts.js")
     <script>
+        // Page translations ----------------------------------------------------------------------
+        var translations = {
+            selectPlaceholderAn: '@Labels.SelectAnFEntity',
+            selectPlaceholderA: '@Labels.SelectAFEntity',
+            industry: '@Html.Raw(Labels.CollaboratorIndustry.ToLowerInvariant())',
+            role: '@Html.Raw(Labels.Role.ToLowerInvariant())'
+        };
+
         jQuery(document).ready(function () {
             NetworksContacts.init();
             NetworksContactsListWidget.init();

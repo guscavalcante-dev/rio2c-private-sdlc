@@ -4,7 +4,7 @@
 // Created          : 07-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-01-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="SalesPlatformWebhookRequest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,8 +35,8 @@ namespace PlataformaRio2C.Domain.Entities
         public bool IsProcessed { get; private set; }
         public bool IsProcessing { get; private set; }
         public int ProcessingCount { get; private set; }
-        public DateTime? LastProcessingDate { get; private set; }
-        public DateTime? NextProcessingDate { get; private set; }
+        public DateTimeOffset? LastProcessingDate { get; private set; }
+        public DateTimeOffset? NextProcessingDate { get; private set; }
         public string ProcessingErrorCode { get; private set; }
         public string ProcessingErrorMessage { get; private set; }
         public int? ManualProcessingUserId { get; private set; }
@@ -79,7 +79,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsProcessing = false;
             this.ProcessingCount = 0;
             this.NextProcessingDate = this.GetNextProcessingDate();
-            this.CreateDate = DateTime.Now;
+            this.CreateDate = DateTime.UtcNow;
             this.SecurityStamp = Guid.NewGuid().ToString();
         }
 
@@ -160,7 +160,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Gets the next processing date.</summary>
         /// <returns></returns>
-        private DateTime? GetNextProcessingDate()
+        private DateTimeOffset? GetNextProcessingDate()
         {
             var visibilityTimeouts = new[] { 0, 60, 120, 180, 300, 480, 780, 1260, 2040, 3300, 5340, 8640, 13980, 22620, 36600, 42000, 84000 };
 

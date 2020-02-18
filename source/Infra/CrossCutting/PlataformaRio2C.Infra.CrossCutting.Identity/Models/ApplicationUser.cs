@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-27-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="ApplicationUser.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,8 +25,8 @@ namespace PlataformaRio2C.Infra.CrossCutting.Identity.Models
         public Guid Uid { get; set; }
         public bool Active { get; set; }
         public bool IsDeleted { get; set; }
-        public DateTime CreateDate { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public DateTimeOffset CreateDate { get; set; }
+        public DateTimeOffset UpdateDate { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="ApplicationUser"/> class.</summary>
         public ApplicationUser()

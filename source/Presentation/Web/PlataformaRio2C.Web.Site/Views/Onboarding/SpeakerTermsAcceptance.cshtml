@@ -1,12 +1,12 @@
-﻿@using PlataformaRio2C.Domain.Entities
+﻿@using PlataformaRio2C.Domain.Dtos
 @model PlataformaRio2C.Application.CQRS.Commands.OnboardSpeakerTermsAcceptance
 @{
     Layout = "~/Views/Themes/Metronic/_Internal.cshtml";
-    ViewBag.Title = Labels.Welcome;
-    var isPlayer = ViewBag.IsPlayer as bool? == true;
-    var playerAttendeeOrganizations = ViewBag.PlayerAttendeeOrganizations as List<AttendeeOrganization>;
-    var menuIndex = !isPlayer ? 4 : 
-                                3 + ((playerAttendeeOrganizations?.Count ?? 0) * 2) + 1;
+    var editionDto = ViewBag.EditionDto as EditionDto;
+    ViewBag.Title = string.Format(Labels.Welcome, editionDto?.UrlCode);
+    //var menuIndex = !isPlayer ? 4 : 
+    //                            3 + ((playerAttendeeOrganizations?.Count ?? 0) * 2) + 1;
+    var menuIndex = 2;
 }
 <div class="kt-portlet">
     <div class="kt-portlet__body kt-portlet__body--fit">

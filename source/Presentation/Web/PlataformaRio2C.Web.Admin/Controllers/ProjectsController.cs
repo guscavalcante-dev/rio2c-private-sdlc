@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-05-2020
+// Last Modified On : 02-17-2020
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -131,7 +131,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         public async Task<FileResult> DownloadPdfs(string keyword, Guid? interestUid, string selectedProjectsUids)
         {
             var projectsDtos = await this.projectRepo.FindAllPitchingDtosByFiltersAsync(
-                keyword, 
+                keyword,
                 interestUid,
                 selectedProjectsUids?.ToListGuid(','),
                 this.UserInterfaceLanguage,
@@ -149,7 +149,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 var projectDto = projectsDtos.First();
                 var pdf = new PlataformaRio2CDocument(new ProjectDocumentTemplate(projectDto));
 
-                return File(pdf.GetStream(), "application/pdf", Labels.Project + "_" + projectDto.Project.Id.ToString("D4") + "_" + projectDto.GetTitleDtoByLanguageCode(Constants.Culture.Portuguese).ProjectTitle.Value + ".pdf");
+                return File(pdf.GetStream(), "application/pdf", Labels.Project +
+                                                                "_" +
+                                                                projectDto.Project.Id.ToString("D4") +
+                                                                "_" +
+                                                                projectDto.GetTitleDtoByLanguageCode(Language.Portuguese.Code).ProjectTitle.Value.RemoveFilenameInvalidChars() +
+                                                                ".pdf");
             }
 
             // Many projects returned
@@ -158,7 +163,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             foreach (var projectDto in projectsDtos)
             {
                 var pdfDocument = new PlataformaRio2CDocument(new ProjectDocumentTemplate(projectDto));
-                dictPdf.Add(Labels.Project + "_" + projectDto.Project.Id.ToString("D4") + "_" + projectDto.GetTitleDtoByLanguageCode(Constants.Culture.Portuguese).ProjectTitle.Value + ".pdf", pdfDocument.GetStream());
+                dictPdf.Add(Labels.Project +
+                            "_" +
+                            projectDto.Project.Id.ToString("D4") +
+                            "_" +
+                            projectDto.GetTitleDtoByLanguageCode(Language.Portuguese.Code).ProjectTitle.Value.RemoveFilenameInvalidChars() +
+                            ".pdf", pdfDocument.GetStream());
             }
 
             return ZipDocuments(dictPdf);
@@ -169,7 +179,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <returns></returns>
         private FileResult ZipDocuments(Dictionary<string, MemoryStream> pdfCollection)
         {
-            string fileNameZip = Labels.Projects + "_" + DateTime.Now.ToString("yyyyMMdd") + ".zip";
+            string fileNameZip = Labels.Projects + "_" + DateTime.UtcNow.ToUserTimeZone().ToString("yyyyMMdd") + ".zip";
             byte[] compressedBytes;
             using (var outStream = new MemoryStream())
             {
@@ -232,6 +242,5 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         }
 
         #endregion
-
     }
 }

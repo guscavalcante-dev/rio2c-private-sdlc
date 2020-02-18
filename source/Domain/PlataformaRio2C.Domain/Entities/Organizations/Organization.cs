@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -47,7 +47,7 @@ namespace PlataformaRio2C.Domain.Entities
         public string Instagram { get; private set; }
         public string Youtube { get; private set; }
         public int? AddressId { get; private set; }
-        public DateTime? ImageUploadDate { get; private set; }
+        public DateTimeOffset? ImageUploadDate { get; private set; }
         
         public virtual Holding Holding { get; private set; }
         public virtual Address Address { get; private set; }
@@ -143,7 +143,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.PhoneNumber = phoneNumber?.Trim();
             this.UpdateImageUploadDate(isImageUploaded, false);
             this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeOrganizationDescriptions(organizationDescriptions, userId);
             this.SynchronizeOrganizationRestrictionSpecifics(organizationRestrictionSpecifics, userId);
@@ -206,7 +206,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
             this.UpdateImageUploadDate(isImageUploaded, false);
             this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeOrganizationDescriptions(organizationDscriptions, userId);
             this.SynchronizeAttendeeOrganizations(edition, null, false, null, attendeeCollaborator, true, userId);
@@ -270,7 +270,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
             this.UpdateImageUploadDate(isImageUploaded, false);
             this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeOrganizationDescriptions(organizationDescriptions, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
@@ -363,7 +363,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.PhoneNumber = phoneNumber?.Trim();
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
             this.SynchronizeOrganizationDescriptions(organizationDscriptions, userId);
             this.SynchronizeOrganizationRestrictionSpecifics(organizationRestrictionSpecifics, userId);
@@ -397,7 +397,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.TradeName = tradeName?.Trim();
             this.Document = document?.Trim();
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
             this.SynchronizeOrganizationDescriptions(organizationDescriptions, userId);
         }
@@ -424,7 +424,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Youtube = youtube?.Trim();
 
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -434,7 +434,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void Delete(Edition edition, OrganizationType organizationType, int userId)
         {
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
             this.DeleteAttendeeOrganization(edition, organizationType, userId);
 
@@ -452,7 +452,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             if (isImageUploaded)
             {
-                this.ImageUploadDate = DateTime.Now;
+                this.ImageUploadDate = DateTime.UtcNow;
             }
             else if (isImageDeleted)
             {
@@ -534,7 +534,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
             this.SynchronizeOrganizationDescriptions(organizationDescriptions, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
@@ -615,7 +615,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
             this.SynchronizeOrganizationDescriptions(organizationDescriptions, userId);
             this.SynchronizeAttendeeOrganizations(edition, null, null, null, attendeeCollaborator, true, userId);
@@ -680,7 +680,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
             this.SynchronizeOrganizationDescriptions(organizationDescriptions, userId);
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
@@ -811,7 +811,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
         }
 
         /// <summary>Synchronizes the organization restriction specifics.</summary>
@@ -999,7 +999,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void UpdateOrganizationActivities(List<OrganizationActivity> organizationActivities, int userId)
         {
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
             this.SynchronizeOrganizationActivities(organizationActivities, userId);
         }
@@ -1066,7 +1066,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void UpdateOrganizationTargetAudiences(List<TargetAudience> targetAudiences, int userId)
         {
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
             this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
         }
@@ -1136,7 +1136,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
         }
 
         /// <summary>Synchronizes the organization interests.</summary>

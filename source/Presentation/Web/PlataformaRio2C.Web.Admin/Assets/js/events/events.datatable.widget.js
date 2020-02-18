@@ -4,7 +4,7 @@
 // Created          : 01-05-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-09-2020
+// Last Modified On : 02-16-2020
 // ***********************************************************************
 // <copyright file="events.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -133,25 +133,25 @@ var EventsDataTableWidget = function () {
                 {
                     data: 'StartDate',
                     render: function (data) {
-                        return moment(data).locale(globalVariables.userInterfaceLanguage).format('L');
+                        return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L');
                     }
                 },
                 {
                     data: 'EndDate',
                     render: function (data) {
-                        return moment(data).locale(globalVariables.userInterfaceLanguage).format('L');
+                        return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L');
                     }
                 },
                 {
                     data: 'CreateDate',
                     render: function (data) {
-                        return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                        return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
                 },
                 {
                     data: 'UpdateDate',
                     render: function (data) {
-                        return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                        return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
                 },
                 {

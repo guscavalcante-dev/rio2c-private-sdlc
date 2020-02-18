@@ -4,7 +4,7 @@
 // Created          : 11-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-17-2019
+// Last Modified On : 01-31-2020
 // ***********************************************************************
 // <copyright file="ProjectDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,6 +35,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<ProjectImageLinkDto> ProjectImageLinkDtos { get; set; }
         public IEnumerable<ProjectTeaserLinkDto> ProjectTeaserLinkDtos { get; set; }
         public IEnumerable<ProjectBuyerEvaluationDto> ProjectBuyerEvaluationDtos { get; set; }
+        public IEnumerable<InterestGroup> InterestGroupsMatches { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="ProjectDto"/> class.</summary>
         public ProjectDto()
@@ -57,6 +58,13 @@ namespace PlataformaRio2C.Domain.Dtos
         public ProjectInterestDto GetInterestDtoByInterestUid(Guid interestUid)
         {
             return this.ProjectInterestDtos?.FirstOrDefault(pid => pid.Interest.Uid == interestUid);
+        }
+
+        /// <summary>Gets the total interest groups matches count.</summary>
+        /// <returns></returns>
+        public int GetTotalInterestGroupsMatchesCount()
+        {
+            return this.InterestGroupsMatches?.Count() ?? 0;
         }
 
         #endregion

@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-02-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="SentEmail.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,8 +26,8 @@ namespace PlataformaRio2C.Domain.Entities
         public int RecipientUserId { get; private set; }
         public int? EditionId { get; private set; }
         public string EmailType { get; private set; }
-        public DateTime EmailSendDate { get; private set; }
-        public DateTime? EmailReadDate { get; private set; }
+        public DateTimeOffset EmailSendDate { get; private set; }
+        public DateTimeOffset? EmailReadDate { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="SentEmail"/> class.</summary>
         /// <param name="sentEmailUid">The sent email uid.</param>
@@ -40,7 +40,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.RecipientUserId = recipientUserId;
             this.EditionId = editionId;
             this.EmailType = emailType?.Trim();
-            this.EmailSendDate = DateTime.Now;
+            this.EmailSendDate = DateTime.UtcNow;
         }
 
         /// <summary>Initializes a new instance of the <see cref="SentEmail"/> class.</summary>

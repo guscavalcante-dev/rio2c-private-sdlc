@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-09-2020
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="Room.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -46,7 +46,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeRoomNames(roomNames, userId);
 
             this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
         }
 
@@ -65,7 +65,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeRoomNames(roomNames, userId);
 
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -77,7 +77,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeRoomNames(new List<RoomName>(), userId);
             this.DeleteConferencesRooms(userId);
 
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 

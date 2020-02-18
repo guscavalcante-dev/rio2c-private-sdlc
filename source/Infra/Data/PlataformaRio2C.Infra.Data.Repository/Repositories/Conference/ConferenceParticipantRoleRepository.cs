@@ -4,7 +4,7 @@
 // Created          : 01-02-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="ConferenceParticipantRoleRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -337,11 +337,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 },
                                 new List<string> { "CreateDate", "UpdateDate" },
                                 "StartDate")
-                            .Select(r => new ConferenceParticipantRoleJsonDto
+                            .Select(pr => new ConferenceParticipantRoleJsonDto
                             {
-                                Id = r.Id,
-                                Uid = r.Uid,
-                                Title = r.ConferenceParticipantRoleTitles.FirstOrDefault(cprt => !cprt.IsDeleted && cprt.LanguageId == languageId).Value
+                                Id = pr.Id,
+                                Uid = pr.Uid,
+                                Title = pr.ConferenceParticipantRoleTitles.FirstOrDefault(cprt => !cprt.IsDeleted && cprt.LanguageId == languageId).Value,
+                                CreateDate = pr.CreateDate,
+                                UpdateDate = pr.UpdateDate
                             })
                             .ToListPagedAsync(page, pageSize);
         }

@@ -1,8 +1,8 @@
-﻿using PlataformaRio2C.Application.ViewModels;
+﻿//using PlataformaRio2C.Application.ViewModels;
 
-namespace PlataformaRio2C.Application.Interfaces.Services
-{
-    public interface IInterestAppService : IAppService<InterestAppViewModel, InterestAppViewModel, InterestAppViewModel, InterestAppViewModel>
-    {
-    }
-}
+//namespace PlataformaRio2C.Application.Interfaces.Services
+//{
+//    public interface IInterestAppService : IAppService<InterestAppViewModel, InterestAppViewModel, InterestAppViewModel, InterestAppViewModel>
+//    {
+//    }
+//}

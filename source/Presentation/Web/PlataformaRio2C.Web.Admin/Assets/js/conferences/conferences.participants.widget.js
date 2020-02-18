@@ -4,7 +4,7 @@
 // Created          : 01-02-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-03-2020
+// Last Modified On : 02-12-2020
 // ***********************************************************************
 // <copyright file="conferences.participants.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,6 +26,7 @@ var ConferencesParticipantsWidget = function () {
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         KTApp.initTooltips();
+        MyRio2cCommon.initScroll();
         //enableSpeakerSelect2();
     };
 

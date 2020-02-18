@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-09-2020
+// Last Modified On : 02-16-2020
 // ***********************************************************************
 // <copyright file="tracks.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -133,7 +133,6 @@ var TracksDataTableWidget = function () {
                 {
                     data: 'Color',
                     render: function (data, type, full, meta) {
-                        console.log(data);
                         var html = '<span class="kt-badge kt-badge--inline mt-1" style="color: #ffffff; background: ' + data + '">' + data + '</span>';
                                 
                         return html;
@@ -142,13 +141,13 @@ var TracksDataTableWidget = function () {
                 {
                     data: 'CreateDate',
                     render: function (data) {
-                        return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                        return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
                 },
                 {
                     data: 'UpdateDate',
                     render: function (data) {
-                        return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                        return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
                 },
                 {

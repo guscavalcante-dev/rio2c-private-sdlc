@@ -4,7 +4,7 @@
 // Created          : 12-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-09-2020
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="CreateConference.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -48,13 +48,15 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<ConferenceSynopsisBaseCommand> Synopsis { get; set; }
 
         public List<Guid> TrackUids { get; set; }
+        public List<Guid> PillarUids { get; set; }
         public List<Guid> PresentationFormatUids { get; set; }
 
-        public DateTime? StartDate { get; private set; }
-        public DateTime? EndDate { get; private set; }
+        public DateTimeOffset? StartDate { get; private set; }
+        public DateTimeOffset? EndDate { get; private set; }
         public List<EditionEvent> EditionEvents { get; private set; }
         public List<RoomJsonDto> Rooms { get; private set; }
         public List<Track> Tracks { get; private set; }
+        public List<Pillar> Pillars { get; private set; }
         public List<PresentationFormat> PresentationFormats { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="CreateConference"/> class.</summary>
@@ -69,13 +71,14 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<LanguageDto> languagesDtos,
             List<RoomDto> roomDtos,
             List<Track> tracks,
+            List<Pillar> pillars,
             List<PresentationFormat> presentationFormats,
             string userInterfaceLanguage)
         {
             this.UpdateTitles(languagesDtos);
             this.UpdateSynopsis(languagesDtos);
 
-            this.UpdateDropdowns(editionEvents, roomDtos, tracks, presentationFormats, userInterfaceLanguage);
+            this.UpdateDropdowns(editionEvents, roomDtos, tracks, pillars, presentationFormats, userInterfaceLanguage);
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateConference"/> class.</summary>
@@ -87,6 +90,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<EditionEvent> editionEvents,
             List<RoomDto> roomDtos,
             List<Track> tracks,
+            List<Pillar> pillars,
             List<PresentationFormat> presentationFormats,
             string userInterfaceLanguage)
         {
@@ -107,6 +111,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             })?.ToList();
 
             this.Tracks = tracks;
+            this.Pillars = pillars;
             this.PresentationFormats = presentationFormats;
         }
 

@@ -144,6 +144,7 @@
     <Compile Include="Attributes\GroupAttribute.cs" />
     <Compile Include="Attributes\InjectAttribute.cs" />
     <Compile Include="Attributes\LogAttribute.cs" />
+    <Compile Include="Attributes\RedirectOnErrorAttribute.cs" />
     <Compile Include="Attributes\LogConfigAttribute.cs" />
     <Compile Include="Attributes\NameFromResourceAttribute.cs" />
     <Compile Include="Attributes\PercentageRegistrationAttribute.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Enums\StatusMessageType.cs" />
     <Compile Include="Exceptions\DomainException.cs" />
     <Compile Include="Extensions\AsyncHelpers.cs" />
+    <Compile Include="Extensions\TranslateExtensions.cs" />
     <Compile Include="Extensions\PagedListExtensions.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />

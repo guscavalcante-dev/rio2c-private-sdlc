@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-17-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="Edition.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,17 +26,17 @@ namespace PlataformaRio2C.Domain.Entities
         public int UrlCode { get; private set; }
         public bool IsCurrent { get; private set; }
         public bool IsActive { get; private set; }
-        public DateTime StartDate { get; private set; }
-        public DateTime EndDate { get; private set; }
-        public DateTime SellStartDate { get; private set; }
-        public DateTime SellEndDate { get; private set; }
-        public DateTime ProjectSubmitStartDate { get; private set; }
-        public DateTime ProjectSubmitEndDate { get; private set; }
-        public DateTime ProjectEvaluationStartDate { get; private set; }
-        public DateTime ProjectEvaluationEndDate { get; private set; }
-        public DateTime OneToOneMeetingsScheduleDate { get; private set; }
-        public DateTime NegotiationStartDate { get; private set; }
-        public DateTime NegotiationEndDate { get; private set; }
+        public DateTimeOffset StartDate { get; private set; }
+        public DateTimeOffset EndDate { get; private set; }
+        public DateTimeOffset SellStartDate { get; private set; }
+        public DateTimeOffset SellEndDate { get; private set; }
+        public DateTimeOffset ProjectSubmitStartDate { get; private set; }
+        public DateTimeOffset ProjectSubmitEndDate { get; private set; }
+        public DateTimeOffset ProjectEvaluationStartDate { get; private set; }
+        public DateTimeOffset ProjectEvaluationEndDate { get; private set; }
+        public DateTimeOffset OneToOneMeetingsScheduleDate { get; private set; }
+        public DateTimeOffset NegotiationStartDate { get; private set; }
+        public DateTimeOffset NegotiationEndDate { get; private set; }
         public int AttendeeOrganizationMaxSellProjectsCount { get; private set; }
         public int ProjectMaxBuyerEvaluationsCount { get; private set; }
 

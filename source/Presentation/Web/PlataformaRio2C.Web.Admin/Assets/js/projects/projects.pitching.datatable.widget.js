@@ -3,8 +3,8 @@
 // Author           : William Sergio Almado Junior
 // Created          : 12-13-2019
 //
-// Last Modified By : William Sergio Almado Junior
-// Last Modified On : 12-13-2019
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 02-17-2020
 // ***********************************************************************
 // <copyright file="projects.pitching.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -113,9 +113,25 @@ var ProjectsPitchingDataTableWidget = function () {
                         {
                             text: translations.downloadPdfs,
                             action: function (e, dt, node, config) {
+                                $('.dt-button-background').remove();
                                 showDownloadModal();
                             }
-                        }]
+                        },
+                        {
+                            text: labels.selectAll,
+                            action: function (e, dt, node, config) {
+                                $('.dt-button-background').remove();
+                                table.rows().select();
+                            }
+                        },
+                        {
+                            text: labels.unselectAll,
+                            action: function (e, dt, node, config) {
+                                $('.dt-button-background').remove();
+                                table.rows().deselect();
+                            }
+                        }
+                    ]
                 }],
             order: [[4, "asc"]],
             sDom: '<"row"<"col-sm-6"l><"col-sm-6 text-right"B>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
@@ -203,13 +219,13 @@ var ProjectsPitchingDataTableWidget = function () {
                 {
                     data: 'CreateDate',
                     render: function (data) {
-                        return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                        return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
                 },
                 {
                     data: 'FinishDate',
                     render: function (data) {
-                        return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                        return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
                 },
             ],

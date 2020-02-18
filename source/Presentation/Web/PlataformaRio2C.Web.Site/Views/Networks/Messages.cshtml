@@ -28,9 +28,11 @@
                     else
                     {
                         <span class="kt-media kt-media--circle kt-media--brand d-inline-block">
-                            <span>@(userAccessControlDto?.Collaborator?.GetDisplayNameAbbreviation() ?? 
-                                    userAccessControlDto?.User?.Name?.GetTwoLetterCode() ??
-                                    "-")</span>
+                            <span>
+                                @(userAccessControlDto?.Collaborator?.GetDisplayNameAbbreviation() ??
+                                  userAccessControlDto?.User?.Name?.GetTwoLetterCode() ??
+                                  "-")
+                            </span>
                         </span>
                     }
                     <span class="kt-chat__status ml-3">
@@ -73,7 +75,7 @@
                     <div class="kt-chat__head">
                         <div class="kt-chat__left"></div>
                         <div class="kt-chat__center">@Messages.NoConversationsFound</div>
-                        <div class="kt-chat__right"></div>                        
+                        <div class="kt-chat__right"></div>
                     </div>
                 </div>
             </div>
@@ -82,13 +84,23 @@
     <!--End:: App Content-->
 </div>
 @section Styles {
+    @Styles.Render("~/bundles/css/select2.css")
 }
 @section Scripts {
+    @Scripts.Render("~/bundles/js/select2.js")
     @Scripts.Render("~/bundles/js/jquery.timeago.js")
     <script src="~/Assets/components/jquery.timeago/locales/jquery.timeago.@(ViewBag.UserInterfaceLanguage)-short.js" type="text/javascript"></script>
     @Scripts.Render("~/bundles/js/networks.messages.js")
     @Scripts.Render("~/bundles/js/networks.contacts.js")
     <script>
+        // Page translations ----------------------------------------------------------------------
+        var translations = {
+            selectPlaceholderAn: '@Labels.SelectAnFEntity',
+            selectPlaceholderA: '@Labels.SelectAFEntity',
+            industry: '@Html.Raw(Labels.CollaboratorIndustry.ToLowerInvariant())',
+            role: '@Html.Raw(Labels.Role.ToLowerInvariant())'
+        };
+
         var messagesConfig = {
             editionId: '@(editionDto?.Id)',
             editionUid: '@(editionDto?.Uid)',

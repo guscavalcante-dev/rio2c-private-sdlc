@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,7 +31,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     {
         private readonly IEditionRepository editionRepo;
         private readonly ICollaboratorTypeRepository collaboratorTypeRepo;
-        private readonly ILanguageRepository languageRepo;
+        private readonly ILanguageRepository languageRepo;  
+        private readonly ICollaboratorGenderRepository genderRepo;
+        private readonly ICollaboratorIndustryRepository industryRepo;
+        private readonly ICollaboratorRoleRepository roleRepo;
 
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorAdminMainInformationCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
@@ -45,12 +49,18 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             ICollaboratorRepository collaboratorRepository,
             IEditionRepository editionRepository,
             ICollaboratorTypeRepository collaboratorTypeRepository,
-            ILanguageRepository languageRepository)
+            ILanguageRepository languageRepository,
+            ICollaboratorGenderRepository genderRepo,
+            ICollaboratorIndustryRepository industryRepo,
+            ICollaboratorRoleRepository roleRepo)
             : base(eventBus, uow, collaboratorRepository)
         {
             this.editionRepo = editionRepository;
             this.collaboratorTypeRepo = collaboratorTypeRepository;
             this.languageRepo = languageRepository;
+            this.genderRepo = genderRepo;
+            this.industryRepo = industryRepo;
+            this.roleRepo = roleRepo;
         }
 
         /// <summary>Handles the specified update collaborator admin main information.</summary>
@@ -77,7 +87,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var beforeImageUploadDate = collaborator.ImageUploadDate;
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
-
+            if(cmd.EditionsUids == null || (!cmd.HaveYouBeenToRio2CBefore ?? false)) cmd.EditionsUids = new List<Guid>();
             collaborator.UpdateAdminMainInformation(
                 await this.collaboratorTypeRepo.FindByNameAsunc(cmd.CollaboratorTypeName),
                 cmd.FirstName,
@@ -92,7 +102,18 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.CropperImage?.IsImageDeleted == true,
                 cmd.JobTitles?.Select(d => new CollaboratorJobTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.MiniBios?.Select(d => new CollaboratorMiniBio(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
-                await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty), 
+                cmd.BirthDate,
+                genderRepo.Get(cmd.CollaboratorGenderUid ?? Guid.Empty),
+                cmd.CollaboratorGenderAdditionalInfo,
+                roleRepo.Get(cmd.CollaboratorRoleUid ?? Guid.Empty),
+                cmd.CollaboratorRoleAdditionalInfo,
+                industryRepo.Get(cmd.CollaboratorIndustryUid ?? Guid.Empty),
+                cmd.CollaboratorIndustryAdditionalInfo,
+                cmd.HasAnySpecialNeeds ?? false,
+                cmd.SpecialNeedsDescription,
+                cmd.HaveYouBeenToRio2CBefore,
+                this.editionRepo.GetAll(e => cmd.EditionsUids.Contains(e.Uid)).ToList(),
+                await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
                 cmd.UserId);
 
             if (!collaborator.IsValid())

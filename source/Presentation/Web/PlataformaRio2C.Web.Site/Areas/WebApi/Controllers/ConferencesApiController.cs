@@ -4,7 +4,7 @@
 // Created          : 01-08-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified On : 02-16-2020
 // ***********************************************************************
 // <copyright file="ConferencesApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,6 +35,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         private readonly IEditionEventRepository editionEventRepo;
         private readonly IRoomRepository roomRepo;
         private readonly ITrackRepository trackRepo;
+        private readonly IPillarRepository pillarRepo;
         private readonly IPresentationFormatRepository presentationFormatRepo;
         private readonly ILanguageRepository languageRepo;
         private readonly IFileRepository fileRepo;
@@ -54,6 +55,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             IEditionEventRepository editionEventRepository,
             IRoomRepository roomRepository,
             ITrackRepository trackRepository,
+            IPillarRepository pillarRepo,
             IPresentationFormatRepository presentationFormatRepository,
             ILanguageRepository languageRepository,
             IFileRepository fileRepository)
@@ -66,6 +68,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             this.presentationFormatRepo = presentationFormatRepository;
             this.languageRepo = languageRepository;
             this.fileRepo = fileRepository;
+            this.pillarRepo = pillarRepo;
         }
 
         #region List
@@ -103,10 +106,11 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             var collaboratorsApiDtos = await this.conferenceRepo.FindAllPublicApiPaged(
                 edition.Id,
                 request?.Keywords,
-                request?.EditionDates?.ToListDateTime(',', "yyyy-MM-dd"),
+                request?.EditionDates?.ToListDateTimeOffset(',', "yyyy-MM-dd", true),
                 request?.EventsUids?.ToListGuid(','),
                 request?.RoomsUids?.ToListGuid(','),
                 request?.TracksUids?.ToListGuid(','),
+                request?.PillarsUids?.ToListGuid(','),
                 request?.PresentationFormatsUids?.ToListGuid(','),
                 request?.Page ?? 1,
                 request?.PageSize ?? 10);
@@ -133,15 +137,21 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                             c.GetConferenceTitleDtoByLanguageCode(defaultLanguage?.Code)?.ConferenceTitle?.Value?.Trim(),
                     Synopsis = c.GetConferenceSynopsisDtoByLanguageCode(requestLanguage?.Code)?.ConferenceSynopsis?.Value?.Trim() ??
                                c.GetConferenceSynopsisDtoByLanguageCode(defaultLanguage?.Code)?.ConferenceSynopsis?.Value?.Trim(),
-                    Date = c.Conference.StartDate.ToString("yyyy-MM-dd"),
-                    StartTime = c.Conference.StartDate.ToString("HH:mm"),
-                    EndTime = c.Conference.EndDate.ToString("HH:mm"),
+                    Date = c.Conference.StartDate.ToUserTimeZone().ToString("yyyy-MM-dd"),
+                    StartTime = c.Conference.StartDate.ToUserTimeZone().ToString("HH:mm"),
+                    EndTime = c.Conference.EndDate.ToUserTimeZone().ToString("HH:mm"),
                     DurationMinutes = (int) ((c.Conference.EndDate - c.Conference.StartDate).TotalMinutes),
                     Room = c.RoomDto != null ? new RoomBaseApiResponse
                     {
                         Uid = c.RoomDto.Room.Uid,
                         Name = c.RoomDto.GetRoomNameByLanguageCode(requestLanguage?.Code ?? defaultLanguage?.Code)?.RoomName?.Value?.Trim()
                     } : null,
+                    Pillars = c.ConferencePillarDtos?.Select(ctd => new PillarBaseApiResponse()
+                    {
+                        Uid = ctd.Pillar.Uid,
+                        Name = ctd.Pillar.Name?.GetSeparatorTranslation(requestLanguage?.Code ?? defaultLanguage?.Code, Language.Separator)?.Trim(),
+                        Color = ctd.Pillar.Color
+                    })?.ToList(),
                     Tracks = c.ConferenceTrackDtos?.Select(ctd => new TrackBaseApiResponse
                     {
                         Uid = ctd.Track.Uid,
@@ -183,26 +193,33 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 var roomDtos = await this.roomRepo.FindAllDtoByEditionIdAsync(edition.Id);
                 var tracks = await this.trackRepo.FindAllByEditionIdAsync(edition.Id);
                 var presentationFormats = await this.presentationFormatRepo.FindAllByEditionIdAsync(edition.Id);
+                var pillars = await this.pillarRepo.FindAllByEditionIdAsync(edition.Id);
 
                 return await Json(new ConferencesFiltersApiResponse
                 {
                     Status = ApiStatus.Success,
                     Error = null,
-                    EditionDates = Enumerable.Range(0, 1 + edition.EndDate.Subtract(edition.StartDate).Days)
-                                             .Select(offset => edition.StartDate.AddDays(offset).ToString("yyyy-MM-dd"))
+                    EditionDates = Enumerable.Range(0, 1 + edition.EndDate.ToUserTimeZone().Subtract(edition.StartDate.ToUserTimeZone()).Days)
+                                             .Select(offset => edition.StartDate.ToUserTimeZone().AddDays(offset).ToString("yyyy-MM-dd"))
                                              .ToList(),
                     EventsApiResponses = editionEvents?.Select(ee => new EditionEventApiResponse
                     {
                         Uid = ee.Uid,
                         Name = ee.Name.Trim(),
-                        StartDate = ee.StartDate.ToString("yyyy-MM-dd"),
-                        EndDate = ee.EndDate.ToString("yyyy-MM-dd"),
+                        StartDate = ee.StartDate.ToUserTimeZone().ToString("yyyy-MM-dd"),
+                        EndDate = ee.EndDate.ToUserTimeZone().ToString("yyyy-MM-dd"),
                         DurationDays = (int)((ee.EndDate - ee.StartDate).TotalDays) + 1
                     })?.OrderBy(c => c.Name)?.ToList(),
                     RoomsApiResponses = roomDtos?.Select(rd => new ConferencesFilterItemApiResponse
                     {
                         Uid = rd.Room.Uid,
                         Name = rd.GetRoomNameByLanguageCode(request?.Culture)?.RoomName?.Value
+                    })?.OrderBy(c => c.Name)?.ToList(),
+                    PillarsApiResponses = pillars?.Select(t => new PillarBaseApiResponse
+                    {
+                        Uid = t.Uid,
+                        Name = t.Name.GetSeparatorTranslation(request?.Culture, Language.Separator),
+                        Color = t.Color
                     })?.OrderBy(c => c.Name)?.ToList(),
                     TracksApiResponses = tracks?.Select(t => new TrackBaseApiResponse
                     {

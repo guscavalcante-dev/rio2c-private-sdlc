@@ -23,6 +23,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using PlataformaRio2C.Web.Site.Hub;
+using PlataformaRio2C.Web.Site.Helpers;
 
 [assembly: OwinStartupAttribute(typeof(PlataformaRio2C.Web.Site.Startup))]
 namespace PlataformaRio2C.Web.Site
@@ -65,6 +66,9 @@ namespace PlataformaRio2C.Web.Site
             
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new RazorViewEngine());
+
+            ModelBinders.Binders.Add(typeof(DateTime), new DateTimeBinder());
+            ModelBinders.Binders.Add(typeof(DateTime?), new NullableDateTimeBinder());
 
             app.MapSignalR("/signalr", hubConfiguration);
         }

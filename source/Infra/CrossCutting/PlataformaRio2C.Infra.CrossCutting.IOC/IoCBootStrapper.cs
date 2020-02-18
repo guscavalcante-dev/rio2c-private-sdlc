@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-27-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="IoCBootStrapper.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,10 +13,7 @@
 // ***********************************************************************
 using LazyCache;
 using Microsoft.AspNet.Identity;
-using PlataformaRio2C.Application.Interfaces.Services;
-using PlataformaRio2C.Application.Services;
 using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Domain.Services;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Configuration;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Models;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
@@ -73,17 +70,17 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
             //container.Register<IProducerService, ProducerService>(Lifestyle.Scoped);
             //container.Register<IProducerRepository, ProducerRepository>(Lifestyle.Scoped);
 
-            container.Register<IEmailAppService, EmailAppService>(Lifestyle.Scoped);
+            //container.Register<IEmailAppService, EmailAppService>(Lifestyle.Scoped);
 
             //container.Register<IMessageAppService, MessageAppService>(Lifestyle.Scoped);
-            container.Register<IMessageService, MessageService>(Lifestyle.Scoped);
+            //container.Register<IMessageService, MessageService>(Lifestyle.Scoped);
             //container.Register<IMessageRepository, MessageRepository>(Lifestyle.Scoped);
 
             //container.Register<IProjectService, ProjectService>(Lifestyle.Scoped);
             //container.Register<IProjectAppService, ProjectAppService>(Lifestyle.Scoped);
             //container.Register<IProjectRepository, ProjectRepository>(Lifestyle.Scoped);
 
-            container.Register<IErrorMessageService, ErrorMessageService>(Lifestyle.Scoped);
+            //container.Register<IErrorMessageService, ErrorMessageService>(Lifestyle.Scoped);
 
 
             //container.Register<IRoomService, RoomService>(Lifestyle.Scoped);
@@ -96,14 +93,14 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
 
             //container.Register<IDashboardAppService, DashboardAppService>(Lifestyle.Scoped);
 
-            container.Register<INegotiationService, NegotiationService>(Lifestyle.Scoped);
+            //container.Register<INegotiationService, NegotiationService>(Lifestyle.Scoped);
             //container.Register<INegotiationRepository, NegotiationRepository>(Lifestyle.Scoped);
             //container.Register<INegotiationAppService, NegotiationAppService>(Lifestyle.Scoped);
 
             //container.Register<IScheduleAppService, ScheduleAppService>(Lifestyle.Scoped);
 
-            container.Register<IQuizAnswerAppService, QuizAnswerAppService>(Lifestyle.Scoped);
-            container.Register<IQuizAnswerService, QuizAnswerService>(Lifestyle.Scoped);
+            //container.Register<IQuizAnswerAppService, QuizAnswerAppService>(Lifestyle.Scoped);
+            //container.Register<IQuizAnswerService, QuizAnswerService>(Lifestyle.Scoped);
             //container.Register<IQuizAnswerRepository, QuizAnswerRepository>(Lifestyle.Scoped);
 
             RegisterRepositories(container);
@@ -142,16 +139,16 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
             container.Register<IdentityAutenticationService>(Lifestyle.Scoped);
             container.Register<IdentityServicesSetup>(() => MakeIdentityServicesSetup(container), Lifestyle.Scoped);
 
-            container.Register<ILanguageAppService, LanguageAppService>(Lifestyle.Scoped);
-            container.Register<ILanguageService, LanguageService>(Lifestyle.Scoped);
+            //container.Register<ILanguageAppService, LanguageAppService>(Lifestyle.Scoped);
+            //container.Register<ILanguageService, LanguageService>(Lifestyle.Scoped);
 
-            container.Register<IUserAppService, UserAppService>(Lifestyle.Scoped);
-            container.Register<IUserService, UserService>(Lifestyle.Scoped);
+            //container.Register<IUserAppService, UserAppService>(Lifestyle.Scoped);
+            //container.Register<IUserService, UserService>(Lifestyle.Scoped);
 
             //container.Register<IPlayerRestrictionsSpecificsService, PlayerRestrictionsSpecificsService>(Lifestyle.Scoped);
 
             //container.Register<ILogisticsAppService, LogisticsAppService>(Lifestyle.Scoped);
-            container.Register<ILogisticsService, LogisticsService>(Lifestyle.Scoped);
+            //container.Register<ILogisticsService, LogisticsService>(Lifestyle.Scoped);
 
 
             //container.Register<IConferenceAppService, ConferenceAppService>(Lifestyle.Scoped);
@@ -179,8 +176,8 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
             //container.Register<ICollaboratorService, CollaboratorService>(Lifestyle.Scoped);
             //container.Register<ICollaboratorAppService, CollaboratorAppService>(Lifestyle.Scoped);
 
-            container.Register<ICountryService, CountryService>(Lifestyle.Scoped);
-            container.Register<ICountryAppService, CountryAppService>(Lifestyle.Scoped);
+            //container.Register<ICountryService, CountryService>(Lifestyle.Scoped);
+            //container.Register<ICountryAppService, CountryAppService>(Lifestyle.Scoped);
         }
 
         /// <summary>Resolves the collaborator player.</summary>
@@ -221,16 +218,16 @@ namespace PlataformaRio2C.Infra.CrossCutting.IOC
         /// <param name="container">The container.</param>
         public static void ResolveInterestGroup(Container container)
         {
-            container.Register<IInterestGroupAppService, InterestGroupAppService>(Lifestyle.Scoped);
-            container.Register<IInterestGroupService, InterestGroupService>(Lifestyle.Scoped);
+            //container.Register<IInterestGroupAppService, InterestGroupAppService>(Lifestyle.Scoped);
+            //container.Register<IInterestGroupService, InterestGroupService>(Lifestyle.Scoped);
         }
 
         /// <summary>Resolves the interest.</summary>
         /// <param name="container">The container.</param>
         public static void ResolveInterest(Container container)
         {
-            container.Register<IInterestAppService, InterestAppService>(Lifestyle.Scoped);
-            container.Register<IInterestService, InterestService>(Lifestyle.Scoped);
+            //container.Register<IInterestAppService, InterestAppService>(Lifestyle.Scoped);
+            //container.Register<IInterestService, InterestService>(Lifestyle.Scoped);
         }
 
         /// <summary>Resolves the sales plataforms.</summary>

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-09-2020
+// Last Modified On : 02-16-2020
 // ***********************************************************************
 // <copyright file="Conference.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,8 +25,8 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public int EditionEventId { get; private set; }
         public int RoomId { get; private set; }
-        public DateTime StartDate { get; private set; }
-        public DateTime EndDate { get; private set; }
+        public DateTimeOffset StartDate { get; private set; }
+        public DateTimeOffset EndDate { get; private set; }
 
         public virtual EditionEvent EditionEvent { get; private set; }
         public virtual Room Room { get; private set; }
@@ -36,6 +36,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<ConferenceParticipant> ConferenceParticipants { get; private set; }
         public virtual ICollection<ConferenceTrack> ConferenceTracks { get; private set; }
         public virtual ICollection<ConferencePresentationFormat> ConferencePresentationFormats { get; private set; }
+        public virtual ICollection<ConferencePillar> ConferencePillars { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Conference"/> class.</summary>
         /// <param name="conferenceUid">The conference uid.</param>
@@ -47,6 +48,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="conferenceTitles">The conference titles.</param>
         /// <param name="conferenceSynopses">The conference synopses.</param>
         /// <param name="tracks">The tracks.</param>
+        /// <param name="pillars">The pillars.</param>
         /// <param name="presentationFormats">The presentation formats.</param>
         /// <param name="userId">The user identifier.</param>
         public Conference(
@@ -59,23 +61,25 @@ namespace PlataformaRio2C.Domain.Entities
             List<ConferenceTitle> conferenceTitles,
             List<ConferenceSynopsis> conferenceSynopses,
             List<Track> tracks,
+            List<Pillar> pillars,
             List<PresentationFormat> presentationFormats,
             int userId)
         {
             //this.Uid = conferenceUid;
             this.EditionEventId = editionEvent?.Id ?? 0;
             this.EditionEvent = editionEvent;
-            this.StartDate = date.JoinDateAndTime(startTime, true);
-            this.EndDate = date.JoinDateAndTime(endTime, true);
+            this.StartDate = date.JoinDateAndTime(startTime, true).ToUtcTimeZone();
+            this.EndDate = date.JoinDateAndTime(endTime, true).ToUtcTimeZone();
             this.RoomId = room?.Id ?? 0;
             this.Room = room;
             this.SynchronizeConferenceTitles(conferenceTitles, userId);
             this.SynchronizeConferenceSynopses(conferenceSynopses, userId);
             this.SynchronizeConferenceTracks(tracks, userId);
+            this.SynchronizeConferencePillars(pillars, userId);
             this.SynchronizeConferencePresentationFormats(presentationFormats, userId);
 
             this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
         }
 
@@ -105,30 +109,32 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.EditionEventId = editionEvent?.Id ?? 0;
             this.EditionEvent = editionEvent;
-            this.StartDate = date.JoinDateAndTime(startTime, true);
-            this.EndDate = date.JoinDateAndTime(endTime, true);
+            this.StartDate = date.JoinDateAndTime(startTime, true).ToUtcTimeZone();
+            this.EndDate = date.JoinDateAndTime(endTime, true).ToUtcTimeZone();
             this.RoomId = room?.Id ?? 0;
             this.Room = room;
             this.SynchronizeConferenceTitles(conferenceTitles, userId);
             this.SynchronizeConferenceSynopses(conferenceSynopses, userId);
 
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
         /// <summary>Updates the tracks and presentation formats.</summary>
         /// <param name="tracks">The tracks.</param>
+        /// <param name="pillars">The pillars.</param>
         /// <param name="presentationFormats">The presentation formats.</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateTracksAndPresentationFormats(List<Track> tracks, List<PresentationFormat> presentationFormats, int userId)
+        public void UpdateTracksAndPresentationFormats(List<Track> tracks, List<Pillar> pillars, List<PresentationFormat> presentationFormats, int userId)
         {
             this.SynchronizeConferenceTracks(tracks, userId);
+            this.SynchronizeConferencePillars(pillars, userId);
             this.SynchronizeConferencePresentationFormats(presentationFormats, userId);
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
         }
 
         /// <summary>Deletes the specified user identifier.</summary>
@@ -139,7 +145,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeConferenceTitles(new List<ConferenceTitle>(), userId);
             this.SynchronizeConferenceSynopses(new List<ConferenceSynopsis>(), userId);
 
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -303,6 +309,56 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.ConferenceTracks.Add(new ConferenceTrack(Guid.NewGuid(), this, track, userId));
         }
+        
+
+        private void SynchronizeConferencePillars(List<Pillar> pillars, int userId)
+        {
+            if (this.ConferencePillars == null)
+            {
+                this.ConferencePillars = new List<ConferencePillar>();
+            }
+
+            this.DeleteConferencePillars(pillars, userId);
+
+            if (pillars?.Any() != true)
+            {
+                return;
+            }
+
+            // Create or update
+            foreach (var pillar in pillars)
+            {
+                var pillarDb = this.ConferencePillars.FirstOrDefault(a => a.Pillar.Uid == pillar.Uid);
+                if (pillarDb != null)
+                {
+                    pillarDb.Update(userId);
+                }
+                else
+                {
+                    this.CreateConferencePillar(pillar, userId);
+                }
+            }
+        }
+
+        /// <summary>Deletes the conference pillars.</summary>
+        /// <param name="newPillars">The new pillars.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteConferencePillars(List<Pillar> newPillars, int userId)
+        {
+            var conferencePillarsToDelete = this.ConferencePillars.Where(db => newPillars?.Select(a => a.Uid)?.Contains(db.Pillar.Uid) == false && !db.IsDeleted).ToList();
+            foreach (var conferencePillarToDelete in conferencePillarsToDelete)
+            {
+                conferencePillarToDelete.Delete(userId);
+            }
+        }
+
+        /// <summary>Creates the conference pillar.</summary>
+        /// <param name="pillar">The pillar.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void CreateConferencePillar(Pillar pillar, int userId)
+        {
+            this.ConferencePillars.Add(new ConferencePillar(this, pillar, userId));
+        }
 
         #endregion
 
@@ -457,7 +513,7 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.StartDate < this.EditionEvent.StartDate || this.StartDate > this.EditionEvent.EndDate
                 || this.EndDate < this.EditionEvent.StartDate || this.EndDate > this.EditionEvent.EndDate)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.Date, this.EditionEvent.EndDate.ToShortDateString(), this.EditionEvent.StartDate.ToShortDateString()), new string[] { "Date" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.Date, this.EditionEvent.EndDate.ToUserTimeZone().ToShortDateString(), this.EditionEvent.StartDate.ToUserTimeZone().ToShortDateString()), new string[] { "Date" }));
             }
 
             if (this.StartDate > this.EndDate)

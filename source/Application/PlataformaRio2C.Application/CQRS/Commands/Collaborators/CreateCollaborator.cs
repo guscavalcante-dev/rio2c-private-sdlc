@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System.Collections.Generic;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -29,12 +30,28 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public CreateCollaborator(
             List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, 
             List<LanguageDto> languagesDtos, 
-            List<CountryBaseDto> countriesBaseDtos,
+            List<CollaboratorGender> genders, 
+            List<CollaboratorIndustry> industries, 
+            List<CollaboratorRole> roles,
+            List<EditionDto> editionsDtos,
+            int currentEditionId,
             bool isJobTitleRequired,
             bool isMiniBioRequired, 
-            bool isImageRequired)
+            bool isImageRequired,
+            string userInterfaceLanguage)
         {
-            this.UpdateBaseProperties(null, attendeeOrganizationsBaseDtos, languagesDtos, countriesBaseDtos, isJobTitleRequired, isMiniBioRequired, isImageRequired);
+            this.UpdateBaseProperties(null, 
+                attendeeOrganizationsBaseDtos, 
+                languagesDtos, 
+                genders, 
+                industries, 
+                roles, 
+                editionsDtos, 
+                currentEditionId, 
+                isJobTitleRequired, 
+                isMiniBioRequired, 
+                isImageRequired, 
+                userInterfaceLanguage);
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateCollaborator"/> class.</summary>

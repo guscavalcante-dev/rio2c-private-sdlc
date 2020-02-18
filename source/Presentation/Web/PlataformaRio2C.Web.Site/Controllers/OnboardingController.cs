@@ -4,7 +4,7 @@
 // Created          : 08-29-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-19-2019
+// Last Modified On : 02-06-2020
 // ***********************************************************************
 // <copyright file="OnboardingController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -69,13 +69,19 @@ namespace PlataformaRio2C.Web.Site.Controllers
             // Redirect if onboarding is not pending
             if (this.UserAccessControlDto?.IsOnboardingPending() != true)
             {
-                //return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home");
             }
 
             // Redirect to access data if not finished
             if (this.UserAccessControlDto?.IsUserOnboardingFinished() != true)
             {
                 return RedirectToAction("AccessData", "Onboarding");
+            }
+
+            // Redirect if speaker terms acceptance pending
+            if (this.UserAccessControlDto?.IsSpeakerTermsAcceptanceFinished() != true)
+            {
+                return RedirectToAction("SpeakerTermsAcceptance", "Onboarding");
             }
 
             // Redirect if player terms acceptance is pending
@@ -109,12 +115,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return RedirectToAction("CompanyInfo", "Onboarding");
             }
 
-            // Redirect if speaker terms acceptance pending
-            if (this.UserAccessControlDto?.IsSpeakerTermsAcceptanceFinished() != true)
-            {
-                return RedirectToAction("SpeakerTermsAcceptance", "Onboarding");
-            }
-
             return RedirectToAction("Index", "Home");
         }
 
@@ -130,14 +130,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return RedirectToAction("Index", "Onboarding");
             }
 
-            await this.CommandBus.Send(new OnboardCollaborator(
-                this.UserAccessControlDto.Collaborator.Uid,
-                this.UserAccessControlDto.User.Id,
-                this.UserAccessControlDto.User.Uid,
-                this.EditionDto.Id,
-                this.EditionDto.Uid,
-                this.UserInterfaceLanguage));
-
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.WelcomeTitle, new List<BreadcrumbItemHelper> {
@@ -145,6 +137,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
             });
 
             #endregion
+
+            await this.CommandBus.Send(new OnboardCollaborator(
+                this.UserAccessControlDto.Collaborator.Uid,
+                this.UserAccessControlDto.User.Id,
+                this.UserAccessControlDto.User.Uid,
+                this.EditionDto.Id,
+                this.EditionDto.Uid,
+                this.UserInterfaceLanguage));
 
             this.SetViewBags();
 
@@ -218,103 +218,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
 
             this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Labels.AccessData, Labels.UpdatedM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
-
-            return RedirectToAction("Index", "Onboarding");
-        }
-
-        #endregion
-
-        #region Player Terms Acceptance
-
-        /// <summary>Players the terms acceptance.</summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> PlayerTermsAcceptance()
-        {
-            if (this.UserAccessControlDto?.IsPlayerTermsAcceptanceFinished() == true)
-            {
-                return RedirectToAction("Index", "Onboarding");
-            }
-
-            #region Breadcrumb
-
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.WelcomeTitle, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Messages.CompleteYourRegistration, Url.Action("Index", "Onboarding"))
-            });
-
-            #endregion
-
-            this.SetViewBags();
-
-            var cmd = new OnboardPlayerTermsAcceptance();
-
-            return View(cmd);
-        }
-
-        /// <summary>Players the terms acceptance.</summary>
-        /// <param name="cmd">The command.</param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> PlayerTermsAcceptance(OnboardPlayerTermsAcceptance cmd)
-        {
-            if (this.UserAccessControlDto?.IsPlayerTermsAcceptanceFinished() == true)
-            {
-                return RedirectToAction("Index", "Onboarding");
-            }
-
-            #region Breadcrumb
-
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.WelcomeTitle, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Messages.CompleteYourRegistration, Url.Action("Index", "Onboarding"))
-            });
-
-            #endregion
-
-            this.SetViewBags();
-
-            var result = new AppValidationResult();
-
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-
-                cmd.UpdatePreSendProperties(
-                    this.UserAccessControlDto.Collaborator.Uid,
-                    this.UserAccessControlDto.User.Id,
-                    this.UserAccessControlDto.User.Uid,
-                    this.EditionDto.Id,
-                    this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
-                result = await this.CommandBus.Send(cmd);
-                if (!result.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-            }
-            catch (DomainException ex)
-            {
-                foreach (var error in result.Errors)
-                {
-                    var target = error.Target ?? "";
-                    ModelState.AddModelError(target, error.Message);
-                }
-
-                this.StatusMessageToastr(ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-
-                return View(cmd);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-
-                return View(cmd);
-            }
-
-            this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Messages.PlayerTerms, Labels.Accepted.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
 
             return RedirectToAction("Index", "Onboarding");
         }
@@ -418,6 +321,103 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #endregion
 
+        #region Player Terms Acceptance
+
+        /// <summary>Players the terms acceptance.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> PlayerTermsAcceptance()
+        {
+            if (this.UserAccessControlDto?.IsPlayerTermsAcceptanceFinished() == true)
+            {
+                return RedirectToAction("Index", "Onboarding");
+            }
+
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.WelcomeTitle, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Messages.CompleteYourRegistration, Url.Action("Index", "Onboarding"))
+            });
+
+            #endregion
+
+            this.SetViewBags();
+
+            var cmd = new OnboardPlayerTermsAcceptance();
+
+            return View(cmd);
+        }
+
+        /// <summary>Players the terms acceptance.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> PlayerTermsAcceptance(OnboardPlayerTermsAcceptance cmd)
+        {
+            if (this.UserAccessControlDto?.IsPlayerTermsAcceptanceFinished() == true)
+            {
+                return RedirectToAction("Index", "Onboarding");
+            }
+
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.WelcomeTitle, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Messages.CompleteYourRegistration, Url.Action("Index", "Onboarding"))
+            });
+
+            #endregion
+
+            this.SetViewBags();
+
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.UserAccessControlDto.Collaborator.Uid,
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                this.StatusMessageToastr(ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+
+                return View(cmd);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+
+                return View(cmd);
+            }
+
+            this.StatusMessageToastr(string.Format(Messages.EntityActionSuccessfull, Messages.PlayerTerms, Labels.Accepted.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Success);
+
+            return RedirectToAction("Index", "Onboarding");
+        }
+
+        #endregion
+
         #region Collaborator Data
 
         /// <summary>Collaborators the data.</summary>
@@ -442,10 +442,16 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             var cmd = new OnboardCollaboratorData(
                 await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(this.UserAccessControlDto?.Collaborator?.Uid ?? Guid.Empty, this.EditionDto.Id, this.UserInterfaceLanguage)),
+                await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
+                await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
+                await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
+                await this.CommandBus.Send(new FindAllEditionsByIsActive(true)),
+                EditionDto.Id,
                 true,
                 true,
-                true);
+                true,
+                UserInterfaceLanguage);
 
             return View(cmd);
         }
@@ -475,8 +481,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             try
             {
-                var isExecutive = this.UserAccessControlDto?.HasAnyCollaboratorType(PlataformaRio2C.Domain.Constants.CollaboratorType.Executives) == true;
-                var isIndustry = this.UserAccessControlDto?.HasCollaboratorType(PlataformaRio2C.Domain.Constants.CollaboratorType.Industry) == true;
+                var isExecutive = this.UserAccessControlDto?.HasAnyCollaboratorType(Constants.CollaboratorType.Executives) == true;
+                var isIndustry = this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true;
 
                 // Field SharePublicEmail does not exist for this types of users
                 if (!isExecutive && !isIndustry)
@@ -513,14 +519,28 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
-                this.StatusMessageToastr(ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                this.StatusMessageToastr(ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);                
+                cmd.UpdateData(                
+                    await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllEditionsByIsActive(true)),
+                    EditionDto.Id,
+                    UserInterfaceLanguage);
 
                 return View(cmd);
             }
             catch (Exception ex)
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);                
+                cmd.UpdateData(                
+                    await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllEditionsByIsActive(true)),
+                    EditionDto.Id,
+                    UserInterfaceLanguage);
 
                 return View(cmd);
             }
@@ -948,6 +968,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
                                                                                               && aot.OrganizationType.Name == Constants.OrganizationType.AudiovisualBuyer) == true)?
                                                                 .ToList();
             }
+
+            ViewBag.IsIndustry = this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true;
+            ViewBag.IsTicketBuyer = this.UserAccessControlDto?.HasAnyCollaboratorType(Constants.CollaboratorType.TicketBuyers) == true;
+            ViewBag.IsExecutive = this.UserAccessControlDto?.HasAnyCollaboratorType(Constants.CollaboratorType.Executives);
+            ViewBag.IsSpeaker = this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Speaker) == true;
         }
 
         #endregion

@@ -4,7 +4,7 @@
 // Created          : 01-04-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-06-2020
+// Last Modified On : 02-16-2020
 // ***********************************************************************
 // <copyright file="EditionEvent.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -27,8 +28,8 @@ namespace PlataformaRio2C.Domain.Entities
 
         public int EditionId { get; private set; }
         public string Name { get; private set; }
-        public DateTime StartDate { get; private set; }
-        public DateTime EndDate { get; private set; }
+        public DateTimeOffset StartDate { get; private set; }
+        public DateTimeOffset EndDate { get; private set; }
 
         public virtual Edition Edition { get; private set; }
 
@@ -53,11 +54,11 @@ namespace PlataformaRio2C.Domain.Entities
             this.EditionId = edition?.Id ?? 0;
             this.Edition = edition;
             this.Name = name?.Trim();
-            this.StartDate = startDate;
-            this.EndDate = endDate.AddHours(23).AddMinutes(59).AddSeconds(59);
+            this.StartDate = startDate.ToUtcTimeZone();
+            this.EndDate = endDate.AddHours(23).AddMinutes(59).AddSeconds(59).ToUtcTimeZone();
 
             this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
         }
 
@@ -78,11 +79,11 @@ namespace PlataformaRio2C.Domain.Entities
             int userId)
         {
             this.Name = name?.Trim();
-            this.StartDate = startDate;
-            this.EndDate = endDate.AddHours(23).AddMinutes(59).AddSeconds(59);
+            this.StartDate = startDate.ToUtcTimeZone();
+            this.EndDate = endDate.AddHours(23).AddMinutes(59).AddSeconds(59).ToUtcTimeZone();
 
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -93,7 +94,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = true;
             this.DeleteConferences(userId);
 
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -160,12 +161,12 @@ namespace PlataformaRio2C.Domain.Entities
         {
             if (this.StartDate < this.Edition.StartDate || this.StartDate > this.Edition.EndDate)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.StartDate, this.Edition.EndDate.ToShortDateString(), this.Edition.StartDate.ToShortDateString()), new string[] { "StartDate" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.StartDate, this.Edition.EndDate.ToUserTimeZone().ToShortDateString(), this.Edition.StartDate.ToUserTimeZone().ToShortDateString()), new string[] { "StartDate" }));
             }
 
             if (this.EndDate < this.Edition.StartDate || this.EndDate > this.Edition.EndDate)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.EndDate, this.Edition.EndDate.ToShortDateString(), this.Edition.StartDate.ToShortDateString()), new string[] { "EndDate" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.EndDate, this.Edition.EndDate.ToUserTimeZone().ToShortDateString(), this.Edition.StartDate.ToUserTimeZone().ToShortDateString()), new string[] { "EndDate" }));
             }
 
             if (this.StartDate > this.EndDate)

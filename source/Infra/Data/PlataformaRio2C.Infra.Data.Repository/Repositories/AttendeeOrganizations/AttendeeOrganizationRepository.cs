@@ -4,7 +4,7 @@
 // Created          : 08-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified On : 02-06-2020
 // ***********************************************************************
 // <copyright file="AttendeeOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -278,11 +278,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>Finds all base dtos by edition uid asynchronous.</summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <returns></returns>
-        public async Task<List<AttendeeOrganizationBaseDto>> FindAllBaseDtosByEditionUidAsync(int editionId, bool showAllEditions)
+        public async Task<List<AttendeeOrganizationBaseDto>> FindAllBaseDtosByEditionUidAsync(int editionId, bool showAllEditions, Guid organizationTypeUid)
         {
             var query = this.GetBaseQuery()
-                                .FindByEditionId(editionId, showAllEditions);
+                                .FindByEditionId(editionId, showAllEditions)
+                                .FindByOrganizationTypeUid(editionId, organizationTypeUid);
 
             return await query
                             .Select(ao => new AttendeeOrganizationBaseDto

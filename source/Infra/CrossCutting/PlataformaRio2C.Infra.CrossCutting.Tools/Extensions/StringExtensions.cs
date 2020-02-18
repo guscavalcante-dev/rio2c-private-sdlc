@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified On : 02-16-2020
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -63,6 +64,22 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                 result += value[i];
             }
             return result;
+        }
+
+        /// <summary>Removes the filename invalid chars.</summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public static string RemoveFilenameInvalidChars(this string value)
+        {
+            return string.Concat(value.Split(Path.GetInvalidFileNameChars()));
+        }
+
+        /// <summary>Replaces the filename invalid chars.</summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public static string ReplaceFilenameInvalidChars(this string value)
+        {
+            return string.Join("_", value.Split(Path.GetInvalidFileNameChars()));
         }
 
         /// <summary>Removes the accents.</summary>
@@ -164,33 +181,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             return code?.ToUpperInvariant();
         }
 
-        /// <summary>Gets the separator translation.</summary>
-        /// <param name="s">The s.</param>
-        /// <param name="culture">The culture.</param>
-        /// <param name="separator">The separator.</param>
-        /// <returns></returns>
-        public static string GetSeparatorTranslation(this string s, string culture, char separator)
-        {
-            if (string.IsNullOrEmpty(s))
-            {
-                return string.Empty;
-            }
-
-            var splitName = s.Split(separator);
-
-            if (culture?.ToLowerInvariant() == "pt-br")
-            {
-                return splitName[0].Trim();
-            }
-
-            if (culture?.ToLowerInvariant() == "en-us" && splitName.Length == 2)
-            {
-                return splitName[1].Trim();
-            }
-
-            return splitName[0].Trim();
-        }
-
         /// <summary>Gets the splitted word.</summary>
         /// <param name="s">The s.</param>
         /// <param name="separator">The separator.</param>
@@ -237,8 +227,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         /// <param name="s">The s.</param>
         /// <param name="separator">The separator.</param>
         /// <param name="dateFormat">The date format.</param>
+        /// <param name="truncateTime">The truncate time.</param>
         /// <returns></returns>
-        public static List<DateTime> ToListDateTime(this string s, char separator, string dateFormat)
+        public static List<DateTime> ToListDateTime(this string s, char separator, string dateFormat, bool? truncateTime = false)
         {
             var list = new List<DateTime>();
 
@@ -252,7 +243,34 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             {
                 if (DateTime.TryParseExact(split, dateFormat, null, DateTimeStyles.None, out DateTime dateTime))
                 {
-                    list.Add(dateTime);
+                    list.Add(truncateTime != true ? dateTime.ToUtcTimeZone().DateTime : dateTime.ToUtcTimeZone().Date);
+                }
+            }
+
+            return list;
+        }
+
+        /// <summary>Converts to listdatetimeoffset.</summary>
+        /// <param name="s">The s.</param>
+        /// <param name="separator">The separator.</param>
+        /// <param name="dateFormat">The date format.</param>
+        /// <param name="truncateTime">The truncate time.</param>
+        /// <returns></returns>
+        public static List<DateTimeOffset> ToListDateTimeOffset(this string s, char separator, string dateFormat, bool? truncateTime = false)
+        {
+            var list = new List<DateTimeOffset>();
+
+            var splitted = s?.Split(separator);
+            if (splitted == null || splitted.Length <= 0)
+            {
+                return list;
+            }
+
+            foreach (var split in splitted)
+            {
+                if (DateTime.TryParseExact(split, dateFormat, null, DateTimeStyles.None, out DateTime dateTime))
+                {
+                    list.Add(truncateTime != true ? dateTime.ToUtcTimeZone() : new DateTimeOffset(dateTime.ToUtcTimeZone().Date, TimeSpan.Zero));
                 }
             }
 

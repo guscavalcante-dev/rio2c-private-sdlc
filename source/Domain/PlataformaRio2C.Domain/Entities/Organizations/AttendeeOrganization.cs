@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-18-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="AttendeeOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,11 +24,11 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public int EditionId { get; private set; }
         public int OrganizationId { get; private set; }
-        public DateTime? OnboardingStartDate { get; private set; }
-        public DateTime? OnboardingFinishDate { get; private set; }
-        public DateTime? OnboardingOrganizationDate { get; private set; }
-        public DateTime? OnboardingInterestsDate { get; private set; }
-        public DateTime? ProjectSubmissionOrganizationDate { get; private set; }
+        public DateTimeOffset? OnboardingStartDate { get; private set; }
+        public DateTimeOffset? OnboardingFinishDate { get; private set; }
+        public DateTimeOffset? OnboardingOrganizationDate { get; private set; }
+        public DateTimeOffset? OnboardingInterestsDate { get; private set; }
+        public DateTimeOffset? ProjectSubmissionOrganizationDate { get; private set; }
         public int SellProjectsCount { get; set; }
 
         public virtual Edition Edition { get; private set; }
@@ -57,11 +57,11 @@ namespace PlataformaRio2C.Domain.Entities
             this.Edition = edition;
             this.Organization = organization;
             this.SellProjectsCount = 0;
+            this.SynchronizeAttendeeOrganizationTypes(organizationType, isApiDisplayEnabled, apiHighlightPosition, userId);
 
             this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
-            this.SynchronizeAttendeeOrganizationTypes(organizationType, isApiDisplayEnabled, apiHighlightPosition, userId);
         }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeOrganization"/> class.</summary>
@@ -74,8 +74,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void Delete(OrganizationType organizationType, int userId)
         {
-            this.UpdateDate = DateTime.Now;
-            this.UpdateUserId = userId;
             this.DeleteOrganizationType(organizationType, userId);
             this.DeleteAttendeeOrganizationCollaborators(userId);
 
@@ -84,6 +82,9 @@ namespace PlataformaRio2C.Domain.Entities
             {
                 this.IsDeleted = true;
             }
+
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
         }
 
         /// <summary>Restores the specified organization type.</summary>
@@ -93,10 +94,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void Restore(OrganizationType organizationType, bool? isApiDisplayEnabled, int? apiHighlightPosition, int userId)
         {
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
-            this.UpdateUserId = userId;
             this.SynchronizeAttendeeOrganizationTypes(organizationType, isApiDisplayEnabled, apiHighlightPosition, userId);
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
         }
 
         #region Attendee Organization Types
@@ -195,40 +197,44 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void OnboardPlayer(int userId)
         {
+            this.OnboardingStartDate = this.OnboardingOrganizationDate = DateTime.UtcNow;
+
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
-            this.OnboardingStartDate = this.OnboardingOrganizationDate = DateTime.Now;
         }
 
         /// <summary>Called when [interests].</summary>
         /// <param name="userId">The user identifier.</param>
         public void OnboardInterests(int userId)
         {
+            this.OnboardingFinishDate = this.OnboardingInterestsDate = DateTime.UtcNow;
+
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
-            this.OnboardingFinishDate = this.OnboardingInterestsDate = DateTime.Now;
         }
 
         /// <summary>Called when [t icket buyer].</summary>
         /// <param name="userId">The user identifier.</param>
         public void OnboardTIcketBuyer(int userId)
         {
+            this.OnboardingStartDate = this.OnboardingFinishDate = this.OnboardingOrganizationDate = DateTime.UtcNow;
+
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
-            this.OnboardingStartDate = this.OnboardingFinishDate = this.OnboardingOrganizationDate = DateTime.Now;
         }
 
         /// <summary>Called when [producer].</summary>
         /// <param name="userId">The user identifier.</param>
         public void OnboardProducer(int userId)
         {
+            this.OnboardingStartDate = this.OnboardingFinishDate = this.OnboardingOrganizationDate = this.ProjectSubmissionOrganizationDate = DateTime.UtcNow;
+
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
-            this.OnboardingStartDate = this.OnboardingFinishDate = this.OnboardingOrganizationDate = this.ProjectSubmissionOrganizationDate = DateTime.Now;
         }
 
         #endregion

@@ -4,7 +4,7 @@
 // Created          : 12-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-13-2020
+// Last Modified On : 02-17-2020
 // ***********************************************************************
 // <copyright file="speakers.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -195,12 +195,14 @@ var SpeakersDataTableWidget = function () {
                     {
                         text: sendInvitationEmail,
                         action: function (e, dt, node, config) {
+                            $('.dt-button-background').remove();
                             showSendInvitationEmailsModal();
                         }
                     },
                     {
                         text: exportToEventbrite,
                         action: function (e, dt, node, config) {
+                            $('.dt-button-background').remove();
                             eventbriteCsvExport = dt.ajax.params();
                             eventbriteCsvExport.selectedCollaboratorsUids = $('#speakers-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
                             eventbriteCsvExport.showAllEditions = $('#ShowAllEditions').prop('checked');
@@ -208,6 +210,20 @@ var SpeakersDataTableWidget = function () {
                             eventbriteCsvExport.showHighlights = $('#ShowHighlights').prop('checked');
 
                             showExportEventbriteCsvModal();
+                        }
+                    },
+                    {
+                        text: labels.selectAll,
+                        action: function (e, dt, node, config) {
+                            $('.dt-button-background').remove();
+                            table.rows().select();
+                        }
+                    },
+                    {
+                        text: labels.unselectAll,
+                        action: function (e, dt, node, config) {
+                            $('.dt-button-background').remove();
+                            table.rows().deselect();
                         }
                     }]
             }],
@@ -302,23 +318,33 @@ var SpeakersDataTableWidget = function () {
                         return html;
                     }
                 },
-                {
-                    data: 'CreateDate',
-                    render: function (data) {
-                        return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
-                    }
-                },
+                //{
+                //    data: 'CreateDate',
+                //    render: function (data) {
+                //        return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                //    }
+                //},
                 {
                     data: 'UpdateDate',
                     render: function (data) {
-                        return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                        return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
                 },
                 {
                     data: 'SpeakerCurrentEditionOnboardingFinishDate',
                     render: function (data) {
                         if (data !== null) {
-                            return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                            return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                        }
+
+                        return '';
+                    }
+                },
+                {
+                    data: 'CurrentEditionOnboardingFinishDate',
+                    render: function (data) {
+                        if (data !== null) {
+                            return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                         }
 
                         return '';
@@ -368,11 +394,11 @@ var SpeakersDataTableWidget = function () {
                     orderable: false
                 },
                 {
-                    targets: [3, 4],
+                    targets: [3],
                     className: "dt-center"
                 },
                 {
-                    targets: [5],
+                    targets: [4, 5],
                     className: "dt-center",
                     orderable: false
                 },

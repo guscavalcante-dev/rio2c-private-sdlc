@@ -4,7 +4,7 @@
 // Created          : 01-07-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="PresentationFormatJsonDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,6 +21,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public int Id { get; set; }
         public Guid Uid { get; set; }
         public string Name { get; set; }
+        public DateTimeOffset CreateDate { get; set; }
+        public DateTimeOffset UpdateDate { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="PresentationFormatJsonDto"/> class.</summary>
         public PresentationFormatJsonDto()

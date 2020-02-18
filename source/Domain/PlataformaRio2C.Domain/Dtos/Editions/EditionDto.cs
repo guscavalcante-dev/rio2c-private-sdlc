@@ -4,7 +4,7 @@
 // Created          : 08-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-11-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="EditionDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,23 +26,23 @@ namespace PlataformaRio2C.Domain.Dtos
         public int UrlCode { get; private set; }
         public bool IsCurrent { get; private set; }
         public bool IsActive { get; private set; }
-        public DateTime StartDate { get; private set; }
-        public DateTime EndDate { get; private set; }
-        public DateTime SellStartDate { get; private set; }
-        public DateTime SellEndDate { get; private set; }
-        public DateTime ProjectSubmitStartDate { get; private set; }
-        public DateTime ProjectSubmitEndDate { get; private set; }
-        public DateTime ProjectEvaluationStartDate { get; private set; }
-        public DateTime ProjectEvaluationEndDate { get; private set; }
-        public DateTime OneToOneMeetingsScheduleDate { get; private set; }
-        public DateTime NegotiationStartDate { get; private set; }
-        public DateTime NegotiationEndDate { get; private set; }
+        public DateTimeOffset StartDate { get; private set; }
+        public DateTimeOffset EndDate { get; private set; }
+        public DateTimeOffset SellStartDate { get; private set; }
+        public DateTimeOffset SellEndDate { get; private set; }
+        public DateTimeOffset ProjectSubmitStartDate { get; private set; }
+        public DateTimeOffset ProjectSubmitEndDate { get; private set; }
+        public DateTimeOffset ProjectEvaluationStartDate { get; private set; }
+        public DateTimeOffset ProjectEvaluationEndDate { get; private set; }
+        public DateTimeOffset OneToOneMeetingsScheduleDate { get; private set; }
+        public DateTimeOffset NegotiationStartDate { get; private set; }
+        public DateTimeOffset NegotiationEndDate { get; private set; }
         public int AttendeeOrganizationMaxSellProjectsCount { get; private set; }
         public int ProjectMaxBuyerEvaluationsCount { get; private set; }
-        public DateTime CreateDate { get; private set; }
+        public DateTimeOffset CreateDate { get; private set; }
         public int CreateUserId { get; private set; }
+        public DateTimeOffset UpdateDate { get; private set; }
         public int UpdateUserId { get; private set; }
-        public DateTime UpdateDate { get; private set; }
 
         //public UserAppViewModel Creator { get; set; }
         //public UserAppViewModel Updated { get; set; }
@@ -106,7 +106,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is project submit open]; otherwise, <c>false</c>.</returns>
         public bool IsProjectSubmitOpen()
         {
-            return DateTime.Now >= this.ProjectSubmitStartDate && DateTime.Now <= this.ProjectSubmitEndDate;
+            return DateTime.UtcNow >= this.ProjectSubmitStartDate && DateTime.UtcNow <= this.ProjectSubmitEndDate;
         }
 
         /// <summary>Determines whether [is project submit started].</summary>
@@ -114,7 +114,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is project submit started]; otherwise, <c>false</c>.</returns>
         public bool IsProjectSubmitStarted()
         {
-            return DateTime.Now >= this.ProjectSubmitStartDate;
+            return DateTime.UtcNow >= this.ProjectSubmitStartDate;
         }
 
         /// <summary>Determines whether [is project submit ended].</summary>
@@ -122,7 +122,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is project submit ended]; otherwise, <c>false</c>.</returns>
         public bool IsProjectSubmitEnded()
         {
-            return DateTime.Now > this.ProjectSubmitEndDate;
+            return DateTime.UtcNow > this.ProjectSubmitEndDate;
         }
 
         #endregion
@@ -134,7 +134,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is project evaluation open]; otherwise, <c>false</c>.</returns>
         public bool IsProjectEvaluationOpen()
         {
-            return DateTime.Now >= this.ProjectEvaluationStartDate && DateTime.Now <= this.ProjectEvaluationEndDate;
+            return DateTime.UtcNow >= this.ProjectEvaluationStartDate && DateTime.UtcNow <= this.ProjectEvaluationEndDate;
         }
 
         /// <summary>Determines whether [is project evaluation started].</summary>
@@ -142,7 +142,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is project evaluation started]; otherwise, <c>false</c>.</returns>
         public bool IsProjectEvaluationStarted()
         {
-            return DateTime.Now >= this.ProjectEvaluationStartDate;
+            return DateTime.UtcNow >= this.ProjectEvaluationStartDate;
         }
 
         /// <summary>Determines whether [is project evaluation ended].</summary>
@@ -150,7 +150,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is project evaluation ended]; otherwise, <c>false</c>.</returns>
         public bool IsProjectEvaluationEnded()
         {
-            return DateTime.Now > this.ProjectEvaluationEndDate;
+            return DateTime.UtcNow > this.ProjectEvaluationEndDate;
         }
 
         #endregion

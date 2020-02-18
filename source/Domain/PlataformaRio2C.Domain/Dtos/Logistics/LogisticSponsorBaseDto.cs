@@ -25,8 +25,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public int Id { get; set; }
         public Guid Uid { get; set; }
         public string Name { get; set; }
-        public DateTime CreateDate { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public DateTimeOffset CreateDate { get; set; }
+        public DateTimeOffset UpdateDate { get; set; }
         public bool IsInOtherEdition { get; set; }
         public bool IsInCurrentEdition { get; set; }
         public bool IsAirfareTicketRequired { get; set; }

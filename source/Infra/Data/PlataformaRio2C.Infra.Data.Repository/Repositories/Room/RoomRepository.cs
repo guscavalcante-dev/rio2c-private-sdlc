@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="RoomRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -299,7 +299,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             {
                                 Id = r.Id,
                                 Uid = r.Uid,
-                                Name = r.RoomNames.FirstOrDefault(rn => !rn.IsDeleted && rn.LanguageId == languageId).Value
+                                Name = r.RoomNames.FirstOrDefault(rn => !rn.IsDeleted && rn.LanguageId == languageId).Value,
+                                CreateDate = r.CreateDate,
+                                UpdateDate = r.UpdateDate
                             })
                             .ToListPagedAsync(page, pageSize);
         }

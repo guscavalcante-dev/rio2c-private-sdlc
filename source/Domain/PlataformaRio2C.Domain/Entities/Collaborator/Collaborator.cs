@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,6 +35,7 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int TwitterMaxLength = 100;
         public static readonly int InstagramMaxLength = 100;
         public static readonly int YoutubeMaxLength = 300;
+        public static readonly int SpecialNeedsDescriptionMaxLength = 300;
 
         public string FirstName { get; private set; }
         public string LastNames { get; private set; }
@@ -48,15 +49,30 @@ namespace PlataformaRio2C.Domain.Entities
         public string Instagram { get; private set; }
         public string Youtube { get; private set; }
         public int? AddressId { get; private set; }
-        public DateTime? ImageUploadDate { get; private set; }
+        public DateTimeOffset? ImageUploadDate { get; private set; }
+
+        public DateTime? BirthDate { get; private set; }
+        public int? CollaboratorGenderId  { get; private set; }
+        public string CollaboratorGenderAdditionalInfo  { get; private set; }
+        public int? CollaboratorRoleId  { get; private set; }
+        public string CollaboratorRoleAdditionalInfo  { get; private set; }
+        public int? CollaboratorIndustryId  { get; private set; }
+        public string CollaboratorIndustryAdditionalInfo  { get; private set; }
+        public bool? HasAnySpecialNeeds { get; private set; }
+        public string SpecialNeedsDescription  { get; private set; }
 
         public virtual User User { get; private set; }
         public virtual Address Address { get; private set; }
         public virtual User Updater { get; private set; }
+        public virtual CollaboratorGender Gender { get; private set; }
+        public virtual CollaboratorRole Role { get; private set; }
+        public virtual CollaboratorIndustry Industry { get; private set; }
 
         public virtual ICollection<CollaboratorJobTitle> JobTitles { get; private set; }
         public virtual ICollection<CollaboratorMiniBio> MiniBios { get; private set; }
         public virtual ICollection<AttendeeCollaborator> AttendeeCollaborators { get; private set; }
+        public virtual ICollection<CollaboratorEditionParticipation> EditionParticipantions { get; private set; }
+
         //public virtual ICollection<Player> Players { get; private set; }
         //public virtual ICollection<CollaboratorProducer> ProducersEvents { get; private set; }
 
@@ -88,7 +104,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUser(email);
 
             this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
         }
 
@@ -97,6 +113,17 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="birthDate">The birth date.</param>
+        /// <param name="collaboratorGender">The collaborator gender.</param>
+        /// <param name="collaboratorGenderAdditionalInfo">The collaborator gender additional information.</param>
+        /// <param name="collaboratorRole">The collaborator role.</param>
+        /// <param name="collaboratorRoleAdditionalInfo">The collaborator role additional information.</param>
+        /// <param name="collaboratorIndustry">The collaborator industry.</param>
+        /// <param name="collaboratorIndustryAdditionalInfo">The collaborator industry additional information.</param>
+        /// <param name="hasAnySpecialNeeds">The has any special needs.</param>
+        /// <param name="specialNeedsDescription">The special needs description.</param>
+        /// <param name="haveYouBeenToRio2CBefore">The have you been to rio2 c before.</param>
+        /// <param name="editionsParticipated">The editions participated.</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastNames">The last names.</param>
         /// <param name="badge">The badge.</param>
@@ -119,6 +146,17 @@ namespace PlataformaRio2C.Domain.Entities
             List<AttendeeOrganization> attendeeOrganizations,
             Edition edition,
             CollaboratorType collaboratorType,
+            DateTime? birthDate,
+            CollaboratorGender collaboratorGender,
+            string collaboratorGenderAdditionalInfo,
+            CollaboratorRole collaboratorRole,
+            string collaboratorRoleAdditionalInfo,
+            CollaboratorIndustry collaboratorIndustry,
+            string collaboratorIndustryAdditionalInfo,
+            bool? hasAnySpecialNeeds,
+            string specialNeedsDescription,
+            bool? haveYouBeenToRio2CBefore,
+            List<Edition> editionsParticipated,
             string firstName,
             string lastNames,
             string badge,
@@ -147,8 +185,22 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateImageUploadDate(isImageUploaded, false);
 
             this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
+
+            this.UpdateEditions(haveYouBeenToRio2CBefore, editionsParticipated, userId);
+            this.BirthDate = birthDate;
+            this.Gender = collaboratorGender;
+            this.Industry = collaboratorIndustry;
+            this.Role = collaboratorRole;
+            this.CollaboratorGenderId = collaboratorGender?.Id;
+            this.CollaboratorGenderAdditionalInfo =  collaboratorGenderAdditionalInfo;
+            this.CollaboratorRoleId = collaboratorRole?.Id;
+            this.CollaboratorRoleAdditionalInfo = collaboratorRoleAdditionalInfo;
+            this.CollaboratorIndustryId = collaboratorIndustry?.Id;
+            this.CollaboratorIndustryAdditionalInfo = collaboratorIndustryAdditionalInfo;
+            this.HasAnySpecialNeeds = hasAnySpecialNeeds;
+            this.SpecialNeedsDescription = specialNeedsDescription;
 
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
@@ -202,7 +254,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Badge = firstName?.Trim() + (!string.IsNullOrEmpty(lastMame) ? " " + lastMame?.Trim() : string.Empty);
             this.CellPhone = cellPhone?.Trim();
             this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
             this.SynchronizeAttendeeCollaborators(
                 edition,
@@ -252,7 +304,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUser(email);
 
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -260,6 +312,17 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="birthDate">The birth date.</param>
+        /// <param name="collaboratorGender">The collaborator gender.</param>
+        /// <param name="collaboratorGenderAdditionalInfo">The collaborator gender additional information.</param>
+        /// <param name="collaboratorRole">The collaborator role.</param>
+        /// <param name="collaboratorRoleAdditionalInfo">The collaborator role additional information.</param>
+        /// <param name="collaboratorIndustry">The collaborator industry.</param>
+        /// <param name="collaboratorIndustryAdditionalInfo">The collaborator industry additional information.</param>
+        /// <param name="hasAnySpecialNeeds">if set to <c>true</c> [has any special needs].</param>
+        /// <param name="specialNeedsDescription">The special needs description.</param>
+        /// <param name="haveYouBeenToRio2CBefore">The have you been to rio2 c before.</param>
+        /// <param name="editionsParticipated">The editions participated.</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastNames">The last names.</param>
         /// <param name="badge">The badge.</param>
@@ -283,6 +346,17 @@ namespace PlataformaRio2C.Domain.Entities
             List<AttendeeOrganization> attendeeOrganizations,
             Edition edition,
             CollaboratorType collaboratorType,
+            DateTime? birthDate,
+            CollaboratorGender collaboratorGender,
+            string collaboratorGenderAdditionalInfo,
+            CollaboratorRole collaboratorRole,
+            string collaboratorRoleAdditionalInfo,
+            CollaboratorIndustry collaboratorIndustry,
+            string collaboratorIndustryAdditionalInfo,
+            bool hasAnySpecialNeeds,
+            string specialNeedsDescription,
+            bool? haveYouBeenToRio2CBefore,
+            List<Edition> editionsParticipated,
             string firstName,
             string lastNames,
             string badge,
@@ -313,8 +387,15 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             this.UpdateSocialNetworks(website, linkedin, twitter, instagram, youtube, userId);
 
+            this.UpdateEditions(haveYouBeenToRio2CBefore, editionsParticipated, userId);
+            this.BirthDate = birthDate;
+            UpdateGender(collaboratorGender, collaboratorGenderAdditionalInfo);
+            UpdateRole(collaboratorRole, collaboratorRoleAdditionalInfo);
+            UpdateIndustry(collaboratorIndustry, collaboratorIndustryAdditionalInfo);
+            UpdateSpecialNeeds(hasAnySpecialNeeds, specialNeedsDescription);
+
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
 
             this.SynchronizeJobTitles(jobTitles, userId);
@@ -337,6 +418,17 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
         /// <param name="jobTitles">The job titles.</param>
         /// <param name="miniBios">The mini bios.</param>
+        /// <param name="birthDate">The birth date.</param>
+        /// <param name="collaboratorGender">The collaborator gender.</param>
+        /// <param name="collaboratorGenderAdditionalInfo">The collaborator gender additional information.</param>
+        /// <param name="collaboratorRole">The collaborator role.</param>
+        /// <param name="collaboratorRoleAdditionalInfo">The collaborator role additional information.</param>
+        /// <param name="collaboratorIndustry">The collaborator industry.</param>
+        /// <param name="collaboratorIndustryAdditionalInfo">The collaborator industry additional information.</param>
+        /// <param name="hasAnySpecialNeeds">if set to <c>true</c> [has any special needs].</param>
+        /// <param name="specialNeedsDescription">The special needs description.</param>
+        /// <param name="haveYouBeenToRio2CBefore">The have you been to rio2 c before.</param>
+        /// <param name="editionsParticipated">The editions participated.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="userId">The user identifier.</param>
         public void UpdateAdminMainInformation(
@@ -353,6 +445,17 @@ namespace PlataformaRio2C.Domain.Entities
             bool isImageDeleted,
             List<CollaboratorJobTitle> jobTitles,
             List<CollaboratorMiniBio> miniBios,
+            DateTime? birthDate,
+            CollaboratorGender collaboratorGender,
+            string collaboratorGenderAdditionalInfo,
+            CollaboratorRole collaboratorRole,
+            string collaboratorRoleAdditionalInfo,
+            CollaboratorIndustry collaboratorIndustry,
+            string collaboratorIndustryAdditionalInfo,
+            bool hasAnySpecialNeeds,
+            string specialNeedsDescription,
+            bool? haveYouBeenToRio2CBefore,
+            List<Edition> editionsParticipated,
             Edition edition,
             int userId)
         {
@@ -366,10 +469,16 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
-            this.OnboardAttendeeCollaboratorData(edition, userId);
+            this.UpdateEditions(haveYouBeenToRio2CBefore, editionsParticipated, userId);
+                        
+            this.BirthDate = birthDate;
+            this.UpdateGender(collaboratorGender, collaboratorGenderAdditionalInfo);
+            this.UpdateRole(collaboratorRole, collaboratorRoleAdditionalInfo);
+            this.UpdateIndustry(collaboratorIndustry, collaboratorIndustryAdditionalInfo);
+            this.UpdateSpecialNeeds(hasAnySpecialNeeds, specialNeedsDescription);
 
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -383,6 +492,17 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="publicEmail">The public email.</param>
         /// <param name="jobTitles">The job titles.</param>
         /// <param name="miniBios">The mini bios.</param>
+        /// <param name="birthDate">The birth date.</param>
+        /// <param name="collaboratorGender">The collaborator gender.</param>
+        /// <param name="collaboratorGenderAdditionalInfo">The collaborator gender additional information.</param>
+        /// <param name="collaboratorRole">The collaborator role.</param>
+        /// <param name="collaboratorRoleAdditionalInfo">The collaborator role additional information.</param>
+        /// <param name="collaboratorIndustry">The collaborator industry.</param>
+        /// <param name="collaboratorIndustryAdditionalInfo">The collaborator industry additional information.</param>
+        /// <param name="hasAnySpecialNeeds">if set to <c>true</c> [has any special needs].</param>
+        /// <param name="specialNeedsDescription">The special needs description.</param>
+        /// <param name="haveYouBeenToRio2CBefore">The have you been to rio2 c before.</param>
+        /// <param name="editionsParticipated">The editions participated.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="userId">The user identifier.</param>
@@ -396,6 +516,17 @@ namespace PlataformaRio2C.Domain.Entities
             string publicEmail,
             List<CollaboratorJobTitle> jobTitles,
             List<CollaboratorMiniBio> miniBios,
+            DateTime? birthDate,
+            CollaboratorGender collaboratorGender,
+            string collaboratorGenderAdditionalInfo,
+            CollaboratorRole collaboratorRole,
+            string collaboratorRoleAdditionalInfo,
+            CollaboratorIndustry collaboratorIndustry,
+            string collaboratorIndustryAdditionalInfo,
+            bool hasAnySpecialNeeds,
+            string specialNeedsDescription,
+            bool? haveYouBeenToRio2CBefore,
+            List<Edition> editionsParticipated,
             Edition edition,
             bool isImageUploaded,
             int userId)
@@ -407,13 +538,127 @@ namespace PlataformaRio2C.Domain.Entities
             this.CellPhone = cellPhone?.Trim();
             this.UpdatePublicEmail(sharePublicEmail, publicEmail);
             this.UpdateImageUploadDate(isImageUploaded, false);
+            this.UpdateEditions(haveYouBeenToRio2CBefore, editionsParticipated, userId);
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
             this.OnboardAttendeeCollaboratorData(edition, userId);
+            
+            this.BirthDate = birthDate;
+            UpdateGender(collaboratorGender, collaboratorGenderAdditionalInfo);
+            UpdateRole(collaboratorRole, collaboratorRoleAdditionalInfo);
+            UpdateIndustry(collaboratorIndustry, collaboratorIndustryAdditionalInfo);
+            UpdateSpecialNeeds(hasAnySpecialNeeds, specialNeedsDescription);
 
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
+        }
+
+        /// <summary>
+        /// Updates the special needs.
+        /// </summary>
+        /// <param name="hasAnySpecialNeeds">if set to <c>true</c> [has any special needs].</param>
+        /// <param name="specialNeedsDescription">The special needs description.</param>
+        private void UpdateSpecialNeeds(bool hasAnySpecialNeeds, string specialNeedsDescription)
+        {
+            this.HasAnySpecialNeeds = hasAnySpecialNeeds;
+            this.SpecialNeedsDescription = hasAnySpecialNeeds ? specialNeedsDescription : null;
+        }
+
+        /// <summary>
+        /// Updates the industry.
+        /// </summary>
+        /// <param name="collaboratorIndustry">The collaborator industry.</param>
+        /// <param name="collaboratorIndustryAdditionalInfo">The collaborator industry additional information.</param>
+        private void UpdateIndustry(CollaboratorIndustry collaboratorIndustry, string collaboratorIndustryAdditionalInfo)
+        {
+            this.Industry = collaboratorIndustry;
+            this.CollaboratorIndustryId = collaboratorIndustry?.Id;
+            this.CollaboratorIndustryAdditionalInfo = collaboratorIndustry?.HasAdditionalInfo ?? false ? collaboratorIndustryAdditionalInfo : null;
+        }
+
+        /// <summary>
+        /// Updates the role.
+        /// </summary>
+        /// <param name="collaboratorRole">The collaborator role.</param>
+        /// <param name="collaboratorRoleAdditionalInfo">The collaborator role additional information.</param>
+        private void UpdateRole(CollaboratorRole collaboratorRole, string collaboratorRoleAdditionalInfo)
+        {
+            this.CollaboratorRoleId = collaboratorRole?.Id;
+            this.Role = collaboratorRole;
+            this.CollaboratorRoleAdditionalInfo = collaboratorRole?.HasAdditionalInfo ?? false ? collaboratorRoleAdditionalInfo : null;
+        }
+
+        /// <summary>
+        /// Updates the gender.
+        /// </summary>
+        /// <param name="collaboratorGender">The collaborator gender.</param>
+        /// <param name="collaboratorGenderAdditionalInfo">The collaborator gender additional information.</param>
+        private void UpdateGender(CollaboratorGender collaboratorGender, string collaboratorGenderAdditionalInfo)
+        {
+            this.Gender = collaboratorGender;
+            this.CollaboratorGenderId = collaboratorGender?.Id;
+            this.CollaboratorGenderAdditionalInfo = collaboratorGender?.HasAdditionalInfo ?? false ? collaboratorGenderAdditionalInfo : null;
+        }
+
+        /// <summary>Updates the editions.</summary>
+        /// <param name="haveYouBeenToRio2CBefore">The have you been to rio2 c before.</param>
+        /// <param name="editionsParticipated">The editions participated.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void UpdateEditions(bool? haveYouBeenToRio2CBefore, List<Edition> editionsParticipated, int userId)
+        {
+            this.DeleteCollaboratorParticipation(editionsParticipated, userId);
+
+            // No selection was made
+            if (!haveYouBeenToRio2CBefore.HasValue)
+            {
+                return;
+            }
+
+            if (editionsParticipated == null || !editionsParticipated.Any())
+            {
+                return;
+            }
+
+            if (this.EditionParticipantions == null)
+            {
+                this.EditionParticipantions = new List<CollaboratorEditionParticipation>();
+            }
+
+            foreach (var edition in editionsParticipated)
+            {
+                var existing = EditionParticipantions.FirstOrDefault(e => e.EditionId == edition.Id);
+
+                if (existing == null)
+                {
+                    EditionParticipantions.Add(new CollaboratorEditionParticipation(edition, this, userId));
+                    continue;
+                }
+
+                if (existing.IsDeleted)
+                {
+                    existing.Undelete(userId);
+                }
+            }
+        }
+
+        /// <summary>Deletes the collaborator participation.</summary>
+        /// <param name="editionsParticipated">The editions participated.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteCollaboratorParticipation(List<Edition> editionsParticipated, int userId)
+        {
+            if (EditionParticipantions == null)
+            {
+                return;
+            }
+
+            foreach (var participation in EditionParticipantions)
+            {
+                if (editionsParticipated.All(e => e.Id != participation.Id && !e.IsDeleted))
+                {
+                    participation.Delete(userId);
+                }
+            }
         }
 
         /// <summary>Updates the social networks.</summary>
@@ -438,7 +683,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Youtube = youtube?.Trim();
 
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -461,7 +706,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void Delete(Edition edition, CollaboratorType collaboratorType, int userId)
         {
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
             this.DeleteAttendeeCollaborators(edition, collaboratorType, userId);
 
@@ -480,7 +725,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             if (isImageUploaded)
             {
-                this.ImageUploadDate = DateTime.Now;
+                this.ImageUploadDate = DateTime.UtcNow;
             }
             else if (isImageDeleted)
             {
@@ -751,7 +996,7 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition?.Id ?? 0);
             attendeeCollaborator?.UpdateApiConfiguration(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
 
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -764,7 +1009,7 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition?.Id ?? 0);
             attendeeCollaborator?.DeleteApiHighlightPosition(collaboratorType, userId);
 
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -777,7 +1022,7 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
             attendeeCollaborator?.DeleteAttendeeOrganizationCollaborator(organizationUid, userId);
 
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -1073,7 +1318,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Badge = !string.IsNullOrEmpty(this.Badge) ? this.Badge : (firstName?.Trim() + (!string.IsNullOrEmpty(lastMame) ? " " + lastMame?.Trim() : string.Empty));
             this.CellPhone = !string.IsNullOrEmpty(this.CellPhone) ? this.CellPhone : cellPhone?.Trim();
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
             this.SynchronizeAttendeeCollaborators(
                 edition,
@@ -1132,7 +1377,7 @@ namespace PlataformaRio2C.Domain.Entities
                 barcodeUpdateDate,
                 userId);
 
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
             //this.DeleteRole(this.User.Email, role);
         }
@@ -1149,7 +1394,7 @@ namespace PlataformaRio2C.Domain.Entities
         public void Onboard(Edition edition, int userId)
         {
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
             this.OnboardAttendeeCollaborator(edition, userId);
         }
@@ -1174,7 +1419,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.OnboardUser(passwordHash);
 
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -1188,7 +1433,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.OnboardAttendeeCollaboratorPlayerTermsAcceptance(edition, userId);
 
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -1202,7 +1447,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.OnboardAttendeeCollaboratorSpeakerTermsAcceptance(edition, userId);
 
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -1226,6 +1471,17 @@ namespace PlataformaRio2C.Domain.Entities
             bool isImageUploaded,
             List<CollaboratorJobTitle> jobTitles,
             List<CollaboratorMiniBio> miniBios,
+            DateTime? birthDate,
+            CollaboratorGender collaboratorGender,
+            string collaboratorGenderAdditionalInfo,
+            CollaboratorRole collaboratorRole,
+            string collaboratorRoleAdditionalInfo,
+            CollaboratorIndustry collaboratorIndustry,
+            string collaboratorIndustryAdditionalInfo,
+            bool hasAnySpecialNeeds,
+            string specialNeedsDescription,
+            bool? haveYouBeenToRio2CBefore,
+            List<Edition> editionsParticipated,
             string website,
             string linkedin,
             string twitter,
@@ -1238,14 +1494,29 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
             this.OnboardAttendeeCollaboratorData(edition, userId);
+            this.UpdateEditions(haveYouBeenToRio2CBefore, editionsParticipated, userId);
+
             this.Website = website?.Trim();
             this.Linkedin = linkedin?.Trim();
             this.Twitter = twitter?.Trim();
             this.Instagram = instagram?.Trim();
             this.Youtube = youtube?.Trim();
 
+            this.BirthDate = birthDate;
+            this.Gender = collaboratorGender;
+            this.Industry = collaboratorIndustry;
+            this.Role = collaboratorRole;
+            this.CollaboratorGenderId = collaboratorGender?.Id;
+            this.CollaboratorGenderAdditionalInfo =  collaboratorGenderAdditionalInfo;
+            this.CollaboratorRoleId = collaboratorRole?.Id;
+            this.CollaboratorRoleAdditionalInfo = collaboratorRoleAdditionalInfo;
+            this.CollaboratorIndustryId = collaboratorIndustry?.Id;
+            this.CollaboratorIndustryAdditionalInfo = collaboratorIndustryAdditionalInfo;
+            this.HasAnySpecialNeeds = hasAnySpecialNeeds;
+            this.SpecialNeedsDescription = specialNeedsDescription;
+
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -1259,7 +1530,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.OnboardAttendeeCollaboratorProducerTermsAcceptance(edition, userId);
 
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -1293,6 +1564,10 @@ namespace PlataformaRio2C.Domain.Entities
             //this.ValidateAddress();
             this.ValidateUser();
             this.ValidateAttendeeCollaborators();
+            //this.ValidateGender();
+            //this.ValidateIndustry();
+            //this.ValidateRole();
+            //this.ValidateBirthDate();
 
             return this.ValidationResult.IsValid;
         }
@@ -1308,6 +1583,17 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.FirstName?.Trim().Length < FirstNameMinLength || this.FirstName?.Trim().Length > FirstNameMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, FirstNameMaxLength, FirstNameMinLength), new string[] { "FirstName" }));
+            }
+        }
+        
+        /// <summary>
+        /// Validates the birth date
+        /// </summary>
+        private void ValidateBirthDate()
+        {
+            if (!BirthDate.HasValue)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.BirthDate), new string[] { "BirthDate" }));
             }
         }
 
@@ -1447,6 +1733,48 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
+        /// <summary>Validates the first name.</summary>
+        public void ValidateGender()
+        {
+            if (string.IsNullOrEmpty(this.CollaboratorGenderAdditionalInfo?.Trim()) && Gender?.HasAdditionalInfo == true)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Name), new string[] { "CollaboratorGenderAdditionalInfo" }));
+            }
+
+            if ((this.CollaboratorGenderAdditionalInfo?.Trim().Length < 1 || this.CollaboratorGenderAdditionalInfo?.Trim().Length > SpecialNeedsDescriptionMaxLength) && Gender?.HasAdditionalInfo == true)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.AdditionalInfo, SpecialNeedsDescriptionMaxLength, 1), new string[] { "CollaboratorGenderAdditionalInfo" }));
+            }
+        }
+                
+        /// <summary>Validates the first name.</summary>
+        public void ValidateIndustry()
+        {
+            if (string.IsNullOrEmpty(this.CollaboratorIndustryAdditionalInfo?.Trim()) && Industry?.HasAdditionalInfo == true)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Name), new string[] { "CollaboratorIndustryAdditionalInfo" }));
+            }
+
+            if ((this.CollaboratorIndustryAdditionalInfo?.Trim().Length < 1 || this.CollaboratorIndustryAdditionalInfo?.Trim().Length > SpecialNeedsDescriptionMaxLength) && Industry?.HasAdditionalInfo == true)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.AdditionalInfo, SpecialNeedsDescriptionMaxLength, 1), new string[] { "CollaboratorIndustryAdditionalInfo" }));
+            }
+        }
+                
+        /// <summary>Validates the first name.</summary>
+        public void ValidateRole()
+        {
+            if (string.IsNullOrEmpty(this.CollaboratorRoleAdditionalInfo?.Trim()) && Role?.HasAdditionalInfo == true)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Name), new string[] { "CollaboratorRoleAdditionalInfo" }));
+            }
+
+            if ((this.CollaboratorRoleAdditionalInfo?.Trim().Length < 1 || this.CollaboratorRoleAdditionalInfo?.Trim().Length > SpecialNeedsDescriptionMaxLength) && Role?.HasAdditionalInfo == true)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.AdditionalInfo, SpecialNeedsDescriptionMaxLength, 1), new string[] { "CollaboratorRoleAdditionalInfo" }));
+            }
+        }
+                
         /// <summary>Validates the attendee collaborators.</summary>
         public void ValidateAttendeeCollaborators()
         {

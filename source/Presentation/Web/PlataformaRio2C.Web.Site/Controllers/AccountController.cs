@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-14-2019
+// Last Modified On : 02-14-2020
 // ***********************************************************************
 // <copyright file="AccountController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,6 +35,7 @@ using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Resources.Helpers;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using Constants = PlataformaRio2C.Domain.Constants;
 
@@ -107,6 +108,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
+        [HandleAntiforgeryTokenException]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
@@ -178,10 +180,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
                     if (userLanguage != null)
                     {
-                        return RedirectToAction("Index", "Quiz", new { culture = userLanguage?.Language?.Code });
+                        return RedirectToAction("Index", "Home", new { culture = userLanguage?.Language?.Code });
                     }
 
-                    return RedirectToAction("Index", "Quiz");
+                    return RedirectToAction("Index", "Home");
 
                     //transforma a senha digitada em md5
                     //byte[] encodedPassword = new UTF8Encoding().GetBytes(model.Password);

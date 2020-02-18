@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-03-2019
+// Last Modified On : 02-17-2020
 // ***********************************************************************
 // <copyright file="MessageHub.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -119,14 +119,12 @@ namespace PlataformaRio2C.Web.Site.Hub
                         SenderNameInitials = messageDto.SenderCollaborator?.Badge?.GetTwoLetterCode() ??
                                              messageDto.SenderCollaborator?.GetNameAbbreviation() ??
                                              messageDto.SenderUser?.Name?.GetTwoLetterCode(),
-                        SenderImageUrl = messageDto.SenderCollaborator?.ImageUploadDate != null ? ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, messageDto.SenderCollaborator.Uid, messageDto.SenderCollaborator.ImageUploadDate, true) : 
+                        SenderImageUrl = messageDto.SenderCollaborator?.ImageUploadDate != null ? ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, messageDto.SenderCollaborator.Uid, messageDto.SenderCollaborator.ImageUploadDate?.DateTime, true) : 
                                                                                                   null,
                         RecipientUserUid = messageDto.RecipientUser.Uid,
                         RecipientEmail = messageDto.RecipientUser.Email,
-                        SendDate = messageDto.Message.SendDate.ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.CurrentCulture),
-                        SendDateFormatted = messageDto.Message.SendDate.ToShortDateString() + " " + messageDto.Message.SendDate.ToLongTimeString(),
-                        ReadDate = messageDto.Message.ReadDate?.ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.CurrentCulture),
-                        ReadDateFormatted = messageDto.Message.ReadDate?.ToShortDateString() + " " + messageDto.Message.ReadDate?.ToLongTimeString(),
+                        SendDate = messageDto.Message.SendDate,
+                        ReadDate = messageDto.Message.ReadDate,
                         Text = messageDto.Message.Text
                     }
                 };

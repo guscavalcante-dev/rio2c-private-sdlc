@@ -4,7 +4,7 @@
 // Created          : 08-31-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-16-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorTicket.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -36,7 +36,7 @@ namespace PlataformaRio2C.Domain.Entities
         public int AttendeeCollaboratorId { get; private set; }
         public int AttendeeSalesPlatformTicketTypeId { get; private set; }
         public string SalesPlatformAttendeeId { get; private set; }
-        public DateTime SalesPlatformUpdateDate { get; private set; }
+        public DateTimeOffset SalesPlatformUpdateDate { get; private set; }
         public string FirstName { get; private set; }
         public string LastNames { get; private set; }
         public string CellPhone { get; private set; }
@@ -46,7 +46,7 @@ namespace PlataformaRio2C.Domain.Entities
         public string Barcode { get; private set; }
         public bool IsBarcodePrinted { get; private set; }
         public bool IsBarcodeUsed { get; private set; }
-        public DateTime? BarcodeUpdateDate { get; private set; }
+        public DateTimeOffset? BarcodeUpdateDate { get; private set; }
 
         public virtual AttendeeCollaborator AttendeeCollaborator { get; private set; }
         public virtual AttendeeSalesPlatformTicketType AttendeeSalesPlatformTicketType { get; private set; }
@@ -96,7 +96,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.BarcodeUpdateDate = barcodeUpdateDate;
             
             this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId= userId;
         }
 
@@ -156,7 +156,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.BarcodeUpdateDate = barcodeUpdateDate;
 
             this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
@@ -188,7 +188,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SalesPlatformUpdateDate = salesPlatformUpdateDate;
             this.BarcodeUpdateDate = barcodeUpdateDate;
             this.IsDeleted = true;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 

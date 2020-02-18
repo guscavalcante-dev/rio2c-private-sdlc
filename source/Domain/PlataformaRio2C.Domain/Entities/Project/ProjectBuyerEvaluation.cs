@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-11-2019
+// Last Modified On : 02-15-2020
 // ***********************************************************************
 // <copyright file="ProjectBuyerEvaluation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -32,8 +32,8 @@ namespace PlataformaRio2C.Domain.Entities
         public string Reason { get; private set; }
         public int SellerUserId { get; private set; }
         public int? BuyerEvaluationUserId { get; private set; }
-        public DateTime? EvaluationDate { get; private set; }
-        public DateTime? BuyerEmailSendDate { get; private set; }
+        public DateTimeOffset? EvaluationDate { get; private set; }
+        public DateTimeOffset? BuyerEmailSendDate { get; private set; }
 
         public virtual Project Project { get; private set; }
         public virtual AttendeeOrganization BuyerAttendeeOrganization { get; private set; }
@@ -63,7 +63,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.IsDeleted = false;
             this.CreateUserId = this.UpdateUserId = userId;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
         }
 
         /// <summary>Initializes a new instance of the <see cref="ProjectBuyerEvaluation"/> class.</summary>
@@ -85,7 +85,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
         }
 
         /// <summary>Deletes the specified user identifier.</summary>
@@ -96,7 +96,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.IsDeleted = true;
             this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
         }
 
         /// <summary>Accepts the specified project evaluation statuses.</summary>
@@ -112,11 +112,11 @@ namespace PlataformaRio2C.Domain.Entities
             this.ProjectEvaluationRefuseReason = null;
             this.Reason = null;
             this.BuyerEvaluationUserId = userId;
-            this.EvaluationDate = DateTime.Now;
+            this.EvaluationDate = DateTime.UtcNow;
            
             this.IsDeleted = false;
             this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
         }
 
         /// <summary>Refuses the specified project evaluation refuse reason.</summary>
@@ -134,17 +134,17 @@ namespace PlataformaRio2C.Domain.Entities
             this.ProjectEvaluationRefuseReason = projectEvaluationRefuseReason;
             this.Reason = reason?.Trim();
             this.BuyerEvaluationUserId = userId;
-            this.EvaluationDate = DateTime.Now;
+            this.EvaluationDate = DateTime.UtcNow;
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
         }
 
         /// <summary>Sends the buyer email.</summary>
         public void SendBuyerEmail()
         {
-            this.BuyerEmailSendDate = DateTime.Now;
+            this.BuyerEmailSendDate = DateTime.UtcNow;
         }
 
         #region Validations

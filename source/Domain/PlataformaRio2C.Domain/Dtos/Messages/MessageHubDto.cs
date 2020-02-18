@@ -4,7 +4,7 @@
 // Created          : 11-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-03-2019
+// Last Modified On : 02-17-2020
 // ***********************************************************************
 // <copyright file="MessageHubDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,10 +26,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public Guid RecipientUserUid { get; set; }
         public string RecipientEmail { get; set; }
         public string Text { get; set; }
-        public string SendDate { get; set; }
-        public string SendDateFormatted { get; set; }
-        public string ReadDate { get; set; }
-        public string ReadDateFormatted { get; set; }
+        public DateTimeOffset SendDate { get; set; }
+        public DateTimeOffset? ReadDate { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="MessageHubDto"/> class.</summary>
         public MessageHubDto()

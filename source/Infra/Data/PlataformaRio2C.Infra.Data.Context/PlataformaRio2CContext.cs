@@ -71,6 +71,10 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new AttendeeCollaboratorMap());
             modelBuilder.Configurations.Add(new AttendeeCollaboratorTypeMap());
             modelBuilder.Configurations.Add(new AttendeeCollaboratorTicketMap());
+            modelBuilder.Configurations.Add(new CollaboratorGenderMap());
+            modelBuilder.Configurations.Add(new CollaboratorRoleMap());
+            modelBuilder.Configurations.Add(new CollaboratorIndustryMap());
+            modelBuilder.Configurations.Add(new CollaboratorEditionParticipationMap());
 
             // Projects
             modelBuilder.Configurations.Add(new ProjectMap());
@@ -118,6 +122,7 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new ConferenceParticipantRoleMap());
             modelBuilder.Configurations.Add(new ConferenceParticipantRoleTitleMap());
             modelBuilder.Configurations.Add(new ConferenceTrackMap());
+            modelBuilder.Configurations.Add(new ConferencePillarMap());
             modelBuilder.Configurations.Add(new ConferencePresentationFormatMap());
 
             // Common
@@ -130,6 +135,7 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new RoomNameMap());
             modelBuilder.Configurations.Add(new TrackMap());
             modelBuilder.Configurations.Add(new PresentationFormatMap());
+            modelBuilder.Configurations.Add(new PillarMap());
 
             // Logistics Configuration
             modelBuilder.Configurations.Add(new LogisticsSponsorMap());
