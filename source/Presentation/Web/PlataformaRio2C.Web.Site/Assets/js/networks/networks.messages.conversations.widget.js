@@ -4,7 +4,7 @@
 // Created          : 11-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-06-2019
+// Last Modified On : 02-17-2020
 // ***********************************************************************
 // <copyright file="networks.messages.conversations.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -118,6 +118,12 @@ var NetworksMessagesConversationsWidget = function () {
         }
     };
 
+    // Change last message date/time -----------------------------------------------------------------
+    var changeLastMessageDateTime = function (dateTimeOffset, dateTime) {
+        $('.chat-selected .kt-widget__date').timeago('update', dateTimeOffset);
+        $('.chat-selected .kt-widget__date').attr('title', dateTime);
+    };
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
@@ -137,6 +143,9 @@ var NetworksMessagesConversationsWidget = function () {
         },
         reload: function() {
             reload();
+        },
+        changeLastMessageDateTime: function (isChatOpen, dateTime) {
+            changeLastMessageDateTime(isChatOpen, dateTime);
         }
     };
 }();

@@ -4,7 +4,7 @@
 // Created          : 11-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-12-2020
+// Last Modified On : 02-17-2020
 // ***********************************************************************
 // <copyright file="NetworksController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -257,7 +257,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #endregion
 
-        #region Main Conversations Widget
+        #region Conversations Widget
 
         /// <summary>Shows the conversation widget.</summary>
         /// <param name="recipientId">The recipient identifier.</param>

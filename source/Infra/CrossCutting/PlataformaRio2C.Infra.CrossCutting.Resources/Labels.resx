@@ -2093,4 +2093,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Selecione uma {0}</value>
     <comment>Selecione uma {0}</comment>
   </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Selecionar todos</value>
+    <comment>Selecionar todos</comment>
+  </data>
+  <data name="UnselectAll" xml:space="preserve">
+    <value>Deselecionar todos</value>
+    <comment>Deselecionar todos</comment>
+  </data>
 </root>
