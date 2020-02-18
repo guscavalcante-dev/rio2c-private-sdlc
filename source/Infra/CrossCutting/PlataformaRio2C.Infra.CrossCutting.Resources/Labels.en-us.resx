@@ -2122,4 +2122,36 @@
     <value>Show All Sponsored</value>
     <comment>Mostrar todos patrocinados</comment>
   </data>
+  <data name="Arrival" xml:space="preserve">
+    <value>Arrival</value>
+    <comment>Chegada</comment>
+  </data>
+  <data name="CheckInDate" xml:space="preserve">
+    <value>Check In Date</value>
+    <comment>Data de Check-in</comment>
+  </data>
+  <data name="CheckOutDate" xml:space="preserve">
+    <value>Check Out Date</value>
+    <comment>Data de Check-out</comment>
+  </data>
+  <data name="Departure" xml:space="preserve">
+    <value>Departure</value>
+    <comment>Saída</comment>
+  </data>
+  <data name="IsNational" xml:space="preserve">
+    <value>National</value>
+    <comment>National</comment>
+  </data>
+  <data name="TicketNumber" xml:space="preserve">
+    <value>Ticket Number</value>
+    <comment>Número do Bilhete</comment>
+  </data>
+  <data name="FromPlace" xml:space="preserve">
+    <value>From</value>
+    <comment>De</comment>
+  </data>
+  <data name="ToPlace" xml:space="preserve">
+    <value>To</value>
+    <comment>Para</comment>
+  </data>
 </root>

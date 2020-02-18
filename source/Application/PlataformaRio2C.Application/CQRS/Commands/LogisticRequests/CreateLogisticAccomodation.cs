@@ -24,10 +24,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>CreateLogisticSponsors</summary>
     public class CreateLogisticAccomodation : BaseCommand
     {
+        [Display(Name = "CheckInDate", ResourceType = typeof(Labels))]
         public DateTimeOffset? CheckInDate { get; set; }
 
+        [Display(Name = "CheckOutDate", ResourceType = typeof(Labels))]
         public DateTimeOffset? CheckOutDate { get; set; }
-        
+
+        [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
         public string AdditionalInfo { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CreateLogisticSponsors"/> class.</summary>

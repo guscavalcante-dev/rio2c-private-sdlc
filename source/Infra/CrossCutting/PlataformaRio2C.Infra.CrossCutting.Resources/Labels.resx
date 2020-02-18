@@ -2129,4 +2129,36 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Exibir todos os patrocinados</value>
     <comment>Exibir todos os patrocinados</comment>
   </data>
+  <data name="Arrival" xml:space="preserve">
+    <value>Chegada</value>
+    <comment>Chegada</comment>
+  </data>
+  <data name="CheckInDate" xml:space="preserve">
+    <value>Data de Check-in</value>
+    <comment>Data de Check-in</comment>
+  </data>
+  <data name="CheckOutDate" xml:space="preserve">
+    <value>Data de Check-out</value>
+    <comment>Data de Check-out</comment>
+  </data>
+  <data name="Departure" xml:space="preserve">
+    <value>Saída</value>
+    <comment>Saída</comment>
+  </data>
+  <data name="FromPlace" xml:space="preserve">
+    <value>De</value>
+    <comment>De</comment>
+  </data>
+  <data name="IsNational" xml:space="preserve">
+    <value>Nacional</value>
+    <comment>Nacional</comment>
+  </data>
+  <data name="TicketNumber" xml:space="preserve">
+    <value>Número do Bilhete</value>
+    <comment>Número do Bilhete</comment>
+  </data>
+  <data name="ToPlace" xml:space="preserve">
+    <value>Para</value>
+    <comment>Para</comment>
+  </data>
 </root>

@@ -26,18 +26,28 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>CreateLogisticSponsors</summary>
     public class CreateLogisticAirfare : BaseCommand
     {
+        [Display(Name = "FromPlace", ResourceType = typeof(Labels))]
         public string From { get; set; }
-        
+
+        [Display(Name = "ToPlace", ResourceType = typeof(Labels))]
         public string To { get; set; }
+        
+        [Display(Name = "IsNational", ResourceType = typeof(Labels))]
         public bool? IsNational { get; set; }
 
+        [Display(Name = "Departure", ResourceType = typeof(Labels))]
         public DateTimeOffset? Departure { get; set; }
 
+        [Display(Name = "Arrival", ResourceType = typeof(Labels))]
         public DateTimeOffset? Arrival { get; set; }
 
+        [Display(Name = "TicketNumber", ResourceType = typeof(Labels))]
         public string TicketNumber { get; set; }
+        
+        [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
         public string AdditionalInfo { get; set; }
 
+        [Display(Name = "Ticket", ResourceType = typeof(Labels))]
         public HttpPostedFile Ticket { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CreateLogisticSponsors"/> class.</summary>
