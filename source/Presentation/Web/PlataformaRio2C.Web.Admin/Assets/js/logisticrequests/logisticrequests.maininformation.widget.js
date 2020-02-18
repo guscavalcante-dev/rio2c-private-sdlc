@@ -76,7 +76,6 @@ var LogisticRequestsMainInformationWidget = function () {
 
         MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2' });
         MyRio2cCommon.enableDatePicker({ inputIdOrClass: updateFormId + ' .enable-datepicker' });
-        MyRio2cCommon.enableTimePicker({ inputIdOrClass: updateFormId + ' .enable-timepicker' });
         enableAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
