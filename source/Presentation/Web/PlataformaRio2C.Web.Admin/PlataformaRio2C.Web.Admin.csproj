@@ -415,6 +415,9 @@
     <Content Include="Assets\img\logo-rio2c-footer.png" />
     <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
+    <Content Include="Assets\js\logisticrequests\logisticrequests.accommodation.delete.js" />
+    <Content Include="Assets\js\logisticrequests\logisticrequests.transport.delete.js" />
+    <Content Include="Assets\js\logisticrequests\logisticrequests.airfare.delete.js" />
     <Content Include="Assets\js\logisticrequests\logisticrequests.transport.create.js" />
     <Content Include="Assets\js\logisticrequests\logisticrequests.accommodation.create.js" />
     <Content Include="Assets\js\logisticrequests\logisticrequests.airfare.create.js" />
@@ -2118,7 +2121,7 @@
     <Content Include="Assets\themes\metronic\vendors\general\bootstrap-datetime-picker\js\locales\bootstrap-datetimepicker.nl.js" />
     <Content Include="Assets\themes\metronic\vendors\general\bootstrap-datetime-picker\js\locales\bootstrap-datetimepicker.no.js" />
     <Content Include="Assets\themes\metronic\vendors\general\bootstrap-datetime-picker\js\locales\bootstrap-datetimepicker.pl.js" />
-    <Content Include="Assets\themes\metronic\vendors\general\bootstrap-datetime-picker\js\locales\bootstrap-datetimepicker.pt-BR.js" />
+    <Content Include="Assets\themes\metronic\vendors\general\bootstrap-datetime-picker\js\locales\bootstrap-datetimepicker.pt-br.js" />
     <Content Include="Assets\themes\metronic\vendors\general\bootstrap-datetime-picker\js\locales\bootstrap-datetimepicker.pt.js" />
     <Content Include="Assets\themes\metronic\vendors\general\bootstrap-datetime-picker\js\locales\bootstrap-datetimepicker.ro.js" />
     <Content Include="Assets\themes\metronic\vendors\general\bootstrap-datetime-picker\js\locales\bootstrap-datetimepicker.rs-latin.js" />

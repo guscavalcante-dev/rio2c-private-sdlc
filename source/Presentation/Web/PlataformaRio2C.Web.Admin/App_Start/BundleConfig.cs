@@ -231,7 +231,8 @@ namespace PlataformaRio2C.Web.Admin
                 .Include("~/Assets/themes/metronic/vendors/general/bootstrap-datetime-picker/css/bootstrap-datetimepicker.css", new CssRewriteUrlTransform()));
 
             bundles.Add(new ScriptBundle("~/bundles/js/bootstrap-datetimepicker.js").Include(
-                "~/Assets/themes/metronic/vendors/general/bootstrap-datetime-picker/js/bootstrap-datetimepicker.js"));
+                "~/Assets/themes/metronic/vendors/general/bootstrap-datetime-picker/js/bootstrap-datetimepicker.js",
+                "~/Assets/themes/metronic/vendors/general/bootstrap-datetime-picker/js/locales/bootstrap-datetimepicker.pt-BR.js"));
 
             #endregion
 
@@ -248,7 +249,7 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/components/bootstrap-timepicker/bootstrap-datepicker.pt-br.js"));
 
             #endregion
-
+            
             #region Bootstrap Timepicker
 
             bundles.Add(new StyleBundle("~/bundles/css/bootstrap-timepicker.css")
@@ -590,7 +591,10 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/logisticrequests/logisticrequests.maininformation.widget.js",
                 "~/Assets/js/logisticrequests/logisticrequests.airfare.create.js",
                 "~/Assets/js/logisticrequests/logisticrequests.accommodation.create.js",
-                "~/Assets/js/logisticrequests/logisticrequests.transport.create.js"));
+                "~/Assets/js/logisticrequests/logisticrequests.transport.create.js",
+                "~/Assets/js/logisticrequests/logisticrequests.airfare.delete.js",
+                "~/Assets/js/logisticrequests/logisticrequests.accommodation.delete.js",
+                "~/Assets/js/logisticrequests/logisticrequests.transport.delete.js"));
 
             #endregion
 

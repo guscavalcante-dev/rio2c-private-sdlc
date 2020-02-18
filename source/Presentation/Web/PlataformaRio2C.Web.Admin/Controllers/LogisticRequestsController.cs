@@ -610,7 +610,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Speaker, Labels.CreatedM) });
         }
-
+        
         #endregion
 
         #region Delete

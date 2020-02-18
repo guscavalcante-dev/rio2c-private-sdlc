@@ -143,13 +143,13 @@
                                     <td class="text-center ">
                                         <span class="dropdown">
                                             <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
-                                            
+
                                                 <i class="la la-ellipsis-h"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                <button class="dropdown-item" onclick=""><i class="la la-edit"></i>@Labels.Edit</button>
+                                                <button class="dropdown-item" onclick="LogisticAirfareCreate.showModal();"><i class="la la-edit"></i>@Labels.Edit</button>
                                                 <button class="dropdown-item" onclick=""><i class="la la-download"></i>@Labels.Download</button>
-                                                <button class="dropdown-item" onclick=""><i class="la la-remove"></i>@Labels.Remove</button>
+                                                <button class="dropdown-item" onclick="LogisticAirfareDelete.showModal();"><i class="la la-remove"></i>@Labels.Remove</button>
                                             </div>
                                         </span>
                                     </td>
@@ -189,9 +189,9 @@
                                                 <i class="la la-ellipsis-h"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                <button class="dropdown-item" onclick=""><i class="la la-edit"></i>@Labels.Edit</button>
+                                                <button class="dropdown-item" onclick="LogisticAirfareCreate.showModal();"><i class="la la-edit"></i>@Labels.Edit</button>
                                                 <button class="dropdown-item" onclick=""><i class="la la-download"></i>@Labels.Download</button>
-                                                <button class="dropdown-item" onclick=""><i class="la la-remove"></i>@Labels.Remove</button>
+                                                <button class="dropdown-item" onclick="LogisticAirfareDelete.showModal();"><i class="la la-remove"></i>@Labels.Remove</button>
                                             </div>
                                         </span>
                                     </td>
@@ -231,9 +231,9 @@
                                                 <i class="la la-ellipsis-h"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                <button class="dropdown-item" onclick=""><i class="la la-edit"></i>@Labels.Edit</button>
+                                                <button class="dropdown-item" onclick="LogisticAirfareCreate.showModal();"><i class="la la-edit"></i>@Labels.Edit</button>
                                                 <button class="dropdown-item" onclick=""><i class="la la-download"></i>@Labels.Download</button>
-                                                <button class="dropdown-item" onclick=""><i class="la la-remove"></i>@Labels.Remove</button>
+                                                <button class="dropdown-item" onclick="LogisticAirfareDelete.showModal();"><i class="la la-remove"></i>@Labels.Remove</button>
                                             </div>
                                         </span>
                                     </td>
@@ -255,10 +255,8 @@
                                         05/05/2020 02:00
                                     </td>
                                     <td class="text-center ">
-                                        
                                     </td>
                                     <td class="text-center ">
-                                        
                                     </td>
                                     <td class="text-center ">
                                         05/05/2020 02:00
@@ -269,13 +267,12 @@
                                     <td class="text-center ">
                                         <span class="dropdown">
                                             <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
-
                                                 <i class="la la-ellipsis-h"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                <button class="dropdown-item" onclick=""><i class="la la-edit"></i>@Labels.Edit</button>
+                                                <button class="dropdown-item" onclick="LogisticAirfareCreate.showModal();"><i class="la la-edit"></i>@Labels.Edit</button>
                                                 <button class="dropdown-item" onclick=""><i class="la la-download"></i>@Labels.Download</button>
-                                                <button class="dropdown-item" onclick=""><i class="la la-remove"></i>@Labels.Remove</button>
+                                                <button class="dropdown-item" onclick="LogisticAirfareDelete.showModal();"><i class="la la-remove"></i>@Labels.Remove</button>
                                             </div>
                                         </span>
                                     </td>
@@ -344,8 +341,8 @@
                                                 <i class="la la-ellipsis-h"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                <button class="dropdown-item" onclick=""><i class="la la-edit"></i>@Labels.Edit</button>
-                                                <button class="dropdown-item" onclick=""><i class="la la-remove"></i>@Labels.Remove</button>
+                                                <button class="dropdown-item" onclick="LogisticAccommodationCreate.showModal();"><i class="la la-edit"></i>@Labels.Edit</button>
+                                                <button class="dropdown-item" onclick="LogisticAirfareDelete.showModal();"><i class="la la-remove"></i>@Labels.Remove</button>
                                             </div>
                                         </span>
                                     </td>
@@ -414,8 +411,8 @@
                                                 <i class="la la-ellipsis-h"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                <button class="dropdown-item" onclick=""><i class="la la-edit"></i>@Labels.Edit</button>
-                                                <button class="dropdown-item" onclick=""><i class="la la-remove"></i>@Labels.Remove</button>
+                                                <button class="dropdown-item" onclick="LogisticTransportCreate.showModal();"><i class="la la-edit"></i>@Labels.Edit</button>
+                                                <button class="dropdown-item" onclick="LogisticAirfareDelete.showModal();"><i class="la la-remove"></i>@Labels.Remove</button>
                                             </div>
                                         </span>
                                     </td>
@@ -433,13 +430,13 @@
 @section Styles {
     @Styles.Render("~/bundles/css/select2.css")
     @Styles.Render("~/bundles/css/bootstrap-datepicker.css")
-    @Styles.Render("~/bundles/css/bootstrap-timepicker.css")
+    @Styles.Render("~/bundles/css/bootstrap-datetimepicker.css")
 }
 @section Scripts {
     @Scripts.Render("~/bundles/js/select2.js")
     @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/bootstrap-datepicker.js")
-    @Scripts.Render("~/bundles/js/bootstrap-timepicker.js")
+    @Scripts.Render("~/bundles/js/bootstrap-datetimepicker.js")
     @Scripts.Render("~/bundles/js/logisticrequests.details.js")
     <script>
         // Page translations ----------------------------------------------------------------------

@@ -487,26 +487,13 @@ namespace PlataformaRio2C.Web.Site
             bundles.Add(new StyleBundle("~/bundles/css/bootstrap-datepicker.css")
                 .Include("~/Assets/themes/metronic/vendors/general/bootstrap-datepicker/dist/css/bootstrap-datepicker.css", new CssRewriteUrlTransform()));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/bootstrap-datepicker.js").Include(                
-                //"~/Assets/themes/metronic/vendors/general/moment/min/moment-with-locales.min.js",
+            bundles.Add(new ScriptBundle("~/bundles/js/bootstrap-datepicker.js").Include(
                 "~/Assets/themes/metronic/vendors/general/bootstrap-datepicker/dist/js/bootstrap-datepicker.js",
                 "~/Assets/components/bootstrap-timepicker/bootstrap-datepicker.en-us.js",
                 "~/Assets/components/bootstrap-timepicker/bootstrap-datepicker.pt-br.js"));
 
             #endregion
                             
-            #region Bootstrap Datepicker
-                        
-            //bundles.Add(new ScriptBundle("~/bundles/js/globalize.js").Include(
-            //    "~/Assets/components/cldr/cldr.js",
-            //    "~/Assets/components/cldr/event.js",
-            //    "~/Assets/components/cldr/supplemental.js",
-            //    "~/Assets/components/globalize/globalize.js",
-            //    "~/Assets/components/globalize/number.js",
-            //    "~/Assets/components/globalize/date.js"));
-
-            #endregion
-
             // Required to generate bundles on release running in visual studio
             #if !DEBUG
             BundleTable.EnableOptimizations = true;

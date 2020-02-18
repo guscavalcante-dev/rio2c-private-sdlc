@@ -627,6 +627,25 @@ var MyRio2cCommon = function () {
         });
     };
 
+    var enableDateTimePicker = function (options) {
+	    // Id or class
+	    if (!hasProperty(options, 'inputIdOrClass') || isNullOrEmpty(options.inputIdOrClass)) {
+		    options.inputIdOrClass = '.enable-datetimepicker';
+	    }
+
+	    var dateFormat = $.fn.datepicker.dates[MyRio2cCommon.getGlobalVariable('userInterfaceLanguage')].format;
+
+        $(options.inputIdOrClass).datetimepicker({
+            format: dateFormat + ' hh:ii',
+            language: MyRio2cCommon.getGlobalVariable('userInterfaceLanguage')
+        });
+
+        $(options.inputIdOrClass).inputmask("datetime", {
+            inputFormat: dateFormat + ' HH:MM',
+            placeholder: '__/__/____ __:__'
+        });
+    }
+
     var enableTimePicker = function (options) {
         if (isNullOrEmpty(options)) {
             options = new Object();
@@ -1443,6 +1462,9 @@ var MyRio2cCommon = function () {
         },
         enableYesNoRadioEvent: function(elementId) {
 	        enableYesNoRadioEvent(elementId);
+        },
+        enableDateTimePicker: function(options) {
+	        enableDateTimePicker(options);
         }
     };
 }();
