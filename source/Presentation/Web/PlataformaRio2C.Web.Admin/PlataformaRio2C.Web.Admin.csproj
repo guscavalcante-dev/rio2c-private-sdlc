@@ -7074,6 +7074,7 @@
     <Content Include="Assets\components\bootstrap-maxlength\LICENSE" />
     <Content Include="Assets\components\bootstrap-maxlength\README.md" />
     <Content Include="Assets\components\jquery.autocomplete\readme.md" />
+    <Content Include="Assets\img\200484580088054.pdf" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
