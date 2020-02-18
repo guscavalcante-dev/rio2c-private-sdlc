@@ -2086,4 +2086,12 @@
     <value>Select an {0}</value>
     <comment>Selecione uma {0}</comment>
   </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Select all</value>
+    <comment>Selecionar todos</comment>
+  </data>
+  <data name="UnselectAll" xml:space="preserve">
+    <value>Unselect all</value>
+    <comment>Deselecionar todos</comment>
+  </data>
 </root>

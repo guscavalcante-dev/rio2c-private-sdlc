@@ -4,7 +4,7 @@
 // Created          : 12-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-16-2020
+// Last Modified On : 02-17-2020
 // ***********************************************************************
 // <copyright file="speakers.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -195,12 +195,14 @@ var SpeakersDataTableWidget = function () {
                     {
                         text: sendInvitationEmail,
                         action: function (e, dt, node, config) {
+                            $('.dt-button-background').remove();
                             showSendInvitationEmailsModal();
                         }
                     },
                     {
                         text: exportToEventbrite,
                         action: function (e, dt, node, config) {
+                            $('.dt-button-background').remove();
                             eventbriteCsvExport = dt.ajax.params();
                             eventbriteCsvExport.selectedCollaboratorsUids = $('#speakers-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
                             eventbriteCsvExport.showAllEditions = $('#ShowAllEditions').prop('checked');
@@ -208,6 +210,20 @@ var SpeakersDataTableWidget = function () {
                             eventbriteCsvExport.showHighlights = $('#ShowHighlights').prop('checked');
 
                             showExportEventbriteCsvModal();
+                        }
+                    },
+                    {
+                        text: labels.selectAll,
+                        action: function (e, dt, node, config) {
+                            $('.dt-button-background').remove();
+                            table.rows().select();
+                        }
+                    },
+                    {
+                        text: labels.unselectAll,
+                        action: function (e, dt, node, config) {
+                            $('.dt-button-background').remove();
+                            table.rows().deselect();
                         }
                     }]
             }],

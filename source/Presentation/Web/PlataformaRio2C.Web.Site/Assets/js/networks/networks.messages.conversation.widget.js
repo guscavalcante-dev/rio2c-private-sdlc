@@ -4,9 +4,9 @@
 // Created          : 11-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-05-2019
+// Last Modified On : 02-17-2020
 // ***********************************************************************
-// <copyright file="networks.messages.conversation.widget" company="Softo">
+// <copyright file="networks.messages.conversation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -216,6 +216,9 @@ jQuery(document).ready(function () {
     }
 
     messageHub.client.receiveSenderMessage = function (message) {
+        var globalVariables = MyRio2cCommon.getGlobalVariables();
+        console.log(globalVariables);
+
         var messageHubDto = JSON.parse(message);
 
         MyRio2cCommon.handleAjaxReturn({
@@ -223,10 +226,12 @@ jQuery(document).ready(function () {
             // Success
             onSuccess: function () {
                 if (otherUserUid === messageHubDto.data.recipientUserUid) {
+                    var sendDateFormatted = moment(messageHubDto.data.sendDate).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+
                     var html =
                         '<div class="kt-chat__message kt-chat__message--right">' +
                             '   <div class="kt-chat__user">' +
-                            '       <time class="timeago kt-widget__date" datetime="' + messageHubDto.data.sendDate + '">' + messageHubDto.data.sendDateFormatted + '</time>' +
+                        '       <time class="timeago kt-widget__date" datetime="' + messageHubDto.data.sendDate + '">' + sendDateFormatted + '</time>' +
                             '       <a href="#" class="kt-chat__username">' + messagesConfig.you + '</a>';
 
                     if (!MyRio2cCommon.isNullOrEmpty(messageHubDto.data.senderImageUrl)) {
@@ -248,6 +253,11 @@ jQuery(document).ready(function () {
                         '</div>';
 
                     $('#Messages').append(html);
+
+                    if (typeof (NetworksMessagesConversationsWidget) !== 'undefined') {
+                        NetworksMessagesConversationsWidget.changeLastMessageDateTime(messageHubDto.data.sendDate, sendDateFormatted);
+                    }
+
                     $("time.timeago").timeago();
                     NetworksMessagesConversationWidget.handleMessaging();
                 }
@@ -259,6 +269,8 @@ jQuery(document).ready(function () {
     };
 
     messageHub.client.receiveRecipientMessage = function (message) {
+        var globalVariables = MyRio2cCommon.getGlobalVariables();
+
         var messageHubDto = JSON.parse(message);
 
         MyRio2cCommon.handleAjaxReturn({
@@ -286,7 +298,7 @@ jQuery(document).ready(function () {
 
                     html +=
                         '       <a href="#" class="kt-chat__username">' + messageHubDto.data.senderName + '</a>' +
-                        '       <time class="timeago kt-widget__date" datetime="' + messageHubDto.data.sendDate + '">' + messageHubDto.data.sendDateFormatted + '</time>' +
+                    '       <time class="timeago kt-widget__date" datetime="' + messageHubDto.data.sendDate + '">' + moment(messageHubDto.data.sendDate).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS') + '</time>' +
                         '   </div>' +
                         '   <div class="kt-chat__text kt-bg-light-success text-wrap">' + messageHubDto.data.text.replace(/(?:\r\n|\r|\n)/g, '<br>') + '</div>' +
                         '</div>';

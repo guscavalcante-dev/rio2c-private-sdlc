@@ -3751,6 +3751,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Selecionar todos.
+        /// </summary>
+        public static string SelectAll {
+            get {
+                return ResourceManager.GetString("SelectAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Selecione um {0}.
         /// </summary>
         public static string SelectAMEntity {
@@ -4503,6 +4512,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Unselect {
             get {
                 return ResourceManager.GetString("Unselect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deselecionar todos.
+        /// </summary>
+        public static string UnselectAll {
+            get {
+                return ResourceManager.GetString("UnselectAll", resourceCulture);
             }
         }
         
