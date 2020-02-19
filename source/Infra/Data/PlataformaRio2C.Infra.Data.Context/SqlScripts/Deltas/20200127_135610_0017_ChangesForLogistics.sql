@@ -42,6 +42,7 @@ CREATE TABLE "dbo"."Logistics"
 	"AirportTransferOtherLogisticSponsor" varchar(100)  NULL ,
 	"IsCityTransferRequired" bit  NOT NULL ,
 	"IsVehicleDisposalRequired" bit  NOT NULL ,
+	"AdditionalInfo"	 varchar(300) NULL,
 	"IsDeleted"          bit  NOT NULL ,
 	"CreateDate"         datetimeoffset  NOT NULL ,
 	"CreateUserId"       int  NOT NULL ,

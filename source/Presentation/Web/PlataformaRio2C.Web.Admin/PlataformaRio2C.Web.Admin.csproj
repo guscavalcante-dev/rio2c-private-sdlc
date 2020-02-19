@@ -8356,7 +8356,6 @@
     <Content Include="Views\LogisticRequests\Widgets\DataTableWidget.cshtml" />
     <Content Include="Views\LogisticRequests\Details.cshtml" />
     <Content Include="Views\LogisticRequests\Modals\UpdateMainInformationModal.cshtml" />
-    <Content Include="Views\LogisticRequests\Modals\UpdateMainInformationForm.cshtml" />
     <Content Include="Views\LogisticRequests\Modals\CreateTransportModal.cshtml" />
     <Content Include="Views\LogisticRequests\Modals\CreateAccommodationModal.cshtml" />
     <Content Include="Views\LogisticRequests\Modals\_AccommodationForm.cshtml" />

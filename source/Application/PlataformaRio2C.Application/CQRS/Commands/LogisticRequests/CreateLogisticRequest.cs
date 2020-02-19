@@ -35,7 +35,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public List<LogisticSponsorBaseDto> Sponsors { get; set; }
         public bool IsAirfareTicketRequired { get; set; }
-        
+
+        [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
+        public string AdditionalInfo { get; set; }
+
         /// <summary>Initializes a new instance of the <see cref="CreateLogisticSponsors"/> class.</summary>
         public CreateLogisticRequest(List<LogisticSponsorBaseDto> sponsors, List<LanguageDto> languagesDtos, string userInterfaceLanguage)
         {
