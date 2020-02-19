@@ -97,6 +97,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hospedagem.
+        /// </summary>
+        public static string Accommodation {
+            get {
+                return ResourceManager.GetString("Accommodation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Credenciamento.
         /// </summary>
         public static string Accreditation {
@@ -282,6 +291,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string AHolding {
             get {
                 return ResourceManager.GetString("AHolding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aéreo.
+        /// </summary>
+        public static string Airfare {
+            get {
+                return ResourceManager.GetString("Airfare", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bilhete.
+        /// </summary>
+        public static string AirfareTicket {
+            get {
+                return ResourceManager.GetString("AirfareTicket", resourceCulture);
             }
         }
         
@@ -2253,6 +2280,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Logistics {
             get {
                 return ResourceManager.GetString("Logistics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transfer.
+        /// </summary>
+        public static string LogisticsTransfer {
+            get {
+                return ResourceManager.GetString("LogisticsTransfer", resourceCulture);
             }
         }
         
@@ -4615,6 +4651,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Transfer City.
+        /// </summary>
+        public static string TransferCity {
+            get {
+                return ResourceManager.GetString("TransferCity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transporte.
+        /// </summary>
+        public static string Transport {
+            get {
+                return ResourceManager.GetString("Transport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Digite sua mensagem.
         /// </summary>
         public static string TypeYourMessage {
@@ -4746,6 +4800,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ValueStillNeeded {
             get {
                 return ResourceManager.GetString("ValueStillNeeded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Veículo à Disposição.
+        /// </summary>
+        public static string VehicleAtDisposal {
+            get {
+                return ResourceManager.GetString("VehicleAtDisposal", resourceCulture);
             }
         }
         

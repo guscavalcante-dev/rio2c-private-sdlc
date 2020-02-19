@@ -181,11 +181,6 @@ var LogisticRequestsDataTableWidget = function () {
             ],
             columnDefs: [
                 {
-                    targets: [0],
-                    width: "25%",
-                    className: "dt-center"
-                },
-                {
                     targets: [2, 3],
                     className: "dt-center"
                 },

@@ -47,7 +47,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
         public string AdditionalInfo { get; set; }
 
-        [Display(Name = "Ticket", ResourceType = typeof(Labels))]
+        [Display(Name = "AirfareTicket", ResourceType = typeof(Labels))]
         public HttpPostedFile Ticket { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CreateLogisticSponsors"/> class.</summary>

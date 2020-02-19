@@ -2161,4 +2161,32 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Para</value>
     <comment>Para</comment>
   </data>
+  <data name="AirfareTicket" xml:space="preserve">
+    <value>Bilhete</value>
+    <comment>Bilhete</comment>
+  </data>
+  <data name="Accommodation" xml:space="preserve">
+    <value>Hospedagem</value>
+    <comment>Hospedagem</comment>
+  </data>
+  <data name="Airfare" xml:space="preserve">
+    <value>Aéreo</value>
+    <comment>Aéreo</comment>
+  </data>
+  <data name="Transport" xml:space="preserve">
+    <value>Transporte</value>
+    <comment>Transporte</comment>
+  </data>
+  <data name="LogisticsTransfer" xml:space="preserve">
+    <value>Transfer</value>
+    <comment>Transfer</comment>
+  </data>
+  <data name="TransferCity" xml:space="preserve">
+    <value>Transfer City</value>
+    <comment>Transfer City</comment>
+  </data>
+  <data name="VehicleAtDisposal" xml:space="preserve">
+    <value>Veículo à Disposição</value>
+    <comment>Veículo à Disposição</comment>
+  </data>
 </root>

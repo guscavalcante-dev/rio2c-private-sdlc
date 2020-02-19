@@ -2154,4 +2154,32 @@
     <value>To</value>
     <comment>Para</comment>
   </data>
+  <data name="AirfareTicket" xml:space="preserve">
+    <value>Ticket</value>
+    <comment>Bilhete</comment>
+  </data>
+  <data name="Accommodation" xml:space="preserve">
+    <value>Accommodation</value>
+    <comment>Hospedagem</comment>
+  </data>
+  <data name="Airfare" xml:space="preserve">
+    <value>Airfare</value>
+    <comment>Aéreo</comment>
+  </data>
+  <data name="Transport" xml:space="preserve">
+    <value>Transport</value>
+    <comment>Transporte</comment>
+  </data>
+  <data name="LogisticsTransfer" xml:space="preserve">
+    <value>Transfer</value>
+    <comment>Transfer</comment>
+  </data>
+  <data name="TransferCity" xml:space="preserve">
+    <value>Transfer City</value>
+    <comment>Transfer City</comment>
+  </data>
+  <data name="VehicleAtDisposal" xml:space="preserve">
+    <value>Vehicle at Guest's Disposal</value>
+    <comment>Veículo à Disposição</comment>
+  </data>
 </root>
