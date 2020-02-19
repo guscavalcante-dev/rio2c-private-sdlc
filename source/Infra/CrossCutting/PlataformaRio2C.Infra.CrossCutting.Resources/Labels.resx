@@ -2186,7 +2186,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Transfer City</comment>
   </data>
   <data name="VehicleAtDisposal" xml:space="preserve">
-    <value>Veículo à Disposição</value>
+    <value>Carro à Disposição</value>
     <comment>Veículo à Disposição</comment>
   </data>
 </root>

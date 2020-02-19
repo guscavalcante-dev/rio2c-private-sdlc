@@ -4804,7 +4804,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Veículo à Disposição.
+        ///   Looks up a localized string similar to Carro à Disposição.
         /// </summary>
         public static string VehicleAtDisposal {
             get {
