@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : William Sergio Almado Junior
-// Last Modified On : 01/16/2020
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 02-20-2020
 // ***********************************************************************
 // <copyright file="IProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -38,6 +38,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<ProjectDto> FindSiteBuyerCompanyWidgetDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteDuplicateDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteBuyerEvaluationWidgetDtoByProjectUidAsync(Guid projectUid, Guid attendeeCollaboratorUid);
+        Task<ProjectDto> FindDtoToEvaluateAsync(Guid attendeeCollaboratorUid, Guid projectUid);
         Task<int> CountAllByDataTable(int editionId, bool showAllEditions = false);
         IEnumerable<AudiovisualProjectSubscriptionDto> FindAudiovisualSubscribedProjectsDtosByFilter(string keywords, List<Guid> interestUids, int editionId, bool isPitching, List<Guid> targetAudienceUids, DateTime? startDate, DateTime? endDate, bool showAllEditions = false);
         Task<IPagedList<AudiovisualProjectSubscriptionDto>> FindAudiovisualSubscribedProjectsDtosByFilterAndByPageAsync(string keywords, List<Guid> interestUids, int editionId, bool isPitching, List<Guid> targetAudienceUids, DateTime? startDate, DateTime? endDate, int page, int pageSize, bool showAllEditions = false);

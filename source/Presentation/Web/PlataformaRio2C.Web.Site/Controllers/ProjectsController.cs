@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-11-2019
+// Last Modified On : 02-20-2020
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1549,6 +1549,37 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>Shows the evaluation list item widget.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.ExecutiveAudiovisual)]
+        [HttpGet]
+        public async Task<ActionResult> ShowEvaluationListItemWidget(Guid? projectUid)
+        {
+            if (this.EditionDto?.IsProjectEvaluationStarted() != true)
+            {
+                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+            }
+
+            if (!projectUid.HasValue)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM)}, JsonRequestBehavior.AllowGet);
+            }
+
+            var projects = await this.projectRepo.FindDtoToEvaluateAsync(
+                this.UserAccessControlDto?.EditionAttendeeCollaborator?.Uid ?? Guid.Empty,
+                projectUid.Value);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EvaluationListItemWidget", projects), divIdOrClass = $"#project-{projectUid}" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
         #region Evaluation Details
@@ -1749,7 +1780,12 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.ProjectAccepted.ToLowerInvariant()) });
+            return Json(new
+            {
+                status = "success",
+                projectUid = cmd.ProjectUid,
+                message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.ProjectAccepted.ToLowerInvariant())
+            });
         }
 
         #endregion
@@ -1869,7 +1905,12 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.ProjectRefused.ToLowerInvariant()) });
+            return Json(new
+            {
+                status = "success",
+                projectUid = cmd.ProjectUid,
+                message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.ProjectRefused.ToLowerInvariant())
+            });
         }
 
         #endregion

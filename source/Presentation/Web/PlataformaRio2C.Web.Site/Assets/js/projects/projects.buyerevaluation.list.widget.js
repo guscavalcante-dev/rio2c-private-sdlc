@@ -4,7 +4,7 @@
 // Created          : 12-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-11-2019
+// Last Modified On : 02-20-2020
 // ***********************************************************************
 // <copyright file="projects.buyerevaluation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -115,6 +115,41 @@ var ProjectsBuyerEvaluationListWidget = function () {
         });
     };
 
+    // Refresh project ----------------------------------------------------------------------------
+    var refreshProject = function (projectUid) {
+        if (MyRio2cCommon.isNullOrEmpty(projectUid)) {
+	        return;
+        }
+
+        var projectWidgetName = '#project-' + projectUid;
+        if ($(projectWidgetName).length <= 0) {
+		    return;
+        }
+
+        MyRio2cCommon.block({ idOrClass: projectWidgetName });
+
+	    var jsonParameters = new Object();
+	    jsonParameters.projectUid = projectUid;
+
+	    $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/ShowEvaluationListItemWidget'), jsonParameters, function (data) {
+		    MyRio2cCommon.handleAjaxReturn({
+			    data: data,
+			    // Success
+			    onSuccess: function () {
+				    enableShowPlugins();
+			    },
+			    // Error
+			    onError: function () {
+			    }
+		    });
+	    })
+	    .fail(function () {
+	    })
+	    .always(function () {
+            MyRio2cCommon.unblock({ idOrClass: projectWidgetName });
+	    });
+    };
+
     return {
         init: function () {
             initElements();
@@ -130,6 +165,9 @@ var ProjectsBuyerEvaluationListWidget = function () {
         },
         handlePaginationReturn: function (data) {
             handlePaginationReturn(data);
+        },
+        refreshProject: function(projectUid) {
+	        refreshProject(projectUid);
         }
     };
 }();

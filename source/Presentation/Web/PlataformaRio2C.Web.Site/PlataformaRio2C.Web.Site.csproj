@@ -7272,6 +7272,7 @@
     <Content Include="Views\Companies\Modals\UpdateSocialNetworksModal.cshtml" />
     <Content Include="Views\Companies\Modals\UpdateSocialNetworksForm.cshtml" />
     <Content Include="Views\Networks\Shared\_ContactListSearchForm.cshtml" />
+    <Content Include="Views\Projects\Widgets\EvaluationListItemWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
