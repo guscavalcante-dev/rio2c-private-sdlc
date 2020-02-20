@@ -8,7 +8,15 @@
     <!--begin::List-->
     foreach (var projectDto in Model)
     {
-        @Html.Partial("Widgets/EvaluationListItemWidget", projectDto)
+        <!--begin::List Item-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="kt-portlet kt-portlet--height-fluid" id="project-@projectDto.Project.Uid">
+                    @Html.Partial("Widgets/EvaluationListItemWidget", projectDto)
+                </div>
+            </div>
+        </div>
+        <!--end::List Item-->
     }
     <!--end::List-->
     <!--begin::Pagination-->
