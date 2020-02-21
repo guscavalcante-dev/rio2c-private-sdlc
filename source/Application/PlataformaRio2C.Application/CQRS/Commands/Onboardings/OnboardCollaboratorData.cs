@@ -4,7 +4,7 @@
 // Created          : 09-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified On : 02-21-2020
 // ***********************************************************************
 // <copyright file="OnboardCollaboratorData.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,7 +20,6 @@ using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -113,7 +112,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public bool? HaveYouBeenToRio2CBefore { get; set; }
         
-        [Display(Name = "PreviousEditions", ResourceType = typeof(Labels))]
+        //[Display(Name = "PreviousEditions", ResourceType = typeof(Labels))]
         public IEnumerable<Guid> EditionsUids { get; set; }
                 
         [RequiredIf("HaveYouBeenToRio2CBefore", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneOption")]
@@ -127,12 +126,18 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public Guid CollaboratorUid { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="OnboardCollaboratorData"/> class.</summary>
-        /// <param name="collaborator">The collaborator.</param>
-        /// <param name="languagesDtos">The languages dtos.</param>
-        /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
-        /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
-        /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
+        /// <summary></summary>
+        /// <param name="collaborator"></param>
+        /// <param name="genders"></param>
+        /// <param name="industries"></param>
+        /// <param name="roles"></param>
+        /// <param name="languagesDtos"></param>
+        /// <param name="editionsDtos"></param>
+        /// <param name="currentEditionId"></param>
+        /// <param name="isJobTitleRequired"></param>
+        /// <param name="isMiniBioRequired"></param>
+        /// <param name="isImageRequired"></param>
+        /// <param name="userInterfaceLanguage"></param>
         public OnboardCollaboratorData(
             CollaboratorDto collaborator, 
             List<CollaboratorGender> genders, 
@@ -157,43 +162,56 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateCropperImage(collaborator, isImageRequired);
         }
 
-        /// <summary>
-        /// Updates the editions.
-        /// </summary>
-        /// <param name="editionsDtos">The editions dtos.</param>
-        private void UpdateEditions(List<EditionDto> editionsDtos, int currentEditionId)
-        {
-            if(this.EditionsUids == null)
-                this.EditionsUids = new List<Guid>();
-
-            this.Editions = editionsDtos.Where(e => e.Id != currentEditionId).ToList();
-        }
-
-        /// <summary>
-        /// Updates the data.
-        /// </summary>
-        /// <param name="genders">The genders.</param>
-        /// <param name="industries">The industries.</param>
-        /// <param name="roles">The roles.</param>
-        /// <param name="editionsDtos">The editions dtos.</param>
-        /// <param name="userInterfaceLanguage">The user interface language.</param>
-        public void UpdateData(List<CollaboratorGender> genders, 
-            List<CollaboratorIndustry> industries, 
-            List<CollaboratorRole> roles, 
-            List<EditionDto> editionsDtos, 
-            int editionId,
-            string userInterfaceLanguage)
-        {            
-            this.UpdateEditions(editionsDtos, editionId);
-            this.UpdateGenders(genders, userInterfaceLanguage);
-            this.UpdateIndustries(industries, userInterfaceLanguage);
-            this.UpdateRoles(roles, userInterfaceLanguage);            
-        }
-
         /// <summary>Initializes a new instance of the <see cref="OnboardCollaboratorData"/> class.</summary>
         public OnboardCollaboratorData()
         {
         }
+
+        /// <summary>Updates the data.</summary>
+        /// <param name="genders">The genders.</param>
+        /// <param name="industries">The industries.</param>
+        /// <param name="roles">The roles.</param>
+        /// <param name="editionsDtos">The editions dtos.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public void UpdateData(List<CollaboratorGender> genders,
+            List<CollaboratorIndustry> industries,
+            List<CollaboratorRole> roles,
+            List<EditionDto> editionsDtos,
+            int editionId,
+            string userInterfaceLanguage)
+        {
+            this.UpdateEditions(editionsDtos, editionId);
+            this.UpdateGenders(genders, userInterfaceLanguage);
+            this.UpdateIndustries(industries, userInterfaceLanguage);
+            this.UpdateRoles(roles, userInterfaceLanguage);
+        }
+
+        /// <summary>Updates the pre send properties.</summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="userUid">The user uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="editionUid">The edition uid.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public void UpdatePreSendProperties(
+            Guid collaboratorUid,
+            int userId,
+            Guid userUid,
+            int? editionId,
+            Guid? editionUid,
+            string userInterfaceLanguage)
+        {
+            if (!HaveYouBeenToRio2CBefore ?? false)
+            {
+                EditionsUids = new List<Guid>();
+            }
+
+            this.CollaboratorUid = collaboratorUid;
+            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, userInterfaceLanguage);
+        }
+
+        #region Private Methods
 
         /// <summary>Updates the job titles.</summary>
         /// <param name="entity">The entity.</param>
@@ -208,42 +226,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 this.JobTitles.Add(jobTitle != null ? new CollaboratorJobTitleBaseCommand(jobTitle, isJobTitleRequired) :
                                                       new CollaboratorJobTitleBaseCommand(languageDto, isJobTitleRequired));
             }
-        }
-        
-        /// <summary>
-        /// Updates the genders.
-        /// </summary>
-        /// <param name="genders">The genders.</param>
-        /// <param name="userInterfaceLanguage">The user interface language.</param>
-        /// <exception cref="NotImplementedException"></exception>
-        private void UpdateGenders(List<CollaboratorGender> genders, string userInterfaceLanguage)
-        {
-            genders.ForEach(g => g.Translate(userInterfaceLanguage));
-            this.CollaboratorGenders = genders.OrderBy(e => e.HasAdditionalInfo).ThenBy(e => e.Name);
-        }
-
-        /// <summary>
-        /// Updates the genders.
-        /// </summary>
-        /// <param name="genders">The genders.</param>
-        /// <param name="userInterfaceLanguage">The user interface language.</param>
-        /// <exception cref="NotImplementedException"></exception>
-        private void UpdateIndustries(List<CollaboratorIndustry> industries, string userInterfaceLanguage)
-        {
-            industries.ForEach(g => g.Translate(userInterfaceLanguage));
-            this.CollaboratorIndustries = industries.OrderBy(e => e.HasAdditionalInfo).ThenBy(e => e.Name);
-        }
-
-        /// <summary>
-        /// Updates the genders.
-        /// </summary>
-        /// <param name="genders">The genders.</param>
-        /// <param name="userInterfaceLanguage">The user interface language.</param>
-        /// <exception cref="NotImplementedException"></exception>
-        private void UpdateRoles(List<CollaboratorRole> roles, string userInterfaceLanguage)
-        {
-            roles.ForEach(g => g.Translate(userInterfaceLanguage));
-            this.CollaboratorRoles = roles.OrderBy(e => e.HasAdditionalInfo).ThenBy(e => e.Name);
         }
 
         /// <summary>Updates the mini bios.</summary>
@@ -269,28 +251,44 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.CropperImage = new CropperImageBaseCommand(entity?.ImageUploadDate, entity?.Uid, FileRepositoryPathType.UserImage, isImageRequired);
         }
 
-        /// <summary>Updates the pre send properties.</summary>
-        /// <param name="collaboratorUid">The collaborator uid.</param>
-        /// <param name="userId">The user identifier.</param>
-        /// <param name="userUid">The user uid.</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <param name="editionUid">The edition uid.</param>
-        /// <param name="userInterfaceLanguage">The user interface language.</param>
-        public void UpdatePreSendProperties(
-            Guid collaboratorUid,
-            int userId,
-            Guid userUid,
-            int? editionId,
-            Guid? editionUid,
-            string userInterfaceLanguage)
-        {            
-            if (!HaveYouBeenToRio2CBefore ?? false)
-            {
-                EditionsUids = new List<Guid>();
-            }
+        /// <summary>Updates the editions.</summary>
+        /// <param name="editionsDtos">The editions dtos.</param>
+        /// <param name="currentEditionId">The current edition identifier.</param>
+        private void UpdateEditions(List<EditionDto> editionsDtos, int currentEditionId)
+        {
+            if (this.EditionsUids == null)
+                this.EditionsUids = new List<Guid>();
 
-            this.CollaboratorUid = collaboratorUid;
-            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, userInterfaceLanguage);
+            this.Editions = editionsDtos.Where(e => e.Id != currentEditionId).ToList();
         }
+
+        /// <summary>Updates the genders.</summary>
+        /// <param name="genders">The genders.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        private void UpdateGenders(List<CollaboratorGender> genders, string userInterfaceLanguage)
+        {
+            genders.ForEach(g => g.Translate(userInterfaceLanguage));
+            this.CollaboratorGenders = genders.OrderBy(e => e.HasAdditionalInfo).ThenBy(e => e.Name);
+        }
+
+        /// <summary>Updates the industries.</summary>
+        /// <param name="industries">The industries.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        private void UpdateIndustries(List<CollaboratorIndustry> industries, string userInterfaceLanguage)
+        {
+            industries.ForEach(g => g.Translate(userInterfaceLanguage));
+            this.CollaboratorIndustries = industries.OrderBy(e => e.HasAdditionalInfo).ThenBy(e => e.Name);
+        }
+
+        /// <summary>Updates the roles.</summary>
+        /// <param name="roles">The roles.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        private void UpdateRoles(List<CollaboratorRole> roles, string userInterfaceLanguage)
+        {
+            roles.ForEach(g => g.Translate(userInterfaceLanguage));
+            this.CollaboratorRoles = roles.OrderBy(e => e.HasAdditionalInfo).ThenBy(e => e.Name);
+        }
+
+        #endregion
     }
 }

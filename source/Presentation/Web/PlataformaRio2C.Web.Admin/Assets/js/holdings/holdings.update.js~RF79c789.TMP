@@ -1,21 +1,21 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Rafael Dantas Ruiz
-// Created          : 12-27-2019
+// Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-21-2020
+// Last Modified On : 10-21-2019
 // ***********************************************************************
-// <copyright file="conferences.create.js" company="Softo">
+// <copyright file="holdings.update.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var ConferencesCreate = function () {
+var HoldingsUpdate = function () {
 
-    var modalId = '#CreateConferenceModal';
-    var formId = '#CreateConferenceForm';
+    var modalId = '#UpdateHoldingModal';
+    var formId = '#UpdateHoldingForm';
 
     // Enable form validation ---------------------------------------------------------------------
     var enableFormValidation = function () {
@@ -23,30 +23,26 @@ var ConferencesCreate = function () {
     };
 
     // Enable plugins -----------------------------------------------------------------------------
-    var enablePlugins = function () {
-        if (typeof (ConferencesEditionEvents) !== 'undefined') {
-            ConferencesEditionEvents.init();
-        }
-
-        MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
-        MyRio2cCommon.enableDatePicker({ inputIdOrClass: formId + ' .enable-datepicker' });
-        MyRio2cCommon.enableTimePicker({ inputIdOrClass: formId + ' .enable-timepicker' });
+    var enablelugins = function () {
+        MyRio2cCropper.init({ formIdOrClass: formId });
+        //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c', maxCharCount: 710 });
         enableAjaxForm();
         enableFormValidation();
     };
 
     // Show modal ---------------------------------------------------------------------------------
-    var showModal = function () {
+    var showModal = function (holdingUid) {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
+        jsonParameters.holdingUid = holdingUid;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Conferences/ShowCreateModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Holdings/ShowUpdateModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
                 onSuccess: function () {
-                    enablePlugins();
+                    enablelugins();
                     $(modalId).modal();
                 },
                 // Error
@@ -68,21 +64,13 @@ var ConferencesCreate = function () {
             onSuccess: function (data) {
                 $(modalId).modal('hide');
 
-                if (typeof (ConferencesDataTableWidget) !== 'undefined') {
-                    ConferencesDataTableWidget.refreshData();
-                }
-
-                if (typeof (ConferencesTotalCountWidget) !== 'undefined') {
-                    ConferencesTotalCountWidget.init();
-                }
-
-                if (typeof (ConferencesEditionCountWidget) !== 'undefined') {
-                    ConferencesEditionCountWidget.init();
+                if (typeof (HoldingsDataTableWidget) !== 'undefined') {
+                    HoldingsDataTableWidget.refreshData();
                 }
             },
             onError: function (data) {
                 if (MyRio2cCommon.hasProperty(data, 'pages')) {
-                    enablePlugins();
+                    enablelugins();
                 }
 
                 $(formId).find(":input.input-validation-error:first").focus();
@@ -91,8 +79,8 @@ var ConferencesCreate = function () {
     };
 
     return {
-        showModal: function () {
-            showModal();
+        showModal: function (holdingUid) {
+            showModal(holdingUid);
         }
     };
 }();

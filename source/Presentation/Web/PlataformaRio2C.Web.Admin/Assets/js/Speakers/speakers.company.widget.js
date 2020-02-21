@@ -4,7 +4,7 @@
 // Created          : 12-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-19-2019
+// Last Modified On : 02-21-2020
 // ***********************************************************************
 // <copyright file="speakers.company.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -67,6 +67,8 @@ var SpeakersCompanyWidget = function () {
                 if (MyRio2cCommon.hasProperty(data, 'pages')) {
                     enableUpdatePlugins();
                 }
+
+                $(createFormId).find(":input.input-validation-error:first").focus();
             }
         });
     };

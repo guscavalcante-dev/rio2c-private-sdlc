@@ -4,7 +4,7 @@
 // Created          : 01-16-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified On : 02-21-2020
 // ***********************************************************************
 // <copyright file="executives.socialnetworks.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -67,6 +67,8 @@ var ExecutivesSocialNetworksWidget = function () {
                 if (MyRio2cCommon.hasProperty(data, 'pages')) {
                     enableUpdatePlugins();
                 }
+
+                $(updateFormId).find(":input.input-validation-error:first").focus();
             }
         });
     };

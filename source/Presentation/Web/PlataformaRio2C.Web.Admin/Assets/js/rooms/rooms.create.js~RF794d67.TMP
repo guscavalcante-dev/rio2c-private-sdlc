@@ -1,21 +1,21 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Rafael Dantas Ruiz
-// Created          : 12-27-2019
+// Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-21-2020
+// Last Modified On : 01-06-2020
 // ***********************************************************************
-// <copyright file="conferences.create.js" company="Softo">
+// <copyright file="room.create.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var ConferencesCreate = function () {
+var RoomsCreate = function () {
 
-    var modalId = '#CreateConferenceModal';
-    var formId = '#CreateConferenceForm';
+    var modalId = '#CreateRoomModal';
+    var formId = '#CreateRoomForm';
 
     // Enable form validation ---------------------------------------------------------------------
     var enableFormValidation = function () {
@@ -24,13 +24,6 @@ var ConferencesCreate = function () {
 
     // Enable plugins -----------------------------------------------------------------------------
     var enablePlugins = function () {
-        if (typeof (ConferencesEditionEvents) !== 'undefined') {
-            ConferencesEditionEvents.init();
-        }
-
-        MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
-        MyRio2cCommon.enableDatePicker({ inputIdOrClass: formId + ' .enable-datepicker' });
-        MyRio2cCommon.enableTimePicker({ inputIdOrClass: formId + ' .enable-timepicker' });
         enableAjaxForm();
         enableFormValidation();
     };
@@ -41,7 +34,7 @@ var ConferencesCreate = function () {
 
         var jsonParameters = new Object();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Conferences/ShowCreateModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Rooms/ShowCreateModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -68,16 +61,16 @@ var ConferencesCreate = function () {
             onSuccess: function (data) {
                 $(modalId).modal('hide');
 
-                if (typeof (ConferencesDataTableWidget) !== 'undefined') {
-                    ConferencesDataTableWidget.refreshData();
+                if (typeof (RoomsDataTableWidget) !== 'undefined') {
+                    RoomsDataTableWidget.refreshData();
                 }
 
-                if (typeof (ConferencesTotalCountWidget) !== 'undefined') {
-                    ConferencesTotalCountWidget.init();
+                if (typeof (RoomsTotalCountWidget) !== 'undefined') {
+                    RoomsTotalCountWidget.init();
                 }
 
-                if (typeof (ConferencesEditionCountWidget) !== 'undefined') {
-                    ConferencesEditionCountWidget.init();
+                if (typeof (RoomsEditionCountWidget) !== 'undefined') {
+                    RoomsEditionCountWidget.init();
                 }
             },
             onError: function (data) {

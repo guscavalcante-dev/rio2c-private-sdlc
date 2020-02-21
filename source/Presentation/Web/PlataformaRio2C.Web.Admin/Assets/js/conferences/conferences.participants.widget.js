@@ -4,7 +4,7 @@
 // Created          : 01-02-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-12-2020
+// Last Modified On : 02-21-2020
 // ***********************************************************************
 // <copyright file="conferences.participants.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -72,6 +72,8 @@ var ConferencesParticipantsWidget = function () {
                 if (MyRio2cCommon.hasProperty(data, 'pages')) {
                     enableCreatePlugins();
                 }
+
+                $(createFormId).find(":input.input-validation-error:first").focus();
             }
         });
     };
@@ -124,6 +126,8 @@ var ConferencesParticipantsWidget = function () {
                 if (MyRio2cCommon.hasProperty(data, 'pages')) {
                     enableUpdatePlugins();
                 }
+
+                $(updateFormId).find(":input.input-validation-error:first").focus();
             }
         });
     };

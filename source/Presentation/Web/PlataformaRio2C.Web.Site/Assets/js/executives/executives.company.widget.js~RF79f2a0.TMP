@@ -1,24 +1,24 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Rafael Dantas Ruiz
-// Created          : 01-07-2020
+// Created          : 10-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-21-2020
+// Last Modified On : 10-23-2019
 // ***********************************************************************
-// <copyright file="conferenceparticipantroles.maininformation.widget.js" company="Softo">
+// <copyright file="executives.company.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var ConferenceParticipantRolesMainInformationWidget = function () {
+var ExecutivesCompanyWidget = function () {
 
-    var widgetElementId = '#ConferenceParticipantRoleMainInformationWidget';
+    var widgetElementId = '#ExecutiveCompanyWidget';
     var widgetElement = $(widgetElementId);
 
-    var updateModalId = '#UpdateMainInformationModal';
-    var updateFormId = '#UpdateMainInformationForm';
+    var createModalId = '#CreateCompanyInfoModal';
+    var createFormId = '#CreateCompanyInfoForm';
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
@@ -31,9 +31,9 @@ var ConferenceParticipantRolesMainInformationWidget = function () {
         }
 
         var jsonParameters = new Object();
-        jsonParameters.conferenceParticipantRoleUid = $('#AggregateId').val();
+        jsonParameters.collaboratorUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/ParticipantRoles/ShowMainInformationWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Executives/ShowCompanyWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -45,22 +45,22 @@ var ConferenceParticipantRolesMainInformationWidget = function () {
                 }
             });
         })
-        .fail(function () {
-        })
-        .always(function () {
-            MyRio2cCommon.unblock({ idOrClass: widgetElementId });
-        });
+            .fail(function () {
+            })
+            .always(function () {
+                MyRio2cCommon.unblock({ idOrClass: widgetElementId });
+            });
     };
 
-    // Update -------------------------------------------------------------------------------------
+    // Create -------------------------------------------------------------------------------------
     var enableAjaxForm = function () {
         MyRio2cCommon.enableAjaxForm({
-            idOrClass: updateFormId,
+            idOrClass: createFormId,
             onSuccess: function (data) {
-                $(updateModalId).modal('hide');
+                $(createModalId).modal('hide');
 
-                if (typeof (ConferenceParticipantRolesMainInformationWidget) !== 'undefined') {
-                    ConferenceParticipantRolesMainInformationWidget.init();
+                if (typeof (ExecutivesCompanyWidget) !== 'undefined') {
+                    ExecutivesCompanyWidget.init();
                 }
             },
             onError: function (data) {
@@ -68,29 +68,42 @@ var ConferenceParticipantRolesMainInformationWidget = function () {
                     enableUpdatePlugins();
                 }
 
-                $(updateFormId).find(":input.input-validation-error:first").focus();
+                $(createFormId).find(":input.input-validation-error:first").focus();
             }
         });
     };
 
     var enableUpdatePlugins = function () {
+        if (typeof (MyRio2cCropper) !== 'undefined') {
+            MyRio2cCropper.init({ formIdOrClass: createFormId });
+        }
+        
+        if (typeof (AddressesForm) !== 'undefined') {
+            AddressesForm.init();
+        }
+
+        if (typeof (CompanyInfoAutocomplete) !== 'undefined') {
+            CompanyInfoAutocomplete.init('/Companies/ShowTicketBuyerFilledForm', enableUpdatePlugins);
+        }
+
+        //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c', maxCharCount: 710 });
+
         enableAjaxForm();
-        MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
+        MyRio2cCommon.enableFormValidation({ formIdOrClass: createFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
 
-    var showUpdateModal = function () {
+    var showCreateModal = function () {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
-        jsonParameters.conferenceParticipantRoleUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/ParticipantRoles/ShowUpdateMainInformationModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Executives/ShowCreateCompanyInfoModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
                 onSuccess: function () {
                     enableUpdatePlugins();
-                    $(updateModalId).modal();
+                    $(createModalId).modal();
                 },
                 // Error
                 onError: function () {
@@ -109,8 +122,8 @@ var ConferenceParticipantRolesMainInformationWidget = function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
         },
-        showUpdateModal: function () {
-            showUpdateModal();
+        showCreateModal: function () {
+            showCreateModal();
         }
     };
 }();

@@ -4,7 +4,7 @@
 // Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-21-2019
+// Last Modified On : 02-21-2020
 // ***********************************************************************
 // <copyright file="holdings.update.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -72,6 +72,8 @@ var HoldingsUpdate = function () {
                 if (MyRio2cCommon.hasProperty(data, 'pages')) {
                     enablelugins();
                 }
+
+                $(formId).find(":input.input-validation-error:first").focus();
             }
         });
     };
