@@ -385,11 +385,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="SqlScripts\01_Schema.sql" />
-    <Content Include="SqlScripts\06_SampleData_Test.sql" />
-    <Content Include="SqlScripts\03_Seed.sql" />
+    <Content Include="SqlScripts\05_Seed_Innovation.sql" />
+    <Content Include="SqlScripts\04_Seed_Music.sql" />
+    <Content Include="SqlScripts\08_SampleData_Test.sql" />
+    <Content Include="SqlScripts\03_Seed_Audiovisual.sql" />
     <Content Include="SqlScripts\02_Elmah.sql" />
-    <Content Include="SqlScripts\04_TicketSettings.sql" />
-    <Content Include="SqlScripts\05_InitialData.sql" />
+    <Content Include="SqlScripts\06_TicketSettings.sql" />
+    <Content Include="SqlScripts\07_InitialData.sql" />
     <Content Include="SqlScripts\Deltas\20190930_114613_0001_ChangesForPlayersApi.sql" />
     <Content Include="SqlScripts\Deltas\20200223_190851_0019_ChangesForMusicAndInnovationProjects.sql" />
     <Content Include="SqlScripts\Deltas\20200215_180632_0018_ChangesForDateTimeOffset.sql" />
