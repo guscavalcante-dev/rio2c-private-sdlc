@@ -570,9 +570,8 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/music.commissions.editioncount.js").Include(
                 "~/Assets/js/music/commissions/music.commissions.editioncount.widget.js"));
 
-            //bundles.Add(new ScriptBundle("~/bundles/js/spemusic.commissionsakers.create.js").Include(
-            //    "~/Assets/js/speakers/music.commissions.create.js",
-            //    "~/Assets/js/myrio2c.publicemail.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/music.commissions.create.js").Include(
+                "~/Assets/js/music/commissions/music.commissions.create.js"));
 
             //bundles.Add(new StyleBundle("~/bundles/css/speakers.details.css").Include(
             //    "~/Assets/themes/metronic/css/demo4/pages/pricing/pricing-1.css"));
@@ -587,11 +586,11 @@ namespace PlataformaRio2C.Web.Admin
             //    "~/Assets/js/myrio2c.companynumber.js",
             //    "~/Assets/js/speakers/speakers.apiconfiguration.widget.js"));
 
-            //bundles.Add(new ScriptBundle("~/bundles/js/speakers.update.js").Include(
-            //    "~/Assets/js/speakers/speakers.update.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/music.commissions.update.js").Include(
+                "~/Assets/js/music/commissions/music.commissions.update.js"));
 
-            //bundles.Add(new ScriptBundle("~/bundles/js/speakers.delete.js").Include(
-            //    "~/Assets/js/speakers/speakers.delete.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/music.commissions.delete.js").Include(
+                "~/Assets/js/music/commissions/music.commissions.delete.js"));
 
             #endregion
 

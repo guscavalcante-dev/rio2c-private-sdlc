@@ -6,13 +6,13 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 02-25-2020
 // ***********************************************************************
-// <copyright file="speakers.delete.js" company="Softo">
+// <copyright file="music.commissions.delete.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var SpeakersDelete = function () {
+var MusicCommissionsDelete = function () {
 
     // Delete -------------------------------------------------------------------------------------
     var executeDelete = function (collaboratorUid) {
@@ -21,22 +21,22 @@ var SpeakersDelete = function () {
         var jsonParameters = new Object();
         jsonParameters.collaboratorUid = collaboratorUid;
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/Delete'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Commissions/Delete'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
                 onSuccess: function () {
-                    if (typeof (SpeakersDataTableWidget) !== 'undefined') {
-                        SpeakersDataTableWidget.refreshData();
-                    }
+	                if (typeof (MusicCommissionsDataTableWidget) !== 'undefined') {
+		                MusicCommissionsDataTableWidget.refreshData();
+	                }
 
-                    if (typeof (SpeakersTotalCountWidget) !== 'undefined') {
-                        SpeakersTotalCountWidget.init();
-                    }
+	                if (typeof (MusicCommissionsTotalCountWidget) !== 'undefined') {
+		                MusicCommissionsTotalCountWidget.init();
+	                }
 
-                    if (typeof (SpeakersEditionCountWidget) !== 'undefined') {
-                        SpeakersEditionCountWidget.init();
-                    }
+	                if (typeof (MusicCommissionsEditionCountWidget) !== 'undefined') {
+		                MusicCommissionsEditionCountWidget.init();
+	                }
                 },
                 // Error
                 onError: function () {

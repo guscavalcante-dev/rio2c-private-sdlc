@@ -452,13 +452,13 @@
     <Content Include="Assets\js\music\commissions\speakers.company.widget.js" />
     <Content Include="Assets\js\music\commissions\music.commissions.create.js" />
     <Content Include="Assets\js\music\commissions\music.commissions.datatable.widget.js" />
-    <Content Include="Assets\js\music\commissions\speakers.delete.js" />
+    <Content Include="Assets\js\music\commissions\music.commissions.delete.js" />
     <Content Include="Assets\js\music\commissions\music.commissions.editioncount.widget.js" />
     <Content Include="Assets\js\music\commissions\speakers.maininformation.widget.js" />
     <Content Include="Assets\js\music\commissions\speakers.participants.widget.js" />
     <Content Include="Assets\js\music\commissions\speakers.socialnetworks.widget.js" />
     <Content Include="Assets\js\music\commissions\music.commissions.totalcount.widget.js" />
-    <Content Include="Assets\js\music\commissions\speakers.update.js" />
+    <Content Include="Assets\js\music\commissions\music.commissions.update.js" />
     <Content Include="Assets\js\speakers\speakers.conferences.widget.js" />
     <Content Include="Assets\js\speakers\speakers.socialnetworks.widget.js" />
     <Content Include="Assets\js\speakers\speakers.participants.widget.js" />
@@ -7073,7 +7073,7 @@
     <Content Include="Areas\Music\Views\web.config" />
     <Content Include="Areas\Music\Views\Commissions\Details.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Index.cshtml" />
-    <Content Include="Areas\Music\Views\Commissions\Modals\_TinyForm.cshtml" />
+    <Content Include="Views\Shared\Collaborators\_TinyForm.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Modals\CreateModal.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Modals\EventbriteCsvModal.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Modals\UpdateApiConfigurationForm.cshtml" />

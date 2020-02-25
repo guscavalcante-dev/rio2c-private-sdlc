@@ -6,16 +6,16 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 02-25-2020
 // ***********************************************************************
-// <copyright file="speakers.update.js" company="Softo">
+// <copyright file="music.commissions.update.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var SpeakersUpdate = function () {
+var MusicCommissionsUpdate = function () {
 
-    var modalId = '#UpdateSpeakerModal';
-    var formId = '#UpdateSpeakerForm';
+    var modalId = '#UpdateCommissionModal';
+    var formId = '#UpdateCommissionForm';
 
     // Enable form validation ---------------------------------------------------------------------
     var enableFormValidation = function () {
@@ -24,16 +24,6 @@ var SpeakersUpdate = function () {
 
     // Enable plugins -----------------------------------------------------------------------------
     var enablePlugins = function () {
-        if (typeof (MyRio2cPublicEmail) !== 'undefined') {
-            MyRio2cPublicEmail.init();
-        }
-
-        MyRio2cCropper.init({ formIdOrClass: formId });
-        MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
-        AttendeeOrganizationsForm.init(formId);
-        AddressesForm.init();
-        //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-jobtitle', maxCharCount: 81 });
-        //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-minibio', maxCharCount: 710 });
         enableAjaxForm();
         enableFormValidation();
     };
@@ -46,7 +36,7 @@ var SpeakersUpdate = function () {
         jsonParameters.collaboratorUid = collaboratorUid;
         jsonParameters.isAddingToCurrentEdition = isAddingToCurrentEdition;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/ShowUpdateModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Commissions/ShowUpdateModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -73,16 +63,16 @@ var SpeakersUpdate = function () {
             onSuccess: function (data) {
                 $(modalId).modal('hide');
 
-                if (typeof (SpeakersDataTableWidget) !== 'undefined') {
-                    SpeakersDataTableWidget.refreshData();
+                if (typeof (MusicCommissionsDataTableWidget) !== 'undefined') {
+	                MusicCommissionsDataTableWidget.refreshData();
                 }
 
-                if (typeof (SpeakersTotalCountWidget) !== 'undefined') {
-                    SpeakersTotalCountWidget.init();
+                if (typeof (MusicCommissionsTotalCountWidget) !== 'undefined') {
+	                MusicCommissionsTotalCountWidget.init();
                 }
 
-                if (typeof (SpeakersEditionCountWidget) !== 'undefined') {
-                    SpeakersEditionCountWidget.init();
+                if (typeof (MusicCommissionsEditionCountWidget) !== 'undefined') {
+	                MusicCommissionsEditionCountWidget.init();
                 }
             },
             onError: function (data) {

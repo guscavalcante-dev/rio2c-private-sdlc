@@ -6,16 +6,16 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 02-25-2020
 // ***********************************************************************
-// <copyright file="speakers.create.js" company="Softo">
+// <copyright file="music.commissions.create.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var SpeakersCreate = function () {
+var MusicCommissionsCreate = function () {
 
-    var modalId = '#CreateSpeakerModal';
-    var formId = '#CreateSpeakerForm';
+    var modalId = '#CreateCommissionModal';
+    var formId = '#CreateCommissionForm';
 
     // Enable form validation ---------------------------------------------------------------------
     var enableFormValidation = function () {
@@ -24,16 +24,6 @@ var SpeakersCreate = function () {
 
     // Enable plugins -----------------------------------------------------------------------------
     var enablePlugins = function () {
-        if (typeof (MyRio2cPublicEmail) !== 'undefined') {
-            MyRio2cPublicEmail.init();
-        }
-
-        MyRio2cCropper.init({ formIdOrClass: formId });
-        MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
-        AttendeeOrganizationsForm.init(formId);
-        AddressesForm.init();
-        //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-jobtitle', maxCharCount: 81 });
-        //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-minibio', maxCharCount: 710 });
         enableAjaxForm();
         enableFormValidation();
     };
@@ -44,7 +34,7 @@ var SpeakersCreate = function () {
 
         var jsonParameters = new Object();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/ShowCreateModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Commissions/ShowCreateModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -71,16 +61,16 @@ var SpeakersCreate = function () {
             onSuccess: function (data) {
                 $(modalId).modal('hide');
 
-                if (typeof (SpeakersDataTableWidget) !== 'undefined') {
-                    SpeakersDataTableWidget.refreshData();
+                if (typeof (MusicCommissionsDataTableWidget) !== 'undefined') {
+	                MusicCommissionsDataTableWidget.refreshData();
                 }
 
-                if (typeof (SpeakersTotalCountWidget) !== 'undefined') {
-                    SpeakersTotalCountWidget.init();
+                if (typeof (MusicCommissionsTotalCountWidget) !== 'undefined') {
+	                MusicCommissionsTotalCountWidget.init();
                 }
 
-                if (typeof (SpeakersEditionCountWidget) !== 'undefined') {
-                    SpeakersEditionCountWidget.init();
+                if (typeof (MusicCommissionsEditionCountWidget) !== 'undefined') {
+	                MusicCommissionsEditionCountWidget.init();
                 }
             },
             onError: function (data) {
