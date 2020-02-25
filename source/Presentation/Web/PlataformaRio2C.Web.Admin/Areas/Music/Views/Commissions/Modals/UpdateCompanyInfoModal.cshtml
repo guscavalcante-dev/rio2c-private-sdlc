@@ -1,0 +1,29 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateTicketBuyerOrganizationData
+<div class="modal fade" id="UpdateCompanyInfoModal" role="dialog" aria-labelledby="UpdateCompanyInfoModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    @(Labels.Company + " " + Labels.Informations)
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("UpdateCompanyInformation", "Speakers", new { Area = "" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UpdateCompanyInfoForm" }))
+                {
+                    @Html.HiddenFor(m => m.CollaboratorUid)
+                    @Html.HiddenFor(m => m.OrganizationUid)
+                    @Html.HiddenFor(m => m.IsUpdate)
+
+                    <div id="form-container">
+                        @Html.Partial("/Views/Companies/Shared/_TicketBuyerCompanyInfoForm.cshtml", Model)
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">@Labels.Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="$('#UpdateCompanyInfoForm').submit();">@Labels.Save</button>
+            </div>
+        </div>
+    </div>
+</div>

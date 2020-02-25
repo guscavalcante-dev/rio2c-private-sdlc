@@ -2101,4 +2101,16 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Deselecionar todos</value>
     <comment>Deselecionar todos</comment>
   </data>
+  <data name="Commission" xml:space="preserve">
+    <value>Comissão</value>
+    <comment>Comissão</comment>
+  </data>
+  <data name="Member" xml:space="preserve">
+    <value>Membro</value>
+    <comment>Membro</comment>
+  </data>
+  <data name="Members" xml:space="preserve">
+    <value>Membros</value>
+    <comment>Membros</comment>
+  </data>
 </root>

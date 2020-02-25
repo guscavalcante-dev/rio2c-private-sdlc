@@ -535,6 +535,7 @@
     <Compile Include="ViewModels\Common\MusicalCommission\MusicalCommissionDetailAppViewModel.cs" />
     <Compile Include="ViewModels\Common\MusicalCommission\MusicalCommissionEditAppViewModel.cs" />
     <Compile Include="ViewModels\Common\MusicalCommission\MusicalCommissionItemListAppViewModel.cs" />
+    <Compile Include="ViewModels\Common\Music\Commissions\MusicCommissionSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Negotiation\GroupDateTableNegotiationAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Negotiation\GroupItemDateTableNegotiationAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Negotiation\GroupRoomTableNegotiationAppViewModel.cs" />

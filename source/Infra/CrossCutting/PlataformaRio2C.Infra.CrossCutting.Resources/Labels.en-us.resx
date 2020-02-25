@@ -2094,4 +2094,16 @@
     <value>Unselect all</value>
     <comment>Deselecionar todos</comment>
   </data>
+  <data name="Commission" xml:space="preserve">
+    <value>Commission</value>
+    <comment>Comissão</comment>
+  </data>
+  <data name="Member" xml:space="preserve">
+    <value>Member</value>
+    <comment>Membro</comment>
+  </data>
+  <data name="Members" xml:space="preserve">
+    <value>Members</value>
+    <comment>Membros</comment>
+  </data>
 </root>

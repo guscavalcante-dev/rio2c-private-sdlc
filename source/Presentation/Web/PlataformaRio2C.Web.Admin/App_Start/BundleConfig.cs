@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-16-2020
+// Last Modified On : 02-25-2020
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -271,7 +271,7 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
-            #region Pages Bundles
+            #region Audiovisual Pages Bundles
 
             #region Holdings
 
@@ -494,7 +494,6 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
-
             #region Pillars
 
             bundles.Add(new ScriptBundle("~/bundles/js/pillars.list.js").Include(
@@ -556,6 +555,44 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Scripts/jquery.unobtrusive-ajax.js"));
 
             #endregion
+            #endregion
+
+            #endregion
+
+            #region Music Page Bundles
+
+            #region Collaborators - Commissions
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.commissions.list.js").Include(
+                "~/Assets/js/music/commissions/music.commissions.totalcount.widget.js",
+                "~/Assets/js/music/commissions/music.commissions.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.commissions.editioncount.js").Include(
+                "~/Assets/js/music/commissions/music.commissions.editioncount.widget.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/spemusic.commissionsakers.create.js").Include(
+            //    "~/Assets/js/speakers/music.commissions.create.js",
+            //    "~/Assets/js/myrio2c.publicemail.js"));
+
+            //bundles.Add(new StyleBundle("~/bundles/css/speakers.details.css").Include(
+            //    "~/Assets/themes/metronic/css/demo4/pages/pricing/pricing-1.css"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/speakers.details.js").Include(
+            //    "~/Assets/js/speakers/speakers.maininformation.widget.js",
+            //    "~/Assets/js/speakers/speakers.socialnetworks.widget.js",
+            //    "~/Assets/js/speakers/speakers.company.widget.js",
+            //    "~/Assets/js/speakers/speakers.conferences.widget.js",
+            //    "~/Assets/js/speakers/speakers.participants.widget.js",
+            //    "~/Assets/js/companies/companyinfo.autocomplete.js",
+            //    "~/Assets/js/myrio2c.companynumber.js",
+            //    "~/Assets/js/speakers/speakers.apiconfiguration.widget.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/speakers.update.js").Include(
+            //    "~/Assets/js/speakers/speakers.update.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/speakers.delete.js").Include(
+            //    "~/Assets/js/speakers/speakers.delete.js"));
+
             #endregion
 
             #endregion
