@@ -8255,7 +8255,6 @@
     <Content Include="Views\Account\Modals\UpdatePasswordModal.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\InterestBaseCommand.cshtml" />
     <Content Include="Views\Speakers\Modals\CreateModal.cshtml" />
-    <Content Include="Views\Speakers\Modals\_TinyForm.cshtml" />
     <Content Include="Views\Speakers\Index.cshtml" />
     <Content Include="Views\Speakers\Widgets\DataTableWidget.cshtml" />
     <Content Include="Views\Speakers\Widgets\EditionCountWidget.cshtml" />
