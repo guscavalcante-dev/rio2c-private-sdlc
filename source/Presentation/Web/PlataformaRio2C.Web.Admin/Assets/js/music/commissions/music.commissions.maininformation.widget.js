@@ -4,21 +4,21 @@
 // Created          : 02-25-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-25-2020
+// Last Modified On : 02-26-2020
 // ***********************************************************************
-// <copyright file="speakers.socialnetworks.widget.js" company="Softo">
+// <copyright file="music.commissions.maininformation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var SpeakersSocialNetworksWidget = function () {
+var CollaboratorsMainInformationWidget = function () {
 
-    var widgetElementId = '#SpeakerSocialNetworksWidget';
+    var widgetElementId = '#MusicCommissionMainInformationWidget';
     var widgetElement = $(widgetElementId);
 
-    var updateModalId = '#UpdateSocialNetworksModal';
-    var updateFormId = '#UpdateSocialNetworksForm';
+    var updateModalId = '#UpdateMainInformationModal';
+    var updateFormId = '#UpdateMainInformationForm';
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
@@ -33,7 +33,7 @@ var SpeakersSocialNetworksWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.collaboratorUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/ShowSocialNetworksWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Commissions/ShowMainInformationWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -59,8 +59,8 @@ var SpeakersSocialNetworksWidget = function () {
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (SpeakersSocialNetworksWidget) !== 'undefined') {
-                    SpeakersSocialNetworksWidget.init();
+                if (typeof (CollaboratorsMainInformationWidget) !== 'undefined') {
+	                CollaboratorsMainInformationWidget.init();
                 }
             },
             onError: function (data) {
@@ -74,17 +74,52 @@ var SpeakersSocialNetworksWidget = function () {
     };
 
     var enableUpdatePlugins = function () {
+        if (typeof (MyRio2cPublicEmail) !== 'undefined') {
+            MyRio2cPublicEmail.init();
+        }
+
+        //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-minibio', maxCharCount: 710 });
+        MyRio2cCropper.init({ formIdOrClass: updateFormId });
+        MyRio2cCommon.enableDatePicker({ inputIdOrClass: updateFormId + ' .enable-datepicker' });
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2' });
+        MyRio2cCommon.enableDropdownChangeEvent("CollaboratorGenderUid", "CollaboratorGenderAdditionalInfo");
+        MyRio2cCommon.enableDropdownChangeEvent("CollaboratorRoleUid", "CollaboratorRoleAdditionalInfo");
+        MyRio2cCommon.enableDropdownChangeEvent("CollaboratorIndustryUid", "CollaboratorIndustryAdditionalInfo");
+        MyRio2cCommon.enableYesNoRadioEvent("HasAnySpecialNeeds");
+        MyRio2cCommon.enableYesNoRadioEvent("HaveYouBeenToRio2CBefore");
+        changePreviousEditionsRequired();
         enableAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
+
+
+    var changePreviousEditionsRequired = function () {
+	    $("#HasEditionSelected").val($('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox:checked').length > 0 ? "True" : null);
+	    var dataValMsgFor = $('[data-valmsg-for="HasEditionSelected"]');
+
+	    $('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox').on('click', function () {
+		    if ($('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox:checked').length > 0) {
+			    $("#HasEditionSelected").val("True");
+			    dataValMsgFor.html('');
+			    dataValMsgFor.addClass('field-validation-valid');
+			    dataValMsgFor.removeClass('field-validation-error');
+		    } else {
+			    $("#HasEditionSelected").val("False");
+			    dataValMsgFor.html('<span for="' + name + '" generated="true" class="">' + labels.selectAtLeastOneOption + '</span>');
+			    dataValMsgFor.removeClass('field-validation-valid');
+			    dataValMsgFor.addClass('field-validation-error');
+		    }
+	    });
+    }
 
     var showUpdateModal = function () {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
         jsonParameters.collaboratorUid = $('#AggregateId').val();
+        jsonParameters.isAddingToCurrentEdition = true;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/ShowUpdateSocialNetworksModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Commissions/ShowUpdateMainInformationModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

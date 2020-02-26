@@ -4,17 +4,17 @@
 // Created          : 02-25-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-25-2020
+// Last Modified On : 02-26-2020
 // ***********************************************************************
-// <copyright file="speakers.company.widget.js" company="Softo">
+// <copyright file="music.commissions.company.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var SpeakersCompanyWidget = function () {
+var CollaboratorsCompanyWidget = function () {
 
-    var widgetElementId = '#SpeakerCompanyWidget';
+    var widgetElementId = '#MusicCommissionCompanyWidget';
     var widgetElement = $(widgetElementId);
 
     var createModalId = '#UpdateCompanyInfoModal';
@@ -33,7 +33,7 @@ var SpeakersCompanyWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.collaboratorUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/ShowCompanyWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Commissions/ShowCompanyWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -59,8 +59,8 @@ var SpeakersCompanyWidget = function () {
             onSuccess: function (data) {
                 $(createModalId).modal('hide');
 
-                if (typeof (SpeakersCompanyWidget) !== 'undefined') {
-                    SpeakersCompanyWidget.init();
+                if (typeof (CollaboratorsCompanyWidget) !== 'undefined') {
+	                CollaboratorsCompanyWidget.init();
                 }
             },
             onError: function (data) {
@@ -97,7 +97,7 @@ var SpeakersCompanyWidget = function () {
         jsonParameters.collaboratorUid = $('#AggregateId').val();
         jsonParameters.organizationUid = organizationUid;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/ShowUpdateCompanyInfoModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Commissions/ShowUpdateCompanyInfoModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -125,13 +125,13 @@ var SpeakersCompanyWidget = function () {
         jsonParameters.collaboratorUid = $('#AggregateId').val();
         jsonParameters.organizationUid = organizationUid;
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/DeleteOrganization'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Commissions/DeleteOrganization'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
                 onSuccess: function () {
-                    if (typeof (SpeakersCompanyWidget) !== 'undefined') {
-                        SpeakersCompanyWidget.init();
+                    if (typeof (CollaboratorsCompanyWidget) !== 'undefined') {
+	                    CollaboratorsCompanyWidget.init();
                     }
                 },
                 // Error

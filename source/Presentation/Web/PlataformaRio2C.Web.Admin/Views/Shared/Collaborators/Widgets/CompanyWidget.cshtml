@@ -10,7 +10,7 @@
     </div>
     <div class="kt-portlet__head-toolbar">
         <div class="kt-portlet__head-actions">
-            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="SpeakersCompanyWidget.showUpdateModal();">
+            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="CollaboratorsCompanyWidget.showUpdateModal();">
                 <i class="flaticon2-plus"></i>
             </button>
         </div>
@@ -32,13 +32,13 @@
                             <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right" style="">
                                 <ul class="kt-nav">
                                     <li class="kt-nav__item">
-                                        <a href="#" class="kt-nav__link" onclick="SpeakersCompanyWidget.showUpdateModal('@attendeeOrganizationDto.Organization.Uid'); return false;">
+                                        <a href="#" class="kt-nav__link" onclick="CollaboratorsCompanyWidget.showUpdateModal('@attendeeOrganizationDto.Organization.Uid'); return false;">
                                             <i class="kt-nav__link-icon flaticon2-edit"></i>
                                             <span class="kt-nav__link-text">@Labels.Edit</span>
                                         </a>
                                     </li>
                                     <li class="kt-nav__item">
-                                        <a href="#" class="kt-nav__link" onclick="SpeakersCompanyWidget.showDeleteModal('@attendeeOrganizationDto.Organization.Uid'); return false;">
+                                        <a href="#" class="kt-nav__link" onclick="CollaboratorsCompanyWidget.showDeleteModal('@attendeeOrganizationDto.Organization.Uid'); return false;">
                                             <i class="kt-nav__link-icon flaticon2-delete"></i>
                                             <span class="kt-nav__link-text">@Labels.Remove</span>
                                         </a>
@@ -48,7 +48,7 @@
                         </div>
 
                         @*<div class="kt-portlet__head-actions text-right pr-2 pt-2">
-                            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="SpeakersCompanyWidget.showUpdateModal('@attendeeOrganizationDto.Organization.Uid');">
+                            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="CollaboratorsCompanyWidget.showUpdateModal('@attendeeOrganizationDto.Organization.Uid');">
                                 <i class="flaticon2-edit"></i>
                             </button>
                         </div>*@

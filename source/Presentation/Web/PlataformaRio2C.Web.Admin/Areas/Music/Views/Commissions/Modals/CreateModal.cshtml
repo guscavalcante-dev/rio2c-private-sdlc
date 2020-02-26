@@ -10,7 +10,7 @@
                 @using (Html.BeginForm("Create", "Commissions", new { Area = "Music" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "CreateCommissionForm" }))
                 {
                     <div id="form-container">
-                        @Html.Partial("/Views/Shared/Collaborators/_TinyForm.cshtml", Model)
+                        @Html.Partial("/Views/Shared/Collaborators/Forms/_TinyForm.cshtml", Model)
                     </div>
                 }
             </div>

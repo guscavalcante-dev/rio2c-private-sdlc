@@ -9,11 +9,11 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("UpdateMainInformation", "Speakers", new { Area = "" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UpdateMainInformationForm" }))
+                @using (Html.BeginForm("UpdateMainInformation", "Commissions", new { Area = "" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UpdateMainInformationForm" }))
                 {
                     @Html.HiddenFor(m => m.CollaboratorUid)
                     <div id="form-container">
-                        @Html.Partial("Modals/UpdateMainInformationForm", Model)
+                        @Html.Partial("/Views/Shared/Collaborators/Forms/_MainInformationForm.cshtml", Model)
                     </div>
                 }
             </div>

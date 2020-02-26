@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-25-2020
+// Last Modified On : 02-26-2020
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -573,18 +573,12 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/music.commissions.create.js").Include(
                 "~/Assets/js/music/commissions/music.commissions.create.js"));
 
-            //bundles.Add(new StyleBundle("~/bundles/css/speakers.details.css").Include(
-            //    "~/Assets/themes/metronic/css/demo4/pages/pricing/pricing-1.css"));
-
-            //bundles.Add(new ScriptBundle("~/bundles/js/speakers.details.js").Include(
-            //    "~/Assets/js/speakers/speakers.maininformation.widget.js",
-            //    "~/Assets/js/speakers/speakers.socialnetworks.widget.js",
-            //    "~/Assets/js/speakers/speakers.company.widget.js",
-            //    "~/Assets/js/speakers/speakers.conferences.widget.js",
-            //    "~/Assets/js/speakers/speakers.participants.widget.js",
-            //    "~/Assets/js/companies/companyinfo.autocomplete.js",
-            //    "~/Assets/js/myrio2c.companynumber.js",
-            //    "~/Assets/js/speakers/speakers.apiconfiguration.widget.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/music.commissions.details.js").Include(
+                "~/Assets/js/music/commissions/music.commissions.maininformation.widget.js",
+                "~/Assets/js/music/commissions/music.commissions.socialnetworks.widget.js",
+                "~/Assets/js/music/commissions/music.commissions.company.widget.js",
+                "~/Assets/js/companies/companyinfo.autocomplete.js",
+                "~/Assets/js/myrio2c.companynumber.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/music.commissions.update.js").Include(
                 "~/Assets/js/music/commissions/music.commissions.update.js"));

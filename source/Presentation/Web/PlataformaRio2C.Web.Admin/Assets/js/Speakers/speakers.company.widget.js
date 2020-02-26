@@ -4,7 +4,7 @@
 // Created          : 12-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-21-2020
+// Last Modified On : 02-26-2020
 // ***********************************************************************
 // <copyright file="speakers.company.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,7 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 
-var SpeakersCompanyWidget = function () {
+var CollaboratorsCompanyWidget = function () {
 
     var widgetElementId = '#SpeakerCompanyWidget';
     var widgetElement = $(widgetElementId);
@@ -59,8 +59,8 @@ var SpeakersCompanyWidget = function () {
             onSuccess: function (data) {
                 $(createModalId).modal('hide');
 
-                if (typeof (SpeakersCompanyWidget) !== 'undefined') {
-                    SpeakersCompanyWidget.init();
+                if (typeof (CollaboratorsCompanyWidget) !== 'undefined') {
+	                CollaboratorsCompanyWidget.init();
                 }
             },
             onError: function (data) {
@@ -130,8 +130,8 @@ var SpeakersCompanyWidget = function () {
                 data: data,
                 // Success
                 onSuccess: function () {
-                    if (typeof (SpeakersCompanyWidget) !== 'undefined') {
-                        SpeakersCompanyWidget.init();
+                    if (typeof (CollaboratorsCompanyWidget) !== 'undefined') {
+	                    CollaboratorsCompanyWidget.init();
                     }
                 },
                 // Error

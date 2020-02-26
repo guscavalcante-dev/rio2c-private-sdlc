@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-25-2020
+// Last Modified On : 02-26-2020
 // ***********************************************************************
 // <copyright file="SpeakersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -175,7 +175,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#SpeakerMainInformationWidget" },
+                    new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Widgets/MainInformationWidget.cshtml", mainInformationWidgetDto), divIdOrClass = "#SpeakerMainInformationWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -279,7 +279,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     message = ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationForm", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Forms/_MainInformationForm.cshtml", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -315,7 +315,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/SocialNetworksWidget", socialNetworksWidgetDto), divIdOrClass = "#SpeakerSocialNetworksWidget" },
+                    new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Widgets/SocialNetworksWidget.cshtml", socialNetworksWidgetDto), divIdOrClass = "#SpeakerSocialNetworksWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -397,7 +397,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     message = ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/UpdateSocialNetworksForm", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Forms/_SocialNetworksForm.cshtml", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -433,7 +433,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/CompanyWidget", companyWidgetDto), divIdOrClass = "#SpeakerCompanyWidget" },
+                    new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Widgets/CompanyWidget.cshtml", companyWidgetDto), divIdOrClass = "#SpeakerCompanyWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -1026,7 +1026,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     message = ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/_TinyForm.cshtml", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Forms/_TinyForm.cshtml", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -1115,7 +1115,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     message = ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/_TinyForm.cshtml", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Forms/_TinyForm.cshtml", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
