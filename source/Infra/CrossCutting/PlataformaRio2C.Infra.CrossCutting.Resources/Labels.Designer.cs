@@ -2374,6 +2374,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Comissão de Música.
+        /// </summary>
+        public static string MusicCommission {
+            get {
+                return ResourceManager.GetString("MusicCommission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MyRio2C.
         /// </summary>
         public static string MyRio2C {

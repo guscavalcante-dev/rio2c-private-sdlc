@@ -2118,4 +2118,8 @@
     <value>Start</value>
     <comment>Início</comment>
   </data>
+  <data name="MusicCommission" xml:space="preserve">
+    <value>Music Commission</value>
+    <comment>Comissão de Música</comment>
+  </data>
 </root>

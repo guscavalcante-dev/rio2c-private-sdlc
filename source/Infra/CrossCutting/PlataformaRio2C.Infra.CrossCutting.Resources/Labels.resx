@@ -2125,4 +2125,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Início</value>
     <comment>Início</comment>
   </data>
+  <data name="MusicCommission" xml:space="preserve">
+    <value>Comissão de Música</value>
+    <comment>Comissão de Música</comment>
+  </data>
 </root>
