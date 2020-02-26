@@ -408,7 +408,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
         #endregion
 
-        #region Onboarding Widget
+        #region Onboarding Info Widget
 
         /// <summary>Shows the onboarding information widget.</summary>
         /// <param name="collaboratorUid">The collaborator uid.</param>
