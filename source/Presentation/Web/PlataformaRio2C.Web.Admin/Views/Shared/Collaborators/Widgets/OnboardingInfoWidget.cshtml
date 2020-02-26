@@ -26,7 +26,7 @@
                     }
                     @if (startDate.HasValue)
                     {
-                        @(startDate?.ToUserTimeZone().ToShortDateString() + " " + startDate?.ToUserTimeZone().ToShortTimeString())
+                        @(startDate?.ToShortDateString() + " " + startDate?.ToShortTimeString())
                     }
                     else
                     {
@@ -44,7 +44,7 @@
                     }
                     @if (finishDate.HasValue)
                     {
-                        @(finishDate?.ToUserTimeZone().ToShortDateString() + " " + finishDate?.ToUserTimeZone().ToShortTimeString())
+                        @(finishDate?.ToShortDateString() + " " + finishDate?.ToShortTimeString())
                     }
                     else
                     {
@@ -64,7 +64,7 @@
                     }
                     @if (userDate.HasValue)
                     {
-                        @(userDate?.ToUserTimeZone().ToShortDateString() + " " + userDate?.ToUserTimeZone().ToShortTimeString())
+                        @(userDate?.ToShortDateString() + " " + userDate?.ToShortTimeString())
                     }
                     else
                     {
@@ -82,7 +82,7 @@
                     }
                     @if (collaboratorDate.HasValue)
                     {
-                        @(collaboratorDate?.ToUserTimeZone().ToShortDateString() + " " + collaboratorDate?.ToUserTimeZone().ToShortTimeString())
+                        @(collaboratorDate?.ToShortDateString() + " " + collaboratorDate?.ToShortTimeString())
                     }
                     else
                     {
@@ -105,7 +105,7 @@
                     }
                     @if (termsAcceptanceDate.HasValue)
                     {
-                        @(termsAcceptanceDate?.ToUserTimeZone().ToShortDateString() + " " + termsAcceptanceDate?.ToUserTimeZone().ToShortTimeString())
+                        @(termsAcceptanceDate?.ToShortDateString() + " " + termsAcceptanceDate?.ToShortTimeString())
                     }
                     else
                     {
