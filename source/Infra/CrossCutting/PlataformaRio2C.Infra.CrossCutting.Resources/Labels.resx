@@ -2117,4 +2117,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Aceite do regulamento</value>
     <comment>Aceite do regulamento</comment>
   </data>
+  <data name="End" xml:space="preserve">
+    <value>Término</value>
+    <comment>Término</comment>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Início</value>
+    <comment>Início</comment>
+  </data>
 </root>

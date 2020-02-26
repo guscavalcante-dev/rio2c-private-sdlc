@@ -2110,4 +2110,12 @@
     <value>Terms acceptance</value>
     <comment>Aceite do regulamento</comment>
   </data>
+  <data name="End" xml:space="preserve">
+    <value>Finish</value>
+    <comment>Término</comment>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Start</value>
+    <comment>Início</comment>
+  </data>
 </root>

@@ -1357,6 +1357,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Término.
+        /// </summary>
+        public static string End {
+            get {
+                return ResourceManager.GetString("End", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data de término.
         /// </summary>
         public static string EndDate {
@@ -4116,6 +4125,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Speeches {
             get {
                 return ResourceManager.GetString("Speeches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Início.
+        /// </summary>
+        public static string Start {
+            get {
+                return ResourceManager.GetString("Start", resourceCulture);
             }
         }
         
