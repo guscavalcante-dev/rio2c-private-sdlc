@@ -509,82 +509,80 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
         //#endregion
 
-        //#region Send Invitation Emails
+        #region Send Invitation Emails
 
-        ///// <summary>Sends the invitation emails.</summary>
-        ///// <param name="selectedCollaboratorsUids">The selected collaborators uids.</param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public async Task<ActionResult> SendInvitationEmails(string selectedCollaboratorsUids)
-        //{
-        //    AppValidationResult result = null;
+        /// <summary>Sends the invitation emails.</summary>
+        /// <param name="selectedCollaboratorsUids">The selected collaborators uids.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> SendInvitationEmails(string selectedCollaboratorsUids)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(selectedCollaboratorsUids))
+                {
+                    throw new DomainException(Messages.SelectAtLeastOneOption);
+                }
 
-        //    try
-        //    {
-        //        if (string.IsNullOrEmpty(selectedCollaboratorsUids))
-        //        {
-        //            throw new DomainException(Messages.SelectAtLeastOneOption);
-        //        }
+                var collaboratorsUids = selectedCollaboratorsUids?.ToListGuid(',');
+                if (!collaboratorsUids.Any())
+                {
+                    throw new DomainException(Messages.SelectAtLeastOneOption);
+                }
 
-        //        var collaboratorsUids = selectedCollaboratorsUids?.ToListGuid(',');
-        //        if (!collaboratorsUids.Any())
-        //        {
-        //            throw new DomainException(Messages.SelectAtLeastOneOption);
-        //        }
+                var collaboratorsDtos = await this.collaboratorRepo.FindAllCollaboratorsByCollaboratorsUids(this.EditionDto.Id, collaboratorsUids);
+                if (collaboratorsDtos?.Any() != true)
+                {
+                    throw new DomainException(Messages.SelectAtLeastOneOption);
+                }
 
-        //        var collaboratorsDtos = await this.collaboratorRepo.FindAllCollaboratorsByCollaboratorsUids(this.EditionDto.Id, collaboratorsUids);
-        //        if (collaboratorsDtos?.Any() != true)
-        //        {
-        //            throw new DomainException(Messages.SelectAtLeastOneOption);
-        //        }
+                foreach (var collaboratorDto in collaboratorsDtos)
+                {
+                    var collaboratorLanguageCode = collaboratorDto.Language?.Code ?? this.UserInterfaceLanguage;
 
-        //        foreach (var collaboratorDto in collaboratorsDtos)
-        //        {
-        //            var collaboratorLanguageCode = collaboratorDto.Language?.Code ?? this.UserInterfaceLanguage;
+                    try
+                    {
+                        var result = await this.CommandBus.Send(new SendMusicCommissionWelcomeEmailAsync(
+                            collaboratorDto.Collaborator.Uid,
+                            collaboratorDto.User.SecurityStamp,
+                            collaboratorDto.User.Id,
+                            collaboratorDto.User.Uid,
+                            collaboratorDto.GetFirstName(),
+                            collaboratorDto.GetFullName(collaboratorLanguageCode),
+                            collaboratorDto.User.Email,
+                            this.EditionDto.Edition,
+                            this.AdminAccessControlDto.User.Id,
+                            collaboratorLanguageCode));
+                        if (!result.IsValid)
+                        {
+                            throw new DomainException(Messages.CorrectFormValues);
+                        }
+                    }
+                    catch (DomainException ex)
+                    {
+                        //TODO: Check errors
+                        //var errors = result?.Errors?.Select(e => e.Message)?.Join(", ");
+                    }
+                    catch (Exception ex)
+                    {
+                        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                    }
+                }
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage(), }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
 
-        //            try
-        //            {
-        //                result = await this.CommandBus.Send(new SendSpeakerWelcomeEmailAsync(
-        //                    collaboratorDto.Collaborator.Uid,
-        //                    collaboratorDto.User.SecurityStamp,
-        //                    collaboratorDto.User.Id,
-        //                    collaboratorDto.User.Uid,
-        //                    collaboratorDto.GetFirstName(),
-        //                    collaboratorDto.GetFullName(collaboratorLanguageCode),
-        //                    collaboratorDto.User.Email,
-        //                    this.EditionDto.Edition,
-        //                    this.AdminAccessControlDto.User.Id,
-        //                    collaboratorLanguageCode));
-        //                if (!result.IsValid)
-        //                {
-        //                    throw new DomainException(Messages.CorrectFormValues);
-        //                }
-        //            }
-        //            catch (DomainException ex)
-        //            {
-        //                //TODO: Check errors
-        //                //var errors = result?.Errors?.Select(e => e.Message)?.Join(", ");
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-        //            }
-        //        }
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        return Json(new { status = "error", message = ex.GetInnerMessage(), }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-        //    }
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Email.ToLowerInvariant(), Labels.Sent.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+        }
 
-        //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Email.ToLowerInvariant(), Labels.Sent.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //}
-
-        //#endregion
+        #endregion
 
         #region Total Count Widget
 
