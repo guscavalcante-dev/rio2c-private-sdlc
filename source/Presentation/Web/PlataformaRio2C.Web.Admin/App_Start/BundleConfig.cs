@@ -575,10 +575,7 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/music.commissions.details.js").Include(
                 "~/Assets/js/music/commissions/music.commissions.maininformation.widget.js",
-                "~/Assets/js/music/commissions/music.commissions.socialnetworks.widget.js",
-                "~/Assets/js/music/commissions/music.commissions.company.widget.js",
-                "~/Assets/js/companies/companyinfo.autocomplete.js",
-                "~/Assets/js/myrio2c.companynumber.js"));
+                "~/Assets/js/music/commissions/music.commissions.socialnetworks.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/music.commissions.update.js").Include(
                 "~/Assets/js/music/commissions/music.commissions.update.js"));

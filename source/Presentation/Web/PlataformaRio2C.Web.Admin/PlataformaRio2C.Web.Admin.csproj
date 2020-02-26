@@ -449,7 +449,6 @@
     <Content Include="Assets\js\events\events.datatable.widget.js" />
     <Content Include="Assets\js\events\events.editioncount.widget.js" />
     <Content Include="Assets\js\events\events.totalcount.widget.js" />
-    <Content Include="Assets\js\music\commissions\music.commissions.company.widget.js" />
     <Content Include="Assets\js\music\commissions\music.commissions.create.js" />
     <Content Include="Assets\js\music\commissions\music.commissions.datatable.widget.js" />
     <Content Include="Assets\js\music\commissions\music.commissions.delete.js" />
@@ -7075,18 +7074,15 @@
     <Content Include="Views\Shared\Collaborators\Forms\_TinyForm.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Modals\CreateModal.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Modals\EventbriteCsvModal.cshtml" />
-    <Content Include="Areas\Music\Views\Commissions\Modals\UpdateCompanyInfoModal.cshtml" />
     <Content Include="Views\Shared\Collaborators\Forms\_MainInformationForm.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Modals\UpdateMainInformationModal.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Modals\UpdateModal.cshtml" />
     <Content Include="Views\Shared\Collaborators\Forms\_SocialNetworksForm.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Modals\UpdateSocialNetworksModal.cshtml" />
-    <Content Include="Areas\Music\Views\Commissions\Widgets\ApiConfigurationWidget.cshtml" />
     <Content Include="Views\Shared\Collaborators\Widgets\CompanyWidget.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Widgets\DataTableWidget.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Views\Shared\Collaborators\Widgets\MainInformationWidget.cshtml" />
-    <Content Include="Areas\Music\Views\Commissions\Widgets\RelatedParticipantsWidget.cshtml" />
     <Content Include="Views\Shared\Collaborators\Widgets\SocialNetworksWidget.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Areas\Music\Views\_ViewStart.cshtml" />
