@@ -98,10 +98,10 @@
             <div class="row mt-3">
                 <div class="col-12">
                     @{
-                        var termsAcceptanceDate = ViewBag.CollaboratorTypeUid == CollaboratorType.ExecutiveAudiovisual.Uid ? Model.AttendeeCollaborator.PlayerTermsAcceptanceDate?.ToUserTimeZone() :
-                                                  ViewBag.CollaboratorTypeUid == CollaboratorType.Industry.Uid ? Model.AttendeeCollaborator.ProducerTermsAcceptanceDate?.ToUserTimeZone() :
-                                                  ViewBag.CollaboratorTypeUid == CollaboratorType.Speaker.Uid ? Model.AttendeeCollaborator.SpeakerTermsAcceptanceDate?.ToUserTimeZone() :
-                                                  Model.AttendeeCollaborator.OnboardingCollaboratorDate?.ToUserTimeZone();
+                        var termsAcceptanceDate = ViewBag.CollaboratorTypeUid == CollaboratorType.ExecutiveAudiovisual.Uid ? Model.AttendeeCollaborator?.PlayerTermsAcceptanceDate?.ToUserTimeZone() :
+                                                  ViewBag.CollaboratorTypeUid == CollaboratorType.Industry.Uid ? Model.AttendeeCollaborator?.ProducerTermsAcceptanceDate?.ToUserTimeZone() :
+                                                  ViewBag.CollaboratorTypeUid == CollaboratorType.Speaker.Uid ? Model.AttendeeCollaborator?.SpeakerTermsAcceptanceDate?.ToUserTimeZone() :
+                                                  Model.AttendeeCollaboratorTypeDto?.AttendeeCollaboratorType?.TermsAcceptanceDate?.ToUserTimeZone();
                     }
                     @if (termsAcceptanceDate.HasValue)
                     {
