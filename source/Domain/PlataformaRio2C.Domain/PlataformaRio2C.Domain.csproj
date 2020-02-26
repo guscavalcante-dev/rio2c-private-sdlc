@@ -101,6 +101,7 @@
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorSiteDetailsDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorSiteCompanyWidgetDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorApiConfigurationWidgetDto.cs" />
+    <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorOnboardingInfoWidgetDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorSiteMainInformationWidgetDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorTypeDto.cs" />

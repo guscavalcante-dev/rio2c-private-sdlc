@@ -360,7 +360,8 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/speakers/speakers.participants.widget.js",
                 "~/Assets/js/companies/companyinfo.autocomplete.js",
                 "~/Assets/js/myrio2c.companynumber.js",
-                "~/Assets/js/speakers/speakers.apiconfiguration.widget.js"));
+                "~/Assets/js/speakers/speakers.apiconfiguration.widget.js",
+                "~/Assets/js/speakers/speakers.onboardinginfo.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/speakers.update.js").Include(
                 "~/Assets/js/speakers/speakers.update.js"));
@@ -575,7 +576,8 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/music.commissions.details.js").Include(
                 "~/Assets/js/music/commissions/music.commissions.maininformation.widget.js",
-                "~/Assets/js/music/commissions/music.commissions.socialnetworks.widget.js"));
+                "~/Assets/js/music/commissions/music.commissions.socialnetworks.widget.js",
+                "~/Assets/js/music/commissions/music.commissions.onboardinginfo.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/music.commissions.update.js").Include(
                 "~/Assets/js/music/commissions/music.commissions.update.js"));

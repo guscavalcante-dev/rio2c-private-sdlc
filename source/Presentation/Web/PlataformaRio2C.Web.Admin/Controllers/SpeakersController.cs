@@ -27,6 +27,7 @@ using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
@@ -650,6 +651,35 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #endregion
 
+        #region Onboarding Widget
+
+        /// <summary>Shows the onboarding information widget.</summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowOnboardingInfoWidget(Guid? collaboratorUid)
+        {
+            var collaboratorTypeUid = CollaboratorType.Speaker.Uid;
+
+            var onboardingInfoWidgetDto = await this.attendeeCollaboratorRepo.FindOnboardingInfoWidgetDtoAsync(collaboratorUid ?? Guid.Empty, collaboratorTypeUid, this.EditionDto.Id);
+            if (onboardingInfoWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            ViewBag.CollaboratorTypeUid = collaboratorTypeUid;
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Widgets/OnboardingInfoWidget.cshtml", onboardingInfoWidgetDto), divIdOrClass = "#SpeakerOnboardingInfoWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
 
         #region Api Configuration Widget
 

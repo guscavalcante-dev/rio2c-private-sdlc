@@ -4345,6 +4345,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aceite do regulamento.
+        /// </summary>
+        public static string TermsAcceptance {
+            get {
+                return ResourceManager.GetString("TermsAcceptance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data de aceite do regulamento.
         /// </summary>
         public static string TermsAcceptanceDate {

@@ -2113,4 +2113,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Membros</value>
     <comment>Membros</comment>
   </data>
+  <data name="TermsAcceptance" xml:space="preserve">
+    <value>Aceite do regulamento</value>
+    <comment>Aceite do regulamento</comment>
+  </data>
 </root>

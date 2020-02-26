@@ -429,6 +429,7 @@
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.editioncount.widget.js" />
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.maininformation.widget.js" />
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.totalcount.widget.js" />
+    <Content Include="Assets\js\music\commissions\music.commissions.onboardinginfo.widget.js" />
     <Content Include="Assets\js\reports\reports.audiovisual.subscriptions.widget.js" />
     <Content Include="Assets\js\rooms\rooms.conferences.widget.js" />
     <Content Include="Assets\js\rooms\rooms.maininformation.widget.js" />
@@ -458,6 +459,7 @@
     <Content Include="Assets\js\music\commissions\music.commissions.totalcount.widget.js" />
     <Content Include="Assets\js\music\commissions\music.commissions.update.js" />
     <Content Include="Assets\js\speakers\speakers.conferences.widget.js" />
+    <Content Include="Assets\js\speakers\speakers.onboardinginfo.widget.js" />
     <Content Include="Assets\js\speakers\speakers.socialnetworks.widget.js" />
     <Content Include="Assets\js\speakers\speakers.participants.widget.js" />
     <Content Include="Assets\js\projects\projects.pitching.editioncount.widget.js" />
@@ -8357,6 +8359,7 @@
     <Content Include="Views\Projects\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Views\Projects\Widgets\PitchingDataTableWidget.cshtml" />
     <Content Include="Views\Projects\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Views\Shared\Collaborators\Widgets\OnboardingInfoWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

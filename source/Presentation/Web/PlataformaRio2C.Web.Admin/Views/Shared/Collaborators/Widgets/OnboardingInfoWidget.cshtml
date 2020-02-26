@@ -1,0 +1,118 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Entities;
+@model AttendeeCollaboratorOnboardingInfoWidgetDto
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+            @Labels.Onboarding
+        </h3>
+    </div>
+    @*<div class="kt-portlet__head-toolbar">
+        <div class="kt-portlet__head-actions">
+            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="CollaboratorsSocialNetworksWidget.showUpdateModal();">
+                <i class="flaticon2-edit"></i>
+            </button>
+        </div>
+    </div>*@
+</div>
+<div class="kt-portlet__body">
+    <div class="row">
+        <div class="col-md-6 mt-20">
+            <h3 class="kt-heading kt-heading--sm mb-0 mt-0">@Labels.StartDate</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @{
+                        var startDate = Model.AttendeeCollaborator.OnboardingStartDate?.ToUserTimeZone();
+                    }
+                    @if (startDate.HasValue)
+                    {
+                        @(startDate?.ToUserTimeZone().ToShortDateString() + " " + startDate?.ToUserTimeZone().ToShortTimeString())
+                    }
+                    else
+                    {
+                        @:-
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mt-20">
+            <h3 class="kt-heading kt-heading--sm mb-0 mt-0">@Labels.EndDate</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @{
+                        var finishDate = Model.AttendeeCollaborator.OnboardingFinishDate?.ToUserTimeZone();
+                    }
+                    @if (finishDate.HasValue)
+                    {
+                        @(finishDate?.ToUserTimeZone().ToShortDateString() + " " + finishDate?.ToUserTimeZone().ToShortTimeString())
+                    }
+                    else
+                    {
+                        @:-
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 mt-20">
+            <h3 class="kt-heading kt-heading--sm mb-0 mt-0">@Labels.AccessData</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @{
+                        var userDate = Model.AttendeeCollaborator.OnboardingUserDate?.ToUserTimeZone();
+                    }
+                    @if (userDate.HasValue)
+                    {
+                        @(userDate?.ToUserTimeZone().ToShortDateString() + " " + userDate?.ToUserTimeZone().ToShortTimeString())
+                    }
+                    else
+                    {
+                        @:-
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mt-20">
+            <h3 class="kt-heading kt-heading--sm mb-0 mt-0">@Labels.PersonalInformation</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @{
+                        var collaboratorDate = Model.AttendeeCollaborator.OnboardingCollaboratorDate?.ToUserTimeZone();
+                    }
+                    @if (collaboratorDate.HasValue)
+                    {
+                        @(collaboratorDate?.ToUserTimeZone().ToShortDateString() + " " + collaboratorDate?.ToUserTimeZone().ToShortTimeString())
+                    }
+                    else
+                    {
+                        @:-
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 mt-20">
+            <h3 class="kt-heading kt-heading--sm mb-0 mt-0">@Labels.TermsAcceptance</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @{
+                        var termsAcceptanceDate = ViewBag.CollaboratorTypeUid == CollaboratorType.ExecutiveAudiovisual.Uid ? Model.AttendeeCollaborator.PlayerTermsAcceptanceDate?.ToUserTimeZone() :
+                                                  ViewBag.CollaboratorTypeUid == CollaboratorType.Industry.Uid ? Model.AttendeeCollaborator.ProducerTermsAcceptanceDate?.ToUserTimeZone() :
+                                                  ViewBag.CollaboratorTypeUid == CollaboratorType.Speaker.Uid ? Model.AttendeeCollaborator.SpeakerTermsAcceptanceDate?.ToUserTimeZone() :
+                                                  Model.AttendeeCollaborator.OnboardingCollaboratorDate?.ToUserTimeZone();
+                    }
+                    @if (termsAcceptanceDate.HasValue)
+                    {
+                        @(termsAcceptanceDate?.ToUserTimeZone().ToShortDateString() + " " + termsAcceptanceDate?.ToUserTimeZone().ToShortTimeString())
+                    }
+                    else
+                    {
+                        @:-
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
