@@ -2122,4 +2122,8 @@
     <value>Music Commission</value>
     <comment>Comissão de Música</comment>
   </data>
+  <data name="MusicProjects" xml:space="preserve">
+    <value>Music Projects</value>
+    <comment>Projetos de Música</comment>
+  </data>
 </root>

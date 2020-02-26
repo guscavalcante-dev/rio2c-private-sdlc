@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-16-2020
+// Last Modified On : 02-26-2020
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -243,7 +243,7 @@ namespace PlataformaRio2C.Web.Site
 
             #endregion
 
-            #region Pages Bundles
+            #region Audiovisual Pages Bundles
 
             #region Onboarding Wizard
 
@@ -358,6 +358,41 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/js/networks/networks.messages.conversations.widget.js",
                 "~/Assets/js/networks/networks.messages.conversation.widget.js",
                 "~/Assets/js/networks/chat.js"));
+
+            #endregion
+
+            #endregion
+
+            #region Music Page Bundles
+
+            #region Projects
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/projects.producerinfo.js").Include(
+            //    "~/Assets/js/projects/projects.producerinfo.js",
+            //    "~/Assets/js/companies/companyinfo.autocomplete.js",
+            //    "~/Assets/js/myrio2c.companynumber.js",
+            //    "~/Assets/js/myrio2c.additionalinfo.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/projects.projectinfo.js").Include(
+            //    "~/Assets/js/projects/projects.projectinfo.js",
+            //    "~/Assets/js/myrio2c.additionalinfo.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/projects.buyercompany.widget.js").Include(
+            //    "~/Assets/js/projects/projects.buyercompany.widget.js",
+            //    "~/Scripts/jquery.unobtrusive-ajax.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/projects.widget.js").Include(
+            //    "~/Assets/js/projects/projects.maininformation.widget.js",
+            //    "~/Assets/js/projects/projects.interest.widget.js",
+            //    "~/Assets/js/projects/projects.links.widget.js",
+            //    "~/Assets/js/myrio2c.additionalinfo.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.projects.evaluation.list.widget.js").Include(
+                "~/Assets/js/music/projects/music.projects.evaluation.list.widget.js",
+                "~/Scripts/jquery.unobtrusive-ajax.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/projects.buyerevaluation.update.widget.js").Include(
+            //    "~/Assets/js/projects/projects.buyerevaluation.update.widget.js"));
 
             #endregion
 

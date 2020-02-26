@@ -1,0 +1,97 @@
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Entities
+@using PlataformaRio2C.Domain.Statics
+@model ProjectDto
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+}
+@if (Model != null)
+{
+    var projectTitle = Model.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value;
+
+    <div class="kt-portlet__body">
+        <div class="kt-widget5">
+            <div class="kt-widget kt-widget--project-1" style="border-bottom: 0.07rem dashed #ebedf2;">
+                <div class="kt-widget__head pt-0">
+                    <div class="kt-widget__label">
+                        <div class="kt-widget__media" style="padding-right: 10px">
+                            <a href="@Url.Action("Details", "Companies", new { Area = "", id = Model.SellerAttendeeOrganizationDto?.Organization?.Uid })" target="_blank">
+                                @if (Model.SellerAttendeeOrganizationDto?.Organization?.HasImage() == true)
+                                {
+                                    <span class="kt-media kt-media--lg kt-margin-r-5 kt-margin-t-5">
+                                        <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, Model.SellerAttendeeOrganizationDto.Organization.Uid, Model.SellerAttendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="" style="max-width: 65px; max-height: 65px;">
+                                    </span>
+                                }
+                                else
+                                {
+                                    <div class="kt-userpic kt-userpic--lg kt-userpic--brand kt-margin-r-5 kt-margin-t-5">
+                                        <span>@(Model.SellerAttendeeOrganizationDto?.Organization?.GetTradeNameAbbreviation())</span>
+                                    </div>
+                                }
+                            </a>
+                        </div>
+                        <div class="kt-widget__info mt-0 pl-0">
+                            <a href="@Url.Action("EvaluationDetails", "Projects", new { id = Model.Project.Uid, Area = "" })" class="kt-widget__title">
+                                @projectTitle
+                            </a>
+                            <span class="kt-widget__desc">
+                                @Labels.Producer: <a href="@Url.Action("Details", "Companies", new { Area = "", id = Model.SellerAttendeeOrganizationDto?.Organization?.Uid })" target="_blank">@(Model.SellerAttendeeOrganizationDto?.Organization?.TradeName)</a>
+                            </span>
+                            <span class="kt-widget__desc">
+                                @Labels.Genre:
+                                @{
+                                    var projectInterestsDtos = Model.GetAllInterestsByInterestGroupUid(InterestGroup.Genre.Uid);
+                                    if (projectInterestsDtos?.Any() == true)
+                                    {
+                                        foreach (var projectInterestDto in projectInterestsDtos)
+                                        {
+                                            <span class="kt-badge kt-badge--inline kt-badge--info">@(projectInterestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
+
+                                        }
+                                    }
+                                }
+                            </span>
+                            <span class="kt-widget__desc">
+                                @{
+                                    var totalInterestGroupsMatchesCount = Model.GetTotalInterestGroupsMatchesCount();
+                                }
+                                <small>@totalInterestGroupsMatchesCount @((totalInterestGroupsMatchesCount != 1 ? Labels.Matches : Labels.Match).ToLowerInvariant()):</small>
+                                @foreach (var interestGroupsMatch in Model.InterestGroupsMatches.OrderBy(igm => igm.DisplayOrder))
+                                {
+                                    <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@interestGroupsMatch.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
+                                }
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-widget__body pb-0">
+                    <div class="kt-widget__content">
+                        <span class="kt-widget__text mt-0">
+                            @(Html.Raw(Model.GetLogLineDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectLogLine?.Value))
+                        </span>
+                        @Html.Partial("Shared/_BuyersEvaluations", Model)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-20 justify-content-end">
+            <div class="col-4 text-center">
+                <a href="@Url.Action("EvaluationDetails", "Projects", new { id = Model.Project.Uid, Area = "" })" class="btn btn-brand">@Labels.View</a>
+            </div>
+            @if (editionDto?.IsProjectEvaluationOpen() == true)
+            {
+                <div class="col-4 text-center">
+                    <button type="button" class="btn btn-success" onclick="ProjectsBuyerEvaluationUpdateWidget.showAcceptModal('@Model.Project.Uid');">
+                        <i class="fa fa-thumbs-up"></i> @Labels.AcceptProject
+                    </button>
+                </div>
+                <div class="col-4 text-center">
+                    <button type="button" class="btn btn-danger" onclick="ProjectsBuyerEvaluationUpdateWidget.showRefuseModal('@Model.Project.Uid');">
+                        <i class="fa fa-thumbs-down"></i> @Labels.RefuseProject
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+}
