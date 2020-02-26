@@ -70,8 +70,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         {
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Commission, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Commission, Url.Action("Index", "Commissions", new { Area = "Music" }))
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.MusicCommission, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.MusicCommission, Url.Action("Index", "Commissions", new { Area = "Music" }))
             });
 
             #endregion
@@ -133,8 +133,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Commission, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Commission, Url.Action("Index", "Commissions", new { Area = "Music" })),
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.MusicCommission, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.MusicCommission, Url.Action("Index", "Commissions", new { Area = "Music" })),
                 new BreadcrumbItemHelper(attendeeCollaboratorDto.Collaborator.GetFullName(), Url.Action("Details", "Commissions", new { Area = "Music", id }))
             });
 
