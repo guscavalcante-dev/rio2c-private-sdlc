@@ -2182,4 +2182,8 @@
     <value>Vehicle at Guest's Disposal</value>
     <comment>Veículo à Disposição</comment>
   </data>
+  <data name="AirportTransfer" xml:space="preserve">
+    <value>Airport Transfer</value>
+    <comment>Transfer Aeroporto</comment>
+  </data>
 </root>

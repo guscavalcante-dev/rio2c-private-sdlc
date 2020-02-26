@@ -313,6 +313,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Transfer Aeroporto.
+        /// </summary>
+        public static string AirportTransfer {
+            get {
+                return ResourceManager.GetString("AirportTransfer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Todos.
         /// </summary>
         public static string All {

@@ -4,23 +4,25 @@
     var editionDto = ViewBag.EditionDto as EditionDto;
 }
 
-    <div class="row">
-        <div class="form-group col-md-4">
-            @Html.LabelFor(m => m.From, new { @class = "control-label" })
-            @Html.TextBoxFor(m => m.From, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.From, "", new { @class = "text-danger" })
-        </div>
-        <div class="form-group col-md-4">
-            @Html.LabelFor(m => m.To, new { @class = "control-label" })
-            @Html.TextBoxFor(m => m.To, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.To, "", new { @class = "text-danger" })
-        </div>
-        <div class="form-group col-md-4">
-            @Html.LabelFor(m => m.Departure, new { @class = "control-label" })
-            @Html.TextBox("Date", Model?.Departure?.Date.ToShortDateString(), new { @class = "form-control enable-datetimepicker" })
-            @Html.ValidationMessageFor(m => m.Departure, "", new { @class = "text-danger" })
-        </div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.From, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.From, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.From, "", new { @class = "text-danger" })
     </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.To, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.To, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.To, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Departure, new { @class = "control-label" })
+        @Html.TextBox("Date", Model?.Departure?.Date.ToShortDateString(), new { @class = "form-control enable-datetimepicker" })
+        @Html.ValidationMessageFor(m => m.Departure, "", new { @class = "text-danger" })
+    </div>
+</div>
 
 <div class="row">
     <div class="form-group col-md-12">

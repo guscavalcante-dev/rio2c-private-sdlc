@@ -18,6 +18,7 @@ using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -28,7 +29,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public int AttendeeCollaboratorId { get; set; }
         public int? AirfareAttendeeLogisticSponsorId { get; set; }
         public int? AccommodationAttendeeLogisticSponsorId { get; set; }
-        public int? AirportTransferAttendeeLogisticSponsorId { get; set; }
+        public Guid? AirportTransferAttendeeLogisticSponsorUid { get; set; }
+
+        [Display(Name = "Others", ResourceType = typeof(Labels))]
+        public string AirportTransferAttendeeLogisticSponsorOthers { get; set; }
 
         public bool IsCityTransferRequired { get; set; }
         public bool IsVehicleDisposalRequired { get; set; }

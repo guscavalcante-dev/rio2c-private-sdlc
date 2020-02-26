@@ -21,7 +21,7 @@
     <div class="kt-section__content mt-3">
         <div class="kt-checkbox-list">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <label class="kt-checkbox">
                         <input type="checkbox"
                                name="IsAirfareTicketRequired"
@@ -49,8 +49,19 @@
                 <input type="radio" name="AirfareAttendeeLogisticSponsorId" checked> Patrocinado por outras instituições
                 <span></span>
             </label>
-            <div class="form-group">
-                <input type="text" name="AirportTransferOtherLogisticSponsor" class="form-control" placeholder="Outra instituição" autocomplete="off" style="cursor: auto;">
+        </div>
+        <div class="row">
+            <div class="form-group col-md-8 mb-0" data-id="City">
+                <div class="view">
+                    @Html.Hidden("InitialCityUid", Model.AirportTransferAttendeeLogisticSponsorUid)
+                    @Html.DropDownList("CityUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control enable-select2" })
+                    <span class="form-text text-muted text-right"><a href="" onclick="return AddressesForm.enableNewCity();" class="btn-link btn-edit">@(Labels.NewM.ToLowerInvariant()) @(Labels.Sponsor.ToLowerInvariant())</a></span>
+                </div>
+                <div class="edit d-none">
+                    @Html.TextBoxFor(m => m.AirportTransferAttendeeLogisticSponsorOthers, new { @class = "form-control" })
+                    <span class="form-text text-muted text-right"><a href="" onclick="return AddressesForm.disableNewCity();" class="btn-link">@(Labels.Cancel.ToLowerInvariant())</a></span>
+                </div>
+                @Html.ValidationMessageFor(m => m.AirportTransferAttendeeLogisticSponsorOthers, "", new { @class = "text-danger" })
             </div>
         </div>
     </div>
@@ -62,11 +73,11 @@
     <div class="kt-section__content mt-3">
         <div class="kt-checkbox-list">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <label class="kt-checkbox">
                         <input type="checkbox"
                                name="IsAirfareTicketRequired"
-                               value="true" /> Necessita
+                               value="true" checked /> Necessita
                         <span></span>
                     </label>
                 </div>
@@ -99,11 +110,16 @@
     <div class="kt-section__content mt-3">
         <div class="kt-checkbox-list">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
+                    <label class="control-label">@Labels.AirportTransfer</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
                     <label class="kt-checkbox">
                         <input type="checkbox"
                                name="IsAirfareTicketRequired"
-                               value="true" /> Necessita
+                               value="true" checked /> Necessita
                         <span></span>
                     </label>
                 </div>
@@ -134,19 +150,19 @@
     <div class="kt-section__content mt-3">
         <div class="kt-checkbox-list">
             <div class="row">
-                <div class="col-md-6">
-                    <label class="control-label">@Labels.TransferCity</label>
+                <div class="col-md-12">
+                    <label class="control-label"></label>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6 form-group mb-0">
+                <div class="col-md-12 form-group mb-0">
                     <label class="kt-checkbox">
                         <input type="checkbox"
                                name="IsCityTransferRequired"
                                value="true"
-                               checked /> Necessita
-                        <span></span>
-                    </label>
+                               checked /> Solicitar @Labels.TransferCity
+                            <span></span>
+                        </label>
                     <span class="form-text text-muted">Residentes do Rio de Janeiro - Somente casos extremamente excepcionais</span>
                 </div>
             </div>
@@ -158,19 +174,19 @@
     <div class="kt-section__content mt-3">
         <div class="kt-checkbox-list">
             <div class="row">
-                <div class="col-md-6">
-                    <label class="control-label">@Labels.VehicleAtDisposal</label>
+                <div class="col-md-12">
+                    <label class="control-label"></label>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6 form-group mb-0">
+                <div class="col-md-12 form-group mb-0">
                     <label class="kt-checkbox">
                         <input type="checkbox"
                                name="IsVehicleDisposalRequired"
                                value="true"
-                               checked /> Necessita
-                        <span></span>
-                    </label>
+                               checked /> Solicitar @Labels.VehicleAtDisposal
+                            <span></span>
+                        </label>
                     <span class="form-text text-muted">Keynotes somente</span>
                 </div>
             </div>

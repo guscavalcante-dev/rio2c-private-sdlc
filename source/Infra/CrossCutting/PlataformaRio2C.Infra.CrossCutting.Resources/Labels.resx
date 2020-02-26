@@ -2189,4 +2189,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Carro à Disposição</value>
     <comment>Veículo à Disposição</comment>
   </data>
+  <data name="AirportTransfer" xml:space="preserve">
+    <value>Transfer Aeroporto</value>
+    <comment>Transfer Aeroporto</comment>
+  </data>
 </root>
