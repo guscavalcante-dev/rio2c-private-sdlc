@@ -358,6 +358,7 @@
     <Compile Include="Controllers\ParticipantRolesController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\PillarsController.cs" />
+    <Compile Include="Controllers\SalesPlatformsController.cs" />
     <Compile Include="Controllers\TracksController.cs" />
     <Compile Include="Controllers\RoomsController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
@@ -458,6 +459,7 @@
     <Content Include="Assets\js\music\commissions\music.commissions.socialnetworks.widget.js" />
     <Content Include="Assets\js\music\commissions\music.commissions.totalcount.widget.js" />
     <Content Include="Assets\js\music\commissions\music.commissions.update.js" />
+    <Content Include="Assets\js\salesplatforms\salesplatforms.export.js" />
     <Content Include="Assets\js\speakers\speakers.conferences.widget.js" />
     <Content Include="Assets\js\speakers\speakers.onboardinginfo.widget.js" />
     <Content Include="Assets\js\speakers\speakers.socialnetworks.widget.js" />
@@ -7075,7 +7077,6 @@
     <Content Include="Areas\Music\Views\Commissions\Index.cshtml" />
     <Content Include="Views\Shared\Collaborators\Forms\_TinyForm.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Modals\CreateModal.cshtml" />
-    <Content Include="Areas\Music\Views\Commissions\Modals\EventbriteCsvModal.cshtml" />
     <Content Include="Views\Shared\Collaborators\Forms\_MainInformationForm.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Modals\UpdateMainInformationModal.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Modals\UpdateModal.cshtml" />
@@ -8244,7 +8245,6 @@
     <Content Include="Views\AdminMailerService\PlayerWelcomeEmail.cshtml" />
     <Content Include="Views\Players\EditorTemplates\OrganizationRestrictionSpecificsBaseCommand.cshtml" />
     <Content Include="Views\Players\EditorTemplates\OrganizationActivityBaseCommand.cshtml" />
-    <Content Include="Views\PlayersExecutives\Modals\EventbriteCsvModal.cshtml" />
     <Content Include="Views\AdminMailerService\ForgotPasswordEmail.cshtml" />
     <Content Include="Views\Account\Modals\UpdatePasswordForm.cshtml" />
     <Content Include="Views\Account\Modals\UpdatePasswordModal.cshtml" />
@@ -8256,7 +8256,7 @@
     <Content Include="Views\Speakers\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Views\Speakers\Modals\UpdateModal.cshtml" />
     <Content Include="Views\AdminMailerService\SpeakerWelcomeEmail.cshtml" />
-    <Content Include="Views\Speakers\Modals\EventbriteCsvModal.cshtml" />
+    <Content Include="Views\SalesPlatforms\Modals\EventbriteCsvModal.cshtml" />
     <Content Include="Views\Speakers\Details.cshtml" />
     <Content Include="Views\Speakers\Modals\UpdateMainInformationModal.cshtml" />
     <Content Include="Views\Speakers\Modals\UpdateCompanyInfoModal.cshtml" />

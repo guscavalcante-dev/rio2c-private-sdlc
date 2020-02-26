@@ -21,19 +21,15 @@ using System.Web.Mvc;
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
-using Newtonsoft.Json;
 using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
-using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.Models;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Admin.Controllers;
@@ -49,7 +45,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
     {
         private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
-        private readonly IAttendeeSalesPlatformTicketTypeRepository attendeeSalesPlatformTicketTypeRepo;
         private readonly IFileRepository fileRepo;
 
         public CommissionsController(
@@ -57,13 +52,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             IdentityAutenticationService identityController,
             ICollaboratorRepository collaboratorRepository,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
-            IAttendeeSalesPlatformTicketTypeRepository attendeeSalesPlatformTicketTypeRepository,
             IFileRepository fileRepository)
             : base(commandBus, identityController)
         {
             this.collaboratorRepo = collaboratorRepository;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
-            this.attendeeSalesPlatformTicketTypeRepo = attendeeSalesPlatformTicketTypeRepository;
             this.fileRepo = fileRepository;
         }
 
@@ -439,75 +432,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         #endregion
 
         #endregion
-
-        //#region Export Eventbrite CSV
-
-        ///// <summary>Shows the export eventbrite CSV modal.</summary>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowExportEventbriteCsvModal()
-        //{
-        //    var ticketTypes = await this.attendeeSalesPlatformTicketTypeRepo.FindAllByEditionIdAsync(this.EditionDto.Id);
-
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Modals/EventbriteCsvModal", ticketTypes), divIdOrClass = "#GlobalModalContainer" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
-
-        ///// <summary>Exports the eventbrite CSV.</summary>
-        ///// <param name="request">The request.</param>
-        ///// <param name="selectedCollaboratorsUids">The selected collaborators uids.</param>
-        ///// <param name="ticketClassName">Name of the ticket class.</param>
-        ///// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
-        ///// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
-        ///// <param name="showHighlights">The show highlights.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ExportEventbriteCsv(IDataTablesRequest request, string selectedCollaboratorsUids, string ticketClassName, bool showAllEditions, bool showAllParticipants, bool? showHighlights)
-        //{
-        //    List<EventbriteCsv> eventbriteCsv = null;
-
-        //    try
-        //    {
-        //        var speakers = await this.collaboratorRepo.FindAllByDataTable(
-        //            1,
-        //            10000,
-        //            request?.Search?.Value,
-        //            request?.GetSortColumns(),
-        //            selectedCollaboratorsUids?.ToListGuid(','),
-        //            Constants.CollaboratorType.CommissionMusic,
-        //            showAllEditions,
-        //            false,
-        //            showAllParticipants,
-        //            showHighlights,
-        //            this.EditionDto?.Id
-        //        );
-
-        //        eventbriteCsv = speakers?.Select(s => new EventbriteCsv(
-        //            s.FirstName, 
-        //            s.LastNames, 
-        //            s.Email, 
-        //            ticketClassName, 1)).ToList();
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        return Json(new { status = "error", message = ex.GetInnerMessage(), }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-        //    }
-
-        //    return Json(new { status = "success", data = JsonConvert.SerializeObject(eventbriteCsv) }, JsonRequestBehavior.AllowGet);
-        //}
-
-        //#endregion
 
         #region Send Invitation Emails
 

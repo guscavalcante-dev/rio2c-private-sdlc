@@ -271,6 +271,13 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            #region Common Page Bundles
+
+            bundles.Add(new ScriptBundle("~/bundles/js/salesplatforms.export.js").Include(
+                "~/Assets/js/salesplatforms/salesplatforms.export.js"));
+
+            #endregion
+
             #region Audiovisual Pages Bundles
 
             #region Holdings
@@ -319,7 +326,8 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/collaborators.list.js").Include(
                 "~/Assets/js/collaborators/collaborators.totalcount.widget.js",
-                "~/Assets/js/collaborators/collaborators.datatable.widget.js"));
+                "~/Assets/js/collaborators/collaborators.datatable.widget.js",
+                "~/Assets/js/salesplatforms/salesplatforms.export.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/collaborators.editioncount.js").Include(
                 "~/Assets/js/collaborators/collaborators.editioncount.widget.js"));
@@ -340,7 +348,8 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/speakers.list.js").Include(
                 "~/Assets/js/speakers/speakers.totalcount.widget.js",
-                "~/Assets/js/speakers/speakers.datatable.widget.js"));
+                "~/Assets/js/speakers/speakers.datatable.widget.js",
+                "~/Assets/js/salesplatforms/salesplatforms.export.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/speakers.editioncount.js").Include(
                 "~/Assets/js/speakers/speakers.editioncount.widget.js"));
@@ -566,7 +575,8 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/music.commissions.list.js").Include(
                 "~/Assets/js/music/commissions/music.commissions.totalcount.widget.js",
-                "~/Assets/js/music/commissions/music.commissions.datatable.widget.js"));
+                "~/Assets/js/music/commissions/music.commissions.datatable.widget.js",
+                "~/Assets/js/salesplatforms/salesplatforms.export.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/music.commissions.editioncount.js").Include(
                 "~/Assets/js/music/commissions/music.commissions.editioncount.widget.js"));
