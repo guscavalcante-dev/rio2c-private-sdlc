@@ -219,7 +219,7 @@ CREATE TABLE [dbo].[AttendeeInnovationOrganizationCollaborators](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
 	[AttendeeInnovationOrganizationId] [int] NOT NULL,
-	[CollaboratorId] [int] NOT NULL,
+	[AttendeeCollaboratorId] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
@@ -229,10 +229,10 @@ CREATE TABLE [dbo].[AttendeeInnovationOrganizationCollaborators](
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
- CONSTRAINT [IDX_UQ_AttendeeInnovationOrganizationCollaborators_AttendeeInnovationOrganizationId_CollaboratorId] UNIQUE NONCLUSTERED 
+ CONSTRAINT [IDX_UQ_AttendeeInnovationOrganizationCollaborators_AttendeeInnovationOrganizationId_AttendeeCollaboratorId] UNIQUE NONCLUSTERED 
 (
 	[AttendeeInnovationOrganizationId] ASC,
-	[CollaboratorId] ASC
+	[AttendeeCollaboratorId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
  CONSTRAINT [IDX_UQ_AttendeeInnovationOrganizationCollaborators_Uid] UNIQUE NONCLUSTERED 
 (
@@ -301,7 +301,7 @@ CREATE TABLE [dbo].[AttendeeMusicBandsCollaborators](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
 	[AttendeeMusicBandId] [int] NOT NULL,
-	[CollaboratorId] [int] NOT NULL,
+	[AttendeeCollaboratorId] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
@@ -311,10 +311,10 @@ CREATE TABLE [dbo].[AttendeeMusicBandsCollaborators](
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
- CONSTRAINT [IDX_UQ_AttendeeMusicBandsCollaborators_AttendeeMusicBandId_CollaboratorId] UNIQUE NONCLUSTERED 
+ CONSTRAINT [IDX_UQ_AttendeeMusicBandsCollaborators_AttendeeMusicBandId_AttendeeCollaboratorId] UNIQUE NONCLUSTERED 
 (
 	[AttendeeMusicBandId] ASC,
-	[CollaboratorId] ASC
+	[AttendeeCollaboratorId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
  CONSTRAINT [IDX_UQ_AttendeeMusicBandsCollaborators_Uid] UNIQUE NONCLUSTERED 
 (
@@ -3525,9 +3525,9 @@ CREATE NONCLUSTERED INDEX [IDX_AttendeeInnovationOrganization_ProjectEvaluationS
 	[ProjectEvaluationRefuseReasonId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-CREATE NONCLUSTERED INDEX [IDX_AttendeeInnovationOrganizationCollaborators_CollaboratorId] ON [dbo].[AttendeeInnovationOrganizationCollaborators]
+CREATE NONCLUSTERED INDEX [IDX_AttendeeInnovationOrganizationCollaborators_AttendeeCollaboratorId] ON [dbo].[AttendeeInnovationOrganizationCollaborators]
 (
-	[CollaboratorId] ASC
+	[AttendeeCollaboratorId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
 CREATE NONCLUSTERED INDEX [IDX_AttendeeLogisticSponsors_EditionId_IsDeleted] ON [dbo].[AttendeeLogisticSponsors]
@@ -3547,9 +3547,9 @@ CREATE NONCLUSTERED INDEX [IDX_AttendeeMusicBands_MusicBandId] ON [dbo].[Attende
 	[MusicBandId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
-CREATE NONCLUSTERED INDEX [IDX_AttendeeMusicBandsCollaborators_CollaboratorId] ON [dbo].[AttendeeMusicBandsCollaborators]
+CREATE NONCLUSTERED INDEX [IDX_AttendeeMusicBandsCollaborators_AttendeeCollaboratorId] ON [dbo].[AttendeeMusicBandsCollaborators]
 (
-	[CollaboratorId] ASC
+	[AttendeeCollaboratorId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
 CREATE NONCLUSTERED INDEX [IDX_AttendeeOrganizationTypes_IsApiDisplayEnabled] ON [dbo].[AttendeeOrganizationTypes]
@@ -4133,15 +4133,15 @@ REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[AttendeeInnovationOrganization] CHECK CONSTRAINT [FK_Users_AttendeeInnovationOrganization_UpdateUserId]
 GO
+ALTER TABLE [dbo].[AttendeeInnovationOrganizationCollaborators]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeCollaborators_AttendeeInnovationOrganizationCollaborators_AttendeeCollaboratorId] FOREIGN KEY([AttendeeCollaboratorId])
+REFERENCES [dbo].[AttendeeCollaborators] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeInnovationOrganizationCollaborators] CHECK CONSTRAINT [FK_AttendeeCollaborators_AttendeeInnovationOrganizationCollaborators_AttendeeCollaboratorId]
+GO
 ALTER TABLE [dbo].[AttendeeInnovationOrganizationCollaborators]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeInnovationOrganization_AttendeeInnovationOrganizationCollaborators_AttendeeInnovationOrganizationId] FOREIGN KEY([AttendeeInnovationOrganizationId])
 REFERENCES [dbo].[AttendeeInnovationOrganization] ([Id])
 GO
 ALTER TABLE [dbo].[AttendeeInnovationOrganizationCollaborators] CHECK CONSTRAINT [FK_AttendeeInnovationOrganization_AttendeeInnovationOrganizationCollaborators_AttendeeInnovationOrganizationId]
-GO
-ALTER TABLE [dbo].[AttendeeInnovationOrganizationCollaborators]  WITH CHECK ADD  CONSTRAINT [FK_Collaborators_AttendeeInnovationOrganizationCollaborators_CollaboratorId] FOREIGN KEY([CollaboratorId])
-REFERENCES [dbo].[Collaborators] ([Id])
-GO
-ALTER TABLE [dbo].[AttendeeInnovationOrganizationCollaborators] CHECK CONSTRAINT [FK_Collaborators_AttendeeInnovationOrganizationCollaborators_CollaboratorId]
 GO
 ALTER TABLE [dbo].[AttendeeInnovationOrganizationCollaborators]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeInnovationOrganizationCollaborators_CreateUserId] FOREIGN KEY([CreateUserId])
 REFERENCES [dbo].[Users] ([Id])
@@ -4193,15 +4193,15 @@ REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[AttendeeMusicBands] CHECK CONSTRAINT [FK_Users_AttendeeMusicBands_UpdateUserId]
 GO
+ALTER TABLE [dbo].[AttendeeMusicBandsCollaborators]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeCollaborators_AttendeeMusicBandsCollaborators_AttendeeCollaboratorId] FOREIGN KEY([AttendeeCollaboratorId])
+REFERENCES [dbo].[AttendeeCollaborators] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeMusicBandsCollaborators] CHECK CONSTRAINT [FK_AttendeeCollaborators_AttendeeMusicBandsCollaborators_AttendeeCollaboratorId]
+GO
 ALTER TABLE [dbo].[AttendeeMusicBandsCollaborators]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeMusicBands_AttendeeMusicBandsCollaborators_AttendeeMusicBandId] FOREIGN KEY([AttendeeMusicBandId])
 REFERENCES [dbo].[AttendeeMusicBands] ([Id])
 GO
 ALTER TABLE [dbo].[AttendeeMusicBandsCollaborators] CHECK CONSTRAINT [FK_AttendeeMusicBands_AttendeeMusicBandsCollaborators_AttendeeMusicBandId]
-GO
-ALTER TABLE [dbo].[AttendeeMusicBandsCollaborators]  WITH CHECK ADD  CONSTRAINT [FK_Collaborators_AttendeeMusicBandsCollaborators_CollaboratorId] FOREIGN KEY([CollaboratorId])
-REFERENCES [dbo].[Collaborators] ([Id])
-GO
-ALTER TABLE [dbo].[AttendeeMusicBandsCollaborators] CHECK CONSTRAINT [FK_Collaborators_AttendeeMusicBandsCollaborators_CollaboratorId]
 GO
 ALTER TABLE [dbo].[AttendeeMusicBandsCollaborators]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeMusicBandsCollaborators_CreateUserId] FOREIGN KEY([CreateUserId])
 REFERENCES [dbo].[Users] ([Id])
