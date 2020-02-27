@@ -1045,3 +1045,12 @@ INSERT [dbo].[WorkDedications] ([Id], [Uid], [Name], [DisplayOrder], [IsDeleted]
 GO
 SET IDENTITY_INSERT [dbo].[WorkDedications] OFF
 GO
+
+SET IDENTITY_INSERT [dbo].[CollaboratorTypes] ON 
+GO
+INSERT [dbo].[CollaboratorTypes] ([Id], [Uid], [Name], [RoleId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (601, N'1610eb14-d2e0-4b09-81f9-f904c1ff37b5', N'Music', 3, 0, CAST(N'2020-02-27 18:27:15.121' AS DateTime), 1, CAST(N'2020-02-27 18:27:15.121' AS DateTime), 1)
+GO
+INSERT [dbo].[CollaboratorTypes] ([Id], [Uid], [Name], [RoleId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (602, N'e1a6aeee-15fd-4bdb-b899-acc462f30258', N'Innovation', 3, 0, CAST(N'2020-02-27 18:27:15.121' AS DateTime), 1, CAST(N'2020-02-27 18:27:15.121' AS DateTime), 1)
+GO
+SET IDENTITY_INSERT [dbo].[CollaboratorTypes] OFF
+GO
