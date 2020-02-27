@@ -887,4 +887,8 @@
     <value>A url do YouTube.</value>
     <comment>A url do YouTube.</comment>
   </data>
+  <data name="PropertyGreaterThanValue" xml:space="preserve">
+    <value>O campo {0} deve ser maior que o {1}.</value>
+    <comment>O campo {0} deve ser maior que o {1}.</comment>
+  </data>
 </root>

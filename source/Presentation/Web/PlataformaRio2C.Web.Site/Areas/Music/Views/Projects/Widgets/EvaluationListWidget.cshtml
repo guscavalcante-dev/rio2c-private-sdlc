@@ -1,18 +1,18 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @using X.PagedList.Mvc
 @using X.PagedList.Mvc.Common
-@model X.PagedList.IPagedList<ProjectDto>
+@model X.PagedList.IPagedList<MusicProjectDto>
 
 @if (Model?.Any() == true)
 {
     <!--begin::List-->
-    foreach (var projectDto in Model)
+    foreach (var musicProjectDto in Model)
     {
         <!--begin::List Item-->
         <div class="row">
             <div class="col-md-12">
-                <div class="kt-portlet kt-portlet--height-fluid" id="project-@projectDto.Project.Uid">
-                    @Html.Partial("Widgets/EvaluationListItemWidget", projectDto)
+                <div class="kt-portlet kt-portlet--height-fluid" id="project-@musicProjectDto.MusicProject.Uid">
+                    @Html.Partial("Widgets/EvaluationListItemWidget", musicProjectDto)
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
                     <div class="kt-pagination kt-pagination--brand justify-content-center justify-content-sm-between">
                         @Html.PagedListPager(
                             Model,
-                            page => Url.Action("ShowEvaluationListWidget", "Projects", new { searchKeywords = ViewBag.SearchKeywords, interestUid = ViewBag.InterestUid, evaluationStatusUid = ViewBag.EvaluationStatusUid, page, pageSize = ViewBag.PageSize }),
+                            page => Url.Action("ShowEvaluationListWidget", "Projects", new { Area = "Music", searchKeywords = ViewBag.SearchKeywords, evaluationStatusUid = ViewBag.EvaluationStatusUid, page, pageSize = ViewBag.PageSize }),
                             PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
                                 new PagedListRenderOptions
                                 {

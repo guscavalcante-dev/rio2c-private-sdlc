@@ -16,18 +16,11 @@ using System.Web.Mvc;
 using MediatR;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using PlataformaRio2C.Application;
-using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Application.CQRS.Queries;
-using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Site.Controllers;
 using PlataformaRio2C.Web.Site.Filters;
@@ -40,41 +33,33 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.CommissionMusic)]
     public class ProjectsController : BaseController
     {
-        private readonly IProjectRepository projectRepo;
+        private readonly IMusicProjectRepository musicProjectRepo;
         private readonly IInterestRepository interestRepo;
-        private readonly IActivityRepository activityRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
-        private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo;
         private readonly IProjectEvaluationStatusRepository evaluationStatusRepository;
 
         /// <summary>Initializes a new instance of the <see cref="ProjectsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        /// <param name="projectRepository">The project repository.</param>
+        /// <param name="musicProjectRepository">The music project repository.</param>
         /// <param name="interestRepository">The interest repository.</param>
-        /// <param name="activityRepository">The activity repository.</param>
         /// <param name="targetAudienceRepository">The target audience repository.</param>
-        /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="projectEvaluationRefuseReasonRepo">The project evaluation refuse reason repo.</param>
-        /// <param name="evaluationStatusRepository">The project evaluation status repository.</param>
+        /// <param name="evaluationStatusRepository">The evaluation status repository.</param>
         public ProjectsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
-            IProjectRepository projectRepository,
+            IMusicProjectRepository musicProjectRepository,
             IInterestRepository interestRepository,
-            IActivityRepository activityRepository,
             ITargetAudienceRepository targetAudienceRepository,
-            IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo,
             IProjectEvaluationStatusRepository evaluationStatusRepository)
             : base(commandBus, identityController)
         {
-            this.projectRepo = projectRepository;
+            this.musicProjectRepo = musicProjectRepository;
             this.interestRepo = interestRepository;
-            this.activityRepo = activityRepository;
             this.targetAudienceRepo = targetAudienceRepository;
-            this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.projectEvaluationRefuseReasonRepo = projectEvaluationRefuseReasonRepo;
             this.evaluationStatusRepository = evaluationStatusRepository;
         }
@@ -1521,15 +1506,13 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowEvaluationListWidget(string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 10)
         {
-            if (this.EditionDto?.IsProjectEvaluationStarted() != true)
-            {
-                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-            }
+            //if (this.EditionDto?.IsProjectEvaluationStarted() != true)
+            //{
+            //    return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+            //}
 
-            var projects = await this.projectRepo.FindAllDtosToEvaluateAsync(
-                this.UserAccessControlDto?.EditionAttendeeCollaborator?.Uid ?? Guid.Empty, 
+            var projects = await this.musicProjectRepo.FindAllDtosToEvaluateAsync(
                 searchKeywords, 
-                interestUid,
                 evaluationStatusUid,
                 page.Value, 
                 pageSize.Value);
@@ -1557,19 +1540,17 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowEvaluationListItemWidget(Guid? projectUid)
         {
-            if (this.EditionDto?.IsProjectEvaluationStarted() != true)
-            {
-                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-            }
+            //if (this.EditionDto?.IsProjectEvaluationStarted() != true)
+            //{
+            //    return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+            //}
 
             if (!projectUid.HasValue)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM)}, JsonRequestBehavior.AllowGet);
             }
 
-            var projects = await this.projectRepo.FindDtoToEvaluateAsync(
-                this.UserAccessControlDto?.EditionAttendeeCollaborator?.Uid ?? Guid.Empty,
-                projectUid.Value);
+            var projects = await this.musicProjectRepo.FindDtoToEvaluateAsync(projectUid.Value);
 
             return Json(new
             {

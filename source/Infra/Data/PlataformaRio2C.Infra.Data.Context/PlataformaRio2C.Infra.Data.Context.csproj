@@ -111,6 +111,10 @@
     <Compile Include="Mapping\Mail\MailMap.cs" />
     <Compile Include="Mapping\Message\MessageMap.cs" />
     <Compile Include="Mapping\MusicalCommission\MusicalCommissionMap.cs" />
+    <Compile Include="Mapping\Music\AttendeeMusicBandCollaboratorMap.cs" />
+    <Compile Include="Mapping\Music\AttendeeMusicBandMap.cs" />
+    <Compile Include="Mapping\Music\MusicProjectMap.cs" />
+    <Compile Include="Mapping\Music\MusicBandMap.cs" />
     <Compile Include="Mapping\NegotiationConfig\NegotiationRoomConfigMap.cs" />
     <Compile Include="Mapping\NegotiationConfig\NegotiationConfigMap.cs" />
     <Compile Include="Mapping\Negotiation\NegotiationMap.cs" />
@@ -122,6 +126,7 @@
     <Compile Include="Mapping\Organizations\OrganizationTargetAudienceMap.cs" />
     <Compile Include="Mapping\Organizations\OrganizationActivityMap.cs" />
     <Compile Include="Mapping\Organizations\OrganizationDescriptionMap.cs" />
+    <Compile Include="Mapping\Music\MusicBandTypeMap.cs" />
     <Compile Include="Mapping\Organizations\OrganizationTypeMap.cs" />
     <Compile Include="Mapping\Organizations\OrganizationMap.cs" />
     <Compile Include="Mapping\Projects\ProjectEvaluationRefuseReasonMap.cs" />

@@ -457,6 +457,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tipo de artista.
+        /// </summary>
+        public static string BandType {
+            get {
+                return ResourceManager.GetString("BandType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data de Nascimento.
         /// </summary>
         public static string BirthDate {
@@ -1182,6 +1191,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string DisplayOnSiteEdition {
             get {
                 return ResourceManager.GetString("DisplayOnSiteEdition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ordem de exibição.
+        /// </summary>
+        public static string DisplayOrder {
+            get {
+                return ResourceManager.GetString("DisplayOrder", resourceCulture);
             }
         }
         
@@ -2226,6 +2244,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string LogOut {
             get {
                 return ResourceManager.GetString("LogOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Principais influências musicais.
+        /// </summary>
+        public static string MainMusicInfluences {
+            get {
+                return ResourceManager.GetString("MainMusicInfluences", resourceCulture);
             }
         }
         
@@ -3513,6 +3540,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Rejected {
             get {
                 return ResourceManager.GetString("Rejected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Release.
+        /// </summary>
+        public static string Release {
+            get {
+                return ResourceManager.GetString("Release", resourceCulture);
             }
         }
         

@@ -2126,4 +2126,20 @@
     <value>Music Projects</value>
     <comment>Projetos de Música</comment>
   </data>
+  <data name="BandType" xml:space="preserve">
+    <value>Participant profile</value>
+    <comment>Tipo de artist</comment>
+  </data>
+  <data name="DisplayOrder" xml:space="preserve">
+    <value>Display order</value>
+    <comment>Ordem de exibição</comment>
+  </data>
+  <data name="MainMusicInfluences" xml:space="preserve">
+    <value>Major musical influences</value>
+    <comment>Principais influências musicais</comment>
+  </data>
+  <data name="Release" xml:space="preserve">
+    <value>Release</value>
+    <comment>Release</comment>
+  </data>
 </root>

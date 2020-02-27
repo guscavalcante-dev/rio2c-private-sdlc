@@ -2133,4 +2133,20 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Projetos de Música</value>
     <comment>Projetos de Música</comment>
   </data>
+  <data name="BandType" xml:space="preserve">
+    <value>Tipo de artista</value>
+    <comment>Tipo de artist</comment>
+  </data>
+  <data name="DisplayOrder" xml:space="preserve">
+    <value>Ordem de exibição</value>
+    <comment>Ordem de exibição</comment>
+  </data>
+  <data name="MainMusicInfluences" xml:space="preserve">
+    <value>Principais influências musicais</value>
+    <comment>Principais influências musicais</comment>
+  </data>
+  <data name="Release" xml:space="preserve">
+    <value>Release</value>
+    <comment>Release</comment>
+  </data>
 </root>
