@@ -24,14 +24,13 @@ CREATE TABLE "MusicBands"
 	"Uid"                uniqueidentifier  NOT NULL ,
 	"MusicBandTypeId"    int  NOT NULL ,
 	"Name"               varchar(300)  NOT NULL ,
-	"ImageUploadDate"    datetimeoffset  NULL ,
-	"FormationDate"      datetime  NOT NULL ,
-	"MainMusicInfluences" varchar(150)  NULL ,
-	"Facebook"           varchar(100)  NULL ,
-	"Instagram"          varchar(100)  NULL ,
-	"Twitter"            varchar(100)  NULL ,
+	"ImageUrl"		     varchar(300)  NULL ,
+	"FormationDate"      varchar(300)  NULL ,
+	"MainMusicInfluences" varchar(600)  NULL ,
+	"Facebook"           varchar(300)  NULL ,
+	"Instagram"          varchar(300)  NULL ,
+	"Twitter"            varchar(300)  NULL ,
 	"Youtube"            varchar(300)  NULL ,
-	"Release"            varchar(600)  NULL ,
 	"IsDeleted"          bit  NOT NULL ,
 	"CreateDate"         datetimeoffset  NOT NULL ,
 	"CreateUserId"       int  NOT NULL ,
@@ -100,7 +99,10 @@ CREATE TABLE "MusicProjects"
 	"VideoUrl"           varchar(300)  NULL ,
 	"Music1Url"          varchar(300)  NULL ,
 	"Music2Url"          varchar(300)  NULL ,
-	"ClippingUploadDate" datetimeoffset  NULL ,
+	"Release"            varchar(max)  NULL ,
+	"Clipping1"          varchar(300)  NULL ,
+	"Clipping2"          varchar(300)  NULL ,
+	"Clipping3"          varchar(300)  NULL ,
 	"ProjectEvaluationStatusId" int  NOT NULL ,
 	"ProjectEvaluationRefuseId" int  NULL ,
 	"Reason"             varchar(1500)  NULL ,
@@ -241,7 +243,7 @@ CREATE TABLE "ReleasedMusicProjects"
 	"Uid"                uniqueidentifier  NOT NULL ,
 	"MusicBandId"        int  NOT NULL ,
 	"Name"               varchar(200)  NOT NULL ,
-	"Year"               datetime  NULL ,
+	"Year"               varchar(300)  NULL ,
 	"IsDeleted"          bit  NOT NULL ,
 	"CreateDate"         datetimeoffset  NOT NULL ,
 	"CreateUserId"       int  NOT NULL ,
@@ -1044,6 +1046,15 @@ GO
 INSERT [dbo].[WorkDedications] ([Id], [Uid], [Name], [DisplayOrder], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (2, N'ada0c122-45ef-41e4-9002-edb9e9fbdb51', N'Integral', 2, 0, CAST(N'2020-02-23T23:21:38.8530000+00:00' AS DateTimeOffset), 1, CAST(N'2020-02-23T23:21:38.8530000+00:00' AS DateTimeOffset), 1)
 GO
 SET IDENTITY_INSERT [dbo].[WorkDedications] OFF
+GO
+
+SET IDENTITY_INSERT [dbo].[MusicBandTypes] ON 
+GO
+INSERT [dbo].[MusicBandTypes] ([Id], [Uid], [Name], [DisplayOrder], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (1, N'dd8d2040-52d2-427b-962b-026b7b1c4604', N'Banda / Grupo Musical', 1, 0, CAST(N'2020-02-27T22:28:42.2670000+00:00' AS DateTimeOffset), 1, CAST(N'2020-02-27T22:28:42.2670000+00:00' AS DateTimeOffset), 1)
+GO
+INSERT [dbo].[MusicBandTypes] ([Id], [Uid], [Name], [DisplayOrder], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (2, N'8b86b02c-179c-4c5b-b2de-58066bea209e', N'Artista Solo', 2, 0, CAST(N'2020-02-27T22:28:42.2700000+00:00' AS DateTimeOffset), 1, CAST(N'2020-02-27T22:28:42.2700000+00:00' AS DateTimeOffset), 1)
+GO
+SET IDENTITY_INSERT [dbo].[MusicBandTypes] OFF
 GO
 
 SET IDENTITY_INSERT [dbo].[CollaboratorTypes] ON 

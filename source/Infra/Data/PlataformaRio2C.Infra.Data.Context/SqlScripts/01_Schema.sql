@@ -1810,14 +1810,13 @@ CREATE TABLE [dbo].[MusicBands](
 	[Uid] [uniqueidentifier] NOT NULL,
 	[MusicBandTypeId] [int] NOT NULL,
 	[Name] [varchar](300) NOT NULL,
-	[ImageUploadDate] [datetimeoffset](7) NULL,
-	[FormationDate] [datetime] NOT NULL,
-	[MainMusicInfluences] [varchar](150) NULL,
-	[Facebook] [varchar](100) NULL,
-	[Instagram] [varchar](100) NULL,
-	[Twitter] [varchar](100) NULL,
+	[ImageUrl] [varchar](300) NOT NULL,
+	[FormationDate] [varchar](300) NULL,
+	[MainMusicInfluences] [varchar](600) NULL,
+	[Facebook] [varchar](300) NULL,
+	[Instagram] [varchar](300) NULL,
+	[Twitter] [varchar](300) NULL,
 	[Youtube] [varchar](300) NULL,
-	[Release] [varchar](600) NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
@@ -1968,7 +1967,10 @@ CREATE TABLE [dbo].[MusicProjects](
 	[VideoUrl] [varchar](300) NULL,
 	[Music1Url] [varchar](300) NULL,
 	[Music2Url] [varchar](300) NULL,
-	[ClippingUploadDate] [datetimeoffset](7) NULL,
+	[Release] [varchar](max) NULL,
+	[Clipping1] [varchar](300) NULL,
+	[Clipping2] [varchar](300) NULL,
+	[Clipping3] [varchar](300) NULL,
 	[ProjectEvaluationStatusId] [int] NOT NULL,
 	[ProjectEvaluationRefuseId] [int] NULL,
 	[Reason] [varchar](1500) NULL,
@@ -1987,7 +1989,7 @@ CREATE TABLE [dbo].[MusicProjects](
 (
 	[Uid] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
 SET ANSI_PADDING OFF
@@ -2979,7 +2981,7 @@ CREATE TABLE [dbo].[ReleasedMusicProjects](
 	[Uid] [uniqueidentifier] NOT NULL,
 	[MusicBandId] [int] NOT NULL,
 	[Name] [varchar](200) NOT NULL,
-	[Year] [datetime] NULL,
+	[Year] [varchar](300) NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,

@@ -67,3 +67,12 @@ INSERT [dbo].[TargetAudiences] ([Id], [Uid], [ProjectTypeId], [Name], [DisplayOr
 GO
 SET IDENTITY_INSERT [dbo].[TargetAudiences] OFF
 GO
+
+SET IDENTITY_INSERT [dbo].[MusicBandTypes] ON 
+GO
+INSERT [dbo].[MusicBandTypes] ([Id], [Uid], [Name], [DisplayOrder], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (1, N'dd8d2040-52d2-427b-962b-026b7b1c4604', N'Banda / Grupo Musical', 1, 0, CAST(N'2020-02-27T22:28:42.2670000+00:00' AS DateTimeOffset), 1, CAST(N'2020-02-27T22:28:42.2670000+00:00' AS DateTimeOffset), 1)
+GO
+INSERT [dbo].[MusicBandTypes] ([Id], [Uid], [Name], [DisplayOrder], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (2, N'8b86b02c-179c-4c5b-b2de-58066bea209e', N'Artista Solo', 2, 0, CAST(N'2020-02-27T22:28:42.2700000+00:00' AS DateTimeOffset), 1, CAST(N'2020-02-27T22:28:42.2700000+00:00' AS DateTimeOffset), 1)
+GO
+SET IDENTITY_INSERT [dbo].[MusicBandTypes] OFF
+GO
