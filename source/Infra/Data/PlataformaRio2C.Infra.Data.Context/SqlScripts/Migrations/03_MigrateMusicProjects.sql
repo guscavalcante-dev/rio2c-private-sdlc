@@ -8,13 +8,13 @@ BEGIN
 	// Created          : 02-26-2020
 	//
 	// Last Modified By : Rafael Dantas Ruiz
-	// Last Modified On : 02-27-2020
+	// Last Modified On : 02-28-2020
 	// ***********************************************************************
 	// <copyright file="MigrateMusicProjects.sql" company="Softo">
 	//     Copyright (c) Softo. All rights reserved.
 	// </copyright>
 	// <summary>
-	//    v0.1 - Initial Version
+	//    v0.2 - Fix ImageUrl and ClippingUrl for Projects 2 and 3
 	// </summary>
 	// ***********************************************************************
 	*/
@@ -655,6 +655,11 @@ BEGIN
 					GOTO NEXTFETCH;
 				END;
 
+				IF (LOWER(@Projeto1Foto) NOT LIKE '%.jpg' AND LOWER(@Projeto1Foto) NOT LIKE '%.jpeg' AND LOWER(@Projeto1Foto) NOT LIKE '%.png')
+				BEGIN
+					SELECT @Projeto1Foto = NULL;
+				END;
+
 				PRINT N' ';
 				PRINT N'@Projeto1NomeDoArtista (Name): ' + CAST(LEN(@Projeto1NomeDoArtista) as nvarchar(max));
 				PRINT N'@Projeto1Foto (ImageUrl): ' + CAST(LEN(@Projeto1Foto) as nvarchar(max));
@@ -1186,6 +1191,11 @@ BEGIN
 					GOTO NEXTFETCH;
 				END;
 
+				IF (LOWER(@Projeto2Foto) NOT LIKE '%.jpg' AND LOWER(@Projeto2Foto) NOT LIKE '%.jpeg' AND LOWER(@Projeto2Foto) NOT LIKE '%.png')
+				BEGIN
+					SELECT @Projeto2Foto = NULL;
+				END;
+
 				PRINT N' ';
 				PRINT N'@Projeto2NomeDoArtista (Name): ' + CAST(LEN(@Projeto2NomeDoArtista) as nvarchar(max));
 				PRINT N'@Projeto2Foto (ImageUrl): ' + CAST(LEN(@Projeto2Foto) as nvarchar(max));
@@ -1715,6 +1725,11 @@ BEGIN
 				BEGIN
 					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4001', ErrorMessage = 'The music band type could not be found.' WHERE Id = @id;
 					GOTO NEXTFETCH;
+				END;
+
+				IF (LOWER(@Projeto3Foto) NOT LIKE '%.jpg' AND LOWER(@Projeto3Foto) NOT LIKE '%.jpeg' AND LOWER(@Projeto3Foto) NOT LIKE '%.png')
+				BEGIN
+					SELECT @Projeto3Foto = NULL;
 				END;
 
 				PRINT N' ';
