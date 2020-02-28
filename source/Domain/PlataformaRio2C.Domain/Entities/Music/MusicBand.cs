@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-26-2020
+// Last Modified On : 02-28-2020
 // ***********************************************************************
 // <copyright file="MusicBand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,23 +25,23 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public static readonly int NameMinLength = 1;
         public static readonly int NameMaxLength = 300;
-        public static readonly int MainMusicInfluencesMaxLength = 150;
-        public static readonly int FacebookMaxLength = 100;
-        public static readonly int InstagramMaxLength = 100;
-        public static readonly int TwitterMaxLength = 100;
+        public static readonly int ImageUrlMaxLength = 300;
+        public static readonly int FormationDateMaxLength = 300;
+        public static readonly int MainMusicInfluencesMaxLength = 600;
+        public static readonly int FacebookMaxLength = 300;
+        public static readonly int InstagramMaxLength = 300;
+        public static readonly int TwitterMaxLength = 300;
         public static readonly int YoutubeMaxLength = 300;
-        public static readonly int ReleaseMaxLength = 600;
 
         public int MusicBandTypeId { get; private set; }
         public string Name { get; private set; }
-        public DateTimeOffset? ImageUploadDate { get; private set; }
-        public DateTime FormationDate { get; private set; }
+        public string ImageUrl { get; private set; }
+        public string FormationDate { get; private set; }
         public string MainMusicInfluences { get; private set; }
         public string Facebook { get; private set; }
         public string Instagram { get; private set; }
         public string Twitter { get; private set; }
         public string Youtube { get; private set; }
-        public string Release { get; private set; }
 
         public virtual MusicBandType MusicBandType { get; private set; }
         //public virtual Address Address { get; private set; }
@@ -58,6 +58,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="edition">The edition.</param>
         /// <param name="name">The name.</param>
         /// <param name="formationDate">The formation date.</param>
+        /// <param name="imageUrl">The image URL.</param>
         /// <param name="mainMusicInfluences">The main music influences.</param>
         /// <param name="release">The release.</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
@@ -66,7 +67,8 @@ namespace PlataformaRio2C.Domain.Entities
         public void UpdateMainInformation(
             Edition edition,
             string name,
-            DateTime formationDate,
+            string formationDate,
+            string imageUrl,
             string mainMusicInfluences,
             string release,
             bool isImageUploaded,
@@ -74,10 +76,9 @@ namespace PlataformaRio2C.Domain.Entities
             int userId)
         {
             this.Name = name?.Trim();
-            this.FormationDate = formationDate;
+            this.FormationDate = formationDate?.Trim();
+            this.ImageUrl = imageUrl?.Trim();
             this.MainMusicInfluences = mainMusicInfluences?.Trim();
-            this.Release = release?.Trim();
-            this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
@@ -86,14 +87,12 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Updates the social networks.</summary>
         /// <param name="facebook">The facebook.</param>
-        /// <param name="linkedin">The linkedin.</param>
         /// <param name="twitter">The twitter.</param>
         /// <param name="instagram">The instagram.</param>
         /// <param name="youtube">The youtube.</param>
         /// <param name="userId">The user identifier.</param>
         public void UpdateSocialNetworks(
             string facebook,
-            string linkedin,
             string twitter,
             string instagram,
             string youtube,
@@ -122,22 +121,7 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.FindAllAttendeeMusicBandsNotDeleted(edition)?.Any() == false)
             {
                 this.IsDeleted = true;
-                this.UpdateImageUploadDate(false, true);
-            }
-        }
-
-        /// <summary>Updates the image upload date.</summary>
-        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
-        /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
-        private void UpdateImageUploadDate(bool isImageUploaded, bool isImageDeleted)
-        {
-            if (isImageUploaded)
-            {
-                this.ImageUploadDate = DateTime.UtcNow;
-            }
-            else if (isImageDeleted)
-            {
-                this.ImageUploadDate = null;
+                this.ImageUrl = null;
             }
         }
 
@@ -153,7 +137,7 @@ namespace PlataformaRio2C.Domain.Entities
         ///   <c>true</c> if this instance has image; otherwise, <c>false</c>.</returns>
         public bool HasImage()
         {
-            return this.ImageUploadDate.HasValue;
+            return !string.IsNullOrEmpty(this.ImageUrl);
         }
 
         //#region Address
@@ -415,7 +399,9 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.ValidateMusicBandType();
             this.ValidateName();
+            this.ValidateImageUrl();
             this.ValidateMainMusicInfluences();
+            this.ValidateFormationDate();
             this.ValidateFacebook();
             this.ValidateInstagram();
             this.ValidateTwitter();
@@ -444,6 +430,24 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.Name?.Trim().Length < NameMinLength || this.Name?.Trim().Length > NameMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, NameMaxLength, NameMinLength), new string[] { "Name" }));
+            }
+        }
+
+        /// <summary>Validates the image URL.</summary>
+        public void ValidateImageUrl()
+        {
+            if (!string.IsNullOrEmpty(this.ImageUrl) && this.ImageUrl?.Trim().Length > ImageUrlMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Photo, ImageUrlMaxLength, 1), new string[] { "ImageUrl" }));
+            }
+        }
+
+        /// <summary>Validates the formation date.</summary>
+        public void ValidateFormationDate()
+        {
+            if (!string.IsNullOrEmpty(this.FormationDate) && this.FormationDate?.Trim().Length > FormationDateMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Date, FormationDateMaxLength, 1), new string[] { "FormationDate" })); //TODO: Change Labels.Date to Labels.FormationDate
             }
         }
 
@@ -489,15 +493,6 @@ namespace PlataformaRio2C.Domain.Entities
             if (!string.IsNullOrEmpty(this.Youtube) && this.Youtube?.Trim().Length > YoutubeMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "Youtube", YoutubeMaxLength, 1), new string[] { "Youtube" }));
-            }
-        }
-
-        /// <summary>Validates the release.</summary>
-        public void ValidateRelease()
-        {
-            if (!string.IsNullOrEmpty(this.Release) && this.Release?.Trim().Length > ReleaseMaxLength)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Release, ReleaseMaxLength, 1), new string[] { "Release" }));
             }
         }
 

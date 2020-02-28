@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-26-2020
+// Last Modified On : 02-28-2020
 // ***********************************************************************
 // <copyright file="AttendeeMusicBand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -104,12 +104,20 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="videoUrl">The video URL.</param>
         /// <param name="music1Url">The music1 URL.</param>
         /// <param name="music2Url">The music2 URL.</param>
+        /// <param name="release">The release.</param>
+        /// <param name="clipping1">The clipping1.</param>
+        /// <param name="clipping2">The clipping2.</param>
+        /// <param name="clipping3">The clipping3.</param>
         /// <param name="isClippingUploaded">if set to <c>true</c> [is clipping uploaded].</param>
         /// <param name="userId">The user identifier.</param>
         public void CreateProject(
             string videoUrl,
             string music1Url,
             string music2Url,
+            string release,
+            string clipping1,
+            string clipping2,
+            string clipping3,
             bool isClippingUploaded,
             int userId)
         {
@@ -129,7 +137,10 @@ namespace PlataformaRio2C.Domain.Entities
                 videoUrl,
                 music1Url,
                 music2Url,
-                isClippingUploaded,
+                release,
+                clipping1,
+                clipping2,
+                clipping3,
                 userId));
 
             //this.UpdateProjectsCount();

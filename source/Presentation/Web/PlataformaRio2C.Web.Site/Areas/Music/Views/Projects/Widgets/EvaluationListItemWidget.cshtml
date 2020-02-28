@@ -20,7 +20,7 @@
                                 @if (Model.AttendeeMusicBandDto?.MusicBand?.HasImage() == true)
                                 {
                                     <span class="kt-media kt-media--lg kt-margin-r-5 kt-margin-t-5">
-                                        <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, Model.AttendeeMusicBandDto.MusicBand.Uid, Model.AttendeeMusicBandDto.MusicBand.ImageUploadDate, true)" alt="" style="max-width: 65px; max-height: 65px;">
+                                        <img src="@(Model.AttendeeMusicBandDto?.MusicBand.ImageUrl)" alt="" style="max-width: 65px; max-height: 65px;">
                                     </span>
                                 }
                                 else

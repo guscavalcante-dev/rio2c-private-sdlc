@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-26-2020
+// Last Modified On : 02-28-2020
 // ***********************************************************************
 // <copyright file="MusicBandMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,6 +27,12 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.Property(t => t.Name)
                 .HasMaxLength(MusicBand.NameMaxLength);
 
+            this.Property(t => t.ImageUrl)
+                .HasMaxLength(MusicBand.ImageUrlMaxLength);
+
+            this.Property(t => t.FormationDate)
+                .HasMaxLength(MusicBand.FormationDateMaxLength);
+
             this.Property(t => t.MainMusicInfluences)
                 .HasMaxLength(MusicBand.MainMusicInfluencesMaxLength);
 
@@ -41,9 +47,6 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
 
             this.Property(t => t.Youtube)
                 .HasMaxLength(MusicBand.YoutubeMaxLength);
-
-            this.Property(t => t.Release)
-                .HasMaxLength(MusicBand.ReleaseMaxLength);
 
             // Relationships
             this.HasRequired(t => t.MusicBandType)
