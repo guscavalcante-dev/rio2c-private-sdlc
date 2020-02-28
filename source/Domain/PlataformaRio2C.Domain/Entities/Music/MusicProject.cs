@@ -12,6 +12,8 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
@@ -97,6 +99,26 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
+        /// <summary>Accepts the specified project evaluation statuses.</summary>
+        /// <param name="projectEvaluationStatuses">The project evaluation statuses.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Accept(List<ProjectEvaluationStatus> projectEvaluationStatuses, int userId)
+        {
+            var projectEvaluationStatus = projectEvaluationStatuses?.FirstOrDefault(pes => pes.Code == ProjectEvaluationStatus.Accepted.Code);
+            this.ProjectEvaluationStatusId = projectEvaluationStatus?.Id ?? 0;
+            this.ProjectEvaluationStatus = projectEvaluationStatus;
+
+            this.ProjectEvaluationRefuseReasonId = null;
+            this.ProjectEvaluationRefuseReason = null;
+            this.Reason = null;
+            this.EvaluationUserId = userId;
+            //this.EvaluationDate = DateTime.UtcNow; //TODO: Add evaluation date
+
+            this.IsDeleted = false;
+            this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.UtcNow;
+        }
+
         //TODO: Implement validations
 
         #region Validations
@@ -113,12 +135,43 @@ namespace PlataformaRio2C.Domain.Entities
             return this.ValidationResult.IsValid;
         }
 
+        /// <summary>Determines whether [is evaluation valid].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is evaluation valid]; otherwise, <c>false</c>.</returns>
+        public bool IsEvaluationValid()
+        {
+            this.ValidationResult = new ValidationResult();
+
+            this.ValidateRefuseReason();
+
+            return this.ValidationResult.IsValid;
+        }
+
         /// <summary>Validates the release.</summary>
         public void ValidateRelease()
         {
             if (!string.IsNullOrEmpty(this.Release) && this.Release?.Trim().Length > ReleaseMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Release, ReleaseMaxLength, 1), new string[] { "Release" }));
+            }
+        }
+
+        /// <summary>Validates the refuse reason.</summary>
+        public void ValidateRefuseReason()
+        {
+            //if (this.ProjectEvaluationStatus?.Code == ProjectEvaluationStatus.Refused.Code && this.ProjectEvaluationRefuseReason == null)
+            //{
+            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Reason), new string[] { "Reason" }));
+            //}
+
+            //if (this.ProjectEvaluationRefuseReason?.HasAdditionalInfo == true && string.IsNullOrEmpty(this.Reason?.Trim()))
+            //{
+            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Reason), new string[] { "Reason" }));
+            //}
+
+            if (this.Reason?.Trim().Length < ReasonMinLength || this.Reason?.Trim().Length > ReasonMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, ReasonMaxLength, ReasonMinLength), new string[] { "Reason" }));
             }
         }
 

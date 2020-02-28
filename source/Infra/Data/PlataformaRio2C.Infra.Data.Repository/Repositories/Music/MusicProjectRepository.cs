@@ -314,8 +314,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                 TargetAudience = mbta.TargetAudience
                                                                             })
                                     },
-                                    ProjectEvaluationStatus = mp.ProjectEvaluationStatus,
-                                    ProjectEvaluationRefuseReason = mp.ProjectEvaluationRefuseReason
+                                    MusicProjectEvaluationDto = new MusicProjectEvaluationDto
+                                    {
+                                        EvaluationCollaborator = mp.EvaluationUser.Collaborator,
+                                        ProjectEvaluationStatus = mp.ProjectEvaluationStatus,
+                                        ProjectEvaluationRefuseReason = mp.ProjectEvaluationRefuseReason,
+                                        Reason = mp.Reason
+                                    }
                                 });
 
             return await query
@@ -337,10 +342,31 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     {
                                         AttendeeMusicBand = mp.AttendeeMusicBand,
                                         MusicBand = mp.AttendeeMusicBand.MusicBand,
-                                        MusicBandType = mp.AttendeeMusicBand.MusicBand.MusicBandType
+                                        MusicBandType = mp.AttendeeMusicBand.MusicBand.MusicBandType,
+                                        MusicBandGenreDtos = mp.AttendeeMusicBand.MusicBand.MusicBandGenres
+                                                                    .Where(mbg => !mbg.IsDeleted && !mbg.MusicGenre.IsDeleted)
+                                                                    .OrderBy(mbg => mbg.MusicGenre.DisplayOrder)
+                                                                    .Select(mbg => new MusicBandGenreDto
+                                                                    {
+                                                                        MusicBandGenre = mbg,
+                                                                        MusicGenre = mbg.MusicGenre
+                                                                    }),
+                                        MusicBandTargetAudienceDtos = mp.AttendeeMusicBand.MusicBand.MusicBandTargetAudiences
+                                                                            .Where(mbta => !mbta.IsDeleted && !mbta.TargetAudience.IsDeleted)
+                                                                            .OrderBy(mbta => mbta.TargetAudience.DisplayOrder)
+                                                                            .Select(mbta => new MusicBandTargetAudienceDto
+                                                                            {
+                                                                                MusicBandTargetAudience = mbta,
+                                                                                TargetAudience = mbta.TargetAudience
+                                                                            })
                                     },
-                                    ProjectEvaluationStatus = mp.ProjectEvaluationStatus,
-                                    ProjectEvaluationRefuseReason = mp.ProjectEvaluationRefuseReason
+                                    MusicProjectEvaluationDto = new MusicProjectEvaluationDto
+                                    {
+                                        EvaluationCollaborator = mp.EvaluationUser.Collaborator,
+                                        ProjectEvaluationStatus = mp.ProjectEvaluationStatus,
+                                        ProjectEvaluationRefuseReason = mp.ProjectEvaluationRefuseReason,
+                                        Reason = mp.Reason
+                                    }
                                 });
 
             return await query

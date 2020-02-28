@@ -151,6 +151,7 @@
     <Compile Include="Dtos\Music\AttendeeMusicBandDto.cs" />
     <Compile Include="Dtos\Music\MusicBandTargetAudienceDto.cs" />
     <Compile Include="Dtos\Music\MusicBandGenreDto.cs" />
+    <Compile Include="Dtos\Music\MusicProjectEvaluationDto.cs" />
     <Compile Include="Dtos\Music\MusicProjectDto.cs" />
     <Compile Include="Dtos\OrganizationDescriptions\OrganizationRestrictionSpecificDto.cs" />
     <Compile Include="Dtos\OrganizationDescriptions\OrganizationRestrictionSpecificBaseDto.cs" />

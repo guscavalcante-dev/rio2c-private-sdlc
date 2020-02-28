@@ -891,4 +891,8 @@
     <value>O campo {0} deve ser maior que o {1}.</value>
     <comment>O campo {0} deve ser maior que o {1}.</comment>
   </data>
+  <data name="DoYouReallyWishAcceptObjectEntity" xml:space="preserve">
+    <value>Deseja aprovar {0} "&lt;b&gt;{1}&lt;/b&gt;"?</value>
+    <comment>Deseja aprovar {0} "&lt;b&gt;{1}&lt;/b&gt;"?</comment>
+  </data>
 </root>

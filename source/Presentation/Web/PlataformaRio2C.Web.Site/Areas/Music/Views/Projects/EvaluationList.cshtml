@@ -84,12 +84,12 @@
 @section Scripts {
     @Scripts.Render("~/bundles/js/select2.js")
     @Scripts.Render("~/bundles/js/music.projects.evaluation.list.widget.js")
-    @*@Scripts.Render("~/bundles/js/projects.buyerevaluation.update.widget.js")*@
+    @Scripts.Render("~/bundles/js/music.projects.evaluation.update.widget.js")
     <script>
         // Page translations ----------------------------------------------------------------------
         var translations = {
             selectPlaceholder: '@Labels.SelectAMEntity',
-            genre: '@Html.Raw(Labels.Genre.ToLowerInvariant())',
+            genre: '@Html.Raw(Labels.MusicGenre.ToLowerInvariant())',
             status: '@Labels.Status.ToLowerInvariant()'
         };
 

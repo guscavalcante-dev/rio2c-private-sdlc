@@ -62,7 +62,7 @@
                                     {
                                         foreach (var musicBandTargetAudienceDto in Model.AttendeeMusicBandDto.MusicBandTargetAudienceDtos)
                                         {
-                                            <span class="kt-badge kt-badge--inline kt-badge--info">@(musicBandTargetAudienceDto.TargetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
+                                            <span class="kt-badge kt-badge--inline kt-badge--primary">@(musicBandTargetAudienceDto.TargetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
                                         }
                                     }
                                     else
@@ -72,26 +72,26 @@
                                 }
                             </span>
                             @*<span class="kt-widget__desc">
-            @{
-                var totalInterestGroupsMatchesCount = Model.GetTotalInterestGroupsMatchesCount();
-            }
-            <small>@totalInterestGroupsMatchesCount @((totalInterestGroupsMatchesCount != 1 ? Labels.Matches : Labels.Match).ToLowerInvariant()):</small>
-            @foreach (var interestGroupsMatch in Model.InterestGroupsMatches.OrderBy(igm => igm.DisplayOrder))
-            {
-                <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@interestGroupsMatch.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
-            }
-        </span>*@
+                                    @{
+                                        var totalInterestGroupsMatchesCount = Model.GetTotalInterestGroupsMatchesCount();
+                                    }
+                                    <small>@totalInterestGroupsMatchesCount @((totalInterestGroupsMatchesCount != 1 ? Labels.Matches : Labels.Match).ToLowerInvariant()):</small>
+                                    @foreach (var interestGroupsMatch in Model.InterestGroupsMatches.OrderBy(igm => igm.DisplayOrder))
+                                    {
+                                        <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@interestGroupsMatch.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
+                                    }
+                                </span>*@
                         </div>
                     </div>
                 </div>
-                @*<div class="kt-widget__body pb-0">
+                <div class="kt-widget__body pb-0">
                     <div class="kt-widget__content">
-                        <span class="kt-widget__text mt-0">
+                        @*<span class="kt-widget__text mt-0">
                             @(Html.Raw(Model.GetLogLineDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectLogLine?.Value))
-                        </span>
-                        @Html.Partial("Shared/_BuyersEvaluations", Model)
+                        </span>*@
+                        @Html.Partial("Shared/_Evaluation", Model)
                     </div>
-                </div>*@
+                </div>
             </div>
         </div>
         <div class="row mt-20 justify-content-end">
@@ -101,12 +101,12 @@
             @if (editionDto?.IsMusicProjectEvaluationOpen() == true)
             {
                 <div class="col-4 text-center">
-                    <button type="button" class="btn btn-success" onclick="ProjectsBuyerEvaluationUpdateWidget.showAcceptModal('@Model.MusicProject.Uid');">
+                    <button type="button" class="btn btn-success" onclick="MusicProjectsEvaluationUpdateWidget.showAcceptModal('@Model.MusicProject.Uid');">
                         <i class="fa fa-thumbs-up"></i> @Labels.AcceptProject
                     </button>
                 </div>
                 <div class="col-4 text-center">
-                    <button type="button" class="btn btn-danger" onclick="ProjectsBuyerEvaluationUpdateWidget.showRefuseModal('@Model.MusicProject.Uid');">
+                    <button type="button" class="btn btn-danger" onclick="MusicProjectsEvaluationUpdateWidget.showRefuseModal('@Model.MusicProject.Uid');">
                         <i class="fa fa-thumbs-down"></i> @Labels.RefuseProject
                     </button>
                 </div>

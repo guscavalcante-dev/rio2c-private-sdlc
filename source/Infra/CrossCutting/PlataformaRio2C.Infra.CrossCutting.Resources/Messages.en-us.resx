@@ -886,4 +886,8 @@
     <value>The field {0} must be greater than {1}.</value>
     <comment>O campo {0} deve ser maior que o {1}.</comment>
   </data>
+  <data name="DoYouReallyWishAcceptObjectEntity" xml:space="preserve">
+    <value>Do you want to accept {0} "&lt;b&gt;{1}&lt;/b&gt;"?</value>
+    <comment>Deseja aprovar {0} "&lt;b&gt;{1}&lt;/b&gt;"?</comment>
+  </data>
 </root>
