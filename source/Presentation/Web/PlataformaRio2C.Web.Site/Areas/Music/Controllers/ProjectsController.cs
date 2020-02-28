@@ -69,25 +69,25 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             this.evaluationStatusRepository = evaluationStatusRepository;
         }
 
-        //#region Schedule
+        #region Schedule
 
-        ///// <summary>Indexes this instance.</summary>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public ActionResult Index()
-        //{
-        //    #region Breadcrumb
+        /// <summary>Indexes this instance.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Index()
+        {
+            #region Breadcrumb
 
-        //    ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
-        //        new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "" }))
-        //    });
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.PitchingShow, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "Music" }))
+            });
 
-        //    #endregion
+            #endregion
 
-        //    return View();
-        //}
+            return View();
+        }
 
-        //#endregion
+        #endregion
 
         #region Music Commission
 

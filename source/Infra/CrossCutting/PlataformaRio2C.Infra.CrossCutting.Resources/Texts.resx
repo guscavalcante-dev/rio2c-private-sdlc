@@ -518,4 +518,10 @@ As credenciais Industry e Industry+ tem ainda os benefícios adicionais de inscr
 O acesso à Rede Rio2C para contactar outros participantes, ver os perfis de todos os inscritos no evento e enviar mensagens via chat estão disponíveis para as credenciais Creator+ | Creator | Summit Marcas | Summit Educa.&lt;br/&gt;
 O MyRio2C também é um canal de comunicação do Rio2C com você, trazendo informações importantes na área We Connected.</comment>
   </data>
+  <data name="PitchingShowCommissionProjectsDates" xml:space="preserve">
+    <value>&lt;li&gt;Projetos disponíveis para avaliação a partir de: {0}&lt;/li&gt;
+&lt;li&gt;Período de avaliação: {0} a {1}&lt;/li&gt;</value>
+    <comment>&lt;li&gt;Projetos disponíveis para avaliação a partir de: {0}&lt;/li&gt;
+&lt;li&gt;Período de avaliação: {0} a {1}&lt;/li&gt;</comment>
+  </data>
 </root>

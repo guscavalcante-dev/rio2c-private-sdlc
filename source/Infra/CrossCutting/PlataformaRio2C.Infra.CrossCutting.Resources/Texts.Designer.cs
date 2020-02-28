@@ -19,7 +19,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Texts {
@@ -381,6 +381,16 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string PaymentNotConfirmed {
             get {
                 return ResourceManager.GetString("PaymentNotConfirmed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;li&gt;Projetos disponíveis para avaliação a partir de: {0}&lt;/li&gt;
+        ///&lt;li&gt;Período de avaliação: {0} a {1}&lt;/li&gt;.
+        /// </summary>
+        public static string PitchingShowCommissionProjectsDates {
+            get {
+                return ResourceManager.GetString("PitchingShowCommissionProjectsDates", resourceCulture);
             }
         }
         

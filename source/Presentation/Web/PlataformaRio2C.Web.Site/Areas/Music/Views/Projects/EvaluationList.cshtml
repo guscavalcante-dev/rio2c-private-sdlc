@@ -62,17 +62,16 @@
                     </div>
                     <div class="kt-iconbox__desc">
                         <h3 class="kt-iconbox__title">
-                            <a class="kt-link" href="#">@Labels.Program @Labels.AudiovisualProjects</a>
+                            <a class="kt-link" href="#">@Labels.Program @Labels.PitchingShow</a>
                         </h3>
                     </div>
                 </div>
                 <div class="kt-iconbox__content mt-3">
                     <ul class="pl-0 mb-0">
                         @Html.Raw(string.Format(
-                            Texts.PlayerProjectsDates,
-                            editionDto?.ProjectEvaluationStartDate.ToUserTimeZone().ToShortDateString(),
-                            editionDto?.ProjectEvaluationEndDate.ToUserTimeZone().ToShortDateString(),
-                            editionDto?.OneToOneMeetingsScheduleDate.ToUserTimeZone().ToShortDateString()))
+                            Texts.PitchingShowCommissionProjectsDates,
+                            editionDto?.MusicProjectEvaluationStartDate.ToUserTimeZone().ToShortDateString(),
+                            editionDto?.MusicProjectEvaluationEndDate.ToUserTimeZone().ToShortDateString()))
                     </ul>
                 </div>
             </div>
