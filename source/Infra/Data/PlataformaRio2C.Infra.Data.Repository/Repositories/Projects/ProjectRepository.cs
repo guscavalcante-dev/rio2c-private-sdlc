@@ -724,7 +724,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         ProjectInterest = i,
                                         Interest = i.Interest,
                                         InterestGroup = i.Interest.InterestGroup
-                                    })
+                                    }),
+                                    ProjectTeaserLinkDtos = p.ProjectTeaserLinks.Where(tl => !tl.IsDeleted).Select(tl => new ProjectTeaserLinkDto
+                                    {
+                                        ProjectTeaserLink = tl
+                                    }),
+                                    ProjectImageLinkDtos = p.ProjectImageLinks.Where(il => !il.IsDeleted).Select(il => new ProjectImageLinkDto
+                                    {
+                                        ProjectImageLink = il
+                                    }),
                                 });
 
             return await query

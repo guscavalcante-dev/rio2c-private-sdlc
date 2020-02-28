@@ -466,7 +466,40 @@ namespace PlataformaRio2C.Application.TemplateDocuments
         /// <param name="paragraph">The paragraph.</param>
         private void GetOtherInfos(ref PlataformaRio2CDocument document, Paragraph paragraph)
         {
+            paragraph.Add(new Chunk("Link para imagens ou layout conceituais: ", _fontLabel));
+            paragraph.IndentationLeft = 15;
+            paragraph.IndentationRight = 15;
+            paragraph.SpacingBefore = 0;
+            paragraph.SetLeading(1.0f, 2.0f);
+            document.Add(paragraph);
+            paragraph.Clear();
+            if (this.Project.ProjectImageLinkDtos?.Any() == true)
+            {
+                foreach (var projectImageLink in this.Project.ProjectImageLinkDtos)
+                {
+                    paragraph.Add(GetChunk(projectImageLink.ProjectImageLink.Value, DefaultFontSize + 4f, Font.NORMAL));
+                    paragraph.Add(GetChunk(" "));
+                }
+            }
+            else
+            {
+                paragraph.Add(GetChunk("N/A", DefaultFontSize + 4f, Font.NORMAL));
+            }
+            paragraph.IndentationLeft = 15;
+            paragraph.IndentationRight = 15;
+            paragraph.SpacingBefore = 5;
+            paragraph.SetLeading(1.0f, 2.0f);
+            document.Add(paragraph);
+            paragraph.Clear();
+
             paragraph.Add(new Chunk("Links de teaser: ", _fontLabel));
+            paragraph.IndentationLeft = 15;
+            paragraph.IndentationRight = 15;
+            paragraph.SpacingBefore = 10;
+            paragraph.SetLeading(1.0f, 2.0f);
+            document.Add(paragraph);
+            paragraph.Clear();
+
             if (this.Project.ProjectTeaserLinkDtos?.Any() == true)
             {
                 foreach (var projectTeaserLink in this.Project.ProjectTeaserLinkDtos)
@@ -479,10 +512,10 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             {
                 paragraph.Add(GetChunk("N/A", DefaultFontSize + 4f, Font.NORMAL));
             }
-
             paragraph.IndentationLeft = 15;
             paragraph.IndentationRight = 15;
-            paragraph.SpacingBefore = 10;
+            paragraph.SpacingBefore = 5;
+            paragraph.SetLeading(1.0f, 2.0f);
             document.Add(paragraph);
             paragraph.Clear();
 
