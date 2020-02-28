@@ -113,8 +113,11 @@
     <Compile Include="Mapping\MusicalCommission\MusicalCommissionMap.cs" />
     <Compile Include="Mapping\Music\AttendeeMusicBandCollaboratorMap.cs" />
     <Compile Include="Mapping\Music\AttendeeMusicBandMap.cs" />
+    <Compile Include="Mapping\Music\MusicGenreMap.cs" />
     <Compile Include="Mapping\Music\MusicProjectMap.cs" />
     <Compile Include="Mapping\Music\MusicBandMap.cs" />
+    <Compile Include="Mapping\Music\MusicBandGenreMap.cs" />
+    <Compile Include="Mapping\Music\MusicBandTargetAudienceMap.cs" />
     <Compile Include="Mapping\NegotiationConfig\NegotiationRoomConfigMap.cs" />
     <Compile Include="Mapping\NegotiationConfig\NegotiationConfigMap.cs" />
     <Compile Include="Mapping\Negotiation\NegotiationMap.cs" />

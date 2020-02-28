@@ -2410,6 +2410,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Estilo musical.
+        /// </summary>
+        public static string MusicGenre {
+            get {
+                return ResourceManager.GetString("MusicGenre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Projetos de Música.
         /// </summary>
         public static string MusicProjects {
@@ -2748,6 +2757,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Participant {
             get {
                 return ResourceManager.GetString("Participant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tipo de artista.
+        /// </summary>
+        public static string ParticipantProfile {
+            get {
+                return ResourceManager.GetString("ParticipantProfile", resourceCulture);
             }
         }
         

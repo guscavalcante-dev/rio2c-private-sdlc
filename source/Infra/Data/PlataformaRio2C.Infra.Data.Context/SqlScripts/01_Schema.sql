@@ -1753,7 +1753,7 @@ CREATE TABLE [dbo].[MusicBandGenres](
 	[Uid] [uniqueidentifier] NOT NULL,
 	[MusicBandId] [int] NOT NULL,
 	[MusicGenreId] [int] NOT NULL,
-	[AdditionalInfo] [char](18) NULL,
+	[AdditionalInfo] [varchar](200) NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,

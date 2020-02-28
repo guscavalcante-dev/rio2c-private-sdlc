@@ -48,6 +48,8 @@ namespace PlataformaRio2C.Domain.Entities
         //public virtual User Updater { get; private set; }
 
         public virtual ICollection<AttendeeMusicBand> AttendeeMusicBands { get; private set; }
+        public virtual ICollection<MusicBandGenre> MusicBandGenres { get; private set; }
+        public virtual ICollection<MusicBandTargetAudience> MusicBandTargetAudiences { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="MusicBand"/> class.</summary>
         protected MusicBand()
@@ -406,6 +408,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateInstagram();
             this.ValidateTwitter();
             this.ValidateYoutube();
+            this.ValidateMusicBandGenres();
+            this.ValidateMusicBandTargetAudiences();
 
             return this.ValidationResult.IsValid;
         }
@@ -496,19 +500,33 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        ///// <summary>Validates the descriptions.</summary>
-        //public void ValidateDescriptions()
-        //{
-        //    if (this.OrganizationDescriptions?.Any() != true)
-        //    {
-        //        return;
-        //    }
+        /// <summary>Validates the music band genres.</summary>
+        public void ValidateMusicBandGenres()
+        {
+            if (this.MusicBandGenres?.Any() != true)
+            {
+                return;
+            }
 
-        //    foreach (var description in this.OrganizationDescriptions?.Where(d => !d.IsValid())?.ToList())
-        //    {
-        //        this.ValidationResult.Add(description.ValidationResult);
-        //    }
-        //}
+            foreach (var musicBandGenre in this.MusicBandGenres?.Where(d => !d.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(musicBandGenre.ValidationResult);
+            }
+        }
+
+        /// <summary>Validates the music band target audiences.</summary>
+        public void ValidateMusicBandTargetAudiences()
+        {
+            if (this.MusicBandTargetAudiences?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var musicBandTargetAudience in this.MusicBandTargetAudiences?.Where(d => !d.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(musicBandTargetAudience.ValidationResult);
+            }
+        }
 
         ///// <summary>Validates the address.</summary>
         //public void ValidateAddress()

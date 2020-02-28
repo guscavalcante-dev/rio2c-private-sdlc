@@ -149,6 +149,8 @@
     <Compile Include="Dtos\Messages\ConversationDto.cs" />
     <Compile Include="Dtos\Interests\InterestDto.cs" />
     <Compile Include="Dtos\Music\AttendeeMusicBandDto.cs" />
+    <Compile Include="Dtos\Music\MusicBandTargetAudienceDto.cs" />
+    <Compile Include="Dtos\Music\MusicBandGenreDto.cs" />
     <Compile Include="Dtos\Music\MusicProjectDto.cs" />
     <Compile Include="Dtos\OrganizationDescriptions\OrganizationRestrictionSpecificDto.cs" />
     <Compile Include="Dtos\OrganizationDescriptions\OrganizationRestrictionSpecificBaseDto.cs" />
@@ -236,9 +238,12 @@
     <Compile Include="Entities\Message\Message.cs" />
     <Compile Include="Entities\Music\AttendeeMusicBand.cs" />
     <Compile Include="Entities\Music\AttendeeMusicBandCollaborator.cs" />
+    <Compile Include="Entities\Music\MusicBandGenre.cs" />
+    <Compile Include="Entities\Music\MusicGenre.cs" />
     <Compile Include="Entities\Music\MusicBandType.cs" />
     <Compile Include="Entities\Music\MusicBand.cs" />
     <Compile Include="Entities\Music\MusicProject.cs" />
+    <Compile Include="Entities\Music\MusicBandTargetAudience.cs" />
     <Compile Include="Entities\NegotiationConfig\NegotiationRoomConfig.cs" />
     <Compile Include="Entities\NegotiationConfig\NegotiationConfig.cs" />
     <Compile Include="Entities\Negotiation\Negotiation.cs" />

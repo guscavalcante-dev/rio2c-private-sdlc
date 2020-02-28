@@ -2153,4 +2153,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>PitchingShow</value>
     <comment>PitchingShow</comment>
   </data>
+  <data name="MusicGenre" xml:space="preserve">
+    <value>Estilo musical</value>
+    <comment>Estilo musical</comment>
+  </data>
+  <data name="ParticipantProfile" xml:space="preserve">
+    <value>Tipo de artista</value>
+    <comment>Tipo de artista</comment>
+  </data>
 </root>

@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-26-2020
+// Last Modified On : 02-28-2020
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1470,14 +1470,14 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> EvaluationList(string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 10)
         {
-            //if (this.EditionDto?.IsProjectEvaluationStarted() != true)
-            //{
-            //    return RedirectToAction("Index", "Projects", new { Area = "Music" });
-            //}
+            if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
+            {
+                return RedirectToAction("Index", "Projects", new { Area = "Music" });
+            }
 
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.MusicProjects, new List<BreadcrumbItemHelper> {
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.PitchingShow, new List<BreadcrumbItemHelper> {
                 new BreadcrumbItemHelper(Labels.ProjectsEvaluation, Url.Action("EvaluationList", "Projects", new { Area = "Music" })),
             });
 
@@ -1506,10 +1506,10 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowEvaluationListWidget(string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 10)
         {
-            //if (this.EditionDto?.IsProjectEvaluationStarted() != true)
-            //{
-            //    return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-            //}
+            if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
+            {
+                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+            }
 
             var projects = await this.musicProjectRepo.FindAllDtosToEvaluateAsync(
                 searchKeywords, 
@@ -1540,10 +1540,10 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowEvaluationListItemWidget(Guid? projectUid)
         {
-            //if (this.EditionDto?.IsProjectEvaluationStarted() != true)
-            //{
-            //    return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-            //}
+            if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
+            {
+                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+            }
 
             if (!projectUid.HasValue)
             {
