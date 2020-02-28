@@ -51,6 +51,7 @@ namespace PlataformaRio2C.Domain.Entities
         public int? ProjectEvaluationRefuseReasonId { get; private set; }
         public string Reason { get; private set; }
         public int? EvaluationUserId { get; private set; }
+        public DateTimeOffset? EvaluationDate { get; private set; }
         public DateTimeOffset? EvaluationEmailSendDate { get; private set; }
 
         public virtual AttendeeMusicBand AttendeeMusicBand { get; private set; }
@@ -112,7 +113,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ProjectEvaluationRefuseReason = null;
             this.Reason = null;
             this.EvaluationUserId = userId;
-            //this.EvaluationDate = DateTime.UtcNow; //TODO: Add evaluation date
+            this.EvaluationDate = DateTime.UtcNow;
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
@@ -134,7 +135,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ProjectEvaluationRefuseReason = projectEvaluationRefuseReason;
             this.Reason = reason?.Trim();
             this.EvaluationUserId = userId;
-            //this.EvaluationDate = DateTime.UtcNow; //TODO: Add evaluation date
+            this.EvaluationDate = DateTime.UtcNow;
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;

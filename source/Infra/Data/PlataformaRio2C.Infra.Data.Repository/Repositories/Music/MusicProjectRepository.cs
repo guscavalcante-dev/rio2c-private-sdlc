@@ -319,7 +319,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         EvaluationCollaborator = mp.EvaluationUser.Collaborator,
                                         ProjectEvaluationStatus = mp.ProjectEvaluationStatus,
                                         ProjectEvaluationRefuseReason = mp.ProjectEvaluationRefuseReason,
-                                        Reason = mp.Reason
+                                        Reason = mp.Reason,
+                                        EvaluationDate = mp.EvaluationDate
                                     }
                                 });
 
@@ -365,7 +366,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         EvaluationCollaborator = mp.EvaluationUser.Collaborator,
                                         ProjectEvaluationStatus = mp.ProjectEvaluationStatus,
                                         ProjectEvaluationRefuseReason = mp.ProjectEvaluationRefuseReason,
-                                        Reason = mp.Reason
+                                        Reason = mp.Reason,
+                                        EvaluationDate = mp.EvaluationDate
                                     }
                                 });
 

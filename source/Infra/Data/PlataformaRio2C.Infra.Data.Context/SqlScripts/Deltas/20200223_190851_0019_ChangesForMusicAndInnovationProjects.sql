@@ -87,6 +87,7 @@ CREATE TABLE "MusicProjects"
 	"ProjectEvaluationRefuseReasonId" int  NULL ,
 	"Reason"             varchar(1500)  NULL ,
 	"EvaluationUserId"   int  NULL ,
+	"EvaluationDate" datetimeoffset  NULL ,
 	"EvaluationEmailSendDate" datetimeoffset  NULL ,
 	"IsDeleted"          bit  NOT NULL ,
 	"CreateDate"         datetimeoffset  NOT NULL ,

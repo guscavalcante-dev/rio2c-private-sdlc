@@ -31,6 +31,10 @@
         {
             <span class="kt-widget--user-profile-1 kt-widget__username d-block">
                 <small>@Labels.By</small> @(musicProjectEvaluationDto.EvaluationCollaborator.GetFullName())
+                @if (musicProjectEvaluationDto.EvaluationDate.HasValue)
+                {
+                    <br/><small>@Labels.At @(musicProjectEvaluationDto.EvaluationDate?.ToUserTimeZone())</small>
+                }
             </span>
         }
         @if (musicProjectEvaluationDto.ProjectEvaluationStatus?.Code == ProjectEvaluationStatus.Refused.Code && musicProjectEvaluationDto.ProjectEvaluationRefuseReason != null)

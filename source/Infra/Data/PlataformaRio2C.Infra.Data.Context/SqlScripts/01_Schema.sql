@@ -1983,6 +1983,7 @@ CREATE TABLE [dbo].[MusicProjects](
 	[ProjectEvaluationRefuseReasonId] [int] NULL,
 	[Reason] [varchar](1500) NULL,
 	[EvaluationUserId] [int] NULL,
+	[EvaluationDate] [datetimeoffset](7) NULL,
 	[EvaluationEmailSendDate] [datetimeoffset](7) NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetimeoffset](7) NOT NULL,

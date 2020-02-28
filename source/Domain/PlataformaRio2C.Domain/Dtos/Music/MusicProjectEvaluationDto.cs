@@ -11,6 +11,7 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Domain.Dtos
@@ -22,6 +23,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public ProjectEvaluationStatus ProjectEvaluationStatus { get; set; }
         public ProjectEvaluationRefuseReason ProjectEvaluationRefuseReason { get; set; }
         public string Reason { get; set; }
+        public DateTimeOffset? EvaluationDate;
 
         /// <summary>Initializes a new instance of the <see cref="MusicProjectEvaluationDto"/> class.</summary>
         public MusicProjectEvaluationDto()
