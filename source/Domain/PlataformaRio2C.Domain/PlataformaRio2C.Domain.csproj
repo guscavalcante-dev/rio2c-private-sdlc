@@ -239,6 +239,8 @@
     <Compile Include="Entities\Message\Message.cs" />
     <Compile Include="Entities\Music\AttendeeMusicBand.cs" />
     <Compile Include="Entities\Music\AttendeeMusicBandCollaborator.cs" />
+    <Compile Include="Entities\Music\MusicBandTeamMember.cs" />
+    <Compile Include="Entities\Music\MusicBandMember.cs" />
     <Compile Include="Entities\Music\MusicBandGenre.cs" />
     <Compile Include="Entities\Music\MusicGenre.cs" />
     <Compile Include="Entities\Music\MusicBandType.cs" />

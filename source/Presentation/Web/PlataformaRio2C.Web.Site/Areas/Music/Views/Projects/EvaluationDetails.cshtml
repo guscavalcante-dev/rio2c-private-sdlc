@@ -6,21 +6,26 @@
 @Html.Hidden("AggregateId", Model.MusicProject.Uid)
 <div class="row">
     <div class="col-md-12">
-        <!--begin:Main Information Widget-->
         <div class="row">
+            <!--begin:Main Information Widget-->
             <div class="col-12">
                 <div id="ProjectMainInformationWidget" class="kt-portlet" style="min-height: 325px;"></div>
             </div>
+            <!--end:Main Information Widget-->
         </div>
-        <!--end:Main Information Widget-->
-        @*
-        <!--begin:Interest Widget-->
         <div class="row">
-            <div class="col-12">
-                <div id="ProjectInterestWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            <!--begin:Members Widget-->
+            <div class="col-md-6">
+                <div id="ProjectMembersWidget" class="kt-portlet" style="min-height: 325px;"></div>
             </div>
+            <!--end:Members Widget-->
+            <!--begin:Team Members Widget-->
+            <div class="col-md-6">
+                <div id="ProjectTeamMembersWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+            <!--end:Team Members Widget-->
         </div>
-        <!--end:Interest Widget-->
+        @*
         <!--begin:Links Widget-->
         <div class="row">
             <div class="col-12">
@@ -54,9 +59,8 @@
 
         jQuery(document).ready(function () {
             MusicProjectsMainInformationWidget.init();
-            //ProjectsInterestWidget.init();
-            //ProjectsLinksWidget.init();
-            //ProjectsBuyerEvaluationUpdateWidget.init();
+            MusicProjectsMembersWidget.init();
+            MusicProjectsTeamMembersWidget.init();
         });
     </script>
 }

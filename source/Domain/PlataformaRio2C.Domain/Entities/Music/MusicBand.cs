@@ -50,6 +50,8 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeMusicBand> AttendeeMusicBands { get; private set; }
         public virtual ICollection<MusicBandGenre> MusicBandGenres { get; private set; }
         public virtual ICollection<MusicBandTargetAudience> MusicBandTargetAudiences { get; private set; }
+        public virtual ICollection<MusicBandMember> MusicBandMembers { get; private set; }
+        public virtual ICollection<MusicBandTeamMember> MusicBandTeamMembers { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="MusicBand"/> class.</summary>
         protected MusicBand()

@@ -395,6 +395,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        /// <summary>Finds the main information widget dto asynchronous.</summary>
+        /// <param name="musicProjectUid">The music project uid.</param>
+        /// <returns></returns>
         public async Task<MusicProjectDto> FindMainInformationWidgetDtoAsync(Guid musicProjectUid)
         {
             var query = this.GetBaseQuery()
@@ -423,14 +426,50 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                 MusicBandTargetAudience = mbta,
                                                                                 TargetAudience = mbta.TargetAudience
                                                                             })
-                                    },
-                                    MusicProjectEvaluationDto = new MusicProjectEvaluationDto
+                                    }
+                                });
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>Finds the members widget dto asynchronous.</summary>
+        /// <param name="musicProjectUid">The music project uid.</param>
+        /// <returns></returns>
+        public async Task<MusicProjectDto> FindMembersWidgetDtoAsync(Guid musicProjectUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(musicProjectUid)
+                                .Select(mp => new MusicProjectDto
+                                {
+                                    MusicProject = mp,
+                                    AttendeeMusicBandDto = new AttendeeMusicBandDto
                                     {
-                                        EvaluationCollaborator = mp.EvaluationUser.Collaborator,
-                                        ProjectEvaluationStatus = mp.ProjectEvaluationStatus,
-                                        ProjectEvaluationRefuseReason = mp.ProjectEvaluationRefuseReason,
-                                        Reason = mp.Reason,
-                                        EvaluationDate = mp.EvaluationDate
+                                        AttendeeMusicBand = mp.AttendeeMusicBand,
+                                        MusicBand = mp.AttendeeMusicBand.MusicBand,
+                                        MusicBandMembers = mp.AttendeeMusicBand.MusicBand.MusicBandMembers.Where(mbm => !mbm.IsDeleted)
+                                    }
+                                });
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>Finds the team members widget dto asynchronous.</summary>
+        /// <param name="musicProjectUid">The music project uid.</param>
+        /// <returns></returns>
+        public async Task<MusicProjectDto> FindTeamMembersWidgetDtoAsync(Guid musicProjectUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(musicProjectUid)
+                                .Select(mp => new MusicProjectDto
+                                {
+                                    MusicProject = mp,
+                                    AttendeeMusicBandDto = new AttendeeMusicBandDto
+                                    {
+                                        AttendeeMusicBand = mp.AttendeeMusicBand,
+                                        MusicBand = mp.AttendeeMusicBand.MusicBand,
+                                        MusicBandTeamMembers = mp.AttendeeMusicBand.MusicBand.MusicBandTeamMembers.Where(mbm => !mbm.IsDeleted)
                                     }
                                 });
 

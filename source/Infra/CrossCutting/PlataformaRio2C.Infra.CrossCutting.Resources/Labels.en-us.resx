@@ -2150,9 +2150,21 @@
     <value>Year band was created</value>
     <comment>Ano de início da banda</comment>
   </data>
+  <data name="MusicBandMembers" xml:space="preserve">
+    <value>Members</value>
+    <comment>Integrantes</comment>
+  </data>
+  <data name="MusicBandStaff" xml:space="preserve">
+    <value>Staff</value>
+    <comment>Equipe</comment>
+  </data>
   <data name="MusicGenre" xml:space="preserve">
     <value>Musical style</value>
     <comment>Estilo musical</comment>
+  </data>
+  <data name="MusicInstrumentName" xml:space="preserve">
+    <value>Musical instrument</value>
+    <comment>Instrumento musical</comment>
   </data>
   <data name="ParticipantProfile" xml:space="preserve">
     <value>Participant profile</value>

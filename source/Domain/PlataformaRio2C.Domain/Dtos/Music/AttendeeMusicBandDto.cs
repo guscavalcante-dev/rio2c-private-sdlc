@@ -25,6 +25,8 @@ namespace PlataformaRio2C.Domain.Dtos
 
         public IEnumerable<MusicBandGenreDto> MusicBandGenreDtos { get; set; }
         public IEnumerable<MusicBandTargetAudienceDto> MusicBandTargetAudienceDtos { get; set; }
+        public IEnumerable<MusicBandMember> MusicBandMembers { get; set; }
+        public IEnumerable<MusicBandTeamMember> MusicBandTeamMembers { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeMusicBandDto"/> class.</summary>
         public AttendeeMusicBandDto()

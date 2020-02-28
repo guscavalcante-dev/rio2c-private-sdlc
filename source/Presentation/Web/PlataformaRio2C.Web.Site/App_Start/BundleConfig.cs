@@ -382,7 +382,9 @@ namespace PlataformaRio2C.Web.Site
             //    "~/Scripts/jquery.unobtrusive-ajax.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/music.projects.widget.js").Include(
-                "~/Assets/js/music/projects/music.projects.maininformation.widget.js"));
+                "~/Assets/js/music/projects/music.projects.maininformation.widget.js",
+                "~/Assets/js/music/projects/music.projects.members.widget.js",
+                "~/Assets/js/music/projects/music.projects.teammembers.widget.js"));
                 //"~/Assets/js/projects/projects.interest.widget.js",
                 //"~/Assets/js/projects/projects.links.widget.js",
                 //"~/Assets/js/myrio2c.additionalinfo.js"));

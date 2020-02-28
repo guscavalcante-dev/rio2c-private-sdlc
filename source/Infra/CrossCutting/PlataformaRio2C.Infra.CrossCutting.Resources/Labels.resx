@@ -2157,9 +2157,21 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Ano de início da banda</value>
     <comment>Ano de início da banda</comment>
   </data>
+  <data name="MusicBandMembers" xml:space="preserve">
+    <value>Integrantes</value>
+    <comment>Integrantes</comment>
+  </data>
+  <data name="MusicBandStaff" xml:space="preserve">
+    <value>Equipe</value>
+    <comment>Equipe</comment>
+  </data>
   <data name="MusicGenre" xml:space="preserve">
     <value>Estilo musical</value>
     <comment>Estilo musical</comment>
+  </data>
+  <data name="MusicInstrumentName" xml:space="preserve">
+    <value>Instrumento musical</value>
+    <comment>Instrumento musical</comment>
   </data>
   <data name="ParticipantProfile" xml:space="preserve">
     <value>Tipo de artista</value>
