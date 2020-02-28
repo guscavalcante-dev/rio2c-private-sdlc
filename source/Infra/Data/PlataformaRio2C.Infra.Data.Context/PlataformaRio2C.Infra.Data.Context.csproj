@@ -419,9 +419,9 @@
     <Content Include="SqlScripts\Deltas\20191021_225115_0003_RemoveHtmlTagsFromData.sql" />
     <Content Include="SqlScripts\Deltas\20191015_140530_0002_ChangesForTicketBuyersOnboarding.sql" />
     <Content Include="SqlScripts\Deltas\20191009_094500_0001_ChangesForLanguage.sql" />
-    <Content Include="SqlScripts\Migrations\02_CreateMigrateMusicProjectsTable.sql" />
-    <Content Include="SqlScripts\Migrations\03_MigrateMusicProjects.sql" />
-    <Content Include="SqlScripts\Migrations\01_Split.sql" />
+    <Content Include="SqlScripts\Migrations\Music\02_CreateMigrateMusicProjectsTable.sql" />
+    <Content Include="SqlScripts\Migrations\Music\03_MigrateMusicProjects.sql" />
+    <Content Include="SqlScripts\Migrations\Common\01_Split.sql" />
     <None Include="App.config" />
     <None Include="bin\Debug\App_Data\Logs\PlataformaRio2C_Web_Site_DESKTOP-S4BP9HQ_2018.09.20.LOG" />
     <None Include="bin\Debug\App_Data\Logs\PlataformaRio2C_Web_Site_DESKTOP-S4BP9HQ_2018.09.21.LOG" />

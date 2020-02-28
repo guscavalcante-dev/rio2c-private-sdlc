@@ -1,4 +1,10 @@
-﻿CREATE PROCEDURE [dbo].[MigrateMusicProjects]
+﻿IF EXISTS (SELECT 1 FROM sysobjects WHERE  id = object_id(N'[dbo].[MigrateMusicProjects]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+BEGIN
+    DROP PROCEDURE [dbo].[MigrateMusicProjects]
+END
+GO
+
+CREATE PROCEDURE [dbo].[MigrateMusicProjects]
 AS 
 BEGIN
 	/*
@@ -14,7 +20,7 @@ BEGIN
 	//     Copyright (c) Softo. All rights reserved.
 	// </copyright>
 	// <summary>
-	//    v0.2 - Fix ImageUrl and ClippingUrl for Projects 2 and 3
+	//    v0.3 - Changes on table names and fields
 	// </summary>
 	// ***********************************************************************
 	*/
@@ -46,7 +52,7 @@ BEGIN
 	DECLARE @MusicBandTargetAudienceId int;
 	DECLARE @ReleasedMusicProjectId int;
 	DECLARE @MusicBandMemberId int;
-	DECLARE @MusicBandTeamId int;
+	DECLARE @MusicBandTeamMemberId int;
 
 	-- MySql properties
 	DECLARE @Id int;
@@ -265,7 +271,7 @@ BEGIN
 		[Projeto 1 - Video Clip],
 		[Projeto 1 - Nome do Artista],
 		[Projeto 1 - Tipo do Artista],
-		[Projeto 1 - Public Alvo],
+		[Projeto 1 - Publico Alvo],
 		[Projeto 1 - Fan page no Facebook],
 		[Projeto 2 - Time 1 - Nome],
 		[Projeto 2 - Time 1 - Funcao],
@@ -701,15 +707,15 @@ BEGIN
 			END;
 
 			-- Attendee Music Band Collaborators
-			SELECT @AttendeeMusicBandCollaboratorId = [Id] FROM dbo.AttendeeMusicBandsCollaborators WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND AttendeeCollaboratorId = @AttendeeCollaboratorId;
+			SELECT @AttendeeMusicBandCollaboratorId = [Id] FROM dbo.AttendeeMusicBandCollaborators WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND AttendeeCollaboratorId = @AttendeeCollaboratorId;
 			IF (@AttendeeMusicBandCollaboratorId IS NULL)
 			BEGIN
-				INSERT INTO [dbo].[AttendeeMusicBandsCollaborators]
+				INSERT INTO [dbo].[AttendeeMusicBandCollaborators]
 					([Uid], [AttendeeMusicBandId], [AttendeeCollaboratorId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId])
 				VALUES
 					(NEWID(), @AttendeeMusicBandId, @AttendeeCollaboratorId, 0, GETUTCDATE(), @UserId, GETUTCDATE(), @UserId);
 
-				SELECT @AttendeeMusicBandCollaboratorId = [Id] FROM dbo.AttendeeMusicBandsCollaborators WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND AttendeeCollaboratorId = @AttendeeCollaboratorId;
+				SELECT @AttendeeMusicBandCollaboratorId = [Id] FROM dbo.AttendeeMusicBandCollaborators WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND AttendeeCollaboratorId = @AttendeeCollaboratorId;
 				IF (@AttendeeMusicBandCollaboratorId IS NULL)
 				BEGIN
 					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2004', ErrorMessage = 'The attendee music band collaborator could not be created.' WHERE Id = @id;
@@ -731,7 +737,7 @@ BEGIN
 				PRINT N'@Projeto1Clipping3 (Clipping3): ' + CAST(LEN(@Projeto1Clipping3) as nvarchar(max));
 
 				INSERT INTO [dbo].[MusicProjects]
-					([Uid], [AttendeeMusicBandId], [VideoUrl], [Music1Url], [Music2Url], [Release], [Clipping1], [Clipping2], [Clipping3], [ProjectEvaluationStatusId], [ProjectEvaluationRefuseId], [Reason], [EvaluationUserId], [EvaluationEmailSendDate], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId])
+					([Uid], [AttendeeMusicBandId], [VideoUrl], [Music1Url], [Music2Url], [Release], [Clipping1], [Clipping2], [Clipping3], [ProjectEvaluationStatusId], [ProjectEvaluationRefuseReasonId], [Reason], [EvaluationUserId], [EvaluationEmailSendDate], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId])
 				VALUES
 					(NEWID(), @AttendeeMusicBandId, @Projeto1VideoClip, @Projeto1Musica1, @Projeto1Musica2, @Projeto1Release, @Projeto1Clipping1, @Projeto1Clipping2, @Projeto1Clipping3, @ProjectEvaluationStatusId, NULL, NULL, NULL, NULL, 0, GETUTCDATE(), @UserId, GETUTCDATE(), @UserId);
 
@@ -1052,110 +1058,110 @@ BEGIN
 			-- Music Band Teams
 			BEGIN
 				-- Team 1
-				SELECT @MusicBandTeamId = NULL;
+				SELECT @MusicBandTeamMemberId = NULL;
 
 				IF (NULLIF(@Projeto1Time1Nome, '') IS NOT NULL AND NULLIF(@Projeto1Time1Funcao, '') IS NOT NULL)
 				BEGIN
-					SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Time1Nome AND [Role] = @Projeto1Time1Funcao;
-					IF (@MusicBandTeamId IS NULL)
+					SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Time1Nome AND [Role] = @Projeto1Time1Funcao;
+					IF (@MusicBandTeamMemberId IS NULL)
 					BEGIN
-					INSERT INTO [dbo].[MusicBandTeam]
+					INSERT INTO [dbo].[MusicBandTeamMembers]
 						([Uid], [MusicBandId], [Name], [Role], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId])
 					VALUES
 						(NEWID(), @MusicBandId, @Projeto1Time1Nome, @Projeto1Time1Funcao, 0, GETUTCDATE(), @UserId, GETUTCDATE(), @UserId);
 
-						SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Time1Nome AND [Role] = @Projeto1Time1Funcao;
-						IF (@MusicBandTeamId IS NULL)
+						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Time1Nome AND [Role] = @Projeto1Time1Funcao;
+						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2018', ErrorMessage = 'The music band team 1 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2018', ErrorMessage = 'The music band team member 1 could not be created.' WHERE Id = @id;
 							GOTO NEXTFETCH;
 						END
 					END;
 				END;
 
 				-- Team 2
-				SELECT @MusicBandTeamId = NULL;
+				SELECT @MusicBandTeamMemberId = NULL;
 
 				IF (NULLIF(@Projeto1Time2Nome, '') IS NOT NULL AND NULLIF(@Projeto1Time2Funcao, '') IS NOT NULL)
 				BEGIN
-					SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Time2Nome AND [Role] = @Projeto1Time2Funcao;
-					IF (@MusicBandTeamId IS NULL)
+					SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Time2Nome AND [Role] = @Projeto1Time2Funcao;
+					IF (@MusicBandTeamMemberId IS NULL)
 					BEGIN
-					INSERT INTO [dbo].[MusicBandTeam]
+					INSERT INTO [dbo].[MusicBandTeamMembers]
 						([Uid], [MusicBandId], [Name], [Role], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId])
 					VALUES
 						(NEWID(), @MusicBandId, @Projeto1Time2Nome, @Projeto1Time2Funcao, 0, GETUTCDATE(), @UserId, GETUTCDATE(), @UserId);
 
-						SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Time2Nome AND [Role] = @Projeto1Time2Funcao;
-						IF (@MusicBandTeamId IS NULL)
+						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Time2Nome AND [Role] = @Projeto1Time2Funcao;
+						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2019', ErrorMessage = 'The music band team 2 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2019', ErrorMessage = 'The music band team member member 2 could not be created.' WHERE Id = @id;
 							GOTO NEXTFETCH;
 						END
 					END;
 				END;
 
 				-- Team 3
-				SELECT @MusicBandTeamId = NULL;
+				SELECT @MusicBandTeamMemberId = NULL;
 
 				IF (NULLIF(@Projeto1Time3Nome, '') IS NOT NULL AND NULLIF(@Projeto1Time3Funcao, '') IS NOT NULL)
 				BEGIN
-					SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Time3Nome AND [Role] = @Projeto1Time3Funcao;
-					IF (@MusicBandTeamId IS NULL)
+					SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Time3Nome AND [Role] = @Projeto1Time3Funcao;
+					IF (@MusicBandTeamMemberId IS NULL)
 					BEGIN
-					INSERT INTO [dbo].[MusicBandTeam]
+					INSERT INTO [dbo].[MusicBandTeamMembers]
 						([Uid], [MusicBandId], [Name], [Role], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId])
 					VALUES
 						(NEWID(), @MusicBandId, @Projeto1Time3Nome, @Projeto1Time3Funcao, 0, GETUTCDATE(), @UserId, GETUTCDATE(), @UserId);
 
-						SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Time3Nome AND [Role] = @Projeto1Time3Funcao;
-						IF (@MusicBandTeamId IS NULL)
+						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Time3Nome AND [Role] = @Projeto1Time3Funcao;
+						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2020', ErrorMessage = 'The music band team 3 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2020', ErrorMessage = 'The music band team member 3 could not be created.' WHERE Id = @id;
 							GOTO NEXTFETCH;
 						END
 					END;
 				END;
 
 				-- Team 4
-				SELECT @MusicBandTeamId = NULL;
+				SELECT @MusicBandTeamMemberId = NULL;
 
 				IF (NULLIF(@Projeto1Time4Nome, '') IS NOT NULL AND NULLIF(@Projeto1Time4Funcao, '') IS NOT NULL)
 				BEGIN
-					SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Time4Nome AND [Role] = @Projeto1Time4Funcao;
-					IF (@MusicBandTeamId IS NULL)
+					SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Time4Nome AND [Role] = @Projeto1Time4Funcao;
+					IF (@MusicBandTeamMemberId IS NULL)
 					BEGIN
-					INSERT INTO [dbo].[MusicBandTeam]
+					INSERT INTO [dbo].[MusicBandTeamMembers]
 						([Uid], [MusicBandId], [Name], [Role], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId])
 					VALUES
 						(NEWID(), @MusicBandId, @Projeto1Time4Nome, @Projeto1Time4Funcao, 0, GETUTCDATE(), @UserId, GETUTCDATE(), @UserId);
 
-						SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Time4Nome AND [Role] = @Projeto1Time4Funcao;
-						IF (@MusicBandTeamId IS NULL)
+						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Time4Nome AND [Role] = @Projeto1Time4Funcao;
+						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2021', ErrorMessage = 'The music band team 4 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2021', ErrorMessage = 'The music band team member 4 could not be created.' WHERE Id = @id;
 							GOTO NEXTFETCH;
 						END
 					END;
 				END;
 
 				-- Team 5
-				SELECT @MusicBandTeamId = NULL;
+				SELECT @MusicBandTeamMemberId = NULL;
 
 				IF (NULLIF(@Projeto1Time5Nome, '') IS NOT NULL AND NULLIF(@Projeto1Time5Funcao, '') IS NOT NULL)
 				BEGIN
-					SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Time5Nome AND [Role] = @Projeto1Time5Funcao;
-					IF (@MusicBandTeamId IS NULL)
+					SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Time5Nome AND [Role] = @Projeto1Time5Funcao;
+					IF (@MusicBandTeamMemberId IS NULL)
 					BEGIN
-					INSERT INTO [dbo].[MusicBandTeam]
+					INSERT INTO [dbo].[MusicBandTeamMembers]
 						([Uid], [MusicBandId], [Name], [Role], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId])
 					VALUES
 						(NEWID(), @MusicBandId, @Projeto1Time5Nome, @Projeto1Time5Funcao, 0, GETUTCDATE(), @UserId, GETUTCDATE(), @UserId);
 
-						SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Time5Nome AND [Role] = @Projeto1Time5Funcao;
-						IF (@MusicBandTeamId IS NULL)
+						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Time5Nome AND [Role] = @Projeto1Time5Funcao;
+						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2022', ErrorMessage = 'The music band team 5 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2022', ErrorMessage = 'The music band team member 5 could not be created.' WHERE Id = @id;
 							GOTO NEXTFETCH;
 						END
 					END;
@@ -1237,15 +1243,15 @@ BEGIN
 			END;
 
 			-- Attendee Music Band Collaborators
-			SELECT @AttendeeMusicBandCollaboratorId = [Id] FROM dbo.AttendeeMusicBandsCollaborators WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND AttendeeCollaboratorId = @AttendeeCollaboratorId;
+			SELECT @AttendeeMusicBandCollaboratorId = [Id] FROM dbo.AttendeeMusicBandCollaborators WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND AttendeeCollaboratorId = @AttendeeCollaboratorId;
 			IF (@AttendeeMusicBandCollaboratorId IS NULL)
 			BEGIN
-				INSERT INTO [dbo].[AttendeeMusicBandsCollaborators]
+				INSERT INTO [dbo].[AttendeeMusicBandCollaborators]
 					([Uid], [AttendeeMusicBandId], [AttendeeCollaboratorId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId])
 				VALUES
 					(NEWID(), @AttendeeMusicBandId, @AttendeeCollaboratorId, 0, GETUTCDATE(), @UserId, GETUTCDATE(), @UserId);
 
-				SELECT @AttendeeMusicBandCollaboratorId = [Id] FROM dbo.AttendeeMusicBandsCollaborators WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND AttendeeCollaboratorId = @AttendeeCollaboratorId;
+				SELECT @AttendeeMusicBandCollaboratorId = [Id] FROM dbo.AttendeeMusicBandCollaborators WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND AttendeeCollaboratorId = @AttendeeCollaboratorId;
 				IF (@AttendeeMusicBandCollaboratorId IS NULL)
 				BEGIN
 					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3004', ErrorMessage = 'The attendee music band collaborator could not be created.' WHERE Id = @id;
@@ -1267,7 +1273,7 @@ BEGIN
 				PRINT N'@Projeto2Clipping3 (Clipping3): ' + CAST(LEN(@Projeto2Clipping3) as nvarchar(max));
 
 				INSERT INTO [dbo].[MusicProjects]
-					([Uid], [AttendeeMusicBandId], [VideoUrl], [Music1Url], [Music2Url], [Release], [Clipping1], [Clipping2], [Clipping3], [ProjectEvaluationStatusId], [ProjectEvaluationRefuseId], [Reason], [EvaluationUserId], [EvaluationEmailSendDate], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId])
+					([Uid], [AttendeeMusicBandId], [VideoUrl], [Music1Url], [Music2Url], [Release], [Clipping1], [Clipping2], [Clipping3], [ProjectEvaluationStatusId], [ProjectEvaluationRefuseReasonId], [Reason], [EvaluationUserId], [EvaluationEmailSendDate], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId])
 				VALUES
 					(NEWID(), @AttendeeMusicBandId, @Projeto2VideoClip, @Projeto2Musica1, @Projeto2Musica2, @Projeto2Release, @Projeto2Clipping1, @Projeto2Clipping2, @Projeto2Clipping3, @ProjectEvaluationStatusId, NULL, NULL, NULL, NULL, 0, GETUTCDATE(), @UserId, GETUTCDATE(), @UserId);
 
@@ -1588,110 +1594,110 @@ BEGIN
 			-- Music Band Teams
 			BEGIN
 				-- Team 1
-				SELECT @MusicBandTeamId = NULL;
+				SELECT @MusicBandTeamMemberId = NULL;
 
 				IF (NULLIF(@Projeto2Time1Nome, '') IS NOT NULL AND NULLIF(@Projeto2Time1Funcao, '') IS NOT NULL)
 				BEGIN
-					SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Time1Nome AND [Role] = @Projeto2Time1Funcao;
-					IF (@MusicBandTeamId IS NULL)
+					SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Time1Nome AND [Role] = @Projeto2Time1Funcao;
+					IF (@MusicBandTeamMemberId IS NULL)
 					BEGIN
-					INSERT INTO [dbo].[MusicBandTeam]
+					INSERT INTO [dbo].[MusicBandTeamMembers]
 						([Uid], [MusicBandId], [Name], [Role], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId])
 					VALUES
 						(NEWID(), @MusicBandId, @Projeto2Time1Nome, @Projeto2Time1Funcao, 0, GETUTCDATE(), @UserId, GETUTCDATE(), @UserId);
 
-						SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Time1Nome AND [Role] = @Projeto2Time1Funcao;
-						IF (@MusicBandTeamId IS NULL)
+						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Time1Nome AND [Role] = @Projeto2Time1Funcao;
+						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3018', ErrorMessage = 'The music band team 1 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3018', ErrorMessage = 'The music band team member 1 could not be created.' WHERE Id = @id;
 							GOTO NEXTFETCH;
 						END
 					END;
 				END;
 
 				-- Team 2
-				SELECT @MusicBandTeamId = NULL;
+				SELECT @MusicBandTeamMemberId = NULL;
 
 				IF (NULLIF(@Projeto2Time2Nome, '') IS NOT NULL AND NULLIF(@Projeto2Time2Funcao, '') IS NOT NULL)
 				BEGIN
-					SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Time2Nome AND [Role] = @Projeto2Time2Funcao;
-					IF (@MusicBandTeamId IS NULL)
+					SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Time2Nome AND [Role] = @Projeto2Time2Funcao;
+					IF (@MusicBandTeamMemberId IS NULL)
 					BEGIN
-					INSERT INTO [dbo].[MusicBandTeam]
+					INSERT INTO [dbo].[MusicBandTeamMembers]
 						([Uid], [MusicBandId], [Name], [Role], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId])
 					VALUES
 						(NEWID(), @MusicBandId, @Projeto2Time2Nome, @Projeto2Time2Funcao, 0, GETUTCDATE(), @UserId, GETUTCDATE(), @UserId);
 
-						SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Time2Nome AND [Role] = @Projeto2Time2Funcao;
-						IF (@MusicBandTeamId IS NULL)
+						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Time2Nome AND [Role] = @Projeto2Time2Funcao;
+						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3019', ErrorMessage = 'The music band team 2 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3019', ErrorMessage = 'The music band team member 2 could not be created.' WHERE Id = @id;
 							GOTO NEXTFETCH;
 						END
 					END;
 				END;
 
 				-- Team 3
-				SELECT @MusicBandTeamId = NULL;
+				SELECT @MusicBandTeamMemberId = NULL;
 
 				IF (NULLIF(@Projeto2Time3Nome, '') IS NOT NULL AND NULLIF(@Projeto2Time3Funcao, '') IS NOT NULL)
 				BEGIN
-					SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Time3Nome AND [Role] = @Projeto2Time3Funcao;
-					IF (@MusicBandTeamId IS NULL)
+					SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Time3Nome AND [Role] = @Projeto2Time3Funcao;
+					IF (@MusicBandTeamMemberId IS NULL)
 					BEGIN
-					INSERT INTO [dbo].[MusicBandTeam]
+					INSERT INTO [dbo].[MusicBandTeamMembers]
 						([Uid], [MusicBandId], [Name], [Role], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId])
 					VALUES
 						(NEWID(), @MusicBandId, @Projeto2Time3Nome, @Projeto2Time3Funcao, 0, GETUTCDATE(), @UserId, GETUTCDATE(), @UserId);
 
-						SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Time3Nome AND [Role] = @Projeto2Time3Funcao;
-						IF (@MusicBandTeamId IS NULL)
+						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Time3Nome AND [Role] = @Projeto2Time3Funcao;
+						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3020', ErrorMessage = 'The music band team 3 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3020', ErrorMessage = 'The music band team member 3 could not be created.' WHERE Id = @id;
 							GOTO NEXTFETCH;
 						END
 					END;
 				END;
 
 				-- Team 4
-				SELECT @MusicBandTeamId = NULL;
+				SELECT @MusicBandTeamMemberId = NULL;
 
 				IF (NULLIF(@Projeto2Time4Nome, '') IS NOT NULL AND NULLIF(@Projeto2Time4Funcao, '') IS NOT NULL)
 				BEGIN
-					SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Time4Nome AND [Role] = @Projeto2Time4Funcao;
-					IF (@MusicBandTeamId IS NULL)
+					SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Time4Nome AND [Role] = @Projeto2Time4Funcao;
+					IF (@MusicBandTeamMemberId IS NULL)
 					BEGIN
-					INSERT INTO [dbo].[MusicBandTeam]
+					INSERT INTO [dbo].[MusicBandTeamMembers]
 						([Uid], [MusicBandId], [Name], [Role], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId])
 					VALUES
 						(NEWID(), @MusicBandId, @Projeto2Time4Nome, @Projeto2Time4Funcao, 0, GETUTCDATE(), @UserId, GETUTCDATE(), @UserId);
 
-						SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Time4Nome AND [Role] = @Projeto2Time4Funcao;
-						IF (@MusicBandTeamId IS NULL)
+						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Time4Nome AND [Role] = @Projeto2Time4Funcao;
+						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3021', ErrorMessage = 'The music band team 4 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3021', ErrorMessage = 'The music band team member 4 could not be created.' WHERE Id = @id;
 							GOTO NEXTFETCH;
 						END
 					END;
 				END;
 
 				-- Team 5
-				SELECT @MusicBandTeamId = NULL;
+				SELECT @MusicBandTeamMemberId = NULL;
 
 				IF (NULLIF(@Projeto2Time5Nome, '') IS NOT NULL AND NULLIF(@Projeto2Time5Funcao, '') IS NOT NULL)
 				BEGIN
-					SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Time5Nome AND [Role] = @Projeto2Time5Funcao;
-					IF (@MusicBandTeamId IS NULL)
+					SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Time5Nome AND [Role] = @Projeto2Time5Funcao;
+					IF (@MusicBandTeamMemberId IS NULL)
 					BEGIN
-					INSERT INTO [dbo].[MusicBandTeam]
+					INSERT INTO [dbo].[MusicBandTeamMembers]
 						([Uid], [MusicBandId], [Name], [Role], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId])
 					VALUES
 						(NEWID(), @MusicBandId, @Projeto2Time5Nome, @Projeto2Time5Funcao, 0, GETUTCDATE(), @UserId, GETUTCDATE(), @UserId);
 
-						SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Time5Nome AND [Role] = @Projeto2Time5Funcao;
-						IF (@MusicBandTeamId IS NULL)
+						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Time5Nome AND [Role] = @Projeto2Time5Funcao;
+						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3022', ErrorMessage = 'The music band team 5 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3022', ErrorMessage = 'The music band team member 5 could not be created.' WHERE Id = @id;
 							GOTO NEXTFETCH;
 						END
 					END;
@@ -1773,15 +1779,15 @@ BEGIN
 			END;
 
 			-- Attendee Music Band Collaborators
-			SELECT @AttendeeMusicBandCollaboratorId = [Id] FROM dbo.AttendeeMusicBandsCollaborators WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND AttendeeCollaboratorId = @AttendeeCollaboratorId;
+			SELECT @AttendeeMusicBandCollaboratorId = [Id] FROM dbo.AttendeeMusicBandCollaborators WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND AttendeeCollaboratorId = @AttendeeCollaboratorId;
 			IF (@AttendeeMusicBandCollaboratorId IS NULL)
 			BEGIN
-				INSERT INTO [dbo].[AttendeeMusicBandsCollaborators]
+				INSERT INTO [dbo].[AttendeeMusicBandCollaborators]
 					([Uid], [AttendeeMusicBandId], [AttendeeCollaboratorId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId])
 				VALUES
 					(NEWID(), @AttendeeMusicBandId, @AttendeeCollaboratorId, 0, GETUTCDATE(), @UserId, GETUTCDATE(), @UserId);
 
-				SELECT @AttendeeMusicBandCollaboratorId = [Id] FROM dbo.AttendeeMusicBandsCollaborators WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND AttendeeCollaboratorId = @AttendeeCollaboratorId;
+				SELECT @AttendeeMusicBandCollaboratorId = [Id] FROM dbo.AttendeeMusicBandCollaborators WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND AttendeeCollaboratorId = @AttendeeCollaboratorId;
 				IF (@AttendeeMusicBandCollaboratorId IS NULL)
 				BEGIN
 					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4004', ErrorMessage = 'The attendee music band collaborator could not be created.' WHERE Id = @id;
@@ -1803,7 +1809,7 @@ BEGIN
 				PRINT N'@Projeto3Clipping3 (Clipping3): ' + CAST(LEN(@Projeto3Clipping3) as nvarchar(max));
 
 				INSERT INTO [dbo].[MusicProjects]
-					([Uid], [AttendeeMusicBandId], [VideoUrl], [Music1Url], [Music2Url], [Release], [Clipping1], [Clipping2], [Clipping3], [ProjectEvaluationStatusId], [ProjectEvaluationRefuseId], [Reason], [EvaluationUserId], [EvaluationEmailSendDate], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId])
+					([Uid], [AttendeeMusicBandId], [VideoUrl], [Music1Url], [Music2Url], [Release], [Clipping1], [Clipping2], [Clipping3], [ProjectEvaluationStatusId], [ProjectEvaluationRefuseReasonId], [Reason], [EvaluationUserId], [EvaluationEmailSendDate], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId])
 				VALUES
 					(NEWID(), @AttendeeMusicBandId, @Projeto3VideoClip, @Projeto3Musica1, @Projeto3Musica2, @Projeto3Release, @Projeto3Clipping1, @Projeto3Clipping2, @Projeto3Clipping3, @ProjectEvaluationStatusId, NULL, NULL, NULL, NULL, 0, GETUTCDATE(), @UserId, GETUTCDATE(), @UserId);
 
@@ -2124,110 +2130,110 @@ BEGIN
 			-- Music Band Teams
 			BEGIN
 				-- Team 1
-				SELECT @MusicBandTeamId = NULL;
+				SELECT @MusicBandTeamMemberId = NULL;
 
 				IF (NULLIF(@Projeto3Time1Nome, '') IS NOT NULL AND NULLIF(@Projeto3Time1Funcao, '') IS NOT NULL)
 				BEGIN
-					SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Time1Nome AND [Role] = @Projeto3Time1Funcao;
-					IF (@MusicBandTeamId IS NULL)
+					SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Time1Nome AND [Role] = @Projeto3Time1Funcao;
+					IF (@MusicBandTeamMemberId IS NULL)
 					BEGIN
-					INSERT INTO [dbo].[MusicBandTeam]
+					INSERT INTO [dbo].[MusicBandTeamMembers]
 						([Uid], [MusicBandId], [Name], [Role], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId])
 					VALUES
 						(NEWID(), @MusicBandId, @Projeto3Time1Nome, @Projeto3Time1Funcao, 0, GETUTCDATE(), @UserId, GETUTCDATE(), @UserId);
 
-						SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Time1Nome AND [Role] = @Projeto3Time1Funcao;
-						IF (@MusicBandTeamId IS NULL)
+						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Time1Nome AND [Role] = @Projeto3Time1Funcao;
+						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4018', ErrorMessage = 'The music band team 1 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4018', ErrorMessage = 'The music band team member 1 could not be created.' WHERE Id = @id;
 							GOTO NEXTFETCH;
 						END
 					END;
 				END;
 
 				-- Team 2
-				SELECT @MusicBandTeamId = NULL;
+				SELECT @MusicBandTeamMemberId = NULL;
 
 				IF (NULLIF(@Projeto3Time2Nome, '') IS NOT NULL AND NULLIF(@Projeto3Time2Funcao, '') IS NOT NULL)
 				BEGIN
-					SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Time2Nome AND [Role] = @Projeto3Time2Funcao;
-					IF (@MusicBandTeamId IS NULL)
+					SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Time2Nome AND [Role] = @Projeto3Time2Funcao;
+					IF (@MusicBandTeamMemberId IS NULL)
 					BEGIN
-					INSERT INTO [dbo].[MusicBandTeam]
+					INSERT INTO [dbo].[MusicBandTeamMembers]
 						([Uid], [MusicBandId], [Name], [Role], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId])
 					VALUES
 						(NEWID(), @MusicBandId, @Projeto3Time2Nome, @Projeto3Time2Funcao, 0, GETUTCDATE(), @UserId, GETUTCDATE(), @UserId);
 
-						SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Time2Nome AND [Role] = @Projeto3Time2Funcao;
-						IF (@MusicBandTeamId IS NULL)
+						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Time2Nome AND [Role] = @Projeto3Time2Funcao;
+						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4019', ErrorMessage = 'The music band team 2 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4019', ErrorMessage = 'The music band team member 2 could not be created.' WHERE Id = @id;
 							GOTO NEXTFETCH;
 						END
 					END;
 				END;
 
 				-- Team 3
-				SELECT @MusicBandTeamId = NULL;
+				SELECT @MusicBandTeamMemberId = NULL;
 
 				IF (NULLIF(@Projeto3Time3Nome, '') IS NOT NULL AND NULLIF(@Projeto3Time3Funcao, '') IS NOT NULL)
 				BEGIN
-					SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Time3Nome AND [Role] = @Projeto3Time3Funcao;
-					IF (@MusicBandTeamId IS NULL)
+					SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Time3Nome AND [Role] = @Projeto3Time3Funcao;
+					IF (@MusicBandTeamMemberId IS NULL)
 					BEGIN
-					INSERT INTO [dbo].[MusicBandTeam]
+					INSERT INTO [dbo].[MusicBandTeamMembers]
 						([Uid], [MusicBandId], [Name], [Role], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId])
 					VALUES
 						(NEWID(), @MusicBandId, @Projeto3Time3Nome, @Projeto3Time3Funcao, 0, GETUTCDATE(), @UserId, GETUTCDATE(), @UserId);
 
-						SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Time3Nome AND [Role] = @Projeto3Time3Funcao;
-						IF (@MusicBandTeamId IS NULL)
+						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Time3Nome AND [Role] = @Projeto3Time3Funcao;
+						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4020', ErrorMessage = 'The music band team 3 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4020', ErrorMessage = 'The music band team member 3 could not be created.' WHERE Id = @id;
 							GOTO NEXTFETCH;
 						END
 					END;
 				END;
 
 				-- Team 4
-				SELECT @MusicBandTeamId = NULL;
+				SELECT @MusicBandTeamMemberId = NULL;
 
 				IF (NULLIF(@Projeto3Time4Nome, '') IS NOT NULL AND NULLIF(@Projeto3Time4Funcao, '') IS NOT NULL)
 				BEGIN
-					SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Time4Nome AND [Role] = @Projeto3Time4Funcao;
-					IF (@MusicBandTeamId IS NULL)
+					SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Time4Nome AND [Role] = @Projeto3Time4Funcao;
+					IF (@MusicBandTeamMemberId IS NULL)
 					BEGIN
-					INSERT INTO [dbo].[MusicBandTeam]
+					INSERT INTO [dbo].[MusicBandTeamMembers]
 						([Uid], [MusicBandId], [Name], [Role], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId])
 					VALUES
 						(NEWID(), @MusicBandId, @Projeto3Time4Nome, @Projeto3Time4Funcao, 0, GETUTCDATE(), @UserId, GETUTCDATE(), @UserId);
 
-						SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Time4Nome AND [Role] = @Projeto3Time4Funcao;
-						IF (@MusicBandTeamId IS NULL)
+						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Time4Nome AND [Role] = @Projeto3Time4Funcao;
+						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4021', ErrorMessage = 'The music band team 4 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4021', ErrorMessage = 'The music band team member 4 could not be created.' WHERE Id = @id;
 							GOTO NEXTFETCH;
 						END
 					END;
 				END;
 
 				-- Team 5
-				SELECT @MusicBandTeamId = NULL;
+				SELECT @MusicBandTeamMemberId = NULL;
 
 				IF (NULLIF(@Projeto3Time5Nome, '') IS NOT NULL AND NULLIF(@Projeto3Time5Funcao, '') IS NOT NULL)
 				BEGIN
-					SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Time5Nome AND [Role] = @Projeto3Time5Funcao;
-					IF (@MusicBandTeamId IS NULL)
+					SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Time5Nome AND [Role] = @Projeto3Time5Funcao;
+					IF (@MusicBandTeamMemberId IS NULL)
 					BEGIN
-					INSERT INTO [dbo].[MusicBandTeam]
+					INSERT INTO [dbo].[MusicBandTeamMembers]
 						([Uid], [MusicBandId], [Name], [Role], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId])
 					VALUES
 						(NEWID(), @MusicBandId, @Projeto3Time5Nome, @Projeto3Time5Funcao, 0, GETUTCDATE(), @UserId, GETUTCDATE(), @UserId);
 
-						SELECT @MusicBandTeamId = [Id] FROM dbo.MusicBandTeam WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Time5Nome AND [Role] = @Projeto3Time5Funcao;
-						IF (@MusicBandTeamId IS NULL)
+						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Time5Nome AND [Role] = @Projeto3Time5Funcao;
+						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4022', ErrorMessage = 'The music band team 5 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4022', ErrorMessage = 'The music band team member 5 could not be created.' WHERE Id = @id;
 							GOTO NEXTFETCH;
 						END
 					END;

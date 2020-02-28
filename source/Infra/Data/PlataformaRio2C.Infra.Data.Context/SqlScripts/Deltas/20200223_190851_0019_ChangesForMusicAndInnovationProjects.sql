@@ -24,7 +24,7 @@ CREATE TABLE "MusicBands"
 	"Uid"                uniqueidentifier  NOT NULL ,
 	"MusicBandTypeId"    int  NOT NULL ,
 	"Name"               varchar(300)  NOT NULL ,
-	"ImageUrl"		     varchar(300)  NULL ,
+	"ImageUrl"           varchar(300)  NULL ,
 	"FormationDate"      varchar(300)  NULL ,
 	"MainMusicInfluences" varchar(600)  NULL ,
 	"Facebook"           varchar(300)  NULL ,
@@ -71,26 +71,6 @@ CREATE NONCLUSTERED INDEX "IDX_AttendeeMusicBands_MusicBandId" ON "AttendeeMusic
 )
 go
 
-CREATE TABLE "AttendeeMusicBandsCollaborators"
-( 
-	"Id"                 int IDENTITY ( 1,1 ) ,
-	"Uid"                uniqueidentifier  NOT NULL ,
-	"AttendeeMusicBandId" int  NOT NULL ,
-	"AttendeeCollaboratorId" int  NOT NULL ,
-	"IsDeleted"          bit  NOT NULL ,
-	"CreateDate"         datetimeoffset  NOT NULL ,
-	"CreateUserId"       int  NOT NULL ,
-	"UpdateDate"         datetimeoffset  NOT NULL ,
-	"UpdateUserId"       int  NOT NULL 
-)
-go
-
-CREATE NONCLUSTERED INDEX "IDX_AttendeeMusicBandsCollaborators_AttendeeCollaboratorId" ON "AttendeeMusicBandsCollaborators"
-( 
-	"AttendeeCollaboratorId"  ASC
-)
-go
-
 CREATE TABLE "MusicProjects"
 ( 
 	"Id"                 int IDENTITY ( 1,1 ) ,
@@ -104,7 +84,7 @@ CREATE TABLE "MusicProjects"
 	"Clipping2"          varchar(300)  NULL ,
 	"Clipping3"          varchar(300)  NULL ,
 	"ProjectEvaluationStatusId" int  NOT NULL ,
-	"ProjectEvaluationRefuseId" int  NULL ,
+	"ProjectEvaluationRefuseReasonId" int  NULL ,
 	"Reason"             varchar(1500)  NULL ,
 	"EvaluationUserId"   int  NULL ,
 	"EvaluationEmailSendDate" datetimeoffset  NULL ,
@@ -258,13 +238,17 @@ CREATE NONCLUSTERED INDEX "IDX_ReleasedMusicProjects_MusicBandId" ON "ReleasedMu
 )
 go
 
-CREATE TABLE "MusicBandTeam"
+CREATE TABLE "AttendeeInnovationOrganization"
 ( 
 	"Id"                 int IDENTITY ( 1,1 ) ,
 	"Uid"                uniqueidentifier  NOT NULL ,
-	"MusicBandId"        int  NOT NULL ,
-	"Name"               varchar(300)  NOT NULL ,
-	"Role"               varchar(100)  NOT NULL ,
+	"EditionId"          int  NOT NULL ,
+	"InnovationOrganizationId" int  NOT NULL ,
+	"ProjectEvaluationStatusId" int  NOT NULL ,
+	"ProjectEvaluationRefuseReasonId" int  NULL ,
+	"Reason"             varchar(1500)  NULL ,
+	"EvaluationUserId"   int  NULL ,
+	"EvaluationEmailSendDate" datetimeoffset  NULL ,
 	"IsDeleted"          bit  NOT NULL ,
 	"CreateDate"         datetimeoffset  NOT NULL ,
 	"CreateUserId"       int  NOT NULL ,
@@ -273,9 +257,21 @@ CREATE TABLE "MusicBandTeam"
 )
 go
 
-CREATE NONCLUSTERED INDEX "IDX_MusicBandTeam_MusicBandId" ON "MusicBandTeam"
+CREATE NONCLUSTERED INDEX "IDX_AttendeeInnovationOrganization_InnovationOrganizationId" ON "AttendeeInnovationOrganization"
 ( 
-	"MusicBandId"         ASC
+	"InnovationOrganizationId"  ASC
+)
+go
+
+CREATE NONCLUSTERED INDEX "IDX_AttendeeInnovationOrganization_ProjectEvaluationStatusId" ON "AttendeeInnovationOrganization"
+( 
+	"ProjectEvaluationRefuseReasonId"  ASC
+)
+go
+
+CREATE NONCLUSTERED INDEX "IDX_AttendeeInnovationOrganization_EvaluationuserId" ON "AttendeeInnovationOrganization"
+( 
+	"EvaluationUserId"    ASC
 )
 go
 
@@ -319,43 +315,6 @@ go
 CREATE NONCLUSTERED INDEX "IDX_InnovationOrganizations_Document" ON "InnovationOrganizations"
 ( 
 	"Document"            ASC
-)
-go
-
-CREATE TABLE "AttendeeInnovationOrganization"
-( 
-	"Id"                 int IDENTITY ( 1,1 ) ,
-	"Uid"                uniqueidentifier  NOT NULL ,
-	"EditionId"          int  NOT NULL ,
-	"InnovationOrganizationId" int  NOT NULL ,
-	"ProjectEvaluationStatusId" int  NOT NULL ,
-	"ProjectEvaluationRefuseReasonId" int  NULL ,
-	"Reason"             varchar(1500)  NULL ,
-	"EvaluationUserId"   int  NULL ,
-	"EvaluationEmailSendDate" datetimeoffset  NULL ,
-	"IsDeleted"          bit  NOT NULL ,
-	"CreateDate"         datetimeoffset  NOT NULL ,
-	"CreateUserId"       int  NOT NULL ,
-	"UpdateDate"         datetimeoffset  NOT NULL ,
-	"UpdateUserId"       int  NOT NULL 
-)
-go
-
-CREATE NONCLUSTERED INDEX "IDX_AttendeeInnovationOrganization_InnovationOrganizationId" ON "AttendeeInnovationOrganization"
-( 
-	"InnovationOrganizationId"  ASC
-)
-go
-
-CREATE NONCLUSTERED INDEX "IDX_AttendeeInnovationOrganization_ProjectEvaluationStatusId" ON "AttendeeInnovationOrganization"
-( 
-	"ProjectEvaluationRefuseReasonId"  ASC
-)
-go
-
-CREATE NONCLUSTERED INDEX "IDX_AttendeeInnovationOrganization_EvaluationuserId" ON "AttendeeInnovationOrganization"
-( 
-	"EvaluationUserId"    ASC
 )
 go
 
@@ -469,6 +428,47 @@ CREATE NONCLUSTERED INDEX "IDX_AttendeeInnovationOrganizationCollaborators_Atten
 )
 go
 
+CREATE TABLE "MusicBandTeamMembers"
+( 
+	"Id"                 int IDENTITY ( 1,1 ) ,
+	"Uid"                uniqueidentifier  NOT NULL ,
+	"MusicBandId"        int  NOT NULL ,
+	"Name"               varchar(300)  NOT NULL ,
+	"Role"               varchar(300)  NOT NULL ,
+	"IsDeleted"          bit  NOT NULL ,
+	"CreateDate"         datetimeoffset  NOT NULL ,
+	"CreateUserId"       int  NOT NULL ,
+	"UpdateDate"         datetimeoffset  NOT NULL ,
+	"UpdateUserId"       int  NOT NULL 
+)
+go
+
+CREATE NONCLUSTERED INDEX "IDX_MusicBandTeamMembers_MusicBandId" ON "MusicBandTeamMembers"
+( 
+	"MusicBandId"         ASC
+)
+go
+
+CREATE TABLE "AttendeeMusicBandCollaborators"
+( 
+	"Id"                 int IDENTITY ( 1,1 ) ,
+	"Uid"                uniqueidentifier  NOT NULL ,
+	"AttendeeMusicBandId" int  NOT NULL ,
+	"AttendeeCollaboratorId" int  NOT NULL ,
+	"IsDeleted"          bit  NOT NULL ,
+	"CreateDate"         datetimeoffset  NOT NULL ,
+	"CreateUserId"       int  NOT NULL ,
+	"UpdateDate"         datetimeoffset  NOT NULL ,
+	"UpdateUserId"       int  NOT NULL 
+)
+go
+
+CREATE NONCLUSTERED INDEX "IDX_AttendeeMusicBandCollaborators_AttendeeCollaboratorId" ON "AttendeeMusicBandCollaborators"
+( 
+	"AttendeeCollaboratorId"  ASC
+)
+go
+
 ALTER TABLE "MusicBands"
 ADD CONSTRAINT "PK_MusicBands" PRIMARY KEY  CLUSTERED ("Id" ASC)
 go
@@ -487,18 +487,6 @@ go
 
 ALTER TABLE "AttendeeMusicBands"
 ADD CONSTRAINT "IDX_UQ_AttendeeMusicBands_EditionId_MusicBandId" UNIQUE ("EditionId"  ASC,"MusicBandId"  ASC)
-go
-
-ALTER TABLE "AttendeeMusicBandsCollaborators"
-ADD CONSTRAINT "PK_AttendeeMusicBandsCollaborators" PRIMARY KEY  CLUSTERED ("Id" ASC)
-go
-
-ALTER TABLE "AttendeeMusicBandsCollaborators"
-ADD CONSTRAINT "IDX_UQ_AttendeeMusicBandsCollaborators_Uid" UNIQUE ("Uid"  ASC)
-go
-
-ALTER TABLE "AttendeeMusicBandsCollaborators"
-ADD CONSTRAINT "IDX_UQ_AttendeeMusicBandsCollaborators_AttendeeMusicBandId_AttendeeCollaboratorId" UNIQUE ("AttendeeMusicBandId"  ASC,"AttendeeCollaboratorId"  ASC)
 go
 
 ALTER TABLE "MusicProjects"
@@ -565,22 +553,6 @@ ALTER TABLE "ReleasedMusicProjects"
 ADD CONSTRAINT "IDX_UQ_ReleasedMusicProjects_Uid" UNIQUE ("Uid"  ASC)
 go
 
-ALTER TABLE "MusicBandTeam"
-ADD CONSTRAINT "PK_MusicBandTeam" PRIMARY KEY  CLUSTERED ("Id" ASC)
-go
-
-ALTER TABLE "MusicBandTeam"
-ADD CONSTRAINT "IDX_UQ_MusicBandTeam_Uid" UNIQUE ("Uid"  ASC)
-go
-
-ALTER TABLE "InnovationOrganizations"
-ADD CONSTRAINT "PK_InnovationOrganizations" PRIMARY KEY  CLUSTERED ("Id" ASC)
-go
-
-ALTER TABLE "InnovationOrganizations"
-ADD CONSTRAINT "IDX_UQ_InnovationOrganizations_Uid" UNIQUE ("Uid"  ASC)
-go
-
 ALTER TABLE "AttendeeInnovationOrganization"
 ADD CONSTRAINT "PK_AttendeeInnovationOrganization" PRIMARY KEY  CLUSTERED ("Id" ASC)
 go
@@ -591,6 +563,14 @@ go
 
 ALTER TABLE "AttendeeInnovationOrganization"
 ADD CONSTRAINT "IDX_UQ_AttendeeInnovationOrganization_EditionId_InnovationOrganizationId" UNIQUE ("EditionId"  ASC,"InnovationOrganizationId"  ASC)
+go
+
+ALTER TABLE "InnovationOrganizations"
+ADD CONSTRAINT "PK_InnovationOrganizations" PRIMARY KEY  CLUSTERED ("Id" ASC)
+go
+
+ALTER TABLE "InnovationOrganizations"
+ADD CONSTRAINT "IDX_UQ_InnovationOrganizations_Uid" UNIQUE ("Uid"  ASC)
 go
 
 ALTER TABLE "InnovationOptionGroups"
@@ -641,6 +621,26 @@ ALTER TABLE "AttendeeInnovationOrganizationCollaborators"
 ADD CONSTRAINT "IDX_UQ_AttendeeInnovationOrganizationCollaborators_AttendeeInnovationOrganizationId_AttendeeCollaboratorId" UNIQUE ("AttendeeInnovationOrganizationId"  ASC,"AttendeeCollaboratorId"  ASC)
 go
 
+ALTER TABLE "MusicBandTeamMembers"
+ADD CONSTRAINT "PK_MusicBandTeamMembers" PRIMARY KEY  CLUSTERED ("Id" ASC)
+go
+
+ALTER TABLE "MusicBandTeamMembers"
+ADD CONSTRAINT "IDX_UQ_MusicBandTeamMembers_Uid" UNIQUE ("Uid"  ASC)
+go
+
+ALTER TABLE "AttendeeMusicBandCollaborators"
+ADD CONSTRAINT "PK_AttendeeMusicBandCollaborators" PRIMARY KEY  CLUSTERED ("Id" ASC)
+go
+
+ALTER TABLE "AttendeeMusicBandCollaborators"
+ADD CONSTRAINT "IDX_UQ_AttendeeMusicBandCollaborators_Uid" UNIQUE ("Uid"  ASC)
+go
+
+ALTER TABLE "AttendeeMusicBandCollaborators"
+ADD CONSTRAINT "IDX_UQ_AttendeeMusicBandCollaborators_AttendeeMusicBandId_AttendeeCollaboratorId" UNIQUE ("AttendeeMusicBandId"  ASC,"AttendeeCollaboratorId"  ASC)
+go
+
 ALTER TABLE "MusicBands"
 	ADD CONSTRAINT "FK_MusicBandTypes_MusicBands_MusicBandTypeId" FOREIGN KEY ("MusicBandTypeId") REFERENCES "MusicBandTypes"("Id")
 go
@@ -669,32 +669,12 @@ ALTER TABLE "AttendeeMusicBands"
 	ADD CONSTRAINT "FK_Users_AttendeeMusicBands_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
 go
 
-ALTER TABLE "AttendeeMusicBandsCollaborators"
-	ADD CONSTRAINT "FK_AttendeeMusicBands_AttendeeMusicBandsCollaborators_AttendeeMusicBandId" FOREIGN KEY ("AttendeeMusicBandId") REFERENCES "AttendeeMusicBands"("Id")
-go
-
-ALTER TABLE "AttendeeMusicBandsCollaborators"
-	ADD CONSTRAINT "FK_Users_AttendeeMusicBandsCollaborators_CreateUserId" FOREIGN KEY ("CreateUserId") REFERENCES "dbo"."Users"("Id")
-go
-
-ALTER TABLE "AttendeeMusicBandsCollaborators"
-	ADD CONSTRAINT "FK_Users_AttendeeMusicBandsCollaborators_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
-go
-
-ALTER TABLE "AttendeeMusicBandsCollaborators"
-	ADD CONSTRAINT "FK_AttendeeCollaborators_AttendeeMusicBandsCollaborators_AttendeeCollaboratorId" FOREIGN KEY ("AttendeeCollaboratorId") REFERENCES "dbo"."AttendeeCollaborators"("Id")
-go
-
 ALTER TABLE "MusicProjects"
 	ADD CONSTRAINT "FK_AttendeeMusicBands_MusicProjects_AttendeeMusicBandId" FOREIGN KEY ("AttendeeMusicBandId") REFERENCES "AttendeeMusicBands"("Id")
 go
 
 ALTER TABLE "MusicProjects"
 	ADD CONSTRAINT "FK_ProjectEvaluationStatuses_MusicProjects_ProjectEvaluationStatusId" FOREIGN KEY ("ProjectEvaluationStatusId") REFERENCES "dbo"."ProjectEvaluationStatuses"("Id")
-go
-
-ALTER TABLE "MusicProjects"
-	ADD CONSTRAINT "FK_ProjectEvaluationRefuseReasons_MusicProjects_ProjectEvaluationRefuseId" FOREIGN KEY ("ProjectEvaluationRefuseId") REFERENCES "ProjectEvaluationRefuseReasons"("Id")
 go
 
 ALTER TABLE "MusicProjects"
@@ -707,6 +687,10 @@ go
 
 ALTER TABLE "MusicProjects"
 	ADD CONSTRAINT "FK_Users_MusicProjects_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
+go
+
+ALTER TABLE "MusicProjects"
+	ADD CONSTRAINT "FK_ProjectEvaluationRefuseReasons_MusicProjects_ProjectEvaluationRefuseReasonId" FOREIGN KEY ("ProjectEvaluationRefuseReasonId") REFERENCES "ProjectEvaluationRefuseReasons"("Id")
 go
 
 ALTER TABLE "MusicBandTypes"
@@ -781,30 +765,6 @@ ALTER TABLE "ReleasedMusicProjects"
 	ADD CONSTRAINT "FK_Users_ReleasedMusicProjects_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
 go
 
-ALTER TABLE "MusicBandTeam"
-	ADD CONSTRAINT "FK_MusicBands_MusicBandTeam_MusicBandId" FOREIGN KEY ("MusicBandId") REFERENCES "MusicBands"("Id")
-go
-
-ALTER TABLE "MusicBandTeam"
-	ADD CONSTRAINT "FK_Users_MusicBandTeam_CreateUserId" FOREIGN KEY ("CreateUserId") REFERENCES "dbo"."Users"("Id")
-go
-
-ALTER TABLE "MusicBandTeam"
-	ADD CONSTRAINT "FK_Users_MusicBandTeam_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
-go
-
-ALTER TABLE "InnovationOrganizations"
-	ADD CONSTRAINT "FK_WorkDedications_InnovationOrganizations_WorkDedicationId" FOREIGN KEY ("WorkDedicationId") REFERENCES "WorkDedications"("Id")
-go
-
-ALTER TABLE "InnovationOrganizations"
-	ADD CONSTRAINT "FK_Users_InnovationOrganizations_CreateUserId" FOREIGN KEY ("CreateUserId") REFERENCES "dbo"."Users"("Id")
-go
-
-ALTER TABLE "InnovationOrganizations"
-	ADD CONSTRAINT "FK_Users_InnovationOrganizations_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
-go
-
 ALTER TABLE "AttendeeInnovationOrganization"
 	ADD CONSTRAINT "FK_Editions_AttendeeInnovationOrganization_EditionId" FOREIGN KEY ("EditionId") REFERENCES "dbo"."Editions"("Id")
 go
@@ -831,6 +791,18 @@ go
 
 ALTER TABLE "AttendeeInnovationOrganization"
 	ADD CONSTRAINT "FK_Users_AttendeeInnovationOrganization_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
+go
+
+ALTER TABLE "InnovationOrganizations"
+	ADD CONSTRAINT "FK_WorkDedications_InnovationOrganizations_WorkDedicationId" FOREIGN KEY ("WorkDedicationId") REFERENCES "WorkDedications"("Id")
+go
+
+ALTER TABLE "InnovationOrganizations"
+	ADD CONSTRAINT "FK_Users_InnovationOrganizations_CreateUserId" FOREIGN KEY ("CreateUserId") REFERENCES "dbo"."Users"("Id")
+go
+
+ALTER TABLE "InnovationOrganizations"
+	ADD CONSTRAINT "FK_Users_InnovationOrganizations_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
 go
 
 ALTER TABLE "ProjectEvaluationRefuseReasons"
@@ -895,6 +867,34 @@ go
 
 ALTER TABLE "AttendeeInnovationOrganizationCollaborators"
 	ADD CONSTRAINT "FK_AttendeeCollaborators_AttendeeInnovationOrganizationCollaborators_AttendeeCollaboratorId" FOREIGN KEY ("AttendeeCollaboratorId") REFERENCES "dbo"."AttendeeCollaborators"("Id")
+go
+
+ALTER TABLE "MusicBandTeamMembers"
+	ADD CONSTRAINT "FK_MusicBands_MusicBandTeamMembers_MusicBandId" FOREIGN KEY ("MusicBandId") REFERENCES "MusicBands"("Id")
+go
+
+ALTER TABLE "MusicBandTeamMembers"
+	ADD CONSTRAINT "FK_Users_MusicBandTeamMembers_CreateUserId" FOREIGN KEY ("CreateUserId") REFERENCES "dbo"."Users"("Id")
+go
+
+ALTER TABLE "MusicBandTeamMembers"
+	ADD CONSTRAINT "FK_Users_MusicBandTeamMembers_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
+go
+
+ALTER TABLE "AttendeeMusicBandCollaborators"
+	ADD CONSTRAINT "FK_AttendeeMusicBands_AttendeeMusicBandCollaborators_AttendeeMusicBandId" FOREIGN KEY ("AttendeeMusicBandId") REFERENCES "AttendeeMusicBands"("Id")
+go
+
+ALTER TABLE "AttendeeMusicBandCollaborators"
+	ADD CONSTRAINT "FK_AttendeeCollaborators_AttendeeMusicBandCollaborators_AttendeeCollaboratorId" FOREIGN KEY ("AttendeeCollaboratorId") REFERENCES "dbo"."AttendeeCollaborators"("Id")
+go
+
+ALTER TABLE "AttendeeMusicBandCollaborators"
+	ADD CONSTRAINT "FK_Users_AttendeeMusicBandCollaborators_CreateUserId" FOREIGN KEY ("CreateUserId") REFERENCES "dbo"."Users"("Id")
+go
+
+ALTER TABLE "AttendeeMusicBandCollaborators"
+	ADD CONSTRAINT "FK_Users_AttendeeMusicBandCollaborators_UpdateUserId" FOREIGN KEY ("UpdateUserId") REFERENCES "dbo"."Users"("Id")
 go
 
 

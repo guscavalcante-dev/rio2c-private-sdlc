@@ -46,7 +46,7 @@ namespace PlataformaRio2C.Domain.Entities
         public string Clipping2 { get; private set; }
         public string Clipping3 { get; private set; }
         public int ProjectEvaluationStatusId { get; private set; }
-        public int? ProjectEvaluationRefuseId { get; private set; } // TODO: Change to ProjectEvaluationRefuseReasonId
+        public int? ProjectEvaluationRefuseReasonId { get; private set; }
         public string Reason { get; private set; }
         public int? EvaluationUserId { get; private set; }
         public DateTimeOffset? EvaluationEmailSendDate { get; private set; }

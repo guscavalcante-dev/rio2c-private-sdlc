@@ -59,7 +59,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
 
             this.HasOptional(t => t.ProjectEvaluationRefuseReason)
                 .WithMany()
-                .HasForeignKey(t => t.ProjectEvaluationRefuseId);
+                .HasForeignKey(t => t.ProjectEvaluationRefuseReasonId);
 
             this.HasOptional(t => t.EvaluationUser)
                 .WithMany()
