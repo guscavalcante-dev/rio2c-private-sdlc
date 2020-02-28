@@ -394,5 +394,48 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query
                             .FirstOrDefaultAsync();
         }
+
+        public async Task<MusicProjectDto> FindMainInformationWidgetDtoAsync(Guid musicProjectUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(musicProjectUid)
+                                .Select(mp => new MusicProjectDto
+                                {
+                                    MusicProject = mp,
+                                    AttendeeMusicBandDto = new AttendeeMusicBandDto
+                                    {
+                                        AttendeeMusicBand = mp.AttendeeMusicBand,
+                                        MusicBand = mp.AttendeeMusicBand.MusicBand,
+                                        MusicBandType = mp.AttendeeMusicBand.MusicBand.MusicBandType,
+                                        MusicBandGenreDtos = mp.AttendeeMusicBand.MusicBand.MusicBandGenres
+                                                                    .Where(mbg => !mbg.IsDeleted && !mbg.MusicGenre.IsDeleted)
+                                                                    .OrderBy(mbg => mbg.MusicGenre.DisplayOrder)
+                                                                    .Select(mbg => new MusicBandGenreDto
+                                                                    {
+                                                                        MusicBandGenre = mbg,
+                                                                        MusicGenre = mbg.MusicGenre
+                                                                    }),
+                                        MusicBandTargetAudienceDtos = mp.AttendeeMusicBand.MusicBand.MusicBandTargetAudiences
+                                                                            .Where(mbta => !mbta.IsDeleted && !mbta.TargetAudience.IsDeleted)
+                                                                            .OrderBy(mbta => mbta.TargetAudience.DisplayOrder)
+                                                                            .Select(mbta => new MusicBandTargetAudienceDto
+                                                                            {
+                                                                                MusicBandTargetAudience = mbta,
+                                                                                TargetAudience = mbta.TargetAudience
+                                                                            })
+                                    },
+                                    MusicProjectEvaluationDto = new MusicProjectEvaluationDto
+                                    {
+                                        EvaluationCollaborator = mp.EvaluationUser.Collaborator,
+                                        ProjectEvaluationStatus = mp.ProjectEvaluationStatus,
+                                        ProjectEvaluationRefuseReason = mp.ProjectEvaluationRefuseReason,
+                                        Reason = mp.Reason,
+                                        EvaluationDate = mp.EvaluationDate
+                                    }
+                                });
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
     }
 }

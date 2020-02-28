@@ -24,5 +24,6 @@ namespace PlataformaRio2C.Domain.Interfaces
     {
         Task<IPagedList<MusicProjectDto>> FindAllDtosToEvaluateAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize);
         Task<MusicProjectDto> FindDtoToEvaluateAsync(Guid musicProjectUid);
+        Task<MusicProjectDto> FindMainInformationWidgetDtoAsync(Guid musicProjectUid);
     }
 }

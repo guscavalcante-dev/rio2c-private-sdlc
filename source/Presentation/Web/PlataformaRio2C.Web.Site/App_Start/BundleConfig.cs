@@ -381,11 +381,11 @@ namespace PlataformaRio2C.Web.Site
             //    "~/Assets/js/projects/projects.buyercompany.widget.js",
             //    "~/Scripts/jquery.unobtrusive-ajax.js"));
 
-            //bundles.Add(new ScriptBundle("~/bundles/js/projects.widget.js").Include(
-            //    "~/Assets/js/projects/projects.maininformation.widget.js",
-            //    "~/Assets/js/projects/projects.interest.widget.js",
-            //    "~/Assets/js/projects/projects.links.widget.js",
-            //    "~/Assets/js/myrio2c.additionalinfo.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/music.projects.widget.js").Include(
+                "~/Assets/js/music/projects/music.projects.maininformation.widget.js"));
+                //"~/Assets/js/projects/projects.interest.widget.js",
+                //"~/Assets/js/projects/projects.links.widget.js",
+                //"~/Assets/js/myrio2c.additionalinfo.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/music.projects.evaluation.list.widget.js").Include(
                 "~/Assets/js/music/projects/music.projects.evaluation.list.widget.js",

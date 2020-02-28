@@ -200,49 +200,37 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
         #endregion
 
-        //#region Evaluation Details
+        #region Evaluation Details
 
-        ///// <summary>Evaluations the details.</summary>
-        ///// <param name="id">The identifier.</param>
-        ///// <returns></returns>
-        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.ExecutiveAudiovisual)]
-        //public async Task<ActionResult> EvaluationDetails(Guid? id)
-        //{
-        //    if (this.EditionDto?.IsProjectEvaluationStarted() != true)
-        //    {
-        //        return RedirectToAction("Index", "Projects", new { Area = "" });
-        //    }
+        /// <summary>Evaluations the details.</summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
+        public async Task<ActionResult> EvaluationDetails(Guid? id)
+        {
+            if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
+            {
+                return RedirectToAction("Index", "Projects", new { Area = "Music" });
+            }
 
-        //    var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(id ?? Guid.Empty);
-        //    if (projectDto == null)
-        //    {
-        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("EvaluationList", "Projects", new { Area = "" });
-        //    }
+            var musicProjectDto = await this.musicProjectRepo.FindDtoToEvaluateAsync(id ?? Guid.Empty);
+            if (musicProjectDto == null)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("EvaluationList", "Projects", new { Area = "Music" });
+            }
 
-        //    if (!projectDto.Project.IsFinished())
-        //    {
-        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("EvaluationList", "Projects", new { Area = "" });
-        //    }
+            #region Breadcrumb
 
-        //    if (this.UserAccessControlDto?.HasAnyEditionAttendeeOrganization(projectDto.ProjectBuyerEvaluationDtos?.Select(pbed => pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid)?.ToList()) != true) // Is buyer
-        //    {
-        //        this.StatusMessageToastr(Texts.ForbiddenErrorMessage, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("EvaluationList", "Projects", new { Area = "" });
-        //    }
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.PitchingShow, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("EvaluationList", "Projects", new { Area = "Music" })),
+                new BreadcrumbItemHelper(musicProjectDto.AttendeeMusicBandDto?.MusicBand?.Name ?? Labels.Project, Url.Action("EvaluationDetails", "Projects", new { Area = "Music", id }))
+            });
 
-        //    #region Breadcrumb
+            #endregion
 
-        //    ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
-        //        new BreadcrumbItemHelper(Labels.Projects, Url.Action("EvaluationList", "Projects", new { Area = "" })),
-        //        new BreadcrumbItemHelper(projectDto.GetTitleDtoByLanguageCode(this.UserInterfaceLanguage)?.ProjectTitle?.Value ?? Labels.Project, Url.Action("EvaluationDetails", "Projects", new { id }))
-        //    });
-
-        //    #endregion
-
-        //    return View(projectDto);
-        //}
+            return View(musicProjectDto);
+        }
 
         //#region Buyer Evaluation
 
@@ -281,9 +269,151 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
         //#endregion
 
-        //#endregion
+        #endregion
 
         #region Common
+
+        #region Main Information Widget
+
+        /// <summary>Shows the main information widget.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowMainInformationWidget(Guid? projectUid)
+        {
+            var mainInformationWidgetDto = await this.musicProjectRepo.FindMainInformationWidgetDtoAsync(projectUid ?? Guid.Empty);
+            if (mainInformationWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#ProjectMainInformationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        //#region Update
+
+        ///// <summary>Shows the update main information modal.</summary>
+        ///// <param name="projectUid">The project uid.</param>
+        ///// <returns></returns>
+        //[HttpGet]
+        //public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? projectUid)
+        //{
+        //    UpdateProjectMainInformation cmd;
+
+        //    try
+        //    {
+        //        var mainInformationWidgetDto = await this.musicProjectRepo.FindSiteMainInformationWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
+        //        if (mainInformationWidgetDto == null)
+        //        {
+        //            throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
+        //        }
+
+        //        if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(mainInformationWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+        //        {
+        //            throw new DomainException(Texts.ForbiddenErrorMessage);
+        //        }
+
+
+        //        if (this.EditionDto?.IsProjectSubmitOpen() != true)
+        //        {
+        //            throw new DomainException(Messages.ProjectSubmissionNotOpen);
+        //        }
+
+        //        if (mainInformationWidgetDto.Project.IsFinished())
+        //        {
+        //            throw new DomainException(Messages.ProjectIsFinishedCannotBeUpdated);
+        //        }
+
+        //        cmd = new UpdateProjectMainInformation(
+        //            mainInformationWidgetDto,
+        //            await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
+        //            true,
+        //            false,
+        //            false);
+        //    }
+        //    catch (DomainException ex)
+        //    {
+        //        return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        pages = new List<dynamic>
+        //        {
+        //            new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+        //        }
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
+
+        ///// <summary>Updates the main information.</summary>
+        ///// <param name="cmd">The command.</param>
+        ///// <returns></returns>
+        //[HttpPost]
+        //public async Task<ActionResult> UpdateMainInformation(UpdateProjectMainInformation cmd)
+        //{
+        //    var result = new AppValidationResult();
+
+        //    try
+        //    {
+        //        if (!ModelState.IsValid)
+        //        {
+        //            throw new DomainException(Messages.CorrectFormValues);
+        //        }
+
+        //        cmd.UpdatePreSendProperties(
+        //            this.UserAccessControlDto.User.Id,
+        //            this.UserAccessControlDto.User.Uid,
+        //            this.EditionDto.Id,
+        //            this.EditionDto.Uid,
+        //            this.UserInterfaceLanguage);
+        //        result = await this.CommandBus.Send(cmd);
+        //        if (!result.IsValid)
+        //        {
+        //            throw new DomainException(Messages.CorrectFormValues);
+        //        }
+        //    }
+        //    catch (DomainException ex)
+        //    {
+        //        foreach (var error in result.Errors)
+        //        {
+        //            var target = error.Target ?? "";
+        //            ModelState.AddModelError(target, error.Message);
+        //        }
+        //        var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
+
+        //        //cmd.UpdateModelsAndLists(
+        //        //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
+
+        //        return Json(new
+        //        {
+        //            status = "error",
+        //            message = toastrError?.Message ?? ex.GetInnerMessage(),
+        //            pages = new List<dynamic>
+        //            {
+        //                new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationForm", cmd), divIdOrClass = "#form-container" },
+        //            }
+        //        }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.UpdatedM) });
+        //}
+
+        //#endregion
+
+        #endregion
 
         #region Accept
 

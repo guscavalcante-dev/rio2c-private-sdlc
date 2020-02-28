@@ -2153,6 +2153,10 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>PitchingShow</value>
     <comment>PitchingShow</comment>
   </data>
+  <data name="MusicBandFormationYear" xml:space="preserve">
+    <value>Ano de início da banda</value>
+    <comment>Ano de início da banda</comment>
+  </data>
   <data name="MusicGenre" xml:space="preserve">
     <value>Estilo musical</value>
     <comment>Estilo musical</comment>

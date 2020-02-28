@@ -2392,6 +2392,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ano de início da banda.
+        /// </summary>
+        public static string MusicBandFormationYear {
+            get {
+                return ResourceManager.GetString("MusicBandFormationYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bandas de Música.
         /// </summary>
         public static string MusicBands {

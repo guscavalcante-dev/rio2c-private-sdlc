@@ -34,41 +34,37 @@
                                 @(Model.AttendeeMusicBandDto?.MusicBandType?.Name ?? "-")
                             </span>
                             <span class="kt-widget__desc">
-                                @Labels.MusicGenre:
-                                @{
-                                    if (Model.AttendeeMusicBandDto?.MusicBandGenreDtos?.Any() == true)
+                                @Labels.MusicGenre: 
+                                @if (Model.AttendeeMusicBandDto?.MusicBandGenreDtos?.Any() == true)
+                                {
+                                    foreach (var musicBandGenreDto in Model.AttendeeMusicBandDto.MusicBandGenreDtos)
                                     {
-                                        foreach (var musicBandGenreDto in Model.AttendeeMusicBandDto.MusicBandGenreDtos)
-                                        {
-                                            <span class="kt-badge kt-badge--inline kt-badge--info">
-                                                @(musicBandGenreDto.MusicGenre.Name)
-                                                @if (musicBandGenreDto.MusicGenre.HasAdditionalInfo && !string.IsNullOrEmpty(musicBandGenreDto.MusicBandGenre.AdditionalInfo))
-                                                {
-                                                    @musicBandGenreDto.MusicBandGenre.AdditionalInfo
-                                                }
-                                            </span>
-                                        }
+                                        <span class="kt-badge kt-badge--inline kt-badge--info">
+                                            @(musicBandGenreDto.MusicGenre.Name)
+                                            @if (musicBandGenreDto.MusicGenre.HasAdditionalInfo && !string.IsNullOrEmpty(musicBandGenreDto.MusicBandGenre.AdditionalInfo))
+                                            {
+                                                @musicBandGenreDto.MusicBandGenre.AdditionalInfo
+                                            }
+                                        </span>
                                     }
-                                    else
-                                    {
-                                        @:-
-                                    }
+                                }
+                                else
+                                {
+                                    @:-
                                 }
                             </span>
                             <span class="kt-widget__desc">
-                                @Labels.TargetAudience:
-                                @{
-                                    if (Model.AttendeeMusicBandDto?.MusicBandTargetAudienceDtos?.Any() == true)
+                                @Labels.TargetAudience: 
+                                @if (Model.AttendeeMusicBandDto?.MusicBandTargetAudienceDtos?.Any() == true)
+                                {
+                                    foreach (var musicBandTargetAudienceDto in Model.AttendeeMusicBandDto.MusicBandTargetAudienceDtos)
                                     {
-                                        foreach (var musicBandTargetAudienceDto in Model.AttendeeMusicBandDto.MusicBandTargetAudienceDtos)
-                                        {
-                                            <span class="kt-badge kt-badge--inline kt-badge--primary">@(musicBandTargetAudienceDto.TargetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
-                                        }
+                                        <span class="kt-badge kt-badge--inline kt-badge--primary">@(musicBandTargetAudienceDto.TargetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
                                     }
-                                    else
-                                    {
-                                        @:-
-                                    }
+                                }
+                                else
+                                {
+                                    @:-
                                 }
                             </span>
                             @*<span class="kt-widget__desc">
