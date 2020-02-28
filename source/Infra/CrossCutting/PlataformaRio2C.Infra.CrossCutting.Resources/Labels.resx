@@ -2149,4 +2149,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Release</value>
     <comment>Release</comment>
   </data>
+  <data name="PitchingShow" xml:space="preserve">
+    <value>PitchingShow</value>
+    <comment>PitchingShow</comment>
+  </data>
 </root>

@@ -50,7 +50,7 @@
                                     PageClasses = new string[] { "" },
                                     EllipsesElementClass = ""
                                 }
-                                , new AjaxOptions { HttpMethod = "GET", OnBegin = "ProjectsBuyerEvaluationListWidget.changePage", OnSuccess = "ProjectsBuyerEvaluationListWidget.handlePaginationReturn" }))
+                                , new AjaxOptions { HttpMethod = "GET", OnBegin = "MusicProjectsEvaluationListWidget.changePage", OnSuccess = "MusicProjectsEvaluationListWidget.handlePaginationReturn" }))
                         <div class="kt-pagination__toolbar">
                             @Html.DropDownList("PageSizeDropdown", new SelectList(new[] { 1, 5, 10, 15, 30 }, ViewBag.PageSize), null, new { @class = "form-control kt-font-brand", style = "width: 60px;" })
                             @Html.PagedListPager(

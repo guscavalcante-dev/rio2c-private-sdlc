@@ -2896,6 +2896,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PitchingShow.
+        /// </summary>
+        public static string PitchingShow {
+            get {
+                return ResourceManager.GetString("PitchingShow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MyRio2C.
         /// </summary>
         public static string PlatformRio2C {
