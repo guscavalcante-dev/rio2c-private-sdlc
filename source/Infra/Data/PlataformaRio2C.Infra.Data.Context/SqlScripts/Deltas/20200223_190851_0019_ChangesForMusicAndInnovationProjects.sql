@@ -898,6 +898,83 @@ ALTER TABLE "AttendeeMusicBandCollaborators"
 go
 
 
+ALTER TABLE "dbo"."Editions"
+ADD MusicProjectSubmitStartDate  datetimeoffset  NULL
+go
+
+ALTER TABLE "dbo"."Editions"
+ADD MusicProjectSubmitEndDate  datetimeoffset  NULL
+go
+
+ALTER TABLE "dbo"."Editions"
+ADD MusicProjectEvaluationStartDate  datetimeoffset  NULL
+go
+
+ALTER TABLE "dbo"."Editions"
+ADD MusicProjectEvaluationEndDate  datetimeoffset  NULL
+go
+
+ALTER TABLE "dbo"."Editions"
+ADD InnovationProjectSubmitStartDate  datetimeoffset  NULL
+go
+
+ALTER TABLE "dbo"."Editions"
+ADD InnovationProjectSubmitEndDate  datetimeoffset  NULL
+go
+
+ALTER TABLE "dbo"."Editions"
+ADD InnovationProjectEvaluationStartDate  datetimeoffset  NULL
+go
+
+ALTER TABLE "dbo"."Editions"
+ADD InnovationProjectEvaluationEndDate  datetimeoffset  NULL
+go
+
+update dbo.Editions
+SET 
+	MusicProjectSubmitStartDate = ProjectSubmitStartDate,
+	MusicProjectSubmitEndDate = ProjectSubmitEndDate,
+	MusicProjectEvaluationStartDate = ProjectEvaluationStartDate,
+	MusicProjectEvaluationEndDate = ProjectEvaluationEndDate,
+	InnovationProjectSubmitStartDate = ProjectSubmitStartDate,
+	InnovationProjectSubmitEndDate = ProjectSubmitEndDate,
+	InnovationProjectEvaluationStartDate = ProjectEvaluationStartDate,
+	InnovationProjectEvaluationEndDate = ProjectEvaluationEndDate
+go
+
+ALTER TABLE "dbo"."Editions"
+ALTER COLUMN MusicProjectSubmitStartDate  datetimeoffset  NOT NULL
+go
+
+ALTER TABLE "dbo"."Editions"
+ALTER COLUMN MusicProjectSubmitEndDate  datetimeoffset  NOT NULL
+go
+
+ALTER TABLE "dbo"."Editions"
+ALTER COLUMN MusicProjectEvaluationStartDate  datetimeoffset  NOT NULL
+go
+
+ALTER TABLE "dbo"."Editions"
+ALTER COLUMN MusicProjectEvaluationEndDate  datetimeoffset  NOT NULL
+go
+
+ALTER TABLE "dbo"."Editions"
+ALTER COLUMN InnovationProjectSubmitStartDate  datetimeoffset  NOT NULL
+go
+
+ALTER TABLE "dbo"."Editions"
+ALTER COLUMN InnovationProjectSubmitEndDate  datetimeoffset  NOT NULL
+go
+
+ALTER TABLE "dbo"."Editions"
+ALTER COLUMN InnovationProjectEvaluationStartDate  datetimeoffset  NOT NULL
+go
+
+ALTER TABLE "dbo"."Editions"
+ALTER COLUMN InnovationProjectEvaluationEndDate  datetimeoffset  NOT NULL
+go
+
+
 SET IDENTITY_INSERT [dbo].[MusicGenres] ON 
 GO
 INSERT [dbo].[MusicGenres] ([Id], [Uid], [Name], [DisplayOrder], [HasAdditionalInfo], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (1, N'9a04295a-2e61-41d9-940f-686e9e87b4b4', N'Soul', 1, 0, 0, CAST(N'2020-02-23T20:00:38.0630000+00:00' AS DateTimeOffset), 1, CAST(N'2020-02-23T20:00:38.0630000+00:00' AS DateTimeOffset), 1)
