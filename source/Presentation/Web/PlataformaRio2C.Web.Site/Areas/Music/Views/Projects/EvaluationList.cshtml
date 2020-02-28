@@ -1,9 +1,10 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Entities
 @using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
 @{
     ViewBag.Title = Labels.ProjectsEvaluation;
     var editionDto = ViewBag.EditionDto as EditionDto;
-    var genreInterests = ViewBag.GenreInterests as List<InterestDto>;
+    var musicGenres = ViewBag.MusicGenres as List<MusicGenre>;
     var projectEvaluationStatuses = ViewBag.ProjectEvaluationStatuses as List<PlataformaRio2C.Domain.Entities.ProjectEvaluationStatus>;
 }
 <div class="kt-portlet">
@@ -20,12 +21,12 @@
         </div>
         <div class="row">
             <div class="col-12 col-sm-6 mt-2">
-                <select name="InterestUid" id="InterestUid" class="form-control">
-                    <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Genre.ToLowerInvariant()))...</option>
-                    @foreach (var interestDto in genreInterests)
+                <select name="MusicGenreUid" id="MusicGenreUid" class="form-control">
+                    <option value="">@(string.Format(Labels.SelectAMEntity, Labels.MusicGenre.ToLowerInvariant()))...</option>
+                    @foreach (var musicGenre in musicGenres)
                     {
-                        <option value="@interestDto.Interest.Uid" @(interestDto.Interest.Uid == ViewBag.InterestUid ? "selected" : string.Empty)>
-                            @interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                        <option value="@musicGenre.Uid" @(musicGenre.Uid == ViewBag.MusicGenreUid ? "selected" : string.Empty)>
+                            @musicGenre.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
                         </option>
                     }
                 </select>

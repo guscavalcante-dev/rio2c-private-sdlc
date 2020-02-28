@@ -54,6 +54,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the by music genre uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="musicGenreUid">The music genre uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<MusicProject> FindByMusicGenreUid(this IQueryable<MusicProject> query, Guid? musicGenreUid)
+        {
+            if (musicGenreUid.HasValue)
+            {
+                query = query.Where(mp => mp.AttendeeMusicBand.MusicBand.MusicBandGenres.Any(mbg => !mbg.IsDeleted 
+                                                                                                    && !mbg.MusicGenre.IsDeleted 
+                                                                                                    && mbg.MusicGenre.Uid == musicGenreUid));
+            }
+
+            return query;
+        }
+
         /// <summary>Finds the by attendee music band uid.</summary>
         /// <param name="query">The query.</param>
         /// <param name="attendeeMusicBandUid">The attendee music band uid.</param>
@@ -279,15 +295,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>Finds all dtos to evaluate asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="musicGenreUid">The music genre uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<MusicProjectDto>> FindAllDtosToEvaluateAsync(string searchKeywords, Guid? evaluationStatusUid, int page, int pageSize)
+        public async Task<IPagedList<MusicProjectDto>> FindAllDtosToEvaluateAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize)
         {
             var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId)
                                 .FindByKeywords(searchKeywords)
+                                .FindByMusicGenreUid(musicGenreUid)
                                 .FindByProjectEvaluationStatus(evaluationStatusUid)
                                 .Select(mp => new MusicProjectDto
                                 {

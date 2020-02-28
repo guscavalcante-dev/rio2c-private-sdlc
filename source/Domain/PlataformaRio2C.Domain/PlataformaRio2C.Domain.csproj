@@ -319,6 +319,7 @@
     <Compile Include="Interfaces\Repositories\Addresses\IStateRepository.cs" />
     <Compile Include="Interfaces\Repositories\Editions\IEditionEventRepository.cs" />
     <Compile Include="Interfaces\Repositories\Music\Projects\IMusicProjectRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Music\Projects\IMusicGenreRepository.cs" />
     <Compile Include="Interfaces\Repositories\Projects\IProjectEvaluationRefuseReasonRepository.cs" />
     <Compile Include="Interfaces\Repositories\Projects\IProjectEvaluationStatusRepository.cs" />
     <Compile Include="Interfaces\Repositories\Projects\IProjectBuyerEvaluationRepository.cs" />

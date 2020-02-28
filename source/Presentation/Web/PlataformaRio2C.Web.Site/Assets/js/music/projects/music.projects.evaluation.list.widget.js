@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-26-2020
+// Last Modified On : 02-28-2020
 // ***********************************************************************
 // <copyright file="music.projects.evaluation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,7 +26,7 @@ var MusicProjectsEvaluationListWidget = function () {
     var enableShowPlugins = function () {
         KTApp.initTooltips();
         MyRio2cCommon.initScroll();
-        MyRio2cCommon.enableSelect2({ inputIdOrClass: '#InterestUid', allowClear: true, placeholder: translations.selectPlaceholder.replace('{0}', translations.genre) + '...' });
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: '#MusicGenreUid', allowClear: true, placeholder: translations.selectPlaceholder.replace('{0}', translations.genre) + '...' });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: '#EvaluationStatusUid', allowClear: true, placeholder: translations.selectPlaceholder.replace('{0}', translations.status) + '...' });
         enablePageSizeChangeEvent();
     };
@@ -38,7 +38,7 @@ var MusicProjectsEvaluationListWidget = function () {
 
         var jsonParameters = new Object();
         jsonParameters.searchKeywords = $('#SearchKeywords').val();
-        jsonParameters.interestUid = $('#InterestUid').val();
+        jsonParameters.musicGenreUid = $('#MusicGenreUid').val();
         jsonParameters.evaluationStatusUid = $('#EvaluationStatusUid').val();
         jsonParameters.page = $('#Page').val();
         jsonParameters.pageSize = $('#PageSize').val();
@@ -65,7 +65,7 @@ var MusicProjectsEvaluationListWidget = function () {
     // Search -------------------------------------------------------------------------------------
     var search = function () {
         $('#Page').val('1');
-        ProjectsBuyerEvaluationListWidget.init();
+        MusicProjectsEvaluationListWidget.init();
     };
 
     var enableSearchEvents = function () {
@@ -74,10 +74,10 @@ var MusicProjectsEvaluationListWidget = function () {
         });
         $('#SearchKeywords').addClass('search-event-enabled');
 
-        $('#InterestUid').not('.change-event-enabled').on('change', function () {
+        $('#MusicGenreUid').not('.change-event-enabled').on('change', function () {
             search();
         });
-        $('#InterestUid').addClass('change-event-enabled');
+        $('#MusicGenreUid').addClass('change-event-enabled');
 
         $('#EvaluationStatusUid').not('.change-event-enabled').on('change', function () {
             search();
@@ -89,7 +89,7 @@ var MusicProjectsEvaluationListWidget = function () {
     var enablePageSizeChangeEvent = function () {
         $('#PageSizeDropdown').not('.change-event-enabled').on('change', function () {
             $('#PageSize').val($(this).val());
-            ProjectsBuyerEvaluationListWidget.search();
+            MusicProjectsEvaluationListWidget.search();
         });
 
         $('#PageSizeDropdown').addClass('change-event-enabled');
@@ -106,7 +106,7 @@ var MusicProjectsEvaluationListWidget = function () {
             onSuccess: function () {
                 enableShowPlugins();
                 MyRio2cCommon.unblock();
-                $('#ContactsSearchKeywords').focus();
+                $('#SearchKeywords').focus();
             },
             // Error
             onError: function () {

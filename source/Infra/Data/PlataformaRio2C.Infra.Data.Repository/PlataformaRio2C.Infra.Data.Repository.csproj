@@ -168,6 +168,7 @@
     <Compile Include="Repositories\Country\CountryRepository.cs" />
     <Compile Include="Repositories\Country\StateRepository.cs" />
     <Compile Include="Repositories\Music\MusicProjectRepository.cs" />
+    <Compile Include="Repositories\Music\MusicGenreRepository.cs" />
     <Compile Include="Repositories\Organizations\OrganizationTypeRepository.cs" />
     <Compile Include="Repositories\Organizations\OrganizationRepository.cs" />
     <Compile Include="Repositories\Logistics\LogisticsRepository.cs" />

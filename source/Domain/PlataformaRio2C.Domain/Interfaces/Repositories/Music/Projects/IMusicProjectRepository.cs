@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-26-2020
+// Last Modified On : 02-28-2020
 // ***********************************************************************
 // <copyright file="IMusicProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,7 +22,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IMusicProjectRepository</summary>
     public interface IMusicProjectRepository : IRepository<MusicProject>
     {
-        Task<IPagedList<MusicProjectDto>> FindAllDtosToEvaluateAsync(string searchKeywords, Guid? evaluationStatusUid, int page, int pageSize);
+        Task<IPagedList<MusicProjectDto>> FindAllDtosToEvaluateAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize);
         Task<MusicProjectDto> FindDtoToEvaluateAsync(Guid musicProjectUid);
     }
 }

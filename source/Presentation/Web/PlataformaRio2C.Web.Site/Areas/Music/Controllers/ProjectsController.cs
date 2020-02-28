@@ -39,7 +39,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
     public class ProjectsController : BaseController
     {
         private readonly IMusicProjectRepository musicProjectRepo;
-        private readonly IInterestRepository interestRepo;
+        private readonly IMusicGenreRepository musicGenreRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
         private readonly IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo;
         private readonly IProjectEvaluationStatusRepository evaluationStatusRepository;
@@ -48,7 +48,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="musicProjectRepository">The music project repository.</param>
-        /// <param name="interestRepository">The interest repository.</param>
+        /// <param name="musicGenreRepository">The music genre repository.</param>
         /// <param name="targetAudienceRepository">The target audience repository.</param>
         /// <param name="projectEvaluationRefuseReasonRepo">The project evaluation refuse reason repo.</param>
         /// <param name="evaluationStatusRepository">The evaluation status repository.</param>
@@ -56,14 +56,14 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             IMediator commandBus,
             IdentityAutenticationService identityController,
             IMusicProjectRepository musicProjectRepository,
-            IInterestRepository interestRepository,
+            IMusicGenreRepository musicGenreRepository,
             ITargetAudienceRepository targetAudienceRepository,
             IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo,
             IProjectEvaluationStatusRepository evaluationStatusRepository)
             : base(commandBus, identityController)
         {
             this.musicProjectRepo = musicProjectRepository;
-            this.interestRepo = interestRepository;
+            this.musicGenreRepo = musicGenreRepository;
             this.targetAudienceRepo = targetAudienceRepository;
             this.projectEvaluationRefuseReasonRepo = projectEvaluationRefuseReasonRepo;
             this.evaluationStatusRepository = evaluationStatusRepository;
@@ -95,14 +95,14 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
         /// <summary>Evaluations the list.</summary>
         /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="interestUid">The interest uid.</param>
+        /// <param name="musicGenreUid">The music genre uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
         [HttpGet]
-        public async Task<ActionResult> EvaluationList(string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 10)
+        public async Task<ActionResult> EvaluationList(string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 10)
         {
             if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
             {
@@ -118,12 +118,12 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             #endregion
 
             ViewBag.SearchKeywords = searchKeywords;
-            ViewBag.InterestUid = interestUid;
+            ViewBag.MusicGenreUid = musicGenreUid;
             ViewBag.EvaluationStatusUid = evaluationStatusUid;
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
 
-            ViewBag.GenreInterests = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.Genre.Uid);
+            ViewBag.MusicGenres = await this.musicGenreRepo.FindAllAsync();
             ViewBag.ProjectEvaluationStatuses = await this.evaluationStatusRepository.FindAllAsync();
 
             return View();
@@ -131,14 +131,14 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
         /// <summary>Shows the evaluation list widget.</summary>
         /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="interestUid">The interest uid.</param>
+        /// <param name="musicGenreUid">The music genre uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
         [HttpGet]
-        public async Task<ActionResult> ShowEvaluationListWidget(string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 10)
+        public async Task<ActionResult> ShowEvaluationListWidget(string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 10)
         {
             if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
             {
@@ -146,13 +146,15 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             }
 
             var projects = await this.musicProjectRepo.FindAllDtosToEvaluateAsync(
+                this.EditionDto.Id,
                 searchKeywords, 
+                musicGenreUid,
                 evaluationStatusUid,
                 page.Value, 
                 pageSize.Value);
 
             ViewBag.SearchKeywords = searchKeywords;
-            ViewBag.InterestUid = interestUid;
+            ViewBag.MusicGenreUid = musicGenreUid;
             ViewBag.EvaluationStatusUid = evaluationStatusUid;
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
