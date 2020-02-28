@@ -396,126 +396,116 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
         #region Refuse
 
-        ///// <summary>Shows the refuse evaluation modal.</summary>
-        ///// <param name="projectUid">The project uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowRefuseEvaluationModal(Guid? projectUid)
-        //{
-        //    RefuseProjectEvaluation cmd;
+        /// <summary>Shows the refuse evaluation modal.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
+        public async Task<ActionResult> ShowRefuseEvaluationModal(Guid? projectUid)
+        {
+            RefuseMusicProjectEvaluation cmd;
 
-        //    try
-        //    {
-        //        if (this.EditionDto?.IsProjectEvaluationOpen() != true)
-        //        {
-        //            throw new DomainException(Texts.ForbiddenErrorMessage);
-        //        }
+            try
+            {
+                if (this.EditionDto?.IsMusicProjectEvaluationOpen() != true)
+                {
+                    throw new DomainException(Texts.ForbiddenErrorMessage);
+                }
 
-        //        var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(projectUid ?? Guid.Empty);
-        //        if (projectDto == null)
-        //        {
-        //            throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
-        //        }
+                var projectDto = await this.musicProjectRepo.FindDtoToEvaluateAsync(projectUid ?? Guid.Empty);
+                if (projectDto == null)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
+                }
 
-        //        if (!projectDto.Project.IsFinished())
-        //        {
-        //            throw new DomainException(Texts.ForbiddenErrorMessage);
-        //        }
+                cmd = new RefuseMusicProjectEvaluation(
+                    projectDto,
+                    await this.projectEvaluationRefuseReasonRepo.FindAllByProjectTypeUidAsync(ProjectType.Music.Uid));
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
 
-        //        if (this.UserAccessControlDto?.HasAnyEditionAttendeeOrganization(projectDto.ProjectBuyerEvaluationDtos?.Select(pbed => pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid)?.ToList()) != true) // Is buyer
-        //        {
-        //            throw new DomainException(Texts.ForbiddenErrorMessage);
-        //        }
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/RefuseEvaluationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
-        //        cmd = new RefuseProjectEvaluation(
-        //            projectDto,
-        //            this.UserAccessControlDto?.EditionAttendeeOrganizations?.ToList(),
-        //            await this.projectEvaluationRefuseReasonRepo.FindAllAsync());
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-        //    }
+        /// <summary>Refuses the specified music project evaluation.</summary>
+        /// <param name="cmd">The command</param>
+        /// <returns></returns>
+        [HttpPost]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
+        public async Task<ActionResult> Refuse(RefuseMusicProjectEvaluation cmd)
+        {
+            var result = new AppValidationResult();
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Modals/RefuseEvaluationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            try
+            {
+                if (this.EditionDto?.IsMusicProjectEvaluationOpen() != true)
+                {
+                    throw new DomainException(Texts.ForbiddenErrorMessage);
+                }
 
-        ///// <summary>Refuses the specified project evaluation.</summary>
-        ///// <param name="cmd">The command.</param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public async Task<ActionResult> Refuse(RefuseProjectEvaluation cmd)
-        //{
-        //    var result = new AppValidationResult();
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
 
-        //    try
-        //    {
-        //        if (this.EditionDto?.IsProjectEvaluationOpen() != true)
-        //        {
-        //            throw new DomainException(Texts.ForbiddenErrorMessage);
-        //        }
+                cmd.UpdatePreSendProperties(
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
 
-        //        if (!ModelState.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
+                cmd.UpdateModelsAndLists(
+                    await this.musicProjectRepo.FindDtoToEvaluateAsync(cmd.ProjectUid ?? Guid.Empty),
+                    await this.projectEvaluationRefuseReasonRepo.FindAllByProjectTypeUidAsync(ProjectType.Music.Uid));
 
-        //        cmd.UpdatePreSendProperties(
-        //            this.UserAccessControlDto.User.Id,
-        //            this.UserAccessControlDto.User.Uid,
-        //            this.EditionDto.Id,
-        //            this.EditionDto.Uid,
-        //            this.UserInterfaceLanguage);
-        //        result = await this.CommandBus.Send(cmd);
-        //        if (!result.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        foreach (var error in result.Errors)
-        //        {
-        //            var target = error.Target ?? "";
-        //            ModelState.AddModelError(target, error.Message);
-        //        }
-        //        var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
+                return Json(new
+                {
+                    status = "error",
+                    message = toastrError?.Message ?? ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/RefuseEvaluationForm", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
 
-        //        cmd.UpdateModelsAndLists(
-        //            await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(cmd.ProjectUid ?? Guid.Empty),
-        //            this.UserAccessControlDto?.EditionAttendeeOrganizations?.ToList(),
-        //            await this.projectEvaluationRefuseReasonRepo.FindAllAsync());
-
-        //        return Json(new
-        //        {
-        //            status = "error",
-        //            message = toastrError?.Message ?? ex.GetInnerMessage(),
-        //            pages = new List<dynamic>
-        //            {
-        //                new { page = this.RenderRazorViewToString("Modals/RefuseEvaluationForm", cmd), divIdOrClass = "#form-container" },
-        //            }
-        //        }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-        //    }
-
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        projectUid = cmd.ProjectUid,
-        //        message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.ProjectRefused.ToLowerInvariant())
-        //    });
-        //}
+            return Json(new
+            {
+                status = "success",
+                projectUid = cmd.ProjectUid,
+                message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.ProjectRefused.ToLowerInvariant())
+            });
+        }
 
         #endregion
 

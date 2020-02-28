@@ -119,6 +119,28 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.UtcNow;
         }
 
+        /// <summary>Refuses the specified project evaluation refuse reason.</summary>
+        /// <param name="projectEvaluationRefuseReason">The project evaluation refuse reason.</param>
+        /// <param name="reason">The reason.</param>
+        /// <param name="projectEvaluationStatuses">The project evaluation statuses.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Refuse(ProjectEvaluationRefuseReason projectEvaluationRefuseReason, string reason, List<ProjectEvaluationStatus> projectEvaluationStatuses, int userId)
+        {
+            var projectEvaluationStatus = projectEvaluationStatuses?.FirstOrDefault(pes => pes.Code == ProjectEvaluationStatus.Refused.Code);
+            this.ProjectEvaluationStatusId = projectEvaluationStatus?.Id ?? 0;
+            this.ProjectEvaluationStatus = projectEvaluationStatus;
+
+            this.ProjectEvaluationRefuseReasonId = projectEvaluationRefuseReason?.Id;
+            this.ProjectEvaluationRefuseReason = projectEvaluationRefuseReason;
+            this.Reason = reason?.Trim();
+            this.EvaluationUserId = userId;
+            //this.EvaluationDate = DateTime.UtcNow; //TODO: Add evaluation date
+
+            this.IsDeleted = false;
+            this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.UtcNow;
+        }
+
         //TODO: Implement validations
 
         #region Validations

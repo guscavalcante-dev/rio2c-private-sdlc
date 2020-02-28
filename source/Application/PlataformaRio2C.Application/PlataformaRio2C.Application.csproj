@@ -217,6 +217,7 @@
     <Compile Include="CQRS\CommandsHandlers\Messages\SendUnreadConversationsEmailsAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\Projects\AcceptMusicProjectEvaluationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\Projects\BaseMusicProjectCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Music\Projects\RefuseMusicProjectEvaluationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardSpeakerTermsAcceptanceCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardProducerTermsAcceptanceCommandHandler.cs" />
@@ -276,6 +277,7 @@
     <Compile Include="CQRS\Commands\ConferenceParticipantRoles\UpdateConferenceParticipantRoleMainInformation.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendMusicCommissionWelcomeEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Music\Projects\AcceptMusicProjectEvaluation.cs" />
+    <Compile Include="CQRS\Commands\Music\Projects\RefuseMusicProjectEvaluation.cs" />
     <Compile Include="CQRS\Commands\Organizations\UpdateOrganizationSocialNetworks.cs" />
     <Compile Include="CQRS\Commands\Rooms\DeleteRoom.cs" />
     <Compile Include="CQRS\CommandsHandlers\Rooms\RoomBaseCommandHandler.cs" />

@@ -6446,6 +6446,8 @@
     <Content Include="Areas\Music\Views\Projects\Modals\AcceptEvaluationModal.cshtml" />
     <Content Include="Areas\Music\Views\Projects\Modals\AcceptEvaluationForm.cshtml" />
     <Content Include="Areas\Music\Views\Projects\Shared\_Evaluation.cshtml" />
+    <Content Include="Areas\Music\Views\Projects\Modals\RefuseEvaluationModal.cshtml" />
+    <Content Include="Areas\Music\Views\Projects\Modals\RefuseEvaluationForm.cshtml" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />

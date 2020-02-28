@@ -475,6 +475,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deseja reprovar {0} &quot;&lt;b&gt;{1}&lt;/b&gt;&quot;?.
+        /// </summary>
+        public static string DoYouReallyWishRefuseObjectEntity {
+            get {
+                return ResourceManager.GetString("DoYouReallyWishRefuseObjectEntity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O email é utilizado para o login do usuário..
         /// </summary>
         public static string EmailInputMessage {

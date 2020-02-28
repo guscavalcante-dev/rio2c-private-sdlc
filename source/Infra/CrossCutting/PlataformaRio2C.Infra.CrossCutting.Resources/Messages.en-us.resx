@@ -890,4 +890,8 @@
     <value>Do you want to accept {0} "&lt;b&gt;{1}&lt;/b&gt;"?</value>
     <comment>Deseja aprovar {0} "&lt;b&gt;{1}&lt;/b&gt;"?</comment>
   </data>
+  <data name="DoYouReallyWishRefuseObjectEntity" xml:space="preserve">
+    <value>Do you want to refuse {0} "&lt;b&gt;{1}&lt;/b&gt;"?</value>
+    <comment>Deseja reprovar {0} "&lt;b&gt;{1}&lt;/b&gt;"?</comment>
+  </data>
 </root>

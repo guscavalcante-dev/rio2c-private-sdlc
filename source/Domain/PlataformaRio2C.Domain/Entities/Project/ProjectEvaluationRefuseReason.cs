@@ -4,7 +4,7 @@
 // Created          : 12-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-10-2019
+// Last Modified On : 02-28-2020
 // ***********************************************************************
 // <copyright file="ProjectEvaluationRefuseReason.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,9 +22,12 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int NameMinLength = 1;
         public static readonly int NameMaxLength = 500;
 
+        public int ProjectTypeId { get; private set; }
         public string Name { get; private set; }
         public bool HasAdditionalInfo { get; private set; }
         public int DisplayOrder { get; private set; }
+
+        public virtual ProjectType ProjectType { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="ProjectEvaluationRefuseReason"/> class.</summary>
         protected ProjectEvaluationRefuseReason()
