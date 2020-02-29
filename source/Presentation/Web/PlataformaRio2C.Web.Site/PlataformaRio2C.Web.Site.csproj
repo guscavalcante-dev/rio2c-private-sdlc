@@ -6466,6 +6466,7 @@
     <Content Include="Areas\Music\Views\Projects\Widgets\ClippingItem.cshtml" />
     <Content Include="Areas\Music\Views\Projects\Widgets\VideoAndMusicWidget.cshtml" />
     <Content Include="Areas\Music\Views\Projects\Widgets\MusicItem.cshtml" />
+    <Content Include="Areas\Music\Views\Projects\Widgets\VideoItem.cshtml" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />

@@ -313,6 +313,13 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                       || s.ToLowerInvariant().Contains("youtu.be"));
         }
 
+        public static bool IsFacebookVideo(this string s)
+        {
+            return !string.IsNullOrEmpty(s)
+                   && s.ToLowerInvariant().Contains("facebook.com")
+                   && s.ToLowerInvariant().Contains("videos");
+        }
+
         /// <summary>Converts the video to embed.</summary>
         /// <param name="s">The s.</param>
         /// <returns></returns>
@@ -329,8 +336,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                 }
 
                 var id = match.Groups[1].Value;
-                return $"<iframe src='https://www.youtube.com/embed/{id}' class='embed-responsive-item' frameborder='0' allowfullscreen='1'></iframe>";
-                //title='YouTube video player' width='480' height='270'
+                return $"<iframe src='https://www.youtube.com/embed/{id}' class='embed-responsive-item' frameborder='0' allowFullScreen='true'></iframe>";
             }
 
             if (IsVimeoVideo(s))
@@ -344,9 +350,25 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                 }
 
                 var id = match.Groups[1].Value;
-                return $"<iframe src='https://player.vimeo.com/video/{id}' class='embed-responsive-item' frameborder='0' allow='autoplay; fullscreen' allowfullscreen></iframe>";
-                //width='480' height='270'
+                return $"<iframe src='https://player.vimeo.com/video/{id}' class='embed-responsive-item' frameborder='0' allow='autoplay; fullscreen' allowFullScreen='true'></iframe>";
             }
+
+            if (IsFacebookVideo(s))
+            {
+                var rgx = new Regex(@"facebook\.com\/([a-zA-Z0-9-_]+)\/(videos)\/([0-9]*)");
+                var match = rgx.Match(s);
+
+                if (!match.Success)
+                {
+                    return s;
+                }
+
+                //var id = match.Groups[1].Value;
+                return $"<iframe src='https://www.facebook.com/plugins/video.php?href=https://www.{match.Value}&show_text=0' class='embed-responsive-item' scrolling='no' frameborder='0' allowTransparency='true' allowFullScreen='true'></iframe>";
+            }
+
+            //https://www.facebook.com/GilbertoCariocaMusic/videos/519439721771582/
+            //
 
             return s;
 
@@ -393,7 +415,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
 
                 var type = match.Groups[1].Value;
                 var id = match.Groups[2].Value;
-                return $"<iframe src='https://open.spotify.com/embed/{type}/{id}' class='embed-responsive-item' frameborder='0' allowtransparency='true' allow='encrypted-media'></iframe>";
+                return $"<iframe src='https://open.spotify.com/embed/{type}/{id}' class='embed-responsive-item' frameborder='0' allowTransparency='true' allow='encrypted-media'></iframe>";
             }
 
             return s;
