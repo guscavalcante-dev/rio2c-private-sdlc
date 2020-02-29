@@ -4813,6 +4813,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vídeo clip.
+        /// </summary>
+        public static string VideoClip {
+            get {
+                return ResourceManager.GetString("VideoClip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vídeo clip e músicas.
+        /// </summary>
+        public static string VideoClipAndMusics {
+            get {
+                return ResourceManager.GetString("VideoClipAndMusics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Visualizar.
         /// </summary>
         public static string View {

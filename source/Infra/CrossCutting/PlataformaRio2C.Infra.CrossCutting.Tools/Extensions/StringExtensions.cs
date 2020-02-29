@@ -317,7 +317,8 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         public static bool IsYoutubeVideo(this string s)
         {
             return !string.IsNullOrEmpty(s)
-                   && s.ToLowerInvariant().Contains("youtube.com");
+                   && (s.ToLowerInvariant().Contains("youtube.com")
+                      || s.ToLowerInvariant().Contains("youtu.be"));
         }
 
         /// <summary>Converts the video to embed.</summary>

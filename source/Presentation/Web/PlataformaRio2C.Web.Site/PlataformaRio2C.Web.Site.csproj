@@ -453,6 +453,7 @@
     <Content Include="Assets\js\executives\executives.company.widget.js" />
     <Content Include="Assets\js\executives\executives.socialnetworks.widget.js" />
     <Content Include="Assets\js\executives\executives.maininformation.widget.js" />
+    <Content Include="Assets\js\music\projects\music.projects.videoandmusic.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.evaluation.list.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.evaluation.update.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.clipping.widget.js" />
@@ -6463,6 +6464,8 @@
     <Content Include="Areas\Music\Views\Projects\Widgets\ProjectResponsibleWidget.cshtml" />
     <Content Include="Areas\Music\Views\Projects\Widgets\ClippingWidget.cshtml" />
     <Content Include="Areas\Music\Views\Projects\Widgets\ClippingItem.cshtml" />
+    <Content Include="Areas\Music\Views\Projects\Widgets\VideoAndMusicWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Projects\Widgets\MusicItem.cshtml" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />

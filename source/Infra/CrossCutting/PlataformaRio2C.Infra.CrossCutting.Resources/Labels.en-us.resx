@@ -2186,4 +2186,12 @@
     <value>CPF / Vat Number / RG / Passaporte</value>
     <comment>CPF / CNPJ / RG / Passaporte</comment>
   </data>
+  <data name="VideoClip" xml:space="preserve">
+    <value>Music video</value>
+    <comment>Vídeo clip</comment>
+  </data>
+  <data name="VideoClipAndMusics" xml:space="preserve">
+    <value>Music video and tracks</value>
+    <comment>Vídeo clip e músicas</comment>
+  </data>
 </root>

@@ -544,5 +544,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query
                             .FirstOrDefaultAsync();
         }
+
+        /// <summary>Finds the video and music widget dto asynchronous.</summary>
+        /// <param name="musicProjectUid">The music project uid.</param>
+        /// <returns></returns>
+        public async Task<MusicProjectDto> FindVideoAndMusicWidgetDtoAsync(Guid musicProjectUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(musicProjectUid)
+                                .Select(mp => new MusicProjectDto
+                                {
+                                    MusicProject = mp
+                                });
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
     }
 }

@@ -28,7 +28,7 @@
                 <div class="col-md-12">
                     <div class="kt-widget4">
                         <h3 class="kt-heading kt-heading--sm mb-0 mt-0 text-center">Clipping 1</h3>
-                        @Html.Partial("Widgets/ClippingItem", Model.MusicProject.Clipping1, new ViewDataDictionary())
+                        @Html.Partial("Widgets/ClippingItem", Model.MusicProject?.Clipping1, new ViewDataDictionary())
                     </div>
                 </div>
             </div>
@@ -36,7 +36,7 @@
                 <div class="col-md-12">
                     <div class="kt-widget4">
                         <h3 class="kt-heading kt-heading--sm mb-0 mt-0 text-center">Clipping 2</h3>
-                        @Html.Partial("Widgets/ClippingItem", Model.MusicProject.Clipping2, new ViewDataDictionary())
+                        @Html.Partial("Widgets/ClippingItem", Model.MusicProject?.Clipping2, new ViewDataDictionary())
                     </div>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                 <div class="col-md-12">
                     <div class="kt-widget4">
                         <h3 class="kt-heading kt-heading--sm mb-0 mt-0 text-center">Clipping 3</h3>
-                        @Html.Partial("Widgets/ClippingItem", Model.MusicProject.Clipping3, new ViewDataDictionary())
+                        @Html.Partial("Widgets/ClippingItem", Model.MusicProject?.Clipping3, new ViewDataDictionary())
                     </div>
                 </div>
             </div>

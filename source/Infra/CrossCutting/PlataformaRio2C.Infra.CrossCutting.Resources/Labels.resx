@@ -2193,4 +2193,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>CPF / CNPJ / RG / Passaporte</value>
     <comment>CPF / CNPJ / RG / Passaporte</comment>
   </data>
+  <data name="VideoClip" xml:space="preserve">
+    <value>Vídeo clip</value>
+    <comment>Vídeo clip</comment>
+  </data>
+  <data name="VideoClipAndMusics" xml:space="preserve">
+    <value>Vídeo clip e músicas</value>
+    <comment>Vídeo clip e músicas</comment>
+  </data>
 </root>
