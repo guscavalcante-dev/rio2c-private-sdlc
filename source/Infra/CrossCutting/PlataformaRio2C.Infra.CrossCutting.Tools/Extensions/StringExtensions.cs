@@ -290,15 +290,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                        || s.ToLowerInvariant().EndsWith(".gif"));
         }
 
-        /// <summary>Determines whether this instance is PDF.</summary>
-        /// <param name="s">The s.</param>
-        /// <returns>
-        ///   <c>true</c> if the specified s is PDF; otherwise, <c>false</c>.</returns>
-        public static bool IsPdf(this string s)
-        {
-            return !string.IsNullOrEmpty(s)
-                   && (s.ToLowerInvariant().EndsWith(".pdf"));
-        }
+        #region Video
 
         /// <summary>Determines whether [is vimeo video].</summary>
         /// <param name="s">The s.</param>
@@ -370,6 +362,68 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
              */
         }
 
+        #endregion
+
+        #region Music
+
+        /// <summary>Determines whether [is spotify music].</summary>
+        /// <param name="s">The s.</param>
+        /// <returns>
+        ///   <c>true</c> if [is spotify music] [the specified s]; otherwise, <c>false</c>.</returns>
+        public static bool IsSpotifyMusic(this string s)
+        {
+            return !string.IsNullOrEmpty(s)
+                   && s.ToLowerInvariant().Contains("spotify.com");
+        }
+
+        /// <summary>Converts the music to embed.</summary>
+        /// <param name="s">The s.</param>
+        /// <returns></returns>
+        public static string ConvertMusicToEmbed(this string s)
+        {
+            if (IsSpotifyMusic(s))
+            {
+                var rgx = new Regex(@"open\.spotify\.com\/(track|album|artist)\/([a-zA-Z0-9-_]+)");
+                var match = rgx.Match(s);
+
+                if (!match.Success)
+                {
+                    return s;
+                }
+
+                var type = match.Groups[1].Value;
+                var id = match.Groups[2].Value;
+                return $"<iframe src='https://open.spotify.com/embed/{type}/{id}' class='embed-responsive-item' frameborder='0' allowtransparency='true' allow='encrypted-media'></iframe>";
+            }
+
+            return s;
+
+            /*
+             Use html like this:
+                <div class="row mt-3 justify-content-center">
+                    <div class="col-sm-8 col-md-8 col-lg-6">
+                        <div class="embed-responsive embed-responsive-16by9 d-flex">
+                            @Html.Raw(teaserLinkDto.ProjectTeaserLink.Value.ConvertVideoToEmbed())
+                        </div>
+                    </div>                                        
+                </div>
+             */
+        }
+
+        #endregion
+
+        #region Pdf
+
+        /// <summary>Determines whether this instance is PDF.</summary>
+        /// <param name="s">The s.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified s is PDF; otherwise, <c>false</c>.</returns>
+        public static bool IsPdf(this string s)
+        {
+            return !string.IsNullOrEmpty(s)
+                   && (s.ToLowerInvariant().EndsWith(".pdf"));
+        }
+
         /// <summary>Converts the PDF to embed.</summary>
         /// <param name="s">The s.</param>
         /// <returns></returns>
@@ -382,6 +436,8 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
 
             return s;
         }
+
+        #endregion
 
         /// <summary>Gets the URL with protocol.</summary>
         /// <param name="s">The s.</param>
