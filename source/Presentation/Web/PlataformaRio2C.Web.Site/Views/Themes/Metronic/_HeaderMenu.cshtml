@@ -61,11 +61,11 @@
         }) == true)
     {
         var projectsUrl = Url.Action("Index", "Projects", new { Area = "Music" });
-        if (editionDto?.IsMusicProjectSubmitStarted() == true && userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Music) == true)
-        {
-            projectsUrl = Url.Action("SubmittedList", "Projects", new { Area = "Music" });
-        }
-        else if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.CommissionMusic) == true)
+        //if (editionDto?.IsMusicProjectSubmitStarted() == true && userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Music) == true)
+        //{
+        //    projectsUrl = Url.Action("SubmittedList", "Projects", new { Area = "Music" });
+        //}
+        if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.CommissionMusic) == true)
         {
             projectsUrl = Url.Action("EvaluationList", "Projects", new { Area = "Music" });
             if (editionDto?.IsMusicProjectEvaluationStarted() != true)
