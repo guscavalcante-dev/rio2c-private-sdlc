@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-16-2020
+// Last Modified On : 02-29-2020
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -290,6 +290,16 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                        || s.ToLowerInvariant().EndsWith(".gif"));
         }
 
+        /// <summary>Determines whether this instance is PDF.</summary>
+        /// <param name="s">The s.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified s is PDF; otherwise, <c>false</c>.</returns>
+        public static bool IsPdf(this string s)
+        {
+            return !string.IsNullOrEmpty(s)
+                   && (s.ToLowerInvariant().EndsWith(".pdf"));
+        }
+
         /// <summary>Determines whether [is vimeo video].</summary>
         /// <param name="s">The s.</param>
         /// <returns>
@@ -357,6 +367,19 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                     </div>                                        
                 </div>
              */
+        }
+
+        /// <summary>Converts the PDF to embed.</summary>
+        /// <param name="s">The s.</param>
+        /// <returns></returns>
+        public static string ConvertPdfToEmbed(this string s)
+        {
+            if (IsPdf(s))
+            {
+                return $"<embed src='https://drive.google.com/viewerng/viewer?embedded=true&url={s}' type='application/pdf'>";
+            }
+
+            return s;
         }
 
         /// <summary>Gets the URL with protocol.</summary>

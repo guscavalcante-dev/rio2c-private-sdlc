@@ -7,7 +7,6 @@
     var editionDto = ViewBag.EditionDto as EditionDto;
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var isMusicCommission = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.CommissionMusic) == true;
-    var isProjectSubmissionOpen = editionDto?.IsMusicProjectSubmitOpen() == true;
     var attendeeMusicBandCollaboratorDto = Model.AttendeeMusicBandDto?.AttendeeMusicBandCollaboratorDto;
 }
 <div class="kt-portlet__head">

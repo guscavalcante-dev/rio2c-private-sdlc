@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-28-2020
+// Last Modified On : 02-29-2020
 // ***********************************************************************
 // <copyright file="MusicProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -523,6 +523,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                 })
                                                                                 .FirstOrDefault()
                                     }
+                                });
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>Finds the clippings widget dto asynchronous.</summary>
+        /// <param name="musicProjectUid">The music project uid.</param>
+        /// <returns></returns>
+        public async Task<MusicProjectDto> FindClippingWidgetDtoAsync(Guid musicProjectUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(musicProjectUid)
+                                .Select(mp => new MusicProjectDto
+                                {
+                                    MusicProject = mp
                                 });
 
             return await query

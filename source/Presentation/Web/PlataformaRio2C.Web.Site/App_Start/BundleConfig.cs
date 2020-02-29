@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-28-2020
+// Last Modified On : 02-29-2020
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -386,7 +386,8 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/js/music/projects/music.projects.members.widget.js",
                 "~/Assets/js/music/projects/music.projects.teammembers.widget.js",
                 "~/Assets/js/music/projects/music.projects.releasedprojects.widget.js",
-                "~/Assets/js/music/projects/music.projects.responsible.widget.js"));
+                "~/Assets/js/music/projects/music.projects.responsible.widget.js",
+                "~/Assets/js/music/projects/music.projects.clipping.widget.js"));
                 //"~/Assets/js/projects/projects.interest.widget.js",
                 //"~/Assets/js/projects/projects.links.widget.js",
                 //"~/Assets/js/myrio2c.additionalinfo.js"));
