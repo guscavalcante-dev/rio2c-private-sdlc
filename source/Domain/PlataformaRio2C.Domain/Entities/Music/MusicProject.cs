@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-28-2020
+// Last Modified On : 02-29-2020
 // ***********************************************************************
 // <copyright file="MusicProject.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,21 +22,13 @@ namespace PlataformaRio2C.Domain.Entities
     /// <summary>MusicProject</summary>
     public class MusicProject : Entity
     {
-        public static readonly int VideoUrlMinLength = 1;
         public static readonly int VideoUrlMaxLength = 300;
-        public static readonly int Music1UrlMinLength = 1;
         public static readonly int Music1UrlMaxLength = 300;
-        public static readonly int Music2UrlMinLength = 1;
         public static readonly int Music2UrlMaxLength = 300;
-        public static readonly int Clipping1UrlMinLength = 1;
-        public static readonly int Clipping1UrlMaxLength = 300;
-        public static readonly int Clipping2UrlMinLength = 1;
-        public static readonly int Clipping2UrlMaxLength = 300;
-        public static readonly int Clipping3UrlMinLength = 1;
-        public static readonly int Clipping3UrlMaxLength = 300;
-        public static readonly int ReleaseMinLength = 1;
+        public static readonly int Clipping1MaxLength = 300;
+        public static readonly int Clipping2MaxLength = 300;
+        public static readonly int Clipping3MaxLength = 300;
         public static readonly int ReleaseMaxLength = 12000;
-        public static readonly int ReasonMinLength = 1;
         public static readonly int ReasonMaxLength = 500;
 
         public int AttendeeMusicBandId { get; private set; }
@@ -142,8 +134,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.UtcNow;
         }
 
-        //TODO: Implement validations
-
         #region Validations
 
         /// <summary>Returns true if ... is valid.</summary>
@@ -153,7 +143,14 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.ValidationResult = new ValidationResult();
 
+            this.ValidateMusicBand();
+            this.ValidateVideoUrl();
+            this.ValidateMusic1Url();
+            this.ValidateMusic2Url();
             this.ValidateRelease();
+            this.ValidateClipping1();
+            this.ValidateClipping2();
+            this.ValidateClipping3();
 
             return this.ValidationResult.IsValid;
         }
@@ -170,6 +167,42 @@ namespace PlataformaRio2C.Domain.Entities
             return this.ValidationResult.IsValid;
         }
 
+        /// <summary>Validates the music band.</summary>
+        public void ValidateMusicBand()
+        {
+            if (this.AttendeeMusicBand == null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.MusicBand), new string[] { "MusicBandId" }));
+            }
+        }
+
+        /// <summary>Validates the video URL.</summary>
+        public void ValidateVideoUrl()
+        {
+            if (!string.IsNullOrEmpty(this.VideoUrl) && this.VideoUrl?.Trim().Length > VideoUrlMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Release, VideoUrlMaxLength, 1), new string[] { "Release" }));
+            }
+        }
+
+        /// <summary>Validates the music1 URL.</summary>
+        public void ValidateMusic1Url()
+        {
+            if (!string.IsNullOrEmpty(this.Music1Url) && this.Music1Url?.Trim().Length > Music1UrlMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Music + " 1", Music1UrlMaxLength, 1), new string[] { "Music1Url" }));
+            }
+        }
+
+        /// <summary>Validates the music2 URL.</summary>
+        public void ValidateMusic2Url()
+        {
+            if (!string.IsNullOrEmpty(this.Music2Url) && this.Music2Url?.Trim().Length > Music2UrlMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Music + " 2", Music2UrlMaxLength, 1), new string[] { "Music2Url" }));
+            }
+        }
+
         /// <summary>Validates the release.</summary>
         public void ValidateRelease()
         {
@@ -179,65 +212,47 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        /// <summary>Validates the refuse reason.</summary>
-        public void ValidateRefuseReason()
+        /// <summary>Validates the clipping1.</summary>
+        public void ValidateClipping1()
         {
-            //if (this.ProjectEvaluationStatus?.Code == ProjectEvaluationStatus.Refused.Code && this.ProjectEvaluationRefuseReason == null)
-            //{
-            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Reason), new string[] { "Reason" }));
-            //}
-
-            //if (this.ProjectEvaluationRefuseReason?.HasAdditionalInfo == true && string.IsNullOrEmpty(this.Reason?.Trim()))
-            //{
-            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Reason), new string[] { "Reason" }));
-            //}
-
-            if (this.Reason?.Trim().Length < ReasonMinLength || this.Reason?.Trim().Length > ReasonMaxLength)
+            if (!string.IsNullOrEmpty(this.Clipping1) && this.Clipping1?.Trim().Length > Clipping1MaxLength)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, ReasonMaxLength, ReasonMinLength), new string[] { "Reason" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Clipping + " 1", Clipping1MaxLength, 1), new string[] { "Clipping1" }));
             }
         }
 
-        ///// <summary>Determines whether [is create project valid].</summary>
-        ///// <returns>
-        /////   <c>true</c> if [is create project valid]; otherwise, <c>false</c>.</returns>
-        //public bool IsCreateProjectValid()
-        //{
-        //    if (this.ValidationResult == null)
-        //    {
-        //        this.ValidationResult = new ValidationResult();
-        //    }
+        /// <summary>Validates the clipping2.</summary>
+        public void ValidateClipping2()
+        {
+            if (!string.IsNullOrEmpty(this.Clipping2) && this.Clipping2?.Trim().Length > Clipping2MaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Clipping + " 2", Clipping2MaxLength, 1), new string[] { "Clipping2" }));
+            }
+        }
 
-        //    this.ValidateProjectsLimits();
-        //    this.ValidateProjects();
+        /// <summary>Validates the clipping3.</summary>
+        public void ValidateClipping3()
+        {
+            if (!string.IsNullOrEmpty(this.Clipping3) && this.Clipping3?.Trim().Length > Clipping3MaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Clipping + " 3", Clipping3MaxLength, 1), new string[] { "Clipping3" }));
+            }
+        }
+        
+        /// <summary>Validates the refuse reason.</summary>
+        public void ValidateRefuseReason()
+        {
+            if (this.ProjectEvaluationRefuseReason?.HasAdditionalInfo == true && string.IsNullOrEmpty(this.Reason?.Trim()))
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Reason), new string[] { "Reason" }));
+            }
 
-        //    return this.ValidationResult.IsValid;
-        //}
-
-        ///// <summary>Validates the projects limits.</summary>
-        //public void ValidateProjectsLimits()
-        //{
-        //    if (this.SellProjectsCount > this.GetMaxSellProjectsCount())
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(Messages.IsNotPossibleCreateProjectLimit, new string[] { "ToastrError" }));
-        //    }
-        //}
-
-        ///// <summary>Validates the projects.</summary>
-        //public void ValidateProjects()
-        //{
-        //    if (this.SellProjects?.Any() != true)
-        //    {
-        //        return;
-        //    }
-
-        //    foreach (var project in this.SellProjects?.Where(d => !d.IsDeleted && !d.IsCreateValid())?.ToList())
-        //    {
-        //        this.ValidationResult.Add(project.ValidationResult);
-        //    }
-        //}
+            if (this.Reason?.Trim().Length > ReasonMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, ReasonMaxLength, 1), new string[] { "Reason" }));
+            }
+        }
 
         #endregion
     }
 }
-

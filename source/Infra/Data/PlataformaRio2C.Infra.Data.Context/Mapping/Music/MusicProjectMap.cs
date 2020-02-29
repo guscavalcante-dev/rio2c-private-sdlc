@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-28-2020
+// Last Modified On : 02-29-2020
 // ***********************************************************************
 // <copyright file="MusicProjectMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -37,13 +37,13 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 .HasMaxLength(MusicProject.ReleaseMaxLength);
 
             this.Property(t => t.Clipping1)
-                .HasMaxLength(MusicProject.Clipping1UrlMaxLength);
+                .HasMaxLength(MusicProject.Clipping1MaxLength);
 
             this.Property(t => t.Clipping2)
-                .HasMaxLength(MusicProject.Clipping2UrlMaxLength);
+                .HasMaxLength(MusicProject.Clipping2MaxLength);
 
             this.Property(t => t.Clipping3)
-                .HasMaxLength(MusicProject.Clipping3UrlMaxLength);
+                .HasMaxLength(MusicProject.Clipping3MaxLength);
             
             this.Property(t => t.Reason)
                 .HasMaxLength(MusicProject.ReasonMaxLength);
