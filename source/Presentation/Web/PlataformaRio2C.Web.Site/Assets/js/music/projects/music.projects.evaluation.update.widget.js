@@ -4,7 +4,7 @@
 // Created          : 02-28-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-28-2020
+// Last Modified On : 02-29-2020
 // ***********************************************************************
 // <copyright file="music.projects.evaluation.update.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,7 +14,7 @@
 
 var MusicProjectsEvaluationUpdateWidget = function () {
 
-    var widgetElementId = '#ProjectBuyerEvaluationWidget';
+    var widgetElementId = '#ProjectEvaluationWidget';
     var widgetElement;
 
     var acceptModalId = '#AcceptEvaluationModal';
@@ -41,7 +41,7 @@ var MusicProjectsEvaluationUpdateWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.projectUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/ShowBuyerEvaluationWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/ShowEvaluationWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

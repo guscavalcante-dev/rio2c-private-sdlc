@@ -51,15 +51,13 @@
             </div>
             <!--end:Clipping Widget-->
         </div>
-        @*
-        <!--begin:Evaluation Widget-->
         <div class="row">
+            <!--begin:Evaluation Widget-->
             <div class="col-12">
-                <div id="ProjectBuyerEvaluationWidget" class="kt-portlet" style="min-height: 296px;"></div>
+                <div id="ProjectEvaluationWidget" class="kt-portlet" style="min-height: 296px;"></div>
             </div>
+            <!--end:Evaluation Widget-->
         </div>
-        <!--end:Evaluation Widget-->
-        *@
     </div>
 </div>
 @section Styles {
@@ -70,7 +68,7 @@
     @Scripts.Render("~/bundles/js/inputmask.js")
     @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/music.projects.widget.js")
-    @*@Scripts.Render("~/bundles/js/projects.buyerevaluation.update.widget.js")*@
+    @Scripts.Render("~/bundles/js/music.projects.evaluation.update.widget.js")
     <script>
         // Page translations ----------------------------------------------------------------------
         var translations = {
@@ -84,6 +82,7 @@
             MusicProjectResponsibleWidget.init();
             MusicProjectsVideoAndMusicWidget.init();
             MusicProjectsClippingWidget.init();
+            MusicProjectsEvaluationUpdateWidget.init();
         });
     </script>
 }

@@ -4,7 +4,7 @@
 // Created          : 02-28-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-28-2020
+// Last Modified On : 02-29-2020
 // ***********************************************************************
 // <copyright file="music.projects.responsible.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,7 +34,7 @@ var MusicProjectResponsibleWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.projectUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/ShowProjectResponsibleWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/ShowResponsibleWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

@@ -377,13 +377,13 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
         #endregion
 
-        #region Project Responsible Widget
+        #region Responsible Widget
 
-        /// <summary>Shows the project responsible widget.</summary>
+        /// <summary>Shows the responsible widget.</summary>
         /// <param name="projectUid">The project uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowProjectResponsibleWidget(Guid? projectUid)
+        public async Task<ActionResult> ShowResponsibleWidget(Guid? projectUid)
         {
             var projectResponsibleWidgetDto = await this.musicProjectRepo.FindProjectResponsibleWidgetDtoAsync(projectUid ?? Guid.Empty);
             if (projectResponsibleWidgetDto == null)
@@ -396,7 +396,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/ProjectResponsibleWidget", projectResponsibleWidgetDto), divIdOrClass = "#ProjectResponsibleWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/ResponsibleWidget", projectResponsibleWidgetDto), divIdOrClass = "#ProjectResponsibleWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -449,6 +449,37 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 pages = new List<dynamic>
                 {
                     new { page = this.RenderRazorViewToString("Widgets/ClippingWidget", clippingWidgetDto), divIdOrClass = "#ProjectClippingWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Evaluation
+
+        /// <summary>Shows the evaluation widget.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowEvaluationWidget(Guid? projectUid)
+        {
+            if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
+            {
+                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+            }
+
+            var evaluationDto = await this.musicProjectRepo.FindEvaluationWidgetDtoAsync(projectUid ?? Guid.Empty);
+            if (evaluationDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EvaluationWidget", evaluationDto), divIdOrClass = "#ProjectEvaluationWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
