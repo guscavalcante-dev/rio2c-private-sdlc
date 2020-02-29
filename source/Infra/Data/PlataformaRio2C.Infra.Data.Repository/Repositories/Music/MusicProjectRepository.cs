@@ -499,5 +499,34 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        /// <summary>Finds the project responsible widget dto asynchronous.</summary>
+        /// <param name="musicProjectUid">The music project uid.</param>
+        /// <returns></returns>
+        public async Task<MusicProjectDto> FindProjectResponsibleWidgetDtoAsync(Guid musicProjectUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(musicProjectUid)
+                                .Select(mp => new MusicProjectDto
+                                {
+                                    MusicProject = mp,
+                                    AttendeeMusicBandDto = new AttendeeMusicBandDto
+                                    {
+                                        AttendeeMusicBand = mp.AttendeeMusicBand,
+                                        AttendeeMusicBandCollaboratorDto = mp.AttendeeMusicBand.AttendeeMusicBandCollaborators
+                                                                                .Where(amb => !amb.IsDeleted && !amb.AttendeeCollaborator.IsDeleted && !amb.AttendeeCollaborator.Collaborator.IsDeleted)
+                                                                                .Select(amb => new AttendeeMusicBandCollaboratorDto
+                                                                                {
+                                                                                    AttendeeMusicBandCollaborator = amb,
+                                                                                    AttendeeCollaborator = amb.AttendeeCollaborator,
+                                                                                    Collaborator = amb.AttendeeCollaborator.Collaborator,
+                                                                                    User = amb.AttendeeCollaborator.Collaborator.User
+                                                                                })
+                                                                                .FirstOrDefault()
+                                    }
+                                });
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
     }
 }

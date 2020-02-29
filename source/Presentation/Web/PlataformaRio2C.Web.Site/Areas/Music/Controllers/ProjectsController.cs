@@ -377,6 +377,32 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
         #endregion
 
+        #region Project Responsible Widget
+
+        /// <summary>Shows the project responsible widget.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowProjectResponsibleWidget(Guid? projectUid)
+        {
+            var projectResponsibleWidgetDto = await this.musicProjectRepo.FindProjectResponsibleWidgetDtoAsync(projectUid ?? Guid.Empty);
+            if (projectResponsibleWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/ProjectResponsibleWidget", projectResponsibleWidgetDto), divIdOrClass = "#ProjectResponsibleWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
         #region Accept
 
         /// <summary>Shows the accept evaluation modal.</summary>

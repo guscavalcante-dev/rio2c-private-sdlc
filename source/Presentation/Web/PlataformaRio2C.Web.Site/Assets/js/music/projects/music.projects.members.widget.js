@@ -18,7 +18,7 @@ var MusicProjectsMembersWidget = function () {
     var widgetElement = $(widgetElementId);
 
     var updateModalId = '#UpdateMembersModal';
-    var updateFormId = '#UpdateMemmbersForm';
+    var updateFormId = '#UpdateMembersForm';
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {

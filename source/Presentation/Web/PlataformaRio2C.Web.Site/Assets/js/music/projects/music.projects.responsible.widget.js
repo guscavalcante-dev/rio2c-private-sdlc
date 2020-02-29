@@ -6,19 +6,19 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 02-28-2020
 // ***********************************************************************
-// <copyright file="music.projects.releasedprojects.widget.js" company="Softo">
+// <copyright file="music.projects.responsible.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var MusicProjectsReleasedWidget = function () {
+var MusicProjectResponsibleWidget = function () {
 
-    var widgetElementId = '#ReleasedProjectsWidget';
+    var widgetElementId = '#ProjectResponsibleWidget';
     var widgetElement = $(widgetElementId);
 
-    var updateModalId = '#UpdateReleasedProjectsModal';
-    var updateFormId = '#UpdateReleasedProjectsForm';
+    var updateModalId = '#UpdateProjectResponsibleModal';
+    var updateFormId = '#UpdateProjectResponsibleForm';
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
@@ -34,7 +34,7 @@ var MusicProjectsReleasedWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.projectUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/ShowReleasedProjectsWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/ShowProjectResponsibleWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

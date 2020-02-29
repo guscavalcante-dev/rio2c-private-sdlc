@@ -3679,6 +3679,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Responsável.
+        /// </summary>
+        public static string Responsible {
+            get {
+                return ResourceManager.GetString("Responsible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Restrições e especificidades.
         /// </summary>
         public static string RestrictionsSpecifics {

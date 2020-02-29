@@ -2181,6 +2181,10 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Projetos lançados</value>
     <comment>Projetos lançados</comment>
   </data>
+  <data name="Responsible" xml:space="preserve">
+    <value>Responsável</value>
+    <comment>Responsável</comment>
+  </data>
   <data name="Year" xml:space="preserve">
     <value>Ano</value>
     <comment>Ano</comment>
