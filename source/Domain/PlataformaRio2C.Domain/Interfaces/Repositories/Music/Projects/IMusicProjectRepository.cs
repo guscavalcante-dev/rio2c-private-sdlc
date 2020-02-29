@@ -27,5 +27,6 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<MusicProjectDto> FindMainInformationWidgetDtoAsync(Guid musicProjectUid);
         Task<MusicProjectDto> FindMembersWidgetDtoAsync(Guid musicProjectUid);
         Task<MusicProjectDto> FindTeamMembersWidgetDtoAsync(Guid musicProjectUid);
+        Task<MusicProjectDto> FindReleasedProjectsWidgetDtoAsync(Guid musicProjectUid);
     }
 }

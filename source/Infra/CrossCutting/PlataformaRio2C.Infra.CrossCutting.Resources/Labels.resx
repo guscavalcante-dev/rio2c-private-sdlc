@@ -2177,4 +2177,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Tipo de artista</value>
     <comment>Tipo de artista</comment>
   </data>
+  <data name="ProjectsReleased" xml:space="preserve">
+    <value>Projetos lançados</value>
+    <comment>Projetos lançados</comment>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Ano</value>
+    <comment>Ano</comment>
+  </data>
 </root>

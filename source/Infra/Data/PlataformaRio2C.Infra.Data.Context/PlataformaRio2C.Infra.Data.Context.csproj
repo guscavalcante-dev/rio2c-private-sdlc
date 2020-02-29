@@ -113,6 +113,7 @@
     <Compile Include="Mapping\MusicalCommission\MusicalCommissionMap.cs" />
     <Compile Include="Mapping\Music\AttendeeMusicBandCollaboratorMap.cs" />
     <Compile Include="Mapping\Music\AttendeeMusicBandMap.cs" />
+    <Compile Include="Mapping\Music\ReleasedMusicProjectMap.cs" />
     <Compile Include="Mapping\Music\MusicBandTeamMemberMap.cs" />
     <Compile Include="Mapping\Music\MusicBandMemberMap.cs" />
     <Compile Include="Mapping\Music\MusicGenreMap.cs" />

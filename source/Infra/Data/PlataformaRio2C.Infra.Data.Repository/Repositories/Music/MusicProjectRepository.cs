@@ -476,5 +476,28 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query
                             .FirstOrDefaultAsync();
         }
+
+        /// <summary>Finds the released music projects widget dto asynchronous.</summary>
+        /// <param name="musicProjectUid">The music project uid.</param>
+        /// <returns></returns>
+        public async Task<MusicProjectDto> FindReleasedProjectsWidgetDtoAsync(Guid musicProjectUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(musicProjectUid)
+                                .Select(mp => new MusicProjectDto
+                                {
+                                    MusicProject = mp,
+                                    AttendeeMusicBandDto = new AttendeeMusicBandDto
+                                    {
+                                        AttendeeMusicBand = mp.AttendeeMusicBand,
+                                        MusicBand = mp.AttendeeMusicBand.MusicBand,
+                                        ReleasedMusicProjects = mp.AttendeeMusicBand.MusicBand.ReleasedMusicProjects.Where(rmp => !rmp.IsDeleted)
+                                    }
+                                });
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
+
     }
 }

@@ -3440,6 +3440,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Projetos lançados.
+        /// </summary>
+        public static string ProjectsReleased {
+            get {
+                return ResourceManager.GetString("ProjectsReleased", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inscrição de projetos.
         /// </summary>
         public static string ProjectsSubmission {
@@ -4953,6 +4962,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string WorkDuration {
             get {
                 return ResourceManager.GetString("WorkDuration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ano.
+        /// </summary>
+        public static string Year {
+            get {
+                return ResourceManager.GetString("Year", resourceCulture);
             }
         }
         

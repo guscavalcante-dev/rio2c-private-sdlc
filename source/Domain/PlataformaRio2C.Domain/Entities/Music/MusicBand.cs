@@ -52,6 +52,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<MusicBandTargetAudience> MusicBandTargetAudiences { get; private set; }
         public virtual ICollection<MusicBandMember> MusicBandMembers { get; private set; }
         public virtual ICollection<MusicBandTeamMember> MusicBandTeamMembers { get; private set; }
+        public virtual ICollection<ReleasedMusicProject> ReleasedMusicProjects { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="MusicBand"/> class.</summary>
         protected MusicBand()
@@ -412,6 +413,9 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateYoutube();
             this.ValidateMusicBandGenres();
             this.ValidateMusicBandTargetAudiences();
+            this.ValidateMusicBandMembers();
+            this.ValidateMusicBandTeamMembers();
+            this.ValidateReleasedMusicProjects();
 
             return this.ValidationResult.IsValid;
         }
@@ -527,6 +531,48 @@ namespace PlataformaRio2C.Domain.Entities
             foreach (var musicBandTargetAudience in this.MusicBandTargetAudiences?.Where(d => !d.IsValid())?.ToList())
             {
                 this.ValidationResult.Add(musicBandTargetAudience.ValidationResult);
+            }
+        }
+
+        /// <summary>Validates the music band members.</summary>
+        public void ValidateMusicBandMembers()
+        {
+            if (this.MusicBandMembers?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var musicBandMember in this.MusicBandMembers?.Where(d => !d.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(musicBandMember.ValidationResult);
+            }
+        }
+
+        /// <summary>Validates the music band team members.</summary>
+        public void ValidateMusicBandTeamMembers()
+        {
+            if (this.MusicBandTeamMembers?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var musicBandTeamMember in this.MusicBandTeamMembers?.Where(d => !d.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(musicBandTeamMember.ValidationResult);
+            }
+        }
+
+        /// <summary>Validates the released music projects.</summary>
+        public void ValidateReleasedMusicProjects()
+        {
+            if (this.ReleasedMusicProjects?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var releasedMusicProject in this.ReleasedMusicProjects?.Where(d => !d.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(releasedMusicProject.ValidationResult);
             }
         }
 

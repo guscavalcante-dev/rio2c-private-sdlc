@@ -2170,4 +2170,12 @@
     <value>Participant profile</value>
     <comment>Tipo de artista</comment>
   </data>
+  <data name="ProjectsReleased" xml:space="preserve">
+    <value>Projects released</value>
+    <comment>Projetos lançados</comment>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Year</value>
+    <comment>Ano</comment>
+  </data>
 </root>
