@@ -6463,10 +6463,10 @@
     <Content Include="Areas\Music\Views\Projects\Widgets\ReleasedProjectsWidget.cshtml" />
     <Content Include="Areas\Music\Views\Projects\Widgets\ProjectResponsibleWidget.cshtml" />
     <Content Include="Areas\Music\Views\Projects\Widgets\ClippingWidget.cshtml" />
-    <Content Include="Areas\Music\Views\Projects\Widgets\ClippingItem.cshtml" />
+    <Content Include="Areas\Music\Views\Projects\Shared\_ClippingItem.cshtml" />
     <Content Include="Areas\Music\Views\Projects\Widgets\VideoAndMusicWidget.cshtml" />
-    <Content Include="Areas\Music\Views\Projects\Widgets\MusicItem.cshtml" />
-    <Content Include="Areas\Music\Views\Projects\Widgets\VideoItem.cshtml" />
+    <Content Include="Areas\Music\Views\Projects\Shared\_MusicItem.cshtml" />
+    <Content Include="Areas\Music\Views\Projects\Shared\_VideoItem.cshtml" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />

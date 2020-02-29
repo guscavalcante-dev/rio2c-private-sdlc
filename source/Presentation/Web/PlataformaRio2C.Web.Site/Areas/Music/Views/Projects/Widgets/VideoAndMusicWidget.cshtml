@@ -28,7 +28,7 @@
                 <div class="col-md-12">
                     <div class="kt-widget4">
                         <h3 class="kt-heading kt-heading--sm mb-0 mt-0 text-center">@Labels.VideoClip</h3>
-                        @Html.Partial("Widgets/VideoItem", Model.MusicProject?.VideoUrl, new ViewDataDictionary())
+                        @Html.Partial("Shared/_VideoItem", Model.MusicProject?.VideoUrl, new ViewDataDictionary())
                     </div>
                 </div>
             </div>
@@ -36,7 +36,7 @@
                 <div class="col-md-12">
                     <div class="kt-widget4">
                         <h3 class="kt-heading kt-heading--sm mb-0 mt-0 text-center">@Labels.Music 1</h3>
-                        @Html.Partial("Widgets/MusicItem", Model.MusicProject?.Music1Url, new ViewDataDictionary())
+                        @Html.Partial("Shared/_MusicItem", Model.MusicProject?.Music1Url, new ViewDataDictionary())
                     </div>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                 <div class="col-md-12">
                     <div class="kt-widget4">
                         <h3 class="kt-heading kt-heading--sm mb-0 mt-0 text-center">@Labels.Music 2</h3>
-                        @Html.Partial("Widgets/MusicItem", Model.MusicProject?.Music2Url, new ViewDataDictionary())
+                        @Html.Partial("Shared/_MusicItem", Model.MusicProject?.Music2Url, new ViewDataDictionary())
                     </div>
                 </div>
             </div>
