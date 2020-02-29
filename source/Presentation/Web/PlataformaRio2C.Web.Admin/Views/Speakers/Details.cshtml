@@ -48,6 +48,13 @@
     <!--end: Main Container-->
     <!--begin: Right Container-->
     <div class="col-md-4 col-lg-3">
+        <!--begin:Onboarding Info Widget-->
+        <div class="row">
+            <div class="col-12">
+                <div id="SpeakerOnboardingInfoWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+        </div>
+        <!--end:Onboarding Info Widget-->
         <!--begin:Api Configurations Widget-->
         <div class="row">
             <div class="col-12">
@@ -79,11 +86,12 @@
         // Page translations ----------------------------------------------------------------------
 
         jQuery(document).ready(function () {
-            SpeakersMainInformationWidget.init();
-            SpeakersSocialNetworksWidget.init();
-            SpeakersCompanyWidget.init();
+            CollaboratorsMainInformationWidget.init();
+            CollaboratorsSocialNetworksWidget.init();
+            CollaboratorsCompanyWidget.init();
             SpeakersParticipantsWidget.init();
             SpeakersConferencesWidget.init();
+            CollaboratorsOnboardingInfoWidget.init();
             SpeakersApiConfigurationWidget.init();
         });
     </script>

@@ -330,6 +330,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SimpleInjectorInitializer.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Music\Controllers\CommissionsController.cs" />
+    <Compile Include="Areas\Music\MusicAreaRegistration.cs" />
     <Compile Include="Areas\WebApi\Controllers\BaseApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\CollaboratorPlayerController.cs" />
     <Compile Include="Areas\WebApi\Controllers\ConferenceController.cs" />
@@ -356,6 +358,7 @@
     <Compile Include="Controllers\ParticipantRolesController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\PillarsController.cs" />
+    <Compile Include="Controllers\SalesPlatformsController.cs" />
     <Compile Include="Controllers\TracksController.cs" />
     <Compile Include="Controllers\RoomsController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
@@ -427,6 +430,7 @@
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.editioncount.widget.js" />
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.maininformation.widget.js" />
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.totalcount.widget.js" />
+    <Content Include="Assets\js\music\commissions\music.commissions.onboardinginfo.widget.js" />
     <Content Include="Assets\js\reports\reports.audiovisual.subscriptions.widget.js" />
     <Content Include="Assets\js\rooms\rooms.conferences.widget.js" />
     <Content Include="Assets\js\rooms\rooms.maininformation.widget.js" />
@@ -447,7 +451,17 @@
     <Content Include="Assets\js\events\events.datatable.widget.js" />
     <Content Include="Assets\js\events\events.editioncount.widget.js" />
     <Content Include="Assets\js\events\events.totalcount.widget.js" />
+    <Content Include="Assets\js\music\commissions\music.commissions.create.js" />
+    <Content Include="Assets\js\music\commissions\music.commissions.datatable.widget.js" />
+    <Content Include="Assets\js\music\commissions\music.commissions.delete.js" />
+    <Content Include="Assets\js\music\commissions\music.commissions.editioncount.widget.js" />
+    <Content Include="Assets\js\music\commissions\music.commissions.maininformation.widget.js" />
+    <Content Include="Assets\js\music\commissions\music.commissions.socialnetworks.widget.js" />
+    <Content Include="Assets\js\music\commissions\music.commissions.totalcount.widget.js" />
+    <Content Include="Assets\js\music\commissions\music.commissions.update.js" />
+    <Content Include="Assets\js\salesplatforms\salesplatforms.export.js" />
     <Content Include="Assets\js\speakers\speakers.conferences.widget.js" />
+    <Content Include="Assets\js\speakers\speakers.onboardinginfo.widget.js" />
     <Content Include="Assets\js\speakers\speakers.socialnetworks.widget.js" />
     <Content Include="Assets\js\speakers\speakers.participants.widget.js" />
     <Content Include="Assets\js\projects\projects.pitching.editioncount.widget.js" />
@@ -7058,6 +7072,23 @@
     <Content Include="Assets\components\bootstrap-maxlength\LICENSE" />
     <Content Include="Assets\components\bootstrap-maxlength\README.md" />
     <Content Include="Assets\components\jquery.autocomplete\readme.md" />
+    <Content Include="Areas\Music\Views\web.config" />
+    <Content Include="Areas\Music\Views\Commissions\Details.cshtml" />
+    <Content Include="Areas\Music\Views\Commissions\Index.cshtml" />
+    <Content Include="Views\Shared\Collaborators\Forms\_TinyForm.cshtml" />
+    <Content Include="Areas\Music\Views\Commissions\Modals\CreateModal.cshtml" />
+    <Content Include="Views\Shared\Collaborators\Forms\_MainInformationForm.cshtml" />
+    <Content Include="Areas\Music\Views\Commissions\Modals\UpdateMainInformationModal.cshtml" />
+    <Content Include="Areas\Music\Views\Commissions\Modals\UpdateModal.cshtml" />
+    <Content Include="Views\Shared\Collaborators\Forms\_SocialNetworksForm.cshtml" />
+    <Content Include="Areas\Music\Views\Commissions\Modals\UpdateSocialNetworksModal.cshtml" />
+    <Content Include="Views\Shared\Collaborators\Widgets\CompanyWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Commissions\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Commissions\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Views\Shared\Collaborators\Widgets\MainInformationWidget.cshtml" />
+    <Content Include="Views\Shared\Collaborators\Widgets\SocialNetworksWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Commissions\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Areas\Music\Views\_ViewStart.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -8214,24 +8245,19 @@
     <Content Include="Views\AdminMailerService\PlayerWelcomeEmail.cshtml" />
     <Content Include="Views\Players\EditorTemplates\OrganizationRestrictionSpecificsBaseCommand.cshtml" />
     <Content Include="Views\Players\EditorTemplates\OrganizationActivityBaseCommand.cshtml" />
-    <Content Include="Views\PlayersExecutives\Modals\EventbriteCsvModal.cshtml" />
     <Content Include="Views\AdminMailerService\ForgotPasswordEmail.cshtml" />
     <Content Include="Views\Account\Modals\UpdatePasswordForm.cshtml" />
     <Content Include="Views\Account\Modals\UpdatePasswordModal.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\InterestBaseCommand.cshtml" />
     <Content Include="Views\Speakers\Modals\CreateModal.cshtml" />
-    <Content Include="Views\Speakers\Modals\_TinyForm.cshtml" />
     <Content Include="Views\Speakers\Index.cshtml" />
     <Content Include="Views\Speakers\Widgets\DataTableWidget.cshtml" />
     <Content Include="Views\Speakers\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Views\Speakers\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Views\Speakers\Modals\UpdateModal.cshtml" />
     <Content Include="Views\AdminMailerService\SpeakerWelcomeEmail.cshtml" />
-    <Content Include="Views\Speakers\Modals\EventbriteCsvModal.cshtml" />
+    <Content Include="Views\SalesPlatforms\Modals\EventbriteCsvModal.cshtml" />
     <Content Include="Views\Speakers\Details.cshtml" />
-    <Content Include="Views\Speakers\Widgets\MainInformationWidget.cshtml" />
-    <Content Include="Views\Speakers\Widgets\CompanyWidget.cshtml" />
-    <Content Include="Views\Speakers\Modals\UpdateMainInformationForm.cshtml" />
     <Content Include="Views\Speakers\Modals\UpdateMainInformationModal.cshtml" />
     <Content Include="Views\Speakers\Modals\UpdateCompanyInfoModal.cshtml" />
     <Content Include="Views\Speakers\Widgets\ApiConfigurationWidget.cshtml" />
@@ -8317,9 +8343,7 @@
     <Content Include="Views\Speakers\Widgets\RelatedParticipantsWidget.cshtml" />
     <Content Include="Views\Reports\Audiovisual\AudiovisualSubscriptions.cshtml" />
     <Content Include="Views\Reports\Audiovisual\Widgets\AudiovisualSubscriptionsWidget.cshtml" />
-    <Content Include="Views\Speakers\Widgets\SocialNetworksWidget.cshtml" />
     <Content Include="Views\Speakers\Modals\UpdateSocialNetworksModal.cshtml" />
-    <Content Include="Views\Speakers\Modals\UpdateSocialNetworksForm.cshtml" />
     <Content Include="Views\Pillars\Details.cshtml" />
     <Content Include="Views\Pillars\EditorTemplates\PillarNameBaseCommand.cshtml" />
     <Content Include="Views\Pillars\Index.cshtml" />
@@ -8335,9 +8359,13 @@
     <Content Include="Views\Projects\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Views\Projects\Widgets\PitchingDataTableWidget.cshtml" />
     <Content Include="Views\Projects\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Views\Shared\Collaborators\Widgets\OnboardingInfoWidget.cshtml" />
+    <Content Include="Views\AdminMailerService\MusicCommissionWelcomeEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Music\Data\" />
+    <Folder Include="Areas\Music\Views\Shared\" />
     <Folder Include="Scripts\ckeditor\images\" />
     <Folder Include="Scripts\ckeditor\plugins\a11yhelp\lang\" />
     <Folder Include="Scripts\ckeditor\plugins\docprops\dialogs\" />

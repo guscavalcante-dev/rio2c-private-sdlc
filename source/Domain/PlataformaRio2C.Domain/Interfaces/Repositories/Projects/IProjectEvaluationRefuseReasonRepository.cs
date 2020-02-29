@@ -4,7 +4,7 @@
 // Created          : 12-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-10-2019
+// Last Modified On : 02-28-2020
 // ***********************************************************************
 // <copyright file="IProjectEvaluationRefuseReasonRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,6 +22,6 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface IProjectEvaluationRefuseReasonRepository : IRepository<ProjectEvaluationRefuseReason>
     {
         Task<ProjectEvaluationRefuseReason> FindByUidAsync(Guid projectEvaluationRefuseReasonUid);
-        Task<List<ProjectEvaluationRefuseReason>> FindAllAsync();
+        Task<List<ProjectEvaluationRefuseReason>> FindAllByProjectTypeUidAsync(Guid projectTypeUid);
     }
 }

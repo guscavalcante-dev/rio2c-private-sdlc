@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-07-2019
+// Last Modified On : 02-25-2020
 // ***********************************************************************
 // <copyright file="RouteConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,6 +24,8 @@ namespace PlataformaRio2C.Web.Admin
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            routes.MapMvcAttributeRoutes();
 
             AreaRegistration.RegisterAllAreas();
 

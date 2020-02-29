@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-17-2019
+// Last Modified On : 02-26-2020
 // ***********************************************************************
 // <copyright file="SiteMailerService.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -211,6 +211,16 @@ namespace PlataformaRio2C.Web.Site.Services
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
         public MvcMailMessage SendSpeakerWelcomeEmail(SendSpeakerWelcomeEmailAsync cmd, Guid sentEmailUid)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>Sends the music commission welcome email.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <param name="sentEmailUid">The sent email uid.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public MvcMailMessage SendMusicCommissionWelcomeEmail(SendMusicCommissionWelcomeEmailAsync cmd, Guid sentEmailUid)
         {
             throw new NotImplementedException();
         }

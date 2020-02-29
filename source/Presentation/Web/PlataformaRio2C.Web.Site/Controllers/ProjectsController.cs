@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-20-2020
+// Last Modified On : 02-28-2020
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1826,7 +1826,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 cmd = new RefuseProjectEvaluation(
                     projectDto,
                     this.UserAccessControlDto?.EditionAttendeeOrganizations?.ToList(),
-                    await this.projectEvaluationRefuseReasonRepo.FindAllAsync());
+                    await this.projectEvaluationRefuseReasonRepo.FindAllByProjectTypeUidAsync(ProjectType.Audiovisual.Uid));
             }
             catch (DomainException ex)
             {
@@ -1887,7 +1887,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 cmd.UpdateModelsAndLists(
                     await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(cmd.ProjectUid ?? Guid.Empty),
                     this.UserAccessControlDto?.EditionAttendeeOrganizations?.ToList(),
-                    await this.projectEvaluationRefuseReasonRepo.FindAllAsync());
+                    await this.projectEvaluationRefuseReasonRepo.FindAllByProjectTypeUidAsync(ProjectType.Audiovisual.Uid));
 
                 return Json(new
                 {

@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-16-2020
+// Last Modified On : 02-29-2020
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -290,6 +290,8 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                        || s.ToLowerInvariant().EndsWith(".gif"));
         }
 
+        #region Video
+
         /// <summary>Determines whether [is vimeo video].</summary>
         /// <param name="s">The s.</param>
         /// <returns>
@@ -307,7 +309,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         public static bool IsYoutubeVideo(this string s)
         {
             return !string.IsNullOrEmpty(s)
-                   && s.ToLowerInvariant().Contains("youtube.com");
+                   && (s.ToLowerInvariant().Contains("youtube.com")
+                      || s.ToLowerInvariant().Contains("youtu.be"));
+        }
+
+        public static bool IsFacebookVideo(this string s)
+        {
+            return !string.IsNullOrEmpty(s)
+                   && s.ToLowerInvariant().Contains("facebook.com")
+                   && s.ToLowerInvariant().Contains("videos");
         }
 
         /// <summary>Converts the video to embed.</summary>
@@ -326,8 +336,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                 }
 
                 var id = match.Groups[1].Value;
-                return $"<iframe src='https://www.youtube.com/embed/{id}' class='embed-responsive-item' frameborder='0' allowfullscreen='1'></iframe>";
-                //title='YouTube video player' width='480' height='270'
+                return $"<iframe src='https://www.youtube.com/embed/{id}' class='embed-responsive-item' frameborder='0' allowFullScreen='true'></iframe>";
             }
 
             if (IsVimeoVideo(s))
@@ -341,8 +350,72 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                 }
 
                 var id = match.Groups[1].Value;
-                return $"<iframe src='https://player.vimeo.com/video/{id}' class='embed-responsive-item' frameborder='0' allow='autoplay; fullscreen' allowfullscreen></iframe>";
-                //width='480' height='270'
+                return $"<iframe src='https://player.vimeo.com/video/{id}' class='embed-responsive-item' frameborder='0' allow='autoplay; fullscreen' allowFullScreen='true'></iframe>";
+            }
+
+            if (IsFacebookVideo(s))
+            {
+                var rgx = new Regex(@"facebook\.com\/([a-zA-Z0-9-_]+)\/(videos)\/([0-9]*)");
+                var match = rgx.Match(s);
+
+                if (!match.Success)
+                {
+                    return s;
+                }
+
+                //var id = match.Groups[1].Value;
+                return $"<iframe src='https://www.facebook.com/plugins/video.php?href=https://www.{match.Value}&show_text=0' class='embed-responsive-item' scrolling='no' frameborder='0' allowTransparency='true' allowFullScreen='true'></iframe>";
+            }
+
+            //https://www.facebook.com/GilbertoCariocaMusic/videos/519439721771582/
+            //
+
+            return s;
+
+            /*
+             Use html like this:
+                <div class="row mt-3 justify-content-center">
+                    <div class="col-sm-8 col-md-8 col-lg-6">
+                        <div class="embed-responsive embed-responsive-16by9 d-flex">
+                            @Html.Raw(teaserLinkDto.ProjectTeaserLink.Value.ConvertVideoToEmbed())
+                        </div>
+                    </div>                                        
+                </div>
+             */
+        }
+
+        #endregion
+
+        #region Music
+
+        /// <summary>Determines whether [is spotify music].</summary>
+        /// <param name="s">The s.</param>
+        /// <returns>
+        ///   <c>true</c> if [is spotify music] [the specified s]; otherwise, <c>false</c>.</returns>
+        public static bool IsSpotifyMusic(this string s)
+        {
+            return !string.IsNullOrEmpty(s)
+                   && s.ToLowerInvariant().Contains("spotify.com");
+        }
+
+        /// <summary>Converts the music to embed.</summary>
+        /// <param name="s">The s.</param>
+        /// <returns></returns>
+        public static string ConvertMusicToEmbed(this string s)
+        {
+            if (IsSpotifyMusic(s))
+            {
+                var rgx = new Regex(@"open\.spotify\.com\/(track|album|artist)\/([a-zA-Z0-9-_]+)");
+                var match = rgx.Match(s);
+
+                if (!match.Success)
+                {
+                    return s;
+                }
+
+                var type = match.Groups[1].Value;
+                var id = match.Groups[2].Value;
+                return $"<iframe src='https://open.spotify.com/embed/{type}/{id}' class='embed-responsive-item' frameborder='0' allowTransparency='true' allow='encrypted-media'></iframe>";
             }
 
             return s;
@@ -358,6 +431,35 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                 </div>
              */
         }
+
+        #endregion
+
+        #region Pdf
+
+        /// <summary>Determines whether this instance is PDF.</summary>
+        /// <param name="s">The s.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified s is PDF; otherwise, <c>false</c>.</returns>
+        public static bool IsPdf(this string s)
+        {
+            return !string.IsNullOrEmpty(s)
+                   && (s.ToLowerInvariant().EndsWith(".pdf"));
+        }
+
+        /// <summary>Converts the PDF to embed.</summary>
+        /// <param name="s">The s.</param>
+        /// <returns></returns>
+        public static string ConvertPdfToEmbed(this string s)
+        {
+            if (IsPdf(s))
+            {
+                return $"<embed src='https://drive.google.com/viewerng/viewer?embedded=true&url={s}' type='application/pdf'>";
+            }
+
+            return s;
+        }
+
+        #endregion
 
         /// <summary>Gets the URL with protocol.</summary>
         /// <param name="s">The s.</param>

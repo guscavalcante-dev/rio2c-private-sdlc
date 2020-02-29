@@ -4,7 +4,7 @@
 // Created          : 09-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 02-26-2020
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,6 +24,7 @@ namespace PlataformaRio2C.Domain.Entities
         public int CollaboratorTypeId { get; private set; }
         public bool IsApiDisplayEnabled { get; private set; }
         public int? ApiHighlightPosition { get; private set; }
+        public DateTimeOffset? TermsAcceptanceDate { get; private set; }
 
         public virtual AttendeeCollaborator AttendeeCollaborator { get; private set; }
         public virtual CollaboratorType CollaboratorType { get; private set; }

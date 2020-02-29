@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 02-28-2020
 // ***********************************************************************
 // <copyright file="PlataformaRio2CContext.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -124,6 +124,19 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new ConferenceTrackMap());
             modelBuilder.Configurations.Add(new ConferencePillarMap());
             modelBuilder.Configurations.Add(new ConferencePresentationFormatMap());
+
+            // Music
+            modelBuilder.Configurations.Add(new MusicBandMap());
+            modelBuilder.Configurations.Add(new MusicBandTypeMap());
+            modelBuilder.Configurations.Add(new AttendeeMusicBandMap());
+            modelBuilder.Configurations.Add(new AttendeeMusicBandCollaboratorMap());
+            modelBuilder.Configurations.Add(new MusicProjectMap());
+            modelBuilder.Configurations.Add(new MusicGenreMap());
+            modelBuilder.Configurations.Add(new MusicBandGenreMap());
+            modelBuilder.Configurations.Add(new MusicBandTargetAudienceMap());
+            modelBuilder.Configurations.Add(new MusicBandMemberMap());
+            modelBuilder.Configurations.Add(new MusicBandTeamMemberMap());
+            modelBuilder.Configurations.Add(new ReleasedMusicProjectMap());
 
             // Common
             modelBuilder.Configurations.Add(new ActivityMap());

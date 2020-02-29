@@ -2094,4 +2094,104 @@
     <value>Unselect all</value>
     <comment>Deselecionar todos</comment>
   </data>
+  <data name="Commission" xml:space="preserve">
+    <value>Commission</value>
+    <comment>Comissão</comment>
+  </data>
+  <data name="Member" xml:space="preserve">
+    <value>Member</value>
+    <comment>Membro</comment>
+  </data>
+  <data name="Members" xml:space="preserve">
+    <value>Members</value>
+    <comment>Membros</comment>
+  </data>
+  <data name="TermsAcceptance" xml:space="preserve">
+    <value>Terms acceptance</value>
+    <comment>Aceite do regulamento</comment>
+  </data>
+  <data name="End" xml:space="preserve">
+    <value>Finish</value>
+    <comment>Término</comment>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Start</value>
+    <comment>Início</comment>
+  </data>
+  <data name="MusicCommission" xml:space="preserve">
+    <value>Music Commission</value>
+    <comment>Comissão de Música</comment>
+  </data>
+  <data name="MusicProjects" xml:space="preserve">
+    <value>Music Projects</value>
+    <comment>Projetos de Música</comment>
+  </data>
+  <data name="BandType" xml:space="preserve">
+    <value>Participant profile</value>
+    <comment>Tipo de artist</comment>
+  </data>
+  <data name="DisplayOrder" xml:space="preserve">
+    <value>Display order</value>
+    <comment>Ordem de exibição</comment>
+  </data>
+  <data name="MainMusicInfluences" xml:space="preserve">
+    <value>Major musical influences</value>
+    <comment>Principais influências musicais</comment>
+  </data>
+  <data name="Release" xml:space="preserve">
+    <value>Release</value>
+    <comment>Release</comment>
+  </data>
+  <data name="PitchingShow" xml:space="preserve">
+    <value>PitchingShow</value>
+    <comment>PitchingShow</comment>
+  </data>
+  <data name="MusicBandFormationYear" xml:space="preserve">
+    <value>Year band was created</value>
+    <comment>Ano de início da banda</comment>
+  </data>
+  <data name="MusicBandMembers" xml:space="preserve">
+    <value>Members</value>
+    <comment>Integrantes</comment>
+  </data>
+  <data name="MusicBandStaff" xml:space="preserve">
+    <value>Staff</value>
+    <comment>Equipe</comment>
+  </data>
+  <data name="MusicGenre" xml:space="preserve">
+    <value>Musical style</value>
+    <comment>Estilo musical</comment>
+  </data>
+  <data name="MusicInstrumentName" xml:space="preserve">
+    <value>Musical instrument</value>
+    <comment>Instrumento musical</comment>
+  </data>
+  <data name="ParticipantProfile" xml:space="preserve">
+    <value>Participant profile</value>
+    <comment>Tipo de artista</comment>
+  </data>
+  <data name="ProjectsReleased" xml:space="preserve">
+    <value>Projects released</value>
+    <comment>Projetos lançados</comment>
+  </data>
+  <data name="Responsible" xml:space="preserve">
+    <value>Responsible</value>
+    <comment>Responsável</comment>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Year</value>
+    <comment>Ano</comment>
+  </data>
+  <data name="AllRegistrationDocuments" xml:space="preserve">
+    <value>CPF / Vat Number / RG / Passaporte</value>
+    <comment>CPF / CNPJ / RG / Passaporte</comment>
+  </data>
+  <data name="VideoClip" xml:space="preserve">
+    <value>Music video</value>
+    <comment>Vídeo clip</comment>
+  </data>
+  <data name="VideoClipAndMusics" xml:space="preserve">
+    <value>Music video and tracks</value>
+    <comment>Vídeo clip e músicas</comment>
+  </data>
 </root>

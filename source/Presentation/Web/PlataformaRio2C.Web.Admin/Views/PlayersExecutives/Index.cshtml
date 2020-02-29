@@ -40,6 +40,8 @@
     @Scripts.Render("~/bundles/js/collaborators.delete.js")
     @Scripts.Render("~/bundles/js/addresses.form.js")
     <script>
+        var collaboratorTypeName = '@PlataformaRio2C.Domain.Entities.CollaboratorType.ExecutiveAudiovisual.Name';
+
         // Page translations ----------------------------------------------------------------------
         var addToEdition = '@string.Format(Labels.AddToEdition, ViewBag.EditionDto.UrlCode)';
         var removeFromEdition = '@string.Format(Labels.RemoveFromEdition, ViewBag.EditionDto.UrlCode)';

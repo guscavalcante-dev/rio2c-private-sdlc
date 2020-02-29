@@ -1,0 +1,195 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@using Constants = PlataformaRio2C.Domain.Constants;
+@model MusicProjectDto
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var isMusicCommission = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.CommissionMusic) == true;
+}
+<div class="kt-portlet__body">
+    <div class="kt-widget kt-widget--user-profile-3">
+        <div class="kt-widget__top">
+            <div style="float: right;">
+                <a href="@Url.Action("EvaluatioNDetails", "Projects", new { Area = "Music", id = Model.MusicProject?.Uid })" target="_blank">
+                    @if (Model.AttendeeMusicBandDto?.MusicBand?.HasImage() == true)
+                    {
+                        <div class="kt-widget__media">
+                            <img src="@(Model.AttendeeMusicBandDto?.MusicBand.ImageUrl)" alt="image">
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest" style="width: 110px; height: 110px;">
+                            <span>@(Model.AttendeeMusicBandDto?.MusicBand?.GetNameAbbreviation() ?? "-")</span>
+                        </div>
+                    }
+                </a>
+            </div>
+            <div class="kt-widget__content" style="overflow: hidden;">
+                <div class="kt-widget__head">
+                    <span class="kt-widget__username">
+                        @(Model.AttendeeMusicBandDto?.MusicBand?.Name ?? "-")
+                        @*@if (Model.SellerAttendeeOrganizationDto?.AttendeeOrganization.OnboardingFinishDate.HasValue) //Show if approved by any player
+                            {
+                                <i class="flaticon2-correct"></i>
+                            }*@
+                    </span>
+                    @*@if (isMusicCommission && isProjectSubmissionOpen)
+                        {
+                            <div class="kt-widget__action">
+                                <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="ProjectsMainInformationWidget.showUpdateModal();">
+                                    <i class="flaticon2-edit"></i>
+                                </button>
+                            </div>
+                        }*@
+                </div>
+                <div class="kt-widget__subhead pt-0">
+                    @(Model.AttendeeMusicBandDto?.MusicBandType?.Name ?? "-")
+                    @*@if (isMusicCommission && !string.IsNullOrEmpty(Model.AttendeeMusicBandDto.MusicBand?.Organization?.Document))
+                        {
+                            @:- @(Model.SellerAttendeeOrganizationDto?.Organization.Document)
+                        }*@
+                </div>
+                <div class="kt-widget__subhead pt-1 pb-0">
+                    @Labels.MusicGenre:
+                    @if (Model.AttendeeMusicBandDto?.MusicBandGenreDtos?.Any() == true)
+                    {
+                        foreach (var musicBandGenreDto in Model.AttendeeMusicBandDto.MusicBandGenreDtos)
+                        {
+                            <span class="kt-badge kt-badge--inline kt-badge--info">
+                                @(musicBandGenreDto.MusicGenre.Name)
+                                @if (musicBandGenreDto.MusicGenre.HasAdditionalInfo && !string.IsNullOrEmpty(musicBandGenreDto.MusicBandGenre.AdditionalInfo))
+                                {
+                                    @musicBandGenreDto.MusicBandGenre.AdditionalInfo
+                                }
+                            </span>
+                        }
+                    }
+                    else
+                    {
+                        @:-
+                    }
+                </div>
+                <div class="kt-widget__subhead pt-1 pb-0">
+                    @Labels.TargetAudience:
+                    @if (Model.AttendeeMusicBandDto?.MusicBandTargetAudienceDtos?.Any() == true)
+                    {
+                        foreach (var musicBandTargetAudienceDto in Model.AttendeeMusicBandDto.MusicBandTargetAudienceDtos)
+                        {
+                            <span class="kt-badge kt-badge--inline kt-badge--primary">@(musicBandTargetAudienceDto.TargetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
+                        }
+                    }
+                    else
+                    {
+                        @:-
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="kt-widget__bottom">
+            @if (!string.IsNullOrEmpty(Model.MusicProject?.Release))
+            {
+                <div class="kt-widget__item w-100">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.Release</span>
+                        <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Html.Raw(Model.MusicProject?.Release?.Replace("\n", "<br/>") ?? "-"))</span></span>
+                    </div>
+                </div>
+            }
+            <div class="kt-widget__item w-50 w-xs-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.MusicBandFormationYear</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.AttendeeMusicBandDto?.MusicBand?.FormationDate ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-50 w-xs-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.MainMusicInfluences</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.AttendeeMusicBandDto?.MusicBand?.MainMusicInfluences ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-50 w-xs-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">Facebook</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.AttendeeMusicBandDto?.MusicBand?.Facebook ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-50 w-xs-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">Instagram</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.AttendeeMusicBandDto?.MusicBand?.Instagram ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-50 w-xs-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">Twitter</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.AttendeeMusicBandDto?.MusicBand?.Twitter ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-50 w-xs-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">Youtube</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.AttendeeMusicBandDto?.MusicBand?.Youtube ?? "-")</span></span>
+                </div>
+            </div>
+            @*
+        @{
+            var productionPlanDto = Model.GetProductionPlanDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
+        }
+        @if (productionPlanDto != null)
+        {
+            <div class="kt-widget__item w-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.ProductionPlan</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Html.Raw(productionPlanDto.ProjectProductionPlan?.Value?.Replace("\n", "<br/>") ?? "-"))</span></span>
+                </div>
+            </div>
+        }
+        <div class="kt-widget__item w-50">
+            <div class="kt-widget__details">
+                <span class="kt-widget__title">@Labels.ValuePerEpisode</span>
+                <span class="kt-widget__value"><span>@(Model.Project?.ValuePerEpisode?.ToString() ?? "-")</span></span>
+            </div>
+        </div>
+        <div class="kt-widget__item w-50">
+            <div class="kt-widget__details">
+                <span class="kt-widget__title">@Labels.TotalValueOfProject</span>
+                <span class="kt-widget__value"><span>@(Model.Project?.TotalValueOfProject?.ToString() ?? "-")</span></span>
+            </div>
+        </div>
+        <div class="kt-widget__item w-50">
+            <div class="kt-widget__details">
+                <span class="kt-widget__title">@Labels.ValueAlreadyRaised</span>
+                <span class="kt-widget__value"><span>@(Model.Project?.ValueAlreadyRaised?.ToString() ?? "-")</span></span>
+            </div>
+        </div>
+        <div class="kt-widget__item w-50">
+            <div class="kt-widget__details">
+                <span class="kt-widget__title">@Labels.ValueStillNeeded</span>
+                <span class="kt-widget__value"><span>@(Model.Project?.ValueStillNeeded?.ToString() ?? "-")</span></span>
+            </div>
+        </div>
+        @{
+            var additionalInformationDto = Model.GetAdditionalInformationDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
+        }
+        @if (additionalInformationDto != null)
+        {
+            <div class="kt-widget__item w-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.AdditionalInformation</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Html.Raw(additionalInformationDto.ProjectAdditionalInformation?.Value?.Replace("\n", "<br/>") ?? "-"))</span></span>
+                </div>
+            </div>
+        }
+        @if (isMusicCommission)
+        {
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">Pitching</span>
+                    <span class="kt-widget__value"><span>@(Model.Project?.IsPitching == true ? Labels.Yes : Labels.No)</span></span>
+                </div>
+            </div>
+        }*@
+        </div>
+    </div>
+</div>

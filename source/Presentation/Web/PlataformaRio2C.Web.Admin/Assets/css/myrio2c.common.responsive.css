@@ -28,7 +28,6 @@
 @media (min-width: 1200px) {
 }
 
-
 @media (max-width: 1200px) {
     .kt-footer__top .redes a {
         margin-right: 1.5px !important;
@@ -73,7 +72,34 @@
     }
 }
 
+/*
+    Bootstrap sizes
+*/
+
+/* Large (lg) */
+@media (max-width: 1199px) {
+    /* Common */
+    .w-50.w-lg-100 {
+        width: 100% !important;
+    }
+}
+
+/* Medium (md) */
+@media (max-width: 991px) {
+    /* Common */
+    .w-50.w-md-100 {
+        width: 100% !important;
+    }
+}
+
+/* Small (sm) */
 @media (max-width: 767px) {
+    /* Common */
+    .w-50.w-sm-100 {
+        width: 100% !important;
+    }
+
+    /* Footer */
     .kt-footer__top ul li,
     .kt-footer__top ul li a {
         text-align: left;
@@ -122,5 +148,13 @@
         -ms-flex: 0 0 100%;
         flex: 0 0 100%;
         margin-left: 0 !important;
+    }
+}
+
+/* Extra small (xs) */
+@media (max-width: 575px) {
+    /* Common */
+    .w-50.w-xs-100 {
+        width: 100% !important;
     }
 }

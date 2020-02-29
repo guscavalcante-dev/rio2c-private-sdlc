@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-13-2019
+// Last Modified On : 02-26-2020
 // ***********************************************************************
 // <copyright file="IMailerService.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,6 +30,7 @@ namespace PlataformaRio2C.Application.Services
 
         MvcMailMessage SendPlayerWelcomeEmail(SendPlayerWelcomeEmailAsync cmd, Guid sentEmailUid);
         MvcMailMessage SendSpeakerWelcomeEmail(SendSpeakerWelcomeEmailAsync cmd, Guid sentEmailUid);
+        MvcMailMessage SendMusicCommissionWelcomeEmail(SendMusicCommissionWelcomeEmailAsync cmd, Guid sentEmailUid);
 
         #endregion
 
