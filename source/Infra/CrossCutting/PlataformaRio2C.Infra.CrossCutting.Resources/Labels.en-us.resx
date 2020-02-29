@@ -2182,4 +2182,8 @@
     <value>Year</value>
     <comment>Ano</comment>
   </data>
+  <data name="AllRegistrationDocuments" xml:space="preserve">
+    <value>CPF / Vat Number / RG / Passaporte</value>
+    <comment>CPF / CNPJ / RG / Passaporte</comment>
+  </data>
 </root>

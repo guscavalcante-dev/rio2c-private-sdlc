@@ -53,14 +53,14 @@
                     </span>
                 </div>
                 <div class="kt-widget__subhead">
-                    <a><i class="la la-envelope-o"></i>@(attendeeMusicBandCollaboratorDto?.User?.Email ?? "-")</a>
+                    <a class="text-break"><i class="la la-envelope-o"></i>@(attendeeMusicBandCollaboratorDto?.User?.Email ?? "-")</a>
                     @if (!string.IsNullOrEmpty(attendeeMusicBandCollaboratorDto?.Collaborator?.CellPhone))
                     {
-                        <br /><a><i class="la la-mobile-phone"></i>@(attendeeMusicBandCollaboratorDto.Collaborator.CellPhone)</a>
+                        <br /><a class="text-break"><i class="la la-mobile-phone"></i>@(attendeeMusicBandCollaboratorDto.Collaborator.CellPhone)</a>
                     }
                     @if (!string.IsNullOrEmpty(attendeeMusicBandCollaboratorDto?.Collaborator?.PhoneNumber))
                     {
-                        <br /><a><i class="la la-phone"></i>@(attendeeMusicBandCollaboratorDto.Collaborator.PhoneNumber)</a>
+                        <br /><a class="text-break"><i class="la la-phone"></i>@(attendeeMusicBandCollaboratorDto.Collaborator.PhoneNumber)</a>
                     }
                 </div>
                 @*@{
@@ -85,10 +85,16 @@
             </div>
         </div>
         <div class="kt-widget__bottom">
-            <div class="kt-widget__item">
+            <div class="kt-widget__item w-50 w-xs-100">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.FullName</span>
-                    <span class="kt-widget__value"><span>@(attendeeMusicBandCollaboratorDto?.Collaborator?.GetFullName() ?? "-")</span></span>
+                    <span class="kt-widget__value"><span class="text-break">@(attendeeMusicBandCollaboratorDto?.Collaborator?.GetFullName() ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-50 w-xs-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.AllRegistrationDocuments</span>
+                    <span class="kt-widget__value"><span class="text-break">@(attendeeMusicBandCollaboratorDto?.Collaborator?.Document ?? "-")</span></span>
                 </div>
             </div>
         </div>

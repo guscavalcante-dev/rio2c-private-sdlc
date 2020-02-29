@@ -4,7 +4,6 @@
 */
 /* Small devices (landscape phones, 576px and up)*/
 @media (min-width: 576px) {
-    
 }
 
 /* Medium devices (tablets, 768px and up)*/
@@ -19,17 +18,18 @@
     .r2c-login-header__topbar {
         position: absolute !important;
     }
+
     .kt-login__body .kt-iconbox {
         margin-bottom: 30px !important;
     }
 
     .kt-login.kt-login--v1 .kt-login__wrapper .kt-login__body {
-        margin-top:unset !important;
+        margin-top: unset !important;
     }
 
-    .kt-login.kt-login--v1 .kt-login__wrapper .kt-login__body .kt-login__form .kt-login__title{
-        margin-bottom:unset !important;
-    }
+        .kt-login.kt-login--v1 .kt-login__wrapper .kt-login__body .kt-login__form .kt-login__title {
+            margin-bottom: unset !important;
+        }
 }
 
 /* Large devices (desktops, 992px and up)*/
@@ -39,7 +39,6 @@
 /* Extra large devices (large desktops, 1200px and up)*/
 @media (min-width: 1200px) {
 }
-
 
 @media (max-width: 1200px) {
     .kt-footer__top .redes a {
@@ -85,7 +84,34 @@
     }
 }
 
+/*
+    Bootstrap sizes
+*/
+
+/* Large (lg) */
+@media (max-width: 1199px) {
+    /* Common */
+    .w-50.w-lg-100 {
+        width: 100% !important;
+    }
+}
+
+/* Medium (md) */
+@media (max-width: 991px) {
+    /* Common */
+    .w-50.w-md-100 {
+        width: 100% !important;
+    }
+}
+
+/* Small (sm) */
 @media (max-width: 767px) {
+    /* Common */
+    .w-50.w-sm-100 {
+        width: 100% !important;
+    }
+
+    /* Footer */
     .kt-footer__top ul li,
     .kt-footer__top ul li a {
         text-align: left;
@@ -134,5 +160,13 @@
         -ms-flex: 0 0 100%;
         flex: 0 0 100%;
         margin-left: 0 !important;
+    }
+}
+
+/* Extra small (xs) */
+@media (max-width: 575px) {
+    /* Common */
+    .w-50.w-xs-100 {
+        width: 100% !important;
     }
 }

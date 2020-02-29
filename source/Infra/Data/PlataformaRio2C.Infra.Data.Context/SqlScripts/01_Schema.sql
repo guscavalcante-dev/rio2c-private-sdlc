@@ -748,6 +748,7 @@ CREATE TABLE [dbo].[Collaborators](
 	[Uid] [uniqueidentifier] NOT NULL,
 	[FirstName] [varchar](100) NOT NULL,
 	[LastNames] [varchar](200) NULL,
+	[Document] [varchar](100) NULL,
 	[ImageUploadDate] [datetimeoffset](7) NULL,
 	[PhoneNumber] [varchar](50) NULL,
 	[CellPhone] [varchar](50) NULL,

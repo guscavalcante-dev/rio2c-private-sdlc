@@ -20,7 +20,7 @@ BEGIN
 	//     Copyright (c) Softo. All rights reserved.
 	// </copyright>
 	// <summary>
-	//    v0.5 - Add processing date to migration table
+	//    v0.6 - Add Document to Collaborators
 	// </summary>
 	// ***********************************************************************
 	*/
@@ -591,9 +591,9 @@ BEGIN
 			IF (@CollaboratorId IS NULL)
 			BEGIN
 				INSERT INTO [dbo].[Collaborators] 
-					([Id], [Uid], [FirstName], [LastNames], [ImageUploadDate], [PhoneNumber], [CellPhone], [Badge], [PublicEmail], [AddressId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId], [Website], [Linkedin], [Instagram], [Twitter], [Youtube], [BirthDate], [CollaboratorGenderId], [CollaboratorGenderAdditionalInfo], [CollaboratorRoleId], [CollaboratorRoleAdditionalInfo], [CollaboratorIndustryId], [CollaboratorIndustryAdditionalInfo], [HasAnySpecialNeeds], [SpecialNeedsDescription]) 
+					([Id], [Uid], [FirstName], [LastNames], [Document], [ImageUploadDate], [PhoneNumber], [CellPhone], [Badge], [PublicEmail], [AddressId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId], [Website], [Linkedin], [Instagram], [Twitter], [Youtube], [BirthDate], [CollaboratorGenderId], [CollaboratorGenderAdditionalInfo], [CollaboratorRoleId], [CollaboratorRoleAdditionalInfo], [CollaboratorIndustryId], [CollaboratorIndustryAdditionalInfo], [HasAnySpecialNeeds], [SpecialNeedsDescription]) 
 				VALUES
-					(@UserId, NEWID(), @Nome, NULL, NULL, @Telefone, @Celular, NULL, NULL, NULL, 0, GETUTCDATE(), @UserId, GETUTCDATE(), @UserId, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+					(@UserId, NEWID(), @Nome, NULL, @CPFCNPJ, NULL, @Telefone, @Celular, NULL, NULL, NULL, 0, GETUTCDATE(), @UserId, GETUTCDATE(), @UserId, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 				SELECT @CollaboratorId = [Id] FROM dbo.Collaborators WHERE Id = @UserId;
 				IF (@CollaboratorId IS NULL)

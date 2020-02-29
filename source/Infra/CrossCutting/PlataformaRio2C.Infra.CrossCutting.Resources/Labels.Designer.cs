@@ -295,6 +295,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CPF / CNPJ / RG / Passaporte.
+        /// </summary>
+        public static string AllRegistrationDocuments {
+            get {
+                return ResourceManager.GetString("AllRegistrationDocuments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alterar.
         /// </summary>
         public static string Alter {

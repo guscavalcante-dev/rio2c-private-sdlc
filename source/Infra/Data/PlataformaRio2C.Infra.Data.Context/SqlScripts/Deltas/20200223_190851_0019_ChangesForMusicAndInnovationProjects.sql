@@ -3,6 +3,10 @@
 
 --possible values are: "no", "yes, not done" and "yes, done"
 
+ALTER TABLE "dbo"."Collaborators"
+ADD Document  varchar(100)  NULL
+go
+
 ALTER TABLE "dbo"."AttendeeCollaboratorTypes"
 ADD TermsAcceptanceDate  datetimeoffset  NULL
 go
@@ -931,17 +935,12 @@ ALTER TABLE "dbo"."Editions"
 ADD InnovationProjectEvaluationEndDate  datetimeoffset  NULL
 go
 
-update dbo.Editions
-SET 
-	MusicProjectSubmitStartDate = ProjectSubmitStartDate,
-	MusicProjectSubmitEndDate = ProjectSubmitEndDate,
-	MusicProjectEvaluationStartDate = ProjectEvaluationStartDate,
-	MusicProjectEvaluationEndDate = ProjectEvaluationEndDate,
-	InnovationProjectSubmitStartDate = ProjectSubmitStartDate,
-	InnovationProjectSubmitEndDate = ProjectSubmitEndDate,
-	InnovationProjectEvaluationStartDate = ProjectEvaluationStartDate,
-	InnovationProjectEvaluationEndDate = ProjectEvaluationEndDate
-go
+UPDATE [dbo].[Editions] SET [MusicProjectSubmitStartDate] = CAST(N'2018-11-01T03:00:00.0000000+00:00' AS DateTimeOffset), [MusicProjectSubmitEndDate] = CAST(N'2019-01-01T02:59:59.0000000+00:00' AS DateTimeOffset), [MusicProjectEvaluationStartDate] = CAST(N'2019-01-01T03:00:00.0000000+00:00' AS DateTimeOffset), [MusicProjectEvaluationEndDate] = CAST(N'2019-02-16T02:59:59.0000000+00:00' AS DateTimeOffset), [InnovationProjectSubmitStartDate] = CAST(N'2018-11-01T03:00:00.0000000+00:00' AS DateTimeOffset), [InnovationProjectSubmitEndDate] = CAST(N'2019-01-01T02:59:59.0000000+00:00' AS DateTimeOffset), [InnovationProjectEvaluationStartDate] = CAST(N'2019-01-01T03:00:00.0000000+00:00' AS DateTimeOffset), [InnovationProjectEvaluationEndDate] = CAST(N'2019-02-16T02:59:59.0000000+00:00' AS DateTimeOffset) WHERE Uid = '80376662-12f6-44a1-8e71-acbe001d3df0'
+GO
+UPDATE [dbo].[Editions] SET [MusicProjectSubmitStartDate] = CAST(N'2019-11-25T03:00:00.0000000+00:00' AS DateTimeOffset), [MusicProjectSubmitEndDate] = CAST(N'2020-02-15T02:59:59.0000000+00:00' AS DateTimeOffset), [MusicProjectEvaluationStartDate] = CAST(N'2020-01-06T03:00:00.0000000+00:00' AS DateTimeOffset), [MusicProjectEvaluationEndDate] = CAST(N'2020-04-01T02:59:59.0000000+00:00' AS DateTimeOffset), [InnovationProjectSubmitStartDate] = CAST(N'2019-11-25T03:00:00.0000000+00:00' AS DateTimeOffset), [InnovationProjectSubmitEndDate] = CAST(N'2020-02-15T02:59:59.0000000+00:00' AS DateTimeOffset), [InnovationProjectEvaluationStartDate] = CAST(N'2020-01-06T03:00:00.0000000+00:00' AS DateTimeOffset), [InnovationProjectEvaluationEndDate] = CAST(N'2020-04-01T02:59:59.0000000+00:00' AS DateTimeOffset) WHERE Uid = '88fb28b3-a952-4794-8783-88f6a08f78be'
+GO
+UPDATE [dbo].[Editions] SET [MusicProjectSubmitStartDate] = CAST(N'2017-11-01T03:00:00.0000000+00:00' AS DateTimeOffset), [MusicProjectSubmitEndDate] = CAST(N'2018-01-01T02:59:59.0000000+00:00' AS DateTimeOffset), [MusicProjectEvaluationStartDate] = CAST(N'2018-01-01T03:00:00.0000000+00:00' AS DateTimeOffset), [MusicProjectEvaluationEndDate] = CAST(N'2018-02-16T02:59:59.0000000+00:00' AS DateTimeOffset), [InnovationProjectSubmitStartDate] = CAST(N'2017-11-01T03:00:00.0000000+00:00' AS DateTimeOffset), [InnovationProjectSubmitEndDate] = CAST(N'2018-01-01T02:59:59.0000000+00:00' AS DateTimeOffset), [InnovationProjectEvaluationStartDate] = CAST(N'2018-01-01T03:00:00.0000000+00:00' AS DateTimeOffset), [InnovationProjectEvaluationEndDate] = CAST(N'2018-02-16T02:59:59.0000000+00:00' AS DateTimeOffset) WHERE Uid = '96485f4a-56b3-4d03-8847-26d864544fab'
+GO
 
 ALTER TABLE "dbo"."Editions"
 ALTER COLUMN MusicProjectSubmitStartDate  datetimeoffset  NOT NULL

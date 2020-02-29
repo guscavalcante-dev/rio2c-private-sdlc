@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 02-29-2020
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,9 +23,10 @@ namespace PlataformaRio2C.Domain.Entities
     /// <summary>Collaborator</summary>
     public class Collaborator : AggregateRoot
     {
-        public static readonly int FirstNameMinLength = 2;
+        public static readonly int FirstNameMinLength = 1;
         public static readonly int FirstNameMaxLength = 100;
         public static readonly int LastNamesMaxLength = 200;
+        public static readonly int DocumentMaxLength = 100;
         public static readonly int BadgeMaxLength = 50;
         public static readonly int PhoneNumberMaxLength = 50;
         public static readonly int CellPhoneMaxLength = 50;
@@ -39,6 +40,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         public string FirstName { get; private set; }
         public string LastNames { get; private set; }
+        public string Document { get; private set; }
         public string Badge { get; private set; }
         public string PhoneNumber { get; private set; }
         public string CellPhone { get; private set; }
@@ -50,7 +52,6 @@ namespace PlataformaRio2C.Domain.Entities
         public string Youtube { get; private set; }
         public int? AddressId { get; private set; }
         public DateTimeOffset? ImageUploadDate { get; private set; }
-
         public DateTime? BirthDate { get; private set; }
         public int? CollaboratorGenderId  { get; private set; }
         public string CollaboratorGenderAdditionalInfo  { get; private set; }
@@ -1550,6 +1551,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.ValidateFirstName();
             this.ValidateLastNames();
+            this.ValidateDocument();
             this.ValidateBadge();
             this.ValidatePhoneNumber();
             this.ValidateCellPhone();
@@ -1585,17 +1587,6 @@ namespace PlataformaRio2C.Domain.Entities
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, FirstNameMaxLength, FirstNameMinLength), new string[] { "FirstName" }));
             }
         }
-        
-        /// <summary>
-        /// Validates the birth date
-        /// </summary>
-        private void ValidateBirthDate()
-        {
-            if (!BirthDate.HasValue)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.BirthDate), new string[] { "BirthDate" }));
-            }
-        }
 
         /// <summary>Validates the last names.</summary>
         public void ValidateLastNames()
@@ -1603,6 +1594,15 @@ namespace PlataformaRio2C.Domain.Entities
             if (!string.IsNullOrEmpty(this.LastNames) && this.LastNames?.Trim().Length > LastNamesMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.LastNames, LastNamesMaxLength, 1), new string[] { "LastNames" }));
+            }
+        }
+
+        /// <summary>Validates the document.</summary>
+        public void ValidateDocument()
+        {
+            if (!string.IsNullOrEmpty(this.Document) && this.Document?.Trim().Length > DocumentMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.AllRegistrationDocuments, DocumentMaxLength, 1), new string[] { "Document" }));
             }
         }
 
@@ -1684,6 +1684,15 @@ namespace PlataformaRio2C.Domain.Entities
             if (!string.IsNullOrEmpty(this.Youtube) && this.Youtube?.Trim().Length > YoutubeMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "Youtube", YoutubeMaxLength, 1), new string[] { "Youtube" }));
+            }
+        }
+
+        /// <summary>Validates the birth date.</summary>
+        private void ValidateBirthDate()
+        {
+            if (!BirthDate.HasValue)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.BirthDate), new string[] { "BirthDate" }));
             }
         }
 
