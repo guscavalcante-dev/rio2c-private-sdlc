@@ -14,13 +14,13 @@ BEGIN
 	// Created          : 02-26-2020
 	//
 	// Last Modified By : Rafael Dantas Ruiz
-	// Last Modified On : 02-28-2020
+	// Last Modified On : 02-29-2020
 	// ***********************************************************************
 	// <copyright file="MigrateMusicProjects.sql" company="Softo">
 	//     Copyright (c) Softo. All rights reserved.
 	// </copyright>
 	// <summary>
-	//    v0.4 - Fix IsProcessed update for registers without projects 2 and 3
+	//    v0.5 - Add processing date to migration table
 	// </summary>
 	// ***********************************************************************
 	*/
@@ -548,21 +548,21 @@ BEGIN
 			-- Check if the name is null
 			IF (@Nome IS NULL)
 			BEGIN
-				UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '0001', ErrorMessage = 'The field "Nome" is null.' WHERE Id = @id;
+				UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '0001', ErrorMessage = 'The field "Nome" is null.' WHERE Id = @id;
 				GOTO ERROR_NEXTFETCH;
 			END;
 
 			-- Check if the email is null
 			IF (@Email IS NULL)
 			BEGIN
-				UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '0002', ErrorMessage = 'The field "Email" is null.' WHERE Id = @id;
+				UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '0002', ErrorMessage = 'The field "Email" is null.' WHERE Id = @id;
 				GOTO ERROR_NEXTFETCH;
 			END;
 
 			-- Check if projet 1 nome do artista is null
 			IF (@Projeto1NomeDoArtista IS NULL)
 			BEGIN
-				UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '0003', ErrorMessage = 'The registration does not have projects.' WHERE Id = @id;
+				UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '0003', ErrorMessage = 'The registration does not have projects.' WHERE Id = @id;
 				GOTO ERROR_NEXTFETCH;
 			END;
 		END;
@@ -581,7 +581,7 @@ BEGIN
 				SELECT @UserId = [Id] FROM dbo.Users WHERE LOWER([Email]) = LOWER(@Email);
 				IF (@UserId IS NULL)
 				BEGIN
-					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '1001', ErrorMessage = 'The user could not be created.' WHERE Id = @id;
+					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '1001', ErrorMessage = 'The user could not be created.' WHERE Id = @id;
 					GOTO ERROR_NEXTFETCH;
 				END;
 			END;
@@ -598,7 +598,7 @@ BEGIN
 				SELECT @CollaboratorId = [Id] FROM dbo.Collaborators WHERE Id = @UserId;
 				IF (@CollaboratorId IS NULL)
 				BEGIN
-					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '1002', ErrorMessage = 'The collaborator could not be created.' WHERE Id = @id;
+					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '1002', ErrorMessage = 'The collaborator could not be created.' WHERE Id = @id;
 					GOTO ERROR_NEXTFETCH;
 				END;
 			END;
@@ -615,7 +615,7 @@ BEGIN
 				SELECT @AttendeeCollaboratorId = [Id] FROM dbo.AttendeeCollaborators WHERE CollaboratorId = @CollaboratorId AND EditionId = @EditionId;
 				IF (@AttendeeCollaboratorId IS NULL)
 				BEGIN
-					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '1003', ErrorMessage = 'The attendee collaborator could not be created.' WHERE Id = @id;
+					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '1003', ErrorMessage = 'The attendee collaborator could not be created.' WHERE Id = @id;
 					GOTO ERROR_NEXTFETCH;
 				END;
 			END;
@@ -632,7 +632,7 @@ BEGIN
 				SELECT @AttendeeCollaboratorTypeId = [Id] FROM dbo.AttendeeCollaboratorTypes WHERE AttendeeCollaboratorId = @AttendeeCollaboratorId AND CollaboratorTypeId = @CollaboratorTypeId;
 				IF (@AttendeeCollaboratorTypeId IS NULL)
 				BEGIN
-					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '1004', ErrorMessage = 'The attendee collaborator type could not be created.' WHERE Id = @id;
+					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '1004', ErrorMessage = 'The attendee collaborator type could not be created.' WHERE Id = @id;
 					GOTO ERROR_NEXTFETCH;
 				END;
 			END;
@@ -657,7 +657,7 @@ BEGIN
 				SELECT @MusicBandTypeId = Id FROM dbo.MusicBandTypes WHERE Name = ISNULL(@Projeto1TipoDoArtista, 'Banda / Grupo Musical');
 				IF (@MusicBandTypeId IS NULL)
 				BEGIN
-					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2001', ErrorMessage = 'The music band type could not be found.' WHERE Id = @id;
+					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '2001', ErrorMessage = 'The music band type could not be found.' WHERE Id = @id;
 					GOTO ERROR_NEXTFETCH;
 				END;
 
@@ -684,7 +684,7 @@ BEGIN
 				SELECT @MusicBandId = [Id] FROM dbo.MusicBands WHERE Name = @Projeto1NomeDoArtista;
 				IF (@MusicBandId IS NULL)
 				BEGIN
-					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2002', ErrorMessage = 'The music band could not be created.' WHERE Id = @id;
+					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '2002', ErrorMessage = 'The music band could not be created.' WHERE Id = @id;
 					GOTO ERROR_NEXTFETCH;
 				END;
 			END;
@@ -701,7 +701,7 @@ BEGIN
 				SELECT @AttendeeMusicBandId = [Id] FROM dbo.AttendeeMusicBands WHERE MusicBandId = @MusicBandId AND EditionId = @EditionId;
 				IF (@AttendeeMusicBandId IS NULL)
 				BEGIN
-					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2003', ErrorMessage = 'The attendee music band could not be created.' WHERE Id = @id;
+					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '2003', ErrorMessage = 'The attendee music band could not be created.' WHERE Id = @id;
 					GOTO ERROR_NEXTFETCH;
 				END
 			END;
@@ -718,7 +718,7 @@ BEGIN
 				SELECT @AttendeeMusicBandCollaboratorId = [Id] FROM dbo.AttendeeMusicBandCollaborators WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND AttendeeCollaboratorId = @AttendeeCollaboratorId;
 				IF (@AttendeeMusicBandCollaboratorId IS NULL)
 				BEGIN
-					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2004', ErrorMessage = 'The attendee music band collaborator could not be created.' WHERE Id = @id;
+					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '2004', ErrorMessage = 'The attendee music band collaborator could not be created.' WHERE Id = @id;
 					GOTO ERROR_NEXTFETCH;
 				END
 			END;
@@ -744,7 +744,7 @@ BEGIN
 				SELECT @MusicProjectId = [Id] FROM dbo.MusicProjects WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND Music1Url = @Projeto1Musica1 AND Music2Url = @Projeto1Musica2;
 				IF (@MusicProjectId IS NULL)
 				BEGIN
-					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2005', ErrorMessage = 'The music project could not be created.' WHERE Id = @id;
+					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '2005', ErrorMessage = 'The music project could not be created.' WHERE Id = @id;
 					GOTO ERROR_NEXTFETCH;
 				END
 			END;
@@ -784,7 +784,7 @@ BEGIN
 								SELECT @MusicBandGenreId = [Id] FROM dbo.MusicBandGenres WHERE MusicBandId = @MusicBandId AND MusicGenreId = @MusicGenreId;
 								IF (@MusicBandGenreId IS NULL)
 								BEGIN
-									UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2006', ErrorMessage = 'The music band genre could not be created.' WHERE Id = @id;
+									UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '2006', ErrorMessage = 'The music band genre could not be created.' WHERE Id = @id;
 									GOTO ERROR_NEXTFETCH;
 								END
 							END;
@@ -821,7 +821,7 @@ BEGIN
 						SELECT @MusicBandTargetAudienceId = [Id] FROM dbo.MusicBandTargetAudiences WHERE MusicBandId = @MusicBandId AND TargetAudienceId = @TargetAudienceId;
 						IF (@MusicBandTargetAudienceId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2007', ErrorMessage = 'The music band target audience could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '2007', ErrorMessage = 'The music band target audience could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 
@@ -847,7 +847,7 @@ BEGIN
 						SELECT @ReleasedMusicProjectId = [Id] FROM dbo.ReleasedMusicProjects WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Release1Nome AND [Year] = @Projeto1Release1Ano;
 						IF (@ReleasedMusicProjectId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2008', ErrorMessage = 'The release 1 music project could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '2008', ErrorMessage = 'The release 1 music project could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -869,7 +869,7 @@ BEGIN
 						SELECT @ReleasedMusicProjectId = [Id] FROM dbo.ReleasedMusicProjects WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Release2Nome AND [Year] = @Projeto1Release2Ano;
 						IF (@ReleasedMusicProjectId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2009', ErrorMessage = 'The release 2 music project could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '2009', ErrorMessage = 'The release 2 music project could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -891,7 +891,7 @@ BEGIN
 						SELECT @ReleasedMusicProjectId = [Id] FROM dbo.ReleasedMusicProjects WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Release3Nome AND [Year] = @Projeto1Release3Ano;
 						IF (@ReleasedMusicProjectId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2010', ErrorMessage = 'The release 3 music project could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '2010', ErrorMessage = 'The release 3 music project could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -913,7 +913,7 @@ BEGIN
 						SELECT @ReleasedMusicProjectId = [Id] FROM dbo.ReleasedMusicProjects WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Release4Nome AND [Year] = @Projeto1Release4Ano;
 						IF (@ReleasedMusicProjectId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2011', ErrorMessage = 'The release 4 music project could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '2011', ErrorMessage = 'The release 4 music project could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -935,7 +935,7 @@ BEGIN
 						SELECT @ReleasedMusicProjectId = [Id] FROM dbo.ReleasedMusicProjects WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Release5Nome AND [Year] = @Projeto1Release5Ano;
 						IF (@ReleasedMusicProjectId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2012', ErrorMessage = 'The release 5 music project could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '2012', ErrorMessage = 'The release 5 music project could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -960,7 +960,7 @@ BEGIN
 						SELECT @MusicBandMemberId = [Id] FROM dbo.MusicBandMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Integrante1Nome AND [MusicInstrumentName] = @Projeto1Integrante1Instrumento;
 						IF (@MusicBandMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2013', ErrorMessage = 'The music band member 1 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '2013', ErrorMessage = 'The music band member 1 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -982,7 +982,7 @@ BEGIN
 						SELECT @MusicBandMemberId = [Id] FROM dbo.MusicBandMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Integrante2Nome AND [MusicInstrumentName] = @Projeto1Integrante2Instrumento;
 						IF (@MusicBandMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2014', ErrorMessage = 'The music band member 2 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '2014', ErrorMessage = 'The music band member 2 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -1004,7 +1004,7 @@ BEGIN
 						SELECT @MusicBandMemberId = [Id] FROM dbo.MusicBandMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Integrante3Nome AND [MusicInstrumentName] = @Projeto1Integrante3Instrumento;
 						IF (@MusicBandMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2015', ErrorMessage = 'The music band member 3 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '2015', ErrorMessage = 'The music band member 3 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -1026,7 +1026,7 @@ BEGIN
 						SELECT @MusicBandMemberId = [Id] FROM dbo.MusicBandMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Integrante4Nome AND [MusicInstrumentName] = @Projeto1Integrante4Instrumento;
 						IF (@MusicBandMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2016', ErrorMessage = 'The music band member 4 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '2016', ErrorMessage = 'The music band member 4 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -1048,7 +1048,7 @@ BEGIN
 						SELECT @MusicBandMemberId = [Id] FROM dbo.MusicBandMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Integrante5Nome AND [MusicInstrumentName] = @Projeto1Integrante5Instrumento;
 						IF (@MusicBandMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2017', ErrorMessage = 'The music band member 5 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '2017', ErrorMessage = 'The music band member 5 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -1073,7 +1073,7 @@ BEGIN
 						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Time1Nome AND [Role] = @Projeto1Time1Funcao;
 						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2018', ErrorMessage = 'The music band team member 1 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '2018', ErrorMessage = 'The music band team member 1 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -1095,7 +1095,7 @@ BEGIN
 						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Time2Nome AND [Role] = @Projeto1Time2Funcao;
 						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2019', ErrorMessage = 'The music band team member member 2 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '2019', ErrorMessage = 'The music band team member member 2 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -1117,7 +1117,7 @@ BEGIN
 						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Time3Nome AND [Role] = @Projeto1Time3Funcao;
 						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2020', ErrorMessage = 'The music band team member 3 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '2020', ErrorMessage = 'The music band team member 3 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -1139,7 +1139,7 @@ BEGIN
 						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Time4Nome AND [Role] = @Projeto1Time4Funcao;
 						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2021', ErrorMessage = 'The music band team member 4 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '2021', ErrorMessage = 'The music band team member 4 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -1161,7 +1161,7 @@ BEGIN
 						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto1Time5Nome AND [Role] = @Projeto1Time5Funcao;
 						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '2022', ErrorMessage = 'The music band team member 5 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '2022', ErrorMessage = 'The music band team member 5 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -1193,7 +1193,7 @@ BEGIN
 				SELECT @MusicBandTypeId = Id FROM dbo.MusicBandTypes WHERE Name = ISNULL(@Projeto2TipoDoArtista, 'Banda / Grupo Musical');
 				IF (@MusicBandTypeId IS NULL)
 				BEGIN
-					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3001', ErrorMessage = 'The music band type could not be found.' WHERE Id = @id;
+					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '3001', ErrorMessage = 'The music band type could not be found.' WHERE Id = @id;
 					GOTO ERROR_NEXTFETCH;
 				END;
 
@@ -1220,7 +1220,7 @@ BEGIN
 				SELECT @MusicBandId = [Id] FROM dbo.MusicBands WHERE Name = @Projeto2NomeDoArtista;
 				IF (@MusicBandId IS NULL)
 				BEGIN
-					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3002', ErrorMessage = 'The music band could not be created.' WHERE Id = @id;
+					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '3002', ErrorMessage = 'The music band could not be created.' WHERE Id = @id;
 					GOTO ERROR_NEXTFETCH;
 				END;
 			END;
@@ -1237,7 +1237,7 @@ BEGIN
 				SELECT @AttendeeMusicBandId = [Id] FROM dbo.AttendeeMusicBands WHERE MusicBandId = @MusicBandId AND EditionId = @EditionId;
 				IF (@AttendeeMusicBandId IS NULL)
 				BEGIN
-					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3003', ErrorMessage = 'The attendee music band could not be created.' WHERE Id = @id;
+					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '3003', ErrorMessage = 'The attendee music band could not be created.' WHERE Id = @id;
 					GOTO ERROR_NEXTFETCH;
 				END
 			END;
@@ -1254,7 +1254,7 @@ BEGIN
 				SELECT @AttendeeMusicBandCollaboratorId = [Id] FROM dbo.AttendeeMusicBandCollaborators WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND AttendeeCollaboratorId = @AttendeeCollaboratorId;
 				IF (@AttendeeMusicBandCollaboratorId IS NULL)
 				BEGIN
-					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3004', ErrorMessage = 'The attendee music band collaborator could not be created.' WHERE Id = @id;
+					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '3004', ErrorMessage = 'The attendee music band collaborator could not be created.' WHERE Id = @id;
 					GOTO ERROR_NEXTFETCH;
 				END
 			END;
@@ -1280,7 +1280,7 @@ BEGIN
 				SELECT @MusicProjectId = [Id] FROM dbo.MusicProjects WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND Music1Url = @Projeto2Musica1 AND Music2Url = @Projeto2Musica2;
 				IF (@MusicProjectId IS NULL)
 				BEGIN
-					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3005', ErrorMessage = 'The music project could not be created.' WHERE Id = @id;
+					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '3005', ErrorMessage = 'The music project could not be created.' WHERE Id = @id;
 					GOTO ERROR_NEXTFETCH;
 				END
 			END;
@@ -1320,7 +1320,7 @@ BEGIN
 								SELECT @MusicBandGenreId = [Id] FROM dbo.MusicBandGenres WHERE MusicBandId = @MusicBandId AND MusicGenreId = @MusicGenreId;
 								IF (@MusicBandGenreId IS NULL)
 								BEGIN
-									UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3006', ErrorMessage = 'The music band genre could not be created.' WHERE Id = @id;
+									UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '3006', ErrorMessage = 'The music band genre could not be created.' WHERE Id = @id;
 									GOTO ERROR_NEXTFETCH;
 								END
 							END;
@@ -1357,7 +1357,7 @@ BEGIN
 						SELECT @MusicBandTargetAudienceId = [Id] FROM dbo.MusicBandTargetAudiences WHERE MusicBandId = @MusicBandId AND TargetAudienceId = @TargetAudienceId;
 						IF (@MusicBandTargetAudienceId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3007', ErrorMessage = 'The music band target audience could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '3007', ErrorMessage = 'The music band target audience could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 
@@ -1383,7 +1383,7 @@ BEGIN
 						SELECT @ReleasedMusicProjectId = [Id] FROM dbo.ReleasedMusicProjects WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Release1Nome AND [Year] = @Projeto2Release1Ano;
 						IF (@ReleasedMusicProjectId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3008', ErrorMessage = 'The release 1 music project could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '3008', ErrorMessage = 'The release 1 music project could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -1405,7 +1405,7 @@ BEGIN
 						SELECT @ReleasedMusicProjectId = [Id] FROM dbo.ReleasedMusicProjects WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Release2Nome AND [Year] = @Projeto2Release2Ano;
 						IF (@ReleasedMusicProjectId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3009', ErrorMessage = 'The release 2 music project could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '3009', ErrorMessage = 'The release 2 music project could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -1427,7 +1427,7 @@ BEGIN
 						SELECT @ReleasedMusicProjectId = [Id] FROM dbo.ReleasedMusicProjects WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Release3Nome AND [Year] = @Projeto2Release3Ano;
 						IF (@ReleasedMusicProjectId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3010', ErrorMessage = 'The release 3 music project could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '3010', ErrorMessage = 'The release 3 music project could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -1449,7 +1449,7 @@ BEGIN
 						SELECT @ReleasedMusicProjectId = [Id] FROM dbo.ReleasedMusicProjects WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Release4Nome AND [Year] = @Projeto2Release4Ano;
 						IF (@ReleasedMusicProjectId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3011', ErrorMessage = 'The release 4 music project could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '3011', ErrorMessage = 'The release 4 music project could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -1471,7 +1471,7 @@ BEGIN
 						SELECT @ReleasedMusicProjectId = [Id] FROM dbo.ReleasedMusicProjects WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Release5Nome AND [Year] = @Projeto2Release5Ano;
 						IF (@ReleasedMusicProjectId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3012', ErrorMessage = 'The release 5 music project could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '3012', ErrorMessage = 'The release 5 music project could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -1496,7 +1496,7 @@ BEGIN
 						SELECT @MusicBandMemberId = [Id] FROM dbo.MusicBandMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Integrante1Nome AND [MusicInstrumentName] = @Projeto2Integrante1Instrumento;
 						IF (@MusicBandMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3013', ErrorMessage = 'The music band member 1 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '3013', ErrorMessage = 'The music band member 1 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -1518,7 +1518,7 @@ BEGIN
 						SELECT @MusicBandMemberId = [Id] FROM dbo.MusicBandMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Integrante2Nome AND [MusicInstrumentName] = @Projeto2Integrante2Instrumento;
 						IF (@MusicBandMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3014', ErrorMessage = 'The music band member 2 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '3014', ErrorMessage = 'The music band member 2 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -1540,7 +1540,7 @@ BEGIN
 						SELECT @MusicBandMemberId = [Id] FROM dbo.MusicBandMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Integrante3Nome AND [MusicInstrumentName] = @Projeto2Integrante3Instrumento;
 						IF (@MusicBandMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3015', ErrorMessage = 'The music band member 3 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '3015', ErrorMessage = 'The music band member 3 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -1562,7 +1562,7 @@ BEGIN
 						SELECT @MusicBandMemberId = [Id] FROM dbo.MusicBandMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Integrante4Nome AND [MusicInstrumentName] = @Projeto2Integrante4Instrumento;
 						IF (@MusicBandMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3016', ErrorMessage = 'The music band member 4 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '3016', ErrorMessage = 'The music band member 4 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -1584,7 +1584,7 @@ BEGIN
 						SELECT @MusicBandMemberId = [Id] FROM dbo.MusicBandMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Integrante5Nome AND [MusicInstrumentName] = @Projeto2Integrante5Instrumento;
 						IF (@MusicBandMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3017', ErrorMessage = 'The music band member 5 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '3017', ErrorMessage = 'The music band member 5 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -1609,7 +1609,7 @@ BEGIN
 						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Time1Nome AND [Role] = @Projeto2Time1Funcao;
 						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3018', ErrorMessage = 'The music band team member 1 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '3018', ErrorMessage = 'The music band team member 1 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -1631,7 +1631,7 @@ BEGIN
 						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Time2Nome AND [Role] = @Projeto2Time2Funcao;
 						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3019', ErrorMessage = 'The music band team member 2 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '3019', ErrorMessage = 'The music band team member 2 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -1653,7 +1653,7 @@ BEGIN
 						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Time3Nome AND [Role] = @Projeto2Time3Funcao;
 						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3020', ErrorMessage = 'The music band team member 3 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '3020', ErrorMessage = 'The music band team member 3 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -1675,7 +1675,7 @@ BEGIN
 						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Time4Nome AND [Role] = @Projeto2Time4Funcao;
 						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3021', ErrorMessage = 'The music band team member 4 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '3021', ErrorMessage = 'The music band team member 4 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -1697,7 +1697,7 @@ BEGIN
 						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto2Time5Nome AND [Role] = @Projeto2Time5Funcao;
 						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '3022', ErrorMessage = 'The music band team member 5 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '3022', ErrorMessage = 'The music band team member 5 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -1729,7 +1729,7 @@ BEGIN
 				SELECT @MusicBandTypeId = Id FROM dbo.MusicBandTypes WHERE Name = ISNULL(@Projeto3TipoDoArtista, 'Banda / Grupo Musical');
 				IF (@MusicBandTypeId IS NULL)
 				BEGIN
-					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4001', ErrorMessage = 'The music band type could not be found.' WHERE Id = @id;
+					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '4001', ErrorMessage = 'The music band type could not be found.' WHERE Id = @id;
 					GOTO ERROR_NEXTFETCH;
 				END;
 
@@ -1756,7 +1756,7 @@ BEGIN
 				SELECT @MusicBandId = [Id] FROM dbo.MusicBands WHERE Name = @Projeto3NomeDoArtista;
 				IF (@MusicBandId IS NULL)
 				BEGIN
-					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4002', ErrorMessage = 'The music band could not be created.' WHERE Id = @id;
+					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '4002', ErrorMessage = 'The music band could not be created.' WHERE Id = @id;
 					GOTO ERROR_NEXTFETCH;
 				END;
 			END;
@@ -1773,7 +1773,7 @@ BEGIN
 				SELECT @AttendeeMusicBandId = [Id] FROM dbo.AttendeeMusicBands WHERE MusicBandId = @MusicBandId AND EditionId = @EditionId;
 				IF (@AttendeeMusicBandId IS NULL)
 				BEGIN
-					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4003', ErrorMessage = 'The attendee music band could not be created.' WHERE Id = @id;
+					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '4003', ErrorMessage = 'The attendee music band could not be created.' WHERE Id = @id;
 					GOTO ERROR_NEXTFETCH;
 				END
 			END;
@@ -1790,7 +1790,7 @@ BEGIN
 				SELECT @AttendeeMusicBandCollaboratorId = [Id] FROM dbo.AttendeeMusicBandCollaborators WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND AttendeeCollaboratorId = @AttendeeCollaboratorId;
 				IF (@AttendeeMusicBandCollaboratorId IS NULL)
 				BEGIN
-					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4004', ErrorMessage = 'The attendee music band collaborator could not be created.' WHERE Id = @id;
+					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '4004', ErrorMessage = 'The attendee music band collaborator could not be created.' WHERE Id = @id;
 					GOTO ERROR_NEXTFETCH;
 				END
 			END;
@@ -1816,7 +1816,7 @@ BEGIN
 				SELECT @MusicProjectId = [Id] FROM dbo.MusicProjects WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND Music1Url = @Projeto3Musica1 AND Music2Url = @Projeto3Musica2;
 				IF (@MusicProjectId IS NULL)
 				BEGIN
-					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4005', ErrorMessage = 'The music project could not be created.' WHERE Id = @id;
+					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '4005', ErrorMessage = 'The music project could not be created.' WHERE Id = @id;
 					GOTO ERROR_NEXTFETCH;
 				END
 			END;
@@ -1856,7 +1856,7 @@ BEGIN
 								SELECT @MusicBandGenreId = [Id] FROM dbo.MusicBandGenres WHERE MusicBandId = @MusicBandId AND MusicGenreId = @MusicGenreId;
 								IF (@MusicBandGenreId IS NULL)
 								BEGIN
-									UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4006', ErrorMessage = 'The music band genre could not be created.' WHERE Id = @id;
+									UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '4006', ErrorMessage = 'The music band genre could not be created.' WHERE Id = @id;
 									GOTO ERROR_NEXTFETCH;
 								END
 							END;
@@ -1893,7 +1893,7 @@ BEGIN
 						SELECT @MusicBandTargetAudienceId = [Id] FROM dbo.MusicBandTargetAudiences WHERE MusicBandId = @MusicBandId AND TargetAudienceId = @TargetAudienceId;
 						IF (@MusicBandTargetAudienceId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4007', ErrorMessage = 'The music band target audience could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '4007', ErrorMessage = 'The music band target audience could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 
@@ -1919,7 +1919,7 @@ BEGIN
 						SELECT @ReleasedMusicProjectId = [Id] FROM dbo.ReleasedMusicProjects WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Release1Nome AND [Year] = @Projeto3Release1Ano;
 						IF (@ReleasedMusicProjectId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4008', ErrorMessage = 'The release 1 music project could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '4008', ErrorMessage = 'The release 1 music project could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -1941,7 +1941,7 @@ BEGIN
 						SELECT @ReleasedMusicProjectId = [Id] FROM dbo.ReleasedMusicProjects WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Release2Nome AND [Year] = @Projeto3Release2Ano;
 						IF (@ReleasedMusicProjectId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4009', ErrorMessage = 'The release 2 music project could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '4009', ErrorMessage = 'The release 2 music project could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -1963,7 +1963,7 @@ BEGIN
 						SELECT @ReleasedMusicProjectId = [Id] FROM dbo.ReleasedMusicProjects WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Release3Nome AND [Year] = @Projeto3Release3Ano;
 						IF (@ReleasedMusicProjectId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4010', ErrorMessage = 'The release 3 music project could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '4010', ErrorMessage = 'The release 3 music project could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -1985,7 +1985,7 @@ BEGIN
 						SELECT @ReleasedMusicProjectId = [Id] FROM dbo.ReleasedMusicProjects WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Release4Nome AND [Year] = @Projeto3Release4Ano;
 						IF (@ReleasedMusicProjectId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4011', ErrorMessage = 'The release 4 music project could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '4011', ErrorMessage = 'The release 4 music project could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -2007,7 +2007,7 @@ BEGIN
 						SELECT @ReleasedMusicProjectId = [Id] FROM dbo.ReleasedMusicProjects WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Release5Nome AND [Year] = @Projeto3Release5Ano;
 						IF (@ReleasedMusicProjectId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4012', ErrorMessage = 'The release 5 music project could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '4012', ErrorMessage = 'The release 5 music project could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -2032,7 +2032,7 @@ BEGIN
 						SELECT @MusicBandMemberId = [Id] FROM dbo.MusicBandMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Integrante1Nome AND [MusicInstrumentName] = @Projeto3Integrante1Instrumento;
 						IF (@MusicBandMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4013', ErrorMessage = 'The music band member 1 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '4013', ErrorMessage = 'The music band member 1 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -2054,7 +2054,7 @@ BEGIN
 						SELECT @MusicBandMemberId = [Id] FROM dbo.MusicBandMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Integrante2Nome AND [MusicInstrumentName] = @Projeto3Integrante2Instrumento;
 						IF (@MusicBandMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4014', ErrorMessage = 'The music band member 2 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '4014', ErrorMessage = 'The music band member 2 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -2076,7 +2076,7 @@ BEGIN
 						SELECT @MusicBandMemberId = [Id] FROM dbo.MusicBandMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Integrante3Nome AND [MusicInstrumentName] = @Projeto3Integrante3Instrumento;
 						IF (@MusicBandMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4015', ErrorMessage = 'The music band member 3 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '4015', ErrorMessage = 'The music band member 3 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -2098,7 +2098,7 @@ BEGIN
 						SELECT @MusicBandMemberId = [Id] FROM dbo.MusicBandMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Integrante4Nome AND [MusicInstrumentName] = @Projeto3Integrante4Instrumento;
 						IF (@MusicBandMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4016', ErrorMessage = 'The music band member 4 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '4016', ErrorMessage = 'The music band member 4 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -2120,7 +2120,7 @@ BEGIN
 						SELECT @MusicBandMemberId = [Id] FROM dbo.MusicBandMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Integrante5Nome AND [MusicInstrumentName] = @Projeto3Integrante5Instrumento;
 						IF (@MusicBandMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4017', ErrorMessage = 'The music band member 5 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '4017', ErrorMessage = 'The music band member 5 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -2145,7 +2145,7 @@ BEGIN
 						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Time1Nome AND [Role] = @Projeto3Time1Funcao;
 						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4018', ErrorMessage = 'The music band team member 1 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '4018', ErrorMessage = 'The music band team member 1 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -2167,7 +2167,7 @@ BEGIN
 						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Time2Nome AND [Role] = @Projeto3Time2Funcao;
 						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4019', ErrorMessage = 'The music band team member 2 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '4019', ErrorMessage = 'The music band team member 2 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -2189,7 +2189,7 @@ BEGIN
 						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Time3Nome AND [Role] = @Projeto3Time3Funcao;
 						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4020', ErrorMessage = 'The music band team member 3 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '4020', ErrorMessage = 'The music band team member 3 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -2211,7 +2211,7 @@ BEGIN
 						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Time4Nome AND [Role] = @Projeto3Time4Funcao;
 						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4021', ErrorMessage = 'The music band team member 4 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '4021', ErrorMessage = 'The music band team member 4 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -2233,7 +2233,7 @@ BEGIN
 						SELECT @MusicBandTeamMemberId = [Id] FROM dbo.MusicBandTeamMembers WHERE [MusicBandId] = @MusicBandId AND [Name] = @Projeto3Time5Nome AND [Role] = @Projeto3Time5Funcao;
 						IF (@MusicBandTeamMemberId IS NULL)
 						BEGIN
-							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ErrorCode = '4022', ErrorMessage = 'The music band team member 5 could not be created.' WHERE Id = @id;
+							UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '4022', ErrorMessage = 'The music band team member 5 could not be created.' WHERE Id = @id;
 							GOTO ERROR_NEXTFETCH;
 						END
 					END;
@@ -2244,7 +2244,7 @@ BEGIN
 		-- Update processing properties -----------------------------------------------------------------
 		SUCCESS_NEXTFETCH:
 
-		UPDATE dbo.pitching_show_submissions SET IsProcessed = 1 WHERE Id = @id;
+		UPDATE dbo.pitching_show_submissions SET IsProcessed = 1, ProcessingDate = GETUTCDATE() WHERE Id = @id;
 
 		ERROR_NEXTFETCH:
 

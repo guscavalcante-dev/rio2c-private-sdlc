@@ -174,6 +174,7 @@ CREATE TABLE [dbo].[pitching_show_submissions](
 	[Projeto 3 - Time 5 - Nome] [varchar](max) NULL,
 	[Projeto 3 - Time 5 - Funcao] [varchar](max) NULL,
 	[IsProcessed] [bit] NULL,
+	[ProcessingDate] [datetimeoffset] NULL,
 	[ErrorCode] [varchar](5) NULL,
 	[ErrorMessage] [varchar](300) NULL
 )
