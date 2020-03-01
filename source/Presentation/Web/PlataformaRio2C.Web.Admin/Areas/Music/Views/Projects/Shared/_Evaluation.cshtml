@@ -31,7 +31,7 @@
                 <small>@Labels.By</small> @(musicProjectEvaluationDto.EvaluationCollaboratorUser.Name ?? musicProjectEvaluationDto.EvaluationCollaborator.GetDisplayName())
                 @if (musicProjectEvaluationDto.EvaluationDate.HasValue)
                 {
-                    <br /><small>@Labels.At @(musicProjectEvaluationDto.EvaluationDate?.ToUserTimeZone())</small>
+                    <br/><small>@Labels.At @(musicProjectEvaluationDto.EvaluationDate?.ToUserTimeZone())</small>
                 }
             </span>
         }

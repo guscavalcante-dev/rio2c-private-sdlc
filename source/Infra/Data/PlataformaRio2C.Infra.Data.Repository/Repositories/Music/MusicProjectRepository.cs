@@ -286,6 +286,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     },
                                     MusicProjectEvaluationDto = new MusicProjectEvaluationDto
                                     {
+                                        EvaluationCollaboratorUser = mp.EvaluationUser,
                                         EvaluationCollaborator = mp.EvaluationUser.Collaborator,
                                         ProjectEvaluationStatus = mp.ProjectEvaluationStatus,
                                         ProjectEvaluationRefuseReason = mp.ProjectEvaluationRefuseReason,
@@ -333,6 +334,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     },
                                     MusicProjectEvaluationDto = new MusicProjectEvaluationDto
                                     {
+                                        EvaluationCollaboratorUser = mp.EvaluationUser,
                                         EvaluationCollaborator = mp.EvaluationUser.Collaborator,
                                         ProjectEvaluationStatus = mp.ProjectEvaluationStatus,
                                         ProjectEvaluationRefuseReason = mp.ProjectEvaluationRefuseReason,
@@ -523,6 +525,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     MusicProject = mp,
                                     MusicProjectEvaluationDto = new MusicProjectEvaluationDto
                                     {
+                                        EvaluationCollaboratorUser = mp.EvaluationUser,
                                         EvaluationCollaborator = mp.EvaluationUser.Collaborator,
                                         ProjectEvaluationStatus = mp.ProjectEvaluationStatus,
                                         ProjectEvaluationRefuseReason = mp.ProjectEvaluationRefuseReason,

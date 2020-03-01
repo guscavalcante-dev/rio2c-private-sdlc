@@ -4,7 +4,7 @@
 // Created          : 02-28-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-28-2020
+// Last Modified On : 03-01-2020
 // ***********************************************************************
 // <copyright file="MusicProjectEvaluationDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,6 +19,7 @@ namespace PlataformaRio2C.Domain.Dtos
     /// <summary>MusicProjectEvaluationDto</summary>
     public class MusicProjectEvaluationDto
     {
+        public User EvaluationCollaboratorUser { get; set; }
         public Collaborator EvaluationCollaborator { get; set; }
         public ProjectEvaluationStatus ProjectEvaluationStatus { get; set; }
         public ProjectEvaluationRefuseReason ProjectEvaluationRefuseReason { get; set; }

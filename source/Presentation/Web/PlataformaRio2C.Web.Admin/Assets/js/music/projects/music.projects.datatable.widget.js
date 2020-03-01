@@ -263,6 +263,15 @@ var MusicProjectsDataTableWidget = function () {
         table.ajax.reload();
     };
 
+    // Details ------------------------------------------------------------------------------------
+    var showDetails = function (musicProjectUid) {
+	    if (MyRio2cCommon.isNullOrEmpty(musicProjectUid)) {
+		    return;
+	    }
+
+	    window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/Details/' + musicProjectUid);
+    };
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
@@ -270,6 +279,9 @@ var MusicProjectsDataTableWidget = function () {
         },
         refreshData: function () {
             refreshData();
+        },
+        showDetails: function (musicProjectUid) {
+	        showDetails(musicProjectUid);
         }
     };
 }();

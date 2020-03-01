@@ -41,8 +41,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         private readonly IMusicProjectRepository musicProjectRepo;
         private readonly IMusicGenreRepository musicGenreRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
-        private readonly IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo;
         private readonly IProjectEvaluationStatusRepository evaluationStatusRepo;
+        private readonly IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo;
 
         /// <summary>Initializes a new instance of the <see cref="ProjectsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -50,23 +50,23 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         /// <param name="musicProjectRepository">The music project repository.</param>
         /// <param name="musicGenreRepository">The music genre repository.</param>
         /// <param name="targetAudienceRepository">The target audience repository.</param>
-        /// <param name="projectEvaluationRefuseReasonRepo">The project evaluation refuse reason repo.</param>
         /// <param name="evaluationStatusRepository">The evaluation status repository.</param>
+        /// <param name="projectEvaluationRefuseReasonRepository">The project evaluation refuse reason repository.</param>
         public ProjectsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
             IMusicProjectRepository musicProjectRepository,
             IMusicGenreRepository musicGenreRepository,
             ITargetAudienceRepository targetAudienceRepository,
-            IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo,
-            IProjectEvaluationStatusRepository evaluationStatusRepository)
+            IProjectEvaluationStatusRepository evaluationStatusRepository,
+            IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepository)
             : base(commandBus, identityController)
         {
             this.musicProjectRepo = musicProjectRepository;
             this.musicGenreRepo = musicGenreRepository;
             this.targetAudienceRepo = targetAudienceRepository;
-            this.projectEvaluationRefuseReasonRepo = projectEvaluationRefuseReasonRepo;
             this.evaluationStatusRepo = evaluationStatusRepository;
+            this.projectEvaluationRefuseReasonRepo = projectEvaluationRefuseReasonRepository;
         }
 
         #region Schedule
@@ -455,7 +455,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
         #endregion
 
-        #region Evaluation
+        #region Evaluation Widget
 
         /// <summary>Shows the evaluation widget.</summary>
         /// <param name="projectUid">The project uid.</param>
