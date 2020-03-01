@@ -443,6 +443,7 @@
     <Content Include="Assets\js\music\projects\music.projects.teammembers.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.totalcount.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.videoandmusic.widget.js" />
+    <Content Include="Assets\js\music\projects\music.projects.delete.js" />
     <Content Include="Assets\js\reports\reports.audiovisual.subscriptions.widget.js" />
     <Content Include="Assets\js\rooms\rooms.conferences.widget.js" />
     <Content Include="Assets\js\rooms\rooms.maininformation.widget.js" />

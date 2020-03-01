@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-29-2020
+// Last Modified On : 03-01-2020
 // ***********************************************************************
 // <copyright file="MusicProject.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -133,6 +133,28 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
             this.UpdateDate = DateTime.UtcNow;
         }
+
+        /// <summary>Deletes the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(int userId)
+        {
+            this.IsDeleted = true;
+            //this.DeleteAttendeeMusicBand(userId); // Must be after of this.IsDeleted = true // Don't want to delete other things than the project for now
+
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
+        #region Attendee Music Band
+
+        /// <summary>Deletes the attendee music band.</summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteAttendeeMusicBand(int userId)
+        {
+            this.AttendeeMusicBand.Delete(userId);
+        }
+
+        #endregion
 
         #region Validations
 

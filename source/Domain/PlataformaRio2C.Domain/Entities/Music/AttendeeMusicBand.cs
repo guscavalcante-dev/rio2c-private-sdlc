@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-28-2020
+// Last Modified On : 03-01-2020
 // ***********************************************************************
 // <copyright file="AttendeeMusicBand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,7 +15,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Domain.Validation;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -57,13 +56,18 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void Delete(int userId)
         {
-            this.DeleteAttendeeMusicBandCollaborators(userId);
-
-            if (this.FindAllAttendeeMusicBandCollaboratorsNotDeleted()?.Any() != true)
+            if (this.FindAllMusicProjectsNotDeleted()?.Any() == true)
             {
-                this.IsDeleted = true;
+                return;
             }
 
+            this.DeleteAttendeeMusicBandCollaborators(userId);
+            if (this.FindAllAttendeeMusicBandCollaboratorsNotDeleted()?.Any() == true)
+            {
+                return;
+            }
+
+            this.IsDeleted = true;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
@@ -151,6 +155,13 @@ namespace PlataformaRio2C.Domain.Entities
         public MusicProject GetLastCreatedMusicProject()
         {
             return this.MusicProjects?.OrderByDescending(p => p.CreateDate).FirstOrDefault();
+        }
+
+        /// <summary>Finds all music projects not deleted.</summary>
+        /// <returns></returns>
+        private List<MusicProject> FindAllMusicProjectsNotDeleted()
+        {
+            return this.MusicProjects?.Where(mp => !mp.IsDeleted)?.ToList();
         }
 
         #region Projects Counter
