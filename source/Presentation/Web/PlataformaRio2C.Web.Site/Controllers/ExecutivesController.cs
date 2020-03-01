@@ -4,7 +4,7 @@
 // Created          : 10-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified On : 03-01-2020
 // ***********************************************************************
 // <copyright file="ExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -241,7 +241,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/SocialNetworksWidget", socialNetworksWidgetDto), divIdOrClass = "#ExecutiveSocialNetworksWidget" },
+                    new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Widgets/SocialNetworksWidget.cshtml", socialNetworksWidgetDto), divIdOrClass = "#ExecutiveSocialNetworksWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }

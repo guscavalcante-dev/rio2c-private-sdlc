@@ -450,6 +450,7 @@
     <Content Include="Assets\js\executives\executives.company.widget.js" />
     <Content Include="Assets\js\executives\executives.socialnetworks.widget.js" />
     <Content Include="Assets\js\executives\executives.maininformation.widget.js" />
+    <Content Include="Assets\js\music\projects\music.projects.socialnetworks.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.videoandmusic.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.evaluation.list.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.evaluation.update.widget.js" />
@@ -6465,6 +6466,7 @@
     <Content Include="Areas\Music\Views\Projects\Shared\_MusicItem.cshtml" />
     <Content Include="Areas\Music\Views\Projects\Shared\_VideoItem.cshtml" />
     <Content Include="Areas\Music\Views\Projects\Widgets\EvaluationWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Projects\Widgets\SocialNetworksWidget.cshtml" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />
@@ -7296,7 +7298,6 @@
     <Content Include="Views\Projects\EvaluationDetails.cshtml" />
     <Content Include="Views\Projects\Widgets\BuyerEvaluationWidget.cshtml" />
     <Content Include="Views\SiteMailerService\ProjectBuyerEvaluationEmail.cshtml" />
-    <Content Include="Views\Executives\Widgets\SocialNetworksWidget.cshtml" />
     <Content Include="Views\Executives\Modals\UpdateSocialNetworksModal.cshtml" />
     <Content Include="Views\Executives\Modals\UpdateSocialNetworksForm.cshtml" />
     <Content Include="Views\Companies\Widgets\SocialNetworksWidget.cshtml" />
@@ -7304,6 +7305,13 @@
     <Content Include="Views\Companies\Modals\UpdateSocialNetworksForm.cshtml" />
     <Content Include="Views\Networks\Shared\_ContactListSearchForm.cshtml" />
     <Content Include="Views\Projects\Widgets\EvaluationListItemWidget.cshtml" />
+    <Content Include="Views\Shared\SocialNetworks\_FacebookItem.cshtml" />
+    <Content Include="Views\Shared\SocialNetworks\_InstagramItem.cshtml" />
+    <Content Include="Views\Shared\SocialNetworks\_LinkedInItem.cshtml" />
+    <Content Include="Views\Shared\SocialNetworks\_TwitterItem.cshtml" />
+    <Content Include="Views\Shared\SocialNetworks\_WebsiteItem.cshtml" />
+    <Content Include="Views\Shared\SocialNetworks\_YoutubeItem.cshtml" />
+    <Content Include="Views\Shared\Collaborators\Widgets\SocialNetworksWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

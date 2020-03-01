@@ -374,7 +374,8 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/js/music/projects/music.projects.releasedprojects.widget.js",
                 "~/Assets/js/music/projects/music.projects.responsible.widget.js",
                 "~/Assets/js/music/projects/music.projects.clipping.widget.js",
-                "~/Assets/js/music/projects/music.projects.videoandmusic.widget.js"));
+                "~/Assets/js/music/projects/music.projects.videoandmusic.widget.js",
+                "~/Assets/js/music/projects/music.projects.socialnetworks.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/music.projects.evaluation.list.widget.js").Include(
                 "~/Assets/js/music/projects/music.projects.evaluation.list.widget.js",

@@ -1,5 +1,5 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Web.Site
+// Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Rafael Dantas Ruiz
 // Created          : 03-01-2020
 //

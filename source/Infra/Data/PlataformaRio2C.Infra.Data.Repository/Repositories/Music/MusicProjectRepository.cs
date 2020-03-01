@@ -513,6 +513,27 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        /// <summary>Finds the social networks widget dto asynchronous.</summary>
+        /// <param name="musicProjectUid">The music project uid.</param>
+        /// <returns></returns>
+        public async Task<MusicProjectDto> FindSocialNetworksWidgetDtoAsync(Guid musicProjectUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(musicProjectUid)
+                                .Select(mp => new MusicProjectDto
+                                {
+                                    MusicProject = mp,
+                                    AttendeeMusicBandDto = new AttendeeMusicBandDto
+                                    {
+                                        AttendeeMusicBand = mp.AttendeeMusicBand,
+                                        MusicBand = mp.AttendeeMusicBand.MusicBand,
+                                    }
+                                });
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
+
         /// <summary>Finds the evaluation widget dto asynchronous.</summary>
         /// <param name="musicProjectUid">The music project uid.</param>
         /// <returns></returns>

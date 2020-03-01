@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-29-2020
+// Last Modified On : 03-01-2020
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -472,6 +472,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             }
 
             return s;
+        }
+
+        /// <summary>Gets the facebook URL.</summary>
+        /// <param name="s">The s.</param>
+        /// <returns></returns>
+        public static string GetFacebookUrl(this string s)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                return s;
+            }
+
+            if (s.Contains("facebook.com"))
+            {
+                return s.GetUrlWithProtocol();
+            }
+
+            return $"https://www.facebook.com/{s}";
         }
 
         /// <summary>Gets the linkedin URL.</summary>

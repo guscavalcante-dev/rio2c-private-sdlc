@@ -436,6 +436,7 @@
     <Content Include="Assets\js\music\projects\music.projects.datatable.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.editioncount.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.evaluation.update.widget.js" />
+    <Content Include="Assets\js\music\projects\music.projects.socialnetworks.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.maininformation.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.members.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.releasedprojects.widget.js" />
@@ -7123,6 +7124,7 @@
     <Content Include="Areas\Music\Views\Projects\Modals\AcceptEvaluationModal.cshtml" />
     <Content Include="Areas\Music\Views\Projects\Modals\RefuseEvaluationForm.cshtml" />
     <Content Include="Areas\Music\Views\Projects\Modals\RefuseEvaluationModal.cshtml" />
+    <Content Include="Areas\Music\Views\Projects\Widgets\SocialNetworksWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -8395,6 +8397,12 @@
     <Content Include="Views\Projects\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Views\Shared\Collaborators\Widgets\OnboardingInfoWidget.cshtml" />
     <Content Include="Views\AdminMailerService\MusicCommissionWelcomeEmail.cshtml" />
+    <Content Include="Views\Shared\SocialNetworks\_WebsiteItem.cshtml" />
+    <Content Include="Views\Shared\SocialNetworks\_LinkedInItem.cshtml" />
+    <Content Include="Views\Shared\SocialNetworks\_TwitterItem.cshtml" />
+    <Content Include="Views\Shared\SocialNetworks\_InstagramItem.cshtml" />
+    <Content Include="Views\Shared\SocialNetworks\_YoutubeItem.cshtml" />
+    <Content Include="Views\Shared\SocialNetworks\_FacebookItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

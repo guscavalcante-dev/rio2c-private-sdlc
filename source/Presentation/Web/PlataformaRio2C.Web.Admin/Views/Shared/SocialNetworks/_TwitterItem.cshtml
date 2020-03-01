@@ -1,0 +1,17 @@
+﻿@model string
+<h3 class="kt-heading kt-heading--sm mb-0 mt-0">Twitter</h3>
+<div class="row mt-3">
+    <div class="col-12">
+        @if (!string.IsNullOrEmpty(Model))
+        {
+            <a href="@Model.GetTwitterUrl()" class="btn btn-icon btn-circle btn-label-twitter" target="_blank">
+                <i class="socicon-twitter"></i>
+            </a>
+            <a href="@Model.GetTwitterUrl()" target="_blank">@Model</a>
+        }
+        else
+        {
+            @:-
+        }
+    </div>
+</div>
