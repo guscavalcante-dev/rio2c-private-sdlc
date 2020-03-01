@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-20-2020
+// Last Modified On : 03-01-2020
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -347,6 +347,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     #endregion
 
     #region ProjectBaseDto IQueryable Extensions
+
+    /// <summary>ProjectBaseDtoIQueryableExtensions</summary>
     internal static class ProjectBaseDtoIQueryableExtensions
     {
         /// <summary>
@@ -367,8 +369,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return pagedList;
         }
-
     }
+
     #endregion 
 
     /// <summary>ProjectRepository</summary>

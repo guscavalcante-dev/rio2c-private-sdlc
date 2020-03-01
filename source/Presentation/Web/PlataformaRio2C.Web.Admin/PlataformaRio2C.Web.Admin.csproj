@@ -331,6 +331,7 @@
     <Compile Include="App_Start\SimpleInjectorInitializer.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Music\Controllers\CommissionsController.cs" />
+    <Compile Include="Areas\Music\Controllers\ProjectsController.cs" />
     <Compile Include="Areas\Music\MusicAreaRegistration.cs" />
     <Compile Include="Areas\WebApi\Controllers\BaseApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\CollaboratorPlayerController.cs" />
@@ -431,6 +432,9 @@
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.maininformation.widget.js" />
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.totalcount.widget.js" />
     <Content Include="Assets\js\music\commissions\music.commissions.onboardinginfo.widget.js" />
+    <Content Include="Assets\js\music\projects\music.projects.datatable.widget.js" />
+    <Content Include="Assets\js\music\projects\music.projects.editioncount.widget.js" />
+    <Content Include="Assets\js\music\projects\music.projects.totalcount.widget.js" />
     <Content Include="Assets\js\reports\reports.audiovisual.subscriptions.widget.js" />
     <Content Include="Assets\js\rooms\rooms.conferences.widget.js" />
     <Content Include="Assets\js\rooms\rooms.maininformation.widget.js" />
@@ -7089,6 +7093,10 @@
     <Content Include="Views\Shared\Collaborators\Widgets\SocialNetworksWidget.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Areas\Music\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Music\Views\Projects\Index.cshtml" />
+    <Content Include="Areas\Music\Views\Projects\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Projects\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Projects\Widgets\TotalCountWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

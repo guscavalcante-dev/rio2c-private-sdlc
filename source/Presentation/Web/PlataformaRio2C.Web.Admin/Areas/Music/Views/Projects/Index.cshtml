@@ -1,0 +1,45 @@
+﻿@model CollaboratorSearchViewModel
+@{
+    ViewBag.Title = Labels.ProjectsForPitching;
+}
+<!--begin:: Quick Stats-->
+<div class="row">
+    <div class="col-sm-6">
+        <!--begin:: Total Count Widget-->
+        <div id="MusicProjectsTotalCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <!--end:: Total Count Widget-->
+    </div>
+    <div class="col-sm-6">
+        <!--begin:: Edition Count-->
+        <div id="MusicProjectsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <!--end:: Edition Count-->
+    </div>
+</div>
+@Html.Partial("Widgets/DataTableWidget")
+@section Styles {
+    @Styles.Render("~/bundles/css/select2.css")
+    @Styles.Render("~/bundles/css/dataTables.css")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/dataTables.js")
+    @Scripts.Render("~/bundles/js/chart.js")
+    @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/select2.js")
+    @Scripts.Render("~/bundles/js/music.projects.list.widget.js")
+    @Scripts.Render("~/bundles/js/music.projects.editioncount.widget.js")
+    <script>
+        // Page translations ----------------------------------------------------------------------
+        var translations = {
+        };
+
+        // Pagination -----------------------------------------------------------------------------
+        var initialPage = @(ViewBag.Page?.ToString() ?? "null");
+        var initialPageSize = @(ViewBag.PageSize?.ToString() ?? "null");
+
+        jQuery(document).ready(function () {
+            MusicProjectsDataTableWidget.init();
+            MusicProjectsTotalCountWidget.init();
+            MusicProjectsEditionCountWidget.init();
+        });
+    </script>
+}

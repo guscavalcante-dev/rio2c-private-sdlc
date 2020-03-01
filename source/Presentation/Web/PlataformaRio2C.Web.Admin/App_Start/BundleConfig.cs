@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-26-2020
+// Last Modified On : 03-01-2020
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -594,6 +594,17 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/music.commissions.delete.js").Include(
                 "~/Assets/js/music/commissions/music.commissions.delete.js"));
+
+            #endregion
+
+            #region Projects
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.projects.list.widget.js").Include(
+                "~/Assets/js/music/projects/music.projects.datatable.widget.js",
+                "~/Assets/js/music/projects/music.projects.totalcount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.projects.editioncount.widget.js").Include(
+                "~/Assets/js/music/projects/music.projects.editioncount.widget.js"));
 
             #endregion
 

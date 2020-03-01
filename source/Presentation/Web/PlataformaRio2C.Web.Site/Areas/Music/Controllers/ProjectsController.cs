@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-29-2020
+// Last Modified On : 03-01-2020
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -42,7 +42,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         private readonly IMusicGenreRepository musicGenreRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
         private readonly IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo;
-        private readonly IProjectEvaluationStatusRepository evaluationStatusRepository;
+        private readonly IProjectEvaluationStatusRepository evaluationStatusRepo;
 
         /// <summary>Initializes a new instance of the <see cref="ProjectsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -66,7 +66,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             this.musicGenreRepo = musicGenreRepository;
             this.targetAudienceRepo = targetAudienceRepository;
             this.projectEvaluationRefuseReasonRepo = projectEvaluationRefuseReasonRepo;
-            this.evaluationStatusRepository = evaluationStatusRepository;
+            this.evaluationStatusRepo = evaluationStatusRepository;
         }
 
         #region Schedule
@@ -124,7 +124,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             ViewBag.PageSize = pageSize;
 
             ViewBag.MusicGenres = await this.musicGenreRepo.FindAllAsync();
-            ViewBag.ProjectEvaluationStatuses = await this.evaluationStatusRepository.FindAllAsync();
+            ViewBag.ProjectEvaluationStatuses = await this.evaluationStatusRepo.FindAllAsync();
 
             return View();
         }

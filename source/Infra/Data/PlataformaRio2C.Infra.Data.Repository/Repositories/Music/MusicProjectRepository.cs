@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-29-2020
+// Last Modified On : 03-01-2020
 // ***********************************************************************
 // <copyright file="MusicProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using PlataformaRio2C.Domain.Dtos;
 using X.PagedList;
 using LinqKit;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -106,116 +107,36 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             {
                 var outerWhere = PredicateBuilder.New<MusicProject>(false);
                 var innerMusicBandNameWhere = PredicateBuilder.New<MusicProject>(true);
-                //var innerProjectSummaryNameWhere = PredicateBuilder.New<MusicProject>(true);
-                //var innerProjectInterestNameWhere = PredicateBuilder.New<MusicProject>(true);
-                //var innerSellerAttendeeOrganizationNameWhere = PredicateBuilder.New<MusicProject>(true);
+                var innerMusicBandTypeNameWhere = PredicateBuilder.New<MusicProject>(true);
+                var innerMusicGenreNameWhere = PredicateBuilder.New<MusicProject>(true);
+                var innerTargetAudienceNameWhere = PredicateBuilder.New<MusicProject>(true);
 
                 foreach (var keyword in keywords.Split(' '))
                 {
                     if (!string.IsNullOrEmpty(keyword))
                     {
-                        innerMusicBandNameWhere = innerMusicBandNameWhere.Or(mp => mp.AttendeeMusicBand.MusicBand.Name.Contains(keyword)
-                                                                                        && !mp.AttendeeMusicBand.IsDeleted
-                                                                                        && !mp.AttendeeMusicBand.MusicBand.IsDeleted);
-                        //innerProjectSummaryNameWhere = innerProjectSummaryNameWhere.Or(p => p.ProjectSummaries.Any(pt => !pt.IsDeleted && pt.Value.Contains(keyword)));
-                        //innerProjectInterestNameWhere = innerProjectInterestNameWhere.Or(p => p.ProjectInterests.Any(pi => !pi.IsDeleted && pi.Interest.Name.Contains(keyword)));
-                        //innerSellerAttendeeOrganizationNameWhere = innerSellerAttendeeOrganizationNameWhere.Or(sao => sao.SellerAttendeeOrganization.Organization.Name.Contains(keyword));
+                        innerMusicBandNameWhere = innerMusicBandNameWhere.Or(mp => mp.AttendeeMusicBand.MusicBand.Name.Contains(keyword));
+                        innerMusicBandTypeNameWhere = innerMusicBandTypeNameWhere.Or(mp => mp.AttendeeMusicBand.MusicBand.MusicBandType.Name.Contains(keyword));
+                        innerMusicGenreNameWhere = innerMusicGenreNameWhere.Or(mp => mp.AttendeeMusicBand.MusicBand.MusicBandGenres
+                                                                                                    .Any(mbg => mbg.MusicGenre.Name.Contains(keyword) 
+                                                                                                                && !mbg.IsDeleted 
+                                                                                                                && !mbg.MusicGenre.IsDeleted));
+                        innerTargetAudienceNameWhere = innerTargetAudienceNameWhere.Or(mp => mp.AttendeeMusicBand.MusicBand.MusicBandTargetAudiences
+                                                                                                    .Any(mta => mta.TargetAudience.Name.Contains(keyword)
+                                                                                                                && !mta.IsDeleted
+                                                                                                                && !mta.TargetAudience.IsDeleted));
                     }
                 }
 
                 outerWhere = outerWhere.Or(innerMusicBandNameWhere);
-                //outerWhere = outerWhere.Or(innerProjectSummaryNameWhere);
-                //outerWhere = outerWhere.Or(innerProjectInterestNameWhere);
-                //outerWhere = outerWhere.Or(innerSellerAttendeeOrganizationNameWhere);
+                outerWhere = outerWhere.Or(innerMusicBandTypeNameWhere);
+                outerWhere = outerWhere.Or(innerMusicGenreNameWhere);
+                outerWhere = outerWhere.Or(innerTargetAudienceNameWhere);
                 query = query.Where(outerWhere);
             }
 
             return query;
         }
-
-        ///// <summary>Finds the by interest uid.</summary>
-        ///// <param name="query">The query.</param>
-        ///// <param name="interestUid">The interest uid.</param>
-        ///// <returns></returns>
-        //internal static IQueryable<Project> FindByInterestUid(this IQueryable<Project> query, Guid? interestUid)
-        //{
-        //    if (interestUid != null)
-        //    {
-        //        query = query.Where(p => p.ProjectInterests.Any(pi => !pi.IsDeleted
-        //                                                              && !pi.Interest.IsDeleted
-        //                                                              && pi.Interest.Uid == interestUid));
-        //    }
-
-        //    return query;
-        //}
-
-
-        ///// <summary>Finds by interest uids.</summary>
-        ///// <param name="query">The query.</param>
-        ///// <param name="interestUids">The interest uid.</param>
-        ///// <returns></returns>
-        //internal static IQueryable<Project> FindByInterestUids(this IQueryable<Project> query, List<Guid> interestUids)
-        //{
-        //    if (interestUids?.Any() == true)
-        //    {
-        //        query = query.Where(p => p.ProjectInterests.Any(pi => !pi.IsDeleted
-        //                                                              && !pi.Interest.IsDeleted
-        //                                                              && interestUids.Contains(pi.Interest.Uid)));
-        //    }
-
-        //    return query;
-        //}
-
-        ///// <summary>Finds by target audience uid.</summary>
-        ///// <param name="query">The query.</param>
-        ///// <param name="targetAudienceUid">The target audience uid.</param>
-        ///// <returns></returns>
-        //internal static IQueryable<Project> FindByTargetAudienceUid(this IQueryable<Project> query, Guid? targetAudienceUid)
-        //{
-        //    if (targetAudienceUid != null)
-        //    {
-        //        query = query.Where(p => p.ProjectTargetAudiences.Any(pi => !pi.IsDeleted
-        //                                                              && !pi.TargetAudience.IsDeleted
-        //                                                              && pi.TargetAudience.Uid == targetAudienceUid));
-        //    }
-
-        //    return query;
-        //}
-
-        ///// <summary>Finds by target audience uid.</summary>
-        ///// <param name="query">The query.</param>
-        ///// <param name="targetAudienceUid">The target audience uid.</param>
-        ///// <returns></returns>
-        //internal static IQueryable<Project> FindByTargetAudienceUids(this IQueryable<Project> query, List<Guid> targetAudienceUids)
-        //{
-        //    if (targetAudienceUids?.Any() == true)
-        //    {
-        //        query = query.Where(p => p.ProjectTargetAudiences.Any(pi => !pi.IsDeleted
-        //                                                              && !pi.TargetAudience.IsDeleted
-        //                                                              && targetAudienceUids.Contains(pi.TargetAudience.Uid)));
-        //    }
-
-        //    return query;
-        //}
-
-        ///// <summary>Finds by the start and end date</summary>
-        ///// <param name="query"></param>
-        ///// <param name="startDate"></param>
-        ///// <param name="endDate"></param>
-        ///// <returns></returns>
-        //internal static IQueryable<Project> FindByDate(this IQueryable<Project> query, DateTime? startDate, DateTime? endDate)
-        //{
-        //    if (startDate != null)
-        //    {
-        //        query = query.Where(p => p.CreateDate >= startDate || p.FinishDate >= startDate);
-        //    }
-        //    if (endDate != null)
-        //    {
-        //        var maxEndDate = new DateTime(endDate.Value.Year, endDate.Value.Month, endDate.Value.Day, 23, 59, 59);
-        //        query = query.Where(p => p.CreateDate <= maxEndDate || p.FinishDate <= maxEndDate);
-        //    }
-        //    return query;
-        //}
 
         /// <summary>Finds the by project evaluation status.</summary>
         /// <param name="query">The query.</param>
@@ -236,7 +157,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<MusicProject> IsNotDeleted(this IQueryable<MusicProject> query)
         {
-            query = query.Where(p => !p.IsDeleted);
+            query = query.Where(mp => !mp.IsDeleted
+                                      && !mp.AttendeeMusicBand.IsDeleted
+                                      && !mp.AttendeeMusicBand.MusicBand.IsDeleted);
 
             return query;
         }
@@ -270,6 +193,33 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     }
 
     #endregion
+
+    #region MusicProjectJsonDto IQueryable Extensions
+
+    /// <summary>MusicProjectJsonDtoIQueryableExtensions</summary>
+    internal static class MusicProjectJsonDtoIQueryableExtensions
+    {
+        /// <summary>
+        /// To the list paged.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        internal static async Task<IPagedList<MusicProjectJsonDto>> ToListPagedAsync(this IQueryable<MusicProjectJsonDto> query, int page, int pageSize)
+        {
+            // Page the list
+            page++;
+
+            var pagedList = await query.ToPagedListAsync(page, pageSize);
+            if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
+                pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
+
+            return pagedList;
+        }
+    }
+
+    #endregion 
 
     /// <summary>MusicProjectRepository</summary>
     public class MusicProjectRepository : Repository<Context.PlataformaRio2CContext, MusicProject>, IMusicProjectRepository
@@ -583,6 +533,72 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return await query
                             .FirstOrDefaultAsync();
+        }
+
+        /// <summary>Finds all json dtos paged asynchronous.</summary>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="musicGenreUid">The music genre uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="languageCode">The language code.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<MusicProjectJsonDto>> FindAllJsonDtosPagedAsync(
+            int page, 
+            int pageSize, 
+            List<Tuple<string, string>> sortColumns, 
+            string keywords, 
+            Guid? musicGenreUid, 
+            Guid? evaluationStatusUid, 
+            string languageCode, 
+            int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId, false)
+                                .FindByKeywords(keywords)
+                                .FindByMusicGenreUid(musicGenreUid)
+                                .FindByProjectEvaluationStatus(evaluationStatusUid)
+                                .DynamicOrder<MusicProject>(
+                                    sortColumns,
+                                    null,
+                                    new List<string> { "CreateDate", "UpdateDate" },"CreateDate")
+                                .Select(mp => new MusicProjectJsonDto
+                                {
+                                    MusicProjectId = mp.Id,
+                                    MusicProjectUid = mp.Uid,
+                                    MusicBandName = mp.AttendeeMusicBand.MusicBand.Name,
+                                    MusicBandImageUrl = mp.AttendeeMusicBand.MusicBand.ImageUrl,
+                                    MusicBandTypeName = mp.AttendeeMusicBand.MusicBand.MusicBandType.Name,
+                                    EvaluationStatusName = mp.ProjectEvaluationStatus.Name,
+                                    MusicGenreNames = mp.AttendeeMusicBand.MusicBand.MusicBandGenres
+                                                            .Where(mbg => !mbg.IsDeleted && !mbg.MusicGenre.IsDeleted)
+                                                            .OrderBy(mbg => mbg.MusicGenre.DisplayOrder)
+                                                            .Select(mbg => mbg.MusicGenre.Name).ToList(),
+                                    MusicTargetAudiencesNames = mp.AttendeeMusicBand.MusicBand.MusicBandTargetAudiences
+                                                                        .Where(mbg => !mbg.IsDeleted && !mbg.TargetAudience.IsDeleted)
+                                                                        .OrderBy(mbg => mbg.TargetAudience.DisplayOrder)
+                                                                        .Select(mbg => mbg.TargetAudience.Name).ToList(),
+                                    CreateDate = mp.CreateDate,
+                                    UpdateDate = mp.UpdateDate
+                                });
+
+            return await query
+                           .ToListPagedAsync(page, pageSize);
+        }
+
+        /// <summary>Counts the asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <returns></returns>
+        public async Task<int> CountAsync(int editionId, bool showAllEditions = false)
+
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId, showAllEditions);
+
+            return await query.CountAsync();
         }
     }
 }

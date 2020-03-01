@@ -4,7 +4,7 @@
 // Created          : 02-25-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-26-2020
+// Last Modified On : 03-01-2020
 // ***********************************************************************
 // <copyright file="CommissionsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,14 +33,13 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Admin.Controllers;
-using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 {
     /// <summary>CommissionsController</summary>
-    [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
-    [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual)]
+    [AjaxAuthorize(Order = 1, Roles = Constants.Role.Admin)]
+    //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual)]
     public class CommissionsController : BaseController
     {
         private readonly ICollaboratorRepository collaboratorRepo;

@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-29-2020
+// Last Modified On : 03-01-2020
 // ***********************************************************************
 // <copyright file="IMusicProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,6 +13,7 @@
 // ***********************************************************************
 using PlataformaRio2C.Domain.Entities;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using PlataformaRio2C.Domain.Dtos;
 using X.PagedList;
@@ -32,5 +33,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<MusicProjectDto> FindClippingWidgetDtoAsync(Guid musicProjectUid);
         Task<MusicProjectDto> FindVideoAndMusicWidgetDtoAsync(Guid musicProjectUid);
         Task<MusicProjectDto> FindEvaluationWidgetDtoAsync(Guid musicProjectUid);
+        Task<IPagedList<MusicProjectJsonDto>> FindAllJsonDtosPagedAsync(int page, int pageSize, List<Tuple<string, string>> sortColumns, string keywords, Guid? musicGenreUid, Guid? evaluationStatusUid, string languageCode, int editionId);
+        Task<int> CountAsync(int editionId, bool showAllEditions = false);
     }
 }
