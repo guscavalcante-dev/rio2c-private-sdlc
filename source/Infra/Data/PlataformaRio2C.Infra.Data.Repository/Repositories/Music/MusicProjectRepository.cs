@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-01-2020
+// Last Modified On : 03-02-2020
 // ***********************************************************************
 // <copyright file="MusicProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -596,6 +596,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     MusicBandImageUrl = mp.AttendeeMusicBand.MusicBand.ImageUrl,
                                     MusicBandTypeName = mp.AttendeeMusicBand.MusicBand.MusicBandType.Name,
                                     EvaluationStatusName = mp.ProjectEvaluationStatus.Name,
+                                    EvaluationUserName = mp.EvaluationUser.Name,
                                     MusicGenreNames = mp.AttendeeMusicBand.MusicBand.MusicBandGenres
                                                             .Where(mbg => !mbg.IsDeleted && !mbg.MusicGenre.IsDeleted)
                                                             .OrderBy(mbg => mbg.MusicGenre.DisplayOrder)

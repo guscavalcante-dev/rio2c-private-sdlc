@@ -1,7 +1,5 @@
-﻿@using PlataformaRio2C.Domain.Dtos
-@{
+﻿@{
     ViewBag.Title = Labels.PitchingShow;
-    var genreInterests = ViewBag.GenreInterests as List<InterestDto>;
 }
 <!--begin:: DataTable Widget-->
 <div id="MusicProjectDataTableWidget" class="kt-portlet kt-portlet--mobile">
@@ -43,6 +41,7 @@
                     <th>@Labels.MusicGenre</th>
                     <th>@Labels.TargetAudience</th>
                     <th class="dt-head-center dt-body-center">@Labels.Status</th>
+                    <th>@Labels.Evaluation @Labels.User</th>
                     <th class="dt-head-center dt-body-center">@Labels.CreateDate</th>
                     <th class="dt-head-center dt-body-center">@Labels.UpdateDate</th>
                     <th class="dt-head-center dt-body-center">@Labels.Actions</th>

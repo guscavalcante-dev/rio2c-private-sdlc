@@ -4,7 +4,7 @@
 // Created          : 03-01-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-01-2020
+// Last Modified On : 03-02-2020
 // ***********************************************************************
 // <copyright file="music.projects.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -66,7 +66,7 @@ var MusicProjectsDataTableWidget = function () {
             processing: true,
             serverSide: true,
             buttons: [],
-            order: [[5, "asc"]],
+            order: [[6, "asc"]],
             sDom: '<"row"<"col-sm-6"l><"col-sm-6 text-right"B>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
             oSearch: {
                 sSearch: $('#Search').val()
@@ -167,7 +167,8 @@ var MusicProjectsDataTableWidget = function () {
 		                return html;
 	                }
                 },
-	            { data: 'EvaluationStatusName' },
+                { data: 'EvaluationStatusName' },
+	            { data: 'EvaluationUserName' },
                 {
                     data: 'CreateDate',
                     render: function (data) {
@@ -205,12 +206,12 @@ var MusicProjectsDataTableWidget = function () {
             columnDefs: [
                 {
                     targets: [0],
-                    width: "25%",
+                    width: "20%",
                     className: "dt-left",
                     orderable: false
                 },
                 {
-                    targets: [1, 2, 3],
+                    targets: [1, 2, 3, 5],
                     className: "dt-left",
                     orderable: false
                 },
@@ -220,12 +221,13 @@ var MusicProjectsDataTableWidget = function () {
 	                orderable: false
                 },
                 {
-                    targets: [5, 6],
+                    targets: [6, 7],
+                    width: "8%",
                     className: "dt-center"
                 },
                 {
 	                targets: -1,
-	                width: "10%",
+	                width: "6%",
 	                orderable: false,
 	                searchable: false,
 	                className: "dt-center"

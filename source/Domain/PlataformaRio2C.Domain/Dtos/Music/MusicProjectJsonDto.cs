@@ -4,7 +4,7 @@
 // Created          : 03-01-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-01-2020
+// Last Modified On : 03-02-2020
 // ***********************************************************************
 // <copyright file="MusicProjectJsonDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,6 +25,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public string MusicBandImageUrl { get; set; }
         public string MusicBandTypeName { get; set; }
         public string EvaluationStatusName { get; set; }
+        public string EvaluationUserName { get; set; }
 
         public IList<string> MusicGenreNames { get; set; }
         public IList<string> MusicTargetAudiencesNames { get; set; }
