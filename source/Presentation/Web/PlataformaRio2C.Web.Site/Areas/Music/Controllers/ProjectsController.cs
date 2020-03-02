@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-01-2020
+// Last Modified On : 03-02-2020
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -40,7 +40,6 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
     {
         private readonly IMusicProjectRepository musicProjectRepo;
         private readonly IMusicGenreRepository musicGenreRepo;
-        private readonly ITargetAudienceRepository targetAudienceRepo;
         private readonly IProjectEvaluationStatusRepository evaluationStatusRepo;
         private readonly IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo;
 
@@ -49,7 +48,6 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         /// <param name="identityController">The identity controller.</param>
         /// <param name="musicProjectRepository">The music project repository.</param>
         /// <param name="musicGenreRepository">The music genre repository.</param>
-        /// <param name="targetAudienceRepository">The target audience repository.</param>
         /// <param name="evaluationStatusRepository">The evaluation status repository.</param>
         /// <param name="projectEvaluationRefuseReasonRepository">The project evaluation refuse reason repository.</param>
         public ProjectsController(
@@ -57,14 +55,12 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             IdentityAutenticationService identityController,
             IMusicProjectRepository musicProjectRepository,
             IMusicGenreRepository musicGenreRepository,
-            ITargetAudienceRepository targetAudienceRepository,
             IProjectEvaluationStatusRepository evaluationStatusRepository,
             IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepository)
             : base(commandBus, identityController)
         {
             this.musicProjectRepo = musicProjectRepository;
             this.musicGenreRepo = musicGenreRepository;
-            this.targetAudienceRepo = targetAudienceRepository;
             this.evaluationStatusRepo = evaluationStatusRepository;
             this.projectEvaluationRefuseReasonRepo = projectEvaluationRefuseReasonRepository;
         }
@@ -231,43 +227,6 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
             return View(musicProjectDto);
         }
-
-        //#region Buyer Evaluation
-
-        ///// <summary>Shows the buyer evaluation widget.</summary>
-        ///// <param name="projectUid">The project uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowBuyerEvaluationWidget(Guid? projectUid)
-        //{
-        //    if (this.EditionDto?.IsProjectEvaluationStarted() != true)
-        //    {
-        //        return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-        //    }
-
-        //    var projectBuyerEvaluationDto = await this.projectRepo.FindSiteBuyerEvaluationWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty, this.UserAccessControlDto?.EditionAttendeeCollaborator?.Uid ?? Guid.Empty);
-        //    if (projectBuyerEvaluationDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
-
-        //    if (this.UserAccessControlDto?.HasAnyEditionAttendeeOrganization(projectBuyerEvaluationDto.ProjectBuyerEvaluationDtos?.Select(pbed => pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid)?.ToList()) != true   // Buyer with project finished
-        //        || projectBuyerEvaluationDto.Project?.IsFinished() != true)
-        //    {
-        //        return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-        //    }
-
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Widgets/BuyerEvaluationWidget", projectBuyerEvaluationDto), divIdOrClass = "#ProjectBuyerEvaluationWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
-
-        //#endregion
 
         #endregion
 

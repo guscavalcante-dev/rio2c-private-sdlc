@@ -1142,3 +1142,10 @@ INSERT [dbo].[CollaboratorTypes] ([Id], [Uid], [Name], [RoleId], [IsDeleted], [C
 GO
 SET IDENTITY_INSERT [dbo].[CollaboratorTypes] OFF
 GO
+
+SET IDENTITY_INSERT [dbo].[CollaboratorTypes] ON 
+GO
+INSERT [dbo].[CollaboratorTypes] ([Id], [Uid], [Name], [RoleId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (102, N'495b5126-0a9e-4658-ac42-8bba55818b6f', N'Curatorship | Music', 2, 0, CAST(N'2019-09-26 17:48:45.397' AS DateTime), 1, CAST(N'2019-09-26 17:48:45.397' AS DateTime), 1)
+GO
+SET IDENTITY_INSERT [dbo].[CollaboratorTypes] OFF
+GO

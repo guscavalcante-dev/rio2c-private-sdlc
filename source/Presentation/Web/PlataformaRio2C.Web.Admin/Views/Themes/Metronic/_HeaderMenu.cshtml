@@ -5,6 +5,7 @@
     var isAdminFull = adminAccessControlDto?.IsAdmin() == true;
     var isAdminAudiovisual = adminAccessControlDto?.IsAdminPartial() == true && adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminAudiovisual) == true;
     var isCuratorshipAudiovisual = adminAccessControlDto?.HasCollaboratorType(CollaboratorType.CuratorshipAudiovisual) == true;
+    var isCuratorshipMusic = adminAccessControlDto?.HasCollaboratorType(CollaboratorType.CuratorshipMusic) == true;
     var isComissionAudiovisual = adminAccessControlDto?.HasCollaboratorType(CollaboratorType.CommissionAudiovisual) == true;
 
     var isLogistics = false; //userRoles.HasElement("Logistics");
@@ -145,7 +146,7 @@
                 </div>
             </li>
         }
-        @if (isAdminFull)
+        @if (isAdminFull || isCuratorshipMusic)
         {
             <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel @this.IsOpen(menuOpenCssClass, null, "Commissions,Projects", "Music") @this.IsOpen(menuOpenCssClass, null, "MusicBands", null)" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
                 <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">@Labels.PitchingShow</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>

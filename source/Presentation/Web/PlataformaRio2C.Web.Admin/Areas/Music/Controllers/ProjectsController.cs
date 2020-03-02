@@ -4,7 +4,7 @@
 // Created          : 03-01-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-01-2020
+// Last Modified On : 03-02-2020
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -36,8 +36,8 @@ using Constants = PlataformaRio2C.Domain.Constants;
 namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 {
     /// <summary>ProjectsController</summary>
-    [AjaxAuthorize(Order = 1, Roles = Constants.Role.Admin)]
-    //[AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.Admin + "," + Constants.CollaboratorType.CommissionAudiovisual)]
+    [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.CuratorshipMusic)]
     public class ProjectsController : BaseController
     {
         private readonly IMusicProjectRepository musicProjectRepo;
@@ -185,7 +185,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <summary>Evaluations the details.</summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
         public async Task<ActionResult> Details(Guid? id)
         {
             var musicProjectDto = await this.musicProjectRepo.FindDtoToEvaluateAsync(id ?? Guid.Empty);
@@ -591,7 +590,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="cmd">The command</param>
         /// <returns></returns>
         [HttpPost]
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
         public async Task<ActionResult> Refuse(RefuseMusicProjectEvaluation cmd)
         {
             var result = new AppValidationResult();

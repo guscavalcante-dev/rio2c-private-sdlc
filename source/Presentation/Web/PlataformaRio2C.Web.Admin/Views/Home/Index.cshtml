@@ -6,6 +6,7 @@
     var isAdminFull = adminAccessControlDto?.IsAdmin() == true;
     var isAdminAudiovisual = adminAccessControlDto?.IsAdminPartial() == true && adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminAudiovisual) == true;
     var isCuratorshipAudiovisual = adminAccessControlDto?.IsAdminPartial() == true && adminAccessControlDto?.HasCollaboratorType(CollaboratorType.CuratorshipAudiovisual) == true;
+    var isCuratorshipMusic = adminAccessControlDto?.IsAdminPartial() == true && adminAccessControlDto?.HasCollaboratorType(CollaboratorType.CuratorshipMusic) == true;
 }
 <div class="row">
     @if (isAdminFull || isAdminAudiovisual)
@@ -63,11 +64,22 @@
             <div id="ConferenceParticipantRolesEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
         </div>
         <!--end:: Conference Participant Roles Edition Count-->
+    }
+    @if (isAdminFull || isAdminAudiovisual)
+    {
         <!--begin:: Projects for Pitching Edition Count-->
         <div class="col-sm-4">
             <div id="ProjectsPitchingEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
         </div>
         <!--end:: Projects for Pitching Edition Count-->
+    }
+    @if (isAdminFull || isCuratorshipMusic)
+    {
+        <!--begin:: Music Projects Edition Count-->
+        <div class="col-sm-4">
+            <div id="MusicProjectsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        </div>
+        <!--end:: Music Projects Edition Count-->
     }
 </div>
 @section Styles {
@@ -79,6 +91,7 @@
         @Scripts.Render("~/bundles/js/holdings.editioncount.js")
         @Scripts.Render("~/bundles/js/organizations.editioncount.js")
         @Scripts.Render("~/bundles/js/collaborators.editioncount.js")
+        @Scripts.Render("~/bundles/js/projects.pitching.editioncount.widget.js")
     }
     @if (isAdminFull || isAdminAudiovisual || isCuratorshipAudiovisual)
     {
@@ -89,7 +102,10 @@
         @Scripts.Render("~/bundles/js/tracks.editioncount.js")
         @Scripts.Render("~/bundles/js/presentationformats.editioncount.js")
         @Scripts.Render("~/bundles/js/conferenceparticipantroles.editioncount.js")
-        @Scripts.Render("~/bundles/js/projects.pitching.editioncount.widget.js")
+    }
+    @if (isAdminFull || isCuratorshipMusic)
+    {
+        @Scripts.Render("~/bundles/js/music.projects.editioncount.widget.js")
     }
     <script>
         jQuery(document).ready(function () {
@@ -112,6 +128,12 @@
                     TracksEditionCountWidget.init();
                     PresentationFormatsEditionCountWidget.init();
                     ConferenceParticipantRolesEditionCountWidget.init();
+                </text>
+            }
+            @if (isAdminFull || isCuratorshipMusic)
+            {
+                <text>
+                    MusicProjectsEditionCountWidget.init();
                 </text>
             }
         });
