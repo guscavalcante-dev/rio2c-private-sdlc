@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-21-2019
+// Last Modified On : 02-21-2020
 // ***********************************************************************
 // <copyright file="collaborators.create.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -111,6 +111,8 @@ var CollaboratorsCreate = function () {
                 if (MyRio2cCommon.hasProperty(data, 'pages')) {
                     enablePlugins();
                 }
+
+                $(formId).find(":input.input-validation-error:first").focus();
             }
         });
     };

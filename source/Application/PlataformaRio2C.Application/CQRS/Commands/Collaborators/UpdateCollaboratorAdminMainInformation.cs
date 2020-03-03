@@ -4,7 +4,7 @@
 // Created          : 12-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-16-2019
+// Last Modified On : 02-21-2020
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorAdminMainInformation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -114,7 +114,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorAdminMainInformation"/> class.</summary>
         /// <param name="entity">The entity.</param>
+        /// <param name="genders">The genders.</param>
+        /// <param name="industries">The industries.</param>
+        /// <param name="roles">The roles.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
+        /// <param name="editionsDtos">The editions dtos.</param>
+        /// <param name="currentEditionId">The current edition identifier.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
         public UpdateCollaboratorAdminMainInformation(
             AttendeeCollaboratorSiteMainInformationWidgetDto entity, 
             List<CollaboratorGender> genders, 
@@ -126,9 +132,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string userInterfaceLanguage)
             : base(entity, languagesDtos, false, false, false)
         {
-            this.UpdateGenders(genders, userInterfaceLanguage);
-            this.UpdateIndustries(industries, userInterfaceLanguage);
-            this.UpdateRoles(roles, userInterfaceLanguage);
+            this.UpdateModelsAndLists(genders, industries, roles, editionsDtos, currentEditionId, userInterfaceLanguage);
             this.UpdateEditions(editionsDtos, entity.Collaborator, currentEditionId);
 
             this.FirstName = entity?.Collaborator?.FirstName;
@@ -154,61 +158,26 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public UpdateCollaboratorAdminMainInformation()
         {
         }
-        
-        /// <summary>
-        /// Updates the editions.
-        /// </summary>
-        /// <param name="editions">The editions.</param>
-        /// <param name="collaborator">The collaborator.</param>
+
+        /// <summary>Updates the models and lists.</summary>
+        /// <param name="genders">The genders.</param>
+        /// <param name="industries">The industries.</param>
+        /// <param name="roles">The roles.</param>
+        /// <param name="editionsDtos">The editions dtos.</param>
         /// <param name="currentEditionId">The current edition identifier.</param>
-        private void UpdateEditions(IEnumerable<EditionDto> editions, Collaborator collaborator, int currentEditionId)
-        {
-            this.Editions = editions.Where(e => e.Id != currentEditionId).ToList();
-
-            if (!collaborator.EditionParticipantions.Any(p => !p.IsDeleted))
-            {
-                EditionsUids = new List<Guid>();
-                return;
-            }           
-            
-            HaveYouBeenToRio2CBefore = true;
-            EditionsUids = editions.Where(e => collaborator.EditionParticipantions.Any(p => p.EditionId == e.Id && !p.IsDeleted)).Select(e => e.Uid).ToList();
-        }
-        
-        /// <summary>
-        /// Updates the genders.
-        /// </summary>
-        /// <param name="genders">The genders.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
-        /// <exception cref="NotImplementedException"></exception>
-        private void UpdateGenders(List<CollaboratorGender> genders, string userInterfaceLanguage)
+        public void UpdateModelsAndLists(
+            List<CollaboratorGender> genders,
+            List<CollaboratorIndustry> industries,
+            List<CollaboratorRole> roles,
+            List<EditionDto> editionsDtos,
+            int currentEditionId,
+            string userInterfaceLanguage)
         {
-            genders.ForEach(g => g.Translate(userInterfaceLanguage));
-            this.CollaboratorGenders = genders.OrderBy(e => e.HasAdditionalInfo).ThenBy(e => e.Name);
-        }
-
-        /// <summary>
-        /// Updates the genders.
-        /// </summary>
-        /// <param name="genders">The genders.</param>
-        /// <param name="userInterfaceLanguage">The user interface language.</param>
-        /// <exception cref="NotImplementedException"></exception>
-        private void UpdateIndustries(List<CollaboratorIndustry> industries, string userInterfaceLanguage)
-        {
-            industries.ForEach(g => g.Translate(userInterfaceLanguage));
-            this.CollaboratorIndustries = industries.OrderBy(e => e.HasAdditionalInfo).ThenBy(e => e.Name);
-        }
-
-        /// <summary>
-        /// Updates the genders.
-        /// </summary>
-        /// <param name="genders">The genders.</param>
-        /// <param name="userInterfaceLanguage">The user interface language.</param>
-        /// <exception cref="NotImplementedException"></exception>
-        private void UpdateRoles(List<CollaboratorRole> roles, string userInterfaceLanguage)
-        {
-            roles.ForEach(g => g.Translate(userInterfaceLanguage));
-            this.CollaboratorRoles = roles.OrderBy(e => e.HasAdditionalInfo).ThenBy(e => e.Name);
+            this.UpdateGenders(genders, userInterfaceLanguage);
+            this.UpdateIndustries(industries, userInterfaceLanguage);
+            this.UpdateRoles(roles, userInterfaceLanguage);
+            this.Editions = editionsDtos.Where(e => e.Id != currentEditionId).ToList();
         }
 
         /// <summary>Updates the pre send properties.</summary>
@@ -229,5 +198,56 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.CollaboratorTypeName = collaboratorTypeName;
             this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, userInterfaceLanguage);
         }
+
+        #region Private Methods
+
+        /// <summary>
+        /// Updates the editions.
+        /// </summary>
+        /// <param name="editions">The editions.</param>
+        /// <param name="collaborator">The collaborator.</param>
+        /// <param name="currentEditionId">The current edition identifier.</param>
+        private void UpdateEditions(IEnumerable<EditionDto> editions, Collaborator collaborator, int currentEditionId)
+        {
+            if (collaborator?.EditionParticipantions.Any(p => !p.IsDeleted) == false)
+            {
+                this.EditionsUids = new List<Guid>();
+                return;
+            }
+
+            HaveYouBeenToRio2CBefore = true;
+            this.EditionsUids = editions.Where(e => collaborator?.EditionParticipantions.Any(p => p.EditionId == e.Id && !p.IsDeleted) == true).Select(e => e.Uid).ToList();
+        }
+
+        /// <summary>
+        /// Updates the genders.
+        /// </summary>
+        /// <param name="genders">The genders.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        private void UpdateGenders(List<CollaboratorGender> genders, string userInterfaceLanguage)
+        {
+            genders.ForEach(g => g.Translate(userInterfaceLanguage));
+            this.CollaboratorGenders = genders.OrderBy(e => e.HasAdditionalInfo).ThenBy(e => e.Name);
+        }
+
+        /// <summary></summary>
+        /// <param name="industries"></param>
+        /// <param name="userInterfaceLanguage"></param>
+        private void UpdateIndustries(List<CollaboratorIndustry> industries, string userInterfaceLanguage)
+        {
+            industries.ForEach(g => g.Translate(userInterfaceLanguage));
+            this.CollaboratorIndustries = industries.OrderBy(e => e.HasAdditionalInfo).ThenBy(e => e.Name);
+        }
+
+        /// <summary></summary>
+        /// <param name="roles"></param>
+        /// <param name="userInterfaceLanguage"></param>
+        private void UpdateRoles(List<CollaboratorRole> roles, string userInterfaceLanguage)
+        {
+            roles.ForEach(g => g.Translate(userInterfaceLanguage));
+            this.CollaboratorRoles = roles.OrderBy(e => e.HasAdditionalInfo).ThenBy(e => e.Name);
+        }
+
+        #endregion
     }
 }

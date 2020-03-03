@@ -66,10 +66,7 @@ namespace PlataformaRio2C.Web.Site
             
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new RazorViewEngine());
-
-            ModelBinders.Binders.Add(typeof(DateTime), new DateTimeBinder());
-            ModelBinders.Binders.Add(typeof(DateTime?), new NullableDateTimeBinder());
-
+            
             app.MapSignalR("/signalr", hubConfiguration);
         }
     }

@@ -340,6 +340,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CPF / CNPJ / RG / Passaporte.
+        /// </summary>
+        public static string AllRegistrationDocuments {
+            get {
+                return ResourceManager.GetString("AllRegistrationDocuments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alterar.
         /// </summary>
         public static string Alter {
@@ -507,6 +516,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Badges {
             get {
                 return ResourceManager.GetString("Badges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tipo de artista.
+        /// </summary>
+        public static string BandType {
+            get {
+                return ResourceManager.GetString("BandType", resourceCulture);
             }
         }
         
@@ -759,6 +777,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Commercial {
             get {
                 return ResourceManager.GetString("Commercial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comissão.
+        /// </summary>
+        public static string Commission {
+            get {
+                return ResourceManager.GetString("Commission", resourceCulture);
             }
         }
         
@@ -1258,6 +1285,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ordem de exibição.
+        /// </summary>
+        public static string DisplayOrder {
+            get {
+                return ResourceManager.GetString("DisplayOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Baixar.
         /// </summary>
         public static string Download {
@@ -1425,6 +1461,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Enabled {
             get {
                 return ResourceManager.GetString("Enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Término.
+        /// </summary>
+        public static string End {
+            get {
+                return ResourceManager.GetString("End", resourceCulture);
             }
         }
         
@@ -2329,6 +2374,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Principais influências musicais.
+        /// </summary>
+        public static string MainMusicInfluences {
+            get {
+                return ResourceManager.GetString("MainMusicInfluences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mercado.
         /// </summary>
         public static string Market {
@@ -2370,6 +2424,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Matches {
             get {
                 return ResourceManager.GetString("Matches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Membro.
+        /// </summary>
+        public static string Member {
+            get {
+                return ResourceManager.GetString("Member", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Membros.
+        /// </summary>
+        public static string Members {
+            get {
+                return ResourceManager.GetString("Members", resourceCulture);
             }
         }
         
@@ -2446,11 +2518,74 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ano de início da banda.
+        /// </summary>
+        public static string MusicBandFormationYear {
+            get {
+                return ResourceManager.GetString("MusicBandFormationYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Integrantes.
+        /// </summary>
+        public static string MusicBandMembers {
+            get {
+                return ResourceManager.GetString("MusicBandMembers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bandas de Música.
         /// </summary>
         public static string MusicBands {
             get {
                 return ResourceManager.GetString("MusicBands", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Equipe.
+        /// </summary>
+        public static string MusicBandStaff {
+            get {
+                return ResourceManager.GetString("MusicBandStaff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comissão de Música.
+        /// </summary>
+        public static string MusicCommission {
+            get {
+                return ResourceManager.GetString("MusicCommission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Estilo musical.
+        /// </summary>
+        public static string MusicGenre {
+            get {
+                return ResourceManager.GetString("MusicGenre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Instrumento musical.
+        /// </summary>
+        public static string MusicInstrumentName {
+            get {
+                return ResourceManager.GetString("MusicInstrumentName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Projetos de Música.
+        /// </summary>
+        public static string MusicProjects {
+            get {
+                return ResourceManager.GetString("MusicProjects", resourceCulture);
             }
         }
         
@@ -2788,6 +2923,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tipo de artista.
+        /// </summary>
+        public static string ParticipantProfile {
+            get {
+                return ResourceManager.GetString("ParticipantProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Participantes.
         /// </summary>
         public static string Participants {
@@ -2928,6 +3072,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Pitching {
             get {
                 return ResourceManager.GetString("Pitching", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PitchingShow.
+        /// </summary>
+        public static string PitchingShow {
+            get {
+                return ResourceManager.GetString("PitchingShow", resourceCulture);
             }
         }
         
@@ -3413,6 +3566,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Projetos lançados.
+        /// </summary>
+        public static string ProjectsReleased {
+            get {
+                return ResourceManager.GetString("ProjectsReleased", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inscrição de projetos.
         /// </summary>
         public static string ProjectsSubmission {
@@ -3580,6 +3742,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Release.
+        /// </summary>
+        public static string Release {
+            get {
+                return ResourceManager.GetString("Release", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lembre-me?.
         /// </summary>
         public static string RememberMe {
@@ -3648,6 +3819,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ResetYourPassword {
             get {
                 return ResourceManager.GetString("ResetYourPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Responsável.
+        /// </summary>
+        public static string Responsible {
+            get {
+                return ResourceManager.GetString("Responsible", resourceCulture);
             }
         }
         
@@ -4255,6 +4435,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Início.
+        /// </summary>
+        public static string Start {
+            get {
+                return ResourceManager.GetString("Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data de início.
         /// </summary>
         public static string StartDate {
@@ -4476,6 +4665,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string TeaserLinks {
             get {
                 return ResourceManager.GetString("TeaserLinks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aceite do regulamento.
+        /// </summary>
+        public static string TermsAcceptance {
+            get {
+                return ResourceManager.GetString("TermsAcceptance", resourceCulture);
             }
         }
         
@@ -4822,6 +5020,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vídeo clip.
+        /// </summary>
+        public static string VideoClip {
+            get {
+                return ResourceManager.GetString("VideoClip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vídeo clip e músicas.
+        /// </summary>
+        public static string VideoClipAndMusics {
+            get {
+                return ResourceManager.GetString("VideoClipAndMusics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Visualizar.
         /// </summary>
         public static string View {
@@ -4989,6 +5205,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string WorkDuration {
             get {
                 return ResourceManager.GetString("WorkDuration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ano.
+        /// </summary>
+        public static string Year {
+            get {
+                return ResourceManager.GetString("Year", resourceCulture);
             }
         }
         

@@ -4,7 +4,7 @@
 // Created          : 12-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-18-2019
+// Last Modified On : 02-21-2020
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorAdminMainInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,6 +22,8 @@ using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
+using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -29,6 +31,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>UpdateCollaboratorAdminMainInformationCommandHandler</summary>
     public class UpdateCollaboratorAdminMainInformationCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<UpdateCollaboratorAdminMainInformation, AppValidationResult>
     {
+        private readonly IUserRepository userRepo;
         private readonly IEditionRepository editionRepo;
         private readonly ICollaboratorTypeRepository collaboratorTypeRepo;
         private readonly ILanguageRepository languageRepo;  
@@ -36,17 +39,22 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly ICollaboratorIndustryRepository industryRepo;
         private readonly ICollaboratorRoleRepository roleRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorAdminMainInformationCommandHandler"/> class.</summary>
-        /// <param name="eventBus">The event bus.</param>
-        /// <param name="uow">The uow.</param>
-        /// <param name="collaboratorRepository">The collaborator repository.</param>
-        /// <param name="editionRepository">The edition repository.</param>
-        /// <param name="collaboratorTypeRepository">The collaborator type repository.</param>
-        /// <param name="languageRepository">The language repository.</param>
+        /// <summary></summary>
+        /// <param name="eventBus"></param>
+        /// <param name="uow"></param>
+        /// <param name="collaboratorRepository"></param>
+        /// <param name="userRepository"></param>
+        /// <param name="editionRepository"></param>
+        /// <param name="collaboratorTypeRepository"></param>
+        /// <param name="languageRepository"></param>
+        /// <param name="genderRepo"></param>
+        /// <param name="industryRepo"></param>
+        /// <param name="roleRepo"></param>
         public UpdateCollaboratorAdminMainInformationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             ICollaboratorRepository collaboratorRepository,
+            IUserRepository userRepository,
             IEditionRepository editionRepository,
             ICollaboratorTypeRepository collaboratorTypeRepository,
             ILanguageRepository languageRepository,
@@ -55,6 +63,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             ICollaboratorRoleRepository roleRepo)
             : base(eventBus, uow, collaboratorRepository)
         {
+            this.userRepo = userRepository;
             this.editionRepo = editionRepository;
             this.collaboratorTypeRepo = collaboratorTypeRepository;
             this.languageRepo = languageRepository;
@@ -74,6 +83,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var collaborator = await this.GetCollaboratorByUid(cmd.CollaboratorUid);
 
             #region Initial validations
+
+            // Check if exists an user with the same email
+            var user = await this.userRepo.GetAsync(u => u.Email == cmd.Email.Trim());
+            if (user != null && (collaborator?.User == null || user.Uid != collaborator?.User?.Uid))
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.User.ToLowerInvariant(), $"{Labels.TheM} {Labels.Email.ToLowerInvariant()}", cmd.Email), new string[] { "Email" }));
+            }
 
             if (!this.ValidationResult.IsValid)
             {

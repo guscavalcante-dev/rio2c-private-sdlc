@@ -4,7 +4,7 @@
 // Created          : 10-08-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified On : 02-21-2020
 // ***********************************************************************
 // <copyright file="companies.activity.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -69,6 +69,8 @@ var CompaniesActivityWidget = function () {
                 if (MyRio2cCommon.hasProperty(data, 'pages')) {
                     enableUpdatePlugins();
                 }
+
+                $(updateFormId).find(":input.input-validation-error:first").focus();
             }
         });
     };

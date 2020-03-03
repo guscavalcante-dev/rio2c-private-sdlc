@@ -1,0 +1,17 @@
+﻿@model string
+<h3 class="kt-heading kt-heading--sm mb-0 mt-0">@Labels.Website</h3>
+<div class="row mt-3">
+    <div class="col-12">
+        @if (!string.IsNullOrEmpty(Model))
+        {
+            <a href="@Model.GetUrlWithProtocol()" class="btn btn-icon btn-circle btn-label-google" target="_blank">
+                <i class="flaticon2-link"></i>
+            </a>
+            <a href="@Model.GetUrlWithProtocol()" target="_blank">@Model</a>
+        }
+        else
+        {
+            @:-
+        }
+    </div>
+</div>

@@ -1,0 +1,53 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@using Constants = PlataformaRio2C.Domain.Constants;
+@model MusicProjectDto
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var isMusicCommission = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.CommissionMusic) == true;
+}
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">@Labels.VideoClipAndMusics</h3>
+    </div>
+    @*@if (isCollaborator && isProjectSubmissionOpen && !isProjectFinished)
+        {
+            <div class="kt-portlet__head-toolbar">
+                <div class="kt-portlet__head-actions">
+                    <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="ProjectsLinksWidget.showUpdateModal();">
+                        <i class="flaticon2-edit"></i>
+                    </button>
+                </div>
+            </div>
+        }*@
+</div>
+<div class="kt-portlet__body">
+    <div class="kt-widget">
+        <div class="kt-widget__bottom">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="kt-widget4">
+                        <h3 class="kt-heading kt-heading--sm mb-0 mt-0 text-center">@Labels.VideoClip</h3>
+                        @Html.Partial("Shared/_VideoItem", Model.MusicProject?.VideoUrl, new ViewDataDictionary())
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-20">
+                <div class="col-md-12">
+                    <div class="kt-widget4">
+                        <h3 class="kt-heading kt-heading--sm mb-0 mt-0 text-center">@Labels.Music 1</h3>
+                        @Html.Partial("Shared/_MusicItem", Model.MusicProject?.Music1Url, new ViewDataDictionary())
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-20">
+                <div class="col-md-12">
+                    <div class="kt-widget4">
+                        <h3 class="kt-heading kt-heading--sm mb-0 mt-0 text-center">@Labels.Music 2</h3>
+                        @Html.Partial("Shared/_MusicItem", Model.MusicProject?.Music2Url, new ViewDataDictionary())
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

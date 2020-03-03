@@ -608,11 +608,12 @@ var MyRio2cCommon = function () {
         if (!hasProperty(options, 'autoclose') || isNullOrEmpty(options.autoclose)) {
             options.autoclose = true;
         }
-        
+
+        var format = $.fn.datepicker.dates[MyRio2cCommon.getGlobalVariable('userInterfaceLanguage')].format;
+
         $.validator.methods.date = function (value, element) {
             moment.locale(MyRio2cCommon.getGlobalVariable('userInterfaceLanguage'));
-            var val = moment(value).toDate();
-            return this.optional(element) || (val);
+            return this.optional(element) || moment(value, format.toUpperCase(), true).isValid();
         }
 
         $(options.inputIdOrClass).datepicker({
@@ -623,28 +624,10 @@ var MyRio2cCommon = function () {
         });
                 
         $(options.inputIdOrClass).inputmask("datetime", {
-            inputFormat: $.fn.datepicker.dates[MyRio2cCommon.getGlobalVariable('userInterfaceLanguage')].format
+            inputFormat: format,
+            placeholder: "__/__/____",
         });
     };
-
-    var enableDateTimePicker = function (options) {
-	    // Id or class
-	    if (!hasProperty(options, 'inputIdOrClass') || isNullOrEmpty(options.inputIdOrClass)) {
-		    options.inputIdOrClass = '.enable-datetimepicker';
-	    }
-
-	    var dateFormat = $.fn.datepicker.dates[MyRio2cCommon.getGlobalVariable('userInterfaceLanguage')].format;
-
-        $(options.inputIdOrClass).datetimepicker({
-            format: dateFormat + ' hh:ii',
-            language: MyRio2cCommon.getGlobalVariable('userInterfaceLanguage')
-        });
-
-        $(options.inputIdOrClass).inputmask("datetime", {
-            inputFormat: dateFormat + ' HH:MM',
-            placeholder: '__/__/____ __:__'
-        });
-    }
 
     var enableTimePicker = function (options) {
         if (isNullOrEmpty(options)) {
@@ -1462,9 +1445,6 @@ var MyRio2cCommon = function () {
         },
         enableYesNoRadioEvent: function(elementId) {
 	        enableYesNoRadioEvent(elementId);
-        },
-        enableDateTimePicker: function(options) {
-	        enableDateTimePicker(options);
         }
     };
 }();

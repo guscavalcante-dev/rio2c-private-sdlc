@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified On : 02-29-2020
 // ***********************************************************************
 // <copyright file="CollaboratorMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,6 +30,9 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
 
             this.Property(t => t.LastNames)
                 .HasMaxLength(Collaborator.LastNamesMaxLength);
+
+            this.Property(t => t.Document)
+                .HasMaxLength(Collaborator.DocumentMaxLength);
 
             this.Property(t => t.PublicEmail)
                 .HasMaxLength(Collaborator.PublicEmailMaxLength);

@@ -4,7 +4,7 @@
 // Created          : 12-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-10-2019
+// Last Modified On : 02-21-2020
 // ***********************************************************************
 // <copyright file="projects.buyerevaluation.update.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -73,14 +73,16 @@ var ProjectsBuyerEvaluationUpdateWidget = function () {
                     ProjectsBuyerEvaluationUpdateWidget.init();
                 }
 
-                if (typeof (ProjectsBuyerEvaluationListWidget) !== 'undefined') {
-                    ProjectsBuyerEvaluationListWidget.init();
+                if (typeof (ProjectsBuyerEvaluationListWidget) !== 'undefined' && !MyRio2cCommon.isNullOrEmpty(data.projectUid)) {
+                    ProjectsBuyerEvaluationListWidget.refreshProject(data.projectUid);
                 }
             },
             onError: function (data) {
                 if (MyRio2cCommon.hasProperty(data, 'pages')) {
                     enableAcceptPlugins();
                 }
+
+                $(acceptFormId).find(":input.input-validation-error:first").focus();
             }
         });
     };
@@ -159,14 +161,16 @@ var ProjectsBuyerEvaluationUpdateWidget = function () {
                     ProjectsBuyerEvaluationUpdateWidget.init();
                 }
 
-                if (typeof (ProjectsBuyerEvaluationListWidget) !== 'undefined') {
-                    ProjectsBuyerEvaluationListWidget.init();
+                if (typeof (ProjectsBuyerEvaluationListWidget) !== 'undefined' && !MyRio2cCommon.isNullOrEmpty(data.projectUid)) {
+	                ProjectsBuyerEvaluationListWidget.refreshProject(data.projectUid);
                 }
             },
             onError: function (data) {
                 if (MyRio2cCommon.hasProperty(data, 'pages')) {
                     enableRefusePlugins();
                 }
+
+                $(refuseFormId).find(":input.input-validation-error:first").focus();
             }
         });
     };

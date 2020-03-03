@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-16-2020
+// Last Modified On : 03-01-2020
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -272,8 +272,13 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
-            #region Pages Bundles
+            #region Common Page Bundles
 
+            bundles.Add(new ScriptBundle("~/bundles/js/salesplatforms.export.js").Include(
+                "~/Assets/js/salesplatforms/salesplatforms.export.js"));
+
+            #endregion
+            
             #region Holdings
 
             bundles.Add(new ScriptBundle("~/bundles/js/holdings.list.js").Include(
@@ -320,7 +325,8 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/collaborators.list.js").Include(
                 "~/Assets/js/collaborators/collaborators.totalcount.widget.js",
-                "~/Assets/js/collaborators/collaborators.datatable.widget.js"));
+                "~/Assets/js/collaborators/collaborators.datatable.widget.js",
+                "~/Assets/js/salesplatforms/salesplatforms.export.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/collaborators.editioncount.js").Include(
                 "~/Assets/js/collaborators/collaborators.editioncount.widget.js"));
@@ -341,7 +347,8 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/speakers.list.js").Include(
                 "~/Assets/js/speakers/speakers.totalcount.widget.js",
-                "~/Assets/js/speakers/speakers.datatable.widget.js"));
+                "~/Assets/js/speakers/speakers.datatable.widget.js",
+                "~/Assets/js/salesplatforms/salesplatforms.export.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/speakers.editioncount.js").Include(
                 "~/Assets/js/speakers/speakers.editioncount.widget.js"));
@@ -361,7 +368,8 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/speakers/speakers.participants.widget.js",
                 "~/Assets/js/companies/companyinfo.autocomplete.js",
                 "~/Assets/js/myrio2c.companynumber.js",
-                "~/Assets/js/speakers/speakers.apiconfiguration.widget.js"));
+                "~/Assets/js/speakers/speakers.apiconfiguration.widget.js",
+                "~/Assets/js/speakers/speakers.onboardinginfo.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/speakers.update.js").Include(
                 "~/Assets/js/speakers/speakers.update.js"));
@@ -495,7 +503,6 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
-
             #region Pillars
 
             bundles.Add(new ScriptBundle("~/bundles/js/pillars.list.js").Include(
@@ -556,6 +563,12 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/reports/reports.audiovisual.subscriptions.widget.js",
                 "~/Scripts/jquery.unobtrusive-ajax.js"));
 
+            #region Reports
+            #region Audiovisual
+            bundles.Add(new ScriptBundle("~/bundles/js/reports.audiovisual.subscriptions.widget.js").Include(
+                "~/Assets/js/reports/reports.audiovisual.subscriptions.widget.js",
+                "~/Scripts/jquery.unobtrusive-ajax.js"));
+
             
             #region Logistics - LogisticSponsors
 
@@ -599,6 +612,65 @@ namespace PlataformaRio2C.Web.Admin
             #endregion
 
             #endregion
+            #endregion
+
+            #endregion
+
+            #endregion
+
+            #region Music Page Bundles
+
+            #region Collaborators - Commissions
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.commissions.list.js").Include(
+                "~/Assets/js/music/commissions/music.commissions.totalcount.widget.js",
+                "~/Assets/js/music/commissions/music.commissions.datatable.widget.js",
+                "~/Assets/js/salesplatforms/salesplatforms.export.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.commissions.editioncount.js").Include(
+                "~/Assets/js/music/commissions/music.commissions.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.commissions.create.js").Include(
+                "~/Assets/js/music/commissions/music.commissions.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.commissions.details.js").Include(
+                "~/Assets/js/music/commissions/music.commissions.maininformation.widget.js",
+                "~/Assets/js/music/commissions/music.commissions.socialnetworks.widget.js",
+                "~/Assets/js/music/commissions/music.commissions.onboardinginfo.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.commissions.update.js").Include(
+                "~/Assets/js/music/commissions/music.commissions.update.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.commissions.delete.js").Include(
+                "~/Assets/js/music/commissions/music.commissions.delete.js"));
+
+            #endregion
+
+            #region Projects
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.projects.list.widget.js").Include(
+                "~/Assets/js/music/projects/music.projects.datatable.widget.js",
+                "~/Assets/js/music/projects/music.projects.totalcount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.projects.editioncount.widget.js").Include(
+                "~/Assets/js/music/projects/music.projects.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.projects.widget.js").Include(
+                "~/Assets/js/music/projects/music.projects.maininformation.widget.js",
+                "~/Assets/js/music/projects/music.projects.members.widget.js",
+                "~/Assets/js/music/projects/music.projects.teammembers.widget.js",
+                "~/Assets/js/music/projects/music.projects.releasedprojects.widget.js",
+                "~/Assets/js/music/projects/music.projects.responsible.widget.js",
+                "~/Assets/js/music/projects/music.projects.clipping.widget.js",
+                "~/Assets/js/music/projects/music.projects.videoandmusic.widget.js",
+                "~/Assets/js/music/projects/music.projects.socialnetworks.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.projects.evaluation.update.widget.js").Include(
+                "~/Assets/js/music/projects/music.projects.evaluation.update.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/music.projects.delete.js").Include(
+                "~/Assets/js/music/projects/music.projects.delete.js"));
+            
             #endregion
 
             #endregion

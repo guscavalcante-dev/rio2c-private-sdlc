@@ -4,7 +4,7 @@
 // Created          : 08-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 02-28-2020
 // ***********************************************************************
 // <copyright file="EditionDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -39,6 +39,14 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset NegotiationEndDate { get; private set; }
         public int AttendeeOrganizationMaxSellProjectsCount { get; private set; }
         public int ProjectMaxBuyerEvaluationsCount { get; private set; }
+        public DateTimeOffset MusicProjectSubmitStartDate { get; private set; }
+        public DateTimeOffset MusicProjectSubmitEndDate { get; private set; }
+        public DateTimeOffset MusicProjectEvaluationStartDate { get; private set; }
+        public DateTimeOffset MusicProjectEvaluationEndDate { get; private set; }
+        public DateTimeOffset InnovationProjectSubmitStartDate { get; private set; }
+        public DateTimeOffset InnovationProjectSubmitEndDate { get; private set; }
+        public DateTimeOffset InnovationProjectEvaluationStartDate { get; private set; }
+        public DateTimeOffset InnovationProjectEvaluationEndDate { get; private set; }
         public DateTimeOffset CreateDate { get; private set; }
         public int CreateUserId { get; private set; }
         public DateTimeOffset UpdateDate { get; private set; }
@@ -83,6 +91,14 @@ namespace PlataformaRio2C.Domain.Dtos
             this.NegotiationEndDate = entity.NegotiationEndDate;
             this.AttendeeOrganizationMaxSellProjectsCount = entity.AttendeeOrganizationMaxSellProjectsCount;
             this.ProjectMaxBuyerEvaluationsCount = entity.ProjectMaxBuyerEvaluationsCount;
+            this.MusicProjectSubmitStartDate = entity.MusicProjectSubmitStartDate;
+            this.MusicProjectSubmitEndDate = entity.MusicProjectSubmitEndDate;
+            this.MusicProjectEvaluationStartDate = entity.MusicProjectEvaluationStartDate;
+            this.MusicProjectEvaluationEndDate = entity.MusicProjectEvaluationEndDate;
+            this.InnovationProjectSubmitStartDate = entity.InnovationProjectSubmitStartDate;
+            this.InnovationProjectSubmitEndDate = entity.InnovationProjectSubmitEndDate;
+            this.InnovationProjectEvaluationStartDate = entity.InnovationProjectEvaluationStartDate;
+            this.InnovationProjectEvaluationEndDate = entity.InnovationProjectEvaluationEndDate;
             this.CreateDate = entity.CreateDate;
             this.CreateUserId = entity.CreateUserId;
             this.UpdateDate = entity.UpdateDate;
@@ -98,6 +114,8 @@ namespace PlataformaRio2C.Domain.Dtos
             //    this.Updater = new UserAppViewModel(entity.Updater);
             //}
         }
+
+        #region Audiovisual
 
         #region Project Submit
 
@@ -152,6 +170,128 @@ namespace PlataformaRio2C.Domain.Dtos
         {
             return DateTime.UtcNow > this.ProjectEvaluationEndDate;
         }
+
+        #endregion
+
+        #endregion
+
+        #region Music
+
+        #region Project Submit
+
+        /// <summary>Determines whether [is music project submit open].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is music project submit open]; otherwise, <c>false</c>.</returns>
+        public bool IsMusicProjectSubmitOpen()
+        {
+            return DateTime.UtcNow >= this.MusicProjectSubmitStartDate && DateTime.UtcNow <= this.MusicProjectSubmitEndDate;
+        }
+
+        /// <summary>Determines whether [is music project submit started].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is music project submit started]; otherwise, <c>false</c>.</returns>
+        public bool IsMusicProjectSubmitStarted()
+        {
+            return DateTime.UtcNow >= this.MusicProjectSubmitStartDate;
+        }
+
+        /// <summary>Determines whether [is music project submit ended].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is music project submit ended]; otherwise, <c>false</c>.</returns>
+        public bool IsMusicProjectSubmitEnded()
+        {
+            return DateTime.UtcNow > this.MusicProjectSubmitEndDate;
+        }
+
+        #endregion
+
+        #region Project Evaluation
+
+        /// <summary>Determines whether [is music project evaluation open].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is music project evaluation open]; otherwise, <c>false</c>.</returns>
+        public bool IsMusicProjectEvaluationOpen()
+        {
+            return DateTime.UtcNow >= this.MusicProjectEvaluationStartDate && DateTime.UtcNow <= this.MusicProjectEvaluationEndDate;
+        }
+
+        /// <summary>Determines whether [is music project evaluation started].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is music project evaluation started]; otherwise, <c>false</c>.</returns>
+        public bool IsMusicProjectEvaluationStarted()
+        {
+            return DateTime.UtcNow >= this.MusicProjectEvaluationStartDate;
+        }
+
+        /// <summary>Determines whether [is music project evaluation ended].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is music project evaluation ended]; otherwise, <c>false</c>.</returns>
+        public bool IsMusicProjectEvaluationEnded()
+        {
+            return DateTime.UtcNow > this.MusicProjectEvaluationEndDate;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Innovation
+
+        #region Project Submit
+
+        /// <summary>Determines whether [is innovation project submit open].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is innovation project submit open]; otherwise, <c>false</c>.</returns>
+        public bool IsInnovationProjectSubmitOpen()
+        {
+            return DateTime.UtcNow >= this.InnovationProjectSubmitStartDate && DateTime.UtcNow <= this.InnovationProjectSubmitEndDate;
+        }
+
+        /// <summary>Determines whether [is innovation project submit started].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is innovation project submit started]; otherwise, <c>false</c>.</returns>
+        public bool IsInnovationProjectSubmitStarted()
+        {
+            return DateTime.UtcNow >= this.InnovationProjectSubmitStartDate;
+        }
+
+        /// <summary>Determines whether [is innovation project submit ended].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is innovation project submit ended]; otherwise, <c>false</c>.</returns>
+        public bool IsInnovationProjectSubmitEnded()
+        {
+            return DateTime.UtcNow > this.InnovationProjectSubmitEndDate;
+        }
+
+        #endregion
+
+        #region Project Evaluation
+
+        /// <summary>Determines whether [is innovation project evaluation open].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is innovation project evaluation open]; otherwise, <c>false</c>.</returns>
+        public bool IsInnovationProjectEvaluationOpen()
+        {
+            return DateTime.UtcNow >= this.InnovationProjectEvaluationStartDate && DateTime.UtcNow <= this.InnovationProjectEvaluationEndDate;
+        }
+
+        /// <summary>Determines whether [is innovation project evaluation started].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is innovation project evaluation started]; otherwise, <c>false</c>.</returns>
+        public bool IsInnovationProjectEvaluationStarted()
+        {
+            return DateTime.UtcNow >= this.InnovationProjectEvaluationStartDate;
+        }
+
+        /// <summary>Determines whether [is innovation project evaluation ended].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is innovation project evaluation ended]; otherwise, <c>false</c>.</returns>
+        public bool IsInnovationProjectEvaluationEnded()
+        {
+            return DateTime.UtcNow > this.InnovationProjectEvaluationEndDate;
+        }
+
+        #endregion
 
         #endregion
     }

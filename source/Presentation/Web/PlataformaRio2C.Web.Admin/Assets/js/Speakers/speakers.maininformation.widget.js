@@ -4,7 +4,7 @@
 // Created          : 12-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-16-2019
+// Last Modified On : 02-26-2020
 // ***********************************************************************
 // <copyright file="speakers.maininformation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,7 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 
-var SpeakersMainInformationWidget = function () {
+var CollaboratorsMainInformationWidget = function () {
 
     var widgetElementId = '#SpeakerMainInformationWidget';
     var widgetElement = $(widgetElementId);
@@ -59,14 +59,16 @@ var SpeakersMainInformationWidget = function () {
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (SpeakersMainInformationWidget) !== 'undefined') {
-                    SpeakersMainInformationWidget.init();
+                if (typeof (CollaboratorsMainInformationWidget) !== 'undefined') {
+	                CollaboratorsMainInformationWidget.init();
                 }
             },
             onError: function (data) {
                 if (MyRio2cCommon.hasProperty(data, 'pages')) {
                     enableUpdatePlugins();
                 }
+
+                $(updateFormId).find(":input.input-validation-error:first").focus();
             }
         });
     };

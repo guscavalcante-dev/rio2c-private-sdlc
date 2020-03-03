@@ -40,6 +40,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeOrganizationCollaborator> AttendeeOrganizationCollaborators { get; private set; }
         public virtual ICollection<AttendeeCollaboratorTicket> AttendeeCollaboratorTickets { get; private set; }
         public virtual ICollection<ConferenceParticipant> ConferenceParticipants { get; private set; }
+        public virtual ICollection<AttendeeMusicBandCollaborator> AttendeeMusicBandCollaborators { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.</summary>
         /// <param name="edition">The edition.</param>
@@ -627,6 +628,92 @@ namespace PlataformaRio2C.Domain.Entities
             {
                 conferenceParticipant.Delete(userId);
             }
+        }
+
+        #endregion
+
+        #region Attendee Music Band Collaborators
+
+        /// <summary>Synchronizes the attendee music band collaborators.</summary>
+        /// <param name="attendeeMusicBands">The attendee music bands.</param>
+        /// <param name="shouldDeleteMusicBands">if set to <c>true</c> [should delete music bands].</param>
+        /// <param name="userId">The user identifier.</param>
+        public void SynchronizeAttendeeMusicBandCollaborators(List<AttendeeMusicBand> attendeeMusicBands, bool shouldDeleteMusicBands, int userId)
+        {
+            if (this.AttendeeMusicBandCollaborators == null)
+            {
+                this.AttendeeMusicBandCollaborators = new List<AttendeeMusicBandCollaborator>();
+            }
+
+            if (shouldDeleteMusicBands)
+            {
+                this.DeleteAttendeeMusicBandCollaborators(attendeeMusicBands, userId);
+            }
+
+            if (attendeeMusicBands?.Any() != true)
+            {
+                return;
+            }
+
+            // Create or update
+            foreach (var attendeeMusicBand in attendeeMusicBands)
+            {
+                var attendeeMusicBandCollaboratorDb = this.AttendeeMusicBandCollaborators.FirstOrDefault(ambc => ambc.AttendeeMusicBandId == attendeeMusicBand.Id);
+                if (attendeeMusicBandCollaboratorDb != null)
+                {
+                    attendeeMusicBandCollaboratorDb.Update(userId);
+                }
+                else
+                {
+                    this.CreateAttendeeMusicBandCollaborator(attendeeMusicBand, userId);
+                }
+            }
+        }
+
+        /// <summary>Deletes the attendee music band collaborator.</summary>
+        /// <param name="musicBandUid">The music band uid.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void DeleteAttendeeMusicBandCollaborator(Guid musicBandUid, int userId)
+        {
+            var attendeeMusicBandCollaborator = this.FindAttendeeMusicBandCollaboratorByMusicBandUid(musicBandUid);
+            attendeeMusicBandCollaborator?.Delete(userId);
+        }
+
+        /// <summary>Deletes the attendee music band collaborators.</summary>
+        /// <param name="newAttendeeMusicBands">The new attendee music bands.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteAttendeeMusicBandCollaborators(List<AttendeeMusicBand> newAttendeeMusicBands, int userId)
+        {
+            var attendeeMusicBandCollaboratorToDelete = this.AttendeeMusicBandCollaborators.Where(ambc => !ambc.IsDeleted
+                                                                                                             && newAttendeeMusicBands?.Select(namb => namb.Id)?.Contains(ambc.AttendeeMusicBandId) == false)
+                                                                                                 .ToList();
+            foreach (var attendeeMusicBandCollaborator in attendeeMusicBandCollaboratorToDelete)
+            {
+                attendeeMusicBandCollaborator.Delete(userId);
+            }
+        }
+
+        /// <summary>Creates the attendee music band collaborator.</summary>
+        /// <param name="attendeeMusicBand">The attendee music band.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void CreateAttendeeMusicBandCollaborator(AttendeeMusicBand attendeeMusicBand, int userId)
+        {
+            this.AttendeeMusicBandCollaborators.Add(new AttendeeMusicBandCollaborator(attendeeMusicBand, this, userId));
+        }
+
+        /// <summary>Finds the attendee music band collaborator by music band uid.</summary>
+        /// <param name="musicBandUid">The music band uid.</param>
+        /// <returns></returns>
+        private AttendeeMusicBandCollaborator FindAttendeeMusicBandCollaboratorByMusicBandUid(Guid musicBandUid)
+        {
+            return this.AttendeeMusicBandCollaborators?.FirstOrDefault(ambc => ambc.AttendeeMusicBand.MusicBand.Uid == musicBandUid);
+        }
+
+        /// <summary>Gets all attende music bands.</summary>
+        /// <returns></returns>
+        public List<AttendeeMusicBand> GetAllAttendeMusicBands()
+        {
+            return this.AttendeeMusicBandCollaborators?.Select(ambc => ambc.AttendeeMusicBand)?.ToList();
         }
 
         #endregion

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 02-28-2020
 // ***********************************************************************
 // <copyright file="Edition.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -39,14 +39,22 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset NegotiationEndDate { get; private set; }
         public int AttendeeOrganizationMaxSellProjectsCount { get; private set; }
         public int ProjectMaxBuyerEvaluationsCount { get; private set; }
+        public DateTimeOffset MusicProjectSubmitStartDate { get; private set; }
+        public DateTimeOffset MusicProjectSubmitEndDate { get; private set; }
+        public DateTimeOffset MusicProjectEvaluationStartDate { get; private set; }
+        public DateTimeOffset MusicProjectEvaluationEndDate { get; private set; }
+        public DateTimeOffset InnovationProjectSubmitStartDate { get; private set; }
+        public DateTimeOffset InnovationProjectSubmitEndDate { get; private set; }
+        public DateTimeOffset InnovationProjectEvaluationStartDate { get; private set; }
+        public DateTimeOffset InnovationProjectEvaluationEndDate { get; private set; }
 
         public virtual Quiz Quiz { get; private set; }
 
         public virtual ICollection<AttendeeOrganization> AttendeeOrganizations { get; private set; }
         public virtual ICollection<AttendeeCollaborator> AttendeeCollaborators { get; private set; }
         public virtual ICollection<AttendeeSalesPlatform> AttendeeSalesPlatforms { get; private set; }
-        public virtual ICollection<AttendeeLogisticSponsor> AttendeeLogisticSponsors { get; private set; }        
-
+        public virtual ICollection<AttendeeLogisticSponsor> AttendeeLogisticSponsors { get; private set; }
+        
         /// <summary>Initializes a new instance of the <see cref="Edition"/> class.</summary>
         /// <param name="name">The name.</param>
         public Edition(string name)

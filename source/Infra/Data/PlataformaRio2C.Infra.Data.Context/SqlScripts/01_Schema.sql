@@ -150,6 +150,7 @@ CREATE TABLE [dbo].[AttendeeCollaboratorTypes](
 	[CollaboratorTypeId] [int] NOT NULL,
 	[IsApiDisplayEnabled] [bit] NOT NULL,
 	[ApiHighlightPosition] [int] NULL,
+	[TermsAcceptanceDate] [datetimeoffset](7) NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
@@ -175,6 +176,75 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[AttendeeInnovationOrganization](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[EditionId] [int] NOT NULL,
+	[InnovationOrganizationId] [int] NOT NULL,
+	[ProjectEvaluationStatusId] [int] NOT NULL,
+	[ProjectEvaluationRefuseReasonId] [int] NULL,
+	[Reason] [varchar](1500) NULL,
+	[EvaluationUserId] [int] NULL,
+	[EvaluationEmailSendDate] [datetimeoffset](7) NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_AttendeeInnovationOrganization] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_AttendeeInnovationOrganization_EditionId_InnovationOrganizationId] UNIQUE NONCLUSTERED 
+(
+	[EditionId] ASC,
+	[InnovationOrganizationId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_AttendeeInnovationOrganization_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AttendeeInnovationOrganizationCollaborators](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[AttendeeInnovationOrganizationId] [int] NOT NULL,
+	[AttendeeCollaboratorId] [int] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_AttendeeInnovationOrganizationCollaborators] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_AttendeeInnovationOrganizationCollaborators_AttendeeInnovationOrganizationId_AttendeeCollaboratorId] UNIQUE NONCLUSTERED 
+(
+	[AttendeeInnovationOrganizationId] ASC,
+	[AttendeeCollaboratorId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_AttendeeInnovationOrganizationCollaborators_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 CREATE TABLE [dbo].[AttendeeLogisticSponsors](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
@@ -189,6 +259,66 @@ CREATE TABLE [dbo].[AttendeeLogisticSponsors](
  CONSTRAINT [PK_AttendeeLogisticSponsors_Uid] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AttendeeMusicBandCollaborators](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[AttendeeMusicBandId] [int] NOT NULL,
+	[AttendeeCollaboratorId] [int] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_AttendeeMusicBandCollaborators] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_AttendeeMusicBandCollaborators_AttendeeMusicBandId_AttendeeCollaboratorId] UNIQUE NONCLUSTERED 
+(
+	[AttendeeMusicBandId] ASC,
+	[AttendeeCollaboratorId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_AttendeeMusicBandCollaborators_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AttendeeMusicBands](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[EditionId] [int] NOT NULL,
+	[MusicBandId] [int] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_AttendeeMusicBands] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_AttendeeMusicBands_EditionId_MusicBandId] UNIQUE NONCLUSTERED 
+(
+	[EditionId] ASC,
+	[MusicBandId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_AttendeeMusicBands_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
@@ -618,6 +748,7 @@ CREATE TABLE [dbo].[Collaborators](
 	[Uid] [uniqueidentifier] NOT NULL,
 	[FirstName] [varchar](100) NOT NULL,
 	[LastNames] [varchar](200) NULL,
+	[Document] [varchar](100) NULL,
 	[ImageUploadDate] [datetimeoffset](7) NULL,
 	[PhoneNumber] [varchar](50) NULL,
 	[CellPhone] [varchar](50) NULL,
@@ -1062,6 +1193,14 @@ CREATE TABLE [dbo].[Editions](
 	[NegotiationEndDate] [datetimeoffset](7) NOT NULL,
 	[AttendeeOrganizationMaxSellProjectsCount] [int] NOT NULL,
 	[ProjectMaxBuyerEvaluationsCount] [int] NOT NULL,
+	[MusicProjectSubmitStartDate] [datetimeoffset](7) NOT NULL,
+	[MusicProjectSubmitEndDate] [datetimeoffset](7) NOT NULL,
+	[MusicProjectEvaluationStartDate] [datetimeoffset](7) NOT NULL,
+	[MusicProjectEvaluationEndDate] [datetimeoffset](7) NOT NULL,
+	[InnovationProjectSubmitStartDate] [datetimeoffset](7) NOT NULL,
+	[InnovationProjectSubmitEndDate] [datetimeoffset](7) NOT NULL,
+	[InnovationProjectEvaluationStartDate] [datetimeoffset](7) NOT NULL,
+	[InnovationProjectEvaluationEndDate] [datetimeoffset](7) NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetimeoffset](7) NULL,
 	[CreateUserId] [int] NOT NULL,
@@ -1140,6 +1279,148 @@ CREATE TABLE [dbo].[Holdings](
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
  CONSTRAINT [IDX_UQ_Holdings_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[InnovationOptionGroups](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](150) NOT NULL,
+	[DisplayOrder] [int] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_InnovationOptionGroups] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_InnovationOptionGroups_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[InnovationOptions](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[InnovationOptionGroupId] [int] NOT NULL,
+	[Name] [varchar](150) NOT NULL,
+	[Description] [varchar](500) NULL,
+	[DisplayOrder] [int] NOT NULL,
+	[HasAdditionalInfo] [bit] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_InnovationOptions] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_InnovationOptions_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[InnovationOrganizationOptions](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[InnovationOrganizationId] [int] NOT NULL,
+	[InnovationOptionId] [int] NOT NULL,
+	[AdditionalInfo] [varchar](200) NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_InnovationOrganizationOptions] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_InnovationOrganizationOptions_InnovationOrganizationId_InnovationOptionId] UNIQUE NONCLUSTERED 
+(
+	[InnovationOrganizationId] ASC,
+	[InnovationOptionId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_InnovationOrganizationOptions_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[InnovationOrganizations](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](100) NOT NULL,
+	[Document] [varchar](50) NULL,
+	[ServiceName] [varchar](150) NOT NULL,
+	[FoundersNames] [varchar](1000) NOT NULL,
+	[FoundationDate] [datetime] NOT NULL,
+	[AccumulatedRevenue] [decimal](12, 2) NOT NULL,
+	[Description] [varchar](600) NOT NULL,
+	[Curriculum] [varchar](600) NOT NULL,
+	[WorkDedicationId] [int] NOT NULL,
+	[BusinessDefinition] [varchar](300) NULL,
+	[Website] [varchar](300) NULL,
+	[BusinessFocus] [varchar](300) NULL,
+	[MarketSize] [varchar](300) NULL,
+	[BusinessEconomicModel] [varchar](300) NULL,
+	[BusinessOperationalModel] [varchar](300) NULL,
+	[BusinessDifferentials] [varchar](300) NULL,
+	[CompetingCompanies] [varchar](300) NULL,
+	[BusinessStage] [varchar](300) NULL,
+	[PresentationUploadDate] [datetimeoffset](7) NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_InnovationOrganizations] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_InnovationOrganizations_Uid] UNIQUE NONCLUSTERED 
 (
 	[Uid] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
@@ -1461,6 +1742,267 @@ CREATE TABLE [dbo].[Messages](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[MusicBandGenres](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[MusicBandId] [int] NOT NULL,
+	[MusicGenreId] [int] NOT NULL,
+	[AdditionalInfo] [varchar](200) NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_MusicBandGenres] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_MusicBandGenres_MusicBandId_MusicGenreId] UNIQUE NONCLUSTERED 
+(
+	[MusicBandId] ASC,
+	[MusicGenreId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_MusicBandGenres_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[MusicBandMembers](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[MusicBandId] [int] NOT NULL,
+	[Name] [varchar](300) NOT NULL,
+	[MusicInstrumentName] [varchar](100) NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_MusicBandMembers] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_MusicBandMembers_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[MusicBands](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[MusicBandTypeId] [int] NOT NULL,
+	[Name] [varchar](300) NOT NULL,
+	[ImageUrl] [varchar](300) NULL,
+	[FormationDate] [varchar](300) NULL,
+	[MainMusicInfluences] [varchar](600) NULL,
+	[Facebook] [varchar](300) NULL,
+	[Instagram] [varchar](300) NULL,
+	[Twitter] [varchar](300) NULL,
+	[Youtube] [varchar](300) NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_MusicBands] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_MusicBands_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[MusicBandTargetAudiences](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[MusicBandId] [int] NOT NULL,
+	[TargetAudienceId] [int] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_MusicBandTargetAudiences] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_MusicBandTargetAudiences_MusicBandId_TargetAudienceId] UNIQUE NONCLUSTERED 
+(
+	[MusicBandId] ASC,
+	[TargetAudienceId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_MusicBandTargetAudiences_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[MusicBandTeamMembers](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[MusicBandId] [int] NOT NULL,
+	[Name] [varchar](300) NOT NULL,
+	[Role] [varchar](300) NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_MusicBandTeamMembers] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_MusicBandTeamMembers_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[MusicBandTypes](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](100) NOT NULL,
+	[DisplayOrder] [int] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_MusicBandTypes] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_MusicBandTypes_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[MusicGenres](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](100) NOT NULL,
+	[DisplayOrder] [int] NOT NULL,
+	[HasAdditionalInfo] [bit] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_MusicGenres] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_MusicGenres_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[MusicProjects](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[AttendeeMusicBandId] [int] NOT NULL,
+	[VideoUrl] [varchar](300) NULL,
+	[Music1Url] [varchar](300) NULL,
+	[Music2Url] [varchar](300) NULL,
+	[Release] [varchar](max) NULL,
+	[Clipping1] [varchar](300) NULL,
+	[Clipping2] [varchar](300) NULL,
+	[Clipping3] [varchar](300) NULL,
+	[ProjectEvaluationStatusId] [int] NOT NULL,
+	[ProjectEvaluationRefuseReasonId] [int] NULL,
+	[Reason] [varchar](1500) NULL,
+	[EvaluationUserId] [int] NULL,
+	[EvaluationDate] [datetimeoffset](7) NULL,
+	[EvaluationEmailSendDate] [datetimeoffset](7) NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_MusicProjects] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_MusicProjects_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
 GO
 SET ANSI_NULLS ON
 GO
@@ -1949,6 +2491,7 @@ GO
 CREATE TABLE [dbo].[ProjectEvaluationRefuseReasons](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
+	[ProjectTypeId] [int] NOT NULL,
 	[Name] [varchar](500) NOT NULL,
 	[HasAdditionalInfo] [bit] NOT NULL,
 	[DisplayOrder] [int] NOT NULL,
@@ -2443,6 +2986,36 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_PADDING ON
 GO
+CREATE TABLE [dbo].[ReleasedMusicProjects](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[MusicBandId] [int] NOT NULL,
+	[Name] [varchar](200) NOT NULL,
+	[Year] [varchar](300) NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_ReleasedMusicProjects] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_ReleasedMusicProjects_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
 CREATE TABLE [dbo].[Roles](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Name] [varchar](256) NOT NULL,
@@ -2896,6 +3469,35 @@ CREATE TABLE [dbo].[UserUnsubscribedLists](
 ) ON [PRIMARY]
 
 GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[WorkDedications](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Uid] [uniqueidentifier] NOT NULL,
+	[Name] [varchar](100) NOT NULL,
+	[DisplayOrder] [int] NOT NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[CreateDate] [datetimeoffset](7) NOT NULL,
+	[CreateUserId] [int] NOT NULL,
+	[UpdateDate] [datetimeoffset](7) NOT NULL,
+	[UpdateUserId] [int] NOT NULL,
+ CONSTRAINT [PK_WorkDedications] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IDX_UQ_WorkDedications_Uid] UNIQUE NONCLUSTERED 
+(
+	[Uid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
 CREATE NONCLUSTERED INDEX [IDX_Activities_ProjectTYpeId] ON [dbo].[Activities]
 (
 	[ProjectTypeId] ASC
@@ -2920,6 +3522,26 @@ CREATE NONCLUSTERED INDEX [IDX_AttendeeCollaboratorTypes_IsApiDisplayEnabled] ON
 	[IsApiDisplayEnabled] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
+CREATE NONCLUSTERED INDEX [IDX_AttendeeInnovationOrganization_EvaluationuserId] ON [dbo].[AttendeeInnovationOrganization]
+(
+	[EvaluationUserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_AttendeeInnovationOrganization_InnovationOrganizationId] ON [dbo].[AttendeeInnovationOrganization]
+(
+	[InnovationOrganizationId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_AttendeeInnovationOrganization_ProjectEvaluationStatusId] ON [dbo].[AttendeeInnovationOrganization]
+(
+	[ProjectEvaluationRefuseReasonId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_AttendeeInnovationOrganizationCollaborators_AttendeeCollaboratorId] ON [dbo].[AttendeeInnovationOrganizationCollaborators]
+(
+	[AttendeeCollaboratorId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
 CREATE NONCLUSTERED INDEX [IDX_AttendeeLogisticSponsors_EditionId_IsDeleted] ON [dbo].[AttendeeLogisticSponsors]
 (
 	[EditionId] ASC,
@@ -2930,6 +3552,16 @@ CREATE NONCLUSTERED INDEX [IDX_AttendeeLogisticSponsors_LogisticSponsorId_IsDele
 (
 	[LogisticSponsorId] ASC,
 	[IsDeleted] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_AttendeeMusicBandCollaborators_AttendeeCollaboratorId] ON [dbo].[AttendeeMusicBandCollaborators]
+(
+	[AttendeeCollaboratorId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_AttendeeMusicBands_MusicBandId] ON [dbo].[AttendeeMusicBands]
+(
+	[MusicBandId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
 CREATE NONCLUSTERED INDEX [IDX_AttendeeOrganizationTypes_IsApiDisplayEnabled] ON [dbo].[AttendeeOrganizationTypes]
@@ -3026,6 +3658,48 @@ CREATE NONCLUSTERED INDEX [IDX_EditionEvents_EditionId] ON [dbo].[EditionEvents]
 	[EditionId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
+SET ANSI_PADDING ON
+
+GO
+CREATE NONCLUSTERED INDEX [IDX_InnovationOptionGroups_Name] ON [dbo].[InnovationOptionGroups]
+(
+	[Name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_InnovationOptions_InnovationOptionGroupId] ON [dbo].[InnovationOptions]
+(
+	[InnovationOptionGroupId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+CREATE NONCLUSTERED INDEX [IDX_InnovationOptions_Name] ON [dbo].[InnovationOptions]
+(
+	[Name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_InnovationOrganizationOptions_InnovationOptionId] ON [dbo].[InnovationOrganizationOptions]
+(
+	[InnovationOptionId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+CREATE NONCLUSTERED INDEX [IDX_InnovationOrganizations_Document] ON [dbo].[InnovationOrganizations]
+(
+	[Document] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+CREATE NONCLUSTERED INDEX [IDX_InnovationOrganizations_Name] ON [dbo].[InnovationOrganizations]
+(
+	[Name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
 CREATE NONCLUSTERED INDEX [IDX_InterestGroups_ProjectTypeId] ON [dbo].[InterestGroups]
 (
 	[ProjectTypeId] ASC
@@ -3077,6 +3751,70 @@ GO
 CREATE NONCLUSTERED INDEX [IDX_Messages_SenderId] ON [dbo].[Messages]
 (
 	[SenderId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_MusicBandGenres_MusicGenreId] ON [dbo].[MusicBandGenres]
+(
+	[MusicGenreId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_MusicBandMembers_MusicBandId] ON [dbo].[MusicBandMembers]
+(
+	[MusicBandId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_MusicBands_MusicBandTypeId] ON [dbo].[MusicBands]
+(
+	[MusicBandTypeId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+CREATE NONCLUSTERED INDEX [IDX_MusicBands_Name] ON [dbo].[MusicBands]
+(
+	[Name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_MusicBandTargetAudiences_TargetAudienceId] ON [dbo].[MusicBandTargetAudiences]
+(
+	[TargetAudienceId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_MusicBandTeamMembers_MusicBandId] ON [dbo].[MusicBandTeamMembers]
+(
+	[MusicBandId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+CREATE NONCLUSTERED INDEX [IDX_MusicBandTypes_Name] ON [dbo].[MusicBandTypes]
+(
+	[Name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+CREATE NONCLUSTERED INDEX [IDX_MusicGenres_Name] ON [dbo].[MusicGenres]
+(
+	[Name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_MusicProjects_AttendeeMusicBandId] ON [dbo].[MusicProjects]
+(
+	[AttendeeMusicBandId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_MusicProjects_EvaluationUserId] ON [dbo].[MusicProjects]
+(
+	[EvaluationUserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_MusicProjects_ProjectEvaluationStatusId] ON [dbo].[MusicProjects]
+(
+	[ProjectEvaluationStatusId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
 CREATE NONCLUSTERED INDEX [IDX_NegotiationConfigs_EditionId] ON [dbo].[NegotiationConfigs]
@@ -3186,6 +3924,11 @@ CREATE NONCLUSTERED INDEX [IDX_UQ_Quizzes_IsActive] ON [dbo].[Quizzes]
 	[IsActive] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
+CREATE NONCLUSTERED INDEX [IDX_ReleasedMusicProjects_MusicBandId] ON [dbo].[ReleasedMusicProjects]
+(
+	[MusicBandId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
 CREATE NONCLUSTERED INDEX [IDX_Rooms_EditionId] ON [dbo].[Rooms]
 (
 	[EditionId] ASC
@@ -3257,6 +4000,14 @@ GO
 CREATE NONCLUSTERED INDEX [IDX_Users_UserName] ON [dbo].[Users]
 (
 	[UserName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+
+GO
+CREATE NONCLUSTERED INDEX [IDX_WorkDedications_Name] ON [dbo].[WorkDedications]
+(
+	[Name] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[Activities]  WITH CHECK ADD  CONSTRAINT [FK_ProjectTypes_Activities_ProjectTypeId] FOREIGN KEY([ProjectTypeId])
@@ -3359,6 +4110,61 @@ REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[AttendeeCollaboratorTypes] CHECK CONSTRAINT [FK_Users_AttendeeCollaboratorTypes_UpdateUserId]
 GO
+ALTER TABLE [dbo].[AttendeeInnovationOrganization]  WITH CHECK ADD  CONSTRAINT [FK_Editions_AttendeeInnovationOrganization_EditionId] FOREIGN KEY([EditionId])
+REFERENCES [dbo].[Editions] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeInnovationOrganization] CHECK CONSTRAINT [FK_Editions_AttendeeInnovationOrganization_EditionId]
+GO
+ALTER TABLE [dbo].[AttendeeInnovationOrganization]  WITH CHECK ADD  CONSTRAINT [FK_InnovationOrganizations_AttendeeInnovationOrganization_InnovationOrganizationId] FOREIGN KEY([InnovationOrganizationId])
+REFERENCES [dbo].[InnovationOrganizations] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeInnovationOrganization] CHECK CONSTRAINT [FK_InnovationOrganizations_AttendeeInnovationOrganization_InnovationOrganizationId]
+GO
+ALTER TABLE [dbo].[AttendeeInnovationOrganization]  WITH CHECK ADD  CONSTRAINT [FK_ProjectEvaluationRefuseReasons_AttendeeInnovationOrganization_ProjectEvaluationRefuseReasonId] FOREIGN KEY([ProjectEvaluationRefuseReasonId])
+REFERENCES [dbo].[ProjectEvaluationRefuseReasons] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeInnovationOrganization] CHECK CONSTRAINT [FK_ProjectEvaluationRefuseReasons_AttendeeInnovationOrganization_ProjectEvaluationRefuseReasonId]
+GO
+ALTER TABLE [dbo].[AttendeeInnovationOrganization]  WITH CHECK ADD  CONSTRAINT [FK_ProjectEvaluationStatuses_AttendeeInnovationOrganization_ProjectEvaluationStatusId] FOREIGN KEY([ProjectEvaluationStatusId])
+REFERENCES [dbo].[ProjectEvaluationStatuses] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeInnovationOrganization] CHECK CONSTRAINT [FK_ProjectEvaluationStatuses_AttendeeInnovationOrganization_ProjectEvaluationStatusId]
+GO
+ALTER TABLE [dbo].[AttendeeInnovationOrganization]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeInnovationOrganization_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeInnovationOrganization] CHECK CONSTRAINT [FK_Users_AttendeeInnovationOrganization_CreateUserId]
+GO
+ALTER TABLE [dbo].[AttendeeInnovationOrganization]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeInnovationOrganization_EvaluationUserId] FOREIGN KEY([EvaluationUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeInnovationOrganization] CHECK CONSTRAINT [FK_Users_AttendeeInnovationOrganization_EvaluationUserId]
+GO
+ALTER TABLE [dbo].[AttendeeInnovationOrganization]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeInnovationOrganization_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeInnovationOrganization] CHECK CONSTRAINT [FK_Users_AttendeeInnovationOrganization_UpdateUserId]
+GO
+ALTER TABLE [dbo].[AttendeeInnovationOrganizationCollaborators]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeCollaborators_AttendeeInnovationOrganizationCollaborators_AttendeeCollaboratorId] FOREIGN KEY([AttendeeCollaboratorId])
+REFERENCES [dbo].[AttendeeCollaborators] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeInnovationOrganizationCollaborators] CHECK CONSTRAINT [FK_AttendeeCollaborators_AttendeeInnovationOrganizationCollaborators_AttendeeCollaboratorId]
+GO
+ALTER TABLE [dbo].[AttendeeInnovationOrganizationCollaborators]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeInnovationOrganization_AttendeeInnovationOrganizationCollaborators_AttendeeInnovationOrganizationId] FOREIGN KEY([AttendeeInnovationOrganizationId])
+REFERENCES [dbo].[AttendeeInnovationOrganization] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeInnovationOrganizationCollaborators] CHECK CONSTRAINT [FK_AttendeeInnovationOrganization_AttendeeInnovationOrganizationCollaborators_AttendeeInnovationOrganizationId]
+GO
+ALTER TABLE [dbo].[AttendeeInnovationOrganizationCollaborators]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeInnovationOrganizationCollaborators_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeInnovationOrganizationCollaborators] CHECK CONSTRAINT [FK_Users_AttendeeInnovationOrganizationCollaborators_CreateUserId]
+GO
+ALTER TABLE [dbo].[AttendeeInnovationOrganizationCollaborators]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeInnovationOrganizationCollaborators_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeInnovationOrganizationCollaborators] CHECK CONSTRAINT [FK_Users_AttendeeInnovationOrganizationCollaborators_UpdateUserId]
+GO
 ALTER TABLE [dbo].[AttendeeLogisticSponsors]  WITH CHECK ADD  CONSTRAINT [FK_Editions_AttendeeLogisticSponsors_EditionId] FOREIGN KEY([EditionId])
 REFERENCES [dbo].[Editions] ([Id])
 GO
@@ -3378,6 +4184,46 @@ ALTER TABLE [dbo].[AttendeeLogisticSponsors]  WITH CHECK ADD  CONSTRAINT [FK_Use
 REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[AttendeeLogisticSponsors] CHECK CONSTRAINT [FK_Users_AttendeeLogisticSponsors_UpdateUserId]
+GO
+ALTER TABLE [dbo].[AttendeeMusicBandCollaborators]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeCollaborators_AttendeeMusicBandCollaborators_AttendeeCollaboratorId] FOREIGN KEY([AttendeeCollaboratorId])
+REFERENCES [dbo].[AttendeeCollaborators] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeMusicBandCollaborators] CHECK CONSTRAINT [FK_AttendeeCollaborators_AttendeeMusicBandCollaborators_AttendeeCollaboratorId]
+GO
+ALTER TABLE [dbo].[AttendeeMusicBandCollaborators]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeMusicBands_AttendeeMusicBandCollaborators_AttendeeMusicBandId] FOREIGN KEY([AttendeeMusicBandId])
+REFERENCES [dbo].[AttendeeMusicBands] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeMusicBandCollaborators] CHECK CONSTRAINT [FK_AttendeeMusicBands_AttendeeMusicBandCollaborators_AttendeeMusicBandId]
+GO
+ALTER TABLE [dbo].[AttendeeMusicBandCollaborators]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeMusicBandCollaborators_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeMusicBandCollaborators] CHECK CONSTRAINT [FK_Users_AttendeeMusicBandCollaborators_CreateUserId]
+GO
+ALTER TABLE [dbo].[AttendeeMusicBandCollaborators]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeMusicBandCollaborators_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeMusicBandCollaborators] CHECK CONSTRAINT [FK_Users_AttendeeMusicBandCollaborators_UpdateUserId]
+GO
+ALTER TABLE [dbo].[AttendeeMusicBands]  WITH CHECK ADD  CONSTRAINT [FK_Editions_AttendeeMusicBands_EditionId] FOREIGN KEY([EditionId])
+REFERENCES [dbo].[Editions] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeMusicBands] CHECK CONSTRAINT [FK_Editions_AttendeeMusicBands_EditionId]
+GO
+ALTER TABLE [dbo].[AttendeeMusicBands]  WITH CHECK ADD  CONSTRAINT [FK_MusicBands_AttendeeMusicBands_MusicBandId] FOREIGN KEY([MusicBandId])
+REFERENCES [dbo].[MusicBands] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeMusicBands] CHECK CONSTRAINT [FK_MusicBands_AttendeeMusicBands_MusicBandId]
+GO
+ALTER TABLE [dbo].[AttendeeMusicBands]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeMusicBands_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeMusicBands] CHECK CONSTRAINT [FK_Users_AttendeeMusicBands_CreateUserId]
+GO
+ALTER TABLE [dbo].[AttendeeMusicBands]  WITH CHECK ADD  CONSTRAINT [FK_Users_AttendeeMusicBands_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[AttendeeMusicBands] CHECK CONSTRAINT [FK_Users_AttendeeMusicBands_UpdateUserId]
 GO
 ALTER TABLE [dbo].[AttendeeOrganizationCollaborators]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeCollaborators_AttendeeOrganizationCollaborators_AttendeeCollaboratorId] FOREIGN KEY([AttendeeCollaboratorId])
 REFERENCES [dbo].[AttendeeCollaborators] ([Id])
@@ -3899,6 +4745,66 @@ REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[Holdings] CHECK CONSTRAINT [FK_Users_Holdings_UpdateUserId]
 GO
+ALTER TABLE [dbo].[InnovationOptionGroups]  WITH CHECK ADD  CONSTRAINT [FK_Users_InnovationOptionGroups_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[InnovationOptionGroups] CHECK CONSTRAINT [FK_Users_InnovationOptionGroups_CreateUserId]
+GO
+ALTER TABLE [dbo].[InnovationOptionGroups]  WITH CHECK ADD  CONSTRAINT [FK_Users_InnovationOptionGroups_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[InnovationOptionGroups] CHECK CONSTRAINT [FK_Users_InnovationOptionGroups_UpdateUserId]
+GO
+ALTER TABLE [dbo].[InnovationOptions]  WITH CHECK ADD  CONSTRAINT [FK_InnovationOptionGroups_InnovationOptions_InnovationOptionGroupId] FOREIGN KEY([InnovationOptionGroupId])
+REFERENCES [dbo].[InnovationOptionGroups] ([Id])
+GO
+ALTER TABLE [dbo].[InnovationOptions] CHECK CONSTRAINT [FK_InnovationOptionGroups_InnovationOptions_InnovationOptionGroupId]
+GO
+ALTER TABLE [dbo].[InnovationOptions]  WITH CHECK ADD  CONSTRAINT [FK_Users_InnovationOptions_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[InnovationOptions] CHECK CONSTRAINT [FK_Users_InnovationOptions_CreateUserId]
+GO
+ALTER TABLE [dbo].[InnovationOptions]  WITH CHECK ADD  CONSTRAINT [FK_Users_InnovationOptions_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[InnovationOptions] CHECK CONSTRAINT [FK_Users_InnovationOptions_UpdateUserId]
+GO
+ALTER TABLE [dbo].[InnovationOrganizationOptions]  WITH CHECK ADD  CONSTRAINT [FK_InnovationOptions_InnovationOrganizationOptions_InnovationOptionId] FOREIGN KEY([InnovationOptionId])
+REFERENCES [dbo].[InnovationOptions] ([Id])
+GO
+ALTER TABLE [dbo].[InnovationOrganizationOptions] CHECK CONSTRAINT [FK_InnovationOptions_InnovationOrganizationOptions_InnovationOptionId]
+GO
+ALTER TABLE [dbo].[InnovationOrganizationOptions]  WITH CHECK ADD  CONSTRAINT [FK_InnovationOrganizations_InnovationOrganizationOptions_InnovationOrganizationId] FOREIGN KEY([InnovationOrganizationId])
+REFERENCES [dbo].[InnovationOrganizations] ([Id])
+GO
+ALTER TABLE [dbo].[InnovationOrganizationOptions] CHECK CONSTRAINT [FK_InnovationOrganizations_InnovationOrganizationOptions_InnovationOrganizationId]
+GO
+ALTER TABLE [dbo].[InnovationOrganizationOptions]  WITH CHECK ADD  CONSTRAINT [FK_Users_InnovationOrganizationOptions_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[InnovationOrganizationOptions] CHECK CONSTRAINT [FK_Users_InnovationOrganizationOptions_CreateUserId]
+GO
+ALTER TABLE [dbo].[InnovationOrganizationOptions]  WITH CHECK ADD  CONSTRAINT [FK_Users_InnovationOrganizationOptions_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[InnovationOrganizationOptions] CHECK CONSTRAINT [FK_Users_InnovationOrganizationOptions_UpdateUserId]
+GO
+ALTER TABLE [dbo].[InnovationOrganizations]  WITH CHECK ADD  CONSTRAINT [FK_Users_InnovationOrganizations_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[InnovationOrganizations] CHECK CONSTRAINT [FK_Users_InnovationOrganizations_CreateUserId]
+GO
+ALTER TABLE [dbo].[InnovationOrganizations]  WITH CHECK ADD  CONSTRAINT [FK_Users_InnovationOrganizations_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[InnovationOrganizations] CHECK CONSTRAINT [FK_Users_InnovationOrganizations_UpdateUserId]
+GO
+ALTER TABLE [dbo].[InnovationOrganizations]  WITH CHECK ADD  CONSTRAINT [FK_WorkDedications_InnovationOrganizations_WorkDedicationId] FOREIGN KEY([WorkDedicationId])
+REFERENCES [dbo].[WorkDedications] ([Id])
+GO
+ALTER TABLE [dbo].[InnovationOrganizations] CHECK CONSTRAINT [FK_WorkDedications_InnovationOrganizations_WorkDedicationId]
+GO
 ALTER TABLE [dbo].[InterestGroups]  WITH CHECK ADD  CONSTRAINT [FK_ProjectTypes_InterestGroups_ProjectTypeId] FOREIGN KEY([ProjectTypeId])
 REFERENCES [dbo].[ProjectTypes] ([Id])
 GO
@@ -4068,6 +4974,141 @@ ALTER TABLE [dbo].[Messages]  WITH CHECK ADD  CONSTRAINT [FK_Users_Messages_Send
 REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[Messages] CHECK CONSTRAINT [FK_Users_Messages_SenderId]
+GO
+ALTER TABLE [dbo].[MusicBandGenres]  WITH CHECK ADD  CONSTRAINT [FK_MusicBands_MusicBandGenres_MusicBandId] FOREIGN KEY([MusicBandId])
+REFERENCES [dbo].[MusicBands] ([Id])
+GO
+ALTER TABLE [dbo].[MusicBandGenres] CHECK CONSTRAINT [FK_MusicBands_MusicBandGenres_MusicBandId]
+GO
+ALTER TABLE [dbo].[MusicBandGenres]  WITH CHECK ADD  CONSTRAINT [FK_MusicGenres_MusicBandGenres_MusicGenreId] FOREIGN KEY([MusicGenreId])
+REFERENCES [dbo].[MusicGenres] ([Id])
+GO
+ALTER TABLE [dbo].[MusicBandGenres] CHECK CONSTRAINT [FK_MusicGenres_MusicBandGenres_MusicGenreId]
+GO
+ALTER TABLE [dbo].[MusicBandGenres]  WITH CHECK ADD  CONSTRAINT [FK_Users_MusicBandGenres_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[MusicBandGenres] CHECK CONSTRAINT [FK_Users_MusicBandGenres_CreateUserId]
+GO
+ALTER TABLE [dbo].[MusicBandGenres]  WITH CHECK ADD  CONSTRAINT [FK_Users_MusicBandGenres_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[MusicBandGenres] CHECK CONSTRAINT [FK_Users_MusicBandGenres_UpdateUserId]
+GO
+ALTER TABLE [dbo].[MusicBandMembers]  WITH CHECK ADD  CONSTRAINT [FK_MusicBands_MusicBandMembers_MusicBandId] FOREIGN KEY([MusicBandId])
+REFERENCES [dbo].[MusicBands] ([Id])
+GO
+ALTER TABLE [dbo].[MusicBandMembers] CHECK CONSTRAINT [FK_MusicBands_MusicBandMembers_MusicBandId]
+GO
+ALTER TABLE [dbo].[MusicBandMembers]  WITH CHECK ADD  CONSTRAINT [FK_Users_MusicBandMembers_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[MusicBandMembers] CHECK CONSTRAINT [FK_Users_MusicBandMembers_CreateUserId]
+GO
+ALTER TABLE [dbo].[MusicBandMembers]  WITH CHECK ADD  CONSTRAINT [FK_Users_MusicBandMembers_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[MusicBandMembers] CHECK CONSTRAINT [FK_Users_MusicBandMembers_UpdateUserId]
+GO
+ALTER TABLE [dbo].[MusicBands]  WITH CHECK ADD  CONSTRAINT [FK_MusicBandTypes_MusicBands_MusicBandTypeId] FOREIGN KEY([MusicBandTypeId])
+REFERENCES [dbo].[MusicBandTypes] ([Id])
+GO
+ALTER TABLE [dbo].[MusicBands] CHECK CONSTRAINT [FK_MusicBandTypes_MusicBands_MusicBandTypeId]
+GO
+ALTER TABLE [dbo].[MusicBands]  WITH CHECK ADD  CONSTRAINT [FK_Users_MusicBands_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[MusicBands] CHECK CONSTRAINT [FK_Users_MusicBands_CreateUserId]
+GO
+ALTER TABLE [dbo].[MusicBands]  WITH CHECK ADD  CONSTRAINT [FK_Users_MusicBands_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[MusicBands] CHECK CONSTRAINT [FK_Users_MusicBands_UpdateUserId]
+GO
+ALTER TABLE [dbo].[MusicBandTargetAudiences]  WITH CHECK ADD  CONSTRAINT [FK_MusicBands_MusicBandTargetAudiences_MusicBandId] FOREIGN KEY([MusicBandId])
+REFERENCES [dbo].[MusicBands] ([Id])
+GO
+ALTER TABLE [dbo].[MusicBandTargetAudiences] CHECK CONSTRAINT [FK_MusicBands_MusicBandTargetAudiences_MusicBandId]
+GO
+ALTER TABLE [dbo].[MusicBandTargetAudiences]  WITH CHECK ADD  CONSTRAINT [FK_TargetAudiences_MusicBandTargetAudiences_TargetAudienceId] FOREIGN KEY([TargetAudienceId])
+REFERENCES [dbo].[TargetAudiences] ([Id])
+GO
+ALTER TABLE [dbo].[MusicBandTargetAudiences] CHECK CONSTRAINT [FK_TargetAudiences_MusicBandTargetAudiences_TargetAudienceId]
+GO
+ALTER TABLE [dbo].[MusicBandTargetAudiences]  WITH CHECK ADD  CONSTRAINT [FK_Users_MusicBandTargetAudiences_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[MusicBandTargetAudiences] CHECK CONSTRAINT [FK_Users_MusicBandTargetAudiences_CreateUserId]
+GO
+ALTER TABLE [dbo].[MusicBandTargetAudiences]  WITH CHECK ADD  CONSTRAINT [FK_Users_MusicBandTargetAudiences_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[MusicBandTargetAudiences] CHECK CONSTRAINT [FK_Users_MusicBandTargetAudiences_UpdateUserId]
+GO
+ALTER TABLE [dbo].[MusicBandTeamMembers]  WITH CHECK ADD  CONSTRAINT [FK_MusicBands_MusicBandTeamMembers_MusicBandId] FOREIGN KEY([MusicBandId])
+REFERENCES [dbo].[MusicBands] ([Id])
+GO
+ALTER TABLE [dbo].[MusicBandTeamMembers] CHECK CONSTRAINT [FK_MusicBands_MusicBandTeamMembers_MusicBandId]
+GO
+ALTER TABLE [dbo].[MusicBandTeamMembers]  WITH CHECK ADD  CONSTRAINT [FK_Users_MusicBandTeamMembers_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[MusicBandTeamMembers] CHECK CONSTRAINT [FK_Users_MusicBandTeamMembers_CreateUserId]
+GO
+ALTER TABLE [dbo].[MusicBandTeamMembers]  WITH CHECK ADD  CONSTRAINT [FK_Users_MusicBandTeamMembers_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[MusicBandTeamMembers] CHECK CONSTRAINT [FK_Users_MusicBandTeamMembers_UpdateUserId]
+GO
+ALTER TABLE [dbo].[MusicBandTypes]  WITH CHECK ADD  CONSTRAINT [FK_Users_MusicBandTypes_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[MusicBandTypes] CHECK CONSTRAINT [FK_Users_MusicBandTypes_CreateUserId]
+GO
+ALTER TABLE [dbo].[MusicBandTypes]  WITH CHECK ADD  CONSTRAINT [FK_Users_MusicBandTypes_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[MusicBandTypes] CHECK CONSTRAINT [FK_Users_MusicBandTypes_UpdateUserId]
+GO
+ALTER TABLE [dbo].[MusicGenres]  WITH CHECK ADD  CONSTRAINT [FK_Users_MusicGenres_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[MusicGenres] CHECK CONSTRAINT [FK_Users_MusicGenres_CreateUserId]
+GO
+ALTER TABLE [dbo].[MusicGenres]  WITH CHECK ADD  CONSTRAINT [FK_Users_MusicGenres_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[MusicGenres] CHECK CONSTRAINT [FK_Users_MusicGenres_UpdateUserId]
+GO
+ALTER TABLE [dbo].[MusicProjects]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeMusicBands_MusicProjects_AttendeeMusicBandId] FOREIGN KEY([AttendeeMusicBandId])
+REFERENCES [dbo].[AttendeeMusicBands] ([Id])
+GO
+ALTER TABLE [dbo].[MusicProjects] CHECK CONSTRAINT [FK_AttendeeMusicBands_MusicProjects_AttendeeMusicBandId]
+GO
+ALTER TABLE [dbo].[MusicProjects]  WITH CHECK ADD  CONSTRAINT [FK_ProjectEvaluationRefuseReasons_MusicProjects_ProjectEvaluationRefuseReasonId] FOREIGN KEY([ProjectEvaluationRefuseReasonId])
+REFERENCES [dbo].[ProjectEvaluationRefuseReasons] ([Id])
+GO
+ALTER TABLE [dbo].[MusicProjects] CHECK CONSTRAINT [FK_ProjectEvaluationRefuseReasons_MusicProjects_ProjectEvaluationRefuseReasonId]
+GO
+ALTER TABLE [dbo].[MusicProjects]  WITH CHECK ADD  CONSTRAINT [FK_ProjectEvaluationStatuses_MusicProjects_ProjectEvaluationStatusId] FOREIGN KEY([ProjectEvaluationStatusId])
+REFERENCES [dbo].[ProjectEvaluationStatuses] ([Id])
+GO
+ALTER TABLE [dbo].[MusicProjects] CHECK CONSTRAINT [FK_ProjectEvaluationStatuses_MusicProjects_ProjectEvaluationStatusId]
+GO
+ALTER TABLE [dbo].[MusicProjects]  WITH CHECK ADD  CONSTRAINT [FK_Users_MusicProjects_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[MusicProjects] CHECK CONSTRAINT [FK_Users_MusicProjects_CreateUserId]
+GO
+ALTER TABLE [dbo].[MusicProjects]  WITH CHECK ADD  CONSTRAINT [FK_Users_MusicProjects_EvaluationUserId] FOREIGN KEY([EvaluationUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[MusicProjects] CHECK CONSTRAINT [FK_Users_MusicProjects_EvaluationUserId]
+GO
+ALTER TABLE [dbo].[MusicProjects]  WITH CHECK ADD  CONSTRAINT [FK_Users_MusicProjects_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[MusicProjects] CHECK CONSTRAINT [FK_Users_MusicProjects_UpdateUserId]
 GO
 ALTER TABLE [dbo].[NegotiationConfigs]  WITH CHECK ADD  CONSTRAINT [FK_Editions_NegotiationConfigs_EditionId] FOREIGN KEY([EditionId])
 REFERENCES [dbo].[Editions] ([Id])
@@ -4364,6 +5405,11 @@ REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[ProjectBuyerEvaluations] CHECK CONSTRAINT [FK_Users_ProjectBuyerEvaluations_UpdateUserId]
 GO
+ALTER TABLE [dbo].[ProjectEvaluationRefuseReasons]  WITH CHECK ADD  CONSTRAINT [FK_ProjectTypes_ProjectEvaluationRefuseReasons_ProjectTypeId] FOREIGN KEY([ProjectTypeId])
+REFERENCES [dbo].[ProjectTypes] ([Id])
+GO
+ALTER TABLE [dbo].[ProjectEvaluationRefuseReasons] CHECK CONSTRAINT [FK_ProjectTypes_ProjectEvaluationRefuseReasons_ProjectTypeId]
+GO
 ALTER TABLE [dbo].[ProjectEvaluationRefuseReasons]  WITH CHECK ADD  CONSTRAINT [FK_Users_ProjectEvaluationRefuseReasons_CreateUserId] FOREIGN KEY([CreateUserId])
 REFERENCES [dbo].[Users] ([Id])
 GO
@@ -4624,6 +5670,21 @@ REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[Quizzes] CHECK CONSTRAINT [FK_Users_Quizzes_UpdateUserId]
 GO
+ALTER TABLE [dbo].[ReleasedMusicProjects]  WITH CHECK ADD  CONSTRAINT [FK_MusicBands_ReleasedMusicProjects_MusicBandId] FOREIGN KEY([MusicBandId])
+REFERENCES [dbo].[MusicBands] ([Id])
+GO
+ALTER TABLE [dbo].[ReleasedMusicProjects] CHECK CONSTRAINT [FK_MusicBands_ReleasedMusicProjects_MusicBandId]
+GO
+ALTER TABLE [dbo].[ReleasedMusicProjects]  WITH CHECK ADD  CONSTRAINT [FK_Users_ReleasedMusicProjects_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ReleasedMusicProjects] CHECK CONSTRAINT [FK_Users_ReleasedMusicProjects_CreateUserId]
+GO
+ALTER TABLE [dbo].[ReleasedMusicProjects]  WITH CHECK ADD  CONSTRAINT [FK_Users_ReleasedMusicProjects_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[ReleasedMusicProjects] CHECK CONSTRAINT [FK_Users_ReleasedMusicProjects_UpdateUserId]
+GO
 ALTER TABLE [dbo].[RoomNames]  WITH CHECK ADD  CONSTRAINT [FK_Languages_RoomNames_LanguageId] FOREIGN KEY([LanguageId])
 REFERENCES [dbo].[Languages] ([Id])
 GO
@@ -4788,4 +5849,14 @@ ALTER TABLE [dbo].[UserUnsubscribedLists]  WITH CHECK ADD  CONSTRAINT [FK_Users_
 REFERENCES [dbo].[Users] ([Id])
 GO
 ALTER TABLE [dbo].[UserUnsubscribedLists] CHECK CONSTRAINT [FK_Users_UserUnsubscribedLists_UserId]
+GO
+ALTER TABLE [dbo].[WorkDedications]  WITH CHECK ADD  CONSTRAINT [FK_Users_WorkDedications_CreateUserId] FOREIGN KEY([CreateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[WorkDedications] CHECK CONSTRAINT [FK_Users_WorkDedications_CreateUserId]
+GO
+ALTER TABLE [dbo].[WorkDedications]  WITH CHECK ADD  CONSTRAINT [FK_Users_WorkDedications_UpdateUserId] FOREIGN KEY([UpdateUserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[WorkDedications] CHECK CONSTRAINT [FK_Users_WorkDedications_UpdateUserId]
 GO

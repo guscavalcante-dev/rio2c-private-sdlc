@@ -204,6 +204,7 @@
     <Compile Include="CQRS\CommandsHandlers\EditionEvents\DeleteEditionEventCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\EditionEvents\EditionEventBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\EditionEvents\CreateEditionEventCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendMusicCommissionWelcomeEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendSpeakerWelcomeEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Common\SendForgotPasswordEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Site\SendProjectBuyerEvaluationEmailAsyncCommandHandler.cs" />
@@ -218,6 +219,10 @@
     <Compile Include="CQRS\CommandsHandlers\LogisticSponsors\CreateLogisticSponsorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\LogisticSponsors\LogisticSponsorBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Messages\SendUnreadConversationsEmailsAsyncCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Music\Projects\AcceptMusicProjectEvaluationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Music\Projects\BaseMusicProjectCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Music\Projects\DeleteMusicProjectCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Music\Projects\RefuseMusicProjectEvaluationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardSpeakerTermsAcceptanceCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardProducerTermsAcceptanceCommandHandler.cs" />
@@ -285,6 +290,10 @@
     <Compile Include="CQRS\Commands\LogisticSponsors\DeleteLogisticSponsors.cs" />
     <Compile Include="CQRS\Commands\LogisticSponsors\UpdateLogisticSponsors.cs" />
     <Compile Include="CQRS\Commands\LogisticSponsors\CreateLogisticSponsors.cs" />
+    <Compile Include="CQRS\Commands\Emails\Admin\SendMusicCommissionWelcomeEmailAsync.cs" />
+    <Compile Include="CQRS\Commands\Music\Projects\AcceptMusicProjectEvaluation.cs" />
+    <Compile Include="CQRS\Commands\Music\Projects\DeleteMusicProject.cs" />
+    <Compile Include="CQRS\Commands\Music\Projects\RefuseMusicProjectEvaluation.cs" />
     <Compile Include="CQRS\Commands\Organizations\UpdateOrganizationSocialNetworks.cs" />
     <Compile Include="CQRS\Commands\Rooms\DeleteRoom.cs" />
     <Compile Include="CQRS\CommandsHandlers\Rooms\RoomBaseCommandHandler.cs" />
@@ -426,9 +435,9 @@
     <Compile Include="CQRS\QueriesHandlers\Quizzes\FindActiveQuizQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\SalesPlatformWebhookRequests\FindAllSalesPlatformWebhooRequestsDtoByPendingQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\SalesPlatforms\FindSalesPlatformDtoByNameQueryHandler.cs" />
+    <Compile Include="CQRS\Queries\Collaborators\FindAllCollaboratorGenderAsync.cs" />
     <Compile Include="CQRS\Queries\Collaborators\FindAllCollaboratorIndustryAsync.cs" />
     <Compile Include="CQRS\Queries\Collaborators\FindAllCollaboratorRoleAsync.cs" />
-    <Compile Include="CQRS\Queries\Collaborators\FindAllCollaboratorGenderAsync.cs" />
     <Compile Include="CQRS\Queries\LogisticSponsors\FindLogisticSponsorDtoByUid.cs" />
     <Compile Include="CQRS\Queries\Users\FindAdminAccessControlDto.cs" />
     <Compile Include="CQRS\Queries\Users\FindUserLanguageDto.cs" />
@@ -553,6 +562,7 @@
     <Compile Include="ViewModels\Common\MusicalCommission\MusicalCommissionDetailAppViewModel.cs" />
     <Compile Include="ViewModels\Common\MusicalCommission\MusicalCommissionEditAppViewModel.cs" />
     <Compile Include="ViewModels\Common\MusicalCommission\MusicalCommissionItemListAppViewModel.cs" />
+    <Compile Include="ViewModels\Common\Music\Commissions\MusicCommissionSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Negotiation\GroupDateTableNegotiationAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Negotiation\GroupItemDateTableNegotiationAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Negotiation\GroupRoomTableNegotiationAppViewModel.cs" />

@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified On : 02-26-2020
 // ***********************************************************************
 // <copyright file="SpeakersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,18 +21,17 @@ using System.Web.Mvc;
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
-using Newtonsoft.Json;
 using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.Models;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Admin.Filters;
@@ -47,7 +46,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     {
         private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
-        private readonly IAttendeeSalesPlatformTicketTypeRepository attendeeSalesPlatformTicketTypeRepo;
         private readonly IFileRepository fileRepo;
 
         /// <summary>Initializes a new instance of the <see cref="SpeakersController"/> class.</summary>
@@ -55,20 +53,17 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="identityController">The identity controller.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
-        /// <param name="attendeeSalesPlatformTicketTypeRepository">The attendee sales platform ticket type repository.</param>
         /// <param name="fileRepository">The file repository.</param>
         public SpeakersController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             ICollaboratorRepository collaboratorRepository,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
-            IAttendeeSalesPlatformTicketTypeRepository attendeeSalesPlatformTicketTypeRepository,
             IFileRepository fileRepository)
             : base(commandBus, identityController)
         {
             this.collaboratorRepo = collaboratorRepository;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
-            this.attendeeSalesPlatformTicketTypeRepo = attendeeSalesPlatformTicketTypeRepository;
             this.fileRepo = fileRepository;
         }
 
@@ -175,7 +170,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#SpeakerMainInformationWidget" },
+                    new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Widgets/MainInformationWidget.cshtml", mainInformationWidgetDto), divIdOrClass = "#SpeakerMainInformationWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -265,13 +260,21 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
+                cmd.UpdateModelsAndLists(
+                    await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllEditionsByIsActive(true)),
+                    EditionDto.Id,
+                    UserInterfaceLanguage);
+
                 return Json(new
                 {
                     status = "error",
                     message = ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationForm", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Forms/_MainInformationForm.cshtml", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -307,7 +310,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/SocialNetworksWidget", socialNetworksWidgetDto), divIdOrClass = "#SpeakerSocialNetworksWidget" },
+                    new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Widgets/SocialNetworksWidget.cshtml", socialNetworksWidgetDto), divIdOrClass = "#SpeakerSocialNetworksWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -389,7 +392,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     message = ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/UpdateSocialNetworksForm", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Forms/_SocialNetworksForm.cshtml", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -425,7 +428,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/CompanyWidget", companyWidgetDto), divIdOrClass = "#SpeakerCompanyWidget" },
+                    new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Widgets/CompanyWidget.cshtml", companyWidgetDto), divIdOrClass = "#SpeakerCompanyWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -642,6 +645,35 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #endregion
 
+        #region Onboarding Info Widget
+
+        /// <summary>Shows the onboarding information widget.</summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowOnboardingInfoWidget(Guid? collaboratorUid)
+        {
+            var collaboratorTypeUid = CollaboratorType.Speaker.Uid;
+
+            var onboardingInfoWidgetDto = await this.attendeeCollaboratorRepo.FindOnboardingInfoWidgetDtoAsync(collaboratorUid ?? Guid.Empty, collaboratorTypeUid, this.EditionDto.Id);
+            if (onboardingInfoWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            ViewBag.CollaboratorTypeUid = collaboratorTypeUid;
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Widgets/OnboardingInfoWidget.cshtml", onboardingInfoWidgetDto), divIdOrClass = "#SpeakerOnboardingInfoWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
 
         #region Api Configuration Widget
 
@@ -767,75 +799,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         #endregion
 
         #endregion
-
-        #endregion
-
-        #region Export Eventbrite CSV
-
-        /// <summary>Shows the export eventbrite CSV modal.</summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ShowExportEventbriteCsvModal()
-        {
-            var ticketTypes = await this.attendeeSalesPlatformTicketTypeRepo.FindAllByEditionIdAsync(this.EditionDto.Id);
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Modals/EventbriteCsvModal", ticketTypes), divIdOrClass = "#GlobalModalContainer" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>Exports the eventbrite CSV.</summary>
-        /// <param name="request">The request.</param>
-        /// <param name="selectedCollaboratorsUids">The selected collaborators uids.</param>
-        /// <param name="ticketClassName">Name of the ticket class.</param>
-        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
-        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
-        /// <param name="showHighlights">The show highlights.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ExportEventbriteCsv(IDataTablesRequest request, string selectedCollaboratorsUids, string ticketClassName, bool showAllEditions, bool showAllParticipants, bool? showHighlights)
-        {
-            List<EventbriteCsv> eventbriteCsv = null;
-
-            try
-            {
-                var speakers = await this.collaboratorRepo.FindAllByDataTable(
-                    1,
-                    10000,
-                    request?.Search?.Value,
-                    request?.GetSortColumns(),
-                    selectedCollaboratorsUids?.ToListGuid(','),
-                    Constants.CollaboratorType.Speaker,
-                    showAllEditions,
-                    false,
-                    showAllParticipants,
-                    showHighlights,
-                    this.EditionDto?.Id
-                );
-
-                eventbriteCsv = speakers?.Select(s => new EventbriteCsv(
-                    s.FirstName, 
-                    s.LastNames, 
-                    s.Email, 
-                    ticketClassName, 1)).ToList();
-            }
-            catch (DomainException ex)
-            {
-                return Json(new { status = "error", message = ex.GetInnerMessage(), }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new { status = "success", data = JsonConvert.SerializeObject(eventbriteCsv) }, JsonRequestBehavior.AllowGet);
-        }
 
         #endregion
 
@@ -1018,7 +981,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     message = ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/_TinyForm", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Forms/_TinyForm.cshtml", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -1107,7 +1070,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     message = ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/_TinyForm", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Forms/_TinyForm.cshtml", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }

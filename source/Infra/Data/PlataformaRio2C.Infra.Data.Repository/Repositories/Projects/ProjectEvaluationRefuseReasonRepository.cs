@@ -4,7 +4,7 @@
 // Created          : 12-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-10-2019
+// Last Modified On : 02-28-2020
 // ***********************************************************************
 // <copyright file="ProjectEvaluationRefuseReasonRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,6 +33,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static IQueryable<ProjectEvaluationRefuseReason> FindByUid(this IQueryable<ProjectEvaluationRefuseReason> query, Guid projectEvaluationRefuseReasonUid)
         {
             query = query.Where(perr => perr.Uid == projectEvaluationRefuseReasonUid);
+
+            return query;
+        }
+
+        /// <summary>Finds the by project type uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="projectTypeUid">The project type uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<ProjectEvaluationRefuseReason> FindByProjectTypeUid(this IQueryable<ProjectEvaluationRefuseReason> query, Guid projectTypeUid)
+        {
+            query = query.Where(perr => perr.ProjectType.Uid == projectTypeUid);
 
             return query;
         }
@@ -97,9 +108,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         /// <summary>Finds all asynchronous.</summary>
         /// <returns></returns>
-        public async Task<List<ProjectEvaluationRefuseReason>> FindAllAsync()
+        public async Task<List<ProjectEvaluationRefuseReason>> FindAllByProjectTypeUidAsync(Guid projectTypeUid)
         {
-            var query = this.GetBaseQuery();
+            var query = this.GetBaseQuery()
+                                .FindByProjectTypeUid(projectTypeUid);
 
             return await query
                             .Order()

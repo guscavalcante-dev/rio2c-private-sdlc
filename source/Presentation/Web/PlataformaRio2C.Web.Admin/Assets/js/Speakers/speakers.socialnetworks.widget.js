@@ -4,7 +4,7 @@
 // Created          : 01-16-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified On : 02-26-2020
 // ***********************************************************************
 // <copyright file="speakers.socialnetworks.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,7 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 
-var SpeakersSocialNetworksWidget = function () {
+var CollaboratorsSocialNetworksWidget = function () {
 
     var widgetElementId = '#SpeakerSocialNetworksWidget';
     var widgetElement = $(widgetElementId);
@@ -59,14 +59,16 @@ var SpeakersSocialNetworksWidget = function () {
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (SpeakersSocialNetworksWidget) !== 'undefined') {
-                    SpeakersSocialNetworksWidget.init();
+                if (typeof (CollaboratorsSocialNetworksWidget) !== 'undefined') {
+	                CollaboratorsSocialNetworksWidget.init();
                 }
             },
             onError: function (data) {
                 if (MyRio2cCommon.hasProperty(data, 'pages')) {
                     enableUpdatePlugins();
                 }
+
+                $(updateFormId).find(":input.input-validation-error:first").focus();
             }
         });
     };

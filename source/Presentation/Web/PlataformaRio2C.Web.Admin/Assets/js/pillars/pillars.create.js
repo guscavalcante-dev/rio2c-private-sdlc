@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-09-2020
+// Last Modified On : 02-21-2020
 // ***********************************************************************
 // <copyright file="pillars.create.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -78,6 +78,8 @@ var PillarsCreate = function () {
                 if (MyRio2cCommon.hasProperty(data, 'pages')) {
                     enablePlugins();
                 }
+
+                $(formId).find(":input.input-validation-error:first").focus();
             }
         });
     };

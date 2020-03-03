@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-31-2020
+// Last Modified On : 03-01-2020
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -347,6 +347,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     #endregion
 
     #region ProjectBaseDto IQueryable Extensions
+
+    /// <summary>ProjectBaseDtoIQueryableExtensions</summary>
     internal static class ProjectBaseDtoIQueryableExtensions
     {
         /// <summary>
@@ -367,8 +369,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return pagedList;
         }
-
     }
+
     #endregion 
 
     /// <summary>ProjectRepository</summary>
@@ -537,6 +539,83 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .ToListPagedAsync(page, pageSize);
         }
 
+        public async Task<ProjectDto> FindDtoToEvaluateAsync(Guid attendeeCollaboratorUid, Guid projectUid)
+        {
+            var matchInterestsGroups = new List<Guid>
+            {
+                InterestGroup.LookingFor.Uid,
+                InterestGroup.ProjectStatus.Uid,
+                InterestGroup.Platforms.Uid,
+                InterestGroup.Genre.Uid
+            };
+
+            var query = this.GetBaseQuery()
+                                .FindByUid(projectUid)
+                                .IsFinished()
+                                .Select(p => new ProjectDto
+                                {
+                                    Project = p,
+                                    ProjectType = p.ProjectType,
+                                    SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                    {
+                                        AttendeeOrganization = p.SellerAttendeeOrganization,
+                                        Organization = p.SellerAttendeeOrganization.Organization,
+                                        Edition = p.SellerAttendeeOrganization.Edition
+                                    },
+                                    ProjectTitleDtos = p.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                    {
+                                        ProjectTitle = t,
+                                        Language = t.Language
+                                    }),
+                                    ProjectLogLineDtos = p.ProjectLogLines.Where(ll => !ll.IsDeleted).Select(ll => new ProjectLogLineDto
+                                    {
+                                        ProjectLogLine = ll,
+                                        Language = ll.Language
+                                    }),
+                                    ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted).Select(i => new ProjectInterestDto
+                                    {
+                                        ProjectInterest = i,
+                                        Interest = i.Interest,
+                                        InterestGroup = i.Interest.InterestGroup
+                                    }),
+                                    InterestGroupsMatches = p.ProjectInterests
+                                                                .Where(pi => !pi.IsDeleted && !pi.Interest.IsDeleted
+                                                                             && p.ProjectBuyerEvaluations
+                                                                                    .Any(pbe => !pbe.IsDeleted
+                                                                                                  && pbe.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators
+                                                                                                            .Where(aoc => aoc.AttendeeCollaborator.Uid == attendeeCollaboratorUid
+                                                                                                                          && !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted && !aoc.AttendeeOrganization.Organization.IsDeleted)
+                                                                                                            .FirstOrDefault()
+                                                                                                            .AttendeeOrganization.Organization.OrganizationInterests
+                                                                                                                    .Any(oi => !oi.IsDeleted && !oi.Interest.IsDeleted
+                                                                                                                               && matchInterestsGroups.Contains(oi.Interest.InterestGroup.Uid)
+                                                                                                                               && oi.Interest.Id == pi.Interest.Id)))
+                                                                .Select(pi => pi.Interest.InterestGroup)
+                                                                .Distinct(),
+                                    ProjectBuyerEvaluationDtos = p.ProjectBuyerEvaluations
+                                                                    .Where(pbe => !pbe.IsDeleted
+                                                                                  && !pbe.BuyerAttendeeOrganization.IsDeleted
+                                                                                  && pbe.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators
+                                                                                                                      .Any(aoc => !aoc.IsDeleted
+                                                                                                                                  && aoc.AttendeeCollaborator.Uid == attendeeCollaboratorUid))
+                                    .Select(be => new ProjectBuyerEvaluationDto
+                                    {
+                                        ProjectBuyerEvaluation = be,
+                                        BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                        {
+                                            AttendeeOrganization = be.BuyerAttendeeOrganization,
+                                            Organization = be.BuyerAttendeeOrganization.Organization,
+                                            Edition = be.BuyerAttendeeOrganization.Edition
+                                        },
+                                        ProjectEvaluationStatus = be.ProjectEvaluationStatus,
+                                        ProjectEvaluationRefuseReason = be.ProjectEvaluationRefuseReason
+                                    })
+                                });
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
+
         /// <summary>Finds all pitching base dtos by filters and by page asynchronous.</summary>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
@@ -647,7 +726,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         ProjectInterest = i,
                                         Interest = i.Interest,
                                         InterestGroup = i.Interest.InterestGroup
-                                    })
+                                    }),
+                                    ProjectTeaserLinkDtos = p.ProjectTeaserLinks.Where(tl => !tl.IsDeleted).Select(tl => new ProjectTeaserLinkDto
+                                    {
+                                        ProjectTeaserLink = tl
+                                    }),
+                                    ProjectImageLinkDtos = p.ProjectImageLinks.Where(il => !il.IsDeleted).Select(il => new ProjectImageLinkDto
+                                    {
+                                        ProjectImageLink = il
+                                    }),
                                 });
 
             return await query

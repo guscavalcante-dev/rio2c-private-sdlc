@@ -4,7 +4,7 @@
 // Created          : 10-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-21-2019
+// Last Modified On : 02-21-2020
 // ***********************************************************************
 // <copyright file="executives.maininformation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -67,6 +67,8 @@ var ExecutivesMainInformationWidget = function () {
                 if (MyRio2cCommon.hasProperty(data, 'pages')) {
                     enableUpdatePlugins();
                 }
+
+                $(updateFormId).find(":input.input-validation-error:first").focus();
             }
         });
     };

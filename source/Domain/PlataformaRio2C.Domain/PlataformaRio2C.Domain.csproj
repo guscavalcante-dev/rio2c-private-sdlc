@@ -101,6 +101,7 @@
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorSiteDetailsDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorSiteCompanyWidgetDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorApiConfigurationWidgetDto.cs" />
+    <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorOnboardingInfoWidgetDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorSiteMainInformationWidgetDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorTypeDto.cs" />
@@ -150,6 +151,13 @@
     <Compile Include="Dtos\Messages\MessageDto.cs" />
     <Compile Include="Dtos\Messages\ConversationDto.cs" />
     <Compile Include="Dtos\Interests\InterestDto.cs" />
+    <Compile Include="Dtos\Music\AttendeeMusicBandDto.cs" />
+    <Compile Include="Dtos\Music\AttendeeMusicBandCollaboratorDto.cs" />
+    <Compile Include="Dtos\Music\MusicBandTargetAudienceDto.cs" />
+    <Compile Include="Dtos\Music\MusicBandGenreDto.cs" />
+    <Compile Include="Dtos\Music\MusicProjectJsonDto.cs" />
+    <Compile Include="Dtos\Music\MusicProjectEvaluationDto.cs" />
+    <Compile Include="Dtos\Music\MusicProjectDto.cs" />
     <Compile Include="Dtos\OrganizationDescriptions\OrganizationRestrictionSpecificDto.cs" />
     <Compile Include="Dtos\OrganizationDescriptions\OrganizationRestrictionSpecificBaseDto.cs" />
     <Compile Include="Dtos\Organizations\OrganizationApiListDto.cs" />
@@ -239,6 +247,17 @@
     <Compile Include="Entities\Logistics\AttendeeLogisticsSponsor.cs" />
     <Compile Include="Entities\Logistics\Logistics.cs" />
     <Compile Include="Entities\Message\Message.cs" />
+    <Compile Include="Entities\Music\AttendeeMusicBand.cs" />
+    <Compile Include="Entities\Music\AttendeeMusicBandCollaborator.cs" />
+    <Compile Include="Entities\Music\ReleasedMusicProject.cs" />
+    <Compile Include="Entities\Music\MusicBandTeamMember.cs" />
+    <Compile Include="Entities\Music\MusicBandMember.cs" />
+    <Compile Include="Entities\Music\MusicBandGenre.cs" />
+    <Compile Include="Entities\Music\MusicGenre.cs" />
+    <Compile Include="Entities\Music\MusicBandType.cs" />
+    <Compile Include="Entities\Music\MusicBand.cs" />
+    <Compile Include="Entities\Music\MusicProject.cs" />
+    <Compile Include="Entities\Music\MusicBandTargetAudience.cs" />
     <Compile Include="Entities\NegotiationConfig\NegotiationRoomConfig.cs" />
     <Compile Include="Entities\NegotiationConfig\NegotiationConfig.cs" />
     <Compile Include="Entities\Negotiation\Negotiation.cs" />
@@ -316,6 +335,8 @@
     <Compile Include="Interfaces\Repositories\Logistics\ILogisticsRepository.cs" />
     <Compile Include="Interfaces\Repositories\Logistics\IPlaceRepository.cs" />
     <Compile Include="Interfaces\Repositories\Logistics\ILogisticSponsorRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Music\Projects\IMusicProjectRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Music\Projects\IMusicGenreRepository.cs" />
     <Compile Include="Interfaces\Repositories\Projects\IProjectEvaluationRefuseReasonRepository.cs" />
     <Compile Include="Interfaces\Repositories\Projects\IProjectEvaluationStatusRepository.cs" />
     <Compile Include="Interfaces\Repositories\Projects\IProjectBuyerEvaluationRepository.cs" />
@@ -630,39 +651,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="bin\Debug\PlataformaRio2C.Domain.dll.config" />
-    <None Include="bin\Debug\PlataformaRio2C.Infra.CrossCutting.Resources.dll.config" />
-    <None Include="bin\Release\PlataformaRio2C.Domain.dll.config" />
-    <None Include="bin\Release\PlataformaRio2C.Infra.CrossCutting.Resources.dll.config" />
     <None Include="ClassDiagram1.cd" />
     <None Include="ClassDiagram2.cd" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="bin\Debug\en-us\PlataformaRio2C.Infra.CrossCutting.Resources.resources.dll" />
-    <Content Include="bin\Debug\EntityFramework.dll" />
-    <Content Include="bin\Debug\EntityFramework.SqlServer.dll" />
-    <Content Include="bin\Debug\EntityFramework.SqlServer.xml" />
-    <Content Include="bin\Debug\EntityFramework.xml" />
-    <Content Include="bin\Debug\log4net.dll" />
-    <Content Include="bin\Debug\log4net.xml" />
-    <Content Include="bin\Debug\Migrations.dll" />
-    <Content Include="bin\Debug\PlataformaRio2C.Domain.dll" />
-    <Content Include="bin\Debug\PlataformaRio2C.Domain.pdb" />
-    <Content Include="bin\Debug\PlataformaRio2C.Infra.CrossCutting.Resources.dll" />
-    <Content Include="bin\Debug\PlataformaRio2C.Infra.CrossCutting.Resources.pdb" />
-    <Content Include="bin\Release\en-us\PlataformaRio2C.Infra.CrossCutting.Resources.resources.dll" />
-    <Content Include="bin\Release\EntityFramework.dll" />
-    <Content Include="bin\Release\EntityFramework.SqlServer.dll" />
-    <Content Include="bin\Release\EntityFramework.SqlServer.xml" />
-    <Content Include="bin\Release\EntityFramework.xml" />
-    <Content Include="bin\Release\log4net.dll" />
-    <Content Include="bin\Release\log4net.xml" />
-    <Content Include="bin\Release\Migrations.dll" />
-    <Content Include="bin\Release\PlataformaRio2C.Domain.dll" />
-    <Content Include="bin\Release\PlataformaRio2C.Domain.pdb" />
-    <Content Include="bin\Release\PlataformaRio2C.Infra.CrossCutting.Resources.dll" />
-    <Content Include="bin\Release\PlataformaRio2C.Infra.CrossCutting.Resources.pdb" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

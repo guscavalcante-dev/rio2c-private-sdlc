@@ -882,4 +882,16 @@
     <value>The Youtube url.</value>
     <comment>A url do YouTube.</comment>
   </data>
+  <data name="PropertyGreaterThanValue" xml:space="preserve">
+    <value>The field {0} must be greater than {1}.</value>
+    <comment>O campo {0} deve ser maior que o {1}.</comment>
+  </data>
+  <data name="DoYouReallyWishAcceptObjectEntity" xml:space="preserve">
+    <value>Do you want to accept {0} "&lt;b&gt;{1}&lt;/b&gt;"?</value>
+    <comment>Deseja aprovar {0} "&lt;b&gt;{1}&lt;/b&gt;"?</comment>
+  </data>
+  <data name="DoYouReallyWishRefuseObjectEntity" xml:space="preserve">
+    <value>Do you want to refuse {0} "&lt;b&gt;{1}&lt;/b&gt;"?</value>
+    <comment>Deseja reprovar {0} "&lt;b&gt;{1}&lt;/b&gt;"?</comment>
+  </data>
 </root>

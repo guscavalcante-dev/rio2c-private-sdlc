@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-12-2020
+// Last Modified On : 02-26-2020
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -355,6 +355,37 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                         AttendeeOrganization = aoc.AttendeeOrganization,
                                                                         Organization = aoc.AttendeeOrganization.Organization
                                                                     })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>Finds the onboarding information widget dto asynchronous.</summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="collaboratorTypeUid">The collaborator type uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeCollaboratorOnboardingInfoWidgetDto> FindOnboardingInfoWidgetDtoAsync(Guid collaboratorUid, Guid collaboratorTypeUid, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByCollaboratorUid(collaboratorUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(ac => new AttendeeCollaboratorOnboardingInfoWidgetDto
+                            {
+                                AttendeeCollaborator = ac,
+                                Collaborator = ac.Collaborator,
+                                User = ac.Collaborator.User,
+                                AttendeeCollaboratorTypeDto = ac.AttendeeCollaboratorTypes
+                                                                    .Where(act => !act.IsDeleted
+                                                                                  && act.CollaboratorType.Uid == collaboratorTypeUid
+                                                                                  && !act.CollaboratorType.IsDeleted)
+                                                                    .Select(act => new AttendeeCollaboratorTypeDto
+                                                                    {
+                                                                        AttendeeCollaboratorType = act,
+                                                                        CollaboratorType = act.CollaboratorType
+                                                                    })
+                                                                    .FirstOrDefault()
                             })
                             .FirstOrDefaultAsync();
         }
