@@ -19,6 +19,7 @@ using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -44,8 +45,20 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string AdditionalInfo { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CreateLogisticSponsors"/> class.</summary>
-        public CreateLogisticRequest(List<LogisticSponsorBaseDto> sponsors, List<LanguageDto> languagesDtos, string userInterfaceLanguage)
+        public CreateLogisticRequest(List<LogisticSponsorBaseDto> sponsors, string userInterfaceLanguage)
         {
+            this.UpdateSponsors(sponsors, userInterfaceLanguage);
+        }
+
+        /// <summary>
+        /// Updates the sponsors.
+        /// </summary>
+        /// <param name="sponsors">The sponsors.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        private void UpdateSponsors(List<LogisticSponsorBaseDto> sponsors, string userInterfaceLanguage)
+        {
+            sponsors.ForEach(g => g.Name.GetSeparatorTranslation(userInterfaceLanguage, Language.Separator));
+            this.Sponsors = sponsors.OrderBy(e => e.IsOtherRequired).ThenBy(e => e.Name).ToList();
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateLogisticSponsors"/> class.</summary>

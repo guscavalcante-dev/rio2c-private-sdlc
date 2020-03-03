@@ -12,7 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 
-var LogisticRequestsMainInformationWidget = function () {
+var LogisticsMainInformationWidget = function () {
     var widgetElementId = '#LogisticRequestsMainInformationWidget';
     var widgetElement = $(widgetElementId);
     var updateModalId = '#UpdateLogisticRequestModal';

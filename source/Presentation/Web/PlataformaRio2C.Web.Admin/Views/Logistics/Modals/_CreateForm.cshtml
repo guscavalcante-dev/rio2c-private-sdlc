@@ -25,14 +25,25 @@
                     <label class="kt-checkbox">
                         <input type="checkbox"
                                name="IsAirfareTicketRequired"
-                               value="true"
-                               checked /> Necessita
+                               id="IsAirfareTicketRequired"
+                               value="true"/> Necessita
                         <span></span>
                     </label>
                 </div>
             </div>
         </div>
-        <div class="kt-radio-list mt-2">
+        <div class="kt-radio-list mt-2 d-none" data-additionalinfo="IsAirfareTicketRequired">
+            @if (Model.Sponsors != null)
+            {
+                foreach (var sponsor in Model.Sponsors)
+                {
+                    <label class="kt-radio">
+                        @Html.RadioButtonFor(m => m.AirfareAttendeeLogisticSponsorId, sponsor.Id) @sponsor.Name
+                        <span></span>
+                    </label>
+                }
+            }
+
             <label class="kt-radio">
                 <input type="radio" name="AirfareAttendeeLogisticSponsorId"> Rio2C
                 <span></span>
@@ -46,11 +57,11 @@
                 <span></span>
             </label>
             <label class="kt-radio">
-                <input type="radio" name="AirfareAttendeeLogisticSponsorId" checked> Patrocinado por outras instituições
+                <input type="radio" name="AirfareAttendeeLogisticSponsorId"> Patrocinado por outras instituições
                 <span></span>
             </label>
         </div>
-        <div class="row">
+        <div class="row d-none">
             <div class="form-group col-md-8 mb-0" data-id="City">
                 <div class="view">
                     @Html.Hidden("InitialCityUid", Model.AirportTransferAttendeeLogisticSponsorUid)

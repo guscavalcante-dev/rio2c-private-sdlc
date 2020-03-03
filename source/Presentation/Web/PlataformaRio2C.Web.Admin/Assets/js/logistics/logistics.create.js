@@ -1,21 +1,21 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Rafael Dantas Ruiz
-// Created          : 08-26-2019
+// Author           : Arthur Souza
+// Created          : 01-27-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-21-2019
+// Last Modified By : Arthur Souza
+// Last Modified On : 01-27-2020
 // ***********************************************************************
-// <copyright file="collaborators.update.js" company="Softo">
+// <copyright file="collaborators.create.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var LogisticRequestUpdate = function () {
+var LogisticsCreate = function () {
 
-    var modalId = '#UpdateLogisticRequestModal';
-    var formId = '#UpdateLogisticRequestForm';
+    var modalId = '#CreateLogisticRequestModal';
+    var formId = '#CreateLogisticRequestForm';
 
     // Enable form validation ---------------------------------------------------------------------
     var enableFormValidation = function () {
@@ -23,20 +23,21 @@ var LogisticRequestUpdate = function () {
     };
 
     // Enable plugins -----------------------------------------------------------------------------
-    var enablePlugins = function () {
+    var enablePlugins = function () {        
+        MyRio2cCommon.enableCollaboratorSelect2({ url: '/Speakers/FindAllByFilters' });
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2', allowClear: true });
         enableAjaxForm();
+        MyRio2cCommon.enableCheckboxChangeEvent("IsAirfareTicketRequired");
         enableFormValidation();
     };
 
     // Show modal ---------------------------------------------------------------------------------
-    var showModal = function (uid, isAddingToCurrentEdition) {
+    var showModal = function () {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
-        jsonParameters.sponsorUid = uid;
-        jsonParameters.isAddingToCurrentEdition = isAddingToCurrentEdition;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/LogisticRequests/ShowUpdateModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/ShowCreateModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -76,8 +77,8 @@ var LogisticRequestUpdate = function () {
     };
 
     return {
-        showModal: function (collaboratorUid, isAddingToCurrentEdition) {
-            showModal(collaboratorUid, isAddingToCurrentEdition);
+        showModal: function () {
+            showModal();
         }
     };
 }();

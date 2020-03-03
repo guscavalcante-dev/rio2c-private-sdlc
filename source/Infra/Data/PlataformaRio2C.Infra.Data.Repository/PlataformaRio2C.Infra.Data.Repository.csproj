@@ -168,9 +168,9 @@
     <Compile Include="Repositories\Country\CountryRepository.cs" />
     <Compile Include="Repositories\Country\StateRepository.cs" />
     <Compile Include="Repositories\Logistics\LogisticSponsorsRepository.cs" />
+    <Compile Include="Repositories\Logistics\LogisticsRepository.cs" />
     <Compile Include="Repositories\Organizations\OrganizationTypeRepository.cs" />
     <Compile Include="Repositories\Organizations\OrganizationRepository.cs" />
-    <Compile Include="Repositories\Logistics\LogisticsRepository.cs" />
     <Compile Include="Repositories\Mail\MailCollaboratorRepository.cs" />
     <Compile Include="Repositories\Mail\MailRepository.cs" />
     <Compile Include="Repositories\Message\MessageRepository.cs" />

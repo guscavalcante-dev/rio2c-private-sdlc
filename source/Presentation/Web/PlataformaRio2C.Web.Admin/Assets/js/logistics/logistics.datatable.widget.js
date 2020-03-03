@@ -12,7 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 
-var LogisticRequestsDataTableWidget = function () {
+var LogisticsDataTableWidget = function () {
     var widgetElementId = '#LogisticRequestsDataTableWidget';
     var tableElementId = '#logisticsponsors-list-table';
     var table;
@@ -65,11 +65,10 @@ var LogisticRequestsDataTableWidget = function () {
                 sSearch: $('#Search').val()
             },
             ajax: {
-                url: MyRio2cCommon.getUrlWithCultureAndEdition('/LogisticRequests/Search'),
+                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/Search'),
                 data: function (d) {
-                    d.showAllEditions = $('#ShowAllEditions').prop('checked');
-                    //d.showAllExecutives = $('#ShowAllExecutives').prop('checked');
-                    //d.showAllParticipants = $('#ShowAllParticipants').prop('checked');
+                    d.ShowAllParticipants = $('#ShowAllParticipants').prop('checked');
+                    d.ShowAllSponsored = $('#ShowAllSponsored').prop('checked');
                 },
                 dataFilter: function (data) {
                     var jsonReturned = jQuery.parseJSON(data);
@@ -154,21 +153,21 @@ var LogisticRequestsDataTableWidget = function () {
 
                         if (!full.HasSponsors) {
                             // Create request
-                            html += '<button class="dropdown-item" onclick="LogisticRequestCreate.showModal(\'' + full.Uid + '\');"><i class="la la-edit"></i> ' + addRequest + '</button>';
+                            html += '<button class="dropdown-item" onclick="LogisticsCreate.showModal(\'' + full.Uid + '\');"><i class="la la-edit"></i> ' + addRequest + '</button>';
                         }
                         else if (!full.HasLogistics) {
                             // Update request
-                            html += '<button class="dropdown-item" onclick="LogisticRequestUpdate.showModal(\'' + full.Uid + '\');"><i class="la la-edit"></i> ' + labels.edit + '</button>';
+                            html += '<button class="dropdown-item" onclick="LogisticsUpdate.showModal(\'' + full.Uid + '\');"><i class="la la-edit"></i> ' + labels.edit + '</button>';
                         }
 
                         if (full.HasSponsors) {
                             // View details
-                            html += '<button class="dropdown-item" onclick="LogisticRequestsDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-edit"></i> ' + view + '</button>';
+                            html += '<button class="dropdown-item" onclick="LogisticsDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-edit"></i> ' + view + '</button>';
                         }
                         
                         if (full.HasSponsors && !full.HasLogistics) {
                             // Delete
-                            html += '<button class="dropdown-item" onclick="LogisticRequestDelete.showModal(\'' + full.Uid + '\');"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+                            html += '<button class="dropdown-item" onclick="LogisticsDelete.showModal(\'' + full.Uid + '\');"><i class="la la-remove"></i> ' + labels.remove + '</button>';
                         }
 
                         html += '\
@@ -219,7 +218,7 @@ var LogisticRequestsDataTableWidget = function () {
             return;
         }
 
-        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/LogisticRequests/Details/' + logisticsUid);
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/Details/' + logisticsUid);
     };
 
     return {

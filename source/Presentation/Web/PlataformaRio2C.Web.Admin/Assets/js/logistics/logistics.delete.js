@@ -12,7 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 
-var LogisticRequestDelete = function () {
+var LogisticsDelete = function () {
 
     // Delete -------------------------------------------------------------------------------------
     var executeDelete = function (sponsorUid) {

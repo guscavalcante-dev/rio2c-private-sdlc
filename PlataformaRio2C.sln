@@ -55,6 +55,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.3 - Report", "4.3 - Repor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaRio2C.Infra.Report", "source\Infra\Report\PlataformaRio2C.Infra.Report\PlataformaRio2C.Infra.Report.csproj", "{D9F58A23-B5EB-4250-83BE-08C8A34A98E6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{33C8604D-F2DE-4472-8029-F27FC589290C}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -192,7 +197,7 @@ Global
 		{D9F58A23-B5EB-4250-83BE-08C8A34A98E6} = {DFF5E3F8-2E2F-47EB-B79E-3C0211CB5033}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {359C66AC-967C-49D7-A3E0-7E8A0A656AD1}
 		LessCompiler = aaa2f19f-23e9-41d7-9790-8e47cf17db1f
+		SolutionGuid = {359C66AC-967C-49D7-A3E0-7E8A0A656AD1}
 	EndGlobalSection
 EndGlobal

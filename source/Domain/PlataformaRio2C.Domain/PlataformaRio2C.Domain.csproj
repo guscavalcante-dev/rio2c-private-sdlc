@@ -313,6 +313,7 @@
     <Compile Include="Interfaces\Repositories\Addresses\IStateRepository.cs" />
     <Compile Include="Interfaces\Repositories\Editions\IEditionEventRepository.cs" />
     <Compile Include="Interfaces\Repositories\Logistics\IAttendeeLogisticSponsorRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Logistics\ILogisticsRepository.cs" />
     <Compile Include="Interfaces\Repositories\Logistics\IPlaceRepository.cs" />
     <Compile Include="Interfaces\Repositories\Logistics\ILogisticSponsorRepository.cs" />
     <Compile Include="Interfaces\Repositories\Projects\IProjectEvaluationRefuseReasonRepository.cs" />
@@ -324,7 +325,6 @@
     <Compile Include="Interfaces\Repositories\Organizations\IOrganizationTypeRepository.cs" />
     <Compile Include="Interfaces\Repositories\Organizations\IOrganizationRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAddressRepository.cs" />
-    <Compile Include="Interfaces\Repositories\Logistics\ILogisticsRepository.cs" />
     <Compile Include="Interfaces\Repositories\Mail\IMailRepository.cs" />
     <Compile Include="Interfaces\Repositories\Message\IMessageRepository.cs" />
     <Compile Include="Interfaces\Repositories\MusicalCommission\IMusicalCommissionRepository.cs" />

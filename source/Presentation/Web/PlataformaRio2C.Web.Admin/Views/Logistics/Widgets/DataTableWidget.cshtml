@@ -13,7 +13,7 @@
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-wrapper">
                 <div class="kt-portlet__head-actions">                   
-                    <button onclick="LogisticRequestCreate.showModal();" class="btn btn-brand btn-elevate btn-icon-sm">
+                    <button onclick="LogisticsCreate.showModal();" class="btn btn-brand btn-elevate btn-icon-sm">
                         <i class="la la-plus"></i>
                         @Labels.NewF @Labels.Request
                     </button>
@@ -33,11 +33,11 @@
                     <label>&nbsp;</label>
                     <div class="kt-checkbox-inline">
                         <label class="kt-checkbox">
-                            @Html.CheckBoxFor(m => m.ShowAllEditions, new { @class = "enable-datatable-reload" }) @Labels.ShowAllParticipants
+                            @Html.CheckBoxFor(m => m.ShowAllParticipants, new { @class = "enable-datatable-reload" }) @Labels.ShowAllParticipants
                             <span></span>
                         </label>                        
                         <label class="kt-checkbox">
-                            @Html.CheckBoxFor(m => m.ShowAllEditions, new { @class = "enable-datatable-reload" }) @Labels.ShowAllSponsored
+                            @Html.CheckBoxFor(m => m.ShowAllSponsored, new { @class = "enable-datatable-reload" }) @Labels.ShowAllSponsored
                             <span></span>
                         </label>
                     </div>

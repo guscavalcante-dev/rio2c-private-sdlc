@@ -575,26 +575,26 @@ namespace PlataformaRio2C.Web.Admin
             
             #region Logistics - LogisticRequests
 
-            bundles.Add(new ScriptBundle("~/bundles/js/logisticrequests.list.js").Include(
-                "~/Assets/js/logisticrequests/logisticrequests.datatable.widget.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/logistics.list.js").Include(
+                "~/Assets/js/logistics/logistics.datatable.widget.js"));
             
-            bundles.Add(new ScriptBundle("~/bundles/js/logisticrequests.create.js").Include(
-                "~/Assets/js/logisticrequests/logisticrequests.create.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/logistics.create.js").Include(
+                "~/Assets/js/logistics/logistics.create.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/logisticrequests.update.js").Include(
-                "~/Assets/js/logisticrequests/logisticrequests.update.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/logistics.update.js").Include(
+                "~/Assets/js/logistics/logistics.update.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/logisticrequests.delete.js").Include(
-                "~/Assets/js/logisticrequests/logisticrequests.delete.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/logistics.delete.js").Include(
+                "~/Assets/js/logistics/logistics.delete.js"));
             
-            bundles.Add(new ScriptBundle("~/bundles/js/logisticrequests.details.js").Include(
-                "~/Assets/js/logisticrequests/logisticrequests.maininformation.widget.js",
-                "~/Assets/js/logisticrequests/logisticrequests.airfare.create.js",
-                "~/Assets/js/logisticrequests/logisticrequests.accommodation.create.js",
-                "~/Assets/js/logisticrequests/logisticrequests.transport.create.js",
-                "~/Assets/js/logisticrequests/logisticrequests.airfare.delete.js",
-                "~/Assets/js/logisticrequests/logisticrequests.accommodation.delete.js",
-                "~/Assets/js/logisticrequests/logisticrequests.transport.delete.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/logistics.details.js").Include(
+                "~/Assets/js/logistics/logistics.maininformation.widget.js",
+                "~/Assets/js/logistics/logistics.airfare.create.js",
+                "~/Assets/js/logistics/logistics.accommodation.create.js",
+                "~/Assets/js/logistics/logistics.transport.create.js",
+                "~/Assets/js/logistics/logistics.airfare.delete.js",
+                "~/Assets/js/logistics/logistics.accommodation.delete.js",
+                "~/Assets/js/logistics/logistics.transport.delete.js"));
 
             #endregion
 

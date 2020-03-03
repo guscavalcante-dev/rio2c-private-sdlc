@@ -15,10 +15,10 @@
     @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/dynamic.list.js")
 
-    @Scripts.Render("~/bundles/js/logisticrequests.list.js") 
-    @Scripts.Render("~/bundles/js/logisticrequests.create.js")
-    @Scripts.Render("~/bundles/js/logisticrequests.update.js")
-    @Scripts.Render("~/bundles/js/logisticrequests.delete.js")
+    @Scripts.Render("~/bundles/js/logistics.list.js") 
+    @Scripts.Render("~/bundles/js/logistics.create.js")
+    @Scripts.Render("~/bundles/js/logistics.update.js")
+    @Scripts.Render("~/bundles/js/logistics.delete.js")
     <script>
         // Page translations ----------------------------------------------------------------------
         var addToEdition = '@string.Format(Labels.AddToEdition, ViewBag.EditionDto.UrlCode)';
@@ -36,7 +36,7 @@
         var initialPageSize = @(Model.PageSize?.ToString() ?? "null");
 
         jQuery(document).ready(function () {
-            LogisticRequestsDataTableWidget.init();
+            LogisticsDataTableWidget.init();
         });
     </script>
 }

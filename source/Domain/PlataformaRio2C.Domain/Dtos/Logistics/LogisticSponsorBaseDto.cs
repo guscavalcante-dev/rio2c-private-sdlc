@@ -30,13 +30,14 @@ namespace PlataformaRio2C.Domain.Dtos
         public bool IsInOtherEdition { get; set; }
         public bool IsInCurrentEdition { get; set; }
         public bool IsAirfareTicketRequired { get; set; }
+        public bool IsOtherRequired { get; set; }
 
         /// <summary>Gets the name by language code.</summary>
         /// <param name="languageCode">The language code.</param>
         /// <returns></returns>
         public string GetNameByLanguageCode(string languageCode)
         {
-            return this.Name.GetSeparatorTranslation(languageCode, '|');
+            return this.Name.GetSeparatorTranslation(languageCode, Language.Separator);
         }
     }
 }

@@ -1,18 +1,19 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateLogisticAirfare
-<div class="modal fade" id="CreateLogisticAirfareModal" role="dialog" aria-labelledby="CreateLogisticAirfareModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateLogisticRequest
+<div class="modal fade" id="UpdateLogisticRequestModal" role="dialog" aria-labelledby="UpdateLogisticRequestModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">
-                    @(Labels.Create + " " + Labels.Airfare)
+                    @(Labels.Update + " " + Labels.Request)
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Update", "LogisticRequests", new { Area = "" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "CreateLogisticAirfareForm" }))
-                {                  
+                @using (Html.BeginForm("Update", "Logistics", new { Area = "" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UpdateLogisticRequestForm" }))
+                {
+                    @Html.HiddenFor(m => m.LogisticRequestUid)                    
                     <div id="form-container">
-                        @Html.Partial("Modals/_AirfareForm", Model)
+                        @Html.Partial("Modals/_CreateForm", Model)
                     </div>
                 }
             </div>

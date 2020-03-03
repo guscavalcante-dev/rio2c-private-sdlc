@@ -44,31 +44,33 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     /// <summary>LogisticSponsorsController</summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
     [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual)]
-    public class LogisticRequestsController : BaseController
+    public class LogisticsController : BaseController
     {
-        private readonly ICollaboratorRepository collaboratorRepo;
-        private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
-        private readonly IAttendeeSalesPlatformTicketTypeRepository attendeeSalesPlatformTicketTypeRepo;
-        private readonly IFileRepository fileRepo;
+        //private readonly ICollaboratorRepository collaboratorRepo;
+        //private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
+        //private readonly IAttendeeSalesPlatformTicketTypeRepository attendeeSalesPlatformTicketTypeRepo;
+        //private readonly IFileRepository fileRepo;
 
         private readonly ILogisticSponsorRepository logisticSponsorRepo;
+        private readonly ILogisticsRepository logisticsRepo;
         private readonly ILanguageRepository languageRepo;
 
         /// <summary>Initializes a new instance of the <see cref="SpeakersController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        /// <param name="collaboratorRepository">The collaborator repository.</param>
-        /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
-        /// <param name="attendeeSalesPlatformTicketTypeRepository">The attendee sales platform ticket type repository.</param>
-        /// <param name="fileRepository">The file repository.</param>
-        public LogisticRequestsController(
+        /// <param name="logisticSponsorRepo"></param>
+        /// <param name="logisticsRepo"></param>
+        /// <param name="languageRepo"></param>
+        public LogisticsController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             ILogisticSponsorRepository logisticSponsorRepo,
+            ILogisticsRepository logisticsRepo,
             ILanguageRepository languageRepo)
             : base(commandBus, identityController)
         {
             this.logisticSponsorRepo = logisticSponsorRepo;
+            this.logisticsRepo = logisticsRepo;
             this.languageRepo = languageRepo;
         }
 
@@ -83,7 +85,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Logistics, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Requests, Url.Action("Index", "LogisticRequests", new { Area = "" }))
+                new BreadcrumbItemHelper(Labels.Requests, Url.Action("Index", "Logistics", new { Area = "" }))
             });
 
             #endregion
@@ -93,85 +95,24 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #region DataTable Widget
 
-        /// <summary>Searches the specified request.</summary>
+        /// <summary>
+        /// Searches the specified request.
+        /// </summary>
         /// <param name="request">The request.</param>
-        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
-        /// <param name="showHighlights">if set to <c>true</c> [show highlights].</param>
+        /// <param name="showAllSponsored">if set to <c>true</c> [show all sponsored].</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions)
+        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllParticipants, bool showAllSponsored)
         {
-            //var sponsors = await this.logisticSponsorRepo.FindAllByDataTable(
-            //    request.Start / request.Length,
-            //    request.Length,
-            //    request.Search?.Value,
-            //    request.GetSortColumns(),
-            //    showAllEditions,
-            //    this.EditionDto?.Id);
-
-            //foreach (var item in sponsors){
-            //    item.Name = item.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, '|');
-            //}
-
-            var list = new List<LogisticRequestBaseDto>()
-            {
-                new LogisticRequestBaseDto()
-                {
-                    Name = "Participante",
-                    AccommodationSponsor = "Próprio",
-                    AirfareSponsor = "Rio2C",
-                    TransferSponsor = "APEX",
-                    IsSponsoredByEvent = true,
-                    HasSponsors = true
-                },
-                new LogisticRequestBaseDto()
-                {
-                    Name = "Participante",
-                    AccommodationSponsor = "Patrocinado por outras instituições",
-                    AirfareSponsor = null,
-                    TransferSponsor = null,
-                    IsSponsoredByEvent = false,
-                    HasSponsors = true
-                },
-                new LogisticRequestBaseDto()
-                {
-                    Name = "Participante",
-                    AccommodationSponsor = null,
-                    AirfareSponsor = null,
-                    TransferSponsor = null,
-                    IsSponsoredByEvent = false,
-                    HasSponsors = false
-                },
-                new LogisticRequestBaseDto()
-                {
-                    Name = "Participante",
-                    AccommodationSponsor = "Patrocinado por outras instituições",
-                    AirfareSponsor = "Rio2C",
-                    TransferSponsor = "APEX",
-                    IsSponsoredByEvent = true,
-                    HasSponsors = true
-                },
-                new LogisticRequestBaseDto()
-                {
-                    Name = "Participante",
-                    AccommodationSponsor = "Patrocinado por outras instituições",
-                    AirfareSponsor = "Rio2C",
-                    TransferSponsor = "APEX",
-                    IsSponsoredByEvent = true,
-                    HasSponsors = true
-                },
-                new LogisticRequestBaseDto()
-                {
-                    Name = "Participante",
-                    AccommodationSponsor = "Próprio | Own",
-                    AirfareSponsor = "Rio2C",
-                    TransferSponsor = "APEX",
-                    IsSponsoredByEvent = true,
-                    HasSponsors = true
-                },
-            };
-
+            var list = await this.logisticsRepo.FindAllByDataTable(
+                request.Start / request.Length,
+                request.Length,
+                request.Search?.Value,
+                request.GetSortColumns(),
+                showAllParticipants,
+                showAllSponsored);
+            
             var response = DataTablesResponse.Create(request, 100, 100, list);
             
             return Json(new
@@ -192,7 +133,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowCreateModal()
         {
-            var cmd = new CreateLogisticRequest();
+            var cmd = new CreateLogisticRequest(
+                await logisticSponsorRepo.FindAllDtosByEditionUidAsync(this.EditionDto.Id),
+                UserInterfaceLanguage);
 
             return Json(new
             {
@@ -374,8 +317,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Logistics, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Requests, Url.Action("Index", "LogisticRequests", new { id })),
-                new BreadcrumbItemHelper("", Url.Action("Details", "LogisticRequests", new { id }))
+                new BreadcrumbItemHelper(Labels.Requests, Url.Action("Index", "Logistics", new { id })),
+                new BreadcrumbItemHelper("", Url.Action("Details", "Logistics", new { id }))
             });
 
             #endregion
@@ -670,47 +613,47 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #region Finds
 
-        /// <summary>Finds all by filters.</summary>
-        /// <param name="keywords">The keywords.</param>
-        /// <param name="page">The page.</param>
-        /// <returns></returns>
-        [HttpGet]
-        [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual + "," + Constants.CollaboratorType.CommissionAudiovisual)]
-        public async Task<ActionResult> FindAllByFilters(string keywords, int? page = 1)
-        {
-            var collaboratorsApiDtos = await this.collaboratorRepo.FindAllDropdownApiListDtoPaged(
-                this.EditionDto.Id,
-                keywords,
-                Constants.CollaboratorType.Speaker,
-                page.Value,
-                10);
+        ///// <summary>Finds all by filters.</summary>
+        ///// <param name="keywords">The keywords.</param>
+        ///// <param name="page">The page.</param>
+        ///// <returns></returns>
+        //[HttpGet]
+        //[AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual + "," + Constants.CollaboratorType.CommissionAudiovisual)]
+        //public async Task<ActionResult> FindAllByFilters(string keywords, int? page = 1)
+        //{
+        //    var collaboratorsApiDtos = await this.collaboratorRepo.FindAllDropdownApiListDtoPaged(
+        //        this.EditionDto.Id,
+        //        keywords,
+        //        Constants.CollaboratorType.Speaker,
+        //        page.Value,
+        //        10);
 
-            return Json(new
-            {
-                status = "success",
-                HasPreviousPage = collaboratorsApiDtos.HasPreviousPage,
-                HasNextPage = collaboratorsApiDtos.HasNextPage,
-                TotalItemCount = collaboratorsApiDtos.TotalItemCount,
-                PageCount = collaboratorsApiDtos.PageCount,
-                PageNumber = collaboratorsApiDtos.PageNumber,
-                PageSize = collaboratorsApiDtos.PageSize,
-                Speakers = collaboratorsApiDtos?.Select(c => new SpeakersDropdownDto
-                {
-                    Uid = c.Uid,
-                    BadgeName = c.BadgeName?.Trim(),
-                    Name = c.Name?.Trim(),
-                    Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.Uid, c.ImageUploadDate, true) : null,
-                    JobTitle = c.GetCollaboratorJobTitleBaseDtoByLanguageCode(this.UserInterfaceLanguage)?.Value?.Trim(),
-                    Companies = c.OrganizationsDtos?.Select(od => new SpeakersDropdownOrganizationDto
-                    {
-                        Uid = od.Uid,
-                        TradeName = od.TradeName,
-                        CompanyName = od.CompanyName,
-                        Picture = od.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, od.Uid, od.ImageUploadDate, true) : null
-                    })?.ToList()
-                })?.ToList()
-            }, JsonRequestBehavior.AllowGet);
-        }
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        HasPreviousPage = collaboratorsApiDtos.HasPreviousPage,
+        //        HasNextPage = collaboratorsApiDtos.HasNextPage,
+        //        TotalItemCount = collaboratorsApiDtos.TotalItemCount,
+        //        PageCount = collaboratorsApiDtos.PageCount,
+        //        PageNumber = collaboratorsApiDtos.PageNumber,
+        //        PageSize = collaboratorsApiDtos.PageSize,
+        //        Speakers = collaboratorsApiDtos?.Select(c => new SpeakersDropdownDto
+        //        {
+        //            Uid = c.Uid,
+        //            BadgeName = c.BadgeName?.Trim(),
+        //            Name = c.Name?.Trim(),
+        //            Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.Uid, c.ImageUploadDate, true) : null,
+        //            JobTitle = c.GetCollaboratorJobTitleBaseDtoByLanguageCode(this.UserInterfaceLanguage)?.Value?.Trim(),
+        //            Companies = c.OrganizationsDtos?.Select(od => new SpeakersDropdownOrganizationDto
+        //            {
+        //                Uid = od.Uid,
+        //                TradeName = od.TradeName,
+        //                CompanyName = od.CompanyName,
+        //                Picture = od.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, od.Uid, od.ImageUploadDate, true) : null
+        //            })?.ToList()
+        //        })?.ToList()
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
 
         #endregion
     }

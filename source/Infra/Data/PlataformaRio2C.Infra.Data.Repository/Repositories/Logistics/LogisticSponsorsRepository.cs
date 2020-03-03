@@ -207,5 +207,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             }).FirstOrDefaultAsync();
 
         }
+
+        public async Task<List<LogisticSponsorBaseDto>> FindAllDtosByEditionUidAsync(int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                .FindByEditionId(false, editionId);
+
+            return await query
+                .Select(c => new LogisticSponsorBaseDto
+                {
+                    Id = c.Id,
+                    Uid = c.Uid,
+                    Name = c.Name,
+                    CreateDate = c.CreateDate,
+                    UpdateDate = c.UpdateDate,
+                    IsOtherRequired = c.IsOtherRequired
+                }).ToListAsync();
+        }
     }
 }
