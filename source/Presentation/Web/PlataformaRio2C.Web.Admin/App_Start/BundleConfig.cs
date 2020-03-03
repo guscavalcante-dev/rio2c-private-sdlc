@@ -278,7 +278,9 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/salesplatforms/salesplatforms.export.js"));
 
             #endregion
-            
+
+            #region Audiovisual Pages Bundles
+
             #region Holdings
 
             bundles.Add(new ScriptBundle("~/bundles/js/holdings.list.js").Include(
@@ -612,6 +614,8 @@ namespace PlataformaRio2C.Web.Admin
             #endregion
 
             #endregion
+            #endregion
+
             #endregion
 
             #endregion
