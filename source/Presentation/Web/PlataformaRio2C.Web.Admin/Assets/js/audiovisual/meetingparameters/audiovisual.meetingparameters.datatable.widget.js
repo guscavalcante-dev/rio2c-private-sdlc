@@ -118,7 +118,31 @@ var AudiovisualMeetingParametersDataTableWidget = function () {
                     render: function (data) {
 	                    return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('LT');
                     }
-	            },
+                },
+                {
+                    data: 'RoundFirstTurn'
+                },
+                {
+                    data: 'RoundSecondTurn'
+                },
+                {
+                    data: 'TimeIntervalBetweenTurn',
+                    render: function (data) {
+	                    return moment.utc(moment.duration(data).as('milliseconds')).format('HH:mm');
+	                }
+                },
+                {
+                    data: 'TimeOfEachRound',
+                    render: function (data) {
+	                    return moment.utc(moment.duration(data).as('milliseconds')).format('HH:mm');
+                    }
+                },
+                {
+                    data: 'TimeIntervalBetweenRound',
+                    render: function (data) {
+	                    return moment.utc(moment.duration(data).as('milliseconds')).format('HH:mm');
+                    }
+                },
                 {
                     data: 'CreateDate',
                     render: function (data) {
@@ -159,12 +183,12 @@ var AudiovisualMeetingParametersDataTableWidget = function () {
                     className: "dt-center"
                 },
 	            {
-		            targets: [1, 2],
+		            targets: [1, 2, 3, 4, 5, 6, 7],
                     className: "dt-center",
 		            orderable: false
 	            },
                 {
-                    targets: [3, 4],
+                    targets: [8, 9],
                     className: "dt-center"
                 },
                 {

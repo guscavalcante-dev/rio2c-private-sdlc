@@ -14,6 +14,7 @@
 using PlataformaRio2C.Domain.Validation;
 using System;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -34,9 +35,51 @@ namespace PlataformaRio2C.Domain.Entities
         //public virtual ICollection<NegotiationRoomConfig> Rooms { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="NegotiationConfig"/> class.</summary>
+        /// <param name="negotiationConfigUid">The negotiation configuration uid.</param>
+        /// <param name="edition">The edition.</param>
+        /// <param name="date">The date.</param>
+        /// <param name="startTime">The start time.</param>
+        /// <param name="endTime">The end time.</param>
+        /// <param name="roundFirstTurn">The round first turn.</param>
+        /// <param name="roundSecondTurn">The round second turn.</param>
+        /// <param name="timeIntervalBetweenTurnString">The time interval between turn string.</param>
+        /// <param name="timeOfEachRoundString">The time of each round string.</param>
+        /// <param name="timeIntervalBetweenRoundString">The time interval between round string.</param>
+        /// <param name="userId">The user identifier.</param>
+        public NegotiationConfig(
+            Guid negotiationConfigUid,
+            Edition edition,
+            DateTime date,
+            string startTime,
+            string endTime,
+            int roundFirstTurn,
+            int roundSecondTurn,
+            string timeIntervalBetweenTurnString,
+            string timeOfEachRoundString,
+            string timeIntervalBetweenRoundString,
+            int userId)
+        {
+            //this.Uid = negotiationConfigUid;
+            this.EditionId = edition?.Id ?? 0;
+            this.Edition = edition;
+            this.StartDate = date.JoinDateAndTime(startTime, true).ToUtcTimeZone();
+            this.EndDate = date.JoinDateAndTime(endTime, true).ToUtcTimeZone();
+            this.RoundFirstTurn = roundFirstTurn;
+            this.RoundSecondTurn = roundSecondTurn;
+            this.TimeIntervalBetweenTurn = timeIntervalBetweenTurnString.ToTimeSpan();
+            this.TimeOfEachRound = timeOfEachRoundString.ToTimeSpan();
+            this.TimeIntervalBetweenRound = timeIntervalBetweenRoundString.ToTimeSpan();
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="NegotiationConfig"/> class.</summary>
         protected NegotiationConfig()
         {
         }
+
 
         //TODO: Implement validations
 
@@ -50,6 +93,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidationResult = new ValidationResult();
 
             this.ValidateEdition();
+            this.ValidateDates();
 
             return this.ValidationResult.IsValid;
         }
@@ -63,73 +107,21 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
+        /// <summary>Validates the dates.</summary>
+        public void ValidateDates()
+        {
+            if (this.StartDate < this.Edition.StartDate || this.StartDate > this.Edition.EndDate
+                || this.EndDate < this.Edition.StartDate || this.EndDate > this.Edition.EndDate)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.Date, this.Edition.EndDate.ToUserTimeZone().ToShortDateString(), this.Edition.StartDate.ToUserTimeZone().ToShortDateString()), new string[] { "Date" }));
+            }
+
+            if (this.StartDate > this.EndDate)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyGreaterThanProperty, Labels.EndTime, Labels.StartTime), new string[] { "EndTime" }));
+            }
+        }
+
         #endregion
-
-        //public NegotiationConfig(DateTime? date)
-        //{
-        //    SetDate(date);
-        //}
-
-
-        //public void SetDate(DateTime? val)
-        //{
-        //    Date = val;
-        //}
-
-        //public void SetStartTime(TimeSpan val)
-        //{
-        //    StartTime = val;
-        //}
-
-        //public void SetEndTime(TimeSpan val)
-        //{
-        //    EndTime = val;
-        //}
-
-        //public void SetTimeIntervalBetweenTurn(TimeSpan val)
-        //{
-        //    TimeIntervalBetweenTurn = val;
-        //}
-
-        //public void SetTimeOfEachRound(TimeSpan val)
-        //{
-        //    TimeOfEachRound = val;
-        //}
-
-        //public void SetTimeIntervalBetweenRound(TimeSpan val)
-        //{
-        //    TimeIntervalBetweenRound = val;
-        //}
-
-        //public void SetCountSlotsFirstTurn(int val)
-        //{
-        //    RoudsFirstTurn = val;
-        //}
-
-        //public void SetCountSlotsSecondTurn(int val)
-        //{
-        //    RoundsSecondTurn = val;
-        //}
-        //public void SetRooms(ICollection<NegotiationRoomConfig> rooms)
-        //{
-        //    Rooms = rooms;
-        //}
-
-        //public override bool IsValid()
-        //{
-        //    ValidationResult = new ValidationResult();
-
-        //    ValidationResult.Add(new NegotiationConfigIsConsistent().Valid(this));
-
-        //    if (Rooms != null && Rooms.Any())
-        //    {
-        //        foreach (var room in Rooms)
-        //        {
-        //            ValidationResult.Add(new NegotiationRoomConfigIsConsistent().Valid(room));
-        //        }
-        //    }
-
-        //    return ValidationResult.IsValid;
-        //}
     }
 }

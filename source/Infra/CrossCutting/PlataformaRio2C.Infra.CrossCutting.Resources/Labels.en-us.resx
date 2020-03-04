@@ -2202,4 +2202,24 @@
     <value>Parameter</value>
     <comment>Parâmetro</comment>
   </data>
+  <data name="RoundFirstTurn" xml:space="preserve">
+    <value>Rounds qty. of 1&lt;sup&gt;st&lt;/sup&gt; turn</value>
+    <comment>Qtde. de rodadas do 1&lt;sup&gt;o&lt;/sup&gt; turno</comment>
+  </data>
+  <data name="RoundSecondTurn" xml:space="preserve">
+    <value>Rounds qty. of 2&lt;sup&gt;nd&lt;/sup&gt; turn</value>
+    <comment>Qtde. de rodadas do 2&lt;sup&gt;o&lt;/sup&gt; turno</comment>
+  </data>
+  <data name="TimeIntervalBetweenRound" xml:space="preserve">
+    <value>Time interval between rounds</value>
+    <comment>Tempo de intervalo entre cada rodada</comment>
+  </data>
+  <data name="TimeIntervalBetweenTurn" xml:space="preserve">
+    <value>Time interval between turns</value>
+    <comment>Tempo de intervalo entre os turnos</comment>
+  </data>
+  <data name="TimeOfEachRound" xml:space="preserve">
+    <value>Time of each turn</value>
+    <comment>Tempo de cada rodada</comment>
+  </data>
 </root>

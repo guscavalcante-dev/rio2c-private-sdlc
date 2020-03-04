@@ -22,6 +22,12 @@ namespace PlataformaRio2C.Domain.Dtos
         public Guid NegotiationConfigUid { get; set; }
         public DateTimeOffset StartDate { get; set; }
         public DateTimeOffset EndDate { get; set; }
+        public int RoundFirstTurn { get; set; }
+        public int RoundSecondTurn { get; set; }
+        public TimeSpan TimeIntervalBetweenTurn { get; set; }
+        public TimeSpan TimeOfEachRound { get; set; }
+        public TimeSpan TimeIntervalBetweenRound { get; set; }
+
 
         public DateTimeOffset CreateDate { get; set; }
         public DateTimeOffset UpdateDate { get; set; }

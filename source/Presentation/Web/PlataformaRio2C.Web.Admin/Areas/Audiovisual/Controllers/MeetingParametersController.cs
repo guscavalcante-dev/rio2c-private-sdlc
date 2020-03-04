@@ -113,6 +113,122 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
         #endregion
 
+        #region Total Count Widget
+
+        /// <summary>Shows the total count widget.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowTotalCountWidget()
+        {
+            var executivesCount = await this.negotiationConfigRepo.CountAsync(this.EditionDto.Id, true);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", executivesCount), divIdOrClass = "#AudiovisualMeetingParametersTotalCountWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Edition Count Widget
+
+        /// <summary>Shows the edition count widget.</summary>
+        /// <returns></returns>
+        public async Task<ActionResult> ShowEditionCountWidget()
+        {
+            var executivesCount = await this.negotiationConfigRepo.CountAsync(this.EditionDto.Id, false);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", executivesCount), divIdOrClass = "#AudiovisualMeetingParametersEditionCountWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Create
+
+        /// <summary>Shows the create modal.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowCreateModal()
+        {
+            var cmd = new CreateNegotiationConfig();
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/CreateModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Creates the specified create negotiation configuration.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> Create(CreateNegotiationConfig cmd)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                return Json(new
+                {
+                    status = "error",
+                    message = ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/_CreateForm", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Parameter, Labels.CreatedM) });
+        }
+
+        #endregion
+
         #region Details
 
         /// <summary>Detailses the specified identifier.</summary>
@@ -427,287 +543,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         }
 
         #endregion
-
-        #endregion
-
-        #region Send Invitation Emails
-
-        /// <summary>Sends the invitation emails.</summary>
-        /// <param name="selectedCollaboratorsUids">The selected collaborators uids.</param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> SendInvitationEmails(string selectedCollaboratorsUids)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(selectedCollaboratorsUids))
-                {
-                    throw new DomainException(Messages.SelectAtLeastOneOption);
-                }
-
-                var collaboratorsUids = selectedCollaboratorsUids?.ToListGuid(',');
-                if (!collaboratorsUids.Any())
-                {
-                    throw new DomainException(Messages.SelectAtLeastOneOption);
-                }
-
-                var collaboratorsDtos = await this.collaboratorRepo.FindAllCollaboratorsByCollaboratorsUids(this.EditionDto.Id, collaboratorsUids);
-                if (collaboratorsDtos?.Any() != true)
-                {
-                    throw new DomainException(Messages.SelectAtLeastOneOption);
-                }
-
-                foreach (var collaboratorDto in collaboratorsDtos)
-                {
-                    var collaboratorLanguageCode = collaboratorDto.Language?.Code ?? this.UserInterfaceLanguage;
-
-                    try
-                    {
-                        var result = await this.CommandBus.Send(new SendMusicCommissionWelcomeEmailAsync(
-                            collaboratorDto.Collaborator.Uid,
-                            collaboratorDto.User.SecurityStamp,
-                            collaboratorDto.User.Id,
-                            collaboratorDto.User.Uid,
-                            collaboratorDto.GetFirstName(),
-                            collaboratorDto.GetFullName(collaboratorLanguageCode),
-                            collaboratorDto.User.Email,
-                            this.EditionDto.Edition,
-                            this.AdminAccessControlDto.User.Id,
-                            collaboratorLanguageCode));
-                        if (!result.IsValid)
-                        {
-                            throw new DomainException(Messages.CorrectFormValues);
-                        }
-                    }
-                    catch (DomainException ex)
-                    {
-                        //TODO: Check errors
-                        //var errors = result?.Errors?.Select(e => e.Message)?.Join(", ");
-                    }
-                    catch (Exception ex)
-                    {
-                        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                    }
-                }
-            }
-            catch (DomainException ex)
-            {
-                return Json(new { status = "error", message = ex.GetInnerMessage(), }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Email.ToLowerInvariant(), Labels.Sent.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        }
-
-        #endregion
-
-        #region Total Count Widget
-
-        /// <summary>Shows the total count widget.</summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ShowTotalCountWidget()
-        {
-            var executivesCount = await this.negotiationConfigRepo.CountAsync(this.EditionDto.Id, true);
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", executivesCount), divIdOrClass = "#AudiovisualMeetingParametersTotalCountWidget" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        #endregion
-
-        #region Edition Count Widget
-
-        /// <summary>Shows the edition count widget.</summary>
-        /// <returns></returns>
-        public async Task<ActionResult> ShowEditionCountWidget()
-        {
-            var executivesCount = await this.negotiationConfigRepo.CountAsync(this.EditionDto.Id, false);
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", executivesCount), divIdOrClass = "#AudiovisualMeetingParametersEditionCountWidget" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        #endregion
-
-        #region Create
-
-        /// <summary>Shows the create modal.</summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ShowCreateModal()
-        {
-            var cmd = new CreateTinyCollaborator();
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Modals/CreateModal", cmd), divIdOrClass = "#GlobalModalContainer" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>Creates the specified collaborator.</summary>
-        /// <param name="cmd">The command.</param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> Create(CreateTinyCollaborator cmd)
-        {
-            var result = new AppValidationResult();
-
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-
-                cmd.UpdatePreSendProperties(
-                    Constants.CollaboratorType.CommissionMusic,
-                    this.AdminAccessControlDto.User.Id,
-                    this.AdminAccessControlDto.User.Uid,
-                    this.EditionDto.Id,
-                    this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
-                result = await this.CommandBus.Send(cmd);
-                if (!result.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-            }
-            catch (DomainException ex)
-            {
-                foreach (var error in result.Errors)
-                {
-                    var target = error.Target ?? "";
-                    ModelState.AddModelError(target, error.Message);
-                }
-
-                return Json(new
-                {
-                    status = "error",
-                    message = ex.GetInnerMessage(),
-                    pages = new List<dynamic>
-                    {
-                        new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Forms/_TinyForm.cshtml", cmd), divIdOrClass = "#form-container" },
-                    }
-                }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Member, Labels.CreatedM) });
-        }
-
-        #endregion
-
-        #region Update
-
-        /// <summary>Shows the update modal.</summary>
-        /// <param name="collaboratorUid">The collaborator uid.</param>
-        /// <param name="isAddingToCurrentEdition">The is adding to current edition.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ShowUpdateModal(Guid? collaboratorUid, bool? isAddingToCurrentEdition)
-        {
-            UpdateTinyCollaborator cmd;
-
-            try
-            {
-                cmd = new UpdateTinyCollaborator(
-                    await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
-                    isAddingToCurrentEdition);
-            }
-            catch (DomainException ex)
-            {
-                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Modals/UpdateModal", cmd), divIdOrClass = "#GlobalModalContainer" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>Updates the specified tiny collaborator.</summary>
-        /// <param name="cmd">The command.</param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> Update(UpdateTinyCollaborator cmd)
-        {
-            var result = new AppValidationResult();
-
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-
-                cmd.UpdatePreSendProperties(
-                    Constants.CollaboratorType.CommissionMusic,
-                    this.AdminAccessControlDto.User.Id,
-                    this.AdminAccessControlDto.User.Uid,
-                    this.EditionDto.Id,
-                    this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
-                result = await this.CommandBus.Send(cmd);
-                if (!result.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-            }
-            catch (DomainException ex)
-            {
-                foreach (var error in result.Errors)
-                {
-                    var target = error.Target ?? "";
-                    ModelState.AddModelError(target, error.Message);
-                }
-
-                return Json(new
-                {
-                    status = "error",
-                    message = ex.GetInnerMessage(),
-                    pages = new List<dynamic>
-                    {
-                        new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Forms/_TinyForm.cshtml", cmd), divIdOrClass = "#form-container" },
-                    }
-                }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Member, Labels.UpdatedM) });
-        }
 
         #endregion
 

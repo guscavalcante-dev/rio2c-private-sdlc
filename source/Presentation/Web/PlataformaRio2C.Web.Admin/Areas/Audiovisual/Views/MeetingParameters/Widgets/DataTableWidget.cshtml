@@ -56,7 +56,7 @@
                             </div>
                         </div>
                         &nbsp;*@
-                    <button onclick="MusicCommissionsCreate.showModal();" class="btn btn-brand btn-elevate btn-icon-sm">
+                    <button onclick="AudiovisualMeetingParametersCreate.showModal();" class="btn btn-brand btn-elevate btn-icon-sm">
                         <i class="la la-plus"></i>
                         @Labels.NewM @Labels.Parameter
                     </button>
@@ -95,8 +95,13 @@
             <thead>
                 <tr>
                     <th>@Labels.Date</th>
-                    <th>@Labels.Start</th>
-                    <th>@Labels.End</th>
+                    <th>@Labels.StartTime</th>
+                    <th>@Labels.EndTime</th>
+                    <th>@Html.Raw(Labels.RoundFirstTurn)</th>
+                    <th>@Html.Raw(Labels.RoundSecondTurn)</th>
+                    <th>@Labels.TimeIntervalBetweenTurn</th>
+                    <th>@Labels.TimeOfEachRound</th>
+                    <th>@Labels.TimeIntervalBetweenRound</th>
                     <th>@Labels.CreateDate</th>
                     <th>@Labels.UpdateDate</th>
                     <th class="dt-head-center dt-body-center">@Labels.Actions</th>

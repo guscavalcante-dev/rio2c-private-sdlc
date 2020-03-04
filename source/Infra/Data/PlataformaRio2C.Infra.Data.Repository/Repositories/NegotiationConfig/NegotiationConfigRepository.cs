@@ -150,6 +150,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     NegotiationConfigUid = nc.Uid,
                                     StartDate = nc.StartDate,
                                     EndDate = nc.EndDate,
+                                    RoundFirstTurn = nc.RoundFirstTurn,
+                                    RoundSecondTurn = nc.RoundSecondTurn,
+                                    TimeIntervalBetweenTurn = nc.TimeIntervalBetweenTurn,
+                                    TimeOfEachRound = nc.TimeOfEachRound,
+                                    TimeIntervalBetweenRound = nc.TimeIntervalBetweenRound,
                                     CreateDate = nc.CreateDate,
                                     UpdateDate = nc.UpdateDate
                                 });

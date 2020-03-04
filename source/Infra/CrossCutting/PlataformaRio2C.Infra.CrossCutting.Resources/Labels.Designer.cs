@@ -3814,6 +3814,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Qtde. de rodadas do 1&lt;sup&gt;o&lt;/sup&gt; turno.
+        /// </summary>
+        public static string RoundFirstTurn {
+            get {
+                return ResourceManager.GetString("RoundFirstTurn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Qtde. de rodadas do 2&lt;sup&gt;o&lt;/sup&gt; turno.
+        /// </summary>
+        public static string RoundSecondTurn {
+            get {
+                return ResourceManager.GetString("RoundSecondTurn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Regulamento.
         /// </summary>
         public static string Rules {
@@ -4602,6 +4620,33 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Ticket {
             get {
                 return ResourceManager.GetString("Ticket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tempo de intervalo entre cada rodada.
+        /// </summary>
+        public static string TimeIntervalBetweenRound {
+            get {
+                return ResourceManager.GetString("TimeIntervalBetweenRound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tempo de intervalo entre os turnos.
+        /// </summary>
+        public static string TimeIntervalBetweenTurn {
+            get {
+                return ResourceManager.GetString("TimeIntervalBetweenTurn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tempo de cada rodada.
+        /// </summary>
+        public static string TimeOfEachRound {
+            get {
+                return ResourceManager.GetString("TimeOfEachRound", resourceCulture);
             }
         }
         
