@@ -512,7 +512,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowTotalCountWidget()
         {
-            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(Constants.CollaboratorType.CommissionMusic, true, this.EditionDto.Id);
+            var executivesCount = await this.negotiationConfigRepo.CountAsync(this.EditionDto.Id, true);
 
             return Json(new
             {
@@ -532,7 +532,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <returns></returns>
         public async Task<ActionResult> ShowEditionCountWidget()
         {
-            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(Constants.CollaboratorType.CommissionMusic, false, this.EditionDto.Id);
+            var executivesCount = await this.negotiationConfigRepo.CountAsync(this.EditionDto.Id, false);
 
             return Json(new
             {

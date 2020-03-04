@@ -158,6 +158,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                            .ToListPagedAsync(page, pageSize);
         }
 
+        /// <summary>Counts the asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <returns></returns>
+        public async Task<int> CountAsync(int editionId, bool showAllEditions = false)
+
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId, showAllEditions);
+
+            return await query.CountAsync();
+        }
+
         //public override IQueryable<NegotiationConfig> GetAll(bool @readonly = false)
         //{
         //    var consult = this.dbSet
