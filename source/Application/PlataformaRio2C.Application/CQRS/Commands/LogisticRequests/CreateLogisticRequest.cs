@@ -27,7 +27,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     public class CreateLogisticRequest : BaseCommand
     {
         [Display(Name = "Participant", ResourceType = typeof(Labels))]
-        public int AttendeeCollaboratorId { get; set; }
+        public Guid AttendeeCollaboratorUid { get; set; }
 
         #region Airfare sponsor
 

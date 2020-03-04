@@ -7,8 +7,8 @@
     <div class="kt-section__content mt-3">
         <div class="row">
             <div class="col-md-8">
-                @Html.LabelFor(m => m.AttendeeCollaboratorId, new { @class = "control-label" })
-                @Html.DropDownListFor(m => m.AttendeeCollaboratorId, Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control enable-collaborator-select2" })
+                @Html.LabelFor(m => m.AttendeeCollaboratorUid, new { @class = "control-label" })
+                @Html.DropDownListFor(m => m.AttendeeCollaboratorUid, Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control enable-collaborator-select2" })
             </div>
         </div>
     </div>
@@ -78,7 +78,7 @@
                 foreach (var sponsor in Model.Sponsors)
                 {
                     <label class="kt-radio">
-                        @Html.RadioButtonFor(m => m.AccommodationAttendeeLogisticSponsorUid, sponsor.Id, new { data_isothers = sponsor.IsOtherRequired }) @sponsor.Name
+                        @Html.RadioButtonFor(m => m.AccommodationAttendeeLogisticSponsorUid, sponsor.Uid, new { data_isothers = sponsor.IsOtherRequired }) @sponsor.Name
                         <span></span>
                     </label>
                 }
@@ -126,7 +126,7 @@
                 foreach (var sponsor in Model.Sponsors)
                 {
                     <label class="kt-radio">
-                        @Html.RadioButtonFor(m => m.AirportTransferAttendeeLogisticSponsorUid, sponsor.Id, new { data_isothers = sponsor.IsOtherRequired }) @sponsor.Name
+                        @Html.RadioButtonFor(m => m.AirportTransferAttendeeLogisticSponsorUid, sponsor.Uid, new { data_isothers = sponsor.IsOtherRequired }) @sponsor.Name
                         <span></span>
                     </label>
                 }

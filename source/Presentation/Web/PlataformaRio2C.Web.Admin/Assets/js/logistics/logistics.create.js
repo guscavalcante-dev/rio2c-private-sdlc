@@ -19,7 +19,7 @@ var LogisticsCreate = function () {
 
     // Enable form validation ---------------------------------------------------------------------
     var enableFormValidation = function () {
-        MyRio2cCommon.enableFormValidation({ formIdOrClass: formId, enableHiddenInputsValidation: true, enableMaxlength: true });
+        //MyRio2cCommon.enableFormValidation({ formIdOrClass: formId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
 
     // Enable plugins -----------------------------------------------------------------------------

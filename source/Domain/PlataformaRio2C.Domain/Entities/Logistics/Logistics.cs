@@ -156,9 +156,10 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isCityTransferRequired">if set to <c>true</c> [is city transfer required].</param>
         /// <param name="isVehicleDisposalRequired">if set to <c>true</c> [is vehicle disposal required].</param>
         /// <param name="additionalInfo">The additional information.</param>
-        public Logistics(int attendeeCollaboratorId, bool isAirfareSponsored, int? airfareAttendeeLogisticSponsorId, bool isAccommodationSponsored, int? accommodationAttendeeLogisticSponsorId, bool isAirportTransferSponsored, int? airportTransferAttendeeLogisticSponsorId, bool isCityTransferRequired, bool isVehicleDisposalRequired, string additionalInfo)
+        public Logistics(int? attendeeCollaboratorId, bool isAirfareSponsored, int? airfareAttendeeLogisticSponsorId, bool isAccommodationSponsored, int? accommodationAttendeeLogisticSponsorId, bool isAirportTransferSponsored, int? airportTransferAttendeeLogisticSponsorId, bool isCityTransferRequired, bool isVehicleDisposalRequired, string additionalInfo)
         {
-            this.AttendeeCollaboratorId = attendeeCollaboratorId;
+            // TODO: Validate
+            this.AttendeeCollaboratorId = attendeeCollaboratorId.Value;
             this.IsAirfareSponsored = isAirfareSponsored;
             this.AirfareAttendeeLogisticSponsorId = airfareAttendeeLogisticSponsorId;
             this.IsAccommodationSponsored = isAccommodationSponsored;

@@ -30,6 +30,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly ILanguageRepository languageRepo;
         private readonly ILogisticsRepository logisticsRepo;
         private readonly ILogisticSponsorRepository logisticSponsorRepo;
+        private readonly ICollaboratorRepository collaboratorRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateLogisticsCommandHandler"/> class.
@@ -46,12 +47,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             ILogisticsRepository logisticsRepo,
             ILogisticSponsorRepository logisticSponsorRepo,
             IEditionRepository editionRepository,
+            ICollaboratorRepository collaboratorRepo,
             ILanguageRepository languageRepository)
             : base(eventBus, uow, logisticsRepo)
         {
             this.editionRepo = editionRepository;
             this.languageRepo = languageRepository;
             this.logisticsRepo = logisticsRepo;
+            this.collaboratorRepo = collaboratorRepo;
             this.logisticSponsorRepo = logisticSponsorRepo;
         }
 
@@ -64,7 +67,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.Uow.BeginTransaction();
             
             var logistics = new Logistics(
-                cmd.AttendeeCollaboratorId, 
+                this.collaboratorRepo.Get(cmd.AttendeeCollaboratorUid)?.Id,
                 cmd.IsAirfareSponsored,
                 this.logisticSponsorRepo.Get(cmd.AirfareSponsorOtherUid ?? cmd.AirfareSponsorUid ?? Guid.Empty)?.Id,
                 cmd.IsAccommodationSponsored,
