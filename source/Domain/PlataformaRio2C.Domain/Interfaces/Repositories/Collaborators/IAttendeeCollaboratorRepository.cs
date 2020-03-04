@@ -43,8 +43,9 @@ namespace PlataformaRio2C.Domain.Interfaces
         #endregion
 
         #region Api
-
         Task<List<AttendeeCollaboratorApiConfigurationWidgetDto>> FindAllApiConfigurationWidgetDtoByHighlight(int editionId, string collaboratorTypeName);
+
+        Task<IPagedList<AttendeeCollaboratorListDto>> FindAllDropdownApiListDtoPaged(int editionId, int page, int pageSize);
 
         #endregion
     }

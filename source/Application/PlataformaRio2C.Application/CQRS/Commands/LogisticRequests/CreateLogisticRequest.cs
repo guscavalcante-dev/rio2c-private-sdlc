@@ -42,28 +42,33 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         //[RequiredIfOneWithValueAndOtherEmptyAttribute("IsRequired", "True", "CityUid")]
         //[StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string AirfareSponsorOtherName { get; set; }
-        
+
         #endregion
 
-        public Guid? AccommodationAttendeeLogisticSponsorUid { get; set; }
-        public string AccommodationAttendeeLogisticSponsorOthers { get; set; }
-        
-        public Guid? AirportTransferAttendeeLogisticSponsorUid { get; set; }
-        public string AirportTransferAttendeeLogisticSponsorOthers { get; set; }
+        #region Accommodation Sponsor
+        public bool IsAccommodationSponsored { get; set; }
+        public Guid? AccommodationSponsorUid { get; set; }
+        public Guid? AccommodationSponsorOtherUid { get; set; }
+        public string AccommodationSponsorOtherName { get; set; }
+
+        #endregion
+
+        #region AirportTransfer Sponsor
+        public bool IsAirportTransferSponsored { get; set; }
+        public Guid? AirportTransferSponsorUid { get; set; }
+        public Guid? AirportTransferSponsorOtherUid { get; set; }
+        public string AirportTransferSponsorOtherName { get; set; }
+
+        #endregion
         
         public bool IsCityTransferRequired { get; set; }
         public bool IsVehicleDisposalRequired { get; set; }
 
         public List<LogisticSponsorBaseDto> Sponsors { get; set; }
-        public bool IsAccommodationSponsored { get; set; }
-        public bool IsAirportTransferSponsored { get; set; }
 
         [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
         public string AdditionalInfo { get; set; }
-
-        public Guid? AirportTransferAttendeeLogisticSponsorOtherUid { get; set; }
-        public Guid? AccommodationAttendeeLogisticSponsorOtherUid { get; set; }
-
+        
         /// <summary>Initializes a new instance of the <see cref="CreateLogisticSponsors"/> class.</summary>
         public CreateLogisticRequest(List<LogisticSponsorBaseDto> sponsors, string userInterfaceLanguage)
         {

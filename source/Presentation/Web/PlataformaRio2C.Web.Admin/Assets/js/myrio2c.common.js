@@ -76,7 +76,7 @@ var MyRio2cCommon = function () {
     };
 
         // Enable change events -----------------------------------------------------------------------
-    var enableCheckboxChangeEvent = function (elementId) {
+    var enableCheckboxChangeEvent = function (elementId, callback) {
             var element = $('#' + elementId);
         
             function toggleChanged(element) {       
@@ -86,12 +86,16 @@ var MyRio2cCommon = function () {
                 else {
                     $("[data-additionalinfo='"+element.attr("id")+"']").addClass('d-none');
                 }
+
+                if (callback) {
+	                callback(element.prop('checked'));
+                }
             }
         
             toggleChanged(element);
 
             element.not('.change-event-enabled').on('click', function () {   
-                toggleChanged(element);  
+                toggleChanged(element);
             });
 
             element.addClass('change-event-enabled');
@@ -1440,8 +1444,8 @@ var MyRio2cCommon = function () {
         enableDropdownChangeEvent: function (elementId, requiredFieldId) {
             enableDropdownChangeEvent(elementId, requiredFieldId);
         },
-        enableCheckboxChangeEvent: function (elementId) {
-            enableCheckboxChangeEvent(elementId);
+        enableCheckboxChangeEvent: function (elementId, callback) {
+	        enableCheckboxChangeEvent(elementId, callback);
         },
         enableYesNoRadioEvent: function(elementId) {
 	        enableYesNoRadioEvent(elementId);

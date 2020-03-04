@@ -30,16 +30,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly ILanguageRepository languageRepo;
         private readonly ILogisticsRepository logisticsRepo;
         private readonly ILogisticSponsorRepository logisticSponsorRepo;
-        private readonly ICollaboratorRepository collaboratorRepo;
+        private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CreateLogisticsCommandHandler"/> class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref="T:PlataformaRio2C.Application.CQRS.CommandsHandlers.CreateLogisticsCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="logisticsRepo">The logistics repo.</param>
-        /// <param name="logisticSponsorRepo1"></param>
+        /// <param name="logisticSponsorRepo">The logistic sponsor repo.</param>
         /// <param name="editionRepository">The edition repository.</param>
+        /// <param name="attendeeCollaboratorRepo">The attendee collaborator repo.</param>
         /// <param name="languageRepository">The language repository.</param>
         public CreateLogisticsCommandHandler(
             IMediator eventBus,
@@ -47,14 +46,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             ILogisticsRepository logisticsRepo,
             ILogisticSponsorRepository logisticSponsorRepo,
             IEditionRepository editionRepository,
-            ICollaboratorRepository collaboratorRepo,
+            IAttendeeCollaboratorRepository attendeeCollaboratorRepo,
             ILanguageRepository languageRepository)
             : base(eventBus, uow, logisticsRepo)
         {
             this.editionRepo = editionRepository;
             this.languageRepo = languageRepository;
             this.logisticsRepo = logisticsRepo;
-            this.collaboratorRepo = collaboratorRepo;
+            this.attendeeCollaboratorRepo = attendeeCollaboratorRepo;
             this.logisticSponsorRepo = logisticSponsorRepo;
         }
 
@@ -67,16 +66,17 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.Uow.BeginTransaction();
             
             var logistics = new Logistics(
-                this.collaboratorRepo.Get(cmd.AttendeeCollaboratorUid)?.Id,
+                this.attendeeCollaboratorRepo.Get(cmd.AttendeeCollaboratorUid),
                 cmd.IsAirfareSponsored,
                 this.logisticSponsorRepo.Get(cmd.AirfareSponsorOtherUid ?? cmd.AirfareSponsorUid ?? Guid.Empty)?.Id,
                 cmd.IsAccommodationSponsored,
-                this.logisticSponsorRepo.Get(cmd.AccommodationAttendeeLogisticSponsorOtherUid ?? cmd.AccommodationAttendeeLogisticSponsorUid ?? Guid.Empty)?.Id,
+                this.logisticSponsorRepo.Get(cmd.AccommodationSponsorOtherUid ?? cmd.AccommodationSponsorUid ?? Guid.Empty)?.Id,
                 cmd.IsAirportTransferSponsored,
-                this.logisticSponsorRepo.Get(cmd.AirportTransferAttendeeLogisticSponsorOtherUid ?? cmd.AirportTransferAttendeeLogisticSponsorUid ?? Guid.Empty)?.Id,
+                this.logisticSponsorRepo.Get(cmd.AirportTransferSponsorOtherUid ?? cmd.AirportTransferSponsorUid ?? Guid.Empty)?.Id,
                 cmd.IsCityTransferRequired,
                 cmd.IsVehicleDisposalRequired,
-                cmd.AdditionalInfo);
+                cmd.AdditionalInfo,
+                cmd.UserId);
             
             if (!logistics.IsValid())
             {

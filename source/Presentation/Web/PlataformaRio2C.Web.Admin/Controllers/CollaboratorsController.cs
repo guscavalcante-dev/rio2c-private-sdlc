@@ -77,11 +77,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual + "," + Constants.CollaboratorType.CommissionAudiovisual)]
         public async Task<ActionResult> FindAllByFilters(string keywords, int? page = 1)
         {
-            var collaboratorsApiDtos = await this.collaboratorRepo.FindAllDropdownApiListDtoPaged(
+            var collaboratorsApiDtos = await this.attendeeCollaboratorRepo.FindAllDropdownApiListDtoPaged(
                 this.EditionDto.Id,
-                keywords,
-                null,
-                true,
                 page.Value,
                 10);
 
@@ -97,9 +94,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 Speakers = collaboratorsApiDtos?.Select(c => new SpeakersDropdownDto
                 {
                     Uid = c.Uid,
-                    BadgeName = c.BadgeName?.Trim(),
                     Name = c.Name?.Trim(),
-                    Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.Uid, c.ImageUploadDate, true) : null,
+                    Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.CollaboratorUid, c.ImageUploadDate, true) : null,
                     JobTitle = c.GetCollaboratorJobTitleBaseDtoByLanguageCode(this.UserInterfaceLanguage)?.Value?.Trim(),
                     Companies = c.OrganizationsDtos?.Select(od => new SpeakersDropdownOrganizationDto
                     {

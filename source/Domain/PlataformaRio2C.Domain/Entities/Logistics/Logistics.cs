@@ -81,59 +81,8 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         /// <value>The additional information.</value>
         public string AdditionalInfo { get; private set; }
-
-        #region Legacy
-        /// <summary>
-        /// Gets the arrival date.
-        /// </summary>
-        /// <value>The arrival date.</value>
-        public DateTime? ArrivalDate { get; private set; }
-        /// <summary>
-        /// Gets the arrival time.
-        /// </summary>
-        /// <value>The arrival time.</value>
-        public TimeSpan? ArrivalTime { get; private set; }
-        /// <summary>
-        /// Gets the departure date.
-        /// </summary>
-        /// <value>The departure date.</value>
-        public DateTime? DepartureDate { get; private set; }
-        /// <summary>
-        /// Gets the departure time.
-        /// </summary>
-        /// <value>The departure time.</value>
-        public TimeSpan? DepartureTime { get; private set; }
-        /// <summary>
-        /// Gets the collaborator identifier.
-        /// </summary>
-        /// <value>The collaborator identifier.</value>
-        public int CollaboratorId { get; private set; }
-        /// <summary>
-        /// Gets the collaborator.
-        /// </summary>
-        /// <value>The collaborator.</value>
-        public virtual Collaborator Collaborator { get; private set; }
-        /// <summary>
-        /// Gets the event identifier.
-        /// </summary>
-        /// <value>The event identifier.</value>
-        public int EventId { get; private set; }
-        /// <summary>
-        /// Gets the edition.
-        /// </summary>
-        /// <value>The edition.</value>
-        public virtual Edition Edition { get; private set; }
-        /// <summary>
-        /// Gets the name of the original.
-        /// </summary>
-        /// <value>The name of the original.</value>
-        public string OriginalName { get; private set; }
-        /// <summary>
-        /// Gets the name of the server.
-        /// </summary>
-        /// <value>The name of the server.</value>
-        public string ServerName { get; private set; }
-        #endregion
+        
+        public virtual AttendeeCollaborator AttendeeCollaborator { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Logistics"/> class.
@@ -146,7 +95,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>
         /// Initializes a new instance of the <see cref="Logistics" /> class.
         /// </summary>
-        /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
+        /// <param name="attendeeCollaborator"></param>
         /// <param name="isAirfareSponsored">if set to <c>true</c> [is airfare sponsored].</param>
         /// <param name="airfareAttendeeLogisticSponsorId">The airfare attendee logistic sponsor identifier.</param>
         /// <param name="isAccommodationSponsored">if set to <c>true</c> [is accommodation sponsored].</param>
@@ -156,10 +105,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isCityTransferRequired">if set to <c>true</c> [is city transfer required].</param>
         /// <param name="isVehicleDisposalRequired">if set to <c>true</c> [is vehicle disposal required].</param>
         /// <param name="additionalInfo">The additional information.</param>
-        public Logistics(int? attendeeCollaboratorId, bool isAirfareSponsored, int? airfareAttendeeLogisticSponsorId, bool isAccommodationSponsored, int? accommodationAttendeeLogisticSponsorId, bool isAirportTransferSponsored, int? airportTransferAttendeeLogisticSponsorId, bool isCityTransferRequired, bool isVehicleDisposalRequired, string additionalInfo)
+        /// <param name="userId"></param>
+        public Logistics(AttendeeCollaborator attendeeCollaborator, bool isAirfareSponsored, int? airfareAttendeeLogisticSponsorId, bool isAccommodationSponsored, int? accommodationAttendeeLogisticSponsorId, bool isAirportTransferSponsored, int? airportTransferAttendeeLogisticSponsorId, bool isCityTransferRequired, bool isVehicleDisposalRequired, string additionalInfo, int userId)
         {
-            // TODO: Validate
-            this.AttendeeCollaboratorId = attendeeCollaboratorId.Value;
+            this.AttendeeCollaborator = attendeeCollaborator;
+
             this.IsAirfareSponsored = isAirfareSponsored;
             this.AirfareAttendeeLogisticSponsorId = airfareAttendeeLogisticSponsorId;
             this.IsAccommodationSponsored = isAccommodationSponsored;
@@ -169,104 +119,10 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsCityTransferRequired = isCityTransferRequired;
             this.IsVehicleDisposalRequired = isVehicleDisposalRequired;
             this.AdditionalInfo = additionalInfo;
+            this.CreateUserId = this.UpdateUserId = userId;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
         }
-
-        #region Legacy
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Logistics"/> class.
-        /// </summary>
-        /// <param name="arrivalDate">The arrival date.</param>
-        /// <param name="departureDate">The departure date.</param>
-        public Logistics(DateTime? arrivalDate, DateTime? departureDate)
-        {
-            SetArrivalDate(arrivalDate);
-            SetDepartureDate(departureDate);
-        }
-
-        /// <summary>
-        /// Sets the arrival time.
-        /// </summary>
-        /// <param name="arrivalTime">The arrival time.</param>
-        public void SetArrivalTime(TimeSpan? arrivalTime)
-        {
-            ArrivalTime = arrivalTime;
-        }
-
-        /// <summary>
-        /// Sets the arrival date.
-        /// </summary>
-        /// <param name="val">The value.</param>
-        public void SetArrivalDate(DateTime? val)
-        {
-            ArrivalDate = val;
-        }
-
-
-        /// <summary>
-        /// Sets the departure time.
-        /// </summary>
-        /// <param name="departureTime">The departure time.</param>
-        public void SetDepartureTime(TimeSpan? departureTime)
-        {
-            DepartureTime = departureTime;
-        }
-
-        /// <summary>
-        /// Sets the departure date.
-        /// </summary>
-        /// <param name="val">The value.</param>
-        public void SetDepartureDate(DateTime? val)
-        {
-            DepartureDate = val;
-        }
-
-        /// <summary>
-        /// Sets the name of the original.
-        /// </summary>
-        /// <param name="originalName">Name of the original.</param>
-        public void SetOriginalName(string originalName)
-        {
-            OriginalName = originalName;
-        }
-
-        /// <summary>
-        /// Sets the name of the server.
-        /// </summary>
-        /// <param name="serverName">Name of the server.</param>
-        public void SetServerName(string serverName)
-        {
-            ServerName = serverName;
-        }
-
-        /// <summary>
-        /// Sets the collaborator.
-        /// </summary>
-        /// <param name="collaborator">The collaborator.</param>
-        public void SetCollaborator(Collaborator collaborator)
-        {
-            Collaborator = collaborator;
-            if (collaborator != null)
-            {
-                CollaboratorId = collaborator.Id;
-            }
-        }
-
-        /// <summary>
-        /// Sets the event.
-        /// </summary>
-        /// <param name="eventEntity">The event entity.</param>
-        public void SetEvent(Edition eventEntity)
-        {
-            Edition = eventEntity;
-            if (eventEntity != null)
-            {
-                EventId = eventEntity.Id;
-            }
-        }
-
-        #endregion
-
+        
         /// <summary>
         /// Returns true if ... is valid.
         /// </summary>

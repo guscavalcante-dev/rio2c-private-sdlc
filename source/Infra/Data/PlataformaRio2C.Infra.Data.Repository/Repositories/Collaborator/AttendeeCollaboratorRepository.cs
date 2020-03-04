@@ -231,6 +231,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return pagedList;
         }
+
+        internal static async Task<IPagedList<AttendeeCollaboratorListDto>> ToListPagedAsync(this IQueryable<AttendeeCollaboratorListDto> query, int page, int pageSize)
+        {
+            // Page the list
+            var pagedList = await query.ToPagedListAsync(page, pageSize);
+            if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
+                pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
+
+            return pagedList;
+        }
     }
 
     #endregion
@@ -631,6 +641,51 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 })
                             })
                             .ToListAsync();
+        }
+        
+        public async Task<IPagedList<AttendeeCollaboratorListDto>> FindAllDropdownApiListDtoPaged(int editionId, int page, int pageSize)
+        {
+            var query = this.GetBaseQuery()
+                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(c => new AttendeeCollaboratorListDto()
+                            {
+                                Uid = c.Uid,
+                                CollaboratorUid = c.Collaborator.Uid,
+                                Name = c.Collaborator.FirstName + " " + c.Collaborator.LastNames,
+                                BadgeName = c.Collaborator.Badge,
+                                ImageUploadDate = c.Collaborator.ImageUploadDate,
+                                JobTitlesDtos = c.Collaborator.JobTitles.Where(jb => !jb.IsDeleted).Select(d => new CollaboratorJobTitleBaseDto
+                                {
+                                    Id = d.Id,
+                                    Uid = d.Uid,
+                                    Value = d.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = d.Language.Id,
+                                        Uid = d.Language.Uid,
+                                        Name = d.Language.Name,
+                                        Code = d.Language.Code
+                                    }
+                                }),
+                                OrganizationsDtos = c.Collaborator.AttendeeCollaborators
+                                    .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                    .SelectMany(ac => ac.AttendeeOrganizationCollaborators
+                                        .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted && !aoc.AttendeeOrganization.Organization.IsDeleted)
+                                        .Select(aoc => new OrganizationApiListDto
+                                        {
+                                            Uid = aoc.AttendeeOrganization.Organization.Uid,
+                                            CompanyName = aoc.AttendeeOrganization.Organization.CompanyName,
+                                            TradeName = aoc.AttendeeOrganization.Organization.TradeName,
+                                            ImageUploadDate = aoc.AttendeeOrganization.Organization.ImageUploadDate
+
+                                        })),
+                                CreateDate = c.CreateDate,
+                                UpdateDate = c.UpdateDate
+                            })
+                            .OrderBy(o => o.Name)
+                            .ToListPagedAsync(page, pageSize);
         }
 
         #endregion
