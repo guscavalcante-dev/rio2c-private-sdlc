@@ -118,6 +118,7 @@
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorBaseDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorTicketDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationBaseDto.cs" />
+    <Compile Include="Dtos\Audiovisual\Negotiations\NegotiationConfigJsonDto.cs" />
     <Compile Include="Dtos\Cities\CityBaseDto.cs" />
     <Compile Include="Dtos\Collaborators\CollaboratorEditionParticipationBaseDto.cs" />
     <Compile Include="Dtos\Collaborators\SpeakerCollaboratorDto.cs" />
@@ -250,8 +251,8 @@
     <Compile Include="Entities\Music\MusicBand.cs" />
     <Compile Include="Entities\Music\MusicProject.cs" />
     <Compile Include="Entities\Music\MusicBandTargetAudience.cs" />
-    <Compile Include="Entities\NegotiationConfig\NegotiationRoomConfig.cs" />
-    <Compile Include="Entities\NegotiationConfig\NegotiationConfig.cs" />
+    <Compile Include="Entities\Audiovisual\NegotiationConfig\NegotiationRoomConfig.cs" />
+    <Compile Include="Entities\Audiovisual\NegotiationConfig\NegotiationConfig.cs" />
     <Compile Include="Entities\Negotiation\Negotiation.cs" />
     <Compile Include="Entities\Organizations\AttendeeOrganizationCollaborator.cs" />
     <Compile Include="Entities\Organizations\AttendeeOrganizationType.cs" />
@@ -338,8 +339,8 @@
     <Compile Include="Interfaces\Repositories\Mail\IMailRepository.cs" />
     <Compile Include="Interfaces\Repositories\Message\IMessageRepository.cs" />
     <Compile Include="Interfaces\Repositories\MusicalCommission\IMusicalCommissionRepository.cs" />
-    <Compile Include="Interfaces\Repositories\NegotiationConfig\INegotiationRoomConfigRepository.cs" />
-    <Compile Include="Interfaces\Repositories\NegotiationConfig\INegotiationConfigRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Audiovisual\NegotiationConfig\INegotiationRoomConfigRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Audiovisual\NegotiationConfig\INegotiationConfigRepository.cs" />
     <Compile Include="Interfaces\Repositories\Negotiation\INegotiationRepository.cs" />
     <Compile Include="Interfaces\Repositories\Projects\IProjectPlayerRepository.cs" />
     <Compile Include="Interfaces\Repositories\Projects\IProjectStatusRepository.cs" />

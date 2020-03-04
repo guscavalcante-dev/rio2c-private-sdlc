@@ -515,6 +515,7 @@
     <Compile Include="ViewModels\Api\Conference\LecturerAppViewModel.cs" />
     <Compile Include="ViewModels\Api\Conference\LecturerGroupAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Activity\ActivityAppViewModel.cs" />
+    <Compile Include="ViewModels\Common\Audiovisual\Meetings\MeetingParameterSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\CollaboratorPlayer\CollaboratorPlayerEditAppViewModel.cs" />
     <Compile Include="ViewModels\Common\CollaboratorPlayer\CollaboratorPlayerItemListAppViewModel.cs" />
     <Compile Include="ViewModels\Common\CollaboratorProducer\CollaboratorProducerItemListAppViewModel.cs" />

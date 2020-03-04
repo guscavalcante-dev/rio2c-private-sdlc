@@ -121,8 +121,8 @@
     <Compile Include="Mapping\Music\MusicBandMap.cs" />
     <Compile Include="Mapping\Music\MusicBandGenreMap.cs" />
     <Compile Include="Mapping\Music\MusicBandTargetAudienceMap.cs" />
-    <Compile Include="Mapping\NegotiationConfig\NegotiationRoomConfigMap.cs" />
-    <Compile Include="Mapping\NegotiationConfig\NegotiationConfigMap.cs" />
+    <Compile Include="Mapping\Audiovisual\NegotiationConfig\NegotiationRoomConfigMap.cs" />
+    <Compile Include="Mapping\Audiovisual\NegotiationConfig\NegotiationConfigMap.cs" />
     <Compile Include="Mapping\Negotiation\NegotiationMap.cs" />
     <Compile Include="Mapping\Organizations\AttendeeOrganizationCollaboratorMap.cs" />
     <Compile Include="Mapping\Organizations\AttendeeOrganizationTypeMap.cs" />

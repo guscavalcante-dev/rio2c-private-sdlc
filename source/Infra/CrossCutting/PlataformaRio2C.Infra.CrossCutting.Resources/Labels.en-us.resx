@@ -2194,4 +2194,12 @@
     <value>Music video and tracks</value>
     <comment>Vídeo clip e músicas</comment>
   </data>
+  <data name="OneToOneMeetingParameters" xml:space="preserve">
+    <value>One-to-One Meetings Parameters</value>
+    <comment>Parâmetros de Rodadas de Negócio</comment>
+  </data>
+  <data name="Parameter" xml:space="preserve">
+    <value>Parameter</value>
+    <comment>Parâmetro</comment>
+  </data>
 </root>

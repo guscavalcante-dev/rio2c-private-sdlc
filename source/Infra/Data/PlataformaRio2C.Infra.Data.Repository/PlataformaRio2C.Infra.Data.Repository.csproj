@@ -235,7 +235,9 @@
     <Compile Include="Repositories\Player\PlayerRepository.cs" />
     <Compile Include="Repositories\Holding\HoldingRepository.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Repositories\Audiovisual\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

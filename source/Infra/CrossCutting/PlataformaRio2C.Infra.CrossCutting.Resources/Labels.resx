@@ -2201,4 +2201,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Vídeo clip e músicas</value>
     <comment>Vídeo clip e músicas</comment>
   </data>
+  <data name="OneToOneMeetingParameters" xml:space="preserve">
+    <value>Parâmetros de Rodadas de Negócio</value>
+    <comment>Parâmetros de Rodadas de Negócio</comment>
+  </data>
+  <data name="Parameter" xml:space="preserve">
+    <value>Parâmetro</value>
+    <comment>Parâmetro</comment>
+  </data>
 </root>

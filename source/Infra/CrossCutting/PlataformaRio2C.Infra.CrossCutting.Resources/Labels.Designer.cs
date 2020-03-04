@@ -2734,6 +2734,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Parâmetros de Rodadas de Negócio.
+        /// </summary>
+        public static string OneToOneMeetingParameters {
+            get {
+                return ResourceManager.GetString("OneToOneMeetingParameters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rodadas de Negócios.
         /// </summary>
         public static string OneToOneMeetings {
@@ -2784,6 +2793,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Others {
             get {
                 return ResourceManager.GetString("Others", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parâmetro.
+        /// </summary>
+        public static string Parameter {
+            get {
+                return ResourceManager.GetString("Parameter", resourceCulture);
             }
         }
         

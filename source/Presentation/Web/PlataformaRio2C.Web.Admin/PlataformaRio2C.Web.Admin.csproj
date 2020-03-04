@@ -330,6 +330,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SimpleInjectorInitializer.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Audiovisual\AudiovisualAreaRegistration.cs" />
+    <Compile Include="Areas\Audiovisual\Controllers\MeetingParametersController.cs" />
     <Compile Include="Areas\Music\Controllers\CommissionsController.cs" />
     <Compile Include="Areas\Music\Controllers\ProjectsController.cs" />
     <Compile Include="Areas\Music\MusicAreaRegistration.cs" />
@@ -418,6 +420,9 @@
     <Content Include="Assets\img\logo-rio2c-footer.png" />
     <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
+    <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.editioncount.widget.js" />
+    <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.totalcount.widget.js" />
+    <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.datatable.widget.js" />
     <Content Include="Assets\js\companies\companyinfo.autocomplete.js" />
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.participants.widget.js" />
     <Content Include="Assets\js\conferences\conferences.editionevents.js" />
@@ -7125,6 +7130,17 @@
     <Content Include="Areas\Music\Views\Projects\Modals\RefuseEvaluationForm.cshtml" />
     <Content Include="Areas\Music\Views\Projects\Modals\RefuseEvaluationModal.cshtml" />
     <Content Include="Areas\Music\Views\Projects\Widgets\SocialNetworksWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\web.config" />
+    <Content Include="Areas\Audiovisual\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Details.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Index.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\CreateModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\UpdateMainInformationModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\UpdateModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\UpdateSocialNetworksModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Widgets\TotalCountWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -8406,6 +8422,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Audiovisual\Data\" />
+    <Folder Include="Areas\Audiovisual\Views\Shared\" />
     <Folder Include="Areas\Music\Data\" />
     <Folder Include="Areas\Music\Views\Shared\" />
     <Folder Include="Scripts\ckeditor\images\" />
