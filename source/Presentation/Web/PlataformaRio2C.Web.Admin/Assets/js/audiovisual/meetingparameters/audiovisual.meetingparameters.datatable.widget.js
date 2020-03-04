@@ -39,7 +39,6 @@ var AudiovisualMeetingParametersDataTableWidget = function () {
         }
 
         var globalVariables = MyRio2cCommon.getGlobalVariables();
-        var imageDirectory = 'https://' + globalVariables.bucket + '/img/users/';
 
         // Initiate datatable
         table = tableElement.DataTable({
@@ -67,8 +66,8 @@ var AudiovisualMeetingParametersDataTableWidget = function () {
             ajax: {
                 url: MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/Search'),
                 data: function (d) {
-                    d.showAllEditions = $('#ShowAllEditions').prop('checked');
-                    d.showAllParticipants = $('#ShowAllParticipants').prop('checked');
+                    //d.showAllEditions = $('#ShowAllEditions').prop('checked');
+                    //d.showAllParticipants = $('#ShowAllParticipants').prop('checked');
                 },
                 dataFilter: function (data) {
                     var jsonReturned = jQuery.parseJSON(data);
@@ -144,7 +143,7 @@ var AudiovisualMeetingParametersDataTableWidget = function () {
                                             <div class="dropdown-menu dropdown-menu-right">';
 
                         html += '               <button class="dropdown-item" onclick="AudiovisualMeetingParametersDataTableWidget.showDetails(\'' + full.NegotiationConfigUid + '\', false);"><i class="la la-edit"></i> ' + labels.edit + '</button>';
-		                html += '               <button class="dropdown-item" onclick="MusicProjectsDelete.showModal(\'' + full.NegotiationConfigUid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+		                html += '               <button class="dropdown-item" onclick="AudiovisualMeetingParametersDelete.showModal(\'' + full.NegotiationConfigUid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
 
 		                html += '\
                                             </div>\
@@ -181,11 +180,11 @@ var AudiovisualMeetingParametersDataTableWidget = function () {
             }
         });
 
-        $('#Search').keyup(function (e) {
-            if (e.keyCode === 13) {
-                table.search($(this).val()).draw();
-            }
-        });
+        //$('#Search').keyup(function (e) {
+        //    if (e.keyCode === 13) {
+        //        table.search($(this).val()).draw();
+        //    }
+        //});
 
         $('.enable-datatable-reload').click(function (e) {
             table.ajax.reload();
