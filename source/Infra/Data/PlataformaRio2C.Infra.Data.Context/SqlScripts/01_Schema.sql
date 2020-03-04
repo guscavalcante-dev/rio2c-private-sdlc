@@ -2018,7 +2018,7 @@ CREATE TABLE [dbo].[NegotiationConfigs](
 	[EndDate] [datetimeoffset](7) NOT NULL,
 	[RoundFirstTurn] [int] NOT NULL,
 	[RoundSecondTurn] [int] NOT NULL,
-	[TimeIntervalBetweenTurn] [char](18) NULL,
+	[TimeIntervalBetweenTurn] [time](7) NOT NULL,
 	[TimeOfEachRound] [time](7) NOT NULL,
 	[TimeIntervalBetweenRound] [time](7) NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
