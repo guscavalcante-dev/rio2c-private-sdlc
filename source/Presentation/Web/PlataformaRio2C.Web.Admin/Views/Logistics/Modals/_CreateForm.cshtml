@@ -23,56 +23,36 @@
             <div class="row">
                 <div class="col-md-12">
                     <label class="kt-checkbox">
-                        <input type="checkbox"
-                               name="IsAirfareTicketRequired"
-                               id="IsAirfareTicketRequired"
-                               value="true"/> Necessita
+                        @Html.CheckBoxFor(m => m.IsAirfareSponsored) Necessita
                         <span></span>
                     </label>
                 </div>
             </div>
         </div>
-        <div class="kt-radio-list mt-2 d-none" data-additionalinfo="IsAirfareTicketRequired">
+        <div class="kt-radio-list mt-2 d-none" data-additionalinfo="IsAirfareSponsored">
             @if (Model.Sponsors != null)
             {
                 foreach (var sponsor in Model.Sponsors)
                 {
                     <label class="kt-radio">
-                        @Html.RadioButtonFor(m => m.AirfareAttendeeLogisticSponsorId, sponsor.Id) @sponsor.Name
+                        @Html.RadioButtonFor(m => m.AirfareSponsorUid, sponsor.Uid, new { data_isothers=sponsor.IsOtherRequired }) @sponsor.Name
                         <span></span>
                     </label>
                 }
             }
-
-            <label class="kt-radio">
-                <input type="radio" name="AirfareAttendeeLogisticSponsorId"> Rio2C
-                <span></span>
-            </label>
-            <label class="kt-radio">
-                <input type="radio" name="AirfareAttendeeLogisticSponsorId"> APEX
-                <span></span>
-            </label>
-            <label class="kt-radio">
-                <input type="radio" name="AirfareAttendeeLogisticSponsorId"> Próprio
-                <span></span>
-            </label>
-            <label class="kt-radio">
-                <input type="radio" name="AirfareAttendeeLogisticSponsorId"> Patrocinado por outras instituições
-                <span></span>
-            </label>
         </div>
-        <div class="row d-none">
-            <div class="form-group col-md-8 mb-0" data-id="City">
+        <div class="row">
+            <div class="form-group col-md-8 mb-0" data-id="Airfare">
                 <div class="view">
-                    @Html.Hidden("InitialCityUid", Model.AirportTransferAttendeeLogisticSponsorUid)
-                    @Html.DropDownList("CityUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control enable-select2" })
-                    <span class="form-text text-muted text-right"><a href="" onclick="return AddressesForm.enableNewCity();" class="btn-link btn-edit">@(Labels.NewM.ToLowerInvariant()) @(Labels.Sponsor.ToLowerInvariant())</a></span>
+                    @Html.Hidden("Airfare_InitialSponsorUid", Model.AirportTransferAttendeeLogisticSponsorUid)
+                    @Html.DropDownList("Airfare_SponsorUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control enable-select2" })
+                    <span class="form-text text-muted text-right"><a href="" onclick="return LogisticsCreate.enableNewSponsor();" class="btn-link btn-edit">@(Labels.NewM.ToLowerInvariant()) @(Labels.Sponsor.ToLowerInvariant())</a></span>
                 </div>
                 <div class="edit d-none">
-                    @Html.TextBoxFor(m => m.AirportTransferAttendeeLogisticSponsorOthers, new { @class = "form-control" })
-                    <span class="form-text text-muted text-right"><a href="" onclick="return AddressesForm.disableNewCity();" class="btn-link">@(Labels.Cancel.ToLowerInvariant())</a></span>
+                    @Html.TextBoxFor(m => m.AirfareSponsorOtherName, new { @class = "form-control" })
+                    <span class="form-text text-muted text-right"><a href="" onclick="return LogisticsCreate.disableNewSponsor();" class="btn-link">@(Labels.Cancel.ToLowerInvariant())</a></span>
                 </div>
-                @Html.ValidationMessageFor(m => m.AirportTransferAttendeeLogisticSponsorOthers, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(m => m.AirfareSponsorOtherName, "", new { @class = "text-danger" })
             </div>
         </div>
     </div>
@@ -86,31 +66,37 @@
             <div class="row">
                 <div class="col-md-12">
                     <label class="kt-checkbox">
-                        <input type="checkbox"
-                               name="IsAirfareTicketRequired"
-                               value="true" checked /> Necessita
+                        @Html.CheckBoxFor(m => m.IsAccommodationSponsored) Necessita
                         <span></span>
                     </label>
                 </div>
             </div>
         </div>
-        <div class="kt-radio-list mt-2">
-            <label class="kt-radio">
-                <input type="radio" name="AccommodationAttendeeLogisticSponsorId"> Rio2C
-                <span></span>
-            </label>
-            <label class="kt-radio">
-                <input type="radio" name="AccommodationAttendeeLogisticSponsorId"> APEX
-                <span></span>
-            </label>
-            <label class="kt-radio">
-                <input type="radio" name="AccommodationAttendeeLogisticSponsorId"> Próprio
-                <span></span>
-            </label>
-            <label class="kt-radio">
-                <input type="radio" name="AccommodationAttendeeLogisticSponsorId"> Patrocinado por outras instituições
-                <span></span>
-            </label>
+        <div class="kt-radio-list mt-2 d-none" data-additionalinfo="IsAccommodationSponsored">
+            @if (Model.Sponsors != null)
+            {
+                foreach (var sponsor in Model.Sponsors)
+                {
+                    <label class="kt-radio">
+                        @Html.RadioButtonFor(m => m.AccommodationAttendeeLogisticSponsorUid, sponsor.Id, new { data_isothers = sponsor.IsOtherRequired }) @sponsor.Name
+                        <span></span>
+                    </label>
+                }
+            }
+        </div>
+        <div class="row">
+            <div class="form-group col-md-8 mb-0" data-id="Accomodation">
+                <div class="view">
+                    @Html.Hidden("Accomodation_InitialSponsorUid", Model.AccommodationAttendeeLogisticSponsorUid)
+                    @Html.DropDownList("Accomodation_SponsorUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control enable-select2" })
+                    <span class="form-text text-muted text-right"><a href="" onclick="return LogisticsCreate.enableNewSponsor();" class="btn-link btn-edit">@(Labels.NewM.ToLowerInvariant()) @(Labels.Sponsor.ToLowerInvariant())</a></span>
+                </div>
+                <div class="edit d-none">
+                    @Html.TextBoxFor(m => m.AccommodationAttendeeLogisticSponsorOthers, new { @class = "form-control" })
+                    <span class="form-text text-muted text-right"><a href="" onclick="return LogisticsCreate.disableNewSponsor();" class="btn-link">@(Labels.Cancel.ToLowerInvariant())</a></span>
+                </div>
+                @Html.ValidationMessageFor(m => m.AccommodationAttendeeLogisticSponsorOthers, "", new { @class = "text-danger" })
+            </div>
         </div>
     </div>
 </div>
@@ -128,31 +114,37 @@
             <div class="row">
                 <div class="col-md-12">
                     <label class="kt-checkbox">
-                        <input type="checkbox"
-                               name="IsAirfareTicketRequired"
-                               value="true" checked /> Necessita
+                        @Html.CheckBoxFor(m => m.IsAirportTransferSponsored) Necessita
                         <span></span>
                     </label>
                 </div>
             </div>
         </div>
-        <div class="kt-radio-list mt-2">
-            <label class="kt-radio">
-                <input type="radio" name="AirportTransferAttendeeLogisticSponsorId"> Rio2C
-                <span></span>
-            </label>
-            <label class="kt-radio">
-                <input type="radio" name="AirportTransferAttendeeLogisticSponsorId"> APEX
-                <span></span>
-            </label>
-            <label class="kt-radio">
-                <input type="radio" name="AirportTransferAttendeeLogisticSponsorId"> Próprio
-                <span></span>
-            </label>
-            <label class="kt-radio">
-                <input type="radio" name="AirportTransferAttendeeLogisticSponsorId"> Patrocinado por outras instituições
-                <span></span>
-            </label>
+        <div class="kt-radio-list mt-2 d-none" data-additionalinfo="IsAirportTransferSponsored">
+            @if (Model.Sponsors != null)
+            {
+                foreach (var sponsor in Model.Sponsors)
+                {
+                    <label class="kt-radio">
+                        @Html.RadioButtonFor(m => m.AirportTransferAttendeeLogisticSponsorUid, sponsor.Id, new { data_isothers = sponsor.IsOtherRequired }) @sponsor.Name
+                        <span></span>
+                    </label>
+                }
+            }
+        </div>
+        <div class="row">
+            <div class="form-group col-md-8 mb-0" data-id="AirportTransfer">
+                <div class="view">
+                    @Html.Hidden("AirportTransfer_InitialSponsorUid", Model.AirportTransferAttendeeLogisticSponsorUid)
+                    @Html.DropDownList("AirportTransfer_SponsorUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control enable-select2" })
+                    <span class="form-text text-muted text-right"><a href="" onclick="return LogisticsCreate.enableNewSponsor();" class="btn-link btn-edit">@(Labels.NewM.ToLowerInvariant()) @(Labels.Sponsor.ToLowerInvariant())</a></span>
+                </div>
+                <div class="edit d-none">
+                    @Html.TextBoxFor(m => m.AirportTransferAttendeeLogisticSponsorOthers, new { @class = "form-control" })
+                    <span class="form-text text-muted text-right"><a href="" onclick="return LogisticsCreate.disableNewSponsor();" class="btn-link">@(Labels.Cancel.ToLowerInvariant())</a></span>
+                </div>
+                @Html.ValidationMessageFor(m => m.AirportTransferAttendeeLogisticSponsorOthers, "", new { @class = "text-danger" })
+            </div>
         </div>
     </div>
 </div>

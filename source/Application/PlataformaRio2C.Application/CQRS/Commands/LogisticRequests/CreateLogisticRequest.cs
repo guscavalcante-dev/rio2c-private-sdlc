@@ -28,21 +28,41 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         [Display(Name = "Participant", ResourceType = typeof(Labels))]
         public int AttendeeCollaboratorId { get; set; }
-        public int? AirfareAttendeeLogisticSponsorId { get; set; }
-        public int? AccommodationAttendeeLogisticSponsorId { get; set; }
+
+        #region Airfare sponsor
+
+        public bool IsAirfareSponsored { get; set; }
+
+        public Guid? AirfareSponsorUid { get; set; }
+
+        // City
+        //[RequiredIfOneWithValueAndOtherEmptyAttribute("IsRequired", "True", "CityName")]
+        public Guid? AirfareSponsorOtherUid { get; set; }
+        
+        //[RequiredIfOneWithValueAndOtherEmptyAttribute("IsRequired", "True", "CityUid")]
+        //[StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string AirfareSponsorOtherName { get; set; }
+        
+        #endregion
+
+        public Guid? AccommodationAttendeeLogisticSponsorUid { get; set; }
+        public string AccommodationAttendeeLogisticSponsorOthers { get; set; }
+        
         public Guid? AirportTransferAttendeeLogisticSponsorUid { get; set; }
-
-        [Display(Name = "Others", ResourceType = typeof(Labels))]
         public string AirportTransferAttendeeLogisticSponsorOthers { get; set; }
-
+        
         public bool IsCityTransferRequired { get; set; }
         public bool IsVehicleDisposalRequired { get; set; }
 
         public List<LogisticSponsorBaseDto> Sponsors { get; set; }
-        public bool IsAirfareTicketRequired { get; set; }
+        public bool IsAccommodationSponsored { get; set; }
+        public bool IsAirportTransferSponsored { get; set; }
 
         [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
         public string AdditionalInfo { get; set; }
+
+        public Guid? AirportTransferAttendeeLogisticSponsorOtherUid { get; set; }
+        public Guid? AccommodationAttendeeLogisticSponsorOtherUid { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CreateLogisticSponsors"/> class.</summary>
         public CreateLogisticRequest(List<LogisticSponsorBaseDto> sponsors, string userInterfaceLanguage)

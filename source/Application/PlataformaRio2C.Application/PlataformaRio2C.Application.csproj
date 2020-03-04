@@ -218,6 +218,8 @@
     <Compile Include="CQRS\CommandsHandlers\LogisticSponsors\UpdateLogisticSponsorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\LogisticSponsors\CreateLogisticSponsorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\LogisticSponsors\LogisticSponsorBaseCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Logistics\CreateLogisticsCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Logistics\LogisticsBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Messages\SendUnreadConversationsEmailsAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\Projects\AcceptMusicProjectEvaluationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\Projects\BaseMusicProjectCommandHandler.cs" />

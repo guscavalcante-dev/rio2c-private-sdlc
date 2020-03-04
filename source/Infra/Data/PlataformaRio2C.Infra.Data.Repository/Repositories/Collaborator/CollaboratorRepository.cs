@@ -768,13 +768,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="keywords">The keywords.</param>
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
+        /// <param name="showAllParticipants"></param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<CollaboratorApiListDto>> FindAllDropdownApiListDtoPaged(int editionId, string keywords, string collaboratorTypeName, int page, int pageSize)
+        public async Task<IPagedList<CollaboratorApiListDto>> FindAllDropdownApiListDtoPaged(int editionId, string keywords, string collaboratorTypeName, bool showAllParticipants, int page, int pageSize)
         {
             var query = this.GetBaseQuery()
-                                .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeName, false, false, false, editionId)
+                                .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeName, false, false, showAllParticipants, editionId)
                                 .FindByKeywords(keywords, editionId);
 
             return await query

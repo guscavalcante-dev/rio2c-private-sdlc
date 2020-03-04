@@ -51,6 +51,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        internal static IQueryable<LogisticSponsor> FindByIsOther(this IQueryable<LogisticSponsor> query, int editionId, bool isOther = false)
+        {
+            return query.Where(o => o.AttendeeLogisticSponsors.Any(ac => ac.EditionId == editionId
+                                                                              && !ac.IsDeleted
+                                                                              && !ac.Edition.IsDeleted
+                                                                              && ac.IsOther == isOther));
+        }
+
         /// <summary>Finds the by keywords.</summary>
         /// <param name="query">The query.</param>
         /// <param name="keywords">The keywords.</param>
@@ -211,7 +219,26 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<List<LogisticSponsorBaseDto>> FindAllDtosByEditionUidAsync(int editionId)
         {
             var query = this.GetBaseQuery(true)
-                .FindByEditionId(false, editionId);
+                .FindByEditionId(false, editionId)
+                .FindByIsOther(editionId);
+
+            return await query
+                .Select(c => new LogisticSponsorBaseDto
+                {
+                    Id = c.Id,
+                    Uid = c.Uid,
+                    Name = c.Name,
+                    CreateDate = c.CreateDate,
+                    UpdateDate = c.UpdateDate,
+                    IsOtherRequired = c.IsOtherRequired
+                }).ToListAsync();
+        }
+
+        public async Task<List<LogisticSponsorBaseDto>> FindAllDtosByIsOther(int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                .FindByEditionId(false, editionId)
+                .FindByIsOther(editionId, true);
 
             return await query
                 .Select(c => new LogisticSponsorBaseDto

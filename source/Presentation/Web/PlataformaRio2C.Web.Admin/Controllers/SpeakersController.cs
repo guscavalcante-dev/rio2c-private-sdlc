@@ -1155,6 +1155,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 this.EditionDto.Id,
                 keywords,
                 Constants.CollaboratorType.Speaker,
+                false,
                 page.Value,
                 10);
 

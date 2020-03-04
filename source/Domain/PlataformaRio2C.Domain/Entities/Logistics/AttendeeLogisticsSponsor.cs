@@ -50,11 +50,10 @@ namespace PlataformaRio2C.Domain.Entities
 
         public int EditionId { get; private set; }
         public int LogisticSponsorId { get; private set; }
+        public bool IsOther { get; private set; }
         public virtual Edition Edition { get; private set; }
         public virtual LogisticSponsor LogisticSponsor { get; private set; }
                 
-
-
         #region Validations
 
         /// <summary>Returns true if ... is valid.</summary>

@@ -352,45 +352,16 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #region Finds
 
-        /// <summary>Finds all by filters.</summary>
-        /// <param name="keywords">The keywords.</param>
-        /// <param name="page">The page.</param>
-        /// <returns></returns>
         [HttpGet]
         [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual + "," + Constants.CollaboratorType.CommissionAudiovisual)]
-        public async Task<ActionResult> FindAllByFilters(string keywords, int? page = 1)
+        public async Task<ActionResult> FindAllByIsOther()
         {
-            var collaboratorsApiDtos = await this.collaboratorRepo.FindAllDropdownApiListDtoPaged(
-                this.EditionDto.Id,
-                keywords,
-                Constants.CollaboratorType.Speaker,
-                page.Value,
-                10);
-
+            var list = await this.logisticSponsorRepo.FindAllDtosByIsOther(this.EditionDto.Id);
+            
             return Json(new
             {
                 status = "success",
-                HasPreviousPage = collaboratorsApiDtos.HasPreviousPage,
-                HasNextPage = collaboratorsApiDtos.HasNextPage,
-                TotalItemCount = collaboratorsApiDtos.TotalItemCount,
-                PageCount = collaboratorsApiDtos.PageCount,
-                PageNumber = collaboratorsApiDtos.PageNumber,
-                PageSize = collaboratorsApiDtos.PageSize,
-                Speakers = collaboratorsApiDtos?.Select(c => new SpeakersDropdownDto
-                {
-                    Uid = c.Uid,
-                    BadgeName = c.BadgeName?.Trim(),
-                    Name = c.Name?.Trim(),
-                    Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.Uid, c.ImageUploadDate, true) : null,
-                    JobTitle = c.GetCollaboratorJobTitleBaseDtoByLanguageCode(this.UserInterfaceLanguage)?.Value?.Trim(),
-                    Companies = c.OrganizationsDtos?.Select(od => new SpeakersDropdownOrganizationDto
-                    {
-                        Uid = od.Uid,
-                        TradeName = od.TradeName,
-                        CompanyName = od.CompanyName,
-                        Picture = od.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, od.Uid, od.ImageUploadDate, true) : null
-                    })?.ToList()
-                })?.ToList()
+                list
             }, JsonRequestBehavior.AllowGet);
         }
 

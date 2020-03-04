@@ -361,6 +361,7 @@
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\PillarsController.cs" />
     <Compile Include="Controllers\SalesPlatformsController.cs" />
+    <Compile Include="Controllers\CollaboratorsController.cs" />
     <Compile Include="Controllers\TracksController.cs" />
     <Compile Include="Controllers\RoomsController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
