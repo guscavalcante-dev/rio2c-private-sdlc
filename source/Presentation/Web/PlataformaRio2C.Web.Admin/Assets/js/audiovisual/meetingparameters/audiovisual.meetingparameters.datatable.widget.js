@@ -166,8 +166,8 @@ var AudiovisualMeetingParametersDataTableWidget = function () {
                                             </a>\
                                             <div class="dropdown-menu dropdown-menu-right">';
 
-                        html += '               <button class="dropdown-item" onclick="AudiovisualMeetingParametersDataTableWidget.showDetails(\'' + full.NegotiationConfigUid + '\', false);"><i class="la la-edit"></i> ' + labels.edit + '</button>';
-		                html += '               <button class="dropdown-item" onclick="AudiovisualMeetingParametersDelete.showModal(\'' + full.NegotiationConfigUid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+                        html += '               <button class="dropdown-item" onclick="AudiovisualMeetingParametersDataTableWidget.showDetails(\'' + full.NegotiationConfigUid + '\');"><i class="la la-edit"></i> ' + labels.edit + '</button>';
+                        html += '               <button class="dropdown-item" onclick="AudiovisualMeetingParametersDelete.showModal(\'' + full.NegotiationConfigUid + '\');"><i class="la la-remove"></i> ' + labels.remove + '</button>';
 
 		                html += '\
                                             </div>\

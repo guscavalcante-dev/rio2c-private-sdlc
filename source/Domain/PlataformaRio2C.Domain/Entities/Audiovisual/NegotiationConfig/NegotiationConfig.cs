@@ -80,8 +80,16 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
+        /// <summary>Deletes the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(int userId)
+        {
+            //TODO: Delete room configurations
 
-        //TODO: Implement validations
+            this.IsDeleted = true;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
 
         #region Validations
 
@@ -94,6 +102,8 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.ValidateEdition();
             this.ValidateDates();
+            this.ValidateRoundFirstTurn();
+            this.ValidateRoundSecondTurn();
 
             return this.ValidationResult.IsValid;
         }
@@ -119,6 +129,24 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.StartDate > this.EndDate)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyGreaterThanProperty, Labels.EndTime, Labels.StartTime), new string[] { "EndTime" }));
+            }
+        }
+
+        /// <summary>Validates the round first turn.</summary>
+        public void ValidateRoundFirstTurn()
+        {
+            if (this.RoundFirstTurn < 0)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyGreaterThanValue, Labels.RoundFirstTurn, 0), new string[] { "RoundFirstTurn" }));
+            }
+        }
+
+        /// <summary>Validates the round second turn.</summary>
+        public void ValidateRoundSecondTurn()
+        {
+            if (this.RoundSecondTurn < 0)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyGreaterThanValue, Labels.RoundSecondTurn, 0), new string[] { "RoundSecondTurn" }));
             }
         }
 

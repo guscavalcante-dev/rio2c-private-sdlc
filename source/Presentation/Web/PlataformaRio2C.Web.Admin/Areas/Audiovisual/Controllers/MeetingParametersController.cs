@@ -173,7 +173,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        /// <summary>Creates the specified create negotiation configuration.</summary>
+        /// <summary>Creates the specified negotiation configuration.</summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
@@ -211,7 +211,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
                         new { page = this.RenderRazorViewToString("Modals/_CreateForm", cmd), divIdOrClass = "#form-container" },
@@ -548,11 +548,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
         #region Delete
 
-        /// <summary>Deletes the specified collaborator.</summary>
-        /// <param name="cmd"></param>
+        /// <summary>Deletes the specified negotiation configuration.</summary>
+        /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Delete(DeleteCollaborator cmd)
+        public async Task<ActionResult> Delete(DeleteNegotiationConfig cmd)
         {
             var result = new AppValidationResult();
 
@@ -564,7 +564,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    Constants.CollaboratorType.CommissionMusic,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -588,7 +587,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                 }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -597,7 +596,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Member, Labels.DeletedM) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Parameter, Labels.DeletedM) });
         }
 
         #endregion

@@ -45,7 +45,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var negotiationConfig = await this.NegotiationConfigRepo.GetAsync(negotiationConfigUid);
             if (negotiationConfig == null || negotiationConfig.IsDeleted) // Do not check IsDeleted because the Collaborator/User can be restored
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Parameter, Labels.FoundM), new string[] { "Parameter" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Parameter, Labels.FoundM), new string[] { "ToastrError" }));
             }
 
             return negotiationConfig;

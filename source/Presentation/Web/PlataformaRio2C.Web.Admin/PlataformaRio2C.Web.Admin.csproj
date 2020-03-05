@@ -424,6 +424,7 @@
     <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.totalcount.widget.js" />
     <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.datatable.widget.js" />
     <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.create.js" />
+    <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.delete.js" />
     <Content Include="Assets\js\companies\companyinfo.autocomplete.js" />
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.participants.widget.js" />
     <Content Include="Assets\js\conferences\conferences.editionevents.js" />

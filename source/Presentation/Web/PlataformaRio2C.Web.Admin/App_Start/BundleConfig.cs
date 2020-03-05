@@ -579,6 +579,9 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetingparameters.create.js").Include(
                 "~/Assets/js/audiovisual/meetingparameters/audiovisual.meetingparameters.create.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetingparameters.delete.js").Include(
+                "~/Assets/js/audiovisual/meetingparameters/audiovisual.meetingparameters.delete.js"));
+
             #endregion
 
             #endregion
