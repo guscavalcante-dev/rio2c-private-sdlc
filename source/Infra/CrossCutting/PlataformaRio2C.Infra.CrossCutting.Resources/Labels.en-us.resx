@@ -2222,4 +2222,12 @@
     <value>Time of each turn</value>
     <comment>Tempo de cada rodada</comment>
   </data>
+  <data name="CountAutomaticTables" xml:space="preserve">
+    <value>Number of automatic tables</value>
+    <comment>Número de mesas automáticas</comment>
+  </data>
+  <data name="CountManualTables" xml:space="preserve">
+    <value>Number of manual tables</value>
+    <comment>Número de mesas manuais</comment>
+  </data>
 </root>

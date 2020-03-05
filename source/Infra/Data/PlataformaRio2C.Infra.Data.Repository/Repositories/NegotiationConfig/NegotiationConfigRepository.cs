@@ -134,6 +134,44 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        /// <summary>Finds the rooms widget dto asynchronous.</summary>
+        /// <param name="negotiationConfigUid">The negotiation configuration uid.</param>
+        /// <returns></returns>
+        public async Task<NegotiationConfigDto> FindRoomsWidgetDtoAsync(Guid negotiationConfigUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(negotiationConfigUid)
+                                .Select(nc => new NegotiationConfigDto
+                                {
+                                    NegotiationConfig = nc,
+                                    NegotiationRoomConfigDtos = nc.NegotiationRoomConfigs
+                                                                    .Where(nrc => !nrc.IsDeleted && !nrc.Room.IsDeleted)
+                                                                    .Select(nrc => new NegotiationRoomConfigDto
+                                                                    {
+                                                                        NegotiationRoomConfig = nrc,
+                                                                        RoomDto = new RoomDto
+                                                                        {
+                                                                            Room = nrc.Room,
+                                                                            RoomNameDtos = nrc.Room.RoomNames
+                                                                                                        .Where(rn => rn.IsDeleted)
+                                                                                                        .Select(rn => new RoomNameDto
+                                                                                                        {
+                                                                                                            RoomName = rn,
+                                                                                                            LanguageDto = new LanguageDto
+                                                                                                            {
+                                                                                                                Id = rn.Language.Id,
+                                                                                                                Uid = rn.Language.Uid,
+                                                                                                                Code = rn.Language.Code
+                                                                                                            }
+                                                                                                        })
+                                                                        }
+                                                                    })
+                                });
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
+
         /// <summary>Finds all json dtos paged asynchronous.</summary>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>

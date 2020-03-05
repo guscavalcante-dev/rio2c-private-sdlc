@@ -13,6 +13,7 @@
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
 using System;
+using System.Collections.Generic;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
@@ -31,8 +32,7 @@ namespace PlataformaRio2C.Domain.Entities
         public TimeSpan TimeIntervalBetweenRound { get; private set; }
 
         public virtual Edition Edition { get; private set; }
-
-        //public virtual ICollection<NegotiationRoomConfig> Rooms { get; private set; }
+        public virtual ICollection<NegotiationRoomConfig> NegotiationRoomConfigs { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="NegotiationConfig"/> class.</summary>
         /// <param name="negotiationConfigUid">The negotiation configuration uid.</param>

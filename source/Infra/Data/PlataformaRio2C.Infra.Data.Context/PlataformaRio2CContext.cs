@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-04-2020
+// Last Modified On : 03-05-2020
 // ***********************************************************************
 // <copyright file="PlataformaRio2CContext.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -127,6 +127,7 @@ namespace PlataformaRio2C.Infra.Data.Context
 
             // Negotiations
             modelBuilder.Configurations.Add(new NegotiationConfigMap());
+            modelBuilder.Configurations.Add(new NegotiationRoomConfigMap());
 
             // Music
             modelBuilder.Configurations.Add(new MusicBandMap());

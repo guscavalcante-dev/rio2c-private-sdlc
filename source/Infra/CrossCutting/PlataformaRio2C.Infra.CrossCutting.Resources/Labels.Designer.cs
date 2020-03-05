@@ -934,6 +934,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Número de mesas automáticas.
+        /// </summary>
+        public static string CountAutomaticTables {
+            get {
+                return ResourceManager.GetString("CountAutomaticTables", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Número de mesas manuais.
+        /// </summary>
+        public static string CountManualTables {
+            get {
+                return ResourceManager.GetString("CountManualTables", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to País.
         /// </summary>
         public static string Country {

@@ -7,6 +7,17 @@ ALTER TABLE [dbo].[NegotiationConfigs]
 ALTER COLUMN [TimeIntervalBetweenTurn] [time](7) NOT NULL
 go
 
+ALTER TABLE "dbo"."NegotiationRoomConfigs"
+DROP CONSTRAINT "FK_Users_NegotiationRoomConfigs_CrateUserId"
+go
+
+execute sp_rename '"dbo".NegotiationRoomConfigs."CrateUserId"', 'CreateUserId', 'COLUMN'
+go
+
+ALTER TABLE "dbo"."NegotiationRoomConfigs"
+	ADD CONSTRAINT "FK_Users_NegotiationRoomConfigs_CreateUserId" FOREIGN KEY ("CreateUserId") REFERENCES "dbo"."Users"("Id")
+go
+
 
 SET IDENTITY_INSERT [dbo].[NegotiationConfigs] ON 
 GO

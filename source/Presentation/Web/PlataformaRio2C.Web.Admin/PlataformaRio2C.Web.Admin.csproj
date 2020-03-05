@@ -421,6 +421,7 @@
     <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
     <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.editioncount.widget.js" />
+    <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.rooms.widget.js" />
     <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.totalcount.widget.js" />
     <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.datatable.widget.js" />
     <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.create.js" />
@@ -7147,6 +7148,7 @@
     <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\CreateForm.cshtml" />
     <Content Include="Areas\Audiovisual\Views\MeetingParameters\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\UpdateMainInformationForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Widgets\RoomsWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

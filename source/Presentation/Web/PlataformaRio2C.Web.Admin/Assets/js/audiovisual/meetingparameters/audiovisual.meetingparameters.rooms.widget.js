@@ -6,19 +6,22 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-05-2020
 // ***********************************************************************
-// <copyright file="audiovisual.meetingparameters.maininformation.widget.js" company="Softo">
+// <copyright file="audiovisual.meetingparameters.rooms.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var AudiovisualMeetingParametersMainInformationWidget = function () {
+var AudiovisualMeetingParametersRoomsWidget = function () {
 
-    var widgetElementId = '#AudiovisualMeetingParametersMainInformationWidget';
+    var widgetElementId = '#AudiovisualMeetingParametersRoomsWidget';
     var widgetElement = $(widgetElementId);
 
-    var updateModalId = '#UpdateMainInformationModal';
-    var updateFormId = '#UpdateMainInformationForm';
+    var createModalId = '#CreateRoomModal';
+    var createFormId = '#CreateRoomForm';
+
+    var updateModalId = '#UpdateRoomModal';
+    var updateFormId = '#UpdateRoomForm';
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
@@ -34,7 +37,7 @@ var AudiovisualMeetingParametersMainInformationWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.negotiationConfigUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/ShowMainInformationWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/ShowRoomsWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -56,14 +59,66 @@ var AudiovisualMeetingParametersMainInformationWidget = function () {
     };
 
     // Update -------------------------------------------------------------------------------------
-    var enableAjaxForm = function () {
+    var enableCreateAjaxForm = function () {
+	    MyRio2cCommon.enableAjaxForm({
+		    idOrClass: updateFormId,
+		    onSuccess: function (data) {
+			    $(updateModalId).modal('hide');
+
+			    if (typeof (AudiovisualMeetingParametersRoomsWidget) !== 'undefined') {
+				    AudiovisualMeetingParametersRoomsWidget.init();
+			    }
+		    },
+		    onError: function (data) {
+			    if (MyRio2cCommon.hasProperty(data, 'pages')) {
+				    enableUpdatePlugins();
+			    }
+
+			    $(updateFormId).find(":input.input-validation-error:first").focus();
+		    }
+	    });
+    };
+
+    var enableCreatePlugins = function () {
+	    enableCreateAjaxForm();
+	    MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
+    };
+
+    var showCreateModal = function () {
+	    MyRio2cCommon.block({ isModal: true });
+
+	    var jsonParameters = new Object();
+	    jsonParameters.negotiationConfigUid = $('#AggregateId').val();
+
+	    $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/ShowCreateRoomModal'), jsonParameters, function (data) {
+			    MyRio2cCommon.handleAjaxReturn({
+				    data: data,
+				    // Success
+				    onSuccess: function () {
+					    enableCreatePlugins();
+					    $(updateModalId).modal();
+				    },
+				    // Error
+				    onError: function () {
+				    }
+			    });
+		    })
+		    .fail(function () {
+		    })
+		    .always(function () {
+			    MyRio2cCommon.unblock();
+		    });
+    };
+
+    // Update -------------------------------------------------------------------------------------
+    var enableUpdateAjaxForm = function () {
         MyRio2cCommon.enableAjaxForm({
             idOrClass: updateFormId,
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (AudiovisualMeetingParametersMainInformationWidget) !== 'undefined') {
-	                AudiovisualMeetingParametersMainInformationWidget.init();
+                if (typeof (AudiovisualMeetingParametersRoomsWidget) !== 'undefined') {
+	                AudiovisualMeetingParametersRoomsWidget.init();
                 }
             },
             onError: function (data) {
@@ -77,9 +132,7 @@ var AudiovisualMeetingParametersMainInformationWidget = function () {
     };
 
     var enableUpdatePlugins = function () {
-        MyRio2cCommon.enableDatePicker({ inputIdOrClass: updateFormId + ' .enable-datepicker' });
-        MyRio2cCommon.enableTimePicker({ inputIdOrClass: updateFormId + ' .enable-timepicker' });
-        enableAjaxForm();
+	    enableUpdateAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
 
@@ -89,7 +142,7 @@ var AudiovisualMeetingParametersMainInformationWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.negotiationConfigUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/ShowUpdateMainInformationModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/ShowUpdateRoomModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
             data: data,
             // Success
@@ -113,6 +166,9 @@ var AudiovisualMeetingParametersMainInformationWidget = function () {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
+        },
+        showCreateModal: function () {
+	        showCreateModal();
         },
         showUpdateModal: function () {
             showUpdateModal();

@@ -2229,4 +2229,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Tempo de cada rodada</value>
     <comment>Tempo de cada rodada</comment>
   </data>
+  <data name="CountAutomaticTables" xml:space="preserve">
+    <value>Número de mesas automáticas</value>
+    <comment>Número de mesas automáticas</comment>
+  </data>
+  <data name="CountManualTables" xml:space="preserve">
+    <value>Número de mesas manuais</value>
+    <comment>Número de mesas manuais</comment>
+  </data>
 </root>

@@ -1,51 +1,125 @@
-﻿namespace PlataformaRio2C.Domain.Entities
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Domain
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-05-2020
+// ***********************************************************************
+// <copyright file="NegotiationRoomConfig.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+
+using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+
+namespace PlataformaRio2C.Domain.Entities
 {
+    /// <summary>NegotiationRoomConfig</summary>
     public class NegotiationRoomConfig : Entity
     {
-        public int RoomId { get; set; }
-        public virtual Room Room { get; set; }
-        public int CountAutomaticTables { get; set; }
-        public int CountManualTables { get; set; }
-        public int NegotiationConfigId { get; set; }
-        public virtual NegotiationConfig NegotiationConfig { get; set; }
+        public int RoomId { get; private set; }
+        public int NegotiationConfigId { get; private set; }
+        public int CountAutomaticTables { get; private set; }
+        public int CountManualTables { get; private set; }
 
+        public virtual Room Room { get; private set; }
+        public virtual NegotiationConfig NegotiationConfig { get; private set; }
+
+        /// <summary>Initializes a new instance of the <see cref="NegotiationRoomConfig"/> class.</summary>
         protected NegotiationRoomConfig()
         {
-
         }
 
-        public NegotiationRoomConfig(int countAutomaticTables)
-        {
-            SetCountAutomaticTables(countAutomaticTables);
-        }
+        #region Validations
 
-        public NegotiationRoomConfig(Room room)
-        {
-            SetRoom(room);
-        }
-
-        public void SetRoom(Room room)
-        {
-            Room = room;
-            if (room != null)
-            {
-                RoomId = room.Id;
-            }            
-        }        
-
-        public void SetCountAutomaticTables(int val)
-        {
-            CountAutomaticTables = val;
-        }
-
-        public void SetCountManualTables(int val)
-        {
-            CountManualTables = val;
-        }
-
+        /// <summary>Returns true if ... is valid.</summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
         public override bool IsValid()
         {
-            return true;
+            this.ValidationResult = new ValidationResult();
+
+            this.ValidateRoom();
+            this.ValidateNegotiationConfig();
+            this.ValidateCountAutomaticTables();
+            this.ValidateCountManualTables();
+
+            return this.ValidationResult.IsValid;
         }
+
+        /// <summary>Validates the room.</summary>
+        public void ValidateRoom()
+        {
+            if (this.Room == null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Room), new string[] { "RoomId" }));
+            }
+        }
+
+        /// <summary>Validates the negotiation configuration.</summary>
+        public void ValidateNegotiationConfig()
+        {
+            if (this.NegotiationConfig == null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Parameter), new string[] { "NegotiationConfigId" }));
+            }
+        }
+
+        /// <summary>Validates the count automatic tables.</summary>
+        public void ValidateCountAutomaticTables()
+        {
+            if (this.CountAutomaticTables < 0)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyGreaterThanValue, Labels.CountAutomaticTables, 0), new string[] { "CountAutomaticTables" }));
+            }
+        }
+
+        /// <summary>Validates the count manual tables.</summary>
+        public void ValidateCountManualTables()
+        {
+            if (this.CountManualTables < 0)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyGreaterThanValue, Labels.CountManualTables, 0), new string[] { "CountManualTables" }));
+            }
+        }
+
+        #endregion
+
+        //public NegotiationRoomConfig(int countAutomaticTables)
+        //{
+        //    SetCountAutomaticTables(countAutomaticTables);
+        //}
+
+        //public NegotiationRoomConfig(Room room)
+        //{
+        //    SetRoom(room);
+        //}
+
+        //public void SetRoom(Room room)
+        //{
+        //    Room = room;
+        //    if (room != null)
+        //    {
+        //        RoomId = room.Id;
+        //    }            
+        //}        
+
+        //public void SetCountAutomaticTables(int val)
+        //{
+        //    CountAutomaticTables = val;
+        //}
+
+        //public void SetCountManualTables(int val)
+        //{
+        //    CountManualTables = val;
+        //}
+
+        //public override bool IsValid()
+        //{
+        //    return true;
+        //}
     }
 }

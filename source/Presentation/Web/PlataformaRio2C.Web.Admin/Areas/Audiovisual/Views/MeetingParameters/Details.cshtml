@@ -9,19 +9,19 @@
         <div class="row">
             <!--begin:Main Information Widget-->
             <div class="col-12">
-                <div id="AudiovisualMeetingParameternMainInformationWidget" class="kt-portlet" style="min-height: 300px;"></div>
+                <div id="AudiovisualMeetingParametersMainInformationWidget" class="kt-portlet" style="min-height: 300px;"></div>
             </div>
             <!--end:Main Information Widget-->
         </div>
-        @*
+        
         <div class="row">
             <!--begin:Rooms Widget-->
             <div class="col-12">
-                <div id="AudiovisualMeetingParameterRoomsWidget" class="kt-portlet" style="min-height: 325px;"></div>
+                <div id="AudiovisualMeetingParametersRoomsWidget" class="kt-portlet" style="min-height: 325px;"></div>
             </div>
             <!--end:Rooms Widget-->
         </div>
-        *@
+        
     </div>
 </div>
 @section Styles {
@@ -40,6 +40,7 @@
 
         jQuery(document).ready(function () {
             AudiovisualMeetingParametersMainInformationWidget.init();
+            AudiovisualMeetingParametersRoomsWidget.init();
         });
     </script>
 }
