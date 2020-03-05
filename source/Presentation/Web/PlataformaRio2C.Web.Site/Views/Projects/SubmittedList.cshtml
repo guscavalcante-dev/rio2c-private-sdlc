@@ -6,7 +6,8 @@
 @{
     ViewBag.Title = Labels.ProjectsSubmission;
     var editionDto = ViewBag.EditionDto as EditionDto;
-    var isProjectSubmissionEnded = editionDto?.IsProjectEvaluationEnded() == true;
+    var isProjectSubmitOpen = editionDto?.IsProjectSubmitOpen() == true;
+    var isEvaluationReleasedForDisclosure = editionDto?.IsEvaluationReleasedForDisclosure() == true;
     var hasProjectSpace = Model.Any(m => m.IsFakeProject);
 }
 <div class="row">
@@ -97,7 +98,7 @@
                                                                                             <a href="@Url.Action("Details", "Companies", new {id = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid})" class="kt-widget__username" target="_blank" style="min-height: 70px;">
                                                                                                 <small>@projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Name</small>
                                                                                             </a>
-                                                                                            @if (isProjectSubmissionEnded)
+                                                                                            @if (isEvaluationReleasedForDisclosure)
                                                                                             {
                                                                                                 var color = "warning";
                                                                                                 var icon = "fa-diagnoses";
@@ -174,20 +175,23 @@
                                                 @(!isFinished ? Labels.Edit : Labels.View)
                                             </a>
                                         </div>
-                                        <div class="col-4 text-center">
-                                            @if (!isFinished)
-                                            {
-                                                <a href="@Url.Action("SendToPlayers", "Projects", new { id = projectDto.Project.Uid, Area = "" })" class="btn btn-brand">
-                                                    @Labels.SendProjectsToPlayer
-                                                </a>
-                                            }
-                                            else
-                                            {
-                                                <a class="btn btn-secondary disabled">
-                                                    @Labels.SendProjectsToPlayer
-                                                </a>
-                                            }
-                                        </div>
+                                        if (isProjectSubmitOpen)
+                                        {
+                                            <div class="col-4 text-center">
+                                                @if (!isFinished)
+                                                {
+                                                    <a href="@Url.Action("SendToPlayers", "Projects", new { id = projectDto.Project.Uid, Area = "" })" class="btn btn-brand">
+                                                        @Labels.SendProjectsToPlayer
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <a class="btn btn-secondary disabled">
+                                                        @Labels.SendProjectsToPlayer
+                                                    </a>
+                                                }
+                                            </div>
+                                        }
                                     }
                                 </div>
                             </div>
