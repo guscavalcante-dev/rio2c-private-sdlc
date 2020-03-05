@@ -4,7 +4,7 @@
 // Created          : 11-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-03-2019
+// Last Modified On : 03-04-2020
 // ***********************************************************************
 // <copyright file="BaseMessageCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -46,7 +46,7 @@ namespace PlataformaRio2C.HubApplication.CQRS.CommandsHandlers
             var message = await this.MessageRepo.GetAsync(messageUid);
             if (message == null)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Messages, Labels.FoundF)));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Messages, Labels.FoundF), new string[] { "ToastrError" }));
                 return null;
             }
 

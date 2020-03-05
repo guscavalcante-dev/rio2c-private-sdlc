@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 03-04-2020
 // ***********************************************************************
 // <copyright file="PillarBaseCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -45,7 +45,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var pillar = await this.PillarRepo.GetAsync(pillarUid);
             if (pillar == null || pillar.IsDeleted)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Pillar, Labels.FoundF), new string[] { "Pillar" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Pillar, Labels.FoundF), new string[] { "ToastrError" }));
             }
 
             return pillar;
