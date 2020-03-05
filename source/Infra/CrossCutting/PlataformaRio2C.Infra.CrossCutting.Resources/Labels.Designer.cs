@@ -2338,6 +2338,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Residentes do Rio de Janeiro - Somente casos extremamente excepcionais.
+        /// </summary>
+        public static string LogisticsCityTransferHelpText {
+            get {
+                return ResourceManager.GetString("LogisticsCityTransferHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Transfer.
         /// </summary>
         public static string LogisticsTransfer {
@@ -2856,6 +2865,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string OneToOneMeetings {
             get {
                 return ResourceManager.GetString("OneToOneMeetings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Keynotes somente.
+        /// </summary>
+        public static string OnlyKeynotes {
+            get {
+                return ResourceManager.GetString("OnlyKeynotes", resourceCulture);
             }
         }
         

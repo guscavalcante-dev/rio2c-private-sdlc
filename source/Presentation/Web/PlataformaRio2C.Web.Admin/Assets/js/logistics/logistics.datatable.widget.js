@@ -109,19 +109,19 @@ var LogisticsDataTableWidget = function () {
                     }
                 },
                 {
-                    data: 'AccommodationSponsor',
+                    data: 'AccommodationSponsor.Name',
                     render: function (data, type, full, meta) {
                         return data;
                     }
                 },
                 {
-                    data: 'AirfareSponsor',
+                    data: 'AirfareSponsor.Name',
                     render: function (data, type, full, meta) {
                         return data;
                     }
                 },
                 {
-                    data: 'TransferSponsor',
+                    data: 'TransferSponsor.Name',
                     render: function (data, type, full, meta) {
                         return data;
                     }
@@ -151,7 +151,7 @@ var LogisticsDataTableWidget = function () {
                                             <div class="dropdown-menu dropdown-menu-right">';
                         
 
-                        if (!full.HasSponsors) {
+                        if (!full.HasRequest) {
                             // Create request
                             html += '<button class="dropdown-item" onclick="LogisticsCreate.showModal(\'' + full.Uid + '\');"><i class="la la-edit"></i> ' + addRequest + '</button>';
                         }

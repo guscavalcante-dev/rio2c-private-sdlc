@@ -20,7 +20,7 @@ var LogisticsCreate = function () {
 
     // Enable form validation ---------------------------------------------------------------------
     var enableFormValidation = function () {
-        //MyRio2cCommon.enableFormValidation({ formIdOrClass: formId, enableHiddenInputsValidation: true, enableMaxlength: true });
+        MyRio2cCommon.enableFormValidation({ formIdOrClass: formId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
 
     // Enable plugins -----------------------------------------------------------------------------
@@ -81,7 +81,7 @@ var LogisticsCreate = function () {
 
     var hideSponsorSelect2 = function (preffix) {
 	    $("[data-id='" + preffix + "']").addClass('d-none');
-	    $('#' + preffix + 'Required').val("False");
+	    $('#' + preffix + 'Required').val("");
     }
 
     var enableShowHideOtherSponsorsSelect2 = function (preffix) {

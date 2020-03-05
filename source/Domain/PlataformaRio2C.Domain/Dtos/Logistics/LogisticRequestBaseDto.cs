@@ -24,19 +24,20 @@ namespace PlataformaRio2C.Domain.Dtos
     /// </summary>
     public class LogisticRequestBaseDto
     {
-        public int Id { get; set; }
-        public Guid Uid { get; set; }
+        public int? Id { get; set; }
+        public Guid? Uid { get; set; }
+        public Guid CollaboratorUid { get; set; }
         public string Name { get; set; }
-        public DateTimeOffset CreateDate { get; set; }
-        public DateTimeOffset UpdateDate { get; set; }
+        public DateTimeOffset? CreateDate { get; set; }
+        public DateTimeOffset? UpdateDate { get; set; }
 
-        public string AirfareSponsor { get; set; }
-        public string AccommodationSponsor { get; set; }
-        public string TransferSponsor { get; set; }
+        public LogisticSponsorBaseDto AccommodationSponsor { get; set; }
+        public LogisticSponsorBaseDto AirportTransferSponsor { get; set; }
+        public LogisticSponsorBaseDto AirfareSponsor { get; set; }
 
         public bool IsSponsoredByEvent { get; set; }
         public bool HasLogistics { get; set; }
-        public bool HasSponsors { get; set; }
+        public bool HasRequest { get; set; }
 
         /// <summary>
         /// Gets the airfare sponsor by language.
@@ -45,7 +46,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns>System.String.</returns>
         public string GetAirfareSponsorByLanguage(string languageCode)
         {
-            return this.AirfareSponsor.GetSeparatorTranslation(languageCode, '|');
+            return this.AirfareSponsor?.Name.GetSeparatorTranslation(languageCode, Language.Separator);
         }
 
         /// <summary>
@@ -55,7 +56,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns>System.String.</returns>
         public string GetAccommodationSponsorByLanguage(string languageCode)
         {
-            return this.AccommodationSponsor.GetSeparatorTranslation(languageCode, '|');
+            return this.AccommodationSponsor?.Name.GetSeparatorTranslation(languageCode, Language.Separator);
         }
 
         /// <summary>
@@ -65,7 +66,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns>System.String.</returns>
         public string GetTransferSponsorByLanguage(string languageCode)
         {
-            return this.TransferSponsor.GetSeparatorTranslation(languageCode, '|');
+            return this.AirportTransferSponsor?.Name.GetSeparatorTranslation(languageCode, Language.Separator);
         }
     }
 }

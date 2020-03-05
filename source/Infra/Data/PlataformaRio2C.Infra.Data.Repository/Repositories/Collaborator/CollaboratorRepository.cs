@@ -95,6 +95,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        internal static IQueryable<Collaborator> FindLogisticsByEditionId(this IQueryable<Collaborator> query, bool showAllParticipants, bool showAllSponsors, int editionId)
+        {
+            query = query.Where(c => c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId 
+                                                                       && !ac.IsDeleted
+                                                                       && !ac.Edition.IsDeleted
+                                                                       && (showAllParticipants || (ac.Logistics.Any(l => !l.IsDeleted)))));
+
+            return query;
+        }
+
         /// <summary>Finds the by organization type uid and by edition identifier.</summary>
         /// <param name="query">The query.</param>
         /// <param name="organizationTypeUid">The organization type uid.</param>
@@ -1076,6 +1086,95 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 //.Include(i => i.Players)
                                 //.Include(i => i.Players.Select(e => e.Collaborators))
                                 .FirstOrDefault(filter);
+        }
+
+        public async Task<IPagedList<LogisticRequestBaseDto>> FindAllLogisticsByDatatable(
+            int editionId,
+            int page, 
+            int pageSize, 
+            string searchValue, 
+            List<Tuple<string, string>> sortColumns,
+            bool showAllParticipants, 
+            bool showAllSponsored)
+        {
+            var query = this.GetBaseQuery()
+                    .FindLogisticsByEditionId(showAllParticipants, showAllSponsored, editionId);
+            
+            return await query
+                .DynamicOrder<Collaborator>(
+                    sortColumns,
+                    new List<Tuple<string, string>>(),
+                    new List<string> { "FirstName", "CreateDate", "UpdateDate" }, "FirstName")
+                .Select(c => new LogisticRequestBaseDto
+                {
+                    CollaboratorUid = c.Uid,
+                    Name = c.FirstName + " " + c.LastNames,
+                    HasRequest = c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId && !ac.IsDeleted && ac.Logistics.Any(l => !l.IsDeleted &&
+                                                                                           (l.AccommodationAttendeeLogisticSponsorId.HasValue ||
+                                                                                            l.AirfareAttendeeLogisticSponsorId.HasValue ||
+                                                                                            l.AirportTransferAttendeeLogisticSponsorId.HasValue ||
+                                                                                            l.IsVehicleDisposalRequired ||
+                                                                                            l.IsCityTransferRequired)
+                                                                                           )),
+
+                    Id = c.AttendeeCollaborators
+                        .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
+                        .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
+                        .Select(e => e.Id)
+                        .FirstOrDefault(),
+
+                    Uid = c.AttendeeCollaborators
+                        .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
+                        .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
+                        .Select(e => e.Uid)
+                        .FirstOrDefault(),
+
+                    AccommodationSponsor = c.AttendeeCollaborators
+                    .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
+                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted && l.AccommodationSponsor != null))
+                    .Select(e => new LogisticSponsorBaseDto()
+                    {
+                        //Id = e.AccommodationSponsor.Id,
+                        //Uid = e.AccommodationSponsor.Uid,
+                        Name = e.AccommodationSponsor.Name
+                    })
+                    .FirstOrDefault(),
+
+                    AirfareSponsor = c.AttendeeCollaborators
+                        .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
+                        .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted && l.AirfareSponsor != null))
+                        .Select(e => new LogisticSponsorBaseDto()
+                        {
+                            //Id = e.AirfareSponsor.Id,
+                            //Uid = e.AirfareSponsor.Uid,
+                            Name = e.AirfareSponsor.Name
+                        })
+                        .FirstOrDefault(),
+
+                    AirportTransferSponsor = c.AttendeeCollaborators
+                        .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
+                        .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted && l.AirportTransferSponsor != null))
+                        .Select(e => new LogisticSponsorBaseDto()
+                        {
+                            //Id = e.AirportTransferSponsor.Id,
+                            //Uid = e.AirportTransferSponsor.Uid,
+                            Name = e.AirportTransferSponsor.Name
+                        })
+                        .FirstOrDefault(),
+
+                    CreateDate = c.AttendeeCollaborators
+                        .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
+                        .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
+                        .Select(e => e.CreateDate)
+                        .FirstOrDefault(),
+
+                    UpdateDate = c.AttendeeCollaborators
+                        .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
+                        .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
+                        .Select(e => e.UpdateDate)
+                        .FirstOrDefault(),
+                })
+                .ToListPagedAsync(page, pageSize);
         }
 
         public Collaborator GetById(int id)

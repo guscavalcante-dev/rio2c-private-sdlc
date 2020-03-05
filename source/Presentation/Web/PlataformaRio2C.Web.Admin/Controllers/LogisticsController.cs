@@ -54,6 +54,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         private readonly ILogisticSponsorRepository logisticSponsorRepo;
         private readonly ILogisticsRepository logisticsRepo;
         private readonly ILanguageRepository languageRepo;
+        private readonly ICollaboratorRepository collaboratorRepo;
 
         /// <summary>Initializes a new instance of the <see cref="SpeakersController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -65,6 +66,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             ILogisticSponsorRepository logisticSponsorRepo,
+            ICollaboratorRepository collaboratorRepo,
             ILogisticsRepository logisticsRepo,
             ILanguageRepository languageRepo)
             : base(commandBus, identityController)
@@ -72,6 +74,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             this.logisticSponsorRepo = logisticSponsorRepo;
             this.logisticsRepo = logisticsRepo;
             this.languageRepo = languageRepo;
+            this.collaboratorRepo = collaboratorRepo;
         }
 
         #region List
@@ -105,7 +108,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllParticipants, bool showAllSponsored)
         {
-            var list = await this.logisticsRepo.FindAllByDataTable(
+            var list = await this.collaboratorRepo.FindAllLogisticsByDatatable(
+                EditionDto.Id,
                 request.Start / request.Length,
                 request.Length,
                 request.Search?.Value,

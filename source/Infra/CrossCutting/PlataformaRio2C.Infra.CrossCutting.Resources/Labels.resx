@@ -2201,82 +2201,6 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Vídeo clip e músicas</value>
     <comment>Vídeo clip e músicas</comment>
   </data>
-  <data name="BirthDate" xml:space="preserve">
-    <value>Data de Nascimento</value>
-    <comment>Data de Nascimento</comment>
-  </data>
-  <data name="AdditionalInfo" xml:space="preserve">
-    <value>Informações Adicionais</value>
-    <comment>Informações Adicionais</comment>
-  </data>
-  <data name="Gender" xml:space="preserve">
-    <value>Gênero</value>
-    <comment>Gênero</comment>
-  </data>
-  <data name="HasAnySpecialNeeds" xml:space="preserve">
-    <value>Possui necessidades especiais?</value>
-    <comment>Possui necessidades especiais?</comment>
-  </data>
-  <data name="CollaboratorIndustry" xml:space="preserve">
-    <value>Área de Atuação</value>
-    <comment>Área de Atuação</comment>
-  </data>
-  <data name="Role" xml:space="preserve">
-    <value>Função</value>
-    <comment>Função</comment>
-  </data>
-  <data name="WhichSpecialNeedsQ" xml:space="preserve">
-    <value>Qual?</value>
-    <comment>Qual?</comment>
-  </data>
-  <data name="HaveYouBeenToRio2CBefore" xml:space="preserve">
-    <value>Já esteve em outras edições do Rio2C?</value>
-    <comment>Já esteve em outras edições do Rio2C?</comment>
-  </data>
-  <data name="InWhatEditions" xml:space="preserve">
-    <value>Em que edição?</value>
-    <comment>Em que edição?</comment>
-  </data>
-  <data name="Others" xml:space="preserve">
-    <value>Outros</value>
-    <comment>Outros</comment>
-  </data>
-  <data name="EnterYourIndustry" xml:space="preserve">
-    <value>Informe sua área de atuação</value>
-    <comment>Informe sua área de atuação</comment>
-  </data>
-  <data name="EnterYourRole" xml:space="preserve">
-    <value>Informe sua função</value>
-    <comment>Informe sua função</comment>
-  </data>
-  <data name="Pillar" xml:space="preserve">
-    <value>Pilar</value>
-    <comment>Pilar</comment>
-  </data>
-  <data name="Pillars" xml:space="preserve">
-    <value>Pilares</value>
-    <comment>Pilares</comment>
-  </data>
-  <data name="WhichEditionQ" xml:space="preserve">
-    <value>Em qual edição?</value>
-    <comment>Em qual edição?</comment>
-  </data>
-  <data name="SelectAFEntity" xml:space="preserve">
-    <value>Selecione uma {0}</value>
-    <comment>Selecione uma {0}</comment>
-  </data>
-  <data name="SelectAnFEntity" xml:space="preserve">
-    <value>Selecione uma {0}</value>
-    <comment>Selecione uma {0}</comment>
-  </data>
-  <data name="SelectAll" xml:space="preserve">
-    <value>Selecionar todos</value>
-    <comment>Selecionar todos</comment>
-  </data>
-  <data name="UnselectAll" xml:space="preserve">
-    <value>Deselecionar todos</value>
-    <comment>Deselecionar todos</comment>
-  </data>
   <data name="Sponsors" xml:space="preserve">
     <value>Patrocinadores</value>
     <comment>Patrocinadores</comment>
@@ -2368,5 +2292,13 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="AirportTransfer" xml:space="preserve">
     <value>Transfer Aeroporto</value>
     <comment>Transfer Aeroporto</comment>
+  </data>
+  <data name="LogisticsCityTransferHelpText" xml:space="preserve">
+    <value>Residentes do Rio de Janeiro - Somente casos extremamente excepcionais</value>
+    <comment>Residentes do Rio de Janeiro - Somente casos extremamente excepcionais</comment>
+  </data>
+  <data name="OnlyKeynotes" xml:space="preserve">
+    <value>Keynotes somente</value>
+    <comment>Keynotes somente</comment>
   </data>
 </root>

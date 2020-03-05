@@ -242,6 +242,7 @@
     <Compile Include="Entities\Addresses\Country.cs" />
     <Compile Include="Entities\Addresses\State.cs" />
     <Compile Include="Entities\Editions\EditionEvent.cs" />
+    <Compile Include="Entities\Logistics\LogisticAccommodations.cs" />
     <Compile Include="Entities\Logistics\AttendeePlaces.cs" />
     <Compile Include="Entities\Logistics\Place.cs" />
     <Compile Include="Entities\Logistics\LogisticSponsor.cs" />

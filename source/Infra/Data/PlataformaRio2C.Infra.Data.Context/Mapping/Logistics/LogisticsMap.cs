@@ -23,58 +23,17 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
     {
         public LogisticsMap()
         {
-            //Property(t => t.CollaboratorId)
-            //    .HasColumnAnnotation(IndexAnnotation.AnnotationName,
-            //        new IndexAnnotation(
-            //            new IndexAttribute("IX_Collaborator", 0)
-            //            {
-            //                IsUnique = true
-            //            }
-            //        )
-            //    )
-            //    .IsRequired();
+            this.HasOptional(t => t.AccommodationSponsor)
+                .WithMany(e => e.AccommodationSponsors)
+              .HasForeignKey(d => d.AccommodationAttendeeLogisticSponsorId);
 
+            this.HasOptional(t => t.AirportTransferSponsor)
+                .WithMany(e => e.AirportTransferSponsors)
+                .HasForeignKey(d => d.AirportTransferAttendeeLogisticSponsorId);
 
-            //Property(t => t.EventId)
-            //    .HasColumnAnnotation(IndexAnnotation.AnnotationName,
-            //        new IndexAnnotation(
-            //            new IndexAttribute("IX_Collaborator", 1)
-            //            {
-            //                IsUnique = true
-            //            }
-            //        )
-            //    )
-            //    .IsRequired();
-
-
-            //this.Ignore(m => m.ArrivalTime);
-            //this.Ignore(m => m.DepartureTime);
-
-            //this.Property(p => p.ArrivalDate)
-            //    //.HasColumnType("DATE")
-            //    .IsRequired();
-
-            //this.Property(p => p.ArrivalTime)
-            //    //.HasColumnType("TIME")
-            //  .IsRequired();
-
-            //this.Property(p => p.DepartureDate)
-            //    //.HasColumnType("DATE")
-            //    .IsRequired();
-
-            //this.Property(p => p.DepartureTime)
-            //    //.HasColumnType("TIME")
-            //  .IsRequired();
-
-            ////Relationships
-            //this.HasRequired(t => t.Collaborator)
-            //   .WithMany()
-            //   .HasForeignKey(d => d.CollaboratorId);
-
-
-            //this.HasRequired(t => t.Edition)
-            //  .WithMany()
-            //  .HasForeignKey(d => d.EventId);
+            this.HasOptional(t => t.AirfareSponsor)
+                .WithMany(e => e.AirfareSponsors)
+                .HasForeignKey(d => d.AirfareAttendeeLogisticSponsorId);
 
             ToTable("Logistics");
         }

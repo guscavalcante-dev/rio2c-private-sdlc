@@ -10,6 +10,7 @@
             <div class="col-md-8">
                 @Html.LabelFor(m => m.AttendeeCollaboratorUid, new { @class = "control-label" })
                 @Html.DropDownListFor(m => m.AttendeeCollaboratorUid, Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control enable-collaborator-select2" })
+                @Html.ValidationMessageFor(m => m.AttendeeCollaboratorUid, "", new { @class = "text-danger" })
             </div>
         </div>
     </div>
@@ -24,7 +25,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <label class="kt-checkbox">
-                        @Html.CheckBoxFor(m => m.IsAirfareSponsored) Necessita
+                        @Html.CheckBoxFor(m => m.IsAirfareSponsored) @Labels.AddRequest
                         <span></span>
                     </label>
                 </div>
@@ -40,12 +41,14 @@
                         <span></span>
                     </label>
                 }
+
+                @Html.ValidationMessageFor(m => m.AirfareSponsorUid, "", new { @class = "text-danger" })
             }
         </div>
         <div class="row">
             <div class="form-group col-md-8 mb-0" data-id="Airfare">
                 <div class="view">
-                    @Html.Hidden("AirfareSponsorRequired", "True")
+                    @Html.Hidden("AirfareRequired")
                     @Html.Hidden("AirfareInitialSponsorUid", Model.AirportTransferSponsorUid)
                     @Html.DropDownList("AirfareSponsorOtherUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new {@class = "form-control enable-select2"})
                     <span class="form-text text-muted text-right"><a href="" onclick="return LogisticsCreate.enableNewSponsor('Airfare');" class="btn-link btn-edit">@(Labels.NewM.ToLowerInvariant()) @(Labels.Sponsor.ToLowerInvariant())</a></span>
@@ -68,7 +71,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <label class="kt-checkbox">
-                        @Html.CheckBoxFor(m => m.IsAccommodationSponsored) Necessita
+                        @Html.CheckBoxFor(m => m.IsAccommodationSponsored) @Labels.AddRequest
                         <span></span>
                     </label>
                 </div>
@@ -85,10 +88,13 @@
                     </label>
                 }
             }
+
+            @Html.ValidationMessageFor(m => m.AccommodationSponsorUid, "", new { @class = "text-danger" })
         </div>
         <div class="row">
             <div class="form-group col-md-8 mb-0" data-id="Accommodation">
                 <div class="view">
+                    @Html.Hidden("AccommodationRequired")
                     @Html.Hidden("AccommodationInitialSponsorUid", Model.AccommodationSponsorUid)
                     @Html.DropDownList("AccommodationSponsorOtherUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control enable-select2" })
                     <span class="form-text text-muted text-right"><a href="" onclick="return LogisticsCreate.enableNewSponsor('Accommodation');" class="btn-link btn-edit">@(Labels.NewM.ToLowerInvariant()) @(Labels.Sponsor.ToLowerInvariant())</a></span>
@@ -116,7 +122,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <label class="kt-checkbox">
-                        @Html.CheckBoxFor(m => m.IsAirportTransferSponsored) Necessita
+                        @Html.CheckBoxFor(m => m.IsAirportTransferSponsored) @Labels.AddRequest
                         <span></span>
                     </label>
                 </div>
@@ -132,11 +138,14 @@
                         <span></span>
                     </label>
                 }
+
+                @Html.ValidationMessageFor(m => m.AirportTransferSponsorUid, "", new { @class = "text-danger" })
             }
         </div>
         <div class="row" data-id="AirportTransfer">
             <div class="form-group col-md-8 mb-0">
                 <div class="view">
+                    @Html.Hidden("AirportTransferRequired")
                     @Html.Hidden("AirportTransferInitialSponsorUid", Model.AirportTransferSponsorUid)
                     @Html.DropDownList("AirportTransferOtherSponsorUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control enable-select2" })
                     <span class="form-text text-muted text-right"><a href="" onclick="return LogisticsCreate.enableNewSponsor('AirportTransfer');" class="btn-link btn-edit">@(Labels.NewM.ToLowerInvariant()) @(Labels.Sponsor.ToLowerInvariant())</a></span>
@@ -162,13 +171,10 @@
             <div class="row">
                 <div class="col-md-12 form-group mb-0">
                     <label class="kt-checkbox">
-                        <input type="checkbox"
-                               name="IsCityTransferRequired"
-                               value="true"
-                               checked /> Solicitar @Labels.TransferCity
+                        @Html.CheckBoxFor(m => m.IsCityTransferRequired) @Labels.TransferCity
                             <span></span>
                         </label>
-                    <span class="form-text text-muted">Residentes do Rio de Janeiro - Somente casos extremamente excepcionais</span>
+                    <span class="form-text text-muted">@Labels.LogisticsCityTransferHelpText</span>
                 </div>
             </div>
         </div>
@@ -186,13 +192,10 @@
             <div class="row">
                 <div class="col-md-12 form-group mb-0">
                     <label class="kt-checkbox">
-                        <input type="checkbox"
-                               name="IsVehicleDisposalRequired"
-                               value="true"
-                               checked /> Solicitar @Labels.VehicleAtDisposal
-                            <span></span>
-                        </label>
-                    <span class="form-text text-muted">Keynotes somente</span>
+                        @Html.CheckBoxFor(m => m.IsVehicleDisposalRequired) @Labels.VehicleAtDisposal
+                        <span></span>
+                    </label>
+                    <span class="form-text text-muted">@Labels.OnlyKeynotes</span>
                 </div>
             </div>
         </div>

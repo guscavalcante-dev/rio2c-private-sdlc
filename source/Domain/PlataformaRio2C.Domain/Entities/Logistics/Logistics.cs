@@ -14,6 +14,7 @@
 using PlataformaRio2C.Domain.Entities.Validations;
 using PlataformaRio2C.Domain.Validation;
 using System;
+using System.Security.AccessControl;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -83,6 +84,9 @@ namespace PlataformaRio2C.Domain.Entities
         public string AdditionalInfo { get; private set; }
         
         public virtual AttendeeCollaborator AttendeeCollaborator { get; private set; }
+        public virtual LogisticSponsor AirportTransferSponsor { get; private set; }
+        public virtual LogisticSponsor AirfareSponsor { get; private set; }
+        public virtual LogisticSponsor AccommodationSponsor { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Logistics"/> class.
@@ -95,27 +99,59 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>
         /// Initializes a new instance of the <see cref="Logistics" /> class.
         /// </summary>
-        /// <param name="attendeeCollaborator"></param>
+        /// <param name="attendeeCollaborator">The attendee collaborator.</param>
         /// <param name="isAirfareSponsored">if set to <c>true</c> [is airfare sponsored].</param>
-        /// <param name="airfareAttendeeLogisticSponsorId">The airfare attendee logistic sponsor identifier.</param>
+        /// <param name="airfareAttendeeLogisticSponsor">The airfare attendee logistic sponsor.</param>
+        /// <param name="airfareSponsorName">Name of the airfare sponsor.</param>
         /// <param name="isAccommodationSponsored">if set to <c>true</c> [is accommodation sponsored].</param>
-        /// <param name="accommodationAttendeeLogisticSponsorId">The accommodation attendee logistic sponsor identifier.</param>
+        /// <param name="accommodationAttendeeLogisticSponsor">The accommodation attendee logistic sponsor.</param>
+        /// <param name="accommodationSponsorName">Name of the accommodation sponsor.</param>
         /// <param name="isAirportTransferSponsored">if set to <c>true</c> [is airport transfer sponsored].</param>
-        /// <param name="airportTransferAttendeeLogisticSponsorId">The airport transfer attendee logistic sponsor identifier.</param>
+        /// <param name="airportTransferAttendeeLogisticSponsor">The airport transfer attendee logistic sponsor.</param>
+        /// <param name="airportTransferSponsorName">Name of the airport transfer sponsor.</param>
         /// <param name="isCityTransferRequired">if set to <c>true</c> [is city transfer required].</param>
         /// <param name="isVehicleDisposalRequired">if set to <c>true</c> [is vehicle disposal required].</param>
         /// <param name="additionalInfo">The additional information.</param>
-        /// <param name="userId"></param>
-        public Logistics(AttendeeCollaborator attendeeCollaborator, bool isAirfareSponsored, int? airfareAttendeeLogisticSponsorId, bool isAccommodationSponsored, int? accommodationAttendeeLogisticSponsorId, bool isAirportTransferSponsored, int? airportTransferAttendeeLogisticSponsorId, bool isCityTransferRequired, bool isVehicleDisposalRequired, string additionalInfo, int userId)
+        /// <param name="userId">The user identifier.</param>
+        public Logistics(AttendeeCollaborator attendeeCollaborator,
+            bool isAirfareSponsored,
+            LogisticSponsor airfareAttendeeLogisticSponsor,
+            string airfareSponsorName,
+            bool isAccommodationSponsored,
+            LogisticSponsor accommodationAttendeeLogisticSponsor,
+            string accommodationSponsorName,
+            bool isAirportTransferSponsored,
+            LogisticSponsor airportTransferAttendeeLogisticSponsor,
+            string airportTransferSponsorName,
+            bool isCityTransferRequired,
+            bool isVehicleDisposalRequired,
+            string additionalInfo,
+            int userId)
         {
             this.AttendeeCollaborator = attendeeCollaborator;
+            this.AttendeeCollaboratorId = attendeeCollaborator.Id;
+            
+            if (!string.IsNullOrEmpty(airfareSponsorName))
+                airfareAttendeeLogisticSponsor = new LogisticSponsor(airfareSponsorName, userId);
+            else if (airfareAttendeeLogisticSponsor != null)
+                this.AirfareAttendeeLogisticSponsorId = airfareAttendeeLogisticSponsor.Id;
+            
+            if (!string.IsNullOrEmpty(airportTransferSponsorName))
+                airportTransferAttendeeLogisticSponsor = new LogisticSponsor(airportTransferSponsorName, userId);
+            else if (airportTransferAttendeeLogisticSponsor != null)
+                this.AirportTransferAttendeeLogisticSponsorId = airportTransferAttendeeLogisticSponsor.Id;
 
+            if (!string.IsNullOrEmpty(accommodationSponsorName))
+                accommodationAttendeeLogisticSponsor = new LogisticSponsor(accommodationSponsorName, userId);
+            else if (accommodationAttendeeLogisticSponsor != null)
+                this.AccommodationAttendeeLogisticSponsorId = accommodationAttendeeLogisticSponsor.Id;
+
+            this.AirfareSponsor = airfareAttendeeLogisticSponsor;
+            this.AccommodationSponsor = accommodationAttendeeLogisticSponsor;
+            this.AirportTransferSponsor = airportTransferAttendeeLogisticSponsor;
             this.IsAirfareSponsored = isAirfareSponsored;
-            this.AirfareAttendeeLogisticSponsorId = airfareAttendeeLogisticSponsorId;
             this.IsAccommodationSponsored = isAccommodationSponsored;
-            this.AccommodationAttendeeLogisticSponsorId = accommodationAttendeeLogisticSponsorId;
             this.IsAirportTransferSponsored = isAirportTransferSponsored;
-            this.AirportTransferAttendeeLogisticSponsorId = airportTransferAttendeeLogisticSponsorId;
             this.IsCityTransferRequired = isCityTransferRequired;
             this.IsVehicleDisposalRequired = isVehicleDisposalRequired;
             this.AdditionalInfo = additionalInfo;

@@ -29,7 +29,7 @@ namespace PlataformaRio2C.Domain.Entities
         public bool IsAirfareTicketRequired { get; private set; }
         public bool IsOtherRequired { get; protected set; }
         
-        public LogisticSponsor(){}
+        protected LogisticSponsor(){}
 
         public LogisticSponsor(
             List<TranslatedName> names,
@@ -43,9 +43,21 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
         }
+        public LogisticSponsor(string name, int userId)
+        {
+            this.Name = name;
+            this.IsDeleted = false;
+            this.IsAirfareTicketRequired = false;
+            this.IsOtherRequired = false;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
 
         public virtual ICollection<AttendeeLogisticSponsor> AttendeeLogisticSponsors { get; private set; }
-        
+        public virtual ICollection<Logistics> AccommodationSponsors { get; private set; }
+        public virtual ICollection<Logistics> AirfareSponsors { get; private set; }
+        public virtual ICollection<Logistics> AirportTransferSponsors { get; private set; }
+
         public void Update(List<TranslatedName> names, 
             Edition edition, 
             bool isAirfareTicketRequired,

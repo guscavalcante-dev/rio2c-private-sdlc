@@ -44,6 +44,10 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.HasMany(t => t.AttendeeCollaboratorTickets)
                 .WithRequired(e => e.AttendeeCollaborator)
                 .HasForeignKey(e => e.AttendeeCollaboratorId);
+            
+            this.HasMany(t => t.Logistics)
+                .WithRequired(e => e.AttendeeCollaborator)
+                .HasForeignKey(e => e.AttendeeCollaboratorId);
         }
     }
 }

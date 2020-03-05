@@ -537,7 +537,8 @@ var MyRio2cCommon = function () {
 
     // Forms --------------------------------------------------------------------------------------
     var enableFormValidation = function (options) {
-        extendGlobalValidations();
+	    var globalValidations = extendGlobalValidations;
+	    globalValidations();
 
         if (!hasProperty(options, 'formIdOrClass') || isNullOrEmpty(options.formIdOrClass)) {
             return;
@@ -693,7 +694,9 @@ var MyRio2cCommon = function () {
             return;
         }
 
-        var validator = $(formIdOrClass).validate();
+        var validator = $(formIdOrClass).validate({
+            debug: true
+        });
 
         if ($(formIdOrClass).valid()) {
             MyRio2cCommon.block();

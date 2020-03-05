@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -27,36 +28,55 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     public class CreateLogisticRequest : BaseCommand
     {
         [Display(Name = "Participant", ResourceType = typeof(Labels))]
+
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid AttendeeCollaboratorUid { get; set; }
 
         #region Airfare sponsor
 
         public bool IsAirfareSponsored { get; set; }
 
+        public bool? AirfareRequired { get; set; }
+        
+        [RequiredIf("IsAirfareSponsored", true, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? AirfareSponsorUid { get; set; }
-
-        // City
-        //[RequiredIfOneWithValueAndOtherEmptyAttribute("IsRequired", "True", "CityName")]
+        
         public Guid? AirfareSponsorOtherUid { get; set; }
         
-        //[RequiredIfOneWithValueAndOtherEmptyAttribute("IsRequired", "True", "CityUid")]
-        //[StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        [RequiredIfOneWithValueAndOtherEmptyAttribute("AirfareRequired", "True", "AirfareSponsorOtherUid")]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string AirfareSponsorOtherName { get; set; }
 
         #endregion
 
         #region Accommodation Sponsor
         public bool IsAccommodationSponsored { get; set; }
+        
+        [RequiredIf("IsAccommodationSponsored", true, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? AccommodationSponsorUid { get; set; }
+        public bool? AccommodationRequired { get; set; }
+        
+        [RequiredIfOneWithValueAndOtherEmptyAttribute("AccommodationRequired", "True", "AccommodationSponsorOtherName")]
         public Guid? AccommodationSponsorOtherUid { get; set; }
+
+        [RequiredIfOneWithValueAndOtherEmptyAttribute("AccommodationRequired", "True", "AccommodationSponsorOtherUid")]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string AccommodationSponsorOtherName { get; set; }
 
         #endregion
 
         #region AirportTransfer Sponsor
         public bool IsAirportTransferSponsored { get; set; }
+
+        [RequiredIf("IsAirportTransferSponsored", true, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? AirportTransferSponsorUid { get; set; }
+        public bool? AirportTransferRequired { get; set; }
+
+        [RequiredIfOneWithValueAndOtherEmptyAttribute("AirportTransferRequired", "True", "AirportTransferSponsorOtherName")]
         public Guid? AirportTransferSponsorOtherUid { get; set; }
+        
+        [RequiredIfOneWithValueAndOtherEmptyAttribute("AirportTransferRequired", "True", "AirportTransferSponsorOtherUid")]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string AirportTransferSponsorOtherName { get; set; }
 
         #endregion

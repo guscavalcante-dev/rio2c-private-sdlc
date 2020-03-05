@@ -54,5 +54,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Collaborator GetBySchedule(Expression<Func<Collaborator, bool>> filter);
 
         #endregion
+
+        Task<IPagedList<LogisticRequestBaseDto>> FindAllLogisticsByDatatable(int editionId, int page, int pageSize, string searchValue, List<Tuple<string, string>> getSortColumns, bool showAllParticipants, bool showAllSponsored);
     }    
 }
