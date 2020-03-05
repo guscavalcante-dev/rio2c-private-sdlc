@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-04-2020
+// Last Modified On : 03-05-2020
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -581,6 +581,9 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetingparameters.delete.js").Include(
                 "~/Assets/js/audiovisual/meetingparameters/audiovisual.meetingparameters.delete.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetingparameters.details.js").Include(
+                "~/Assets/js/audiovisual/meetingparameters/audiovisual.meetingparameters.maininformation.widget.js"));
 
             #endregion
 

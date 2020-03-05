@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-04-2020
+// Last Modified On : 03-05-2020
 // ***********************************************************************
 // <copyright file="MusicBand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -78,6 +78,40 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Initializes a new instance of the <see cref="NegotiationConfig"/> class.</summary>
         protected NegotiationConfig()
         {
+        }
+
+        /// <summary>Updates the main information.</summary>
+        /// <param name="date">The date.</param>
+        /// <param name="startTime">The start time.</param>
+        /// <param name="endTime">The end time.</param>
+        /// <param name="roundFirstTurn">The round first turn.</param>
+        /// <param name="roundSecondTurn">The round second turn.</param>
+        /// <param name="timeIntervalBetweenTurnString">The time interval between turn string.</param>
+        /// <param name="timeOfEachRoundString">The time of each round string.</param>
+        /// <param name="timeIntervalBetweenRoundString">The time interval between round string.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateMainInformation(
+            DateTime date,
+            string startTime,
+            string endTime,
+            int roundFirstTurn,
+            int roundSecondTurn,
+            string timeIntervalBetweenTurnString,
+            string timeOfEachRoundString,
+            string timeIntervalBetweenRoundString,
+            int userId)
+        {
+            this.StartDate = date.JoinDateAndTime(startTime, true).ToUtcTimeZone();
+            this.EndDate = date.JoinDateAndTime(endTime, true).ToUtcTimeZone();
+            this.RoundFirstTurn = roundFirstTurn;
+            this.RoundSecondTurn = roundSecondTurn;
+            this.TimeIntervalBetweenTurn = timeIntervalBetweenTurnString.ToTimeSpan();
+            this.TimeOfEachRound = timeOfEachRoundString.ToTimeSpan();
+            this.TimeIntervalBetweenRound = timeIntervalBetweenRoundString.ToTimeSpan();
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
         }
 
         /// <summary>Deletes the specified user identifier.</summary>

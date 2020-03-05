@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-04-2020
+// Last Modified On : 03-05-2020
 // ***********************************************************************
 // <copyright file="NegotiationConfigRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -116,6 +116,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return @readonly
                         ? consult.AsNoTracking()
                         : consult;
+        }
+
+        /// <summary>Finds the main information widget dto asynchronous.</summary>
+        /// <param name="negotiationConfigUid">The negotiation configuration uid.</param>
+        /// <returns></returns>
+        public async Task<NegotiationConfigDto> FindMainInformationWidgetDtoAsync(Guid negotiationConfigUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(negotiationConfigUid)
+                                .Select(nc => new NegotiationConfigDto
+                                {
+                                    NegotiationConfig = nc
+                                });
+
+            return await query
+                            .FirstOrDefaultAsync();
         }
 
         /// <summary>Finds all json dtos paged asynchronous.</summary>

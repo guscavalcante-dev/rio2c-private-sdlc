@@ -274,6 +274,8 @@
     <Compile Include="CQRS\CommandsHandlers\Tracks\CreateTrackCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Tracks\DeleteTrackCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Tracks\TrackBaseCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationConfigs\UpdateNegotiationConfigMainInformationCommandHandler.cs" />
+    <Compile Include="CQRS\Commands\Audiovisual\NegotiationConfigs\UpdateNegotiationConfigMainInformation.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\NegotiationConfigs\DeleteNegotiationConfig.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\NegotiationConfigs\CreateNegotiationConfig.cs" />
     <Compile Include="CQRS\Commands\Collaborators\UpdateCollaboratorSocialNetworks.cs" />

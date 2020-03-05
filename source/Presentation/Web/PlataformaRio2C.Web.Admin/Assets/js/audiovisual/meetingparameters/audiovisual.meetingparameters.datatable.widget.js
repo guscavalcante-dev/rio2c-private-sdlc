@@ -4,7 +4,7 @@
 // Created          : 03-04-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-04-2020
+// Last Modified On : 03-05-2020
 // ***********************************************************************
 // <copyright file="audiovisual.meetingparameters.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -221,12 +221,12 @@ var AudiovisualMeetingParametersDataTableWidget = function () {
         table.ajax.reload();
     };
 
-    var showDetails = function (collaboratorUid) {
-        if (MyRio2cCommon.isNullOrEmpty(collaboratorUid)) {
+    var showDetails = function (negotiationConfigUid) {
+        if (MyRio2cCommon.isNullOrEmpty(negotiationConfigUid)) {
             return;
         }
 
-        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Commissions/Details/' + collaboratorUid);
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/Details/' + negotiationConfigUid);
     };
 
     return {
@@ -240,8 +240,8 @@ var AudiovisualMeetingParametersDataTableWidget = function () {
         exportEventbriteCsv: function() {
             exportEventbriteCsv();
         },
-        showDetails: function (collaboratorUid) {
-            showDetails(collaboratorUid);
+        showDetails: function (negotiationConfigUid) {
+            showDetails(negotiationConfigUid);
         }
     };
 }();

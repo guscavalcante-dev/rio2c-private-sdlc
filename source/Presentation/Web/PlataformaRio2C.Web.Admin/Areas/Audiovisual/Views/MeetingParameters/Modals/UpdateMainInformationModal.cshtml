@@ -1,4 +1,4 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateCollaboratorAdminMainInformation
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateNegotiationConfigMainInformation
 <div class="modal fade" id="UpdateMainInformationModal" role="dialog" aria-labelledby="UpdateMainInformationModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -9,11 +9,11 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("UpdateMainInformation", "Commissions", new { Area = "" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UpdateMainInformationForm" }))
+                @using (Html.BeginForm("UpdateMainInformation", "MeetingParameters", new { Area = "Audiovisual" }, FormMethod.Post, new { id = "UpdateMainInformationForm" }))
                 {
-                    @Html.HiddenFor(m => m.CollaboratorUid)
+                    @Html.HiddenFor(m => m.NegotiationConfigUid)
                     <div id="form-container">
-                        @Html.Partial("/Views/Shared/Collaborators/Forms/_MainInformationForm.cshtml", Model)
+                        @Html.Partial("Modals/UpdateMainInformationForm", Model)
                     </div>
                 }
             </div>

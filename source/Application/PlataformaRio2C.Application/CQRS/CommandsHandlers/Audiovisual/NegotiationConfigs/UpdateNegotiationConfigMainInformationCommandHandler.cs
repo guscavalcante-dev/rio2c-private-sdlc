@@ -1,60 +1,61 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Rafael Dantas Ruiz
-// Created          : 03-04-2020
+// Created          : 03-05-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-05-2020
 // ***********************************************************************
-// <copyright file="CreateNegotiationConfigCommandHandler.cs" company="Softo">
+// <copyright file="UpdateNegotiationConfigMainInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>CreateNegotiationConfigCommandHandler</summary>
-    public class CreateNegotiationConfigCommandHandler : NegotiationConfigBaseCommandHandler, IRequestHandler<CreateNegotiationConfig, AppValidationResult>
+    /// <summary>UpdateNegotiationConfigMainInformationCommandHandler</summary>
+    public class UpdateNegotiationConfigMainInformationCommandHandler : NegotiationConfigBaseCommandHandler, IRequestHandler<UpdateNegotiationConfigMainInformation, AppValidationResult>
     {
-        private readonly IEditionRepository editionRepo;
-
-        /// <summary>Initializes a new instance of the <see cref="CreateNegotiationConfigCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="UpdateNegotiationConfigMainInformationCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="negotiationConfigRepository">The negotiation configuration repository.</param>
-        /// <param name="editionRepository">The edition repository.</param>
-        public CreateNegotiationConfigCommandHandler(
+        public UpdateNegotiationConfigMainInformationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            INegotiationConfigRepository negotiationConfigRepository,
-            IEditionRepository editionRepository)
+            INegotiationConfigRepository negotiationConfigRepository)
             : base(eventBus, uow, negotiationConfigRepository)
         {
-            this.editionRepo = editionRepository;
         }
 
-        /// <summary>Handles the specified create negotiation configuration.</summary>
+        /// <summary>Handles the specified update negotiation configuration main information.</summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(CreateNegotiationConfig cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(UpdateNegotiationConfigMainInformation cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
-            var negotiationConfigUid = Guid.NewGuid();
+            var negotiationConfig = await this.GetNegotiationConfigByUid(cmd.NegotiationConfigUid);
 
-            var negotiationConfig = new NegotiationConfig(
-                negotiationConfigUid,
-                await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
+            #region Initial validations
+
+            if (!this.ValidationResult.IsValid)
+            {
+                this.AppValidationResult.Add(this.ValidationResult);
+                return this.AppValidationResult;
+            }
+
+            #endregion
+
+            negotiationConfig.UpdateMainInformation(
                 cmd.Date.Value,
                 cmd.StartTime,
                 cmd.EndTime,
@@ -70,9 +71,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
-            this.NegotiationConfigRepo.Create(negotiationConfig);
+            this.NegotiationConfigRepo.Update(negotiationConfig);
             this.Uow.SaveChanges();
-            this.AppValidationResult.Data = negotiationConfig;
 
             return this.AppValidationResult;
 

@@ -425,6 +425,7 @@
     <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.datatable.widget.js" />
     <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.create.js" />
     <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.delete.js" />
+    <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.maininformation.widget.js" />
     <Content Include="Assets\js\companies\companyinfo.autocomplete.js" />
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.participants.widget.js" />
     <Content Include="Assets\js\conferences\conferences.editionevents.js" />
@@ -7136,7 +7137,6 @@
     <Content Include="Areas\Audiovisual\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Audiovisual\Views\MeetingParameters\Details.cshtml" />
     <Content Include="Areas\Audiovisual\Views\MeetingParameters\Index.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\CreateModal_old.cshtml" />
     <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\UpdateMainInformationModal.cshtml" />
     <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\UpdateModal.cshtml" />
     <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\UpdateSocialNetworksModal.cshtml" />
@@ -7144,7 +7144,9 @@
     <Content Include="Areas\Audiovisual\Views\MeetingParameters\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\MeetingParameters\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\CreateModal.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\_CreateForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\CreateForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Widgets\MainInformationWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\UpdateMainInformationForm.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

@@ -1,0 +1,55 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model PlataformaRio2C.Application.CQRS.Commands.UpdateNegotiationConfigMainInformation
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+}
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Date, new { @class = "control-label" })
+        @Html.TextBox("Date", Model.Date?.ToShortDateString(), new { @class = "form-control enable-datepicker", data_date_start_date = editionDto?.StartDate.ToUserTimeZone().ToShortDateString(), data_date_end_date = editionDto?.EndDate.ToUserTimeZone().ToShortDateString() })
+        @Html.ValidationMessageFor(m => m.Date, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.StartTime, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.StartTime, new { @class = "form-control enable-timepicker", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.StartTime, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.EndTime, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.EndTime, new { @class = "form-control enable-timepicker", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.EndTime, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.Raw(HttpUtility.HtmlDecode(Html.LabelFor(m => m.RoundFirstTurn, Labels.RoundFirstTurn, new { @class = "control-label" }).ToString()))
+        @Html.TextBoxFor(m => m.RoundFirstTurn, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.RoundFirstTurn, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.Raw(HttpUtility.HtmlDecode(Html.LabelFor(m => m.RoundSecondTurn, Labels.RoundSecondTurn, new { @class = "control-label" }).ToString()))
+        @Html.TextBoxFor(m => m.RoundSecondTurn, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.RoundSecondTurn, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.TimeIntervalBetweenTurn, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.TimeIntervalBetweenTurn, new { @class = "form-control enable-timepicker", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.TimeIntervalBetweenTurn, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.TimeOfEachRound, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.TimeOfEachRound, new { @class = "form-control enable-timepicker", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.TimeOfEachRound, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.TimeIntervalBetweenRound, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.TimeIntervalBetweenRound, new { @class = "form-control enable-timepicker", @readonly = "readonly" })
+        @Html.ValidationMessageFor(m => m.TimeIntervalBetweenRound, "", new { @class = "text-danger" })
+    </div>
+</div>
