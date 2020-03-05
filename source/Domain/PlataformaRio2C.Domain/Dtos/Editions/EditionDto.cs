@@ -4,7 +4,7 @@
 // Created          : 08-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-28-2020
+// Last Modified On : 03-05-2020
 // ***********************************************************************
 // <copyright file="EditionDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -169,6 +169,14 @@ namespace PlataformaRio2C.Domain.Dtos
         public bool IsProjectEvaluationEnded()
         {
             return DateTime.UtcNow > this.ProjectEvaluationEndDate;
+        }
+
+        /// <summary>Determines whether [is evaluation released for disclosure].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is evaluation released for disclosure]; otherwise, <c>false</c>.</returns>
+        public bool IsEvaluationReleasedForDisclosure()
+        {
+            return DateTime.UtcNow > this.OneToOneMeetingsScheduleDate;
         }
 
         #endregion
