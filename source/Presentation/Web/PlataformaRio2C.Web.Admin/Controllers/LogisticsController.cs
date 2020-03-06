@@ -53,6 +53,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         private readonly ILogisticSponsorRepository logisticSponsorRepo;
         private readonly ILogisticsRepository logisticsRepo;
+        //private readonly ILogisticAirfareRepository logisticsRepo;
+        //private readonly ILogisticAccommodationRepository logisticsRepo;
+        //private readonly ILogisticAirportTransferRepository logisticsRepo;
         private readonly ILanguageRepository languageRepo;
         private readonly ICollaboratorRepository collaboratorRepo;
 
@@ -608,6 +611,39 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             }
 
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Speaker, Labels.DeletedM) });
+        }
+
+        #endregion
+        
+        #region Airfare Widget
+
+        /// <summary>Shows the released projects widget.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowAirfareWidget(Guid? logisticsUid)
+        {
+            var logisticsRequestDto = await this.logisticsRepo.GetDto(logisticsUid ?? Guid.Empty, this.languageRepo.Get(f => f.Code == UserInterfaceLanguage));
+            if (logisticsRequestDto == null)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Logistics, Labels.FoundF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Logistics", new { Area = "" });
+            }
+
+            //var releasedProjectsWidgetDto = await this.musicProjectRepo.FindReleasedProjectsWidgetDtoAsync(projectUid ?? Guid.Empty);
+            //if (releasedProjectsWidgetDto == null)
+            //{
+            //    return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            //}
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/LogisticsAirfareWidget", null), divIdOrClass = "#LogisticsAirfareWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

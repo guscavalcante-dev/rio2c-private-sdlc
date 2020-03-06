@@ -605,10 +605,13 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/logistics.details.js").Include(
                 "~/Assets/js/logistics/logistics.maininformation.widget.js",
                 "~/Assets/js/logistics/logistics.airfare.create.js",
-                "~/Assets/js/logistics/logistics.accommodation.create.js",
-                "~/Assets/js/logistics/logistics.transport.create.js",
+                "~/Assets/js/logistics/logistics.airfare.widget.js",
                 "~/Assets/js/logistics/logistics.airfare.delete.js",
+                "~/Assets/js/logistics/logistics.accommodation.create.js",
+                "~/Assets/js/logistics/logistics.accommodation.widget.js",
                 "~/Assets/js/logistics/logistics.accommodation.delete.js",
+                "~/Assets/js/logistics/logistics.transport.create.js",
+                "~/Assets/js/logistics/logistics.transport.widget.js",
                 "~/Assets/js/logistics/logistics.transport.delete.js"));
 
             #endregion

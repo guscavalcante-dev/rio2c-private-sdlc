@@ -119,10 +119,11 @@
     </div>
 </div>
 <!--end:Main Information Widget-->
+
 <!--begin:Airfare Widget-->
 <div class="row">
     <div class="col-12">
-        <div id="LogisticAirfareWidget" class="kt-portlet" style="position: relative; zoom: 1;">
+        <div id="LogisticsAirfareWidget" class="kt-portlet" style="min-height: 325px;">
             <div class="kt-portlet__head">
                 <div class="kt-portlet__head-label">
                     <h3 class="kt-portlet__head-title">
@@ -481,7 +482,7 @@
     @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/bootstrap-datepicker.js")
     @Scripts.Render("~/bundles/js/bootstrap-datetimepicker.js")
-    @Scripts.Render("~/bundles/js/logisticrequests.details.js")
+    @Scripts.Render("~/bundles/js/logistics.details.js")
     <script>
         // Page translations ----------------------------------------------------------------------
         var translations = {
@@ -489,6 +490,7 @@
         }
 
         jQuery(document).ready(function () {
+            LogisticsAirfareWidget.init();
             //ConferencesMainInformationWidget.init();
             //ConferencesTracksAndPresentationFormatsWidget.init();
             //ConferencesParticipantsWidget.init();

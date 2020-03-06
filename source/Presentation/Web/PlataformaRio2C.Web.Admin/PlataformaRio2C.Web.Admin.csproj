@@ -367,7 +367,6 @@
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
-    <Compile Include="Controllers\FinancialReportController.cs" />
     <Compile Include="Controllers\CitiesController.cs" />
     <Compile Include="Controllers\ConferencesController.cs" />
     <Compile Include="Controllers\SpeakersController.cs" />
@@ -375,17 +374,9 @@
     <Compile Include="Controllers\StatesController.cs" />
     <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\MusicalCommissionController.cs" />
-    <Compile Include="Controllers\InterestController.cs" />
-    <Compile Include="Controllers\InterestGroupController.cs" />
     <Compile Include="Controllers\HoldingsController.cs" />
-    <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Controllers\LogisticSponsorsController.cs" />
-    <Compile Include="Controllers\ManualMessageController.cs" />
-    <Compile Include="Controllers\ScheduleOneToOneMeetingsController.cs" />
-    <Compile Include="Controllers\ScheduleOneToOneMeetingsConfigController.cs" />
     <Compile Include="Controllers\SystemParameterController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Filters\AuthorizeCollaboratorTypeAttribute.cs" />
     <Compile Include="Filters\CustomExceptionFilterAttribute.cs" />
     <Compile Include="Models\LanguageMessageHandler.cs" />
@@ -448,6 +439,7 @@
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.editioncount.widget.js" />
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.maininformation.widget.js" />
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.totalcount.widget.js" />
+    <Content Include="Assets\js\logistics\logistics.airfare.widget.js" />
     <Content Include="Assets\js\music\commissions\music.commissions.onboardinginfo.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.clipping.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.datatable.widget.js" />
@@ -8466,6 +8458,7 @@
     <Content Include="Views\Shared\SocialNetworks\_InstagramItem.cshtml" />
     <Content Include="Views\Shared\SocialNetworks\_YoutubeItem.cshtml" />
     <Content Include="Views\Shared\SocialNetworks\_FacebookItem.cshtml" />
+    <Content Include="Views\Logistics\Widgets\LogisticsAirfareWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
