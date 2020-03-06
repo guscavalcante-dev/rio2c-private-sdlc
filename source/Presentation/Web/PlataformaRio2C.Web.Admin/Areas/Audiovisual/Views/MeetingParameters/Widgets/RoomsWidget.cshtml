@@ -33,7 +33,7 @@
                             @foreach (var negotiationRoomConfigDto in Model.NegotiationRoomConfigDtos)
                             {
                                 <tr>
-                                    <td>@negotiationRoomConfigDto.RoomDto.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)</td>
+                                    <td>@(negotiationRoomConfigDto.RoomDto.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.RoomName?.Value)</td>
                                     <td class="text-center">@negotiationRoomConfigDto.NegotiationRoomConfig.CountAutomaticTables</td>
                                     <td class="text-center">@negotiationRoomConfigDto.NegotiationRoomConfig.CountManualTables</td>
                                     <td class="text-center ">

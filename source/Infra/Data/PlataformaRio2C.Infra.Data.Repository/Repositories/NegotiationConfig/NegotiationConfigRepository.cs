@@ -152,18 +152,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                         RoomDto = new RoomDto
                                                                         {
                                                                             Room = nrc.Room,
-                                                                            RoomNameDtos = nrc.Room.RoomNames
-                                                                                                        .Where(rn => rn.IsDeleted)
-                                                                                                        .Select(rn => new RoomNameDto
-                                                                                                        {
-                                                                                                            RoomName = rn,
-                                                                                                            LanguageDto = new LanguageDto
-                                                                                                            {
-                                                                                                                Id = rn.Language.Id,
-                                                                                                                Uid = rn.Language.Uid,
-                                                                                                                Code = rn.Language.Code
-                                                                                                            }
-                                                                                                        })
+                                                                            RoomNameDtos = nrc.Room.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto
+                                                                            {
+                                                                                RoomName = rn,
+                                                                                LanguageDto = new LanguageDto
+                                                                                {
+                                                                                    Id = rn.Language.Id,
+                                                                                    Uid = rn.Language.Uid,
+                                                                                    Code = rn.Language.Code
+                                                                                }
+                                                                            })
                                                                         }
                                                                     })
                                 });

@@ -58,12 +58,12 @@ var AudiovisualMeetingParametersRoomsWidget = function () {
         });
     };
 
-    // Update -------------------------------------------------------------------------------------
+    // Create -------------------------------------------------------------------------------------
     var enableCreateAjaxForm = function () {
 	    MyRio2cCommon.enableAjaxForm({
-		    idOrClass: updateFormId,
+            idOrClass: createFormId,
 		    onSuccess: function (data) {
-			    $(updateModalId).modal('hide');
+                $(createModalId).modal('hide');
 
 			    if (typeof (AudiovisualMeetingParametersRoomsWidget) !== 'undefined') {
 				    AudiovisualMeetingParametersRoomsWidget.init();
@@ -74,14 +74,15 @@ var AudiovisualMeetingParametersRoomsWidget = function () {
 				    enableUpdatePlugins();
 			    }
 
-			    $(updateFormId).find(":input.input-validation-error:first").focus();
+                $(createFormId).find(":input.input-validation-error:first").focus();
 		    }
 	    });
     };
 
     var enableCreatePlugins = function () {
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: createFormId + ' .enable-select2' });
 	    enableCreateAjaxForm();
-	    MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
+        MyRio2cCommon.enableFormValidation({ formIdOrClass: createFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
 
     var showCreateModal = function () {
@@ -96,7 +97,7 @@ var AudiovisualMeetingParametersRoomsWidget = function () {
 				    // Success
 				    onSuccess: function () {
 					    enableCreatePlugins();
-					    $(updateModalId).modal();
+                        $(createModalId).modal();
 				    },
 				    // Error
 				    onError: function () {
@@ -132,15 +133,17 @@ var AudiovisualMeetingParametersRoomsWidget = function () {
     };
 
     var enableUpdatePlugins = function () {
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2' });
 	    enableUpdateAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
 
-    var showUpdateModal = function () {
+    var showUpdateModal = function (negotiationRoomConfigUid) {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
         jsonParameters.negotiationConfigUid = $('#AggregateId').val();
+        jsonParameters.negotiationRoomConfigUid = negotiationRoomConfigUid;
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/ShowUpdateRoomModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -168,10 +171,10 @@ var AudiovisualMeetingParametersRoomsWidget = function () {
             show();
         },
         showCreateModal: function () {
-	        showCreateModal();
+            showCreateModal();
         },
-        showUpdateModal: function () {
-            showUpdateModal();
+        showUpdateModal: function (negotiationRoomConfigUid) {
+            showUpdateModal(negotiationRoomConfigUid);
         }
     };
 }();

@@ -11,7 +11,7 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
+using System;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
@@ -29,8 +29,42 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual NegotiationConfig NegotiationConfig { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="NegotiationRoomConfig"/> class.</summary>
+        /// <param name="room">The room.</param>
+        /// <param name="negotiationConfig">The negotiation configuration.</param>
+        /// <param name="countAutomaticTables">The count automatic tables.</param>
+        /// <param name="countManualTables">The count manual tables.</param>
+        /// <param name="userId">The user identifier.</param>
+        public NegotiationRoomConfig(
+            Room room,
+            NegotiationConfig negotiationConfig,
+            int countAutomaticTables,
+            int countManualTables,
+            int userId)
+        {
+            this.RoomId = room?.Id ?? 0;
+            this.Room = room;
+            this.NegotiationConfigId = negotiationConfig?.Id ?? 0;
+            this.NegotiationConfig = negotiationConfig;
+            this.CountAutomaticTables = countAutomaticTables;
+            this.CountManualTables = countManualTables;
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="NegotiationRoomConfig"/> class.</summary>
         protected NegotiationRoomConfig()
         {
+        }
+
+        /// <summary>Deletes the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(int userId)
+        {
+            this.IsDeleted = true;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
         }
 
         #region Validations
@@ -87,39 +121,5 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         #endregion
-
-        //public NegotiationRoomConfig(int countAutomaticTables)
-        //{
-        //    SetCountAutomaticTables(countAutomaticTables);
-        //}
-
-        //public NegotiationRoomConfig(Room room)
-        //{
-        //    SetRoom(room);
-        //}
-
-        //public void SetRoom(Room room)
-        //{
-        //    Room = room;
-        //    if (room != null)
-        //    {
-        //        RoomId = room.Id;
-        //    }            
-        //}        
-
-        //public void SetCountAutomaticTables(int val)
-        //{
-        //    CountAutomaticTables = val;
-        //}
-
-        //public void SetCountManualTables(int val)
-        //{
-        //    CountManualTables = val;
-        //}
-
-        //public override bool IsValid()
-        //{
-        //    return true;
-        //}
     }
 }

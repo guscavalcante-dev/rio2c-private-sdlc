@@ -14,6 +14,7 @@
 using PlataformaRio2C.Domain.Validation;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
@@ -118,12 +119,46 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void Delete(int userId)
         {
-            //TODO: Delete room configurations
+            this.DeleteNegotiationRoomConfigs(userId);
 
             this.IsDeleted = true;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
+
+        #region Negotiation Room Configs
+
+        /// <summary>Creates the negotiation room configuration.</summary>
+        /// <param name="room">The room.</param>
+        /// <param name="countAutomaticTables">The count automatic tables.</param>
+        /// <param name="countManualTables">The count manual tables.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void CreateNegotiationRoomConfig(Room room, int countAutomaticTables, int countManualTables, int userId)
+        {
+            if (this.NegotiationRoomConfigs?.Any() != true)
+            {
+                this.NegotiationRoomConfigs = new List<NegotiationRoomConfig>();
+            }
+
+            this.NegotiationRoomConfigs.Add(new NegotiationRoomConfig(room,this, countAutomaticTables, countManualTables, userId));
+        }
+
+        /// <summary>Deletes the negotiation room configs.</summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteNegotiationRoomConfigs(int userId)
+        {
+            if (this.NegotiationRoomConfigs?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var negotiationRoomConfig in this.NegotiationRoomConfigs.Where(c => !c.IsDeleted))
+            {
+                negotiationRoomConfig.Delete(userId);
+            }
+        }
+
+        #endregion
 
         #region Validations
 
@@ -138,6 +173,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateDates();
             this.ValidateRoundFirstTurn();
             this.ValidateRoundSecondTurn();
+            this.ValidateNegotiationRoomConfigs();
 
             return this.ValidationResult.IsValid;
         }
@@ -181,6 +217,20 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.RoundSecondTurn < 0)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyGreaterThanValue, Labels.RoundSecondTurn, 0), new string[] { "RoundSecondTurn" }));
+            }
+        }
+
+        /// <summary>Validates the negotiation room configs.</summary>
+        public void ValidateNegotiationRoomConfigs()
+        {
+            if (this.NegotiationRoomConfigs?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var negotiationRoomConfig in this.NegotiationRoomConfigs?.Where(d => !d.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(negotiationRoomConfig.ValidationResult);
             }
         }
 
