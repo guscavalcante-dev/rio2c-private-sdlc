@@ -165,6 +165,58 @@ var AudiovisualMeetingParametersRoomsWidget = function () {
         });
     };
 
+    // Delete -------------------------------------------------------------------------------------
+    var executeDelete = function (negotiationRoomConfigUid) {
+        MyRio2cCommon.block();
+
+        var jsonParameters = new Object();
+        jsonParameters.negotiationConfigUid = $('#AggregateId').val();
+        jsonParameters.negotiationRoomConfigUid = negotiationRoomConfigUid;
+
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/DeleteRoom'), jsonParameters, function (data) {
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function () {
+	                if (typeof (AudiovisualMeetingParametersRoomsWidget) !== 'undefined') {
+		                AudiovisualMeetingParametersRoomsWidget.init();
+	                }
+                },
+                // Error
+                onError: function () {
+                }
+            });
+        })
+            .fail(function () {
+            })
+            .always(function () {
+                MyRio2cCommon.unblock();
+            });
+    };
+
+    var showDeleteModal = function (negotiationRoomConfigUid) {
+        var message = labels.deleteConfirmationMessage;
+
+        bootbox.dialog({
+            message: message,
+            buttons: {
+                cancel: {
+                    label: labels.cancel,
+                    className: "btn btn-secondary mr-auto",
+                    callback: function () {
+                    }
+                },
+                confirm: {
+                    label: labels.remove,
+                    className: "btn btn-danger",
+                    callback: function () {
+                        executeDelete(negotiationRoomConfigUid);
+                    }
+                }
+            }
+        });
+    };
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
@@ -175,6 +227,9 @@ var AudiovisualMeetingParametersRoomsWidget = function () {
         },
         showUpdateModal: function (negotiationRoomConfigUid) {
             showUpdateModal(negotiationRoomConfigUid);
+        },
+        showDeleteModal: function (negotiationRoomConfigUid) {
+            showDeleteModal(negotiationRoomConfigUid);
         }
     };
 }();

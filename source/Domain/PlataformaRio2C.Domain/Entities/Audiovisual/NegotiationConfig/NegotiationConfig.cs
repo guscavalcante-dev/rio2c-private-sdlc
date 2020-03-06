@@ -155,6 +155,15 @@ namespace PlataformaRio2C.Domain.Entities
             negotiationRoomConfig?.Update(room, countAutomaticTables, countManualTables, userId);
         }
 
+        /// <summary>Deletes the negotiation room configuration.</summary>
+        /// <param name="negotiationRoomConfigUid">The negotiation room configuration uid.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void DeleteNegotiationRoomConfig(Guid negotiationRoomConfigUid, int userId)
+        {
+            var negotiationRoomConfig = this.GetNegotiationRoomConfigByUid(negotiationRoomConfigUid);
+            negotiationRoomConfig?.Delete(userId);
+        }
+
         /// <summary>Gets the negotiation room configuration by uid.</summary>
         /// <param name="negotiationRoomConfigUid">The negotiation room configuration uid.</param>
         /// <returns></returns>

@@ -29,7 +29,7 @@
                                 <th class="text-center">@Labels.Actions</th>
                             </tr>
                         </thead>
-                        <tbody class="rio2c-scroll kt-scroll ps rio2c-scroll-enabled" style="height: 200px; overflow: hidden;">
+                        <tbody class="rio2c-scroll" style="height: 200px;">
                             @foreach (var negotiationRoomConfigDto in Model.NegotiationRoomConfigDtos)
                             {
                                 <tr>
@@ -42,8 +42,8 @@
                                                 <i class="la la-ellipsis-h"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                <button class="dropdown-item" onclick="AudiovisualMeetingParametersRoomsWidget.showUpdateModal('@negotiationRoomConfigDto.NegotiationRoomConfig.Uid');"><i class="la la-edit"></i>@Labels.Edit</button>
-                                                <button class="dropdown-item" onclick="AudiovisualMeetingParametersRoomsWidget.showDeleteModal('@negotiationRoomConfigDto.NegotiationRoomConfig.Uid');"><i class="la la-remove"></i>@Labels.Remove</button>
+                                                <button class="dropdown-item" onclick="AudiovisualMeetingParametersRoomsWidget.showUpdateModal('@(negotiationRoomConfigDto.NegotiationRoomConfig?.Uid)');"><i class="la la-edit"></i>@Labels.Edit</button>
+                                                <button class="dropdown-item" onclick="AudiovisualMeetingParametersRoomsWidget.showDeleteModal('@(negotiationRoomConfigDto.NegotiationRoomConfig?.Uid)');"><i class="la la-remove"></i>@Labels.Remove</button>
                                             </div>
                                         </span>
                                     </td>
