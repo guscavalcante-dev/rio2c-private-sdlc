@@ -12,11 +12,15 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Domain.Interfaces
 {
     public interface IAttendeeLogisticSponsorRepository : IRepository<AttendeeLogisticSponsor>
     {
+        Task<List<LogisticSponsorBaseDto>> FindAllDtosByIsOther(int editionDtoId);
     }    
 }

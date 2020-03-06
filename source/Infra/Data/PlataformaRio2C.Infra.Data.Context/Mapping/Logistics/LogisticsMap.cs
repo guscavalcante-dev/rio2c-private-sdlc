@@ -35,6 +35,11 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 .WithMany(e => e.AirfareSponsors)
                 .HasForeignKey(d => d.AirfareAttendeeLogisticSponsorId);
 
+            this.HasRequired(t => t.CreateUser)
+                .WithMany()
+                .HasForeignKey(d => d.CreateUserId);
+
+
             ToTable("Logistics");
         }
     }

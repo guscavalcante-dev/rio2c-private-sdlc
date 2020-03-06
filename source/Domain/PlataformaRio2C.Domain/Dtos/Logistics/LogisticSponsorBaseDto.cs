@@ -31,6 +31,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public bool IsInCurrentEdition { get; set; }
         public bool IsAirfareTicketRequired { get; set; }
         public bool IsOtherRequired { get; set; }
+        public bool IsOthers { get; set; }
 
         /// <summary>Gets the name by language code.</summary>
         /// <param name="languageCode">The language code.</param>

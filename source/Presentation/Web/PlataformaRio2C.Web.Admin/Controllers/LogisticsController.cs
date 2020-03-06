@@ -309,15 +309,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Details(Guid? id)
         {
-            //var attendeeCollaboratorDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUidAndByEditionIdAsync(id ?? Guid.Empty, this.EditionDto.Id);
-            //if (attendeeCollaboratorDto == null)
-            //{
-            //    this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Speaker, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-            //    return RedirectToAction("Index", "Home", new { Area = "" });
-            //}
-
-            var dto = new LogisticRequestDetailsDto();
-
+            var logisticsRequestDto = await this.logisticsRepo.GetDto(id ?? Guid.Empty, this.languageRepo.Get(f => f.Code == UserInterfaceLanguage));
+            if (logisticsRequestDto == null)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Logistics, Labels.FoundF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Logistics", new { Area = "" });
+            }
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Logistics, new List<BreadcrumbItemHelper> {
@@ -327,7 +324,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             #endregion
 
-            return View(dto);
+            return View(logisticsRequestDto);
         }
 
         #endregion

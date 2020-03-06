@@ -30,6 +30,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly ILanguageRepository languageRepo;
         private readonly ILogisticsRepository logisticsRepo;
         private readonly ILogisticSponsorRepository logisticSponsorRepo;
+        private readonly IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
 
         /// <summary>Initializes a new instance of the <see cref="T:PlataformaRio2C.Application.CQRS.CommandsHandlers.CreateLogisticsCommandHandler"/> class.</summary>
@@ -47,12 +48,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             ILogisticSponsorRepository logisticSponsorRepo,
             IEditionRepository editionRepository,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepo,
+            IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepo,
             ILanguageRepository languageRepository)
             : base(eventBus, uow, logisticsRepo)
         {
             this.editionRepo = editionRepository;
             this.languageRepo = languageRepository;
             this.logisticsRepo = logisticsRepo;
+            this.attendeeLogisticSponsorRepo = attendeeLogisticSponsorRepo;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepo;
             this.logisticSponsorRepo = logisticSponsorRepo;
         }
@@ -66,15 +69,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.Uow.BeginTransaction();
             
             var logistics = new Logistics(
+                this.editionRepo.Get(cmd.EditionId),
                 this.attendeeCollaboratorRepo.Get(cmd.AttendeeCollaboratorUid),
                 cmd.IsAirfareSponsored,
-                this.logisticSponsorRepo.Get(cmd.AirfareSponsorOtherUid ?? cmd.AirfareSponsorUid ?? Guid.Empty),
+                this.attendeeLogisticSponsorRepo.Get(cmd.AirfareSponsorOtherUid ?? cmd.AirfareSponsorUid ?? Guid.Empty),
                 cmd.AirfareSponsorOtherName,
                 cmd.IsAccommodationSponsored,
-                this.logisticSponsorRepo.Get(cmd.AccommodationSponsorOtherUid ?? cmd.AccommodationSponsorUid ?? Guid.Empty),
+                this.attendeeLogisticSponsorRepo.Get(cmd.AccommodationSponsorOtherUid ?? cmd.AccommodationSponsorUid ?? Guid.Empty),
                 cmd.AccommodationSponsorOtherName,
                 cmd.IsAirportTransferSponsored,
-                this.logisticSponsorRepo.Get(cmd.AirportTransferSponsorOtherUid ?? cmd.AirportTransferSponsorUid ?? Guid.Empty),
+                this.attendeeLogisticSponsorRepo.Get(cmd.AirportTransferSponsorOtherUid ?? cmd.AirportTransferSponsorUid ?? Guid.Empty),
                 cmd.AirportTransferSponsorOtherName,
                 cmd.IsCityTransferRequired,
                 cmd.IsVehicleDisposalRequired,

@@ -1,5 +1,6 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
-@model LogisticRequestDetailsDto
+@using PlataformaRio2C.Domain.Entities
+@model LogisticRequestBaseDto
 @{
     ViewBag.Title = Labels.Logistics;
 }
@@ -15,7 +16,7 @@
                         <div class="kt-widget__content pl-0" style="overflow: hidden;">
                             <div class="kt-widget__head">
                                 <span class="kt-widget__username">
-                                    Satya Nadella
+                                    @Model.Name
                                 </span>
                                 <div class="kt-widget__action">
                                     <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="LogisticRequestsMainInformationWidget.showUpdateModal();">
@@ -25,15 +26,31 @@
                             </div>
                             <div class="kt-widget__info">
                                 <span class="kt-widget__desc">
-                                    @Labels.Pillars: <span class="kt-badge  kt-badge--info kt-badge--inline" style="background-color: #E5007D; color: white;">Transformação das empresas e empregos</span>
-                                    <span class="kt-badge  kt-badge--info kt-badge--inline" style="background-color: #F9B233; color: white;">Arte, Mídia e Entretenimento</span>
-                                    <span class="kt-badge  kt-badge--info kt-badge--inline" style="background-color: #5578eb; color: white;">Inovação</span>
+                                    @Labels.Pillars:
+                                    @if (Model.CollaboratorPillars != null)
+                                    {
+                                        foreach (var pillar in Model.CollaboratorPillars)
+                                        {
+                                            <span class="kt-badge  kt-badge--info kt-badge--inline" style="background-color: @pillar.Color; color: white;">@pillar.Name.GetSeparatorTranslation(UICulture, Language.Separator)</span>
+                                        }
+                                    }
+
+                                    @*<span class="kt-badge  kt-badge--info kt-badge--inline" style="background-color: #E5007D; color: white;">Transformação das empresas e empregos</span>
+                                        <span class="kt-badge  kt-badge--info kt-badge--inline" style="background-color: #F9B233; color: white;">Arte, Mídia e Entretenimento</span>
+                                        <span class="kt-badge  kt-badge--info kt-badge--inline" style="background-color: #5578eb; color: white;">Inovação</span>*@
                                 </span>
                             </div>
                             <div class="kt-widget__info">
                                 <span class="kt-widget__desc">
-                                    Funções: <span class="kt-badge  kt-badge--info kt-badge--inline">Keynote</span>
-                                    <span class="kt-badge  kt-badge--info kt-badge--inline">Palestrante</span>
+                                    Funções:
+                                    @if (Model.CollaboratorRoles != null)
+                                    {
+                                        foreach (var role in Model.CollaboratorRoles)
+                                        {
+                                            <span class="kt-badge  kt-badge--info kt-badge--inline">@role</span>
+
+                                        }
+                                    }
                                 </span>
                             </div>
                         </div>
@@ -42,38 +59,38 @@
                         <div class="kt-widget__item">
                             <div class="kt-widget__details">
                                 <span class="kt-widget__title">@Labels.Airfare</span>
-                                <span class="kt-widget__value"><span>Rio2C</span></span>
+                                <span class="kt-widget__value"><span>@(Model.GetAirfareSponsorTranslation(UICulture) ?? "--")</span></span>
                             </div>
                         </div>
                         <div class="kt-widget__item">
                             <div class="kt-widget__details">
                                 <span class="kt-widget__title">@Labels.Accommodation</span>
-                                <span class="kt-widget__value"><span>APEX</span></span>
+                                <span class="kt-widget__value"><span>@(Model.GetAccommodationSponsorTranslation(UICulture) ?? "--")</span></span>
                             </div>
                         </div>
                         <div class="kt-widget__item">
                             <div class="kt-widget__details">
                                 <span class="kt-widget__title">@Labels.AirportTransfer</span>
-                                <span class="kt-widget__value"><span>Patrocinado por outras instituições</span></span>
+                                <span class="kt-widget__value"><span>@(Model.GetAirportTransferSponsorTranslation(UICulture) ?? "--")</span></span>
                             </div>
                         </div>
                         <div class="kt-widget__item">
                             <div class="kt-widget__details">
                                 <span class="kt-widget__title">@Labels.TransferCity</span>
-                                <span class="kt-widget__value"><span>Sim</span></span>
+                                <span class="kt-widget__value"><span>@(Model.TransferCity ? Labels.Yes : Labels.No)</span></span>
                             </div>
                         </div>
                         <div class="kt-widget__item">
                             <div class="kt-widget__details">
                                 <span class="kt-widget__title">@Labels.VehicleAtDisposal</span>
-                                <span class="kt-widget__value"><span>Sim</span></span>
+                                <span class="kt-widget__value"><span>@(Model.IsVehicleDisposalRequired ? Labels.Yes : Labels.No)</span></span>
                             </div>
                         </div>
 
                         <div class="kt-widget__item">
                             <div class="kt-widget__details">
                                 <span class="kt-widget__title">Solicitante</span>
-                                <span class="kt-widget__value"><span>Stephan Gates</span></span>
+                                <span class="kt-widget__value"><span>@Model.CreateUser</span></span>
                             </div>
                         </div>
 
@@ -81,7 +98,7 @@
                         <div class="kt-widget__item">
                             <div class="kt-widget__details">
                                 <span class="kt-widget__title">Data de Solicitação</span>
-                                <span class="kt-widget__value"><span>08/01/2020 18:30</span></span>
+                                <span class="kt-widget__value"><span>@(Model.CreateDate?.ToString("G"))</span></span>
                             </div>
                         </div>
 
@@ -90,7 +107,7 @@
                                 <span class="kt-widget__title">@Labels.AdditionalInfo</span>
                                 <span class="kt-widget__value">
                                     <span>
-                                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit
+                                        @(Model.AdditionalInfo ?? "--")
                                     </span>
                                 </span>
                             </div>

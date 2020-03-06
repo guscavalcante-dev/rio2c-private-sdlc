@@ -50,6 +50,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         private readonly IAttendeeSalesPlatformTicketTypeRepository attendeeSalesPlatformTicketTypeRepo;
         private readonly IFileRepository fileRepo;
 
+        private readonly IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepo;
         private readonly ILogisticSponsorRepository logisticSponsorRepo;
         private readonly ILanguageRepository languageRepo;
 
@@ -64,11 +65,13 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             ILogisticSponsorRepository logisticSponsorRepo,
+            IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepo,
             ILanguageRepository languageRepo)
             : base(commandBus, identityController)
         {
             this.logisticSponsorRepo = logisticSponsorRepo;
             this.languageRepo = languageRepo;
+            this.attendeeLogisticSponsorRepo = attendeeLogisticSponsorRepo;
         }
 
         #region List
@@ -356,7 +359,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual + "," + Constants.CollaboratorType.CommissionAudiovisual)]
         public async Task<ActionResult> FindAllByIsOther()
         {
-            var list = await this.logisticSponsorRepo.FindAllDtosByIsOther(this.EditionDto.Id);
+            var list = await this.attendeeLogisticSponsorRepo.FindAllDtosByIsOther(this.EditionDto.Id);
             
             return Json(new
             {

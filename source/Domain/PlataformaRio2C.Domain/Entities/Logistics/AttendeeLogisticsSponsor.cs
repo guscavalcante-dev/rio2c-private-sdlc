@@ -21,8 +21,17 @@ namespace PlataformaRio2C.Domain.Entities
     /// <summary>AttendeeLogisticSponsor</summary>
     public class AttendeeLogisticSponsor : Entity
     {
-        public AttendeeLogisticSponsor()
+        protected AttendeeLogisticSponsor()
         {
+        }
+        
+        public AttendeeLogisticSponsor(Edition edition, string name, int userId)
+        {
+            this.Edition = edition;
+            this.IsOther = true;
+            this.CreateUserId = this.UpdateUserId = userId;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+            this.LogisticSponsor = new LogisticSponsor(name, userId);
         }
 
         public AttendeeLogisticSponsor(Edition edition, LogisticSponsor logisticSponsor, int userId)
@@ -53,7 +62,11 @@ namespace PlataformaRio2C.Domain.Entities
         public bool IsOther { get; private set; }
         public virtual Edition Edition { get; private set; }
         public virtual LogisticSponsor LogisticSponsor { get; private set; }
-                
+
+        public virtual ICollection<Logistics> AccommodationSponsors { get; private set; }
+        public virtual ICollection<Logistics> AirfareSponsors { get; private set; }
+        public virtual ICollection<Logistics> AirportTransferSponsors { get; private set; }
+
         #region Validations
 
         /// <summary>Returns true if ... is valid.</summary>

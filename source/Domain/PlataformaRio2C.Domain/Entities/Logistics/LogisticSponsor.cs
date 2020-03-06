@@ -54,9 +54,6 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         public virtual ICollection<AttendeeLogisticSponsor> AttendeeLogisticSponsors { get; private set; }
-        public virtual ICollection<Logistics> AccommodationSponsors { get; private set; }
-        public virtual ICollection<Logistics> AirfareSponsors { get; private set; }
-        public virtual ICollection<Logistics> AirportTransferSponsors { get; private set; }
 
         public void Update(List<TranslatedName> names, 
             Edition edition, 

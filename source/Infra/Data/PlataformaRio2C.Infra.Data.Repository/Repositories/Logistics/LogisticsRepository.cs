@@ -133,5 +133,37 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 })
                 .ToListPagedAsync(page, pageSize);
         }
+
+        public Task<LogisticRequestBaseDto> GetDto(Guid id, Language language)
+        {
+            var query = this.GetBaseQuery();
+
+            return query.FindByUid(id).Select(e => new LogisticRequestBaseDto()
+            {
+                CollaboratorUid = e.AttendeeCollaborator.Collaborator.Uid,
+                Name = e.AttendeeCollaborator.Collaborator.FirstName + " " +
+                       e.AttendeeCollaborator.Collaborator.LastNames,
+                Id = e.Id,
+                Uid = e.Uid,
+                AccommodationSponsor = e.AccommodationSponsor.LogisticSponsor.Name,
+                AirfareSponsor = e.AccommodationSponsor.LogisticSponsor.Name,
+                AirportTransferSponsor = e.AccommodationSponsor.LogisticSponsor.Name,
+                AdditionalInfo = e.AdditionalInfo,
+                TransferCity = e.IsCityTransferRequired,
+                IsVehicleDisposalRequired = e.IsVehicleDisposalRequired,
+                CreateDate = e.CreateDate,
+                CreateUser = e.CreateUser.Name,
+                CollaboratorPillars = e.AttendeeCollaborator.ConferenceParticipants
+                    .SelectMany(cp => cp.Conference.ConferencePillars)
+                    .Select(p => p.Pillar)
+                    .ToList(),
+                CollaboratorRoles = e.AttendeeCollaborator.ConferenceParticipants
+                    .Select(cp => cp.ConferenceParticipantRole)
+                    .SelectMany(cp => cp.ConferenceParticipantRoleTitles.Where(t => t.LanguageId == language.Id))
+                    .Select(cp => cp.Value)
+                    .ToList()
+
+            }).FirstOrDefaultAsync();
+        }
     }
 }

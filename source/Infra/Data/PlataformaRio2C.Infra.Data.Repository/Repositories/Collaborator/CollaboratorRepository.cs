@@ -1132,34 +1132,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                     AccommodationSponsor = c.AttendeeCollaborators
                     .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
                     .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted && l.AccommodationSponsor != null))
-                    .Select(e => new LogisticSponsorBaseDto()
-                    {
-                        //Id = e.AccommodationSponsor.Id,
-                        //Uid = e.AccommodationSponsor.Uid,
-                        Name = e.AccommodationSponsor.Name
-                    })
+                    .Select(e => e.AccommodationSponsor.LogisticSponsor.Name)
                     .FirstOrDefault(),
 
                     AirfareSponsor = c.AttendeeCollaborators
                         .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
                         .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted && l.AirfareSponsor != null))
-                        .Select(e => new LogisticSponsorBaseDto()
-                        {
-                            //Id = e.AirfareSponsor.Id,
-                            //Uid = e.AirfareSponsor.Uid,
-                            Name = e.AirfareSponsor.Name
-                        })
+                        .Select(e => e.AirfareSponsor.LogisticSponsor.Name)
                         .FirstOrDefault(),
 
                     AirportTransferSponsor = c.AttendeeCollaborators
                         .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
                         .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted && l.AirportTransferSponsor != null))
-                        .Select(e => new LogisticSponsorBaseDto()
-                        {
-                            //Id = e.AirportTransferSponsor.Id,
-                            //Uid = e.AirportTransferSponsor.Uid,
-                            Name = e.AirportTransferSponsor.Name
-                        })
+                        .Select(e => e.AirportTransferSponsor.LogisticSponsor.Name)
                         .FirstOrDefault(),
 
                     CreateDate = c.AttendeeCollaborators

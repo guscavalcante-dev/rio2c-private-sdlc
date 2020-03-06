@@ -155,21 +155,11 @@ var LogisticsDataTableWidget = function () {
                             // Create request
                             html += '<button class="dropdown-item" onclick="LogisticsCreate.showModal(\'' + full.Uid + '\');"><i class="la la-edit"></i> ' + addRequest + '</button>';
                         }
-                        else if (!full.HasLogistics) {
-                            // Update request
-                            html += '<button class="dropdown-item" onclick="LogisticsUpdate.showModal(\'' + full.Uid + '\');"><i class="la la-edit"></i> ' + labels.edit + '</button>';
-                        }
-
-                        if (full.HasSponsors) {
+                        else {
                             // View details
                             html += '<button class="dropdown-item" onclick="LogisticsDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-edit"></i> ' + view + '</button>';
                         }
                         
-                        if (full.HasSponsors && !full.HasLogistics) {
-                            // Delete
-                            html += '<button class="dropdown-item" onclick="LogisticsDelete.showModal(\'' + full.Uid + '\');"><i class="la la-remove"></i> ' + labels.remove + '</button>';
-                        }
-
                         html += '\
                                             </div>\
                                         </span>';

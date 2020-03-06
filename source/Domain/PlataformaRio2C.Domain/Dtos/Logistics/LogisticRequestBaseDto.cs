@@ -31,22 +31,28 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset? CreateDate { get; set; }
         public DateTimeOffset? UpdateDate { get; set; }
 
-        public LogisticSponsorBaseDto AccommodationSponsor { get; set; }
-        public LogisticSponsorBaseDto AirportTransferSponsor { get; set; }
-        public LogisticSponsorBaseDto AirfareSponsor { get; set; }
+        public string AccommodationSponsor { get; set; }
+        public string AirportTransferSponsor { get; set; }
+        public string AirfareSponsor { get; set; }
 
         public bool IsSponsoredByEvent { get; set; }
         public bool HasLogistics { get; set; }
         public bool HasRequest { get; set; }
+        public string CreateUser { get; set; }
+        public string AdditionalInfo { get; set; }
+        public bool TransferCity { get; set; }
+        public bool IsVehicleDisposalRequired { get; set; }
+        public List<string> CollaboratorRoles { get; set; }
+        public List<Pillar> CollaboratorPillars { get; set; }
 
         /// <summary>
         /// Gets the airfare sponsor by language.
         /// </summary>
         /// <param name="languageCode">The language code.</param>
         /// <returns>System.String.</returns>
-        public string GetAirfareSponsorByLanguage(string languageCode)
+        public string GetAirfareSponsorTranslation(string languageCode)
         {
-            return this.AirfareSponsor?.Name.GetSeparatorTranslation(languageCode, Language.Separator);
+            return this.AirfareSponsor?.GetSeparatorTranslation(languageCode, Language.Separator);
         }
 
         /// <summary>
@@ -54,9 +60,9 @@ namespace PlataformaRio2C.Domain.Dtos
         /// </summary>
         /// <param name="languageCode">The language code.</param>
         /// <returns>System.String.</returns>
-        public string GetAccommodationSponsorByLanguage(string languageCode)
+        public string GetAccommodationSponsorTranslation(string languageCode)
         {
-            return this.AccommodationSponsor?.Name.GetSeparatorTranslation(languageCode, Language.Separator);
+            return this.AccommodationSponsor?.GetSeparatorTranslation(languageCode, Language.Separator);
         }
 
         /// <summary>
@@ -64,9 +70,9 @@ namespace PlataformaRio2C.Domain.Dtos
         /// </summary>
         /// <param name="languageCode">The language code.</param>
         /// <returns>System.String.</returns>
-        public string GetTransferSponsorByLanguage(string languageCode)
+        public string GetAirportTransferSponsorTranslation(string languageCode)
         {
-            return this.AirportTransferSponsor?.Name.GetSeparatorTranslation(languageCode, Language.Separator);
+            return this.AirportTransferSponsor?.GetSeparatorTranslation(languageCode, Language.Separator);
         }
     }
 }

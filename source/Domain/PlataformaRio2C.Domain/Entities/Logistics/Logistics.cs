@@ -84,9 +84,10 @@ namespace PlataformaRio2C.Domain.Entities
         public string AdditionalInfo { get; private set; }
         
         public virtual AttendeeCollaborator AttendeeCollaborator { get; private set; }
-        public virtual LogisticSponsor AirportTransferSponsor { get; private set; }
-        public virtual LogisticSponsor AirfareSponsor { get; private set; }
-        public virtual LogisticSponsor AccommodationSponsor { get; private set; }
+        public virtual AttendeeLogisticSponsor AirportTransferSponsor { get; private set; }
+        public virtual AttendeeLogisticSponsor AirfareSponsor { get; private set; }
+        public virtual AttendeeLogisticSponsor AccommodationSponsor { get; private set; }
+        public virtual User CreateUser { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Logistics"/> class.
@@ -113,15 +114,17 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isVehicleDisposalRequired">if set to <c>true</c> [is vehicle disposal required].</param>
         /// <param name="additionalInfo">The additional information.</param>
         /// <param name="userId">The user identifier.</param>
-        public Logistics(AttendeeCollaborator attendeeCollaborator,
+        public Logistics(
+            Edition edition,
+            AttendeeCollaborator attendeeCollaborator,
             bool isAirfareSponsored,
-            LogisticSponsor airfareAttendeeLogisticSponsor,
+            AttendeeLogisticSponsor airfareAttendeeLogisticSponsor,
             string airfareSponsorName,
             bool isAccommodationSponsored,
-            LogisticSponsor accommodationAttendeeLogisticSponsor,
+            AttendeeLogisticSponsor accommodationAttendeeLogisticSponsor,
             string accommodationSponsorName,
             bool isAirportTransferSponsored,
-            LogisticSponsor airportTransferAttendeeLogisticSponsor,
+            AttendeeLogisticSponsor airportTransferAttendeeLogisticSponsor,
             string airportTransferSponsorName,
             bool isCityTransferRequired,
             bool isVehicleDisposalRequired,
@@ -132,17 +135,17 @@ namespace PlataformaRio2C.Domain.Entities
             this.AttendeeCollaboratorId = attendeeCollaborator.Id;
             
             if (!string.IsNullOrEmpty(airfareSponsorName))
-                airfareAttendeeLogisticSponsor = new LogisticSponsor(airfareSponsorName, userId);
+                airfareAttendeeLogisticSponsor = new AttendeeLogisticSponsor(edition, airfareSponsorName, userId);
             else if (airfareAttendeeLogisticSponsor != null)
                 this.AirfareAttendeeLogisticSponsorId = airfareAttendeeLogisticSponsor.Id;
             
             if (!string.IsNullOrEmpty(airportTransferSponsorName))
-                airportTransferAttendeeLogisticSponsor = new LogisticSponsor(airportTransferSponsorName, userId);
+                airportTransferAttendeeLogisticSponsor = new AttendeeLogisticSponsor(edition, airportTransferSponsorName, userId);
             else if (airportTransferAttendeeLogisticSponsor != null)
                 this.AirportTransferAttendeeLogisticSponsorId = airportTransferAttendeeLogisticSponsor.Id;
 
             if (!string.IsNullOrEmpty(accommodationSponsorName))
-                accommodationAttendeeLogisticSponsor = new LogisticSponsor(accommodationSponsorName, userId);
+                accommodationAttendeeLogisticSponsor = new AttendeeLogisticSponsor(edition, accommodationSponsorName, userId);
             else if (accommodationAttendeeLogisticSponsor != null)
                 this.AccommodationAttendeeLogisticSponsorId = accommodationAttendeeLogisticSponsor.Id;
 
