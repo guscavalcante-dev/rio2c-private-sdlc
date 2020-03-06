@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-05-2020
 // ***********************************************************************
-// <copyright file="CreateNegotiationRoomConfig.cs" company="Softo">
+// <copyright file="UpdateNegotiationRoomConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -20,10 +20,11 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>CreateNegotiationRoomConfig</summary>
-    public class CreateNegotiationRoomConfig : BaseCommand
+    /// <summary>UpdateNegotiationRoomConfig</summary>
+    public class UpdateNegotiationRoomConfig : BaseCommand
     {
         public Guid? NegotiationConfigUid { get; set; }
+        public Guid? NegotiationRoomConfigUid { get; set; }
 
         [Display(Name = "Room", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -39,21 +40,25 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public List<RoomJsonDto> Rooms { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="CreateNegotiationRoomConfig"/> class.</summary>
-        /// <param name="negotiationConfigDto">The negotiation configuration dto.</param>
+        /// <summary>Initializes a new instance of the <see cref="UpdateNegotiationRoomConfig"/> class.</summary>
+        /// <param name="negotiationRoomConfigDto">The negotiation room configuration dto.</param>
         /// <param name="roomDtos">The room dtos.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
-        public CreateNegotiationRoomConfig(
-            NegotiationConfigDto negotiationConfigDto,
+        public UpdateNegotiationRoomConfig(
+            NegotiationRoomConfigDto negotiationRoomConfigDto,
             List<RoomDto> roomDtos,
             string userInterfaceLanguage)
         {
-            this.NegotiationConfigUid = negotiationConfigDto?.NegotiationConfig?.Uid;
+            this.RoomUid = negotiationRoomConfigDto?.RoomDto?.Room?.Uid;
+            this.NegotiationConfigUid = negotiationRoomConfigDto?.NegotiationConfig?.Uid;
+            this.NegotiationRoomConfigUid = negotiationRoomConfigDto?.NegotiationRoomConfig?.Uid;
+            this.CountAutomaticTables = negotiationRoomConfigDto?.NegotiationRoomConfig?.CountAutomaticTables;
+            this.CountManualTables = negotiationRoomConfigDto?.NegotiationRoomConfig?.CountManualTables;
             this.UpdateModelsAndLists(roomDtos, userInterfaceLanguage);
         }
 
-        /// <summary>Initializes a new instance of the <see cref="CreateNegotiationRoomConfig"/> class.</summary>
-        public CreateNegotiationRoomConfig()
+        /// <summary>Initializes a new instance of the <see cref="UpdateNegotiationRoomConfig"/> class.</summary>
+        public UpdateNegotiationRoomConfig()
         {
         }
 

@@ -7151,6 +7151,8 @@
     <Content Include="Areas\Audiovisual\Views\MeetingParameters\Widgets\RoomsWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\CreateRoomModal.cshtml" />
     <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\CreateRoomForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\UpdateRoomModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\UpdateRoomForm.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

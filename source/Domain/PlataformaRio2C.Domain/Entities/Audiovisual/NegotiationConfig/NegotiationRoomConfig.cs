@@ -58,6 +58,23 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
+        /// <summary>Updates the specified room.</summary>
+        /// <param name="room">The room.</param>
+        /// <param name="countAutomaticTables">The count automatic tables.</param>
+        /// <param name="countManualTables">The count manual tables.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(Room room, int countAutomaticTables, int countManualTables, int userId)
+        {
+            this.RoomId = room?.Id ?? 0;
+            this.Room = room;
+            this.CountAutomaticTables = countAutomaticTables;
+            this.CountManualTables = countManualTables;
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
         /// <summary>Deletes the specified user identifier.</summary>
         /// <param name="userId">The user identifier.</param>
         public void Delete(int userId)

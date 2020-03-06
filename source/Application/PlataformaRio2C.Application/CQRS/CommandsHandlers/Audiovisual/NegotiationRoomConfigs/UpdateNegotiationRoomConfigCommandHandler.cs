@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-05-2020
 // ***********************************************************************
-// <copyright file="CreateNegotiationRoomConfigCommandHandler.cs" company="Softo">
+// <copyright file="UpdateNegotiationRoomConfigCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -21,17 +21,17 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>CreateNegotiationRoomConfigCommandHandler</summary>
-    public class CreateNegotiationRoomConfigCommandHandler : NegotiationConfigBaseCommandHandler, IRequestHandler<CreateNegotiationRoomConfig, AppValidationResult>
+    /// <summary>UpdateNegotiationRoomConfigCommandHandler</summary>
+    public class UpdateNegotiationRoomConfigCommandHandler : NegotiationConfigBaseCommandHandler, IRequestHandler<UpdateNegotiationRoomConfig, AppValidationResult>
     {
         private readonly IRoomRepository roomRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="CreateNegotiationRoomConfigCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="UpdateNegotiationRoomConfigCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="negotiationConfigRepository">The negotiation configuration repository.</param>
         /// <param name="roomRepository">The room repository.</param>
-        public CreateNegotiationRoomConfigCommandHandler(
+        public UpdateNegotiationRoomConfigCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             INegotiationConfigRepository negotiationConfigRepository,
@@ -41,11 +41,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.roomRepo = roomRepository;
         }
 
-        /// <summary>Handles the specified create negotiation room configuration.</summary>
+        /// <summary>Handles the specified update negotiation room configuration.</summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(CreateNegotiationRoomConfig cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(UpdateNegotiationRoomConfig cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
@@ -61,7 +61,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            negotiationConfig.CreateNegotiationRoomConfig(
+            negotiationConfig.UpdateNegotiationRoomConfig(
+                cmd.NegotiationRoomConfigUid ?? Guid.Empty,
                 await this.roomRepo.FindByUidAsync(cmd.RoomUid ?? Guid.Empty),
                 cmd.CountAutomaticTables.Value,
                 cmd.CountManualTables.Value,

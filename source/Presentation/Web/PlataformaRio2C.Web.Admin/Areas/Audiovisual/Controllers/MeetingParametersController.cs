@@ -41,21 +41,25 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
     public class MeetingParametersController : BaseController
     {
         private readonly INegotiationConfigRepository negotiationConfigRepo;
+        private readonly INegotiationRoomConfigRepository negotiationRoomConfigRepo;
         private readonly IRoomRepository roomRepo;
 
         /// <summary>Initializes a new instance of the <see cref="MeetingParametersController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="negotiationConfigRepository">The negotiation configuration repository.</param>
+        /// <param name="negotiationRoomConfigRepository">The negotiation room configuration repository.</param>
         /// <param name="roomRepository">The room repository.</param>
         public MeetingParametersController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             INegotiationConfigRepository negotiationConfigRepository,
+            INegotiationRoomConfigRepository negotiationRoomConfigRepository,
             IRoomRepository roomRepository)
             : base(commandBus, identityController)
         {
             this.negotiationConfigRepo = negotiationConfigRepository;
+            this.negotiationRoomConfigRepo = negotiationRoomConfigRepository;
             this.roomRepo = roomRepository;
         }
 
@@ -477,7 +481,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/_RoomForm.cshtml", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("Modals/CreateRoomForm.cshtml", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -487,99 +491,107 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Parameter, Labels.UpdatedM) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Room, Labels.CreatedM) });
         }
 
         #endregion
 
         #region Update
 
-        ///// <summary>Shows the update main information modal.</summary>
-        ///// <param name="negotiationConfigUid">The negotiation configuration uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? negotiationConfigUid)
-        //{
-        //    UpdateNegotiationConfigMainInformation cmd;
+        /// <summary>Shows the update room modal.</summary>
+        /// <param name="negotiationRoomConfigUid">The negotiation room configuration uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowUpdateRoomModal(Guid? negotiationRoomConfigUid)
+        {
+            UpdateNegotiationRoomConfig cmd;
 
-        //    try
-        //    {
-        //        var mainInformationWidgetDto = await this.negotiationConfigRepo.FindMainInformationWidgetDtoAsync(negotiationConfigUid ?? Guid.Empty);
-        //        if (mainInformationWidgetDto == null)
-        //        {
-        //            throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Parameter, Labels.FoundM.ToLowerInvariant()));
-        //        }
+            try
+            {
+                var roomWidgetDto = await this.negotiationRoomConfigRepo.FindMainInformationWidgetDtoAsync(negotiationRoomConfigUid ?? Guid.Empty);
+                if (roomWidgetDto == null)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Room, Labels.FoundM.ToLowerInvariant()));
+                }
 
-        //        cmd = new UpdateNegotiationConfigMainInformation(mainInformationWidgetDto);
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-        //    }
+                cmd = new UpdateNegotiationRoomConfig(
+                    roomWidgetDto,
+                    await this.roomRepo.FindAllDtoByEditionIdAsync(this.EditionDto.Id),
+                    this.UserInterfaceLanguage);
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/UpdateRoomModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
-        ///// <summary>Updates the main information.</summary>
-        ///// <param name="cmd">The command.</param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public async Task<ActionResult> UpdateMainInformation(UpdateNegotiationConfigMainInformation cmd)
-        //{
-        //    var result = new AppValidationResult();
+        /// <summary>Updates the room.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        /// <exception cref="DomainException"></exception>
+        [HttpPost]
+        public async Task<ActionResult> UpdateRoom(UpdateNegotiationRoomConfig cmd)
+        {
+            var result = new AppValidationResult();
 
-        //    try
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
 
-        //        cmd.UpdatePreSendProperties(
-        //            this.AdminAccessControlDto.User.Id,
-        //            this.AdminAccessControlDto.User.Uid,
-        //            this.EditionDto.Id,
-        //            this.EditionDto.Uid,
-        //            this.UserInterfaceLanguage);
-        //        result = await this.CommandBus.Send(cmd);
-        //        if (!result.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        foreach (var error in result.Errors)
-        //        {
-        //            var target = error.Target ?? "";
-        //            ModelState.AddModelError(target, error.Message);
-        //        }
+                cmd.UpdatePreSendProperties(
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
 
-        //        return Json(new
-        //        {
-        //            status = "error",
-        //            message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
-        //            pages = new List<dynamic>
-        //            {
-        //                new { page = this.RenderRazorViewToString("Modals/MainInformationForm.cshtml", cmd), divIdOrClass = "#form-container" },
-        //            }
-        //        }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-        //    }
+                cmd.UpdateModelsAndLists(
+                    await this.roomRepo.FindAllDtoByEditionIdAsync(this.EditionDto.Id),
+                    this.UserInterfaceLanguage);
 
-        //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Parameter, Labels.UpdatedM) });
-        //}
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/UpdateRoomForm.cshtml", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Room, Labels.UpdatedM) });
+        }
 
         #endregion
 

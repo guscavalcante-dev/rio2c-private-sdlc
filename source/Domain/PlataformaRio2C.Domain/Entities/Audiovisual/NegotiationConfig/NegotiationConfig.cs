@@ -143,6 +143,26 @@ namespace PlataformaRio2C.Domain.Entities
             this.NegotiationRoomConfigs.Add(new NegotiationRoomConfig(room,this, countAutomaticTables, countManualTables, userId));
         }
 
+        /// <summary>Updates the negotiation room configuration.</summary>
+        /// <param name="negotiationRoomConfigUid">The negotiation room configuration uid.</param>
+        /// <param name="room">The room.</param>
+        /// <param name="countAutomaticTables">The count automatic tables.</param>
+        /// <param name="countManualTables">The count manual tables.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateNegotiationRoomConfig(Guid negotiationRoomConfigUid, Room room, int countAutomaticTables, int countManualTables, int userId)
+        {
+            var negotiationRoomConfig = this.GetNegotiationRoomConfigByUid(negotiationRoomConfigUid);
+            negotiationRoomConfig?.Update(room, countAutomaticTables, countManualTables, userId);
+        }
+
+        /// <summary>Gets the negotiation room configuration by uid.</summary>
+        /// <param name="negotiationRoomConfigUid">The negotiation room configuration uid.</param>
+        /// <returns></returns>
+        private NegotiationRoomConfig GetNegotiationRoomConfigByUid(Guid? negotiationRoomConfigUid)
+        {
+            return this.NegotiationRoomConfigs?.FirstOrDefault(nrc => nrc.Uid == negotiationRoomConfigUid);
+        }
+
         /// <summary>Deletes the negotiation room configs.</summary>
         /// <param name="userId">The user identifier.</param>
         private void DeleteNegotiationRoomConfigs(int userId)

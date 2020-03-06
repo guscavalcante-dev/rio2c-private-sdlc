@@ -11,7 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System.Collections.Generic;
 using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Domain.Dtos
@@ -21,6 +20,7 @@ namespace PlataformaRio2C.Domain.Dtos
     {
         public NegotiationRoomConfig NegotiationRoomConfig { get; set; }
         public RoomDto RoomDto { get; set; }
+        public NegotiationConfig NegotiationConfig { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="NegotiationRoomConfigDto"/> class.</summary>
         public NegotiationRoomConfigDto()
