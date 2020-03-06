@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-21-2020
+// Last Modified On : 03-03-2020
 // ***********************************************************************
 // <copyright file="speakers.create.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,12 +28,7 @@ var SpeakersCreate = function () {
             MyRio2cPublicEmail.init();
         }
 
-        MyRio2cCropper.init({ formIdOrClass: formId });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
-        AttendeeOrganizationsForm.init(formId);
-        AddressesForm.init();
-        //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-jobtitle', maxCharCount: 81 });
-        //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-minibio', maxCharCount: 710 });
         enableAjaxForm();
         enableFormValidation();
     };
