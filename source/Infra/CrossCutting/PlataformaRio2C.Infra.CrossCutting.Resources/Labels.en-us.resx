@@ -2230,4 +2230,12 @@
     <value>Number of manual tables</value>
     <comment>Número de mesas manuais</comment>
   </data>
+  <data name="GeneratedF" xml:space="preserve">
+    <value>Generated</value>
+    <comment>Gerada</comment>
+  </data>
+  <data name="GeneratedM" xml:space="preserve">
+    <value>Generated</value>
+    <comment>Gerado</comment>
+  </data>
 </root>

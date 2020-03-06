@@ -1798,6 +1798,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gerada.
+        /// </summary>
+        public static string GeneratedF {
+            get {
+                return ResourceManager.GetString("GeneratedF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gerado.
+        /// </summary>
+        public static string GeneratedM {
+            get {
+                return ResourceManager.GetString("GeneratedM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gênero.
         /// </summary>
         public static string Genre {

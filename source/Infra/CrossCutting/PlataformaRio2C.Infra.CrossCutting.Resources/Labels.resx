@@ -2237,4 +2237,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Número de mesas manuais</value>
     <comment>Número de mesas manuais</comment>
   </data>
+  <data name="GeneratedF" xml:space="preserve">
+    <value>Gerada</value>
+    <comment>Gerada</comment>
+  </data>
+  <data name="GeneratedM" xml:space="preserve">
+    <value>Gerado</value>
+    <comment>Gerado</comment>
+  </data>
 </root>

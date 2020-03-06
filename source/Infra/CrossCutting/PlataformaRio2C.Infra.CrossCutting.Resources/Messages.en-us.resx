@@ -894,4 +894,12 @@
     <value>Do you want to refuse {0} "&lt;b&gt;{1}&lt;/b&gt;"?</value>
     <comment>Deseja reprovar {0} "&lt;b&gt;{1}&lt;/b&gt;"?</comment>
   </data>
+  <data name="CalendarProcessedSuccessfully" xml:space="preserve">
+    <value>Calendar processed successfully in &lt;b&gt;{0}&lt;/b&gt;.</value>
+    <comment>Agenda processada com sucesso em &lt;b&gt;{0}&lt;/b&gt;.</comment>
+  </data>
+  <data name="GenerateCalendarMessage" xml:space="preserve">
+    <value>Do you want to generate the calendar?</value>
+    <comment>Deseja gerar a agenda?</comment>
+  </data>
 </root>

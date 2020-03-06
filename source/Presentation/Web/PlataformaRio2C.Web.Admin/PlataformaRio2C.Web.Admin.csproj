@@ -331,6 +331,7 @@
     <Compile Include="App_Start\SimpleInjectorInitializer.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Audiovisual\AudiovisualAreaRegistration.cs" />
+    <Compile Include="Areas\Audiovisual\Controllers\MeetingsController.cs" />
     <Compile Include="Areas\Audiovisual\Controllers\MeetingParametersController.cs" />
     <Compile Include="Areas\Music\Controllers\CommissionsController.cs" />
     <Compile Include="Areas\Music\Controllers\ProjectsController.cs" />
@@ -427,6 +428,7 @@
     <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.create.js" />
     <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.delete.js" />
     <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.maininformation.widget.js" />
+    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.status.widget.js" />
     <Content Include="Assets\js\companies\companyinfo.autocomplete.js" />
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.participants.widget.js" />
     <Content Include="Assets\js\conferences\conferences.editionevents.js" />
@@ -7153,6 +7155,8 @@
     <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\CreateRoomForm.cshtml" />
     <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\UpdateRoomModal.cshtml" />
     <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\UpdateRoomForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Index.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\StatusWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

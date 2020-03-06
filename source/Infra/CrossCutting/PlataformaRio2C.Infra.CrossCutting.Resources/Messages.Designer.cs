@@ -160,6 +160,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Agenda processada com sucesso em &lt;b&gt;{0}&lt;/b&gt;..
+        /// </summary>
+        public static string CalendarProcessedSuccessfully {
+            get {
+                return ResourceManager.GetString("CalendarProcessedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Não é possível editar um projeto submetido para avaliação de player.
         /// </summary>
         public static string CanNotEditASubmittedProjectForPlayerEvaluation {
@@ -686,6 +695,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string FundingPlan {
             get {
                 return ResourceManager.GetString("FundingPlan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deseja gerar a agenda?.
+        /// </summary>
+        public static string GenerateCalendarMessage {
+            get {
+                return ResourceManager.GetString("GenerateCalendarMessage", resourceCulture);
             }
         }
         

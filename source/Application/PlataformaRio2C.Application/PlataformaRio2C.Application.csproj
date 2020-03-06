@@ -183,6 +183,7 @@
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationRoomConfigs\DeleteNegotiationRoomConfigCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationRoomConfigs\UpdateNegotiationRoomConfigCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationRoomConfigs\CreateNegotiationRoomConfigCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Audiovisual\Negotiations\CreateNegotiationsCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\BaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\BaseCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\CreateTinyCollaboratorCommandHandler.cs" />
@@ -284,6 +285,7 @@
     <Compile Include="CQRS\Commands\Audiovisual\NegotiationRoomConfigs\DeleteNegotiationRoomConfig.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\NegotiationRoomConfigs\UpdateNegotiationRoomConfig.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\NegotiationRoomConfigs\CreateNegotiationRoomConfig.cs" />
+    <Compile Include="CQRS\Commands\Audiovisual\Negotiations\CreateNegotiations.cs" />
     <Compile Include="CQRS\Commands\Collaborators\UpdateCollaboratorSocialNetworks.cs" />
     <Compile Include="CQRS\Commands\ConferenceParticipantRoles\BaseCommands\ConferenceParticipantRoleTitleBaseCommand.cs" />
     <Compile Include="CQRS\Commands\ConferenceParticipantRoles\CreateConferenceParticipantRole.cs" />
