@@ -24,5 +24,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     {
         Task<List<ProjectBuyerEvaluationEmailDto>> FindAllBuyerEmailDtosAsync(int editionId, DateTimeOffset editionProjectEvaluationStartDate, DateTimeOffset editionProjectEvaluationEndDate);
         Task<List<ProjectBuyerEvaluation>> FindAllByProjectEvaluationStatusUidAsync(int editionId, Guid projectEvaluationStatusUid);
+        Task<int> CountNegotiationScheduledAsync(int editionId, bool showAllEditions = false);
+        Task<int> CountNegotiationNotScheduledAsync(int editionId, bool showAllEditions = false);
     }
 }

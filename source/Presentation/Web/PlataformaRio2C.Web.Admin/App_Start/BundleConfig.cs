@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-06-2020
+// Last Modified On : 03-07-2020
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -590,9 +590,15 @@ namespace PlataformaRio2C.Web.Admin
 
             #region Meetings
 
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetingparameters.editionscheduledcount.widget.js").Include(
+                "~/Assets/js/audiovisual/meetings/audiovisual.meetingparameters.editionscheduledcount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetingparameters.editionnotscheduledcount.widget.js").Include(
+                "~/Assets/js/audiovisual/meetings/audiovisual.meetingparameters.editionnotscheduledcount.widget.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.generate.widget.js").Include(
                 "~/Assets/js/audiovisual/meetings/audiovisual.meetings.status.widget.js"));
-
+            
             #endregion
 
             #endregion

@@ -1041,6 +1041,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rodadas de Negócios não Agendadas.
+        /// </summary>
+        public static string NotScheduledOneToOneMeetings {
+            get {
+                return ResourceManager.GetString("NotScheduledOneToOneMeetings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Não exibindo na edição {0} do site.
         /// </summary>
         public static string NotShowingOnSiteEdition {
@@ -1658,6 +1667,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string RestrictionsSpecificsInPtBrMandatory {
             get {
                 return ResourceManager.GetString("RestrictionsSpecificsInPtBrMandatory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rodadas de Negócios Agendadas.
+        /// </summary>
+        public static string ScheduledOneToOneMeetings {
+            get {
+                return ResourceManager.GetString("ScheduledOneToOneMeetings", resourceCulture);
             }
         }
         

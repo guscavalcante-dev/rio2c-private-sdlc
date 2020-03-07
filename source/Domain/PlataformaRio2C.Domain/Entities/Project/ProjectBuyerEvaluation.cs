@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 03-07-2020
 // ***********************************************************************
 // <copyright file="ProjectBuyerEvaluation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -42,6 +42,8 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual User BuyerEvaluationUser { get; private set; }
         public virtual ProjectEvaluationStatus ProjectEvaluationStatus { get; private set; }
         public virtual ProjectEvaluationRefuseReason ProjectEvaluationRefuseReason { get; private set; }
+
+        public virtual ICollection<Negotiation> Negotiations { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="ProjectBuyerEvaluation"/> class.</summary>
         /// <param name="project">The project.</param>

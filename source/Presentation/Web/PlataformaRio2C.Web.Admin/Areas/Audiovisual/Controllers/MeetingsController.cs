@@ -4,7 +4,7 @@
 // Created          : 03-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-06-2020
+// Last Modified On : 03-07-2020
 // ***********************************************************************
 // <copyright file="MeetingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -40,6 +40,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         private readonly INegotiationConfigRepository negotiationConfigRepo;
         private readonly INegotiationRoomConfigRepository negotiationRoomConfigRepo;
         private readonly IRoomRepository roomRepo;
+        private readonly IProjectBuyerEvaluationRepository projectBuyerEvaluationRepo;
 
         /// <summary>Initializes a new instance of the <see cref="MeetingsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -47,17 +48,20 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="negotiationConfigRepository">The negotiation configuration repository.</param>
         /// <param name="negotiationRoomConfigRepository">The negotiation room configuration repository.</param>
         /// <param name="roomRepository">The room repository.</param>
+        /// <param name="projectBuyerEvaluationRepository">The project buyer evaluation repository.</param>
         public MeetingsController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             INegotiationConfigRepository negotiationConfigRepository,
             INegotiationRoomConfigRepository negotiationRoomConfigRepository,
-            IRoomRepository roomRepository)
+            IRoomRepository roomRepository,
+            IProjectBuyerEvaluationRepository projectBuyerEvaluationRepository)
             : base(commandBus, identityController)
         {
             this.negotiationConfigRepo = negotiationConfigRepository;
             this.negotiationRoomConfigRepo = negotiationRoomConfigRepository;
             this.roomRepo = roomRepository;
+            this.projectBuyerEvaluationRepo = projectBuyerEvaluationRepository;
         }
 
         #region Generate Agenda
@@ -77,6 +81,48 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             return View();
         }
+
+        #region Edition Scheduled Count Widget
+
+        /// <summary>Shows the edition scheduled count widget.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowEditionScheduledCountWidget()
+        {
+            var scheduledCount = await this.projectBuyerEvaluationRepo.CountNegotiationScheduledAsync(this.EditionDto.Id, false);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EditionScheduledCountWidget", scheduledCount), divIdOrClass = "#AudiovisualMeetingsEditionScheduledCountWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Edition Not Scheduled Count Widget
+
+        /// <summary>Shows the edition not scheduled count widget.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowEditionNotScheduledCountWidget()
+        {
+            var notScheduledCount = await this.projectBuyerEvaluationRepo.CountNegotiationNotScheduledAsync(this.EditionDto.Id, false);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EditionNotScheduledCountWidget", notScheduledCount), divIdOrClass = "#AudiovisualMeetingsEditionNotScheduledCountWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
 
         #region Status Widget
 
