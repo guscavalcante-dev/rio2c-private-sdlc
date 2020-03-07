@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
 using PlataformaRio2C.Domain.Dtos;
+using Z.EntityFramework.Plus;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -197,15 +198,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .ToListAsync();
         }
 
-        /// <summary>Finds all by project evaluation status uid asynchronous.</summary>
+        /// <summary>Finds all for generate negotiations asynchronous.</summary>
         /// <param name="editionId">The edition identifier.</param>
-        /// <param name="projectEvaluationStatusUid">The project evaluation status uid.</param>
         /// <returns></returns>
-        public async Task<List<ProjectBuyerEvaluation>> FindAllByProjectEvaluationStatusUidAsync(int editionId, Guid projectEvaluationStatusUid)
+        public async Task<List<ProjectBuyerEvaluation>> FindAllForGenerateNegotiationsAsync(int editionId)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId)
-                                .FindByProjectEvaluationStatusUid(projectEvaluationStatusUid);
+                                .FindByProjectEvaluationStatusUid(ProjectEvaluationStatus.Accepted.Uid)
+                                .Include(pbe => pbe.Project)
+                                .Include(pbe => pbe.Project.SellerAttendeeOrganization)
+                                .Include(pbe => pbe.BuyerAttendeeOrganization);
 
             return await query
                             .ToListAsync();

@@ -22,6 +22,7 @@ using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context;
 using X.PagedList;
+using Z.EntityFramework.Plus;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -116,16 +117,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return @readonly
                         ? consult.AsNoTracking()
                         : consult;
-        }
-
-        /// <summary>Finds all asynchronous.</summary>
-        /// <returns></returns>
-        public async Task<List<NegotiationConfig>> FindAllAsync()
-        {
-            var query = this.GetBaseQuery();
-
-            return await query
-                            .ToListAsync();
         }
 
         /// <summary>Finds the main information widget dto asynchronous.</summary>
@@ -238,6 +229,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query.CountAsync();
         }
 
+        /// <summary>Finds all for generate negotiations asynchronous.</summary>
+        /// <returns></returns>
+        public async Task<List<NegotiationConfig>> FindAllForGenerateNegotiationsAsync()
+        {
+            var query = this.GetBaseQuery()
+                                    .IncludeFilter(nc => nc.NegotiationRoomConfigs.Where(nrc => !nrc.IsDeleted && !nrc.Room.IsDeleted))
+                                    .IncludeFilter(nc => nc.NegotiationRoomConfigs.Where(nrc => !nrc.IsDeleted && !nrc.Room.IsDeleted).Select(nrc => nrc.Room));
+
+            return await query
+                            .ToListAsync();
+        }
+
+
+        #region Old methods
+
         //public override IQueryable<NegotiationConfig> GetAll(bool @readonly = false)
         //{
         //    var consult = this.dbSet
@@ -275,5 +281,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         //        Delete(item);
         //    }
         //}
+
+        #endregion
     }
 }

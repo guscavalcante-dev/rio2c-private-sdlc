@@ -68,7 +68,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.Uow.BeginTransaction();
 
-            var negotiationConfigs = await this.negotiationConfigRepo.FindAllAsync();
+            var negotiationConfigs = await this.negotiationConfigRepo.FindAllForGenerateNegotiationsAsync();
             var negotiationSlots = new List<Negotiation>();
             var negotiationsFilled = new List<Negotiation>();
 
@@ -76,7 +76,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             {
                 negotiationSlots = this.GetNegotiationSlots(negotiationConfigs, cmd.UserId);
 
-                var projectBuyerEvaluations = await this.projectBuyerEvaluationRepo.FindAllByProjectEvaluationStatusUidAsync(cmd.EditionId ?? 0, ProjectEvaluationStatus.Accepted.Uid);
+                var projectBuyerEvaluations = await this.projectBuyerEvaluationRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionId ?? 0);
 
                 if (projectBuyerEvaluations?.Any() == true)
                 {

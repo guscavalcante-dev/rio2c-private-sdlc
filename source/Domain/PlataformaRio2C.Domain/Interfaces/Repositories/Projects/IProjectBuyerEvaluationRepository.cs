@@ -23,7 +23,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface IProjectBuyerEvaluationRepository : IRepository<ProjectBuyerEvaluation>
     {
         Task<List<ProjectBuyerEvaluationEmailDto>> FindAllBuyerEmailDtosAsync(int editionId, DateTimeOffset editionProjectEvaluationStartDate, DateTimeOffset editionProjectEvaluationEndDate);
-        Task<List<ProjectBuyerEvaluation>> FindAllByProjectEvaluationStatusUidAsync(int editionId, Guid projectEvaluationStatusUid);
+        Task<List<ProjectBuyerEvaluation>> FindAllForGenerateNegotiationsAsync(int editionId);
         Task<int> CountNegotiationScheduledAsync(int editionId, bool showAllEditions = false);
         Task<int> CountNegotiationNotScheduledAsync(int editionId, bool showAllEditions = false);
     }
