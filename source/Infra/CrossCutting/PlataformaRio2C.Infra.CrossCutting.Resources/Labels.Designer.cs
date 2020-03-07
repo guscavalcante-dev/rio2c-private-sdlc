@@ -3611,6 +3611,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Regerar Agenda.
+        /// </summary>
+        public static string RegenerateCalendar {
+            get {
+                return ResourceManager.GetString("RegenerateCalendar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Registrar.
         /// </summary>
         public static string Register {

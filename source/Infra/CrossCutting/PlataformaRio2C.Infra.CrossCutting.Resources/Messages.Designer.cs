@@ -160,6 +160,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Agenda não processada..
+        /// </summary>
+        public static string CalendarNotProcessed {
+            get {
+                return ResourceManager.GetString("CalendarNotProcessed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Agenda processada com sucesso em &lt;b&gt;{0}&lt;/b&gt;..
         /// </summary>
         public static string CalendarProcessedSuccessfully {

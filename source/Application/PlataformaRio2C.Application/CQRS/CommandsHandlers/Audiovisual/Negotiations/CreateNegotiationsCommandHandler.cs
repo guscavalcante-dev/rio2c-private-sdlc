@@ -28,6 +28,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>CreateNegotiationsCommandHandler</summary>
     public class CreateNegotiationsCommandHandler : NegotiationBaseCommandHandler, IRequestHandler<CreateNegotiations, AppValidationResult>
     {
+        private readonly IEditionRepository editionRepo;
         private readonly INegotiationConfigRepository negotiationConfigRepo;
         private readonly IProjectBuyerEvaluationRepository projectBuyerEvaluationRepo;
 
@@ -38,14 +39,23 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
         private IList<ProjectBuyerEvaluation> _projectSubmissionsError = new List<ProjectBuyerEvaluation>();
 
+        /// <summary>Initializes a new instance of the <see cref="CreateNegotiationsCommandHandler"/> class.</summary>
+        /// <param name="eventBus">The event bus.</param>
+        /// <param name="uow">The uow.</param>
+        /// <param name="negotiationRepository">The negotiation repository.</param>
+        /// <param name="editionRepository">The edition repository.</param>
+        /// <param name="negotiationConfigRepository">The negotiation configuration repository.</param>
+        /// <param name="projectBuyerEvaluationRepository">The project buyer evaluation repository.</param>
         public CreateNegotiationsCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             INegotiationRepository negotiationRepository,
+            IEditionRepository editionRepository,
             INegotiationConfigRepository negotiationConfigRepository,
             IProjectBuyerEvaluationRepository projectBuyerEvaluationRepository)
             : base(eventBus, uow, negotiationRepository)
         {
+            this.editionRepo = editionRepository;
             this.negotiationConfigRepo = negotiationConfigRepository;
             this.projectBuyerEvaluationRepo = projectBuyerEvaluationRepository;
         }
@@ -90,6 +100,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             //}
 
             this.NegotiationRepo.CreateAll(_negociations);
+
+            var edition = await this.editionRepo.FindByUidAsync(cmd.EditionUid ?? Guid.Empty, true);
+            edition?.CreateAudiovisualNegotiations(cmd.UserId);
 
             //this.NegotiationConfigRepo.Create(negotiationConfig);
             this.Uow.SaveChanges();

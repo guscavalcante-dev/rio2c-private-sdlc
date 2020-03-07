@@ -1201,6 +1201,7 @@ CREATE TABLE [dbo].[Editions](
 	[InnovationProjectSubmitEndDate] [datetimeoffset](7) NOT NULL,
 	[InnovationProjectEvaluationStartDate] [datetimeoffset](7) NOT NULL,
 	[InnovationProjectEvaluationEndDate] [datetimeoffset](7) NOT NULL,
+	[AudiovisualNegotiationsCreateDate] [datetimeoffset](7) NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetimeoffset](7) NULL,
 	[CreateUserId] [int] NOT NULL,

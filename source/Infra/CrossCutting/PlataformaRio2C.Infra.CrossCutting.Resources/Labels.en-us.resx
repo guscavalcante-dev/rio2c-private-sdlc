@@ -2246,4 +2246,8 @@
     <value>Table number</value>
     <comment>Número da mesa</comment>
   </data>
+  <data name="RegenerateCalendar" xml:space="preserve">
+    <value>Regenerate Calendar</value>
+    <comment>Regerar Agenda</comment>
+  </data>
 </root>

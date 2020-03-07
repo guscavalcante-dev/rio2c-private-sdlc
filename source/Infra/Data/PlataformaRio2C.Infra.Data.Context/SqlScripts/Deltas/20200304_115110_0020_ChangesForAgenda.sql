@@ -18,6 +18,10 @@ ALTER TABLE "dbo"."NegotiationRoomConfigs"
 	ADD CONSTRAINT "FK_Users_NegotiationRoomConfigs_CreateUserId" FOREIGN KEY ("CreateUserId") REFERENCES "dbo"."Users"("Id")
 go
 
+ALTER TABLE [dbo].[Editions]
+	ADD [AudiovisualNegotiationsCreateDate] [datetimeoffset](7) NULL
+go
+
 
 SET IDENTITY_INSERT [dbo].[NegotiationConfigs] ON 
 GO

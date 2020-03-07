@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-28-2020
+// Last Modified On : 03-07-2020
 // ***********************************************************************
 // <copyright file="Edition.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,6 +13,8 @@
 // ***********************************************************************
 using System;
 using System.Collections.Generic;
+using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -47,6 +49,7 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset InnovationProjectSubmitEndDate { get; private set; }
         public DateTimeOffset InnovationProjectEvaluationStartDate { get; private set; }
         public DateTimeOffset InnovationProjectEvaluationEndDate { get; private set; }
+        public DateTimeOffset? AudiovisualNegotiationsCreateDate { get; private set; }
 
         public virtual Quiz Quiz { get; private set; }
 
@@ -55,37 +58,107 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeSalesPlatform> AttendeeSalesPlatforms { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Edition"/> class.</summary>
-        /// <param name="name">The name.</param>
-        public Edition(string name)
-        {
-            Name = name;
-        }
-
-        /// <summary>Initializes a new instance of the <see cref="Edition"/> class.</summary>
         protected Edition()
         {
         }
 
-        /// <summary>Sets the start date.</summary>
-        /// <param name="startDate">The start date.</param>
-        public void SetStartDate(DateTime startDate)
+        /// <summary>Creates the audiovisual negotiations.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void CreateAudiovisualNegotiations(int userId)
         {
-            StartDate = startDate;
+            this.AudiovisualNegotiationsCreateDate = DateTime.UtcNow;
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
         }
 
-        /// <summary>Sets the end date.</summary>
-        /// <param name="endDate">The end date.</param>
-        public void SetEndDate(DateTime endDate)
-        {
-            EndDate = endDate;
-        }
+        #region Validations
 
         /// <summary>Returns true if ... is valid.</summary>
         /// <returns>
         ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
         public override bool IsValid()
         {
-            return true;
+            this.ValidationResult = new ValidationResult();
+
+            this.ValidateName();
+            this.ValidateUrlCode();
+
+            return this.ValidationResult.IsValid;
         }
+
+        /// <summary>Validates the name.</summary>
+        public void ValidateName()
+        {
+            if (string.IsNullOrEmpty(this.Name?.Trim()))
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Name), new string[] { "Name" }));
+            }
+
+            if (this.Name?.Trim().Length < NameMinLength || this.Name?.Trim().Length > NameMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, NameMaxLength, NameMinLength), new string[] { "Name" }));
+            }
+        }
+
+        /// <summary>Validates the URL code.</summary>
+        public void ValidateUrlCode()
+        {
+            if (this.UrlCode < 0)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyGreaterThanValue, Labels.Code, 0), new string[] { "UrlCode" }));
+            }
+        }
+
+        ///// <summary>Validates the dates.</summary>
+        //public void ValidateDates()
+        //{
+        //    if (this.StartDate < this.Edition.StartDate || this.StartDate > this.Edition.EndDate
+        //        || this.EndDate < this.Edition.StartDate || this.EndDate > this.Edition.EndDate)
+        //    {
+        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.Date, this.Edition.EndDate.ToUserTimeZone().ToShortDateString(), this.Edition.StartDate.ToUserTimeZone().ToShortDateString()), new string[] { "Date" }));
+        //    }
+
+        //    if (this.StartDate > this.EndDate)
+        //    {
+        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyGreaterThanProperty, Labels.EndTime, Labels.StartTime), new string[] { "EndTime" }));
+        //    }
+        //}
+
+        #endregion
+
+        #region Old Methods
+
+        ///// <summary>Initializes a new instance of the <see cref="Edition"/> class.</summary>
+        ///// <param name="name">The name.</param>
+        //public Edition(string name)
+        //{
+        //    Name = name;
+        //}
+
+        ///// <summary>Sets the start date.</summary>
+        ///// <param name="startDate">The start date.</param>
+        //public void SetStartDate(DateTime startDate)
+        //{
+        //    StartDate = startDate;
+        //}
+
+        ///// <summary>Sets the end date.</summary>
+        ///// <param name="endDate">The end date.</param>
+        //public void SetEndDate(DateTime endDate)
+        //{
+        //    EndDate = endDate;
+        //}
+
+        ///// <summary>Returns true if ... is valid.</summary>
+        ///// <returns>
+        /////   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
+        //public override bool IsValid()
+        //{
+        //    return true;
+        //}
+
+        #endregion
     }
 }

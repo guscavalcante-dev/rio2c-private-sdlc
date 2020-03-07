@@ -902,6 +902,10 @@
     <value>Do you want to generate the calendar?</value>
     <comment>Deseja gerar a agenda?</comment>
   </data>
+  <data name="CalendarNotProcessed" xml:space="preserve">
+    <value>Calendar not processed.</value>
+    <comment>Agenda não processada.</comment>
+  </data>
   <data name="NotScheduledOneToOneMeetings" xml:space="preserve">
     <value>Not Scheduled One-to-One Meetings</value>
     <comment>Rodadas de Negócios não Agendadas</comment>
