@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-05-2020
+// Last Modified On : 03-07-2020
 // ***********************************************************************
 // <copyright file="NegotiationConfigRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -116,6 +116,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return @readonly
                         ? consult.AsNoTracking()
                         : consult;
+        }
+
+        /// <summary>Finds all asynchronous.</summary>
+        /// <returns></returns>
+        public async Task<List<NegotiationConfig>> FindAllAsync()
+        {
+            var query = this.GetBaseQuery();
+
+            return await query
+                            .ToListAsync();
         }
 
         /// <summary>Finds the main information widget dto asynchronous.</summary>

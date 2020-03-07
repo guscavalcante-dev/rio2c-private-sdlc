@@ -343,7 +343,7 @@
     <Compile Include="Interfaces\Repositories\MusicalCommission\IMusicalCommissionRepository.cs" />
     <Compile Include="Interfaces\Repositories\Audiovisual\NegotiationConfig\INegotiationRoomConfigRepository.cs" />
     <Compile Include="Interfaces\Repositories\Audiovisual\NegotiationConfig\INegotiationConfigRepository.cs" />
-    <Compile Include="Interfaces\Repositories\Negotiation\INegotiationRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Audiovisual\Negotiation\INegotiationRepository.cs" />
     <Compile Include="Interfaces\Repositories\Projects\IProjectPlayerRepository.cs" />
     <Compile Include="Interfaces\Repositories\Projects\IProjectStatusRepository.cs" />
     <Compile Include="Interfaces\Repositories\Quiz\IQuizAnswerRepository.cs" />

@@ -123,7 +123,7 @@
     <Compile Include="Mapping\Music\MusicBandTargetAudienceMap.cs" />
     <Compile Include="Mapping\Audiovisual\NegotiationConfig\NegotiationRoomConfigMap.cs" />
     <Compile Include="Mapping\Audiovisual\NegotiationConfig\NegotiationConfigMap.cs" />
-    <Compile Include="Mapping\Negotiation\NegotiationMap.cs" />
+    <Compile Include="Mapping\Audiovisual\Negotiation\NegotiationMap.cs" />
     <Compile Include="Mapping\Organizations\AttendeeOrganizationCollaboratorMap.cs" />
     <Compile Include="Mapping\Organizations\AttendeeOrganizationTypeMap.cs" />
     <Compile Include="Mapping\Organizations\AttendeeOrganizationMap.cs" />

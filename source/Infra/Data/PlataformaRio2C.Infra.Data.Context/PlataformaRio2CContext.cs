@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-05-2020
+// Last Modified On : 03-07-2020
 // ***********************************************************************
 // <copyright file="PlataformaRio2CContext.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -126,6 +126,7 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new ConferencePresentationFormatMap());
 
             // Negotiations
+            modelBuilder.Configurations.Add(new NegotiationMap());
             modelBuilder.Configurations.Add(new NegotiationConfigMap());
             modelBuilder.Configurations.Add(new NegotiationRoomConfigMap());
 
@@ -179,8 +180,6 @@ namespace PlataformaRio2C.Infra.Data.Context
             
             //modelBuilder.Configurations.Add(new RoleLecturerMap());
             //modelBuilder.Configurations.Add(new RoleLecturerTitleMap());
-
-            //modelBuilder.Configurations.Add(new NegotiationMap());
 
             modelBuilder.Configurations.Add(new QuizMap());
             modelBuilder.Configurations.Add(new QuizQuestionMap());

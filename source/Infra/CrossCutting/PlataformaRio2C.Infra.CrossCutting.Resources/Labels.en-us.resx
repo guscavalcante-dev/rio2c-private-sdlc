@@ -2238,4 +2238,12 @@
     <value>Generated</value>
     <comment>Gerado</comment>
   </data>
+  <data name="RoundNumber" xml:space="preserve">
+    <value>Round number</value>
+    <comment>Número da rodada</comment>
+  </data>
+  <data name="TableNumber" xml:space="preserve">
+    <value>Table number</value>
+    <comment>Número da mesa</comment>
+  </data>
 </root>

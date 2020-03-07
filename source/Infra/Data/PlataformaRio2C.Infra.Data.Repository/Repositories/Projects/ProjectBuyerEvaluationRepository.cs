@@ -4,7 +4,7 @@
 // Created          : 12-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 03-07-2020
 // ***********************************************************************
 // <copyright file="ProjectBuyerEvaluationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -37,6 +37,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             query = query.Where(pbe => !pbe.Project.SellerAttendeeOrganization.IsDeleted
                                        && pbe.Project.SellerAttendeeOrganization.EditionId == editionId);
+
+            return query;
+        }
+
+        /// <summary>Finds the by project evaluation status uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="projectEvaluationStatusUid">The project evaluation status uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<ProjectBuyerEvaluation> FindByProjectEvaluationStatusUid(this IQueryable<ProjectBuyerEvaluation> query, Guid projectEvaluationStatusUid)
+        {
+            query = query.Where(pbe => pbe.ProjectEvaluationStatus.Uid == projectEvaluationStatusUid);
 
             return query;
         }
@@ -162,6 +173,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                 })
                                 })
                                 .ToListAsync();
+        }
+
+        /// <summary>Finds all by project evaluation status uid asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="projectEvaluationStatusUid">The project evaluation status uid.</param>
+        /// <returns></returns>
+        public async Task<List<ProjectBuyerEvaluation>> FindAllByProjectEvaluationStatusUidAsync(int editionId, Guid projectEvaluationStatusUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByProjectEditionId(editionId)
+                                .FindByProjectEvaluationStatusUid(projectEvaluationStatusUid);
+
+            return await query
+                            .ToListAsync();
         }
     }
 }

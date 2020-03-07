@@ -3859,6 +3859,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Número do rodada.
+        /// </summary>
+        public static string RoundNumber {
+            get {
+                return ResourceManager.GetString("RoundNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Qtde. de rodadas do 2&lt;sup&gt;o&lt;/sup&gt; turno.
         /// </summary>
         public static string RoundSecondTurn {
@@ -4539,6 +4548,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Table {
             get {
                 return ResourceManager.GetString("Table", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Número da mesa.
+        /// </summary>
+        public static string TableNumber {
+            get {
+                return ResourceManager.GetString("TableNumber", resourceCulture);
             }
         }
         

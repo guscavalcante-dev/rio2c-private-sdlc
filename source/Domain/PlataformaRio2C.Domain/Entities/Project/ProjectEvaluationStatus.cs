@@ -4,13 +4,14 @@
 // Created          : 11-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 03-07-2020
 // ***********************************************************************
 // <copyright file="ProjectEvaluationStatus.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using PlataformaRio2C.Domain.Validation;
 
 namespace PlataformaRio2C.Domain.Entities
@@ -25,9 +26,9 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Configurations
 
-        public static ProjectEvaluationStatus UnderEvaluation = new ProjectEvaluationStatus("UnderEvaluation");
-        public static ProjectEvaluationStatus Accepted = new ProjectEvaluationStatus("Accepted");
-        public static ProjectEvaluationStatus Refused = new ProjectEvaluationStatus("Refused");
+        public static ProjectEvaluationStatus UnderEvaluation = new ProjectEvaluationStatus(new Guid("44368049-923D-41C6-9EAB-A9CECA05C296"), "UnderEvaluation");
+        public static ProjectEvaluationStatus Accepted = new ProjectEvaluationStatus(new Guid("3DFA9E93-CAB8-4A5E-83D1-BF945DD7C137"), "Accepted");
+        public static ProjectEvaluationStatus Refused = new ProjectEvaluationStatus(new Guid("CA9C8F5D-C368-4A50-B85C-49C7CFD48625"), "Refused");
 
         #endregion
 
@@ -41,9 +42,11 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>Initializes a new instance of the <see cref="ProjectEvaluationStatus"/> class.</summary>
+        /// <param name="projectEvaluationStatusUid">The project evaluation status uid.</param>
         /// <param name="code">The code.</param>
-        public ProjectEvaluationStatus(string code)
+        private ProjectEvaluationStatus(Guid projectEvaluationStatusUid, string code)
         {
+            this.Uid = projectEvaluationStatusUid;
             this.Code = code?.Trim();
         }
 

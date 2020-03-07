@@ -6,21 +6,21 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-07-2020
 // ***********************************************************************
-// <copyright file="INegotiationRoomConfigRepository.cs" company="Softo">
+// <copyright file="INegotiationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Threading.Tasks;
-using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Domain.Interfaces
 {
-    /// <summary>INegotiationRoomConfigRepository</summary>
-    public interface INegotiationRoomConfigRepository : IRepository<NegotiationRoomConfig>
+    /// <summary>INegotiationRepository</summary>
+    public interface INegotiationRepository : IRepository<Negotiation>
     {
-        Task<NegotiationRoomConfigDto> FindMainInformationWidgetDtoAsync(Guid negotiationRoomConfigUid);
+        //IEnumerable<Player> GetAllPlayers();
+        //IEnumerable<Producer> GetAllProducers();
+        //IQueryable<Negotiation> GetAllBySchedule(Expression<Func<Negotiation, bool>> filter);        
+        void Truncate();
     }    
 }

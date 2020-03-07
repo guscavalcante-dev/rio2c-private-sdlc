@@ -184,6 +184,7 @@
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationRoomConfigs\UpdateNegotiationRoomConfigCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationRoomConfigs\CreateNegotiationRoomConfigCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\Negotiations\CreateNegotiationsCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Audiovisual\Negotiations\NegotiationBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\BaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\BaseCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\CreateTinyCollaboratorCommandHandler.cs" />

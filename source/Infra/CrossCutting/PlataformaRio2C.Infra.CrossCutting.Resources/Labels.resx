@@ -2245,4 +2245,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Gerado</value>
     <comment>Gerado</comment>
   </data>
+  <data name="RoundNumber" xml:space="preserve">
+    <value>Número do rodada</value>
+    <comment>Número da rodada</comment>
+  </data>
+  <data name="TableNumber" xml:space="preserve">
+    <value>Número da mesa</value>
+    <comment>Número da mesa</comment>
+  </data>
 </root>
