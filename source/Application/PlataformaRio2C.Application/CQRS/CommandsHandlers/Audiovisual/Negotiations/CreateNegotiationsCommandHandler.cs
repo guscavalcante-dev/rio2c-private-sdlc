@@ -32,11 +32,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly INegotiationConfigRepository negotiationConfigRepo;
         private readonly IProjectBuyerEvaluationRepository projectBuyerEvaluationRepo;
 
-        private IList<Negotiation> _negociations = new List<Negotiation>();
-        //private IList<NegotiationConfig> _negotiationConfigs;
-        private IList<Logistics> _logistics;
-        private IList<Conference> _conferences;
-
         private IList<ProjectBuyerEvaluation> _projectSubmissionsError = new List<ProjectBuyerEvaluation>();
 
         /// <summary>Initializes a new instance of the <see cref="CreateNegotiationsCommandHandler"/> class.</summary>
@@ -68,16 +63,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.Uow.BeginTransaction();
 
-            var negotiationConfigs = await this.negotiationConfigRepo.FindAllForGenerateNegotiationsAsync();
             var negotiationSlots = new List<Negotiation>();
-            var negotiationsFilled = new List<Negotiation>();
 
+            var negotiationConfigs = await this.negotiationConfigRepo.FindAllForGenerateNegotiationsAsync();
             if (negotiationConfigs?.Any() == true)
             {
                 negotiationSlots = this.GetNegotiationSlots(negotiationConfigs, cmd.UserId);
 
                 var projectBuyerEvaluations = await this.projectBuyerEvaluationRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionId ?? 0);
-
                 if (projectBuyerEvaluations?.Any() == true)
                 {
                     //_logistics = _logisticsRepository.GetAll().ToList();
@@ -87,26 +80,17 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 }
             }
 
-            //var t = negotiationSlots.Where(e => e.Evaluation != null).ToList();
-
-            _negociations = negotiationSlots
+            var negotiations = negotiationSlots
                                 .Where(ns => ns.ProjectBuyerEvaluation != null)
                                 .ToList();
 
-            //var oldEntities = this.NegotiationRepo.FindAll();
-            //if (oldEntities?.Any() == true)
-            //{
-                this.NegotiationRepo.Truncate();
-            //}
-
-            this.NegotiationRepo.CreateAll(_negociations);
+            this.NegotiationRepo.Truncate();
+            this.NegotiationRepo.CreateAll(negotiations);
 
             var edition = await this.editionRepo.FindByUidAsync(cmd.EditionUid ?? Guid.Empty, true);
             edition?.CreateAudiovisualNegotiations(cmd.UserId);
 
-            //this.NegotiationConfigRepo.Create(negotiationConfig);
             this.Uow.SaveChanges();
-            //this.AppValidationResult.Data = negotiationConfig;
 
             return this.AppValidationResult;
 
@@ -213,13 +197,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 iTable + 1,
                 numberSlot,
                 userId);
-            //var negociation = new Negotiation(dateConfig.StartDate);
-            //negociation.SetRoom(roomConfig.Room);
-            //negociation.SetSlotNumber(numberSlot);
-            //negociation.SetTable(iTable + 1);
-            //negociation.SetStarTime(currentTime);
-            //negociation.SetEndTime(currentTime.Add(dateConfig.TimeOfEachRound));
-            //return negociation;
         }
 
         /// <summary>Processes the project submissions.</summary>
@@ -227,45 +204,39 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="projectBuyerEvaluations">The project buyer evaluations.</param>
         private void FillNegotiationSlots(List<Negotiation> negotiationSlots, List<ProjectBuyerEvaluation> projectBuyerEvaluations)
         {
-            projectBuyerEvaluations = this.ProcessProjectSubmissionsByAvailability(negotiationSlots, projectBuyerEvaluations);
+            // Project buyer evaluations with more exceptions are in the beginning of the list
+            projectBuyerEvaluations = this.GetProjectBuyerEvaluationsOrderedByExceptions(negotiationSlots, projectBuyerEvaluations);
 
-            var projectBuyerEvaluationsGroupedByPlayer = projectBuyerEvaluations.GroupBy(e => e.BuyerAttendeeOrganizationId);
-            //var reservationsGroupSlot = negotiationSlots.GroupBy(e => e.RoundNumber);
-
-            foreach (var playerProjectBuyerEvaluations in projectBuyerEvaluationsGroupedByPlayer)
+            var buyerAttendeeOrganizations = projectBuyerEvaluations.GroupBy(e => e.BuyerAttendeeOrganizationId);
+            foreach (var buyerAttendeeOrganization in buyerAttendeeOrganizations)
             {
-                int currentSlot = 1;
-
-                foreach (var playerProjectBuyerEvaluation in playerProjectBuyerEvaluations.ToList())
+                foreach (var projectBuyerEvaluation in buyerAttendeeOrganization.ToList())
                 {
-                    var slotsExpection = this.GetSlotExceptions(negotiationSlots, playerProjectBuyerEvaluation);
-                    //var negociation = negotiationSlots.FirstOrDefault(e => e.Evaluation == null && e.ProjectId != itemSub.ProjectId && e.PlayerId != itemSub.PlayerId && !slotsExpection.Contains(e.RoundNumber));
-                    //var possiblesNegociation = negotiationSlots.Where(ns => ns.ProjectBuyerEvaluation == null && ns.ProjectId != itemSub.ProjectId && ns.PlayerId != itemSub.PlayerId && !slotsExpection.Contains(ns.RoundNumber));
+                    var slotsExceptions = this.GetSlotExceptions(negotiationSlots, projectBuyerEvaluation);
                     var possibleNegotiationSlots = negotiationSlots?
-                                                        .Where(ns => (ns.ProjectBuyerEvaluation == null || ns.ProjectBuyerEvaluation.Id != playerProjectBuyerEvaluation.Id) 
-                                                                     && !slotsExpection.Contains(ns.RoundNumber))?
+                                                        .Where(ns => ns.ProjectBuyerEvaluation == null 
+                                                                     && ns.ProjectBuyerEvaluation?.ProjectId != projectBuyerEvaluation.ProjectId 
+                                                                     && ns.ProjectBuyerEvaluation?.BuyerAttendeeOrganizationId !=  projectBuyerEvaluation.BuyerAttendeeOrganizationId
+                                                                     && !slotsExceptions.Contains(ns.RoundNumber))?
                                                         .ToList();
-
                     if (possibleNegotiationSlots?.Any() == true)
                     {
                         var dateTest = possibleNegotiationSlots
                                             .Select(e => e.StartDate.Date)
                                             .FirstOrDefault();
 
-                        var negotiationsInDate = negotiationSlots
-                                                    .FirstOrDefault(ns => ns.StartDate.Date == dateTest && ns.ProjectBuyerEvaluationId == playerProjectBuyerEvaluation.Id);
+                        var negotiationsInDate = negotiationSlots.FirstOrDefault(ns => ns.StartDate.Date == dateTest && ns.ProjectBuyerEvaluationId == projectBuyerEvaluation.Id);
                         if (negotiationsInDate != null)
                         {
-                            var negotiation = possibleNegotiationSlots.
-                                                    FirstOrDefault(e => e.TableNumber == negotiationsInDate.TableNumber && e.RoomId == negotiationsInDate.RoomId);
+                            var negotiation = possibleNegotiationSlots.FirstOrDefault(e => e.TableNumber == negotiationsInDate.TableNumber && e.RoomId == negotiationsInDate.RoomId);
 
                             if (negotiation != null)
                             {
-                                negotiation.AssignProjectBuyerEvaluation(playerProjectBuyerEvaluation);
+                                negotiation.AssignProjectBuyerEvaluation(projectBuyerEvaluation);
                             }
                             else
                             {
-                                _projectSubmissionsError.Add(playerProjectBuyerEvaluation);
+                                _projectSubmissionsError.Add(projectBuyerEvaluation);
                             }
                         }
                         else
@@ -273,52 +244,39 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                             var negotiation = possibleNegotiationSlots.FirstOrDefault();
                             if (negotiation != null)
                             {
-                                negotiation.AssignProjectBuyerEvaluation(playerProjectBuyerEvaluation);
+                                negotiation.AssignProjectBuyerEvaluation(projectBuyerEvaluation);
                             }
                             else
                             {
-                                _projectSubmissionsError.Add(playerProjectBuyerEvaluation);
+                                _projectSubmissionsError.Add(projectBuyerEvaluation);
                             }
                         }
                     }
                     else
                     {
-                        _projectSubmissionsError.Add(playerProjectBuyerEvaluation);
+                        _projectSubmissionsError.Add(projectBuyerEvaluation);
                     }
-
-                    //if (negociation != null)
-                    //{
-                    //    negociation.SetPlayer(itemSub.Player);
-                    //    negociation.SetProject(itemSub.Project);
-                    //    negociation.SetSourceEvaluation(itemSub.Evaluation);
-                    //}
-                    //else
-                    //{
-                    //    _projectSubmissionsError.Add(itemSub);
-                    //}
-
-                    currentSlot++;
                 }
             }
         }
 
-        /// <summary>Processes the project submissions by availability.</summary>
+        /// <summary>Gets the project buyer evaluations ordered by exceptions.</summary>
         /// <param name="negotiationSlots">The negotiation slots.</param>
-        /// <param name="projectBuyerEvaluations">The project submissions.</param>
+        /// <param name="projectBuyerEvaluations">The project buyer evaluations.</param>
         /// <returns></returns>
-        private List<ProjectBuyerEvaluation> ProcessProjectSubmissionsByAvailability(List<Negotiation> negotiationSlots, List<ProjectBuyerEvaluation> projectBuyerEvaluations)
+        private List<ProjectBuyerEvaluation> GetProjectBuyerEvaluationsOrderedByExceptions(List<Negotiation> negotiationSlots, List<ProjectBuyerEvaluation> projectBuyerEvaluations)
         {
-            var projectBuyerEvaluationStotExceptions = new List<Tuple<ProjectBuyerEvaluation, int>>();
+            var projectBuyerEvaluationSlotExceptions = new List<Tuple<ProjectBuyerEvaluation, int>>();
 
             if (projectBuyerEvaluations?.Any() == true)
             {
                 foreach (var projectBuyerEvaluation in projectBuyerEvaluations)
                 {
                     var slotExceptions = this.GetSlotExceptions(negotiationSlots, projectBuyerEvaluation);
-                    projectBuyerEvaluationStotExceptions.Add(new Tuple<ProjectBuyerEvaluation, int>(projectBuyerEvaluation, slotExceptions.Count));
+                    projectBuyerEvaluationSlotExceptions.Add(new Tuple<ProjectBuyerEvaluation, int>(projectBuyerEvaluation, slotExceptions.Count));
                 }
 
-                return projectBuyerEvaluationStotExceptions
+                return projectBuyerEvaluationSlotExceptions
                             .GroupBy(e => e.Item1.BuyerAttendeeOrganizationId)
                             .OrderByDescending(e => e.Count())
                             .ThenByDescending(e => e.First().Item2)
@@ -341,10 +299,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var result = new List<int>();
 
             var playerSlotExceptions = negotiationSlots
-                                                    .Where(e => e.ProjectBuyerEvaluationId == playerProjectBuyerEvaluation.Id 
-                                                                || e.ProjectBuyerEvaluation?.ProjectId == playerProjectBuyerEvaluation.ProjectId 
-                                                                || e.ProjectBuyerEvaluation?.Project?.SellerAttendeeOrganizationId == playerProjectBuyerEvaluation.Project.SellerAttendeeOrganizationId)
-                                                    .Select(e => e.RoundNumber)
+                                                    .Where(ns => ns.ProjectBuyerEvaluationId == playerProjectBuyerEvaluation.Id 
+                                                                || ns.ProjectBuyerEvaluation?.ProjectId == playerProjectBuyerEvaluation.ProjectId 
+                                                                || ns.ProjectBuyerEvaluation?.Project?.SellerAttendeeOrganizationId == playerProjectBuyerEvaluation.Project.SellerAttendeeOrganizationId)
+                                                    .Select(ns => ns.RoundNumber)
                                                     .Distinct()
                                                     .ToList();
 
@@ -365,17 +323,17 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             var result = new List<int>();
 
-            result.AddRange(this.GetPlayerLogisticsSlotsExpection(reservationForNegotiation, projectBuyerEvaluation));
-            result.AddRange(this.GetProducerLogisticsSlotsExpection(reservationForNegotiation, projectBuyerEvaluation));
+            result.AddRange(this.GetPlayerLogisticsSlotsExceptions(reservationForNegotiation, projectBuyerEvaluation));
+            result.AddRange(this.GetProducerLogisticsSlotsExceptions(reservationForNegotiation, projectBuyerEvaluation));
 
             return result;
         }
 
-        /// <summary>Gets the player logistics slots expection.</summary>
+        /// <summary>Gets the player logistics slots exceptions.</summary>
         /// <param name="reservationForNegotiation">The reservation for negotiation.</param>
         /// <param name="projectBuyerEvaluation">The project buyer evaluation.</param>
         /// <returns></returns>
-        private List<int> GetPlayerLogisticsSlotsExpection(List<Negotiation> reservationForNegotiation, ProjectBuyerEvaluation projectBuyerEvaluation)
+        private List<int> GetPlayerLogisticsSlotsExceptions(List<Negotiation> reservationForNegotiation, ProjectBuyerEvaluation projectBuyerEvaluation)
         {
             var result = new List<int>();
 
@@ -406,11 +364,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             return result;
         }
 
-        /// <summary>Gets the producer logistics slots expection.</summary>
+        /// <summary>Gets the producer logistics slots exceptions.</summary>
         /// <param name="reservationForNegotiation">The reservation for negotiation.</param>
         /// <param name="projectBuyerEvaluation">The project buyer evaluation.</param>
         /// <returns></returns>
-        private List<int> GetProducerLogisticsSlotsExpection(List<Negotiation> reservationForNegotiation, ProjectBuyerEvaluation projectBuyerEvaluation)
+        private List<int> GetProducerLogisticsSlotsExceptions(List<Negotiation> reservationForNegotiation, ProjectBuyerEvaluation projectBuyerEvaluation)
         {
             var result = new List<int>();
 

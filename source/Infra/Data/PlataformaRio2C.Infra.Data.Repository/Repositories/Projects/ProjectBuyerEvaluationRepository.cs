@@ -19,7 +19,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
 using PlataformaRio2C.Domain.Dtos;
-using Z.EntityFramework.Plus;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -51,16 +50,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static IQueryable<ProjectBuyerEvaluation> FindByProjectEvaluationStatusUid(this IQueryable<ProjectBuyerEvaluation> query, Guid projectEvaluationStatusUid)
         {
             query = query.Where(pbe => pbe.ProjectEvaluationStatus.Uid == projectEvaluationStatusUid);
-
-            return query;
-        }
-
-        /// <summary>Determines whether [is project not deleted].</summary>
-        /// <param name="query">The query.</param>
-        /// <returns></returns>
-        internal static IQueryable<ProjectBuyerEvaluation> IsProjectNotDeleted(this IQueryable<ProjectBuyerEvaluation> query)
-        {
-            query = query.Where(pbe => !pbe.Project.IsDeleted);
 
             return query;
         }
@@ -126,7 +115,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<ProjectBuyerEvaluation> IsNotDeleted(this IQueryable<ProjectBuyerEvaluation> query)
         {
-            query = query.Where(pbe => !pbe.IsDeleted && !pbe.Project.IsDeleted);
+            query = query.Where(pbe => !pbe.IsDeleted && !pbe.Project.IsDeleted && !pbe.Project.SellerAttendeeOrganization.IsDeleted);
 
             return query;
         }
@@ -168,11 +157,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             DateTimeOffset editionProjectEvaluationEndDate)
         {
             var query = this.GetBaseQuery()
-                                .IsBuyerEvaluationEmailPending()
                                 .FindByEditionId(editionId)
+                                .IsBuyerEvaluationEmailPending()
                                 .IsProjectFinished()
-                                .IsProjectFinishDateBetweenEvaluationPeriod(editionProjectEvaluationStartDate, editionProjectEvaluationEndDate)
-                                .IsProjectNotDeleted();
+                                .IsProjectFinishDateBetweenEvaluationPeriod(editionProjectEvaluationStartDate, editionProjectEvaluationEndDate);
 
             return await query
                                 .Select(pbe => new ProjectBuyerEvaluationEmailDto
@@ -206,6 +194,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId)
                                 .FindByProjectEvaluationStatusUid(ProjectEvaluationStatus.Accepted.Uid)
+                                .IsProjectFinished()
                                 .Include(pbe => pbe.Project)
                                 .Include(pbe => pbe.Project.SellerAttendeeOrganization)
                                 .Include(pbe => pbe.BuyerAttendeeOrganization);
