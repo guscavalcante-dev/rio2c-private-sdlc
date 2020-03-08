@@ -74,7 +74,7 @@ var AudiovisualMeetingParametersRoomsWidget = function () {
                     enableCreatePlugins();
 			    }
 
-                //$(createFormId).find(":input.input-validation-error:first").focus();
+                //$(createFormId).find(":input.input-validation-error:first").focus(); //Removed because was erasing the server error on RoomUid (select2)
 		    }
 	    });
     };
@@ -127,7 +127,7 @@ var AudiovisualMeetingParametersRoomsWidget = function () {
                     enableUpdatePlugins();
                 }
 
-                //$(updateFormId).find(":input.input-validation-error:first").focus();
+                //$(updateFormId).find(":input.input-validation-error:first").focus();  //Removed because was erasing the server error on RoomUid (select2)
             }
         });
     };
