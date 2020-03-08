@@ -1233,7 +1233,8 @@ var MyRio2cCommon = function () {
 	    container +=
 		    '</div > ' +
 		    '<div class="select2-result-collaborator__meta">' +
-			'<div class="select2-result-collaborator__title">' + (organization.TradeName || organization.CompanyName) + '</div>';
+            '<div class="select2-result-collaborator__title">' + organization.TradeName + '</div>' +
+			'<div class="select2-result-collaborator__description">' + organization.CompanyName + '</div>';
 
 	    container +=
 		    '   </div>' +
