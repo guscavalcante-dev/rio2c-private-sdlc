@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 03-08-2020
 // ***********************************************************************
 // <copyright file="Country.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -167,7 +167,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             if (state == null)
             {
-                throw new DomainException(string.Format(Messages.CouldNotCreate, Labels.TheM, Labels.State.ToLowerInvariant()));
+                throw new DomainException(string.Format(Messages.CouldNotCreate, Labels.TheM.ToLowerInvariant(), Labels.State.ToLowerInvariant()));
             }
 
             return state;

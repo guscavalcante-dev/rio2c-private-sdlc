@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-07-2020
+// Last Modified On : 03-08-2020
 // ***********************************************************************
 // <copyright file="Negotiation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

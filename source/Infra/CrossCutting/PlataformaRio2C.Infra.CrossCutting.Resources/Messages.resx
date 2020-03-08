@@ -919,4 +919,8 @@
     <value>Rodadas de Negócios Agendadas</value>
     <comment>Rodadas de Negócios Agendadas</comment>
   </data>
+  <data name="EntityIsAlreadyAction" xml:space="preserve">
+    <value>{0} já está {1}.</value>
+    <comment>{0} já está {1}.</comment>
+  </data>
 </root>

@@ -3638,6 +3638,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cadastrada.
+        /// </summary>
+        public static string RegisteredF {
+            get {
+                return ResourceManager.GetString("RegisteredF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cadastrado.
+        /// </summary>
+        public static string RegisteredM {
+            get {
+                return ResourceManager.GetString("RegisteredM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Registrados.
         /// </summary>
         public static string RegisteredP {
@@ -4660,7 +4678,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to a.
+        ///   Looks up a localized string similar to A.
         /// </summary>
         public static string TheF {
             get {
@@ -4669,7 +4687,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to o.
+        ///   Looks up a localized string similar to O.
         /// </summary>
         public static string TheM {
             get {

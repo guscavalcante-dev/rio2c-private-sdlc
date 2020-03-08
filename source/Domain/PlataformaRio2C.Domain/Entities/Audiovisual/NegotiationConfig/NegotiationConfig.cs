@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-05-2020
+// Last Modified On : 03-08-2020
 // ***********************************************************************
 // <copyright file="MusicBand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -255,6 +255,12 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.NegotiationRoomConfigs?.Any() != true)
             {
                 return;
+            }
+
+            // Check if there is the same room in differente room configs
+            if (this.NegotiationRoomConfigs?.Where(nrc => !nrc.IsDeleted)?.GroupBy(nrc => nrc.RoomId)?.Any(r => r.Count() > 1) == true)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityIsAlreadyAction, Labels.TheF + " " + Labels.Room.ToLowerInvariant(), Labels.RegisteredF.ToLowerInvariant()), new string[] { "RoomUid" }));
             }
 
             foreach (var negotiationRoomConfig in this.NegotiationRoomConfigs?.Where(d => !d.IsValid())?.ToList())

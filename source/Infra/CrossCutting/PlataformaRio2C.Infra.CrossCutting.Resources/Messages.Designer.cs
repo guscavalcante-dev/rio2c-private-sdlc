@@ -556,6 +556,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} já está {1}..
+        /// </summary>
+        public static string EntityIsAlreadyAction {
+            get {
+                return ResourceManager.GetString("EntityIsAlreadyAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} não {1}..
         /// </summary>
         public static string EntityNotAction {

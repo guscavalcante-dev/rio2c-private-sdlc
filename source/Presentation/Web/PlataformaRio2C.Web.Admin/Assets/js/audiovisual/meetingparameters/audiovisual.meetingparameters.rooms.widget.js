@@ -4,7 +4,7 @@
 // Created          : 03-05-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-05-2020
+// Last Modified On : 03-08-2020
 // ***********************************************************************
 // <copyright file="audiovisual.meetingparameters.rooms.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -71,10 +71,10 @@ var AudiovisualMeetingParametersRoomsWidget = function () {
 		    },
 		    onError: function (data) {
 			    if (MyRio2cCommon.hasProperty(data, 'pages')) {
-				    enableUpdatePlugins();
+                    enableCreatePlugins();
 			    }
 
-                $(createFormId).find(":input.input-validation-error:first").focus();
+                //$(createFormId).find(":input.input-validation-error:first").focus();
 		    }
 	    });
     };
@@ -127,7 +127,7 @@ var AudiovisualMeetingParametersRoomsWidget = function () {
                     enableUpdatePlugins();
                 }
 
-                $(updateFormId).find(":input.input-validation-error:first").focus();
+                //$(updateFormId).find(":input.input-validation-error:first").focus();
             }
         });
     };

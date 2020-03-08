@@ -1314,12 +1314,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Rua</comment>
   </data>
   <data name="TheF" xml:space="preserve">
-    <value>a</value>
-    <comment>a</comment>
+    <value>A</value>
+    <comment>A</comment>
   </data>
   <data name="TheM" xml:space="preserve">
-    <value>o</value>
-    <comment>o</comment>
+    <value>O</value>
+    <comment>O</comment>
   </data>
   <data name="Address1" xml:space="preserve">
     <value>Endereço</value>
@@ -2264,6 +2264,14 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="ScheduledNegotiations" xml:space="preserve">
     <value>Negociações agendadas</value>
     <comment>Negociações agendadas</comment>
+  </data>
+  <data name="RegisteredF" xml:space="preserve">
+    <value>Cadastrada</value>
+    <comment>Cadastrada</comment>
+  </data>
+  <data name="RegisteredM" xml:space="preserve">
+    <value>Cadastrado</value>
+    <comment>Cadastrado</comment>
   </data>
   <data name="Type" xml:space="preserve">
     <value>Tipo</value>

@@ -4,7 +4,7 @@
 // Created          : 03-04-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-05-2020
+// Last Modified On : 03-08-2020
 // ***********************************************************************
 // <copyright file="MeetingParametersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -481,7 +481,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/CreateRoomForm.cshtml", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("Modals/CreateRoomForm", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -580,7 +580,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/UpdateRoomForm.cshtml", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("Modals/UpdateRoomForm", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
