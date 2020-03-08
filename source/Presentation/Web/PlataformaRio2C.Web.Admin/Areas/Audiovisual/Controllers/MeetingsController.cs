@@ -224,12 +224,12 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             return View();
         }
 
-        #region DataTable Widget
+        #region Scheduled Widget
 
-        /// <summary>Searches the scheduled.</summary>
+        /// <summary>Shows the scheduled widget.</summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> SearchScheduled()
+        public async Task<ActionResult> ShowScheduledWidget()
         {
             var negotiations = await this.negotiationRepo.FindScheduledWidgetDtoAsync(this.EditionDto.Id);
 
