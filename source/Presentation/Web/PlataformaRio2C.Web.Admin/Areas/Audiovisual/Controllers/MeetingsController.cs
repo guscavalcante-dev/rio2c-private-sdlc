@@ -215,14 +215,16 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <summary>Shows the scheduled data widget.</summary>
         /// <param name="buyerOrganizationUid">The buyer organization uid.</param>
         /// <param name="sellerOrganizationUid">The seller organization uid.</param>
+        /// <param name="projectKeywords">The project keywords.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowScheduledDataWidget(Guid? buyerOrganizationUid, Guid? sellerOrganizationUid)
+        public async Task<ActionResult> ShowScheduledDataWidget(Guid? buyerOrganizationUid, Guid? sellerOrganizationUid, string projectKeywords)
         {
             var negotiations = await this.negotiationRepo.FindScheduledWidgetDtoAsync(
                 this.EditionDto.Id,
                 buyerOrganizationUid,
-                sellerOrganizationUid);
+                sellerOrganizationUid,
+                projectKeywords);
 
             return new JsonResult()
             {

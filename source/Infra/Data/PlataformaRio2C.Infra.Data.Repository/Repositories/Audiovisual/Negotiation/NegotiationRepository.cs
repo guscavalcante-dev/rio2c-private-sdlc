@@ -19,6 +19,7 @@ using System.Linq;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using LinqKit;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using Z.EntityFramework.Plus;
@@ -83,6 +84,31 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the by project keywords.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="projectKeywords">The project keywords.</param>
+        /// <returns></returns>
+        internal static IQueryable<Negotiation> FindByProjectKeywords(this IQueryable<Negotiation> query, string projectKeywords)
+        {
+            if (!string.IsNullOrEmpty(projectKeywords))
+            {
+                var outerWhere = PredicateBuilder.New<Negotiation>(false);
+                var innerProjectTitleWhere = PredicateBuilder.New<Negotiation>(true);
+
+                foreach (var keyword in projectKeywords.Split(' '))
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        innerProjectTitleWhere = innerProjectTitleWhere.Or(n => n.ProjectBuyerEvaluation.Project.ProjectTitles.Any(pt => !pt.IsDeleted && pt.Value.Contains(keyword)));
+                    }
+                }
+
+                outerWhere = outerWhere.Or(innerProjectTitleWhere);
+                query = query.Where(outerWhere);
+            }
+
+            return query;
+        }
 
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
@@ -124,13 +150,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="buyerOrganizationUid">The buyer organization uid.</param>
         /// <param name="sellerOrganizationUid">The seller organization uid.</param>
+        /// <param name="projectKeywords">The project keywords.</param>
         /// <returns></returns>
-        public async Task<List<NegotiationGroupedByDateDto>> FindScheduledWidgetDtoAsync(int editionId, Guid? buyerOrganizationUid, Guid? sellerOrganizationUid)
+        public async Task<List<NegotiationGroupedByDateDto>> FindScheduledWidgetDtoAsync(int editionId, Guid? buyerOrganizationUid, Guid? sellerOrganizationUid, string projectKeywords)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId)
                                 .FindByBuyerOrganizationUid(buyerOrganizationUid)
                                 .FindBySellerOrganizationUid(sellerOrganizationUid)
+                                .FindByProjectKeywords(projectKeywords)
                                 .Include(n => n.Room)
                                 .Include(n => n.Room.RoomNames)
                                 .Include(n => n.Room.RoomNames.Select(rn => rn.Language))
