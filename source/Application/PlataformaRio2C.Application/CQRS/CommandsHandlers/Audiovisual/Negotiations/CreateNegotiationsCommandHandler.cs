@@ -105,7 +105,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private List<Negotiation> GetNegotiationSlots(List<NegotiationConfig> negotiationConfigs,int userId)
         {
             var negotiationSlots = new List<Negotiation>();
-            var numberSlot = 1;
+            var roundNumber = 1;
 
             if (negotiationConfigs?.Any() != true)
             {
@@ -128,15 +128,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         foreach (var negotiationRoomConfig in negotiationConfig.NegotiationRoomConfigs.Where(nrc => !nrc.IsDeleted))
                         {
                             // Each automatic table
-                            for (int iTable = 0; iTable < negotiationRoomConfig.CountAutomaticTables; iTable++)
+                            for (int tableNumber = 1; tableNumber <= negotiationRoomConfig.CountAutomaticTables; tableNumber++)
                             {
-                                negotiationSlots.Add(this.CreateNegotiationSlot(negotiationConfig, negotiationRoomConfig, numberSlot, iTable, startDate, NegotiationTypeCodes.Automatic, userId));
+                                negotiationSlots.Add(this.CreateNegotiationSlot(negotiationConfig, negotiationRoomConfig, roundNumber, tableNumber, startDate, NegotiationTypeCodes.Automatic, userId));
                             }
                         }
                     }
 
                     startDate = startDate.Add(negotiationConfig.TimeOfEachRound.Add(negotiationConfig.TimeIntervalBetweenRound));
-                    numberSlot++;
+                    roundNumber++;
                 }
 
                 #endregion
@@ -155,15 +155,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         foreach (var negotiationRoomConfig in negotiationConfig.NegotiationRoomConfigs.Where(nrc => !nrc.IsDeleted))
                         {
                             // Each automatic table
-                            for (int iTable = 0; iTable < negotiationRoomConfig.CountAutomaticTables; iTable++)
+                            for (int tableNumber = 1; tableNumber <= negotiationRoomConfig.CountAutomaticTables; tableNumber++)
                             {
-                                negotiationSlots.Add(this.CreateNegotiationSlot(negotiationConfig, negotiationRoomConfig, numberSlot, iTable, startDate, NegotiationTypeCodes.Automatic, userId));
+                                negotiationSlots.Add(this.CreateNegotiationSlot(negotiationConfig, negotiationRoomConfig, roundNumber, tableNumber, startDate, NegotiationTypeCodes.Automatic, userId));
                             }
                         }
                     }
 
                     startDate = startDate.Add(negotiationConfig.TimeOfEachRound.Add(negotiationConfig.TimeIntervalBetweenRound));
-                    numberSlot++;
+                    roundNumber++;
                 }
 
                 #endregion
@@ -194,7 +194,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 roomConfig.Room,
                 startDate,
                 startDate.Add(dateConfig.TimeOfEachRound),
-                iTable + 1,
+                iTable,
                 numberSlot,
                 userId);
         }
@@ -301,7 +301,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var playerSlotExceptions = negotiationSlots
                                                     .Where(ns => ns.ProjectBuyerEvaluationId == playerProjectBuyerEvaluation.Id 
                                                                 || ns.ProjectBuyerEvaluation?.ProjectId == playerProjectBuyerEvaluation.ProjectId 
-                                                                || ns.ProjectBuyerEvaluation?.Project?.SellerAttendeeOrganizationId == playerProjectBuyerEvaluation.Project.SellerAttendeeOrganizationId)
+                                                                || ns.ProjectBuyerEvaluation?.Project?.SellerAttendeeOrganizationId == playerProjectBuyerEvaluation.Project.SellerAttendeeOrganizationId
+                                                                || ns.ProjectBuyerEvaluation?.BuyerAttendeeOrganizationId == playerProjectBuyerEvaluation.BuyerAttendeeOrganizationId)
                                                     .Select(ns => ns.RoundNumber)
                                                     .Distinct()
                                                     .ToList();
