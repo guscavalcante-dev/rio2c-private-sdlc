@@ -145,11 +145,11 @@
                                                             <table class="table table-striped- table-bordered table-hover table-checkable" id="conferences-list-table">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th>@Labels.Table</th>
+                                                                        <th class="text-center">@Labels.Table</th>
                                                                         <th>@Labels.Player</th>
                                                                         <th>@Labels.Project</th>
                                                                         <th>@Labels.Producer</th>
-                                                                        <th>@Labels.Type</th>
+                                                                        <th class="text-center">@Labels.Type</th>
                                                                         <th class="text-center">@Labels.Actions</th>
                                                                     </tr>
                                                                 </thead>
@@ -157,11 +157,11 @@
                                                                     @foreach (var negotiation in negotiationGroupedByRoundDto.Negotiations)
                                                                     {
                                                                         <tr>
-                                                                            <td>@(negotiation.TableNumber)</td>
+                                                                            <td class="text-center">@(negotiation.TableNumber)</td>
                                                                             <td>@(negotiation.ProjectBuyerEvaluation?.BuyerAttendeeOrganization?.Organization?.TradeName)</td>
                                                                             <td>@(negotiation.ProjectBuyerEvaluation?.Project?.ProjectTitles?.FirstOrDefault(pt => pt.Language.Code == ViewBag.UserInterfaceLanguage)?.Value)</td>
                                                                             <td>@(negotiation.ProjectBuyerEvaluation?.Project?.SellerAttendeeOrganization?.Organization?.TradeName)</td>
-                                                                            <td>Automatic</td>
+                                                                            <td class="text-center">@(negotiation.IsAutomatic ? Labels.Automatic : Labels.Manual)</td>
                                                                             <td class="text-center">
                                                                                 <span class="dropdown">
                                                                                     <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">

@@ -2265,6 +2265,14 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Negociações agendadas</value>
     <comment>Negociações agendadas</comment>
   </data>
+  <data name="Automatic" xml:space="preserve">
+    <value>Automático</value>
+    <comment>Automático</comment>
+  </data>
+  <data name="Manual" xml:space="preserve">
+    <value>Manual</value>
+    <comment>Manual</comment>
+  </data>
   <data name="RegisteredF" xml:space="preserve">
     <value>Cadastrada</value>
     <comment>Cadastrada</comment>

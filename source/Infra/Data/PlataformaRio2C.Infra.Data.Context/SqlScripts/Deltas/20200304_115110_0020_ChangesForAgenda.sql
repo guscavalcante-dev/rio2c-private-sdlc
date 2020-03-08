@@ -7,6 +7,10 @@ ALTER TABLE [dbo].[NegotiationConfigs]
 ALTER COLUMN [TimeIntervalBetweenTurn] [time](7) NOT NULL
 go
 
+ALTER TABLE [dbo].[Negotiations]
+	ADD [IsAutomatic] [bit] NOT NULL
+go
+
 ALTER TABLE "dbo"."NegotiationRoomConfigs"
 DROP CONSTRAINT "FK_Users_NegotiationRoomConfigs_CrateUserId"
 go

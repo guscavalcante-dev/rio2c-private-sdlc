@@ -421,6 +421,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Automático.
+        /// </summary>
+        public static string Automatic {
+            get {
+                return ResourceManager.GetString("Automatic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disponíveis.
         /// </summary>
         public static string AvailableP {
@@ -2298,6 +2307,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string MainMusicInfluences {
             get {
                 return ResourceManager.GetString("MainMusicInfluences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manual.
+        /// </summary>
+        public static string Manual {
+            get {
+                return ResourceManager.GetString("Manual", resourceCulture);
             }
         }
         

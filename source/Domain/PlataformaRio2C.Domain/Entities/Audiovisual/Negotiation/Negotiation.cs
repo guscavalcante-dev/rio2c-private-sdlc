@@ -26,11 +26,12 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset EndDate { get; private set; }
         public int TableNumber { get; private set; }
         public int RoundNumber { get; private set; }
+        public bool IsAutomatic { get; private set; }
 
         public virtual ProjectBuyerEvaluation ProjectBuyerEvaluation { get; private set; }
         public virtual Room Room { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="Negotiation"/> class for negotiation slots.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Negotiation"/> class for automatic negotiation slots.</summary>
         /// <param name="room">The room.</param>
         /// <param name="startDate">The start date.</param>
         /// <param name="endDate">The end date.</param>
@@ -52,6 +53,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.EndDate = endDate;
             this.TableNumber = tableNumber;
             this.RoundNumber = roundNumber;
+            this.IsAutomatic = true;
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;

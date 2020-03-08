@@ -2080,6 +2080,7 @@ CREATE TABLE [dbo].[Negotiations](
 	[EndDate] [datetimeoffset](7) NOT NULL,
 	[TableNumber] [int] NOT NULL,
 	[RoundNumber] [int] NOT NULL,
+	[IsAutomatic] [bit] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
