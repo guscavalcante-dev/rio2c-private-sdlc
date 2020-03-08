@@ -4,7 +4,7 @@
 // Created          : 03-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-07-2020
+// Last Modified On : 03-08-2020
 // ***********************************************************************
 // <copyright file="CreateNegotiationsCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -177,7 +177,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="roomConfig">The room configuration.</param>
         /// <param name="numberSlot">The number slot.</param>
         /// <param name="iTable">The i table.</param>
-        /// <param name="currentTime">The current time.</param>
+        /// <param name="startDate">The start date.</param>
         /// <param name="type">The type.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
@@ -186,14 +186,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             NegotiationRoomConfig roomConfig, 
             int numberSlot, 
             int iTable, 
-            DateTimeOffset currentTime, 
+            DateTimeOffset startDate, 
             NegotiationTypeCodes type, 
             int userId)
         {
             return new Negotiation(
                 roomConfig.Room,
-                dateConfig.StartDate,
-                dateConfig.StartDate.Add(dateConfig.TimeOfEachRound),
+                startDate,
+                startDate.Add(dateConfig.TimeOfEachRound),
                 iTable + 1,
                 numberSlot,
                 userId);
