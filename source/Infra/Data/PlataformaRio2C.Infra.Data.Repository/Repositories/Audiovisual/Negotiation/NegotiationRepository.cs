@@ -55,6 +55,35 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the by buyer attendee organization uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="buyerOrganizationUid">The buyer organization uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<Negotiation> FindByBuyerOrganizationUid(this IQueryable<Negotiation> query, Guid? buyerOrganizationUid)
+        {
+            if (buyerOrganizationUid.HasValue)
+            {
+                query = query.Where(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization.Uid == buyerOrganizationUid);
+            }
+
+            return query;
+        }
+
+        /// <summary>Finds the by seller attendee organization uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="sellerOrganizationUid">The seller organization uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<Negotiation> FindBySellerOrganizationUid(this IQueryable<Negotiation> query, Guid? sellerOrganizationUid)
+        {
+            if (sellerOrganizationUid.HasValue)
+            {
+                query = query.Where(n => n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.Organization.Uid == sellerOrganizationUid);
+            }
+
+            return query;
+        }
+
+
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
@@ -91,15 +120,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
-        //TODO: Find by edition
-
         /// <summary>Finds the scheduled widget dto asynchronous.</summary>
         /// <param name="editionId">The edition identifier.</param>
+        /// <param name="buyerOrganizationUid">The buyer organization uid.</param>
+        /// <param name="sellerOrganizationUid">The seller organization uid.</param>
         /// <returns></returns>
-        public async Task<List<NegotiationGroupedByDateDto>> FindScheduledWidgetDtoAsync(int editionId)
+        public async Task<List<NegotiationGroupedByDateDto>> FindScheduledWidgetDtoAsync(int editionId, Guid? buyerOrganizationUid, Guid? sellerOrganizationUid)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId)
+                                .FindByBuyerOrganizationUid(buyerOrganizationUid)
+                                .FindBySellerOrganizationUid(sellerOrganizationUid)
                                 .Include(n => n.Room)
                                 .Include(n => n.Room.RoomNames)
                                 .Include(n => n.Room.RoomNames.Select(rn => rn.Language))

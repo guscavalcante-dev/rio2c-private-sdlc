@@ -20,6 +20,12 @@ var AudiovisualMeetingsScheduledWidget = function () {
     //var updateModalId = '#UpdateMainInformationModal';
     //var updateFormId = '#UpdateMainInformationForm';
 
+    // Search form  -------------------------------------------------------------------------------
+    var enableSearchForm = function () {
+	    MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#BuyerOrganizationUid', url: '/Players/FindAllByFilters', filterByProjectsInNegotiation: true, placeholder: translations.playerDropdownPlaceholder + '...' });
+	    MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#SellerOrganizationUid', url: '/Audiovisual/Producers/FindAllByFilters', filterByProjectsInNegotiation: true, placeholder: translations.producerDropdownPlaceholder + '...' });
+    }
+
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         KTApp.initTooltips();
@@ -32,8 +38,10 @@ var AudiovisualMeetingsScheduledWidget = function () {
         }
 
         var jsonParameters = new Object();
+        jsonParameters.buyerOrganizationUid = $('#BuyerOrganizationUid').val();
+        jsonParameters.sellerOrganizationUid = $('#SellerOrganizationUid').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Meetings/ShowScheduledWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Meetings/ShowScheduledDataWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -56,8 +64,12 @@ var AudiovisualMeetingsScheduledWidget = function () {
 
     return {
         init: function () {
-            MyRio2cCommon.block({ idOrClass: widgetElementId });
-            show();
+	        enableSearchForm();
+	        AudiovisualMeetingsScheduledWidget.search();
+        },
+        search: function() {
+	        MyRio2cCommon.block({ idOrClass: widgetElementId });
+	        show();
         }
     };
 }();

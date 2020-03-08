@@ -7166,9 +7166,10 @@
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\EditionScheduledCountWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\EditionUnscheduledCountWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Scheduled.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\ScheduledWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\ScheduledDataWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Unscheduled.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\UnscheduledWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\ScheduledWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

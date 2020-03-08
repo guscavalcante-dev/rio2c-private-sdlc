@@ -212,12 +212,17 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
         #region Scheduled Widget
 
-        /// <summary>Shows the scheduled widget.</summary>
+        /// <summary>Shows the scheduled data widget.</summary>
+        /// <param name="buyerOrganizationUid">The buyer organization uid.</param>
+        /// <param name="sellerOrganizationUid">The seller organization uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowScheduledWidget()
+        public async Task<ActionResult> ShowScheduledDataWidget(Guid? buyerOrganizationUid, Guid? sellerOrganizationUid)
         {
-            var negotiations = await this.negotiationRepo.FindScheduledWidgetDtoAsync(this.EditionDto.Id);
+            var negotiations = await this.negotiationRepo.FindScheduledWidgetDtoAsync(
+                this.EditionDto.Id,
+                buyerOrganizationUid,
+                sellerOrganizationUid);
 
             return new JsonResult()
             {
@@ -226,7 +231,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     status = "success",
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Widgets/ScheduledWidget", negotiations), divIdOrClass = "#AudiovisualMeetingsScheduledWidget" },
+                        new { page = this.RenderRazorViewToString("Widgets/ScheduledDataWidget", negotiations), divIdOrClass = "#AudiovisualMeetingsScheduledWidget" },
                     }
                 },
                 //ContentType = contentType,

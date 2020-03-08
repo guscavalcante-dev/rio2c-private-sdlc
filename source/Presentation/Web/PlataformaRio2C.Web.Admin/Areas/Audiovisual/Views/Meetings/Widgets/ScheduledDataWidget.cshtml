@@ -1,0 +1,120 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model List<NegotiationGroupedByDateDto>
+@if (Model?.Any() == true)
+{
+    foreach (var negotiationGroupedByDateDto in Model)
+    {
+        var date = negotiationGroupedByDateDto.Date.ToShortDateString();
+
+        <div class="kt-portlet kt-portlet--solid-brand kt-portlet--height-fluid mb-0" style="background: #808080;">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    @*<span class="kt-portlet__head-icon"><i class="flaticon-stopwatch"></i></span>*@
+                    <h3 class="kt-portlet__head-title" style="font-size: 25px;">@date</h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                @if (negotiationGroupedByDateDto.NegotiationGroupedByRoomDtos?.Any() == true)
+                {
+                    foreach (var negotiationGroupedByRoomDto in negotiationGroupedByDateDto.NegotiationGroupedByRoomDtos)
+                    {
+                        var roomName = negotiationGroupedByRoomDto?.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value;
+
+                        <div class="kt-portlet kt-portlet--solid-warning kt-portletk-portlet--height-fluid" style="background: #d1d1d1;">
+                            <div class="kt-portlet__head">
+                                <div class="kt-portlet__head-label">
+                                    @*<span class="kt-portlet__head-icon"><i class="flaticon-stopwatch"></i></span>*@
+                                    <h3 class="kt-portlet__head-title" style="font-size: 20px;">@roomName</h3>
+                                </div>
+                            </div>
+                            <div class="kt-portlet__body">
+                                @if (negotiationGroupedByRoomDto.NegotiationGroupedByRoundDtos?.Any() == true)
+                                {
+                                    foreach (var negotiationGroupedByRoundDto in negotiationGroupedByRoomDto.NegotiationGroupedByRoundDtos)
+                                    {
+                                        <div class="kt-portlet kt-portlet--solid-success kt-portlet--height-fluid" style="background: #ffffff;">
+                                            <div class="kt-portlet__head">
+                                                <div class="kt-portlet__head-label">
+                                                    <h3 class="kt-portlet__head-title">
+                                                        @Labels.Round @negotiationGroupedByRoundDto.RoundNumber (@(negotiationGroupedByRoundDto.StartDate?.ToString("HH:mm")) - @(negotiationGroupedByRoundDto.EndDate?.ToString("HH:mm")))
+                                                    </h3>
+                                                </div>
+                                                <div class="kt-portlet__head-toolbar font-italic">
+                                                    @roomName - @date
+                                                </div>
+                                            </div>
+                                            <div class="kt-portlet__body">
+                                                @if (negotiationGroupedByRoundDto.Negotiations?.Any() == true)
+                                                {
+                                                    <!--begin: Data -->
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped- table-bordered table-hover table-checkable" id="conferences-list-table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="text-center">@Labels.Table</th>
+                                                                    <th>@Labels.Player</th>
+                                                                    <th>@Labels.Project</th>
+                                                                    <th>@Labels.Producer</th>
+                                                                    <th class="text-center">@Labels.Type</th>
+                                                                    <th class="text-center">@Labels.Actions</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var negotiation in negotiationGroupedByRoundDto.Negotiations)
+                                                                {
+                                                                    <tr>
+                                                                        <td class="text-center">@(negotiation.TableNumber)</td>
+                                                                        <td>@(negotiation.ProjectBuyerEvaluation?.BuyerAttendeeOrganization?.Organization?.TradeName)</td>
+                                                                        <td>@(negotiation.ProjectBuyerEvaluation?.Project?.ProjectTitles?.FirstOrDefault(pt => pt.Language.Code == ViewBag.UserInterfaceLanguage)?.Value)</td>
+                                                                        <td>@(negotiation.ProjectBuyerEvaluation?.Project?.SellerAttendeeOrganization?.Organization?.TradeName)</td>
+                                                                        <td class="text-center">@(negotiation.IsAutomatic ? Labels.Automatic : Labels.Manual)</td>
+                                                                        <td class="text-center">
+                                                                            <span class="dropdown">
+                                                                                <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
+                                                                                    <i class="la la-ellipsis-h"></i>
+                                                                                </a>
+                                                                                <div class="dropdown-menu dropdown-menu-right">
+                                                                                    <button class="dropdown-item" onclick="AudiovisualMeetingParametersRoomsWidget.showUpdateModal('');">
+                                                                                        <i class="la la-edit"></i>@Labels.Edit
+                                                                                    </button>
+                                                                                    <button class="dropdown-item" onclick="AudiovisualMeetingParametersRoomsWidget.showDeleteModal('');">
+                                                                                        <i class="la la-remove"></i>@Labels.Remove
+                                                                                    </button>
+                                                                                </div>
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <!--end: Data -->
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-12 text-center mt-30">@string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundF)</div>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="col-12 text-center mt-30">@string.Format(Messages.EntityNotAction, Labels.BusinessRound, Labels.FoundM)</div>
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="col-12 text-center mt-30">@string.Format(Messages.EntityNotAction, Labels.Rooms, Labels.FoundFP)</div>
+                }
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="col-12 text-center mt-30">@string.Format(Messages.EntityNotAction, Labels.ScheduledNegotiations, Labels.FoundFP)</div>
+}

@@ -17,91 +17,7 @@
 <!--end:: Quick Stats-->
 <div class="row">
     <!--begin:: Scheduled Meetings Widget-->
-    <div class="col-12">
-        <div class="kt-portlet kt-portlet--mobile">
-            <div class="kt-portlet__head kt-portlet__head--lg">
-                <div class="kt-portlet__head-label">
-                    <span class="kt-portlet__head-icon">
-                        <i class="kt-font-brand flaticon2-line-chart"></i>
-                    </span>
-                    <h3 class="kt-portlet__head-title">
-                        @Labels.ScheduledNegotiations
-                    </h3>
-                </div>
-                <div class="kt-portlet__head-toolbar">
-                    <div class="kt-portlet__head-wrapper">
-                        <div class="kt-portlet__head-actions">
-                            @*<div class="dropdown dropdown-inline">
-                                    <button type="button" class="btn btn-default btn-icon-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="la la-download"></i> Export
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <ul class="kt-nav">
-                                            <li class="kt-nav__section kt-nav__section--first">
-                                                <span class="kt-nav__section-text">Choose an option</span>
-                                            </li>
-                                            <li class="kt-nav__item">
-                                                <a href="#" class="kt-nav__link">
-                                                    <i class="kt-nav__link-icon la la-print"></i>
-                                                    <span class="kt-nav__link-text">Print</span>
-                                                </a>
-                                            </li>
-                                            <li class="kt-nav__item">
-                                                <a href="#" class="kt-nav__link">
-                                                    <i class="kt-nav__link-icon la la-copy"></i>
-                                                    <span class="kt-nav__link-text">Copy</span>
-                                                </a>
-                                            </li>
-                                            <li class="kt-nav__item">
-                                                <a href="#" class="kt-nav__link">
-                                                    <i class="kt-nav__link-icon la la-file-excel-o"></i>
-                                                    <span class="kt-nav__link-text">Excel</span>
-                                                </a>
-                                            </li>
-                                            <li class="kt-nav__item">
-                                                <a href="#" class="kt-nav__link">
-                                                    <i class="kt-nav__link-icon la la-file-text-o"></i>
-                                                    <span class="kt-nav__link-text">CSV</span>
-                                                </a>
-                                            </li>
-                                            <li class="kt-nav__item">
-                                                <a href="#" class="kt-nav__link">
-                                                    <i class="kt-nav__link-icon la la-file-pdf-o"></i>
-                                                    <span class="kt-nav__link-text">PDF</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                &nbsp;*@
-                            <button onclick="ConferencesCreate.showModal();" class="btn btn-brand btn-elevate btn-icon-sm">
-                                <i class="la la-plus"></i>
-                                @Labels.NewF @Labels.Negotiation
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="kt-portlet__body">
-                <!--begin:: Search From-->
-                <div class="row">
-                    <div class="col-12 col-md-5 mt-2">
-                        @Html.DropDownList("PlayerUid", Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAMEntity, Labels.Player.ToLowerInvariant())}...", new { @class = "form-control" })
-                    </div>
-                    <div class="col-12 col-md-5 mt-2">
-                        @Html.DropDownList("ProducerUid", Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAFEntity, Labels.Producer.ToLowerInvariant())}...", new { @class = "form-control" })
-                    </div>
-                    <div class="col-2 col-md-1 mt-2">
-                        <button type="button" class="btn btn-primary btn-icon" onclick="ProjectsBuyerEvaluationListWidget.search();"><i class="fa fa-search"></i></button>
-                    </div>
-                </div>
-                <!--end:: Search From-->
-                <!--begin:: Result-->
-                <div id="AudiovisualMeetingsScheduledWidget" class="mt-2" style="min-height: 500px;"></div>
-                <!--end:: Result-->
-            </div>
-        </div>
-    </div>
+    @Html.Partial("Widgets/ScheduledWidget")
     <!--end:: Scheduled Meetings Widget-->
 </div>
 @section Styles {
@@ -125,9 +41,6 @@
             AudiovisualMeetingsEditionScheduledCountWidget.init();
             AudiovisualMeetingsEditionUnscheduledCountWidget.init();
             AudiovisualMeetingsScheduledWidget.init();
-
-            MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#PlayerUid', url: '/Players/FindAllByFilters', filterByProjectsInNegotiation: true, placeholder: translations.playerDropdownPlaceholder + '...' });
-            MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#ProducerUid', url: '/Audiovisual/Producers/FindAllByFilters', filterByProjectsInNegotiation: true, placeholder: translations.producerDropdownPlaceholder + '...' });
         });
     </script>
 }
