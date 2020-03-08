@@ -7129,7 +7129,6 @@
     <Content Include="Views\Term\Producer.cshtml" />
     <Content Include="Views\Collaborator\_Editor.cshtml" />
     <Content Include="Views\Collaborator\_Display.cshtml" />
-    <Content Include="Views\Projects\Detail.cshtml" />
     <Content Include="Views\Producer\ProfileDetails.cshtml" />
     <Content Include="Views\Producer\ProfileEdit.cshtml" />
     <Content Include="Views\Conference\Detail.cshtml" />

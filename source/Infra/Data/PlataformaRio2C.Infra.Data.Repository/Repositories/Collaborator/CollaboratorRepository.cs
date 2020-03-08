@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified On : 03-08-2020
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -226,6 +226,27 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 outerWhere = outerWhere.Or(innerOrganizationNameWhere);
                 outerWhere = outerWhere.Or(innerHoldingNameWhere);
                 query = query.Where(outerWhere);
+            }
+
+            return query;
+        }
+
+        /// <summary>Determines whether [has project in negotiation] [the specified edition identifier].</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="hasProjectNegotiation">if set to <c>true</c> [has project negotiation].</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> HasProjectInNegotiation(this IQueryable<Collaborator> query, int editionId, bool hasProjectNegotiation)
+        {
+            if (hasProjectNegotiation)
+            {
+                query = query.Where(c => c.AttendeeCollaborators
+                                                .Any(ac => ac.EditionId == editionId 
+                                                           && ac.AttendeeOrganizationCollaborators
+                                                                    .Any(aoc => !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted
+                                                                                && aoc.AttendeeOrganization.ProjectBuyerEvaluations
+                                                                                        .Any(pbe => !pbe.IsDeleted && !pbe.Project.IsDeleted
+                                                                                                    && pbe.Negotiations.Any(n => !n.IsDeleted)))));
             }
 
             return query;
@@ -767,15 +788,23 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>Finds all dropdown API list dto paged.</summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="keywords">The keywords.</param>
+        /// <param name="filterByProjectsInNegotiation">if set to <c>true</c> [filter by projects in negotiation].</param>
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<CollaboratorApiListDto>> FindAllDropdownApiListDtoPaged(int editionId, string keywords, string collaboratorTypeName, int page, int pageSize)
+        public async Task<IPagedList<CollaboratorApiListDto>> FindAllDropdownApiListDtoPaged(
+            int editionId, 
+            string keywords,
+            bool filterByProjectsInNegotiation,
+            string collaboratorTypeName, 
+            int page, 
+            int pageSize)
         {
             var query = this.GetBaseQuery()
                                 .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeName, false, false, false, editionId)
-                                .FindByKeywords(keywords, editionId);
+                                .FindByKeywords(keywords, editionId)
+                                .HasProjectInNegotiation(editionId, filterByProjectsInNegotiation);
 
             return await query
                             .Select(c => new CollaboratorApiListDto

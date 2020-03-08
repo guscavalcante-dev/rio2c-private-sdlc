@@ -169,6 +169,7 @@
     <Compile Include="Dtos\Music\MusicProjectDto.cs" />
     <Compile Include="Dtos\OrganizationDescriptions\OrganizationRestrictionSpecificDto.cs" />
     <Compile Include="Dtos\OrganizationDescriptions\OrganizationRestrictionSpecificBaseDto.cs" />
+    <Compile Include="Dtos\Organizations\OrganizationDropdownDto.cs" />
     <Compile Include="Dtos\Organizations\OrganizationApiListDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttemdeeOrganizationSiteMainInformationWidgetDto.cs" />
     <Compile Include="Dtos\Organizations\OrganizationInterestDto.cs" />

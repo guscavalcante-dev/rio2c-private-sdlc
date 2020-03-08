@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-04-2020
+// Last Modified On : 03-08-2020
 // ***********************************************************************
 // <copyright file="SpeakersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1154,6 +1154,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             var collaboratorsApiDtos = await this.collaboratorRepo.FindAllDropdownApiListDtoPaged(
                 this.EditionDto.Id,
                 keywords,
+                false,
                 Constants.CollaboratorType.Speaker,
                 page.Value,
                 10);
@@ -1167,14 +1168,14 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 PageCount = collaboratorsApiDtos.PageCount,
                 PageNumber = collaboratorsApiDtos.PageNumber,
                 PageSize = collaboratorsApiDtos.PageSize,
-                Speakers = collaboratorsApiDtos?.Select(c => new SpeakersDropdownDto
+                Collaborators = collaboratorsApiDtos?.Select(c => new CollaboratorsDropdownDto
                 {
                     Uid = c.Uid,
                     BadgeName = c.BadgeName?.Trim(),
                     Name = c.Name?.Trim(),
                     Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.Uid, c.ImageUploadDate, true) : null,
                     JobTitle = c.GetCollaboratorJobTitleBaseDtoByLanguageCode(this.UserInterfaceLanguage)?.Value?.Trim(),
-                    Companies = c.OrganizationsDtos?.Select(od => new SpeakersDropdownOrganizationDto
+                    Companies = c.OrganizationsDtos?.Select(od => new CollaboratorsDropdownOrganizationDto
                     {
                         Uid = od.Uid,
                         TradeName = od.TradeName,

@@ -4,9 +4,9 @@
 // Created          : 12-18-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified On : 03-08-2020
 // ***********************************************************************
-// <copyright file="SpeakersApiResponse.cs" company="Softo">
+// <copyright file="CollaboratorsDropdownDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -17,8 +17,8 @@ using Newtonsoft.Json;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
-    /// <summary>SpeakersApiListItem</summary>
-    public class SpeakersDropdownDto
+    /// <summary>CollaboratorsDropdownDto</summary>
+    public class CollaboratorsDropdownDto
     {
         [JsonProperty("uid", Order = 100)]
         public Guid Uid { get; set; }
@@ -39,11 +39,11 @@ namespace PlataformaRio2C.Domain.Dtos
         public string JobTitle { get; set; }
 
         [JsonProperty("companies", Order = 701)]
-        public List<SpeakersDropdownOrganizationDto> Companies { get; set; }
+        public List<CollaboratorsDropdownOrganizationDto> Companies { get; set; }
     }
 
-    /// <summary>SpeakersDropdownOrganizationDto</summary>
-    public class SpeakersDropdownOrganizationDto
+    /// <summary>CollaboratorsDropdownOrganizationDto</summary>
+    public class CollaboratorsDropdownOrganizationDto
     {
         [JsonProperty("uid", Order = 100)]
         public Guid Uid { get; set; }

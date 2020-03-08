@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified On : 03-08-2020
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -155,15 +155,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>Finds the by keywords.</summary>
         /// <param name="query">The query.</param>
         /// <param name="keywords">The keywords.</param>
+        /// <param name="isSimpleSearch">The is simple search.</param>
         /// <returns></returns>
-        internal static IQueryable<Organization> FindByKeywords(this IQueryable<Organization> query, string keywords)
+        internal static IQueryable<Organization> FindByKeywords(this IQueryable<Organization> query, string keywords, bool? isSimpleSearch = false)
         {
             if (!string.IsNullOrEmpty(keywords))
             {
                 var outerWhere = PredicateBuilder.New<Organization>(false);
+                var innerOrganizationTradeNameWhere = PredicateBuilder.New<Organization>(true);
                 var innerOrganizationNameWhere = PredicateBuilder.New<Organization>(true);
                 var innerOrganizationCompanyNameWhere = PredicateBuilder.New<Organization>(true);
-                var innerOrganizationTradeNameWhere = PredicateBuilder.New<Organization>(true);
                 var innerHoldingNameWhere = PredicateBuilder.New<Organization>(true);
                 var innerDocumentWhere = PredicateBuilder.New<Organization>(true);
 
@@ -171,21 +172,66 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 {
                     if (!string.IsNullOrEmpty(keyword))
                     {
-                        innerOrganizationNameWhere = innerOrganizationNameWhere.And(o => o.Name.Contains(keyword));
-                        innerOrganizationCompanyNameWhere = innerOrganizationCompanyNameWhere.And(o => o.CompanyName.Contains(keyword));
                         innerOrganizationTradeNameWhere = innerOrganizationTradeNameWhere.And(o => o.TradeName.Contains(keyword));
-                        innerHoldingNameWhere = innerHoldingNameWhere.And(o => o.Holding.Name.Contains(keyword));
-                        innerDocumentWhere = innerDocumentWhere.And(o => o.Document.Contains(keyword));
+
+                        if (isSimpleSearch == false)
+                        {
+                            innerOrganizationNameWhere = innerOrganizationNameWhere.And(o => o.Name.Contains(keyword));
+                            innerOrganizationCompanyNameWhere = innerOrganizationCompanyNameWhere.And(o => o.CompanyName.Contains(keyword));
+                            innerHoldingNameWhere = innerHoldingNameWhere.And(o => o.Holding.Name.Contains(keyword));
+                            innerDocumentWhere = innerDocumentWhere.And(o => o.Document.Contains(keyword));
+                        }
+                            
                     }
                 }
 
-                outerWhere = outerWhere.Or(innerOrganizationNameWhere);
-                outerWhere = outerWhere.Or(innerOrganizationCompanyNameWhere);
                 outerWhere = outerWhere.Or(innerOrganizationTradeNameWhere);
-                outerWhere = outerWhere.Or(innerHoldingNameWhere);
-                outerWhere = outerWhere.Or(innerDocumentWhere);
+
+                if (isSimpleSearch == false)
+                {
+                    outerWhere = outerWhere.Or(innerOrganizationNameWhere);
+                    outerWhere = outerWhere.Or(innerOrganizationCompanyNameWhere);
+                    outerWhere = outerWhere.Or(innerHoldingNameWhere);
+                    outerWhere = outerWhere.Or(innerDocumentWhere);
+                }
+
                 query = query.Where(outerWhere);
                 //query = query.AsExpandable().Where(predicate);
+            }
+
+            return query;
+        }
+
+        /// <summary>Determines whether [has project in negotiation] [the specified edition identifier].</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="organizationTypeUid">The organization type uid.</param>
+        /// <param name="hasProjectNegotiation">if set to <c>true</c> [has project negotiation].</param>
+        /// <returns></returns>
+        internal static IQueryable<Organization> HasProjectInNegotiation(this IQueryable<Organization> query, int editionId, Guid organizationTypeUid, bool hasProjectNegotiation)
+        {
+            if (hasProjectNegotiation)
+            {
+                if (organizationTypeUid == OrganizationType.Player.Uid)
+                {
+                    query = query.Where(o => o.AttendeeOrganizations
+                                                    .Any(ao => ao.EditionId == editionId
+                                                               && !ao.IsDeleted
+                                                               && ao.ProjectBuyerEvaluations
+                                                                       .Any(pbe => !pbe.IsDeleted && !pbe.Project.IsDeleted
+                                                                                   && pbe.Negotiations.Any(n => !n.IsDeleted))));
+                }
+                else if (organizationTypeUid == OrganizationType.Producer.Uid)
+                {
+                    query = query.Where(o => o.AttendeeOrganizations
+                                                    .Any(ao => ao.EditionId == editionId
+                                                               && !ao.IsDeleted
+                                                               && ao.SellProjects
+                                                                       .Any(sp => !sp.IsDeleted 
+                                                                                  && sp.ProjectBuyerEvaluations
+                                                                                          .Any(pbe => !pbe.IsDeleted
+                                                                                                      && pbe.Negotiations.Any(n => !n.IsDeleted)))));
+                }
             }
 
             return query;
@@ -524,6 +570,39 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByOrganizationTypeUidAndByEditionId(organizationTypeId, showAllEditions, false, editionId);
 
             return await query.CountAsync();
+        }
+
+        /// <summary>Finds all dropdown API list dto paged.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="filterByProjectsInNegotiation">if set to <c>true</c> [filter by projects in negotiation].</param>
+        /// <param name="organizationTypeUid">The organization type uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<OrganizationApiListDto>> FindAllDropdownApiListDtoPaged(
+            int editionId,
+            string keywords,
+            bool filterByProjectsInNegotiation,
+            Guid organizationTypeUid,
+            int page,
+            int pageSize)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, false, false, editionId)
+                                .FindByKeywords(keywords, true)
+                                .HasProjectInNegotiation(editionId, organizationTypeUid, filterByProjectsInNegotiation);
+
+            return await query
+                            .Select(c => new OrganizationApiListDto
+                            {
+                                Uid = c.Uid,
+                                TradeName = c.TradeName,
+                                CompanyName = c.CompanyName,
+                                ImageUploadDate = c.ImageUploadDate,
+                            })
+                            .OrderBy(o => o.TradeName)
+                            .ToListPagedAsync(page, pageSize);
         }
 
         #region Api

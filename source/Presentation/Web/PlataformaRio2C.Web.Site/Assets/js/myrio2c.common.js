@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-17-2020
+// Last Modified On : 03-08-2020
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -73,6 +73,71 @@ var MyRio2cCommon = function () {
 
             return this.filter(unique);
         };
+    };
+
+    // Enable change events -----------------------------------------------------------------------
+    var enableCheckboxChangeEvent = function (elementId) {
+        var element = $('#' + elementId);
+
+        function toggleChanged(element) {
+            if (element.prop('checked')) {
+                $("[data-additionalinfo='" + element.attr("id") + "']").removeClass('d-none');
+            }
+            else {
+                $("[data-additionalinfo='" + element.attr("id") + "']").addClass('d-none');
+            }
+        }
+
+        toggleChanged(element);
+
+        element.not('.change-event-enabled').on('click', function () {
+            toggleChanged(element);
+        });
+
+        element.addClass('change-event-enabled');
+    };
+
+    var enableDropdownChangeEvent = function (elementId, requiredFieldId) {
+        var element = $('#' + elementId);
+
+        function toggleChanged(element) {
+            var hasAdditionalInfo = element.find(':selected').data('additionalinfo');
+
+            if (hasAdditionalInfo === "True") {
+                $("[data-additionalinfo='" + element.attr("id") + "']").removeClass('d-none');
+                $('#' + requiredFieldId + 'Required').val("True");
+            }
+            else {
+                $("[data-additionalinfo='" + element.attr("id") + "']").addClass('d-none');
+                $('#' + requiredFieldId + 'Required').val("False");
+            }
+        }
+
+        toggleChanged(element);
+        element.not('.change-event-enabled').on('change', function () {
+            toggleChanged(element);
+        });
+
+        element.addClass('change-event-enabled');
+    };
+
+    var enableYesNoRadioEvent = function (elementId) {
+        function toggleChanged(radio) {
+            if (radio === "True") {
+                $("[data-additionalinfo='" + elementId + "']").removeClass('d-none');
+            }
+            else {
+                $("[data-additionalinfo='" + elementId + "']").addClass('d-none');
+            }
+        }
+
+        toggleChanged($("[data-id='" + elementId + "']").find(":checked").val());
+
+        var selector = $("[data-id='" + elementId + "'] input");
+        selector.not('.change-event-enabled').change(function () {
+            toggleChanged($(this).val());
+        });
+        selector.addClass('change-event-enabled');
     };
 
     //var fixCkEditorValidation = function () {
@@ -550,14 +615,14 @@ var MyRio2cCommon = function () {
             moment.locale(MyRio2cCommon.getGlobalVariable('userInterfaceLanguage'));
             return this.optional(element) || moment(value, format.toUpperCase(), true).isValid();
         }
-        
+
         $(options.inputIdOrClass).datepicker({
             todayHighlight: true,
             orientation: options.orientation,
             autoclose: options.autoclose,
             language: MyRio2cCommon.getGlobalVariable('userInterfaceLanguage')
         });
-                
+
         $(options.inputIdOrClass).inputmask("datetime", {
             inputFormat: format,
             placeholder: "__/__/____",
@@ -659,71 +724,6 @@ var MyRio2cCommon = function () {
                 $(this).addClass('maxlength-enabled');
             }
         });
-    };
-        
-    // Enable change events -----------------------------------------------------------------------
-    var enableCheckboxChangeEvent = function (elementId) {
-	    var element = $('#' + elementId);
-
-	    function toggleChanged(element) {
-		    if (element.prop('checked')) {
-			    $("[data-additionalinfo='" + element.attr("id") + "']").removeClass('d-none');
-		    }
-		    else {
-			    $("[data-additionalinfo='" + element.attr("id") + "']").addClass('d-none');
-		    }
-	    }
-
-	    toggleChanged(element);
-
-	    element.not('.change-event-enabled').on('click', function () {
-		    toggleChanged(element);
-	    });
-
-	    element.addClass('change-event-enabled');
-    };
-
-    var enableYesNoRadioEvent = function (elementId) {
-        function toggleChanged(radio) {
-            if (radio === "True") {
-                $("[data-additionalinfo='"+ elementId +"']").removeClass('d-none');
-            }
-            else {
-                $("[data-additionalinfo='"+ elementId +"']").addClass('d-none');
-            }
-        }
-
-        toggleChanged($("[data-id='" + elementId + "']").find(":checked").val());
-
-        var selector = $("[data-id='" + elementId + "'] input");
-        selector.not('.change-event-enabled').change(function () {
-			toggleChanged($(this).val());
-        });
-        selector.addClass('change-event-enabled');
-    };
-
-    var enableDropdownChangeEvent = function (elementId, requiredFieldId) {
-        var element = $('#' + elementId);
-
-        function toggleChanged(element) {
-            var hasAdditionalInfo = element.find(':selected').data('additionalinfo');
-            if (hasAdditionalInfo === "True") {
-                $("[data-additionalinfo='"+ element.attr("id") +"']").removeClass('d-none');
-            }
-            else {
-                $("[data-additionalinfo='"+element.attr("id")+"']").addClass('d-none');                
-            }
-
-            if(requiredFieldId)
-                $('#' + requiredFieldId + 'Required').val(hasAdditionalInfo);
-        }
-
-        toggleChanged(element);
-        element.not('.change-event-enabled').on('change', function () {            
-            toggleChanged(element);
-        });
-
-        element.addClass('change-event-enabled');
     };
 
     // Hide/Show Element --------------------------------------------------------------------------
@@ -1208,6 +1208,119 @@ var MyRio2cCommon = function () {
         }
     };
 
+    // Organization select2 -----------------------------------------------------------------------
+    var formatOrganizationResult = function (organization) {
+        if (organization.loading) {
+            return organization.text;
+        }
+
+        var imageDirectory = 'https://' + globalVariables.bucket + '/img/organizations/';
+
+        var container =
+            '<div class="select2-result-collaborator clearfix">' +
+            '<div class="select2-result-collaborator__avatar">';
+
+        // Picture
+        if (!MyRio2cCommon.isNullOrEmpty(organization.Picture)) {
+            container +=
+                '<img src="' + organization.Picture + '" />';
+        }
+        else {
+            container +=
+                '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" />';
+        }
+
+        container +=
+            '</div > ' +
+            '<div class="select2-result-collaborator__meta">' +
+            '<div class="select2-result-collaborator__title">' + (organization.TradeName || organization.CompanyName) + '</div>';
+
+        container +=
+            '   </div>' +
+            '</div>';
+
+        var $container = $(container);
+
+        return $container;
+    };
+
+    var formatOrganizationSelection = function (organization) {
+        return organization.text;
+    };
+
+    var enableOrganizationSelect2 = function (options) {
+        if (isNullOrEmpty(options)) {
+            options = new Object();
+        }
+
+        if (!hasProperty(options, 'inputIdOrClass') || isNullOrEmpty(options.inputIdOrClass)) {
+            options.inputIdOrClass = '.enable-organization-select2';
+        }
+
+        if (!hasProperty(options, 'allowClear') || isNullOrEmpty(options.allowClear)) {
+            options.allowClear = true;
+        }
+
+        if (!hasProperty(options, 'placeholder') || isNullOrEmpty(options.placeholder)) {
+            options.placeholder = labels.selectPlaceholder;
+        }
+
+        $(options.inputIdOrClass).select2({
+            language: MyRio2cCommon.getGlobalVariable('userInterfaceLanguageUppercade'),
+            width: '100%',
+            allowClear: options.allowClear,
+            placeholder: options.placeholder,
+            delay: 250,
+            ajax: {
+                url: MyRio2cCommon.getUrlWithCultureAndEdition(options.url),
+                dataType: 'json',
+                type: "GET",
+                quietMillis: 50,
+                data: function (params) {
+                    var query = {
+                        keywords: params.term,
+                        page: params.page,
+                        filterByProjectsInNegotiation: options.filterByProjectsInNegotiation || false
+                    };
+
+                    return query;
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+
+                    return MyRio2cCommon.handleAjaxReturn({
+                        data: data,
+                        // Success
+                        onSuccess: function () {
+                            for (var i = data.Organizations.length - 1; i >= 0; i--) {
+                                data.Organizations[i].id = data.Organizations[i].Uid;
+                                data.Organizations[i].text = data.Organizations[i].TradeName || data.Organizations[i].CompanyName;
+                            }
+
+                            return {
+                                results: data.Organizations,
+                                pagination: {
+                                    more: data.HasNextPage
+                                }
+                            };
+                        },
+                        // Error
+                        onError: function () {
+                        }
+                    });
+                }
+            },
+            templateResult: formatOrganizationResult,
+            templateSelection: formatOrganizationSelection
+        });
+
+        // Add pre-selected value
+        if (hasProperty(options, 'selectedOption') && !isNullOrEmpty(options.selectedOption) && hasProperty(options.selectedOption, 'id') && hasProperty(options.selectedOption, 'text')) {
+            var newOption = new Option(options.selectedOption.text, options.selectedOption.id, false, true);
+            $(options.inputIdOrClass).append(newOption).trigger('change');
+        }
+    };
+
     // Collaborator select2 -----------------------------------------------------------------------
     var formatCollaboratorResult = function (collaborator) {
         if (collaborator.loading) {
@@ -1269,9 +1382,9 @@ var MyRio2cCommon = function () {
 
         if (!hasProperty(options, 'allowClear') || isNullOrEmpty(options.allowClear)) {
             options.allowClear = true;
-            options.placeholder = labels.selectPlaceholder;
         }
-        else if (!hasProperty(options, 'placeholder') || isNullOrEmpty(options.placeholder)) {
+
+        if (!hasProperty(options, 'placeholder') || isNullOrEmpty(options.placeholder)) {
             options.placeholder = labels.selectPlaceholder;
         }
 
@@ -1289,7 +1402,8 @@ var MyRio2cCommon = function () {
                 data: function (params) {
                     var query = {
                         keywords: params.term,
-                        page: params.page
+                        page: params.page,
+                        filterByProjectsInNegotiation: options.filterByProjectsInNegotiation || false
                     };
 
                     return query;
@@ -1301,13 +1415,13 @@ var MyRio2cCommon = function () {
                         data: data,
                         // Success
                         onSuccess: function () {
-                            for (var i = data.Speakers.length - 1; i >= 0; i--) {
-                                data.Speakers[i].id = data.Speakers[i].Uid;
-                                data.Speakers[i].text = data.Speakers[i].BadgeName || data.Speakers[i].Name;
+                            for (var i = data.Collaborators.length - 1; i >= 0; i--) {
+                                data.Collaborators[i].id = data.Collaborators[i].Uid;
+                                data.Collaborators[i].text = data.Collaborators[i].BadgeName || data.Collaborators[i].Name;
                             }
 
                             return {
-                                results: data.Speakers,
+                                results: data.Collaborators,
                                 pagination: {
                                     more: data.HasNextPage
                                 }
@@ -1433,18 +1547,21 @@ var MyRio2cCommon = function () {
         showAlert: function (options) {
             showAlert(options);
         },
+        enableOrganizationSelect2: function (options) {
+            enableOrganizationSelect2(options);
+        },
         enableCollaboratorSelect2: function (options) {
             enableCollaboratorSelect2(options);
         },
-                
+
         enableDropdownChangeEvent: function (elementId, requiredFieldId) {
             enableDropdownChangeEvent(elementId, requiredFieldId);
         },
-        enableYesNoRadioEvent: function (elementId) {
-	        enableYesNoRadioEvent(elementId);
-        },
         enableCheckboxChangeEvent: function (elementId) {
-	        enableCheckboxChangeEvent(elementId);
+            enableCheckboxChangeEvent(elementId);
+        },
+        enableYesNoRadioEvent: function (elementId) {
+            enableYesNoRadioEvent(elementId);
         }
     };
 }();

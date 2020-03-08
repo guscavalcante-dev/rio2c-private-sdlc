@@ -250,7 +250,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.UnscheduledNegotiations, Url.Action("NotScheduled", "Meetings", new { Area = "Audiovisual" }))
+                new BreadcrumbItemHelper(Labels.UnscheduledNegotiations, Url.Action("Unscheduled", "Meetings", new { Area = "Audiovisual" }))
             });
 
             #endregion

@@ -334,6 +334,7 @@
     <Compile Include="Areas\Audiovisual\AudiovisualAreaRegistration.cs" />
     <Compile Include="Areas\Audiovisual\Controllers\MeetingsController.cs" />
     <Compile Include="Areas\Audiovisual\Controllers\MeetingParametersController.cs" />
+    <Compile Include="Areas\Audiovisual\Controllers\ProducersController.cs" />
     <Compile Include="Areas\Music\Controllers\CommissionsController.cs" />
     <Compile Include="Areas\Music\Controllers\ProjectsController.cs" />
     <Compile Include="Areas\Music\MusicAreaRegistration.cs" />
