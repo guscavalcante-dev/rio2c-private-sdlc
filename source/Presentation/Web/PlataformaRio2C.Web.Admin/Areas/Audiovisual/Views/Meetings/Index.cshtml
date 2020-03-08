@@ -8,11 +8,11 @@
         <div id="AudiovisualMeetingsEditionScheduledCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
     </div>
     <!--end:: Edition Scheduled Count Widget-->
-    <!--begin:: Edition Not Scheduled Count Widget-->
+    <!--begin:: Edition Unscheduled Count Widget-->
     <div class="col-sm-6">
-        <div id="AudiovisualMeetingsEditionNotScheduledCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <div id="AudiovisualMeetingsEditionUnscheduledCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
     </div>
-    <!--end:: Edition Not Scheduled Count Widget-->
+    <!--end:: Edition Unscheduled Count Widget-->
 </div>
 <!--end:: Quick Stats-->
 <div class="row">
@@ -29,7 +29,7 @@
     @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/audiovisual.meetings.generate.widget.js")
     @Scripts.Render("~/bundles/js/audiovisual.meetings.editionscheduledcount.widget.js")
-    @Scripts.Render("~/bundles/js/audiovisual.meetings.editionnotscheduledcount.widget.js")
+    @Scripts.Render("~/bundles/js/audiovisual.meetings.editionunscheduledcount.widget.js")
     <script>
         // Page translations ----------------------------------------------------------------------
         var translations = {
@@ -40,7 +40,7 @@
         // Pagination -----------------------------------------------------------------------------
         jQuery(document).ready(function () {
             AudiovisualMeetingsEditionScheduledCountWidget.init();
-            AudiovisualMeetingsEditionNotScheduledCountWidget.init();
+            AudiovisualMeetingsEditionUnscheduledCountWidget.init();
             AudiovisualMeetingsStatusWidget.init();
         });
     </script>

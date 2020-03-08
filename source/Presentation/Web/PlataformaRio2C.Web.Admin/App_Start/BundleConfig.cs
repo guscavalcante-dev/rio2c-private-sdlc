@@ -593,14 +593,17 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.editionscheduledcount.widget.js").Include(
                 "~/Assets/js/audiovisual/meetings/audiovisual.meetings.editionscheduledcount.widget.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.editionnotscheduledcount.widget.js").Include(
-                "~/Assets/js/audiovisual/meetings/audiovisual.meetings.editionnotscheduledcount.widget.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.editionunscheduledcount.widget.js").Include(
+                "~/Assets/js/audiovisual/meetings/audiovisual.meetings.editionunscheduledcount.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.generate.widget.js").Include(
                 "~/Assets/js/audiovisual/meetings/audiovisual.meetings.status.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.scheduled.widget.js").Include(
                 "~/Assets/js/audiovisual/meetings/audiovisual.meetings.scheduled.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.unscheduled.widget.js").Include(
+                "~/Assets/js/audiovisual/meetings/audiovisual.meetings.unscheduled.widget.js"));
 
             #endregion
 

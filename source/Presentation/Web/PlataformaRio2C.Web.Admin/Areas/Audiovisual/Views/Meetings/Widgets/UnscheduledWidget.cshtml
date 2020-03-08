@@ -1,0 +1,60 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model List<ProjectBuyerEvaluationDto>
+<div class="kt-portlet kt-portlet--mobile">
+    <div class="kt-portlet__head kt-portlet__head--lg">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="kt-font-brand flaticon2-line-chart"></i>
+            </span>
+            <h3 class="kt-portlet__head-title">
+                @Labels.UnscheduledNegotiations
+            </h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        @if (Model?.Any() == true)
+        {
+            <!--begin: Data -->
+            <table class="table table-striped- table-bordered table-hover table-checkable" id="conferences-list-table">
+                <thead>
+                    <tr>
+                        <th>@Labels.Player</th>
+                        <th>@Labels.Project</th>
+                        <th>@Labels.Producer</th>
+                        <th class="text-center">@Labels.Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var projectBuyerEvaluationDto in Model)
+                    {
+                        <tr>
+                            <td>@(projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto?.Organization?.TradeName)</td>
+                            <td>@(projectBuyerEvaluationDto.ProjectDto?.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value)</td>
+                            <td>@(projectBuyerEvaluationDto.ProjectDto?.SellerAttendeeOrganizationDto?.Organization?.TradeName)</td>
+                            <td class="text-center">
+                                <span class="dropdown">
+                                    <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
+                                        <i class="la la-ellipsis-h"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <button class="dropdown-item" onclick="AudiovisualMeetingParametersRoomsWidget.showUpdateModal('');">
+                                            <i class="la la-edit"></i>@Labels.Edit
+                                        </button>
+                                        <button class="dropdown-item" onclick="AudiovisualMeetingParametersRoomsWidget.showDeleteModal('');">
+                                            <i class="la la-remove"></i>@Labels.Remove
+                                        </button>
+                                    </div>
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <!--end: Data -->
+        }
+        else
+        {
+            <div class="col-12 text-center mt-30">@string.Format(Messages.EntityNotAction, Labels.UnscheduledNegotiations, Labels.FoundFP)</div>
+        }
+    </div>
+</div>

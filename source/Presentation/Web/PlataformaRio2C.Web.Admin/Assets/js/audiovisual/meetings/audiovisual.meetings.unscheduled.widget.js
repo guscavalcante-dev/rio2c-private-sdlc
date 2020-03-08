@@ -1,20 +1,20 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Rafael Dantas Ruiz
-// Created          : 03-07-2020
+// Created          : 03-08-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-08-2020
 // ***********************************************************************
-// <copyright file="audiovisual.meetings.scheduled.widget.js" company="Softo">
+// <copyright file="audiovisual.meetings.unscheduled.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var AudiovisualMeetingsScheduledWidget = function () {
+var AudiovisualMeetingsUnscheduledWidget = function () {
 
-    var widgetElementId = '#AudiovisualMeetingsScheduledWidget';
+    var widgetElementId = '#AudiovisualMeetingsUnscheduledWidget';
     var widgetElement = $(widgetElementId);
 
     //var updateModalId = '#UpdateMainInformationModal';
@@ -33,7 +33,7 @@ var AudiovisualMeetingsScheduledWidget = function () {
 
         var jsonParameters = new Object();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Meetings/ShowScheduledWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Meetings/ShowUnscheduledWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

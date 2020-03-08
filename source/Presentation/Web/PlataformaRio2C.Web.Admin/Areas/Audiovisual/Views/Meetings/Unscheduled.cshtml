@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = Labels.OneToOneMeetings + " | " + Labels.ScheduledNegotiations;
+    ViewBag.Title = Labels.OneToOneMeetings + " | " + Labels.UnscheduledNegotiations;
 }
 <!--begin:: Quick Stats-->
 <div class="row">
@@ -16,17 +16,17 @@
 </div>
 <!--end:: Quick Stats-->
 <div class="row">
-    <!--begin:: Scheduled Meetings Widget-->
+    <!--begin:: Unscheduled Meetings Widget-->
     <div class="col-12">
-        <div id="AudiovisualMeetingsScheduledWidget" class="" style="min-height: 500px;"></div>
+        <div id="AudiovisualMeetingsUnscheduledWidget" class="" style="min-height: 500px;"></div>
     </div>
-    <!--end:: Scheduled Meetings Widget-->
+    <!--end:: Unscheduled Meetings Widget-->
 </div>
 @section Styles {
 }
 @section Scripts {
     @Scripts.Render("~/bundles/js/chart.js")
-    @Scripts.Render("~/bundles/js/audiovisual.meetings.scheduled.widget.js")
+    @Scripts.Render("~/bundles/js/audiovisual.meetings.unscheduled.widget.js")
     @Scripts.Render("~/bundles/js/audiovisual.meetings.editionscheduledcount.widget.js")
     @Scripts.Render("~/bundles/js/audiovisual.meetings.editionunscheduledcount.widget.js")
     <script>
@@ -38,7 +38,7 @@
         jQuery(document).ready(function () {
             AudiovisualMeetingsEditionScheduledCountWidget.init();
             AudiovisualMeetingsEditionUnscheduledCountWidget.init();
-            AudiovisualMeetingsScheduledWidget.init();
+            AudiovisualMeetingsUnscheduledWidget.init();
         });
     </script>
 }

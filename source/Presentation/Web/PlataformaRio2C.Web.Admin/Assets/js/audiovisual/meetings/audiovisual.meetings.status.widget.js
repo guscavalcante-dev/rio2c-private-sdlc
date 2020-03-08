@@ -4,7 +4,7 @@
 // Created          : 03-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-07-2020
+// Last Modified On : 03-08-2020
 // ***********************************************************************
 // <copyright file="audiovisual.meetings.status.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -73,8 +73,8 @@ var AudiovisualMeetingsStatusWidget = function () {
 	                    AudiovisualMeetingsEditionScheduledCountWidget.init();
                     }
 
-                    if (typeof (AudiovisualMeetingsEditionNotScheduledCountWidget) !== 'undefined') {
-	                    AudiovisualMeetingsEditionNotScheduledCountWidget.init();
+                    if (typeof (AudiovisualMeetingsEditionUnscheduledCountWidget) !== 'undefined') {
+                        AudiovisualMeetingsEditionUnscheduledCountWidget.init();
                     }
 
                 },

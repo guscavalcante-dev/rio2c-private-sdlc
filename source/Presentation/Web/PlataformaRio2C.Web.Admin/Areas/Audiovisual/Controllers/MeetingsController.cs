@@ -38,33 +38,21 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
     public class MeetingsController : BaseController
     {
         private readonly INegotiationRepository negotiationRepo;
-        private readonly INegotiationConfigRepository negotiationConfigRepo;
-        private readonly INegotiationRoomConfigRepository negotiationRoomConfigRepo;
-        private readonly IRoomRepository roomRepo;
         private readonly IProjectBuyerEvaluationRepository projectBuyerEvaluationRepo;
 
         /// <summary>Initializes a new instance of the <see cref="MeetingsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="negotiationRepository">The negotiation repository.</param>
-        /// <param name="negotiationConfigRepository">The negotiation configuration repository.</param>
-        /// <param name="negotiationRoomConfigRepository">The negotiation room configuration repository.</param>
-        /// <param name="roomRepository">The room repository.</param>
         /// <param name="projectBuyerEvaluationRepository">The project buyer evaluation repository.</param>
         public MeetingsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
             INegotiationRepository negotiationRepository,
-            INegotiationConfigRepository negotiationConfigRepository,
-            INegotiationRoomConfigRepository negotiationRoomConfigRepository,
-            IRoomRepository roomRepository,
             IProjectBuyerEvaluationRepository projectBuyerEvaluationRepository)
             : base(commandBus, identityController)
         {
             this.negotiationRepo = negotiationRepository;
-            this.negotiationConfigRepo = negotiationConfigRepository;
-            this.negotiationRoomConfigRepo = negotiationRoomConfigRepository;
-            this.roomRepo = roomRepository;
             this.projectBuyerEvaluationRepo = projectBuyerEvaluationRepository;
         }
 
@@ -86,48 +74,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             return View();
         }
 
-        #region Edition Scheduled Count Widget
-
-        /// <summary>Shows the edition scheduled count widget.</summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ShowEditionScheduledCountWidget()
-        {
-            var scheduledCount = await this.projectBuyerEvaluationRepo.CountNegotiationScheduledAsync(this.EditionDto.Id, false);
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Widgets/EditionScheduledCountWidget", scheduledCount), divIdOrClass = "#AudiovisualMeetingsEditionScheduledCountWidget" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        #endregion
-
-        #region Edition Not Scheduled Count Widget
-
-        /// <summary>Shows the edition not scheduled count widget.</summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ShowEditionNotScheduledCountWidget()
-        {
-            var notScheduledCount = await this.projectBuyerEvaluationRepo.CountNegotiationNotScheduledAsync(this.EditionDto.Id, false);
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Widgets/EditionNotScheduledCountWidget", notScheduledCount), divIdOrClass = "#AudiovisualMeetingsEditionNotScheduledCountWidget" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        #endregion
-
         #region Status Widget
 
         /// <summary>Shows the status widget.</summary>
@@ -135,8 +81,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowStatusWidget()
         {
-            //var executivesCount = await this.negotiationConfigRepo.CountAsync(this.EditionDto.Id, true);
-
             return Json(new
             {
                 status = "success",
@@ -206,6 +150,48 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
         #endregion
 
+        #region Edition Scheduled Count Widget
+
+        /// <summary>Shows the edition scheduled count widget.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowEditionScheduledCountWidget()
+        {
+            var scheduledCount = await this.projectBuyerEvaluationRepo.CountNegotiationScheduledAsync(this.EditionDto.Id, false);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EditionScheduledCountWidget", scheduledCount), divIdOrClass = "#AudiovisualMeetingsEditionScheduledCountWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Edition Unscheduled Count Widget
+
+        /// <summary>Shows the edition unscheduled count widget.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowEditionUnscheduledCountWidget()
+        {
+            var notScheduledCount = await this.projectBuyerEvaluationRepo.CountNegotiationNotScheduledAsync(this.EditionDto.Id, false);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EditionUnscheduledCountWidget", notScheduledCount), divIdOrClass = "#AudiovisualMeetingsEditionUnscheduledCountWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
         #region Scheduled
 
         /// <summary>Scheduleds this instance.</summary>
@@ -216,7 +202,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.GenerateCalendar, Url.Action("Scheduled", "Meetings", new { Area = "Audiovisual" }))
+                new BreadcrumbItemHelper(Labels.ScheduledNegotiations, Url.Action("Scheduled", "Meetings", new { Area = "Audiovisual" }))
             });
 
             #endregion
@@ -241,6 +227,54 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     pages = new List<dynamic>
                     {
                         new { page = this.RenderRazorViewToString("Widgets/ScheduledWidget", negotiations), divIdOrClass = "#AudiovisualMeetingsScheduledWidget" },
+                    }
+                },
+                //ContentType = contentType,
+                //ContentEncoding = contentEncoding,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                MaxJsonLength = Int32.MaxValue
+            };
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Unscheduled
+
+        /// <summary>Unscheduleds this instance.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Unscheduled()
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.UnscheduledNegotiations, Url.Action("NotScheduled", "Meetings", new { Area = "Audiovisual" }))
+            });
+
+            #endregion
+
+            return View();
+        }
+
+        #region Unscheduled Widget
+
+        /// <summary>Shows the unscheduled widget.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowUnscheduledWidget()
+        {
+            var negotiations = await this.projectBuyerEvaluationRepo.FindUnscheduledWidgetDtoAsync(this.EditionDto.Id);
+
+            return new JsonResult()
+            {
+                Data = new
+                {
+                    status = "success",
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Widgets/UnscheduledWidget", negotiations), divIdOrClass = "#AudiovisualMeetingsUnscheduledWidget" },
                     }
                 },
                 //ContentType = contentType,
