@@ -26,40 +26,48 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>CreateLogisticSponsors</summary>
     public class CreateLogisticAirfare : BaseCommand
     {
+        public Guid LogisticsUid { get; set; }
+
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [Display(Name = "FromPlace", ResourceType = typeof(Labels))]
         public string From { get; set; }
 
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [Display(Name = "ToPlace", ResourceType = typeof(Labels))]
         public string To { get; set; }
-        
+
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [Display(Name = "IsNational", ResourceType = typeof(Labels))]
         public bool? IsNational { get; set; }
 
         [Display(Name = "Departure", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public DateTimeOffset? Departure { get; set; }
 
         [Display(Name = "Arrival", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public DateTimeOffset? Arrival { get; set; }
-
+        
         [Display(Name = "TicketNumber", ResourceType = typeof(Labels))]
         public string TicketNumber { get; set; }
         
         [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
+        [StringLength(1000, MinimumLength = 0, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string AdditionalInfo { get; set; }
 
         [Display(Name = "AirfareTicket", ResourceType = typeof(Labels))]
         public HttpPostedFile Ticket { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CreateLogisticSponsors"/> class.</summary>
-        public CreateLogisticAirfare(List<LogisticSponsorBaseDto> sponsors, List<LanguageDto> languagesDtos, string userInterfaceLanguage)
+        public CreateLogisticAirfare(Guid logisticsUid)
         {
+            this.LogisticsUid = logisticsUid;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="CreateLogisticSponsors"/> class.</summary>
         public CreateLogisticAirfare()
         {
         }
-        
+
         #region Private Methods
 
 

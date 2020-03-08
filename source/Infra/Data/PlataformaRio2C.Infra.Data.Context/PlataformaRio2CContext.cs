@@ -155,6 +155,10 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new PlaceMap());
             modelBuilder.Configurations.Add(new AttendeePlacesMap());
             modelBuilder.Configurations.Add(new AttendeeLogisticSponsorMap());
+            modelBuilder.Configurations.Add(new LogisticsMap());
+            modelBuilder.Configurations.Add(new LogisticAirfareMap());
+            modelBuilder.Configurations.Add(new LogisticAccommodationMap());
+            modelBuilder.Configurations.Add(new LogisticTransferMap());
 
             // TODO: Old mapping that must be reviewed
 
@@ -172,13 +176,12 @@ namespace PlataformaRio2C.Infra.Data.Context
             //modelBuilder.Configurations.Add(new ProjectPlayerMap());
             //modelBuilder.Configurations.Add(new ProjectStatusMap());
             //modelBuilder.Configurations.Add(new ProjectPlayerEvaluationMap());
-            modelBuilder.Configurations.Add(new LogisticsMap());
-           
+
             //modelBuilder.Configurations.Add(new MailMap());
 
             //modelBuilder.Configurations.Add(new ConferenceLecturerMap());
             //modelBuilder.Configurations.Add(new LecturerMap());
-            
+
             //modelBuilder.Configurations.Add(new RoleLecturerMap());
             //modelBuilder.Configurations.Add(new RoleLecturerTitleMap());
 

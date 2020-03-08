@@ -17,7 +17,7 @@ using System.Data.Entity.ModelConfiguration;
 namespace PlataformaRio2C.Infra.Data.Context.Mapping
 {
     /// <summary>AttendeePlacesMap</summary>
-    public class AttendeePlacesMap : EntityTypeConfiguration<AttendeePlaces>
+    public class AttendeePlacesMap : EntityTypeConfiguration<AttendeePlace>
     {
         /// <summary>Initializes a new instance of the <see cref="AttendeePlacesMap"/> class.</summary>
         public AttendeePlacesMap()

@@ -1,21 +1,21 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Arthur Souza
-// Created          : 01-27-2020
+// Author           : Rafael Dantas Ruiz
+// Created          : 08-26-2019
 //
-// Last Modified By : Arthur Souza
-// Last Modified On : 01-27-2020
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 10-21-2019
 // ***********************************************************************
-// <copyright file="collaborators.create.js" company="Softo">
+// <copyright file="collaborators.update.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var LogisticTransportCreate = function () {
+var LogisticTransferUpdate = function () {
 
-    var modalId = '#CreateLogisticTransportModal';
-    var formId = '#CreateLogisticTransportForm';
+    var modalId = '#UpdateLogisticTransferModal';
+    var formId = '#UpdateLogisticTransferForm';
 
     // Enable form validation ---------------------------------------------------------------------
     var enableFormValidation = function () {
@@ -23,21 +23,21 @@ var LogisticTransportCreate = function () {
     };
 
     // Enable plugins -----------------------------------------------------------------------------
-    var enablePlugins = function () {        
-        MyRio2cCommon.enableCollaboratorSelect2({ url: '/Speakers/FindAllByFilters' });
-        MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2', allowClear: true });
-        MyRio2cCommon.enableDateTimePicker({ inputIdOrClass: formId + ' .enable-datetimepicker', allowClear: true });
+    var enablePlugins = function () {
+	    MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2', allowClear: true });
+	    MyRio2cCommon.enableDateTimePicker({ inputIdOrClass: formId + ' .enable-datetimepicker', allowClear: true });
         enableAjaxForm();
         enableFormValidation();
     };
 
     // Show modal ---------------------------------------------------------------------------------
-    var showModal = function () {
+    var showModal = function (uid) {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
+        jsonParameters.uid = uid;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/LogisticRequests/ShowCreateTransportModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/ShowUpdateTransferModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -64,8 +64,8 @@ var LogisticTransportCreate = function () {
             onSuccess: function (data) {
                 $(modalId).modal('hide');
 
-                if (typeof (LogisticSponsorsDataTableWidget) !== 'undefined') {
-                    LogisticSponsorsDataTableWidget.refreshData();
+                if (typeof (LogisticsTransferWidget) !== 'undefined') {
+	                LogisticsTransferWidget.init();
                 }
             },
             onError: function (data) {
@@ -77,8 +77,8 @@ var LogisticTransportCreate = function () {
     };
 
     return {
-        showModal: function () {
-            showModal();
+        showModal: function (uid) {
+            showModal(uid);
         }
     };
 }();

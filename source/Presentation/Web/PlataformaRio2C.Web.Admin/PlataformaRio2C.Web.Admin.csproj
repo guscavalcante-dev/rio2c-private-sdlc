@@ -347,7 +347,6 @@
     <Compile Include="Areas\WebApi\Controllers\RoleLecturerController.cs" />
     <Compile Include="Areas\WebApi\Controllers\RoomController.cs" />
     <Compile Include="Areas\WebApi\Controllers\ProjetcController.cs" />
-    <Compile Include="Areas\WebApi\Controllers\LogisticsController.cs" />
     <Compile Include="Areas\WebApi\Controllers\ProducerController.cs" />
     <Compile Include="Areas\WebApi\Models\Error.cs" />
     <Compile Include="Areas\WebApi\WebApiConfig.cs" />
@@ -413,14 +412,19 @@
     <Content Include="Assets\js\addresses\addresses.form.js" />
     <Content Include="Assets\js\logistics\logistics.accommodation.create.js" />
     <Content Include="Assets\js\logistics\logistics.accommodation.delete.js" />
+    <Content Include="Assets\js\logistics\logistics.transfer.update.js" />
     <Content Include="Assets\js\logistics\logistics.airfare.create.js" />
     <Content Include="Assets\js\logistics\logistics.airfare.delete.js" />
+    <Content Include="Assets\js\logistics\logistics.accommodation.widget.js" />
+    <Content Include="Assets\js\logistics\logistics.accommodation.update.js" />
+    <Content Include="Assets\js\logistics\logistics.transfer.widget.js" />
     <Content Include="Assets\js\logistics\logistics.create.js" />
     <Content Include="Assets\js\logistics\logistics.datatable.widget.js" />
     <Content Include="Assets\js\logistics\logistics.delete.js" />
     <Content Include="Assets\js\logistics\logistics.maininformation.widget.js" />
-    <Content Include="Assets\js\logistics\logistics.transport.create.js" />
-    <Content Include="Assets\js\logistics\logistics.transport.delete.js" />
+    <Content Include="Assets\js\logistics\logistics.transfer.create.js" />
+    <Content Include="Assets\js\logistics\logistics.transfer.delete.js" />
+    <Content Include="Assets\js\logistics\logistics.airfare.update.js" />
     <Content Include="Assets\js\logistics\logistics.update.js" />
     <Content Include="Assets\js\logisticsponsors\logisticsponsors.create.js" />
     <Content Include="Assets\js\logisticsponsors\logisticsponsors.datatable.widget.js" />
@@ -8411,11 +8415,11 @@
     <Content Include="Views\Logistics\Widgets\DataTableWidget.cshtml" />
     <Content Include="Views\Logistics\Details.cshtml" />
     <Content Include="Views\Logistics\Modals\UpdateMainInformationModal.cshtml" />
-    <Content Include="Views\Logistics\Modals\CreateTransportModal.cshtml" />
+    <Content Include="Views\Logistics\Modals\CreateTransferModal.cshtml" />
     <Content Include="Views\Logistics\Modals\CreateAccommodationModal.cshtml" />
     <Content Include="Views\Logistics\Modals\_AccommodationForm.cshtml" />
     <Content Include="Views\Logistics\Modals\_AirfareForm.cshtml" />
-    <Content Include="Views\Logistics\Modals\_TransportForm.cshtml" />
+    <Content Include="Views\Logistics\Modals\_TransferForm.cshtml" />
     <Content Include="Views\Logistics\Modals\CreateAirfareModal.cshtml" />
     <Content Include="Views\Pillars\Details.cshtml" />
     <Content Include="Views\Pillars\EditorTemplates\PillarNameBaseCommand.cshtml" />
@@ -8459,6 +8463,11 @@
     <Content Include="Views\Shared\SocialNetworks\_YoutubeItem.cshtml" />
     <Content Include="Views\Shared\SocialNetworks\_FacebookItem.cshtml" />
     <Content Include="Views\Logistics\Widgets\LogisticsAirfareWidget.cshtml" />
+    <Content Include="Views\Logistics\Widgets\LogisticsAccommodationWidget.cshtml" />
+    <Content Include="Views\Logistics\Widgets\LogisticsTransferWidget.cshtml" />
+    <Content Include="Views\Logistics\Modals\UpdateAirfareModal.cshtml" />
+    <Content Include="Views\Logistics\Modals\UpdateAccommodationModal.cshtml" />
+    <Content Include="Views\Logistics\Modals\UpdateTransferModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

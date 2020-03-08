@@ -1158,6 +1158,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
                         .Select(e => e.UpdateDate)
                         .FirstOrDefault(),
+
+                    TransferCity = c.AttendeeCollaborators
+                        .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
+                        .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
+                        .Select(e => e.IsCityTransferRequired)
+                        .FirstOrDefault(),
+                    
+                    IsVehicleDisposalRequired = c.AttendeeCollaborators
+                        .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
+                        .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
+                        .Select(e => e.IsVehicleDisposalRequired)
+                        .FirstOrDefault(),
                 })
                 .ToListPagedAsync(page, pageSize);
         }

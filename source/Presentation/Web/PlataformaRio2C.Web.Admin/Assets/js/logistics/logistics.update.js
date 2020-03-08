@@ -29,14 +29,13 @@ var LogisticsUpdate = function () {
     };
 
     // Show modal ---------------------------------------------------------------------------------
-    var showModal = function (uid, isAddingToCurrentEdition) {
+    var showModal = function (uid) {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
-        jsonParameters.sponsorUid = uid;
-        jsonParameters.isAddingToCurrentEdition = isAddingToCurrentEdition;
+        jsonParameters.logisticsUid = uid;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/LogisticRequests/ShowUpdateModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/ShowUpdateModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -76,8 +75,8 @@ var LogisticsUpdate = function () {
     };
 
     return {
-        showModal: function (collaboratorUid, isAddingToCurrentEdition) {
-            showModal(collaboratorUid, isAddingToCurrentEdition);
+        showModal: function (uid) {
+            showModal(uid);
         }
     };
 }();

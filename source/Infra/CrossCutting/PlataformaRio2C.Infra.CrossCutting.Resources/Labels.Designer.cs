@@ -2095,6 +2095,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Internacional.
+        /// </summary>
+        public static string International {
+            get {
+                return ResourceManager.GetString("International", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Investidor.
         /// </summary>
         public static string Investor {
@@ -2626,6 +2635,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nacional.
+        /// </summary>
+        public static string National {
+            get {
+                return ResourceManager.GetString("National", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Detalhes da Negociação.
         /// </summary>
         public static string NegotiationDetails {
@@ -3099,6 +3117,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string PitchingShow {
             get {
                 return ResourceManager.GetString("PitchingShow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Local.
+        /// </summary>
+        public static string Place {
+            get {
+                return ResourceManager.GetString("Place", resourceCulture);
             }
         }
         

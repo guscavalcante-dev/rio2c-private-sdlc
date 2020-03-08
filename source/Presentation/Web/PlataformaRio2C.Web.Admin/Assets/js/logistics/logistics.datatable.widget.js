@@ -126,6 +126,18 @@ var LogisticsDataTableWidget = function () {
                         return data;
                     }
                 },
+	            {
+                    data: 'TransferCity',
+                    render: function (data, type, full, meta) {
+                        return data === true ? yes : no;
+		            }
+                },
+	            {
+                    data: 'IsVehicleDisposalRequired',
+		            render: function (data, type, full, meta) {
+			            return data === true ? yes : no;
+		            }
+	            },
                 {
                     data: 'CreateDate',
                     render: function (data) {
@@ -158,6 +170,7 @@ var LogisticsDataTableWidget = function () {
                         else {
                             // View details
                             html += '<button class="dropdown-item" onclick="LogisticsDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-edit"></i> ' + view + '</button>';
+                            html += '<button class="dropdown-item" onclick="LogisticsDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
                         }
                         
                         html += '\

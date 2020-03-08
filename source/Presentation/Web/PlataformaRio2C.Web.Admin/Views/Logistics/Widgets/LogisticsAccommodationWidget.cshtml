@@ -1,0 +1,88 @@
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Statics
+@model List<LogisticAccommodationDto>
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+            @Labels.Accommodation
+        </h3>
+    </div>
+    <div class="kt-portlet__head-toolbar">
+        <div class="kt-portlet__head-actions">
+            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="LogisticAccommodationCreate.showModal();">
+                <i class="flaticon2-add-1"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="kt-portlet__body pt-0">
+    <div class="kt-widget">
+        <div class="kt-widget__bottom">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="kt-widget4">
+                        @if (Model != null && Model.Any())
+                        {
+                            <div class="col-12">
+                                <table class="table table-sm table-head-bg-brand table-body-scroll">
+                                    <thead class="thead-inverse">
+                                    <tr>
+                                        <th class="text-center">@Labels.Place</th>
+                                        <th class="text-center">@Labels.CheckInDate</th>
+                                        <th class="text-center">@Labels.CheckOutDate</th>
+                                        <th class="text-center">@Labels.CreateDate</th>
+                                        <th class="text-center">@Labels.UpdateDate</th>
+                                        <th class="text-center">@Labels.Actions</th>
+                                    </tr>   
+                                    </thead>
+                                    <tbody class="rio2c-scroll" style="height: 180px;">
+                                        @foreach (var dto in Model)
+                                        {
+                                        <tr>
+                                            <td class="text-center">
+                                                @dto.AttendeePlace
+                                            </td>
+                                            <td class="text-center">
+                                                @dto.CheckInDate.ToString("g")
+                                            </td>
+                                            <td class="text-center">
+                                                @dto.CheckOutDate.ToString("g")
+                                            </td>
+                                            <td class="text-center">
+                                                @dto.CreateDate.ToString("g")
+                                            </td>
+                                            <td class="text-center">
+                                                @dto.UpdateDate.ToString("g")
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="dropdown">
+                                                    <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
+                                                        <i class="la la-ellipsis-h"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <button class="dropdown-item" onclick="LogisticAccommodationUpdate.showModal('@dto.Uid');"><i class="la la-edit"></i>@Labels.Edit</button>
+                                                        <button class="dropdown-item" onclick="LogisticAccommodationDelete.showModal('@dto.Uid');"><i class="la la-remove"></i>@Labels.Remove</button>
+                                                    </div>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="row mt-3">
+                                <div class="col-12 text-center">
+                                    <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.Requests, Labels.FoundFP)</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -24,7 +24,6 @@ var LogisticAirfareCreate = function () {
 
     // Enable plugins -----------------------------------------------------------------------------
     var enablePlugins = function () {        
-        MyRio2cCommon.enableCollaboratorSelect2({ url: '/Speakers/FindAllByFilters' });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2', allowClear: true });
         MyRio2cCommon.enableDateTimePicker({ inputIdOrClass: formId + ' .enable-datetimepicker', allowClear: true });
         enableAjaxForm();
@@ -36,6 +35,7 @@ var LogisticAirfareCreate = function () {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
+        jsonParameters.logisticsUid = $('#Uid').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/ShowCreateAirfareModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -64,8 +64,8 @@ var LogisticAirfareCreate = function () {
             onSuccess: function (data) {
                 $(modalId).modal('hide');
 
-                if (typeof (LogisticSponsorsDataTableWidget) !== 'undefined') {
-                    LogisticSponsorsDataTableWidget.refreshData();
+                if (typeof (LogisticsAirfareWidget) !== 'undefined') {
+	                LogisticsAirfareWidget.init();
                 }
             },
             onError: function (data) {

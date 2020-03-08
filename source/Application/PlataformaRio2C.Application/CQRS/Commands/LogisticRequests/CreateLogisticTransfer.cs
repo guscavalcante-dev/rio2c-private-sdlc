@@ -22,33 +22,46 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>CreateLogisticSponsors</summary>
-    public class CreateLogisticTransport : BaseCommand
+    public class CreateLogisticTransfer : BaseCommand
     {
+        public Guid LogisticsUid { get; set; }
+
         [Display(Name = "FromPlace", ResourceType = typeof(Labels))]
-        public string From { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public int? FromAttendeePlaceId { get; set; }
 
         [Display(Name = "ToPlace", ResourceType = typeof(Labels))]
-        public string To { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public int? ToAttendeePlaceId { get; set; }
 
         [Display(Name = "Departure", ResourceType = typeof(Labels))]
-        public DateTimeOffset? Departure { get; set; }
-
-        [Display(Name = "Arrival", ResourceType = typeof(Labels))]
-        public DateTimeOffset? Arrival { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public DateTimeOffset? Date { get; set; }
+        
+        [Display(Name = "LogisticTransferStatus", ResourceType = typeof(Labels))]
+        public int? LogisticTransferStatusId { get; set; }
 
         [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
         public string AdditionalInfo { get; set; }
 
+        public List<AttendeePlaceDto> Places { get; set; }
+
         /// <summary>Initializes a new instance of the <see cref="CreateLogisticSponsors"/> class.</summary>
-        public CreateLogisticTransport(List<LogisticSponsorBaseDto> sponsors, List<LanguageDto> languagesDtos, string userInterfaceLanguage)
+        public CreateLogisticTransfer(Guid logisticsUid, List<AttendeePlaceDto> places)
+        {
+            this.LogisticsUid = logisticsUid;
+            this.Places = places;
+        }
+
+        public void UpdateLists(List<AttendeePlaceDto> attendeePlaceDtos)
+        {
+            this.Places = attendeePlaceDtos;
+        }
+
+        public CreateLogisticTransfer()
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="CreateLogisticSponsors"/> class.</summary>
-        public CreateLogisticTransport()
-        {
-        }
-        
         #region Private Methods
 
 

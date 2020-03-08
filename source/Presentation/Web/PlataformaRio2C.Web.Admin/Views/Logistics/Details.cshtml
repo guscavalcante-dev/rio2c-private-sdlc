@@ -19,7 +19,7 @@
                                     @Model.Name
                                 </span>
                                 <div class="kt-widget__action">
-                                    <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="LogisticRequestsMainInformationWidget.showUpdateModal();">
+                                    <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="LogisticsMainInformationWidget.showUpdateModal();">
                                         <i class="flaticon2-edit"></i>
                                     </button>
                                 </div>
@@ -124,349 +124,351 @@
 <div class="row">
     <div class="col-12">
         <div id="LogisticsAirfareWidget" class="kt-portlet" style="min-height: 325px;">
-            <div class="kt-portlet__head">
-                <div class="kt-portlet__head-label">
-                    <h3 class="kt-portlet__head-title">
-                        @Labels.Airfare
-                    </h3>
-                </div>
-                <div class="kt-portlet__head-toolbar">
-                    <div class="kt-portlet__head-actions">
-                        <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="LogisticAirfareCreate.showModal();">
-                            <i class="flaticon2-add-1"></i>
-                        </button>
+            @*<div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            @Labels.Airfare
+                        </h3>
                     </div>
-                </div>
-            </div>
-            <div class="kt-portlet__body">
-                <div class="row">
-                    <div class="col-12">
-                        <table class="table table-sm table-head-bg-brand table-body-scroll">
-                            <thead class="thead-inverse">
-                                <tr>
-                                    <th class="text-center">Nacional</th>
-                                    <th class="text-center">@Labels.FromPlace</th>
-                                    <th class="text-center">@Labels.DepartureDate</th>
-                                    <th class="text-center">@Labels.ToPlace</th>
-                                    <th class="text-center">@Labels.ArrivalDate</th>
-                                    <th class="text-center">@Labels.TicketNumber</th>
-                                    <th class="text-center">@Labels.AirfareTicket</th>
-                                    <th class="text-center">@Labels.CreateDate</th>
-                                    <th class="text-center">@Labels.UpdateDate</th>
-                                    <th class="text-center">@Labels.Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody class="rio2c-scroll kt-scroll ps rio2c-scroll-enabled" style="height: 200px; overflow: hidden;">
-                                <tr>
-                                    <td class="text-center ">
-                                        Sim
-                                    </td>
-                                    <td class="text-center ">
-                                        São Paulo
-                                    </td>
-                                    <td class="text-center ">
-                                        05/05/2020 01:00
-                                    </td>
-                                    <td class="text-center ">
-                                        São Paulo
-                                    </td>
-                                    <td class="text-center ">
-                                        05/05/2020 02:00
-                                    </td>
-                                    <td class="text-center ">
-                                        QWERTY12345
-                                    </td>
-                                    <td class="text-center ">
-                                        <a class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true"> <i class="la la-paperclip"></i> </a>
-                                    </td>
-                                    <td class="text-center ">
-                                        05/05/2020 02:00
-                                    </td>
-                                    <td class="text-center ">
-                                        05/05/2020 02:00
-                                    </td>
-                                    <td class="text-center ">
-                                        <span class="dropdown">
-                                            <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
-
-                                                <i class="la la-ellipsis-h"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <button class="dropdown-item" onclick="LogisticAirfareCreate.showModal();"><i class="la la-edit"></i>@Labels.Edit</button>
-                                                <a class="dropdown-item" href="@Url.Content("~/Assets/img/200484580088054.pdf")" target="_blank"><i class="la la-download"></i>@Labels.Download</a>
-                                                <button class="dropdown-item" onclick="LogisticAirfareDelete.showModal();"><i class="la la-remove"></i>@Labels.Remove</button>
-                                            </div>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center ">
-                                        Sim
-                                    </td>
-                                    <td class="text-center ">
-                                        São Paulo
-                                    </td>
-                                    <td class="text-center ">
-                                        05/05/2020 01:00
-                                    </td>
-                                    <td class="text-center ">
-                                        São Paulo
-                                    </td>
-                                    <td class="text-center ">
-                                        05/05/2020 02:00
-                                    </td>
-                                    <td class="text-center ">
-                                        QWERTY12345
-                                    </td>
-                                    <td class="text-center ">
-                                        <a class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true"> <i class="la la-paperclip"></i> </a>
-                                    </td>
-                                    <td class="text-center ">
-                                        05/05/2020 02:00
-                                    </td>
-                                    <td class="text-center ">
-                                        05/05/2020 02:00
-                                    </td>
-                                    <td class="text-center ">
-                                        <span class="dropdown">
-                                            <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
-
-                                                <i class="la la-ellipsis-h"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <button class="dropdown-item" onclick="LogisticAirfareCreate.showModal();"><i class="la la-edit"></i>@Labels.Edit</button>
-                                                <a class="dropdown-item" href="@Url.Content("~/Assets/img/200484580088054.pdf")" target="_blank"><i class="la la-download"></i>@Labels.Download</a>
-                                                <button class="dropdown-item" onclick="LogisticAirfareDelete.showModal();"><i class="la la-remove"></i>@Labels.Remove</button>
-                                            </div>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center ">
-                                        Sim
-                                    </td>
-                                    <td class="text-center ">
-                                        São Paulo
-                                    </td>
-                                    <td class="text-center ">
-                                        05/05/2020 01:00
-                                    </td>
-                                    <td class="text-center ">
-                                        São Paulo
-                                    </td>
-                                    <td class="text-center ">
-                                        05/05/2020 02:00
-                                    </td>
-                                    <td class="text-center ">
-                                        QWERTY12345
-                                    </td>
-                                    <td class="text-center ">
-                                        <a class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true"> <i class="la la-paperclip"></i> </a>
-                                    </td>
-                                    <td class="text-center ">
-                                        05/05/2020 02:00
-                                    </td>
-                                    <td class="text-center ">
-                                        05/05/2020 02:00
-                                    </td>
-                                    <td class="text-center ">
-                                        <span class="dropdown">
-                                            <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
-
-                                                <i class="la la-ellipsis-h"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <button class="dropdown-item" onclick="LogisticAirfareCreate.showModal();"><i class="la la-edit"></i>@Labels.Edit</button>
-                                                <a class="dropdown-item" href="@Url.Content("~/Assets/img/200484580088054.pdf")" target="_blank"><i class="la la-download"></i>@Labels.Download</a>
-                                                <button class="dropdown-item" onclick="LogisticAirfareDelete.showModal();"><i class="la la-remove"></i>@Labels.Remove</button>
-                                            </div>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center ">
-                                        Sim
-                                    </td>
-                                    <td class="text-center ">
-                                        São Paulo
-                                    </td>
-                                    <td class="text-center ">
-                                        05/05/2020 01:00
-                                    </td>
-                                    <td class="text-center ">
-                                        São Paulo
-                                    </td>
-                                    <td class="text-center ">
-                                        05/05/2020 02:00
-                                    </td>
-                                    <td class="text-center ">
-                                    </td>
-                                    <td class="text-center ">
-                                    </td>
-                                    <td class="text-center ">
-                                        05/05/2020 02:00
-                                    </td>
-                                    <td class="text-center ">
-                                        05/05/2020 02:00
-                                    </td>
-                                    <td class="text-center ">
-                                        <span class="dropdown">
-                                            <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
-                                                <i class="la la-ellipsis-h"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <button class="dropdown-item" onclick="LogisticAirfareCreate.showModal();"><i class="la la-edit"></i>@Labels.Edit</button>
-                                                <a class="dropdown-item" href="@Url.Content("~/Assets/img/200484580088054.pdf")" target="_blank"><i class="la la-download"></i>@Labels.Download</a>
-                                                <button class="dropdown-item" onclick="LogisticAirfareDelete.showModal();"><i class="la la-remove"></i>@Labels.Remove</button>
-                                            </div>
-                                        </span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-actions">
+                            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="LogisticAirfareCreate.showModal();">
+                                <i class="flaticon2-add-1"></i>
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </div>
+                </div>*@
+            @*<div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table table-sm table-head-bg-brand table-body-scroll">
+                                <thead class="thead-inverse">
+                                    <tr>
+                                        <th class="text-center">Nacional</th>
+                                        <th class="text-center">@Labels.FromPlace</th>
+                                        <th class="text-center">@Labels.DepartureDate</th>
+                                        <th class="text-center">@Labels.ToPlace</th>
+                                        <th class="text-center">@Labels.ArrivalDate</th>
+                                        <th class="text-center">@Labels.TicketNumber</th>
+                                        <th class="text-center">@Labels.AirfareTicket</th>
+                                        <th class="text-center">@Labels.CreateDate</th>
+                                        <th class="text-center">@Labels.UpdateDate</th>
+                                        <th class="text-center">@Labels.Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="rio2c-scroll kt-scroll ps rio2c-scroll-enabled" style="height: 200px; overflow: hidden;">
+                                    <tr>
+                                        <td class="text-center ">
+                                            Sim
+                                        </td>
+                                        <td class="text-center ">
+                                            São Paulo
+                                        </td>
+                                        <td class="text-center ">
+                                            05/05/2020 01:00
+                                        </td>
+                                        <td class="text-center ">
+                                            São Paulo
+                                        </td>
+                                        <td class="text-center ">
+                                            05/05/2020 02:00
+                                        </td>
+                                        <td class="text-center ">
+                                            QWERTY12345
+                                        </td>
+                                        <td class="text-center ">
+                                            <a class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true"> <i class="la la-paperclip"></i> </a>
+                                        </td>
+                                        <td class="text-center ">
+                                            05/05/2020 02:00
+                                        </td>
+                                        <td class="text-center ">
+                                            05/05/2020 02:00
+                                        </td>
+                                        <td class="text-center ">
+                                            <span class="dropdown">
+                                                <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
+
+                                                    <i class="la la-ellipsis-h"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <button class="dropdown-item" onclick="LogisticAirfareCreate.showModal();"><i class="la la-edit"></i>@Labels.Edit</button>
+                                                    <a class="dropdown-item" href="@Url.Content("~/Assets/img/200484580088054.pdf")" target="_blank"><i class="la la-download"></i>@Labels.Download</a>
+                                                    <button class="dropdown-item" onclick="LogisticAirfareDelete.showModal();"><i class="la la-remove"></i>@Labels.Remove</button>
+                                                </div>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center ">
+                                            Sim
+                                        </td>
+                                        <td class="text-center ">
+                                            São Paulo
+                                        </td>
+                                        <td class="text-center ">
+                                            05/05/2020 01:00
+                                        </td>
+                                        <td class="text-center ">
+                                            São Paulo
+                                        </td>
+                                        <td class="text-center ">
+                                            05/05/2020 02:00
+                                        </td>
+                                        <td class="text-center ">
+                                            QWERTY12345
+                                        </td>
+                                        <td class="text-center ">
+                                            <a class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true"> <i class="la la-paperclip"></i> </a>
+                                        </td>
+                                        <td class="text-center ">
+                                            05/05/2020 02:00
+                                        </td>
+                                        <td class="text-center ">
+                                            05/05/2020 02:00
+                                        </td>
+                                        <td class="text-center ">
+                                            <span class="dropdown">
+                                                <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
+
+                                                    <i class="la la-ellipsis-h"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <button class="dropdown-item" onclick="LogisticAirfareCreate.showModal();"><i class="la la-edit"></i>@Labels.Edit</button>
+                                                    <a class="dropdown-item" href="@Url.Content("~/Assets/img/200484580088054.pdf")" target="_blank"><i class="la la-download"></i>@Labels.Download</a>
+                                                    <button class="dropdown-item" onclick="LogisticAirfareDelete.showModal();"><i class="la la-remove"></i>@Labels.Remove</button>
+                                                </div>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center ">
+                                            Sim
+                                        </td>
+                                        <td class="text-center ">
+                                            São Paulo
+                                        </td>
+                                        <td class="text-center ">
+                                            05/05/2020 01:00
+                                        </td>
+                                        <td class="text-center ">
+                                            São Paulo
+                                        </td>
+                                        <td class="text-center ">
+                                            05/05/2020 02:00
+                                        </td>
+                                        <td class="text-center ">
+                                            QWERTY12345
+                                        </td>
+                                        <td class="text-center ">
+                                            <a class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true"> <i class="la la-paperclip"></i> </a>
+                                        </td>
+                                        <td class="text-center ">
+                                            05/05/2020 02:00
+                                        </td>
+                                        <td class="text-center ">
+                                            05/05/2020 02:00
+                                        </td>
+                                        <td class="text-center ">
+                                            <span class="dropdown">
+                                                <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
+
+                                                    <i class="la la-ellipsis-h"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <button class="dropdown-item" onclick="LogisticAirfareCreate.showModal();"><i class="la la-edit"></i>@Labels.Edit</button>
+                                                    <a class="dropdown-item" href="@Url.Content("~/Assets/img/200484580088054.pdf")" target="_blank"><i class="la la-download"></i>@Labels.Download</a>
+                                                    <button class="dropdown-item" onclick="LogisticAirfareDelete.showModal();"><i class="la la-remove"></i>@Labels.Remove</button>
+                                                </div>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center ">
+                                            Sim
+                                        </td>
+                                        <td class="text-center ">
+                                            São Paulo
+                                        </td>
+                                        <td class="text-center ">
+                                            05/05/2020 01:00
+                                        </td>
+                                        <td class="text-center ">
+                                            São Paulo
+                                        </td>
+                                        <td class="text-center ">
+                                            05/05/2020 02:00
+                                        </td>
+                                        <td class="text-center ">
+                                        </td>
+                                        <td class="text-center ">
+                                        </td>
+                                        <td class="text-center ">
+                                            05/05/2020 02:00
+                                        </td>
+                                        <td class="text-center ">
+                                            05/05/2020 02:00
+                                        </td>
+                                        <td class="text-center ">
+                                            <span class="dropdown">
+                                                <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
+                                                    <i class="la la-ellipsis-h"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <button class="dropdown-item" onclick="LogisticAirfareCreate.showModal();"><i class="la la-edit"></i>@Labels.Edit</button>
+                                                    <a class="dropdown-item" href="@Url.Content("~/Assets/img/200484580088054.pdf")" target="_blank"><i class="la la-download"></i>@Labels.Download</a>
+                                                    <button class="dropdown-item" onclick="LogisticAirfareDelete.showModal();"><i class="la la-remove"></i>@Labels.Remove</button>
+                                                </div>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>*@
         </div>
     </div>
 </div>
 <!--end:Airfare Widget-->
+
 <!--begin:Accommodations Widget-->
 <div class="row">
     <div class="col-12">
-        <div id="LogisticAccommodationWidget" class="kt-portlet" style="position: relative; zoom: 1;">
-            <div class="kt-portlet__head">
-                <div class="kt-portlet__head-label">
-                    <h3 class="kt-portlet__head-title">
-                        @Labels.Accommodation
-                    </h3>
-                </div>
-                <div class="kt-portlet__head-toolbar">
-                    <div class="kt-portlet__head-actions">
-                        <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="LogisticAccommodationCreate.showModal();">
-                            <i class="flaticon2-add-1"></i>
-                        </button>
+        <div id="LogisticsAccommodationWidget" class="kt-portlet" style="min-height: 325px;">
+            @*<div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            @Labels.Accommodation
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-actions">
+                            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="LogisticAccommodationCreate.showModal();">
+                                <i class="flaticon2-add-1"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="kt-portlet__body">
-                <div class="row">
-                    <div class="col-12">
-                        <table class="table table-sm table-head-bg-brand table-body-scroll">
-                            <thead class="thead-inverse">
-                                <tr>
-                                    <th class="text-center">Hotel</th>
-                                    <th class="text-center">@Labels.CheckInDate</th>
-                                    <th class="text-center">@Labels.CheckOutDate</th>
-                                    <th class="text-center">@Labels.CreateDate</th>
-                                    <th class="text-center">@Labels.UpdateDate</th>
-                                    <th class="text-center">@Labels.Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody class="rio2c-scroll kt-scroll ps rio2c-scroll-enabled" style="height: 200px; overflow: hidden;">
-                                <tr>
-                                    <td class="text-center ">
-                                        Ipsum Lorem Budget
-                                    </td>
-                                    <td class="text-center ">
-                                        05/05/2020 01:00
-                                    </td>
-                                    <td class="text-center ">
-                                        05/05/2020 02:00
-                                    </td>
-                                    <td class="text-center ">
-                                        05/05/2020 02:00
-                                    </td>
-                                    <td class="text-center ">
-                                        05/05/2020 02:00
-                                    </td>
-                                    <td class="text-center ">
-                                        <span class="dropdown">
-                                            <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
-                                                <i class="la la-ellipsis-h"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <button class="dropdown-item" onclick="LogisticAccommodationCreate.showModal();"><i class="la la-edit"></i>@Labels.Edit</button>
-                                                <button class="dropdown-item" onclick="LogisticAirfareDelete.showModal();"><i class="la la-remove"></i>@Labels.Remove</button>
-                                            </div>
-                                        </span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table table-sm table-head-bg-brand table-body-scroll">
+                                <thead class="thead-inverse">
+                                    <tr>
+                                        <th class="text-center">Hotel</th>
+                                        <th class="text-center">@Labels.CheckInDate</th>
+                                        <th class="text-center">@Labels.CheckOutDate</th>
+                                        <th class="text-center">@Labels.CreateDate</th>
+                                        <th class="text-center">@Labels.UpdateDate</th>
+                                        <th class="text-center">@Labels.Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="rio2c-scroll kt-scroll ps rio2c-scroll-enabled" style="height: 200px; overflow: hidden;">
+                                    <tr>
+                                        <td class="text-center ">
+                                            Ipsum Lorem Budget
+                                        </td>
+                                        <td class="text-center ">
+                                            05/05/2020 01:00
+                                        </td>
+                                        <td class="text-center ">
+                                            05/05/2020 02:00
+                                        </td>
+                                        <td class="text-center ">
+                                            05/05/2020 02:00
+                                        </td>
+                                        <td class="text-center ">
+                                            05/05/2020 02:00
+                                        </td>
+                                        <td class="text-center ">
+                                            <span class="dropdown">
+                                                <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
+                                                    <i class="la la-ellipsis-h"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <button class="dropdown-item" onclick="LogisticAccommodationCreate.showModal();"><i class="la la-edit"></i>@Labels.Edit</button>
+                                                    <button class="dropdown-item" onclick="LogisticAirfareDelete.showModal();"><i class="la la-remove"></i>@Labels.Remove</button>
+                                                </div>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
-            </div>
+                </div>*@
         </div>
     </div>
 </div>
 <!--end:Airfare Widget-->
+
 <!--begin:Accommodations Widget-->
 <div class="row">
     <div class="col-12">
-        <div id="LogisticTransportWidget" class="kt-portlet" style="position: relative; zoom: 1;">
-            <div class="kt-portlet__head">
-                <div class="kt-portlet__head-label">
-                    <h3 class="kt-portlet__head-title">
-                        @Labels.LogisticsTransfer
-                    </h3>
-                </div>
-                <div class="kt-portlet__head-toolbar">
-                    <div class="kt-portlet__head-actions">
-                        <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="LogisticTransportCreate.showModal();">
-                            <i class="flaticon2-add-1"></i>
-                        </button>
+        <div id="LogisticsTransferWidget" class="kt-portlet" style="min-height: 325px;">
+            @*<div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            @Labels.LogisticsTransfer
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-actions">
+                            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="LogisticTransportCreate.showModal();">
+                                <i class="flaticon2-add-1"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="kt-portlet__body">
-                <div class="row">
-                    <div class="col-12">
-                        <table class="table table-sm table-head-bg-brand table-body-scroll">
-                            <thead class="thead-inverse">
-                                <tr>
-                                    <th class="text-center">@Labels.FromPlace</th>
-                                    <th class="text-center">@Labels.ToPlace</th>
-                                    <th class="text-center">@Labels.Departure</th>
-                                    <th class="text-center">@Labels.CreateDate</th>
-                                    <th class="text-center">@Labels.UpdateDate</th>
-                                    <th class="text-center">@Labels.Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody class="rio2c-scroll kt-scroll ps rio2c-scroll-enabled" style="height: 200px; overflow: hidden;">
-                                <tr>
-                                    <td class="text-center">
-                                        Origem
-                                    </td>
-                                    <td class="text-center">
-                                        Destino
-                                    </td>
-                                    <td class="text-center">
-                                        05/05/2020 01:00
-                                    </td>
-                                    <td class="text-center">
-                                        05/05/2020 02:00
-                                    </td>
-                                    <td class="text-center">
-                                        05/05/2020 02:00
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="dropdown">
-                                            <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
-                                                <i class="la la-ellipsis-h"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <button class="dropdown-item" onclick="LogisticTransportCreate.showModal();"><i class="la la-edit"></i>@Labels.Edit</button>
-                                                <button class="dropdown-item" onclick="LogisticAirfareDelete.showModal();"><i class="la la-remove"></i>@Labels.Remove</button>
-                                            </div>
-                                        </span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table table-sm table-head-bg-brand table-body-scroll">
+                                <thead class="thead-inverse">
+                                    <tr>
+                                        <th class="text-center">@Labels.FromPlace</th>
+                                        <th class="text-center">@Labels.ToPlace</th>
+                                        <th class="text-center">@Labels.Departure</th>
+                                        <th class="text-center">@Labels.CreateDate</th>
+                                        <th class="text-center">@Labels.UpdateDate</th>
+                                        <th class="text-center">@Labels.Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="rio2c-scroll kt-scroll ps rio2c-scroll-enabled" style="height: 200px; overflow: hidden;">
+                                    <tr>
+                                        <td class="text-center">
+                                            Origem
+                                        </td>
+                                        <td class="text-center">
+                                            Destino
+                                        </td>
+                                        <td class="text-center">
+                                            05/05/2020 01:00
+                                        </td>
+                                        <td class="text-center">
+                                            05/05/2020 02:00
+                                        </td>
+                                        <td class="text-center">
+                                            05/05/2020 02:00
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="dropdown">
+                                                <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
+                                                    <i class="la la-ellipsis-h"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <button class="dropdown-item" onclick="LogisticTransportCreate.showModal();"><i class="la la-edit"></i>@Labels.Edit</button>
+                                                    <button class="dropdown-item" onclick="LogisticAirfareDelete.showModal();"><i class="la la-remove"></i>@Labels.Remove</button>
+                                                </div>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
-            </div>
+                </div>*@
         </div>
     </div>
 </div>
@@ -491,9 +493,8 @@
 
         jQuery(document).ready(function () {
             LogisticsAirfareWidget.init();
-            //ConferencesMainInformationWidget.init();
-            //ConferencesTracksAndPresentationFormatsWidget.init();
-            //ConferencesParticipantsWidget.init();
+            LogisticsTransferWidget.init();
+            LogisticsAccommodationWidget.init();
         });
     </script>
 }

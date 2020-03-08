@@ -2294,4 +2294,16 @@
     <value>Only keynotes</value>
     <comment>Keynotes somente</comment>
   </data>
+  <data name="International" xml:space="preserve">
+    <value>International</value>
+    <comment>Internacional</comment>
+  </data>
+  <data name="National" xml:space="preserve">
+    <value>National</value>
+    <comment>Nacional</comment>
+  </data>
+  <data name="Place" xml:space="preserve">
+    <value>Place</value>
+    <comment>Local</comment>
+  </data>
 </root>

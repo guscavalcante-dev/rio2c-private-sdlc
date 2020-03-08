@@ -18,7 +18,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>DeleteLogisticSponsors</summary>
     public class DeleteLogisticRequest : BaseCommand
     {
-        public Guid RequestUid { get; set; }
+        public Guid Uid { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="DeleteLogisticSponsors"/> class.</summary>
         public DeleteLogisticRequest()

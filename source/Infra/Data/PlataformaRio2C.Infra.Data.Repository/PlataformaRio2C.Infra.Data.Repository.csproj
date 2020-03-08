@@ -168,7 +168,12 @@
     <Compile Include="Repositories\Country\CountryRepository.cs" />
     <Compile Include="Repositories\Country\StateRepository.cs" />
     <Compile Include="Repositories\Logistics\AttendeeLogisticSponsorsRepository.cs" />
+    <Compile Include="Repositories\Logistics\PlaceRepository.cs" />
+    <Compile Include="Repositories\Logistics\AttendeePlacesRepository.cs" />
+    <Compile Include="Repositories\Logistics\LogisticAirfareRepository.cs" />
+    <Compile Include="Repositories\Logistics\LogisticTransferRepository.cs" />
     <Compile Include="Repositories\Logistics\LogisticSponsorsRepository.cs" />
+    <Compile Include="Repositories\Logistics\LogisticAccommodationRepository.cs" />
     <Compile Include="Repositories\Logistics\LogisticsRepository.cs" />
     <Compile Include="Repositories\Music\MusicProjectRepository.cs" />
     <Compile Include="Repositories\Music\MusicGenreRepository.cs" />

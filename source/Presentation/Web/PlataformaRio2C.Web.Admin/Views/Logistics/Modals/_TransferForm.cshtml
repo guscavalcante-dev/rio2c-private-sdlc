@@ -1,0 +1,32 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model PlataformaRio2C.Application.CQRS.Commands.CreateLogisticTransfer
+
+@Html.HiddenFor(m => m.LogisticsUid)
+
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.FromAttendeePlaceId, Labels.Place, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.FromAttendeePlaceId, new SelectList(Model.Places, "Id", "Name", Model.FromAttendeePlaceId), $"{Labels.Select}...", new { @class = "form-control enable-select2" })
+        @Html.ValidationMessageFor(m => m.FromAttendeePlaceId, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.ToAttendeePlaceId, Labels.Place, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.ToAttendeePlaceId, new SelectList(Model.Places, "Id", "Name", Model.ToAttendeePlaceId), $"{Labels.Select}...", new { @class = "form-control enable-select2" })
+        @Html.ValidationMessageFor(m => m.ToAttendeePlaceId, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Date, new { @class = "control-label" })
+        @Html.TextBox("Date", Model?.Date?.ToString("g"), new { @class = "form-control enable-datetimepicker" })
+        @Html.ValidationMessageFor(m => m.Date, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group col-md-12">
+        @Html.LabelFor(m => m.AdditionalInfo, new { @class = "control-label" })
+        @Html.TextAreaFor(m => m.AdditionalInfo, new { @class = "form-control", rows = 8 })
+        @Html.ValidationMessageFor(m => m.AdditionalInfo, "", new { @class = "text-danger" })
+    </div>
+</div>

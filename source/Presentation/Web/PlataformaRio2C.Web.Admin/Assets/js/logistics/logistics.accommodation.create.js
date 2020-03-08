@@ -36,6 +36,7 @@ var LogisticAccommodationCreate = function () {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
+        jsonParameters.logisticsUid = $('#Uid').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/ShowCreateAccommodationModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -64,8 +65,8 @@ var LogisticAccommodationCreate = function () {
             onSuccess: function (data) {
                 $(modalId).modal('hide');
 
-                if (typeof (LogisticSponsorsDataTableWidget) !== 'undefined') {
-                    LogisticSponsorsDataTableWidget.refreshData();
+                if (typeof (LogisticsAccommodationWidget) !== 'undefined') {
+	                LogisticsAccommodationWidget.init();
                 }
             },
             onError: function (data) {

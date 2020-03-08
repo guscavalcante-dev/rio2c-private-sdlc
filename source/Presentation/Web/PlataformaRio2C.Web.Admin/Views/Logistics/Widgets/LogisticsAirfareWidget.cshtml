@@ -1,7 +1,7 @@
 ﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
 @using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Domain.Statics
-@model ConferenceDto
+@model List<LogisticAirfareDto>
 <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
         <h3 class="kt-portlet__head-title">
@@ -22,29 +22,68 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="kt-widget4">
-                        @if (Model != null)
+                        @if (Model != null && Model.Any())
                         {
                             <div class="col-12">
                                 <table class="table table-sm table-head-bg-brand table-body-scroll">
                                     <thead class="thead-inverse">
-                                        <tr>
-                                            <th>@Labels.Name</th>
-                                            <th class="text-center">@Labels.Year</th>
-                                        </tr>
+                                    <tr>
+                                        <th class="text-center">@Labels.IsNational</th>
+                                        <th class="text-center">@Labels.FromPlace</th>
+                                        <th class="text-center">@Labels.DepartureDate</th>
+                                        <th class="text-center">@Labels.ToPlace</th>
+                                        <th class="text-center">@Labels.ArrivalDate</th>
+                                        <th class="text-center">@Labels.TicketNumber</th>
+                                        <th class="text-center">@Labels.AirfareTicket</th>
+                                        <th class="text-center">@Labels.CreateDate</th>
+                                        <th class="text-center">@Labels.UpdateDate</th>
+                                        <th class="text-center">@Labels.Actions</th>
+                                    </tr>   
                                     </thead>
                                     <tbody class="rio2c-scroll" style="height: 180px;">
-                                        @*foreach (var releasedMusicProject in Model)
+                                        @foreach (var dto in Model)
                                         {
-                                            <tr>
-                                                @*<td>
-                                                        <a href="@Url.Action("Details", "Conferences", new { Area = "", id = musicBandTeamMember.Conference.Uid })" target="_blank">
-                                                            @(musicBandTeamMember.GetConferenceTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ConferenceTitle?.Value)
-                                                        </a>
-                                                    </td>
-                                                <td>@(releasedMusicProject.Name)</td>
-                                                <td class="text-center">@(releasedMusicProject.Year)</td>
-                                            </tr>
-                                        }*@
+                                        <tr>
+                                            <td class="text-center">
+                                                @(dto.IsNational ? Labels.Yes : Labels.No)
+                                            </td>
+                                            <td class="text-center">
+                                                @dto.From
+                                            </td>
+                                            <td class="text-center">
+                                                @dto.DepartureDate.ToString("g")
+                                            </td>
+                                            <td class="text-center">
+                                                @dto.To
+                                            </td>
+                                            <td class="text-center">
+                                                @dto.ArrivalDate.ToString("g")
+                                            </td>
+                                            <td class="text-center">
+                                                @dto.TicketNumber
+                                            </td>
+                                            <td class="text-center">
+                                            </td>
+                                            <td class="text-center">
+                                                @dto.CreateDate.ToString("g")
+                                            </td>
+                                            <td class="text-center">
+                                                @dto.UpdateDate.ToString("g")
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="dropdown">
+                                                    <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
+                                                        <i class="la la-ellipsis-h"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <button class="dropdown-item" onclick="LogisticAirfareUpdate.showModal('@dto.Uid');"><i class="la la-edit"></i>@Labels.Edit</button>
+                                                        <a class="dropdown-item" href="@Url.Content("~/Assets/img/200484580088054.pdf")" target="_blank"><i class="la la-download"></i>@Labels.Download</a>
+                                                        <button class="dropdown-item" onclick="LogisticAirfareDelete.showModal('@dto.Uid');"><i class="la la-remove"></i>@Labels.Remove</button>
+                                                    </div>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        }
                                     </tbody>
                                 </table>
                             </div>
@@ -53,7 +92,7 @@
                         {
                             <div class="row mt-3">
                                 <div class="col-12 text-center">
-                                    <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.ProjectsReleased, Labels.FoundMP)</span>
+                                    <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.Requests, Labels.FoundFP)</span>
                                 </div>
                             </div>
                         }

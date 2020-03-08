@@ -15,20 +15,20 @@
 var LogisticAirfareDelete = function () {
 
     // Delete -------------------------------------------------------------------------------------
-    var executeDelete = function (sponsorUid) {
+    var executeDelete = function (uid) {
         MyRio2cCommon.block();
 
         var jsonParameters = new Object();
-        jsonParameters.sponsorUid = sponsorUid;
+        jsonParameters.uid = uid;
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/LogisticRequests/Delete'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/DeleteLogisticAirfare'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
                 onSuccess: function () {
-                    if (typeof (LogisticSponsorsDataTableWidget) !== 'undefined') {
-                        LogisticSponsorsDataTableWidget.refreshData();
-                    }
+	                if (typeof (LogisticsAirfareWidget) !== 'undefined') {
+		                LogisticsAirfareWidget.init();
+	                }
                 },
                 // Error
                 onError: function () {
@@ -42,36 +42,32 @@ var LogisticAirfareDelete = function () {
         });
     };
 
-    var showModal = function (collaboratorUid, isDeletingFromCurrentEdition) {
-        var message = labels.deleteConfirmationMessage;
+    var showModal = function (uid) {
+	    var message = labels.deleteConfirmationMessage;
 
-        if (isDeletingFromCurrentEdition) {
-            message = labels.deleteCurrentEditionConfirmationMessage;
-        }
-
-        bootbox.dialog({
-            message: message,
-            buttons: {
-                cancel: {
-                    label: labels.cancel,
-                    className: "btn btn-secondary mr-auto",
-                    callback: function () {
-                    }
-                },
-                confirm: {
-                    label: labels.remove,
-                    className: "btn btn-danger",
-                    callback: function () {
-                        executeDelete(collaboratorUid);
-                    }
-                }
-            }
-        });
+	    bootbox.dialog({
+		    message: message,
+		    buttons: {
+			    cancel: {
+				    label: labels.cancel,
+				    className: "btn btn-secondary mr-auto",
+				    callback: function () {
+				    }
+			    },
+			    confirm: {
+				    label: labels.remove,
+				    className: "btn btn-danger",
+				    callback: function () {
+					    executeDelete(uid);
+				    }
+			    }
+		    }
+	    });
     };
 
     return {
-        showModal: function (collaboratorUid, isDeletingFromCurrentEdition) {
-            showModal(collaboratorUid, isDeletingFromCurrentEdition);
-        }
+	    showModal: function (uid) {
+		    showModal(uid);
+	    }
     };
 }();

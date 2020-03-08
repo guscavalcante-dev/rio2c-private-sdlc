@@ -19,7 +19,7 @@ using PlataformaRio2C.Domain.Validation;
 namespace PlataformaRio2C.Domain.Entities
 {
     /// <summary>AttendeePlaces</summary>
-    public class AttendeePlaces : Entity
+    public class AttendeePlace : Entity
     {
         public int EditionId { get; private set; }
         public int PlaceId { get; private set; }

@@ -1,5 +1,5 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateLogisticTransport
-<div class="modal fade" id="CreateLogisticTransportModal" role="dialog" aria-labelledby="CreateLogisticTransportModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateLogisticTransfer
+<div class="modal fade" id="CreateLogisticTransferModal" role="dialog" aria-labelledby="CreateLogisticTransferModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -9,16 +9,16 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Update", "Logistics", new { Area = "" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "CreateLogisticTransportForm" }))
+                @using (Html.BeginForm("CreateTransfer", "Logistics", new { Area = "" }, FormMethod.Post, new { id = "CreateLogisticTransferForm" }))
                 {
                     <div id="form-container">
-                        @Html.Partial("Modals/_TransportForm", Model)
+                        @Html.Partial("Modals/_TransferForm", Model)
                     </div>
                 }
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">@Labels.Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="$('#UpdateLogisticRequestForm').submit();">@Labels.Save</button>
+                <button type="button" class="btn btn-primary" onclick="$('#CreateLogisticTransferForm').submit();">@Labels.Save</button>
             </div>
         </div>
     </div>

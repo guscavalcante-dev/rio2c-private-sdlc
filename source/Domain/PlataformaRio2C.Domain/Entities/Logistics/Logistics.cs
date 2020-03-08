@@ -65,6 +65,13 @@ namespace PlataformaRio2C.Domain.Entities
         /// <value>The airport transfer attendee logistic sponsor identifier.</value>
         public int? AirportTransferAttendeeLogisticSponsorId { get; private set; }
 
+        public void Delete(int userId)
+        {
+            this.IsDeleted = true;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+        
         /// <summary>
         /// Gets a value indicating whether this instance is city transfer required.
         /// </summary>

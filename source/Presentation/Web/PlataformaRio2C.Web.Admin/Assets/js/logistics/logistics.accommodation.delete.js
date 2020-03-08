@@ -15,20 +15,20 @@
 var LogisticAccommodationDelete = function () {
 
     // Delete -------------------------------------------------------------------------------------
-    var executeDelete = function (sponsorUid) {
+    var executeDelete = function (uid) {
         MyRio2cCommon.block();
 
         var jsonParameters = new Object();
-        jsonParameters.sponsorUid = sponsorUid;
+        jsonParameters.uid = uid;
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/LogisticRequests/Delete'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/DeleteLogisticAccommodation'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
                 onSuccess: function () {
-                    if (typeof (LogisticSponsorsDataTableWidget) !== 'undefined') {
-                        LogisticSponsorsDataTableWidget.refreshData();
-                    }
+	                if (typeof (LogisticsAccommodationWidget) !== 'undefined') {
+		                LogisticsAccommodationWidget.init();
+	                }
                 },
                 // Error
                 onError: function () {
@@ -42,13 +42,9 @@ var LogisticAccommodationDelete = function () {
         });
     };
 
-    var showModal = function (collaboratorUid, isDeletingFromCurrentEdition) {
+    var showModal = function (uid) {
         var message = labels.deleteConfirmationMessage;
-
-        if (isDeletingFromCurrentEdition) {
-            message = labels.deleteCurrentEditionConfirmationMessage;
-        }
-
+        
         bootbox.dialog({
             message: message,
             buttons: {
@@ -62,7 +58,7 @@ var LogisticAccommodationDelete = function () {
                     label: labels.remove,
                     className: "btn btn-danger",
                     callback: function () {
-                        executeDelete(collaboratorUid);
+                        executeDelete(uid);
                     }
                 }
             }
@@ -70,8 +66,8 @@ var LogisticAccommodationDelete = function () {
     };
 
     return {
-        showModal: function (collaboratorUid, isDeletingFromCurrentEdition) {
-            showModal(collaboratorUid, isDeletingFromCurrentEdition);
+        showModal: function (uid) {
+            showModal(uid);
         }
     };
 }();

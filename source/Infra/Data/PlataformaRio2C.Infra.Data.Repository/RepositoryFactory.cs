@@ -346,6 +346,7 @@ namespace PlataformaRio2C.Infra.Data.Repository
         //    }
         //}
 
+        #region Logistics
 
         private ILogisticsRepository _logisticsRepository;
         public ILogisticsRepository LogisticsRepository
@@ -355,6 +356,53 @@ namespace PlataformaRio2C.Infra.Data.Repository
                 return this._logisticsRepository ?? (this._logisticsRepository = new LogisticsRepository(_context));
             }
         }
+
+        private IAttendeePlacesRepository _attendeePlacesRepository;
+        public IAttendeePlacesRepository AttendeePlacesRepository
+        {
+            get
+            {
+                return this._attendeePlacesRepository  ?? (this._attendeePlacesRepository = new AttendeePlacesRepository(_context));
+            }
+        }
+
+        private IPlaceRepository _placesRepository;
+        public IPlaceRepository PlaceRepository
+        {
+            get
+            {
+                return this._placesRepository ?? (this._placesRepository = new PlaceRepository(_context));
+            }
+        }
+
+        private ILogisticAirfareRepository _logisticAirfareRepository;
+        public ILogisticAirfareRepository LogisticAirfareRepository
+        {
+            get
+            {
+                return this._logisticAirfareRepository ?? (this._logisticAirfareRepository = new LogisticAirfareRepository(_context));
+            }
+        }
+        
+        private ILogisticAccommodationRepository _logisticAccommodationRepository;
+        public ILogisticAccommodationRepository LogisticAccommodationRepository
+        {
+            get
+            {
+                return this._logisticAccommodationRepository ?? (this._logisticAccommodationRepository = new LogisticAccommodationRepository(_context));
+            }
+        }
+
+        private ILogisticTransferRepository _logisticTransferRepository;
+        public ILogisticTransferRepository LogisticTransferRepository
+        {
+            get
+            {
+                return this._logisticTransferRepository ?? (this._logisticTransferRepository = new LogisticTransferRepository(_context));
+            }
+        }
+
+        #endregion Logistics
 
         private IConferenceRepository _conferenceRepository;
         public IConferenceRepository ConferenceRepository

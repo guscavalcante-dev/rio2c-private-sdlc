@@ -28,5 +28,6 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<LogisticSponsorBaseDto> FindLogisticSponsorDtoByUid(Guid sponsorUid);
         Task<List<LogisticSponsorBaseDto>> FindAllDtosByEditionUidAsync(int editionDtoId);
         Task<List<LogisticSponsorBaseDto>> FindAllDtosByIsOther(int editionDtoId);
+        Task<Guid> GetByIsOthersRequired();
     }    
 }

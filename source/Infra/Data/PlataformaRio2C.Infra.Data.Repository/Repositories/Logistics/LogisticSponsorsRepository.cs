@@ -251,5 +251,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                     IsOtherRequired = c.IsOtherRequired
                 }).ToListAsync();
         }
+
+        public async Task<Guid> GetByIsOthersRequired()
+        {
+            return await this.GetBaseQuery(true)
+                .Where(e => e.IsOtherRequired)
+                .Select(e => e.Uid)
+                .FirstOrDefaultAsync();
+        }
     }
 }

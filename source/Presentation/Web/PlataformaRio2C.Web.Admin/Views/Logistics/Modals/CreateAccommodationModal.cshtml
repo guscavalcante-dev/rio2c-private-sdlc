@@ -9,7 +9,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Update", "Logistics", new { Area = "" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "CreateLogisticAccommodationForm" }))
+                @using (Html.BeginForm("CreateAccommodation", "Logistics", new { Area = "" }, FormMethod.Post, new { id = "CreateLogisticAccommodationForm" }))
                 {               
                     <div id="form-container">
                         @Html.Partial("Modals/_AccommodationForm", Model)
@@ -18,7 +18,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">@Labels.Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="$('#UpdateLogisticRequestForm').submit();">@Labels.Save</button>
+                <button type="button" class="btn btn-primary" onclick="$('#CreateLogisticAccommodationForm').submit();">@Labels.Save</button>
             </div>
         </div>
     </div>

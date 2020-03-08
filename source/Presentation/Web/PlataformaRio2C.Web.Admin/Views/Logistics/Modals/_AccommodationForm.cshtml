@@ -4,24 +4,25 @@
     var editionDto = ViewBag.EditionDto as EditionDto;
 }
 
+@Html.HiddenFor(m => m.LogisticsUid)
+
 <div class="row">
     <div class="form-group col-md-12">
-        <label class = "control-label">Hospedagem</label>
-        <select class="form-control">
-            <option></option>
-        </select>
+        @Html.LabelFor(m=> m.PlaceId, Labels.Place, new { @class = "control-label" })
+        @Html.DropDownListFor(m => m.PlaceId, new SelectList(Model.Places, "Id", "Name", Model.PlaceId), $"{Labels.Select}...", new { @class = "form-control enable-select2" })
+        @Html.ValidationMessageFor(m => m.PlaceId, "", new { @class = "text-danger" })
     </div>
 </div>
 
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.CheckInDate, new { @class = "control-label" })
-        @Html.TextBox("Date", Model?.CheckInDate?.Date.ToShortDateString(), new { @class = "form-control enable-datetimepicker" })
+        @Html.TextBox("CheckInDate", Model?.CheckInDate?.ToString("g"), new { @class = "form-control enable-datetimepicker" })
         @Html.ValidationMessageFor(m => m.CheckInDate, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.CheckOutDate, new { @class = "control-label" })
-        @Html.TextBox("Date", Model?.CheckOutDate?.Date.ToShortDateString(), new { @class = "form-control enable-datetimepicker" })
+        @Html.TextBox("CheckOutDate", Model?.CheckOutDate?.ToString("g"), new { @class = "form-control enable-datetimepicker" })
         @Html.ValidationMessageFor(m => m.CheckOutDate, "", new { @class = "text-danger" })
     </div>
 </div>
