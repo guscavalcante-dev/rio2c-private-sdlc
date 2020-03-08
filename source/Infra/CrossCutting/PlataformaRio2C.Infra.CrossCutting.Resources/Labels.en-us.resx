@@ -2250,4 +2250,16 @@
     <value>Regenerate Calendar</value>
     <comment>Regerar Agenda</comment>
   </data>
+  <data name="Negotiation" xml:space="preserve">
+    <value>Negotiation</value>
+    <comment>Negociação</comment>
+  </data>
+  <data name="ScheduledNegotiations" xml:space="preserve">
+    <value>Scheduled negotiations</value>
+    <comment>Negociações agendadas</comment>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+    <comment>Tipo</comment>
+  </data>
 </root>

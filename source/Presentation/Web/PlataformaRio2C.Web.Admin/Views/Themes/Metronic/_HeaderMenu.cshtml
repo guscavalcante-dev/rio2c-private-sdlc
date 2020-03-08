@@ -81,11 +81,11 @@
                                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "MeetingParameters", "Audiovisual")" aria-haspopup="true">
                                         <a href="@Url.Action("Index", "MeetingParameters", new { Area = "Audiovisual" })" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.Parameters</span></a>
                                     </li>
-                                    <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Meetings", "Audiovisual")" aria-haspopup="true">
+                                    <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "Index", "Meetings", "Audiovisual")" aria-haspopup="true">
                                         <a href="@Url.Action("Index", "Meetings", new { Area = "Audiovisual" })" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.GenerateCalendar</span></a>
                                     </li>
-                                    <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "Index", "ScheduleOneToOneMeetings", null)" aria-haspopup="true">
-                                        <a @*href="@Url.Action("Index", "ScheduleOneToOneMeetings", new { Area = "" })"*@ class="kt-menu__link "><span class="kt-menu__link-text">@Labels.ViewCalendar</span></a>
+                                    <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "Scheduled", "Meetings", "Audiovisual")" aria-haspopup="true">
+                                        <a href="@Url.Action("Scheduled", "Meetings", new { Area = "Audiovisual" })" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.ScheduledNegotiations</span></a>
                                     </li>
                                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "UnscheduledNegotiations", "ScheduleOneToOneMeetings", null)" aria-haspopup="true">
                                         <a @*href="@Url.Action("UnscheduledNegotiations", "ScheduleOneToOneMeetings", new { Area = "" })"*@ class="kt-menu__link "><span class="kt-menu__link-text">@Labels.UnscheduledNegotiations</span></a>

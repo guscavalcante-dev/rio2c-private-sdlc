@@ -2257,4 +2257,16 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Regerar Agenda</value>
     <comment>Regerar Agenda</comment>
   </data>
+  <data name="Negotiation" xml:space="preserve">
+    <value>Negociação</value>
+    <comment>Negociação</comment>
+  </data>
+  <data name="ScheduledNegotiations" xml:space="preserve">
+    <value>Negociações agendadas</value>
+    <comment>Negociações agendadas</comment>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Tipo</value>
+    <comment>Tipo</comment>
+  </data>
 </root>

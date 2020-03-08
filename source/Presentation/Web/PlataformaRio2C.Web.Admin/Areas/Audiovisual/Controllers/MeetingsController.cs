@@ -4,7 +4,7 @@
 // Created          : 03-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-07-2020
+// Last Modified On : 03-08-2020
 // ***********************************************************************
 // <copyright file="MeetingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -37,6 +37,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual)]
     public class MeetingsController : BaseController
     {
+        private readonly INegotiationRepository negotiationRepo;
         private readonly INegotiationConfigRepository negotiationConfigRepo;
         private readonly INegotiationRoomConfigRepository negotiationRoomConfigRepo;
         private readonly IRoomRepository roomRepo;
@@ -45,19 +46,22 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <summary>Initializes a new instance of the <see cref="MeetingsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
+        /// <param name="negotiationRepository">The negotiation repository.</param>
         /// <param name="negotiationConfigRepository">The negotiation configuration repository.</param>
         /// <param name="negotiationRoomConfigRepository">The negotiation room configuration repository.</param>
         /// <param name="roomRepository">The room repository.</param>
         /// <param name="projectBuyerEvaluationRepository">The project buyer evaluation repository.</param>
         public MeetingsController(
-            IMediator commandBus, 
+            IMediator commandBus,
             IdentityAutenticationService identityController,
+            INegotiationRepository negotiationRepository,
             INegotiationConfigRepository negotiationConfigRepository,
             INegotiationRoomConfigRepository negotiationRoomConfigRepository,
             IRoomRepository roomRepository,
             IProjectBuyerEvaluationRepository projectBuyerEvaluationRepository)
             : base(commandBus, identityController)
         {
+            this.negotiationRepo = negotiationRepository;
             this.negotiationConfigRepo = negotiationConfigRepository;
             this.negotiationRoomConfigRepo = negotiationRoomConfigRepository;
             this.roomRepo = roomRepository;
@@ -197,6 +201,54 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         }
 
         #endregion
+
+        #endregion
+
+        #endregion
+
+        #region Scheduled
+
+        /// <summary>Scheduleds this instance.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Scheduled()
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.GenerateCalendar, Url.Action("Scheduled", "Meetings", new { Area = "Audiovisual" }))
+            });
+
+            #endregion
+
+            return View();
+        }
+
+        #region DataTable Widget
+
+        /// <summary>Searches the scheduled.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> SearchScheduled()
+        {
+            var negotiations = await this.negotiationRepo.FindScheduledWidgetDtoAsync(this.EditionDto.Id);
+
+            return new JsonResult()
+            {
+                Data = new
+                {
+                    status = "success",
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Widgets/ScheduledWidget", negotiations), divIdOrClass = "#AudiovisualMeetingsScheduledWidget" },
+                    }
+                },
+                //ContentType = contentType,
+                //ContentEncoding = contentEncoding,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                MaxJsonLength = Int32.MaxValue
+            };
+        }
 
         #endregion
 

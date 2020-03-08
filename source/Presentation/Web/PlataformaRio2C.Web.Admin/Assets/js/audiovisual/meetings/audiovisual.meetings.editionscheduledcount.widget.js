@@ -4,18 +4,18 @@
 // Created          : 03-07-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-07-2020
+// Last Modified On : 03-08-2020
 // ***********************************************************************
-// <copyright file="audiovisual.meetingparameters.editionnotscheduledcount.widget.js" company="Softo">
+// <copyright file="audiovisual.meetings.editionscheduledcount.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var AudiovisualMeetingsEditionNotScheduledCountWidget = function () {
+var AudiovisualMeetingsEditionScheduledCountWidget = function () {
 
-    var widgetElementId = '#AudiovisualMeetingsEditionNotScheduledCountWidget';
-    var chartElementId = 'AudiovisualMeetingsEditionNotScheduledCountChart';
+    var widgetElementId = '#AudiovisualMeetingsEditionScheduledCountWidget';
+    var chartElementId = 'AudiovisualMeetingsEditionScheduledCountChart';
     var widgetElement = $(widgetElementId);
 
     // Show ---------------------------------------------------------------------------------------
@@ -119,7 +119,7 @@ var AudiovisualMeetingsEditionNotScheduledCountWidget = function () {
         jsonParameters.keyword = $('#Search').val();
         jsonParameters.interestUid = $('#InterestUid').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Meetings/ShowEditionNotScheduledCountWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Meetings/ShowEditionScheduledCountWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

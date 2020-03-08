@@ -4,18 +4,18 @@
 // Created          : 03-07-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-07-2020
+// Last Modified On : 03-08-2020
 // ***********************************************************************
-// <copyright file="audiovisual.meetingparameters.editionscheduledcount.widget.js" company="Softo">
+// <copyright file="audiovisual.meetings.editionnotscheduledcount.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var AudiovisualMeetingsEditionScheduledCountWidget = function () {
+var AudiovisualMeetingsEditionNotScheduledCountWidget = function () {
 
-    var widgetElementId = '#AudiovisualMeetingsEditionScheduledCountWidget';
-    var chartElementId = 'AudiovisualMeetingsEditionScheduledCountChart';
+    var widgetElementId = '#AudiovisualMeetingsEditionNotScheduledCountWidget';
+    var chartElementId = 'AudiovisualMeetingsEditionNotScheduledCountChart';
     var widgetElement = $(widgetElementId);
 
     // Show ---------------------------------------------------------------------------------------
@@ -27,8 +27,8 @@ var AudiovisualMeetingsEditionScheduledCountWidget = function () {
         var ctx = document.getElementById(chartElementId).getContext("2d");
 
         var gradient = ctx.createLinearGradient(0, 0, 0, 240);
-        gradient.addColorStop(0, Chart.helpers.color('#d1f1ec').alpha(1).rgbString());
-        gradient.addColorStop(1, Chart.helpers.color('#d1f1ec').alpha(0.3).rgbString());
+        gradient.addColorStop(0, Chart.helpers.color('#ffefce').alpha(1).rgbString());
+        gradient.addColorStop(1, Chart.helpers.color('#ffefce').alpha(0.3).rgbString());
 
         var config = {
             type: 'line',
@@ -36,7 +36,7 @@ var AudiovisualMeetingsEditionScheduledCountWidget = function () {
                 labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October"],
                 datasets: [{
                     backgroundColor: gradient,
-                    borderColor: KTApp.getStateColor('success'),
+                    borderColor: KTApp.getStateColor('warning'),
                     pointBackgroundColor: Chart.helpers.color('#000000').alpha(0).rgbString(),
                     pointBorderColor: Chart.helpers.color('#000000').alpha(0).rgbString(),
                     pointHoverBackgroundColor: KTApp.getStateColor('danger'),
@@ -119,7 +119,7 @@ var AudiovisualMeetingsEditionScheduledCountWidget = function () {
         jsonParameters.keyword = $('#Search').val();
         jsonParameters.interestUid = $('#InterestUid').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Meetings/ShowEditionScheduledCountWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Meetings/ShowEditionNotScheduledCountWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

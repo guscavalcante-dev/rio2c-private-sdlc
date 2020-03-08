@@ -429,8 +429,9 @@
     <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.create.js" />
     <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.delete.js" />
     <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.maininformation.widget.js" />
-    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetingparameters.editionnotscheduledcount.widget.js" />
-    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetingparameters.editionscheduledcount.widget.js" />
+    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.editionnotscheduledcount.widget.js" />
+    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.editionscheduledcount.widget.js" />
+    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.scheduled.widget.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.status.widget.js" />
     <Content Include="Assets\js\companies\companyinfo.autocomplete.js" />
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.participants.widget.js" />
@@ -7162,6 +7163,8 @@
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\StatusWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\EditionScheduledCountWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\EditionNotScheduledCountWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Scheduled.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\ScheduledWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

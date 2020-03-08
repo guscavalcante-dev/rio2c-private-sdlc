@@ -1,0 +1,208 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model List<NegotiationGroupedByDateDto>
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+}
+<div class="kt-portlet kt-portlet--mobile">
+    <div class="kt-portlet__head kt-portlet__head--lg">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="kt-font-brand flaticon2-line-chart"></i>
+            </span>
+            <h3 class="kt-portlet__head-title">
+                @Labels.ScheduledNegotiations
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions">
+                    @*<div class="dropdown dropdown-inline">
+                            <button type="button" class="btn btn-default btn-icon-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="la la-download"></i> Export
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <ul class="kt-nav">
+                                    <li class="kt-nav__section kt-nav__section--first">
+                                        <span class="kt-nav__section-text">Choose an option</span>
+                                    </li>
+                                    <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                            <i class="kt-nav__link-icon la la-print"></i>
+                                            <span class="kt-nav__link-text">Print</span>
+                                        </a>
+                                    </li>
+                                    <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                            <i class="kt-nav__link-icon la la-copy"></i>
+                                            <span class="kt-nav__link-text">Copy</span>
+                                        </a>
+                                    </li>
+                                    <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                            <i class="kt-nav__link-icon la la-file-excel-o"></i>
+                                            <span class="kt-nav__link-text">Excel</span>
+                                        </a>
+                                    </li>
+                                    <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                            <i class="kt-nav__link-icon la la-file-text-o"></i>
+                                            <span class="kt-nav__link-text">CSV</span>
+                                        </a>
+                                    </li>
+                                    <li class="kt-nav__item">
+                                        <a href="#" class="kt-nav__link">
+                                            <i class="kt-nav__link-icon la la-file-pdf-o"></i>
+                                            <span class="kt-nav__link-text">PDF</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        &nbsp;*@
+                    <button onclick="ConferencesCreate.showModal();" class="btn btn-brand btn-elevate btn-icon-sm">
+                        <i class="la la-plus"></i>
+                        @Labels.NewF @Labels.Negotiation
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="kt-portlet__body pt-0">
+        <!--begin: SearchForm-->
+        <div class="form-group row">
+            @*<div class="col-lg-5">
+                <label>@Labels.Search:</label>
+                @Html.TextBoxFor(m => m.Search, new { type = "search", @class = "form-control", autocomplete = "off", placeholder = $"{Labels.Title} {Labels.Or.ToLowerInvariant()} {Labels.Room.ToLowerInvariant()}" })
+            </div>*@
+            @*<div class="col-lg-7">
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <div class="kt-checkbox-inline">
+                        <label class="kt-checkbox">
+                            @Html.CheckBoxFor(m => m.ShowAllEditions, new { @class = "enable-datatable-reload" }) @Labels.ShowAllEditions
+                            <span></span>
+                        </label>
+                        <label class="kt-checkbox">
+                            @Html.CheckBoxFor(m => m.ShowAllParticipants, new { @class = "enable-datatable-reload" }) @Labels.ShowAllParticipants
+                            <span></span>
+                        </label>
+                        <label class="kt-checkbox">
+                            @Html.CheckBoxFor(m => m.ShowHighlights, new { @class = "enable-datatable-reload" }) @Labels.ShowHighlights
+                            <span></span>
+                        </label>
+                    </div>
+                </div>
+            </div>*@
+        </div>
+        <!--end: SearchForm-->
+        @if (Model?.Any() == true)
+        {
+            foreach (var negotiationGroupedByDateDto in Model)
+            {
+                <div class="kt-portlet kt-portlet--solid-brand kt-portlet--height-fluid mb-0 mt-20" style="background: #808080;">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            @*<span class="kt-portlet__head-icon"><i class="flaticon-stopwatch"></i></span>*@
+                            <h3 class="kt-portlet__head-title">@(negotiationGroupedByDateDto.Date.ToShortDateString())</h3>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body">
+                        @if (negotiationGroupedByDateDto.NegotiationGroupedByRoomDtos?.Any() == true)
+                        {
+                            foreach (var negotiationGroupedByRoomDto in negotiationGroupedByDateDto.NegotiationGroupedByRoomDtos)
+                            {
+                                <div class="kt-portlet kt-portlet--solid-warning kt-portletk-portlet--height-fluid" style="background: #d1d1d1;">
+                                    <div class="kt-portlet__head">
+                                        <div class="kt-portlet__head-label">
+                                            @*<span class="kt-portlet__head-icon"><i class="flaticon-stopwatch"></i></span>*@
+                                            <h3 class="kt-portlet__head-title">@(negotiationGroupedByRoomDto?.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value)</h3>
+                                        </div>
+                                    </div>
+                                    <div class="kt-portlet__body">
+                                        @if (negotiationGroupedByRoomDto.NegotiationGroupedByRoundDtos?.Any() == true)
+                                        {
+                                            foreach (var negotiationGroupedByRoundDto in negotiationGroupedByRoomDto.NegotiationGroupedByRoundDtos)
+                                            {
+                                                <div class="kt-portlet kt-portlet--solid-success kt-portlet--height-fluid" style="background: #ffffff;">
+                                                    <div class="kt-portlet__head">
+                                                        <div class="kt-portlet__head-label">
+                                                            <h3 class="kt-portlet__head-title">
+                                                                @Labels.BusinessRound @negotiationGroupedByRoundDto.RoundNumber (@(negotiationGroupedByRoundDto.StartDate?.ToString("HH:mm")) - @(negotiationGroupedByRoundDto.EndDate?.ToString("HH:mm")))
+                                                            </h3>
+                                                        </div>
+                                                    </div>
+                                                    <div class="kt-portlet__body">
+                                                        @if (negotiationGroupedByRoundDto.Negotiations?.Any() == true)
+                                                        {
+                                                            <!--begin: Data -->
+                                                            <table class="table table-striped- table-bordered table-hover table-checkable" id="conferences-list-table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>@Labels.Table</th>
+                                                                        <th>@Labels.Player</th>
+                                                                        <th>@Labels.Project</th>
+                                                                        <th>@Labels.Producer</th>
+                                                                        <th>@Labels.Type</th>
+                                                                        <th class="text-center">@Labels.Actions</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var negotiation in negotiationGroupedByRoundDto.Negotiations)
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@(negotiation.TableNumber)</td>
+                                                                            <td>@(negotiation.ProjectBuyerEvaluation?.BuyerAttendeeOrganization?.Organization?.TradeName)</td>
+                                                                            <td>@(negotiation.ProjectBuyerEvaluation?.Project?.ProjectTitles?.FirstOrDefault(pt => pt.Language.Code == ViewBag.UserInterfaceLanguage)?.Value)</td>
+                                                                            <td>@(negotiation.ProjectBuyerEvaluation?.Project?.SellerAttendeeOrganization?.Organization?.TradeName)</td>
+                                                                            <td>Automatic</td>
+                                                                            <td class="text-center">
+                                                                                <span class="dropdown">
+                                                                                    <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
+                                                                                        <i class="la la-ellipsis-h"></i>
+                                                                                    </a>
+                                                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                                                        <button class="dropdown-item" onclick="AudiovisualMeetingParametersRoomsWidget.showUpdateModal('');">
+                                                                                            <i class="la la-edit"></i>@Labels.Edit
+                                                                                        </button>
+                                                                                        <button class="dropdown-item" onclick="AudiovisualMeetingParametersRoomsWidget.showDeleteModal('');">
+                                                                                            <i class="la la-remove"></i>@Labels.Remove
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </span>
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                            <!--end: Data -->
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="col-12 text-center mt-30">@string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundF)</div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <div class="col-12 text-center mt-30">@string.Format(Messages.EntityNotAction, Labels.BusinessRound, Labels.FoundM)</div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="col-12 text-center mt-30">@string.Format(Messages.EntityNotAction, Labels.Rooms, Labels.FoundFP)</div>
+                        }
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 text-center mt-30">@string.Format(Messages.EntityNotAction, Labels.ScheduledNegotiations, Labels.FoundFP)</div>
+        }
+    </div>
+</div>

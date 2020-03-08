@@ -16,32 +16,29 @@
 </div>
 <!--end:: Quick Stats-->
 <div class="row">
-    <!--begin:: Status Widget-->
+    <!--begin:: Scheduled Meetings Widget-->
     <div class="col-12">
-        <div id="AudiovisualMeetingsStatusWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 75px;"></div>
+        <div id="AudiovisualMeetingsScheduledWidget" class="" style="min-height: 500px;"></div>
     </div>
-    <!--end:: Status Widget-->
+    <!--end:: Scheduled Meetings Widget-->
 </div>
 @section Styles {
 }
 @section Scripts {
     @Scripts.Render("~/bundles/js/chart.js")
-    @Scripts.Render("~/bundles/js/bootbox.js")
-    @Scripts.Render("~/bundles/js/audiovisual.meetings.generate.widget.js")
+    @Scripts.Render("~/bundles/js/audiovisual.meetings.scheduled.widget.js")
     @Scripts.Render("~/bundles/js/audiovisual.meetings.editionscheduledcount.widget.js")
     @Scripts.Render("~/bundles/js/audiovisual.meetings.editionnotscheduledcount.widget.js")
     <script>
         // Page translations ----------------------------------------------------------------------
         var translations = {
-            generateCalendar: '@Labels.GenerateCalendar',
-            generateCalendarMessage: '@Messages.GenerateCalendarMessage'
         };
 
         // Pagination -----------------------------------------------------------------------------
         jQuery(document).ready(function () {
             AudiovisualMeetingsEditionScheduledCountWidget.init();
             AudiovisualMeetingsEditionNotScheduledCountWidget.init();
-            AudiovisualMeetingsStatusWidget.init();
+            AudiovisualMeetingsScheduledWidget.init();
         });
     </script>
 }

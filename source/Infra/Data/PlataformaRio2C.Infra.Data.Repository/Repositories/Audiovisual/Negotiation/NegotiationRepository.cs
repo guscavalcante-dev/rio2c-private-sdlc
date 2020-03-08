@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-07-2020
+// Last Modified On : 03-08-2020
 // ***********************************************************************
 // <copyright file="NegotiationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,7 +18,10 @@ using System.Data.Entity;
 using System.Linq;
 using System;
 using System.Collections.Generic;
-using EFBulkInsert;
+using System.Threading.Tasks;
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using Z.EntityFramework.Plus;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -86,6 +89,34 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return @readonly
                         ? consult.AsNoTracking()
                         : consult;
+        }
+
+        //TODO: Find by edition
+
+        /// <summary>Finds the scheduled widget dto asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<List<NegotiationGroupedByDateDto>> FindScheduledWidgetDtoAsync(int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId)
+                                .Include(n => n.Room)
+                                .Include(n => n.Room.RoomNames)
+                                .Include(n => n.Room.RoomNames.Select(rn => rn.Language))
+                                .Include(n => n.ProjectBuyerEvaluation)
+                                .Include(n => n.ProjectBuyerEvaluation.Project)
+                                .Include(n => n.ProjectBuyerEvaluation.Project.ProjectTitles)
+                                .Include(n => n.ProjectBuyerEvaluation.Project.ProjectTitles.Select(pt => pt.Language))
+                                .Include(n => n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization)
+                                .Include(n => n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.Organization)
+                                .Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization)
+                                .Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization);
+
+            return (await query.ToListAsync())
+                                .GroupBy(n => n.StartDate.ToUserTimeZone().Date)
+                                .Select(nd => new NegotiationGroupedByDateDto(nd.Key, nd.ToList()))
+                                .OrderBy(ngd => ngd.Date)
+                                .ToList();
         }
 
         /// <summary>Truncates this instance.</summary>

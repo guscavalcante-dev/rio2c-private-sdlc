@@ -2536,6 +2536,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Negociação.
+        /// </summary>
+        public static string Negotiation {
+            get {
+                return ResourceManager.GetString("Negotiation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Detalhes da Negociação.
         /// </summary>
         public static string NegotiationDetails {
@@ -3913,6 +3922,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Negociações agendadas.
+        /// </summary>
+        public static string ScheduledNegotiations {
+            get {
+                return ResourceManager.GetString("ScheduledNegotiations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Agendar Negociação.
         /// </summary>
         public static string ScheduleNegotiation {
@@ -4800,6 +4818,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string TradeName {
             get {
                 return ResourceManager.GetString("TradeName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tipo.
+        /// </summary>
+        public static string Type {
+            get {
+                return ResourceManager.GetString("Type", resourceCulture);
             }
         }
         
