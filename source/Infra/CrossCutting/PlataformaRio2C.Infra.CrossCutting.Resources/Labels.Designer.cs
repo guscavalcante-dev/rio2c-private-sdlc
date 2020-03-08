@@ -3886,6 +3886,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rodada.
+        /// </summary>
+        public static string Round {
+            get {
+                return ResourceManager.GetString("Round", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Qtde. de rodadas do 1&lt;sup&gt;o&lt;/sup&gt; turno.
         /// </summary>
         public static string RoundFirstTurn {

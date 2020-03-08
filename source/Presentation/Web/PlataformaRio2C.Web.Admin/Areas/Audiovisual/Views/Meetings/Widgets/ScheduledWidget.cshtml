@@ -99,11 +99,13 @@
         {
             foreach (var negotiationGroupedByDateDto in Model)
             {
+                var date = negotiationGroupedByDateDto.Date.ToShortDateString();
+
                 <div class="kt-portlet kt-portlet--solid-brand kt-portlet--height-fluid mb-0 mt-20" style="background: #808080;">
                     <div class="kt-portlet__head">
                         <div class="kt-portlet__head-label">
                             @*<span class="kt-portlet__head-icon"><i class="flaticon-stopwatch"></i></span>*@
-                            <h3 class="kt-portlet__head-title">@(negotiationGroupedByDateDto.Date.ToShortDateString())</h3>
+                            <h3 class="kt-portlet__head-title" style="font-size: 25px;">@date</h3>
                         </div>
                     </div>
                     <div class="kt-portlet__body">
@@ -111,11 +113,13 @@
                         {
                             foreach (var negotiationGroupedByRoomDto in negotiationGroupedByDateDto.NegotiationGroupedByRoomDtos)
                             {
+                                var roomName = negotiationGroupedByRoomDto?.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value;
+
                                 <div class="kt-portlet kt-portlet--solid-warning kt-portletk-portlet--height-fluid" style="background: #d1d1d1;">
                                     <div class="kt-portlet__head">
                                         <div class="kt-portlet__head-label">
                                             @*<span class="kt-portlet__head-icon"><i class="flaticon-stopwatch"></i></span>*@
-                                            <h3 class="kt-portlet__head-title">@(negotiationGroupedByRoomDto?.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value)</h3>
+                                            <h3 class="kt-portlet__head-title" style="font-size: 20px;">@roomName</h3>
                                         </div>
                                     </div>
                                     <div class="kt-portlet__body">
@@ -127,8 +131,11 @@
                                                     <div class="kt-portlet__head">
                                                         <div class="kt-portlet__head-label">
                                                             <h3 class="kt-portlet__head-title">
-                                                                @Labels.BusinessRound @negotiationGroupedByRoundDto.RoundNumber (@(negotiationGroupedByRoundDto.StartDate?.ToString("HH:mm")) - @(negotiationGroupedByRoundDto.EndDate?.ToString("HH:mm")))
+                                                                @Labels.Round @negotiationGroupedByRoundDto.RoundNumber (@(negotiationGroupedByRoundDto.StartDate?.ToString("HH:mm")) - @(negotiationGroupedByRoundDto.EndDate?.ToString("HH:mm")))
                                                             </h3>
+                                                        </div>
+                                                        <div class="kt-portlet__head-toolbar font-italic">
+                                                            @roomName - @date
                                                         </div>
                                                     </div>
                                                     <div class="kt-portlet__body">

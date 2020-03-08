@@ -2266,6 +2266,10 @@
     <value>Registered</value>
     <comment>Cadastrado</comment>
   </data>
+  <data name="Round" xml:space="preserve">
+    <value>Round</value>
+    <comment>Rodada</comment>
+  </data>
   <data name="Type" xml:space="preserve">
     <value>Type</value>
     <comment>Tipo</comment>
