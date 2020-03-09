@@ -4894,7 +4894,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Negociações não Agendadas.
+        ///   Looks up a localized string similar to Negociações não agendadas.
         /// </summary>
         public static string UnscheduledNegotiations {
             get {

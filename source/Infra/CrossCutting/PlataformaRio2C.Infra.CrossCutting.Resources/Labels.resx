@@ -1066,8 +1066,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Palestras</comment>
   </data>
   <data name="UnscheduledNegotiations" xml:space="preserve">
-    <value>Negociações não Agendadas</value>
-    <comment>Negociações não Agendadas</comment>
+    <value>Negociações não agendadas</value>
+    <comment>Negociações não agendadas</comment>
   </data>
   <data name="ViewCalendar" xml:space="preserve">
     <value>Visualizar Agenda</value>

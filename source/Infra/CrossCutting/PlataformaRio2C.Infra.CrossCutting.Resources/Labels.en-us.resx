@@ -1049,8 +1049,8 @@
     <comment>Palestras</comment>
   </data>
   <data name="UnscheduledNegotiations" xml:space="preserve">
-    <value>Unscheduled Negotiations</value>
-    <comment>Negociações não Agendadas</comment>
+    <value>Unscheduled negotiations</value>
+    <comment>Negociações não agendadas</comment>
   </data>
   <data name="ViewCalendar" xml:space="preserve">
     <value>View Calendar</value>

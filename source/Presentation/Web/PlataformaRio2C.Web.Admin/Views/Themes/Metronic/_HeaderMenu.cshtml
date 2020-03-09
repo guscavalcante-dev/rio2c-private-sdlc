@@ -90,9 +90,9 @@
                                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "Unscheduled", "Meetings", "Audiovisual")" aria-haspopup="true">
                                         <a href="@Url.Action("Unscheduled", "Meetings", new { Area = "Audiovisual" })" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.UnscheduledNegotiations</span></a>
                                     </li>
-                                    <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "RegisterNegotiationManual", "ScheduleOneToOneMeetings", null)" aria-haspopup="true">
-                                        <a @*href="@Url.Action("RegisterNegotiationManual", "ScheduleOneToOneMeetings", new { Area = "" })"*@ class="kt-menu__link "><span class="kt-menu__link-text">@Labels.ScheduleNegotiation</span></a>
-                                    </li>
+                                    @*<li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "RegisterNegotiationManual", "ScheduleOneToOneMeetings", null)" aria-haspopup="true">
+                                        <a href="@Url.Action("RegisterNegotiationManual", "ScheduleOneToOneMeetings", new { Area = "" })" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.ScheduleNegotiation</span></a>
+                                    </li>*@
                                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "SendEmailToPlayers", "ScheduleOneToOneMeetings", null)" aria-haspopup="true">
                                         <a @*href="@Url.Action("SendEmailToPlayers", "ScheduleOneToOneMeetings", new { Area = "" })"*@ class="kt-menu__link "><span class="kt-menu__link-text">@Labels.SendEmailToPlayers</span></a>
                                     </li>
