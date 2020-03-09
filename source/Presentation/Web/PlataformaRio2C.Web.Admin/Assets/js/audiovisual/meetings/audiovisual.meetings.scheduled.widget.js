@@ -41,14 +41,20 @@ var AudiovisualMeetingsScheduledWidget = function () {
 	        AudiovisualMeetingsScheduledWidget.search();
         });
         $('#Date').addClass('change-event-enabled');
+
+        $('#RoomUid').not('.change-event-enabled').on('change', function () {
+	        AudiovisualMeetingsScheduledWidget.search();
+        });
+        $('#RoomUid').addClass('change-event-enabled');
     };
 
     var enableSearchForm = function () {
         enableSearchEvents();
 
 	    MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#BuyerOrganizationUid', url: '/Players/FindAllByFilters', filterByProjectsInNegotiation: true, placeholder: translations.playerDropdownPlaceholder + '...' });
-	    MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#SellerOrganizationUid', url: '/Audiovisual/Producers/FindAllByFilters', filterByProjectsInNegotiation: true, placeholder: translations.producerDropdownPlaceholder + '...' });
+        MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#SellerOrganizationUid', url: '/Audiovisual/Producers/FindAllByFilters', filterByProjectsInNegotiation: true, placeholder: translations.producerDropdownPlaceholder + '...' });
 	    MyRio2cCommon.enableDatePicker({ inputIdOrClass: '.enable-datepicker' });
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: '#RoomUid', allowClear: true, placeholder: translations.roomDropdownPlaceholder + '...' });
     }
 
     // Show ---------------------------------------------------------------------------------------
@@ -66,6 +72,7 @@ var AudiovisualMeetingsScheduledWidget = function () {
         jsonParameters.buyerOrganizationUid = $('#BuyerOrganizationUid').val();
         jsonParameters.sellerOrganizationUid = $('#SellerOrganizationUid').val();
         jsonParameters.projectKeywords = $('#ProjectKeywords').val();
+        jsonParameters.roomUid = $('#RoomUid').val();
 
         var date = $('#Date').val();
         if (!MyRio2cCommon.isNullOrEmpty(date)) {

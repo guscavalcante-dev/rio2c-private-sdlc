@@ -20,6 +20,7 @@ using System.Web.Mvc;
 using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
@@ -39,21 +40,25 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
     {
         private readonly INegotiationRepository negotiationRepo;
         private readonly IProjectBuyerEvaluationRepository projectBuyerEvaluationRepo;
+        private readonly IRoomRepository roomRepo;
 
         /// <summary>Initializes a new instance of the <see cref="MeetingsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="negotiationRepository">The negotiation repository.</param>
         /// <param name="projectBuyerEvaluationRepository">The project buyer evaluation repository.</param>
+        /// <param name="roomRepository">The room repository.</param>
         public MeetingsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
             INegotiationRepository negotiationRepository,
-            IProjectBuyerEvaluationRepository projectBuyerEvaluationRepository)
+            IProjectBuyerEvaluationRepository projectBuyerEvaluationRepository,
+            IRoomRepository roomRepository)
             : base(commandBus, identityController)
         {
             this.negotiationRepo = negotiationRepository;
             this.projectBuyerEvaluationRepo = projectBuyerEvaluationRepository;
+            this.roomRepo = roomRepository;
         }
 
         #region Generate Agenda
@@ -197,7 +202,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <summary>Scheduleds this instance.</summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Scheduled()
+        public async Task<ActionResult> Scheduled()
         {
             #region Breadcrumb
 
@@ -206,6 +211,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             });
 
             #endregion
+
+            ViewBag.Rooms = (await this.roomRepo.FindAllDtoByEditionIdAsync(this.EditionDto.Id))?.Select(r => new RoomJsonDto
+            {
+                Id = r.Room.Id,
+                Uid = r.Room.Uid,
+                Name = r.GetRoomNameByLanguageCode(this.UserInterfaceLanguage)?.RoomName?.Value
+            })?.ToList();
 
             return View();
         }
@@ -217,16 +229,18 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="sellerOrganizationUid">The seller organization uid.</param>
         /// <param name="projectKeywords">The project keywords.</param>
         /// <param name="date">The date.</param>
+        /// <param name="roomUid">The room uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowScheduledDataWidget(Guid? buyerOrganizationUid, Guid? sellerOrganizationUid, string projectKeywords, DateTime? date)
+        public async Task<ActionResult> ShowScheduledDataWidget(Guid? buyerOrganizationUid, Guid? sellerOrganizationUid, string projectKeywords, DateTime? date, Guid? roomUid)
         {
             var negotiations = await this.negotiationRepo.FindScheduledWidgetDtoAsync(
                 this.EditionDto.Id,
                 buyerOrganizationUid,
                 sellerOrganizationUid,
                 projectKeywords,
-                date);
+                date,
+                roomUid);
 
             return new JsonResult()
             {

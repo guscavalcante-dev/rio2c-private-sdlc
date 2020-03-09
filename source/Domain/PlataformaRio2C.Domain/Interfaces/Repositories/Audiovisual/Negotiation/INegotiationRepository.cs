@@ -22,7 +22,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>INegotiationRepository</summary>
     public interface INegotiationRepository : IRepository<Negotiation>
     {
-        Task<List<NegotiationGroupedByDateDto>> FindScheduledWidgetDtoAsync(int editionId, Guid? buyerOrganizationUid, Guid? sellerOrganizationUid, string projectKeywords, DateTime? negotiationDate);
+        Task<List<NegotiationGroupedByDateDto>> FindScheduledWidgetDtoAsync(int editionId, Guid? buyerOrganizationUid, Guid? sellerOrganizationUid, string projectKeywords, DateTime? negotiationDate, Guid? roomUid);
         //IEnumerable<Player> GetAllPlayers();
         //IEnumerable<Producer> GetAllProducers();
         //IQueryable<Negotiation> GetAllBySchedule(Expression<Func<Negotiation, bool>> filter);        

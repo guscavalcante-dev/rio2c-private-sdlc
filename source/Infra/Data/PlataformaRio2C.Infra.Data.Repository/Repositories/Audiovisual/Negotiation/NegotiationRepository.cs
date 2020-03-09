@@ -124,6 +124,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the by room uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="roomUid">The room uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<Negotiation> FindByRoomUid(this IQueryable<Negotiation> query, Guid? roomUid)
+        {
+            if (roomUid.HasValue)
+            {
+                query = query.Where(n => n.Room.Uid == roomUid);
+            }
+
+            return query;
+        }
+
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
@@ -166,13 +180,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="sellerOrganizationUid">The seller organization uid.</param>
         /// <param name="projectKeywords">The project keywords.</param>
         /// <param name="negotiationDate">The negotiation date.</param>
+        /// <param name="roomUid">The room uid.</param>
         /// <returns></returns>
         public async Task<List<NegotiationGroupedByDateDto>> FindScheduledWidgetDtoAsync(
             int editionId, 
             Guid? buyerOrganizationUid,
             Guid? sellerOrganizationUid, 
             string projectKeywords, 
-            DateTime? negotiationDate)
+            DateTime? negotiationDate, 
+            Guid? roomUid)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId)
@@ -180,6 +196,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindBySellerOrganizationUid(sellerOrganizationUid)
                                 .FindByProjectKeywords(projectKeywords)
                                 .FindByDate(negotiationDate)
+                                .FindByRoomUid(roomUid)
                                 .Include(n => n.Room)
                                 .Include(n => n.Room.RoomNames)
                                 .Include(n => n.Room.RoomNames.Select(rn => rn.Language))
