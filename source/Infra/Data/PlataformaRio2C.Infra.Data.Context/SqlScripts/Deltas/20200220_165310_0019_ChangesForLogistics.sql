@@ -16,13 +16,29 @@ ALTER TABLE "dbo"."Logistics"
 go
 
 ALTER TABLE "dbo"."Logistics"
-ADD AdditionalInfo  varchar(1000)  NULL
+ALTER COLUMN AdditionalInfo  varchar(1000)  NULL
 go
 
 ALTER TABLE "AttendeeLogisticSponsors"
-ADD IsOther  bit  NOT NULL
+ADD IsOther  bit  NULL
+go
+
+UPDATE "AttendeeLogisticSponsors"
+    SET IsOther = 0
+go
+
+ALTER TABLE "AttendeeLogisticSponsors"
+ALTER COLUMN IsOther  bit  NOT NULL
 go
 
 ALTER TABLE "Places"
-ADD IsAirport  bit  NOT NULL
+ADD IsAirport  bit  NULL
+go
+
+UPDATE "Places"
+    SET IsAirport = 0
+go
+
+ALTER TABLE "Places"
+ALTER COLUMN IsAirport  bit  NOT NULL
 go
