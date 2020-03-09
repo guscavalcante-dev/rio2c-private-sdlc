@@ -160,6 +160,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Agenda não processada..
+        /// </summary>
+        public static string CalendarNotProcessed {
+            get {
+                return ResourceManager.GetString("CalendarNotProcessed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Agenda processada com sucesso em &lt;b&gt;{0}&lt;/b&gt;..
+        /// </summary>
+        public static string CalendarProcessedSuccessfully {
+            get {
+                return ResourceManager.GetString("CalendarProcessedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Não é possível editar um projeto submetido para avaliação de player.
         /// </summary>
         public static string CanNotEditASubmittedProjectForPlayerEvaluation {
@@ -538,6 +556,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} já está {1}..
+        /// </summary>
+        public static string EntityIsAlreadyAction {
+            get {
+                return ResourceManager.GetString("EntityIsAlreadyAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} não {1}..
         /// </summary>
         public static string EntityNotAction {
@@ -686,6 +713,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string FundingPlan {
             get {
                 return ResourceManager.GetString("FundingPlan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deseja gerar a agenda?.
+        /// </summary>
+        public static string GenerateCalendarMessage {
+            get {
+                return ResourceManager.GetString("GenerateCalendarMessage", resourceCulture);
             }
         }
         
@@ -1019,6 +1055,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string NoneEntityAction {
             get {
                 return ResourceManager.GetString("NoneEntityAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rodadas de Negócios não Agendadas.
+        /// </summary>
+        public static string NotScheduledOneToOneMeetings {
+            get {
+                return ResourceManager.GetString("NotScheduledOneToOneMeetings", resourceCulture);
             }
         }
         
@@ -1640,6 +1685,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string RestrictionsSpecificsInPtBrMandatory {
             get {
                 return ResourceManager.GetString("RestrictionsSpecificsInPtBrMandatory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rodadas de Negócios Agendadas.
+        /// </summary>
+        public static string ScheduledOneToOneMeetings {
+            get {
+                return ResourceManager.GetString("ScheduledOneToOneMeetings", resourceCulture);
             }
         }
         

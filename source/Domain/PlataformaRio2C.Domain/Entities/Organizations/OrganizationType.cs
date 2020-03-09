@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 03-08-2020
 // ***********************************************************************
 // <copyright file="OrganizationType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,6 +22,17 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public static readonly int NameMinLength = 2;
         public static readonly int NameMaxLength = 50;
+
+        #region Configurations
+
+        public static OrganizationType Player = new OrganizationType(new Guid("936B3262-8B8F-472C-94AD-3A2B925DD0AE"), Labels.Player);
+        public static OrganizationType Producer = new OrganizationType(new Guid("7CE5A34F-E31F-4C26-BED9-CDD6A0206185"), Labels.Producer);
+        public static OrganizationType Startup = new OrganizationType(new Guid("F2EFDBAA-27BD-42BD-BF29-A8DAED6093FF"), Labels.Startup);
+        public static OrganizationType Investor = new OrganizationType(new Guid("7EB327A9-95E8-4514-8E66-39510FC9ED03"), Labels.Investor);
+        public static OrganizationType MusicBand = new OrganizationType(new Guid("D077BA5C-2982-4B69-95D4-D9AA1BF8E7F4"), Labels.MusicBand);
+        public static OrganizationType Recorder = new OrganizationType(new Guid("243AAFB2-B610-49B4-B9BC-33CDF631C367"), Labels.Recorder);
+
+        #endregion
 
         public string Name { get; private set; }
         public int RelatedProjectTypeId { get; private set; }
@@ -113,16 +124,5 @@ namespace PlataformaRio2C.Domain.Entities
 
             //return ValidationResult.IsValid;
         }
-
-        #region Statics
-
-        public static OrganizationType Player = new OrganizationType(new Guid("936B3262-8B8F-472C-94AD-3A2B925DD0AE"), Labels.Player);
-        public static OrganizationType Producer = new OrganizationType(new Guid("7CE5A34F-E31F-4C26-BED9-CDD6A0206185"), Labels.Producer);
-        public static OrganizationType Startup = new OrganizationType(new Guid("F2EFDBAA-27BD-42BD-BF29-A8DAED6093FF"), Labels.Startup);
-        public static OrganizationType Investor = new OrganizationType(new Guid("7EB327A9-95E8-4514-8E66-39510FC9ED03"), Labels.Investor);
-        public static OrganizationType MusicBand = new OrganizationType(new Guid("D077BA5C-2982-4B69-95D4-D9AA1BF8E7F4"), Labels.MusicBand);
-        public static OrganizationType Recorder = new OrganizationType(new Guid("243AAFB2-B610-49B4-B9BC-33CDF631C367"), Labels.Recorder);
-
-        #endregion
     }
 }

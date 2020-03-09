@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified On : 03-08-2020
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -95,7 +95,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
-        internal static IQueryable<Collaborator> FindLogisticsByEditionId(this IQueryable<Collaborator> query, bool showAllParticipants, bool showAllSponsors, int editionId)
+        internal static IQueryable<Collaborator> FindLogisticsByEditionId(this IQueryable<Collaborator> query, bool showAllParticipants, int editionId)
         {
             query = query.Where(c => c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId 
                                                                        && !ac.IsDeleted
@@ -236,6 +236,27 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 outerWhere = outerWhere.Or(innerOrganizationNameWhere);
                 outerWhere = outerWhere.Or(innerHoldingNameWhere);
                 query = query.Where(outerWhere);
+            }
+
+            return query;
+        }
+
+        /// <summary>Determines whether [has project in negotiation] [the specified edition identifier].</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="hasProjectNegotiation">if set to <c>true</c> [has project negotiation].</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> HasProjectInNegotiation(this IQueryable<Collaborator> query, int editionId, bool hasProjectNegotiation)
+        {
+            if (hasProjectNegotiation)
+            {
+                query = query.Where(c => c.AttendeeCollaborators
+                                                .Any(ac => ac.EditionId == editionId 
+                                                           && ac.AttendeeOrganizationCollaborators
+                                                                    .Any(aoc => !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted
+                                                                                && aoc.AttendeeOrganization.ProjectBuyerEvaluations
+                                                                                        .Any(pbe => !pbe.IsDeleted && !pbe.Project.IsDeleted
+                                                                                                    && pbe.Negotiations.Any(n => !n.IsDeleted)))));
             }
 
             return query;
@@ -773,20 +794,29 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .ThenBy(o => o.BadgeName)
                             .FirstOrDefaultAsync();
         }
-
+        
         /// <summary>Finds all dropdown API list dto paged.</summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="keywords">The keywords.</param>
+        /// <param name="filterByProjectsInNegotiation">if set to <c>true</c> [filter by projects in negotiation].</param>
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
         /// <param name="showAllParticipants"></param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<CollaboratorApiListDto>> FindAllDropdownApiListDtoPaged(int editionId, string keywords, string collaboratorTypeName, bool showAllParticipants, int page, int pageSize)
+        public async Task<IPagedList<CollaboratorApiListDto>> FindAllDropdownApiListDtoPaged(
+            int editionId, 
+            string keywords,
+            bool filterByProjectsInNegotiation,
+            string collaboratorTypeName, 
+            bool showAllParticipants,
+            int page, 
+            int pageSize)
         {
             var query = this.GetBaseQuery()
                                 .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeName, false, false, showAllParticipants, editionId)
-                                .FindByKeywords(keywords, editionId);
+                                .FindByKeywords(keywords, editionId)
+                                .HasProjectInNegotiation(editionId, filterByProjectsInNegotiation);
 
             return await query
                             .Select(c => new CollaboratorApiListDto
@@ -1094,11 +1124,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             int pageSize, 
             string searchValue, 
             List<Tuple<string, string>> sortColumns,
-            bool showAllParticipants, 
-            bool showAllSponsored)
+            bool showAllParticipants)
         {
             var query = this.GetBaseQuery()
-                    .FindLogisticsByEditionId(showAllParticipants, showAllSponsored, editionId);
+                    .FindLogisticsByEditionId(showAllParticipants, editionId);
             
             return await query
                 .DynamicOrder<Collaborator>(
@@ -1109,13 +1138,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 {
                     CollaboratorUid = c.Uid,
                     Name = c.FirstName + " " + c.LastNames,
-                    HasRequest = c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId && !ac.IsDeleted && ac.Logistics.Any(l => !l.IsDeleted &&
-                                                                                           (l.AccommodationAttendeeLogisticSponsorId.HasValue ||
-                                                                                            l.AirfareAttendeeLogisticSponsorId.HasValue ||
-                                                                                            l.AirportTransferAttendeeLogisticSponsorId.HasValue ||
-                                                                                            l.IsVehicleDisposalRequired ||
-                                                                                            l.IsCityTransferRequired)
-                                                                                           )),
+                    HasRequest = c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId && !ac.IsDeleted && ac.Logistics.Any(l => !l.IsDeleted)),
+                    HasLogistics = c.AttendeeCollaborators.Any(ac => ac.Logistics.Any(l => !l.IsDeleted && 
+                                                                                           (l.LogisticAirfare.Any(a => !a.IsDeleted) ||
+                                                                                            l.LogisticAccommodation.Any(a => !a.IsDeleted) ||
+                                                                                            l.LogisticTransfer.Any(a => !a.IsDeleted)))),
 
                     Id = c.AttendeeCollaborators
                         .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)

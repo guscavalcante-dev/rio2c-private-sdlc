@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-01-2020
+// Last Modified On : 03-08-2020
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -623,6 +623,47 @@ namespace PlataformaRio2C.Web.Admin
             #endregion
 
             #endregion
+
+            #endregion
+
+            #region Meeting Parameters
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetingparameters.list.widget.js").Include(
+                "~/Assets/js/audiovisual/meetingparameters/audiovisual.meetingparameters.datatable.widget.js",
+                "~/Assets/js/audiovisual/meetingparameters/audiovisual.meetingparameters.totalcount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetingparameters.editioncount.widget.js").Include(
+                "~/Assets/js/audiovisual/meetingparameters/audiovisual.meetingparameters.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetingparameters.create.js").Include(
+                "~/Assets/js/audiovisual/meetingparameters/audiovisual.meetingparameters.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetingparameters.delete.js").Include(
+                "~/Assets/js/audiovisual/meetingparameters/audiovisual.meetingparameters.delete.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetingparameters.details.js").Include(
+                "~/Assets/js/audiovisual/meetingparameters/audiovisual.meetingparameters.maininformation.widget.js",
+                "~/Assets/js/audiovisual/meetingparameters/audiovisual.meetingparameters.rooms.widget.js"));
+
+            #endregion
+
+            #region Meetings
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.editionscheduledcount.widget.js").Include(
+                "~/Assets/js/audiovisual/meetings/audiovisual.meetings.editionscheduledcount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.editionunscheduledcount.widget.js").Include(
+                "~/Assets/js/audiovisual/meetings/audiovisual.meetings.editionunscheduledcount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.generate.widget.js").Include(
+                "~/Assets/js/audiovisual/meetings/audiovisual.meetings.status.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.scheduled.widget.js").Include(
+                "~/Assets/js/audiovisual/meetings/audiovisual.meetings.scheduled.widget.js",
+                "~/Assets/js/audiovisual/meetings/audiovisual.meetings.scheduled.delete.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.unscheduled.widget.js").Include(
+                "~/Assets/js/audiovisual/meetings/audiovisual.meetings.unscheduled.widget.js"));
 
             #endregion
 

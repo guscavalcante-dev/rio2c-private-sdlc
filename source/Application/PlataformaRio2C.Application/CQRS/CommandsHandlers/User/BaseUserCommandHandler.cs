@@ -4,7 +4,7 @@
 // Created          : 12-05-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-05-2019
+// Last Modified On : 03-04-2020
 // ***********************************************************************
 // <copyright file="BaseUserCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -44,7 +44,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var user = await this.UserRepo.GetAsync(userUid);
             if (user == null || user.IsDeleted)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.User, Labels.FoundM)));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.User, Labels.FoundM), new string[] { "ToastrError" }));
                 return null;
             }
 
@@ -59,7 +59,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var user = await this.UserRepo.GetAsync(userId);
             if (user == null || user.IsDeleted)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.User, Labels.FoundM)));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.User, Labels.FoundM), new string[] { "ToastrError" }));
                 return null;
             }
 

@@ -4,7 +4,7 @@
 // Created          : 02-28-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-28-2020
+// Last Modified On : 03-04-2020
 // ***********************************************************************
 // <copyright file="BaseMusicProjectCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -46,7 +46,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var musicProject = await this.MusicProjectRepo.GetAsync(projectUid);
             if (musicProject == null || musicProject.IsDeleted)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM)));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM), new string[] { "ToastrError" }));
                 return null;
             }
 

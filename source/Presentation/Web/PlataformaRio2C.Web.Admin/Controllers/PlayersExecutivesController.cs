@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-26-2020
+// Last Modified On : 03-08-2020
 // ***********************************************************************
 // <copyright file="PlayersExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,11 +21,14 @@ using System.Web.Mvc;
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
+using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -43,21 +46,25 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     {
         private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
+        private readonly IFileRepository fileRepo;
 
         /// <summary>Initializes a new instance of the <see cref="PlayersExecutivesController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
+        /// <param name="fileRepository">The file repository.</param>
         public PlayersExecutivesController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             ICollaboratorRepository collaboratorRepository,
-            IAttendeeOrganizationRepository attendeeOrganizationRepository)
+            IAttendeeOrganizationRepository attendeeOrganizationRepository,
+            IFileRepository fileRepository)
             : base(commandBus, identityController)
         {
             this.collaboratorRepo = collaboratorRepository;
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
+            this.fileRepo = fileRepository;
         }
 
         #region List
@@ -315,7 +322,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
                         new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
@@ -426,7 +433,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
                         new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
@@ -442,7 +449,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Executive, Labels.UpdatedM) });
         }
 
-        #endregion#region Create
+        #endregion
 
         #region Delete
 
@@ -486,7 +493,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                 }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -496,6 +503,55 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             }
 
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Executive, Labels.DeletedM) });
+        }
+
+        #endregion
+
+        #region Finds
+
+        /// <summary>Finds all by filters.</summary>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="filterByProjectsInNegotiation">The filter by projects in negotiation.</param>
+        /// <param name="page">The page.</param>
+        /// <returns></returns>
+        [HttpGet]
+        //[AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual + "," + Constants.CollaboratorType.CommissionAudiovisual)]
+        public async Task<ActionResult> FindAllByFilters(string keywords, bool? filterByProjectsInNegotiation = false, int? page = 1)
+        {
+            var collaboratorsApiDtos = await this.collaboratorRepo.FindAllDropdownApiListDtoPaged(
+                this.EditionDto.Id,
+                keywords,
+                filterByProjectsInNegotiation.Value,
+                Constants.CollaboratorType.ExecutiveAudiovisual,
+                false,
+                page.Value,
+                10);
+
+            return Json(new
+            {
+                status = "success",
+                HasPreviousPage = collaboratorsApiDtos.HasPreviousPage,
+                HasNextPage = collaboratorsApiDtos.HasNextPage,
+                TotalItemCount = collaboratorsApiDtos.TotalItemCount,
+                PageCount = collaboratorsApiDtos.PageCount,
+                PageNumber = collaboratorsApiDtos.PageNumber,
+                PageSize = collaboratorsApiDtos.PageSize,
+                Collaborators = collaboratorsApiDtos?.Select(c => new CollaboratorsDropdownDto
+                {
+                    Uid = c.Uid,
+                    BadgeName = c.BadgeName?.Trim(),
+                    Name = c.Name?.Trim(),
+                    Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.Uid, c.ImageUploadDate, true) : null,
+                    JobTitle = c.GetCollaboratorJobTitleBaseDtoByLanguageCode(this.UserInterfaceLanguage)?.Value?.Trim(),
+                    Companies = c.OrganizationsDtos?.Select(od => new CollaboratorsDropdownOrganizationDto
+                    {
+                        Uid = od.Uid,
+                        TradeName = od.TradeName,
+                        CompanyName = od.CompanyName,
+                        Picture = od.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, od.Uid, od.ImageUploadDate, true) : null
+                    })?.ToList()
+                })?.ToList()
+            }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

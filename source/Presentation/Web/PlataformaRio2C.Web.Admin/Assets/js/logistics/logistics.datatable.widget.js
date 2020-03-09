@@ -109,19 +109,19 @@ var LogisticsDataTableWidget = function () {
                     }
                 },
                 {
-                    data: 'AccommodationSponsor.Name',
+                    data: 'AccommodationSponsor',
                     render: function (data, type, full, meta) {
                         return data;
                     }
                 },
                 {
-                    data: 'AirfareSponsor.Name',
+                    data: 'AirfareSponsor',
                     render: function (data, type, full, meta) {
                         return data;
                     }
                 },
                 {
-                    data: 'TransferSponsor.Name',
+                    data: 'TransferSponsor',
                     render: function (data, type, full, meta) {
                         return data;
                     }
@@ -162,16 +162,19 @@ var LogisticsDataTableWidget = function () {
                                             </a>\
                                             <div class="dropdown-menu dropdown-menu-right">';
                         
+                        if (full.HasRequest) {
+	                        // View details
+	                        html += '<button class="dropdown-item" onclick="LogisticsDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-edit"></i> ' + view + '</button>';
+                        }
 
                         if (!full.HasRequest) {
                             // Create request
                             html += '<button class="dropdown-item" onclick="LogisticsCreate.showModal(\'' + full.Uid + '\');"><i class="la la-edit"></i> ' + addRequest + '</button>';
                         }
-                        else {
-                            // View details
-                            html += '<button class="dropdown-item" onclick="LogisticsDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-edit"></i> ' + view + '</button>';
-                            html += '<button class="dropdown-item" onclick="LogisticsDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+                        else if (!full.HasLogistics) {
+	                        html += '<button class="dropdown-item" onclick="LogisticsDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
                         }
+
                         
                         html += '\
                                             </div>\

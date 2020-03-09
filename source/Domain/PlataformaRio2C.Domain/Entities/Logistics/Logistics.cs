@@ -14,6 +14,7 @@
 using PlataformaRio2C.Domain.Entities.Validations;
 using PlataformaRio2C.Domain.Validation;
 using System;
+using System.Collections.Generic;
 using System.Security.AccessControl;
 
 namespace PlataformaRio2C.Domain.Entities
@@ -94,6 +95,9 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual AttendeeLogisticSponsor AirportTransferSponsor { get; private set; }
         public virtual AttendeeLogisticSponsor AirfareSponsor { get; private set; }
         public virtual AttendeeLogisticSponsor AccommodationSponsor { get; private set; }
+        public virtual List<LogisticAirfare> LogisticAirfare { get; private set; }
+        public virtual List<LogisticAccommodation> LogisticAccommodation { get; private set; }
+        public virtual List<LogisticTransfer> LogisticTransfer { get; private set; }
         public virtual User CreateUser { get; private set; }
 
         /// <summary>

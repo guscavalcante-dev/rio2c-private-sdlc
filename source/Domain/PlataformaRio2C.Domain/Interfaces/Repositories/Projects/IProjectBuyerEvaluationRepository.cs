@@ -4,7 +4,7 @@
 // Created          : 12-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 03-08-2020
 // ***********************************************************************
 // <copyright file="IProjectBuyerEvaluationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,5 +23,9 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface IProjectBuyerEvaluationRepository : IRepository<ProjectBuyerEvaluation>
     {
         Task<List<ProjectBuyerEvaluationEmailDto>> FindAllBuyerEmailDtosAsync(int editionId, DateTimeOffset editionProjectEvaluationStartDate, DateTimeOffset editionProjectEvaluationEndDate);
+        Task<List<ProjectBuyerEvaluation>> FindAllForGenerateNegotiationsAsync(int editionId);
+        Task<List<ProjectBuyerEvaluationDto>> FindUnscheduledWidgetDtoAsync(int editionId);
+        Task<int> CountNegotiationScheduledAsync(int editionId, bool showAllEditions = false);
+        Task<int> CountNegotiationNotScheduledAsync(int editionId, bool showAllEditions = false);
     }
 }

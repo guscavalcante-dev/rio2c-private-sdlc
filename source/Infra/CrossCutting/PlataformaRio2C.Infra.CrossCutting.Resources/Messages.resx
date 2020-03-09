@@ -899,4 +899,28 @@
     <value>Deseja reprovar {0} "&lt;b&gt;{1}&lt;/b&gt;"?</value>
     <comment>Deseja reprovar {0} "&lt;b&gt;{1}&lt;/b&gt;"?</comment>
   </data>
+  <data name="CalendarProcessedSuccessfully" xml:space="preserve">
+    <value>Agenda processada com sucesso em &lt;b&gt;{0}&lt;/b&gt;.</value>
+    <comment>Agenda processada com sucesso em &lt;b&gt;{0}&lt;/b&gt;.</comment>
+  </data>
+  <data name="GenerateCalendarMessage" xml:space="preserve">
+    <value>Deseja gerar a agenda?</value>
+    <comment>Deseja gerar a agenda?</comment>
+  </data>
+  <data name="CalendarNotProcessed" xml:space="preserve">
+    <value>Agenda não processada.</value>
+    <comment>Agenda não processada.</comment>
+  </data>
+  <data name="NotScheduledOneToOneMeetings" xml:space="preserve">
+    <value>Rodadas de Negócios não Agendadas</value>
+    <comment>Rodadas de Negócios não Agendadas</comment>
+  </data>
+  <data name="ScheduledOneToOneMeetings" xml:space="preserve">
+    <value>Rodadas de Negócios Agendadas</value>
+    <comment>Rodadas de Negócios Agendadas</comment>
+  </data>
+  <data name="EntityIsAlreadyAction" xml:space="preserve">
+    <value>{0} já está {1}.</value>
+    <comment>{0} já está {1}.</comment>
+  </data>
 </root>

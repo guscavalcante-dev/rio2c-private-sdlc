@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = Labels.OneToOneMeetings + " | " + Labels.UnscheduledNegotiations;
+}
+<!--begin:: Quick Stats-->
+<div class="row">
+    <!--begin:: Edition Scheduled Count Widget-->
+    <div class="col-sm-6">
+        <div id="AudiovisualMeetingsEditionScheduledCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+    </div>
+    <!--end:: Edition Scheduled Count Widget-->
+    <!--begin:: Edition Unscheduled Count Widget-->
+    <div class="col-sm-6">
+        <div id="AudiovisualMeetingsEditionUnscheduledCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+    </div>
+    <!--end:: Edition Unscheduled Count Widget-->
+</div>
+<!--end:: Quick Stats-->
+<div class="row">
+    <!--begin:: Unscheduled Meetings Widget-->
+    <div class="col-12">
+        <div id="AudiovisualMeetingsUnscheduledWidget" class="" style="min-height: 500px;"></div>
+    </div>
+    <!--end:: Unscheduled Meetings Widget-->
+</div>
+@section Styles {
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/chart.js")
+    @Scripts.Render("~/bundles/js/audiovisual.meetings.unscheduled.widget.js")
+    @Scripts.Render("~/bundles/js/audiovisual.meetings.editionscheduledcount.widget.js")
+    @Scripts.Render("~/bundles/js/audiovisual.meetings.editionunscheduledcount.widget.js")
+    <script>
+        // Page translations ----------------------------------------------------------------------
+        var translations = {
+        };
+
+        // Pagination -----------------------------------------------------------------------------
+        jQuery(document).ready(function () {
+            AudiovisualMeetingsEditionScheduledCountWidget.init();
+            AudiovisualMeetingsEditionUnscheduledCountWidget.init();
+            AudiovisualMeetingsUnscheduledWidget.init();
+        });
+    </script>
+}

@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-17-2020
+// Last Modified On : 03-08-2020
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1236,70 +1236,61 @@ var MyRio2cCommon = function () {
         }
     };
 
-    // Collaborator select2 -----------------------------------------------------------------------
-    var formatCollaboratorResult = function (collaborator) {
-        if (collaborator.loading) {
-            return collaborator.text;
-        }
+    // Organization select2 -----------------------------------------------------------------------
+    var formatOrganizationResult = function (organization) {
+        if (organization.loading) {
+            return organization.text;
+	    }
 
-        var imageDirectory = 'https://' + globalVariables.bucket + '/img/users/';
+	    var imageDirectory = 'https://' + globalVariables.bucket + '/img/organizations/';
 
-        var container =
-            '<div class="select2-result-collaborator clearfix">' +
-                '<div class="select2-result-collaborator__avatar">';
+	    var container =
+		    '<div class="select2-result-collaborator clearfix">' +
+			    '<div class="select2-result-collaborator__avatar">';
 
-        // Picture
-        if (!MyRio2cCommon.isNullOrEmpty(collaborator.Picture)) {
-            container +=
-                '<img src="' + collaborator.Picture + '" />';
-        }
-        else {
-            container +=
-                '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" />';
-        }
+	    // Picture
+	    if (!MyRio2cCommon.isNullOrEmpty(organization.Picture)) {
+		    container +=
+                '<img src="' + organization.Picture + '" />';
+	    }
+	    else {
+		    container +=
+			    '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" />';
+	    }
 
-        container +=
-            '</div > ' +
-            '<div class="select2-result-collaborator__meta">' +
-            '<div class="select2-result-collaborator__title">' + (collaborator.BadgeName || collaborator.Name) + '</div>';
+	    container +=
+		    '</div > ' +
+		    '<div class="select2-result-collaborator__meta">' +
+            '<div class="select2-result-collaborator__title">' + organization.TradeName + '</div>' +
+			'<div class="select2-result-collaborator__description">' + organization.CompanyName + '</div>';
 
-        if (!MyRio2cCommon.isNullOrEmpty(collaborator.JobTitle)) {
-            container +=
-                '<div class="select2-result-collaborator__description">' + collaborator.JobTitle + '</div>';
-        }
+	    container +=
+		    '   </div>' +
+		    '</div>';
 
-        if (!MyRio2cCommon.isNullOrEmpty(collaborator.Companies) && collaborator.Companies.length > 0) {
-            container +=
-                '<div class="select2-result-collaborator__description">' + collaborator.Companies[0].TradeName + '</div>';
-        }
+	    var $container = $(container);
 
-        container +=
-            '   </div>' +
-            '</div>';
-
-        var $container = $(container);
-
-        return $container;
+	    return $container;
     };
 
-    var formatCollaboratorSelection = function (collaborator) {
-        return collaborator.text;
+    var formatOrganizationSelection = function (organization) {
+        return organization.text;
     };
 
-    var enableCollaboratorSelect2 = function (options) {
+    var enableOrganizationSelect2 = function (options) {
         if (isNullOrEmpty(options)) {
             options = new Object();
         }
 
         if (!hasProperty(options, 'inputIdOrClass') || isNullOrEmpty(options.inputIdOrClass)) {
-            options.inputIdOrClass = '.enable-collaborator-select2';
+            options.inputIdOrClass = '.enable-organization-select2';
         }
 
         if (!hasProperty(options, 'allowClear') || isNullOrEmpty(options.allowClear)) {
             options.allowClear = true;
-            options.placeholder = labels.selectPlaceholder;
         }
-        else if (!hasProperty(options, 'placeholder') || isNullOrEmpty(options.placeholder)) {
+
+        if (!hasProperty(options, 'placeholder') || isNullOrEmpty(options.placeholder)) {
             options.placeholder = labels.selectPlaceholder;
         }
 
@@ -1317,7 +1308,8 @@ var MyRio2cCommon = function () {
                 data: function (params) {
                     var query = {
                         keywords: params.term,
-                        page: params.page
+                        page: params.page,
+                        filterByProjectsInNegotiation: options.filterByProjectsInNegotiation || false
                     };
 
                     return query;
@@ -1329,13 +1321,136 @@ var MyRio2cCommon = function () {
                         data: data,
                         // Success
                         onSuccess: function () {
-                            for (var i = data.Speakers.length - 1; i >= 0; i--) {
-                                data.Speakers[i].id = data.Speakers[i].Uid;
-                                data.Speakers[i].text = data.Speakers[i].BadgeName || data.Speakers[i].Name;
+                            for (var i = data.Organizations.length - 1; i >= 0; i--) {
+                                data.Organizations[i].id = data.Organizations[i].Uid;
+                                data.Organizations[i].text = data.Organizations[i].TradeName || data.Organizations[i].CompanyName;
                             }
 
                             return {
-                                results: data.Speakers,
+                                results: data.Organizations,
+                                pagination: {
+                                    more: data.HasNextPage
+                                }
+                            };
+                        },
+                        // Error
+                        onError: function () {
+                        }
+                    });
+                }
+            },
+            templateResult: formatOrganizationResult,
+            templateSelection: formatOrganizationSelection
+        });
+
+        // Add pre-selected value
+        if (hasProperty(options, 'selectedOption') && !isNullOrEmpty(options.selectedOption) && hasProperty(options.selectedOption, 'id') && hasProperty(options.selectedOption, 'text')) {
+            var newOption = new Option(options.selectedOption.text, options.selectedOption.id, false, true);
+            $(options.inputIdOrClass).append(newOption).trigger('change');
+        }
+    };
+
+    // Collaborator select2 -----------------------------------------------------------------------
+    var formatCollaboratorResult = function (collaborator) {
+	    if (collaborator.loading) {
+		    return collaborator.text;
+	    }
+
+	    var imageDirectory = 'https://' + globalVariables.bucket + '/img/users/';
+
+	    var container =
+		    '<div class="select2-result-collaborator clearfix">' +
+			    '<div class="select2-result-collaborator__avatar">';
+
+	    // Picture
+	    if (!MyRio2cCommon.isNullOrEmpty(collaborator.Picture)) {
+		    container +=
+			    '<img src="' + collaborator.Picture + '" />';
+	    }
+	    else {
+		    container +=
+			    '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" />';
+	    }
+
+	    container +=
+		    '</div > ' +
+		    '<div class="select2-result-collaborator__meta">' +
+		    '<div class="select2-result-collaborator__title">' + (collaborator.BadgeName || collaborator.Name) + '</div>';
+
+	    if (!MyRio2cCommon.isNullOrEmpty(collaborator.JobTitle)) {
+		    container +=
+			    '<div class="select2-result-collaborator__description">' + collaborator.JobTitle + '</div>';
+	    }
+
+	    if (!MyRio2cCommon.isNullOrEmpty(collaborator.Companies) && collaborator.Companies.length > 0) {
+		    container +=
+			    '<div class="select2-result-collaborator__description">' + collaborator.Companies[0].TradeName + '</div>';
+	    }
+
+	    container +=
+		    '   </div>' +
+		    '</div>';
+
+	    var $container = $(container);
+
+	    return $container;
+    };
+
+    var formatCollaboratorSelection = function (collaborator) {
+	    return collaborator.text;
+    };
+
+    var enableCollaboratorSelect2 = function (options) {
+        if (isNullOrEmpty(options)) {
+            options = new Object();
+        }
+
+        if (!hasProperty(options, 'inputIdOrClass') || isNullOrEmpty(options.inputIdOrClass)) {
+            options.inputIdOrClass = '.enable-collaborator-select2';
+        }
+
+        if (!hasProperty(options, 'allowClear') || isNullOrEmpty(options.allowClear)) {
+            options.allowClear = true;
+        }
+
+        if (!hasProperty(options, 'placeholder') || isNullOrEmpty(options.placeholder)) {
+            options.placeholder = labels.selectPlaceholder;
+        }
+
+        $(options.inputIdOrClass).select2({
+            language: MyRio2cCommon.getGlobalVariable('userInterfaceLanguageUppercade'),
+            width: '100%',
+            allowClear: options.allowClear,
+            placeholder: options.placeholder,
+            delay: 250,
+            ajax: {
+                url: MyRio2cCommon.getUrlWithCultureAndEdition(options.url),
+                dataType: 'json',
+                type: "GET",
+                quietMillis: 50,
+                data: function (params) {
+                    var query = {
+                        keywords: params.term,
+                        page: params.page,
+                        filterByProjectsInNegotiation: options.filterByProjectsInNegotiation || false
+                    };
+
+                    return query;
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+
+                    return MyRio2cCommon.handleAjaxReturn({
+                        data: data,
+                        // Success
+                        onSuccess: function () {
+                            for (var i = data.Collaborators.length - 1; i >= 0; i--) {
+                                data.Collaborators[i].id = data.Collaborators[i].Uid;
+                                data.Collaborators[i].text = data.Collaborators[i].BadgeName || data.Collaborators[i].Name;
+                            }
+
+                            return {
+                                results: data.Collaborators,
                                 pagination: {
                                     more: data.HasNextPage
                                 }
@@ -1460,6 +1575,9 @@ var MyRio2cCommon = function () {
         },
         showAlert: function (options) {
             showAlert(options);
+        },
+        enableOrganizationSelect2: function (options) {
+	        enableOrganizationSelect2(options);
         },
         enableCollaboratorSelect2: function (options) {
             enableCollaboratorSelect2(options);

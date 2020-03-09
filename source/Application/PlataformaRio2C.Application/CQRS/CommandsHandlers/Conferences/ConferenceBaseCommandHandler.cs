@@ -4,7 +4,7 @@
 // Created          : 12-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-27-2019
+// Last Modified On : 03-04-2020
 // ***********************************************************************
 // <copyright file="ConferenceBaseCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -45,7 +45,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var conference = await this.ConferenceRepo.GetAsync(conferenceUid);
             if (conference == null || conference.IsDeleted) // Do not check IsDeleted because the Collaborator/User can be restored
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Conference, Labels.FoundF), new string[] { "Conference" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Conference, Labels.FoundF), new string[] { "ToastrError" }));
             }
 
             return conference;

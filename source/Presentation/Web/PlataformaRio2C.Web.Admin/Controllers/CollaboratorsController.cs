@@ -91,13 +91,13 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 PageCount = collaboratorsApiDtos.PageCount,
                 PageNumber = collaboratorsApiDtos.PageNumber,
                 PageSize = collaboratorsApiDtos.PageSize,
-                Speakers = collaboratorsApiDtos?.Select(c => new SpeakersDropdownDto
+                Collaborators = collaboratorsApiDtos?.Select(c => new CollaboratorsDropdownDto
                 {
                     Uid = c.Uid,
                     Name = c.Name?.Trim(),
                     Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.CollaboratorUid, c.ImageUploadDate, true) : null,
                     JobTitle = c.GetCollaboratorJobTitleBaseDtoByLanguageCode(this.UserInterfaceLanguage)?.Value?.Trim(),
-                    Companies = c.OrganizationsDtos?.Select(od => new SpeakersDropdownOrganizationDto
+                    Companies = c.OrganizationsDtos?.Select(od => new CollaboratorsDropdownOrganizationDto()
                     {
                         Uid = od.Uid,
                         TradeName = od.TradeName,

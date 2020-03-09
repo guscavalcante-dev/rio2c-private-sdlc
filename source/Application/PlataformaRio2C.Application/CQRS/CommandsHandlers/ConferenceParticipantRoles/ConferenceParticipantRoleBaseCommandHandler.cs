@@ -4,7 +4,7 @@
 // Created          : 01-07-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 03-04-2020
 // ***********************************************************************
 // <copyright file="ConferenceParticipantRoleBaseCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -45,7 +45,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var conferenceParticipantRole = await this.ConferenceParticipantRoleRepo.GetAsync(conferenceParticipantRoleUid);
             if (conferenceParticipantRole == null || conferenceParticipantRole.IsDeleted)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.SpeakerRole, Labels.FoundF), new string[] { "ConferenceParticipantRole" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.SpeakerRole, Labels.FoundF), new string[] { "ToastrError" }));
             }
 
             return conferenceParticipantRole;

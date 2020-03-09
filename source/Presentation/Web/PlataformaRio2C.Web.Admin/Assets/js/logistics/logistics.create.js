@@ -28,15 +28,15 @@ var LogisticsCreate = function () {
         MyRio2cCommon.enableCollaboratorSelect2({ url: '/Collaborators/FindAllByFilters' });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2', allowClear: true });
         enableAjaxForm();
-        
-        MyRio2cCommon.enableCheckboxChangeEvent("IsAirfareSponsored", function () { clearSponsor("Airfare"); });
-        MyRio2cCommon.enableCheckboxChangeEvent("IsAccommodationSponsored", function () { clearSponsor("Accommodation"); });
-        MyRio2cCommon.enableCheckboxChangeEvent("IsAirportTransferSponsored", function () { clearSponsor("AirportTransfer"); });
-        
+
         enableOtherSponsorsSelect2('Airfare');
         enableOtherSponsorsSelect2('Accommodation');
         enableOtherSponsorsSelect2('AirportTransfer');
 
+        MyRio2cCommon.enableCheckboxChangeEvent("IsAirfareSponsored", function () { clearSponsor("Airfare"); });
+        MyRio2cCommon.enableCheckboxChangeEvent("IsAccommodationSponsored", function () { clearSponsor("Accommodation"); });
+        MyRio2cCommon.enableCheckboxChangeEvent("IsAirportTransferSponsored", function () { clearSponsor("AirportTransfer"); });
+        
         enableFormValidation();
         userInterfaceLanguage = MyRio2cCommon.getGlobalVariables().userInterfaceLanguageUppercade;
     };
@@ -94,7 +94,7 @@ var LogisticsCreate = function () {
 		    }
 		    else {
 	            hideSponsorSelect2(preffix);
-                emptySponsorSelect2(preffix);
+                //emptySponsorSelect2(preffix);
             }
 	    }
         
@@ -167,16 +167,7 @@ var LogisticsCreate = function () {
 
     var emptySponsorSelect2 = function (preffix) {
 	    var sponsorUidElement = $("#" + preffix + sponsorUid);
-
-        sponsorUidElement.val('').trigger('change');
-        sponsorUidElement.select2({
-            language: userInterfaceLanguage,
-            width: '100%',
-            placeholder: labels.selectPlaceholder,
-            data: []
-        });
-
-        sponsorUidElement.empty();
+	    sponsorUidElement.val('').trigger('change');
     };
 
     var enableOtherSponsorsSelect2 = function (preffix, isParentChanged) {

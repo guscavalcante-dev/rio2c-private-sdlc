@@ -475,6 +475,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Automático.
+        /// </summary>
+        public static string Automatic {
+            get {
+                return ResourceManager.GetString("Automatic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disponíveis.
         /// </summary>
         public static string AvailableP {
@@ -1002,6 +1011,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ContentTypeYouAreLookingFor {
             get {
                 return ResourceManager.GetString("ContentTypeYouAreLookingFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Número de mesas automáticas.
+        /// </summary>
+        public static string CountAutomaticTables {
+            get {
+                return ResourceManager.GetString("CountAutomaticTables", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Número de mesas manuais.
+        /// </summary>
+        public static string CountManualTables {
+            get {
+                return ResourceManager.GetString("CountManualTables", resourceCulture);
             }
         }
         
@@ -1870,6 +1897,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gerada.
+        /// </summary>
+        public static string GeneratedF {
+            get {
+                return ResourceManager.GetString("GeneratedF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gerado.
+        /// </summary>
+        public static string GeneratedM {
+            get {
+                return ResourceManager.GetString("GeneratedM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gênero.
         /// </summary>
         public static string Genre {
@@ -2401,6 +2446,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manual.
+        /// </summary>
+        public static string Manual {
+            get {
+                return ResourceManager.GetString("Manual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mercado.
         /// </summary>
         public static string Market {
@@ -2644,6 +2698,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Negociação.
+        /// </summary>
+        public static string Negotiation {
+            get {
+                return ResourceManager.GetString("Negotiation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Detalhes da Negociação.
         /// </summary>
         public static string NegotiationDetails {
@@ -2878,6 +2941,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Parâmetros de Rodadas de Negócio.
+        /// </summary>
+        public static string OneToOneMeetingParameters {
+            get {
+                return ResourceManager.GetString("OneToOneMeetingParameters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rodadas de Negócios.
         /// </summary>
         public static string OneToOneMeetings {
@@ -2937,6 +3009,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Others {
             get {
                 return ResourceManager.GetString("Others", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parâmetro.
+        /// </summary>
+        public static string Parameter {
+            get {
+                return ResourceManager.GetString("Parameter", resourceCulture);
             }
         }
         
@@ -3719,11 +3800,38 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Regerar Agenda.
+        /// </summary>
+        public static string RegenerateCalendar {
+            get {
+                return ResourceManager.GetString("RegenerateCalendar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Registrar.
         /// </summary>
         public static string Register {
             get {
                 return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cadastrada.
+        /// </summary>
+        public static string RegisteredF {
+            get {
+                return ResourceManager.GetString("RegisteredF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cadastrado.
+        /// </summary>
+        public static string RegisteredM {
+            get {
+                return ResourceManager.GetString("RegisteredM", resourceCulture);
             }
         }
         
@@ -3976,6 +4084,42 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rodada.
+        /// </summary>
+        public static string Round {
+            get {
+                return ResourceManager.GetString("Round", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Qtde. de rodadas do 1&lt;sup&gt;o&lt;/sup&gt; turno.
+        /// </summary>
+        public static string RoundFirstTurn {
+            get {
+                return ResourceManager.GetString("RoundFirstTurn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Número do rodada.
+        /// </summary>
+        public static string RoundNumber {
+            get {
+                return ResourceManager.GetString("RoundNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Qtde. de rodadas do 2&lt;sup&gt;o&lt;/sup&gt; turno.
+        /// </summary>
+        public static string RoundSecondTurn {
+            get {
+                return ResourceManager.GetString("RoundSecondTurn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Regulamento.
         /// </summary>
         public static string Rules {
@@ -3999,6 +4143,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Saved {
             get {
                 return ResourceManager.GetString("Saved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Negociações agendadas.
+        /// </summary>
+        public static string ScheduledNegotiations {
+            get {
+                return ResourceManager.GetString("ScheduledNegotiations", resourceCulture);
             }
         }
         
@@ -4678,6 +4831,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Número da mesa.
+        /// </summary>
+        public static string TableNumber {
+            get {
+                return ResourceManager.GetString("TableNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Talentos.
         /// </summary>
         public static string Talents {
@@ -4750,7 +4912,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to a.
+        ///   Looks up a localized string similar to A.
         /// </summary>
         public static string TheF {
             get {
@@ -4759,7 +4921,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to o.
+        ///   Looks up a localized string similar to O.
         /// </summary>
         public static string TheM {
             get {
@@ -4800,6 +4962,33 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string TicketNumber {
             get {
                 return ResourceManager.GetString("TicketNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tempo de intervalo entre cada rodada.
+        /// </summary>
+        public static string TimeIntervalBetweenRound {
+            get {
+                return ResourceManager.GetString("TimeIntervalBetweenRound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tempo de intervalo entre os turnos.
+        /// </summary>
+        public static string TimeIntervalBetweenTurn {
+            get {
+                return ResourceManager.GetString("TimeIntervalBetweenTurn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tempo de cada rodada.
+        /// </summary>
+        public static string TimeOfEachRound {
+            get {
+                return ResourceManager.GetString("TimeOfEachRound", resourceCulture);
             }
         }
         
@@ -4921,6 +5110,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tipo.
+        /// </summary>
+        public static string Type {
+            get {
+                return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Digite sua mensagem.
         /// </summary>
         public static string TypeYourMessage {
@@ -4939,7 +5137,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Negociações não Agendadas.
+        ///   Looks up a localized string similar to Negociações não agendadas.
         /// </summary>
         public static string UnscheduledNegotiations {
             get {

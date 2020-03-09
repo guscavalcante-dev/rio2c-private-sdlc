@@ -4,7 +4,7 @@
 // Created          : 02-25-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-25-2020
+// Last Modified On : 03-04-2020
 // ***********************************************************************
 // <copyright file="MusicAreaRegistration.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,9 +19,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music
     public class MusicAreaRegistration : AreaRegistration 
     {
         /// <summary>Gets the name of the area to register.</summary>
-        public override string AreaName 
+        public override string AreaName
         {
-            get 
+            get
             {
                 return "Music";
             }
@@ -32,26 +32,26 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(
-                "MusicWithCultureAndEdition",
+                $"{this.AreaName}WithCultureAndEdition",
                 "{culture}/{edition}/" + this.AreaName + "/{controller}/{action}/{id}",
                 new { culture = string.Empty, edition = string.Empty, controller = "Home", action = "Index", area = this.AreaName, id = UrlParameter.Optional },
                 new { culture = @"^[a-zA-Z]{2}(\-[a-zA-Z]{2})?$", edition = @"^[0-9]{4}$" },
-                new[] { "PlataformaRio2C.Web.Admin.Areas.Music.Controllers" }
+                new[] { $"PlataformaRio2C.Web.Admin.Areas.{this.AreaName}.Controllers" }
             );
 
             context.MapRoute(
-                "MusicWithCulture",
+                $"{this.AreaName}WithCulture",
                 "{culture}/" + this.AreaName + "/{controller}/{action}/{id}",
                 new { culture = string.Empty, controller = "Home", action = "Index", area = this.AreaName, id = UrlParameter.Optional },
                 new { culture = @"^[a-zA-Z]{2}(\-[a-zA-Z]{2})?$" },
-                new[] { "PlataformaRio2C.Web.Admin.Areas.Music.Controllers" }
+                new[] { $"PlataformaRio2C.Web.Admin.Areas.{this.AreaName}.Controllers" }
             );
 
             context.MapRoute(
-                "Music",
+                this.AreaName,
                 this.AreaName + "/{controller}/{action}/{id}",
                 new { controller = "Home", action = "Index", area = this.AreaName, id = UrlParameter.Optional },
-                new[] { "PlataformaRio2C.Web.Admin.Areas.Music.Controllers" }
+                new[] { $"PlataformaRio2C.Web.Admin.Areas.{this.AreaName}.Controllers" }
             );
         }
     }

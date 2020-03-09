@@ -1201,6 +1201,7 @@ CREATE TABLE [dbo].[Editions](
 	[InnovationProjectSubmitEndDate] [datetimeoffset](7) NOT NULL,
 	[InnovationProjectEvaluationStartDate] [datetimeoffset](7) NOT NULL,
 	[InnovationProjectEvaluationEndDate] [datetimeoffset](7) NOT NULL,
+	[AudiovisualNegotiationsCreateDate] [datetimeoffset](7) NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetimeoffset](7) NULL,
 	[CreateUserId] [int] NOT NULL,
@@ -2018,7 +2019,7 @@ CREATE TABLE [dbo].[NegotiationConfigs](
 	[EndDate] [datetimeoffset](7) NOT NULL,
 	[RoundFirstTurn] [int] NOT NULL,
 	[RoundSecondTurn] [int] NOT NULL,
-	[TimeIntervalBetweenTurn] [char](18) NULL,
+	[TimeIntervalBetweenTurn] [time](7) NOT NULL,
 	[TimeOfEachRound] [time](7) NOT NULL,
 	[TimeIntervalBetweenRound] [time](7) NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
@@ -2052,7 +2053,7 @@ CREATE TABLE [dbo].[NegotiationRoomConfigs](
 	[CountManualTables] [int] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetimeoffset](7) NOT NULL,
-	[CrateUserId] [int] NOT NULL,
+	[CreateUserId] [int] NOT NULL,
 	[UpdateDate] [datetimeoffset](7) NOT NULL,
 	[UpdateUserId] [int] NOT NULL,
  CONSTRAINT [PK_NegotiationRoomConfigs] PRIMARY KEY CLUSTERED 
@@ -2079,6 +2080,7 @@ CREATE TABLE [dbo].[Negotiations](
 	[EndDate] [datetimeoffset](7) NOT NULL,
 	[TableNumber] [int] NOT NULL,
 	[RoundNumber] [int] NOT NULL,
+	[IsAutomatic] [bit] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,
@@ -5135,10 +5137,10 @@ REFERENCES [dbo].[Rooms] ([Id])
 GO
 ALTER TABLE [dbo].[NegotiationRoomConfigs] CHECK CONSTRAINT [FK_Rooms_NegotiationRoomConfigs_RoomId]
 GO
-ALTER TABLE [dbo].[NegotiationRoomConfigs]  WITH CHECK ADD  CONSTRAINT [FK_Users_NegotiationRoomConfigs_CrateUserId] FOREIGN KEY([CrateUserId])
+ALTER TABLE [dbo].[NegotiationRoomConfigs]  WITH CHECK ADD  CONSTRAINT [FK_Users_NegotiationRoomConfigs_CreateUserId] FOREIGN KEY([CreateUserId])
 REFERENCES [dbo].[Users] ([Id])
 GO
-ALTER TABLE [dbo].[NegotiationRoomConfigs] CHECK CONSTRAINT [FK_Users_NegotiationRoomConfigs_CrateUserId]
+ALTER TABLE [dbo].[NegotiationRoomConfigs] CHECK CONSTRAINT [FK_Users_NegotiationRoomConfigs_CreateUserId]
 GO
 ALTER TABLE [dbo].[NegotiationRoomConfigs]  WITH CHECK ADD  CONSTRAINT [FK_Users_NegotiationRoomConfigs_UpdateUserId] FOREIGN KEY([UpdateUserId])
 REFERENCES [dbo].[Users] ([Id])

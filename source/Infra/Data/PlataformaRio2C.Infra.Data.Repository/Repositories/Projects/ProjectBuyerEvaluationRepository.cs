@@ -4,7 +4,7 @@
 // Created          : 12-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 03-08-2020
 // ***********************************************************************
 // <copyright file="ProjectBuyerEvaluationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,24 +29,27 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     /// </summary>
     internal static class ProjectBuyerEvaluationIQueryableExtensions
     {
-        /// <summary>Finds the by project edition identifier.</summary>
+        /// <summary>Finds the by edition identifier.</summary>
         /// <param name="query">The query.</param>
         /// <param name="editionId">The edition identifier.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <returns></returns>
-        internal static IQueryable<ProjectBuyerEvaluation> FindByProjectEditionId(this IQueryable<ProjectBuyerEvaluation> query, int editionId)
+        internal static IQueryable<ProjectBuyerEvaluation> FindByEditionId(this IQueryable<ProjectBuyerEvaluation> query, int editionId, bool showAllEditions = false)
         {
-            query = query.Where(pbe => !pbe.Project.SellerAttendeeOrganization.IsDeleted
-                                       && pbe.Project.SellerAttendeeOrganization.EditionId == editionId);
+            query = query.Where(pbe => (showAllEditions || (!pbe.Project.SellerAttendeeOrganization.IsDeleted
+                                                            && pbe.Project.SellerAttendeeOrganization.EditionId == editionId)));
 
             return query;
         }
 
-        /// <summary>Determines whether [is project not deleted].</summary>
+
+        /// <summary>Finds the by project evaluation status uid.</summary>
         /// <param name="query">The query.</param>
+        /// <param name="projectEvaluationStatusUid">The project evaluation status uid.</param>
         /// <returns></returns>
-        internal static IQueryable<ProjectBuyerEvaluation> IsProjectNotDeleted(this IQueryable<ProjectBuyerEvaluation> query)
+        internal static IQueryable<ProjectBuyerEvaluation> FindByProjectEvaluationStatusUid(this IQueryable<ProjectBuyerEvaluation> query, Guid projectEvaluationStatusUid)
         {
-            query = query.Where(pbe => !pbe.Project.IsDeleted);
+            query = query.Where(pbe => pbe.ProjectEvaluationStatus.Uid == projectEvaluationStatusUid);
 
             return query;
         }
@@ -57,6 +60,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static IQueryable<ProjectBuyerEvaluation> IsProjectFinished(this IQueryable<ProjectBuyerEvaluation> query)
         {
             query = query.Where(pbe => pbe.Project.FinishDate.HasValue);
+
+            return query;
+        }
+
+        /// <summary>Determines whether [is negotiation unscheduled].</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<ProjectBuyerEvaluation> IsNegotiationUnscheduled(this IQueryable<ProjectBuyerEvaluation> query)
+        {
+            query = query.Where(pbe => !pbe.Negotiations.Any()
+                                       || pbe.Negotiations.All(n => n.IsDeleted));
 
             return query;
         }
@@ -87,12 +101,32 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Determines whether [is negotiation scheduled].</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<ProjectBuyerEvaluation> IsNegotiationScheduled(this IQueryable<ProjectBuyerEvaluation> query)
+        {
+            query = query.Where(pbe => pbe.Negotiations.Any(n => !n.IsDeleted));
+
+            return query;
+        }
+
+        /// <summary>Determines whether [is negotiation not scheduled].</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<ProjectBuyerEvaluation> IsNegotiationNotScheduled(this IQueryable<ProjectBuyerEvaluation> query)
+        {
+            query = query.Where(pbe => !pbe.Negotiations.Any() || pbe.Negotiations.All(n => n.IsDeleted));
+
+            return query;
+        }
+
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
         internal static IQueryable<ProjectBuyerEvaluation> IsNotDeleted(this IQueryable<ProjectBuyerEvaluation> query)
         {
-            query = query.Where(pbe => !pbe.IsDeleted);
+            query = query.Where(pbe => !pbe.IsDeleted && !pbe.Project.IsDeleted && !pbe.Project.SellerAttendeeOrganization.IsDeleted);
 
             return query;
         }
@@ -129,16 +163,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionProjectEvaluationEndDate">The edition project evaluation end date.</param>
         /// <returns></returns>
         public async Task<List<ProjectBuyerEvaluationEmailDto>> FindAllBuyerEmailDtosAsync(
-            int editionId, 
+            int editionId,
             DateTimeOffset editionProjectEvaluationStartDate,
             DateTimeOffset editionProjectEvaluationEndDate)
         {
             var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId)
                                 .IsBuyerEvaluationEmailPending()
-                                .FindByProjectEditionId(editionId)
                                 .IsProjectFinished()
-                                .IsProjectFinishDateBetweenEvaluationPeriod(editionProjectEvaluationStartDate, editionProjectEvaluationEndDate)
-                                .IsProjectNotDeleted();
+                                .IsProjectFinishDateBetweenEvaluationPeriod(editionProjectEvaluationStartDate, editionProjectEvaluationEndDate);
 
             return await query
                                 .Select(pbe => new ProjectBuyerEvaluationEmailDto
@@ -162,6 +195,92 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                 })
                                 })
                                 .ToListAsync();
+        }
+
+        /// <summary>Finds all for generate negotiations asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<List<ProjectBuyerEvaluation>> FindAllForGenerateNegotiationsAsync(int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId)
+                                .FindByProjectEvaluationStatusUid(ProjectEvaluationStatus.Accepted.Uid)
+                                .IsProjectFinished()
+                                .Include(pbe => pbe.Project)
+                                .Include(pbe => pbe.Project.SellerAttendeeOrganization)
+                                .Include(pbe => pbe.BuyerAttendeeOrganization);
+
+            return await query
+                            .ToListAsync();
+        }
+
+        /// <summary>Finds the unscheduled widget dto asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<List<ProjectBuyerEvaluationDto>> FindUnscheduledWidgetDtoAsync(int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId)
+                                .FindByProjectEvaluationStatusUid(ProjectEvaluationStatus.Accepted.Uid)
+                                .IsProjectFinished()
+                                .IsNegotiationUnscheduled()
+                                .Select(pbe => new ProjectBuyerEvaluationDto
+                                {
+                                    ProjectBuyerEvaluation = pbe,
+                                    BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                    {
+                                        AttendeeOrganization = pbe.BuyerAttendeeOrganization,
+                                        Organization = pbe.BuyerAttendeeOrganization.Organization
+                                    },
+                                    ProjectDto = new ProjectDto
+                                    {
+                                        Project = pbe.Project,
+                                        SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                        {
+                                            AttendeeOrganization = pbe.Project.SellerAttendeeOrganization,
+                                            Organization = pbe.Project.SellerAttendeeOrganization.Organization
+                                        },
+                                        ProjectTitleDtos = pbe.Project.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                        {
+                                            ProjectTitle = t,
+                                            Language = t.Language
+                                        })
+                                    }
+                                });
+
+            return await query
+                            .OrderBy(ped => ped.BuyerAttendeeOrganizationDto.Organization.TradeName)
+                            .ToListAsync();
+        }
+
+        /// <summary>Counts the negotiation scheduled asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <returns></returns>
+        public async Task<int> CountNegotiationScheduledAsync(int editionId, bool showAllEditions = false)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId, showAllEditions)
+                                .FindByProjectEvaluationStatusUid(ProjectEvaluationStatus.Accepted.Uid)
+                                .IsProjectFinished()
+                                .IsNegotiationScheduled();
+
+            return await query.CountAsync();
+        }
+
+        /// <summary>Counts the negotiation not scheduled asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <returns></returns>
+        public async Task<int> CountNegotiationNotScheduledAsync(int editionId, bool showAllEditions = false)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId, showAllEditions)
+                                .FindByProjectEvaluationStatusUid(ProjectEvaluationStatus.Accepted.Uid)
+                                .IsProjectFinished()
+                                .IsNegotiationNotScheduled();
+
+            return await query.CountAsync();
         }
     }
 }

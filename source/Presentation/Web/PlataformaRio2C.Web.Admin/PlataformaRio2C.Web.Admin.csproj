@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.props" Condition="Exists('..\..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" />
   <Import Project="..\..\..\..\packages\PostSharp.6.2.8\build\PostSharp.props" Condition="Exists('..\..\..\..\packages\PostSharp.6.2.8\build\PostSharp.props')" />
   <Import Project="..\..\..\..\packages\Microsoft.Net.Compilers.3.1.1\build\Microsoft.Net.Compilers.props" Condition="Exists('..\..\..\..\packages\Microsoft.Net.Compilers.3.1.1\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
@@ -95,10 +96,10 @@
       <HintPath>..\..\..\..\packages\Elmah.Mvc.2.1.2\lib\net40\Elmah.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\..\..\..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\..\..\..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="EPPlus, Version=4.5.3.2, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\EPPlus.4.5.3.2\lib\net40\EPPlus.dll</HintPath>
@@ -330,6 +331,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SimpleInjectorInitializer.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Audiovisual\AudiovisualAreaRegistration.cs" />
+    <Compile Include="Areas\Audiovisual\Controllers\MeetingsController.cs" />
+    <Compile Include="Areas\Audiovisual\Controllers\MeetingParametersController.cs" />
+    <Compile Include="Areas\Audiovisual\Controllers\ProducersController.cs" />
     <Compile Include="Areas\Music\Controllers\CommissionsController.cs" />
     <Compile Include="Areas\Music\Controllers\ProjectsController.cs" />
     <Compile Include="Areas\Music\MusicAreaRegistration.cs" />
@@ -430,6 +435,19 @@
     <Content Include="Assets\js\logisticsponsors\logisticsponsors.datatable.widget.js" />
     <Content Include="Assets\js\logisticsponsors\logisticsponsors.delete.js" />
     <Content Include="Assets\js\logisticsponsors\logisticsponsors.update.js" />
+    <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.editioncount.widget.js" />
+    <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.rooms.widget.js" />
+    <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.totalcount.widget.js" />
+    <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.datatable.widget.js" />
+    <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.create.js" />
+    <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.delete.js" />
+    <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.maininformation.widget.js" />
+    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.scheduled.delete.js" />
+    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.editionunscheduledcount.widget.js" />
+    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.editionscheduledcount.widget.js" />
+    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.unscheduled.widget.js" />
+    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.scheduled.widget.js" />
+    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.status.widget.js" />
     <Content Include="Assets\js\companies\companyinfo.autocomplete.js" />
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.participants.widget.js" />
     <Content Include="Assets\js\conferences\conferences.editionevents.js" />
@@ -7138,7 +7156,34 @@
     <Content Include="Areas\Music\Views\Projects\Modals\RefuseEvaluationForm.cshtml" />
     <Content Include="Areas\Music\Views\Projects\Modals\RefuseEvaluationModal.cshtml" />
     <Content Include="Areas\Music\Views\Projects\Widgets\SocialNetworksWidget.cshtml" />
-    <Content Include="Assets\img\200484580088054.pdf" />
+    <Content Include="Areas\Audiovisual\Views\web.config" />
+    <Content Include="Areas\Audiovisual\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Details.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Index.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\UpdateMainInformationModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\UpdateModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\UpdateSocialNetworksModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\CreateModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\CreateForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Widgets\MainInformationWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\UpdateMainInformationForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Widgets\RoomsWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\CreateRoomModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\CreateRoomForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\UpdateRoomModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\MeetingParameters\Modals\UpdateRoomForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Index.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\StatusWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\EditionScheduledCountWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\EditionUnscheduledCountWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Scheduled.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\ScheduledDataWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Unscheduled.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\UnscheduledWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\ScheduledWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -8471,6 +8516,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Audiovisual\Data\" />
+    <Folder Include="Areas\Audiovisual\Views\Shared\" />
     <Folder Include="Areas\Music\Data\" />
     <Folder Include="Areas\Music\Views\Shared\" />
     <Folder Include="Scripts\ckeditor\images\" />
@@ -8625,6 +8672,8 @@
     <Error Condition="!Exists('..\..\..\..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.10.0\build\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.10.0\build\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.targets'))" />
     <Error Condition="!Exists('..\..\..\..\packages\Microsoft.ApplicationInsights.WindowsServer.2.10.0\build\Microsoft.ApplicationInsights.WindowsServer.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\Microsoft.ApplicationInsights.WindowsServer.2.10.0\build\Microsoft.ApplicationInsights.WindowsServer.targets'))" />
     <Error Condition="!Exists('..\..\..\..\packages\Microsoft.ApplicationInsights.Web.2.10.0\build\Microsoft.ApplicationInsights.Web.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\Microsoft.ApplicationInsights.Web.2.10.0\build\Microsoft.ApplicationInsights.Web.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.targets'))" />
   </Target>
   <Import Project="..\..\..\..\packages\PostSharp.6.2.8\build\PostSharp.targets" Condition="Exists('..\..\..\..\packages\PostSharp.6.2.8\build\PostSharp.targets')" />
   <Import Project="..\..\..\..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.10.0\build\Microsoft.ApplicationInsights.DependencyCollector.targets" Condition="Exists('..\..\..\..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.10.0\build\Microsoft.ApplicationInsights.DependencyCollector.targets')" />
@@ -8632,6 +8681,7 @@
   <Import Project="..\..\..\..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.10.0\build\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.targets" Condition="Exists('..\..\..\..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.10.0\build\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.targets')" />
   <Import Project="..\..\..\..\packages\Microsoft.ApplicationInsights.WindowsServer.2.10.0\build\Microsoft.ApplicationInsights.WindowsServer.targets" Condition="Exists('..\..\..\..\packages\Microsoft.ApplicationInsights.WindowsServer.2.10.0\build\Microsoft.ApplicationInsights.WindowsServer.targets')" />
   <Import Project="..\..\..\..\packages\Microsoft.ApplicationInsights.Web.2.10.0\build\Microsoft.ApplicationInsights.Web.targets" Condition="Exists('..\..\..\..\packages\Microsoft.ApplicationInsights.Web.2.10.0\build\Microsoft.ApplicationInsights.Web.targets')" />
+  <Import Project="..\..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.targets" Condition="Exists('..\..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

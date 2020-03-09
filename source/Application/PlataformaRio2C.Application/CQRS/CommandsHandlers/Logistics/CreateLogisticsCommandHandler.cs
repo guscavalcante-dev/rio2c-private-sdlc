@@ -19,6 +19,8 @@ using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -60,6 +62,18 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.Uow.BeginTransaction();
             
+            var attendeeCollaborator = await this.repository.GetAsync(l => l.AttendeeCollaborator.Uid == cmd.AttendeeCollaboratorUid && !l.IsDeleted);
+            if (attendeeCollaborator?.AttendeeCollaborator.Collaborator != null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.Request.ToLower(), Labels.Participant, attendeeCollaborator.AttendeeCollaborator.Collaborator.GetDisplayName()), new string[] { "AttendeeCollaboratorUid" }));
+            }
+
+            if (!this.ValidationResult.IsValid)
+            {
+                this.AppValidationResult.Add(this.ValidationResult);
+                return this.AppValidationResult;
+            }
+
             var logistics = new Logistics(
                 this.editionRepo.Get(cmd.EditionId),
                 this.attendeeCollaboratorRepo.Get(cmd.AttendeeCollaboratorUid),

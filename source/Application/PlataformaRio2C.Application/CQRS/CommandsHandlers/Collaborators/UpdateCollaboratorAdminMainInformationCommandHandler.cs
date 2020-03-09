@@ -4,7 +4,7 @@
 // Created          : 12-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-21-2020
+// Last Modified On : 03-08-2020
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorAdminMainInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -88,7 +88,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var user = await this.userRepo.GetAsync(u => u.Email == cmd.Email.Trim());
             if (user != null && (collaborator?.User == null || user.Uid != collaborator?.User?.Uid))
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.User.ToLowerInvariant(), $"{Labels.TheM} {Labels.Email.ToLowerInvariant()}", cmd.Email), new string[] { "Email" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.User.ToLowerInvariant(), $"{Labels.TheM.ToLowerInvariant()} {Labels.Email.ToLowerInvariant()}", cmd.Email), new string[] { "Email" }));
             }
 
             if (!this.ValidationResult.IsValid)

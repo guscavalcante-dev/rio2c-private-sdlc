@@ -88,6 +88,7 @@ var LogisticsMainInformationWidget = function () {
         enableOtherSponsorsSelect2('AirportTransfer');
 
         enableFormValidation();
+        $("#AttendeeCollaboratorUid").prop('disabled', true);
         userInterfaceLanguage = MyRio2cCommon.getGlobalVariables().userInterfaceLanguageUppercade;
     };
 
@@ -129,7 +130,7 @@ var LogisticsMainInformationWidget = function () {
 
     var clearSponsor = function (preffix) {
         $("[name='" + preffix + "SponsorUid']").prop("checked", false);
-        emptySponsorSelect2(preffix);
+        //emptySponsorSelect2(preffix);
         disableNewSponsor(preffix);
         hideSponsorSelect2(preffix);
     }
@@ -149,7 +150,7 @@ var LogisticsMainInformationWidget = function () {
             }
             else {
                 hideSponsorSelect2(preffix);
-                emptySponsorSelect2(preffix);
+                //emptySponsorSelect2(preffix);
             }
         }
 
@@ -222,16 +223,7 @@ var LogisticsMainInformationWidget = function () {
 
     var emptySponsorSelect2 = function (preffix) {
         var sponsorUidElement = $("#" + preffix + sponsorUid);
-
         sponsorUidElement.val('').trigger('change');
-        sponsorUidElement.select2({
-            language: userInterfaceLanguage,
-            width: '100%',
-            placeholder: labels.selectPlaceholder,
-            data: []
-        });
-
-        sponsorUidElement.empty();
     };
 
     var enableOtherSponsorsSelect2 = function (preffix, isParentChanged) {

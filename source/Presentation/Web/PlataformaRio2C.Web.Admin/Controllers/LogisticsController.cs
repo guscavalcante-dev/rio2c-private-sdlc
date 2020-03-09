@@ -148,7 +148,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="showAllSponsored">if set to <c>true</c> [show all sponsored].</param>
         /// <returns>Task&lt;ActionResult&gt;.</returns>
         [HttpGet]
-        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllParticipants, bool showAllSponsored)
+        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllParticipants)
         {
             var list = await this.collaboratorRepo.FindAllLogisticsByDatatable(
                 EditionDto.Id,
@@ -156,8 +156,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 request.Length,
                 request.Search?.Value,
                 request.GetSortColumns(),
-                showAllParticipants,
-                showAllSponsored);
+                showAllParticipants);
             
             var response = DataTablesResponse.Create(request, 100, 100, list);
             
@@ -182,7 +181,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         public async Task<ActionResult> ShowCreateModal()
         {
             var cmd = new CreateLogisticRequest(
-                await attendeeLogisticSponsorRepo.FindAllDtosByIsOther(this.EditionDto.Id, true),
+                await attendeeLogisticSponsorRepo.FindAllDtosByIsOther(this.EditionDto.Id, false),
                 UserInterfaceLanguage);
 
             return Json(new
@@ -241,7 +240,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     message = ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/_TinyForm", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("Modals/_CreateForm", cmd), divIdOrClass = "#form-container"}
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -251,7 +250,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Speaker, Labels.CreatedM) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Request, Labels.CreatedF) });
         }
 
         #endregion
@@ -360,7 +359,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Speaker, Labels.UpdatedM) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Request, Labels.UpdatedF) });
         }
 
         #endregion
@@ -455,7 +454,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Speaker, Labels.UpdatedM) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Request, Labels.UpdatedM) });
         }
         #endregion
         
@@ -549,7 +548,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Speaker, Labels.UpdatedM) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Request, Labels.UpdatedF) });
         }
         #endregion
 
@@ -643,7 +642,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Speaker, Labels.UpdatedM) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Request, Labels.UpdatedF) });
         }
         #endregion
         #region Details
@@ -754,7 +753,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Speaker, Labels.CreatedM) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Request, Labels.CreatedF) });
         }
 
         #endregion
@@ -924,7 +923,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Speaker, Labels.CreatedM) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Request, Labels.CreatedF) });
         }
 
         #endregion
@@ -1038,7 +1037,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Speaker, Labels.DeletedM) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Request, Labels.DeletedF) });
         }
 
 
@@ -1094,7 +1093,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Speaker, Labels.DeletedM) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Request, Labels.DeletedF) });
         }
 
 
@@ -1150,7 +1149,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Speaker, Labels.DeletedM) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Request, Labels.DeletedF) });
         }
 
         #endregion

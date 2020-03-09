@@ -1,0 +1,46 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model NegotiationConfigDto
+@{
+    ViewBag.Title = Labels.Parameter;
+}
+@Html.Hidden("AggregateId", Model.NegotiationConfig.Uid)
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <!--begin:Main Information Widget-->
+            <div class="col-12">
+                <div id="AudiovisualMeetingParametersMainInformationWidget" class="kt-portlet" style="min-height: 300px;"></div>
+            </div>
+            <!--end:Main Information Widget-->
+        </div>
+        
+        <div class="row">
+            <!--begin:Rooms Widget-->
+            <div class="col-12">
+                <div id="AudiovisualMeetingParametersRoomsWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+            <!--end:Rooms Widget-->
+        </div>
+        
+    </div>
+</div>
+@section Styles {
+    @Styles.Render("~/bundles/css/select2.css")
+    @Styles.Render("~/bundles/css/bootstrap-datepicker.css")
+    @Styles.Render("~/bundles/css/bootstrap-timepicker.css")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/select2.js")
+    @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/bootstrap-datepicker.js")
+    @Scripts.Render("~/bundles/js/bootstrap-timepicker.js")
+    @Scripts.Render("~/bundles/js/audiovisual.meetingparameters.details.js")
+    <script>
+        // Page translations ----------------------------------------------------------------------
+
+        jQuery(document).ready(function () {
+            AudiovisualMeetingParametersMainInformationWidget.init();
+            AudiovisualMeetingParametersRoomsWidget.init();
+        });
+    </script>
+}

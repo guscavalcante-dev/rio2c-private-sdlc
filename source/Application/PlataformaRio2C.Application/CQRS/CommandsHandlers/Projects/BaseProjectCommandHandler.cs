@@ -4,7 +4,7 @@
 // Created          : 11-07-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-14-2019
+// Last Modified On : 03-04-2020
 // ***********************************************************************
 // <copyright file="BaseProjectCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -48,7 +48,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var attendeeOrganization = await this.AttendeeOrganizationRepo.GetAsync(attendeeOrganizationUid);
             if (attendeeOrganization == null || attendeeOrganization.IsDeleted)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.CompanyName, Labels.FoundF)));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.CompanyName, Labels.FoundF), new string[] { "ToastrError" }));
                 return null;
             }
 
@@ -63,7 +63,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var project = await this.ProjectRepo.GetAsync(projectUid);
             if (project == null || project.IsDeleted)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM)));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM), new string[] { "ToastrError" }));
                 return null;
             }
 

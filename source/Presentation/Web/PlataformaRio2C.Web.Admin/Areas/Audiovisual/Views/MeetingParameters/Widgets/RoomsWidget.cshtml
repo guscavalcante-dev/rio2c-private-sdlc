@@ -1,0 +1,64 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model NegotiationConfigDto
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+            @Labels.Rooms
+        </h3>
+    </div>
+    <div class="kt-portlet__head-toolbar">
+        <div class="kt-portlet__head-actions">
+            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="AudiovisualMeetingParametersRoomsWidget.showCreateModal();">
+                <i class="flaticon2-add-1"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="kt-portlet__body">
+    <div class="row">
+        @if (Model.NegotiationRoomConfigDtos?.Any() == true)
+        {
+            <div class="col-12">
+                <table class="table table-sm table-head-bg-brand table-body-scroll">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>@Labels.Name</th>
+                            <th class="text-center">@Labels.CountAutomaticTables</th>
+                            <th class="text-center">@Labels.CountManualTables</th>
+                            <th class="text-center">@Labels.Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="rio2c-scroll" style="height: 200px;">
+                        @foreach (var negotiationRoomConfigDto in Model.NegotiationRoomConfigDtos)
+                        {
+                            <tr>
+                                <td>@(negotiationRoomConfigDto.RoomDto.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.RoomName?.Value)</td>
+                                <td class="text-center">@negotiationRoomConfigDto.NegotiationRoomConfig.CountAutomaticTables</td>
+                                <td class="text-center">@negotiationRoomConfigDto.NegotiationRoomConfig.CountManualTables</td>
+                                <td class="text-center ">
+                                    <span class="dropdown">
+                                        <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
+                                            <i class="la la-ellipsis-h"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <button class="dropdown-item" onclick="AudiovisualMeetingParametersRoomsWidget.showUpdateModal('@(negotiationRoomConfigDto.NegotiationRoomConfig?.Uid)');">
+                                                <i class="la la-edit"></i>@Labels.Edit
+                                            </button>
+                                            <button class="dropdown-item" onclick="AudiovisualMeetingParametersRoomsWidget.showDeleteModal('@(negotiationRoomConfigDto.NegotiationRoomConfig?.Uid)');">
+                                                <i class="la la-remove"></i>@Labels.Remove
+                                            </button>
+                                        </div>
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="col-12 text-center mt-30">@string.Format(Messages.EntityNotAction, Labels.Rooms, Labels.FoundFP)</div>
+        }
+    </div>
+</div>

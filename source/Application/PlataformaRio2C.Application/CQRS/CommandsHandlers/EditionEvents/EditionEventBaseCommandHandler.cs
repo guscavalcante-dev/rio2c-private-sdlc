@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-06-2020
+// Last Modified On : 03-04-2020
 // ***********************************************************************
 // <copyright file="EditionEventBaseCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -45,7 +45,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var editionEvent = await this.EditionEventRepo.GetAsync(editionEventUid);
             if (editionEvent == null || editionEvent.IsDeleted)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Event, Labels.FoundM), new string[] { "Name" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Event, Labels.FoundM), new string[] { "ToastrError" }));
             }
 
             return editionEvent;

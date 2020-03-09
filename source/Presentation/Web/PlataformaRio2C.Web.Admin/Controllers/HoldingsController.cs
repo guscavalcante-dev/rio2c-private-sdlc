@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-18-2019
+// Last Modified On : 03-04-2020
 // ***********************************************************************
 // <copyright file="HoldingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,6 +15,7 @@ using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using DataTables.AspNet.Core;
@@ -211,7 +212,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
                         new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
@@ -299,7 +300,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
                         new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
@@ -357,7 +358,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                 }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

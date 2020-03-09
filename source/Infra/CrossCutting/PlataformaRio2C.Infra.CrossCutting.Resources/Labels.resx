@@ -1066,8 +1066,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Palestras</comment>
   </data>
   <data name="UnscheduledNegotiations" xml:space="preserve">
-    <value>Negociações não Agendadas</value>
-    <comment>Negociações não Agendadas</comment>
+    <value>Negociações não agendadas</value>
+    <comment>Negociações não agendadas</comment>
   </data>
   <data name="ViewCalendar" xml:space="preserve">
     <value>Visualizar Agenda</value>
@@ -1314,12 +1314,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Rua</comment>
   </data>
   <data name="TheF" xml:space="preserve">
-    <value>a</value>
-    <comment>a</comment>
+    <value>A</value>
+    <comment>A</comment>
   </data>
   <data name="TheM" xml:space="preserve">
-    <value>o</value>
-    <comment>o</comment>
+    <value>O</value>
+    <comment>O</comment>
   </data>
   <data name="Address1" xml:space="preserve">
     <value>Endereço</value>
@@ -2312,5 +2312,93 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Place" xml:space="preserve">
     <value>Local</value>
     <comment>Local</comment>
+  </data>
+  <data name="OneToOneMeetingParameters" xml:space="preserve">
+    <value>Parâmetros de Rodadas de Negócio</value>
+    <comment>Parâmetros de Rodadas de Negócio</comment>
+  </data>
+  <data name="Parameter" xml:space="preserve">
+    <value>Parâmetro</value>
+    <comment>Parâmetro</comment>
+  </data>
+  <data name="RoundFirstTurn" xml:space="preserve">
+    <value>Qtde. de rodadas do 1&lt;sup&gt;o&lt;/sup&gt; turno</value>
+    <comment>Qtde. de rodadas do 1&lt;sup&gt;o&lt;/sup&gt; turno</comment>
+  </data>
+  <data name="RoundSecondTurn" xml:space="preserve">
+    <value>Qtde. de rodadas do 2&lt;sup&gt;o&lt;/sup&gt; turno</value>
+    <comment>Qtde. de rodadas do 2&lt;sup&gt;o&lt;/sup&gt; turno</comment>
+  </data>
+  <data name="TimeIntervalBetweenRound" xml:space="preserve">
+    <value>Tempo de intervalo entre cada rodada</value>
+    <comment>Tempo de intervalo entre cada rodada</comment>
+  </data>
+  <data name="TimeIntervalBetweenTurn" xml:space="preserve">
+    <value>Tempo de intervalo entre os turnos</value>
+    <comment>Tempo de intervalo entre os turnos</comment>
+  </data>
+  <data name="TimeOfEachRound" xml:space="preserve">
+    <value>Tempo de cada rodada</value>
+    <comment>Tempo de cada rodada</comment>
+  </data>
+  <data name="CountAutomaticTables" xml:space="preserve">
+    <value>Número de mesas automáticas</value>
+    <comment>Número de mesas automáticas</comment>
+  </data>
+  <data name="CountManualTables" xml:space="preserve">
+    <value>Número de mesas manuais</value>
+    <comment>Número de mesas manuais</comment>
+  </data>
+  <data name="GeneratedF" xml:space="preserve">
+    <value>Gerada</value>
+    <comment>Gerada</comment>
+  </data>
+  <data name="GeneratedM" xml:space="preserve">
+    <value>Gerado</value>
+    <comment>Gerado</comment>
+  </data>
+  <data name="RoundNumber" xml:space="preserve">
+    <value>Número do rodada</value>
+    <comment>Número da rodada</comment>
+  </data>
+  <data name="TableNumber" xml:space="preserve">
+    <value>Número da mesa</value>
+    <comment>Número da mesa</comment>
+  </data>
+  <data name="RegenerateCalendar" xml:space="preserve">
+    <value>Regerar Agenda</value>
+    <comment>Regerar Agenda</comment>
+  </data>
+  <data name="Negotiation" xml:space="preserve">
+    <value>Negociação</value>
+    <comment>Negociação</comment>
+  </data>
+  <data name="ScheduledNegotiations" xml:space="preserve">
+    <value>Negociações agendadas</value>
+    <comment>Negociações agendadas</comment>
+  </data>
+  <data name="Automatic" xml:space="preserve">
+    <value>Automático</value>
+    <comment>Automático</comment>
+  </data>
+  <data name="Manual" xml:space="preserve">
+    <value>Manual</value>
+    <comment>Manual</comment>
+  </data>
+  <data name="RegisteredF" xml:space="preserve">
+    <value>Cadastrada</value>
+    <comment>Cadastrada</comment>
+  </data>
+  <data name="RegisteredM" xml:space="preserve">
+    <value>Cadastrado</value>
+    <comment>Cadastrado</comment>
+  </data>
+  <data name="Round" xml:space="preserve">
+    <value>Rodada</value>
+    <comment>Rodada</comment>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Tipo</value>
+    <comment>Tipo</comment>
   </data>
 </root>

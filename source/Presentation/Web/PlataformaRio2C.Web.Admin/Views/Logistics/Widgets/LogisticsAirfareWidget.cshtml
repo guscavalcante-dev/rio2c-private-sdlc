@@ -34,7 +34,7 @@
                                         <th class="text-center">@Labels.ToPlace</th>
                                         <th class="text-center">@Labels.ArrivalDate</th>
                                         <th class="text-center">@Labels.TicketNumber</th>
-                                        <th class="text-center">@Labels.AirfareTicket</th>
+                                        @*<th class="text-center">@Labels.AirfareTicket</th>*@
                                         <th class="text-center">@Labels.CreateDate</th>
                                         <th class="text-center">@Labels.UpdateDate</th>
                                         <th class="text-center">@Labels.Actions</th>
@@ -62,8 +62,8 @@
                                             <td class="text-center">
                                                 @dto.TicketNumber
                                             </td>
-                                            <td class="text-center">
-                                            </td>
+                                            @*<td class="text-center">
+                                            </td>*@
                                             <td class="text-center">
                                                 @dto.CreateDate.ToString("g")
                                             </td>
@@ -77,7 +77,7 @@
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-right">
                                                         <button class="dropdown-item" onclick="LogisticAirfareUpdate.showModal('@dto.Uid');"><i class="la la-edit"></i>@Labels.Edit</button>
-                                                        <a class="dropdown-item" href="@Url.Content("~/Assets/img/200484580088054.pdf")" target="_blank"><i class="la la-download"></i>@Labels.Download</a>
+                                                        @*<a class="dropdown-item" href="@Url.Content("~/Assets/img/200484580088054.pdf")" target="_blank"><i class="la la-download"></i>@Labels.Download</a>*@
                                                         <button class="dropdown-item" onclick="LogisticAirfareDelete.showModal('@dto.Uid');"><i class="la la-remove"></i>@Labels.Remove</button>
                                                     </div>
                                                 </span>

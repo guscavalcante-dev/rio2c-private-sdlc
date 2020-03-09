@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-26-2020
+// Last Modified On : 03-08-2020
 // ***********************************************************************
 // <copyright file="SpeakersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -271,7 +271,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
                         new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Forms/_MainInformationForm.cshtml", cmd), divIdOrClass = "#form-container" },
@@ -389,7 +389,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
                         new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Forms/_SocialNetworksForm.cshtml", cmd), divIdOrClass = "#form-container" },
@@ -517,7 +517,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
                         new { page = this.RenderRazorViewToString("/Views/Companies/Shared/_TicketBuyerCompanyInfoForm.cshtml", cmd), divIdOrClass = "#form-container" },
@@ -577,7 +577,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                 }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -780,7 +780,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
                         new { page = this.RenderRazorViewToString("Modals/UpdateApiConfigurationForm", cmd), divIdOrClass = "#form-container" },
@@ -978,7 +978,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
                         new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Forms/_TinyForm.cshtml", cmd), divIdOrClass = "#form-container" },
@@ -1067,7 +1067,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
                         new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Forms/_TinyForm.cshtml", cmd), divIdOrClass = "#form-container" },
@@ -1127,7 +1127,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                 }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -1154,6 +1154,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             var collaboratorsApiDtos = await this.collaboratorRepo.FindAllDropdownApiListDtoPaged(
                 this.EditionDto.Id,
                 keywords,
+                false,
                 Constants.CollaboratorType.Speaker,
                 false,
                 page.Value,
@@ -1168,14 +1169,14 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 PageCount = collaboratorsApiDtos.PageCount,
                 PageNumber = collaboratorsApiDtos.PageNumber,
                 PageSize = collaboratorsApiDtos.PageSize,
-                Speakers = collaboratorsApiDtos?.Select(c => new SpeakersDropdownDto
+                Collaborators = collaboratorsApiDtos?.Select(c => new CollaboratorsDropdownDto
                 {
                     Uid = c.Uid,
                     BadgeName = c.BadgeName?.Trim(),
                     Name = c.Name?.Trim(),
                     Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.Uid, c.ImageUploadDate, true) : null,
                     JobTitle = c.GetCollaboratorJobTitleBaseDtoByLanguageCode(this.UserInterfaceLanguage)?.Value?.Trim(),
-                    Companies = c.OrganizationsDtos?.Select(od => new SpeakersDropdownOrganizationDto
+                    Companies = c.OrganizationsDtos?.Select(od => new CollaboratorsDropdownOrganizationDto
                     {
                         Uid = od.Uid,
                         TradeName = od.TradeName,

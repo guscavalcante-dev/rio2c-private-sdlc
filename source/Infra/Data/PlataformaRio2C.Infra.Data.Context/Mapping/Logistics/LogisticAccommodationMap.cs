@@ -31,7 +31,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             // Relationships
 
             this.HasRequired(t => t.Logistics)
-                .WithMany()
+                .WithMany(e => e.LogisticAccommodation)
                 .HasForeignKey(d => d.LogisticId);
         }
     }

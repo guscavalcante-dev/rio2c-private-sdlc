@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-16-2020
+// Last Modified On : 03-04-2020
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -275,6 +275,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             }
 
             return list;
+        }
+
+        /// <summary>Converts to timespan.</summary>
+        /// <param name="s">The string.</param>
+        /// <returns></returns>
+        public static TimeSpan ToTimeSpan(this string s)
+        {
+            TimeSpan.TryParse(s, null, out var timeIntervalBetweenTurn);
+            return timeIntervalBetweenTurn;
         }
 
         /// <summary>Determines whether this instance is image.</summary>

@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.props" Condition="Exists('..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" />
   <Import Project="..\..\..\packages\PostSharp.6.2.8\build\PostSharp.props" Condition="Exists('..\..\..\packages\PostSharp.6.2.8\build\PostSharp.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -51,10 +52,10 @@
       <HintPath>..\..\..\packages\CommonServiceLocator.2.0.4\lib\net45\CommonServiceLocator.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\..\..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\..\..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="EPPlus, Version=4.5.3.2, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\EPPlus.4.5.3.2\lib\net40\EPPlus.dll</HintPath>
@@ -177,6 +178,15 @@
     <Compile Include="Common\AppValidationResult.cs" />
     <Compile Include="Common\EntityViewModel.cs" />
     <Compile Include="Common\StatusProjectCodes.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationConfigs\DeleteNegotiationConfigCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationConfigs\NegotiationConfigBaseCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationConfigs\CreateNegotiationConfigCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationRoomConfigs\DeleteNegotiationRoomConfigCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationRoomConfigs\UpdateNegotiationRoomConfigCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationRoomConfigs\CreateNegotiationRoomConfigCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Audiovisual\Negotiations\CreateNegotiationsCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Audiovisual\Negotiations\DeleteNegotiationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Audiovisual\Negotiations\NegotiationBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\BaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\BaseCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\CreateTinyCollaboratorCommandHandler.cs" />
@@ -291,6 +301,15 @@
     <Compile Include="CQRS\CommandsHandlers\Tracks\CreateTrackCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Tracks\DeleteTrackCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Tracks\TrackBaseCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationConfigs\UpdateNegotiationConfigMainInformationCommandHandler.cs" />
+    <Compile Include="CQRS\Commands\Audiovisual\NegotiationConfigs\UpdateNegotiationConfigMainInformation.cs" />
+    <Compile Include="CQRS\Commands\Audiovisual\NegotiationConfigs\DeleteNegotiationConfig.cs" />
+    <Compile Include="CQRS\Commands\Audiovisual\NegotiationConfigs\CreateNegotiationConfig.cs" />
+    <Compile Include="CQRS\Commands\Audiovisual\NegotiationRoomConfigs\DeleteNegotiationRoomConfig.cs" />
+    <Compile Include="CQRS\Commands\Audiovisual\NegotiationRoomConfigs\UpdateNegotiationRoomConfig.cs" />
+    <Compile Include="CQRS\Commands\Audiovisual\NegotiationRoomConfigs\CreateNegotiationRoomConfig.cs" />
+    <Compile Include="CQRS\Commands\Audiovisual\Negotiations\CreateNegotiations.cs" />
+    <Compile Include="CQRS\Commands\Audiovisual\Negotiations\DeleteNegotiation.cs" />
     <Compile Include="CQRS\Commands\Collaborators\UpdateCollaboratorSocialNetworks.cs" />
     <Compile Include="CQRS\Commands\ConferenceParticipantRoles\BaseCommands\ConferenceParticipantRoleTitleBaseCommand.cs" />
     <Compile Include="CQRS\Commands\ConferenceParticipantRoles\CreateConferenceParticipantRole.cs" />
@@ -553,6 +572,7 @@
     <Compile Include="ViewModels\Api\Conference\LecturerAppViewModel.cs" />
     <Compile Include="ViewModels\Api\Conference\LecturerGroupAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Activity\ActivityAppViewModel.cs" />
+    <Compile Include="ViewModels\Common\Audiovisual\Meetings\MeetingParameterSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\CollaboratorPlayer\CollaboratorPlayerEditAppViewModel.cs" />
     <Compile Include="ViewModels\Common\CollaboratorPlayer\CollaboratorPlayerItemListAppViewModel.cs" />
     <Compile Include="ViewModels\Common\CollaboratorProducer\CollaboratorProducerItemListAppViewModel.cs" />
@@ -778,8 +798,11 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\..\..\packages\PostSharp.6.2.8\build\PostSharp.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\PostSharp.6.2.8\build\PostSharp.props'))" />
     <Error Condition="!Exists('..\..\..\packages\PostSharp.6.2.8\build\PostSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\PostSharp.6.2.8\build\PostSharp.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.targets'))" />
   </Target>
   <Import Project="..\..\..\packages\PostSharp.6.2.8\build\PostSharp.targets" Condition="Exists('..\..\..\packages\PostSharp.6.2.8\build\PostSharp.targets')" />
+  <Import Project="..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.targets" Condition="Exists('..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
