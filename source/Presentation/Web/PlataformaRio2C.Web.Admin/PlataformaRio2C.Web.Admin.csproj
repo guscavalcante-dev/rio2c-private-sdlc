@@ -8208,14 +8208,7 @@
     <Content Include="Views\Producer\Edit.cshtml" />
     <Content Include="Views\Producer\_Editor.cshtml" />
     <Content Include="Views\LogisticSponsors\Index.cshtml" />
-    <Content Include="Views\Conference\Index.cshtml" />
-    <Content Include="Views\Conference\Create.cshtml" />
-    <Content Include="Views\Conference\Edit.cshtml" />
-    <Content Include="Views\Conference\_Editor.cshtml" />
-    <Content Include="Views\Logistics\Create.cshtml" />
     <Content Include="Views\Logistics\Index.cshtml" />
-    <Content Include="Views\Logistics\Edit.cshtml" />
-    <Content Include="Views\Logistics\_Editor.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\Project\Edit.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ProjectInterestsEditor.cshtml" />
@@ -8443,9 +8436,7 @@
     <Content Include="Views\Speakers\Widgets\RelatedParticipantsWidget.cshtml" />
     <Content Include="Views\Reports\Audiovisual\AudiovisualSubscriptions.cshtml" />
     <Content Include="Views\Reports\Audiovisual\Widgets\AudiovisualSubscriptionsWidget.cshtml" />
-    <Content Include="Views\Speakers\Widgets\SocialNetworksWidget.cshtml" />
     <Content Include="Views\Speakers\Modals\UpdateSocialNetworksModal.cshtml" />
-    <Content Include="Views\Speakers\Modals\UpdateSocialNetworksForm.cshtml" />
     <Content Include="Views\LogisticSponsors\Widgets\DataTableWidget.cshtml" />
     <Content Include="Views\LogisticSponsors\Modals\CreateModal.cshtml" />
     <Content Include="Views\LogisticSponsors\Modals\_CreateForm.cshtml" />
@@ -8453,7 +8444,6 @@
     <Content Include="Views\LogisticSponsors\EditorTemplates\LogisticSponsorsNameBaseCommand.cshtml" />
     <Content Include="Views\LogisticSponsors\Modals\UpdateModal.cshtml" />
     <Content Include="Views\Logistics\EditorTemplates\LogisticSponsorsNameBaseCommand.cshtml" />
-    <Content Include="Views\Logistics\Index.cshtml" />
     <Content Include="Views\Logistics\Modals\_CreateForm.cshtml" />
     <Content Include="Views\Logistics\Modals\CreateModal.cshtml" />
     <Content Include="Views\Logistics\Modals\UpdateModal.cshtml" />
