@@ -116,7 +116,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<ProjectBuyerEvaluation> IsNegotiationNotScheduled(this IQueryable<ProjectBuyerEvaluation> query)
         {
-            query = query.Where(pbe => !pbe.Negotiations.Any() && pbe.Negotiations.All(n => n.IsDeleted));
+            query = query.Where(pbe => !pbe.Negotiations.Any() || pbe.Negotiations.All(n => n.IsDeleted));
 
             return query;
         }

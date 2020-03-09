@@ -600,7 +600,8 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/audiovisual/meetings/audiovisual.meetings.status.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.scheduled.widget.js").Include(
-                "~/Assets/js/audiovisual/meetings/audiovisual.meetings.scheduled.widget.js"));
+                "~/Assets/js/audiovisual/meetings/audiovisual.meetings.scheduled.widget.js",
+                "~/Assets/js/audiovisual/meetings/audiovisual.meetings.scheduled.delete.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.unscheduled.widget.js").Include(
                 "~/Assets/js/audiovisual/meetings/audiovisual.meetings.unscheduled.widget.js"));

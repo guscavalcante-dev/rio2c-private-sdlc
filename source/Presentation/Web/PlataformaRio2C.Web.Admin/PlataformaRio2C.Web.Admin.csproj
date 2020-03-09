@@ -430,6 +430,7 @@
     <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.create.js" />
     <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.delete.js" />
     <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.maininformation.widget.js" />
+    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.scheduled.delete.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.editionunscheduledcount.widget.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.editionscheduledcount.widget.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.unscheduled.widget.js" />

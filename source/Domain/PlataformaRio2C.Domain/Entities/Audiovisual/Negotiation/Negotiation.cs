@@ -73,6 +73,15 @@ namespace PlataformaRio2C.Domain.Entities
             this.ProjectBuyerEvaluation = projectBuyerEvaluation;
         }
 
+        /// <summary>Deletes the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(int userId)
+        {
+            this.IsDeleted = true;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
         #region Validations
 
         /// <summary>Returns true if ... is valid.</summary>
