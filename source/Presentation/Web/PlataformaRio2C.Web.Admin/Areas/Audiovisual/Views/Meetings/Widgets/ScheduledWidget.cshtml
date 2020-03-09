@@ -1,4 +1,8 @@
-﻿<div class="col-12">
+﻿@using PlataformaRio2C.Domain.Dtos
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+}
+<div class="col-12">
     <div class="kt-portlet kt-portlet--mobile">
         <div class="kt-portlet__head kt-portlet__head--lg">
             <div class="kt-portlet__head-label">
@@ -66,11 +70,19 @@
         <div class="kt-portlet__body">
             <!--begin: SearchForm-->
             <div class="row">
-                <div class="col-12 col-md-4 mt-2">
+                <div class="col-12 col-md-6 mt-2">
                     @Html.DropDownList("BuyerOrganizationUid", Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAMEntity, Labels.Player.ToLowerInvariant())}...", new { @class = "form-control" })
                 </div>
-                <div class="col-12 col-md-4 mt-2">
+                <div class="col-12 col-md-6 mt-2">
                     @Html.DropDownList("SellerOrganizationUid", Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAFEntity, Labels.Producer.ToLowerInvariant())}...", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-4 mt-2">
+                    @Html.TextBox("ProjectKeywords", null, new { type = "search", @class = "form-control", autocomplete = "off", placeholder = $"{Labels.Project}" })
+                </div>
+                <div class="col-12 col-md-3 mt-2">
+                    @Html.TextBox("Date", null, new { @class = "form-control enable-datepicker", type = "search", data_date_start_date = editionDto?.StartDate.ToUserTimeZone().ToShortDateString(), data_date_end_date = editionDto?.EndDate.ToUserTimeZone().ToShortDateString(), placeholder = Labels.Date })
                 </div>
                 <div class="col-12 col-md-3 mt-2">
                     @Html.TextBox("ProjectKeywords", null, new { type = "search", @class = "form-control", autocomplete = "off", placeholder = $"{Labels.Project}" })

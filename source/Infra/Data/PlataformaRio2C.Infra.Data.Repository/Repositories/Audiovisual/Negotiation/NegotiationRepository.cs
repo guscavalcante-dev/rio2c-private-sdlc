@@ -110,6 +110,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the by date.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="negotiationDate">The negotiation date.</param>
+        /// <returns></returns>
+        internal static IQueryable<Negotiation> FindByDate(this IQueryable<Negotiation> query, DateTime? negotiationDate)
+        {
+            if (negotiationDate.HasValue)
+            {
+                query = query.Where(n => DbFunctions.TruncateTime(n.StartDate) == DbFunctions.TruncateTime(negotiationDate));
+            }
+
+            return query;
+        }
+
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
@@ -151,14 +165,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="buyerOrganizationUid">The buyer organization uid.</param>
         /// <param name="sellerOrganizationUid">The seller organization uid.</param>
         /// <param name="projectKeywords">The project keywords.</param>
+        /// <param name="negotiationDate">The negotiation date.</param>
         /// <returns></returns>
-        public async Task<List<NegotiationGroupedByDateDto>> FindScheduledWidgetDtoAsync(int editionId, Guid? buyerOrganizationUid, Guid? sellerOrganizationUid, string projectKeywords)
+        public async Task<List<NegotiationGroupedByDateDto>> FindScheduledWidgetDtoAsync(
+            int editionId, 
+            Guid? buyerOrganizationUid,
+            Guid? sellerOrganizationUid, 
+            string projectKeywords, 
+            DateTime? negotiationDate)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId)
                                 .FindByBuyerOrganizationUid(buyerOrganizationUid)
                                 .FindBySellerOrganizationUid(sellerOrganizationUid)
                                 .FindByProjectKeywords(projectKeywords)
+                                .FindByDate(negotiationDate)
                                 .Include(n => n.Room)
                                 .Include(n => n.Room.RoomNames)
                                 .Include(n => n.Room.RoomNames.Select(rn => rn.Language))
