@@ -181,5 +181,71 @@ namespace PlataformaRio2C.Domain.Entities
 
             return ValidationResult.IsValid;
         }
+
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Logistics" /> class.
+        /// </summary>
+        /// <param name="attendeeCollaborator">The attendee collaborator.</param>
+        /// <param name="isAirfareSponsored">if set to <c>true</c> [is airfare sponsored].</param>
+        /// <param name="airfareAttendeeLogisticSponsor">The airfare attendee logistic sponsor.</param>
+        /// <param name="airfareSponsorName">Name of the airfare sponsor.</param>
+        /// <param name="isAccommodationSponsored">if set to <c>true</c> [is accommodation sponsored].</param>
+        /// <param name="accommodationAttendeeLogisticSponsor">The accommodation attendee logistic sponsor.</param>
+        /// <param name="accommodationSponsorName">Name of the accommodation sponsor.</param>
+        /// <param name="isAirportTransferSponsored">if set to <c>true</c> [is airport transfer sponsored].</param>
+        /// <param name="airportTransferAttendeeLogisticSponsor">The airport transfer attendee logistic sponsor.</param>
+        /// <param name="airportTransferSponsorName">Name of the airport transfer sponsor.</param>
+        /// <param name="isCityTransferRequired">if set to <c>true</c> [is city transfer required].</param>
+        /// <param name="isVehicleDisposalRequired">if set to <c>true</c> [is vehicle disposal required].</param>
+        /// <param name="additionalInfo">The additional information.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(
+            Edition edition,
+            AttendeeCollaborator attendeeCollaborator,
+            bool isAirfareSponsored,
+            AttendeeLogisticSponsor airfareAttendeeLogisticSponsor,
+            string airfareSponsorName,
+            bool isAccommodationSponsored,
+            AttendeeLogisticSponsor accommodationAttendeeLogisticSponsor,
+            string accommodationSponsorName,
+            bool isAirportTransferSponsored,
+            AttendeeLogisticSponsor airportTransferAttendeeLogisticSponsor,
+            string airportTransferSponsorName,
+            bool isCityTransferRequired,
+            bool isVehicleDisposalRequired,
+            string additionalInfo,
+            int userId)
+        {
+            this.AttendeeCollaborator = attendeeCollaborator;
+            this.AttendeeCollaboratorId = attendeeCollaborator.Id;
+
+            if (!string.IsNullOrEmpty(airfareSponsorName))
+                airfareAttendeeLogisticSponsor = new AttendeeLogisticSponsor(edition, airfareSponsorName, userId);
+            else if (airfareAttendeeLogisticSponsor != null)
+                this.AirfareAttendeeLogisticSponsorId = airfareAttendeeLogisticSponsor.Id;
+
+            if (!string.IsNullOrEmpty(airportTransferSponsorName))
+                airportTransferAttendeeLogisticSponsor = new AttendeeLogisticSponsor(edition, airportTransferSponsorName, userId);
+            else if (airportTransferAttendeeLogisticSponsor != null)
+                this.AirportTransferAttendeeLogisticSponsorId = airportTransferAttendeeLogisticSponsor.Id;
+
+            if (!string.IsNullOrEmpty(accommodationSponsorName))
+                accommodationAttendeeLogisticSponsor = new AttendeeLogisticSponsor(edition, accommodationSponsorName, userId);
+            else if (accommodationAttendeeLogisticSponsor != null)
+                this.AccommodationAttendeeLogisticSponsorId = accommodationAttendeeLogisticSponsor.Id;
+
+            this.AirfareSponsor = airfareAttendeeLogisticSponsor;
+            this.AccommodationSponsor = accommodationAttendeeLogisticSponsor;
+            this.AirportTransferSponsor = airportTransferAttendeeLogisticSponsor;
+            this.IsAirfareSponsored = isAirfareSponsored;
+            this.IsAccommodationSponsored = isAccommodationSponsored;
+            this.IsAirportTransferSponsored = isAirportTransferSponsored;
+            this.IsCityTransferRequired = isCityTransferRequired;
+            this.IsVehicleDisposalRequired = isVehicleDisposalRequired;
+            this.AdditionalInfo = additionalInfo;
+            this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.UtcNow;
+        }
     }
 }

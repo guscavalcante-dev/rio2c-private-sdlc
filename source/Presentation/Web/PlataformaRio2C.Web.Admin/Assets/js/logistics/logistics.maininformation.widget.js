@@ -74,7 +74,8 @@ var LogisticsMainInformationWidget = function () {
         //if (typeof (ConferencesEditionEvents) !== 'undefined') {
         //    ConferencesEditionEvents.init();
         //}
-        MyRio2cCommon.enableCollaboratorSelect2({ url: '/Collaborators/FindAllByFilters' });
+        
+        MyRio2cCommon.enableCollaboratorSelect2({ url: '/Collaborators/FindAllByFilters', selectedOption: { id: $('#InitialCollaboratorUid').val(), text: $('#InitialCollaboratorName').val() }});
         MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2', allowClear: true });
         enableAjaxForm();
 

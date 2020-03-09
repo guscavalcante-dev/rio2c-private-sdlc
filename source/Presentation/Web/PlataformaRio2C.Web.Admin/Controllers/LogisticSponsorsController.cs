@@ -359,7 +359,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual + "," + Constants.CollaboratorType.CommissionAudiovisual)]
         public async Task<ActionResult> FindAllByIsOther()
         {
-            var list = await this.attendeeLogisticSponsorRepo.FindAllDtosByIsOther(this.EditionDto.Id);
+            var list = await this.attendeeLogisticSponsorRepo.FindAllDtosByIsOther(this.EditionDto.Id, true);
             
             return Json(new
             {

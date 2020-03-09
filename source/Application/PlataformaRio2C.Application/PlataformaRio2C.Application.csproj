@@ -219,6 +219,7 @@
     <Compile Include="CQRS\CommandsHandlers\LogisticSponsors\CreateLogisticSponsorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\LogisticSponsors\LogisticSponsorBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Logistics\CreateLogisticAccomodationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Logistics\UpdateLogisticRequestCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Logistics\UpdateLogisticAccomodationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Logistics\UpdateLogisticTransferCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Logistics\UpdateLogisticAirfareCommandHandler.cs" />

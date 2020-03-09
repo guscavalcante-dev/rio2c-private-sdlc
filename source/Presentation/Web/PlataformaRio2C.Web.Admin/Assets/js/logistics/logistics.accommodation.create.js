@@ -24,7 +24,6 @@ var LogisticAccommodationCreate = function () {
 
     // Enable plugins -----------------------------------------------------------------------------
     var enablePlugins = function () {        
-        MyRio2cCommon.enableCollaboratorSelect2({ url: '/Speakers/FindAllByFilters' });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2', allowClear: true });
         MyRio2cCommon.enableDateTimePicker({ inputIdOrClass: formId + ' .enable-datetimepicker', allowClear: true });
         enableAjaxForm();

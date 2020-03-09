@@ -21,6 +21,6 @@ namespace PlataformaRio2C.Domain.Interfaces
 {
     public interface IAttendeeLogisticSponsorRepository : IRepository<AttendeeLogisticSponsor>
     {
-        Task<List<LogisticSponsorBaseDto>> FindAllDtosByIsOther(int editionDtoId);
+        Task<List<LogisticSponsorBaseDto>> FindAllDtosByIsOther(int editionDtoId, bool isOther);
     }    
 }

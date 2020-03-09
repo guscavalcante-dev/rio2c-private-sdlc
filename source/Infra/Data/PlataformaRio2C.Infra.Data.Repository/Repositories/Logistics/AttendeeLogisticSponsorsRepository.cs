@@ -131,11 +131,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
         
-        public async Task<List<LogisticSponsorBaseDto>> FindAllDtosByIsOther(int editionId)
+        public async Task<List<LogisticSponsorBaseDto>> FindAllDtosByIsOther(int editionId, bool isOther)
         {
             var query = this.GetBaseQuery(true)
                 .FindByEditionId(false, editionId)
-                .FindByIsOther(editionId, true);
+                .FindByIsOther(editionId, isOther);
 
             return await query
                 .Select(c => new LogisticSponsorBaseDto

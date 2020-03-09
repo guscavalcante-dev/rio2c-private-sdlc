@@ -58,7 +58,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// </summary>
         private readonly ILogisticSponsorRepository logisticSponsorRepo;
 
-        private IAttendeeCollaboratorRepository attendeCollaboratorRepo;
+        private IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepo;
+        private readonly IAttendeeCollaboratorRepository attendeCollaboratorRepo;
         /// <summary>
         /// The logistics repo
         /// </summary>
@@ -98,6 +99,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             ILogisticAccommodationRepository logisticsAccommodationRepo,
             ILogisticAirfareRepository logisticsAirfareRepo,
             IAttendeePlacesRepository attendeePlacesRepo,
+            IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepo,
             ILogisticTransferRepository logisticsTransferRepo,
             IAttendeeCollaboratorRepository attendeCollaboratorRepo,
             ILanguageRepository languageRepo)
@@ -112,6 +114,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             this.collaboratorRepo = collaboratorRepo;
             this.attendeCollaboratorRepo = attendeCollaboratorRepo;
             this.logisticsAccommodationRepo = logisticsAccommodationRepo;
+            this.attendeeLogisticSponsorRepo = attendeeLogisticSponsorRepo;
         }
 
         #region List
@@ -179,7 +182,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         public async Task<ActionResult> ShowCreateModal()
         {
             var cmd = new CreateLogisticRequest(
-                await logisticSponsorRepo.FindAllDtosByEditionUidAsync(this.EditionDto.Id),
+                await attendeeLogisticSponsorRepo.FindAllDtosByIsOther(this.EditionDto.Id, true),
                 UserInterfaceLanguage);
 
             return Json(new
@@ -275,6 +278,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd = new UpdateLogisticRequest(
+                    entity.Uid,
                     await attendeCollaboratorRepo.GetAsync(entity.AttendeeCollaboratorId),
                     await logisticSponsorRepo.GetByIsOthersRequired(),
                     entity.AccommodationSponsor,

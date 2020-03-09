@@ -27,9 +27,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     public class CreateLogisticsCommandHandler : LogisticsBaseCommandHandler, IRequestHandler<CreateLogisticRequest, AppValidationResult>
     {
         private readonly IEditionRepository editionRepo;
-        private readonly ILanguageRepository languageRepo;
-        private readonly ILogisticsRepository logisticsRepo;
-        private readonly ILogisticSponsorRepository logisticSponsorRepo;
         private readonly IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
 
@@ -45,19 +42,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IMediator eventBus,
             IUnitOfWork uow,
             ILogisticsRepository logisticsRepo,
-            ILogisticSponsorRepository logisticSponsorRepo,
             IEditionRepository editionRepository,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepo,
-            IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepo,
-            ILanguageRepository languageRepository)
+            IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepo)
             : base(eventBus, uow, logisticsRepo)
         {
             this.editionRepo = editionRepository;
-            this.languageRepo = languageRepository;
-            this.logisticsRepo = logisticsRepo;
             this.attendeeLogisticSponsorRepo = attendeeLogisticSponsorRepo;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepo;
-            this.logisticSponsorRepo = logisticSponsorRepo;
         }
 
         /// <summary>Handles the specified create track.</summary>

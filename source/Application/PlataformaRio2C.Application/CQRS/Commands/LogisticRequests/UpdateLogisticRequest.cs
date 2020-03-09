@@ -26,18 +26,24 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     public class UpdateLogisticRequest : CreateLogisticRequest
     {
         public Guid LogisticRequestUid { get; set; }
-        
+        public Guid InitialCollaboratorUid { get; set; }
+        public string InitialCollaboratorName { get; set; }
+
         public UpdateLogisticRequest()
         {
         }
 
-        public UpdateLogisticRequest(AttendeeCollaborator attendeeCollaborator, Guid othersRequiredSponsorUid, AttendeeLogisticSponsor accommodationSponsor, AttendeeLogisticSponsor airfareSponsor, AttendeeLogisticSponsor airportTransferSponsor, bool isVehicleDisposalRequired, bool isCityTransferRequired, List<LogisticSponsorBaseDto> list, string userInterfaceLanguage)
+        public UpdateLogisticRequest(Guid uid, AttendeeCollaborator attendeeCollaborator, Guid othersRequiredSponsorUid, AttendeeLogisticSponsor accommodationSponsor, AttendeeLogisticSponsor airfareSponsor, AttendeeLogisticSponsor airportTransferSponsor, bool isVehicleDisposalRequired, bool isCityTransferRequired, List<LogisticSponsorBaseDto> list, string userInterfaceLanguage)
         {
+            this.LogisticRequestUid = uid;
             this.IsVehicleDisposalRequired = isVehicleDisposalRequired;
             this.IsCityTransferRequired = isCityTransferRequired;
-            
-            if(attendeeCollaborator != null)
-                this.AttendeeCollaboratorUid = attendeeCollaborator.Uid;
+
+            if (attendeeCollaborator != null)
+            {
+                this.AttendeeCollaboratorUid = this.InitialCollaboratorUid = attendeeCollaborator.Uid;
+                this.InitialCollaboratorName = attendeeCollaborator.Collaborator.GetDisplayName();
+            }
 
             UpdateAccommodationSponsor(othersRequiredSponsorUid, accommodationSponsor);
             UpdateAirfareSponsor(othersRequiredSponsorUid, airfareSponsor);
