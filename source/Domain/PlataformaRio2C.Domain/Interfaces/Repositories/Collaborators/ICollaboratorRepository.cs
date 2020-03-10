@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2020
+// Last Modified On : 03-10-2020
 // ***********************************************************************
 // <copyright file="ICollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -42,17 +42,17 @@ namespace PlataformaRio2C.Domain.Interfaces
 
         #region Old
 
-        Collaborator GetById(int id);
-        Collaborator GetStatusRegisterCollaboratorByUserId(int id);
-        Collaborator GetWithProducerByUserId(int id);
-        Collaborator GetWithPlayerAndProducerUserId(int id);
-        Collaborator GetWithPlayerAndProducerUid(Guid id);
-        Collaborator GetImage(Guid uid);
-        IEnumerable<Collaborator> GetOptions(Expression<Func<Collaborator, bool>> filter);
-        IEnumerable<Collaborator> GetCollaboratorProducerOptions(Expression<Func<Collaborator, bool>> filter);
-        IEnumerable<Collaborator> GetCollaboratorPlayerOptions(Expression<Func<Collaborator, bool>> filter);
-        IEnumerable<Collaborator> GetOptionsChat(int userId);
-        Collaborator GetBySchedule(Expression<Func<Collaborator, bool>> filter);
+        //Collaborator GetById(int id);
+        //Collaborator GetStatusRegisterCollaboratorByUserId(int id);
+        //Collaborator GetWithProducerByUserId(int id);
+        //Collaborator GetWithPlayerAndProducerUserId(int id);
+        //Collaborator GetWithPlayerAndProducerUid(Guid id);
+        //Collaborator GetImage(Guid uid);
+        //IEnumerable<Collaborator> GetOptions(Expression<Func<Collaborator, bool>> filter);
+        //IEnumerable<Collaborator> GetCollaboratorProducerOptions(Expression<Func<Collaborator, bool>> filter);
+        //IEnumerable<Collaborator> GetCollaboratorPlayerOptions(Expression<Func<Collaborator, bool>> filter);
+        //IEnumerable<Collaborator> GetOptionsChat(int userId);
+        //Collaborator GetBySchedule(Expression<Func<Collaborator, bool>> filter);
 
         #endregion
     }    

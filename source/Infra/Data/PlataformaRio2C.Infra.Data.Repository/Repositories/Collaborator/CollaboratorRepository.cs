@@ -884,33 +884,116 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         #endregion
 
+        /// <summary>Finds all logistics by datatable.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="searchValue">The search value.</param>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <returns></returns>
+        public async Task<IPagedList<LogisticRequestBaseDto>> FindAllLogisticsByDatatable(
+            int editionId,
+            int page,
+            int pageSize,
+            string searchValue,
+            List<Tuple<string, string>> sortColumns,
+            bool showAllParticipants)
+        {
+            var query = this.GetBaseQuery()
+                                    .FindLogisticsByEditionId(showAllParticipants, editionId)
+                                    .FindByKeywords(searchValue, editionId);
+
+            return await query
+                            .DynamicOrder<Collaborator>(
+                                sortColumns,
+                                new List<Tuple<string, string>>(),
+                                new List<string> { "FirstName", "CreateDate", "UpdateDate" }, "FirstName")
+                            .Select(c => new LogisticRequestBaseDto
+                            {
+                                CollaboratorUid = c.Uid,
+                                Name = c.FirstName + " " + c.LastNames,
+                                HasRequest = c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId && !ac.IsDeleted && ac.Logistics.Any(l => !l.IsDeleted)),
+                                HasLogistics = c.AttendeeCollaborators.Any(ac => ac.Logistics.Any(l => !l.IsDeleted &&
+                                                                                                       (l.LogisticAirfares.Any(a => !a.IsDeleted) ||
+                                                                                                        l.LogisticAccommodations.Any(a => !a.IsDeleted) ||
+                                                                                                        l.LogisticTransfers.Any(a => !a.IsDeleted)))),
+                                Id = c.AttendeeCollaborators
+                                    .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
+                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
+                                    .Select(e => e.Id)
+                                    .FirstOrDefault(),
+                                Uid = c.AttendeeCollaborators
+                                    .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
+                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
+                                    .Select(e => e.Uid)
+                                    .FirstOrDefault(),
+                                AccommodationSponsor = c.AttendeeCollaborators
+                                    .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
+                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted && l.AccommodationSponsor != null))
+                                    .Select(e => e.AccommodationSponsor.LogisticSponsor.Name)
+                                    .FirstOrDefault(),
+                                AirfareSponsor = c.AttendeeCollaborators
+                                    .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
+                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted && l.AirfareSponsor != null))
+                                    .Select(e => e.AirfareSponsor.LogisticSponsor.Name)
+                                    .FirstOrDefault(),
+                                AirportTransferSponsor = c.AttendeeCollaborators
+                                    .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
+                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted && l.AirportTransferSponsor != null))
+                                    .Select(e => e.AirportTransferSponsor.LogisticSponsor.Name)
+                                    .FirstOrDefault(),
+                                CreateDate = c.AttendeeCollaborators
+                                    .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
+                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
+                                    .Select(e => e.CreateDate)
+                                    .FirstOrDefault(),
+                                UpdateDate = c.AttendeeCollaborators
+                                    .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
+                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
+                                    .Select(e => e.UpdateDate)
+                                    .FirstOrDefault(),
+                                TransferCity = c.AttendeeCollaborators
+                                    .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
+                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
+                                    .Select(e => e.IsCityTransferRequired)
+                                    .FirstOrDefault(),
+                                IsVehicleDisposalRequired = c.AttendeeCollaborators
+                                    .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
+                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
+                                    .Select(e => e.IsVehicleDisposalRequired)
+                                    .FirstOrDefault(),
+                            })
+                            .ToListPagedAsync(page, pageSize);
+        }
+
         #region Old
 
-        /// <summary>Método que traz todos os registros</summary>
-        /// <param name="readonly"></param>
-        /// <returns></returns>
-        public override IQueryable<Collaborator> GetAll(bool @readonly = false)
-        {
-            var consult = this.dbSet
-                                .Include(i => i.Address)
-                                .Include(i => i.User);
-                                //.Include(i => i.MiniBios)
-                                //.Include(i => i.MiniBios.Select(j => j.Language))
-                                //.Include(i => i.JobTitles)
-                                //.Include(i => i.JobTitles.Select(j => j.Language))
-                                //.Include(i => i.Players)
-                                //.Include(i => i.Players.Select(e => e.Holding))
-                                //.Include(i => i.Players.Select(e => e.Address))
-                                //.Include(i => i.ProducersEvents)
-                                ////.Include(i => i.Countries)
-                                ////.Include(i => i.Country)
-                                //.Include(i => i.ProducersEvents.Select(e => e.Producer))
-                                //.Include(i => i.ProducersEvents.Select(e => e.Producer.Address));
+        ///// <summary>Método que traz todos os registros</summary>
+        ///// <param name="readonly"></param>
+        ///// <returns></returns>
+        //public override IQueryable<Collaborator> GetAll(bool @readonly = false)
+        //{
+        //    var consult = this.dbSet
+        //                        .Include(i => i.Address)
+        //                        .Include(i => i.User);
+        //                        //.Include(i => i.MiniBios)
+        //                        //.Include(i => i.MiniBios.Select(j => j.Language))
+        //                        //.Include(i => i.JobTitles)
+        //                        //.Include(i => i.JobTitles.Select(j => j.Language))
+        //                        //.Include(i => i.Players)
+        //                        //.Include(i => i.Players.Select(e => e.Holding))
+        //                        //.Include(i => i.Players.Select(e => e.Address))
+        //                        //.Include(i => i.ProducersEvents)
+        //                        ////.Include(i => i.Countries)
+        //                        ////.Include(i => i.Country)
+        //                        //.Include(i => i.ProducersEvents.Select(e => e.Producer))
+        //                        //.Include(i => i.ProducersEvents.Select(e => e.Producer.Address));
 
-            return @readonly
-                          ? consult.AsNoTracking()
-                          : consult;
-        }
+        //    return @readonly
+        //                  ? consult.AsNoTracking()
+        //                  : consult;
+        //}
 
         //public override IQueryable<Collaborator> GetAll(Expression<Func<Collaborator, bool>> filter)
         //{
@@ -928,323 +1011,233 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         //    return this.GetAll().FirstOrDefault(e => e.Uid == uid);
         //}
 
-        /// <summary>Método que remove a entidade do Contexto</summary>
-        /// <param name="entity">Entidade</param>
-        public override void Delete(Collaborator entity)
-        {
-            var UserRepository = new UserRepository(_context);
+        ///// <summary>Método que remove a entidade do Contexto</summary>
+        ///// <param name="entity">Entidade</param>
+        //public override void Delete(Collaborator entity)
+        //{
+        //    var UserRepository = new UserRepository(_context);
 
-            //entity.Players.Clear();
+        //    //entity.Players.Clear();
 
-            //if (entity.Image != null)
-            //{
-            //    _context.Entry(entity.Image).State = EntityState.Deleted;
-            //}
+        //    //if (entity.Image != null)
+        //    //{
+        //    //    _context.Entry(entity.Image).State = EntityState.Deleted;
+        //    //}
 
-            //if (entity.User != null)
-            //{
-            //    UserRepository.Delete(entity.User);
-            //}
+        //    //if (entity.User != null)
+        //    //{
+        //    //    UserRepository.Delete(entity.User);
+        //    //}
 
-            //if (entity.Address != null)
-            //{
-            //    _context.Entry(entity.Address).State = EntityState.Deleted;
-            //}
+        //    //if (entity.Address != null)
+        //    //{
+        //    //    _context.Entry(entity.Address).State = EntityState.Deleted;
+        //    //}
 
-            //if (entity.JobTitles != null && entity.JobTitles.Any())
-            //{
-            //    var items = entity.JobTitles.ToList();
-            //    foreach (var item in items)
-            //    {
-            //        _context.Entry(item).State = EntityState.Deleted;
-            //    }
-            //}
+        //    //if (entity.JobTitles != null && entity.JobTitles.Any())
+        //    //{
+        //    //    var items = entity.JobTitles.ToList();
+        //    //    foreach (var item in items)
+        //    //    {
+        //    //        _context.Entry(item).State = EntityState.Deleted;
+        //    //    }
+        //    //}
 
-            //if (entity.MiniBios != null && entity.MiniBios.Any())
-            //{
-            //    var items = entity.MiniBios.ToList();
-            //    foreach (var item in items)
-            //    {
-            //        _context.Entry(item).State = EntityState.Deleted;
-            //    }
-            //}
+        //    //if (entity.MiniBios != null && entity.MiniBios.Any())
+        //    //{
+        //    //    var items = entity.MiniBios.ToList();
+        //    //    foreach (var item in items)
+        //    //    {
+        //    //        _context.Entry(item).State = EntityState.Deleted;
+        //    //    }
+        //    //}
 
-            //if (entity.ProducersEvents != null && entity.ProducersEvents.Any())
-            //{
-            //    entity.ProducersEvents.Clear();
-            //}
+        //    //if (entity.ProducersEvents != null && entity.ProducersEvents.Any())
+        //    //{
+        //    //    entity.ProducersEvents.Clear();
+        //    //}
 
-            base.Delete(entity);
-        }
+        //    base.Delete(entity);
+        //}
 
-        /// <summary>Gets the status register collaborator by user identifier.</summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns></returns>
-        public Collaborator GetStatusRegisterCollaboratorByUserId(int id)
-        {
-            return this.dbSet
-                                .Include(i => i.Address)
-                                //.Include(i => i.Players)
-                                //.Include(i => i.Players.Select(j => j.Address))
-                                //.Include(i => i.Players.Select(j => j.Interests))
-                                //.Include(i => i.ProducersEvents)
-                                //.Include(i => i.Countries)
-                                //.Include(i => i.Country)
-                                //.Include(i => i.ProducersEvents.Select(pe => pe.Producer))
-                                //.Include(i => i.ProducersEvents.Select(pe => pe.Producer.Address))
-                                .FirstOrDefault(e => e.Id == id);
-        }
+        ///// <summary>Gets the status register collaborator by user identifier.</summary>
+        ///// <param name="id">The identifier.</param>
+        ///// <returns></returns>
+        //public Collaborator GetStatusRegisterCollaboratorByUserId(int id)
+        //{
+        //    return this.dbSet
+        //                        .Include(i => i.Address)
+        //                        //.Include(i => i.Players)
+        //                        //.Include(i => i.Players.Select(j => j.Address))
+        //                        //.Include(i => i.Players.Select(j => j.Interests))
+        //                        //.Include(i => i.ProducersEvents)
+        //                        //.Include(i => i.Countries)
+        //                        //.Include(i => i.Country)
+        //                        //.Include(i => i.ProducersEvents.Select(pe => pe.Producer))
+        //                        //.Include(i => i.ProducersEvents.Select(pe => pe.Producer.Address))
+        //                        .FirstOrDefault(e => e.Id == id);
+        //}
 
-        /// <summary>Gets the with producer by user identifier.</summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns></returns>
-        public Collaborator GetWithProducerByUserId(int id)
-        {
-            return this.dbSet
-                //.Include(i => i.ProducersEvents)
-                //.Include(i => i.ProducersEvents.Select(e => e.Edition))
-                //.Include(i => i.ProducersEvents.Select(e => e.Producer))
-                //.Include(i => i.Countries)
-                //.Include(i => i.Country)
-                .FirstOrDefault(e => e.Id == id);
-        }
+        ///// <summary>Gets the with producer by user identifier.</summary>
+        ///// <param name="id">The identifier.</param>
+        ///// <returns></returns>
+        //public Collaborator GetWithProducerByUserId(int id)
+        //{
+        //    return this.dbSet
+        //        //.Include(i => i.ProducersEvents)
+        //        //.Include(i => i.ProducersEvents.Select(e => e.Edition))
+        //        //.Include(i => i.ProducersEvents.Select(e => e.Producer))
+        //        //.Include(i => i.Countries)
+        //        //.Include(i => i.Country)
+        //        .FirstOrDefault(e => e.Id == id);
+        //}
 
-        /// <summary>Gets the image.</summary>
-        /// <param name="uid">The uid.</param>
-        /// <returns></returns>
-        public Collaborator GetImage(Guid uid)
-        {
-            return this.dbSet
-                              //.Include(i => i.Image)
-                              .FirstOrDefault(e => e.Uid == uid);
-        }
+        ///// <summary>Gets the image.</summary>
+        ///// <param name="uid">The uid.</param>
+        ///// <returns></returns>
+        //public Collaborator GetImage(Guid uid)
+        //{
+        //    return this.dbSet
+        //                      //.Include(i => i.Image)
+        //                      .FirstOrDefault(e => e.Uid == uid);
+        //}
 
-        /// <summary>Gets the with player and producer user identifier.</summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns></returns>
-        public Collaborator GetWithPlayerAndProducerUserId(int id)
-        {
-            return this.dbSet
-                       //.Include(i => i.Players)
-                       //.Include(i => i.ProducersEvents.Select(pe => pe.Producer))
-                       .Include(i => i.Address)
-                       .FirstOrDefault(e => e.Id == id);
-        }
+        ///// <summary>Gets the with player and producer user identifier.</summary>
+        ///// <param name="id">The identifier.</param>
+        ///// <returns></returns>
+        //public Collaborator GetWithPlayerAndProducerUserId(int id)
+        //{
+        //    return this.dbSet
+        //               //.Include(i => i.Players)
+        //               //.Include(i => i.ProducersEvents.Select(pe => pe.Producer))
+        //               .Include(i => i.Address)
+        //               .FirstOrDefault(e => e.Id == id);
+        //}
 
-        /// <summary>Gets the with player and producer uid.</summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns></returns>
-        public Collaborator GetWithPlayerAndProducerUid(Guid id)
-        {
-            return this.dbSet
-                       //.Include(i => i.Players)
-                       //.Include(i => i.Players.Select(e => e.Holding))
-                       //.Include(i => i.ProducersEvents)
-                       //.Include(i => i.ProducersEvents.Select(pe => pe.Producer))
-                       .FirstOrDefault(e => e.Uid == id);
-        }
+        ///// <summary>Gets the with player and producer uid.</summary>
+        ///// <param name="id">The identifier.</param>
+        ///// <returns></returns>
+        //public Collaborator GetWithPlayerAndProducerUid(Guid id)
+        //{
+        //    return this.dbSet
+        //               //.Include(i => i.Players)
+        //               //.Include(i => i.Players.Select(e => e.Holding))
+        //               //.Include(i => i.ProducersEvents)
+        //               //.Include(i => i.ProducersEvents.Select(pe => pe.Producer))
+        //               .FirstOrDefault(e => e.Uid == id);
+        //}
 
-        /// <summary>Gets the options.</summary>
-        /// <param name="filter">The filter.</param>
-        /// <returns></returns>
-        public IEnumerable<Collaborator> GetOptions(Expression<Func<Collaborator, bool>> filter)
-        {
-            return this.dbSet
-                                //.Include(i => i.Players)
-                                //.Include(i => i.Players.Select(e => e.Holding))
-                                //.Include(i => i.ProducersEvents)
-                                //.Include(i => i.ProducersEvents.Select(e => e.Producer))
-                                //.Include(i => i.Countries)
-                                //.Include(i => i.Country)
-                                .AsNoTracking()
-                                .Where(filter);
+        ///// <summary>Gets the options.</summary>
+        ///// <param name="filter">The filter.</param>
+        ///// <returns></returns>
+        //public IEnumerable<Collaborator> GetOptions(Expression<Func<Collaborator, bool>> filter)
+        //{
+        //    return this.dbSet
+        //                        //.Include(i => i.Players)
+        //                        //.Include(i => i.Players.Select(e => e.Holding))
+        //                        //.Include(i => i.ProducersEvents)
+        //                        //.Include(i => i.ProducersEvents.Select(e => e.Producer))
+        //                        //.Include(i => i.Countries)
+        //                        //.Include(i => i.Country)
+        //                        .AsNoTracking()
+        //                        .Where(filter);
 
-        }
+        //}
 
-        /// <summary>Gets the collaborator producer options.</summary>
-        /// <param name="filter">The filter.</param>
-        /// <returns></returns>
-        public IEnumerable<Collaborator> GetCollaboratorProducerOptions(Expression<Func<Collaborator, bool>> filter)
-        {
-            return this.dbSet
-                             //.Include(i => i.ProducersEvents)
-                             //.Include(i => i.ProducersEvents.Select(e => e.Producer))
-                             //.Include(i => i.Countries)
-                             //.Include(i => i.Country)
-                             .AsNoTracking()
-                             .Where(filter);
-        }
+        ///// <summary>Gets the collaborator producer options.</summary>
+        ///// <param name="filter">The filter.</param>
+        ///// <returns></returns>
+        //public IEnumerable<Collaborator> GetCollaboratorProducerOptions(Expression<Func<Collaborator, bool>> filter)
+        //{
+        //    return this.dbSet
+        //                     //.Include(i => i.ProducersEvents)
+        //                     //.Include(i => i.ProducersEvents.Select(e => e.Producer))
+        //                     //.Include(i => i.Countries)
+        //                     //.Include(i => i.Country)
+        //                     .AsNoTracking()
+        //                     .Where(filter);
+        //}
 
-        /// <summary>Gets the collaborator player options.</summary>
-        /// <param name="filter">The filter.</param>
-        /// <returns></returns>
-        public IEnumerable<Collaborator> GetCollaboratorPlayerOptions(Expression<Func<Collaborator, bool>> filter)
-        {
-            return this.dbSet
-                             //.Include(i => i.Players)
-                             //.Include(i => i.Players.Select(e => e.Holding))
-                             //.Include(i => i.Countries)
-                             //.Include(i => i.Country)
-                             .AsNoTracking()
-                             .Where(filter);
-        }
+        ///// <summary>Gets the collaborator player options.</summary>
+        ///// <param name="filter">The filter.</param>
+        ///// <returns></returns>
+        //public IEnumerable<Collaborator> GetCollaboratorPlayerOptions(Expression<Func<Collaborator, bool>> filter)
+        //{
+        //    return this.dbSet
+        //                     //.Include(i => i.Players)
+        //                     //.Include(i => i.Players.Select(e => e.Holding))
+        //                     //.Include(i => i.Countries)
+        //                     //.Include(i => i.Country)
+        //                     .AsNoTracking()
+        //                     .Where(filter);
+        //}
 
-        /// <summary>Gets the options chat.</summary>
-        /// <param name="userId">The user identifier.</param>
-        /// <returns></returns>
-        public IEnumerable<Collaborator> GetOptionsChat(int userId)
-        {
-            return this.dbSet
-                            //.Include(i => i.User)
-                            //.Include(i => i.Players)
-                            //.Include(i => i.JobTitles)
-                            //.Include(i => i.JobTitles.Select(e => e.Language))
-                            //.Include(i => i.Players.Select(e => e.Holding))
-                            //.Include(i => i.ProducersEvents)
-                            //.Include(i => i.ProducersEvents.Select(e => e.Edition))
-                            //.Include(i => i.ProducersEvents.Select(e => e.Producer))
-                            .AsNoTracking()
-                            .Where(e => e.Id != userId);
-        }
+        ///// <summary>Gets the options chat.</summary>
+        ///// <param name="userId">The user identifier.</param>
+        ///// <returns></returns>
+        //public IEnumerable<Collaborator> GetOptionsChat(int userId)
+        //{
+        //    return this.dbSet
+        //                    //.Include(i => i.User)
+        //                    //.Include(i => i.Players)
+        //                    //.Include(i => i.JobTitles)
+        //                    //.Include(i => i.JobTitles.Select(e => e.Language))
+        //                    //.Include(i => i.Players.Select(e => e.Holding))
+        //                    //.Include(i => i.ProducersEvents)
+        //                    //.Include(i => i.ProducersEvents.Select(e => e.Edition))
+        //                    //.Include(i => i.ProducersEvents.Select(e => e.Producer))
+        //                    .AsNoTracking()
+        //                    .Where(e => e.Id != userId);
+        //}
 
-        /// <summary>Gets the by schedule.</summary>
-        /// <param name="filter">The filter.</param>
-        /// <returns></returns>
-        public Collaborator GetBySchedule(Expression<Func<Collaborator, bool>> filter)
-        {
-            return this.dbSet
-                                //.Include(i => i.ProducersEvents)
-                                //.Include(i => i.ProducersEvents.Select(e => e.Edition))
-                                //.Include(i => i.ProducersEvents.Select(e => e.Producer))
-                                //.Include(i => i.ProducersEvents.Select(e => e.Producer.EventsCollaborators))
-                                //.Include(i => i.ProducersEvents.Select(e => e.Producer.EventsCollaborators.Select(ev => ev.Collaborator)))
-                                //.Include(i => i.Players)
-                                //.Include(i => i.Players.Select(e => e.Collaborators))
-                                .FirstOrDefault(filter);
-        }
+        ///// <summary>Gets the by schedule.</summary>
+        ///// <param name="filter">The filter.</param>
+        ///// <returns></returns>
+        //public Collaborator GetBySchedule(Expression<Func<Collaborator, bool>> filter)
+        //{
+        //    return this.dbSet
+        //                        //.Include(i => i.ProducersEvents)
+        //                        //.Include(i => i.ProducersEvents.Select(e => e.Edition))
+        //                        //.Include(i => i.ProducersEvents.Select(e => e.Producer))
+        //                        //.Include(i => i.ProducersEvents.Select(e => e.Producer.EventsCollaborators))
+        //                        //.Include(i => i.ProducersEvents.Select(e => e.Producer.EventsCollaborators.Select(ev => ev.Collaborator)))
+        //                        //.Include(i => i.Players)
+        //                        //.Include(i => i.Players.Select(e => e.Collaborators))
+        //                        .FirstOrDefault(filter);
+        //}
 
-        /// <summary>Finds all logistics by datatable.</summary>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <param name="page">The page.</param>
-        /// <param name="pageSize">Size of the page.</param>
-        /// <param name="searchValue">The search value.</param>
-        /// <param name="sortColumns">The sort columns.</param>
-        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
-        /// <returns></returns>
-        public async Task<IPagedList<LogisticRequestBaseDto>> FindAllLogisticsByDatatable(
-            int editionId,
-            int page, 
-            int pageSize, 
-            string searchValue, 
-            List<Tuple<string, string>> sortColumns,
-            bool showAllParticipants)
-        {
-            var query = this.GetBaseQuery()
-                                    .FindLogisticsByEditionId(showAllParticipants, editionId)
-                                    .FindByKeywords(searchValue, editionId);
-            
-            return await query
-                            .DynamicOrder<Collaborator>(
-                                sortColumns,
-                                new List<Tuple<string, string>>(),
-                                new List<string> { "FirstName", "CreateDate", "UpdateDate" }, "FirstName")
-                            .Select(c => new LogisticRequestBaseDto
-                            {
-                                CollaboratorUid = c.Uid,
-                                Name = c.FirstName + " " + c.LastNames,
-                                HasRequest = c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId && !ac.IsDeleted && ac.Logistics.Any(l => !l.IsDeleted)),
-                                HasLogistics = c.AttendeeCollaborators.Any(ac => ac.Logistics.Any(l => !l.IsDeleted && 
-                                                                                                       (l.LogisticAirfares.Any(a => !a.IsDeleted) ||
-                                                                                                        l.LogisticAccommodations.Any(a => !a.IsDeleted) ||
-                                                                                                        l.LogisticTransfers.Any(a => !a.IsDeleted)))),
+        ///// <summary>Gets the by identifier.</summary>
+        ///// <param name="id">The identifier.</param>
+        ///// <returns></returns>
+        //public Collaborator GetById(int id)
+        //{
+        //    return this.GetAll().FirstOrDefault(e => e.Id == id);
+        //}
 
-                                Id = c.AttendeeCollaborators
-                                    .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
-                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
-                                    .Select(e => e.Id)
-                                    .FirstOrDefault(),
+        ///// <summary>Gets all simple.</summary>
+        ///// <param name="filter">The filter.</param>
+        ///// <returns></returns>
+        //public override IQueryable<Collaborator> GetAllSimple(Expression<Func<Collaborator, bool>> filter)
+        //{
+        //    return this.dbSet;
+        //                    //.Include(i => i.User)
+        //                    //.Include(i => i.Players)
+        //                    //.Include(i => i.Countries)
+        //                    //.Include(i => i.Country)
+        //                    //.Include(i => i.Players.Select(e => e.Holding));
+        //}
 
-                                Uid = c.AttendeeCollaborators
-                                    .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
-                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
-                                    .Select(e => e.Uid)
-                                    .FirstOrDefault(),
-
-                                AccommodationSponsor = c.AttendeeCollaborators
-                                .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
-                                .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted && l.AccommodationSponsor != null))
-                                .Select(e => e.AccommodationSponsor.LogisticSponsor.Name)
-                                .FirstOrDefault(),
-
-                                AirfareSponsor = c.AttendeeCollaborators
-                                    .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
-                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted && l.AirfareSponsor != null))
-                                    .Select(e => e.AirfareSponsor.LogisticSponsor.Name)
-                                    .FirstOrDefault(),
-
-                                AirportTransferSponsor = c.AttendeeCollaborators
-                                    .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
-                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted && l.AirportTransferSponsor != null))
-                                    .Select(e => e.AirportTransferSponsor.LogisticSponsor.Name)
-                                    .FirstOrDefault(),
-
-                                CreateDate = c.AttendeeCollaborators
-                                    .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
-                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
-                                    .Select(e => e.CreateDate)
-                                    .FirstOrDefault(),
-
-                                UpdateDate = c.AttendeeCollaborators
-                                    .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
-                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
-                                    .Select(e => e.UpdateDate)
-                                    .FirstOrDefault(),
-
-                                TransferCity = c.AttendeeCollaborators
-                                    .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
-                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
-                                    .Select(e => e.IsCityTransferRequired)
-                                    .FirstOrDefault(),
-                                
-                                IsVehicleDisposalRequired = c.AttendeeCollaborators
-                                    .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
-                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
-                                    .Select(e => e.IsVehicleDisposalRequired)
-                                    .FirstOrDefault(),
-                            })
-                            .ToListPagedAsync(page, pageSize);
-        }
-
-        public Collaborator GetById(int id)
-        {
-            return this.GetAll().FirstOrDefault(e => e.Id == id);
-        }
-
-
-        /// <summary>Gets all simple.</summary>
-        /// <param name="filter">The filter.</param>
-        /// <returns></returns>
-        public override IQueryable<Collaborator> GetAllSimple(Expression<Func<Collaborator, bool>> filter)
-        {
-            return this.dbSet;
-                            //.Include(i => i.User)
-                            //.Include(i => i.Players)
-                            //.Include(i => i.Countries)
-                            //.Include(i => i.Country)
-                            //.Include(i => i.Players.Select(e => e.Holding));
-        }
-
-        /// <summary>Gets all simple.</summary>
-        /// <returns></returns>
-        public override IQueryable<Collaborator> GetAllSimple()
-        {
-            return this.dbSet;
-                            //.Include(i => i.User)
-                            //.Include(i => i.Players)
-                            //.Include(i => i.Countries)
-                            //.Include(i => i.Country)
-                            //.Include(i => i.Players.Select(e => e.Holding));
-        }
+        ///// <summary>Gets all simple.</summary>
+        ///// <returns></returns>
+        //public override IQueryable<Collaborator> GetAllSimple()
+        //{
+        //    return this.dbSet;
+        //                    //.Include(i => i.User)
+        //                    //.Include(i => i.Players)
+        //                    //.Include(i => i.Countries)
+        //                    //.Include(i => i.Country)
+        //                    //.Include(i => i.Players.Select(e => e.Holding));
+        //}
 
         #endregion
     }

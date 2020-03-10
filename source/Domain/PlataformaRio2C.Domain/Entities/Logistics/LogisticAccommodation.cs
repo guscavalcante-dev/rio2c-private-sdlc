@@ -14,6 +14,7 @@
 using System;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -36,11 +37,17 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="attendeePlace">The attendee place.</param>
         /// <param name="logistic">The logistic.</param>
         /// <param name="userId">The user identifier.</param>
-        public LogisticAccommodation(string additionalInfo, DateTimeOffset checkInDate, DateTimeOffset checkOutDate, AttendeePlace attendeePlace, Logistic logistic, int userId)
+        public LogisticAccommodation(
+            string additionalInfo, 
+            DateTime checkInDate, 
+            DateTime checkOutDate, 
+            AttendeePlace attendeePlace, 
+            Logistic logistic, 
+            int userId)
         {
             this.AdditionalInfo = additionalInfo;
-            this.CheckInDate = checkInDate;
-            this.CheckOutDate = checkOutDate;
+            this.CheckInDate = checkInDate.ToUtcTimeZone();
+            this.CheckOutDate = checkOutDate.ToUtcTimeZone();
             this.AttendeePlace = attendeePlace;
             this.Logistic = logistic;
             this.CreateUserId = this.UpdateUserId = userId;
@@ -58,16 +65,16 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="checkOutDate">The check out date.</param>
         /// <param name="attendeePlace">The attendee place.</param>
         /// <param name="userId">The user identifier.</param>
-        public void Update(string additionalInfo, DateTimeOffset? checkInDate, DateTimeOffset? checkOutDate, AttendeePlace attendeePlace, int userId)
+        public void Update(string additionalInfo, DateTime? checkInDate, DateTime? checkOutDate, AttendeePlace attendeePlace, int userId)
         {
             if (checkInDate.HasValue)
             {
-                this.CheckInDate = checkInDate.Value;
+                this.CheckInDate = checkInDate.Value.ToUtcTimeZone();
             }
 
             if (checkOutDate.HasValue)
             {
-                this.CheckOutDate = checkOutDate.Value;
+                this.CheckOutDate = checkOutDate.Value.ToUtcTimeZone();
             }
 
             this.AdditionalInfo = additionalInfo;

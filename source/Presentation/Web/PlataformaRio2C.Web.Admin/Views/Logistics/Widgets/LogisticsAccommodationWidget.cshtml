@@ -53,16 +53,16 @@
                                                     @dto.AttendeePlace
                                                 </td>
                                                 <td class="text-center">
-                                                    @dto.CheckInDate.ToString("g")
+                                                    @dto.CheckInDate.ToUserTimeZone().ToString("g")
                                                 </td>
                                                 <td class="text-center">
-                                                    @dto.CheckOutDate.ToString("g")
+                                                    @dto.CheckOutDate.ToUserTimeZone().ToString("g")
                                                 </td>
                                                 <td class="text-center">
-                                                    @dto.CreateDate.ToString("g")
+                                                    @dto.CreateDate.ToUserTimeZone().ToString("g")
                                                 </td>
                                                 <td class="text-center">
-                                                    @dto.UpdateDate.ToString("g")
+                                                    @dto.UpdateDate.ToUserTimeZone().ToString("g")
                                                 </td>
                                                 @if (hasChangeDataPermission)
                                                 {

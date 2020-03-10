@@ -56,13 +56,13 @@
                                                     @dto.ToAttendeePlace
                                                 </td>
                                                 <td class="text-center">
-                                                    @dto.Date.ToString("g")
+                                                    @dto.Date.ToUserTimeZone().ToString("g")
                                                 </td>
                                                 <td class="text-center">
-                                                    @dto.CreateDate.ToString("g")
+                                                    @dto.CreateDate.ToUserTimeZone().ToString("g")
                                                 </td>
                                                 <td class="text-center">
-                                                    @dto.UpdateDate.ToString("g")
+                                                    @dto.UpdateDate.ToUserTimeZone().ToString("g")
                                                 </td>
                                                 @if (hasChangeDataPermission)
                                                 {

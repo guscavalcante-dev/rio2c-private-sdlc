@@ -14,6 +14,7 @@
 using System;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -37,7 +38,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="toAttendeePlace">To attendee place.</param>
         /// <param name="logistic">The logistic.</param>
         /// <param name="userId">The user identifier.</param>
-        public LogisticTransfer(string additionalInfo, DateTimeOffset? date, AttendeePlace fromAttendeePlace, AttendeePlace toAttendeePlace, Logistic logistic, int userId)
+        public LogisticTransfer(string additionalInfo, DateTime? date, AttendeePlace fromAttendeePlace, AttendeePlace toAttendeePlace, Logistic logistic, int userId)
         {
             this.Logistic = logistic;
             this.AdditionalInfo = additionalInfo;
@@ -46,7 +47,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             if (date.HasValue)
             {
-                this.Date = date.Value;
+                this.Date = date.Value.ToUtcTimeZone();
             }
 
             this.IsDeleted = false;
@@ -65,10 +66,10 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="fromAttendeePlace">From attendee place.</param>
         /// <param name="toAttendeePlace">To attendee place.</param>
         /// <param name="userId">The user identifier.</param>
-        public void Update(string additionalInfo, DateTimeOffset date, AttendeePlace fromAttendeePlace, AttendeePlace toAttendeePlace, int userId)
+        public void Update(string additionalInfo, DateTime date, AttendeePlace fromAttendeePlace, AttendeePlace toAttendeePlace, int userId)
         {
             this.AdditionalInfo = additionalInfo;
-            this.Date = date;
+            this.Date = date.ToUtcTimeZone();
             this.FromAttendeePlace = fromAttendeePlace;
             this.ToAttendeePlace = toAttendeePlace;
 

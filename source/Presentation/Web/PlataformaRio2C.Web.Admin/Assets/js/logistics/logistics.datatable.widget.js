@@ -3,8 +3,8 @@
 // Author           : Arthur Souza
 // Created          : 01-20-2020
 //
-// Last Modified By : Arthur Souza
-// Last Modified On : 01-20-2020
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-10-2020
 // ***********************************************************************
 // <copyright file="logisticsponsors.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -186,9 +186,14 @@ var LogisticsDataTableWidget = function () {
             ],
             columnDefs: [
                 {
-                    targets: [2, 3],
-                    className: "dt-center"
+                    targets: [1, 2, 3, 4, 5],
+                    className: "dt-center",
+                    orderable: false
                 },
+	            {
+		            targets: [6, 7],
+		            className: "dt-center"
+	            },
                 {
                     targets: -1,
                     width: "10%",
