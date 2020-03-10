@@ -156,40 +156,43 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 .ToListPagedAsync(page, pageSize);
         }
 
-        /// <summary>Gets the dto.</summary>
-        /// <param name="id">The identifier.</param>
+        /// <summary>Finds the dto asynchronous.</summary>
+        /// <param name="logisticUid">The logistic uid.</param>
         /// <param name="language">The language.</param>
         /// <returns></returns>
-        public Task<LogisticRequestBaseDto> GetDto(Guid id, Language language)
+        public Task<LogisticRequestBaseDto> FindDtoAsync(Guid logisticUid, Language language)
         {
-            var query = this.GetBaseQuery();
+            var query = this.GetBaseQuery()
+                                .FindByUid(logisticUid)
+                                .Select(e => new LogisticRequestBaseDto
+                                {
+                                    CollaboratorUid = e.AttendeeCollaborator.Collaborator.Uid,
+                                    Name = e.AttendeeCollaborator.Collaborator.FirstName + " " +
+                                           e.AttendeeCollaborator.Collaborator.LastNames,
+                                    Id = e.Id,
+                                    Uid = e.Uid,
+                                    AccommodationSponsor = e.AccommodationSponsor.LogisticSponsor.Name,
+                                    AirfareSponsor = e.AirfareSponsor.LogisticSponsor.Name,
+                                    AirportTransferSponsor = e.AirportTransferSponsor.LogisticSponsor.Name,
+                                    AdditionalInfo = e.AdditionalInfo,
+                                    TransferCity = e.IsCityTransferRequired,
+                                    IsVehicleDisposalRequired = e.IsVehicleDisposalRequired,
+                                    CreateDate = e.CreateDate,
+                                    CreateUser = e.CreateUser.Name,
+                                    CollaboratorPillars = e.AttendeeCollaborator.ConferenceParticipants
+                                                                .SelectMany(cp => cp.Conference.ConferencePillars)
+                                                                .Select(p => p.Pillar)
+                                                                .ToList(),
+                                    CollaboratorRoles = e.AttendeeCollaborator.ConferenceParticipants
+                                                                .Select(cp => cp.ConferenceParticipantRole)
+                                                                .SelectMany(cp => cp.ConferenceParticipantRoleTitles.Where(t => t.LanguageId == language.Id))
+                                                                .Select(cp => cp.Value)
+                                                                .ToList()
 
-            return query.FindByUid(id).Select(e => new LogisticRequestBaseDto
-            {
-                CollaboratorUid = e.AttendeeCollaborator.Collaborator.Uid,
-                Name = e.AttendeeCollaborator.Collaborator.FirstName + " " +
-                       e.AttendeeCollaborator.Collaborator.LastNames,
-                Id = e.Id,
-                Uid = e.Uid,
-                AccommodationSponsor = e.AccommodationSponsor.LogisticSponsor.Name,
-                AirfareSponsor = e.AirfareSponsor.LogisticSponsor.Name,
-                AirportTransferSponsor = e.AirportTransferSponsor.LogisticSponsor.Name,
-                AdditionalInfo = e.AdditionalInfo,
-                TransferCity = e.IsCityTransferRequired,
-                IsVehicleDisposalRequired = e.IsVehicleDisposalRequired,
-                CreateDate = e.CreateDate,
-                CreateUser = e.CreateUser.Name,
-                CollaboratorPillars = e.AttendeeCollaborator.ConferenceParticipants
-                                            .SelectMany(cp => cp.Conference.ConferencePillars)
-                                            .Select(p => p.Pillar)
-                                            .ToList(),
-                CollaboratorRoles = e.AttendeeCollaborator.ConferenceParticipants
-                                        .Select(cp => cp.ConferenceParticipantRole)
-                                        .SelectMany(cp => cp.ConferenceParticipantRoleTitles.Where(t => t.LanguageId == language.Id))
-                                        .Select(cp => cp.Value)
-                                        .ToList()
+                                });
 
-            }).FirstOrDefaultAsync();
+            return query
+                        .FirstOrDefaultAsync();
         }
     }
 }

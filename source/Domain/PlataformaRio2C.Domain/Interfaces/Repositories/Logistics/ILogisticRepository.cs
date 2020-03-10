@@ -24,6 +24,6 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface ILogisticRepository : IRepository<Logistic>
     {
         Task<IPagedList<LogisticRequestBaseDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllParticipants, bool showAllSponsored);
-        Task<LogisticRequestBaseDto> GetDto(Guid id, Language language);
+        Task<LogisticRequestBaseDto> FindDtoAsync(Guid logisticUid, Language language);
     }    
 }

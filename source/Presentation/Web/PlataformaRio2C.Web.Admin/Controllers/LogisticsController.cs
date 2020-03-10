@@ -331,17 +331,18 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Details(Guid? id)
         {
-            var logisticsRequestDto = await this.logisticRepo.GetDto(id ?? Guid.Empty, this.languageRepo.Get(f => f.Code == UserInterfaceLanguage));
+            var logisticsRequestDto = await this.logisticRepo.FindDtoAsync(id ?? Guid.Empty, this.languageRepo.Get(f => f.Code == UserInterfaceLanguage));
             if (logisticsRequestDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Logistics, Labels.FoundF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
                 return RedirectToAction("Index", "Logistics", new { Area = "" });
             }
+
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Logistics, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Requests, Url.Action("Index", "Logistics", new { id })),
-                new BreadcrumbItemHelper("", Url.Action("Details", "Logistics", new { id }))
+                new BreadcrumbItemHelper(Labels.Requests, Url.Action("Index", "Logistics", new { Area ="", id })),
+                new BreadcrumbItemHelper(logisticsRequestDto?.Name, Url.Action("Details", "Logistics", new { Area ="", id }))
             });
 
             #endregion
