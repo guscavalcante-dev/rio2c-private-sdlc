@@ -3,8 +3,8 @@
 // Author           : Arthur Souza
 // Created          : 01-27-2020
 //
-// Last Modified By : Arthur Souza
-// Last Modified On : 01-27-2020
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-10-2020
 // ***********************************************************************
 // <copyright file="collaborators.create.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -254,8 +254,8 @@ var LogisticsCreate = function () {
             onSuccess: function (data) {
                 $(modalId).modal('hide');
 
-                if (typeof (LogisticSponsorsDataTableWidget) !== 'undefined') {
-                    LogisticSponsorsDataTableWidget.refreshData();
+                if (typeof (LogisticsDataTableWidget) !== 'undefined') {
+	                LogisticsDataTableWidget.refreshData();
                 }
             },
             onError: function (data) {

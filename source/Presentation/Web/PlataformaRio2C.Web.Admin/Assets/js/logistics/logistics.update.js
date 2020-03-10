@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-21-2019
+// Last Modified On : 03-10-2020
 // ***********************************************************************
 // <copyright file="collaborators.update.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -62,8 +62,8 @@ var LogisticsUpdate = function () {
             onSuccess: function (data) {
                 $(modalId).modal('hide');
 
-                if (typeof (LogisticSponsorsDataTableWidget) !== 'undefined') {
-                    LogisticSponsorsDataTableWidget.refreshData();
+                if (typeof (LogisticsDataTableWidget) !== 'undefined') {
+	                LogisticsDataTableWidget.refreshData();
                 }
             },
             onError: function (data) {
