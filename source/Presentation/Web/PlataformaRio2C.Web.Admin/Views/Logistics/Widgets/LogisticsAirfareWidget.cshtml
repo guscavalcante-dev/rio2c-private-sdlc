@@ -1,20 +1,26 @@
-﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+﻿@using PlataformaRio2C.Domain.Constants
 @using PlataformaRio2C.Domain.Dtos
-@using PlataformaRio2C.Domain.Statics
 @model List<LogisticAirfareDto>
+@{
+    var adminAccessControlDto = ViewBag.AdminAccessControlDto as AdminAccessControlDto;
+    var hasChangeDataPermission = adminAccessControlDto?.HasAnyCollaboratorType(new[] { CollaboratorType.AdminAudiovisual, CollaboratorType.AdminLogistic }) == true;
+}
 <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
         <h3 class="kt-portlet__head-title">
             @Labels.Airfare
         </h3>
     </div>
-    <div class="kt-portlet__head-toolbar">
-        <div class="kt-portlet__head-actions">
-            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="LogisticAirfareCreate.showModal();">
-                <i class="flaticon2-add-1"></i>
-            </button>
+    @if (hasChangeDataPermission)
+    {
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-actions">
+                <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="LogisticAirfareCreate.showModal();">
+                    <i class="flaticon2-add-1"></i>
+                </button>
+            </div>
         </div>
-    </div>
+    }
 </div>
 <div class="kt-portlet__body pt-0">
     <div class="kt-widget">
@@ -27,62 +33,68 @@
                             <div class="col-12">
                                 <table class="table table-sm table-head-bg-brand table-body-scroll">
                                     <thead class="thead-inverse">
-                                    <tr>
-                                        <th class="text-center">@Labels.IsNational</th>
-                                        <th class="text-center">@Labels.FromPlace</th>
-                                        <th class="text-center">@Labels.DepartureDate</th>
-                                        <th class="text-center">@Labels.ToPlace</th>
-                                        <th class="text-center">@Labels.ArrivalDate</th>
-                                        <th class="text-center">@Labels.TicketNumber</th>
-                                        @*<th class="text-center">@Labels.AirfareTicket</th>*@
-                                        <th class="text-center">@Labels.CreateDate</th>
-                                        <th class="text-center">@Labels.UpdateDate</th>
-                                        <th class="text-center">@Labels.Actions</th>
-                                    </tr>   
+                                        <tr>
+                                            <th class="text-center">@Labels.IsNational</th>
+                                            <th class="text-center">@Labels.FromPlace</th>
+                                            <th class="text-center">@Labels.DepartureDate</th>
+                                            <th class="text-center">@Labels.ToPlace</th>
+                                            <th class="text-center">@Labels.ArrivalDate</th>
+                                            <th class="text-center">@Labels.TicketNumber</th>
+                                            @*<th class="text-center">@Labels.AirfareTicket</th>*@
+                                            <th class="text-center">@Labels.CreateDate</th>
+                                            <th class="text-center">@Labels.UpdateDate</th>
+                                            @if (hasChangeDataPermission)
+                                            {
+                                                <th class="text-center">@Labels.Actions</th>
+                                            }
+                                        </tr>
                                     </thead>
                                     <tbody class="rio2c-scroll" style="height: 180px;">
                                         @foreach (var dto in Model)
                                         {
-                                        <tr>
-                                            <td class="text-center">
-                                                @(dto.IsNational ? Labels.Yes : Labels.No)
-                                            </td>
-                                            <td class="text-center">
-                                                @dto.From
-                                            </td>
-                                            <td class="text-center">
-                                                @dto.DepartureDate.ToString("g")
-                                            </td>
-                                            <td class="text-center">
-                                                @dto.To
-                                            </td>
-                                            <td class="text-center">
-                                                @dto.ArrivalDate.ToString("g")
-                                            </td>
-                                            <td class="text-center">
-                                                @dto.TicketNumber
-                                            </td>
-                                            @*<td class="text-center">
-                                            </td>*@
-                                            <td class="text-center">
-                                                @dto.CreateDate.ToString("g")
-                                            </td>
-                                            <td class="text-center">
-                                                @dto.UpdateDate.ToString("g")
-                                            </td>
-                                            <td class="text-center">
-                                                <span class="dropdown">
-                                                    <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
-                                                        <i class="la la-ellipsis-h"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <button class="dropdown-item" onclick="LogisticAirfareUpdate.showModal('@dto.Uid');"><i class="la la-edit"></i>@Labels.Edit</button>
-                                                        @*<a class="dropdown-item" href="@Url.Content("~/Assets/img/200484580088054.pdf")" target="_blank"><i class="la la-download"></i>@Labels.Download</a>*@
-                                                        <button class="dropdown-item" onclick="LogisticAirfareDelete.showModal('@dto.Uid');"><i class="la la-remove"></i>@Labels.Remove</button>
-                                                    </div>
-                                                </span>
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td class="text-center">
+                                                    @(dto.IsNational ? Labels.Yes : Labels.No)
+                                                </td>
+                                                <td class="text-center">
+                                                    @dto.From
+                                                </td>
+                                                <td class="text-center">
+                                                    @dto.DepartureDate.ToString("g")
+                                                </td>
+                                                <td class="text-center">
+                                                    @dto.To
+                                                </td>
+                                                <td class="text-center">
+                                                    @dto.ArrivalDate.ToString("g")
+                                                </td>
+                                                <td class="text-center">
+                                                    @dto.TicketNumber
+                                                </td>
+                                                @*<td class="text-center">
+                                                    </td>*@
+                                                <td class="text-center">
+                                                    @dto.CreateDate.ToString("g")
+                                                </td>
+                                                <td class="text-center">
+                                                    @dto.UpdateDate.ToString("g")
+                                                </td>
+                                                @if (hasChangeDataPermission)
+                                                {
+                                                    <td class="text-center">
+                                                        <span class="dropdown">
+                                                            <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
+                                                                <i class="la la-ellipsis-h"></i>
+                                                            </a>
+                                                            <div class="dropdown-menu dropdown-menu-right">
+                                                                <button class="dropdown-item" onclick="LogisticAirfareUpdate.showModal('@dto.Uid');"><i class="la la-edit"></i>@Labels.Edit</button>
+                                                                @*<a class="dropdown-item" href="@Url.Content("~/Assets/img/200484580088054.pdf")" target="_blank"><i class="la la-download"></i>@Labels.Download</a>*@
+                                                                <button class="dropdown-item" onclick="LogisticAirfareDelete.showModal('@dto.Uid');"><i class="la la-remove"></i>@Labels.Remove</button>
+                                                            </div>
+                                                        </span>
+                                                    </td>
+                                                }
+                                            </tr>
                                         }
                                     </tbody>
                                 </table>

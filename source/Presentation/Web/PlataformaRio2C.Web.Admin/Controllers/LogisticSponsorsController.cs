@@ -3,8 +3,8 @@
 // Author           : Arthur Souza
 // Created          : 01-20-2020
 //
-// Last Modified By : Arthur Souza
-// Last Modified On : 01-20-2020
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-09-2020
 // ***********************************************************************
 // <copyright file="LogisticSponsorsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,24 +15,18 @@ using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
-using Newtonsoft.Json;
-using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
-using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.Models;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Admin.Filters;
@@ -42,25 +36,19 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>LogisticSponsorsController</summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
-    [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual)]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
     public class LogisticSponsorsController : BaseController
     {
-        private readonly ICollaboratorRepository collaboratorRepo;
-        private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
-        private readonly IAttendeeSalesPlatformTicketTypeRepository attendeeSalesPlatformTicketTypeRepo;
-        private readonly IFileRepository fileRepo;
-
         private readonly IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepo;
         private readonly ILogisticSponsorRepository logisticSponsorRepo;
         private readonly ILanguageRepository languageRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="SpeakersController"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="LogisticSponsorsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        /// <param name="collaboratorRepository">The collaborator repository.</param>
-        /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
-        /// <param name="attendeeSalesPlatformTicketTypeRepository">The attendee sales platform ticket type repository.</param>
-        /// <param name="fileRepository">The file repository.</param>
+        /// <param name="logisticSponsorRepo">The logistic sponsor repo.</param>
+        /// <param name="attendeeLogisticSponsorRepo">The attendee logistic sponsor repo.</param>
+        /// <param name="languageRepo">The language repo.</param>
         public LogisticSponsorsController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
@@ -210,7 +198,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         #region Update
 
         /// <summary>Shows the update modal.</summary>
-        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="sponsorUid">The sponsor uid.</param>
         /// <param name="isAddingToCurrentEdition">The is adding to current edition.</param>
         /// <returns></returns>
         [HttpGet]
@@ -300,8 +288,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #region Delete
 
-        /// <summary>Deletes the specified collaborator.</summary>
-        /// <param name="cmd"></param>
+        /// <summary>Deletes the specified command.</summary>
+        /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> Delete(DeleteLogisticSponsors cmd)
@@ -355,6 +343,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #region Finds
 
+        /// <summary>Finds all by is other.</summary>
+        /// <returns></returns>
         [HttpGet]
         [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual + "," + Constants.CollaboratorType.CommissionAudiovisual)]
         public async Task<ActionResult> FindAllByIsOther()

@@ -4,7 +4,7 @@
 // Created          : 09-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-02-2019
+// Last Modified On : 03-09-2020
 // ***********************************************************************
 // <copyright file="AdminAccessControlDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -92,7 +92,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [has collaborator type] [the specified collaborator type]; otherwise, <c>false</c>.</returns>
         public bool HasCollaboratorType(string collaboratorType)
         {
-            return !string.IsNullOrEmpty(collaboratorType) && this.EditionCollaboratorTypes?.Any(r => r.Name == collaboratorType) == true;
+            return this.IsAdmin() || (!string.IsNullOrEmpty(collaboratorType) && this.EditionCollaboratorTypes?.Any(r => r.Name == collaboratorType) == true);
         }
 
         /// <summary>Determines whether [has any collaborator type] [the specified collaborator types].</summary>
@@ -101,12 +101,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [has any collaborator type] [the specified collaborator types]; otherwise, <c>false</c>.</returns>
         public bool HasAnyCollaboratorType(string[] collaboratorTypes)
         {
-            if (collaboratorTypes?.Any() != true)
-            {
-                return false;
-            }
-
-            return this.EditionCollaboratorTypes?.Any(ect => collaboratorTypes.Contains(ect.Name)) == true;
+            return this.IsAdmin() || (collaboratorTypes?.Any() == true && this.EditionCollaboratorTypes?.Any(ect => collaboratorTypes.Contains(ect.Name)) == true);
         }
 
         #endregion

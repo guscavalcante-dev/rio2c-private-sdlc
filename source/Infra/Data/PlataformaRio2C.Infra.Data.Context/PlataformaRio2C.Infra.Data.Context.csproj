@@ -406,6 +406,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="SqlScripts\Deltas\20190930_114613_0001_ChangesForPlayersApi.sql" />
+    <Content Include="SqlScripts\Deltas\20200309_213022_0021_ChangesForLogisticRoles.sql" />
     <Content Include="SqlScripts\Deltas\20200304_115110_0020_ChangesForAgenda.sql" />
     <Content Include="SqlScripts\Deltas\20200223_190851_0019_ChangesForMusicAndInnovationProjects.sql" />
     <Content Include="SqlScripts\Deltas\20200215_180632_0018_ChangesForDateTimeOffset.sql" />

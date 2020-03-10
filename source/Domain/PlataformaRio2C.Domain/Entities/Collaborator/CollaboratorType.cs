@@ -4,7 +4,7 @@
 // Created          : 09-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-02-2020
+// Last Modified On : 03-09-2020
 // ***********************************************************************
 // <copyright file="TicketType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,8 +27,10 @@ namespace PlataformaRio2C.Domain.Entities
         #region Configurations
 
         public static CollaboratorType AdminAudiovisual = new CollaboratorType(new Guid("3871F510-C081-4B69-9ECC-8889E791B0CC"), "Admin | Audiovisual");
+        public static CollaboratorType AdminLogistic = new CollaboratorType(new Guid("2141F9F7-4037-423C-81BF-7ED27520489A"), "Admin | Logistic");
         public static CollaboratorType CuratorshipAudiovisual = new CollaboratorType(new Guid("4AC5A971-BA73-493B-9749-0F51BB6925B5"), "Curatorship | Audiovisual");
         public static CollaboratorType CuratorshipMusic = new CollaboratorType(new Guid("495B5126-0A9E-4658-AC42-8BBA55818B6F"), "Curatorship | Music");
+        public static CollaboratorType CuratorshipInnovation = new CollaboratorType(new Guid("CB1A63D2-5862-4B40-8B8A-7F512E5D046D"), "Curatorship | Innovation");
         public static CollaboratorType ExecutiveAudiovisual = new CollaboratorType(new Guid("2D6F0E07-7990-458A-8207-1471DC3D1833"), "Executive | Audiovisual");
         public static CollaboratorType ExecutiveMusic = new CollaboratorType(new Guid("F05C6213-5CDE-46B8-A617-DF339D9903A9"), "Executive | Music");
         public static CollaboratorType ExecutiveInnovation = new CollaboratorType(new Guid("7E4909E0-3DE9-4B55-A678-3C4C277A89DA"), "Executive | Innovation");
