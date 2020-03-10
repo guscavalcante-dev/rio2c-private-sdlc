@@ -918,4 +918,8 @@
     <value>{0} is already {1}.</value>
     <comment>{0} já está {1}.</comment>
   </data>
+  <data name="PropertyDifferentFromProperty" xml:space="preserve">
+    <value>The field {0} must be differente from field {1}.</value>
+    <comment>O campo {0} deve ser diferente do campo {1}.</comment>
+  </data>
 </root>

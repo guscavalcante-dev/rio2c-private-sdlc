@@ -15,6 +15,7 @@ using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using DataTables.AspNet.Core;
@@ -205,7 +206,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
                         new { page = this.RenderRazorViewToString("Modals/_CreateForm", cmd), divIdOrClass = "#form-container"}
@@ -307,7 +308,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
                         new { page = this.RenderRazorViewToString("Modals/_CreateForm", cmd), divIdOrClass = "#form-container" },
@@ -437,10 +438,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/_TinyForm", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("Modals/_AirfareForm", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -531,10 +532,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/_CreateForm", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("Modals/_AirfareForm", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -591,7 +592,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                 }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -695,7 +696,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
                         new { page = this.RenderRazorViewToString("Modals/_AccommodationForm", cmd), divIdOrClass = "#form-container" },
@@ -789,10 +790,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/_CreateForm", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("Modals/_AccommodationForm", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -849,7 +850,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                 }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -952,7 +953,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
                         new { page = this.RenderRazorViewToString("Modals/_TransferForm", cmd), divIdOrClass = "#form-container" },
@@ -1047,10 +1048,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/_CreateForm", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("Modals/_TransferForm", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -1107,7 +1108,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                 }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -1166,7 +1167,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                 }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

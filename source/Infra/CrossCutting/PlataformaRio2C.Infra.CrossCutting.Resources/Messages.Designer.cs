@@ -1581,6 +1581,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O campo {0} deve ser diferente do campo {1}..
+        /// </summary>
+        public static string PropertyDifferentFromProperty {
+            get {
+                return ResourceManager.GetString("PropertyDifferentFromProperty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O campo {0} deve ser maior que o campo {1}..
         /// </summary>
         public static string PropertyGreaterThanProperty {

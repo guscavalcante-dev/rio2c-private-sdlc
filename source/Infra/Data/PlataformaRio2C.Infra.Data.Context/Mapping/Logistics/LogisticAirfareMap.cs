@@ -3,8 +3,8 @@
 // Author           : Arthur Souza
 // Created          : 01-20-2020
 //
-// Last Modified By : Arthur Souza
-// Last Modified On : 01-24-2020
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-10-2020
 // ***********************************************************************
 // <copyright file="AttendeeLogisticSponsorMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,9 +27,20 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         public LogisticAirfareMap()
         {
             this.ToTable("LogisticAirfares");
-                        
-            // Relationships
 
+            this.Property(p => p.From)
+                .HasMaxLength(LogisticAirfare.FromMaxLength);
+
+            this.Property(p => p.To)
+                .HasMaxLength(LogisticAirfare.ToMaxLength);
+
+            this.Property(p => p.TicketNumber)
+                .HasMaxLength(LogisticAirfare.TicketNumberMaxLength);
+
+            this.Property(p => p.AdditionalInfo)
+                .HasMaxLength(LogisticAirfare.AdditionalInfoMaxLength);
+
+            // Relationships
             this.HasRequired(e => e.Logistics)
                 .WithMany(e => e.LogisticAirfare)
                 .HasForeignKey(e => e.LogisticId);

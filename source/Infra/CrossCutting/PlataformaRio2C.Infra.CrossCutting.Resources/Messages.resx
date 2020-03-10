@@ -923,4 +923,8 @@
     <value>{0} já está {1}.</value>
     <comment>{0} já está {1}.</comment>
   </data>
+  <data name="PropertyDifferentFromProperty" xml:space="preserve">
+    <value>O campo {0} deve ser diferente do campo {1}.</value>
+    <comment>O campo {0} deve ser diferente do campo {1}.</comment>
+  </data>
 </root>

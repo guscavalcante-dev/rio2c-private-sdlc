@@ -32,10 +32,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public bool? IsArrival { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         [Display(Name = "FromPlace", ResourceType = typeof(Labels))]
         public string From { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         [Display(Name = "ToPlace", ResourceType = typeof(Labels))]
         public string To { get; set; }
 
@@ -48,6 +50,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public DateTimeOffset? Arrival { get; set; }
         
         [Display(Name = "TicketNumber", ResourceType = typeof(Labels))]
+        [StringLength(20, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string TicketNumber { get; set; }
         
         [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]

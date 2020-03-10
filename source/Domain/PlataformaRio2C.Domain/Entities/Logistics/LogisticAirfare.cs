@@ -20,6 +20,11 @@ namespace PlataformaRio2C.Domain.Entities
     /// <summary>LogisticAirfare</summary>
     public class LogisticAirfare : Entity
     {
+        public static readonly int FromMaxLength = 100;
+        public static readonly int ToMaxLength = 100;
+        public static readonly int TicketNumberMaxLength = 20;
+        public static readonly int AdditionalInfoMaxLength = 1000;
+
         public int LogisticId { get; private set; }
         public bool IsNational { get; private set; }
         public bool IsArrival { get; private set; }
@@ -131,22 +136,88 @@ namespace PlataformaRio2C.Domain.Entities
                 this.ValidationResult = new ValidationResult();
             }
 
-            if (this.ArrivalDate == DateTimeOffset.MinValue)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.ArrivalDate)));
-            }
-
-            if (this.DepartureDate == DateTimeOffset.MinValue)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.DepartureDate)));
-            }
-
-            if (this.Logistics == null)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Logistics)));
-            }
+            this.ValidateLogistic();
+            this.ValidatePlaces();
+            this.ValidateDates();
+            this.ValidateTicketNumber();
+            this.ValidateAdditionalInfo();
 
             return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>Validates the logistic.</summary>
+        public void ValidateLogistic()
+        {
+            if (this.Logistics == null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Airfare), new string[] { "LogisticUid" }));
+            }
+        }
+
+        /// <summary>Validates the places.</summary>
+        public void ValidatePlaces()
+        {
+            if (string.IsNullOrEmpty(this.From?.Trim()))
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.FromPlace), new string[] { "From" }));
+            }
+
+            if (this.From?.Trim().Length > FromMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.FromPlace, FromMaxLength, 1), new string[] { "From" }));
+            }
+
+            if (string.IsNullOrEmpty(this.To?.Trim()))
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.ToPlace), new string[] { "To" }));
+            }
+
+            if (this.To?.Trim().Length > FromMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.ToPlace, ToMaxLength, 1), new string[] { "To" }));
+            }
+
+            if (this.To?.Trim() == this.From?.Trim())
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyDifferentFromProperty, Labels.ToPlace, Labels.FromPlace), new string[] { "To" }));
+            }
+        }
+
+        /// <summary>Validates the dates.</summary>
+        public void ValidateDates()
+        {
+            if (this.DepartureDate == DateTimeOffset.MinValue)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.DepartureDate), new string[] { "Departure" }));
+            }
+
+            if (this.ArrivalDate == DateTimeOffset.MinValue)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.ArrivalDate), new string[] { "Arrival" }));
+            }
+
+            if (this.DepartureDate >= this.ArrivalDate)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyGreaterThanProperty, Labels.ArrivalDate, Labels.DepartureDate), new string[] { "Arrival" }));
+            }
+        }
+
+        /// <summary>Validates the ticket number.</summary>
+        public void ValidateTicketNumber()
+        {
+            if (!string.IsNullOrEmpty(this.TicketNumber?.Trim()) && this.TicketNumber?.Trim().Length > TicketNumberMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.TicketNumber, TicketNumberMaxLength, 1), new string[] { "TicketNumber" }));
+            }
+        }
+
+        /// <summary>Validates the additional information.</summary>
+        public void ValidateAdditionalInfo()
+        {
+            if (!string.IsNullOrEmpty(this.AdditionalInfo?.Trim()) && this.AdditionalInfo?.Trim().Length > AdditionalInfoMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.AdditionalInfo, AdditionalInfoMaxLength, 1), new string[] { "AdditionalInfo" }));
+            }
         }
 
         #endregion
