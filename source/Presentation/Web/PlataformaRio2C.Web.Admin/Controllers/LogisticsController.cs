@@ -122,15 +122,15 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllParticipants)
         {
-            var list = await this.collaboratorRepo.FindAllLogisticsByDatatable(
+            var logistics = await this.collaboratorRepo.FindAllLogisticsByDatatable(
                 EditionDto.Id,
                 request.Start / request.Length,
                 request.Length,
                 request.Search?.Value,
                 request.GetSortColumns(),
                 showAllParticipants);
-            
-            var response = DataTablesResponse.Create(request, 100, 100, list);
+
+            var response = DataTablesResponse.Create(request, logistics.TotalItemCount, logistics.TotalItemCount, logistics);
             
             return Json(new
             {
