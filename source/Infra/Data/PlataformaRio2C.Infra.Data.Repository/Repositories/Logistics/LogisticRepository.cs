@@ -1,4 +1,17 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Infra.Data.Repository
+// Author           : Arthur Souza
+// Created          : 01-20-2020
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-10-2020
+// ***********************************************************************
+// <copyright file="LogisticRepository.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Collections.Generic;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
@@ -6,43 +19,38 @@ using PlataformaRio2C.Infra.Data.Context;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using LinqKit;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using X.PagedList;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
-    #region IQueryable Extensions
+    #region Logistic IQueryable Extensions
 
-    /// <summary>
-    /// CollaboratorIQueryableExtensions
-    /// </summary>
-    internal static class LogisticsIQueryableExtensions
+    /// <summary>LogisticIQueryableExtensions</summary>
+    internal static class LogisticIQueryableExtensions
     {
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
-        internal static IQueryable<Logistics> IsNotDeleted(this IQueryable<Logistics> query)
+        internal static IQueryable<Logistic> IsNotDeleted(this IQueryable<Logistic> query)
         {
             query = query.Where(c => !c.IsDeleted);
 
             return query;
         }
 
-        /// <summary>Finds the by edition identifier.</summary>
+        /// <summary>Finds the by uid.</summary>
         /// <param name="query">The query.</param>
-        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
-        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="uid">The uid.</param>
         /// <returns></returns>
-        internal static IQueryable<Logistics> FindByUid(this IQueryable<Logistics> query, Guid uid)
+        internal static IQueryable<Logistic> FindByUid(this IQueryable<Logistic> query, Guid uid)
         {
             return query.Where(e => e.Uid == uid);
         }
     }
 
     #endregion
-
 
     #region LogisticRequestBaseDto IQueryable Extensions
 
@@ -73,9 +81,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
     #endregion
 
-    public class LogisticsRepository : Repository<PlataformaRio2CContext, Logistics>, ILogisticsRepository
+    /// <summary>LogisticRepository</summary>
+    public class LogisticRepository : Repository<PlataformaRio2CContext, Logistic>, ILogisticRepository
     {
-        public LogisticsRepository(PlataformaRio2CContext context)
+        /// <summary>Initializes a new instance of the <see cref="LogisticRepository"/> class.</summary>
+        /// <param name="context">The context.</param>
+        public LogisticRepository(PlataformaRio2CContext context)
             : base(context)
         {
             _context = context;
@@ -84,17 +95,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>Gets the base query.</summary>
         /// <param name="readonly">if set to <c>true</c> [readonly].</param>
         /// <returns></returns>
-        private IQueryable<Logistics> GetBaseQuery(bool @readonly = false)
+        private IQueryable<Logistic> GetBaseQuery(bool @readonly = false)
         {
             var consult = this.dbSet
-                .IsNotDeleted();
+                                .IsNotDeleted();
 
             return @readonly
-                ? consult.AsNoTracking()
-                : consult;
+                        ? consult.AsNoTracking()
+                        : consult;
         }
 
-        public override IQueryable<Logistics> GetAll(bool @readonly = false)
+        /// <summary>Método que traz todos os registros</summary>
+        /// <param name="readonly"></param>
+        /// <returns></returns>
+        public override IQueryable<Logistic> GetAll(bool @readonly = false)
         {
             var consult = this.dbSet;
             //.Include(i => i.Collaborator.Players)
@@ -103,10 +117,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             //.Include(i => i.Collaborator.ProducersEvents.Select(e => e.Producer));
 
             return @readonly
-              ? consult.AsNoTracking()
-              : consult;
+                      ? consult.AsNoTracking()
+                      : consult;
         }
 
+        /// <summary>Finds all by data table.</summary>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <param name="showAllSponsored">if set to <c>true</c> [show all sponsored].</param>
+        /// <returns></returns>
         public async Task<IPagedList<LogisticRequestBaseDto>> FindAllByDataTable(int page,
             int pageSize,
             string keywords,
@@ -117,7 +139,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery();
 
             return await query
-                .DynamicOrder<Logistics>(
+                .DynamicOrder<Logistic>(
                     sortColumns,
                     new List<Tuple<string, string>>
                     {
@@ -134,11 +156,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 .ToListPagedAsync(page, pageSize);
         }
 
+        /// <summary>Gets the dto.</summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="language">The language.</param>
+        /// <returns></returns>
         public Task<LogisticRequestBaseDto> GetDto(Guid id, Language language)
         {
             var query = this.GetBaseQuery();
 
-            return query.FindByUid(id).Select(e => new LogisticRequestBaseDto()
+            return query.FindByUid(id).Select(e => new LogisticRequestBaseDto
             {
                 CollaboratorUid = e.AttendeeCollaborator.Collaborator.Uid,
                 Name = e.AttendeeCollaborator.Collaborator.FirstName + " " +
@@ -154,14 +180,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 CreateDate = e.CreateDate,
                 CreateUser = e.CreateUser.Name,
                 CollaboratorPillars = e.AttendeeCollaborator.ConferenceParticipants
-                    .SelectMany(cp => cp.Conference.ConferencePillars)
-                    .Select(p => p.Pillar)
-                    .ToList(),
+                                            .SelectMany(cp => cp.Conference.ConferencePillars)
+                                            .Select(p => p.Pillar)
+                                            .ToList(),
                 CollaboratorRoles = e.AttendeeCollaborator.ConferenceParticipants
-                    .Select(cp => cp.ConferenceParticipantRole)
-                    .SelectMany(cp => cp.ConferenceParticipantRoleTitles.Where(t => t.LanguageId == language.Id))
-                    .Select(cp => cp.Value)
-                    .ToList()
+                                        .Select(cp => cp.ConferenceParticipantRole)
+                                        .SelectMany(cp => cp.ConferenceParticipantRoleTitles.Where(t => t.LanguageId == language.Id))
+                                        .Select(cp => cp.Value)
+                                        .ToList()
 
             }).FirstOrDefaultAsync();
         }

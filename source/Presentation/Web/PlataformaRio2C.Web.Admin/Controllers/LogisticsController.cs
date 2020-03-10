@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-10-2020
 // ***********************************************************************
-// <copyright file="LogisticSponsorsController.cs" company="Softo">
+// <copyright file="LogisticsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -35,7 +35,7 @@ using Constants = PlataformaRio2C.Domain.Constants;
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>
-    /// LogisticSponsorsController
+    /// LogisticsController
     /// </summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic + "," + Constants.CollaboratorType.CuratorshipAudiovisual)]
@@ -44,7 +44,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         private readonly ILogisticSponsorRepository logisticSponsorRepo;
         private IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepo;
         private readonly IAttendeeCollaboratorRepository attendeCollaboratorRepo;
-        private readonly ILogisticsRepository logisticsRepo;
+        private readonly ILogisticRepository logisticRepo;
         private readonly ILogisticAirfareRepository logisticsAirfareRepo;
         private readonly ILogisticAccommodationRepository logisticsAccommodationRepo;
         private readonly ILogisticTransferRepository logisticsTransferRepo;
@@ -55,41 +55,41 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <summary>Initializes a new instance of the <see cref="LogisticsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        /// <param name="logisticSponsorRepo">The logistic sponsor repo.</param>
-        /// <param name="collaboratorRepo">The collaborator repo.</param>
-        /// <param name="logisticsRepo">The logistics repo.</param>
-        /// <param name="logisticsAccommodationRepo">The logistics accommodation repo.</param>
-        /// <param name="logisticsAirfareRepo">The logistics airfare repo.</param>
-        /// <param name="attendeePlacesRepo">The attendee places repo.</param>
-        /// <param name="attendeeLogisticSponsorRepo">The attendee logistic sponsor repo.</param>
-        /// <param name="logisticsTransferRepo">The logistics transfer repo.</param>
-        /// <param name="attendeCollaboratorRepo">The attende collaborator repo.</param>
-        /// <param name="languageRepo">The language repo.</param>
+        /// <param name="logisticSponsorRepository">The logistic sponsor repository.</param>
+        /// <param name="collaboratorRepository">The collaborator repository.</param>
+        /// <param name="logisticRepository">The logistic repository.</param>
+        /// <param name="logisticsAccommodationRepository">The logistics accommodation repository.</param>
+        /// <param name="logisticsAirfareRepository">The logistics airfare repository.</param>
+        /// <param name="attendeePlacesRepository">The attendee places repository.</param>
+        /// <param name="attendeeLogisticSponsorRepository">The attendee logistic sponsor repository.</param>
+        /// <param name="logisticsTransferRepository">The logistics transfer repository.</param>
+        /// <param name="attendeCollaboratorRepository">The attende collaborator repository.</param>
+        /// <param name="languageRepository">The language repository.</param>
         public LogisticsController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
-            ILogisticSponsorRepository logisticSponsorRepo,
-            ICollaboratorRepository collaboratorRepo,
-            ILogisticsRepository logisticsRepo,
-            ILogisticAccommodationRepository logisticsAccommodationRepo,
-            ILogisticAirfareRepository logisticsAirfareRepo,
-            IAttendeePlacesRepository attendeePlacesRepo,
-            IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepo,
-            ILogisticTransferRepository logisticsTransferRepo,
-            IAttendeeCollaboratorRepository attendeCollaboratorRepo,
-            ILanguageRepository languageRepo)
+            ILogisticSponsorRepository logisticSponsorRepository,
+            ICollaboratorRepository collaboratorRepository,
+            ILogisticRepository logisticRepository,
+            ILogisticAccommodationRepository logisticsAccommodationRepository,
+            ILogisticAirfareRepository logisticsAirfareRepository,
+            IAttendeePlacesRepository attendeePlacesRepository,
+            IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepository,
+            ILogisticTransferRepository logisticsTransferRepository,
+            IAttendeeCollaboratorRepository attendeCollaboratorRepository,
+            ILanguageRepository languageRepository)
             : base(commandBus, identityController)
         {
-            this.logisticSponsorRepo = logisticSponsorRepo;
-            this.logisticsRepo = logisticsRepo;
-            this.languageRepo = languageRepo;
-            this.attendeePlacesRepo = attendeePlacesRepo;
-            this.logisticsTransferRepo = logisticsTransferRepo;
-            this.logisticsAirfareRepo = logisticsAirfareRepo;
-            this.collaboratorRepo = collaboratorRepo;
-            this.attendeCollaboratorRepo = attendeCollaboratorRepo;
-            this.logisticsAccommodationRepo = logisticsAccommodationRepo;
-            this.attendeeLogisticSponsorRepo = attendeeLogisticSponsorRepo;
+            this.logisticSponsorRepo = logisticSponsorRepository;
+            this.logisticRepo = logisticRepository;
+            this.languageRepo = languageRepository;
+            this.attendeePlacesRepo = attendeePlacesRepository;
+            this.logisticsTransferRepo = logisticsTransferRepository;
+            this.logisticsAirfareRepo = logisticsAirfareRepository;
+            this.collaboratorRepo = collaboratorRepository;
+            this.attendeCollaboratorRepo = attendeCollaboratorRepository;
+            this.logisticsAccommodationRepo = logisticsAccommodationRepository;
+            this.attendeeLogisticSponsorRepo = attendeeLogisticSponsorRepository;
         }
 
         #region List
@@ -236,7 +236,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             try
             {
-                var entity = await this.logisticsRepo.GetAsync(logisticsUid ?? Guid.Empty);
+                var entity = await this.logisticRepo.GetAsync(logisticsUid ?? Guid.Empty);
                 if (entity == null)
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Request, Labels.FoundF.ToLowerInvariant()));
@@ -334,7 +334,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Details(Guid? id)
         {
-            var logisticsRequestDto = await this.logisticsRepo.GetDto(id ?? Guid.Empty, this.languageRepo.Get(f => f.Code == UserInterfaceLanguage));
+            var logisticsRequestDto = await this.logisticRepo.GetDto(id ?? Guid.Empty, this.languageRepo.Get(f => f.Code == UserInterfaceLanguage));
             if (logisticsRequestDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Logistics, Labels.FoundF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);

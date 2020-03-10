@@ -4,20 +4,17 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2020
+// Last Modified On : 03-10-2020
 // ***********************************************************************
 // <copyright file="UpdateLogisticAccomodationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
@@ -28,27 +25,21 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// </summary>
     public class UpdateLogisticAccomodationCommandHandler : LogisticAccommodationBaseCommandHandler, IRequestHandler<UpdateLogisticAccomodation, AppValidationResult>
     {
-        /// <summary>
-        /// The place repo
-        /// </summary>
-        private readonly IAttendeePlacesRepository placeRepo;
+        private readonly IAttendeePlacesRepository attendeePlaceRepo;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:PlataformaRio2C.Application.CQRS.CommandsHandlers.CreateLogisticsCommandHandler" /> class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref="UpdateLogisticAccomodationCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
-        /// <param name="logisticsRepo">The logistics repo.</param>
-        /// <param name="placeRepo">The place repo.</param>
-        /// <param name="repository">The repository.</param>
+        /// <param name="attendeePlaceRepository">The attendee place repository.</param>
+        /// <param name="logisticAccommodationRepository">The logistic accommodation repository.</param>
         public UpdateLogisticAccomodationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            ILogisticsRepository logisticsRepo,
-            IAttendeePlacesRepository placeRepo,
-            ILogisticAccommodationRepository repository) : base(eventBus, uow, repository)
+            IAttendeePlacesRepository attendeePlaceRepository,
+            ILogisticAccommodationRepository logisticAccommodationRepository) 
+            : base(eventBus, uow, logisticAccommodationRepository)
         {
-            this.placeRepo = placeRepo;
+            this.attendeePlaceRepo = attendeePlaceRepository;
         }
 
         /// <summary>
@@ -83,7 +74,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             accommodation.Update(cmd.AdditionalInfo,
                 cmd.CheckInDate,
                 cmd.CheckOutDate,
-                placeRepo.Get(cmd.PlaceId),
+                attendeePlaceRepo.Get(cmd.PlaceId),
                 cmd.UserId);
             
             if (!accommodation.IsValid())

@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-10-2020
 // ***********************************************************************
-// <copyright file="AttendeeLogisticSponsorMap.cs" company="Softo">
+// <copyright file="LogisticAirfareMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -17,12 +17,12 @@ using System.Data.Entity.ModelConfiguration;
 namespace PlataformaRio2C.Infra.Data.Context.Mapping
 {
     /// <summary>
-    /// AttendeeLogisticSponsorMap
+    /// LogisticAirfareMap
     /// </summary>
     public class LogisticAirfareMap : EntityTypeConfiguration<LogisticAirfare>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeeLogisticSponsorMap" /> class.
+        /// Initializes a new instance of the <see cref="LogisticAirfareMap" /> class.
         /// </summary>
         public LogisticAirfareMap()
         {
@@ -41,8 +41,8 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 .HasMaxLength(LogisticAirfare.AdditionalInfoMaxLength);
 
             // Relationships
-            this.HasRequired(e => e.Logistics)
-                .WithMany(e => e.LogisticAirfare)
+            this.HasRequired(e => e.Logistic)
+                .WithMany(e => e.LogisticAirfares)
                 .HasForeignKey(e => e.LogisticId);
         }
     }

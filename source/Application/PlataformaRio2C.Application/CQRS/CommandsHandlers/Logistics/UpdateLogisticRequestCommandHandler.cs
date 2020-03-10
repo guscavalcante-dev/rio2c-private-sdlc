@@ -4,27 +4,25 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2020
+// Last Modified On : 03-10-2020
 // ***********************************************************************
-// <copyright file="UpdateLogisticAccomodationCommandHandler.cs" company="Softo">
+// <copyright file="UpdateLogisticRequestCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
     /// <summary>
-    /// UpdateLogisticAccomodationCommandHandler
+    /// UpdateLogisticRequestCommandHandler
     /// </summary>
     public class UpdateLogisticRequestCommandHandler : LogisticsBaseCommandHandler, IRequestHandler<UpdateLogisticRequest, AppValidationResult>
     {
@@ -32,25 +30,25 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:PlataformaRio2C.Application.CQRS.CommandsHandlers.CreateLogisticsCommandHandler" /> class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref="UpdateLogisticRequestCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
-        /// <param name="logisticsRepo">The logistics repo.</param>
-        /// <param name="placeRepo">The place repo.</param>
-        /// <param name="repository">The repository.</param>
+        /// <param name="editionRepository">The edition repository.</param>
+        /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
+        /// <param name="attendeeLogisticSponsorRepository">The attendee logistic sponsor repository.</param>
+        /// <param name="logisticRepository">The logistic repository.</param>
         public UpdateLogisticRequestCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IEditionRepository editionRepository,
-            IAttendeeCollaboratorRepository attendeeCollaboratorRepo,
-            IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepo,
-            ILogisticsRepository repository) : base(eventBus, uow, repository)
+            IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
+            IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepository,
+            ILogisticRepository logisticRepository) 
+            : base(eventBus, uow, logisticRepository)
         {
             this.editionRepo = editionRepository;
-            this.attendeeLogisticSponsorRepo = attendeeLogisticSponsorRepo;
-            this.attendeeCollaboratorRepo = attendeeCollaboratorRepo;
+            this.attendeeLogisticSponsorRepo = attendeeLogisticSponsorRepository;
+            this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
         }
 
         /// <summary>
@@ -63,7 +61,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.Uow.BeginTransaction();
 
-            var logistics = await this.GetByUid(cmd.LogisticRequestUid);
+            var logistics = await this.GetLogisticByUid(cmd.LogisticRequestUid);
 
             #region Initial validations
 

@@ -4,7 +4,7 @@
 // Created          : 07-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-27-2019
+// Last Modified On : 03-10-2020
 // ***********************************************************************
 // <copyright file="RepositoryFactory.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -348,12 +348,12 @@ namespace PlataformaRio2C.Infra.Data.Repository
 
         #region Logistics
 
-        private ILogisticsRepository _logisticsRepository;
-        public ILogisticsRepository LogisticsRepository
+        private ILogisticRepository _logisticRepository;
+        public ILogisticRepository LogisticRepository
         {
             get
             {
-                return this._logisticsRepository ?? (this._logisticsRepository = new LogisticsRepository(_context));
+                return this._logisticRepository ?? (this._logisticRepository = new LogisticRepository(_context));
             }
         }
 

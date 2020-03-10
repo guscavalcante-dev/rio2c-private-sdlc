@@ -184,7 +184,7 @@
     <Compile Include="Repositories\Logistics\LogisticTransferRepository.cs" />
     <Compile Include="Repositories\Logistics\LogisticSponsorsRepository.cs" />
     <Compile Include="Repositories\Logistics\LogisticAccommodationRepository.cs" />
-    <Compile Include="Repositories\Logistics\LogisticsRepository.cs" />
+    <Compile Include="Repositories\Logistics\LogisticRepository.cs" />
     <Compile Include="Repositories\Music\MusicProjectRepository.cs" />
     <Compile Include="Repositories\Music\MusicGenreRepository.cs" />
     <Compile Include="Repositories\Organizations\OrganizationTypeRepository.cs" />

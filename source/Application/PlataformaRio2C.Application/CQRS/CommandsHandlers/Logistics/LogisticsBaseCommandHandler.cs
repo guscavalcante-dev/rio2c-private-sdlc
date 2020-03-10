@@ -3,10 +3,10 @@
 // Author           : Arthur Souza
 // Created          : 01-28-2020
 //
-// Last Modified By : Arthur Souza
-// Last Modified On : 01-28-2020
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-10-2020
 // ***********************************************************************
-// <copyright file="TrackBaseCommandHandler.cs" company="Softo">
+// <copyright file="LogisticsBaseCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -25,35 +25,30 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>LogisticsBaseCommandHandler</summary>
     public class LogisticsBaseCommandHandler : BaseCommandHandler
     {
-        protected readonly ILogisticsRepository repository;
+        protected readonly ILogisticRepository repository;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LogisticsBaseCommandHandler"/> class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref="LogisticsBaseCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="logisticsRepository">The logistics repository.</param>
-        public LogisticsBaseCommandHandler(IMediator eventBus, IUnitOfWork uow, ILogisticsRepository logisticsRepository)
+        public LogisticsBaseCommandHandler(IMediator eventBus, IUnitOfWork uow, ILogisticRepository logisticsRepository)
             : base(eventBus, uow)
         {
             this.repository = logisticsRepository;
         }
 
-
-        /// <summary>
-        /// Gets the by uid.
-        /// </summary>
+        /// <summary>Gets the logistic by uid.</summary>
         /// <param name="logisticsUid">The logistics uid.</param>
         /// <returns></returns>
-        public async Task<Logistics> GetByUid(Guid logisticsUid)
+        public async Task<Logistic> GetLogisticByUid(Guid logisticsUid)
         {
-            var entity = await this.repository.GetAsync(logisticsUid);
-            if (entity == null) // Do not check IsDeleted because the Collaborator/User can be restored
+            var logistic = await this.repository.GetAsync(logisticsUid);
+            if (logistic == null) // Do not check IsDeleted because the Collaborator/User can be restored
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundM), new string[] { "FirstName" }));
             }
 
-            return entity;
+            return logistic;
         }
     }
 }

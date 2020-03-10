@@ -3,10 +3,10 @@
 // Author           : Arthur Souza
 // Created          : 01-20-2020
 //
-// Last Modified By : Arthur Souza
-// Last Modified On : 01-20-2020
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-10-2020
 // ***********************************************************************
-// <copyright file="SpeakerRepository.cs" company="Softo">
+// <copyright file="AttendeeLogisticSponsorsRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -20,17 +20,14 @@ using LinqKit;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context;
-using X.PagedList;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
-    
     #region IQueryable Extensions
 
     /// <summary>
-    /// CollaboratorIQueryableExtensions
+    /// AttendeeLogisticSponsorsIQueryableExtensions
     /// </summary>
     internal static class AttendeeLogisticSponsorsIQueryableExtensions
     {
@@ -49,6 +46,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the by is other.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="isOther">if set to <c>true</c> [is other].</param>
+        /// <returns></returns>
         internal static IQueryable<AttendeeLogisticSponsor> FindByIsOther(this IQueryable<AttendeeLogisticSponsor> query, int editionId, bool isOther = false)
         {
             return query.Where(ac => ac.EditionId == editionId && !ac.IsDeleted && !ac.Edition.IsDeleted && ac.IsOther == isOther);
@@ -57,7 +59,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>Finds the by keywords.</summary>
         /// <param name="query">The query.</param>
         /// <param name="keywords">The keywords.</param>
-        /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
         internal static IQueryable<AttendeeLogisticSponsor> FindByKeywords(this IQueryable<AttendeeLogisticSponsor> query, string keywords)
         {
@@ -91,26 +92,24 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
-        /// <summary>Finds the by edition identifier.</summary>
+        /// <summary>Finds the by uid.</summary>
         /// <param name="query">The query.</param>
-        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
-        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="uid">The uid.</param>
         /// <returns></returns>
         internal static IQueryable<AttendeeLogisticSponsor> FindByUid(this IQueryable<AttendeeLogisticSponsor> query, Guid uid)
         {
             return query.Where(e => e.Uid == uid);
         }
-
     }
 
     #endregion
-    
-    /// <summary>SpeakerRepository</summary>
+
+    /// <summary>AttendeeLogisticSponsorsRepository</summary>
     public class AttendeeLogisticSponsorsRepository : Repository<PlataformaRio2CContext, AttendeeLogisticSponsor>, IAttendeeLogisticSponsorRepository
     {
         private PlataformaRio2CContext _context;
 
-        /// <summary>Initializes a new instance of the <see cref="SpeakerRepository"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="AttendeeLogisticSponsorsRepository"/> class.</summary>
         /// <param name="context">The context.</param>
         public AttendeeLogisticSponsorsRepository(PlataformaRio2CContext context)
             : base(context)
@@ -130,7 +129,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         ? consult.AsNoTracking()
                         : consult;
         }
-        
+
+        /// <summary>Finds all dtos by is other.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="isOther">if set to <c>true</c> [is other].</param>
+        /// <returns></returns>
         public async Task<List<LogisticSponsorBaseDto>> FindAllDtosByIsOther(int editionId, bool isOther)
         {
             var query = this.GetBaseQuery(true)

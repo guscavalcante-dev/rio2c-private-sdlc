@@ -1,22 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Infra.Data.Repository
+// Author           : Arthur Souza
+// Created          : 01-20-2020
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-10-2020
+// ***********************************************************************
+// <copyright file="PlaceRepository.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
-using LinqKit;
-using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using X.PagedList;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
-    #region IQueryable Extensions
+    #region Place IQueryable Extensions
 
     /// <summary>
-    /// CollaboratorIQueryableExtensions
+    /// PlaceIQueryableExtensions
     /// </summary>
     internal static class PlaceIQueryableExtensions
     {
@@ -30,10 +37,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
-        /// <summary>Finds the by edition identifier.</summary>
+        /// <summary>Finds the by uid.</summary>
         /// <param name="query">The query.</param>
-        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
-        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="uid">The uid.</param>
         /// <returns></returns>
         internal static IQueryable<Place> FindByUid(this IQueryable<Place> query, Guid uid)
         {
@@ -42,7 +48,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     }
 
     #endregion
-    
+
+    /// <summary>PlaceRepository</summary>
     public class PlaceRepository : Repository<PlataformaRio2CContext, Place>, IPlaceRepository
     {
         public PlaceRepository(PlataformaRio2CContext context)

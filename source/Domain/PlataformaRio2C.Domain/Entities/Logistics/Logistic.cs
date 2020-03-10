@@ -6,12 +6,11 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-10-2020
 // ***********************************************************************
-// <copyright file="Logistics.cs" company="Softo">
+// <copyright file="Logistic.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Domain.Entities.Validations;
 using PlataformaRio2C.Domain.Validation;
 using System;
 using System.Collections.Generic;
@@ -19,9 +18,9 @@ using System.Collections.Generic;
 namespace PlataformaRio2C.Domain.Entities
 {
     /// <summary>
-    /// Logistics
+    /// Logistic
     /// </summary>
-    public class Logistics : Entity
+    public class Logistic : Entity
     {
         public int AttendeeCollaboratorId { get; private set; }
         public bool IsAirfareSponsored { get; private set; }
@@ -38,12 +37,13 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual AttendeeLogisticSponsor AirportTransferSponsor { get; private set; }
         public virtual AttendeeLogisticSponsor AirfareSponsor { get; private set; }
         public virtual AttendeeLogisticSponsor AccommodationSponsor { get; private set; }
-        public virtual List<LogisticAirfare> LogisticAirfare { get; private set; }
-        public virtual List<LogisticAccommodation> LogisticAccommodation { get; private set; }
-        public virtual List<LogisticTransfer> LogisticTransfer { get; private set; }
+
+        public virtual List<LogisticAirfare> LogisticAirfares { get; private set; }
+        public virtual List<LogisticAccommodation> LogisticAccommodations { get; private set; }
+        public virtual List<LogisticTransfer> LogisticTransfers { get; private set; }
         public virtual User CreateUser { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="Logistics"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Logistic"/> class.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
         /// <param name="isAirfareSponsored">if set to <c>true</c> [is airfare sponsored].</param>
@@ -59,7 +59,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isVehicleDisposalRequired">if set to <c>true</c> [is vehicle disposal required].</param>
         /// <param name="additionalInfo">The additional information.</param>
         /// <param name="userId">The user identifier.</param>
-        public Logistics(
+        public Logistic(
             Edition edition,
             AttendeeCollaborator attendeeCollaborator,
             bool isAirfareSponsored,
@@ -115,14 +115,16 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsCityTransferRequired = isCityTransferRequired;
             this.IsVehicleDisposalRequired = isVehicleDisposalRequired;
             this.AdditionalInfo = additionalInfo;
+
+            this.IsDeleted = false;
             this.CreateUserId = this.UpdateUserId = userId;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Logistics"/> class.
+        /// Initializes a new instance of the <see cref="Logistic"/> class.
         /// </summary>
-        protected Logistics()
+        protected Logistic()
         {
         }
 
@@ -221,9 +223,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// <returns><c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
         public override bool IsValid()
         {
-            ValidationResult = new ValidationResult();
+            this.ValidationResult = new ValidationResult();
 
-            ValidationResult.Add(new LogisticsIsConsistent().Valid(this));
+            //ValidationResult.Add(new LogisticsIsConsistent().Valid(this));
 
             return ValidationResult.IsValid;
         }

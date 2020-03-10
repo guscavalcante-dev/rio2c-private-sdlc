@@ -4,25 +4,27 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-06-2019
+// Last Modified On : 03-10-2020
 // ***********************************************************************
-// <copyright file="PlataformaRio2CContext.cs" company="Softo">
+// <copyright file="LogisticMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.ModelConfiguration;
 using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Infra.Data.Context.Mapping
 {
-    public class LogisticsMap : EntityTypeConfiguration<Logistics>
+    /// <summary>LogisticMap</summary>
+    public class LogisticMap : EntityTypeConfiguration<Logistic>
     {
-        public LogisticsMap()
+        /// <summary>Initializes a new instance of the <see cref="LogisticMap"/> class.</summary>
+        public LogisticMap()
         {
+            this.ToTable("Logistics");
+
+            // Relationships
             this.HasOptional(t => t.AccommodationSponsor)
                 .WithMany(e => e.AccommodationSponsors)
               .HasForeignKey(d => d.AccommodationAttendeeLogisticSponsorId);
@@ -38,9 +40,6 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.HasRequired(t => t.CreateUser)
                 .WithMany()
                 .HasForeignKey(d => d.CreateUserId);
-
-
-            ToTable("Logistics");
         }
     }
 }

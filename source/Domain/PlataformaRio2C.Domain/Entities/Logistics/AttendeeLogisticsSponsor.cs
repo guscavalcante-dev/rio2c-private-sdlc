@@ -3,8 +3,8 @@
 // Author           : Arthur Souza
 // Created          : 01-20-2020
 //
-// Last Modified By : Arthur Souza
-// Last Modified On : 01-20-2020
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-10-2020
 // ***********************************************************************
 // <copyright file="AttendeeLogisticSponsor.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,7 +13,6 @@
 // ***********************************************************************
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using PlataformaRio2C.Domain.Validation;
 
 namespace PlataformaRio2C.Domain.Entities
@@ -21,51 +20,72 @@ namespace PlataformaRio2C.Domain.Entities
     /// <summary>AttendeeLogisticSponsor</summary>
     public class AttendeeLogisticSponsor : Entity
     {
-        protected AttendeeLogisticSponsor()
-        {
-        }
-        
-        public AttendeeLogisticSponsor(Edition edition, string name, int userId)
-        {
-            this.Edition = edition;
-            this.IsOther = true;
-            this.CreateUserId = this.UpdateUserId = userId;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
-            this.LogisticSponsor = new LogisticSponsor(name, userId);
-        }
-
-        public AttendeeLogisticSponsor(Edition edition, LogisticSponsor logisticSponsor, int userId)
-        {
-            this.Edition = edition;
-            this.LogisticSponsor = logisticSponsor;
-            this.CreateUserId = this.UpdateUserId = userId;
-            this.CreateDate = this.UpdateDate = DateTime.Now;
-        }
-        
-        public void Update(Edition edition, LogisticSponsor logisticSponsor, int userId)
-        {
-            this.Edition = edition;
-            this.LogisticSponsor = logisticSponsor;
-            this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.Now;
-        }
-
-        public void Delete(int userId)
-        {            
-            this.IsDeleted = true;
-            this.UpdateDate = DateTime.Now;
-            this.UpdateUserId = userId;
-        }
-
         public int EditionId { get; private set; }
         public int LogisticSponsorId { get; private set; }
         public bool IsOther { get; private set; }
         public virtual Edition Edition { get; private set; }
         public virtual LogisticSponsor LogisticSponsor { get; private set; }
 
-        public virtual ICollection<Logistics> AccommodationSponsors { get; private set; }
-        public virtual ICollection<Logistics> AirfareSponsors { get; private set; }
-        public virtual ICollection<Logistics> AirportTransferSponsors { get; private set; }
+        public virtual ICollection<Logistic> AccommodationSponsors { get; private set; }
+        public virtual ICollection<Logistic> AirfareSponsors { get; private set; }
+        public virtual ICollection<Logistic> AirportTransferSponsors { get; private set; }
+
+        /// <summary>Initializes a new instance of the <see cref="AttendeeLogisticSponsor"/> class.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="logisticSponsor">The logistic sponsor.</param>
+        /// <param name="userId">The user identifier.</param>
+        public AttendeeLogisticSponsor(Edition edition, LogisticSponsor logisticSponsor, int userId)
+        {
+            this.Edition = edition;
+            this.LogisticSponsor = logisticSponsor;
+
+            this.IsDeleted = false;
+            this.CreateUserId = this.UpdateUserId = userId;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="AttendeeLogisticSponsor"/> class.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="userId">The user identifier.</param>
+        public AttendeeLogisticSponsor(Edition edition, string name, int userId)
+        {
+            this.Edition = edition;
+            this.LogisticSponsor = new LogisticSponsor(name, userId);
+            this.IsOther = true;
+
+            this.IsDeleted = false;
+            this.CreateUserId = this.UpdateUserId = userId;
+            this.CreateDate = this.UpdateDate = DateTime.Now;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="AttendeeLogisticSponsor"/> class.</summary>
+        protected AttendeeLogisticSponsor()
+        {
+        }
+
+        /// <summary>Updates the specified edition.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="logisticSponsor">The logistic sponsor.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(Edition edition, LogisticSponsor logisticSponsor, int userId)
+        {
+            this.Edition = edition;
+            this.LogisticSponsor = logisticSponsor;
+
+            this.IsDeleted = false;
+            this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.Now;
+        }
+
+        /// <summary>Deletes the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(int userId)
+        {            
+            this.IsDeleted = true;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
 
         #region Validations
 

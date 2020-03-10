@@ -46,7 +46,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<LogisticAirfare> FindByLogisticsUid(this IQueryable<LogisticAirfare> query, Guid logisticUid)
         {
-            return query.Where(la => la.Logistics.Uid == logisticUid);
+            return query.Where(la => la.Logistic.Uid == logisticUid);
         }
 
         /// <summary>Finds the by edition uid.</summary>
@@ -55,7 +55,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<LogisticAirfare> FindByEditionUid(this IQueryable<LogisticAirfare> query, Guid editionUid)
         {
-            return query.Where(la => la.Logistics.AttendeeCollaborator.Edition.Uid == editionUid);
+            return query.Where(la => la.Logistic.AttendeeCollaborator.Edition.Uid == editionUid);
         }
 
         /// <summary>Determines whether [is not deleted].</summary>
@@ -63,7 +63,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<LogisticAirfare> IsNotDeleted(this IQueryable<LogisticAirfare> query)
         {
-            query = query.Where(la => !la.IsDeleted && !la.Logistics.IsDeleted);
+            query = query.Where(la => !la.IsDeleted && !la.Logistic.IsDeleted);
 
             return query;
         }
@@ -145,9 +145,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionUid(editionUid)
-                                .Include(la => la.Logistics)
-                                .Include(la => la.Logistics.AttendeeCollaborator)
-                                .IncludeFilter(la => la.Logistics.AttendeeCollaborator.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted));
+                                .Include(la => la.Logistic)
+                                .Include(la => la.Logistic.AttendeeCollaborator)
+                                .IncludeFilter(la => la.Logistic.AttendeeCollaborator.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted));
 
             return await query
                             .OrderBy(la => la.DepartureDate)

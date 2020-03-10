@@ -36,10 +36,10 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset ArrivalDate { get; private set; }
         public DateTimeOffset? TicketUploadDate { get; private set; }
 
-        public virtual Logistics Logistics { get; private set; }
+        public virtual Logistic Logistic { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="LogisticAirfare"/> class.</summary>
-        /// <param name="logistics">The logistics.</param>
+        /// <param name="logistic">The logistic.</param>
         /// <param name="isNational">The is national.</param>
         /// <param name="isArrival">The is arrival.</param>
         /// <param name="from">From.</param>
@@ -49,9 +49,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="departureDate">The departure date.</param>
         /// <param name="arrivalDate">The arrival date.</param>
         /// <param name="userId">The user identifier.</param>
-        public LogisticAirfare(Logistics logistics, bool? isNational, bool? isArrival, string from, string to, string ticketNumber, string additionalInfo, DateTimeOffset? departureDate, DateTimeOffset? arrivalDate, int userId)
+        public LogisticAirfare(Logistic logistic, bool? isNational, bool? isArrival, string from, string to, string ticketNumber, string additionalInfo, DateTimeOffset? departureDate, DateTimeOffset? arrivalDate, int userId)
         {
-            this.Logistics = logistics;
+            this.Logistic = logistic;
             this.IsNational = isNational ?? false;
             this.IsArrival = isArrival ?? false;
             this.From = from?.Trim();
@@ -70,7 +70,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.TicketNumber = ticketNumber?.Trim();
             this.AdditionalInfo = additionalInfo?.Trim();
 
-            this.Logistics = logistics;
+            this.IsDeleted = false;
             this.CreateUserId = this.UpdateUserId = userId;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
         }
@@ -148,7 +148,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Validates the logistic.</summary>
         public void ValidateLogistic()
         {
-            if (this.Logistics == null)
+            if (this.Logistic == null)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Airfare), new string[] { "LogisticUid" }));
             }

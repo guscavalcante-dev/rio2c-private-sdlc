@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-10-2020
 // ***********************************************************************
-// <copyright file="CreateTrackCommandHandler.cs" company="Softo">
+// <copyright file="CreateLogisticAirfareCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -21,24 +21,24 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>CreateLogisticsCommandHandler</summary>
+    /// <summary>CreateLogisticAirfareCommandHandler</summary>
     public class CreateLogisticAirfareCommandHandler : LogisticAirfareBaseCommandHandler, IRequestHandler<CreateLogisticAirfare, AppValidationResult>
     {
-        private readonly ILogisticsRepository logisticsRepo;
+        private readonly ILogisticRepository logisticRepo;
 
         /// <summary>Initializes a new instance of the <see cref="CreateLogisticAirfareCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
-        /// <param name="logisticsRepo">The logistics repo.</param>
-        /// <param name="logisticsAirfareRepo">The logistics airfare repo.</param>
+        /// <param name="logisticRepository">The logistic repository.</param>
+        /// <param name="logisticsAirfareRepository">The logistics airfare repository.</param>
         public CreateLogisticAirfareCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            ILogisticsRepository logisticsRepo,
-            ILogisticAirfareRepository logisticsAirfareRepo) 
-            : base(eventBus, uow, logisticsAirfareRepo)
+            ILogisticRepository logisticRepository,
+            ILogisticAirfareRepository logisticsAirfareRepository) 
+            : base(eventBus, uow, logisticsAirfareRepository)
         {
-            this.logisticsRepo = logisticsRepo;
+            this.logisticRepo = logisticRepository;
         }
 
         /// <summary>Handles the specified create track.</summary>
@@ -50,7 +50,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.Uow.BeginTransaction();
 
             var entity = new LogisticAirfare(
-                await logisticsRepo.GetAsync(cmd.LogisticsUid),
+                await logisticRepo.GetAsync(cmd.LogisticsUid),
                 cmd.IsNational,
                 cmd.IsArrival,
                 cmd.From,

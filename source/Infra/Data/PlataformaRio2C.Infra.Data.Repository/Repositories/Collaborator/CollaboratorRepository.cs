@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2020
+// Last Modified On : 03-10-2020
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -95,6 +95,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the logistics by edition identifier.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
         internal static IQueryable<Collaborator> FindLogisticsByEditionId(this IQueryable<Collaborator> query, bool showAllParticipants, int editionId)
         {
             query = query.Where(c => c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId 
@@ -1118,6 +1123,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FirstOrDefault(filter);
         }
 
+        /// <summary>Finds all logistics by datatable.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="searchValue">The search value.</param>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <returns></returns>
         public async Task<IPagedList<LogisticRequestBaseDto>> FindAllLogisticsByDatatable(
             int editionId,
             int page, 
@@ -1127,7 +1140,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             bool showAllParticipants)
         {
             var query = this.GetBaseQuery()
-                    .FindLogisticsByEditionId(showAllParticipants, editionId);
+                                    .FindLogisticsByEditionId(showAllParticipants, editionId);
             
             return await query
                 .DynamicOrder<Collaborator>(
@@ -1140,9 +1153,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                     Name = c.FirstName + " " + c.LastNames,
                     HasRequest = c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId && !ac.IsDeleted && ac.Logistics.Any(l => !l.IsDeleted)),
                     HasLogistics = c.AttendeeCollaborators.Any(ac => ac.Logistics.Any(l => !l.IsDeleted && 
-                                                                                           (l.LogisticAirfare.Any(a => !a.IsDeleted) ||
-                                                                                            l.LogisticAccommodation.Any(a => !a.IsDeleted) ||
-                                                                                            l.LogisticTransfer.Any(a => !a.IsDeleted)))),
+                                                                                           (l.LogisticAirfares.Any(a => !a.IsDeleted) ||
+                                                                                            l.LogisticAccommodations.Any(a => !a.IsDeleted) ||
+                                                                                            l.LogisticTransfers.Any(a => !a.IsDeleted)))),
 
                     Id = c.AttendeeCollaborators
                         .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)

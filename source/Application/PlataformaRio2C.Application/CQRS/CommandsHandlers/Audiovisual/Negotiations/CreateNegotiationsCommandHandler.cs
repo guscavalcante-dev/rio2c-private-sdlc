@@ -103,7 +103,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             this.logisticAirfares = await this.logisticAirfareRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionUid ?? Guid.Empty);
-            //_logistics = _logisticsRepository.GetAll().ToList();
             //_conferences = _conferenceRepository.GetAllBySchedule().ToList();
 
             this.FillNegotiationSlots(negotiationSlots, projectBuyerEvaluations);
@@ -370,40 +369,28 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             //}
 
             //// Airfare logistics
-            //var logisticsPlayers = this.logisticAirfares
-            //                                .Where(la => (la.Logistics.AttendeeCollaborator.AttendeeOrganizationCollaborators
-            //                                                    .Any(aoc => aoc.AttendeeOrganizationId == projectBuyerEvaluation.BuyerAttendeeOrganizationId)))
-            //                                .ToList();
-            //if (logisticsPlayers?.Any() != true)
+            //var organizationLogisticAirfares = this.logisticAirfares
+            //                                        .Where(la => (la.Logistic.AttendeeCollaborator.AttendeeOrganizationCollaborators
+            //                                                            .Any(aoc => aoc.AttendeeOrganizationId == projectBuyerEvaluation.BuyerAttendeeOrganizationId)))
+            //                                        .ToList();
+            //if (organizationLogisticAirfares?.Any() != true)
             //{
             //    return result;
             //}
 
-            //var logisticsDatesExceptions = new List<Tuple<DateTimeOffset, DateTimeOffset>>();
-            //foreach (var logistic in logisticsPlayers)
+            //var organizationLogisticsAirfareExceptions = new List<Tuple<DateTimeOffset, DateTimeOffset, bool>>();
+            //foreach (var organizationLogisticAirfare in organizationLogisticAirfares)
             //{
-            //    logisticsDatesExceptions.Add(new Tuple<DateTimeOffset, DateTimeOffset>(logistic.DepartureDate.AddHours(-4), logistic.ArrivalDate.AddHours(4)));
+            //    organizationLogisticsAirfareExceptions.Add(new Tuple<DateTimeOffset, DateTimeOffset, bool>(organizationLogisticAirfare.DepartureDate, organizationLogisticAirfare.ArrivalDate, organizationLogisticAirfare.IsArrival));
             //}
 
-            ///*
-            //Arriving
-            //Departure: 06/05 15:00  (limite 11:00)
-            //Arrival: 06/05 16:00 (limite 20:00)
-
-            //Departuing
-            //Departure: 06/05 15:00  (limite 11:00)
-            //Arrival: 06/05 16:00 (limite 20:00)
-            
-            //Negotiation: 06/05 
-            //*/
             //var logisticSlotsExceptions = negotiationSlots
-            //                                    .Where(ns => logisticsDatesExceptions
-            //                                                    .Any(lde => (ns.StartDate < lde.Item1 || ns.EndDate > lde.Item2)
-            //                                                                || )
-            //                                                    .Any(lde => (ns.Date < lde.Item1) || (ns.Date == lde.Item1 && ns.StarTime < lde.Item2)
-            //                                                                 || (ns.Date > lde.Item3) || (ns.Date == lde.Item3 && ns.EndTime > lde.Item4)
-            //                                        )
-            //                                    ).Select(e => e.RoundNumber).Distinct().ToList();
+            //                                    .Where(ns => organizationLogisticsAirfareExceptions
+            //                                                    .Any(lde => lde.Item3 ? ns.StartDate < lde.Item2.AddHours(4) :   // Arrival
+            //                                                                            ns.EndDate > lde.Item1.AddHours(-4)))?   // Departure
+            //                                    .Select(e => e.RoundNumber)
+            //                                    .Distinct()
+            //                                    .ToList();
 
             //result.AddRange(logisticSlotsExceptions);
 
@@ -411,37 +398,43 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         }
 
         /// <summary>Gets the producer logistics slots exceptions.</summary>
-        /// <param name="reservationForNegotiation">The reservation for negotiation.</param>
+        /// <param name="negotiationSlots">The negotiation slots.</param>
         /// <param name="projectBuyerEvaluation">The project buyer evaluation.</param>
         /// <returns></returns>
-        private List<int> GetProducerLogisticsSlotsExceptions(List<Negotiation> reservationForNegotiation, ProjectBuyerEvaluation projectBuyerEvaluation)
+        private List<int> GetProducerLogisticsSlotsExceptions(List<Negotiation> negotiationSlots, ProjectBuyerEvaluation projectBuyerEvaluation)
         {
             var result = new List<int>();
 
-            //if (submission.Project != null && submission.Project.Producer != null)
+            //if (this.logisticAirfares?.Any() != true)
             //{
-            //    //logistic
-            //    var logisticsProducers = _logistics.Where(e => (e.Collaborator.ProducersEvents.Any() && e.Collaborator.ProducersEvents.Select(p => p.ProducerId).Any(p => p == submission.Project.ProducerId)));
-            //    if (logisticsProducers != null && logisticsProducers.Any())
-            //    {
-            //        List<Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>> dateTimesLogistics = new List<Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>>();
-
-            //        foreach (var logistic in logisticsProducers)
-            //        {
-            //            dateTimesLogistics.Add(new Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>(logistic.ArrivalDate, logistic.ArrivalTime.Value.Add(TimeSpan.FromHours(4)), logistic.DepartureDate, logistic.DepartureTime.Value.Add(TimeSpan.FromHours(-4))));
-            //        }
-
-            //        var slotsExpectionByLogistic = negotiationSlots
-            //                                      .Where(reserva => dateTimesLogistics
-            //                                                      .Any(logistica =>
-            //                                                      (reserva.Date < logistica.Item1) || (reserva.Date == logistica.Item1 && reserva.StarTime < logistica.Item2)
-            //                                                      || (reserva.Date > logistica.Item3) || (reserva.Date == logistica.Item3 && reserva.EndTime > logistica.Item4)
-            //                                                      )
-            //                                             ).Select(e => e.RoundNumber).Distinct().ToList();
-
-            //        result.AddRange(slotsExpectionByLogistic);
-            //    }
+            //    return result;
             //}
+
+            //// Airfare logistics
+            //var organizationLogisticAirfares = this.logisticAirfares
+            //                                            .Where(la => (la.Logistic.AttendeeCollaborator.AttendeeOrganizationCollaborators
+            //                                                                .Any(aoc => aoc.AttendeeOrganizationId == projectBuyerEvaluation.Project.SellerAttendeeOrganizationId)))
+            //                                            .ToList();
+            //if (organizationLogisticAirfares?.Any() != true)
+            //{
+            //    return result;
+            //}
+
+            //var organizationLogisticsAirfareExceptions = new List<Tuple<DateTimeOffset, DateTimeOffset, bool>>();
+            //foreach (var organizationLogisticAirfare in organizationLogisticAirfares)
+            //{
+            //    organizationLogisticsAirfareExceptions.Add(new Tuple<DateTimeOffset, DateTimeOffset, bool>(organizationLogisticAirfare.DepartureDate, organizationLogisticAirfare.ArrivalDate, organizationLogisticAirfare.IsArrival));
+            //}
+
+            //var logisticSlotsExceptions = negotiationSlots
+            //                                    .Where(ns => organizationLogisticsAirfareExceptions
+            //                                                    .Any(lde => lde.Item3 ? ns.StartDate < lde.Item2.AddHours(4) :   // Arrival
+            //                                                                            ns.EndDate > lde.Item1.AddHours(-4)))?   // Departure
+            //                                    .Select(e => e.RoundNumber)
+            //                                    .Distinct()
+            //                                    .ToList();
+
+            //result.AddRange(logisticSlotsExceptions);
 
             return result;
         }

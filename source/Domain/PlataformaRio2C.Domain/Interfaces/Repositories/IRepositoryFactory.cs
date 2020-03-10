@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-27-2019
+// Last Modified On : 03-10-2020
 // ***********************************************************************
 // <copyright file="IRepositoryFactory.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -52,7 +52,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         //IProjectPlayerRepository ProjectPlayerRepository { get; }
         IProjectStatusRepository ProjectStatusRepository { get; }
         //IProjectPlayerEvaluationRepository ProjectPlayerEvaluationRepository { get; }
-        ILogisticsRepository LogisticsRepository { get; }
+        ILogisticRepository LogisticRepository { get; }
         ILogisticAirfareRepository LogisticAirfareRepository { get; }
         ILogisticAccommodationRepository LogisticAccommodationRepository { get; }
         ILogisticTransferRepository LogisticTransferRepository { get; }

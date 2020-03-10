@@ -1,4 +1,17 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Infra.Data.Repository
+// Author           : Arthur Souza
+// Created          : 01-20-2020
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-10-2020
+// ***********************************************************************
+// <copyright file="AttendeePlacesRepository.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Collections.Generic;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
@@ -6,10 +19,7 @@ using PlataformaRio2C.Infra.Data.Context;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using LinqKit;
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using X.PagedList;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -52,9 +62,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     }
 
     #endregion
-    
+
+    /// <summary>AttendeePlacesRepository</summary>
     public class AttendeePlacesRepository : Repository<PlataformaRio2CContext, AttendeePlace>, IAttendeePlacesRepository
     {
+        /// <summary>Initializes a new instance of the <see cref="AttendeePlacesRepository"/> class.</summary>
+        /// <param name="context">The context.</param>
         public AttendeePlacesRepository(PlataformaRio2CContext context)
             : base(context)
         {
@@ -67,24 +80,27 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         private IQueryable<AttendeePlace> GetBaseQuery(bool @readonly = false)
         {
             var consult = this.dbSet
-                .IsNotDeleted();
+                                .IsNotDeleted();
 
             return @readonly
-                ? consult.AsNoTracking()
-                : consult;
+                        ? consult.AsNoTracking()
+                        : consult;
         }
 
+        /// <summary>Finds all dtos by edition.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
         public Task<List<AttendeePlaceDto>> FindAllDtosByEdition(int editionId)
         {
             return this.GetBaseQuery()
-                .FindByEditionId(editionId)
-                .Select(e => new AttendeePlaceDto()
-                {
-                    Id = e.Id,
-                    Name = e.Place.Name
-                })
-                .OrderBy(e => e.Name)
-                .ToListAsync();
+                            .FindByEditionId(editionId)
+                            .Select(e => new AttendeePlaceDto()
+                            {
+                                Id = e.Id,
+                                Name = e.Place.Name
+                            })
+                            .OrderBy(e => e.Name)
+                            .ToListAsync();
         }
     }
 }
