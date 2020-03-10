@@ -105,7 +105,27 @@ var LogisticsDataTableWidget = function () {
                 {
                     data: 'Name',
                     render: function (data, type, full, meta) {
-                        return data;
+	                    var html = '\
+                                <table class="image-side-text text-left">\
+                                    <tr>\
+                                        <td>';
+
+	                    if (!MyRio2cCommon.isNullOrEmpty(full.CollaboratorImageUploadDate)) {
+                            html += '<img src="' + imageDirectory + full.Uid + '_thumbnail.png?v=' + moment(full.CollaboratorImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
+	                    }
+	                    else {
+		                    html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';
+	                    }
+
+                        html += '       <td> ' + full.Name + '</td>\
+                                    </tr>\
+                                </table>';
+
+	                    //if (!full.IsInCurrentEdition) {
+		                   // html += '<span class="kt-badge kt-badge--inline kt-badge--info mt-2">' + labels.notInEdition + '</span>';
+	                    //}
+
+	                    return html;
                     }
                 },
                 {
@@ -186,17 +206,24 @@ var LogisticsDataTableWidget = function () {
             ],
             columnDefs: [
                 {
+                    targets: [0],
+                    width: '25%'
+
+	            },
+                {
                     targets: [1, 2, 3, 4, 5],
                     className: "dt-center",
-                    orderable: false
+                    orderable: false,
+                    width: '10%'
                 },
 	            {
 		            targets: [6, 7],
-		            className: "dt-center"
+                    className: "dt-center",
+		            width: '9%'
 	            },
                 {
                     targets: -1,
-                    width: "10%",
+                    width: "7%",
                     orderable: false,
                     searchable: false,
                     className: "dt-center"

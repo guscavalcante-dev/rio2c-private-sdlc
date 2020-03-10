@@ -27,6 +27,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public Guid? Uid { get; set; }
         public Guid CollaboratorUid { get; set; }
         public string Name { get; set; }
+        public DateTimeOffset? CollaboratorImageUploadDate { get; set; }
         public DateTimeOffset? CreateDate { get; set; }
         public DateTimeOffset? UpdateDate { get; set; }
 

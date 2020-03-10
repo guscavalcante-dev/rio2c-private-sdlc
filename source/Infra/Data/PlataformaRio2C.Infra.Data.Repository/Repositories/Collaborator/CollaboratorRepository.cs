@@ -913,6 +913,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             {
                                 CollaboratorUid = c.Uid,
                                 Name = c.FirstName + " " + c.LastNames,
+                                CollaboratorImageUploadDate = c.ImageUploadDate,
                                 HasRequest = c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId && !ac.IsDeleted && ac.Logistics.Any(l => !l.IsDeleted)),
                                 HasLogistics = c.AttendeeCollaborators.Any(ac => ac.Logistics.Any(l => !l.IsDeleted &&
                                                                                                        (l.LogisticAirfares.Any(a => !a.IsDeleted) ||
