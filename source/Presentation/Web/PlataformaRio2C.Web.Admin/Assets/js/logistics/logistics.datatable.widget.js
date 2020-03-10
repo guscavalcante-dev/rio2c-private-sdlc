@@ -128,6 +128,12 @@ var LogisticsDataTableWidget = function () {
 	                    return html;
                     }
                 },
+				{
+                    data: 'AirfareSponsor',
+                    render: function (data, type, full, meta) {
+                        return data;
+                    }
+                },
                 {
                     data: 'AccommodationSponsor',
                     render: function (data, type, full, meta) {
@@ -135,13 +141,7 @@ var LogisticsDataTableWidget = function () {
                     }
                 },
                 {
-                    data: 'AirfareSponsor',
-                    render: function (data, type, full, meta) {
-                        return data;
-                    }
-                },
-                {
-                    data: 'TransferSponsor',
+                    data: 'AirportTransferSponsor',
                     render: function (data, type, full, meta) {
                         return data;
                     }
