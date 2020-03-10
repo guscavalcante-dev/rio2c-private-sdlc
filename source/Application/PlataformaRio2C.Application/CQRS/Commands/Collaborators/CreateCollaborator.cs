@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-12-2019
+// Last Modified On : 03-10-2020
 // ***********************************************************************
 // <copyright file="CreateCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,10 +23,15 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Initializes a new instance of the <see cref="CreateCollaborator"/> class.</summary>
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
-        /// <param name="countriesBaseDtos">The countries base dtos.</param>
+        /// <param name="genders">The genders.</param>
+        /// <param name="industries">The industries.</param>
+        /// <param name="roles">The roles.</param>
+        /// <param name="editionsDtos">The editions dtos.</param>
+        /// <param name="currentEditionId">The current edition identifier.</param>
         /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
         /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
         public CreateCollaborator(
             List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, 
             List<LanguageDto> languagesDtos, 

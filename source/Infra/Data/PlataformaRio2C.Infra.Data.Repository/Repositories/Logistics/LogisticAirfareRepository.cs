@@ -1,4 +1,17 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Infra.Data.Repository
+// Author           : Arthur Souza
+// Created          : 03-08-2020
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-10-2020
+// ***********************************************************************
+// <copyright file="LogisticAirfareRepository.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Collections.Generic;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
@@ -6,53 +19,59 @@ using PlataformaRio2C.Infra.Data.Context;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using LinqKit;
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using X.PagedList;
+using Z.EntityFramework.Plus;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
-    #region IQueryable Extensions
+    #region LogisticAirfare IQueryable Extensions
 
     /// <summary>
-    /// CollaboratorIQueryableExtensions
+    /// LogisticAirfareIQueryableExtensions
     /// </summary>
     internal static class LogisticAirfareIQueryableExtensions
     {
+        /// <summary>Finds the by uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="logisticAirfareUid">The logistic airfare uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<LogisticAirfare> FindByUid(this IQueryable<LogisticAirfare> query, Guid logisticAirfareUid)
+        {
+            return query.Where(la => la.Uid == logisticAirfareUid);
+        }
+
+        /// <summary>Finds the by logistics uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="logisticUid">The logistic uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<LogisticAirfare> FindByLogisticsUid(this IQueryable<LogisticAirfare> query, Guid logisticUid)
+        {
+            return query.Where(la => la.Logistics.Uid == logisticUid);
+        }
+
+        /// <summary>Finds the by edition uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="editionUid">The edition uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<LogisticAirfare> FindByEditionUid(this IQueryable<LogisticAirfare> query, Guid editionUid)
+        {
+            return query.Where(la => la.Logistics.AttendeeCollaborator.Edition.Uid == editionUid);
+        }
+
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
         internal static IQueryable<LogisticAirfare> IsNotDeleted(this IQueryable<LogisticAirfare> query)
         {
-            query = query.Where(c => !c.IsDeleted);
+            query = query.Where(la => !la.IsDeleted && !la.Logistics.IsDeleted);
 
             return query;
-        }
-
-        /// <summary>Finds the by edition identifier.</summary>
-        /// <param name="query">The query.</param>
-        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <returns></returns>
-        internal static IQueryable<LogisticAirfare> FindByUid(this IQueryable<LogisticAirfare> query, Guid uid)
-        {
-            return query.Where(e => e.Uid == uid);
-        }
-
-        /// <summary>Finds the by edition identifier.</summary>
-        /// <param name="query">The query.</param>
-        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <returns></returns>
-        internal static IQueryable<LogisticAirfare> FindByLogisticsUid(this IQueryable<LogisticAirfare> query, Guid uid)
-        {
-            return query.Where(e => e.Logistics.Uid == uid);
         }
     }
 
     #endregion
-    
+
+    /// <summary>LogisticAirfareRepository</summary>
     public class LogisticAirfareRepository : Repository<PlataformaRio2CContext, LogisticAirfare>, ILogisticAirfareRepository
     {
         public LogisticAirfareRepository(PlataformaRio2CContext context)
@@ -67,34 +86,53 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         private IQueryable<LogisticAirfare> GetBaseQuery(bool @readonly = false)
         {
             var consult = this.dbSet
-                .IsNotDeleted();
+                                .IsNotDeleted();
 
             return @readonly
-                ? consult.AsNoTracking()
-                : consult;
+                        ? consult.AsNoTracking()
+                        : consult;
         }
 
+        /// <summary>Finds all dtos paged.</summary>
+        /// <param name="logisticsUid">The logistics uid.</param>
+        /// <returns></returns>
         public Task<List<LogisticAirfareDto>> FindAllDtosPaged(Guid logisticsUid)
         {
             return this.GetBaseQuery()
-                .FindByLogisticsUid(logisticsUid)
-                .Select(e => new LogisticAirfareDto()
-                {
-                    AdditionalInfo = e.AdditionalInfo,
-                    Id = e.Id,
-                    Uid = e.Uid,
-                    CreateDate = e.CreateDate,
-                    ArrivalDate = e.ArrivalDate,
-                    DepartureDate = e.DepartureDate,
-                    IsNational = e.IsNational,
-                    From = e.From,
-                    To = e.To,
-                    TicketNumber = e.TicketNumber,
-                    TicketUploadDate = e.TicketUploadDate,
-                    UpdateDate = e.UpdateDate
-                })
-                .OrderBy(e => e.CreateDate)
-                .ToListAsync();
+                            .FindByLogisticsUid(logisticsUid)
+                            .Select(e => new LogisticAirfareDto()
+                            {
+                                AdditionalInfo = e.AdditionalInfo,
+                                Id = e.Id,
+                                Uid = e.Uid,
+                                CreateDate = e.CreateDate,
+                                ArrivalDate = e.ArrivalDate,
+                                DepartureDate = e.DepartureDate,
+                                IsNational = e.IsNational,
+                                From = e.From,
+                                To = e.To,
+                                TicketNumber = e.TicketNumber,
+                                TicketUploadDate = e.TicketUploadDate,
+                                UpdateDate = e.UpdateDate
+                            })
+                            .OrderBy(e => e.CreateDate)
+                            .ToListAsync();
+        }
+
+        /// <summary>Finds all for generate negotiations asynchronous.</summary>
+        /// <param name="editionUid">The edition uid.</param>
+        /// <returns></returns>
+        public async Task<List<LogisticAirfare>> FindAllForGenerateNegotiationsAsync(Guid editionUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionUid(editionUid)
+                                .Include(la => la.Logistics)
+                                .Include(la => la.Logistics.AttendeeCollaborator)
+                                .IncludeFilter(la => la.Logistics.AttendeeCollaborator.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted));
+
+            return await query
+                            .OrderBy(la => la.DepartureDate)
+                            .ToListAsync();
         }
     }
 }

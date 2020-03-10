@@ -4,36 +4,23 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-26-2020
+// Last Modified On : 03-10-2020
 // ***********************************************************************
 // <copyright file="SpeakersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Application.ViewModels;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using DataTables.AspNet.Core;
-using DataTables.AspNet.Mvc5;
 using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository;
-using PlataformaRio2C.Application;
-using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 
@@ -44,25 +31,21 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual)]
     public class CollaboratorsController : BaseController
     {
-        private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
         private readonly IFileRepository fileRepo;
 
         /// <summary>Initializes a new instance of the <see cref="SpeakersController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
         /// <param name="fileRepository">The file repository.</param>
         public CollaboratorsController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
-            ICollaboratorRepository collaboratorRepository,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
             IFileRepository fileRepository)
             : base(commandBus, identityController)
         {
-            this.collaboratorRepo = collaboratorRepository;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
             this.fileRepo = fileRepository;
         }
@@ -79,6 +62,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         {
             var collaboratorsApiDtos = await this.attendeeCollaboratorRepo.FindAllDropdownApiListDtoPaged(
                 this.EditionDto.Id,
+                keywords,
                 page.Value,
                 10);
 

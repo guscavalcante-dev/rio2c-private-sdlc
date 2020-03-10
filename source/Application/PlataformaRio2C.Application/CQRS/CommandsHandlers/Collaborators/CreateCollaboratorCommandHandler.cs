@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2020
+// Last Modified On : 03-10-2020
 // ***********************************************************************
 // <copyright file="CreateCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -48,6 +48,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="collaboratorTypeRepository">The collaborator type repository.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="languageRepository">The language repository.</param>
+        /// <param name="genderRepo">The gender repo.</param>
+        /// <param name="industryRepo">The industry repo.</param>
+        /// <param name="roleRepo">The role repo.</param>
         public CreateCollaboratorCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,

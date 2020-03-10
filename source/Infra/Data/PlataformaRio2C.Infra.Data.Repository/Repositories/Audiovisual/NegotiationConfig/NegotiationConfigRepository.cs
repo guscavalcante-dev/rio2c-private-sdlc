@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2020
+// Last Modified On : 03-10-2020
 // ***********************************************************************
 // <copyright file="NegotiationConfigRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -52,6 +52,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static IQueryable<NegotiationConfig> FindByEditionId(this IQueryable<NegotiationConfig> query, int editionId, bool showAllEditions = false)
         {
             query = query.Where(nc => (showAllEditions || nc.EditionId == editionId));
+
+            return query;
+        }
+
+        /// <summary>Determines whether [has rooms configured].</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<NegotiationConfig> HasRoomsConfigured(this IQueryable<NegotiationConfig> query)
+        {
+            query = query.Where(nc => nc.NegotiationRoomConfigs.Any(nrc => !nrc.IsDeleted && !nrc.Room.IsDeleted));
 
             return query;
         }
@@ -234,6 +244,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<List<NegotiationConfig>> FindAllForGenerateNegotiationsAsync()
         {
             var query = this.GetBaseQuery()
+                                    .HasRoomsConfigured()
                                     .IncludeFilter(nc => nc.NegotiationRoomConfigs.Where(nrc => !nrc.IsDeleted && !nrc.Room.IsDeleted))
                                     .IncludeFilter(nc => nc.NegotiationRoomConfigs.Where(nrc => !nrc.IsDeleted && !nrc.Room.IsDeleted).Select(nrc => nrc.Room));
 

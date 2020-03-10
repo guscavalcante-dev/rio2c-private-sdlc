@@ -3,23 +3,21 @@
 // Author           : Arthur Souza
 // Created          : 01-20-2020
 //
-// Last Modified By : Arthur Souza
-// Last Modified On : 01-20-2020
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-10-2020
 // ***********************************************************************
-// <copyright file="AttendeePlaces.cs" company="Softo">
+// <copyright file="LogisticAirfare.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
-    /// <summary>AttendeePlaces</summary>
+    /// <summary>LogisticAirfare</summary>
     public class LogisticAirfare : Entity
     {
         public int LogisticId { get; private set; }
@@ -32,32 +30,94 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset ArrivalDate { get; private set; }
         public DateTimeOffset? TicketUploadDate { get; private set; }
 
-        protected LogisticAirfare()
-        {
-        }
-
         public virtual Logistics Logistics { get; private set; }
 
+        /// <summary>Initializes a new instance of the <see cref="LogisticAirfare"/> class.</summary>
+        /// <param name="logistics">The logistics.</param>
+        /// <param name="isNational">The is national.</param>
+        /// <param name="from">From.</param>
+        /// <param name="to">To.</param>
+        /// <param name="ticketNumber">The ticket number.</param>
+        /// <param name="additionalInfo">The additional information.</param>
+        /// <param name="departureDate">The departure date.</param>
+        /// <param name="arrivalDate">The arrival date.</param>
+        /// <param name="userId">The user identifier.</param>
         public LogisticAirfare(Logistics logistics, bool? isNational, string from, string to, string ticketNumber, string additionalInfo, DateTimeOffset? departureDate, DateTimeOffset? arrivalDate, int userId)
         {
             if (departureDate.HasValue)
+            {
                 this.DepartureDate = departureDate.Value;
+            }
 
             if (arrivalDate.HasValue)
+            {
                 this.ArrivalDate = arrivalDate.Value;
+            }
 
-            if(isNational.HasValue)
+            if (isNational.HasValue)
+            {
                 this.IsNational = isNational.Value;
+            }
 
             this.Logistics = logistics;
             this.From = from;
             this.To = to;
             this.TicketNumber = ticketNumber;
             this.AdditionalInfo = additionalInfo;
-                
+
             this.Logistics = logistics;
             this.CreateUserId = this.UpdateUserId = userId;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="LogisticAirfare"/> class.</summary>
+        protected LogisticAirfare()
+        {
+        }
+
+        /// <summary>Updates the specified is national.</summary>
+        /// <param name="isNational">The is national.</param>
+        /// <param name="from">From.</param>
+        /// <param name="to">To.</param>
+        /// <param name="ticketNumber">The ticket number.</param>
+        /// <param name="additionalInfo">The additional information.</param>
+        /// <param name="departureDate">The departure date.</param>
+        /// <param name="arrivalDate">The arrival date.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(bool? isNational, string from, string to, string ticketNumber, string additionalInfo, DateTimeOffset? departureDate, DateTimeOffset? arrivalDate, int userId)
+        {
+            if (departureDate.HasValue)
+            {
+                this.DepartureDate = departureDate.Value;
+            }
+
+            if (arrivalDate.HasValue)
+            {
+                this.ArrivalDate = arrivalDate.Value;
+            }
+
+            if (isNational.HasValue)
+            {
+                this.IsNational = isNational.Value;
+            }
+
+            this.From = from;
+            this.To = to;
+            this.TicketNumber = ticketNumber;
+            this.AdditionalInfo = additionalInfo;
+
+            this.IsDeleted = false;
+            this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.UtcNow;
+        }
+
+        /// <summary>Deletes the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(int userId)
+        {
+            this.IsDeleted = true;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
         }
 
         #region Validations
@@ -91,31 +151,5 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         #endregion
-
-        public void Delete(int userId)
-        {
-            this.IsDeleted = true;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
-        }
-
-        public void Update(bool? isNational, string from, string to, string ticketNumber, string additionalInfo, DateTimeOffset? departureDate, DateTimeOffset? arrivalDate, int userId)
-        {
-            if (departureDate.HasValue)
-                this.DepartureDate = departureDate.Value;
-
-            if (arrivalDate.HasValue)
-                this.ArrivalDate = arrivalDate.Value;
-
-            if (isNational.HasValue)
-                this.IsNational = isNational.Value;
-            
-            this.From = from;
-            this.To = to;
-            this.TicketNumber = ticketNumber;
-            this.AdditionalInfo = additionalInfo;
-            this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.UtcNow;
-        }
     }
 }

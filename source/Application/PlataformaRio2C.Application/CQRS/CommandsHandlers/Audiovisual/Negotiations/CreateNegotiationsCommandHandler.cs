@@ -4,7 +4,7 @@
 // Created          : 03-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2020
+// Last Modified On : 03-10-2020
 // ***********************************************************************
 // <copyright file="CreateNegotiationsCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,6 +21,8 @@ using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Enums;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -31,8 +33,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IEditionRepository editionRepo;
         private readonly INegotiationConfigRepository negotiationConfigRepo;
         private readonly IProjectBuyerEvaluationRepository projectBuyerEvaluationRepo;
+        private readonly ILogisticAirfareRepository logisticAirfareRepo;
+        private readonly IConferenceRepository conferenceRepo;
 
         private IList<ProjectBuyerEvaluation> _projectSubmissionsError = new List<ProjectBuyerEvaluation>();
+        private List<LogisticAirfare> logisticAirfares = new List<LogisticAirfare>();
 
         /// <summary>Initializes a new instance of the <see cref="CreateNegotiationsCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
@@ -41,18 +46,24 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="negotiationConfigRepository">The negotiation configuration repository.</param>
         /// <param name="projectBuyerEvaluationRepository">The project buyer evaluation repository.</param>
+        /// <param name="logisticAirfareRepository">The logistic airfare repository.</param>
+        /// <param name="conferenceRepository">The conference repository.</param>
         public CreateNegotiationsCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             INegotiationRepository negotiationRepository,
             IEditionRepository editionRepository,
             INegotiationConfigRepository negotiationConfigRepository,
-            IProjectBuyerEvaluationRepository projectBuyerEvaluationRepository)
+            IProjectBuyerEvaluationRepository projectBuyerEvaluationRepository,
+            ILogisticAirfareRepository logisticAirfareRepository,
+            IConferenceRepository conferenceRepository)
             : base(eventBus, uow, negotiationRepository)
         {
             this.editionRepo = editionRepository;
             this.negotiationConfigRepo = negotiationConfigRepository;
             this.projectBuyerEvaluationRepo = projectBuyerEvaluationRepository;
+            this.logisticAirfareRepo = logisticAirfareRepository;
+            this.conferenceRepo = conferenceRepository;
         }
 
         /// <summary>Handles the specified create negotiations.</summary>
@@ -62,33 +73,48 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         public async Task<AppValidationResult> Handle(CreateNegotiations cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
+            this.NegotiationRepo.Truncate();
 
-            var negotiationSlots = new List<Negotiation>();
+            var edition = await this.editionRepo.FindByUidAsync(cmd.EditionUid ?? Guid.Empty, true);
+            edition?.UnsetAudiovisualNegotiationsCreateDate(cmd.UserId);
 
             var negotiationConfigs = await this.negotiationConfigRepo.FindAllForGenerateNegotiationsAsync();
-            if (negotiationConfigs?.Any() == true)
+            if (negotiationConfigs?.Count == 0)
             {
-                negotiationSlots = this.GetNegotiationSlots(negotiationConfigs, cmd.UserId);
-
-                var projectBuyerEvaluations = await this.projectBuyerEvaluationRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionId ?? 0);
-                if (projectBuyerEvaluations?.Any() == true)
-                {
-                    //_logistics = _logisticsRepository.GetAll().ToList();
-                    //_conferences = _conferenceRepository.GetAllBySchedule().ToList();
-
-                    this.FillNegotiationSlots(negotiationSlots, projectBuyerEvaluations);
-                }
+                this.Uow.SaveChanges();
+                this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Rooms, Labels.FoundFP), new string[] { "ToastrError" })));
+                return this.AppValidationResult;
             }
+
+            var negotiationSlots = this.GetNegotiationSlots(negotiationConfigs, cmd.UserId);
+            if (negotiationConfigs?.Count == 0)
+            {
+                this.Uow.SaveChanges();
+                this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Rooms, Labels.FoundFP), new string[] { "ToastrError" })));
+                return this.AppValidationResult;
+            }
+
+            var projectBuyerEvaluations = await this.projectBuyerEvaluationRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionId ?? 0);
+            if (projectBuyerEvaluations?.Count == 0)
+            {
+                this.Uow.SaveChanges();
+                this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Projects, Labels.FoundMP), new string[] { "ToastrError" })));
+                return this.AppValidationResult;
+            }
+
+            this.logisticAirfares = await this.logisticAirfareRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionUid ?? Guid.Empty);
+            //_logistics = _logisticsRepository.GetAll().ToList();
+            //_conferences = _conferenceRepository.GetAllBySchedule().ToList();
+
+            this.FillNegotiationSlots(negotiationSlots, projectBuyerEvaluations);
 
             var negotiations = negotiationSlots
                                 .Where(ns => ns.ProjectBuyerEvaluation != null)
                                 .ToList();
 
-            this.NegotiationRepo.Truncate();
             this.NegotiationRepo.CreateAll(negotiations);
 
-            var edition = await this.editionRepo.FindByUidAsync(cmd.EditionUid ?? Guid.Empty, true);
-            edition?.CreateAudiovisualNegotiations(cmd.UserId);
+            edition?.SetAudiovisualNegotiationsCreateDate(cmd.UserId);
 
             this.Uow.SaveChanges();
 
@@ -317,50 +343,69 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         #region Logistics
 
         /// <summary>Gets the logistics slots exceptions.</summary>
-        /// <param name="reservationForNegotiation">The reservation for negotiation.</param>
+        /// <param name="negotiationSlots">The negotiation slots.</param>
         /// <param name="projectBuyerEvaluation">The project buyer evaluation.</param>
         /// <returns></returns>
-        private List<int> GetLogisticsSlotsExceptions(List<Negotiation> reservationForNegotiation, ProjectBuyerEvaluation projectBuyerEvaluation)
+        private List<int> GetLogisticsSlotsExceptions(List<Negotiation> negotiationSlots, ProjectBuyerEvaluation projectBuyerEvaluation)
         {
             var result = new List<int>();
 
-            result.AddRange(this.GetPlayerLogisticsSlotsExceptions(reservationForNegotiation, projectBuyerEvaluation));
-            result.AddRange(this.GetProducerLogisticsSlotsExceptions(reservationForNegotiation, projectBuyerEvaluation));
+            result.AddRange(this.GetPlayerLogisticsSlotsExceptions(negotiationSlots, projectBuyerEvaluation));
+            result.AddRange(this.GetProducerLogisticsSlotsExceptions(negotiationSlots, projectBuyerEvaluation));
 
             return result;
         }
 
         /// <summary>Gets the player logistics slots exceptions.</summary>
-        /// <param name="reservationForNegotiation">The reservation for negotiation.</param>
+        /// <param name="negotiationSlots">The negotiation slots.</param>
         /// <param name="projectBuyerEvaluation">The project buyer evaluation.</param>
         /// <returns></returns>
-        private List<int> GetPlayerLogisticsSlotsExceptions(List<Negotiation> reservationForNegotiation, ProjectBuyerEvaluation projectBuyerEvaluation)
+        private List<int> GetPlayerLogisticsSlotsExceptions(List<Negotiation> negotiationSlots, ProjectBuyerEvaluation projectBuyerEvaluation)
         {
             var result = new List<int>();
 
-            ////logistic
-            //var logisticsPlayers = _logistics.Where(e => (e.Collaborator.Players.Any(p => p.Id == projectBuyerEvaluation.PlayerId)));
-            //if (logisticsPlayers != null && logisticsPlayers.Any())
+            //if (this.logisticAirfares?.Any() != true)
             //{
-            //    List<Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>> dateTimesLogistics = new List<Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>>();
-
-            //    foreach (var logistic in logisticsPlayers)
-            //    {
-            //        dateTimesLogistics.Add(new Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>(logistic.ArrivalDate, logistic.ArrivalTime.Value.Add(TimeSpan.FromHours(4)), logistic.DepartureDate, logistic.DepartureTime.Value.Add(TimeSpan.FromHours(-4))));
-            //    }
-
-
-
-            //    var slotsExpectionByLogistic = reservationForNegotiation
-            //        .Where(reserva => dateTimesLogistics
-            //            .Any(logistica =>
-            //                (reserva.Date < logistica.Item1) || (reserva.Date == logistica.Item1 && reserva.StarTime < logistica.Item2)
-            //                                                 || (reserva.Date > logistica.Item3) || (reserva.Date == logistica.Item3 && reserva.EndTime > logistica.Item4)
-            //            )
-            //        ).Select(e => e.RoundNumber).Distinct().ToList();
-
-            //    result.AddRange(slotsExpectionByLogistic);
+            //    return result;
             //}
+
+            //// Airfare logistics
+            //var logisticsPlayers = this.logisticAirfares
+            //                                .Where(la => (la.Logistics.AttendeeCollaborator.AttendeeOrganizationCollaborators
+            //                                                    .Any(aoc => aoc.AttendeeOrganizationId == projectBuyerEvaluation.BuyerAttendeeOrganizationId)))
+            //                                .ToList();
+            //if (logisticsPlayers?.Any() != true)
+            //{
+            //    return result;
+            //}
+
+            //var logisticsDatesExceptions = new List<Tuple<DateTimeOffset, DateTimeOffset>>();
+            //foreach (var logistic in logisticsPlayers)
+            //{
+            //    logisticsDatesExceptions.Add(new Tuple<DateTimeOffset, DateTimeOffset>(logistic.DepartureDate.AddHours(-4), logistic.ArrivalDate.AddHours(4)));
+            //}
+
+            ///*
+            //Arriving
+            //Departure: 06/05 15:00  (limite 11:00)
+            //Arrival: 06/05 16:00 (limite 20:00)
+
+            //Departuing
+            //Departure: 06/05 15:00  (limite 11:00)
+            //Arrival: 06/05 16:00 (limite 20:00)
+            
+            //Negotiation: 06/05 
+            //*/
+            //var logisticSlotsExceptions = negotiationSlots
+            //                                    .Where(ns => logisticsDatesExceptions
+            //                                                    .Any(lde => (ns.StartDate < lde.Item1 || ns.EndDate > lde.Item2)
+            //                                                                || )
+            //                                                    .Any(lde => (ns.Date < lde.Item1) || (ns.Date == lde.Item1 && ns.StarTime < lde.Item2)
+            //                                                                 || (ns.Date > lde.Item3) || (ns.Date == lde.Item3 && ns.EndTime > lde.Item4)
+            //                                        )
+            //                                    ).Select(e => e.RoundNumber).Distinct().ToList();
+
+            //result.AddRange(logisticSlotsExceptions);
 
             return result;
         }
@@ -386,7 +431,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             //            dateTimesLogistics.Add(new Tuple<DateTime?, TimeSpan, DateTime?, TimeSpan>(logistic.ArrivalDate, logistic.ArrivalTime.Value.Add(TimeSpan.FromHours(4)), logistic.DepartureDate, logistic.DepartureTime.Value.Add(TimeSpan.FromHours(-4))));
             //        }
 
-            //        var slotsExpectionByLogistic = reservationForNegotiation
+            //        var slotsExpectionByLogistic = negotiationSlots
             //                                      .Where(reserva => dateTimesLogistics
             //                                                      .Any(logistica =>
             //                                                      (reserva.Date < logistica.Item1) || (reserva.Date == logistica.Item1 && reserva.StarTime < logistica.Item2)
@@ -437,7 +482,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             //        dateTimes.Add(new Tuple<DateTime?, TimeSpan, TimeSpan>(conference.Date, conference.StartTime.Value.Add(TimeSpan.FromMinutes(-30)), conference.EndTime.Value.Add(TimeSpan.FromMinutes(30))));
             //    }
 
-            //    var slotsExpectionByConference = reservationForNegotiation
+            //    var slotsExpectionByConference = negotiationSlots
             //                                           .Where(r => dateTimes
             //                                                           .Any(c => (
             //                                                                        c.Item1 == r.Date &&
@@ -474,7 +519,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             //        dateTimes.Add(new Tuple<DateTime?, TimeSpan, TimeSpan>(conference.Date, conference.StartTime.Value.Add(TimeSpan.FromMinutes(-30)), conference.EndTime.Value.Add(TimeSpan.FromMinutes(30))));
             //    }
 
-            //    var slotsExpectionByConference = reservationForNegotiation
+            //    var slotsExpectionByConference = negotiationSlots
             //                                           .Where(r => dateTimes
             //                                                           .Any(c => (
             //                                                                        c.Item1 == r.Date &&

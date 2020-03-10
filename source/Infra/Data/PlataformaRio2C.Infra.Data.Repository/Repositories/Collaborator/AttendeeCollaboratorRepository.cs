@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-26-2020
+// Last Modified On : 03-10-2020
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -642,11 +642,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             })
                             .ToListAsync();
         }
-        
-        public async Task<IPagedList<AttendeeCollaboratorListDto>> FindAllDropdownApiListDtoPaged(int editionId, int page, int pageSize)
+
+        /// <summary>Finds all dropdown API list dto paged.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<AttendeeCollaboratorListDto>> FindAllDropdownApiListDtoPaged(int editionId, string keywords, int page, int pageSize)
         {
             var query = this.GetBaseQuery()
-                .FindByEditionId(editionId, false);
+                                .FindByEditionId(editionId, false)
+                                .FindByKeywords(keywords);
 
             return await query
                             .Select(c => new AttendeeCollaboratorListDto()

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-07-2020
+// Last Modified On : 03-10-2020
 // ***********************************************************************
 // <copyright file="Edition.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -63,11 +63,22 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Creates the audiovisual negotiations.</summary>
+        /// <summary>Sets the audiovisual negotiations create date.</summary>
         /// <param name="userId">The user identifier.</param>
-        public void CreateAudiovisualNegotiations(int userId)
+        public void SetAudiovisualNegotiationsCreateDate(int userId)
         {
             this.AudiovisualNegotiationsCreateDate = DateTime.UtcNow;
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Unsets the audiovisual negotiations create date.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void UnsetAudiovisualNegotiationsCreateDate(int userId)
+        {
+            this.AudiovisualNegotiationsCreateDate = null;
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;

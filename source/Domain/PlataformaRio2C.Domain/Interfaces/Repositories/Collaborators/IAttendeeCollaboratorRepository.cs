@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-26-2020
+// Last Modified On : 03-10-2020
 // ***********************************************************************
 // <copyright file="IAttendeeCollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -43,9 +43,9 @@ namespace PlataformaRio2C.Domain.Interfaces
         #endregion
 
         #region Api
-        Task<List<AttendeeCollaboratorApiConfigurationWidgetDto>> FindAllApiConfigurationWidgetDtoByHighlight(int editionId, string collaboratorTypeName);
 
-        Task<IPagedList<AttendeeCollaboratorListDto>> FindAllDropdownApiListDtoPaged(int editionId, int page, int pageSize);
+        Task<List<AttendeeCollaboratorApiConfigurationWidgetDto>> FindAllApiConfigurationWidgetDtoByHighlight(int editionId, string collaboratorTypeName);
+        Task<IPagedList<AttendeeCollaboratorListDto>> FindAllDropdownApiListDtoPaged(int editionId, string keywords, int page, int pageSize);
 
         #endregion
     }
