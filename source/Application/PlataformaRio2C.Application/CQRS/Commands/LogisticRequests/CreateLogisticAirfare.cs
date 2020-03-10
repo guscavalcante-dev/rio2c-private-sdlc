@@ -3,30 +3,33 @@
 // Author           : Arthur Souza
 // Created          : 01-27-2020
 //
-// Last Modified By : Arthur Souza
-// Last Modified On : 01-27-2020
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-10-2020
 // ***********************************************************************
-// <copyright file="CreateConference.cs" company="Softo">
+// <copyright file="CreateLogisticAirfare.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
-using System.Linq;
 using System.Web;
-using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>CreateLogisticSponsors</summary>
+    /// <summary>CreateLogisticAirfare</summary>
     public class CreateLogisticAirfare : BaseCommand
     {
         public Guid LogisticsUid { get; set; }
+
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [Display(Name = "Type", ResourceType = typeof(Labels))]
+        public bool? IsNational { get; set; }
+
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [Display(Name = "Direction", ResourceType = typeof(Labels))]
+        public bool? IsArrival { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [Display(Name = "FromPlace", ResourceType = typeof(Labels))]
@@ -36,15 +39,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Display(Name = "ToPlace", ResourceType = typeof(Labels))]
         public string To { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [Display(Name = "IsNational", ResourceType = typeof(Labels))]
-        public bool? IsNational { get; set; }
-
-        [Display(Name = "Departure", ResourceType = typeof(Labels))]
+        [Display(Name = "DepartureDate", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public DateTimeOffset? Departure { get; set; }
 
-        [Display(Name = "Arrival", ResourceType = typeof(Labels))]
+        [Display(Name = "ArrivalDate", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public DateTimeOffset? Arrival { get; set; }
         
@@ -64,13 +63,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.LogisticsUid = logisticsUid;
         }
 
+        /// <summary>Initializes a new instance of the <see cref="CreateLogisticAirfare"/> class.</summary>
         public CreateLogisticAirfare()
         {
         }
-
-        #region Private Methods
-
-
-        #endregion
     }
 }

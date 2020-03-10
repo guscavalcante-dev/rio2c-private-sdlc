@@ -158,6 +158,7 @@
     <Compile Include="Dtos\Logistics\LogisticAccommodationDto.cs" />
     <Compile Include="Dtos\Logistics\AttendeePlaceDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticAirfareDto.cs" />
+    <Compile Include="Dtos\Logistics\LogisticAirfareJsonDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticTransferDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticRequestDetailsDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticRequestBaseDto.cs" />

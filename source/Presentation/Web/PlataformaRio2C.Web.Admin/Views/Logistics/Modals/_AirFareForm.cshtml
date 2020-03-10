@@ -1,26 +1,35 @@
-﻿@using PlataformaRio2C.Domain.Dtos
-@model PlataformaRio2C.Application.CQRS.Commands.CreateLogisticAirfare
-@{
-    var editionDto = ViewBag.EditionDto as EditionDto;
-}
-
+﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateLogisticAirfare
 @Html.HiddenFor(m => m.LogisticsUid)
-
-<!--begin: Main Information-->
-<div class="kt-section">
-    <div class="kt-radio-inline">
-        <label class="kt-radio">
-            @Html.RadioButtonFor(m => m.IsNational, true) @Labels.National
-            <span></span>
-        </label>
-        <label class="kt-radio">
-            @Html.RadioButtonFor(m => m.IsNational, false) @Labels.International
-            <span></span>
-        </label>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.IsNational, new { @class = "control-label" })
+        <div class="kt-radio-inline">
+            <label class="kt-radio">
+                @Html.RadioButtonFor(m => m.IsNational, true) @Labels.National
+                <span></span>
+            </label>
+            <label class="kt-radio">
+                @Html.RadioButtonFor(m => m.IsNational, false) @Labels.International
+                <span></span>
+            </label>
+        </div>
+        @Html.ValidationMessageFor(m => m.IsNational, "", new { @class = "text-danger" })
     </div>
-    @Html.ValidationMessageFor(m => m.IsNational, "", new { @class = "text-danger" })
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.IsArrival, new { @class = "control-label" })
+        <div class="kt-radio-inline">
+            <label class="kt-radio">
+                @Html.RadioButtonFor(m => m.IsArrival, true) @Labels.Arrival
+                <span></span>
+            </label>
+            <label class="kt-radio">
+                @Html.RadioButtonFor(m => m.IsArrival, false) @Labels.Departure
+                <span></span>
+            </label>
+        </div>
+        @Html.ValidationMessageFor(m => m.IsArrival, "", new { @class = "text-danger" })
+    </div>
 </div>
-
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.From, new { @class = "control-label" })
@@ -33,7 +42,6 @@
         @Html.ValidationMessageFor(m => m.To, "", new { @class = "text-danger" })
     </div>
 </div>
-
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.Departure, new { @class = "control-label" })
@@ -46,8 +54,6 @@
         @Html.ValidationMessageFor(m => m.Arrival, "", new { @class = "text-danger" })
     </div>
 </div>
-
-
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.TicketNumber, new { @class = "control-label" })
@@ -55,16 +61,14 @@
         @Html.ValidationMessageFor(m => m.TicketNumber, "", new { @class = "text-danger" })
     </div>
     @*<div class="form-group col-md-6">
-        @Html.LabelFor(m => m.Ticket, new { @class = "control-label" })
-        <div></div>
-        <div class="custom-file">
-            <input type="file" class="custom-file-input" id="customFile">
-            <label class="custom-file-label" for="customFile">Escolha o arquivo</label>
-        </div>
-    </div>*@
+            @Html.LabelFor(m => m.Ticket, new { @class = "control-label" })
+            <div></div>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile">
+                <label class="custom-file-label" for="customFile">Escolha o arquivo</label>
+            </div>
+        </div>*@
 </div>
-
-
 <div class="row">
     <div class="form-group col-md-12">
         @Html.LabelFor(m => m.AdditionalInfo, new { @class = "control-label" })

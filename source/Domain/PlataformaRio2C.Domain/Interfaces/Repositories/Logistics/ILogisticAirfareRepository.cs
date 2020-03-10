@@ -22,7 +22,8 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>ILogisticAirfareRepository</summary>
     public interface ILogisticAirfareRepository : IRepository<LogisticAirfare>
     {
-        Task<List<LogisticAirfareDto>> FindAllDtosPaged(Guid logisticsUid);
+        Task<List<LogisticAirfareJsonDto>> FindAllJsonDtosAsync(Guid logisticsUid);
+        Task<LogisticAirfareDto> FindDtoAsync(Guid logisticAirfareUid);
         Task<List<LogisticAirfare>> FindAllForGenerateNegotiationsAsync(Guid editionUid);
     }    
 }

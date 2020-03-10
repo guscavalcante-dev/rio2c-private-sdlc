@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-09-2020
+// Last Modified On : 03-10-2020
 // ***********************************************************************
 // <copyright file="LogisticSponsorsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -359,8 +359,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowAirfareWidget(Guid? logisticsUid)
         {
-            var logisticsRequestDto = await this.logisticsAirfareRepo.FindAllDtosPaged(logisticsUid ?? Guid.Empty);
-            if (logisticsRequestDto == null)
+            var logisticAirfareJsonDtos = await this.logisticsAirfareRepo.FindAllJsonDtosAsync(logisticsUid ?? Guid.Empty);
+            if (logisticAirfareJsonDtos == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Logistics, Labels.FoundF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
                 return RedirectToAction("Index", "Logistics", new { Area = "" });
@@ -371,7 +371,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/LogisticsAirfareWidget", logisticsRequestDto), divIdOrClass = "#LogisticsAirfareWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/LogisticsAirfareWidget", logisticAirfareJsonDtos), divIdOrClass = "#LogisticsAirfareWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -468,13 +468,13 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             try
             {
-                var entity = await this.logisticsAirfareRepo.GetAsync(uid ?? Guid.Empty);
-                if (entity == null)
+                var logisticAirfareDto = await this.logisticsAirfareRepo.FindDtoAsync(uid ?? Guid.Empty);
+                if (logisticAirfareDto == null)
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Request, Labels.FoundF.ToLowerInvariant()));
                 }
 
-                cmd = new UpdateLogisticAirfare(entity.Uid, entity.From, entity.To, entity.IsNational, entity.DepartureDate, entity.ArrivalDate, entity.TicketNumber, entity.AdditionalInfo);
+                cmd = new UpdateLogisticAirfare(logisticAirfareDto);
             }
             catch (DomainException ex)
             {

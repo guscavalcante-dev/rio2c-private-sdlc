@@ -2398,4 +2398,8 @@
     <value>found</value>
     <comment>encontradas</comment>
   </data>
+  <data name="Direction" xml:space="preserve">
+    <value>Direction</value>
+    <comment>Direção</comment>
+  </data>
 </root>

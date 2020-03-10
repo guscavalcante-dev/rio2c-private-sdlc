@@ -3,51 +3,42 @@
 // Author           : Arthur Souza
 // Created          : 01-27-2020
 //
-// Last Modified By : Arthur Souza
-// Last Modified On : 01-27-2020
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-10-2020
 // ***********************************************************************
-// <copyright file="CreateConference.cs" company="Softo">
+// <copyright file="UpdateLogisticAirfare.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.IO;
-using System.Linq;
-using System.Web;
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>CreateLogisticSponsors</summary>
+    /// <summary>UpdateLogisticAirfare</summary>
     public class UpdateLogisticAirfare : CreateLogisticAirfare
     {
         public Guid Uid { get; set; }
 
-
-        public UpdateLogisticAirfare(Guid uid, string from, string to, bool? isNational, DateTimeOffset? departure, DateTimeOffset? arrival, string ticketNumber, string additionalInfo)
+        /// <summary>Initializes a new instance of the <see cref="UpdateLogisticAirfare"/> class.</summary>
+        /// <param name="logisticAirfareDto">The logistic airfare dto.</param>
+        public UpdateLogisticAirfare(LogisticAirfareDto logisticAirfareDto)
         {
-            this.Uid = uid;
-            this.From = from;
-            this.To = to;
-            this.IsNational = isNational;
-            this.Departure = departure;
-            this.Arrival = arrival;
-            this.TicketNumber = ticketNumber;
-            this.AdditionalInfo = additionalInfo;
+            this.Uid = logisticAirfareDto?.LogisticAirfare?.Uid ?? Guid.Empty;
+            this.IsNational = logisticAirfareDto?.LogisticAirfare?.IsNational;
+            this.IsArrival = logisticAirfareDto?.LogisticAirfare?.IsArrival;
+            this.From = logisticAirfareDto?.LogisticAirfare?.From;
+            this.To = logisticAirfareDto?.LogisticAirfare?.To;
+            this.Departure = logisticAirfareDto?.LogisticAirfare?.DepartureDate;
+            this.Arrival = logisticAirfareDto?.LogisticAirfare?.ArrivalDate;
+            this.TicketNumber = logisticAirfareDto?.LogisticAirfare?.TicketNumber;
+            this.AdditionalInfo = logisticAirfareDto?.LogisticAirfare?.AdditionalInfo;
         }
 
+        /// <summary>Initializes a new instance of the <see cref="UpdateLogisticAirfare"/> class.</summary>
         public UpdateLogisticAirfare()
         {
         }
-
-        #region Private Methods
-
-
-        #endregion
     }
 }

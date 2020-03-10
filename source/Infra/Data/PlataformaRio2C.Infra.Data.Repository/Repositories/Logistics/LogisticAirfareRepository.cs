@@ -93,30 +93,49 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
-        /// <summary>Finds all dtos paged.</summary>
+        /// <summary>Finds all json dtos asynchronous.</summary>
         /// <param name="logisticsUid">The logistics uid.</param>
         /// <returns></returns>
-        public Task<List<LogisticAirfareDto>> FindAllDtosPaged(Guid logisticsUid)
+        public Task<List<LogisticAirfareJsonDto>> FindAllJsonDtosAsync(Guid logisticsUid)
         {
-            return this.GetBaseQuery()
+            var query = this.GetBaseQuery()
                             .FindByLogisticsUid(logisticsUid)
-                            .Select(e => new LogisticAirfareDto()
+                            .Select(la => new LogisticAirfareJsonDto
                             {
-                                AdditionalInfo = e.AdditionalInfo,
-                                Id = e.Id,
-                                Uid = e.Uid,
-                                CreateDate = e.CreateDate,
-                                ArrivalDate = e.ArrivalDate,
-                                DepartureDate = e.DepartureDate,
-                                IsNational = e.IsNational,
-                                From = e.From,
-                                To = e.To,
-                                TicketNumber = e.TicketNumber,
-                                TicketUploadDate = e.TicketUploadDate,
-                                UpdateDate = e.UpdateDate
-                            })
-                            .OrderBy(e => e.CreateDate)
-                            .ToListAsync();
+                                AdditionalInfo = la.AdditionalInfo,
+                                Id = la.Id,
+                                Uid = la.Uid,
+                                CreateDate = la.CreateDate,
+                                ArrivalDate = la.ArrivalDate,
+                                DepartureDate = la.DepartureDate,
+                                IsNational = la.IsNational,
+                                IsArrival = la.IsArrival,
+                                From = la.From,
+                                To = la.To,
+                                TicketNumber = la.TicketNumber,
+                                TicketUploadDate = la.TicketUploadDate,
+                                UpdateDate = la.UpdateDate
+                            });
+                
+            return query
+                        .OrderBy(e => e.CreateDate)
+                        .ToListAsync();
+        }
+
+        /// <summary>Finds the dto asynchronous.</summary>
+        /// <param name="logisticAirfareUid">The logistic airfare uid.</param>
+        /// <returns></returns>
+        public async Task<LogisticAirfareDto> FindDtoAsync(Guid logisticAirfareUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(logisticAirfareUid)
+                                .Select(la => new LogisticAirfareDto
+                                {
+                                    LogisticAirfare = la
+                                });
+
+            return await query
+                            .FirstOrDefaultAsync();
         }
 
         /// <summary>Finds all for generate negotiations asynchronous.</summary>

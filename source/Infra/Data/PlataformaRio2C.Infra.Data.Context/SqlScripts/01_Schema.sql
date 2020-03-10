@@ -1566,6 +1566,7 @@ CREATE TABLE [dbo].[LogisticAirfares](
 	[Uid] [uniqueidentifier] NOT NULL,
 	[LogisticId] [int] NOT NULL,
 	[IsNational] [bit] NOT NULL,
+	[IsArrival] [bit] NOT NULL,
 	[From] [varchar](100) NOT NULL,
 	[DepartureDate] [datetimeoffset](7) NOT NULL,
 	[To] [varchar](100) NOT NULL,

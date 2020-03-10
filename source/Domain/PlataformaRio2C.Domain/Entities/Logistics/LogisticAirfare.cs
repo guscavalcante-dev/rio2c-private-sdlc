@@ -22,6 +22,7 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public int LogisticId { get; private set; }
         public bool IsNational { get; private set; }
+        public bool IsArrival { get; private set; }
         public string From { get; private set; }
         public string To { get; private set; }
         public string TicketNumber { get; private set; }
@@ -35,6 +36,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Initializes a new instance of the <see cref="LogisticAirfare"/> class.</summary>
         /// <param name="logistics">The logistics.</param>
         /// <param name="isNational">The is national.</param>
+        /// <param name="isArrival">The is arrival.</param>
         /// <param name="from">From.</param>
         /// <param name="to">To.</param>
         /// <param name="ticketNumber">The ticket number.</param>
@@ -42,8 +44,14 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="departureDate">The departure date.</param>
         /// <param name="arrivalDate">The arrival date.</param>
         /// <param name="userId">The user identifier.</param>
-        public LogisticAirfare(Logistics logistics, bool? isNational, string from, string to, string ticketNumber, string additionalInfo, DateTimeOffset? departureDate, DateTimeOffset? arrivalDate, int userId)
+        public LogisticAirfare(Logistics logistics, bool? isNational, bool? isArrival, string from, string to, string ticketNumber, string additionalInfo, DateTimeOffset? departureDate, DateTimeOffset? arrivalDate, int userId)
         {
+            this.Logistics = logistics;
+            this.IsNational = isNational ?? false;
+            this.IsArrival = isArrival ?? false;
+            this.From = from?.Trim();
+            this.To = to?.Trim();
+
             if (departureDate.HasValue)
             {
                 this.DepartureDate = departureDate.Value;
@@ -54,16 +62,8 @@ namespace PlataformaRio2C.Domain.Entities
                 this.ArrivalDate = arrivalDate.Value;
             }
 
-            if (isNational.HasValue)
-            {
-                this.IsNational = isNational.Value;
-            }
-
-            this.Logistics = logistics;
-            this.From = from;
-            this.To = to;
-            this.TicketNumber = ticketNumber;
-            this.AdditionalInfo = additionalInfo;
+            this.TicketNumber = ticketNumber?.Trim();
+            this.AdditionalInfo = additionalInfo?.Trim();
 
             this.Logistics = logistics;
             this.CreateUserId = this.UpdateUserId = userId;
@@ -77,6 +77,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Updates the specified is national.</summary>
         /// <param name="isNational">The is national.</param>
+        /// <param name="isArrival">The is arrival.</param>
         /// <param name="from">From.</param>
         /// <param name="to">To.</param>
         /// <param name="ticketNumber">The ticket number.</param>
@@ -84,8 +85,13 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="departureDate">The departure date.</param>
         /// <param name="arrivalDate">The arrival date.</param>
         /// <param name="userId">The user identifier.</param>
-        public void Update(bool? isNational, string from, string to, string ticketNumber, string additionalInfo, DateTimeOffset? departureDate, DateTimeOffset? arrivalDate, int userId)
+        public void Update(bool? isNational, bool? isArrival, string from, string to, string ticketNumber, string additionalInfo, DateTimeOffset? departureDate, DateTimeOffset? arrivalDate, int userId)
         {
+            this.IsNational = isNational ?? false;
+            this.IsArrival = isArrival ?? false;
+            this.From = from?.Trim();
+            this.To = to?.Trim();
+
             if (departureDate.HasValue)
             {
                 this.DepartureDate = departureDate.Value;
@@ -96,15 +102,8 @@ namespace PlataformaRio2C.Domain.Entities
                 this.ArrivalDate = arrivalDate.Value;
             }
 
-            if (isNational.HasValue)
-            {
-                this.IsNational = isNational.Value;
-            }
-
-            this.From = from;
-            this.To = to;
-            this.TicketNumber = ticketNumber;
-            this.AdditionalInfo = additionalInfo;
+            this.TicketNumber = ticketNumber?.Trim();
+            this.AdditionalInfo = additionalInfo?.Trim();
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
