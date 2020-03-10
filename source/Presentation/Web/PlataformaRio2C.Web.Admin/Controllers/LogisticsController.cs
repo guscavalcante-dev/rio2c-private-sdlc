@@ -115,13 +115,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #region DataTable Widget
 
-        /// <summary>
-        /// Searches the specified request.
-        /// </summary>
+        /// <summary>Searches the specified request.</summary>
         /// <param name="request">The request.</param>
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
-        /// <param name="showAllSponsored">if set to <c>true</c> [show all sponsored].</param>
-        /// <returns>Task&lt;ActionResult&gt;.</returns>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllParticipants)
         {

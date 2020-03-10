@@ -1140,78 +1140,79 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             bool showAllParticipants)
         {
             var query = this.GetBaseQuery()
-                                    .FindLogisticsByEditionId(showAllParticipants, editionId);
+                                    .FindLogisticsByEditionId(showAllParticipants, editionId)
+                                    .FindByKeywords(searchValue, editionId);
             
             return await query
-                .DynamicOrder<Collaborator>(
-                    sortColumns,
-                    new List<Tuple<string, string>>(),
-                    new List<string> { "FirstName", "CreateDate", "UpdateDate" }, "FirstName")
-                .Select(c => new LogisticRequestBaseDto
-                {
-                    CollaboratorUid = c.Uid,
-                    Name = c.FirstName + " " + c.LastNames,
-                    HasRequest = c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId && !ac.IsDeleted && ac.Logistics.Any(l => !l.IsDeleted)),
-                    HasLogistics = c.AttendeeCollaborators.Any(ac => ac.Logistics.Any(l => !l.IsDeleted && 
-                                                                                           (l.LogisticAirfares.Any(a => !a.IsDeleted) ||
-                                                                                            l.LogisticAccommodations.Any(a => !a.IsDeleted) ||
-                                                                                            l.LogisticTransfers.Any(a => !a.IsDeleted)))),
+                            .DynamicOrder<Collaborator>(
+                                sortColumns,
+                                new List<Tuple<string, string>>(),
+                                new List<string> { "FirstName", "CreateDate", "UpdateDate" }, "FirstName")
+                            .Select(c => new LogisticRequestBaseDto
+                            {
+                                CollaboratorUid = c.Uid,
+                                Name = c.FirstName + " " + c.LastNames,
+                                HasRequest = c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId && !ac.IsDeleted && ac.Logistics.Any(l => !l.IsDeleted)),
+                                HasLogistics = c.AttendeeCollaborators.Any(ac => ac.Logistics.Any(l => !l.IsDeleted && 
+                                                                                                       (l.LogisticAirfares.Any(a => !a.IsDeleted) ||
+                                                                                                        l.LogisticAccommodations.Any(a => !a.IsDeleted) ||
+                                                                                                        l.LogisticTransfers.Any(a => !a.IsDeleted)))),
 
-                    Id = c.AttendeeCollaborators
-                        .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
-                        .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
-                        .Select(e => e.Id)
-                        .FirstOrDefault(),
+                                Id = c.AttendeeCollaborators
+                                    .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
+                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
+                                    .Select(e => e.Id)
+                                    .FirstOrDefault(),
 
-                    Uid = c.AttendeeCollaborators
-                        .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
-                        .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
-                        .Select(e => e.Uid)
-                        .FirstOrDefault(),
+                                Uid = c.AttendeeCollaborators
+                                    .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
+                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
+                                    .Select(e => e.Uid)
+                                    .FirstOrDefault(),
 
-                    AccommodationSponsor = c.AttendeeCollaborators
-                    .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
-                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted && l.AccommodationSponsor != null))
-                    .Select(e => e.AccommodationSponsor.LogisticSponsor.Name)
-                    .FirstOrDefault(),
+                                AccommodationSponsor = c.AttendeeCollaborators
+                                .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
+                                .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted && l.AccommodationSponsor != null))
+                                .Select(e => e.AccommodationSponsor.LogisticSponsor.Name)
+                                .FirstOrDefault(),
 
-                    AirfareSponsor = c.AttendeeCollaborators
-                        .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
-                        .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted && l.AirfareSponsor != null))
-                        .Select(e => e.AirfareSponsor.LogisticSponsor.Name)
-                        .FirstOrDefault(),
+                                AirfareSponsor = c.AttendeeCollaborators
+                                    .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
+                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted && l.AirfareSponsor != null))
+                                    .Select(e => e.AirfareSponsor.LogisticSponsor.Name)
+                                    .FirstOrDefault(),
 
-                    AirportTransferSponsor = c.AttendeeCollaborators
-                        .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
-                        .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted && l.AirportTransferSponsor != null))
-                        .Select(e => e.AirportTransferSponsor.LogisticSponsor.Name)
-                        .FirstOrDefault(),
+                                AirportTransferSponsor = c.AttendeeCollaborators
+                                    .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
+                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted && l.AirportTransferSponsor != null))
+                                    .Select(e => e.AirportTransferSponsor.LogisticSponsor.Name)
+                                    .FirstOrDefault(),
 
-                    CreateDate = c.AttendeeCollaborators
-                        .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
-                        .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
-                        .Select(e => e.CreateDate)
-                        .FirstOrDefault(),
+                                CreateDate = c.AttendeeCollaborators
+                                    .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
+                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
+                                    .Select(e => e.CreateDate)
+                                    .FirstOrDefault(),
 
-                    UpdateDate = c.AttendeeCollaborators
-                        .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
-                        .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
-                        .Select(e => e.UpdateDate)
-                        .FirstOrDefault(),
+                                UpdateDate = c.AttendeeCollaborators
+                                    .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
+                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
+                                    .Select(e => e.UpdateDate)
+                                    .FirstOrDefault(),
 
-                    TransferCity = c.AttendeeCollaborators
-                        .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
-                        .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
-                        .Select(e => e.IsCityTransferRequired)
-                        .FirstOrDefault(),
-                    
-                    IsVehicleDisposalRequired = c.AttendeeCollaborators
-                        .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
-                        .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
-                        .Select(e => e.IsVehicleDisposalRequired)
-                        .FirstOrDefault(),
-                })
-                .ToListPagedAsync(page, pageSize);
+                                TransferCity = c.AttendeeCollaborators
+                                    .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
+                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
+                                    .Select(e => e.IsCityTransferRequired)
+                                    .FirstOrDefault(),
+                                
+                                IsVehicleDisposalRequired = c.AttendeeCollaborators
+                                    .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
+                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
+                                    .Select(e => e.IsVehicleDisposalRequired)
+                                    .FirstOrDefault(),
+                            })
+                            .ToListPagedAsync(page, pageSize);
         }
 
         public Collaborator GetById(int id)
