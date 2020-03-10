@@ -144,13 +144,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<List<LogisticAirfare>> FindAllForGenerateNegotiationsAsync(Guid editionUid)
         {
             var query = this.GetBaseQuery()
-                                .FindByEditionUid(editionUid);
-                                //.Include(la => la.Logistic)
-                                //.Include(la => la.Logistic.AttendeeCollaborator)
-                                //.IncludeFilter(la => la.Logistic.AttendeeCollaborator.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted));
+                                .FindByEditionUid(editionUid)
+                                .IncludeFilter(la => la.Logistic)
+                                .IncludeFilter(la => la.Logistic.AttendeeCollaborator)
+                                .IncludeFilter(la => la.Logistic.AttendeeCollaborator.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted));
 
             return await query
-                            //.OrderBy(la => la.DepartureDate)
+                            .OrderBy(la => la.DepartureDate)
                             .ToListAsync();
         }
     }
