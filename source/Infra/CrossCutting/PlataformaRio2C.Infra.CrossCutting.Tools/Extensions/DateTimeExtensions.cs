@@ -4,7 +4,7 @@
 // Created          : 12-13-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-16-2020
+// Last Modified On : 03-10-2020
 // ***********************************************************************
 // <copyright file="DateTimeExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,7 +35,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         public static DateTime ToUserTimeZone(this DateTime dtUtc)
         {
             var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(UserTimeZone);
-            var teste = TimeZoneInfo.ConvertTimeFromUtc(dtUtc, userTimeZone);
             return TimeZoneInfo.ConvertTimeFromUtc(dtUtc, userTimeZone);
         }
 

@@ -39,10 +39,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public LogisticTransfer(string additionalInfo, DateTimeOffset? date, AttendeePlace fromAttendeePlace, AttendeePlace toAttendeePlace, Logistic logistic, int userId)
         {
+            this.Logistic = logistic;
             this.AdditionalInfo = additionalInfo;
             this.FromAttendeePlace = fromAttendeePlace;
             this.ToAttendeePlace = toAttendeePlace;
-            this.Logistic = logistic;
+
             if (date.HasValue)
             {
                 this.Date = date.Value;

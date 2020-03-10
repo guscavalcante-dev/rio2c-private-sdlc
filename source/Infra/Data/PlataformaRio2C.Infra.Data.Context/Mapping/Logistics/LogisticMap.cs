@@ -25,16 +25,23 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.ToTable("Logistics");
 
             // Relationships
+            this.HasRequired(e => e.AttendeeCollaborator)
+                .WithMany(t => t.Logistics)
+                .HasForeignKey(e => e.AttendeeCollaboratorId);
+
             this.HasOptional(t => t.AccommodationSponsor)
-                .WithMany(e => e.AccommodationSponsors)
+                .WithMany()
+                //.WithMany(e => e.AccommodationSponsors)
               .HasForeignKey(d => d.AccommodationAttendeeLogisticSponsorId);
 
             this.HasOptional(t => t.AirportTransferSponsor)
-                .WithMany(e => e.AirportTransferSponsors)
+                .WithMany()
+                //.WithMany(e => e.AirportTransferSponsors)
                 .HasForeignKey(d => d.AirportTransferAttendeeLogisticSponsorId);
 
             this.HasOptional(t => t.AirfareSponsor)
-                .WithMany(e => e.AirfareSponsors)
+                .WithMany()
+                //.WithMany(e => e.AirfareSponsors)
                 .HasForeignKey(d => d.AirfareAttendeeLogisticSponsorId);
 
             this.HasRequired(t => t.CreateUser)

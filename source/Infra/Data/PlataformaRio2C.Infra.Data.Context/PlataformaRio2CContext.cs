@@ -156,14 +156,14 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new PillarMap());
 
             // Logistics Configuration
-            modelBuilder.Configurations.Add(new LogisticsSponsorMap());
-            modelBuilder.Configurations.Add(new PlaceMap());
-            modelBuilder.Configurations.Add(new AttendeePlacesMap());
-            modelBuilder.Configurations.Add(new AttendeeLogisticSponsorMap());
             modelBuilder.Configurations.Add(new LogisticMap());
             modelBuilder.Configurations.Add(new LogisticAirfareMap());
             modelBuilder.Configurations.Add(new LogisticAccommodationMap());
             modelBuilder.Configurations.Add(new LogisticTransferMap());
+            modelBuilder.Configurations.Add(new PlaceMap());
+            modelBuilder.Configurations.Add(new AttendeePlacesMap());
+            modelBuilder.Configurations.Add(new LogisticsSponsorMap());
+            modelBuilder.Configurations.Add(new AttendeeLogisticSponsorMap());
 
             // TODO: Old mapping that must be reviewed
 

@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-26-2019
+// Last Modified On : 03-10-2020
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -42,10 +42,6 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 .HasForeignKey(e => e.AttendeeCollaboratorId);
 
             this.HasMany(t => t.AttendeeCollaboratorTickets)
-                .WithRequired(e => e.AttendeeCollaborator)
-                .HasForeignKey(e => e.AttendeeCollaboratorId);
-            
-            this.HasMany(t => t.Logistics)
                 .WithRequired(e => e.AttendeeCollaborator)
                 .HasForeignKey(e => e.AttendeeCollaboratorId);
         }

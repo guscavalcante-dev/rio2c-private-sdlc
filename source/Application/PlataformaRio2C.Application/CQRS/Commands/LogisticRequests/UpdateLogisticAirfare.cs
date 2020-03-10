@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -30,8 +31,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.IsArrival = logisticAirfareDto?.LogisticAirfare?.IsArrival;
             this.From = logisticAirfareDto?.LogisticAirfare?.From;
             this.To = logisticAirfareDto?.LogisticAirfare?.To;
-            this.Departure = logisticAirfareDto?.LogisticAirfare?.DepartureDate;
-            this.Arrival = logisticAirfareDto?.LogisticAirfare?.ArrivalDate;
+            this.Departure = logisticAirfareDto?.LogisticAirfare?.DepartureDate.ToUserTimeZone();
+            this.Arrival = logisticAirfareDto?.LogisticAirfare?.ArrivalDate.ToUserTimeZone();
             this.TicketNumber = logisticAirfareDto?.LogisticAirfare?.TicketNumber;
             this.AdditionalInfo = logisticAirfareDto?.LogisticAirfare?.AdditionalInfo;
         }

@@ -26,9 +26,9 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual Edition Edition { get; private set; }
         public virtual LogisticSponsor LogisticSponsor { get; private set; }
 
-        public virtual ICollection<Logistic> AccommodationSponsors { get; private set; }
-        public virtual ICollection<Logistic> AirfareSponsors { get; private set; }
-        public virtual ICollection<Logistic> AirportTransferSponsors { get; private set; }
+        //public virtual ICollection<Logistic> AccommodationSponsors { get; private set; }
+        //public virtual ICollection<Logistic> AirfareSponsors { get; private set; }
+        //public virtual ICollection<Logistic> AirportTransferSponsors { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeLogisticSponsor"/> class.</summary>
         /// <param name="edition">The edition.</param>

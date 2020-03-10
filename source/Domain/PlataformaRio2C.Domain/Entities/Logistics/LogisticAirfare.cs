@@ -14,6 +14,7 @@
 using System;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -49,7 +50,17 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="departureDate">The departure date.</param>
         /// <param name="arrivalDate">The arrival date.</param>
         /// <param name="userId">The user identifier.</param>
-        public LogisticAirfare(Logistic logistic, bool? isNational, bool? isArrival, string from, string to, string ticketNumber, string additionalInfo, DateTimeOffset? departureDate, DateTimeOffset? arrivalDate, int userId)
+        public LogisticAirfare(
+            Logistic logistic, 
+            bool? isNational, 
+            bool? isArrival, 
+            string from, 
+            string to, 
+            string ticketNumber, 
+            string additionalInfo, 
+            DateTime? departureDate, 
+            DateTime? arrivalDate, 
+            int userId)
         {
             this.Logistic = logistic;
             this.IsNational = isNational ?? false;
@@ -59,12 +70,12 @@ namespace PlataformaRio2C.Domain.Entities
 
             if (departureDate.HasValue)
             {
-                this.DepartureDate = departureDate.Value;
+                this.DepartureDate = departureDate.Value.ToUtcTimeZone();
             }
 
             if (arrivalDate.HasValue)
             {
-                this.ArrivalDate = arrivalDate.Value;
+                this.ArrivalDate = arrivalDate.Value.ToUtcTimeZone();
             }
 
             this.TicketNumber = ticketNumber?.Trim();
@@ -90,7 +101,16 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="departureDate">The departure date.</param>
         /// <param name="arrivalDate">The arrival date.</param>
         /// <param name="userId">The user identifier.</param>
-        public void Update(bool? isNational, bool? isArrival, string from, string to, string ticketNumber, string additionalInfo, DateTimeOffset? departureDate, DateTimeOffset? arrivalDate, int userId)
+        public void Update(
+            bool? isNational, 
+            bool? isArrival, 
+            string from, 
+            string to, 
+            string ticketNumber,
+            string additionalInfo,
+            DateTime? departureDate, 
+            DateTime? arrivalDate,
+            int userId)
         {
             this.IsNational = isNational ?? false;
             this.IsArrival = isArrival ?? false;
@@ -99,12 +119,12 @@ namespace PlataformaRio2C.Domain.Entities
 
             if (departureDate.HasValue)
             {
-                this.DepartureDate = departureDate.Value;
+                this.DepartureDate = departureDate.Value.ToUtcTimeZone();
             }
 
             if (arrivalDate.HasValue)
             {
-                this.ArrivalDate = arrivalDate.Value;
+                this.ArrivalDate = arrivalDate.Value.ToUtcTimeZone();
             }
 
             this.TicketNumber = ticketNumber?.Trim();

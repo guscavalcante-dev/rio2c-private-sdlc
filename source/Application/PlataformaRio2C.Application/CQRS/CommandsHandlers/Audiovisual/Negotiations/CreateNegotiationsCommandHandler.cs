@@ -363,36 +363,36 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             var result = new List<int>();
 
-            //if (this.logisticAirfares?.Any() != true)
-            //{
-            //    return result;
-            //}
+            if (this.logisticAirfares?.Any() != true)
+            {
+                return result;
+            }
 
-            //// Airfare logistics
-            //var organizationLogisticAirfares = this.logisticAirfares
-            //                                        .Where(la => (la.Logistic.AttendeeCollaborator.AttendeeOrganizationCollaborators
-            //                                                            .Any(aoc => aoc.AttendeeOrganizationId == projectBuyerEvaluation.BuyerAttendeeOrganizationId)))
-            //                                        .ToList();
-            //if (organizationLogisticAirfares?.Any() != true)
-            //{
-            //    return result;
-            //}
+            // Airfare logistics
+            var organizationLogisticAirfares = this.logisticAirfares
+                                                    .Where(la => (la.Logistic.AttendeeCollaborator.AttendeeOrganizationCollaborators
+                                                                        .Any(aoc => aoc.AttendeeOrganizationId == projectBuyerEvaluation.BuyerAttendeeOrganizationId)))
+                                                    .ToList();
+            if (organizationLogisticAirfares?.Any() != true)
+            {
+                return result;
+            }
 
-            //var organizationLogisticsAirfareExceptions = new List<Tuple<DateTimeOffset, DateTimeOffset, bool>>();
-            //foreach (var organizationLogisticAirfare in organizationLogisticAirfares)
-            //{
-            //    organizationLogisticsAirfareExceptions.Add(new Tuple<DateTimeOffset, DateTimeOffset, bool>(organizationLogisticAirfare.DepartureDate, organizationLogisticAirfare.ArrivalDate, organizationLogisticAirfare.IsArrival));
-            //}
+            var organizationLogisticsAirfareExceptions = new List<Tuple<DateTimeOffset, DateTimeOffset, bool>>();
+            foreach (var organizationLogisticAirfare in organizationLogisticAirfares)
+            {
+                organizationLogisticsAirfareExceptions.Add(new Tuple<DateTimeOffset, DateTimeOffset, bool>(organizationLogisticAirfare.DepartureDate, organizationLogisticAirfare.ArrivalDate, organizationLogisticAirfare.IsArrival));
+            }
 
-            //var logisticSlotsExceptions = negotiationSlots
-            //                                    .Where(ns => organizationLogisticsAirfareExceptions
-            //                                                    .Any(lde => lde.Item3 ? ns.StartDate < lde.Item2.AddHours(4) :   // Arrival
-            //                                                                            ns.EndDate > lde.Item1.AddHours(-4)))?   // Departure
-            //                                    .Select(e => e.RoundNumber)
-            //                                    .Distinct()
-            //                                    .ToList();
+            var logisticSlotsExceptions = negotiationSlots
+                                                .Where(ns => organizationLogisticsAirfareExceptions
+                                                                .Any(lde => lde.Item3 ? ns.StartDate < lde.Item2.AddHours(4) :   // Arrival
+                                                                                        ns.EndDate > lde.Item1.AddHours(-4)))?   // Departure
+                                                .Select(e => e.RoundNumber)
+                                                .Distinct()
+                                                .ToList();
 
-            //result.AddRange(logisticSlotsExceptions);
+            result.AddRange(logisticSlotsExceptions);
 
             return result;
         }
@@ -405,36 +405,36 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             var result = new List<int>();
 
-            //if (this.logisticAirfares?.Any() != true)
-            //{
-            //    return result;
-            //}
+            if (this.logisticAirfares?.Any() != true)
+            {
+                return result;
+            }
 
-            //// Airfare logistics
-            //var organizationLogisticAirfares = this.logisticAirfares
-            //                                            .Where(la => (la.Logistic.AttendeeCollaborator.AttendeeOrganizationCollaborators
-            //                                                                .Any(aoc => aoc.AttendeeOrganizationId == projectBuyerEvaluation.Project.SellerAttendeeOrganizationId)))
-            //                                            .ToList();
-            //if (organizationLogisticAirfares?.Any() != true)
-            //{
-            //    return result;
-            //}
+            // Airfare logistics
+            var organizationLogisticAirfares = this.logisticAirfares
+                                                        .Where(la => (la.Logistic.AttendeeCollaborator.AttendeeOrganizationCollaborators
+                                                                            .Any(aoc => aoc.AttendeeOrganizationId == projectBuyerEvaluation.Project.SellerAttendeeOrganizationId)))
+                                                        .ToList();
+            if (organizationLogisticAirfares?.Any() != true)
+            {
+                return result;
+            }
 
-            //var organizationLogisticsAirfareExceptions = new List<Tuple<DateTimeOffset, DateTimeOffset, bool>>();
-            //foreach (var organizationLogisticAirfare in organizationLogisticAirfares)
-            //{
-            //    organizationLogisticsAirfareExceptions.Add(new Tuple<DateTimeOffset, DateTimeOffset, bool>(organizationLogisticAirfare.DepartureDate, organizationLogisticAirfare.ArrivalDate, organizationLogisticAirfare.IsArrival));
-            //}
+            var organizationLogisticsAirfareExceptions = new List<Tuple<DateTimeOffset, DateTimeOffset, bool>>();
+            foreach (var organizationLogisticAirfare in organizationLogisticAirfares)
+            {
+                organizationLogisticsAirfareExceptions.Add(new Tuple<DateTimeOffset, DateTimeOffset, bool>(organizationLogisticAirfare.DepartureDate, organizationLogisticAirfare.ArrivalDate, organizationLogisticAirfare.IsArrival));
+            }
 
-            //var logisticSlotsExceptions = negotiationSlots
-            //                                    .Where(ns => organizationLogisticsAirfareExceptions
-            //                                                    .Any(lde => lde.Item3 ? ns.StartDate < lde.Item2.AddHours(4) :   // Arrival
-            //                                                                            ns.EndDate > lde.Item1.AddHours(-4)))?   // Departure
-            //                                    .Select(e => e.RoundNumber)
-            //                                    .Distinct()
-            //                                    .ToList();
+            var logisticSlotsExceptions = negotiationSlots
+                                                .Where(ns => organizationLogisticsAirfareExceptions
+                                                                .Any(lde => lde.Item3 ? ns.StartDate < lde.Item2.AddHours(4) :   // Arrival
+                                                                                        ns.EndDate > lde.Item1.AddHours(-4)))?   // Departure
+                                                .Select(e => e.RoundNumber)
+                                                .Distinct()
+                                                .ToList();
 
-            //result.AddRange(logisticSlotsExceptions);
+            result.AddRange(logisticSlotsExceptions);
 
             return result;
         }

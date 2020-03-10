@@ -4,7 +4,7 @@
 // Created          : 12-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 03-10-2020
 // ***********************************************************************
 // <copyright file="CreateConference.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -64,6 +64,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="roomDtos">The room dtos.</param>
         /// <param name="tracks">The tracks.</param>
+        /// <param name="pillars">The pillars.</param>
         /// <param name="presentationFormats">The presentation formats.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public CreateConference(
@@ -86,6 +87,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
         }
 
+        /// <summary>Updates the dropdowns.</summary>
+        /// <param name="editionEvents">The edition events.</param>
+        /// <param name="roomDtos">The room dtos.</param>
+        /// <param name="tracks">The tracks.</param>
+        /// <param name="pillars">The pillars.</param>
+        /// <param name="presentationFormats">The presentation formats.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
         public void UpdateDropdowns(
             List<EditionEvent> editionEvents,
             List<RoomDto> roomDtos,

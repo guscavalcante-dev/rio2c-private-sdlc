@@ -16,14 +16,10 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace PlataformaRio2C.Infra.Data.Context.Mapping
 {
-    /// <summary>
-    /// LogisticAirfareMap
-    /// </summary>
+    /// <summary>LogisticAirfareMap</summary>
     public class LogisticAirfareMap : EntityTypeConfiguration<LogisticAirfare>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LogisticAirfareMap" /> class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref="LogisticAirfareMap"/> class.</summary>
         public LogisticAirfareMap()
         {
             this.ToTable("LogisticAirfares");

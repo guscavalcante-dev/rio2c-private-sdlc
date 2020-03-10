@@ -60,13 +60,13 @@
                                                     @logisticAirfareJsonDto.From
                                                 </td>
                                                 <td class="text-center">
-                                                    @logisticAirfareJsonDto.DepartureDate.ToString("g")
+                                                    @logisticAirfareJsonDto.DepartureDate.ToUserTimeZone().ToString("g")
                                                 </td>
                                                 <td>
                                                     @logisticAirfareJsonDto.To
                                                 </td>
                                                 <td class="text-center">
-                                                    @logisticAirfareJsonDto.ArrivalDate.ToString("g")
+                                                    @logisticAirfareJsonDto.ArrivalDate.ToUserTimeZone().ToString("g")
                                                 </td>
                                                 <td class="text-center">
                                                     @logisticAirfareJsonDto.TicketNumber
@@ -74,10 +74,10 @@
                                                 @*<td class="text-center">
                                                     </td>*@
                                                 <td class="text-center">
-                                                    @logisticAirfareJsonDto.CreateDate.ToString("g")
+                                                    @logisticAirfareJsonDto.CreateDate.ToUserTimeZone().ToString("g")
                                                 </td>
                                                 <td class="text-center">
-                                                    @logisticAirfareJsonDto.UpdateDate.ToString("g")
+                                                    @logisticAirfareJsonDto.UpdateDate.ToUserTimeZone().ToString("g")
                                                 </td>
                                                 @if (hasChangeDataPermission)
                                                 {

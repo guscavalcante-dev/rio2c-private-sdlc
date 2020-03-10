@@ -43,11 +43,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = "DepartureDate", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public DateTimeOffset? Departure { get; set; }
+        public DateTime? Departure { get; set; }
 
         [Display(Name = "ArrivalDate", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public DateTimeOffset? Arrival { get; set; }
+        public DateTime? Arrival { get; set; }
         
         [Display(Name = "TicketNumber", ResourceType = typeof(Labels))]
         [StringLength(20, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]

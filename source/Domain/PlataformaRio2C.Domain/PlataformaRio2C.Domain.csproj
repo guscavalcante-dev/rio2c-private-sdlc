@@ -262,7 +262,7 @@
     <Compile Include="Entities\Editions\EditionEvent.cs" />
     <Compile Include="Entities\Logistics\LogisticTransfer.cs" />
     <Compile Include="Entities\Logistics\LogisticAirfare.cs" />
-    <Compile Include="Entities\Logistics\LogisticAccommodations.cs" />
+    <Compile Include="Entities\Logistics\LogisticAccommodation.cs" />
     <Compile Include="Entities\Logistics\AttendeePlace.cs" />
     <Compile Include="Entities\Logistics\Place.cs" />
     <Compile Include="Entities\Logistics\LogisticSponsor.cs" />

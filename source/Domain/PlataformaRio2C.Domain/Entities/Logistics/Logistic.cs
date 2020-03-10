@@ -37,11 +37,11 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual AttendeeLogisticSponsor AirportTransferSponsor { get; private set; }
         public virtual AttendeeLogisticSponsor AirfareSponsor { get; private set; }
         public virtual AttendeeLogisticSponsor AccommodationSponsor { get; private set; }
+        public virtual User CreateUser { get; private set; }
 
         public virtual List<LogisticAirfare> LogisticAirfares { get; private set; }
         public virtual List<LogisticAccommodation> LogisticAccommodations { get; private set; }
         public virtual List<LogisticTransfer> LogisticTransfers { get; private set; }
-        public virtual User CreateUser { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Logistic"/> class.</summary>
         /// <param name="edition">The edition.</param>
