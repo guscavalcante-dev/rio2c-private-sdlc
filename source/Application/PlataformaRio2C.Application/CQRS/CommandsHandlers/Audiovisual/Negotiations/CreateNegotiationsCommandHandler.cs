@@ -38,6 +38,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
         private IList<ProjectBuyerEvaluation> _projectSubmissionsError = new List<ProjectBuyerEvaluation>();
         private List<LogisticAirfare> logisticAirfares = new List<LogisticAirfare>();
+        private List<Conference> conferences = new List<Conference>();
 
         /// <summary>Initializes a new instance of the <see cref="CreateNegotiationsCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
@@ -103,7 +104,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             this.logisticAirfares = await this.logisticAirfareRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionUid ?? Guid.Empty);
-            //_conferences = _conferenceRepository.GetAllBySchedule().ToList();
+            this.conferences = await this.conferenceRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionUid ?? Guid.Empty);
 
             this.FillNegotiationSlots(negotiationSlots, projectBuyerEvaluations);
 
@@ -444,89 +445,89 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         #region Conferences
 
         /// <summary>Gets the conferences slots exceptions.</summary>
-        /// <param name="reservationForNegotiation">The reservation for negotiation.</param>
+        /// <param name="negotiationSlots">The negotiation slots.</param>
         /// <param name="projectBuyerEvaluation">The project buyer evaluation.</param>
         /// <returns></returns>
-        private List<int> GetConferencesSlotsExceptions(List<Negotiation> reservationForNegotiation, ProjectBuyerEvaluation projectBuyerEvaluation)
+        private List<int> GetConferencesSlotsExceptions(List<Negotiation> negotiationSlots, ProjectBuyerEvaluation projectBuyerEvaluation)
         {
             List<int> result = new List<int>();
 
-            result.AddRange(this.GetPlayerConferencesSlotsExceptions(reservationForNegotiation, projectBuyerEvaluation));
-            result.AddRange(this.GetProducerConferencesSlotsExceptions(reservationForNegotiation, projectBuyerEvaluation));
+            result.AddRange(this.GetPlayerConferencesSlotsExceptions(negotiationSlots, projectBuyerEvaluation));
+            result.AddRange(this.GetProducerConferencesSlotsExceptions(negotiationSlots, projectBuyerEvaluation));
 
             return result;
         }
 
         /// <summary>Gets the player conferences slots exceptions.</summary>
-        /// <param name="reservationForNegotiation">The reservation for negotiation.</param>
+        /// <param name="negotiationSlots">The negotiation slots.</param>
         /// <param name="projectBuyerEvaluation">The project buyer evaluation.</param>
         /// <returns></returns>
-        private List<int> GetPlayerConferencesSlotsExceptions(List<Negotiation> reservationForNegotiation, ProjectBuyerEvaluation projectBuyerEvaluation)
+        private List<int> GetPlayerConferencesSlotsExceptions(List<Negotiation> negotiationSlots, ProjectBuyerEvaluation projectBuyerEvaluation)
         {
             var result = new List<int>();
 
-            //var conferencePlayers = _conferences.Where(e => (e.Lecturers.Where(l => l.Collaborator != null).SelectMany(l => l.Collaborator.Players).Any(p => p.Id == projectBuyerEvaluation.PlayerId)));
-            //if (conferencePlayers != null && conferencePlayers.Any())
-            //{
-            //    List<Tuple<DateTime?, TimeSpan, TimeSpan>> dateTimes = new List<Tuple<DateTime?, TimeSpan, TimeSpan>>();
+            var organizationConferences = this.conferences
+                                                    .Where(c => c.ConferenceParticipants
+                                                                    .Any(cp => cp.AttendeeCollaborator.AttendeeOrganizationCollaborators
+                                                                                    .Any(aoc => aoc.AttendeeOrganizationId == projectBuyerEvaluation.BuyerAttendeeOrganizationId)))
+                                                    .ToList();
+            if (organizationConferences?.Any() != true)
+            {
+                return result;
+            }
 
-            //    foreach (var conference in conferencePlayers)
-            //    {
-            //        dateTimes.Add(new Tuple<DateTime?, TimeSpan, TimeSpan>(conference.Date, conference.StartTime.Value.Add(TimeSpan.FromMinutes(-30)), conference.EndTime.Value.Add(TimeSpan.FromMinutes(30))));
-            //    }
+            var organizationConferencesExceptions = new List<Tuple<DateTimeOffset, DateTimeOffset>>();
+            foreach (var organizationConference in organizationConferences)
+            {
+                organizationConferencesExceptions.Add(new Tuple<DateTimeOffset, DateTimeOffset>(organizationConference.StartDate.AddMinutes(-30), organizationConference.EndDate.AddMinutes(30)));
+            }
 
-            //    var slotsExpectionByConference = negotiationSlots
-            //                                           .Where(r => dateTimes
-            //                                                           .Any(c => (
-            //                                                                        c.Item1 == r.Date &&
-            //                                                                        (
-            //                                                                            (r.StarTime > c.Item2 && r.StarTime < c.Item3) ||
-            //                                                                            (r.EndTime < c.Item3 && r.EndTime > c.Item2)
-            //                                                                         )
+            var conferenceSlotsExceptions = negotiationSlots
+                                                .Where(ns => organizationConferencesExceptions
+                                                    .Any(lde => (ns.StartDate > lde.Item1 && ns.StartDate < lde.Item2)
+                                                                || (ns.EndDate > lde.Item1 && ns.EndDate < lde.Item2)))
+                                                .Select(e => e.RoundNumber)
+                                                .Distinct()
+                                                .ToList();
 
-            //                                                                      )
-            //                                                                )
-            //                                                  ).Select(e => e.RoundNumber).Distinct().ToList();
-
-            //    result.AddRange(slotsExpectionByConference);
-            //}
+            result.AddRange(conferenceSlotsExceptions);
 
             return result;
         }
 
         /// <summary>Gets the producer conferences slots exceptions.</summary>
-        /// <param name="reservationForNegotiation">The reservation for negotiation.</param>
+        /// <param name="negotiationSlots">The negotiation slots.</param>
         /// <param name="projectBuyerEvaluation">The project buyer evaluation.</param>
         /// <returns></returns>
-        private List<int> GetProducerConferencesSlotsExceptions(List<Negotiation> reservationForNegotiation, ProjectBuyerEvaluation projectBuyerEvaluation)
+        private List<int> GetProducerConferencesSlotsExceptions(List<Negotiation> negotiationSlots, ProjectBuyerEvaluation projectBuyerEvaluation)
         {
             var result = new List<int>();
 
-            //var conferenceProducer = _conferences.Where(e => (e.Lecturers.Where(l => l.Collaborator != null).SelectMany(l => l.Collaborator.ProducersEvents.Select(p => p.Producer)).Any(p => p.Id == projectBuyerEvaluation.Project.ProducerId)));
-            //if (conferenceProducer != null && conferenceProducer.Any())
-            //{
-            //    List<Tuple<DateTime?, TimeSpan, TimeSpan>> dateTimes = new List<Tuple<DateTime?, TimeSpan, TimeSpan>>();
+            var organizationConferences = this.conferences
+                                                    .Where(c => c.ConferenceParticipants
+                                                                    .Any(cp => cp.AttendeeCollaborator.AttendeeOrganizationCollaborators
+                                                                                    .Any(aoc => aoc.AttendeeOrganizationId == projectBuyerEvaluation.Project.SellerAttendeeOrganizationId)))
+                                                    .ToList();
+            if (organizationConferences?.Any() != true)
+            {
+                return result;
+            }
 
-            //    foreach (var conference in conferenceProducer)
-            //    {
-            //        dateTimes.Add(new Tuple<DateTime?, TimeSpan, TimeSpan>(conference.Date, conference.StartTime.Value.Add(TimeSpan.FromMinutes(-30)), conference.EndTime.Value.Add(TimeSpan.FromMinutes(30))));
-            //    }
+            var organizationConferencesExceptions = new List<Tuple<DateTimeOffset, DateTimeOffset>>();
+            foreach (var organizationConference in organizationConferences)
+            {
+                organizationConferencesExceptions.Add(new Tuple<DateTimeOffset, DateTimeOffset>(organizationConference.StartDate.AddMinutes(-30), organizationConference.EndDate.AddMinutes(30)));
+            }
 
-            //    var slotsExpectionByConference = negotiationSlots
-            //                                           .Where(r => dateTimes
-            //                                                           .Any(c => (
-            //                                                                        c.Item1 == r.Date &&
-            //                                                                        (
-            //                                                                            (r.StarTime > c.Item2 && r.StarTime < c.Item3) ||
-            //                                                                            (r.EndTime < c.Item3 && r.EndTime > c.Item2)
-            //                                                                         )
+            var conferenceSlotsExceptions = negotiationSlots
+                                            .Where(ns => organizationConferencesExceptions
+                                                .Any(lde => (ns.StartDate > lde.Item1 && ns.StartDate < lde.Item2)
+                                                            || (ns.EndDate > lde.Item1 && ns.EndDate < lde.Item2)))
+                                            .Select(e => e.RoundNumber)
+                                            .Distinct()
+                                            .ToList();
 
-            //                                                                      )
-            //                                                                )
-            //                                                  ).Select(e => e.RoundNumber).Distinct().ToList();
-
-            //    result.AddRange(slotsExpectionByConference);
-            //}
+            result.AddRange(conferenceSlotsExceptions);
 
             return result;
         }

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-16-2020
+// Last Modified On : 03-10-2020
 // ***********************************************************************
 // <copyright file="ConferenceRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,6 +23,7 @@ using LinqKit;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using X.PagedList;
+using Z.EntityFramework.Plus;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -68,6 +69,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             if (!showAllEditions)
             {
                 query = query.Where(c => c.EditionEvent.EditionId == editionId);
+            }
+
+            return query;
+        }
+
+        /// <summary>Finds the by edition uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="editionUid">The edition uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<Conference> FindByEditionUid(this IQueryable<Conference> query, bool showAllEditions, Guid editionUid)
+        {
+            if (!showAllEditions)
+            {
+                query = query.Where(c => c.EditionEvent.Edition.Uid == editionUid);
             }
 
             return query;
@@ -167,6 +183,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 query = query.Where(outerWhere);
                 //query = query.AsExpandable().Where(predicate);
             }
+
+            return query;
+        }
+
+        /// <summary>Determines whether this instance has participants.</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<Conference> HasParticipants(this IQueryable<Conference> query)
+        {
+            query = query.Where(c => c.ConferenceParticipants.Any(cp => !cp.IsDeleted 
+                                                                        && !cp.AttendeeCollaborator.IsDeleted
+                                                                        && !cp.AttendeeCollaborator.Collaborator.IsDeleted));
 
             return query;
         }
@@ -508,6 +536,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByEditionId(showAllEditions, editionId);
 
             return await query.CountAsync();
+        }
+
+        /// <summary>Finds all for generate negotiations asynchronous.</summary>
+        /// <param name="editionUid">The edition uid.</param>
+        /// <returns></returns>
+        public async Task<List<Conference>> FindAllForGenerateNegotiationsAsync(Guid editionUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionUid(false, editionUid)
+                                .HasParticipants()
+                                .IncludeFilter(c => c.ConferenceParticipants.Where(cp => !cp.IsDeleted && !cp.AttendeeCollaborator.IsDeleted))
+                                .IncludeFilter(c => c.ConferenceParticipants.Where(cp => !cp.IsDeleted && !cp.AttendeeCollaborator.IsDeleted).Select(cp => cp.AttendeeCollaborator))
+                                .IncludeFilter(c => c.ConferenceParticipants.Where(cp => !cp.IsDeleted && !cp.AttendeeCollaborator.IsDeleted).Select(cp => cp.AttendeeCollaborator.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted)));
+
+            return await query
+                            .ToListAsync();
         }
 
         #region Api

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-16-2020
+// Last Modified On : 03-10-2020
 // ***********************************************************************
 // <copyright file="IConferenceRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,6 +29,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<ConferenceDto> FindParticipantsWidgetDtoAsync(Guid conferenceUid, int editionId);
         Task<IPagedList<ConferenceJsonDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> conferencesUids, int editionId, int languageId);
         Task<int> CountAllByDataTable(bool showAllEditions, int editionId);
+        Task<List<Conference>> FindAllForGenerateNegotiationsAsync(Guid editionUid);
 
         #region Api
 
