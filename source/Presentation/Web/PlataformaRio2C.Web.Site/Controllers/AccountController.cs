@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-14-2020
+// Last Modified On : 03-10-2020
 // ***********************************************************************
 // <copyright file="AccountController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -155,6 +155,12 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     {
                         var cookie = ApplicationCookieControl.SetCookie(userLanguage.Language.Code, Response.Cookies[Constants.CookieName.MyRio2CCookie], Constants.CookieName.MyRio2CCookie);
                         Response.Cookies.Add(cookie);
+                    }
+                    else
+                    {
+                        await this.CommandBus.Send(new UpdateUserInterfaceLanguage(
+                            user.Uid,
+                            ViewBag.UserInterfaceLanguage));
                     }
 
                     if (!string.IsNullOrEmpty(returnUrl?.Replace("/", string.Empty)))
