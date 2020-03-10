@@ -36,7 +36,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>LogisticSponsorsController</summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic + "," + Constants.CollaboratorType.CuratorshipAudiovisual)]
     public class LogisticSponsorsController : BaseController
     {
         private readonly IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepo;
@@ -68,12 +68,13 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public ActionResult Index(LogisticSponsorSearchViewModel searchViewModel)
         {
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Logistics, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Sponsors, Url.Action("Index", "LogisticsSponsors", new { Area = "" }))
+                new BreadcrumbItemHelper(Labels.Sponsors, Url.Action("Index", "LogisticSponsors", new { Area = "" }))
             });
 
             #endregion
@@ -86,8 +87,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <summary>Searches the specified request.</summary>
         /// <param name="request">The request.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
-        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
-        /// <param name="showHighlights">if set to <c>true</c> [show highlights].</param>
         /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions)
@@ -122,6 +121,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <summary>Shows the create modal.</summary>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> ShowCreateModal()
         {
             var cmd = new CreateLogisticSponsors(
@@ -142,6 +142,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> Create(CreateLogisticSponsors cmd)
         {
             var result = new AppValidationResult();
@@ -202,6 +203,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="isAddingToCurrentEdition">The is adding to current edition.</param>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> ShowUpdateModal(Guid? sponsorUid, bool? isAddingToCurrentEdition)
         {
             UpdateLogisticSponsors cmd;
@@ -233,6 +235,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> Update(UpdateLogisticSponsors cmd)
         {
             var result = new AppValidationResult();
@@ -292,6 +295,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> Delete(DeleteLogisticSponsors cmd)
         {
             var result = new AppValidationResult();
@@ -346,7 +350,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <summary>Finds all by is other.</summary>
         /// <returns></returns>
         [HttpGet]
-        [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual + "," + Constants.CollaboratorType.CommissionAudiovisual)]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic + "," + Constants.CollaboratorType.CuratorshipAudiovisual)]
         public async Task<ActionResult> FindAllByIsOther()
         {
             var list = await this.attendeeLogisticSponsorRepo.FindAllDtosByIsOther(this.EditionDto.Id, true);
