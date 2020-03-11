@@ -39,6 +39,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public DateTime? CheckOutDate { get; set; }
 
         [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
+        [StringLength(1000, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string AdditionalInfo { get; set; }
 
         public List<AttendeePlaceDropdownDto> Places { get; set; }

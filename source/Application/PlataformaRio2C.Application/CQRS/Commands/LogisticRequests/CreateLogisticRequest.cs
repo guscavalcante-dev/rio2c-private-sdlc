@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Arthur Souza
-// Created          : 01-27-2020
+// Created          : 02-03-2020
 //
-// Last Modified By : Arthur Souza
-// Last Modified On : 01-27-2020
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-11-2020
 // ***********************************************************************
-// <copyright file="CreateConference.cs" company="Softo">
+// <copyright file="CreateLogisticRequest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -24,11 +24,10 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>CreateLogisticSponsors</summary>
+    /// <summary>CreateLogisticRequest</summary>
     public class CreateLogisticRequest : BaseCommand
     {
         [Display(Name = "Participant", ResourceType = typeof(Labels))]
-
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid AttendeeCollaboratorUid { get; set; }
 
@@ -50,6 +49,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         #endregion
 
         #region Accommodation Sponsor
+
         public bool IsAccommodationSponsored { get; set; }
         
         [RequiredIf("IsAccommodationSponsored", true, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -66,6 +66,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         #endregion
 
         #region AirportTransfer Sponsor
+
         public bool IsAirportTransferSponsored { get; set; }
 
         [RequiredIf("IsAirportTransferSponsored", true, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -84,16 +85,24 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public bool IsCityTransferRequired { get; set; }
         public bool IsVehicleDisposalRequired { get; set; }
 
+        [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
+        [StringLength(1000, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string AdditionalInfo { get; set; }
+
         public List<LogisticSponsorBaseDto> Sponsors { get; set; }
 
-        [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
-        public string AdditionalInfo { get; set; }
-        
         /// <summary>Initializes a new instance of the <see cref="CreateLogisticSponsors"/> class.</summary>
         public CreateLogisticRequest(List<LogisticSponsorBaseDto> sponsors, string userInterfaceLanguage)
         {
             this.UpdateSponsors(sponsors, userInterfaceLanguage);
         }
+
+        /// <summary>Initializes a new instance of the <see cref="CreateLogisticRequest"/> class.</summary>
+        public CreateLogisticRequest()
+        {
+        }
+
+        #region Private Methods
 
         /// <summary>
         /// Updates the sponsors.
@@ -105,14 +114,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             sponsors.ForEach(g => g.Name.GetSeparatorTranslation(userInterfaceLanguage, Language.Separator));
             this.Sponsors = sponsors.OrderBy(e => e.IsOtherRequired).ThenBy(e => e.Name).ToList();
         }
-
-        /// <summary>Initializes a new instance of the <see cref="CreateLogisticSponsors"/> class.</summary>
-        public CreateLogisticRequest()
-        {
-        }
-        
-        #region Private Methods
-
 
         #endregion
     }
