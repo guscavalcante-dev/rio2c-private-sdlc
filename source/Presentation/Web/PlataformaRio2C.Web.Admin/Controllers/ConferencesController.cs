@@ -4,7 +4,7 @@
 // Created          : 12-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-04-2020
+// Last Modified On : 03-11-2020
 // ***********************************************************************
 // <copyright file="ConferencesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
