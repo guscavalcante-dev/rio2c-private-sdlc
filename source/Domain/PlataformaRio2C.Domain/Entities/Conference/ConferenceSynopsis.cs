@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 03-11-2020
 // ***********************************************************************
 // <copyright file="ConferenceSynopsis.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,8 +20,8 @@ namespace PlataformaRio2C.Domain.Entities
     /// <summary>ConferenceSynopsis</summary>
     public class ConferenceSynopsis : Entity
     {
-        public static readonly int ValueMinLength = 2;
-        public static readonly int ValueMaxLength = 300;
+        public static readonly int ValueMinLength = 1;
+        public static readonly int ValueMaxLength = 1000;
 
         public int ConferenceId { get; private set; }
         public int LanguageId { get; private set; }
