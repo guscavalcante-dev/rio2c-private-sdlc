@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-11-2020
 // ***********************************************************************
 // <copyright file="AttendeePlacesRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,27 +23,16 @@ using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
-    #region IQueryable Extensions
+    #region AttendeePlace IQueryable Extensions
 
     /// <summary>
-    /// CollaboratorIQueryableExtensions
+    /// AttendeePlaceIQueryableExtensions
     /// </summary>
     internal static class AttendeePlaceIQueryableExtensions
     {
-        /// <summary>Determines whether [is not deleted].</summary>
+        /// <summary>Finds the by uid.</summary>
         /// <param name="query">The query.</param>
-        /// <returns></returns>
-        internal static IQueryable<AttendeePlace> IsNotDeleted(this IQueryable<AttendeePlace> query)
-        {
-            query = query.Where(c => !c.IsDeleted);
-
-            return query;
-        }
-
-        /// <summary>Finds the by edition identifier.</summary>
-        /// <param name="query">The query.</param>
-        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
-        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="uid">The uid.</param>
         /// <returns></returns>
         internal static IQueryable<AttendeePlace> FindByUid(this IQueryable<AttendeePlace> query, Guid uid)
         {
@@ -52,12 +41,49 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         /// <summary>Finds the by edition identifier.</summary>
         /// <param name="query">The query.</param>
-        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
         internal static IQueryable<AttendeePlace> FindByEditionId(this IQueryable<AttendeePlace> query, int editionId)
         {
             return query.Where(e => e.EditionId == editionId);
+        }
+
+        /// <summary>Determines whether the specified is hotel is hotel.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="isHotel">The is hotel.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeePlace> IsHotel(this IQueryable<AttendeePlace> query, bool? isHotel)
+        {
+            if (isHotel.HasValue)
+            {
+                query = query.Where(ap => ap.Place.IsHotel == isHotel);
+            }
+
+            return query;
+        }
+
+        /// <summary>Determines whether the specified is airport is airport.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="isAirport">The is airport.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeePlace> IsAirport(this IQueryable<AttendeePlace> query, bool? isAirport)
+        {
+            if (isAirport.HasValue)
+            {
+                query = query.Where(ap => ap.Place.IsAirport == isAirport);
+            }
+
+            return query;
+        }
+
+        /// <summary>Determines whether [is not deleted].</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeePlace> IsNotDeleted(this IQueryable<AttendeePlace> query)
+        {
+            query = query.Where(c => !c.IsDeleted);
+
+            return query;
         }
     }
 
@@ -87,20 +113,26 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
-        /// <summary>Finds all dtos by edition.</summary>
+        /// <summary>Finds all dropdown dtos asynchronous.</summary>
         /// <param name="editionId">The edition identifier.</param>
+        /// <param name="isHotel">The is hotel.</param>
+        /// <param name="isAirport">The is airport.</param>
         /// <returns></returns>
-        public Task<List<AttendeePlaceDto>> FindAllDtosByEdition(int editionId)
+        public Task<List<AttendeePlaceDropdownDto>> FindAllDropdownDtosAsync(int editionId, bool? isHotel = null, bool? isAirport = null)
         {
-            return this.GetBaseQuery()
-                            .FindByEditionId(editionId)
-                            .Select(e => new AttendeePlaceDto()
-                            {
-                                Id = e.Id,
-                                Name = e.Place.Name
-                            })
-                            .OrderBy(e => e.Name)
-                            .ToListAsync();
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId)
+                                .IsHotel(isHotel)
+                                .IsAirport(isAirport)
+                                .Select(e => new AttendeePlaceDropdownDto
+                                {
+                                    Id = e.Id,
+                                    Name = e.Place.Name
+                                });
+
+            return query
+                    .OrderBy(e => e.Name)
+                    .ToListAsync();
         }
     }
 }

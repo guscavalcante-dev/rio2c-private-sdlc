@@ -1,11 +1,5 @@
-﻿@using PlataformaRio2C.Domain.Dtos
-@model PlataformaRio2C.Application.CQRS.Commands.CreateLogisticAccomodation
-@{
-    var editionDto = ViewBag.EditionDto as EditionDto;
-}
-
+﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateLogisticAccommodation
 @Html.HiddenFor(m => m.LogisticsUid)
-
 <div class="row">
     <div class="form-group col-md-12">
         @Html.LabelFor(m=> m.PlaceId, Labels.Place, new { @class = "control-label" })
@@ -13,7 +7,6 @@
         @Html.ValidationMessageFor(m => m.PlaceId, "", new { @class = "text-danger" })
     </div>
 </div>
-
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.CheckInDate, new { @class = "control-label" })
@@ -26,7 +19,6 @@
         @Html.ValidationMessageFor(m => m.CheckOutDate, "", new { @class = "text-danger" })
     </div>
 </div>
-
 <div class="row">
     <div class="form-group col-md-12">
         @Html.LabelFor(m => m.AdditionalInfo, new { @class = "control-label" })

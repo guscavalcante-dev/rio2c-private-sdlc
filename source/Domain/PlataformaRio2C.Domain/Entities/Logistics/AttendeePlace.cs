@@ -1,19 +1,16 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Domain
 // Author           : Arthur Souza
-// Created          : 01-20-2020
+// Created          : 01-24-2020
 //
-// Last Modified By : Arthur Souza
-// Last Modified On : 01-20-2020
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-11-2020
 // ***********************************************************************
 // <copyright file="AttendeePlaces.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using PlataformaRio2C.Domain.Validation;
 
 namespace PlataformaRio2C.Domain.Entities
@@ -23,9 +20,15 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public int EditionId { get; private set; }
         public int PlaceId { get; private set; }
+
         public virtual Edition Edition { get; private set; }
         public virtual Place Place { get; private set; }
-                
+
+        /// <summary>Initializes a new instance of the <see cref="AttendeePlace"/> class.</summary>
+        protected AttendeePlace()
+        {
+        }
+
         #region Validations
 
         /// <summary>Returns true if ... is valid.</summary>

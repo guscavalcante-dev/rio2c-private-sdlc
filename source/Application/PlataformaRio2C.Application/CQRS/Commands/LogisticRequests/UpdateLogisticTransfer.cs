@@ -4,7 +4,7 @@
 // Created          : 01-27-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-11-2020
 // ***********************************************************************
 // <copyright file="UpdateLogisticTransfer.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,7 +30,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="date">The date.</param>
         /// <param name="additionalInfo">The additional information.</param>
         /// <param name="places">The places.</param>
-        public UpdateLogisticTransfer(Guid uid, int? fromAttendeePlaceId, int? attendeePlaceId, DateTimeOffset date, string additionalInfo, List<AttendeePlaceDto> places)
+        public UpdateLogisticTransfer(Guid uid, int? fromAttendeePlaceId, int? attendeePlaceId, DateTimeOffset date, string additionalInfo, List<AttendeePlaceDropdownDto> places)
         {
             this.Uid = uid;
             this.FromAttendeePlaceId = fromAttendeePlaceId;

@@ -4,9 +4,9 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-11-2020
 // ***********************************************************************
-// <copyright file="UpdateLogisticAccomodationCommandHandler.cs" company="Softo">
+// <copyright file="UpdateLogisticAccommodationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -20,19 +20,17 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>
-    /// UpdateLogisticAccomodationCommandHandler
-    /// </summary>
-    public class UpdateLogisticAccomodationCommandHandler : LogisticAccommodationBaseCommandHandler, IRequestHandler<UpdateLogisticAccomodation, AppValidationResult>
+    /// <summary>UpdateLogisticAccommodationCommandHandler</summary>
+    public class UpdateLogisticAccommodationCommandHandler : LogisticAccommodationBaseCommandHandler, IRequestHandler<UpdateLogisticAccommodation, AppValidationResult>
     {
         private readonly IAttendeePlacesRepository attendeePlaceRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateLogisticAccomodationCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="UpdateLogisticAccommodationCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="attendeePlaceRepository">The attendee place repository.</param>
         /// <param name="logisticAccommodationRepository">The logistic accommodation repository.</param>
-        public UpdateLogisticAccomodationCommandHandler(
+        public UpdateLogisticAccommodationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IAttendeePlacesRepository attendeePlaceRepository,
@@ -48,7 +46,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>Task&lt;AppValidationResult&gt;.</returns>
-        public async Task<AppValidationResult> Handle(UpdateLogisticAccomodation cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(UpdateLogisticAccommodation cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 

@@ -156,7 +156,7 @@
     <Compile Include="Dtos\EditionEvents\EditionEventJsonDto.cs" />
     <Compile Include="Dtos\Emails\EmailRecipientDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticAccommodationDto.cs" />
-    <Compile Include="Dtos\Logistics\AttendeePlaceDto.cs" />
+    <Compile Include="Dtos\Logistics\AttendeePlaceDropdownDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticAirfareDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticAirfareJsonDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticTransferDto.cs" />

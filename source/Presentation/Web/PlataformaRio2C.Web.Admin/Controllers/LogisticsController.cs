@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-11-2020
 // ***********************************************************************
 // <copyright file="LogisticsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -640,7 +640,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> ShowCreateAccommodationModal(Guid? logisticsUid)
         {
-            var cmd = new CreateLogisticAccomodation(logisticsUid ?? Guid.Empty, await attendeePlacesRepo.FindAllDtosByEdition(EditionDto.Id));
+            var cmd = new CreateLogisticAccommodation(
+                logisticsUid ?? Guid.Empty, 
+                await this.attendeePlacesRepo.FindAllDropdownDtosAsync(EditionDto.Id, true));
 
             return Json(new
             {
@@ -657,7 +659,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <returns></returns>
         [HttpPost]
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
-        public async Task<ActionResult> CreateAccommodation(CreateLogisticAccomodation cmd)
+        public async Task<ActionResult> CreateAccommodation(CreateLogisticAccommodation cmd)
         {
             var result = new AppValidationResult();
 
@@ -689,7 +691,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
-                cmd.UpdateLists(await attendeePlacesRepo.FindAllDtosByEdition(EditionDto.Id));
+                cmd.UpdateLists(
+                    await attendeePlacesRepo.FindAllDropdownDtosAsync(EditionDto.Id, true));
 
                 return Json(new
                 {
@@ -721,7 +724,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> ShowUpdateAccommodationModal(Guid? uid)
         {
-            UpdateLogisticAccomodation cmd;
+            UpdateLogisticAccommodation cmd;
 
             try
             {
@@ -731,7 +734,13 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Request, Labels.FoundF.ToLowerInvariant()));
                 }
 
-                cmd = new UpdateLogisticAccomodation(entity.Uid, entity.CheckInDate, entity.CheckOutDate, entity.AdditionalInfo, entity.AttendeePlaceId, await attendeePlacesRepo.FindAllDtosByEdition(EditionDto.Id));
+                cmd = new UpdateLogisticAccommodation(
+                    entity.Uid, 
+                    entity.CheckInDate, 
+                    entity.CheckOutDate, 
+                    entity.AdditionalInfo, 
+                    entity.AttendeePlaceId, 
+                    await attendeePlacesRepo.FindAllDropdownDtosAsync(EditionDto.Id, true));
             }
             catch (DomainException ex)
             {
@@ -753,7 +762,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <returns></returns>
         [HttpPost]
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
-        public async Task<ActionResult> UpdateAccommodation(UpdateLogisticAccomodation cmd)
+        public async Task<ActionResult> UpdateAccommodation(UpdateLogisticAccommodation cmd)
         {
             var result = new AppValidationResult();
 
@@ -784,6 +793,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     var target = error.Target ?? "";
                     ModelState.AddModelError(target, error.Message);
                 }
+
+                cmd.UpdateLists(
+                    await attendeePlacesRepo.FindAllDropdownDtosAsync(EditionDto.Id, true));
 
                 return Json(new
                 {
@@ -898,7 +910,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> ShowCreateTransferModal(Guid? logisticsUid)
         {
-            var cmd = new CreateLogisticTransfer(logisticsUid ?? Guid.Empty, await attendeePlacesRepo.FindAllDtosByEdition(EditionDto.Id));
+            var cmd = new CreateLogisticTransfer(logisticsUid ?? Guid.Empty, await attendeePlacesRepo.FindAllDropdownDtosAsync(EditionDto.Id));
 
             return Json(new
             {
@@ -947,7 +959,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
-                cmd.UpdateLists(await attendeePlacesRepo.FindAllDtosByEdition(EditionDto.Id));
+                cmd.UpdateLists(await attendeePlacesRepo.FindAllDropdownDtosAsync(EditionDto.Id));
                 return Json(new
                 {
                     status = "error",
@@ -961,7 +973,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             catch (Exception ex)
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                cmd.UpdateLists(await attendeePlacesRepo.FindAllDtosByEdition(EditionDto.Id));
+                cmd.UpdateLists(await attendeePlacesRepo.FindAllDropdownDtosAsync(EditionDto.Id));
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
@@ -989,7 +1001,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Request, Labels.FoundF.ToLowerInvariant()));
                 }
 
-                cmd = new UpdateLogisticTransfer(entity.Uid, entity.FromAttendeePlaceId, entity.ToAttendeePlaceId, entity.Date, entity.AdditionalInfo, await attendeePlacesRepo.FindAllDtosByEdition(EditionDto.Id));
+                cmd = new UpdateLogisticTransfer(entity.Uid, entity.FromAttendeePlaceId, entity.ToAttendeePlaceId, entity.Date, entity.AdditionalInfo, await attendeePlacesRepo.FindAllDropdownDtosAsync(EditionDto.Id));
             }
             catch (DomainException ex)
             {

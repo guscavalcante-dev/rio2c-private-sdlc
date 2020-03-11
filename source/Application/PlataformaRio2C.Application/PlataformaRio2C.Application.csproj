@@ -228,9 +228,9 @@
     <Compile Include="CQRS\CommandsHandlers\LogisticSponsors\UpdateLogisticSponsorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\LogisticSponsors\CreateLogisticSponsorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\LogisticSponsors\LogisticSponsorBaseCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Logistics\CreateLogisticAccomodationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Logistics\CreateLogisticAccommodationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Logistics\UpdateLogisticRequestCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Logistics\UpdateLogisticAccomodationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Logistics\UpdateLogisticAccommodationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Logistics\UpdateLogisticTransferCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Logistics\UpdateLogisticAirfareCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Logistics\CreateLogisticTransferCommandHandler.cs" />
@@ -316,7 +316,7 @@
     <Compile Include="CQRS\Commands\ConferenceParticipantRoles\DeleteConferenceParticipantRole.cs" />
     <Compile Include="CQRS\Commands\ConferenceParticipantRoles\UpdateConferenceParticipantRoleMainInformation.cs" />
     <Compile Include="CQRS\Commands\LogisticRequests\UpdateLogisticAccomodation.cs" />
-    <Compile Include="CQRS\Commands\LogisticRequests\CreateLogisticAccomodation.cs" />
+    <Compile Include="CQRS\Commands\LogisticRequests\CreateLogisticAccommodation.cs" />
     <Compile Include="CQRS\Commands\LogisticRequests\UpdateLogisticAirfare.cs" />
     <Compile Include="CQRS\Commands\LogisticRequests\UpdateLogisticTransfer.cs" />
     <Compile Include="CQRS\Commands\LogisticRequests\CreateLogisticTransfer.cs" />

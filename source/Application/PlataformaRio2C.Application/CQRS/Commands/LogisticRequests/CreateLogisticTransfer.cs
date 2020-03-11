@@ -4,7 +4,7 @@
 // Created          : 01-27-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-11-2020
 // ***********************************************************************
 // <copyright file="CreateLogisticTransfer.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -42,12 +42,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
         public string AdditionalInfo { get; set; }
 
-        public List<AttendeePlaceDto> Places { get; set; }
+        public List<AttendeePlaceDropdownDto> Places { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CreateLogisticTransfer"/> class.</summary>
         /// <param name="logisticsUid">The logistics uid.</param>
         /// <param name="places">The places.</param>
-        public CreateLogisticTransfer(Guid logisticsUid, List<AttendeePlaceDto> places)
+        public CreateLogisticTransfer(Guid logisticsUid, List<AttendeePlaceDropdownDto> places)
         {
             this.LogisticsUid = logisticsUid;
             this.Places = places;
@@ -60,7 +60,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Updates the lists.</summary>
         /// <param name="attendeePlaceDtos">The attendee place dtos.</param>
-        public void UpdateLists(List<AttendeePlaceDto> attendeePlaceDtos)
+        public void UpdateLists(List<AttendeePlaceDropdownDto> attendeePlaceDtos)
         {
             this.Places = attendeePlaceDtos;
         }

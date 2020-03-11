@@ -1,14 +1,26 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Domain
+// Author           : Arthur Souza
+// Created          : 03-08-2020
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-11-2020
+// ***********************************************************************
+// <copyright file="IAttendeePlacesRepository.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
-using X.PagedList;
 
 namespace PlataformaRio2C.Domain.Interfaces
 {
+    /// <summary>IAttendeePlacesRepository</summary>
     public interface IAttendeePlacesRepository : IRepository<AttendeePlace>
     {
-        Task<List<AttendeePlaceDto>> FindAllDtosByEdition(int editionId);
+        Task<List<AttendeePlaceDropdownDto>> FindAllDropdownDtosAsync(int editionId, bool? isHotel = null, bool? isAirport = null);
     }    
 }

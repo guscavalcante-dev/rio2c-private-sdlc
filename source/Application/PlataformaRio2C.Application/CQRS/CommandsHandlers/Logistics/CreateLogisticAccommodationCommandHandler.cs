@@ -4,9 +4,9 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-11-2020
 // ***********************************************************************
-// <copyright file="CreateLogisticAccomodationCommandHandler.cs" company="Softo">
+// <copyright file="CreateLogisticAccommodationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -22,19 +22,19 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>CreateLogisticAccomodationCommandHandler</summary>
-    public class CreateLogisticAccomodationCommandHandler : LogisticAccommodationBaseCommandHandler, IRequestHandler<CreateLogisticAccomodation, AppValidationResult>
+    /// <summary>CreateLogisticAccommodationCommandHandler</summary>
+    public class CreateLogisticAccommodationCommandHandler : LogisticAccommodationBaseCommandHandler, IRequestHandler<CreateLogisticAccommodation, AppValidationResult>
     {
         private readonly ILogisticRepository logisticRepo;
         private readonly IAttendeePlacesRepository placeRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="CreateLogisticAccomodationCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="CreateLogisticAccommodationCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="logisticRepository">The logistic repository.</param>
         /// <param name="placeRepository">The place repository.</param>
         /// <param name="logisticAccommodationRepository">The logistic accommodation repository.</param>
-        public CreateLogisticAccomodationCommandHandler(
+        public CreateLogisticAccommodationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             ILogisticRepository logisticRepository,
@@ -50,7 +50,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(CreateLogisticAccomodation cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(CreateLogisticAccommodation cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
