@@ -4,7 +4,7 @@
 // Created          : 09-18-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 03-11-2020
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,7 +23,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public Guid Uid { get; set; }
         public Guid CollaboratorUid { get; set; }
         public string Name { get; set; }
-        public object BadgeName { get; set; }
+        public string BadgeName { get; set; }
         public DateTimeOffset CreateDate { get; set; }
         public DateTimeOffset UpdateDate { get; set; }
         public IEnumerable<OrganizationApiListDto> OrganizationsDtos { get; set; }

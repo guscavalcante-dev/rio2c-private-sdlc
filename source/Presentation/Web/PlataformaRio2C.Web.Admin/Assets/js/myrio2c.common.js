@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2020
+// Last Modified On : 03-11-2020
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1370,12 +1370,19 @@ var MyRio2cCommon = function () {
 	    else {
 		    container +=
 			    '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" />';
-	    }
+        }
+
+	    var mainName = collaborator.BadgeName || collaborator.Name;
 
 	    container +=
 		    '</div > ' +
 		    '<div class="select2-result-collaborator__meta">' +
-		    '<div class="select2-result-collaborator__title">' + (collaborator.BadgeName || collaborator.Name) + '</div>';
+            '<div class="select2-result-collaborator__title">' + mainName + '</div>';
+
+        if (mainName !== collaborator.Name) {
+	        container +=
+                '<div class="select2-result-collaborator__description">' + collaborator.Name + '</div>';
+        }
 
 	    if (!MyRio2cCommon.isNullOrEmpty(collaborator.JobTitle)) {
 		    container +=

@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-11-2020
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -138,6 +138,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             {
                 var outerWhere = PredicateBuilder.New<AttendeeCollaborator>(false);
                 var innerBadgeWhere = PredicateBuilder.New<AttendeeCollaborator>(true);
+                var innerUserNameWhere = PredicateBuilder.New<AttendeeCollaborator>(true);
                 var innerJobTitleWhere = PredicateBuilder.New<AttendeeCollaborator>(true);
                 var innerOrganizationNameWhere = PredicateBuilder.New<AttendeeCollaborator>(true);
                 
@@ -147,6 +148,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                     if (!string.IsNullOrEmpty(keyword))
                     {
                         innerBadgeWhere = innerBadgeWhere.And(ac => ac.Collaborator.Badge.Contains(keyword));
+                        innerUserNameWhere = innerUserNameWhere.And(ac => ac.Collaborator.User.Name.Contains(keyword));
                         innerJobTitleWhere = innerJobTitleWhere.And(ac => ac.Collaborator.JobTitles.Any(jb => !jb.IsDeleted
                                                                                                               && jb.Value.Contains(keyword)));
                         innerOrganizationNameWhere = innerOrganizationNameWhere.And(ac =>
@@ -159,6 +161,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 }
 
                 outerWhere = outerWhere.Or(innerBadgeWhere);
+                outerWhere = outerWhere.Or(innerUserNameWhere);
                 outerWhere = outerWhere.Or(innerJobTitleWhere);
                 outerWhere = outerWhere.Or(innerOrganizationNameWhere);
                 query = query.Where(outerWhere);

@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2020
+// Last Modified On : 03-11-2020
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -76,7 +76,7 @@ var MyRio2cCommon = function () {
     };
 
     // Enable change events -----------------------------------------------------------------------
-    var enableCheckboxChangeEvent = function (elementId) {
+    var enableCheckboxChangeEvent = function (elementId, callback) {
         var element = $('#' + elementId);
 
         function toggleChanged(element) {
@@ -85,6 +85,10 @@ var MyRio2cCommon = function () {
             }
             else {
                 $("[data-additionalinfo='" + element.attr("id") + "']").addClass('d-none');
+            }
+
+            if (callback) {
+                callback(element.prop('checked'));
             }
         }
 
@@ -533,7 +537,8 @@ var MyRio2cCommon = function () {
 
     // Forms --------------------------------------------------------------------------------------
     var enableFormValidation = function (options) {
-        extendGlobalValidations();
+        var globalValidations = extendGlobalValidations;
+        globalValidations();
 
         if (!hasProperty(options, 'formIdOrClass') || isNullOrEmpty(options.formIdOrClass)) {
             return;
@@ -629,6 +634,27 @@ var MyRio2cCommon = function () {
         });
     };
 
+
+    var enableDateTimePicker = function (options) {
+        // Id or class
+        if (!hasProperty(options, 'inputIdOrClass') || isNullOrEmpty(options.inputIdOrClass)) {
+            options.inputIdOrClass = '.enable-datetimepicker';
+        }
+
+        var dateFormat = $.fn.datepicker.dates[MyRio2cCommon.getGlobalVariable('userInterfaceLanguage')].format;
+
+        $(options.inputIdOrClass).datetimepicker({
+            format: dateFormat + ' hh:ii',
+            language: MyRio2cCommon.getGlobalVariable('userInterfaceLanguage')
+        });
+
+        $(options.inputIdOrClass).inputmask("datetime", {
+            inputFormat: dateFormat + ' HH:MM',
+            placeholder: '__/__/____ __:__'
+        });
+    }
+
+
     var enableTimePicker = function (options) {
         if (isNullOrEmpty(options)) {
             options = new Object();
@@ -689,7 +715,9 @@ var MyRio2cCommon = function () {
             return;
         }
 
-        var validator = $(formIdOrClass).validate();
+        var validator = $(formIdOrClass).validate({
+            debug: true
+        });
 
         if ($(formIdOrClass).valid()) {
             MyRio2cCommon.block();
@@ -1344,10 +1372,17 @@ var MyRio2cCommon = function () {
                 '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" />';
         }
 
+        var mainName = collaborator.BadgeName || collaborator.Name;
+
         container +=
             '</div > ' +
             '<div class="select2-result-collaborator__meta">' +
-            '<div class="select2-result-collaborator__title">' + (collaborator.BadgeName || collaborator.Name) + '</div>';
+            '<div class="select2-result-collaborator__title">' + mainName + '</div>';
+
+        if (mainName !== collaborator.Name) {
+            container +=
+                '<div class="select2-result-collaborator__description">' + collaborator.Name + '</div>';
+        }
 
         if (!MyRio2cCommon.isNullOrEmpty(collaborator.JobTitle)) {
             container +=
@@ -1558,8 +1593,11 @@ var MyRio2cCommon = function () {
         enableDropdownChangeEvent: function (elementId, requiredFieldId) {
             enableDropdownChangeEvent(elementId, requiredFieldId);
         },
-        enableCheckboxChangeEvent: function (elementId) {
-            enableCheckboxChangeEvent(elementId);
+        enableCheckboxChangeEvent: function (elementId, callback) {
+            enableCheckboxChangeEvent(elementId, callback);
+        },
+        enableDateTimePicker: function (options) {
+            enableDateTimePicker(options);
         },
         enableYesNoRadioEvent: function (elementId) {
             enableYesNoRadioEvent(elementId);

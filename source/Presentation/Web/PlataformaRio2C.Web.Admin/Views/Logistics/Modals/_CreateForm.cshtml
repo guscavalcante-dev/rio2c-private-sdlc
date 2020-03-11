@@ -1,10 +1,6 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Domain.Entities
 @model PlataformaRio2C.Application.CQRS.Commands.CreateLogisticRequest
-@{
-    var editionDto = ViewBag.EditionDto as EditionDto;
-}
-
 <div class="kt-section">
     <div class="kt-section__content mt-3">
         <div class="row">
@@ -16,8 +12,7 @@
         </div>
     </div>
 </div>
-
-<!--begin: Main Information-->
+<!--begin: Airfare-->
 <div class="kt-section">
     <h3 class="kt-section__title mb-0 mt-30">@Labels.Airfare</h3>
     <hr />
@@ -51,7 +46,7 @@
                 <div class="view">
                     @Html.Hidden("AirfareRequired")
                     @Html.Hidden("AirfareInitialSponsorUid", Model.AirportTransferSponsorUid)
-                    @Html.DropDownList("AirfareSponsorOtherUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new {@class = "form-control enable-select2"})
+                    @Html.DropDownList("AirfareSponsorOtherUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control enable-select2" })
                     <span class="form-text text-muted text-right"><a href="" onclick="return LogisticsCreate.enableNewSponsor('Airfare');" class="btn-link btn-edit">@(Labels.NewM.ToLowerInvariant()) @(Labels.Sponsor.ToLowerInvariant())</a></span>
                 </div>
                 <div class="edit d-none">
@@ -63,7 +58,8 @@
         </div>
     </div>
 </div>
-
+<!--end: Airfare-->
+<!--begin: Accommodation-->
 <div class="kt-section">
     <h3 class="kt-section__title mb-0 mt-30">@Labels.Accommodation</h3>
     <hr />
@@ -109,7 +105,8 @@
         </div>
     </div>
 </div>
-
+<!--end: Accommodation-->
+<!--begin: Transport-->
 <div class="kt-section">
     <h3 class="kt-section__title mb-0 mt-30">@Labels.Transport</h3>
     <hr />
@@ -160,7 +157,6 @@
         </div>
     </div>
 </div>
-
 <div class="kt-section">
     <div class="kt-section__content mt-3">
         <div class="kt-checkbox-list">
@@ -173,15 +169,14 @@
                 <div class="col-md-12 form-group mb-0">
                     <label class="kt-checkbox">
                         @Html.CheckBoxFor(m => m.IsCityTransferRequired) @Labels.TransferCity
-                            <span></span>
-                        </label>
+                        <span></span>
+                    </label>
                     <span class="form-text text-muted">@Labels.LogisticsCityTransferHelpText</span>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <div class="kt-section">
     <div class="kt-section__content mt-3">
         <div class="kt-checkbox-list">
@@ -202,7 +197,7 @@
         </div>
     </div>
 </div>
-
+<!--end: Transport-->
 <div class="row">
     <div class="form-group col-md-12">
         @Html.LabelFor(m => m.AdditionalInfo, new { @class = "control-label" })
