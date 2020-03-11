@@ -2405,6 +2405,10 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Direção</value>
     <comment>Direção</comment>
   </data>
+  <data name="Hotel" xml:space="preserve">
+    <value>Hotel</value>
+    <comment>Hotel</comment>
+  </data>
   <data name="Transfer" xml:space="preserve">
     <value>Transfer</value>
     <comment>Transfer</comment>

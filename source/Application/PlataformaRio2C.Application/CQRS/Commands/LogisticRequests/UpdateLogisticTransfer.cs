@@ -22,22 +22,23 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     public class UpdateLogisticTransfer : CreateLogisticTransfer
     {
         public Guid Uid { get; set; }
-        
+
         /// <summary>Initializes a new instance of the <see cref="UpdateLogisticTransfer"/> class.</summary>
         /// <param name="uid">The uid.</param>
         /// <param name="fromAttendeePlaceId">From attendee place identifier.</param>
         /// <param name="attendeePlaceId">The attendee place identifier.</param>
         /// <param name="date">The date.</param>
         /// <param name="additionalInfo">The additional information.</param>
-        /// <param name="places">The places.</param>
-        public UpdateLogisticTransfer(Guid uid, int? fromAttendeePlaceId, int? attendeePlaceId, DateTimeOffset date, string additionalInfo, List<AttendeePlaceDropdownDto> places)
+        /// <param name="attendeePlaceDropdownDto">The attendee place dropdown dto.</param>
+        public UpdateLogisticTransfer(Guid uid, int? fromAttendeePlaceId, int? attendeePlaceId, DateTimeOffset date, string additionalInfo, List<AttendeePlaceDropdownDto> attendeePlaceDropdownDto)
         {
             this.Uid = uid;
             this.FromAttendeePlaceId = fromAttendeePlaceId;
             this.ToAttendeePlaceId = attendeePlaceId;
             this.Date = date.ToUserTimeZone();
-            this.Places = places;
             this.AdditionalInfo = additionalInfo;
+
+            this.UpdateLists(attendeePlaceDropdownDto);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateLogisticTransfer"/> class.</summary>

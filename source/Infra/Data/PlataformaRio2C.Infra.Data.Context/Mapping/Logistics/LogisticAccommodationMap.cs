@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-11-2020
 // ***********************************************************************
 // <copyright file="LogisticAccommodationMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,6 +23,9 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         public LogisticAccommodationMap()
         {
             this.ToTable("LogisticAccommodations");
+
+            this.Property(p => p.AdditionalInfo)
+                .HasMaxLength(LogisticAccommodation.AdditionalInfoMaxLength);
 
             // Relationships
 

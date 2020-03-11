@@ -14,6 +14,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
@@ -30,6 +31,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = "ToPlace", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [NotEqualTo("FromAttendeePlaceId", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyDifferentFromProperty")]
         public int? ToAttendeePlaceId { get; set; }
 
         [Display(Name = "Departure", ResourceType = typeof(Labels))]
@@ -59,10 +61,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         }
 
         /// <summary>Updates the lists.</summary>
-        /// <param name="attendeePlaceDtos">The attendee place dtos.</param>
-        public void UpdateLists(List<AttendeePlaceDropdownDto> attendeePlaceDtos)
+        /// <param name="attendeePlaceDropdownDto">The attendee place dropdown dto.</param>
+        public void UpdateLists(List<AttendeePlaceDropdownDto> attendeePlaceDropdownDto)
         {
-            this.Places = attendeePlaceDtos;
+            this.Places = attendeePlaceDropdownDto;
         }
     }
 }

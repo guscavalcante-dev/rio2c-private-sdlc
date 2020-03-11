@@ -14,6 +14,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
@@ -24,7 +25,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         public Guid LogisticsUid { get; set; }
 
-        [Display(Name = "Place", ResourceType = typeof(Labels))]
+        [Display(Name = "Hotel", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public int? PlaceId { get; set; }
 
@@ -34,6 +35,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = "CheckOutDate", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [NotEqualTo("CheckInDate", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyDifferentFromProperty")]
         public DateTime? CheckOutDate { get; set; }
 
         [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]

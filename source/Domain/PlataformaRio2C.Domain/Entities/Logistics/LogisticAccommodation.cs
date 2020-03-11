@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-11-2020
 // ***********************************************************************
 // <copyright file="LogisticAccommodation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,11 +21,13 @@ namespace PlataformaRio2C.Domain.Entities
     /// <summary>LogisticAccommodation</summary>
     public class LogisticAccommodation : Entity
     {
+        public static readonly int AdditionalInfoMaxLength = 1000;
+
         public int LogisticId { get; private set; }
         public int AttendeePlaceId { get; private set; }
-        public string AdditionalInfo { get; private set; }
         public DateTimeOffset CheckInDate { get; private set; }
         public DateTimeOffset CheckOutDate { get; private set; }
+        public string AdditionalInfo { get; private set; }
 
         public virtual Logistic Logistic { get; private set; }
         public virtual AttendeePlace AttendeePlace { get; private set; }
@@ -45,11 +47,15 @@ namespace PlataformaRio2C.Domain.Entities
             Logistic logistic, 
             int userId)
         {
-            this.AdditionalInfo = additionalInfo;
+            this.LogisticId = logistic?.Id ?? 0;
+            this.Logistic = logistic;
+            this.AttendeePlaceId = attendeePlace?.Id ?? 0;
+            this.AttendeePlace = attendeePlace;
             this.CheckInDate = checkInDate.ToUtcTimeZone();
             this.CheckOutDate = checkOutDate.ToUtcTimeZone();
-            this.AttendeePlace = attendeePlace;
-            this.Logistic = logistic;
+            this.AdditionalInfo = additionalInfo;
+
+            this.IsDeleted = false;
             this.CreateUserId = this.UpdateUserId = userId;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
         }
@@ -67,6 +73,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void Update(string additionalInfo, DateTime? checkInDate, DateTime? checkOutDate, AttendeePlace attendeePlace, int userId)
         {
+            this.AttendeePlaceId = attendeePlace?.Id ?? 0;
+            this.AttendeePlace = attendeePlace;
+
             if (checkInDate.HasValue)
             {
                 this.CheckInDate = checkInDate.Value.ToUtcTimeZone();
@@ -78,7 +87,6 @@ namespace PlataformaRio2C.Domain.Entities
             }
 
             this.AdditionalInfo = additionalInfo;
-            this.AttendeePlace = attendeePlace;
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
@@ -106,17 +114,58 @@ namespace PlataformaRio2C.Domain.Entities
                 this.ValidationResult = new ValidationResult();
             }
 
+            this.ValidateLogistic();
+            this.ValidatePlace();
+            this.ValidateDates();
+            this.ValidateAdditionalInfo();
+
+            return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>Validates the logistic.</summary>
+        public void ValidateLogistic()
+        {
+            if (this.Logistic == null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Request), new string[] { "LogisticUid" }));
+            }
+        }
+
+        /// <summary>Validates the place.</summary>
+        public void ValidatePlace()
+        {
+            if (this.AttendeePlace == null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Hotel), new string[] { "PlaceId" }));
+            }
+        }
+
+        /// <summary>Validates the dates.</summary>
+        public void ValidateDates()
+        {
             if (this.CheckInDate == DateTimeOffset.MinValue)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.CheckInDate)));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.CheckInDate), new string[] { "CheckInDate" }));
             }
 
             if (this.CheckOutDate == DateTimeOffset.MinValue)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.CheckOutDate)));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.CheckOutDate), new string[] { "CheckOutDate" }));
             }
 
-            return this.ValidationResult.IsValid;
+            if (this.CheckInDate >= this.CheckOutDate)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyGreaterThanProperty, Labels.CheckOutDate, Labels.CheckInDate), new string[] { "CheckOutDate" }));
+            }
+        }
+
+        /// <summary>Validates the additional information.</summary>
+        public void ValidateAdditionalInfo()
+        {
+            if (!string.IsNullOrEmpty(this.AdditionalInfo?.Trim()) && this.AdditionalInfo?.Trim().Length > AdditionalInfoMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.AdditionalInfo, AdditionalInfoMaxLength, 1), new string[] { "AdditionalInfo" }));
+            }
         }
 
         #endregion

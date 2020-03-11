@@ -2402,6 +2402,10 @@
     <value>Direction</value>
     <comment>Direção</comment>
   </data>
+  <data name="Hotel" xml:space="preserve">
+    <value>Hotel</value>
+    <comment>Hotel</comment>
+  </data>
   <data name="Transfer" xml:space="preserve">
     <value>Transfer</value>
     <comment>Transfer</comment>

@@ -4,7 +4,7 @@
 // Created          : 01-27-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-11-2020
 // ***********************************************************************
 // <copyright file="CreateLogisticAirfare.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,6 +14,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web;
+using Foolproof;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
@@ -38,6 +39,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        [NotEqualTo("From", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyDifferentFromProperty")]
         [Display(Name = "ToPlace", ResourceType = typeof(Labels))]
         public string To { get; set; }
 
@@ -47,6 +49,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = "ArrivalDate", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [NotEqualTo("Departure", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyDifferentFromProperty")]
         public DateTime? Arrival { get; set; }
         
         [Display(Name = "TicketNumber", ResourceType = typeof(Labels))]

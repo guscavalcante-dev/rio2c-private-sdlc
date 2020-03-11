@@ -2023,6 +2023,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hotel.
+        /// </summary>
+        public static string Hotel {
+            get {
+                return ResourceManager.GetString("Hotel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Horário.
         /// </summary>
         public static string Hour {

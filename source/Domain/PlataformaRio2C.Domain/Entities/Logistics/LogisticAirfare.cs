@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-11-2020
 // ***********************************************************************
 // <copyright file="LogisticAirfare.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -170,7 +170,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             if (this.Logistic == null)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Airfare), new string[] { "LogisticUid" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Request), new string[] { "LogisticUid" }));
             }
         }
 

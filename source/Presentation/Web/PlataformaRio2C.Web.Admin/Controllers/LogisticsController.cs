@@ -910,7 +910,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> ShowCreateTransferModal(Guid? logisticsUid)
         {
-            var cmd = new CreateLogisticTransfer(logisticsUid ?? Guid.Empty, await attendeePlacesRepo.FindAllDropdownDtosAsync(EditionDto.Id));
+            var cmd = new CreateLogisticTransfer(
+                logisticsUid ?? Guid.Empty, 
+                await attendeePlacesRepo.FindAllDropdownDtosAsync(EditionDto.Id));
 
             return Json(new
             {
@@ -959,7 +961,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
-                cmd.UpdateLists(await attendeePlacesRepo.FindAllDropdownDtosAsync(EditionDto.Id));
+                cmd.UpdateLists(
+                    await attendeePlacesRepo.FindAllDropdownDtosAsync(EditionDto.Id));
+
                 return Json(new
                 {
                     status = "error",

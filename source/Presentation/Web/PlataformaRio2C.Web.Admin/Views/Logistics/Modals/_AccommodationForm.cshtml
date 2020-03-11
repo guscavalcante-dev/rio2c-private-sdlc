@@ -2,7 +2,7 @@
 @Html.HiddenFor(m => m.LogisticsUid)
 <div class="row">
     <div class="form-group col-md-12">
-        @Html.LabelFor(m=> m.PlaceId, Labels.Place, new { @class = "control-label" })
+        @Html.LabelFor(m=> m.PlaceId, new { @class = "control-label" })
         @Html.DropDownListFor(m => m.PlaceId, new SelectList(Model.Places, "Id", "Name", Model.PlaceId), $"{Labels.Select}...", new { @class = "form-control enable-select2" })
         @Html.ValidationMessageFor(m => m.PlaceId, "", new { @class = "text-danger" })
     </div>

@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-11-2020
 // ***********************************************************************
 // <copyright file="LogisticTransfer.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,11 +21,14 @@ namespace PlataformaRio2C.Domain.Entities
     /// <summary>LogisticTransfer</summary>
     public class LogisticTransfer : Entity
     {
+        public static readonly int AdditionalInfoMaxLength = 1000;
+
         public int LogisticId { get; private set; }
         public int FromAttendeePlaceId { get; private set; }
         public int ToAttendeePlaceId { get; private set; }
-        public string AdditionalInfo { get; private set; }
         public DateTimeOffset Date { get; private set; }
+        public string AdditionalInfo { get; private set; }
+        public int? LogisticTransferStatusId { get; private set; }
 
         public virtual Logistic Logistic { get; private set; }
         public virtual AttendeePlace FromAttendeePlace { get; private set; }
@@ -41,14 +44,17 @@ namespace PlataformaRio2C.Domain.Entities
         public LogisticTransfer(string additionalInfo, DateTime? date, AttendeePlace fromAttendeePlace, AttendeePlace toAttendeePlace, Logistic logistic, int userId)
         {
             this.Logistic = logistic;
-            this.AdditionalInfo = additionalInfo;
+            this.FromAttendeePlaceId = fromAttendeePlace?.Id ?? 0;
             this.FromAttendeePlace = fromAttendeePlace;
+            this.ToAttendeePlaceId = toAttendeePlace?.Id ?? 0;
             this.ToAttendeePlace = toAttendeePlace;
 
             if (date.HasValue)
             {
                 this.Date = date.Value.ToUtcTimeZone();
             }
+
+            this.AdditionalInfo = additionalInfo?.Trim();
 
             this.IsDeleted = false;
             this.CreateUserId = this.UpdateUserId = userId;
@@ -68,10 +74,12 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void Update(string additionalInfo, DateTime date, AttendeePlace fromAttendeePlace, AttendeePlace toAttendeePlace, int userId)
         {
-            this.AdditionalInfo = additionalInfo;
-            this.Date = date.ToUtcTimeZone();
+            this.FromAttendeePlaceId = fromAttendeePlace?.Id ?? 0;
             this.FromAttendeePlace = fromAttendeePlace;
+            this.ToAttendeePlaceId = toAttendeePlace?.Id ?? 0;
             this.ToAttendeePlace = toAttendeePlace;
+            this.Date = date.ToUtcTimeZone();
+            this.AdditionalInfo = additionalInfo?.Trim();
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
@@ -99,12 +107,48 @@ namespace PlataformaRio2C.Domain.Entities
                 this.ValidationResult = new ValidationResult();
             }
 
-            if (this.Date == DateTimeOffset.MinValue)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Date)));
-            }
+            this.ValidateLogistic();
+            this.ValidatePlaces();
+            this.ValidateAdditionalInfo();
 
             return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>Validates the logistic.</summary>
+        public void ValidateLogistic()
+        {
+            if (this.Logistic == null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Request), new string[] { "LogisticUid" }));
+            }
+        }
+
+        /// <summary>Validates the places.</summary>
+        public void ValidatePlaces()
+        {
+            if (this.FromAttendeePlace == null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.FromPlace), new string[] { "FromAttendeePlaceId" }));
+            }
+
+            if (this.ToAttendeePlace == null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.ToPlace), new string[] { "ToAttendeePlaceId" }));
+            }
+
+            if (this.FromAttendeePlaceId == this.ToAttendeePlaceId)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyDifferentFromProperty, Labels.ToPlace, Labels.FromPlace), new string[] { "ToAttendeePlaceId" }));
+            }
+        }
+
+        /// <summary>Validates the additional information.</summary>
+        public void ValidateAdditionalInfo()
+        {
+            if (!string.IsNullOrEmpty(this.AdditionalInfo?.Trim()) && this.AdditionalInfo?.Trim().Length > AdditionalInfoMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.AdditionalInfo, AdditionalInfoMaxLength, 1), new string[] { "AdditionalInfo" }));
+            }
         }
 
         #endregion

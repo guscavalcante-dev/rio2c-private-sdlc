@@ -34,8 +34,8 @@
                                 <table class="table table-sm table-head-bg-brand table-body-scroll">
                                     <thead class="thead-inverse">
                                         <tr>
-                                            <th class="text-center">@Labels.FromPlace</th>
-                                            <th class="text-center">@Labels.ToPlace</th>
+                                            <th>@Labels.FromPlace</th>
+                                            <th>@Labels.ToPlace</th>
                                             <th class="text-center">@Labels.Departure</th>
                                             <th class="text-center">@Labels.CreateDate</th>
                                             <th class="text-center">@Labels.UpdateDate</th>
@@ -46,23 +46,23 @@
                                         </tr>
                                     </thead>
                                     <tbody class="rio2c-scroll" style="height: 180px;">
-                                        @foreach (var dto in Model)
+                                        @foreach (var logisticTransferDto in Model)
                                         {
                                             <tr>
-                                                <td class="text-center">
-                                                    @dto.FromAttendeePlace
+                                                <td>
+                                                    @logisticTransferDto.FromAttendeePlace
+                                                </td>
+                                                <td>
+                                                    @logisticTransferDto.ToAttendeePlace
                                                 </td>
                                                 <td class="text-center">
-                                                    @dto.ToAttendeePlace
+                                                    @logisticTransferDto.Date.ToUserTimeZone().ToString("g")
                                                 </td>
                                                 <td class="text-center">
-                                                    @dto.Date.ToUserTimeZone().ToString("g")
+                                                    @logisticTransferDto.CreateDate.ToUserTimeZone().ToString("g")
                                                 </td>
                                                 <td class="text-center">
-                                                    @dto.CreateDate.ToUserTimeZone().ToString("g")
-                                                </td>
-                                                <td class="text-center">
-                                                    @dto.UpdateDate.ToUserTimeZone().ToString("g")
+                                                    @logisticTransferDto.UpdateDate.ToUserTimeZone().ToString("g")
                                                 </td>
                                                 @if (hasChangeDataPermission)
                                                 {
@@ -72,8 +72,8 @@
                                                                 <i class="la la-ellipsis-h"></i>
                                                             </a>
                                                             <div class="dropdown-menu dropdown-menu-right">
-                                                                <button class="dropdown-item" onclick="LogisticTransferUpdate.showModal('@dto.Uid');"><i class="la la-edit"></i>@Labels.Edit</button>
-                                                                <button class="dropdown-item" onclick="LogisticTransferDelete.showModal('@dto.Uid');"><i class="la la-remove"></i>@Labels.Remove</button>
+                                                                <button class="dropdown-item" onclick="LogisticTransferUpdate.showModal('@logisticTransferDto.Uid');"><i class="la la-edit"></i>@Labels.Edit</button>
+                                                                <button class="dropdown-item" onclick="LogisticTransferDelete.showModal('@logisticTransferDto.Uid');"><i class="la la-remove"></i>@Labels.Remove</button>
                                                             </div>
                                                         </span>
                                                     </td>
