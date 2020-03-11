@@ -1,4 +1,6 @@
-﻿@{
+﻿@using PlataformaRio2C.Domain.Dtos
+@{
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     DateTime date;
 }
 <div class="kt-portlet">
@@ -29,7 +31,9 @@
                                         New Members Joined!
                                     </div>*@
                                 <div class="kt-timeline-v1__item-body">
-                                    <img class="r2c-we-connected-banner" src="https://assets.my.rio2c.com/img/we-connected/@(date.ToString("yyyyMMdd"))_dashboard-banner-@(ViewBag.UserInterfaceLanguage).png?v=@(date.ToString("yyyyMMdd"))" />
+                                    <a href="@Url.Action("Details", "Executives", new { Area = "", id = ViewBag.userAccessControlDto?.Collaborator?.Uid })">
+                                        <img class="r2c-we-connected-banner" src="https://assets.my.rio2c.com/img/we-connected/@(date.ToString("yyyyMMdd"))_dashboard-banner-@(ViewBag.UserInterfaceLanguage).png?v=@(date.ToString("yyyyMMdd"))" />
+                                    </a>
                                 </div>
                                 @*<div class="kt-timeline-v1__item-actions">
                                         <a href="#" class="btn btn-sm btn-brand">Check all</a>
