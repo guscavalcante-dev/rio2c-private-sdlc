@@ -4,7 +4,7 @@
 // Created          : 12-18-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified On : 03-11-2020
 // ***********************************************************************
 // <copyright file="SpeakersApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -240,7 +240,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 Picture = speakerCollaboratorApiDto.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, speakerCollaboratorApiDto.Uid, speakerCollaboratorApiDto.ImageUploadDate, true, "_500x500") : null,
                 MiniBio = speakerCollaboratorApiDto.GetCollaboratorMiniBioBaseDtoByLanguageCode(request?.Culture)?.Value?.Trim(),
                 JobTitle = speakerCollaboratorApiDto.GetCollaboratorJobTitleBaseDtoByLanguageCode(request?.Culture)?.Value?.Trim(),
-                Site = speakerCollaboratorApiDto.Website.GetUrlWithProtocol(),
+                Site = speakerCollaboratorApiDto.Website?.GetUrlWithProtocol(),
                 SocialNetworks = socialNetworks,
                 Tracks = speakerCollaboratorApiDto.TracksDtos?.Select(td => new TrackBaseApiResponse
                 {
