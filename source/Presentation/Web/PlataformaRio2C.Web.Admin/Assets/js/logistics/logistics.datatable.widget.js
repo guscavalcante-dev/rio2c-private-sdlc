@@ -111,7 +111,7 @@ var LogisticsDataTableWidget = function () {
                                         <td>';
 
 	                    if (!MyRio2cCommon.isNullOrEmpty(full.CollaboratorImageUploadDate)) {
-                            html += '<img src="' + imageDirectory + full.Uid + '_thumbnail.png?v=' + moment(full.CollaboratorImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
+                            html += '<img src="' + imageDirectory + full.CollaboratorUid + '_thumbnail.png?v=' + moment(full.CollaboratorImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
 	                    }
 	                    else {
 		                    html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';
