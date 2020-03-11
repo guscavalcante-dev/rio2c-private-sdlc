@@ -18,6 +18,28 @@
                         <!--begin: Timeline item-->
                         <div class="kt-timeline-v1__item kt-timeline-v1__item--first">
                             @{
+                                date = new DateTime(2020, 3, 11);
+                            }
+                            <div class="kt-timeline-v1__item-circle">
+                                <div class="kt-bg-danger"></div>
+                            </div>
+                            <span class="kt-timeline-v1__item-time kt-font-brand">@date.ToShortDateString()</span>
+                            <div class="kt-timeline-v1__item-content">
+                                @*<div class="kt-timeline-v1__item-title">
+                                        New Members Joined!
+                                    </div>*@
+                                <div class="kt-timeline-v1__item-body">
+                                    <img class="r2c-we-connected-banner" src="https://assets.my.rio2c.com/img/we-connected/@(date.ToString("yyyyMMdd"))_dashboard-banner-@(ViewBag.UserInterfaceLanguage).png?v=@(date.ToString("yyyyMMdd"))" />
+                                </div>
+                                @*<div class="kt-timeline-v1__item-actions">
+                                        <a href="#" class="btn btn-sm btn-brand">Check all</a>
+                                    </div>*@
+                            </div>
+                        </div>
+                        <!--end: Timeline item-->
+                        <!--begin: Timeline item-->
+                        <div class="kt-timeline-v1__item">
+                            @{
                                 date = new DateTime(2020, 1, 31);
                             }
                             <div class="kt-timeline-v1__item-circle">
