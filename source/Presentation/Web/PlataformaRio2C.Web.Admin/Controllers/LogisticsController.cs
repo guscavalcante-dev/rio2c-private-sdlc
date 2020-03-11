@@ -350,7 +350,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             return View(logisticsRequestDto);
         }
 
-        #region Airfare
+        #region Airfare Widget
 
         /// <summary>Shows the airfare widget.</summary>
         /// <param name="logisticsUid">The logistics uid.</param>
@@ -606,7 +606,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #endregion
 
-        #region Accommodation
+        #region Accommodation Widget
 
         /// <summary>Shows the accommodation widget.</summary>
         /// <param name="logisticsUid">The logistics uid.</param>
@@ -864,7 +864,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #endregion
 
-        #region Transfer
+        #region Transfer Widget
 
         /// <summary>Shows the transfer widget.</summary>
         /// <param name="logisticsUid">The logistics uid.</param>
