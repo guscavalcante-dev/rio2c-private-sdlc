@@ -31,7 +31,7 @@
                                         New Members Joined!
                                     </div>*@
                                 <div class="kt-timeline-v1__item-body">
-                                    <a href="@Url.Action("Details", "Executives", new { Area = "", id = ViewBag.userAccessControlDto?.Collaborator?.Uid })">
+                                    <a href="@Url.Action("Details", "Executives", new { Area = "", id = userAccessControlDto?.Collaborator?.Uid })">
                                         <img class="r2c-we-connected-banner" src="https://assets.my.rio2c.com/img/we-connected/@(date.ToString("yyyyMMdd"))_dashboard-banner-@(ViewBag.UserInterfaceLanguage).png?v=@(date.ToString("yyyyMMdd"))" />
                                     </a>
                                 </div>
