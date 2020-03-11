@@ -4516,11 +4516,11 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exibir todos os patrocinados.
+        ///   Looks up a localized string similar to Exibir todos os patrocinadores.
         /// </summary>
-        public static string ShowAllSponsored {
+        public static string ShowAllSponsors {
             get {
-                return ResourceManager.GetString("ShowAllSponsored", resourceCulture);
+                return ResourceManager.GetString("ShowAllSponsors", resourceCulture);
             }
         }
         

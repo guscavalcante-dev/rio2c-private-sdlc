@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-11-2020
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -97,15 +97,23 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         /// <summary>Finds the logistics by edition identifier.</summary>
         /// <param name="query">The query.</param>
-        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
         /// <param name="editionId">The edition identifier.</param>
+        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <param name="showAllSponsored">if set to <c>true</c> [show all sponsored].</param>
         /// <returns></returns>
-        internal static IQueryable<Collaborator> FindLogisticsByEditionId(this IQueryable<Collaborator> query, bool showAllParticipants, int editionId)
+        internal static IQueryable<Collaborator> FindLogisticsByEditionId(this IQueryable<Collaborator> query, int editionId, bool showAllParticipants, bool showAllSponsored)
         {
             query = query.Where(c => c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId 
                                                                        && !ac.IsDeleted
                                                                        && !ac.Edition.IsDeleted
-                                                                       && (showAllParticipants || (ac.Logistics.Any(l => !l.IsDeleted)))));
+                                                                       && (showAllParticipants 
+                                                                           || (showAllSponsored && ac.Logistics.Any(l => !l.IsDeleted))
+                                                                               || (!showAllSponsored && ac.Logistics.Any(l => !l.IsDeleted 
+                                                                                                                              && (l.AirfareSponsor.IsLogisticListDisplayed
+                                                                                                                                  || l.AccommodationSponsor.IsLogisticListDisplayed
+                                                                                                                                  || l.AirportTransferSponsor.IsLogisticListDisplayed
+                                                                                                                                  || l.IsCityTransferRequired
+                                                                                                                                  || l.IsVehicleDisposalRequired))))));
 
             return query;
         }
@@ -891,6 +899,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="searchValue">The search value.</param>
         /// <param name="sortColumns">The sort columns.</param>
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <param name="showAllSponsors">if set to <c>true</c> [show all sponsors].</param>
         /// <returns></returns>
         public async Task<IPagedList<LogisticRequestBaseDto>> FindAllLogisticsByDatatable(
             int editionId,
@@ -898,10 +907,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             int pageSize,
             string searchValue,
             List<Tuple<string, string>> sortColumns,
-            bool showAllParticipants)
+            bool showAllParticipants,
+            bool showAllSponsors)
         {
             var query = this.GetBaseQuery()
-                                    .FindLogisticsByEditionId(showAllParticipants, editionId)
+                                    .FindLogisticsByEditionId(editionId, showAllParticipants, showAllSponsors)
                                     .FindByKeywords(searchValue, editionId);
 
             return await query

@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-13-2019
+// Last Modified On : 03-11-2020
 // ***********************************************************************
 // <copyright file="LogisticSponsorSearchViewModel.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,8 +28,8 @@ namespace PlataformaRio2C.Application.ViewModels
         [Display(Name = "ShowAllParticipants", ResourceType = typeof(Labels))] 
         public bool ShowAllParticipants { get; set; }
 
-        [Display(Name = "ShowAllSponsored", ResourceType = typeof(Labels))] 
-        public bool ShowAllSponsored { get; set; }
+        [Display(Name = "ShowAllSponsors", ResourceType = typeof(Labels))] 
+        public bool ShowAllSponsors { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="LogisticSponsorSearchViewModel"/> class.</summary>
         public LogisticRequestSearchViewModel()

@@ -66,7 +66,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="attendeCollaboratorRepository">The attende collaborator repository.</param>
         /// <param name="languageRepository">The language repository.</param>
         public LogisticsController(
-            IMediator commandBus, 
+            IMediator commandBus,
             IdentityAutenticationService identityController,
             ILogisticSponsorRepository logisticSponsorRepository,
             ICollaboratorRepository collaboratorRepository,
@@ -118,9 +118,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <summary>Searches the specified request.</summary>
         /// <param name="request">The request.</param>
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <param name="showAllSponsors">if set to <c>true</c> [show all sponsors].</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllParticipants)
+        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllParticipants, bool showAllSponsors)
         {
             var logistics = await this.collaboratorRepo.FindAllLogisticsByDatatable(
                 EditionDto.Id,
@@ -128,10 +129,18 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 request.Length,
                 request.Search?.Value,
                 request.GetSortColumns(),
-                showAllParticipants);
+                showAllParticipants,
+                showAllSponsors);
+
+            foreach (var logisticRequestBaseDto in logistics)
+            {
+                logisticRequestBaseDto.AccommodationSponsor = logisticRequestBaseDto.AccommodationSponsor.GetSeparatorTranslation(this.UserInterfaceLanguage, '|');
+                logisticRequestBaseDto.AirportTransferSponsor = logisticRequestBaseDto.AirportTransferSponsor.GetSeparatorTranslation(this.UserInterfaceLanguage, '|');
+                logisticRequestBaseDto.AirfareSponsor = logisticRequestBaseDto.AirfareSponsor.GetSeparatorTranslation(this.UserInterfaceLanguage, '|');
+            }
 
             var response = DataTablesResponse.Create(request, logistics.TotalItemCount, logistics.TotalItemCount, logistics);
-            
+
             return Json(new
             {
                 status = "success",
@@ -260,7 +269,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             {
                 status = "success",
                 pages = new List<dynamic>
-                { 
+                {
                     new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
                 }
             }, JsonRequestBehavior.AllowGet);
@@ -641,7 +650,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         public async Task<ActionResult> ShowCreateAccommodationModal(Guid? logisticsUid)
         {
             var cmd = new CreateLogisticAccommodation(
-                logisticsUid ?? Guid.Empty, 
+                logisticsUid ?? Guid.Empty,
                 await this.attendeePlacesRepo.FindAllDropdownDtosAsync(EditionDto.Id, true));
 
             return Json(new
@@ -735,11 +744,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd = new UpdateLogisticAccommodation(
-                    entity.Uid, 
-                    entity.CheckInDate, 
-                    entity.CheckOutDate, 
-                    entity.AdditionalInfo, 
-                    entity.AttendeePlaceId, 
+                    entity.Uid,
+                    entity.CheckInDate,
+                    entity.CheckOutDate,
+                    entity.AdditionalInfo,
+                    entity.AttendeePlaceId,
                     await attendeePlacesRepo.FindAllDropdownDtosAsync(EditionDto.Id, true));
             }
             catch (DomainException ex)
@@ -911,7 +920,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         public async Task<ActionResult> ShowCreateTransferModal(Guid? logisticsUid)
         {
             var cmd = new CreateLogisticTransfer(
-                logisticsUid ?? Guid.Empty, 
+                logisticsUid ?? Guid.Empty,
                 await attendeePlacesRepo.FindAllDropdownDtosAsync(EditionDto.Id));
 
             return Json(new

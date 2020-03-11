@@ -2225,9 +2225,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Adicionar Solicitação</value>
     <comment>Adicionar Solicitação</comment>
   </data>
-  <data name="ShowAllSponsored" xml:space="preserve">
-    <value>Exibir todos os patrocinados</value>
-    <comment>Exibir todos os patrocinados</comment>
+  <data name="ShowAllSponsors" xml:space="preserve">
+    <value>Exibir todos os patrocinadores</value>
+    <comment>Exibir todos os patrocinadores</comment>
   </data>
   <data name="Arrival" xml:space="preserve">
     <value>Chegada</value>

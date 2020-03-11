@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-11-2020
 // ***********************************************************************
 // <copyright file="logisticsponsors.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -68,7 +68,7 @@ var LogisticsDataTableWidget = function () {
                 url: MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/Search'),
                 data: function (d) {
                     d.ShowAllParticipants = $('#ShowAllParticipants').prop('checked');
-                    d.ShowAllSponsored = $('#ShowAllSponsored').prop('checked');
+                    d.showAllSponsors = $('#ShowAllSponsors').prop('checked');
                 },
                 dataFilter: function (data) {
                     var jsonReturned = jQuery.parseJSON(data);

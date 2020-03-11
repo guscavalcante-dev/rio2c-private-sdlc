@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-11-2020
 // ***********************************************************************
 // <copyright file="Logistic.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,9 +34,9 @@ namespace PlataformaRio2C.Domain.Entities
         public string AdditionalInfo { get; private set; }
 
         public virtual AttendeeCollaborator AttendeeCollaborator { get; private set; }
-        public virtual AttendeeLogisticSponsor AirportTransferSponsor { get; private set; }
         public virtual AttendeeLogisticSponsor AirfareSponsor { get; private set; }
         public virtual AttendeeLogisticSponsor AccommodationSponsor { get; private set; }
+        public virtual AttendeeLogisticSponsor AirportTransferSponsor { get; private set; }
         public virtual User CreateUser { get; private set; }
 
         public virtual List<LogisticAirfare> LogisticAirfares { get; private set; }

@@ -251,6 +251,7 @@ CREATE TABLE [dbo].[AttendeeLogisticSponsors](
 	[EditionId] [int] NOT NULL,
 	[LogisticSponsorId] [int] NOT NULL,
 	[IsOther] [bit] NOT NULL,
+	[IsLogisticListDisplayed] [bit] NOT NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetimeoffset](7) NOT NULL,
 	[CreateUserId] [int] NOT NULL,

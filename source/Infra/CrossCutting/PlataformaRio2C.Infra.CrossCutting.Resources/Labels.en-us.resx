@@ -2307,8 +2307,8 @@
     <comment>Adicionar Solicitação</comment>
   </data>
   <data name="ShowAllSponsored" xml:space="preserve">
-    <value>Show All Sponsored</value>
-    <comment>Mostrar todos patrocinados</comment>
+    <value>Show all sponsors</value>
+    <comment>Exibir todos os patrocinadores</comment>
   </data>
   <data name="Arrival" xml:space="preserve">
     <value>Arrival</value>
