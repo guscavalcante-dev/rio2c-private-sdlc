@@ -449,7 +449,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Request, Labels.CreatedF) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Airfare, Labels.CreatedM) });
         }
 
         #endregion
@@ -543,7 +543,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Request, Labels.UpdatedM) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Airfare, Labels.UpdatedM) });
         }
 
         #endregion
@@ -599,7 +599,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Request, Labels.DeletedF) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Airfare, Labels.DeletedM) });
         }
 
         #endregion
@@ -710,7 +710,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Accommodation, Labels.CreatedM) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Accommodation, Labels.CreatedF) });
         }
 
         #endregion
@@ -813,7 +813,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Request, Labels.UpdatedF) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Accommodation, Labels.UpdatedF) });
         }
 
         #endregion
@@ -869,7 +869,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Request, Labels.DeletedF) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Accommodation, Labels.DeletedF) });
         }
 
         #endregion
@@ -977,7 +977,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Request, Labels.CreatedF) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Transfer, Labels.CreatedM) });
         }
 
         #endregion
@@ -1071,7 +1071,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Request, Labels.UpdatedF) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Transfer, Labels.UpdatedM) });
         }
 
         #endregion
@@ -1127,7 +1127,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Request, Labels.DeletedF) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Transfer, Labels.DeletedM) });
         }
 
         #endregion

@@ -2402,4 +2402,8 @@
     <value>Direction</value>
     <comment>Direção</comment>
   </data>
+  <data name="Transfer" xml:space="preserve">
+    <value>Transfer</value>
+    <comment>Transfer</comment>
+  </data>
 </root>
