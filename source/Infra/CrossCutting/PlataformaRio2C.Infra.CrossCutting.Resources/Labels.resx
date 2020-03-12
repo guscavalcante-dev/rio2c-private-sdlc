@@ -2413,4 +2413,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Transfer</value>
     <comment>Transfer</comment>
   </data>
+  <data name="RequestDate" xml:space="preserve">
+    <value>Data de solicitação</value>
+    <comment>Data de solicitação</comment>
+  </data>
+  <data name="Requester" xml:space="preserve">
+    <value>Solicitante</value>
+    <comment>Solicitante</comment>
+  </data>
 </root>

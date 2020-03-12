@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-12-2020
 // ***********************************************************************
 // <copyright file="LogisticRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -105,23 +105,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
-        /// <summary>Método que traz todos os registros</summary>
-        /// <param name="readonly"></param>
-        /// <returns></returns>
-        public override IQueryable<Logistic> GetAll(bool @readonly = false)
-        {
-            var consult = this.dbSet;
-            //.Include(i => i.Collaborator.Players)
-            //.Include(i => i.Collaborator.Players.Select(e => e.Holding))
-            //.Include(i => i.Collaborator.ProducersEvents)
-            //.Include(i => i.Collaborator.ProducersEvents.Select(e => e.Producer));
-
-            return @readonly
-                      ? consult.AsNoTracking()
-                      : consult;
-        }
-
-        /// <summary>Finds all by data table.</summary>
+        /// <summary>Finds all by data table asynchronous.</summary>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="keywords">The keywords.</param>
@@ -129,7 +113,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
         /// <param name="showAllSponsored">if set to <c>true</c> [show all sponsored].</param>
         /// <returns></returns>
-        public async Task<IPagedList<LogisticRequestBaseDto>> FindAllByDataTable(int page,
+        public async Task<IPagedList<LogisticRequestBaseDto>> FindAllByDataTableAsync(int page,
             int pageSize,
             string keywords,
             List<Tuple<string, string>> sortColumns,
@@ -139,21 +123,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery();
 
             return await query
-                .DynamicOrder<Logistic>(
-                    sortColumns,
-                    new List<Tuple<string, string>>
-                    {
-                        new Tuple<string, string>("CreateDate", "CreateDate"),
-                    },
-                    new List<string> { "CreateDate", "UpdateDate" }, "CreateDate")
-                .Select(c => new LogisticRequestBaseDto
-                {
-                    Id = c.Id,
-                    Uid = c.Uid,
-                    CreateDate = c.CreateDate,
-                    UpdateDate = c.UpdateDate,
-                })
-                .ToListPagedAsync(page, pageSize);
+                            .DynamicOrder<Logistic>(
+                                sortColumns,
+                                new List<Tuple<string, string>>
+                                {
+                                    new Tuple<string, string>("CreateDate", "CreateDate"),
+                                },
+                                new List<string> { "CreateDate", "UpdateDate" }, "CreateDate")
+                            .Select(c => new LogisticRequestBaseDto
+                            {
+                                Id = c.Id,
+                                Uid = c.Uid,
+                                CreateDate = c.CreateDate,
+                                UpdateDate = c.UpdateDate,
+                            })
+                            .ToListPagedAsync(page, pageSize);
         }
 
         /// <summary>Finds the dto asynchronous.</summary>
@@ -194,5 +178,97 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query
                         .FirstOrDefaultAsync();
         }
+
+        /// <summary>Finds the main information widget dto asynchronous.</summary>
+        /// <param name="logisticUid">The logistic uid.</param>
+        /// <returns></returns>
+        public Task<LogisticDto> FindMainInformationWidgetDtoAsync(Guid logisticUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(logisticUid)
+                                .Select(l => new LogisticDto
+                                {
+                                    Logistic = l,
+                                    AttendeeCollaboratorDto = new AttendeeCollaboratorDto
+                                    {
+                                        AttendeeCollaborator = l.AttendeeCollaborator,
+                                        Collaborator = l.AttendeeCollaborator.Collaborator,
+                                        ConferenceParticipantDtos = l.AttendeeCollaborator.ConferenceParticipants.Where(cp => !cp.IsDeleted && !cp.Conference.IsDeleted).Select(cp => new ConferenceParticipantDto
+                                        {
+                                            ConferenceParticipant = cp,
+                                            ConferenceDto = new ConferenceDto
+                                            {
+                                                Conference = cp.Conference,
+                                                ConferencePillarDtos = cp.Conference.ConferencePillars.Where(cvt => !cvt.IsDeleted).Select(cvt => new ConferencePillarDto()
+                                                {
+                                                    ConferencePillar = cvt,
+                                                    Pillar = cvt.Pillar
+                                                })
+                                            },
+                                            ConferenceParticipantRoleDto = new ConferenceParticipantRoleDto
+                                            {
+                                                ConferenceParticipantRole = cp.ConferenceParticipantRole,
+                                                ConferenceParticipantRoleTitleDtos = cp.ConferenceParticipantRole.ConferenceParticipantRoleTitles.Where(cprt => !cprt.IsDeleted).Select(cprt => new ConferenceParticipantRoleTitleDto
+                                                {
+                                                    ConferenceParticipantRoleTitle = cprt,
+                                                    LanguageDto = new LanguageBaseDto
+                                                    {
+                                                        Id = cprt.Language.Id,
+                                                        Uid = cprt.Language.Uid,
+                                                        Name = cprt.Language.Name,
+                                                        Code = cprt.Language.Code
+                                                    }
+                                                })
+                                            }
+                                        })
+                                    },
+                                    AirfareAttendeeLogisticSponsorDto = !l.IsAirfareSponsored || l.AirfareAttendeeLogisticSponsorId == null ? null :
+                                         new AttendeeLogisticSponsorDto
+                                         {
+                                             AttendeeLogisticSponsor = l.AirfareSponsor,
+                                             LogisticSponsor = l.AirfareSponsor.LogisticSponsor
+                                         },
+                                    AccommodationAttendeeLogisticSponsorDto = !l.IsAccommodationSponsored || l.AccommodationAttendeeLogisticSponsorId == null ? null :
+                                        new AttendeeLogisticSponsorDto
+                                        {
+                                            AttendeeLogisticSponsor = l.AccommodationSponsor,
+                                            LogisticSponsor = l.AccommodationSponsor.LogisticSponsor
+                                        },
+                                    AirportTransferAttendeeLogisticSponsorDto = !l.IsAirportTransferSponsored || l.AirportTransferAttendeeLogisticSponsorId == null ? null :
+                                        new AttendeeLogisticSponsorDto
+                                        {
+                                            AttendeeLogisticSponsor = l.AirportTransferSponsor,
+                                            LogisticSponsor = l.AirportTransferSponsor.LogisticSponsor
+                                        },
+                                    CreateUserDto = new UserDto
+                                    {
+                                        User = l.CreateUser,
+                                        Collaborator = l.CreateUser.Collaborator
+                                    }
+                                });
+
+            return query
+                        .FirstOrDefaultAsync();
+        }
+
+        #region Old methods
+
+        /// <summary>Método que traz todos os registros</summary>
+        /// <param name="readonly"></param>
+        /// <returns></returns>
+        public override IQueryable<Logistic> GetAll(bool @readonly = false)
+        {
+            var consult = this.dbSet;
+            //.Include(i => i.Collaborator.Players)
+            //.Include(i => i.Collaborator.Players.Select(e => e.Holding))
+            //.Include(i => i.Collaborator.ProducersEvents)
+            //.Include(i => i.Collaborator.ProducersEvents.Select(e => e.Producer));
+
+            return @readonly
+                ? consult.AsNoTracking()
+                : consult;
+        }
+
+        #endregion
     }
 }

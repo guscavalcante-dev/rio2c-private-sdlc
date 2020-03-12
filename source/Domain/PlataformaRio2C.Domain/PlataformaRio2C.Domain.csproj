@@ -157,8 +157,10 @@
     <Compile Include="Dtos\Emails\EmailRecipientDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticAccommodationDto.cs" />
     <Compile Include="Dtos\Logistics\AttendeePlaceDropdownDto.cs" />
+    <Compile Include="Dtos\Logistics\LogisticDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticAirfareDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticAirfareJsonDto.cs" />
+    <Compile Include="Dtos\Logistics\AttendeeLogisticSponsorDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticTransferDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticRequestDetailsDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticRequestBaseDto.cs" />

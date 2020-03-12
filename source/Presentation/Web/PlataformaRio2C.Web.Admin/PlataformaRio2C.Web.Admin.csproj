@@ -8503,6 +8503,7 @@
     <Content Include="Views\Logistics\Modals\UpdateAirfareModal.cshtml" />
     <Content Include="Views\Logistics\Modals\UpdateAccommodationModal.cshtml" />
     <Content Include="Views\Logistics\Modals\UpdateTransferModal.cshtml" />
+    <Content Include="Views\Logistics\Widgets\MainInformationWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

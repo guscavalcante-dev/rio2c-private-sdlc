@@ -4,7 +4,7 @@
 // Created          : 02-03-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-11-2020
+// Last Modified On : 03-12-2020
 // ***********************************************************************
 // <copyright file="CreateLogisticRequest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

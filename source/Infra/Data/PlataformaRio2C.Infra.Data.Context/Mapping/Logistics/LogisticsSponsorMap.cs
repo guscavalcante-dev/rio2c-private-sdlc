@@ -3,8 +3,8 @@
 // Author           : Arthur Souza
 // Created          : 01-20-2020
 //
-// Last Modified By : Arthur Souza
-// Last Modified On : 01-20-2020
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-12-2020
 // ***********************************************************************
 // <copyright file="LogisticsSponsorMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,9 +29,9 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.ToTable("LogisticSponsors");
                         
             this.Property(t => t.Name)
-                .HasMaxLength(LogisticSponsor.NameMaxLength)
-                .IsRequired();
+                .HasMaxLength(LogisticSponsor.NameMaxLength);
 
+            // Relationships
             this.HasMany(t => t.AttendeeLogisticSponsors)
                 .WithRequired(e => e.LogisticSponsor)
                 .HasForeignKey(e => e.LogisticSponsorId);

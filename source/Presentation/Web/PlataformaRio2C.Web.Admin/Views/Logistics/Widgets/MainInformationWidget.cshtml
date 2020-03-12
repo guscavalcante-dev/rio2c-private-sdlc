@@ -1,0 +1,106 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Entities
+@model LogisticDto
+@{
+    var conferenceParticipantPillars = Model.AttendeeCollaboratorDto?.ConferenceParticipantDtos?.SelectMany(cpd => cpd.ConferenceDto.ConferencePillarDtos)?.ToList();
+    var conferenceParticipantRoles = Model.AttendeeCollaboratorDto?.ConferenceParticipantDtos?.Select(cpd => cpd.ConferenceParticipantRoleDto)?.ToList();
+}
+<div class="kt-portlet__body">
+    <div class="kt-widget kt-widget--user-profile-3">
+        <div class="kt-widget__top">
+            <div class="kt-widget__content pl-0" style="overflow: hidden;">
+                <div class="kt-widget__head">
+                    <span class="kt-widget__username">
+                        @(Model.AttendeeCollaboratorDto?.Collaborator.GetDisplayName())
+                    </span>
+                    <div class="kt-widget__action">
+                        <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="LogisticsMainInformationWidget.showUpdateModal();">
+                            <i class="flaticon2-edit"></i>
+                        </button>
+                    </div>
+                </div>
+                @if (conferenceParticipantPillars?.Any() == true)
+                {
+                    <div class="kt-widget__info">
+                        <span class="kt-widget__desc">
+                            @Labels.Pillars:
+                            @foreach (var conferencePillarDto in conferenceParticipantPillars)
+                            {
+                                <span class="kt-badge  kt-badge--info kt-badge--inline" style="background-color: @conferencePillarDto.Pillar.Color; color: white;">
+                                    @conferencePillarDto.Pillar.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, Language.Separator)
+                                </span>
+                            }
+                        </span>
+                    </div>
+                }
+                @if (conferenceParticipantRoles?.Any() == true)
+                {
+                    <div class="kt-widget__info">
+                        <span class="kt-widget__desc">
+                            Funções:
+                            @foreach (var conferenceParticipantRoleDto in conferenceParticipantRoles)
+                            {
+                                <span class="kt-badge  kt-badge--info kt-badge--inline">
+                                    @(conferenceParticipantRoleDto.GetConferenceParticipantRoleTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ConferenceParticipantRoleTitle?.Value)
+                                </span>
+                            }
+                        </span>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="kt-widget__bottom">
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.Airfare</span>
+                    <span class="kt-widget__value"><span>@(Model.AirfareAttendeeLogisticSponsorDto?.GetNameTranslation(ViewBag.UserInterfaceLanguage) ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.Accommodation</span>
+                    <span class="kt-widget__value"><span>@(Model.AccommodationAttendeeLogisticSponsorDto?.GetNameTranslation(ViewBag.UserInterfaceLanguage) ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.AirportTransfer</span>
+                    <span class="kt-widget__value"><span>@(Model.AirportTransferAttendeeLogisticSponsorDto?.GetNameTranslation(ViewBag.UserInterfaceLanguage) ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.TransferCity</span>
+                    <span class="kt-widget__value"><span>@(Model.Logistic.IsCityTransferRequired ? Labels.Yes : Labels.No)</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.VehicleAtDisposal</span>
+                    <span class="kt-widget__value"><span>@(Model.Logistic.IsVehicleDisposalRequired ? Labels.Yes : Labels.No)</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.Requester</span>
+                    <span class="kt-widget__value"><span>@(Model.CreateUserDto?.GetDisplayName())</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.RequestDate</span>
+                    <span class="kt-widget__value"><span>@(Model.Logistic?.CreateDate.ToUserTimeZone().ToString("G"))</span></span>
+                </div>
+            </div>
+            @if (!string.IsNullOrEmpty(Model.Logistic?.AdditionalInfo))
+            {
+                <div class="kt-widget__item col-12">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.AdditionalInfo</span>
+                        <span class="kt-widget__value"><span>@(Html.Raw(Model.Logistic?.AdditionalInfo.Replace("\n", "<br />")))</span></span>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

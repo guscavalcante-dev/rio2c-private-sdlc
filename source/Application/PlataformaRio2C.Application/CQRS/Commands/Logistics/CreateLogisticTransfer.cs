@@ -4,9 +4,9 @@
 // Created          : 01-27-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-11-2020
+// Last Modified On : 03-12-2020
 // ***********************************************************************
-// <copyright file="CreateLogisticAccommodation.cs" company="Softo">
+// <copyright file="CreateLogisticTransfer.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -20,23 +20,26 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>CreateLogisticAccommodation</summary>
-    public class CreateLogisticAccommodation : BaseCommand
+    /// <summary>CreateLogisticTransfer</summary>
+    public class CreateLogisticTransfer : BaseCommand
     {
         public Guid LogisticsUid { get; set; }
 
-        [Display(Name = "Hotel", ResourceType = typeof(Labels))]
+        [Display(Name = "FromPlace", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public int? PlaceId { get; set; }
+        public int? FromAttendeePlaceId { get; set; }
 
-        [Display(Name = "CheckInDate", ResourceType = typeof(Labels))]
+        [Display(Name = "ToPlace", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public DateTime? CheckInDate { get; set; }
+        [NotEqualTo("FromAttendeePlaceId", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyDifferentFromProperty")]
+        public int? ToAttendeePlaceId { get; set; }
 
-        [Display(Name = "CheckOutDate", ResourceType = typeof(Labels))]
+        [Display(Name = "Departure", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [NotEqualTo("CheckInDate", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyDifferentFromProperty")]
-        public DateTime? CheckOutDate { get; set; }
+        public DateTime? Date { get; set; }
+        
+        [Display(Name = "LogisticTransferStatus", ResourceType = typeof(Labels))]
+        public int? LogisticTransferStatusId { get; set; }
 
         [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
         [StringLength(1000, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
@@ -44,25 +47,25 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public List<AttendeePlaceDropdownDto> Places { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="CreateLogisticAccommodation"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="CreateLogisticTransfer"/> class.</summary>
         /// <param name="logisticsUid">The logistics uid.</param>
-        /// <param name="attendeePlacesDtos">The attendee places dtos.</param>
-        public CreateLogisticAccommodation(Guid logisticsUid, List<AttendeePlaceDropdownDto> attendeePlacesDtos)
+        /// <param name="places">The places.</param>
+        public CreateLogisticTransfer(Guid logisticsUid, List<AttendeePlaceDropdownDto> places)
         {
             this.LogisticsUid = logisticsUid;
-            this.UpdateLists(attendeePlacesDtos);
+            this.Places = places;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="CreateLogisticAccommodation"/> class.</summary>
-        public CreateLogisticAccommodation()
+        /// <summary>Initializes a new instance of the <see cref="CreateLogisticTransfer"/> class.</summary>
+        public CreateLogisticTransfer()
         {
         }
 
         /// <summary>Updates the lists.</summary>
-        /// <param name="attendeePlaceDtos">The attendee place dtos.</param>
-        public void UpdateLists(List<AttendeePlaceDropdownDto> attendeePlaceDtos)
+        /// <param name="attendeePlaceDropdownDto">The attendee place dropdown dto.</param>
+        public void UpdateLists(List<AttendeePlaceDropdownDto> attendeePlaceDropdownDto)
         {
-            this.Places = attendeePlaceDtos;
+            this.Places = attendeePlaceDropdownDto;
         }
     }
 }

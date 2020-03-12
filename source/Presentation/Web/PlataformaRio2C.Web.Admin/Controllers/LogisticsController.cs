@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-11-2020
+// Last Modified On : 03-12-2020
 // ***********************************************************************
 // <copyright file="LogisticsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -230,6 +230,58 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #endregion
 
+        #region Details
+
+        /// <summary>Detailses the specified identifier.</summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> Details(Guid? id)
+        {
+            var logisticsRequestDto = await this.logisticRepo.FindDtoAsync(id ?? Guid.Empty, this.languageRepo.Get(f => f.Code == UserInterfaceLanguage));
+            if (logisticsRequestDto == null)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Logistics, Labels.FoundF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Logistics", new { Area = "" });
+            }
+
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Logistics, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Requests, Url.Action("Index", "Logistics", new { Area ="", id })),
+                new BreadcrumbItemHelper(logisticsRequestDto?.Name, Url.Action("Details", "Logistics", new { Area ="", id }))
+            });
+
+            #endregion
+
+            return View(logisticsRequestDto);
+        }
+
+        #region Main Information Widget
+
+        /// <summary>Shows the main information widget.</summary>
+        /// <param name="logisticsUid">The logistics uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowMainInformationWidget(Guid? logisticsUid)
+        {
+            var mainInformationWidgetDto = await this.logisticRepo.FindMainInformationWidgetDtoAsync(logisticsUid ?? Guid.Empty);
+            if (mainInformationWidgetDto == null)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Logistics, Labels.FoundF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Logistics", new { Area = "" });
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#LogisticsMainInformationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
         #region Update
 
         /// <summary>Shows the update main information modal.</summary>
@@ -238,25 +290,25 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? logisticsUid)
         {
-            UpdateLogisticRequest cmd;
+            UpdateLogisticMainInformation cmd;
 
             try
             {
-                var entity = await this.logisticRepo.GetAsync(logisticsUid ?? Guid.Empty);
-                if (entity == null)
+                var logistic = await this.logisticRepo.GetAsync(logisticsUid ?? Guid.Empty);
+                if (logistic == null)
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Request, Labels.FoundF.ToLowerInvariant()));
                 }
 
-                cmd = new UpdateLogisticRequest(
-                    entity.Uid,
-                    await attendeCollaboratorRepo.GetAsync(entity.AttendeeCollaboratorId),
+                cmd = new UpdateLogisticMainInformation(
+                    logistic.Uid,
+                    await attendeCollaboratorRepo.GetAsync(logistic.AttendeeCollaboratorId),
                     await logisticSponsorRepo.GetByIsOthersRequired(),
-                    entity.AccommodationSponsor,
-                    entity.AirfareSponsor,
-                    entity.AirportTransferSponsor,
-                    entity.IsVehicleDisposalRequired,
-                    entity.IsCityTransferRequired,
+                    logistic.AccommodationSponsor,
+                    logistic.AirfareSponsor,
+                    logistic.AirportTransferSponsor,
+                    logistic.IsVehicleDisposalRequired,
+                    logistic.IsCityTransferRequired,
                     await logisticSponsorRepo.FindAllDtosByEditionUidAsync(this.EditionDto.Id),
                     UserInterfaceLanguage);
             }
@@ -275,11 +327,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        /// <summary>Updates the logistic request.</summary>
+        /// <summary>Updates the main information.</summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
+        /// <exception cref="DomainException"></exception>
         [HttpPost]
-        public async Task<ActionResult> UpdateRequest(UpdateLogisticRequest cmd)
+        public async Task<ActionResult> UpdateMainInformation(UpdateLogisticMainInformation cmd)
         {
             var result = new AppValidationResult();
 
@@ -332,32 +385,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #endregion
 
-        #region Details
-
-        /// <summary>Detailses the specified identifier.</summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> Details(Guid? id)
-        {
-            var logisticsRequestDto = await this.logisticRepo.FindDtoAsync(id ?? Guid.Empty, this.languageRepo.Get(f => f.Code == UserInterfaceLanguage));
-            if (logisticsRequestDto == null)
-            {
-                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Logistics, Labels.FoundF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "Logistics", new { Area = "" });
-            }
-
-            #region Breadcrumb
-
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Logistics, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Requests, Url.Action("Index", "Logistics", new { Area ="", id })),
-                new BreadcrumbItemHelper(logisticsRequestDto?.Name, Url.Action("Details", "Logistics", new { Area ="", id }))
-            });
-
-            #endregion
-
-            return View(logisticsRequestDto);
-        }
+        #endregion
 
         #region Airfare Widget
 

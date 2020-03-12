@@ -4,7 +4,7 @@
 // Created          : 01-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-05-2020
+// Last Modified On : 03-12-2020
 // ***********************************************************************
 // <copyright file="conferences.maininformation.widget" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,10 +13,10 @@
 // ***********************************************************************
 
 var LogisticsMainInformationWidget = function () {
-    var widgetElementId = '#LogisticRequestsMainInformationWidget';
+    var widgetElementId = '#LogisticsMainInformationWidget';
     var widgetElement = $(widgetElementId);
-    var updateModalId = '#UpdateLogisticRequestModal';
-    var updateFormId = '#UpdateLogisticRequestForm';
+    var updateModalId = '#UpdateMainInformationModal';
+    var updateFormId = '#UpdateMainInformationForm';
     var userInterfaceLanguage = 'en';
 
     // Show ---------------------------------------------------------------------------------------
@@ -30,9 +30,9 @@ var LogisticsMainInformationWidget = function () {
         }
 
         var jsonParameters = new Object();
-        jsonParameters.conferenceUid = $('#AggregateId').val();
+        jsonParameters.logisticsUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Conferences/ShowMainInformationWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/ShowMainInformationWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -101,7 +101,7 @@ var LogisticsMainInformationWidget = function () {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
-        jsonParameters.logisticsUid = $('#Uid').val();
+        jsonParameters.logisticsUid = $('#AggregateId').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/ShowUpdateMainInformationModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({

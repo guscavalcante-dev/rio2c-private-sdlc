@@ -1,116 +1,13 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
-@using PlataformaRio2C.Domain.Entities
 @model LogisticRequestBaseDto
 @{
     ViewBag.Title = Labels.Logistics;
 }
-@Html.Hidden("Uid", Model.Uid)
+@Html.Hidden("AggregateId", Model.Uid)
 <!--begin:Main Information Widget-->
 <div class="row">
     <div class="col-12">
-        <div id="LogisticRequestsMainInformationWidget" class="kt-portlet">
-            <div class="kt-portlet__body">
-                <div class="kt-widget kt-widget--user-profile-3">
-                    <div class="kt-widget__top">
-                        <div class="kt-widget__content pl-0" style="overflow: hidden;">
-                            <div class="kt-widget__head">
-                                <span class="kt-widget__username">
-                                    @Model.Name
-                                </span>
-                                <div class="kt-widget__action">
-                                    <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="LogisticsMainInformationWidget.showUpdateModal();">
-                                        <i class="flaticon2-edit"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            @if (Model.CollaboratorPillars?.Any() == true)
-                            {
-                                <div class="kt-widget__info">
-                                    <span class="kt-widget__desc">
-                                        @Labels.Pillars:
-                                        @foreach (var pillar in Model.CollaboratorPillars)
-                                        {
-                                            <span class="kt-badge  kt-badge--info kt-badge--inline" style="background-color: @pillar.Color; color: white;">@pillar.Name.GetSeparatorTranslation(UICulture, Language.Separator)</span>
-                                        }
-                                    </span>
-                                </div>
-                            }
-                            @if (Model.CollaboratorRoles?.Any() == true)
-                            {
-                                <div class="kt-widget__info">
-                                    <span class="kt-widget__desc">
-                                        Funções:
-                                        @foreach (var role in Model.CollaboratorRoles)
-                                        {
-                                            <span class="kt-badge  kt-badge--info kt-badge--inline">@role</span>
-
-                                        }
-                                    </span>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                    <div class="kt-widget__bottom">
-                        <div class="kt-widget__item">
-                            <div class="kt-widget__details">
-                                <span class="kt-widget__title">@Labels.Airfare</span>
-                                <span class="kt-widget__value"><span>@(Model.GetAirfareSponsorTranslation(UICulture) ?? "--")</span></span>
-                            </div>
-                        </div>
-                        <div class="kt-widget__item">
-                            <div class="kt-widget__details">
-                                <span class="kt-widget__title">@Labels.Accommodation</span>
-                                <span class="kt-widget__value"><span>@(Model.GetAccommodationSponsorTranslation(UICulture) ?? "--")</span></span>
-                            </div>
-                        </div>
-                        <div class="kt-widget__item">
-                            <div class="kt-widget__details">
-                                <span class="kt-widget__title">@Labels.AirportTransfer</span>
-                                <span class="kt-widget__value"><span>@(Model.GetAirportTransferSponsorTranslation(UICulture) ?? "--")</span></span>
-                            </div>
-                        </div>
-                        <div class="kt-widget__item">
-                            <div class="kt-widget__details">
-                                <span class="kt-widget__title">@Labels.TransferCity</span>
-                                <span class="kt-widget__value"><span>@(Model.TransferCity ? Labels.Yes : Labels.No)</span></span>
-                            </div>
-                        </div>
-                        <div class="kt-widget__item">
-                            <div class="kt-widget__details">
-                                <span class="kt-widget__title">@Labels.VehicleAtDisposal</span>
-                                <span class="kt-widget__value"><span>@(Model.IsVehicleDisposalRequired ? Labels.Yes : Labels.No)</span></span>
-                            </div>
-                        </div>
-
-                        <div class="kt-widget__item">
-                            <div class="kt-widget__details">
-                                <span class="kt-widget__title">Solicitante</span>
-                                <span class="kt-widget__value"><span>@Model.CreateUser</span></span>
-                            </div>
-                        </div>
-
-
-                        <div class="kt-widget__item">
-                            <div class="kt-widget__details">
-                                <span class="kt-widget__title">Data de Solicitação</span>
-                                <span class="kt-widget__value"><span>@(Model.CreateDate?.ToString("G"))</span></span>
-                            </div>
-                        </div>
-
-                        <div class="kt-widget__item col-12">
-                            <div class="kt-widget__details">
-                                <span class="kt-widget__title">@Labels.AdditionalInfo</span>
-                                <span class="kt-widget__value">
-                                    <span>
-                                        @(Model.AdditionalInfo ?? "--")
-                                    </span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div id="LogisticsMainInformationWidget" class="kt-portlet" style="min-height: 325px;"></div>
     </div>
 </div>
 <!--end:Main Information Widget-->
@@ -153,6 +50,7 @@
         }
 
         jQuery(document).ready(function () {
+            LogisticsMainInformationWidget.init();
             LogisticsAirfareWidget.init();
             LogisticsTransferWidget.init();
             LogisticsAccommodationWidget.init();

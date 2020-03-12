@@ -4,7 +4,7 @@
 // Created          : 01-27-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-12-2020
 // ***********************************************************************
 // <copyright file="UpdateLogisticAirfare.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

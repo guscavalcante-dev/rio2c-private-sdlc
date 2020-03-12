@@ -2410,4 +2410,12 @@
     <value>Transfer</value>
     <comment>Transfer</comment>
   </data>
+  <data name="RequestDate" xml:space="preserve">
+    <value>Request date</value>
+    <comment>Data de solicitação</comment>
+  </data>
+  <data name="Requester" xml:space="preserve">
+    <value>Requester</value>
+    <comment>Solicitante</comment>
+  </data>
 </root>

@@ -4,9 +4,9 @@
 // Created          : 03-02-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-11-2020
+// Last Modified On : 03-12-2020
 // ***********************************************************************
-// <copyright file="UpdateLogisticRequest.cs" company="Softo">
+// <copyright file="UpdateLogisticMainInformation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -20,14 +20,14 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>UpdateLogisticRequest</summary>
-    public class UpdateLogisticRequest : CreateLogisticRequest
+    /// <summary>UpdateLogisticMainInformation</summary>
+    public class UpdateLogisticMainInformation : CreateLogisticRequest
     {
         public Guid LogisticRequestUid { get; set; }
         public Guid InitialCollaboratorUid { get; set; }
         public string InitialCollaboratorName { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateLogisticRequest"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="UpdateLogisticMainInformation"/> class.</summary>
         /// <param name="uid">The uid.</param>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
         /// <param name="othersRequiredSponsorUid">The others required sponsor uid.</param>
@@ -38,7 +38,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isCityTransferRequired">if set to <c>true</c> [is city transfer required].</param>
         /// <param name="list">The list.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
-        public UpdateLogisticRequest(Guid uid, AttendeeCollaborator attendeeCollaborator, Guid othersRequiredSponsorUid, AttendeeLogisticSponsor accommodationSponsor, AttendeeLogisticSponsor airfareSponsor, AttendeeLogisticSponsor airportTransferSponsor, bool isVehicleDisposalRequired, bool isCityTransferRequired, List<LogisticSponsorBaseDto> list, string userInterfaceLanguage)
+        public UpdateLogisticMainInformation(
+            Guid uid, 
+            AttendeeCollaborator attendeeCollaborator, 
+            Guid othersRequiredSponsorUid, 
+            AttendeeLogisticSponsor accommodationSponsor, 
+            AttendeeLogisticSponsor airfareSponsor, 
+            AttendeeLogisticSponsor airportTransferSponsor, 
+            bool isVehicleDisposalRequired, 
+            bool isCityTransferRequired, 
+            List<LogisticSponsorBaseDto> list, 
+            string userInterfaceLanguage)
         {
             this.LogisticRequestUid = uid;
             this.IsVehicleDisposalRequired = isVehicleDisposalRequired;
@@ -56,8 +66,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateSponsors(list, userInterfaceLanguage);
         }
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateLogisticRequest"/> class.</summary>
-        public UpdateLogisticRequest()
+        /// <summary>Initializes a new instance of the <see cref="UpdateLogisticMainInformation"/> class.</summary>
+        public UpdateLogisticMainInformation()
         {
         }
 

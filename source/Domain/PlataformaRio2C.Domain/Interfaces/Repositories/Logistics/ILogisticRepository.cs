@@ -4,7 +4,7 @@
 // Created          : 03-08-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-12-2020
 // ***********************************************************************
 // <copyright file="ILogisticRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,7 +23,8 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>ILogisticRepository</summary>
     public interface ILogisticRepository : IRepository<Logistic>
     {
-        Task<IPagedList<LogisticRequestBaseDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllParticipants, bool showAllSponsored);
+        Task<IPagedList<LogisticRequestBaseDto>> FindAllByDataTableAsync(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllParticipants, bool showAllSponsored);
         Task<LogisticRequestBaseDto> FindDtoAsync(Guid logisticUid, Language language);
+        Task<LogisticDto> FindMainInformationWidgetDtoAsync(Guid logisticUid);
     }    
 }

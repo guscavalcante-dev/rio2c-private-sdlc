@@ -3,8 +3,8 @@
 // Author           : Arthur Souza
 // Created          : 01-20-2020
 //
-// Last Modified By : Arthur Souza
-// Last Modified On : 01-20-2020
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-12-2020
 // ***********************************************************************
 // <copyright file="LogisticsSponsor.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,18 +22,19 @@ namespace PlataformaRio2C.Domain.Entities
     /// <summary>LogisticSponsor</summary>
     public class LogisticSponsor : Entity
     {
-        public static readonly int NameMinLength = 5;
+        public static readonly int NameMinLength = 1;
         public static readonly int NameMaxLength = 100;
 
         public string Name { get; private set; }
         public bool IsAirfareTicketRequired { get; private set; }
         public bool IsOtherRequired { get; protected set; }
-        
-        protected LogisticSponsor(){}
 
-        public LogisticSponsor(
-            List<TranslatedName> names,
-            int userId)
+        public virtual ICollection<AttendeeLogisticSponsor> AttendeeLogisticSponsors { get; private set; }
+
+        /// <summary>Initializes a new instance of the <see cref="LogisticSponsor"/> class.</summary>
+        /// <param name="names">The names.</param>
+        /// <param name="userId">The user identifier.</param>
+        public LogisticSponsor(List<TranslatedName> names, int userId)
         {
             UpdateName(names);
 
@@ -43,6 +44,10 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
         }
+
+        /// <summary>Initializes a new instance of the <see cref="LogisticSponsor"/> class.</summary>
+        /// <param name="name">The name.</param>
+        /// <param name="userId">The user identifier.</param>
         public LogisticSponsor(string name, int userId)
         {
             this.Name = name;
@@ -53,9 +58,20 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateUserId = this.UpdateUserId = userId;
         }
 
-        public virtual ICollection<AttendeeLogisticSponsor> AttendeeLogisticSponsors { get; private set; }
+        /// <summary>Initializes a new instance of the <see cref="LogisticSponsor"/> class.</summary>
+        protected LogisticSponsor()
+        {
+        }
 
-        public void Update(List<TranslatedName> names, 
+
+        /// <summary>Updates the specified names.</summary>
+        /// <param name="names">The names.</param>
+        /// <param name="edition">The edition.</param>
+        /// <param name="isAirfareTicketRequired">if set to <c>true</c> [is airfare ticket required].</param>
+        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(
+            List<TranslatedName> names, 
             Edition edition, 
             bool isAirfareTicketRequired,
             bool isAddingToCurrentEdition, 
@@ -69,6 +85,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeAttendeeSponsors(edition, isAddingToCurrentEdition, userId);
         }
 
+        /// <summary>Updates the name.</summary>
+        /// <param name="names">The names.</param>
         private void UpdateName(List<TranslatedName> names)
         {
             var name = string.Empty;
@@ -81,6 +99,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.Name = name;
         }
 
+        /// <summary>Deletes the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
         public void Delete(int userId)
         {
             this.IsDeleted = true;
@@ -93,12 +113,10 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        /// <summary>Synchronizes the attendee collaborators.</summary>
+        #region Attendee Logistic Sponsors
+
+        /// <summary>Synchronizes the attendee sponsors.</summary>
         /// <param name="edition">The edition.</param>
-        /// <param name="collaboratorType">Type of the collaborator.</param>
-        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
-        /// <param name="apiHighlightPosition">The API highlight position.</param>
-        /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
         /// <param name="userId">The user identifier.</param>
         private void SynchronizeAttendeeSponsors(
@@ -140,6 +158,8 @@ namespace PlataformaRio2C.Domain.Entities
         {
             return this.AttendeeLogisticSponsors?.FirstOrDefault(ac => ac.EditionId == editionId);
         }
+
+        #endregion
 
         #region Validations
 

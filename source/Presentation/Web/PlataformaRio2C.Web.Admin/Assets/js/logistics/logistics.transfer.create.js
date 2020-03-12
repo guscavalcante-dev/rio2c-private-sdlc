@@ -3,8 +3,8 @@
 // Author           : Arthur Souza
 // Created          : 01-27-2020
 //
-// Last Modified By : Arthur Souza
-// Last Modified On : 01-27-2020
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-12-2020
 // ***********************************************************************
 // <copyright file="collaborators.create.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,7 +35,7 @@ var LogisticTransferCreate = function () {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
-        jsonParameters.logisticsUid = $('#Uid').val();
+        jsonParameters.logisticsUid = $('#AggregateId').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/ShowCreateTransferModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
