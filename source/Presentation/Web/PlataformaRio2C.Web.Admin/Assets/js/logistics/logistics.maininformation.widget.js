@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-12-2020
 // ***********************************************************************
-// <copyright file="conferences.maininformation.widget" company="Softo">
+// <copyright file="logistics.maininformation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -58,8 +58,8 @@ var LogisticsMainInformationWidget = function () {
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (ConferencesMainInformationWidget) !== 'undefined') {
-                    ConferencesMainInformationWidget.init();
+                if (typeof (LogisticsMainInformationWidget) !== 'undefined') {
+	                LogisticsMainInformationWidget.init();
                 }
             },
             onError: function (data) {
@@ -71,29 +71,21 @@ var LogisticsMainInformationWidget = function () {
     };
 
     var enableUpdatePlugins = function () {
-        //if (typeof (ConferencesEditionEvents) !== 'undefined') {
-        //    ConferencesEditionEvents.init();
-        //}
-        
-        MyRio2cCommon.enableCollaboratorSelect2({ url: '/Collaborators/FindAllByFilters', selectedOption: { id: $('#InitialCollaboratorUid').val(), text: $('#InitialCollaboratorName').val() }});
         MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2', allowClear: true });
-        enableAjaxForm();
 
-        MyRio2cCommon.enableCheckboxChangeEvent("IsAirfareSponsored", function () { clearSponsor("Airfare"); });
-        MyRio2cCommon.enableCheckboxChangeEvent("IsAccommodationSponsored", function () { clearSponsor("Accommodation"); });
-        MyRio2cCommon.enableCheckboxChangeEvent("IsAirportTransferSponsored", function () { clearSponsor("AirportTransfer"); });
+        MyRio2cCommon.enableCheckboxChangeEvent("IsAirfareSponsored");
+        MyRio2cCommon.enableCheckboxChangeEvent("IsAccommodationSponsored");
+        MyRio2cCommon.enableCheckboxChangeEvent("IsAirportTransferSponsored");
+        //MyRio2cCommon.enableCheckboxChangeEvent("IsAirfareSponsored", function () { clearSponsor("Airfare"); });
+        //MyRio2cCommon.enableCheckboxChangeEvent("IsAccommodationSponsored", function () { clearSponsor("Accommodation"); });
+        //MyRio2cCommon.enableCheckboxChangeEvent("IsAirportTransferSponsored", function () { clearSponsor("AirportTransfer"); });
 
         enableOtherSponsorsSelect2('Airfare');
         enableOtherSponsorsSelect2('Accommodation');
         enableOtherSponsorsSelect2('AirportTransfer');
 
-        enableFormValidation();
-        $("#AttendeeCollaboratorUid").prop('disabled', true);
         userInterfaceLanguage = MyRio2cCommon.getGlobalVariables().userInterfaceLanguageUppercade;
-    };
-
-    // Enable form validation ---------------------------------------------------------------------
-    var enableFormValidation = function () {
+        enableAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
 

@@ -3,8 +3,8 @@
 // Author           : Arthur Souza
 // Created          : 01-27-2020
 //
-// Last Modified By : Arthur Souza
-// Last Modified On : 01-27-2020
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-12-2020
 // ***********************************************************************
 // <copyright file="CreateConference.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,11 +13,7 @@
 // ***********************************************************************
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -27,7 +23,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public Guid LogisticSponsorUid { get; set; }        
         public bool IsAddingToCurrentEdition { get; set; }
         
-        public UpdateLogisticSponsors(LogisticSponsorBaseDto dto, List<LanguageDto> languagesDtos, string userInterfaceLanguage, bool? isAddingToCurrentEdition)
+        public UpdateLogisticSponsors(AttendeeLogisticSponsorBaseDto dto, List<LanguageDto> languagesDtos, string userInterfaceLanguage, bool? isAddingToCurrentEdition)
         {
             this.LogisticSponsorUid = dto.Uid;
             this.IsAirfareTicketRequired = dto.IsAirfareTicketRequired;
@@ -44,7 +40,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Updates the titles.</summary>
         /// <param name="languagesDtos">The languages dtos.</param>
-        private void UpdateNames(LogisticSponsorBaseDto dto, List<LanguageDto> languagesDtos)
+        private void UpdateNames(AttendeeLogisticSponsorBaseDto dto, List<LanguageDto> languagesDtos)
         {
             this.Names = new List<LogisticSponsorsNameBaseCommand>();
             foreach (var languageDto in languagesDtos)

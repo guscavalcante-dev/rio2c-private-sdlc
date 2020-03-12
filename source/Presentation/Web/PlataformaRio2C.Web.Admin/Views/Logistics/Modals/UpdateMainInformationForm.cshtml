@@ -1,19 +1,8 @@
 ﻿@using PlataformaRio2C.Domain.Entities
-@model PlataformaRio2C.Application.CQRS.Commands.CreateLogisticRequest
-<div class="kt-section">
-    <div class="kt-section__content mt-3">
-        <div class="row">
-            <div class="col-md-8">
-                @Html.LabelFor(m => m.AttendeeCollaboratorUid, new { @class = "control-label" })
-                @Html.DropDownListFor(m => m.AttendeeCollaboratorUid, Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control enable-collaborator-select2" })
-                @Html.ValidationMessageFor(m => m.AttendeeCollaboratorUid, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </div>
-</div>
+@model PlataformaRio2C.Application.CQRS.Commands.UpdateLogisticMainInformation
 <!--begin: Airfare-->
 <div class="kt-section">
-    <h3 class="kt-section__title mb-0 mt-30">@Labels.Airfare</h3>
+    <h3 class="kt-section__title mb-0">@Labels.Airfare</h3>
     <hr />
     <div class="kt-section__content mt-3">
         <div class="kt-checkbox-list">
@@ -36,7 +25,6 @@
                         <span></span>
                     </label>
                 }
-
                 @Html.ValidationMessageFor(m => m.AirfareSponsorUid, "", new { @class = "text-danger" })
             }
         </div>
@@ -44,7 +32,7 @@
             <div class="form-group col-md-8 mb-0" data-id="Airfare">
                 <div class="view">
                     @Html.Hidden("AirfareRequired")
-                    @Html.Hidden("AirfareInitialSponsorUid", Model.AirportTransferSponsorUid)
+                    @Html.Hidden("AirfareInitialSponsorUid", Model.AirfareSponsorUid)
                     @Html.DropDownList("AirfareSponsorOtherUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control enable-select2" })
                     <span class="form-text text-muted text-right"><a href="" onclick="return LogisticsCreate.enableNewSponsor('Airfare');" class="btn-link btn-edit">@(Labels.NewM.ToLowerInvariant()) @(Labels.Sponsor.ToLowerInvariant())</a></span>
                 </div>
@@ -83,9 +71,8 @@
                         <span></span>
                     </label>
                 }
+                @Html.ValidationMessageFor(m => m.AccommodationSponsorUid, "", new { @class = "text-danger" })
             }
-
-            @Html.ValidationMessageFor(m => m.AccommodationSponsorUid, "", new { @class = "text-danger" })
         </div>
         <div class="row">
             <div class="form-group col-md-8 mb-0" data-id="Accommodation">
@@ -125,7 +112,7 @@
                 </div>
             </div>
         </div>
-        <div class="kt-radio-list mt-2 d-none" data-additionalinfo="IsAirportTransferSponsored">
+        <div class="kt-radio-list mt-2" data-additionalinfo="IsAirportTransferSponsored">
             @if (Model.Sponsors != null)
             {
                 foreach (var sponsor in Model.Sponsors)
@@ -135,7 +122,6 @@
                         <span></span>
                     </label>
                 }
-
                 @Html.ValidationMessageFor(m => m.AirportTransferSponsorUid, "", new { @class = "text-danger" })
             }
         </div>

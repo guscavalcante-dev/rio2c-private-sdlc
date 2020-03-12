@@ -239,7 +239,7 @@
     <Compile Include="CQRS\CommandsHandlers\Logistics\DeleteLogisticAirfareCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Logistics\DeleteLogisticRequestCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Logistics\CreateLogisticAirfareCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Logistics\CreateLogisticsCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Logistics\CreateLogisticCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Logistics\LogisticTransferBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Logistics\LogisticAccommodationBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Logistics\LogisticsBaseCommandHandler.cs" />
@@ -321,7 +321,7 @@
     <Compile Include="CQRS\Commands\Logistics\UpdateLogisticTransfer.cs" />
     <Compile Include="CQRS\Commands\Logistics\CreateLogisticTransfer.cs" />
     <Compile Include="CQRS\Commands\Logistics\CreateLogisticAirfare.cs" />
-    <Compile Include="CQRS\Commands\Logistics\CreateLogisticRequest.cs" />
+    <Compile Include="CQRS\Commands\Logistics\CreateLogistic.cs" />
     <Compile Include="CQRS\Commands\Logistics\DeleteLogisticAccommodation.cs" />
     <Compile Include="CQRS\Commands\Logistics\DeleteLogisticTransfer.cs" />
     <Compile Include="CQRS\Commands\Logistics\DeleteLogisticAirfare.cs" />
@@ -456,7 +456,7 @@
     <Compile Include="CQRS\QueriesHandlers\Collaborators\FindAllCollaboratorIndustryAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Collaborators\FindAllCollaboratorRoleAsyncQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Collaborators\FindAllCollaboratorGenderAsyncQueryHandler.cs" />
-    <Compile Include="CQRS\QueriesHandlers\LogisticSponsors\FindLogisticSponsorDtoByUidAsyncQueryHandler.cs" />
+    <Compile Include="CQRS\QueriesHandlers\LogisticSponsors\FindLogisticSponsorDtoByUidQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Users\FindAdminAccessControlDtoQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Users\FindUserLanguageDtoQueryHandler.cs" />
     <Compile Include="CQRS\QueriesHandlers\Users\FindUserAccessControlDtoQueryHandler.cs" />

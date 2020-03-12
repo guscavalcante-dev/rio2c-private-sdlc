@@ -1,6 +1,6 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateLogisticRequest
+﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateLogistic
 
-<div class="modal fade" id="CreateLogisticRequestModal" role="dialog" aria-labelledby="CreateLogisticRequestModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<div class="modal fade" id="CreateLogisticRequestModal" role="dialog" aria-labelledby="CreateLogisticModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -11,7 +11,7 @@
                 @using (Html.BeginForm("Create", "Logistics", new { Area = "" }, FormMethod.Post, new { id = "CreateLogisticRequestForm" }))
                 {
                     <div id="form-container">
-                        @Html.Partial("Modals/_CreateForm", Model)
+                        @Html.Partial("Modals/CreateForm", Model)
                     </div>
                 }
             </div>

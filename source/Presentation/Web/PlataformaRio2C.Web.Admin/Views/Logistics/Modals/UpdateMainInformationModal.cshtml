@@ -11,11 +11,9 @@
             <div class="modal-body">
                 @using (Html.BeginForm("UpdateMainInformation", "Logistics", new { Area = "" }, FormMethod.Post, new { id = "UpdateMainInformationForm" }))
                 {
-                    @Html.HiddenFor(m => m.LogisticRequestUid)
-                    @Html.HiddenFor(m => m.InitialCollaboratorUid)
-                    @Html.HiddenFor(m => m.InitialCollaboratorName)
+                    @Html.HiddenFor(m => m.LogisticUid)
                     <div id="form-container">
-                        @Html.Partial("Modals/_CreateForm", Model)
+                        @Html.Partial("Modals/UpdateMainInformationForm", Model)
                     </div>
                 }
             </div>

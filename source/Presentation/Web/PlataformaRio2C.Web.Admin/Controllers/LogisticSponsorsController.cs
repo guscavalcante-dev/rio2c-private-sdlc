@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-09-2020
+// Last Modified On : 03-12-2020
 // ***********************************************************************
 // <copyright file="LogisticSponsorsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -353,7 +353,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic + "," + Constants.CollaboratorType.CuratorshipAudiovisual)]
         public async Task<ActionResult> FindAllByIsOther()
         {
-            var list = await this.attendeeLogisticSponsorRepo.FindAllDtosByIsOther(this.EditionDto.Id, true);
+            var list = await this.attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, true);
             
             return Json(new
             {

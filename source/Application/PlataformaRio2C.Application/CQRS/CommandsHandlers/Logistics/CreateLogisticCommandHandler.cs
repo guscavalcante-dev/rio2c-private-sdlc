@@ -4,9 +4,9 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-12-2020
 // ***********************************************************************
-// <copyright file="CreateLogisticsCommandHandler.cs" company="Softo">
+// <copyright file="CreateLogisticCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -24,21 +24,21 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>CreateLogisticsCommandHandler</summary>
-    public class CreateLogisticsCommandHandler : LogisticsBaseCommandHandler, IRequestHandler<CreateLogisticRequest, AppValidationResult>
+    /// <summary>CreateLogisticCommandHandler</summary>
+    public class CreateLogisticCommandHandler : LogisticsBaseCommandHandler, IRequestHandler<CreateLogistic, AppValidationResult>
     {
         private readonly IEditionRepository editionRepo;
         private readonly IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="CreateLogisticsCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="CreateLogisticCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="logisticRepository">The logistic repository.</param>
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
         /// <param name="attendeeLogisticSponsorRepository">The attendee logistic sponsor repository.</param>
-        public CreateLogisticsCommandHandler(
+        public CreateLogisticCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             ILogisticRepository logisticRepository,
@@ -52,11 +52,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
         }
 
-        /// <summary>Handles the specified create track.</summary>
+        /// <summary>Handles the specified create logistic.</summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(CreateLogisticRequest cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(CreateLogistic cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
             

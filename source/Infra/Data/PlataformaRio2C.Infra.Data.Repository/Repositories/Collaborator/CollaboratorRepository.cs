@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-11-2020
+// Last Modified On : 03-12-2020
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,7 +18,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using LinqKit;
 using PlataformaRio2C.Domain.Dtos;
@@ -109,9 +108,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                        && (showAllParticipants 
                                                                            || (showAllSponsored && ac.Logistics.Any(l => !l.IsDeleted))
                                                                                || (!showAllSponsored && ac.Logistics.Any(l => !l.IsDeleted 
-                                                                                                                              && (l.AirfareSponsor.IsLogisticListDisplayed
-                                                                                                                                  || l.AccommodationSponsor.IsLogisticListDisplayed
-                                                                                                                                  || l.AirportTransferSponsor.IsLogisticListDisplayed
+                                                                                                                              && (l.AirfareAttendeeLogisticSponsor.IsLogisticListDisplayed
+                                                                                                                                  || l.AccommodationAttendeeLogisticSponsor.IsLogisticListDisplayed
+                                                                                                                                  || l.AirportTransferAttendeeLogisticSponsor.IsLogisticListDisplayed
                                                                                                                                   || l.IsCityTransferRequired
                                                                                                                                   || l.IsVehicleDisposalRequired))))));
 
@@ -941,18 +940,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     .FirstOrDefault(),
                                 AccommodationSponsor = c.AttendeeCollaborators
                                     .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
-                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted && l.AccommodationSponsor != null))
-                                    .Select(e => e.AccommodationSponsor.LogisticSponsor.Name)
+                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted && l.AccommodationAttendeeLogisticSponsor != null))
+                                    .Select(e => e.AccommodationAttendeeLogisticSponsor.LogisticSponsor.Name)
                                     .FirstOrDefault(),
                                 AirfareSponsor = c.AttendeeCollaborators
                                     .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
-                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted && l.AirfareSponsor != null))
-                                    .Select(e => e.AirfareSponsor.LogisticSponsor.Name)
+                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted && l.AirfareAttendeeLogisticSponsor != null))
+                                    .Select(e => e.AirfareAttendeeLogisticSponsor.LogisticSponsor.Name)
                                     .FirstOrDefault(),
                                 AirportTransferSponsor = c.AttendeeCollaborators
                                     .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)
-                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted && l.AirportTransferSponsor != null))
-                                    .Select(e => e.AirportTransferSponsor.LogisticSponsor.Name)
+                                    .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted && l.AirportTransferAttendeeLogisticSponsor != null))
+                                    .Select(e => e.AirportTransferAttendeeLogisticSponsor.LogisticSponsor.Name)
                                     .FirstOrDefault(),
                                 CreateDate = c.AttendeeCollaborators
                                     .Where(ac => ac.EditionId == editionId && !ac.IsDeleted)

@@ -4,9 +4,9 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-28-2019
+// Last Modified On : 03-12-2020
 // ***********************************************************************
-// <copyright file="FindCollaboratorDtoByUidAndByEditionIdAsyncQueryHandler.cs" company="Softo">
+// <copyright file="FindLogisticSponsorDtoByUidQueryHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -20,14 +20,14 @@ using PlataformaRio2C.Domain.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
 {
-    /// <summary>FindCollaboratorDtoByUidAndByEditionIdAsyncQueryHandler</summary>
-    public class FindLogisticSponsorDtoByUidAsyncQueryHandler : IRequestHandler<FindLogisticSponsorDtoByUid, LogisticSponsorBaseDto>
+    /// <summary>FindLogisticSponsorDtoByUidQueryHandler</summary>
+    public class FindLogisticSponsorDtoByUidQueryHandler : IRequestHandler<FindLogisticSponsorDtoByUid, AttendeeLogisticSponsorBaseDto>
     {
         private readonly ILogisticSponsorRepository repo;
 
-        /// <summary>Initializes a new instance of the <see cref="FindCollaboratorDtoByUidAndByEditionIdAsyncQueryHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="FindLogisticSponsorDtoByUidQueryHandler"/> class.</summary>
         /// <param name="repository">The repository.</param>
-        public FindLogisticSponsorDtoByUidAsyncQueryHandler(ILogisticSponsorRepository repository)
+        public FindLogisticSponsorDtoByUidQueryHandler(ILogisticSponsorRepository repository)
         {
             this.repo = repository;
         }
@@ -36,7 +36,7 @@ namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<LogisticSponsorBaseDto> Handle(FindLogisticSponsorDtoByUid cmd, CancellationToken cancellationToken)
+        public async Task<AttendeeLogisticSponsorBaseDto> Handle(FindLogisticSponsorDtoByUid cmd, CancellationToken cancellationToken)
         {
             return await this.repo.FindLogisticSponsorDtoByUid(cmd.SponsorUid);
         }

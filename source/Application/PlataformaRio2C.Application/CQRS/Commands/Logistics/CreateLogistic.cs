@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-12-2020
 // ***********************************************************************
-// <copyright file="CreateLogisticRequest.cs" company="Softo">
+// <copyright file="CreateLogistic.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -24,8 +24,8 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>CreateLogisticRequest</summary>
-    public class CreateLogisticRequest : BaseCommand
+    /// <summary>CreateLogistic</summary>
+    public class CreateLogistic : BaseCommand
     {
         [Display(Name = "Participant", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -89,30 +89,38 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(1000, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string AdditionalInfo { get; set; }
 
-        public List<LogisticSponsorBaseDto> Sponsors { get; set; }
+        public List<AttendeeLogisticSponsorBaseDto> Sponsors { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="CreateLogisticSponsors"/> class.</summary>
-        public CreateLogisticRequest(List<LogisticSponsorBaseDto> sponsors, string userInterfaceLanguage)
+        /// <summary>Initializes a new instance of the <see cref="CreateLogistic"/> class.</summary>
+        /// <param name="sponsors">The mainLogisticSponsorBaseDtos.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public CreateLogistic(List<AttendeeLogisticSponsorBaseDto> sponsors, string userInterfaceLanguage)
         {
             this.UpdateSponsors(sponsors, userInterfaceLanguage);
         }
 
-        /// <summary>Initializes a new instance of the <see cref="CreateLogisticRequest"/> class.</summary>
-        public CreateLogisticRequest()
+        /// <summary>Initializes a new instance of the <see cref="CreateLogistic"/> class.</summary>
+        public CreateLogistic()
         {
+        }
+
+        /// <summary>Updates the models and lists.</summary>
+        /// <param name="mainLogisticSponsorBaseDtos">The main logistic sponsor base dtos.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public void UpdateModelsAndLists(List<AttendeeLogisticSponsorBaseDto> mainLogisticSponsorBaseDtos, string userInterfaceLanguage)
+        {
+            this.UpdateSponsors(mainLogisticSponsorBaseDtos, userInterfaceLanguage);
         }
 
         #region Private Methods
 
-        /// <summary>
-        /// Updates the sponsors.
-        /// </summary>
-        /// <param name="sponsors">The sponsors.</param>
+        /// <summary>Updates the sponsors.</summary>
+        /// <param name="mainLogisticSponsorBaseDtos">The main logistic sponsor base dtos.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
-        private void UpdateSponsors(List<LogisticSponsorBaseDto> sponsors, string userInterfaceLanguage)
+        private void UpdateSponsors(List<AttendeeLogisticSponsorBaseDto> mainLogisticSponsorBaseDtos, string userInterfaceLanguage)
         {
-            sponsors.ForEach(g => g.Name.GetSeparatorTranslation(userInterfaceLanguage, Language.Separator));
-            this.Sponsors = sponsors.OrderBy(e => e.IsOtherRequired).ThenBy(e => e.Name).ToList();
+            mainLogisticSponsorBaseDtos.ForEach(g => g.Name.GetSeparatorTranslation(userInterfaceLanguage, Language.Separator));
+            this.Sponsors = mainLogisticSponsorBaseDtos.OrderBy(e => e.IsOtherRequired).ThenBy(e => e.Name).ToList();
         }
 
         #endregion

@@ -28,27 +28,23 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     {
         private readonly IEditionRepository editionRepo;
         private readonly IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepo;
-        private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
 
         /// <summary>Initializes a new instance of the <see cref="UpdateLogisticMainInformationCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="editionRepository">The edition repository.</param>
-        /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
         /// <param name="attendeeLogisticSponsorRepository">The attendee logistic sponsor repository.</param>
         /// <param name="logisticRepository">The logistic repository.</param>
         public UpdateLogisticMainInformationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IEditionRepository editionRepository,
-            IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
             IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepository,
             ILogisticRepository logisticRepository) 
             : base(eventBus, uow, logisticRepository)
         {
             this.editionRepo = editionRepository;
             this.attendeeLogisticSponsorRepo = attendeeLogisticSponsorRepository;
-            this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
         }
 
         /// <summary>Handles the specified update logistic main information.</summary>
@@ -59,28 +55,20 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.Uow.BeginTransaction();
 
-            var logistics = await this.GetLogisticByUid(cmd.LogisticRequestUid);
+            var logistics = await this.GetLogisticByUid(cmd.LogisticUid);
 
             #region Initial validations
 
-            //// Check if exists an user with the same email
-            //var user = await this.repository.GetAsync(u => u.Email == cmd.Email.Trim());
-            //if (user != null && (collaborator?.User == null || user.Uid != collaborator?.User?.Uid))
-            //{
-            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.Executive.ToLowerInvariant(), $"{Labels.TheM} {Labels.Email}", cmd.Email), new string[] { "Email" }));
-            //}
-
-            //if (!this.ValidationResult.IsValid)
-            //{
-            //    this.AppValidationResult.Add(this.ValidationResult);
-            //    return this.AppValidationResult;
-            //}
+            if (!this.ValidationResult.IsValid)
+            {
+                this.AppValidationResult.Add(this.ValidationResult);
+                return this.AppValidationResult;
+            }
 
             #endregion
 
             logistics.Update(
                     this.editionRepo.Get(cmd.EditionId),
-                    this.attendeeCollaboratorRepo.Get(cmd.AttendeeCollaboratorUid),
                     cmd.IsAirfareSponsored,
                     this.attendeeLogisticSponsorRepo.Get(cmd.AirfareSponsorOtherUid ?? cmd.AirfareSponsorUid ?? Guid.Empty),
                     cmd.AirfareSponsorOtherName,

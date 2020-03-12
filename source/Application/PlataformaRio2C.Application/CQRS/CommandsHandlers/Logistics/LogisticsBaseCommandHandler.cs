@@ -4,7 +4,7 @@
 // Created          : 01-28-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-12-2020
 // ***********************************************************************
 // <copyright file="LogisticsBaseCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -43,9 +43,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         public async Task<Logistic> GetLogisticByUid(Guid logisticsUid)
         {
             var logistic = await this.repository.GetAsync(logisticsUid);
-            if (logistic == null) // Do not check IsDeleted because the Collaborator/User can be restored
+            if (logistic == null || logistic.IsDeleted)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundM), new string[] { "FirstName" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Request, Labels.FoundF), new string[] { "ToastrError" }));
             }
 
             return logistic;

@@ -50,7 +50,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public LogisticSponsor(string name, int userId)
         {
-            this.Name = name;
+            this.Name = name?.Trim();
             this.IsDeleted = false;
             this.IsAirfareTicketRequired = false;
             this.IsOtherRequired = false;
@@ -62,7 +62,6 @@ namespace PlataformaRio2C.Domain.Entities
         protected LogisticSponsor()
         {
         }
-
 
         /// <summary>Updates the specified names.</summary>
         /// <param name="names">The names.</param>

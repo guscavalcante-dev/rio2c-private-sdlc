@@ -155,9 +155,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                            e.AttendeeCollaborator.Collaborator.LastNames,
                                     Id = e.Id,
                                     Uid = e.Uid,
-                                    AccommodationSponsor = e.AccommodationSponsor.LogisticSponsor.Name,
-                                    AirfareSponsor = e.AirfareSponsor.LogisticSponsor.Name,
-                                    AirportTransferSponsor = e.AirportTransferSponsor.LogisticSponsor.Name,
+                                    AccommodationSponsor = e.AccommodationAttendeeLogisticSponsor.LogisticSponsor.Name,
+                                    AirfareSponsor = e.AirfareAttendeeLogisticSponsor.LogisticSponsor.Name,
+                                    AirportTransferSponsor = e.AirportTransferAttendeeLogisticSponsor.LogisticSponsor.Name,
                                     AdditionalInfo = e.AdditionalInfo,
                                     TransferCity = e.IsCityTransferRequired,
                                     IsVehicleDisposalRequired = e.IsVehicleDisposalRequired,
@@ -225,20 +225,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     AirfareAttendeeLogisticSponsorDto = !l.IsAirfareSponsored || l.AirfareAttendeeLogisticSponsorId == null ? null :
                                          new AttendeeLogisticSponsorDto
                                          {
-                                             AttendeeLogisticSponsor = l.AirfareSponsor,
-                                             LogisticSponsor = l.AirfareSponsor.LogisticSponsor
+                                             AttendeeLogisticSponsor = l.AirfareAttendeeLogisticSponsor,
+                                             LogisticSponsor = l.AirfareAttendeeLogisticSponsor.LogisticSponsor
                                          },
                                     AccommodationAttendeeLogisticSponsorDto = !l.IsAccommodationSponsored || l.AccommodationAttendeeLogisticSponsorId == null ? null :
                                         new AttendeeLogisticSponsorDto
                                         {
-                                            AttendeeLogisticSponsor = l.AccommodationSponsor,
-                                            LogisticSponsor = l.AccommodationSponsor.LogisticSponsor
+                                            AttendeeLogisticSponsor = l.AccommodationAttendeeLogisticSponsor,
+                                            LogisticSponsor = l.AccommodationAttendeeLogisticSponsor.LogisticSponsor
                                         },
                                     AirportTransferAttendeeLogisticSponsorDto = !l.IsAirportTransferSponsored || l.AirportTransferAttendeeLogisticSponsorId == null ? null :
                                         new AttendeeLogisticSponsorDto
                                         {
-                                            AttendeeLogisticSponsor = l.AirportTransferSponsor,
-                                            LogisticSponsor = l.AirportTransferSponsor.LogisticSponsor
+                                            AttendeeLogisticSponsor = l.AirportTransferAttendeeLogisticSponsor,
+                                            LogisticSponsor = l.AirportTransferAttendeeLogisticSponsor.LogisticSponsor
                                         },
                                     CreateUserDto = new UserDto
                                     {

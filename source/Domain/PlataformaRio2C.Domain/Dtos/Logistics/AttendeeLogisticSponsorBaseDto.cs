@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-11-2020
 // ***********************************************************************
-// <copyright file="LogisticSponsorBaseDto.cs" company="Softo">
+// <copyright file="AttendeeLogisticSponsorBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -17,8 +17,8 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
-    /// <summary>LogisticSponsorBaseDto</summary>
-    public class LogisticSponsorBaseDto
+    /// <summary>AttendeeLogisticSponsorBaseDto</summary>
+    public class AttendeeLogisticSponsorBaseDto
     {
         public int Id { get; set; }
         public Guid Uid { get; set; }

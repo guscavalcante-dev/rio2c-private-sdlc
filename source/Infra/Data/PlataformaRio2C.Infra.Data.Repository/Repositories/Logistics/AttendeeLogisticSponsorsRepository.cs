@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-12-2020
 // ***********************************************************************
 // <copyright file="AttendeeLogisticSponsorsRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -31,6 +31,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     /// </summary>
     internal static class AttendeeLogisticSponsorsIQueryableExtensions
     {
+        /// <summary>Finds the by uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="attendeeLogisticSponsorUid">The attendee logistic sponsor uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeLogisticSponsor> FindByUid(this IQueryable<AttendeeLogisticSponsor> query, Guid attendeeLogisticSponsorUid)
+        {
+            return query.Where(als => als.Uid == attendeeLogisticSponsorUid);
+        }
+
         /// <summary>Finds the by edition identifier.</summary>
         /// <param name="query">The query.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
@@ -40,7 +49,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             if (!showAllEditions && editionId.HasValue)
             {
-                query = query.Where(ac => ac.EditionId == editionId && !ac.IsDeleted && !ac.Edition.IsDeleted);
+                query = query.Where(als => als.EditionId == editionId && !als.Edition.IsDeleted);
             }
 
             return query;
@@ -53,7 +62,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<AttendeeLogisticSponsor> FindByIsOther(this IQueryable<AttendeeLogisticSponsor> query, int editionId, bool isOther = false)
         {
-            return query.Where(ac => ac.EditionId == editionId && !ac.IsDeleted && !ac.Edition.IsDeleted && ac.IsOther == isOther);
+            return query.Where(als => als.IsOther == isOther);
         }
 
         /// <summary>Finds the by keywords.</summary>
@@ -71,7 +80,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 {
                     if (!string.IsNullOrEmpty(keyword))
                     {
-                        innerNameWhere = innerNameWhere.And(t => t.LogisticSponsor.Name.Contains(keyword));
+                        innerNameWhere = innerNameWhere.And(als => als.LogisticSponsor.Name.Contains(keyword));
                     }
                 }
 
@@ -82,23 +91,24 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Determines whether [is other required].</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeLogisticSponsor> IsOtherRequired(this IQueryable<AttendeeLogisticSponsor> query)
+        {
+            query = query.Where(als => als.LogisticSponsor.IsOtherRequired);
+
+            return query;
+        }
+
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
         internal static IQueryable<AttendeeLogisticSponsor> IsNotDeleted(this IQueryable<AttendeeLogisticSponsor> query)
         {
-            query = query.Where(c => !c.IsDeleted);
+            query = query.Where(als => !als.IsDeleted && !als.LogisticSponsor.IsDeleted);
 
             return query;
-        }
-
-        /// <summary>Finds the by uid.</summary>
-        /// <param name="query">The query.</param>
-        /// <param name="uid">The uid.</param>
-        /// <returns></returns>
-        internal static IQueryable<AttendeeLogisticSponsor> FindByUid(this IQueryable<AttendeeLogisticSponsor> query, Guid uid)
-        {
-            return query.Where(e => e.Uid == uid);
         }
     }
 
@@ -130,27 +140,50 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
-        /// <summary>Finds all dtos by is other.</summary>
+        /// <summary>Finds all base dtos by is other asnyc.</summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="isOther">if set to <c>true</c> [is other].</param>
         /// <returns></returns>
-        public async Task<List<LogisticSponsorBaseDto>> FindAllDtosByIsOther(int editionId, bool isOther)
+        public async Task<List<AttendeeLogisticSponsorBaseDto>> FindAllBaseDtosByIsOtherAsnyc(int editionId, bool isOther)
         {
             var query = this.GetBaseQuery(true)
-                .FindByEditionId(false, editionId)
-                .FindByIsOther(editionId, isOther);
+                                    .FindByEditionId(false, editionId)
+                                    .FindByIsOther(editionId, isOther)
+                                    .Select(c => new AttendeeLogisticSponsorBaseDto
+                                    {
+                                        Id = c.Id,
+                                        Uid = c.Uid,
+                                        Name = c.LogisticSponsor.Name,
+                                        CreateDate = c.CreateDate,
+                                        UpdateDate = c.UpdateDate,
+                                        IsOthers = c.IsOther,
+                                        IsOtherRequired = c.LogisticSponsor.IsOtherRequired
+                                    });
 
             return await query
-                .Select(c => new LogisticSponsorBaseDto
-                {
-                    Id = c.Id,
-                    Uid = c.Uid,
-                    Name = c.LogisticSponsor.Name,
-                    CreateDate = c.CreateDate,
-                    UpdateDate = c.UpdateDate,
-                    IsOthers = c.IsOther,
-                    IsOtherRequired = c.LogisticSponsor.IsOtherRequired
-                }).ToListAsync();
+                            .ToListAsync();
+        }
+
+        /// <summary>Finds the other dto asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeLogisticSponsorBaseDto> FindOtherDtoAsync(int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .IsOtherRequired()
+                                .Select(c => new AttendeeLogisticSponsorBaseDto
+                                {
+                                    Id = c.Id,
+                                    Uid = c.Uid,
+                                    Name = c.LogisticSponsor.Name,
+                                    CreateDate = c.CreateDate,
+                                    UpdateDate = c.UpdateDate,
+                                    IsOthers = c.IsOther,
+                                    IsOtherRequired = c.LogisticSponsor.IsOtherRequired
+                                });
+
+            return await query
+                            .FirstOrDefaultAsync();
         }
     }
 }

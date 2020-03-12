@@ -159,8 +159,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowCreateModal()
         {
-            var cmd = new CreateLogisticRequest(
-                await attendeeLogisticSponsorRepo.FindAllDtosByIsOther(this.EditionDto.Id, false),
+            var cmd = new CreateLogistic(
+                await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, false),
                 UserInterfaceLanguage);
 
             return Json(new
@@ -173,11 +173,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        /// <summary>Creates the specified logistic request.</summary>
+        /// <summary>Creates the specified logistic.</summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Create(CreateLogisticRequest cmd)
+        public async Task<ActionResult> Create(CreateLogistic cmd)
         {
             var result = new AppValidationResult();
 
@@ -209,13 +209,17 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
+                cmd.UpdateModelsAndLists(
+                    await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, false),
+                    UserInterfaceLanguage);
+
                 return Json(new
                 {
                     status = "error",
                     message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/_CreateForm", cmd), divIdOrClass = "#form-container"}
+                        new { page = this.RenderRazorViewToString("Modals/CreateForm", cmd), divIdOrClass = "#form-container"}
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -268,7 +272,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             var mainInformationWidgetDto = await this.logisticRepo.FindMainInformationWidgetDtoAsync(logisticsUid ?? Guid.Empty);
             if (mainInformationWidgetDto == null)
             {
-                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Logistics, Labels.FoundF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Request, Labels.FoundF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
                 return RedirectToAction("Index", "Logistics", new { Area = "" });
             }
 
@@ -294,22 +298,16 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             try
             {
-                var logistic = await this.logisticRepo.GetAsync(logisticsUid ?? Guid.Empty);
-                if (logistic == null)
+                var mainInformationWidgetDto = await this.logisticRepo.FindMainInformationWidgetDtoAsync(logisticsUid ?? Guid.Empty);
+                if (mainInformationWidgetDto == null)
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Request, Labels.FoundF.ToLowerInvariant()));
                 }
 
                 cmd = new UpdateLogisticMainInformation(
-                    logistic.Uid,
-                    await attendeCollaboratorRepo.GetAsync(logistic.AttendeeCollaboratorId),
-                    await logisticSponsorRepo.GetByIsOthersRequired(),
-                    logistic.AccommodationSponsor,
-                    logistic.AirfareSponsor,
-                    logistic.AirportTransferSponsor,
-                    logistic.IsVehicleDisposalRequired,
-                    logistic.IsCityTransferRequired,
-                    await logisticSponsorRepo.FindAllDtosByEditionUidAsync(this.EditionDto.Id),
+                    mainInformationWidgetDto,
+                    await attendeeLogisticSponsorRepo.FindOtherDtoAsync(this.EditionDto.Id),
+                    await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, false),
                     UserInterfaceLanguage);
             }
             catch (DomainException ex)
@@ -330,7 +328,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <summary>Updates the main information.</summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
-        /// <exception cref="DomainException"></exception>
         [HttpPost]
         public async Task<ActionResult> UpdateMainInformation(UpdateLogisticMainInformation cmd)
         {
@@ -364,13 +361,17 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
+                cmd.UpdateModelsAndLists(
+                    await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, false),
+                    UserInterfaceLanguage);
+
                 return Json(new
                 {
                     status = "error",
                     message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/_CreateForm", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationForm", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }

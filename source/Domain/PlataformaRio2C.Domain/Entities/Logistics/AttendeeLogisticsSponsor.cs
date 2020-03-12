@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-11-2020
+// Last Modified On : 03-12-2020
 // ***********************************************************************
 // <copyright file="AttendeeLogisticSponsor.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -44,7 +44,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateDate = this.UpdateDate = DateTime.Now;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="AttendeeLogisticSponsor"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="AttendeeLogisticSponsor"/> class for others.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="name">The name.</param>
         /// <param name="userId">The user identifier.</param>

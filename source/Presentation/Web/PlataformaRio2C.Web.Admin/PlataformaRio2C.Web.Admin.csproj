@@ -8444,7 +8444,7 @@
     <Content Include="Views\LogisticSponsors\EditorTemplates\LogisticSponsorsNameBaseCommand.cshtml" />
     <Content Include="Views\LogisticSponsors\Modals\UpdateModal.cshtml" />
     <Content Include="Views\Logistics\EditorTemplates\LogisticSponsorsNameBaseCommand.cshtml" />
-    <Content Include="Views\Logistics\Modals\_CreateForm.cshtml" />
+    <Content Include="Views\Logistics\Modals\CreateForm.cshtml" />
     <Content Include="Views\Logistics\Modals\CreateModal.cshtml" />
     <Content Include="Views\Logistics\Modals\UpdateModal.cshtml" />
     <Content Include="Views\Logistics\Widgets\DataTableWidget.cshtml" />
@@ -8504,6 +8504,7 @@
     <Content Include="Views\Logistics\Modals\UpdateAccommodationModal.cshtml" />
     <Content Include="Views\Logistics\Modals\UpdateTransferModal.cshtml" />
     <Content Include="Views\Logistics\Widgets\MainInformationWidget.cshtml" />
+    <Content Include="Views\Logistics\Modals\UpdateMainInformationForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

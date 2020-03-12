@@ -13,57 +13,106 @@
 // ***********************************************************************
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>UpdateLogisticMainInformation</summary>
-    public class UpdateLogisticMainInformation : CreateLogisticRequest
+    public class UpdateLogisticMainInformation : BaseCommand
     {
-        public Guid LogisticRequestUid { get; set; }
-        public Guid InitialCollaboratorUid { get; set; }
-        public string InitialCollaboratorName { get; set; }
+        public Guid LogisticUid { get; set; }
+
+        [Display(Name = "Participant", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public Guid AttendeeCollaboratorUid { get; set; }
+
+        #region Airfare sponsor
+
+        public bool IsAirfareSponsored { get; set; }
+
+        public bool? AirfareRequired { get; set; }
+
+        [RequiredIf("IsAirfareSponsored", true, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public Guid? AirfareSponsorUid { get; set; }
+
+        public Guid? AirfareSponsorOtherUid { get; set; }
+
+        [RequiredIfOneWithValueAndOtherEmpty("AirfareRequired", "True", "AirfareSponsorOtherUid")]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string AirfareSponsorOtherName { get; set; }
+
+        #endregion
+
+        #region Accommodation Sponsor
+
+        public bool IsAccommodationSponsored { get; set; }
+
+        [RequiredIf("IsAccommodationSponsored", true, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public Guid? AccommodationSponsorUid { get; set; }
+        public bool? AccommodationRequired { get; set; }
+
+        [RequiredIfOneWithValueAndOtherEmptyAttribute("AccommodationRequired", "True", "AccommodationSponsorOtherName")]
+        public Guid? AccommodationSponsorOtherUid { get; set; }
+
+        [RequiredIfOneWithValueAndOtherEmptyAttribute("AccommodationRequired", "True", "AccommodationSponsorOtherUid")]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string AccommodationSponsorOtherName { get; set; }
+
+        #endregion
+
+        #region AirportTransfer Sponsor
+
+        public bool IsAirportTransferSponsored { get; set; }
+
+        [RequiredIf("IsAirportTransferSponsored", true, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public Guid? AirportTransferSponsorUid { get; set; }
+        public bool? AirportTransferRequired { get; set; }
+
+        [RequiredIfOneWithValueAndOtherEmptyAttribute("AirportTransferRequired", "True", "AirportTransferSponsorOtherName")]
+        public Guid? AirportTransferSponsorOtherUid { get; set; }
+
+        [RequiredIfOneWithValueAndOtherEmptyAttribute("AirportTransferRequired", "True", "AirportTransferSponsorOtherUid")]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string AirportTransferSponsorOtherName { get; set; }
+
+        #endregion
+
+        public bool IsCityTransferRequired { get; set; }
+        public bool IsVehicleDisposalRequired { get; set; }
+
+        [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
+        [StringLength(1000, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string AdditionalInfo { get; set; }
+
+        public List<AttendeeLogisticSponsorBaseDto> Sponsors { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateLogisticMainInformation"/> class.</summary>
-        /// <param name="uid">The uid.</param>
-        /// <param name="attendeeCollaborator">The attendee collaborator.</param>
-        /// <param name="othersRequiredSponsorUid">The others required sponsor uid.</param>
-        /// <param name="accommodationSponsor">The accommodation sponsor.</param>
-        /// <param name="airfareSponsor">The airfare sponsor.</param>
-        /// <param name="airportTransferSponsor">The airport transfer sponsor.</param>
-        /// <param name="isVehicleDisposalRequired">if set to <c>true</c> [is vehicle disposal required].</param>
-        /// <param name="isCityTransferRequired">if set to <c>true</c> [is city transfer required].</param>
-        /// <param name="list">The list.</param>
+        /// <param name="logisticDto">The logistic dto.</param>
+        /// <param name="otherAttendeeLogisticSponsorBaseDto">The other attendee logistic sponsor base dto.</param>
+        /// <param name="mainLogisticSponsorBaseDtos">The main logistic sponsor base dtos.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public UpdateLogisticMainInformation(
-            Guid uid, 
-            AttendeeCollaborator attendeeCollaborator, 
-            Guid othersRequiredSponsorUid, 
-            AttendeeLogisticSponsor accommodationSponsor, 
-            AttendeeLogisticSponsor airfareSponsor, 
-            AttendeeLogisticSponsor airportTransferSponsor, 
-            bool isVehicleDisposalRequired, 
-            bool isCityTransferRequired, 
-            List<LogisticSponsorBaseDto> list, 
+            LogisticDto logisticDto,
+            AttendeeLogisticSponsorBaseDto otherAttendeeLogisticSponsorBaseDto, 
+            List<AttendeeLogisticSponsorBaseDto> mainLogisticSponsorBaseDtos, 
             string userInterfaceLanguage)
         {
-            this.LogisticRequestUid = uid;
-            this.IsVehicleDisposalRequired = isVehicleDisposalRequired;
-            this.IsCityTransferRequired = isCityTransferRequired;
+            this.LogisticUid = logisticDto?.Logistic?.Uid ?? Guid.Empty;
+            this.UpdateAirfareSponsor(logisticDto, otherAttendeeLogisticSponsorBaseDto);
+            this.UpdateAccommodationSponsor(logisticDto, otherAttendeeLogisticSponsorBaseDto);
+            this.UpdateAirportTransferSponsor(logisticDto, otherAttendeeLogisticSponsorBaseDto);
+            this.IsVehicleDisposalRequired = logisticDto?.Logistic?.IsVehicleDisposalRequired ?? false;
+            this.IsCityTransferRequired = logisticDto?.Logistic?.IsCityTransferRequired ?? false;
+            this.AdditionalInfo = logisticDto?.Logistic?.AdditionalInfo;
 
-            if (attendeeCollaborator != null)
-            {
-                this.AttendeeCollaboratorUid = this.InitialCollaboratorUid = attendeeCollaborator.Uid;
-                this.InitialCollaboratorName = attendeeCollaborator.Collaborator.GetDisplayName();
-            }
-
-            this.UpdateAccommodationSponsor(othersRequiredSponsorUid, accommodationSponsor);
-            this.UpdateAirfareSponsor(othersRequiredSponsorUid, airfareSponsor);
-            this.UpdateTransferSponsor(othersRequiredSponsorUid, airportTransferSponsor);
-            this.UpdateSponsors(list, userInterfaceLanguage);
+            this.UpdateModelsAndLists(mainLogisticSponsorBaseDtos, userInterfaceLanguage);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateLogisticMainInformation"/> class.</summary>
@@ -71,81 +120,104 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
         }
 
-        #region Private Methods
-
-        /// <summary>Updates the transfer sponsor.</summary>
-        /// <param name="othersRequiredSponsorUid">The others required sponsor uid.</param>
-        /// <param name="airportTransferSponsor">The airport transfer sponsor.</param>
-        private void UpdateTransferSponsor(Guid othersRequiredSponsorUid, AttendeeLogisticSponsor airportTransferSponsor)
+        /// <summary>Updates the models and lists.</summary>
+        /// <param name="mainLogisticSponsorBaseDtos">The main logistic sponsor base dtos.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public void UpdateModelsAndLists(List<AttendeeLogisticSponsorBaseDto> mainLogisticSponsorBaseDtos, string userInterfaceLanguage)
         {
-            if (airportTransferSponsor == null)
-            {
-                return;
-            }
-
-            if (airportTransferSponsor.IsOther)
-            {
-                this.AirportTransferSponsorOtherName = airportTransferSponsor.LogisticSponsor?.Name;
-                this.AirportTransferSponsorOtherUid = airportTransferSponsor.Uid;
-                this.AirportTransferSponsorUid = othersRequiredSponsorUid;
-            }
-            else
-            {
-                this.AccommodationSponsorUid = airportTransferSponsor.Uid;
-            }
+            this.UpdateSponsors(mainLogisticSponsorBaseDtos, userInterfaceLanguage);
         }
 
+        #region Private Methods
+
         /// <summary>Updates the airfare sponsor.</summary>
-        /// <param name="othersRequiredSponsorUid">The others required sponsor uid.</param>
-        /// <param name="airfareSponsor">The airfare sponsor.</param>
-        private void UpdateAirfareSponsor(Guid othersRequiredSponsorUid, AttendeeLogisticSponsor airfareSponsor)
+        /// <param name="logisticDto">The logistic dto.</param>
+        /// <param name="otherAttendeeLogisticSponsorBaseDto">The other attendee logistic sponsor base dto.</param>
+        private void UpdateAirfareSponsor(LogisticDto logisticDto, AttendeeLogisticSponsorBaseDto otherAttendeeLogisticSponsorBaseDto)
         {
-            if (airfareSponsor == null)
+            this.IsAirfareSponsored = false;
+
+            var airfareAttendeeLogisticSponsorDto = logisticDto?.AirfareAttendeeLogisticSponsorDto;
+            if (airfareAttendeeLogisticSponsorDto == null)
             {
                 return;
             }
 
-            if (airfareSponsor.IsOther)
+            this.IsAirfareSponsored = true;
+
+            if (airfareAttendeeLogisticSponsorDto.AttendeeLogisticSponsor.IsOther)
             {
-                this.AirfareSponsorOtherName = airfareSponsor.LogisticSponsor?.Name;
-                this.AirfareSponsorOtherUid = airfareSponsor.Uid;
-                this.AirfareSponsorUid = othersRequiredSponsorUid;
+                this.AirfareSponsorUid = otherAttendeeLogisticSponsorBaseDto?.Uid;
+                this.AirfareSponsorOtherName = airfareAttendeeLogisticSponsorDto.LogisticSponsor.Name;
+                this.AirfareSponsorOtherUid = airfareAttendeeLogisticSponsorDto.AttendeeLogisticSponsor.Uid;
             }
             else
             {
-                this.AirfareSponsorUid = airfareSponsor.Uid;
+                this.AirfareSponsorUid = airfareAttendeeLogisticSponsorDto.AttendeeLogisticSponsor.Uid;
             }
         }
 
         /// <summary>Updates the accommodation sponsor.</summary>
-        /// <param name="othersRequiredSponsorUid">The others required sponsor uid.</param>
-        /// <param name="accommodationSponsor">The accommodation sponsor.</param>
-        private void UpdateAccommodationSponsor(Guid othersRequiredSponsorUid, AttendeeLogisticSponsor accommodationSponsor)
+        /// <param name="logisticDto">The logistic dto.</param>
+        /// <param name="otherAttendeeLogisticSponsorBaseDto">The other attendee logistic sponsor base dto.</param>
+        private void UpdateAccommodationSponsor(LogisticDto logisticDto, AttendeeLogisticSponsorBaseDto otherAttendeeLogisticSponsorBaseDto)
         {
-            if (accommodationSponsor == null)
+            this.IsAccommodationSponsored = false;
+
+            var accommodationAttendeeLogisticSponsorDto = logisticDto?.AccommodationAttendeeLogisticSponsorDto;
+            if (accommodationAttendeeLogisticSponsorDto == null)
             {
                 return;
             }
 
-            if (accommodationSponsor.IsOther)
+            this.IsAccommodationSponsored = true;
+
+            if (accommodationAttendeeLogisticSponsorDto.AttendeeLogisticSponsor.IsOther)
             {
-                this.AccommodationSponsorOtherName = accommodationSponsor.LogisticSponsor?.Name;
-                this.AccommodationSponsorOtherUid = accommodationSponsor.Uid;
-                this.AccommodationSponsorUid = othersRequiredSponsorUid;
+                this.AccommodationSponsorUid = otherAttendeeLogisticSponsorBaseDto?.Uid;
+                this.AccommodationSponsorOtherName = accommodationAttendeeLogisticSponsorDto.LogisticSponsor.Name;
+                this.AccommodationSponsorOtherUid = accommodationAttendeeLogisticSponsorDto.AttendeeLogisticSponsor.Uid;
             }
             else
             {
-                this.AccommodationSponsorUid = accommodationSponsor.Uid;
+                this.AccommodationSponsorUid = accommodationAttendeeLogisticSponsorDto.AttendeeLogisticSponsor.Uid;
+            }
+        }
+
+        /// <summary>Updates the airport transfer sponsor.</summary>
+        /// <param name="logisticDto">The logistic dto.</param>
+        /// <param name="otherAttendeeLogisticSponsorBaseDto">The other attendee logistic sponsor base dto.</param>
+        private void UpdateAirportTransferSponsor(LogisticDto logisticDto, AttendeeLogisticSponsorBaseDto otherAttendeeLogisticSponsorBaseDto)
+        {
+            this.IsAirportTransferSponsored = false;
+
+            var airportTransferAttendeeLogisticSponsorDto = logisticDto?.AirportTransferAttendeeLogisticSponsorDto;
+            if (airportTransferAttendeeLogisticSponsorDto == null)
+            {
+                return;
+            }
+
+            this.IsAirportTransferSponsored = true;
+
+            if (airportTransferAttendeeLogisticSponsorDto.AttendeeLogisticSponsor.IsOther)
+            {
+                this.AirportTransferSponsorUid = otherAttendeeLogisticSponsorBaseDto?.Uid;
+                this.AirportTransferSponsorOtherName = airportTransferAttendeeLogisticSponsorDto.LogisticSponsor.Name;
+                this.AirportTransferSponsorOtherUid = airportTransferAttendeeLogisticSponsorDto.AttendeeLogisticSponsor.Uid;
+            }
+            else
+            {
+                this.AirportTransferSponsorUid = airportTransferAttendeeLogisticSponsorDto.AttendeeLogisticSponsor.Uid;
             }
         }
 
         /// <summary>Updates the sponsors.</summary>
-        /// <param name="sponsors">The sponsors.</param>
+        /// <param name="mainLogisticSponsorBaseDtos">The main logistic sponsor base dtos.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
-        private void UpdateSponsors(List<LogisticSponsorBaseDto> sponsors, string userInterfaceLanguage)
+        private void UpdateSponsors(List<AttendeeLogisticSponsorBaseDto> mainLogisticSponsorBaseDtos, string userInterfaceLanguage)
         {
-            sponsors.ForEach(g => g.Name.GetSeparatorTranslation(userInterfaceLanguage, Language.Separator));
-            this.Sponsors = sponsors.OrderBy(e => e.IsOtherRequired).ThenBy(e => e.Name).ToList();
+            mainLogisticSponsorBaseDtos.ForEach(g => g.Name.GetSeparatorTranslation(userInterfaceLanguage, Language.Separator));
+            this.Sponsors = mainLogisticSponsorBaseDtos.OrderBy(e => e.IsOtherRequired).ThenBy(e => e.Name).ToList();
         }
 
         #endregion

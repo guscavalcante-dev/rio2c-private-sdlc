@@ -164,7 +164,7 @@
     <Compile Include="Dtos\Logistics\LogisticTransferDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticRequestDetailsDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticRequestBaseDto.cs" />
-    <Compile Include="Dtos\Logistics\LogisticSponsorBaseDto.cs" />
+    <Compile Include="Dtos\Logistics\AttendeeLogisticSponsorBaseDto.cs" />
     <Compile Include="Dtos\Messages\NotificationEmailConversationDto.cs" />
     <Compile Include="Dtos\Messages\HubBaseDto.cs" />
     <Compile Include="Dtos\Messages\MessageHubDto.cs" />
