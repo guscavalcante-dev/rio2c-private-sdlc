@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-13-2020
 // ***********************************************************************
 // <copyright file="DeleteLogisticTransferCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -43,7 +43,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.Uow.BeginTransaction();
 
-            var entity = await this.GetByUid(cmd.Uid);
+            var logisticTransfer = await this.GetLogisticTransferByUid(cmd.Uid);
 
             #region Initial validations
 
@@ -55,14 +55,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            entity.Delete(cmd.UserId);
-            if (!entity.IsValid())
+            logisticTransfer.Delete(cmd.UserId);
+            if (!logisticTransfer.IsValid())
             {
-                this.AppValidationResult.Add(entity.ValidationResult);
+                this.AppValidationResult.Add(logisticTransfer.ValidationResult);
                 return this.AppValidationResult;
             }
 
-            this.repository.Update(entity);
+            this.LogisticTransferRepo.Update(logisticTransfer);
             this.Uow.SaveChanges();
 
             return this.AppValidationResult;

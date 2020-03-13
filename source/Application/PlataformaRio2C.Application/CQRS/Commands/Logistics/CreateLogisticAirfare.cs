@@ -4,7 +4,7 @@
 // Created          : 01-27-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-13-2020
 // ***********************************************************************
 // <copyright file="CreateLogisticAirfare.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -45,12 +45,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = "DepartureDate", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public DateTime? Departure { get; set; }
+        public string Departure { get; set; }
 
         [Display(Name = "ArrivalDate", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [NotEqualTo("Departure", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyDifferentFromProperty")]
-        public DateTime? Arrival { get; set; }
+        public string Arrival { get; set; }
         
         [Display(Name = "TicketNumber", ResourceType = typeof(Labels))]
         [StringLength(20, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]

@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-13-2020
 // ***********************************************************************
 // <copyright file="CreateLogisticTransferCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -53,7 +53,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.Uow.BeginTransaction();
 
-            var entity = new LogisticTransfer(
+            var logisticTransfer = new LogisticTransfer(
                 cmd.AdditionalInfo, 
                 cmd.Date,
                 placeRepo.Get(cmd.FromAttendeePlaceId),
@@ -61,16 +61,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 logisticRepo.Get(cmd.LogisticsUid),
                 cmd.UserId);
 
-            if (!entity.IsValid())
+            if (!logisticTransfer.IsValid())
             {
-                this.AppValidationResult.Add(entity.ValidationResult);
+                this.AppValidationResult.Add(logisticTransfer.ValidationResult);
                 return this.AppValidationResult;
             }
 
-            this.repository.Create(entity);
+            this.LogisticTransferRepo.Create(logisticTransfer);
 
             this.Uow.SaveChanges();
-            this.AppValidationResult.Data = entity;
+            this.AppValidationResult.Data = logisticTransfer;
 
             return this.AppValidationResult;
         }

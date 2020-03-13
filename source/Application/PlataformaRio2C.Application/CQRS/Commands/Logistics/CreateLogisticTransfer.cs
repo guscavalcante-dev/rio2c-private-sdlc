@@ -4,7 +4,7 @@
 // Created          : 01-27-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-13-2020
 // ***********************************************************************
 // <copyright file="CreateLogisticTransfer.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -36,7 +36,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = "Departure", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public DateTime? Date { get; set; }
+        public string Date { get; set; }
         
         [Display(Name = "LogisticTransferStatus", ResourceType = typeof(Labels))]
         public int? LogisticTransferStatusId { get; set; }

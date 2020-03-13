@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-11-2020
+// Last Modified On : 03-13-2020
 // ***********************************************************************
 // <copyright file="LogisticTransfer.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Globalization;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
@@ -36,24 +37,19 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Initializes a new instance of the <see cref="LogisticTransfer"/> class.</summary>
         /// <param name="additionalInfo">The additional information.</param>
-        /// <param name="date">The date.</param>
+        /// <param name="stringDate">The string date.</param>
         /// <param name="fromAttendeePlace">From attendee place.</param>
         /// <param name="toAttendeePlace">To attendee place.</param>
         /// <param name="logistic">The logistic.</param>
         /// <param name="userId">The user identifier.</param>
-        public LogisticTransfer(string additionalInfo, DateTime? date, AttendeePlace fromAttendeePlace, AttendeePlace toAttendeePlace, Logistic logistic, int userId)
+        public LogisticTransfer(string additionalInfo, string stringDate, AttendeePlace fromAttendeePlace, AttendeePlace toAttendeePlace, Logistic logistic, int userId)
         {
             this.Logistic = logistic;
             this.FromAttendeePlaceId = fromAttendeePlace?.Id ?? 0;
             this.FromAttendeePlace = fromAttendeePlace;
             this.ToAttendeePlaceId = toAttendeePlace?.Id ?? 0;
             this.ToAttendeePlace = toAttendeePlace;
-
-            if (date.HasValue)
-            {
-                this.Date = date.Value.ToUtcTimeZone();
-            }
-
+            this.UpdateTransferDate(stringDate);
             this.AdditionalInfo = additionalInfo?.Trim();
 
             this.IsDeleted = false;
@@ -68,17 +64,17 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Updates the specified additional information.</summary>
         /// <param name="additionalInfo">The additional information.</param>
-        /// <param name="date">The date.</param>
+        /// <param name="stringDate">The string date.</param>
         /// <param name="fromAttendeePlace">From attendee place.</param>
         /// <param name="toAttendeePlace">To attendee place.</param>
         /// <param name="userId">The user identifier.</param>
-        public void Update(string additionalInfo, DateTime date, AttendeePlace fromAttendeePlace, AttendeePlace toAttendeePlace, int userId)
+        public void Update(string additionalInfo, string stringDate, AttendeePlace fromAttendeePlace, AttendeePlace toAttendeePlace, int userId)
         {
             this.FromAttendeePlaceId = fromAttendeePlace?.Id ?? 0;
             this.FromAttendeePlace = fromAttendeePlace;
             this.ToAttendeePlaceId = toAttendeePlace?.Id ?? 0;
             this.ToAttendeePlace = toAttendeePlace;
-            this.Date = date.ToUtcTimeZone();
+            this.UpdateTransferDate(stringDate);
             this.AdditionalInfo = additionalInfo?.Trim();
 
             this.IsDeleted = false;
@@ -95,6 +91,31 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
         }
 
+        #region Private Methods
+
+        /// <summary>Updates the transfer date.</summary>
+        /// <param name="stringDate">The string date.</param>
+        private void UpdateTransferDate(string stringDate)
+        {
+            if (string.IsNullOrEmpty(stringDate))
+            {
+                return;
+            }
+
+            var datePattern = CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern;
+            var timePattern = "HH:mm";//CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern.Replace(" tt", "");
+
+            var date = stringDate.ToDateTime($"{datePattern} {timePattern}");
+            if (!date.HasValue)
+            {
+                return;
+            }
+
+            this.Date = date.Value.ToUtcTimeZone();
+        }
+
+        #endregion
+
         #region Validations
 
         /// <summary>Returns true if ... is valid.</summary>
@@ -109,6 +130,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.ValidateLogistic();
             this.ValidatePlaces();
+            this.ValidateDate();
             this.ValidateAdditionalInfo();
 
             return this.ValidationResult.IsValid;
@@ -139,6 +161,15 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.FromAttendeePlaceId == this.ToAttendeePlaceId)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyDifferentFromProperty, Labels.ToPlace, Labels.FromPlace), new string[] { "ToAttendeePlaceId" }));
+            }
+        }
+
+        /// <summary>Validates the date.</summary>
+        public void ValidateDate()
+        {
+            if (this.Date == DateTimeOffset.MinValue)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Date), new string[] { "Date" }));
             }
         }
 

@@ -59,7 +59,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.Uow.BeginTransaction();
 
-            var logistics = await this.GetLogisticByUid(cmd.LogisticUid);
+            var logistic = await this.GetLogisticByUid(cmd.LogisticUid);
 
             #region Initial validations
 
@@ -71,7 +71,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            logistics.Update(
+            logistic.Update(
                     this.editionRepo.Get(cmd.EditionId),
                     cmd.IsAirfareSponsored,
                     this.attendeeLogisticSponsorRepo.Get(cmd.AirfareSponsorOtherUid ?? cmd.AirfareSponsorUid ?? Guid.Empty),
@@ -90,15 +90,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.AdditionalInfo,
                     cmd.UserId);
 
-            if (!logistics.IsValid())
+            if (!logistic.IsValid())
             {
-                this.AppValidationResult.Add(logistics.ValidationResult);
+                this.AppValidationResult.Add(logistic.ValidationResult);
                 return this.AppValidationResult;
             }
 
-            this.repository.Update(logistics);
+            this.repository.Update(logistic);
             this.Uow.SaveChanges();
-            this.AppValidationResult.Data = logistics;
+            this.AppValidationResult.Data = logistic;
 
             return this.AppValidationResult;
         }

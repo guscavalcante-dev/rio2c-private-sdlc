@@ -4,7 +4,7 @@
 // Created          : 01-27-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-13-2020
 // ***********************************************************************
 // <copyright file="UpdateLogisticTransfer.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,7 +35,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Uid = uid;
             this.FromAttendeePlaceId = fromAttendeePlaceId;
             this.ToAttendeePlaceId = attendeePlaceId;
-            this.Date = date.ToUserTimeZone();
+            this.UpdateDate(date);
             this.AdditionalInfo = additionalInfo;
 
             this.UpdateLists(attendeePlaceDropdownDto);
@@ -45,5 +45,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public UpdateLogisticTransfer()
         {
         }
+
+        #region Private Methods
+
+        /// <summary>Updates the date.</summary>
+        /// <param name="date">The date.</param>
+        private void UpdateDate(DateTimeOffset? date)
+        {
+            var userDate = date?.ToUserTimeZone();
+            this.Date = userDate?.ToShortDateString() + " " + userDate?.ToString("HH:mm");
+        }
+
+        #endregion
     }
 }

@@ -4,9 +4,9 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 03-13-2020
 // ***********************************************************************
-// <copyright file="PillarBaseCommandHandler.cs" company="Softo">
+// <copyright file="LogisticTransferBaseCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -22,33 +22,33 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>PillarBaseCommandHandler</summary>
+    /// <summary>LogisticTransferBaseCommandHandler</summary>
     public class LogisticTransferBaseCommandHandler : BaseCommandHandler
     {
-        protected readonly ILogisticTransferRepository repository;
+        protected readonly ILogisticTransferRepository LogisticTransferRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="PillarBaseCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="LogisticTransferBaseCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
-        /// <param name="pillarRepository">The pillar repository.</param>
-        public LogisticTransferBaseCommandHandler(IMediator eventBus, IUnitOfWork uow, ILogisticTransferRepository repository)
+        /// <param name="logisticTransferRepository">The logistic transfer repository.</param>
+        public LogisticTransferBaseCommandHandler(IMediator eventBus, IUnitOfWork uow, ILogisticTransferRepository logisticTransferRepository)
             : base(eventBus, uow)
         {
-            this.repository = repository;
+            this.LogisticTransferRepo = logisticTransferRepository;
         }
 
-        /// <summary>Gets the pillar by uid.</summary>
-        /// <param name="pillarUid">The pillar uid.</param>
+        /// <summary>Gets the logistic transfer by uid.</summary>
+        /// <param name="logisticTransferUid">The logistic transfer uid.</param>
         /// <returns></returns>
-        public async Task<LogisticTransfer> GetByUid(Guid uid)
+        public async Task<LogisticTransfer> GetLogisticTransferByUid(Guid logisticTransferUid)
         {
-            var entity = await this.repository.GetAsync(uid);
-            if (entity == null || entity.IsDeleted)
+            var logisticTransfer = await this.LogisticTransferRepo.GetAsync(logisticTransferUid);
+            if (logisticTransfer == null || logisticTransfer.IsDeleted)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Logistics, Labels.FoundF), new string[] { "Airfare" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Transfer, Labels.FoundM), new string[] { "ToastrError" }));
             }
 
-            return entity;
+            return logisticTransfer;
         }
     }
 }

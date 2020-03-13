@@ -4,7 +4,7 @@
 // Created          : 01-27-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-13-2020
 // ***********************************************************************
 // <copyright file="CreateLogisticAccommodation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -31,12 +31,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = "CheckInDate", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public DateTime? CheckInDate { get; set; }
+        public string CheckInDate { get; set; }
 
         [Display(Name = "CheckOutDate", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [NotEqualTo("CheckInDate", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyDifferentFromProperty")]
-        public DateTime? CheckOutDate { get; set; }
+        public string CheckOutDate { get; set; }
 
         [Display(Name = "AdditionalInfo", ResourceType = typeof(Labels))]
         [StringLength(1000, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]

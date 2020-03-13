@@ -10,12 +10,12 @@
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.CheckInDate, new { @class = "control-label" })
-        @Html.TextBox("CheckInDate", Model?.CheckInDate?.ToString("g"), new { @class = "form-control enable-datetimepicker" })
+        @Html.TextBox("CheckInDate", Model?.CheckInDate, new { @class = "form-control enable-datetimepicker" })
         @Html.ValidationMessageFor(m => m.CheckInDate, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.CheckOutDate, new { @class = "control-label" })
-        @Html.TextBox("CheckOutDate", Model?.CheckOutDate?.ToString("g"), new { @class = "form-control enable-datetimepicker" })
+        @Html.TextBox("CheckOutDate", Model?.CheckOutDate, new { @class = "form-control enable-datetimepicker" })
         @Html.ValidationMessageFor(m => m.CheckOutDate, "", new { @class = "text-danger" })
     </div>
 </div>

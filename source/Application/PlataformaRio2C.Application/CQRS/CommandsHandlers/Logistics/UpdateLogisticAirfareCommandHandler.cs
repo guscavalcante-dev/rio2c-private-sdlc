@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-13-2020
 // ***********************************************************************
 // <copyright file="UpdateLogisticAirfareCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -46,29 +46,21 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <returns></returns>
         public async Task<AppValidationResult> Handle(UpdateLogisticAirfare cmd, CancellationToken cancellationToken)
         {
-
             this.Uow.BeginTransaction();
 
-            var airfare = await this.GetByUid(cmd.Uid);
+            var logisticAirfare = await this.GetLogisticAirfareByUid(cmd.Uid);
 
             #region Initial validations
 
-            //// Check if exists an user with the same email
-            //var user = await this.repository.GetAsync(u => u.Email == cmd.Email.Trim());
-            //if (user != null && (collaborator?.User == null || user.Uid != collaborator?.User?.Uid))
-            //{
-            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.Executive.ToLowerInvariant(), $"{Labels.TheM} {Labels.Email}", cmd.Email), new string[] { "Email" }));
-            //}
-
-            //if (!this.ValidationResult.IsValid)
-            //{
-            //    this.AppValidationResult.Add(this.ValidationResult);
-            //    return this.AppValidationResult;
-            //}
+            if (!this.ValidationResult.IsValid)
+            {
+                this.AppValidationResult.Add(this.ValidationResult);
+                return this.AppValidationResult;
+            }
 
             #endregion
 
-            airfare.Update(
+            logisticAirfare.Update(
                 cmd.IsNational,
                 cmd.IsArrival,
                 cmd.From,
@@ -79,15 +71,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.Arrival,
                 cmd.UserId);
 
-            if (!airfare.IsValid())
+            if (!logisticAirfare.IsValid())
             {
-                this.AppValidationResult.Add(airfare.ValidationResult);
+                this.AppValidationResult.Add(logisticAirfare.ValidationResult);
                 return this.AppValidationResult;
             }
 
-            this.repository.Update(airfare);
+            this.LogisticAirfareRepo.Update(logisticAirfare);
             this.Uow.SaveChanges();
-            this.AppValidationResult.Data = airfare;
+            this.AppValidationResult.Data = logisticAirfare;
 
             return this.AppValidationResult;
         }

@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-13-2020
 // ***********************************************************************
 // <copyright file="CreateLogisticAirfareCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -49,7 +49,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.Uow.BeginTransaction();
 
-            var entity = new LogisticAirfare(
+            var logisticAirfare = new LogisticAirfare(
                 await logisticRepo.GetAsync(cmd.LogisticsUid),
                 cmd.IsNational,
                 cmd.IsArrival,
@@ -61,16 +61,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.Arrival,
                 cmd.UserId);
             
-            if (!entity.IsValid())
+            if (!logisticAirfare.IsValid())
             {
-                this.AppValidationResult.Add(entity.ValidationResult);
+                this.AppValidationResult.Add(logisticAirfare.ValidationResult);
                 return this.AppValidationResult;
             }
 
-            this.repository.Create(entity);
+            this.LogisticAirfareRepo.Create(logisticAirfare);
 
             this.Uow.SaveChanges();
-            this.AppValidationResult.Data = entity;
+            this.AppValidationResult.Data = logisticAirfare;
 
             return this.AppValidationResult;
         }

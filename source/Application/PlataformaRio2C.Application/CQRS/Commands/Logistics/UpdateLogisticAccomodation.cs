@@ -4,7 +4,7 @@
 // Created          : 01-27-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-13-2020
 // ***********************************************************************
 // <copyright file="UpdateLogisticAccommodation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,8 +33,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public UpdateLogisticAccommodation(Guid uid, DateTimeOffset? checkInDate, DateTimeOffset? checkOutDate, string additionalInfo, int placeId, List<AttendeePlaceDropdownDto> attendeePlaceDtos)
         {
             this.Uid = uid;
-            this.CheckInDate = checkInDate?.ToUserTimeZone();
-            this.CheckOutDate = checkOutDate?.ToUserTimeZone();
+            this.UpdateDates(checkInDate, checkOutDate);
             this.AdditionalInfo = additionalInfo;
             this.PlaceId = placeId;
             this.UpdateLists(attendeePlaceDtos);
@@ -44,5 +43,21 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public UpdateLogisticAccommodation()
         {
         }
+
+        #region Private Methods
+
+        /// <summary>Updates the dates.</summary>
+        /// <param name="checkInDate">The check in date.</param>
+        /// <param name="checkOutDate">The check out date.</param>
+        private void UpdateDates(DateTimeOffset? checkInDate, DateTimeOffset? checkOutDate)
+        {
+            var checkIn = checkInDate?.ToUserTimeZone();
+            this.CheckInDate = checkIn?.ToShortDateString() + " " + checkIn?.ToString("HH:mm");
+
+            var checkOut = checkOutDate?.ToUserTimeZone();
+            this.CheckOutDate = checkOut?.ToShortDateString() + " " + checkOut?.ToString("HH:mm");
+        }
+
+        #endregion
     }
 }

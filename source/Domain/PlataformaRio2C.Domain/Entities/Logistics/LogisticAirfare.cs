@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-11-2020
+// Last Modified On : 03-13-2020
 // ***********************************************************************
 // <copyright file="LogisticAirfare.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Globalization;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
@@ -47,8 +48,8 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="to">To.</param>
         /// <param name="ticketNumber">The ticket number.</param>
         /// <param name="additionalInfo">The additional information.</param>
-        /// <param name="departureDate">The departure date.</param>
-        /// <param name="arrivalDate">The arrival date.</param>
+        /// <param name="stringDepartureDate">The string departure date.</param>
+        /// <param name="stringArrivalDate">The string arrival date.</param>
         /// <param name="userId">The user identifier.</param>
         public LogisticAirfare(
             Logistic logistic, 
@@ -58,8 +59,8 @@ namespace PlataformaRio2C.Domain.Entities
             string to, 
             string ticketNumber, 
             string additionalInfo, 
-            DateTime? departureDate, 
-            DateTime? arrivalDate, 
+            string stringDepartureDate, 
+            string stringArrivalDate, 
             int userId)
         {
             this.Logistic = logistic;
@@ -67,16 +68,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsArrival = isArrival ?? false;
             this.From = from?.Trim();
             this.To = to?.Trim();
-
-            if (departureDate.HasValue)
-            {
-                this.DepartureDate = departureDate.Value.ToUtcTimeZone();
-            }
-
-            if (arrivalDate.HasValue)
-            {
-                this.ArrivalDate = arrivalDate.Value.ToUtcTimeZone();
-            }
+            this.UpdateDepartureDate(stringDepartureDate);
+            this.UpdateArrivalDate(stringArrivalDate);
 
             this.TicketNumber = ticketNumber?.Trim();
             this.AdditionalInfo = additionalInfo?.Trim();
@@ -98,8 +91,8 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="to">To.</param>
         /// <param name="ticketNumber">The ticket number.</param>
         /// <param name="additionalInfo">The additional information.</param>
-        /// <param name="departureDate">The departure date.</param>
-        /// <param name="arrivalDate">The arrival date.</param>
+        /// <param name="stringDepartureDate">The string departure date.</param>
+        /// <param name="stringArrivalDate">The string arrival date.</param>
         /// <param name="userId">The user identifier.</param>
         public void Update(
             bool? isNational, 
@@ -108,24 +101,16 @@ namespace PlataformaRio2C.Domain.Entities
             string to, 
             string ticketNumber,
             string additionalInfo,
-            DateTime? departureDate, 
-            DateTime? arrivalDate,
+            string stringDepartureDate,
+            string stringArrivalDate,
             int userId)
         {
             this.IsNational = isNational ?? false;
             this.IsArrival = isArrival ?? false;
             this.From = from?.Trim();
             this.To = to?.Trim();
-
-            if (departureDate.HasValue)
-            {
-                this.DepartureDate = departureDate.Value.ToUtcTimeZone();
-            }
-
-            if (arrivalDate.HasValue)
-            {
-                this.ArrivalDate = arrivalDate.Value.ToUtcTimeZone();
-            }
+            this.UpdateDepartureDate(stringDepartureDate);
+            this.UpdateArrivalDate(stringArrivalDate);
 
             this.TicketNumber = ticketNumber?.Trim();
             this.AdditionalInfo = additionalInfo?.Trim();
@@ -143,6 +128,52 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
+
+        #region Private Methods
+
+        /// <summary>Updates the departure date.</summary>
+        /// <param name="stringDepartureDate">The string departure date.</param>
+        private void UpdateDepartureDate(string stringDepartureDate)
+        {
+            if (string.IsNullOrEmpty(stringDepartureDate))
+            {
+                return;
+            }
+
+            var datePattern = CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern;
+            var timePattern = "HH:mm";//CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern.Replace(" tt", "");
+
+            var departureDate = stringDepartureDate.ToDateTime($"{datePattern} {timePattern}");
+            if (!departureDate.HasValue)
+            {
+                return;
+            }
+
+            this.DepartureDate = departureDate.Value.ToUtcTimeZone();
+        }
+
+        /// <summary>Updates the arrival date.</summary>
+        /// <param name="stringArrivalDate">The string arrival date.</param>
+        private void UpdateArrivalDate(string stringArrivalDate)
+        {
+            if (string.IsNullOrEmpty(stringArrivalDate))
+            {
+                return;
+            }
+
+            var datePattern = CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern;
+            var timePattern = "HH:mm";//CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern.Replace(" tt", "");
+
+            var arrivalDate = stringArrivalDate.ToDateTime($"{datePattern} {timePattern}");
+            if (!arrivalDate.HasValue)
+            {
+                return;
+            }
+
+            this.ArrivalDate = arrivalDate.Value.ToUtcTimeZone();
+        }
+
+        #endregion
 
         #region Validations
 

@@ -76,7 +76,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
-            var logistics = new Logistic(
+            var logistic = new Logistic(
                 this.editionRepo.Get(cmd.EditionId),
                 this.attendeeCollaboratorRepo.Get(cmd.AttendeeCollaboratorUid),
                 cmd.IsAirfareSponsored,
@@ -96,16 +96,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.AdditionalInfo,
                 cmd.UserId);
             
-            if (!logistics.IsValid())
+            if (!logistic.IsValid())
             {
-                this.AppValidationResult.Add(logistics.ValidationResult);
+                this.AppValidationResult.Add(logistic.ValidationResult);
                 return this.AppValidationResult;
             }
 
-            this.repository.Create(logistics);
+            this.repository.Create(logistic);
 
             this.Uow.SaveChanges();
-            this.AppValidationResult.Data = logistics;
+            this.AppValidationResult.Data = logistic;
 
             return this.AppValidationResult;
         }

@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 03-13-2020
 // ***********************************************************************
 // <copyright file="PillarBaseCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,30 +25,30 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>PillarBaseCommandHandler</summary>
     public class LogisticAirfareBaseCommandHandler : BaseCommandHandler
     {
-        protected readonly ILogisticAirfareRepository repository;
+        protected readonly ILogisticAirfareRepository LogisticAirfareRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="PillarBaseCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="LogisticAirfareBaseCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
-        /// <param name="pillarRepository">The pillar repository.</param>
-        public LogisticAirfareBaseCommandHandler(IMediator eventBus, IUnitOfWork uow, ILogisticAirfareRepository repository)
+        /// <param name="logisticAirfareRepo">The logistic airfare repo.</param>
+        public LogisticAirfareBaseCommandHandler(IMediator eventBus, IUnitOfWork uow, ILogisticAirfareRepository logisticAirfareRepo)
             : base(eventBus, uow)
         {
-            this.repository = repository;
+            this.LogisticAirfareRepo = logisticAirfareRepo;
         }
 
-        /// <summary>Gets the pillar by uid.</summary>
-        /// <param name="pillarUid">The pillar uid.</param>
+        /// <summary>Gets the logistic airfare by uid.</summary>
+        /// <param name="logisticAirfareUid">The logistic airfare uid.</param>
         /// <returns></returns>
-        public async Task<LogisticAirfare> GetByUid(Guid uid)
+        public async Task<LogisticAirfare> GetLogisticAirfareByUid(Guid logisticAirfareUid)
         {
-            var entity = await this.repository.GetAsync(uid);
-            if (entity == null || entity.IsDeleted)
+            var logisticAirfare = await this.LogisticAirfareRepo.GetAsync(logisticAirfareUid);
+            if (logisticAirfare == null || logisticAirfare.IsDeleted)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Logistics, Labels.FoundF), new string[] { "Airfare" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Airfare, Labels.FoundM), new string[] { "ToastrError" }));
             }
 
-            return entity;
+            return logisticAirfare;
         }
     }
 }

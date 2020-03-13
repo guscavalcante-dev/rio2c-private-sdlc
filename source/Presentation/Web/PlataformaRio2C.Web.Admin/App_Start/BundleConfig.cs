@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2020
+// Last Modified On : 03-13-2020
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -560,68 +560,17 @@ namespace PlataformaRio2C.Web.Admin
             #endregion
 
             #region Reports
+
             #region Audiovisual
+
             bundles.Add(new ScriptBundle("~/bundles/js/reports.audiovisual.subscriptions.widget.js").Include(
                 "~/Assets/js/reports/reports.audiovisual.subscriptions.widget.js",
                 "~/Scripts/jquery.unobtrusive-ajax.js"));
 
-            #region Reports
-            #region Audiovisual
             bundles.Add(new ScriptBundle("~/bundles/js/reports.audiovisual.subscriptions.widget.js").Include(
                 "~/Assets/js/reports/reports.audiovisual.subscriptions.widget.js",
                 "~/Scripts/jquery.unobtrusive-ajax.js"));
-
             
-            #region Logistics - LogisticSponsors
-
-            bundles.Add(new ScriptBundle("~/bundles/js/logisticsponsors.list.js").Include(
-                "~/Assets/js/logisticsponsors/logisticsponsors.datatable.widget.js"));
-            
-            bundles.Add(new ScriptBundle("~/bundles/js/logisticsponsors.create.js").Include(
-                "~/Assets/js/logisticsponsors/logisticsponsors.create.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/logisticsponsors.update.js").Include(
-                "~/Assets/js/logisticsponsors/logisticsponsors.update.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/logisticsponsors.delete.js").Include(
-                "~/Assets/js/logisticsponsors/logisticsponsors.delete.js"));
-
-            #endregion
-            
-            #region Logistics - LogisticRequests
-
-            bundles.Add(new ScriptBundle("~/bundles/js/logistics.list.js").Include(
-                "~/Assets/js/logistics/logistics.datatable.widget.js"));
-            
-            bundles.Add(new ScriptBundle("~/bundles/js/logistics.create.js").Include(
-                "~/Assets/js/logistics/logistics.create.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/logistics.update.js").Include(
-                "~/Assets/js/logistics/logistics.update.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/logistics.delete.js").Include(
-                "~/Assets/js/logistics/logistics.delete.js"));
-            
-            bundles.Add(new ScriptBundle("~/bundles/js/logistics.details.js").Include(
-                "~/Assets/js/logistics/logistics.maininformation.widget.js",
-                "~/Assets/js/logistics/logistics.airfare.create.js",
-                "~/Assets/js/logistics/logistics.airfare.update.js",
-                "~/Assets/js/logistics/logistics.airfare.widget.js",
-                "~/Assets/js/logistics/logistics.airfare.delete.js",
-                "~/Assets/js/logistics/logistics.accommodation.create.js",
-                "~/Assets/js/logistics/logistics.accommodation.update.js",
-                "~/Assets/js/logistics/logistics.accommodation.widget.js",
-                "~/Assets/js/logistics/logistics.accommodation.delete.js",
-                "~/Assets/js/logistics/logistics.transfer.create.js",
-                "~/Assets/js/logistics/logistics.transfer.update.js",
-                "~/Assets/js/logistics/logistics.transfer.widget.js",
-                "~/Assets/js/logistics/logistics.transfer.delete.js"));
-
-            #endregion
-
-            #endregion
-            #endregion
-
             #endregion
 
             #endregion
@@ -721,8 +670,55 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/music.projects.delete.js").Include(
                 "~/Assets/js/music/projects/music.projects.delete.js"));
-            
+
             #endregion
+
+            #endregion
+
+            #region Logistics - Sponsors
+
+            bundles.Add(new ScriptBundle("~/bundles/js/logisticsponsors.list.js").Include(
+                "~/Assets/js/logisticsponsors/logisticsponsors.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/logisticsponsors.create.js").Include(
+                "~/Assets/js/logisticsponsors/logisticsponsors.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/logisticsponsors.update.js").Include(
+                "~/Assets/js/logisticsponsors/logisticsponsors.update.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/logisticsponsors.delete.js").Include(
+                "~/Assets/js/logisticsponsors/logisticsponsors.delete.js"));
+
+            #endregion
+
+            #region Logistics - Requests
+
+            bundles.Add(new ScriptBundle("~/bundles/js/logistics.list.js").Include(
+                "~/Assets/js/logistics/logistics.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/logistics.create.js").Include(
+                "~/Assets/js/logistics/logistics.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/logistics.update.js").Include(
+                "~/Assets/js/logistics/logistics.update.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/logistics.delete.js").Include(
+                "~/Assets/js/logistics/logistics.delete.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/logistics.details.js").Include(
+                "~/Assets/js/logistics/logistics.maininformation.widget.js",
+                "~/Assets/js/logistics/logistics.airfare.create.js",
+                "~/Assets/js/logistics/logistics.airfare.update.js",
+                "~/Assets/js/logistics/logistics.airfare.widget.js",
+                "~/Assets/js/logistics/logistics.airfare.delete.js",
+                "~/Assets/js/logistics/logistics.accommodation.create.js",
+                "~/Assets/js/logistics/logistics.accommodation.update.js",
+                "~/Assets/js/logistics/logistics.accommodation.widget.js",
+                "~/Assets/js/logistics/logistics.accommodation.delete.js",
+                "~/Assets/js/logistics/logistics.transfer.create.js",
+                "~/Assets/js/logistics/logistics.transfer.update.js",
+                "~/Assets/js/logistics/logistics.transfer.widget.js",
+                "~/Assets/js/logistics/logistics.transfer.delete.js"));
 
             #endregion
 

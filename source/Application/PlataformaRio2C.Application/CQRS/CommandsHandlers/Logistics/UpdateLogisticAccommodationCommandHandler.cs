@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-11-2020
+// Last Modified On : 03-13-2020
 // ***********************************************************************
 // <copyright file="UpdateLogisticAccommodationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -50,40 +50,33 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.Uow.BeginTransaction();
 
-            var accommodation = await this.GetByUid(cmd.Uid);
+            var logisticAccommodation = await this.GetLogisticAccommodationByUid(cmd.Uid);
 
             #region Initial validations
 
-            //// Check if exists an user with the same email
-            //var user = await this.repository.GetAsync(u => u.Email == cmd.Email.Trim());
-            //if (user != null && (collaborator?.User == null || user.Uid != collaborator?.User?.Uid))
-            //{
-            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.Executive.ToLowerInvariant(), $"{Labels.TheM} {Labels.Email}", cmd.Email), new string[] { "Email" }));
-            //}
-
-            //if (!this.ValidationResult.IsValid)
-            //{
-            //    this.AppValidationResult.Add(this.ValidationResult);
-            //    return this.AppValidationResult;
-            //}
+            if (!this.ValidationResult.IsValid)
+            {
+                this.AppValidationResult.Add(this.ValidationResult);
+                return this.AppValidationResult;
+            }
 
             #endregion
 
-            accommodation.Update(cmd.AdditionalInfo,
+            logisticAccommodation.Update(cmd.AdditionalInfo,
                 cmd.CheckInDate,
                 cmd.CheckOutDate,
                 attendeePlaceRepo.Get(cmd.PlaceId),
                 cmd.UserId);
             
-            if (!accommodation.IsValid())
+            if (!logisticAccommodation.IsValid())
             {
-                this.AppValidationResult.Add(accommodation.ValidationResult);
+                this.AppValidationResult.Add(logisticAccommodation.ValidationResult);
                 return this.AppValidationResult;
             }
 
-            this.repository.Update(accommodation);
+            this.LogisticAccommodationRepo.Update(logisticAccommodation);
             this.Uow.SaveChanges();
-            this.AppValidationResult.Data = accommodation;
+            this.AppValidationResult.Data = logisticAccommodation;
 
             return this.AppValidationResult;
         }

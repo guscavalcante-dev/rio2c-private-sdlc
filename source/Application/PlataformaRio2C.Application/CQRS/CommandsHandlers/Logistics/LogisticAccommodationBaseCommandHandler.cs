@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 03-13-2020
 // ***********************************************************************
 // <copyright file="PillarBaseCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,30 +25,30 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>PillarBaseCommandHandler</summary>
     public class LogisticAccommodationBaseCommandHandler : BaseCommandHandler
     {
-        protected readonly ILogisticAccommodationRepository repository;
+        protected readonly ILogisticAccommodationRepository LogisticAccommodationRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="PillarBaseCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="LogisticAccommodationBaseCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
-        /// <param name="pillarRepository">The pillar repository.</param>
-        public LogisticAccommodationBaseCommandHandler(IMediator eventBus, IUnitOfWork uow, ILogisticAccommodationRepository repository)
+        /// <param name="logisticAccommodationRepository">The logistic accommodation repository.</param>
+        public LogisticAccommodationBaseCommandHandler(IMediator eventBus, IUnitOfWork uow, ILogisticAccommodationRepository logisticAccommodationRepository)
             : base(eventBus, uow)
         {
-            this.repository = repository;
+            this.LogisticAccommodationRepo = logisticAccommodationRepository;
         }
 
-        /// <summary>Gets the pillar by uid.</summary>
-        /// <param name="pillarUid">The pillar uid.</param>
+        /// <summary>Gets the logistic accommodation by uid.</summary>
+        /// <param name="logisticAccommodationUid">The logistic accommodation uid.</param>
         /// <returns></returns>
-        public async Task<LogisticAccommodation> GetByUid(Guid uid)
+        public async Task<LogisticAccommodation> GetLogisticAccommodationByUid(Guid logisticAccommodationUid)
         {
-            var entity = await this.repository.GetAsync(uid);
-            if (entity == null || entity.IsDeleted)
+            var logisticAccommodation = await this.LogisticAccommodationRepo.GetAsync(logisticAccommodationUid);
+            if (logisticAccommodation == null || logisticAccommodation.IsDeleted)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Logistics, Labels.FoundF), new string[] { "Airfare" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Accommodation, Labels.FoundF), new string[] { "ToastrError" }));
             }
 
-            return entity;
+            return logisticAccommodation;
         }
     }
 }

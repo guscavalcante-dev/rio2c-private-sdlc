@@ -709,26 +709,25 @@ var MyRio2cCommon = function () {
         });
     };
 
-
     var enableDateTimePicker = function (options) {
         // Id or class
         if (!hasProperty(options, 'inputIdOrClass') || isNullOrEmpty(options.inputIdOrClass)) {
             options.inputIdOrClass = '.enable-datetimepicker';
         }
 
-        var dateFormat = $.fn.datepicker.dates[MyRio2cCommon.getGlobalVariable('userInterfaceLanguage')].format;
+        var language = MyRio2cCommon.getGlobalVariable('userInterfaceLanguage');
+        var dateFormat = $.fn.datepicker.dates[language].format;
 
         $(options.inputIdOrClass).datetimepicker({
             format: dateFormat + ' hh:ii',
-            language: MyRio2cCommon.getGlobalVariable('userInterfaceLanguage')
+            language: language
         });
 
         $(options.inputIdOrClass).inputmask("datetime", {
             inputFormat: dateFormat + ' HH:MM',
-            placeholder: '__/__/____ __:__'
+            placeholder: (dateFormat + ' HH:ii').replace(/([(A-Z)|(a-z)])/g, "_")
         });
     }
-
 
     var enableTimePicker = function (options) {
         if (isNullOrEmpty(options)) {

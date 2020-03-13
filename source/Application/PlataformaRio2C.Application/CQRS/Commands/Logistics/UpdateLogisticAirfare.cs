@@ -4,7 +4,7 @@
 // Created          : 01-27-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-13-2020
 // ***********************************************************************
 // <copyright file="UpdateLogisticAirfare.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -31,8 +31,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.IsArrival = logisticAirfareDto?.LogisticAirfare?.IsArrival;
             this.From = logisticAirfareDto?.LogisticAirfare?.From;
             this.To = logisticAirfareDto?.LogisticAirfare?.To;
-            this.Departure = logisticAirfareDto?.LogisticAirfare?.DepartureDate.ToUserTimeZone();
-            this.Arrival = logisticAirfareDto?.LogisticAirfare?.ArrivalDate.ToUserTimeZone();
+            this.UpdateDate(logisticAirfareDto);
             this.TicketNumber = logisticAirfareDto?.LogisticAirfare?.TicketNumber;
             this.AdditionalInfo = logisticAirfareDto?.LogisticAirfare?.AdditionalInfo;
         }
@@ -41,5 +40,20 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public UpdateLogisticAirfare()
         {
         }
+
+        #region Private Methods
+
+        /// <summary>Updates the date.</summary>
+        /// <param name="logisticAirfareDto">The logistic airfare dto.</param>
+        private void UpdateDate(LogisticAirfareDto logisticAirfareDto)
+        {
+            var departureDate = logisticAirfareDto?.LogisticAirfare?.DepartureDate.ToUserTimeZone();
+            this.Departure = departureDate?.ToShortDateString() + " " + departureDate?.ToString("HH:mm");
+
+            var arrivalDate = logisticAirfareDto?.LogisticAirfare?.ArrivalDate.ToUserTimeZone();
+            this.Arrival = arrivalDate?.ToShortDateString() + " " + arrivalDate?.ToString("HH:mm");
+        }
+
+        #endregion
     }
 }

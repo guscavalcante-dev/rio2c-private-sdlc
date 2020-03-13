@@ -233,6 +233,28 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             return list;
         }
 
+        /// <summary>Converts to datetime.</summary>
+        /// <param name="s">The s.</param>
+        /// <param name="dateFormat">The date format.</param>
+        /// <param name="truncateTime">The truncate time.</param>
+        /// <returns></returns>
+        public static DateTime? ToDateTime(this string s, string dateFormat, bool? truncateTime = false)
+        {
+            DateTime? dateTime = null;
+
+            if (string.IsNullOrEmpty(s))
+            {
+                return null;
+            }
+
+            if (DateTime.TryParseExact(s, dateFormat, null, DateTimeStyles.None, out DateTime dateTimeOut))
+            {
+                dateTime = dateTimeOut;
+            }
+
+            return dateTime;
+        }
+
         /// <summary>Converts to listdatetime.</summary>
         /// <param name="s">The s.</param>
         /// <param name="separator">The separator.</param>

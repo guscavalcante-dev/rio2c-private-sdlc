@@ -4,14 +4,13 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-11-2020
+// Last Modified On : 03-13-2020
 // ***********************************************************************
 // <copyright file="CreateLogisticAccommodationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -54,24 +53,24 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.Uow.BeginTransaction();
 
-            var entity = new LogisticAccommodation(
+            var logisticAccommodation = new LogisticAccommodation(
                 cmd.AdditionalInfo, 
-                cmd.CheckInDate ?? DateTime.MinValue, 
-                cmd.CheckOutDate ?? DateTime.MinValue,
+                cmd.CheckInDate, 
+                cmd.CheckOutDate,
                 placeRepo.Get(cmd.PlaceId),
                 logisticRepo.Get(cmd.LogisticsUid),
                 cmd.UserId);
 
-            if (!entity.IsValid())
+            if (!logisticAccommodation.IsValid())
             {
-                this.AppValidationResult.Add(entity.ValidationResult);
+                this.AppValidationResult.Add(logisticAccommodation.ValidationResult);
                 return this.AppValidationResult;
             }
 
-            this.repository.Create(entity);
+            this.LogisticAccommodationRepo.Create(logisticAccommodation);
 
             this.Uow.SaveChanges();
-            this.AppValidationResult.Data = entity;
+            this.AppValidationResult.Data = logisticAccommodation;
 
             return this.AppValidationResult;
         }
