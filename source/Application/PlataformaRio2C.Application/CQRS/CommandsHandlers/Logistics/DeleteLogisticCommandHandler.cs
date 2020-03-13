@@ -4,9 +4,9 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-13-2020
 // ***********************************************************************
-// <copyright file="DeleteLogisticRequestCommandHandler.cs" company="Softo">
+// <copyright file="DeleteLogisticCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -20,14 +20,14 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>DeleteLogisticRequestCommandHandler</summary>
-    public class DeleteLogisticRequestCommandHandler : LogisticsBaseCommandHandler, IRequestHandler<DeleteLogisticRequest, AppValidationResult>
+    /// <summary>DeleteLogisticCommandHandler</summary>
+    public class DeleteLogisticCommandHandler : LogisticsBaseCommandHandler, IRequestHandler<DeleteLogistic, AppValidationResult>
     {
-        /// <summary>Initializes a new instance of the <see cref="DeleteLogisticRequestCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="DeleteLogisticCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="logisticRepository">The logistic repository.</param>
-        public DeleteLogisticRequestCommandHandler(
+        public DeleteLogisticCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             ILogisticRepository logisticRepository) 
@@ -35,11 +35,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
         }
 
-        /// <summary>Handles the specified create track.</summary>
+        /// <summary>Handles the specified delete logistic.</summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(DeleteLogisticRequest cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(DeleteLogistic cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 

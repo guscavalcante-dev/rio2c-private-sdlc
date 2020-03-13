@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-13-2020
 // ***********************************************************************
 // <copyright file="LogisticsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -41,9 +41,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic + "," + Constants.CollaboratorType.CuratorshipAudiovisual)]
     public class LogisticsController : BaseController
     {
-        private readonly ILogisticSponsorRepository logisticSponsorRepo;
         private IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepo;
-        private readonly IAttendeeCollaboratorRepository attendeCollaboratorRepo;
         private readonly ILogisticRepository logisticRepo;
         private readonly ILogisticAirfareRepository logisticsAirfareRepo;
         private readonly ILogisticAccommodationRepository logisticsAccommodationRepo;
@@ -55,7 +53,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <summary>Initializes a new instance of the <see cref="LogisticsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        /// <param name="logisticSponsorRepository">The logistic sponsor repository.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="logisticRepository">The logistic repository.</param>
         /// <param name="logisticsAccommodationRepository">The logistics accommodation repository.</param>
@@ -63,12 +60,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="attendeePlacesRepository">The attendee places repository.</param>
         /// <param name="attendeeLogisticSponsorRepository">The attendee logistic sponsor repository.</param>
         /// <param name="logisticsTransferRepository">The logistics transfer repository.</param>
-        /// <param name="attendeCollaboratorRepository">The attende collaborator repository.</param>
         /// <param name="languageRepository">The language repository.</param>
         public LogisticsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
-            ILogisticSponsorRepository logisticSponsorRepository,
             ICollaboratorRepository collaboratorRepository,
             ILogisticRepository logisticRepository,
             ILogisticAccommodationRepository logisticsAccommodationRepository,
@@ -76,18 +71,15 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             IAttendeePlacesRepository attendeePlacesRepository,
             IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepository,
             ILogisticTransferRepository logisticsTransferRepository,
-            IAttendeeCollaboratorRepository attendeCollaboratorRepository,
             ILanguageRepository languageRepository)
             : base(commandBus, identityController)
         {
-            this.logisticSponsorRepo = logisticSponsorRepository;
             this.logisticRepo = logisticRepository;
             this.languageRepo = languageRepository;
             this.attendeePlacesRepo = attendeePlacesRepository;
             this.logisticsTransferRepo = logisticsTransferRepository;
             this.logisticsAirfareRepo = logisticsAirfareRepository;
             this.collaboratorRepo = collaboratorRepository;
-            this.attendeCollaboratorRepo = attendeCollaboratorRepository;
             this.logisticsAccommodationRepo = logisticsAccommodationRepository;
             this.attendeeLogisticSponsorRepo = attendeeLogisticSponsorRepository;
         }
@@ -1184,11 +1176,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #region Delete
 
-        /// <summary>Deletes the specified delete logistic request.</summary>
+        /// <summary>Deletes the specified logistic.</summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Delete(DeleteLogisticRequest cmd)
+        public async Task<ActionResult> Delete(DeleteLogistic cmd)
         {
             var result = new AppValidationResult();
 

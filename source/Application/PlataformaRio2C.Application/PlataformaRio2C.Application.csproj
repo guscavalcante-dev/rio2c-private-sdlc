@@ -237,7 +237,7 @@
     <Compile Include="CQRS\CommandsHandlers\Logistics\DeleteLogisticTransferCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Logistics\DeleteLogisticAccommodationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Logistics\DeleteLogisticAirfareCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Logistics\DeleteLogisticRequestCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Logistics\DeleteLogisticCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Logistics\CreateLogisticAirfareCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Logistics\CreateLogisticCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Logistics\LogisticTransferBaseCommandHandler.cs" />
@@ -325,7 +325,7 @@
     <Compile Include="CQRS\Commands\Logistics\DeleteLogisticAccommodation.cs" />
     <Compile Include="CQRS\Commands\Logistics\DeleteLogisticTransfer.cs" />
     <Compile Include="CQRS\Commands\Logistics\DeleteLogisticAirfare.cs" />
-    <Compile Include="CQRS\Commands\Logistics\DeleteLogisticRequest.cs" />
+    <Compile Include="CQRS\Commands\Logistics\DeleteLogistic.cs" />
     <Compile Include="CQRS\Commands\Logistics\UpdateLogisticMainInformation.cs" />
     <Compile Include="CQRS\Commands\LogisticSponsors\BaseCommands\LogisticSponsorsNameBaseCommand.cs" />
     <Compile Include="CQRS\Commands\LogisticSponsors\DeleteLogisticSponsors.cs" />
