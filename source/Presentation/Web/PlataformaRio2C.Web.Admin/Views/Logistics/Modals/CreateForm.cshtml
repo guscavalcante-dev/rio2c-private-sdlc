@@ -27,9 +27,9 @@
             </div>
         </div>
         <div class="kt-radio-list mt-2 d-none" data-additionalinfo="IsAirfareSponsored">
-            @if (Model.Sponsors != null)
+            @if (Model.MainSponsors != null)
             {
-                foreach (var sponsor in Model.Sponsors)
+                foreach (var sponsor in Model.MainSponsors)
                 {
                     <label class="kt-radio">
                         @Html.RadioButtonFor(m => m.AirfareSponsorUid, sponsor.Uid, new { data_isothers = sponsor.IsOtherRequired }) @sponsor.Name.GetSeparatorTranslation(UICulture, Language.Separator)
@@ -44,8 +44,7 @@
             <div class="form-group col-md-8 mb-0" data-id="Airfare">
                 <div class="view">
                     @Html.Hidden("AirfareRequired")
-                    @Html.Hidden("AirfareInitialSponsorUid", Model.AirfareSponsorUid)
-                    @Html.DropDownList("AirfareSponsorOtherUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control enable-select2" })
+                    @Html.DropDownListFor(m => m.AirfareSponsorOtherUid, new SelectList(Model.OtherSponsors, "Uid", "Name", Model.AirfareSponsorOtherUid), Labels.Select + "...", new { @class = "form-control enable-select2" })
                     <span class="form-text text-muted text-right"><a href="" onclick="return LogisticsCreate.enableNewSponsor('Airfare');" class="btn-link btn-edit">@(Labels.NewM.ToLowerInvariant()) @(Labels.Sponsor.ToLowerInvariant())</a></span>
                 </div>
                 <div class="edit d-none">
@@ -74,9 +73,9 @@
             </div>
         </div>
         <div class="kt-radio-list mt-2 d-none" data-additionalinfo="IsAccommodationSponsored">
-            @if (Model.Sponsors != null)
+            @if (Model.MainSponsors != null)
             {
-                foreach (var sponsor in Model.Sponsors)
+                foreach (var sponsor in Model.MainSponsors)
                 {
                     <label class="kt-radio">
                         @Html.RadioButtonFor(m => m.AccommodationSponsorUid, sponsor.Uid, new { data_isothers = sponsor.IsOtherRequired }) @sponsor.Name.GetSeparatorTranslation(UICulture, Language.Separator)
@@ -91,8 +90,7 @@
             <div class="form-group col-md-8 mb-0" data-id="Accommodation">
                 <div class="view">
                     @Html.Hidden("AccommodationRequired")
-                    @Html.Hidden("AccommodationInitialSponsorUid", Model.AccommodationSponsorUid)
-                    @Html.DropDownList("AccommodationSponsorOtherUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control enable-select2" })
+                    @Html.DropDownListFor(m => m.AccommodationSponsorOtherUid, new SelectList(Model.OtherSponsors, "Uid", "Name", Model.AccommodationSponsorOtherUid), Labels.Select + "...", new { @class = "form-control enable-select2" })
                     <span class="form-text text-muted text-right"><a href="" onclick="return LogisticsCreate.enableNewSponsor('Accommodation');" class="btn-link btn-edit">@(Labels.NewM.ToLowerInvariant()) @(Labels.Sponsor.ToLowerInvariant())</a></span>
                 </div>
                 <div class="edit d-none">
@@ -126,9 +124,9 @@
             </div>
         </div>
         <div class="kt-radio-list mt-2 d-none" data-additionalinfo="IsAirportTransferSponsored">
-            @if (Model.Sponsors != null)
+            @if (Model.MainSponsors != null)
             {
-                foreach (var sponsor in Model.Sponsors)
+                foreach (var sponsor in Model.MainSponsors)
                 {
                     <label class="kt-radio">
                         @Html.RadioButtonFor(m => m.AirportTransferSponsorUid, sponsor.Uid, new { data_isothers = sponsor.IsOtherRequired }) @sponsor.Name.GetSeparatorTranslation(UICulture, Language.Separator)
@@ -143,8 +141,7 @@
             <div class="form-group col-md-8 mb-0">
                 <div class="view">
                     @Html.Hidden("AirportTransferRequired")
-                    @Html.Hidden("AirportTransferInitialSponsorUid", Model.AirportTransferSponsorUid)
-                    @Html.DropDownList("AirportTransferOtherSponsorUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control enable-select2" })
+                    @Html.DropDownListFor(m => m.AirportTransferSponsorOtherUid, new SelectList(Model.OtherSponsors, "Uid", "Name", Model.AirportTransferSponsorOtherUid), Labels.Select + "...", new { @class = "form-control enable-select2" })
                     <span class="form-text text-muted text-right"><a href="" onclick="return LogisticsCreate.enableNewSponsor('AirportTransfer');" class="btn-link btn-edit">@(Labels.NewM.ToLowerInvariant()) @(Labels.Sponsor.ToLowerInvariant())</a></span>
                 </div>
                 <div class="edit d-none">

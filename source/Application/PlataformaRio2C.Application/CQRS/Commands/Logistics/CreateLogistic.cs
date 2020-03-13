@@ -89,14 +89,19 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(1000, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string AdditionalInfo { get; set; }
 
-        public List<AttendeeLogisticSponsorBaseDto> Sponsors { get; set; }
+        public List<AttendeeLogisticSponsorBaseDto> MainSponsors { get; set; }
+        public List<AttendeeLogisticSponsorBaseDto> OtherSponsors { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CreateLogistic"/> class.</summary>
-        /// <param name="sponsors">The mainLogisticSponsorBaseDtos.</param>
+        /// <param name="mainLogisticSponsorBaseDtos">The main logistic sponsor base dtos.</param>
+        /// <param name="otherLogisticSponsorBaseDtos">The other logistic sponsor base dtos.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
-        public CreateLogistic(List<AttendeeLogisticSponsorBaseDto> sponsors, string userInterfaceLanguage)
+        public CreateLogistic(
+            List<AttendeeLogisticSponsorBaseDto> mainLogisticSponsorBaseDtos,
+            List<AttendeeLogisticSponsorBaseDto> otherLogisticSponsorBaseDtos,
+            string userInterfaceLanguage)
         {
-            this.UpdateSponsors(sponsors, userInterfaceLanguage);
+            this.UpdateModelsAndLists(mainLogisticSponsorBaseDtos, otherLogisticSponsorBaseDtos, userInterfaceLanguage);
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateLogistic"/> class.</summary>
@@ -106,23 +111,20 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Updates the models and lists.</summary>
         /// <param name="mainLogisticSponsorBaseDtos">The main logistic sponsor base dtos.</param>
+        /// <param name="otherLogisticSponsorBaseDtos">The other logistic sponsor base dtos.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
-        public void UpdateModelsAndLists(List<AttendeeLogisticSponsorBaseDto> mainLogisticSponsorBaseDtos, string userInterfaceLanguage)
+        public void UpdateModelsAndLists(
+            List<AttendeeLogisticSponsorBaseDto> mainLogisticSponsorBaseDtos,
+            List<AttendeeLogisticSponsorBaseDto> otherLogisticSponsorBaseDtos,
+            string userInterfaceLanguage)
         {
-            this.UpdateSponsors(mainLogisticSponsorBaseDtos, userInterfaceLanguage);
-        }
-
-        #region Private Methods
-
-        /// <summary>Updates the sponsors.</summary>
-        /// <param name="mainLogisticSponsorBaseDtos">The main logistic sponsor base dtos.</param>
-        /// <param name="userInterfaceLanguage">The user interface language.</param>
-        private void UpdateSponsors(List<AttendeeLogisticSponsorBaseDto> mainLogisticSponsorBaseDtos, string userInterfaceLanguage)
-        {
+            // Mains logistic sponsors
             mainLogisticSponsorBaseDtos.ForEach(g => g.Name.GetSeparatorTranslation(userInterfaceLanguage, Language.Separator));
-            this.Sponsors = mainLogisticSponsorBaseDtos.OrderBy(e => e.IsOtherRequired).ThenBy(e => e.Name).ToList();
-        }
+            this.MainSponsors = mainLogisticSponsorBaseDtos.OrderBy(e => e.IsOtherRequired).ThenBy(e => e.Name).ToList();
 
-        #endregion
+            // Mains logistic sponsors
+            otherLogisticSponsorBaseDtos.ForEach(g => g.Name.GetSeparatorTranslation(userInterfaceLanguage, Language.Separator));
+            this.OtherSponsors = otherLogisticSponsorBaseDtos.OrderBy(e => e.Name).ToList();
+        }
     }
 }

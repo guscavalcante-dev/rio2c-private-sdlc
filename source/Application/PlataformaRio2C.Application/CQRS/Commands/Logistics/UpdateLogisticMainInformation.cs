@@ -91,17 +91,20 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(1000, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string AdditionalInfo { get; set; }
 
-        public List<AttendeeLogisticSponsorBaseDto> Sponsors { get; set; }
+        public List<AttendeeLogisticSponsorBaseDto> MainSponsors { get; set; }
+        public List<AttendeeLogisticSponsorBaseDto> OtherSponsors { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateLogisticMainInformation"/> class.</summary>
         /// <param name="logisticDto">The logistic dto.</param>
         /// <param name="otherAttendeeLogisticSponsorBaseDto">The other attendee logistic sponsor base dto.</param>
         /// <param name="mainLogisticSponsorBaseDtos">The main logistic sponsor base dtos.</param>
+        /// <param name="otherLogisticSponsorBaseDtos">The other logistic sponsor base dtos.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public UpdateLogisticMainInformation(
             LogisticDto logisticDto,
             AttendeeLogisticSponsorBaseDto otherAttendeeLogisticSponsorBaseDto, 
-            List<AttendeeLogisticSponsorBaseDto> mainLogisticSponsorBaseDtos, 
+            List<AttendeeLogisticSponsorBaseDto> mainLogisticSponsorBaseDtos,
+            List<AttendeeLogisticSponsorBaseDto> otherLogisticSponsorBaseDtos,
             string userInterfaceLanguage)
         {
             this.LogisticUid = logisticDto?.Logistic?.Uid ?? Guid.Empty;
@@ -112,7 +115,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.IsCityTransferRequired = logisticDto?.Logistic?.IsCityTransferRequired ?? false;
             this.AdditionalInfo = logisticDto?.Logistic?.AdditionalInfo;
 
-            this.UpdateModelsAndLists(mainLogisticSponsorBaseDtos, userInterfaceLanguage);
+            this.UpdateModelsAndLists(mainLogisticSponsorBaseDtos, otherLogisticSponsorBaseDtos, userInterfaceLanguage);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateLogisticMainInformation"/> class.</summary>
@@ -122,10 +125,20 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Updates the models and lists.</summary>
         /// <param name="mainLogisticSponsorBaseDtos">The main logistic sponsor base dtos.</param>
+        /// <param name="otherLogisticSponsorBaseDtos">The other logistic sponsor base dtos.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
-        public void UpdateModelsAndLists(List<AttendeeLogisticSponsorBaseDto> mainLogisticSponsorBaseDtos, string userInterfaceLanguage)
+        public void UpdateModelsAndLists(
+            List<AttendeeLogisticSponsorBaseDto> mainLogisticSponsorBaseDtos,
+            List<AttendeeLogisticSponsorBaseDto> otherLogisticSponsorBaseDtos,
+            string userInterfaceLanguage)
         {
-            this.UpdateSponsors(mainLogisticSponsorBaseDtos, userInterfaceLanguage);
+            // Mains logistic sponsors
+            mainLogisticSponsorBaseDtos.ForEach(g => g.Name.GetSeparatorTranslation(userInterfaceLanguage, Language.Separator));
+            this.MainSponsors = mainLogisticSponsorBaseDtos.OrderBy(e => e.IsOtherRequired).ThenBy(e => e.Name).ToList();
+
+            // Mains logistic sponsors
+            otherLogisticSponsorBaseDtos.ForEach(g => g.Name.GetSeparatorTranslation(userInterfaceLanguage, Language.Separator));
+            this.OtherSponsors = otherLogisticSponsorBaseDtos.OrderBy(e => e.Name).ToList();
         }
 
         #region Private Methods
@@ -148,7 +161,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             if (airfareAttendeeLogisticSponsorDto.AttendeeLogisticSponsor.IsOther)
             {
                 this.AirfareSponsorUid = otherAttendeeLogisticSponsorBaseDto?.Uid;
-                this.AirfareSponsorOtherName = airfareAttendeeLogisticSponsorDto.LogisticSponsor.Name;
                 this.AirfareSponsorOtherUid = airfareAttendeeLogisticSponsorDto.AttendeeLogisticSponsor.Uid;
             }
             else
@@ -175,7 +187,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             if (accommodationAttendeeLogisticSponsorDto.AttendeeLogisticSponsor.IsOther)
             {
                 this.AccommodationSponsorUid = otherAttendeeLogisticSponsorBaseDto?.Uid;
-                this.AccommodationSponsorOtherName = accommodationAttendeeLogisticSponsorDto.LogisticSponsor.Name;
                 this.AccommodationSponsorOtherUid = accommodationAttendeeLogisticSponsorDto.AttendeeLogisticSponsor.Uid;
             }
             else
@@ -202,22 +213,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             if (airportTransferAttendeeLogisticSponsorDto.AttendeeLogisticSponsor.IsOther)
             {
                 this.AirportTransferSponsorUid = otherAttendeeLogisticSponsorBaseDto?.Uid;
-                this.AirportTransferSponsorOtherName = airportTransferAttendeeLogisticSponsorDto.LogisticSponsor.Name;
                 this.AirportTransferSponsorOtherUid = airportTransferAttendeeLogisticSponsorDto.AttendeeLogisticSponsor.Uid;
             }
             else
             {
                 this.AirportTransferSponsorUid = airportTransferAttendeeLogisticSponsorDto.AttendeeLogisticSponsor.Uid;
             }
-        }
-
-        /// <summary>Updates the sponsors.</summary>
-        /// <param name="mainLogisticSponsorBaseDtos">The main logistic sponsor base dtos.</param>
-        /// <param name="userInterfaceLanguage">The user interface language.</param>
-        private void UpdateSponsors(List<AttendeeLogisticSponsorBaseDto> mainLogisticSponsorBaseDtos, string userInterfaceLanguage)
-        {
-            mainLogisticSponsorBaseDtos.ForEach(g => g.Name.GetSeparatorTranslation(userInterfaceLanguage, Language.Separator));
-            this.Sponsors = mainLogisticSponsorBaseDtos.OrderBy(e => e.IsOtherRequired).ThenBy(e => e.Name).ToList();
         }
 
         #endregion

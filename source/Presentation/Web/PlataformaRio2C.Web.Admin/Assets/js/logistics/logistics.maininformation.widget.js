@@ -17,7 +17,6 @@ var LogisticsMainInformationWidget = function () {
     var widgetElement = $(widgetElementId);
     var updateModalId = '#UpdateMainInformationModal';
     var updateFormId = '#UpdateMainInformationForm';
-    var userInterfaceLanguage = 'en';
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
@@ -73,16 +72,13 @@ var LogisticsMainInformationWidget = function () {
     var enableUpdatePlugins = function () {
         MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2', allowClear: true });
 
-        MyRio2cCommon.enableCheckboxChangeEvent("IsAirfareSponsored");
-        MyRio2cCommon.enableCheckboxChangeEvent("IsAccommodationSponsored");
-        MyRio2cCommon.enableCheckboxChangeEvent("IsAirportTransferSponsored");
-        //MyRio2cCommon.enableCheckboxChangeEvent("IsAirfareSponsored", function () { clearSponsor("Airfare"); });
-        //MyRio2cCommon.enableCheckboxChangeEvent("IsAccommodationSponsored", function () { clearSponsor("Accommodation"); });
-        //MyRio2cCommon.enableCheckboxChangeEvent("IsAirportTransferSponsored", function () { clearSponsor("AirportTransfer"); });
+        MyRio2cCommon.enableCheckboxChangeEvent("IsAirfareSponsored", function () { toggleMainSponsorCheck('Airfare'); toggleOtherSponsorVisibility('Airfare'); });
+        MyRio2cCommon.enableCheckboxChangeEvent("IsAccommodationSponsored", function () { toggleMainSponsorCheck('Accommodation'); toggleOtherSponsorVisibility('Accommodation'); });
+        MyRio2cCommon.enableCheckboxChangeEvent("IsAirportTransferSponsored", function () { toggleMainSponsorCheck('AirportTransfer'); toggleOtherSponsorVisibility('AirportTransfer'); });
 
-        enableOtherSponsorsSelect2('Airfare');
-        enableOtherSponsorsSelect2('Accommodation');
-        enableOtherSponsorsSelect2('AirportTransfer');
+        enableOtherSponsorChangeEvent('Airfare');
+        enableOtherSponsorChangeEvent('Accommodation');
+        enableOtherSponsorChangeEvent('AirportTransfer');
 
         userInterfaceLanguage = MyRio2cCommon.getGlobalVariables().userInterfaceLanguageUppercade;
         enableAjaxForm();
@@ -115,185 +111,55 @@ var LogisticsMainInformationWidget = function () {
         });
     };
 
-    // Sponsor others select2 ------------------------------------------------------------------------------
-    var initialSponsorUid = 'InitialSponsorUid';
-    var sponsorUid = 'SponsorOtherUid';
-    var sponsorName = 'SponsorOtherName';
+    // Main sponsors ------------------------------------------------------------------------------
+    var toggleMainSponsorCheck = function (prefix) {
+	    var isSponsored = "Is" + prefix + "Sponsored";
 
-    var clearSponsor = function (preffix) {
-        $("[name='" + preffix + "SponsorUid']").prop("checked", false);
-        //emptySponsorSelect2(preffix);
-        disableNewSponsor(preffix);
-        hideSponsorSelect2(preffix);
+        if (!$('#' + isSponsored).prop('checked')) {
+	        $("[name='" + prefix + "SponsorUid']").prop('checked', false);
+	    }
+    };
+
+    // Other sponsors -----------------------------------------------------------------------------
+    var toggleOtherSponsorVisibility = function (prefix) {
+        var isSponsored = "Is" + prefix + "Sponsored";
+
+        if ($('#' + isSponsored).prop('checked') && $("[data-additionalinfo='" + isSponsored + "']").find(":checked").data('isothers') === 'True') {
+	        $("[data-id='" + prefix + "']").removeClass('d-none');
+	        $('#' + prefix + 'Required').val('True');
+        }
+        else {
+            $("[data-id='" + prefix + "']").addClass('d-none');
+            $('#' + prefix + 'Required').val('False');
+            $('#' + prefix + 'SponsorOtherUid').val(null).trigger('change');
+            disableNewSponsor(prefix);
+        }
+    };
+
+    var enableOtherSponsorChangeEvent = function (prefix) {
+        toggleOtherSponsorVisibility(prefix);
+
+        var selector = $('[name="' + prefix + 'SponsorUid"]:input');
+	    selector.not('.change-event-enabled').on('change', function () {
+		    toggleOtherSponsorVisibility(prefix);
+	    });
+        selector.not('.change-event-enabled').addClass('change-event-enabled');
     }
 
-    var hideSponsorSelect2 = function (preffix) {
-        $("[data-id='" + preffix + "']").addClass('d-none');
-        $('#' + preffix + 'Required').val("");
-    }
+    var enableNewSponsor = function (prefix) {
+	    MyRio2cCommon.enableFieldEdit({ dataId: prefix });
+        $('#' + prefix + 'SponsorOtherUid').val(null).trigger('change');
 
-    var enableShowHideOtherSponsorsSelect2 = function (preffix) {
-        var attribute = "Is" + preffix + "Sponsored";
-
-        function toggleChanged(value) {
-            if (value === "True") {
-                $("[data-id='" + preffix + "']").removeClass('d-none');
-                $('#' + preffix + 'Required').val("True");
-            }
-            else {
-                hideSponsorSelect2(preffix);
-                //emptySponsorSelect2(preffix);
-            }
-        }
-
-        toggleChanged($("[data-additionalinfo='" + attribute + "']").find(":checked").data('isothers'));
-
-        var selector = $("[data-additionalinfo='" + attribute + "'] input");
-        selector.not('.change-event-enabled').change(function () {
-            toggleChanged($(this).data('isothers'));
-        });
-        selector.addClass('change-event-enabled');
+	    return false;
     };
 
-    var enableNewSponsor = function (preffix) {
-        var sponsorUidElement = $("#" + preffix + sponsorUid);
+    var disableNewSponsor = function (prefix) {
+	    MyRio2cCommon.disableFieldEdit({ dataId: prefix });
+	    $('#' + prefix + 'SponsorOtherName').val('');
 
-        MyRio2cCommon.enableFieldEdit({ dataId: preffix });
-
-        if (!MyRio2cCommon.isNullOrEmpty(sponsorUidElement.val())) {
-            sponsorUidElement.val('').trigger('change');
-        }
-        else {
-            sponsorUidElement.val('');
-        }
-
-        return false;
+	    return false;
     };
 
-    var disableNewSponsor = function (preffix) {
-        var sponsorUidElement = $("#" + preffix + sponsorUid);
-        var sponsorNameElement = $("#" + preffix + sponsorName);
-
-        MyRio2cCommon.disableFieldEdit({ dataId: preffix });
-
-        if (!MyRio2cCommon.isNullOrEmpty(sponsorNameElement.val())) {
-            sponsorUidElement.val('').trigger('change');
-        }
-        else {
-            sponsorUidElement.val('');
-        }
-
-        return false;
-    };
-
-    var toggleSponsor = function (preffix, forceDisable) {
-        if (MyRio2cCommon.isNullOrEmpty(forceDisable)) {
-            forceDisable = false;
-        }
-
-        var sponsorUidElement = $("#" + preffix + sponsorUid);
-        var sponsorNameElement = $("#" + preffix + sponsorName);
-
-        if (!forceDisable)// && (/*!MyRio2cCommon.isNullOrEmpty(initialStateUidElement.val()) ||*/ !MyRio2cCommon.isNullOrEmpty(stateUidElement.val()) || !MyRio2cCommon.isNullOrEmpty(stateNameElement.val())))
-        {
-            $('[data-id="' + preffix + '"] .btn-edit').removeClass('disabled');
-            sponsorUidElement.prop("disabled", false);
-        }
-        else {
-            $('[data-id="' + preffix + '"] .btn-edit').addClass('disabled');
-            sponsorUidElement.prop("disabled", true);
-            sponsorNameElement.val('');
-        }
-
-        if (!forceDisable && !MyRio2cCommon.isNullOrEmpty(sponsorNameElement.val())) {
-            enableNewSponsor(preffix);
-        }
-        else {
-            disableNewSponsor(preffix);
-        }
-    };
-
-    var emptySponsorSelect2 = function (preffix) {
-        var sponsorUidElement = $("#" + preffix + sponsorUid);
-        sponsorUidElement.val('').trigger('change');
-    };
-
-    var enableOtherSponsorsSelect2 = function (preffix, isParentChanged) {
-        enableShowHideOtherSponsorsSelect2(preffix);
-
-        var initialSponsorUidElement = $("#" + preffix + initialSponsorUid);
-        var sponsorUidElement = $("#" + preffix + sponsorUid);
-        var sponsorNameElement = $("#" + preffix + sponsorName);
-
-        if (!MyRio2cCommon.isNullOrEmpty(isParentChanged) && isParentChanged === true) {
-            if (!MyRio2cCommon.isNullOrEmpty(sponsorUidElement.val())) {
-                sponsorUidElement.val('').trigger('change');
-            }
-            else {
-                sponsorUidElement.val('');
-            }
-        }
-
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/LogisticSponsors/FindAllByIsOther'), null, function (data) {
-            MyRio2cCommon.handleAjaxReturn({
-                data: data,
-                // Success
-                onSuccess: function () {
-                    if (data.list.length <= 0) {
-                        emptySponsorSelect2(preffix);
-                    }
-
-                    var selectData = new Array();
-
-                    // Placeholder
-                    var selectOption = new Object();
-                    selectOption.id = '';
-                    selectOption.text = labels.selectPlaceholder;
-                    selectData.push(selectOption);
-
-                    for (var i in data.list) {
-                        if (data.list.hasOwnProperty(i)) {
-                            selectOption = new Object();
-                            selectOption.id = data.list[i].Uid;
-                            selectOption.text = data.list[i].Name;
-                            selectData.push(selectOption);
-                        }
-                    }
-
-                    sponsorUidElement.empty().select2({
-                        language: userInterfaceLanguage,
-                        width: '100%',
-                        placeholder: labels.selectPlaceholder,
-                        triggerChange: true,
-                        allowClear: true,
-                        data: selectData
-                    });
-
-                    var initialNameValue = sponsorNameElement.val();
-                    var initialUidValue = initialSponsorUidElement.val();
-                    if (!MyRio2cCommon.isNullOrEmpty(initialNameValue)) {
-                        enableNewSponsor();
-                    }
-                    else if (!MyRio2cCommon.isNullOrEmpty(initialUidValue)) {
-                        sponsorUidElement.val(initialUidValue).trigger('change');
-                        initialSponsorUidElement.val('');
-                    }
-
-                    toggleSponsor();
-                },
-                // Error
-                onError: function () {
-                    emptySponsorSelect2(preffix);
-                }
-            });
-        })
-            .fail(function () {
-                emptySponsorSelect2(preffix);
-            })
-            .always(function () {
-                MyRio2cCommon.unblock();
-            });
-    };
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
@@ -301,6 +167,12 @@ var LogisticsMainInformationWidget = function () {
         },
         showUpdateModal: function () {
             showUpdateModal();
+        },
+        enableNewSponsor: function (prefix) {
+	        return enableNewSponsor(prefix);
+        },
+        disableNewSponsor: function (prefix) {
+	        return disableNewSponsor(prefix);
         }
     };
 }();

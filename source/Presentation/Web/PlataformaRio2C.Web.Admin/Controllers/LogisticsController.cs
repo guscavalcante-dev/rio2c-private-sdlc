@@ -161,6 +161,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         {
             var cmd = new CreateLogistic(
                 await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, false),
+                await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, true),
                 UserInterfaceLanguage);
 
             return Json(new
@@ -211,6 +212,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd.UpdateModelsAndLists(
                     await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, false),
+                    await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, true),
                     UserInterfaceLanguage);
 
                 return Json(new
@@ -308,6 +310,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     mainInformationWidgetDto,
                     await attendeeLogisticSponsorRepo.FindOtherDtoAsync(this.EditionDto.Id),
                     await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, false),
+                    await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, true),
                     UserInterfaceLanguage);
             }
             catch (DomainException ex)
@@ -363,6 +366,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd.UpdateModelsAndLists(
                     await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, false),
+                    await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, true),
                     UserInterfaceLanguage);
 
                 return Json(new
