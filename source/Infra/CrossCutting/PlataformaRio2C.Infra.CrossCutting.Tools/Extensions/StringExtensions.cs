@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-13-2020
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -32,7 +32,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         ///   <c>true</c> if [is case insensitive equal to] [the specified other string]; otherwise, <c>false</c>.</returns>
         public static bool IsCaseInsensitiveEqualTo(this string s, string otherString)
         {
-            return string.Compare(s?.Trim(), otherString?.Trim(), CultureInfo.InvariantCulture, CompareOptions.IgnoreNonSpace | CompareOptions.IgnoreCase) == 1;
+            return string.Compare(s?.Trim(), otherString?.Trim(), CultureInfo.InvariantCulture, CompareOptions.IgnoreNonSpace | CompareOptions.IgnoreCase) == 0;
         }
 
         /// <summary>

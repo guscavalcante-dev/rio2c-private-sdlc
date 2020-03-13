@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-13-2020
 // ***********************************************************************
 // <copyright file="AttendeeLogisticSponsor.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -76,6 +76,20 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.UpdateUserId = userId;
             this.UpdateDate = DateTime.Now;
+        }
+
+        /// <summary>Restores the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Restore(int userId)
+        {
+            if (!this.IsDeleted)
+            {
+                return;
+            }
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
         }
 
         /// <summary>Deletes the specified user identifier.</summary>

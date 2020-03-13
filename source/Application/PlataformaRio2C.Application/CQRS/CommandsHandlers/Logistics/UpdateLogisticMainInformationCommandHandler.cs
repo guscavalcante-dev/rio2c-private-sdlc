@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-13-2020
 // ***********************************************************************
 // <copyright file="UpdateLogisticMainInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,23 +28,27 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     {
         private readonly IEditionRepository editionRepo;
         private readonly IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepo;
+        private readonly ILogisticSponsorRepository logisticSponsorRepo;
 
         /// <summary>Initializes a new instance of the <see cref="UpdateLogisticMainInformationCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
+        /// <param name="logisticRepository">The logistic repository.</param>
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="attendeeLogisticSponsorRepository">The attendee logistic sponsor repository.</param>
-        /// <param name="logisticRepository">The logistic repository.</param>
+        /// <param name="logisticSponsorRepository">The logistic sponsor repository.</param>
         public UpdateLogisticMainInformationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
+            ILogisticRepository logisticRepository,
             IEditionRepository editionRepository,
             IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepository,
-            ILogisticRepository logisticRepository) 
+            ILogisticSponsorRepository logisticSponsorRepository) 
             : base(eventBus, uow, logisticRepository)
         {
             this.editionRepo = editionRepository;
             this.attendeeLogisticSponsorRepo = attendeeLogisticSponsorRepository;
+            this.logisticSponsorRepo = logisticSponsorRepository;
         }
 
         /// <summary>Handles the specified update logistic main information.</summary>
@@ -71,12 +75,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     this.editionRepo.Get(cmd.EditionId),
                     cmd.IsAirfareSponsored,
                     this.attendeeLogisticSponsorRepo.Get(cmd.AirfareSponsorOtherUid ?? cmd.AirfareSponsorUid ?? Guid.Empty),
+                     await this.logisticSponsorRepo.GetAsync(ls => ls.Name.ToLower() == cmd.AirfareSponsorOtherName.ToLower().Trim() && !ls.IsDeleted),
                     cmd.AirfareSponsorOtherName,
                     cmd.IsAccommodationSponsored,
                     this.attendeeLogisticSponsorRepo.Get(cmd.AccommodationSponsorOtherUid ?? cmd.AccommodationSponsorUid ?? Guid.Empty),
+                    await this.logisticSponsorRepo.GetAsync(ls => ls.Name.ToLower() == cmd.AccommodationSponsorOtherName.ToLower().Trim() && !ls.IsDeleted),
                     cmd.AccommodationSponsorOtherName,
                     cmd.IsAirportTransferSponsored,
                     this.attendeeLogisticSponsorRepo.Get(cmd.AirportTransferSponsorOtherUid ?? cmd.AirportTransferSponsorUid ?? Guid.Empty),
+                    await this.logisticSponsorRepo.GetAsync(ls => ls.Name.ToLower() == cmd.AirportTransferSponsorOtherName.ToLower().Trim() && !ls.IsDeleted),
                     cmd.AirportTransferSponsorOtherName,
                     cmd.IsCityTransferRequired,
                     cmd.IsVehicleDisposalRequired,

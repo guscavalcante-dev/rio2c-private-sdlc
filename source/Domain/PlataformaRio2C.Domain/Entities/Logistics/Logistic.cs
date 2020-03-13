@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-13-2020
 // ***********************************************************************
 // <copyright file="Logistic.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,6 +14,7 @@
 using PlataformaRio2C.Domain.Validation;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
@@ -50,12 +51,15 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
         /// <param name="isAirfareSponsored">if set to <c>true</c> [is airfare sponsored].</param>
         /// <param name="airfareAttendeeLogisticSponsor">The airfare attendee logistic sponsor.</param>
+        /// <param name="otherAirfareLogisticSponsor">The other airfare logistic sponsor.</param>
         /// <param name="otherAirfareSponsorName">Name of the other airfare sponsor.</param>
         /// <param name="isAccommodationSponsored">if set to <c>true</c> [is accommodation sponsored].</param>
         /// <param name="accommodationAttendeeLogisticSponsor">The accommodation attendee logistic sponsor.</param>
+        /// <param name="otherAccommodationLogisticSponsor">The other accommodation logistic sponsor.</param>
         /// <param name="otherAccommodationSponsorName">Name of the other accommodation sponsor.</param>
         /// <param name="isAirportTransferSponsored">if set to <c>true</c> [is airport transfer sponsored].</param>
         /// <param name="airportTransferAttendeeLogisticSponsor">The airport transfer attendee logistic sponsor.</param>
+        /// <param name="otherAirportTransferLogisticSponsor">The other airport transfer logistic sponsor.</param>
         /// <param name="otherAirportTransferSponsorName">Name of the other airport transfer sponsor.</param>
         /// <param name="isCityTransferRequired">if set to <c>true</c> [is city transfer required].</param>
         /// <param name="isVehicleDisposalRequired">if set to <c>true</c> [is vehicle disposal required].</param>
@@ -66,12 +70,15 @@ namespace PlataformaRio2C.Domain.Entities
             AttendeeCollaborator attendeeCollaborator,
             bool isAirfareSponsored,
             AttendeeLogisticSponsor airfareAttendeeLogisticSponsor,
+            LogisticSponsor otherAirfareLogisticSponsor,
             string otherAirfareSponsorName,
             bool isAccommodationSponsored,
             AttendeeLogisticSponsor accommodationAttendeeLogisticSponsor,
+            LogisticSponsor otherAccommodationLogisticSponsor,
             string otherAccommodationSponsorName,
             bool isAirportTransferSponsored,
             AttendeeLogisticSponsor airportTransferAttendeeLogisticSponsor,
+            LogisticSponsor otherAirportTransferLogisticSponsor,
             string otherAirportTransferSponsorName,
             bool isCityTransferRequired,
             bool isVehicleDisposalRequired,
@@ -82,11 +89,11 @@ namespace PlataformaRio2C.Domain.Entities
             this.AttendeeCollaboratorId = attendeeCollaborator.Id;
 
             this.IsAirfareSponsored = isAirfareSponsored;
-            this.UpdateAirfareAttendeeLogisticSponsor(edition, airfareAttendeeLogisticSponsor, otherAirfareSponsorName, userId);
+            this.UpdateAirfareAttendeeLogisticSponsor(edition, airfareAttendeeLogisticSponsor, otherAirfareLogisticSponsor, otherAirfareSponsorName, userId);
             this.IsAccommodationSponsored = isAccommodationSponsored;
-            this.UpdateAccommodationAttendeeLogisticSponsor(edition, accommodationAttendeeLogisticSponsor, otherAccommodationSponsorName, userId);
+            this.UpdateAccommodationAttendeeLogisticSponsor(edition, accommodationAttendeeLogisticSponsor, otherAccommodationLogisticSponsor, otherAccommodationSponsorName, userId);
             this.IsAirportTransferSponsored = isAirportTransferSponsored;
-            this.UpdateAirportTransferAttendeeLogisticSponsor(edition, airportTransferAttendeeLogisticSponsor, otherAirportTransferSponsorName, userId);
+            this.UpdateAirportTransferAttendeeLogisticSponsor(edition, airportTransferAttendeeLogisticSponsor, otherAirportTransferLogisticSponsor, otherAirportTransferSponsorName, userId);
 
             this.IsCityTransferRequired = isCityTransferRequired;
             this.IsVehicleDisposalRequired = isVehicleDisposalRequired;
@@ -108,12 +115,15 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="edition">The edition.</param>
         /// <param name="isAirfareSponsored">if set to <c>true</c> [is airfare sponsored].</param>
         /// <param name="airfareAttendeeLogisticSponsor">The airfare attendee logistic sponsor.</param>
+        /// <param name="otherAirfareLogisticSponsor">The other airfare logistic sponsor.</param>
         /// <param name="otherAirfareSponsorName">Name of the other airfare sponsor.</param>
         /// <param name="isAccommodationSponsored">if set to <c>true</c> [is accommodation sponsored].</param>
         /// <param name="accommodationAttendeeLogisticSponsor">The accommodation attendee logistic sponsor.</param>
+        /// <param name="otherAccommodationLogisticSponsor">The other accommodation logistic sponsor.</param>
         /// <param name="otherAccommodationSponsorName">Name of the other accommodation sponsor.</param>
         /// <param name="isAirportTransferSponsored">if set to <c>true</c> [is airport transfer sponsored].</param>
         /// <param name="airportTransferAttendeeLogisticSponsor">The airport transfer attendee logistic sponsor.</param>
+        /// <param name="otherAirportTransferLogisticSponsor">The other airport transfer logistic sponsor.</param>
         /// <param name="otherAirportTransferSponsorName">Name of the other airport transfer sponsor.</param>
         /// <param name="isCityTransferRequired">if set to <c>true</c> [is city transfer required].</param>
         /// <param name="isVehicleDisposalRequired">if set to <c>true</c> [is vehicle disposal required].</param>
@@ -123,12 +133,15 @@ namespace PlataformaRio2C.Domain.Entities
             Edition edition,
             bool isAirfareSponsored,
             AttendeeLogisticSponsor airfareAttendeeLogisticSponsor,
+            LogisticSponsor otherAirfareLogisticSponsor,
             string otherAirfareSponsorName,
             bool isAccommodationSponsored,
             AttendeeLogisticSponsor accommodationAttendeeLogisticSponsor,
+            LogisticSponsor otherAccommodationLogisticSponsor,
             string otherAccommodationSponsorName,
             bool isAirportTransferSponsored,
             AttendeeLogisticSponsor airportTransferAttendeeLogisticSponsor,
+            LogisticSponsor otherAirportTransferLogisticSponsor,
             string otherAirportTransferSponsorName,
             bool isCityTransferRequired,
             bool isVehicleDisposalRequired,
@@ -136,11 +149,11 @@ namespace PlataformaRio2C.Domain.Entities
             int userId)
         {
             this.IsAirfareSponsored = isAirfareSponsored;
-            this.UpdateAirfareAttendeeLogisticSponsor(edition, airfareAttendeeLogisticSponsor, otherAirfareSponsorName, userId);
+            this.UpdateAirfareAttendeeLogisticSponsor(edition, airfareAttendeeLogisticSponsor, otherAirfareLogisticSponsor, otherAirfareSponsorName, userId);
             this.IsAccommodationSponsored = isAccommodationSponsored;
-            this.UpdateAccommodationAttendeeLogisticSponsor(edition, accommodationAttendeeLogisticSponsor, otherAccommodationSponsorName, userId);
+            this.UpdateAccommodationAttendeeLogisticSponsor(edition, accommodationAttendeeLogisticSponsor, otherAccommodationLogisticSponsor, otherAccommodationSponsorName, userId);
             this.IsAirportTransferSponsored = isAirportTransferSponsored;
-            this.UpdateAirportTransferAttendeeLogisticSponsor(edition, airportTransferAttendeeLogisticSponsor, otherAirportTransferSponsorName, userId);
+            this.UpdateAirportTransferAttendeeLogisticSponsor(edition, airportTransferAttendeeLogisticSponsor, otherAirportTransferLogisticSponsor, otherAirportTransferSponsorName, userId);
 
             this.IsCityTransferRequired = isCityTransferRequired;
             this.IsVehicleDisposalRequired = isVehicleDisposalRequired;
@@ -165,11 +178,34 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Updates the airfare attendee logistic sponsor.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="airfareAttendeeLogisticSponsor">The airfare attendee logistic sponsor.</param>
+        /// <param name="otherAirfareLogisticSponsor">The other airfare logistic sponsor.</param>
         /// <param name="otherAirfareSponsorName">Name of the other airfare sponsor.</param>
         /// <param name="userId">The user identifier.</param>
-        private void UpdateAirfareAttendeeLogisticSponsor(Edition edition, AttendeeLogisticSponsor airfareAttendeeLogisticSponsor, string otherAirfareSponsorName, int userId)
+        private void UpdateAirfareAttendeeLogisticSponsor(
+            Edition edition, 
+            AttendeeLogisticSponsor airfareAttendeeLogisticSponsor, 
+            LogisticSponsor otherAirfareLogisticSponsor, 
+            string otherAirfareSponsorName, 
+            int userId)
         {
-            if (!string.IsNullOrEmpty(otherAirfareSponsorName?.Trim()))
+            // Other logistic sponsor typed exists in database
+            if (otherAirfareLogisticSponsor != null)
+            {
+                // Other attendee logistic sponsor type exists in database
+                var otherAirfareAttendeeLogisticSponsor = otherAirfareLogisticSponsor.AttendeeLogisticSponsors.FirstOrDefault(als => als.EditionId == edition?.Id);
+                if (otherAirfareAttendeeLogisticSponsor != null)
+                {
+                    otherAirfareAttendeeLogisticSponsor.Restore(userId);
+                    airfareAttendeeLogisticSponsor = otherAirfareAttendeeLogisticSponsor;
+                }
+                // Must create the attendee logistic sponsor typed
+                else
+                {
+                    airfareAttendeeLogisticSponsor = new AttendeeLogisticSponsor(edition, otherAirfareLogisticSponsor, userId);
+                }
+            }
+            // Other logistic sponsor type does not exist in database and must be created
+            else if (!string.IsNullOrEmpty(otherAirfareSponsorName?.Trim()))
             {
                 airfareAttendeeLogisticSponsor = new AttendeeLogisticSponsor(edition, otherAirfareSponsorName, userId);
             }
@@ -189,11 +225,34 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Updates the accommodation attendee logistic sponsor.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="accommodationAttendeeLogisticSponsor">The accommodation attendee logistic sponsor.</param>
+        /// <param name="otherAccommodationLogisticSponsor">The other accommodation logistic sponsor.</param>
         /// <param name="otherAccommodationSponsorName">Name of the other accommodation sponsor.</param>
         /// <param name="userId">The user identifier.</param>
-        private void UpdateAccommodationAttendeeLogisticSponsor(Edition edition, AttendeeLogisticSponsor accommodationAttendeeLogisticSponsor, string otherAccommodationSponsorName, int userId)
+        private void UpdateAccommodationAttendeeLogisticSponsor(
+            Edition edition, 
+            AttendeeLogisticSponsor accommodationAttendeeLogisticSponsor, 
+            LogisticSponsor otherAccommodationLogisticSponsor, 
+            string otherAccommodationSponsorName, 
+            int userId)
         {
-            if (!string.IsNullOrEmpty(otherAccommodationSponsorName?.Trim()))
+            // Other logistic sponsor typed exists in database
+            if (otherAccommodationLogisticSponsor != null)
+            {
+                // Other attendee logistic sponsor type exists in database
+                var otherAccommodationAttendeeLogisticSponsor = otherAccommodationLogisticSponsor.AttendeeLogisticSponsors.FirstOrDefault(als => als.EditionId == edition?.Id);
+                if (otherAccommodationAttendeeLogisticSponsor != null)
+                {
+                    otherAccommodationAttendeeLogisticSponsor.Restore(userId);
+                    accommodationAttendeeLogisticSponsor = otherAccommodationAttendeeLogisticSponsor;
+                }
+                // Must create the attendee logistic sponsor typed
+                else
+                {
+                    accommodationAttendeeLogisticSponsor = new AttendeeLogisticSponsor(edition, otherAccommodationLogisticSponsor, userId);
+                }
+            }
+            // Other logistic sponsor type does not exist in database and must be created
+            else if (!string.IsNullOrEmpty(otherAccommodationSponsorName?.Trim()))
             {
                 accommodationAttendeeLogisticSponsor = otherAccommodationSponsorName.IsCaseInsensitiveEqualTo(this.AirfareAttendeeLogisticSponsor.LogisticSponsor.Name) ? this.AirfareAttendeeLogisticSponsor :
                                                        new AttendeeLogisticSponsor(edition, otherAccommodationSponsorName, userId);
@@ -214,11 +273,34 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Updates the airport transfer attendee logistic sponsor.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="airportTransferAttendeeLogisticSponsor">The airport transfer attendee logistic sponsor.</param>
+        /// <param name="otherAirportTransferLogisticSponsor">The other airport transfer logistic sponsor.</param>
         /// <param name="otherAirportTransferSponsorName">Name of the other airport transfer sponsor.</param>
         /// <param name="userId">The user identifier.</param>
-        private void UpdateAirportTransferAttendeeLogisticSponsor(Edition edition, AttendeeLogisticSponsor airportTransferAttendeeLogisticSponsor, string otherAirportTransferSponsorName, int userId)
+        private void UpdateAirportTransferAttendeeLogisticSponsor(
+            Edition edition, 
+            AttendeeLogisticSponsor airportTransferAttendeeLogisticSponsor,
+            LogisticSponsor otherAirportTransferLogisticSponsor,
+            string otherAirportTransferSponsorName, 
+            int userId)
         {
-            if (!string.IsNullOrEmpty(otherAirportTransferSponsorName?.Trim()))
+            // Other logistic sponsor typed exists in database
+            if (otherAirportTransferLogisticSponsor != null)
+            {
+                // Other attendee logistic sponsor type exists in database
+                var otherAirportTransferAttendeeLogisticSponsor = otherAirportTransferLogisticSponsor.AttendeeLogisticSponsors.FirstOrDefault(als => als.EditionId == edition?.Id);
+                if (otherAirportTransferAttendeeLogisticSponsor != null)
+                {
+                    otherAirportTransferAttendeeLogisticSponsor.Restore(userId);
+                    airportTransferAttendeeLogisticSponsor = otherAirportTransferAttendeeLogisticSponsor;
+                }
+                // Must create the attendee logistic sponsor typed
+                else
+                {
+                    airportTransferAttendeeLogisticSponsor = new AttendeeLogisticSponsor(edition, otherAirportTransferLogisticSponsor, userId);
+                }
+            }
+            // Other logistic sponsor type does not exist in database and must be created
+            else if (!string.IsNullOrEmpty(otherAirportTransferSponsorName?.Trim()))
             {
                 airportTransferAttendeeLogisticSponsor = otherAirportTransferSponsorName.IsCaseInsensitiveEqualTo(this.AirfareAttendeeLogisticSponsor.LogisticSponsor.Name) ? this.AirfareAttendeeLogisticSponsor :
                                                          otherAirportTransferSponsorName.IsCaseInsensitiveEqualTo(this.AccommodationAttendeeLogisticSponsor.LogisticSponsor.Name) ? this.AccommodationAttendeeLogisticSponsor :

@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-13-2020
 // ***********************************************************************
 // <copyright file="CreateLogisticCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,6 +29,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     {
         private readonly IEditionRepository editionRepo;
         private readonly IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepo;
+        private readonly ILogisticSponsorRepository logisticSponsorRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
 
         /// <summary>Initializes a new instance of the <see cref="CreateLogisticCommandHandler"/> class.</summary>
@@ -37,6 +38,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="logisticRepository">The logistic repository.</param>
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
+        /// <param name="logisticSponsorRepository">The logistic sponsor repository.</param>
         /// <param name="attendeeLogisticSponsorRepository">The attendee logistic sponsor repository.</param>
         public CreateLogisticCommandHandler(
             IMediator eventBus,
@@ -44,11 +46,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             ILogisticRepository logisticRepository,
             IEditionRepository editionRepository,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
+            ILogisticSponsorRepository logisticSponsorRepository,
             IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepository)
             : base(eventBus, uow, logisticRepository)
         {
             this.editionRepo = editionRepository;
             this.attendeeLogisticSponsorRepo = attendeeLogisticSponsorRepository;
+            this.logisticSponsorRepo = logisticSponsorRepository;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
         }
 
@@ -77,12 +81,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 this.attendeeCollaboratorRepo.Get(cmd.AttendeeCollaboratorUid),
                 cmd.IsAirfareSponsored,
                 this.attendeeLogisticSponsorRepo.Get(cmd.AirfareSponsorOtherUid ?? cmd.AirfareSponsorUid ?? Guid.Empty),
+                await this.logisticSponsorRepo.GetAsync(ls => ls.Name.ToLower() == cmd.AirfareSponsorOtherName.ToLower().Trim() && !ls.IsDeleted),
                 cmd.AirfareSponsorOtherName,
                 cmd.IsAccommodationSponsored,
                 this.attendeeLogisticSponsorRepo.Get(cmd.AccommodationSponsorOtherUid ?? cmd.AccommodationSponsorUid ?? Guid.Empty),
+                await this.logisticSponsorRepo.GetAsync(ls => ls.Name.ToLower() == cmd.AccommodationSponsorOtherName.ToLower().Trim() && !ls.IsDeleted),
                 cmd.AccommodationSponsorOtherName,
                 cmd.IsAirportTransferSponsored,
                 this.attendeeLogisticSponsorRepo.Get(cmd.AirportTransferSponsorOtherUid ?? cmd.AirportTransferSponsorUid ?? Guid.Empty),
+                await this.logisticSponsorRepo.GetAsync(ls => ls.Name.ToLower() == cmd.AirportTransferSponsorOtherName.ToLower().Trim() && !ls.IsDeleted),
                 cmd.AirportTransferSponsorOtherName,
                 cmd.IsCityTransferRequired,
                 cmd.IsVehicleDisposalRequired,
