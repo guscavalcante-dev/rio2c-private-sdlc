@@ -4,7 +4,7 @@
 // Created          : 02-03-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-13-2020
 // ***********************************************************************
 // <copyright file="CreateLogistic.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,7 +15,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -36,13 +35,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public bool IsAirfareSponsored { get; set; }
 
         public bool? AirfareRequired { get; set; }
-        
-        [RequiredIf("IsAirfareSponsored", true, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+
+        [Display(Name = "Sponsor", ResourceType = typeof(Labels))]
+        [RadioButtonRequiredIf("IsAirfareSponsored", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? AirfareSponsorUid { get; set; }
-        
+
+        [Display(Name = "Sponsor", ResourceType = typeof(Labels))]
+        [RequiredIfOneWithValueAndOtherEmpty("AirfareRequired", "True", "AirfareSponsorOtherName")]
         public Guid? AirfareSponsorOtherUid { get; set; }
-        
-        [RequiredIfOneWithValueAndOtherEmptyAttribute("AirfareRequired", "True", "AirfareSponsorOtherUid")]
+
+        [Display(Name = "Sponsor", ResourceType = typeof(Labels))]
+        [RequiredIfOneWithValueAndOtherEmpty("AirfareRequired", "True", "AirfareSponsorOtherUid")]
         [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string AirfareSponsorOtherName { get; set; }
 
@@ -51,15 +54,19 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         #region Accommodation Sponsor
 
         public bool IsAccommodationSponsored { get; set; }
-        
-        [RequiredIf("IsAccommodationSponsored", true, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+
+        [Display(Name = "Sponsor", ResourceType = typeof(Labels))]
+        [RadioButtonRequiredIf("IsAccommodationSponsored", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? AccommodationSponsorUid { get; set; }
+
         public bool? AccommodationRequired { get; set; }
-        
-        [RequiredIfOneWithValueAndOtherEmptyAttribute("AccommodationRequired", "True", "AccommodationSponsorOtherName")]
+
+        [Display(Name = "Sponsor", ResourceType = typeof(Labels))]
+        [RequiredIfOneWithValueAndOtherEmpty("AccommodationRequired", "True", "AccommodationSponsorOtherName")]
         public Guid? AccommodationSponsorOtherUid { get; set; }
 
-        [RequiredIfOneWithValueAndOtherEmptyAttribute("AccommodationRequired", "True", "AccommodationSponsorOtherUid")]
+        [Display(Name = "Sponsor", ResourceType = typeof(Labels))]
+        [RequiredIfOneWithValueAndOtherEmpty("AccommodationRequired", "True", "AccommodationSponsorOtherUid")]
         [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string AccommodationSponsorOtherName { get; set; }
 
@@ -69,19 +76,23 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public bool IsAirportTransferSponsored { get; set; }
 
-        [RequiredIf("IsAirportTransferSponsored", true, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [Display(Name = "Sponsor", ResourceType = typeof(Labels))]
+        [RadioButtonRequiredIf("IsAirportTransferSponsored", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? AirportTransferSponsorUid { get; set; }
+
         public bool? AirportTransferRequired { get; set; }
 
-        [RequiredIfOneWithValueAndOtherEmptyAttribute("AirportTransferRequired", "True", "AirportTransferSponsorOtherName")]
+        [Display(Name = "Sponsor", ResourceType = typeof(Labels))]
+        [RequiredIfOneWithValueAndOtherEmpty("AirportTransferRequired", "True", "AirportTransferSponsorOtherName")]
         public Guid? AirportTransferSponsorOtherUid { get; set; }
-        
-        [RequiredIfOneWithValueAndOtherEmptyAttribute("AirportTransferRequired", "True", "AirportTransferSponsorOtherUid")]
+
+        [Display(Name = "Sponsor", ResourceType = typeof(Labels))]
+        [RequiredIfOneWithValueAndOtherEmpty("AirportTransferRequired", "True", "AirportTransferSponsorOtherUid")]
         [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string AirportTransferSponsorOtherName { get; set; }
 
         #endregion
-        
+
         public bool IsCityTransferRequired { get; set; }
         public bool IsVehicleDisposalRequired { get; set; }
 

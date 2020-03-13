@@ -4,7 +4,7 @@
 // Created          : 01-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-13-2020
 // ***********************************************************************
 // <copyright file="logistics.maininformation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -116,8 +116,8 @@ var LogisticsMainInformationWidget = function () {
 	    var isSponsored = "Is" + prefix + "Sponsored";
 
         if (!$('#' + isSponsored).prop('checked')) {
-	        $("[name='" + prefix + "SponsorUid']").prop('checked', false);
-	    }
+            $("[name='" + prefix + "SponsorUid']").prop('checked', false);
+        }
     };
 
     // Other sponsors -----------------------------------------------------------------------------

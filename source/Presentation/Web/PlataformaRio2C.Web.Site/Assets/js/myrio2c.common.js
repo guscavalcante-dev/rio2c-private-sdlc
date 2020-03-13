@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-11-2020
+// Last Modified On : 03-13-2020
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -204,6 +204,81 @@ var MyRio2cCommon = function () {
                 return defaultRangeValidator.call(this, value, element, param);
             }
         };
+
+        // Radiobutton required if
+        jQuery.validator.addMethod("radiobuttonrequiredif", function (value, element, params) {
+            var dependentProperty = foolproof.getName(element, params["dependentproperty"]);
+            var dependentTestValue = params["dependentvalue"];
+            var operator = params["operator"];
+            var pattern = params["pattern"];
+            var dependentPropertyElement = document.getElementsByName(dependentProperty);
+            var dependentValue = null;
+
+            if (dependentPropertyElement.length > 1) {
+                for (var index = 0; index != dependentPropertyElement.length; index++)
+                    if (dependentPropertyElement[index]["checked"]) {
+                        dependentValue = dependentPropertyElement[index].value;
+                        break;
+                    }
+
+                if (dependentValue == null) {
+                    dependentValue = false;
+                }
+            }
+            else
+                dependentValue = dependentPropertyElement[0].value;
+
+            if (foolproof.is(dependentValue, operator, dependentTestValue)) {
+                if (pattern == null) {
+                    var jElement = $(element);
+                    if (jElement.is(":radio")) {
+                        if ($("[name='" + element.name + "']:checked").length) {
+                            return true;
+                        }
+                    }
+                    else if (value != null && value.toString().replace(/^\s\s*/, '').replace(/\s\s*$/, '') != "") {
+                        return true;
+                    }
+                }
+                else {
+                    return (new RegExp(pattern)).test(value);
+                }
+            }
+            else {
+                return true;
+            }
+
+            return false;
+        });
+
+        $.validator.unobtrusive.adapters.add("radiobuttonrequiredif", ["dependentproperty", "dependentvalue"], function (options) {
+            var value = {
+                dependentproperty: options.params.dependentproperty,
+                dependentvalue: options.params.dependentvalue,
+                operator: 'EqualTo'
+            };
+
+            options.rules["radiobuttonrequiredif"] = value;
+            if (options.message) {
+                options.messages["radiobuttonrequiredif"] = options.message;
+            }
+        });
+
+        //jQuery.validator.addMethod("radiobuttonrequiredif", function (value, element, params) {
+        // var dependentproperty = foolproof.getId(element, params["dependentproperty"]);
+        // var dependentpropertyvalue = $('#' + dependentproperty).val();
+        // if (MyRio2cCommon.isNullOrEmpty(dependentpropertyvalue)) {
+        //  return true;
+        // }
+
+        // if (dependentpropertyvalue != params["dependentpropertyvalue"]) {
+        //  return true;
+        // }
+
+
+
+        // return false;
+        //});
 
         // Required if one not empty and other empty
         jQuery.validator.addMethod("requiredifonenotemptyandotherempty", function (value, element, params) {
