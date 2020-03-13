@@ -454,11 +454,17 @@ GO
 -- Places
 SET IDENTITY_INSERT [dbo].[Places] ON 
 GO
-INSERT [dbo].[Places] ([Id], [Uid], [Name], [IsHotel], [AddressId], [Website], [AdditionalInfo], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (1, N'daa2cf74-bf8a-49df-aaa1-af0ad3640dff', N'Vogue Square Fashion Hotel', 1,  (SELECT Id FROM dbo.Addresses WHERE Address1 = 'Av. das Américas, 8585 - Barra da Tijuca' AND ZipCode = '22793-081'), N'http://www.voguefashionhotel.com.br', N'Café da Manhã Incluído | Breakfast included', 0, CAST(N'2020-01-23 14:50:28.463' AS datetimeoffset), 1, CAST(N'2020-01-23 14:50:28.463' AS datetimeoffset), 1)
+INSERT [dbo].[Places] ([Id], [Uid], [Name], [IsHotel], [IsAirport], [AddressId], [Website], [AdditionalInfo], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (1, N'daa2cf74-bf8a-49df-aaa1-af0ad3640dff', N'Vogue Square Fashion Hotel', 1, 0, (SELECT Id FROM dbo.Addresses WHERE Address1 = 'Av. das Américas, 8585 - Barra da Tijuca' AND ZipCode = '22793-081'), N'http://www.voguefashionhotel.com.br', N'Café da Manhã Incluído | Breakfast included', 0, CAST(N'2020-01-23 14:50:28.463' AS datetimeoffset), 1, CAST(N'2020-01-23 14:50:28.463' AS datetimeoffset), 1)
 GO
-INSERT [dbo].[Places] ([Id], [Uid], [Name], [IsHotel], [AddressId], [Website], [AdditionalInfo], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (2, N'f334193e-0b47-4cbc-81b3-657c88a91981', N'Windsor Marapendi', 1, (SELECT Id FROM dbo.Addresses WHERE Address1 = 'Av. Lúcio Costa, 5400 - Barra da Tijuca' AND ZipCode = '22630-012'), N'https://windsorhoteis.com/hotel/windsor-marapendi', N'Café da Manhã Incluído | Breakfast included', 0, CAST(N'2020-01-23 14:50:28.473' AS datetimeoffset), 1, CAST(N'2020-01-23 14:50:28.473' AS datetimeoffset), 1)
+INSERT [dbo].[Places] ([Id], [Uid], [Name], [IsHotel], [IsAirport], [AddressId], [Website], [AdditionalInfo], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (2, N'f334193e-0b47-4cbc-81b3-657c88a91981', N'Windsor Marapendi', 1, 0, (SELECT Id FROM dbo.Addresses WHERE Address1 = 'Av. Lúcio Costa, 5400 - Barra da Tijuca' AND ZipCode = '22630-012'), N'https://windsorhoteis.com/hotel/windsor-marapendi', N'Café da Manhã Incluído | Breakfast included', 0, CAST(N'2020-01-23 14:50:28.473' AS datetimeoffset), 1, CAST(N'2020-01-23 14:50:28.473' AS datetimeoffset), 1)
 GO
-INSERT [dbo].[Places] ([Id], [Uid], [Name], [IsHotel], [AddressId], [Website], [AdditionalInfo], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (3, N'39b526d0-e560-4eed-8ef4-27251e8a8cde', N'Cidade das Artes', 0, (SELECT Id FROM dbo.Addresses WHERE Address1 = 'Av. das Américas, 5300 - Barra da Tijuca' AND ZipCode = '22793-080'), NULL, NULL, 0, CAST(N'2020-01-23 14:50:28.487' AS datetimeoffset), 1, CAST(N'2020-01-23 14:50:28.487' AS datetimeoffset), 1)
+INSERT [dbo].[Places] ([Id], [Uid], [Name], [IsHotel], [IsAirport], [AddressId], [Website], [AdditionalInfo], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (3, N'39b526d0-e560-4eed-8ef4-27251e8a8cde', N'Cidade das Artes', 0, 0, (SELECT Id FROM dbo.Addresses WHERE Address1 = 'Av. das Américas, 5300 - Barra da Tijuca' AND ZipCode = '22793-080'), NULL, NULL, 0, CAST(N'2020-01-23 14:50:28.487' AS datetimeoffset), 1, CAST(N'2020-01-23 14:50:28.487' AS datetimeoffset), 1)
+GO
+INSERT [dbo].[Places] ([Id], [Uid], [Name], [IsHotel], [IsAirport], [AddressId], [Website], [AdditionalInfo], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (4, N'49da6803-871d-452e-b51e-1eef0f993cb6', N'Rodoviária Novo Rio', 0, 0, NULL, NULL, NULL, 0, CAST(N'2020-03-13 14:50:28.463' AS datetimeoffset), 1, CAST(N'2020-03-13 14:50:28.463' AS datetimeoffset), 1)
+GO
+INSERT [dbo].[Places] ([Id], [Uid], [Name], [IsHotel], [IsAirport], [AddressId], [Website], [AdditionalInfo], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (5, N'e78234a7-1777-46eb-a73e-f79a314633aa', N'Rio de Janeiro - GIG Airport', 0, 1, NULL, NULL, NULL, 0, CAST(N'2020-03-13 14:50:28.463' AS datetimeoffset), 1, CAST(N'2020-03-13 14:50:28.463' AS datetimeoffset), 1)
+GO
+INSERT [dbo].[Places] ([Id], [Uid], [Name], [IsHotel], [IsAirport], [AddressId], [Website], [AdditionalInfo], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (6, N'90dcc4ed-7383-4b28-84c5-48dc5dcf0a49', N'Rio de Janeiro - SDU Airport', 0, 1, NULL, NULL, NULL, 0, CAST(N'2020-03-13 14:50:28.463' AS datetimeoffset), 1, CAST(N'2020-03-13 14:50:28.463' AS datetimeoffset), 1)
 GO
 SET IDENTITY_INSERT [dbo].[Places] OFF
 GO
@@ -470,6 +476,12 @@ GO
 INSERT [dbo].[AttendeePlaces] ([Id], [Uid], [EditionId], [PlaceId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (2, N'1dc3637c-48fd-4b59-b103-119dae5f8849', 2, 2, 0, CAST(N'2020-01-23 14:54:28.040' AS datetimeoffset), 1, CAST(N'2020-01-23 14:54:28.040' AS datetimeoffset), 1)
 GO
 INSERT [dbo].[AttendeePlaces] ([Id], [Uid], [EditionId], [PlaceId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (3, N'b1302f94-586a-47d6-ba7f-a101321f1664', 2, 3, 0, CAST(N'2020-01-23 14:54:28.050' AS datetimeoffset), 1, CAST(N'2020-01-23 14:54:28.050' AS datetimeoffset), 1)
+GO
+INSERT [dbo].[AttendeePlaces] ([Id], [Uid], [EditionId], [PlaceId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (4, N'37c6afb7-d78f-43a9-bf7d-c1d68c7e37ac', 2, 4, 0, CAST(N'2020-03-13 14:54:28.037' AS datetimeoffset), 1, CAST(N'2020-03-13 14:54:28.037' AS datetimeoffset), 1)
+GO
+INSERT [dbo].[AttendeePlaces] ([Id], [Uid], [EditionId], [PlaceId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (5, N'2e4de1b4-ac9a-4989-beae-ba0ea07e26ba', 2, 5, 0, CAST(N'2020-03-13 14:54:28.037' AS datetimeoffset), 1, CAST(N'2020-03-13 14:54:28.037' AS datetimeoffset), 1)
+GO
+INSERT [dbo].[AttendeePlaces] ([Id], [Uid], [EditionId], [PlaceId], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId]) VALUES (6, N'3a0f76c2-81c0-4ccf-8b02-55b36c2f9abc', 2, 6, 0, CAST(N'2020-03-13 14:54:28.037' AS datetimeoffset), 1, CAST(N'2020-03-13 14:54:28.037' AS datetimeoffset), 1)
 GO
 SET IDENTITY_INSERT [dbo].[AttendeePlaces] OFF
 GO
