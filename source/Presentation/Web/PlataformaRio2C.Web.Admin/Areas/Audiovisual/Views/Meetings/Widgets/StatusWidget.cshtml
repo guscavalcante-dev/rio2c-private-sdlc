@@ -5,9 +5,14 @@
 <div class="kt-portlet__body pl-5 pr-5">
     <div class="row">
         <div class="col-sm-8 mt-2 pt-3">
-            @if (editionDto?.AudiovisualNegotiationsCreateDate != null)
+            @if (editionDto?.AudiovisualNegotiationsCreateStartDate != null && editionDto?.AudiovisualNegotiationsCreateEndDate == null)
             {
-                @Html.Raw(string.Format(Messages.CalendarProcessedSuccessfully, editionDto.AudiovisualNegotiationsCreateDate?.ToUserTimeZone()))
+                @Html.Raw(string.Format(Messages.CalendarProcessing, editionDto.AudiovisualNegotiationsCreateStartDate?.ToUserTimeZone()))
+            }
+            else if (editionDto?.AudiovisualNegotiationsCreateEndDate != null)
+            {
+                var processingTime = editionDto.AudiovisualNegotiationsCreateEndDate.Value - editionDto.AudiovisualNegotiationsCreateStartDate.Value;
+                @Html.Raw(string.Format(Messages.CalendarProcessedSuccessfully, $"{editionDto.AudiovisualNegotiationsCreateEndDate?.ToUserTimeZone()} ({processingTime.ToString(@"hh\:mm\:ss")})" ))
             }
             else
             {
@@ -15,9 +20,18 @@
             }
         </div>
         <div class="col-sm-4 mt-2 mb-3 text-sm-right">
-            <button onclick="AudiovisualMeetingsStatusWidget.showModal();" class="btn btn-brand btn-elevate btn-icon-sm">
-                <i class="flaticon-event-calendar-symbol"></i>@(editionDto?.AudiovisualNegotiationsCreateDate != null ? Labels.RegenerateCalendar : Labels.GenerateCalendar)
-            </button>
+            @if (editionDto?.AudiovisualNegotiationsCreateStartDate != null && editionDto?.AudiovisualNegotiationsCreateEndDate == null)
+            {
+                <button class="btn btn-brand btn-elevate btn-icon-sm" disabled>
+                    <i class="flaticon-event-calendar-symbol"></i>@(editionDto?.AudiovisualNegotiationsCreateEndDate != null ? Labels.RegenerateCalendar : Labels.GenerateCalendar)
+                </button>
+            }
+            else
+            {
+                <button onclick="AudiovisualMeetingsStatusWidget.showModal();" class="btn btn-brand btn-elevate btn-icon-sm">
+                    <i class="flaticon-event-calendar-symbol"></i>@(editionDto?.AudiovisualNegotiationsCreateEndDate != null ? Labels.RegenerateCalendar : Labels.GenerateCalendar)
+                </button>
+            }
         </div>
     </div>
 </div>

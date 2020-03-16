@@ -1202,7 +1202,8 @@ CREATE TABLE [dbo].[Editions](
 	[InnovationProjectSubmitEndDate] [datetimeoffset](7) NOT NULL,
 	[InnovationProjectEvaluationStartDate] [datetimeoffset](7) NOT NULL,
 	[InnovationProjectEvaluationEndDate] [datetimeoffset](7) NOT NULL,
-	[AudiovisualNegotiationsCreateDate] [datetimeoffset](7) NULL,
+	[AudiovisualNegotiationsCreateStartDate] [datetimeoffset](7) NULL,
+	[AudiovisualNegotiationsCreateEndDate] [datetimeoffset](7) NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[CreateDate] [datetimeoffset](7) NULL,
 	[CreateUserId] [int] NOT NULL,
@@ -2011,8 +2012,6 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-SET ANSI_PADDING ON
-GO
 CREATE TABLE [dbo].[NegotiationConfigs](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Uid] [uniqueidentifier] NOT NULL,
@@ -2039,8 +2038,6 @@ CREATE TABLE [dbo].[NegotiationConfigs](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
-GO
-SET ANSI_PADDING OFF
 GO
 SET ANSI_NULLS ON
 GO
@@ -3463,11 +3460,7 @@ CREATE TABLE [dbo].[UserUnsubscribedLists](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
  CONSTRAINT [IDX_UQ_UserUnsubscribedLists_UserId_SubscribeListId] UNIQUE NONCLUSTERED 
 (
-	[Uid] ASC,
-	[SubscribeListId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
- CONSTRAINT [IDX_UserUnsubscribedLists_SubscribeListId] UNIQUE NONCLUSTERED 
-(
+	[UserId] ASC,
 	[SubscribeListId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
@@ -4004,6 +3997,11 @@ GO
 CREATE NONCLUSTERED INDEX [IDX_Users_UserName] ON [dbo].[Users]
 (
 	[UserName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IDX_UserUnsubscribedLists_SubscribeListId] ON [dbo].[UserUnsubscribedLists]
+(
+	[SubscribeListId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 GO
 SET ANSI_PADDING ON

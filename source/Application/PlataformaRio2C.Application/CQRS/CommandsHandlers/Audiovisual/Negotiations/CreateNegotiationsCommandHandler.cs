@@ -77,7 +77,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.NegotiationRepo.Truncate();
 
             var edition = await this.editionRepo.FindByUidAsync(cmd.EditionUid ?? Guid.Empty, true);
-            edition?.UnsetAudiovisualNegotiationsCreateDate(cmd.UserId);
+            if (edition.AudiovisualNegotiationsCreateStartDate.HasValue && !edition.AudiovisualNegotiationsCreateEndDate.HasValue)
+            {
+                this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityIsAlreadyAction, Labels.Agenda, Labels.BeingProcessed.ToLowerInvariant()), new string[] { "ToastrError" })));
+                return this.AppValidationResult;
+            }
+
+            edition?.StartAudiovisualNegotiationsCreation(cmd.UserId);
+            this.Uow.SaveChanges();
 
             var negotiationConfigs = await this.negotiationConfigRepo.FindAllForGenerateNegotiationsAsync();
             if (negotiationConfigs?.Count == 0)
@@ -112,9 +119,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                 .Where(ns => ns.ProjectBuyerEvaluation != null)
                                 .ToList();
 
+            this.NegotiationRepo.Truncate();
             this.NegotiationRepo.CreateAll(negotiations);
 
-            edition?.SetAudiovisualNegotiationsCreateDate(cmd.UserId);
+            edition?.FinishAudiovisualNegotiationsCreation(cmd.UserId);
 
             this.Uow.SaveChanges();
 

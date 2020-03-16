@@ -2425,4 +2425,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Código de reserva</value>
     <comment>Código de reserva</comment>
   </data>
+  <data name="BeingProcessed" xml:space="preserve">
+    <value>Sendo executado</value>
+    <comment>Sendo executado</comment>
+  </data>
 </root>

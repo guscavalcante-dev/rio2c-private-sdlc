@@ -2422,4 +2422,8 @@
     <value>Reservation code</value>
     <comment>Código de reserva</comment>
   </data>
+  <data name="BeingProcessed" xml:space="preserve">
+    <value>Being processed</value>
+    <comment>Sendo executado</comment>
+  </data>
 </root>

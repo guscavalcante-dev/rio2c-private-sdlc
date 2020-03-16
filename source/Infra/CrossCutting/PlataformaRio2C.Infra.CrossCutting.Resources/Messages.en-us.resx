@@ -922,4 +922,8 @@
     <value>The field {0} must be differente from field {1}.</value>
     <comment>O campo {0} deve ser diferente do campo {1}.</comment>
   </data>
+  <data name="CalendarProcessing" xml:space="preserve">
+    <value>Calendar processing since &lt;b&gt;{0}&lt;/b&gt;.</value>
+    <comment>Agenda processando desde &lt;b&gt;{0}&lt;/b&gt;.</comment>
+  </data>
 </root>

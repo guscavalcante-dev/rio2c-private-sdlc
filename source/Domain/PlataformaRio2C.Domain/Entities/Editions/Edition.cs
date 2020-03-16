@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-16-2020
 // ***********************************************************************
 // <copyright file="Edition.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -49,7 +49,8 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset InnovationProjectSubmitEndDate { get; private set; }
         public DateTimeOffset InnovationProjectEvaluationStartDate { get; private set; }
         public DateTimeOffset InnovationProjectEvaluationEndDate { get; private set; }
-        public DateTimeOffset? AudiovisualNegotiationsCreateDate { get; private set; }
+        public DateTimeOffset? AudiovisualNegotiationsCreateStartDate { get; private set; }
+        public DateTimeOffset? AudiovisualNegotiationsCreateEndDate { get; private set; }
 
         public virtual Quiz Quiz { get; private set; }
 
@@ -63,22 +64,23 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Sets the audiovisual negotiations create date.</summary>
+        /// <summary>Starts the audiovisual negotiations creation.</summary>
         /// <param name="userId">The user identifier.</param>
-        public void SetAudiovisualNegotiationsCreateDate(int userId)
+        public void StartAudiovisualNegotiationsCreation(int userId)
         {
-            this.AudiovisualNegotiationsCreateDate = DateTime.UtcNow;
+            this.AudiovisualNegotiationsCreateStartDate = DateTime.UtcNow;
+            this.AudiovisualNegotiationsCreateEndDate = null;
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
-        /// <summary>Unsets the audiovisual negotiations create date.</summary>
+        /// <summary>Finishes the audiovisual negotiations creation.</summary>
         /// <param name="userId">The user identifier.</param>
-        public void UnsetAudiovisualNegotiationsCreateDate(int userId)
+        public void FinishAudiovisualNegotiationsCreation(int userId)
         {
-            this.AudiovisualNegotiationsCreateDate = null;
+            this.AudiovisualNegotiationsCreateEndDate = DateTime.UtcNow;
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;

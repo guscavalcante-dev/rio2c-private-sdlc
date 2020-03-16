@@ -178,6 +178,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Agenda processando desde &lt;b&gt;{0}&lt;/b&gt;..
+        /// </summary>
+        public static string CalendarProcessing {
+            get {
+                return ResourceManager.GetString("CalendarProcessing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Não é possível editar um projeto submetido para avaliação de player.
         /// </summary>
         public static string CanNotEditASubmittedProjectForPlayerEvaluation {

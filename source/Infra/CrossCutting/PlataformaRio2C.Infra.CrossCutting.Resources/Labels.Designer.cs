@@ -538,6 +538,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sendo executado.
+        /// </summary>
+        public static string BeingProcessed {
+            get {
+                return ResourceManager.GetString("BeingProcessed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data de Nascimento.
         /// </summary>
         public static string BirthDate {

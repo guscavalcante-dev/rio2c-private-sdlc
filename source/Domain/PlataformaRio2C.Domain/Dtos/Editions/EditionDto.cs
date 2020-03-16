@@ -4,7 +4,7 @@
 // Created          : 08-06-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-07-2020
+// Last Modified On : 03-16-2020
 // ***********************************************************************
 // <copyright file="EditionDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -47,7 +47,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset InnovationProjectSubmitEndDate { get; private set; }
         public DateTimeOffset InnovationProjectEvaluationStartDate { get; private set; }
         public DateTimeOffset InnovationProjectEvaluationEndDate { get; private set; }
-        public DateTimeOffset? AudiovisualNegotiationsCreateDate { get; private set; }
+        public DateTimeOffset? AudiovisualNegotiationsCreateStartDate { get; private set; }
+        public DateTimeOffset? AudiovisualNegotiationsCreateEndDate { get; private set; }
         public DateTimeOffset CreateDate { get; private set; }
         public int CreateUserId { get; private set; }
         public DateTimeOffset UpdateDate { get; private set; }
@@ -100,7 +101,8 @@ namespace PlataformaRio2C.Domain.Dtos
             this.InnovationProjectSubmitEndDate = entity.InnovationProjectSubmitEndDate;
             this.InnovationProjectEvaluationStartDate = entity.InnovationProjectEvaluationStartDate;
             this.InnovationProjectEvaluationEndDate = entity.InnovationProjectEvaluationEndDate;
-            this.AudiovisualNegotiationsCreateDate = entity.AudiovisualNegotiationsCreateDate;
+            this.AudiovisualNegotiationsCreateStartDate = entity.AudiovisualNegotiationsCreateStartDate;
+            this.AudiovisualNegotiationsCreateEndDate = entity.AudiovisualNegotiationsCreateEndDate;
             this.CreateDate = entity.CreateDate;
             this.CreateUserId = entity.CreateUserId;
             this.UpdateDate = entity.UpdateDate;

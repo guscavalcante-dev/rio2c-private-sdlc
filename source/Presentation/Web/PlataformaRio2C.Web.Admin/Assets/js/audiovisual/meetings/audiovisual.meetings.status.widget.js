@@ -4,7 +4,7 @@
 // Created          : 03-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-16-2020
 // ***********************************************************************
 // <copyright file="audiovisual.meetings.status.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -59,6 +59,8 @@ var AudiovisualMeetingsStatusWidget = function () {
         MyRio2cCommon.block();
 
         var jsonParameters = new Object();
+
+        $.ajaxSetup({ timeout: 3600000 });
 
         $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Meetings/Generate'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
