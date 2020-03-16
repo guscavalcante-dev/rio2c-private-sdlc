@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-16-2020
 // ***********************************************************************
 // <copyright file="AccountController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -236,8 +236,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 case IdentitySignInStatus.LockedOut:
                     return View("Lockout");
 
-                case IdentitySignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                //case IdentitySignInStatus.RequiresVerification:
+                //    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
 
                 case IdentitySignInStatus.Failure:
                 default:
@@ -667,72 +667,72 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #endregion
 
-        // GET: /Account/SendCode
-        [AllowAnonymous]
-        public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
-        {
-            var userId = await _identityController.GetVerifiedUserIdAsync();
-            if (userId <= 0)
-            {
-                return View("Error");
-            }
-            var userFactors = await _identityController.GetValidTwoFactorProvidersAsync(userId);
+        //// GET: /Account/SendCode
+        //[AllowAnonymous]
+        //public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
+        //{
+        //    var userId = await _identityController.GetVerifiedUserIdAsync();
+        //    if (userId <= 0)
+        //    {
+        //        return View("Error");
+        //    }
+        //    var userFactors = await _identityController.GetValidTwoFactorProvidersAsync(userId);
 
-            if (!await _identityController.SendTwoFactorCodeAsync(userFactors[0]))
-            {
-                return View("Error");
-            }
+        //    if (!await _identityController.SendTwoFactorCodeAsync(userFactors[0]))
+        //    {
+        //        return View("Error");
+        //    }
 
-            return RedirectToAction("VerifyCode", new { Provider = userFactors[0], ReturnUrl = returnUrl, RememberMe = rememberMe });
-        }
+        //    return RedirectToAction("VerifyCode", new { Provider = userFactors[0], ReturnUrl = returnUrl, RememberMe = rememberMe });
+        //}
 
-        [AllowAnonymous]
-        public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
-        {
-            // Require that the user has already logged in via username/password or external login
-            if (!await _identityController.HasBeenVerifiedAsync())
-            {
-                return View("Error");
-            }
+        //[AllowAnonymous]
+        //public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
+        //{
+        //    // Require that the user has already logged in via username/password or external login
+        //    if (!await _identityController.HasBeenVerifiedAsync())
+        //    {
+        //        return View("Error");
+        //    }
 
-            return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
-        }
+        //    return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
+        //}
 
-        // POST: /Account/VerifyCode
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> VerifyCode(VerifyCodeViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+        //// POST: /Account/VerifyCode
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> VerifyCode(VerifyCodeViewModel model)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(model);
+        //    }
 
-            var result = await _identityController.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
-            switch (result)
-            {
-                case IdentitySignInStatus.Success:
-                    return RedirectToLocal(model.ReturnUrl);
-                case IdentitySignInStatus.LockedOut:
-                    return View("Lockout");
-                case IdentitySignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", Messages.InvalidCode);
-                    return View(model);
-            }
-        }
+        //    var result = await _identityController.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
+        //    switch (result)
+        //    {
+        //        case IdentitySignInStatus.Success:
+        //            return RedirectToLocal(model.ReturnUrl);
+        //        case IdentitySignInStatus.LockedOut:
+        //            return View("Lockout");
+        //        case IdentitySignInStatus.Failure:
+        //        default:
+        //            ModelState.AddModelError("", Messages.InvalidCode);
+        //            return View(model);
+        //    }
+        //}
 
-        [AllowAnonymous]
-        public async Task<ActionResult> ConfirmEmail(int userId, string code)
-        {
-            if (userId <= 0 || code == null || await _identityController.FindByIdAsync(userId) == null)
-            {
-                return View("Error");
-            }
-            var result = await _identityController.ConfirmEmailAsync(userId, code);
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
-        }
+        //[AllowAnonymous]
+        //public async Task<ActionResult> ConfirmEmail(int userId, string code)
+        //{
+        //    if (userId <= 0 || code == null || await _identityController.FindByIdAsync(userId) == null)
+        //    {
+        //        return View("Error");
+        //    }
+        //    var result = await _identityController.ConfirmEmailAsync(userId, code);
+        //    return View(result.Succeeded ? "ConfirmEmail" : "Error");
+        //}
 
         #region Auxiliary Private Methods
 
@@ -792,42 +792,42 @@ namespace PlataformaRio2C.Web.Site.Controllers
             base.Dispose(disposing);
         }
 
-        #region Change Password
+        //#region Change Password
 
-        /// <summary>Changes the password.</summary>
-        /// <returns></returns>
-        public ActionResult ChangePassword()
-        {
-            return View();
-        }
+        ///// <summary>Changes the password.</summary>
+        ///// <returns></returns>
+        //public ActionResult ChangePassword()
+        //{
+        //    return View();
+        //}
 
-        /// <summary>Changes the password.</summary>
-        /// <param name="model">The model.</param>
-        /// <returns></returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+        ///// <summary>Changes the password.</summary>
+        ///// <param name="model">The model.</param>
+        ///// <returns></returns>
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(model);
+        //    }
 
-            var result = await _identityController.ChangePasswordAsync(User.Identity.GetUserId<int>(), model.OldPassword, model.NewPassword);
-            if (result.Succeeded)
-            {
-                var user = await _identityController.FindByIdAsync(User.Identity.GetUserId<int>());
-                if (user != null)
-                {
-                    await _identityController.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                }
-                return RedirectToAction("Index");
-            }
-            AddErrors(result);
-            return View(model);
-        }
+        //    var result = await _identityController.ChangePasswordAsync(User.Identity.GetUserId<int>(), model.OldPassword, model.NewPassword);
+        //    if (result.Succeeded)
+        //    {
+        //        var user = await _identityController.FindByIdAsync(User.Identity.GetUserId<int>());
+        //        if (user != null)
+        //        {
+        //            await _identityController.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+        //        }
+        //        return RedirectToAction("Index");
+        //    }
+        //    AddErrors(result);
+        //    return View(model);
+        //}
 
-        #endregion
+        //#endregion
 
         //[AllowAnonymous]
         //public ActionResult Error()

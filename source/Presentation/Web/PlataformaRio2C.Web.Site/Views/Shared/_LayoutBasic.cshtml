@@ -1,4 +1,4 @@
-﻿@{
+﻿@*@{
     var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
 }
 <!DOCTYPE html>
@@ -34,9 +34,9 @@
                     <a href="#" class="culture" data-value="en-us">
                         <img src="~/Content/img/bandeira-eua.png" class="@(culture == "en-us" ? "cultureUnchecked " : "")" />
                     </a>
-                    <input type="hidden" value="@culture" id="culture" />
-    @*@Html.DropDownList("culture", new List<SelectListItem>() { new SelectListItem { Value = "pt-br", Text = "Português", Selected = culture == "pt-br" }, new SelectListItem { Value = "en-us", Text = "English", Selected = culture == "en-us" } }, new { data_target = Url.Action("SetCulture", "Account", new { area = "" }), @class = "slctCulture" })*@
-                </div>
+                    <input type="hidden" value="@culture" id="culture" />*@
+                    @*@Html.DropDownList("culture", new List<SelectListItem>() { new SelectListItem { Value = "pt-br", Text = "Português", Selected = culture == "pt-br" }, new SelectListItem { Value = "en-us", Text = "English", Selected = culture == "en-us" } }, new { data_target = Url.Action("SetCulture", "Account", new { area = "" }), @class = "slctCulture" })*@
+                @*</div>
             </div>
 
             <h1><span class="logo">Rio2C</span></h1>
@@ -93,4 +93,4 @@
         })
     </script>
 </body>
-</html>
+</html>*@
