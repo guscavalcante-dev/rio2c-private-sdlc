@@ -2421,4 +2421,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Solicitante</value>
     <comment>Solicitante</comment>
   </data>
+  <data name="ReservationCode" xml:space="preserve">
+    <value>Código de reserva</value>
+    <comment>Código de reserva</comment>
+  </data>
 </root>

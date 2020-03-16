@@ -4,7 +4,7 @@
 // Created          : 01-27-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-13-2020
+// Last Modified On : 03-16-2020
 // ***********************************************************************
 // <copyright file="CreateLogisticAirfare.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -52,7 +52,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [NotEqualTo("Departure", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyDifferentFromProperty")]
         public string Arrival { get; set; }
         
-        [Display(Name = "TicketNumber", ResourceType = typeof(Labels))]
+        [Display(Name = "ReservationCode", ResourceType = typeof(Labels))]
         [StringLength(20, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string TicketNumber { get; set; }
         

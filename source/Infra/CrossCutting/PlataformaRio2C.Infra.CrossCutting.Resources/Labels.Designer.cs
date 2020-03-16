@@ -3994,6 +3994,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Código de reserva.
+        /// </summary>
+        public static string ReservationCode {
+            get {
+                return ResourceManager.GetString("ReservationCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Redefinir.
         /// </summary>
         public static string Reset {

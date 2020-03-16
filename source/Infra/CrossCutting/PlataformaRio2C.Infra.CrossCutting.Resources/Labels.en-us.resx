@@ -2418,4 +2418,8 @@
     <value>Requester</value>
     <comment>Solicitante</comment>
   </data>
+  <data name="ReservationCode" xml:space="preserve">
+    <value>Reservation code</value>
+    <comment>Código de reserva</comment>
+  </data>
 </root>
