@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 03-16-2020
 // ***********************************************************************
 // <copyright file="User.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -202,7 +202,7 @@ namespace PlataformaRio2C.Domain.Entities
             foreach (var unsubscribedList in unsubscribedLists)
             {
                 var userUnsubscribedListDb = this.UserUnsubscribedLists.FirstOrDefault(uul => uul.SubscribeListId == unsubscribedList.Id);
-                if (userUnsubscribedListDb != null && userUnsubscribedListDb.IsDeleted)
+                if (userUnsubscribedListDb != null)
                 {
                     userUnsubscribedListDb.Restore(userId);
                 }
