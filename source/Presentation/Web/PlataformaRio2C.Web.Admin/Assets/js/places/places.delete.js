@@ -1,42 +1,42 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Rafael Dantas Ruiz
-// Created          : 01-06-2020
+// Created          : 03-17-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-17-2020
 // ***********************************************************************
-// <copyright file="pillars.delete.js" company="Softo">
+// <copyright file="places.delete.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var PillarsDelete = function () {
+var PlacesDelete = function () {
 
     // Delete -------------------------------------------------------------------------------------
-    var executeDelete = function (pillarUid) {
+    var executeDelete = function (placeUid) {
         MyRio2cCommon.block();
 
         var jsonParameters = new Object();
-        jsonParameters.pillarUid = pillarUid;
+        jsonParameters.placeUid = placeUid;
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Pillars/Delete'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Places/Delete'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
                 onSuccess: function () {
-                    if (typeof (PillarsDataTableWidget) !== 'undefined') {
-                        PillarsDataTableWidget.refreshData();
-                    }
+	                if (typeof (PlacesDataTableWidget) !== 'undefined') {
+		                PlacesDataTableWidget.refreshData();
+	                }
 
-                    if (typeof (PillarsTotalCountWidget) !== 'undefined') {
-                        PillarsTotalCountWidget.init();
-                    }
+	                if (typeof (PlacesTotalCountWidget) !== 'undefined') {
+		                PlacesTotalCountWidget.init();
+	                }
 
-                    if (typeof (PillarsEditionCountWidget) !== 'undefined') {
-                        PillarsEditionCountWidget.init();
-                    }
+	                if (typeof (PlacesEditionCountWidget) !== 'undefined') {
+		                PlacesEditionCountWidget.init();
+	                }
                 },
                 // Error
                 onError: function () {
@@ -50,7 +50,7 @@ var PillarsDelete = function () {
         });
     };
 
-    var showModal = function (pillarUid) {
+    var showModal = function (placeUid) {
         var message = labels.deleteConfirmationMessage;
 
         bootbox.dialog({
@@ -66,7 +66,7 @@ var PillarsDelete = function () {
                     label: labels.remove,
                     className: "btn btn-danger",
                     callback: function () {
-                        executeDelete(pillarUid);
+                        executeDelete(placeUid);
                     }
                 }
             }
@@ -74,8 +74,8 @@ var PillarsDelete = function () {
     };
 
     return {
-        showModal: function (pillarUid) {
-            showModal(pillarUid);
+        showModal: function (placeUid) {
+            showModal(placeUid);
         }
     };
 }();

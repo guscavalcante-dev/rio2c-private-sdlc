@@ -3,22 +3,19 @@
 // Author           : Arthur Souza
 // Created          : 01-30-2020
 //
-// Last Modified By : Arthur Souza
-// Last Modified On : 01-30-2020
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="DeleteLogisticSponsorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers

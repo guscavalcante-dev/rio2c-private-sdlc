@@ -477,6 +477,7 @@
     <Content Include="Assets\js\music\projects\music.projects.totalcount.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.videoandmusic.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.delete.js" />
+    <Content Include="Assets\js\places\places.delete.js" />
     <Content Include="Assets\js\places\places.create.js" />
     <Content Include="Assets\js\places\places.editioncount.widget.js" />
     <Content Include="Assets\js\places\places.totalcount.widget.js" />

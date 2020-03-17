@@ -81,6 +81,22 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
+        /// <summary>Deletes the specified edition.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(Edition edition, int userId)
+        {
+            this.DeleteAttendeePlaces(edition, userId);
+
+            if (this.FindAllAttendeePlacesNotDeleted(edition)?.Any() == false)
+            {
+                this.IsDeleted = true;
+            }
+
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
         #region Attendee Places
 
         /// <summary>Synchronizes the attendee places.</summary>

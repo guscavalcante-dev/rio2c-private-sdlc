@@ -738,8 +738,8 @@ namespace PlataformaRio2C.Web.Admin
             //    "~/Assets/js/pillars/pillars.maininformation.widget.js",
             //    "~/Assets/js/pillars/pillars.conferences.widget.js"));
 
-            //bundles.Add(new ScriptBundle("~/bundles/js/pillars.delete.js").Include(
-            //    "~/Assets/js/pillars/pillars.delete.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/places.delete.js").Include(
+                "~/Assets/js/places/places.delete.js"));
 
             #endregion
 
