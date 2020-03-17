@@ -6,7 +6,7 @@
         <div class="kt-widget__top">
             <div class="kt-widget__content pl-0" style="overflow: hidden;">
                 <div class="kt-widget__head">
-                    <span class="kt-widget__username">@(Model.Place.Name ?? "-")</span>
+                    <span class="kt-widget__username">@(Model.Place.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, Language.Separator) ?? "-")</span>
                     <div class="kt-widget__action">
                         <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="PlacesMainInformationWidget.showUpdateModal();">
                             <i class="flaticon2-edit"></i>

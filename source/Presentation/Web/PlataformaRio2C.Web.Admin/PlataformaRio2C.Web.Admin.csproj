@@ -8509,6 +8509,8 @@
     <Content Include="Views\Places\Modals\CreateForm.cshtml" />
     <Content Include="Views\Places\Details.cshtml" />
     <Content Include="Views\Places\Widgets\MainInformationWidget.cshtml" />
+    <Content Include="Views\Places\Modals\UpdateMainInformationModal.cshtml" />
+    <Content Include="Views\Places\Modals\UpdateMainInformationForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

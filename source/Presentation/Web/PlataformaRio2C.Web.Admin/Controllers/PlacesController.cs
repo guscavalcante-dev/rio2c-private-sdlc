@@ -92,6 +92,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 this.AdminAccessControlDto.Language.Id
             );
 
+            foreach (var placeJsonDto in places)
+            {
+                placeJsonDto.Name = placeJsonDto.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, '|');
+            }
+
             var response = DataTablesResponse.Create(request, places.TotalItemCount, places.TotalItemCount, places);
 
             return Json(new
@@ -240,7 +245,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Places, new List<BreadcrumbItemHelper> {
                 new BreadcrumbItemHelper(Labels.Places, Url.Action("Index", "Places", new { Area = "" })),
-                new BreadcrumbItemHelper(placeDto.Place?.Name, Url.Action("Details", "Places", new { Area = "", id }))
+                new BreadcrumbItemHelper(placeDto.Place?.Name?.GetSeparatorTranslation(this.UserInterfaceLanguage, '|'), Url.Action("Details", "Places", new { Area = "", id }))
             });
 
             #endregion
@@ -272,98 +277,97 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        //#region Update
+        #region Update
 
-        ///// <summary>Shows the update main information modal.</summary>
-        ///// <param name="pillarUid">The pillar uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? pillarUid)
-        //{
-        //    UpdatePillarMainInformation cmd;
+        /// <summary>Shows the update main information modal.</summary>
+        /// <param name="placeUid">The place uid.</param>
+        /// <returns></returns>
+        /// <exception cref="DomainException"></exception>
+        [HttpGet]
+        public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? placeUid)
+        {
+            UpdatePlaceMainInformation cmd;
 
-        //    try
-        //    {
-        //        var mainInformationWidgetDto = await this.pillarRepo.FindDtoAsync(pillarUid ?? Guid.Empty, this.EditionDto.Id);
-        //        if (mainInformationWidgetDto == null)
-        //        {
-        //            throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Pillar, Labels.FoundF.ToLowerInvariant()));
-        //        }
+            try
+            {
+                var mainInformationWidgetDto = await this.placeRepo.FindDtoAsync(placeUid ?? Guid.Empty);
+                if (mainInformationWidgetDto == null)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Place, Labels.FoundM.ToLowerInvariant()));
+                }
 
-        //        cmd = new UpdatePillarMainInformation(
-        //            mainInformationWidgetDto,
-        //            await this.languageRepo.FindAllDtosAsync());
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-        //    }
+                cmd = new UpdatePlaceMainInformation(mainInformationWidgetDto);
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
-        ///// <summary>Updates the main information.</summary>
-        ///// <param name="cmd">The command.</param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public async Task<ActionResult> UpdateMainInformation(UpdatePillarMainInformation cmd)
-        //{
-        //    var result = new AppValidationResult();
+        /// <summary>Updates the main information.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> UpdateMainInformation(UpdatePlaceMainInformation cmd)
+        {
+            var result = new AppValidationResult();
 
-        //    try
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
 
-        //        cmd.UpdatePreSendProperties(
-        //            this.AdminAccessControlDto.User.Id,
-        //            this.AdminAccessControlDto.User.Uid,
-        //            this.EditionDto.Id,
-        //            this.EditionDto.Uid,
-        //            this.UserInterfaceLanguage);
-        //        result = await this.CommandBus.Send(cmd);
-        //        if (!result.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        foreach (var error in result.Errors)
-        //        {
-        //            var target = error.Target ?? "";
-        //            ModelState.AddModelError(target, error.Message);
-        //        }
+                cmd.UpdatePreSendProperties(
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
 
-        //        return Json(new
-        //        {
-        //            status = "error",
-        //            message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
-        //            pages = new List<dynamic>
-        //            {
-        //                new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationForm", cmd), divIdOrClass = "#form-container" },
-        //            }
-        //        }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-        //    }
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationForm", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Pillar, Labels.UpdatedF) });
-        //}
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Place, Labels.UpdatedM) });
+        }
 
-        //#endregion
+        #endregion
 
         #endregion
 

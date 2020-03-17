@@ -80,8 +80,26 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeAttendeePlaces(edition, userId);
 
             this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Updates the main information.</summary>
+        /// <param name="name">The name.</param>
+        /// <param name="type">The type.</param>
+        /// <param name="website">The website.</param>
+        /// <param name="additionalInfo">The additional information.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateMainInformation(string name, string type, string website, string additionalInfo, int userId)
+        {
+            this.Name = name?.Trim();
+            this.Website = website?.Trim();
+            this.AdditionalInfo = additionalInfo;
+            this.UpdateType(type);
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
         }
 
         /// <summary>Deletes the specified edition.</summary>
