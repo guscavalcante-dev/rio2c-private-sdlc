@@ -11,7 +11,7 @@
             <div class="modal-body">
                 @using (Html.BeginForm("UpdateAirfare", "Logistics", new { Area = "" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UpdateLogisticAirfareForm" }))
                 {
-                    @Html.HiddenFor(m => m.Uid)                    
+                    @Html.HiddenFor(m => m.LogisticAirfareUid)                    
                     <div id="form-container">
                         @Html.Partial("Modals/_AirfareForm", Model)
                     </div>

@@ -154,6 +154,20 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
             this.DeleteFiles(fileName, fileRepositoryPathType, args);
         }
 
+        /// <summary>Deletes the files.</summary>
+        /// <param name="fileName">Name of the file.</param>
+        /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
+        /// <param name="args">The arguments.</param>
+        public void DeleteFiles(string fileName, FileRepositoryPathType fileRepositoryPathType, params object[] args)
+        {
+            var directory = this.GetBaseDirectory(fileRepositoryPathType, args);
+
+            foreach (var file in this.GetFiles(directory, fileName))
+            {
+                this.DeleteFile(file);
+            }
+        }
+
         #endregion
 
         #region Private Methods
@@ -256,20 +270,6 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
         #endregion
 
         #region Delete
-
-        /// <summary>Deletes the files.</summary>
-        /// <param name="fileName">Name of the file.</param>
-        /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
-        /// <param name="args">The arguments.</param>
-        private void DeleteFiles(string fileName, FileRepositoryPathType fileRepositoryPathType, params object[] args)
-        {
-            var directory = this.GetBaseDirectory(fileRepositoryPathType, args);
-
-            foreach (var file in this.GetFiles(directory, fileName))
-            {
-                this.DeleteFile(file);
-            }
-        }
 
         /// <summary>Deletes the file.</summary>
         /// <param name="fileName">Name of the file.</param>

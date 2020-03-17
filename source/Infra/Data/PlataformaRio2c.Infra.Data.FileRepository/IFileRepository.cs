@@ -25,6 +25,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
         string GetUrl(FileRepositoryPathType fileRepositoryPathType, Guid fileUid);
         void Upload(Stream inputStream, string contentType, string fileName, FileRepositoryPathType fileRepositoryPathType, params object[] args);
         void DeleteImages(Guid imageUid, FileRepositoryPathType fileRepositoryPathType, params object[] args);
+        void DeleteFiles(string fileName, FileRepositoryPathType fileRepositoryPathType, params object[] args);
 
         //string GetLinkForAvatar(int id, int personTypeId = 1);
         //bool HasAvatar(int id);

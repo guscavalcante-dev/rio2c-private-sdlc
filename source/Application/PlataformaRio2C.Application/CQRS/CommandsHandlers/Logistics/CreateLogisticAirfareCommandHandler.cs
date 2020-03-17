@@ -66,6 +66,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.Departure,
                 cmd.Arrival,
                 cmd.Ticket != null,
+                cmd.IsTicketFileDeleted,
                 cmd.UserId);
             
             if (!logisticAirfare.IsValid())
@@ -81,7 +82,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             if (cmd.Ticket != null)
             {
-                fileRepo.Upload(
+                this.fileRepo.Upload(
                     cmd.Ticket.InputStream,
                     cmd.Ticket.ContentType,
                     logisticAirfare.Uid + ".pdf",

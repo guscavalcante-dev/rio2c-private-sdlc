@@ -51,6 +51,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="stringDepartureDate">The string departure date.</param>
         /// <param name="stringArrivalDate">The string arrival date.</param>
         /// <param name="isTicketUploaded">if set to <c>true</c> [is ticket uploaded].</param>
+        /// <param name="isTicketDeleted">if set to <c>true</c> [is ticket deleted].</param>
         /// <param name="userId">The user identifier.</param>
         public LogisticAirfare(
             Logistic logistic, 
@@ -63,6 +64,7 @@ namespace PlataformaRio2C.Domain.Entities
             string stringDepartureDate, 
             string stringArrivalDate,
             bool isTicketUploaded,
+            bool isTicketDeleted,
             int userId)
         {
             this.Logistic = logistic;
@@ -74,7 +76,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateArrivalDate(stringArrivalDate);
 
             this.TicketNumber = ticketNumber?.Trim();
-            this.UpdateTicketUploadDate(isTicketUploaded, false);
+            this.UpdateTicketUploadDate(isTicketUploaded, isTicketDeleted);
             this.AdditionalInfo = additionalInfo?.Trim();
 
             this.IsDeleted = false;
@@ -97,6 +99,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="stringDepartureDate">The string departure date.</param>
         /// <param name="stringArrivalDate">The string arrival date.</param>
         /// <param name="isTicketUploaded">if set to <c>true</c> [is ticket uploaded].</param>
+        /// <param name="isTicketDeleted">if set to <c>true</c> [is ticket deleted].</param>
         /// <param name="userId">The user identifier.</param>
         public void Update(
             bool? isNational, 
@@ -108,6 +111,7 @@ namespace PlataformaRio2C.Domain.Entities
             string stringDepartureDate,
             string stringArrivalDate,
             bool isTicketUploaded,
+            bool isTicketDeleted,
             int userId)
         {
             this.IsNational = isNational ?? false;
@@ -118,7 +122,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateArrivalDate(stringArrivalDate);
 
             this.TicketNumber = ticketNumber?.Trim();
-            this.UpdateTicketUploadDate(isTicketUploaded, false);
+            this.UpdateTicketUploadDate(isTicketUploaded, isTicketDeleted);
             this.AdditionalInfo = additionalInfo?.Trim();
 
             this.IsDeleted = false;

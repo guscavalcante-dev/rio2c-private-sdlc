@@ -50,7 +50,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.Uow.BeginTransaction();
 
-            var logisticAirfare = await this.GetLogisticAirfareByUid(cmd.Uid);
+            var logisticAirfare = await this.GetLogisticAirfareByUid(cmd.LogisticAirfareUid);
 
             #region Initial validations
 
@@ -62,6 +62,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
+            var beforeTicketUploadDate = logisticAirfare.TicketUploadDate;
+
             logisticAirfare.Update(
                 cmd.IsNational,
                 cmd.IsArrival,
@@ -72,6 +74,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.Departure,
                 cmd.Arrival,
                 cmd.Ticket != null,
+                cmd.IsTicketFileDeleted,
                 cmd.UserId);
 
             if (!logisticAirfare.IsValid())
@@ -84,13 +87,19 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.Uow.SaveChanges();
             this.AppValidationResult.Data = logisticAirfare;
 
+            // Update ticket file
             if (cmd.Ticket != null)
             {
-                fileRepo.Upload(
+                this.fileRepo.Upload(
                     cmd.Ticket.InputStream, 
                     cmd.Ticket.ContentType,
                     logisticAirfare.Uid + ".pdf",
                     FileRepositoryPathType.LogisticAirfareFile);
+            }
+            // Delete ticket file
+            else if (cmd.IsTicketFileDeleted == true && beforeTicketUploadDate.HasValue)
+            {
+                this.fileRepo.DeleteFiles(logisticAirfare.Uid + ".pdf", FileRepositoryPathType.LogisticAirfareFile);
             }
 
             return this.AppValidationResult;

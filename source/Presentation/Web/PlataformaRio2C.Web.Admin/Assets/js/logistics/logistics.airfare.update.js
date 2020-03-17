@@ -72,9 +72,19 @@ var LogisticAirfareUpdate = function () {
         });
     };
 
+    // Ticket pdf ---------------------------------------------------------------------------------
+    var changeFile = function () {
+        $('#file-preview-container').addClass('d-none');
+        $('#file-container').removeClass('d-none');
+        $('#IsTicketFileDeleted').val('True');
+    }
+
     return {
         showModal: function (uid) {
             showModal(uid);
+        },
+        changeFile: function () {
+	        changeFile();
         }
     };
 }();

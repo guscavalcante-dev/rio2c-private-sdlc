@@ -24,6 +24,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     public class CreateLogisticAirfare : BaseCommand
     {
         public Guid LogisticsUid { get; set; }
+        public Guid LogisticAirfareUid { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [Display(Name = "Type", ResourceType = typeof(Labels))]
@@ -65,10 +66,15 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [HttpPostedFileExtensions(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "InvalidPdf", Extensions = "pdf")]
         public HttpPostedFileBase Ticket { get; set; }
 
+        public bool IsTicketFileDeleted { get; set; }
+
+        public DateTimeOffset? TicketUploadDate { get; set; }
+
         /// <summary>Initializes a new instance of the <see cref="CreateLogisticSponsors"/> class.</summary>
         public CreateLogisticAirfare(Guid logisticsUid)
         {
             this.LogisticsUid = logisticsUid;
+            this.IsTicketFileDeleted = false;
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateLogisticAirfare"/> class.</summary>

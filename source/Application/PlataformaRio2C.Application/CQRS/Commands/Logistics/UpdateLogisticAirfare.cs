@@ -4,7 +4,7 @@
 // Created          : 01-27-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-13-2020
+// Last Modified On : 03-16-2020
 // ***********************************************************************
 // <copyright file="UpdateLogisticAirfare.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,19 +20,19 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>UpdateLogisticAirfare</summary>
     public class UpdateLogisticAirfare : CreateLogisticAirfare
     {
-        public Guid Uid { get; set; }
-
         /// <summary>Initializes a new instance of the <see cref="UpdateLogisticAirfare"/> class.</summary>
         /// <param name="logisticAirfareDto">The logistic airfare dto.</param>
         public UpdateLogisticAirfare(LogisticAirfareDto logisticAirfareDto)
         {
-            this.Uid = logisticAirfareDto?.LogisticAirfare?.Uid ?? Guid.Empty;
+            this.LogisticAirfareUid = logisticAirfareDto?.LogisticAirfare?.Uid ?? Guid.Empty;
             this.IsNational = logisticAirfareDto?.LogisticAirfare?.IsNational;
             this.IsArrival = logisticAirfareDto?.LogisticAirfare?.IsArrival;
             this.From = logisticAirfareDto?.LogisticAirfare?.From;
             this.To = logisticAirfareDto?.LogisticAirfare?.To;
             this.UpdateDate(logisticAirfareDto);
             this.TicketNumber = logisticAirfareDto?.LogisticAirfare?.TicketNumber;
+            this.TicketUploadDate = logisticAirfareDto?.LogisticAirfare?.TicketUploadDate;
+            this.IsTicketFileDeleted = false;
             this.AdditionalInfo = logisticAirfareDto?.LogisticAirfare?.AdditionalInfo;
         }
 

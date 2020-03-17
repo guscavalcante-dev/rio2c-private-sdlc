@@ -1,5 +1,8 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateLogisticAirfare
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Statics
+@model PlataformaRio2C.Application.CQRS.Commands.CreateLogisticAirfare
 @Html.HiddenFor(m => m.LogisticsUid)
+@Html.HiddenFor(m => m.IsTicketFileDeleted)
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.IsNational, new { @class = "control-label" })
@@ -60,14 +63,31 @@
         @Html.TextBoxFor(m => m.TicketNumber, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.TicketNumber, "", new { @class = "text-danger" })
     </div>
+</div>
+<div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.Ticket, new { @class = "control-label" })
-        <div></div>
-        <div class="custom-file">
-            <input type="file" class="custom-file-input" id="Ticket" name="Ticket">
-            <label class="custom-file-label" for="Ticket"></label>
+        @if (Model.TicketUploadDate.HasValue)
+        {
+        <div id="file-preview-container">
+            <div class="embed-responsive embed-responsive-16by9 d-flex">
+                @Html.Raw(FileHelper.GetFileUrl(FileRepositoryPathType.LogisticAirfareFile, Model.LogisticAirfareUid, Model.TicketUploadDate).ConvertPdfToEmbed())
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center mt-2">
+                    <button type="button" class="btn btn-primary" onclick="LogisticAirfareUpdate.changeFile();">@Labels.Alter</button>
+                </div>
+            </div>
         </div>
-        <span class="form-text text-muted">@Messages.FileMustBePdf</span>
+        }
+        <div id="file-container" class="@(Model.TicketUploadDate.HasValue ? "d-none" : string.Empty)">
+            <div></div>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="Ticket" name="Ticket">
+                <label class="custom-file-label" for="Ticket"></label>
+            </div>
+            <span class="form-text text-muted">@Messages.FileMustBePdf</span>
+        </div>
         @Html.ValidationMessageFor(m => m.Ticket, "", new { @class = "text-danger" })
     </div>
 </div>
