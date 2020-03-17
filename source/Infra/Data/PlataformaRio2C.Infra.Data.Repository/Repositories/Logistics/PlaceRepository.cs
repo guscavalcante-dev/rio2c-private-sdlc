@@ -162,6 +162,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        /// <summary>Finds the main information widget dto asynchronous.</summary>
+        /// <param name="placeUid">The place uid.</param>
+        /// <returns></returns>
+        public async Task<PlaceDto> FindMainInformationWidgetDtoAsync(Guid placeUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(placeUid)
+                                .Select(p => new PlaceDto
+                                {
+                                    Place = p
+                                });
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
+
         /// <summary>Finds all by data table.</summary>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>

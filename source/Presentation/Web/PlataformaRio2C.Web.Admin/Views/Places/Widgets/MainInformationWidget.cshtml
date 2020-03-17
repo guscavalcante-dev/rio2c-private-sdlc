@@ -1,0 +1,59 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Entities
+@model PlaceDto
+<div class="kt-portlet__body">
+    <div class="kt-widget kt-widget--user-profile-3">
+        <div class="kt-widget__top">
+            <div class="kt-widget__content pl-0" style="overflow: hidden;">
+                <div class="kt-widget__head">
+                    <span class="kt-widget__username">@(Model.Place.Name ?? "-")</span>
+                    <div class="kt-widget__action">
+                        <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="PlacesMainInformationWidget.showUpdateModal();">
+                            <i class="flaticon2-edit"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="kt-widget__subhead">
+                    @if (Model.Place.IsHotel)
+                    {
+                        <span class="kt-badge kt-badge--inline kt-badge--info">@Labels.Hotel</span>
+                    }
+                    else if (Model.Place.IsAirport)
+                    {
+                        <span class="kt-badge kt-badge--inline kt-badge--success">@Labels.Airport</span>
+                    }
+                    else
+                    {
+                        <span class="kt-badge kt-badge--inline kt-badge--dark">@Labels.Others</span>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="kt-widget__bottom">
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.Website</span>
+                    <span class="kt-widget__value"><span>@(Model.Place.Website ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.CreateDate</span>
+                    <span class="kt-widget__value"><span>@(Model.Place.CreateDate.ToUserTimeZone().ToShortDateString()) @(Model.Place.CreateDate.ToUserTimeZone().ToShortTimeString())</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.UpdateDate</span>
+                    <span class="kt-widget__value"><span>@(Model.Place.UpdateDate.ToUserTimeZone().ToShortDateString()) @(Model.Place.UpdateDate.ToUserTimeZone().ToShortTimeString())</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.AdditionalInfo</span>
+                    <span class="kt-widget__value"><span>@(Model.Place.AdditionalInfo?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, Language.Separator) ?? "-")</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

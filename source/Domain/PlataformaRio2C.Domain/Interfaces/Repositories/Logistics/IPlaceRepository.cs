@@ -26,6 +26,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface IPlaceRepository : IRepository<Place>
     {
         Task<PlaceDto> FindDtoAsync(Guid placeUid);
+        Task<PlaceDto> FindMainInformationWidgetDtoAsync(Guid placeUid);
         Task<IPagedList<PlaceJsonDto>> FindAllByDataTableAsync(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, int editionId, bool showAllEditions, int languageId);
         Task<int> CountAllByDataTableAsync(int editionId, bool showAllEditions);
     }    

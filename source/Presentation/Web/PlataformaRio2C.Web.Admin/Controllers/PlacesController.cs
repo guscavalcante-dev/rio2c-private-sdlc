@@ -40,20 +40,18 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     public class PlacesController : BaseController
     {
         private readonly IPlaceRepository placeRepo;
-        private readonly IPillarRepository pillarRepo;
-        private readonly ILanguageRepository languageRepo;
 
+        /// <summary>Initializes a new instance of the <see cref="PlacesController"/> class.</summary>
+        /// <param name="commandBus">The command bus.</param>
+        /// <param name="identityController">The identity controller.</param>
+        /// <param name="placeRepository">The place repository.</param>
         public PlacesController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
-            IPlaceRepository placeRepository,
-            IPillarRepository pillarRepo,
-            ILanguageRepository languageRepository)
+            IPlaceRepository placeRepository)
             : base(commandBus, identityController)
         {
             this.placeRepo = placeRepository;
-            this.pillarRepo = pillarRepo;
-            this.languageRepo = languageRepository;
         }
 
         #region List
@@ -223,56 +221,56 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #endregion
 
-        //#region Details
+        #region Details
 
-        ///// <summary>Detailses the specified identifier.</summary>
-        ///// <param name="id">The identifier.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> Details(Guid? id)
-        //{
-        //    var pillarDto = await this.pillarRepo.FindDtoAsync(id ?? Guid.Empty, this.EditionDto.Id);
-        //    if (pillarDto == null)
-        //    {
-        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Pillar, Labels.FoundF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("Index", "Rooms", new { Area = "" });
-        //    }
+        /// <summary>Detailses the specified identifier.</summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> Details(Guid? id)
+        {
+            var placeDto = await this.placeRepo.FindDtoAsync(id ?? Guid.Empty);
+            if (placeDto == null)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Place, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Places", new { Area = "" });
+            }
 
-        //    #region Breadcrumb
+            #region Breadcrumb
 
-        //    ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Conferences, new List<BreadcrumbItemHelper> {
-        //        new BreadcrumbItemHelper(Labels.Pillars, Url.Action("Index", "Pillars", new { Area = "" })),
-        //        new BreadcrumbItemHelper(pillarDto.Pillar?.GetNameByLanguageCode(ViewBag.UserInterfaceLanguage), Url.Action("Details", "Pillars", new { id }))
-        //    });
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Places, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Places, Url.Action("Index", "Places", new { Area = "" })),
+                new BreadcrumbItemHelper(placeDto.Place?.Name, Url.Action("Details", "Places", new { Area = "", id }))
+            });
 
-        //    #endregion
+            #endregion
 
-        //    return View(pillarDto);
-        //}
+            return View(placeDto);
+        }
 
-        //#region Main Information Widget
+        #region Main Information Widget
 
-        ///// <summary>Shows the main information widget.</summary>
-        ///// <param name="pillarUid">The pillar uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowMainInformationWidget(Guid? pillarUid)
-        //{
-        //    var mainInformationWidgetDto = await this.pillarRepo.FindDtoAsync(pillarUid ?? Guid.Empty, this.EditionDto.Id);
-        //    if (mainInformationWidgetDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Pillar, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
+        /// <summary>Shows the main information widget.</summary>
+        /// <param name="placeUid">The place uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowMainInformationWidget(Guid? placeUid)
+        {
+            var mainInformationWidgetDto = await this.placeRepo.FindMainInformationWidgetDtoAsync(placeUid ?? Guid.Empty);
+            if (mainInformationWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Place, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#PillarMainInformationWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#PlaceMainInformationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
         //#region Update
 
@@ -367,35 +365,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         //#endregion
 
-        //#endregion
+        #endregion
 
-        //#region Conferences Widget
-
-        ///// <summary>Shows the conferences widget.</summary>
-        ///// <param name="pillarUid">The pillar uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowConferencesWidget(Guid? pillarUid)
-        //{
-        //    var conferencesWidgetDto = await this.pillarRepo.FindConferenceWidgetDtoAsync(pillarUid ?? Guid.Empty, this.EditionDto.Id);
-        //    if (conferencesWidgetDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Room, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
-
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("~/Views/Conferences/Widgets/RelatedConferencesWidget.cshtml", conferencesWidgetDto.ConferenceDtos), divIdOrClass = "#PillarConferencesWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
-
-        //#endregion
-
-        //#endregion
+        #endregion
 
         #region Delete
 
