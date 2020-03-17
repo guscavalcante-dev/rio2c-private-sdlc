@@ -24,10 +24,11 @@ var PlacesCreate = function () {
     };
 
     // Show modal ---------------------------------------------------------------------------------
-    var showModal = function () {
+    var showModal = function (placeUid) {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
+        jsonParameters.placeUid = placeUid;
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Places/ShowCreateModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -79,8 +80,8 @@ var PlacesCreate = function () {
     };
 
     return {
-        showModal: function () {
-            showModal();
+        showModal: function (placeUid) {
+            showModal(placeUid);
         }
     };
 }();

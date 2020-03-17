@@ -30,6 +30,9 @@
     @Scripts.Render("~/bundles/js/places.delete.js")
     <script>
         // Page translations ----------------------------------------------------------------------
+        var addToEdition = '@string.Format(Labels.AddToEdition, ViewBag.EditionDto.UrlCode)';
+        var removeFromEdition = '@string.Format(Labels.RemoveFromEdition, ViewBag.EditionDto.UrlCode)';
+
         var translate = {
             hotel: '@Labels.Hotel',
             airport: '@Labels.Airport',

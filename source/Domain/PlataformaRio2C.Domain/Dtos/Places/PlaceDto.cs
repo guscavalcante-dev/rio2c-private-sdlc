@@ -24,5 +24,22 @@ namespace PlataformaRio2C.Domain.Dtos
         public PlaceDto()
         {
         }
+
+        /// <summary>Gets the type of the place.</summary>
+        /// <returns></returns>
+        public string GetPlaceType()
+        {
+            if (this.Place.IsHotel)
+            {
+                return "Hotel";
+            }
+
+            if (this.Place.IsAirport)
+            {
+                return "Airport";
+            }
+
+            return "Others";
+        }
     }
 }

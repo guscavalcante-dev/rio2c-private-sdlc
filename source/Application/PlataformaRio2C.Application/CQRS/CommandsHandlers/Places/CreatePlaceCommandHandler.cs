@@ -50,23 +50,62 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.Uow.BeginTransaction();
 
-            var placeUid = Guid.NewGuid();
+            Place place;
 
-            var place = new Place(
-                placeUid,
-                await this.editionRepo.GetAsync(cmd.EditionId ?? 0),
-                cmd.Name,
-                cmd.Type,
-                cmd.Website,
-                cmd.AdditionalInfo,
-                cmd.UserId);
-            if (!place.IsValid())
+            // New place
+            if (!cmd.PlaceUid.HasValue)
             {
-                this.AppValidationResult.Add(place.ValidationResult);
-                return this.AppValidationResult;
+                var placeUid = Guid.NewGuid();
+
+                place = new Place(
+                    placeUid,
+                    await this.editionRepo.GetAsync(cmd.EditionId ?? 0),
+                    cmd.Name,
+                    cmd.Type,
+                    cmd.Website,
+                    cmd.AdditionalInfo,
+                    cmd.UserId);
+
+                if (!place.IsValid())
+                {
+                    this.AppValidationResult.Add(place.ValidationResult);
+                    return this.AppValidationResult;
+                }
+
+                this.PlaceRepo.Create(place);
+            }
+            // Adding place to edition
+            else
+            {
+                place = await this.GetPlaceByUid(cmd.PlaceUid.Value);
+
+                #region Initial validations
+
+                if (!this.ValidationResult.IsValid)
+                {
+                    this.AppValidationResult.Add(this.ValidationResult);
+                    return this.AppValidationResult;
+                }
+
+                #endregion
+
+                place.Update(
+                    await this.editionRepo.GetAsync(cmd.EditionId ?? 0),
+                    cmd.Name,
+                    cmd.Type,
+                    cmd.Website,
+                    cmd.AdditionalInfo,
+                    cmd.UserId);
+
+                if (!place.IsValid())
+                {
+                    this.AppValidationResult.Add(place.ValidationResult);
+                    return this.AppValidationResult;
+                }
+
+                this.PlaceRepo.Update(place);
             }
 
-            this.PlaceRepo.Create(place);
             this.Uow.SaveChanges();
             this.AppValidationResult.Data = place;
 

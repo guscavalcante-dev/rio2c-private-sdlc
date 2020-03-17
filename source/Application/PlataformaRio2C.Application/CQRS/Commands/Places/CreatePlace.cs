@@ -11,7 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using System.ComponentModel.DataAnnotations;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
@@ -19,6 +21,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>CreatePlace</summary>
     public class CreatePlace : BaseCommand
     {
+        public Guid? PlaceUid { get; set; }
+
         [Display(Name = "Name", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
@@ -37,9 +41,18 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string AdditionalInfo { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CreatePlace"/> class.</summary>
+        public CreatePlace(PlaceDto placeDto)
+        {
+            this.PlaceUid = placeDto?.Place?.Uid;
+            this.Name = placeDto?.Place?.Name;
+            this.Type = placeDto?.GetPlaceType();
+            this.Website = placeDto?.Place?.Website;
+            this.AdditionalInfo = placeDto?.Place?.AdditionalInfo;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="CreatePlace"/> class.</summary>
         public CreatePlace()
         {
-            this.Type = null;
         }
     }
 }

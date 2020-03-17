@@ -146,6 +146,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
+        /// <summary>Finds the dto asynchronous.</summary>
+        /// <param name="placeUid">The place uid.</param>
+        /// <returns></returns>
+        public async Task<PlaceDto> FindDtoAsync(Guid placeUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(placeUid)
+                                .Select(p => new PlaceDto
+                                {
+                                    Place = p
+                                });
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
+
         /// <summary>Finds all by data table.</summary>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
@@ -155,7 +171,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="languageId">The language identifier.</param>
         /// <returns></returns>
-        public async Task<IPagedList<PlaceJsonDto>> FindAllByDataTable(
+        public async Task<IPagedList<PlaceJsonDto>> FindAllByDataTableAsync(
             int page,
             int pageSize,
             string keywords,
@@ -184,6 +200,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 Name = p.Name,
                                 IsHotel = p.IsHotel,
                                 IsAirport = p.IsAirport,
+                                IsInCurrentEdition = p.AttendeePlaces.Any(ap => ap.EditionId == editionId && !ap.IsDeleted && !ap.Edition.IsDeleted),
+                                IsInOtherEdition = p.AttendeePlaces.Any(ap => ap.EditionId != editionId && !ap.IsDeleted && !ap.Edition.IsDeleted),
                                 CreateDate = p.CreateDate,
                                 UpdateDate = p.UpdateDate
                             })
@@ -194,7 +212,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <returns></returns>
-        public async Task<int> CountAllByDataTable(int editionId, bool showAllEditions)
+        public async Task<int> CountAllByDataTableAsync(int editionId, bool showAllEditions)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId, showAllEditions);

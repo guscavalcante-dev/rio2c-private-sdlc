@@ -1,4 +1,5 @@
 ﻿@model PlataformaRio2C.Application.CQRS.Commands.CreatePlace
+@Html.HiddenFor(m => m.PlaceUid)
 <div class="row">
     <div class="form-group col-md-12">
         @Html.LabelFor(m => m.Name, new { @class = "control-label" })

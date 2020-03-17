@@ -64,21 +64,24 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Updates the type.</summary>
+        /// <summary>Updates the specified edition.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="name">The name.</param>
         /// <param name="type">The type.</param>
-        private void UpdateType(string type)
+        /// <param name="website">The website.</param>
+        /// <param name="additionalInfo">The additional information.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(Edition edition, string name, string type, string website, string additionalInfo, int userId)
         {
-            this.IsHotel = false;
-            this.IsAirport = false;
+            this.Name = name?.Trim();
+            this.Website = website?.Trim();
+            this.AdditionalInfo = additionalInfo;
+            this.UpdateType(type);
+            this.SynchronizeAttendeePlaces(edition, userId);
 
-            if (type == "Hotel")
-            {
-                this.IsHotel = true;
-            }
-            else if (type == "Airport")
-            {
-                this.IsAirport = true;
-            }
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
         }
 
         /// <summary>Deletes the specified edition.</summary>
@@ -88,7 +91,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.DeleteAttendeePlaces(edition, userId);
 
-            if (this.FindAllAttendeePlacesNotDeleted(edition)?.Any() == false)
+            if (this.FindAllAttendeePlacesNotDeleted(null)?.Any() == false)
             {
                 this.IsDeleted = true;
             }
@@ -151,6 +154,27 @@ namespace PlataformaRio2C.Domain.Entities
         private List<AttendeePlace> FindAllAttendeePlacesNotDeleted(Edition edition)
         {
             return this.AttendeePlaces?.Where(ap => (edition == null || ap.EditionId == edition.Id) && !ap.IsDeleted)?.ToList();
+        }
+
+        #endregion
+
+        #region Type
+
+        /// <summary>Updates the type.</summary>
+        /// <param name="type">The type.</param>
+        private void UpdateType(string type)
+        {
+            this.IsHotel = false;
+            this.IsAirport = false;
+
+            if (type == "Hotel")
+            {
+                this.IsHotel = true;
+            }
+            else if (type == "Airport")
+            {
+                this.IsAirport = true;
+            }
         }
 
         #endregion

@@ -84,7 +84,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Search(IDataTablesRequest request, bool? showAllEditions = false)
         {
-            var places = await this.placeRepo.FindAllByDataTable(
+            var places = await this.placeRepo.FindAllByDataTableAsync(
                 request.Start / request.Length,
                 request.Length,
                 request.Search?.Value,
@@ -114,7 +114,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowTotalCountWidget()
         {
-            var placesCount = await this.placeRepo.CountAllByDataTable(this.EditionDto.Id, true);
+            var placesCount = await this.placeRepo.CountAllByDataTableAsync(this.EditionDto.Id, true);
 
             return Json(new
             {
@@ -134,7 +134,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <returns></returns>
         public async Task<ActionResult> ShowEditionCountWidget()
         {
-            var placesCount = await this.placeRepo.CountAllByDataTable(this.EditionDto.Id, false);
+            var placesCount = await this.placeRepo.CountAllByDataTableAsync(this.EditionDto.Id, false);
 
             return Json(new
             {
@@ -153,9 +153,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <summary>Shows the create modal.</summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowCreateModal()
+        public async Task<ActionResult> ShowCreateModal(Guid? placeUid)
         {
-            var cmd = new CreatePlace();
+            var cmd = new CreatePlace(placeUid.HasValue ? await this.placeRepo.FindDtoAsync(placeUid.Value) : null);
 
             return Json(new
             {

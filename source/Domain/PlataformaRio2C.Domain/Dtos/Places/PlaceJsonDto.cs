@@ -23,6 +23,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public string Name { get; set; }
         public bool IsHotel { get; set; }
         public bool IsAirport { get; set; }
+        public bool IsInCurrentEdition { get; set; }
+        public bool IsInOtherEdition { get; set; }
         public DateTimeOffset CreateDate { get; set; }
         public DateTimeOffset UpdateDate { get; set; }
 
