@@ -4,7 +4,7 @@
 // Created          : 01-24-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-11-2020
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="AttendeePlaces.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

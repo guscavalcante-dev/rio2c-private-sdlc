@@ -3,8 +3,8 @@
 // Author           : Arthur Souza
 // Created          : 01-20-2020
 //
-// Last Modified By : Arthur Souza
-// Last Modified On : 01-20-2020
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="AttendeePlacesMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,6 +23,15 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         public AttendeePlacesMap()
         {
             this.ToTable("AttendeePlaces");
+
+            // Relationships
+            this.HasRequired(t => t.Edition)
+                .WithMany()
+                .HasForeignKey(d => d.EditionId);
+
+            this.HasRequired(t => t.Place)
+                .WithMany(e => e.AttendeePlaces)
+                .HasForeignKey(d => d.PlaceId);
         }
     }
 }

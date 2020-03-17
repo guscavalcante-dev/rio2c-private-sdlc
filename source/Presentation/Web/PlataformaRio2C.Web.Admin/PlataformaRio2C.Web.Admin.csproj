@@ -359,6 +359,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CompaniesController.cs" />
     <Compile Include="Controllers\LogisticsController.cs" />
+    <Compile Include="Controllers\PlacesController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\PresentationFormatsController.cs" />
     <Compile Include="Controllers\ParticipantRolesController.cs" />
@@ -476,6 +477,9 @@
     <Content Include="Assets\js\music\projects\music.projects.totalcount.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.videoandmusic.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.delete.js" />
+    <Content Include="Assets\js\places\places.editioncount.widget.js" />
+    <Content Include="Assets\js\places\places.totalcount.widget.js" />
+    <Content Include="Assets\js\places\places.datatable.widget.js" />
     <Content Include="Assets\js\reports\reports.audiovisual.subscriptions.widget.js" />
     <Content Include="Assets\js\rooms\rooms.conferences.widget.js" />
     <Content Include="Assets\js\rooms\rooms.maininformation.widget.js" />
@@ -8474,17 +8478,6 @@
     <Content Include="Views\Reports\Audiovisual\AudiovisualSubscriptions.cshtml" />
     <Content Include="Views\Reports\Audiovisual\Widgets\AudiovisualSubscriptionsWidget.cshtml" />
     <Content Include="Views\Speakers\Modals\UpdateSocialNetworksModal.cshtml" />
-    <Content Include="Views\Pillars\Details.cshtml" />
-    <Content Include="Views\Pillars\EditorTemplates\PillarNameBaseCommand.cshtml" />
-    <Content Include="Views\Pillars\Index.cshtml" />
-    <Content Include="Views\Pillars\Modals\_CreateForm.cshtml" />
-    <Content Include="Views\Pillars\Modals\CreateModal.cshtml" />
-    <Content Include="Views\Pillars\Modals\UpdateMainInformationForm.cshtml" />
-    <Content Include="Views\Pillars\Modals\UpdateMainInformationModal.cshtml" />
-    <Content Include="Views\Pillars\Widgets\DataTableWidget.cshtml" />
-    <Content Include="Views\Pillars\Widgets\EditionCountWidget.cshtml" />
-    <Content Include="Views\Pillars\Widgets\MainInformationWidget.cshtml" />
-    <Content Include="Views\Pillars\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Views\Projects\Pitchings.cshtml" />
     <Content Include="Views\Projects\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Views\Projects\Widgets\PitchingDataTableWidget.cshtml" />
@@ -8505,6 +8498,10 @@
     <Content Include="Views\Logistics\Modals\UpdateTransferModal.cshtml" />
     <Content Include="Views\Logistics\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Views\Logistics\Modals\UpdateMainInformationForm.cshtml" />
+    <Content Include="Views\Places\Index.cshtml" />
+    <Content Include="Views\Places\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Views\Places\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Views\Places\Widgets\TotalCountWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

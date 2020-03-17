@@ -198,7 +198,7 @@
     }
     @if (isAdminFull || isAdminAudiovisual || isAdminLogistic || isCuratorshipAudiovisual)
     {
-        <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel  @this.IsOpen(menuOpenCssClass, "Index", "Logistics", null)"  data-ktmenu-submenu-toggle="click" aria-haspopup="true">
+        <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel  @this.IsOpen(menuOpenCssClass, null, "Logistics,LogisticSponsors,Places", null)"  data-ktmenu-submenu-toggle="click" aria-haspopup="true">
             <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">@Labels.Logistics</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
             <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
                 <ul class="kt-menu__subnav">
@@ -209,6 +209,9 @@
                     {
                         <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "LogisticSponsors", null)" aria-haspopup="true">
                             <a href="@Url.Action("Index", "LogisticSponsors", new { Area = "" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Sponsors</span></a>
+                        </li>
+                        <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Places", null)" aria-haspopup="true">
+                            <a href="@Url.Action("Index", "Places", new { Area = "" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Places</span></a>
                         </li>
                     }
                 </ul>

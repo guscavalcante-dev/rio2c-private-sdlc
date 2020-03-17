@@ -4,7 +4,7 @@
 // Created          : 01-05-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-16-2020
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="rooms.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -133,7 +133,6 @@ var RoomsDataTableWidget = function () {
                 {
                     data: 'CreateDate',
                     render: function (data) {
-                        console.log(data);
                         return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
                 },

@@ -2429,4 +2429,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Sendo executado</value>
     <comment>Sendo executado</comment>
   </data>
+  <data name="Places" xml:space="preserve">
+    <value>Locais</value>
+    <comment>Locais</comment>
+  </data>
+  <data name="Airport" xml:space="preserve">
+    <value>Aeroporto</value>
+    <comment>Aeroporto</comment>
+  </data>
 </root>

@@ -1,21 +1,21 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Rafael Dantas Ruiz
-// Created          : 01-06-2020
+// Created          : 03-17-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-17-2020
 // ***********************************************************************
-// <copyright file="pillars.datatable.widget.js" company="Softo">
+// <copyright file="places.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var PillarsDataTableWidget = function () {
+var PlacesDataTableWidget = function () {
 
-    var widgetElementId = '#PillarsDataTableWidget';
-    var tableElementId = '#pillars-list-table';
+    var widgetElementId = '#PlacesDataTableWidget';
+    var tableElementId = '#places-list-table';
     var table;
 
     // Init datatable -----------------------------------------------------------------------------
@@ -54,46 +54,19 @@ var PillarsDataTableWidget = function () {
             pageLength: pageLength,
             responsive: true,
             sScrollY: "520",
-            //bScrollCollapse: false,
             searchDelay: 2000,
             processing: true,
             serverSide: true,
             buttons: [],
-            //buttons: [
-            //{
-            //    extend: 'collection',
-            //    text: labels.actions,
-            //    buttons: [
-            //        {
-            //            text: sendInvitationEmail,
-            //            action: function (e, dt, node, config) {
-            //                showSendInvitationEmailsModal();
-            //            }
-            //        },
-            //        {
-            //            text: exportToEventbrite,
-            //            action: function (e, dt, node, config) {
-            //                eventbriteCsvExport = dt.ajax.params();
-            //                eventbriteCsvExport.selectedCollaboratorsUids = $('#conferences-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
-            //                eventbriteCsvExport.showAllEditions = $('#ShowAllEditions').prop('checked');
-            //                eventbriteCsvExport.showAllParticipants = $('#ShowAllParticipants').prop('checked');
-            //                eventbriteCsvExport.showHighlights = $('#ShowHighlights').prop('checked');
-
-            //                showExportEventbriteCsvModal();
-            //            }
-            //        }]
-            //}],
             order: [[2, "asc"]],
             sDom: '<"row"<"col-sm-6"l><"col-sm-6 text-right"B>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
             oSearch: {
                 sSearch: $('#Search').val()
             },
             ajax: {
-                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Pillars/Search'),
+                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Places/Search'),
                 data: function (d) {
-                    //d.showAllEditions = $('#ShowAllEditions').prop('checked');
-                    //d.showAllParticipants = $('#ShowAllParticipants').prop('checked');
-                    //d.showHighlights = $('#ShowHighlights').prop('checked');
+                    d.showAllEditions = $('#ShowAllEditions').prop('checked');
                 },
                 dataFilter: function (data) {
                     var jsonReturned = jQuery.parseJSON(data);
@@ -131,10 +104,18 @@ var PillarsDataTableWidget = function () {
                     data: 'Name'
                 },
                 {
-                    data: 'Color',
+                    data: 'Type',
                     render: function (data, type, full, meta) {
-                        var html = '<span class="kt-badge kt-badge--inline mt-1" style="color: #ffffff; background: ' + data + '">' + data + '</span>';
-                                
+	                    var html = '';
+                        if (full.IsHotel) {
+                            html += '<span class="kt-badge kt-badge--inline kt-badge--info">' + translate.hotel + '</span>';
+                        }
+                        else if (full.IsAirport) {
+                            html += '<span class="kt-badge kt-badge--inline kt-badge--success">' + translate.airport + '</span>';
+                        }
+                        else {
+                            html += '<span class="kt-badge kt-badge--inline kt-badge--dark">' + translate.others + '</span>';
+                        }       
                         return html;
                     }
                 },
@@ -161,8 +142,8 @@ var PillarsDataTableWidget = function () {
                                             </a>\
                                             <div class="dropdown-menu dropdown-menu-right">';
 
-                        html += '               <button class="dropdown-item" onclick="PillarsDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-edit"></i> ' + labels.edit + '</button>';
-                        html += '               <button class="dropdown-item" onclick="PillarsDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+                        html += '               <button class="dropdown-item" onclick="PlacesDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-edit"></i> ' + labels.edit + '</button>';
+                        html += '               <button class="dropdown-item" onclick="PlacesDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
 
                         html += '\
                                             </div>\
@@ -175,8 +156,7 @@ var PillarsDataTableWidget = function () {
             columnDefs: [
                 {
                     targets: [0],
-                    width: "50%",
-                    orderable: false
+                    width: "50%"
                 },
                 {
                     targets: [1],
@@ -222,7 +202,7 @@ var PillarsDataTableWidget = function () {
             return;
         }
 
-        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Pillars/Details/' + collaboratorUid);
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Places/Details/' + collaboratorUid);
     };
 
     return {

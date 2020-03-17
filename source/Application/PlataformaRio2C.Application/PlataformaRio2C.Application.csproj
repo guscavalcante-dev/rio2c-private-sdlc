@@ -662,6 +662,7 @@
     <Compile Include="ViewModels\Common\Speaker\SpeakerItemListAppViewModel.cs" />
     <Compile Include="ViewModels\Conferences\ConferenceSearchViewModel.cs" />
     <Compile Include="ViewModels\ConferenceParticipantRoles\ConferenceParticipantRoleSearchViewModel.cs" />
+    <Compile Include="ViewModels\Places\PlaceSearchViewModel.cs" />
     <Compile Include="ViewModels\Rooms\RoomSearchViewModel.cs" />
     <Compile Include="ViewModels\Editions\EditionEventSearchViewModel.cs" />
     <Compile Include="ViewModels\Site\Conference\ConferenceDetailAppViewModel.cs" />

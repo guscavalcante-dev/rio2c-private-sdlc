@@ -2426,4 +2426,12 @@
     <value>Being processed</value>
     <comment>Sendo executado</comment>
   </data>
+  <data name="Places" xml:space="preserve">
+    <value>Places</value>
+    <comment>Locais</comment>
+  </data>
+  <data name="Airport" xml:space="preserve">
+    <value>Airport</value>
+    <comment>Aeroporto</comment>
+  </data>
 </root>

@@ -4,13 +4,14 @@
 // Created          : 01-24-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-11-2020
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="Place.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System.Collections.Generic;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
@@ -31,6 +32,8 @@ namespace PlataformaRio2C.Domain.Entities
         public string AdditionalInfo { get; private set; }
         
         public virtual Address Address { get; private set; }
+
+        public virtual ICollection<AttendeePlace> AttendeePlaces { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Place"/> class.</summary>
         protected Place()

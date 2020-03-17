@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-13-2020
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -721,6 +721,28 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/logistics/logistics.transfer.delete.js"));
 
             #endregion
+
+            #region Places
+
+            bundles.Add(new ScriptBundle("~/bundles/js/places.list.js").Include(
+                "~/Assets/js/places/places.totalcount.widget.js",
+                "~/Assets/js/places/places.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/places.editioncount.js").Include(
+                "~/Assets/js/places/places.editioncount.widget.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/pillars.create.js").Include(
+            //    "~/Assets/js/pillars/pillars.create.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/pillars.details.js").Include(
+            //    "~/Assets/js/pillars/pillars.maininformation.widget.js",
+            //    "~/Assets/js/pillars/pillars.conferences.widget.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/js/pillars.delete.js").Include(
+            //    "~/Assets/js/pillars/pillars.delete.js"));
+
+            #endregion
+
 
             #region Scripts
 
