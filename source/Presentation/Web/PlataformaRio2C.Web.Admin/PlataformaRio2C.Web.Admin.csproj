@@ -477,6 +477,7 @@
     <Content Include="Assets\js\music\projects\music.projects.totalcount.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.videoandmusic.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.delete.js" />
+    <Content Include="Assets\js\places\places.create.js" />
     <Content Include="Assets\js\places\places.editioncount.widget.js" />
     <Content Include="Assets\js\places\places.totalcount.widget.js" />
     <Content Include="Assets\js\places\places.datatable.widget.js" />
@@ -8502,6 +8503,8 @@
     <Content Include="Views\Places\Widgets\DataTableWidget.cshtml" />
     <Content Include="Views\Places\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Views\Places\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Views\Places\Modals\CreateModal.cshtml" />
+    <Content Include="Views\Places\Modals\CreateForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

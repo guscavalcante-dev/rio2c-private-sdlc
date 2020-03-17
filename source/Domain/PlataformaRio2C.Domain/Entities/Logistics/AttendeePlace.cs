@@ -11,6 +11,7 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using PlataformaRio2C.Domain.Validation;
 
 namespace PlataformaRio2C.Domain.Entities
@@ -25,8 +26,50 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual Place Place { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeePlace"/> class.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="place">The place.</param>
+        /// <param name="userId">The user identifier.</param>
+        public AttendeePlace(Edition edition, Place place, int userId)
+        {
+            this.Edition = edition;
+            this.Place = place;
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="AttendeePlace"/> class.</summary>
         protected AttendeePlace()
         {
+        }
+
+        /// <summary>Updates the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(int userId)
+        {
+            if (!this.IsDeleted)
+            {
+                return;
+            }
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Deletes the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(int userId)
+        {
+            if (this.IsDeleted)
+            {
+                return;
+            }
+
+            this.IsDeleted = true;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
         }
 
         #region Validations

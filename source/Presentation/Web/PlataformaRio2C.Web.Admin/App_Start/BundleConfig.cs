@@ -731,8 +731,8 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/places.editioncount.js").Include(
                 "~/Assets/js/places/places.editioncount.widget.js"));
 
-            //bundles.Add(new ScriptBundle("~/bundles/js/pillars.create.js").Include(
-            //    "~/Assets/js/pillars/pillars.create.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/places.create.js").Include(
+                "~/Assets/js/places/places.create.js"));
 
             //bundles.Add(new ScriptBundle("~/bundles/js/pillars.details.js").Include(
             //    "~/Assets/js/pillars/pillars.maininformation.widget.js",

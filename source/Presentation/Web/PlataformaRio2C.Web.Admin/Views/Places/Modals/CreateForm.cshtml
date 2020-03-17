@@ -1,0 +1,42 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.CreatePlace
+<div class="row">
+    <div class="form-group col-md-12">
+        @Html.LabelFor(m => m.Name, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-12">
+        @Html.LabelFor(m => m.Type, new { @class = "control-label" })
+        <div class="kt-radio-inline">
+            <label class="kt-radio">
+                @Html.RadioButtonFor(m => m.Type, "Hotel") @Labels.Hotel
+                <span></span>
+            </label>
+            <label class="kt-radio">
+                @Html.RadioButtonFor(m => m.Type, "Airport") @Labels.Airport
+                <span></span>
+            </label>
+            <label class="kt-radio">
+                @Html.RadioButtonFor(m => m.Type, "Others") @Labels.Others
+                <span></span>
+            </label>
+        </div>
+        @Html.ValidationMessageFor(m => m.Type, "", new { @class = "text-danger", })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-12">
+        @Html.LabelFor(m => m.Website, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Website, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Website, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-12">
+        @Html.LabelFor(m => m.AdditionalInfo, new { @class = "control-label" })
+        @Html.TextAreaFor(m => m.AdditionalInfo, new { @class = "form-control", rows = 8 })
+        @Html.ValidationMessageFor(m => m.AdditionalInfo, "", new { @class = "text-danger" })
+    </div>
+</div>

@@ -272,6 +272,8 @@
     <Compile Include="CQRS\CommandsHandlers\Organizations\UpdateOrganizationMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\UpdateOrganizationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\CreateOrganizationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Places\CreatePlaceCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Places\PlaceBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Projects\RefuseProjectEvaluationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Projects\BaseProjectCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Projects\AcceptProjectEvaluationCommandHandler.cs" />
@@ -336,6 +338,7 @@
     <Compile Include="CQRS\Commands\Music\Projects\DeleteMusicProject.cs" />
     <Compile Include="CQRS\Commands\Music\Projects\RefuseMusicProjectEvaluation.cs" />
     <Compile Include="CQRS\Commands\Organizations\UpdateOrganizationSocialNetworks.cs" />
+    <Compile Include="CQRS\Commands\Places\CreatePlace.cs" />
     <Compile Include="CQRS\Commands\Rooms\DeleteRoom.cs" />
     <Compile Include="CQRS\CommandsHandlers\Rooms\RoomBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Rooms\CreateRoomCommandHandler.cs" />
