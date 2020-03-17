@@ -1,5 +1,7 @@
-﻿@using PlataformaRio2C.Domain.Constants
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Constants
 @using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Statics
 @model List<LogisticAirfareJsonDto>
 @{
     var adminAccessControlDto = ViewBag.AdminAccessControlDto as AdminAccessControlDto;
@@ -70,6 +72,12 @@
                                                 </td>
                                                 <td class="text-center">
                                                     @logisticAirfareJsonDto.TicketNumber
+                                                    @if (logisticAirfareJsonDto.TicketUploadDate.HasValue)
+                                                    {
+                                                        <a href="@FileHelper.GetFileUrl(FileRepositoryPathType.LogisticAirfareFile, logisticAirfareJsonDto.Uid, logisticAirfareJsonDto.TicketUploadDate)" target="_blank">
+                                                            <i class="flaticon-attachment"></i>
+                                                        </a>
+                                                    }
                                                 </td>
                                                 @*<td class="text-center">
                                                     </td>*@

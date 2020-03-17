@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-13-2020
+// Last Modified On : 03-16-2020
 // ***********************************************************************
 // <copyright file="LogisticAirfare.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -50,6 +50,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="additionalInfo">The additional information.</param>
         /// <param name="stringDepartureDate">The string departure date.</param>
         /// <param name="stringArrivalDate">The string arrival date.</param>
+        /// <param name="isTicketUploaded">if set to <c>true</c> [is ticket uploaded].</param>
         /// <param name="userId">The user identifier.</param>
         public LogisticAirfare(
             Logistic logistic, 
@@ -60,7 +61,8 @@ namespace PlataformaRio2C.Domain.Entities
             string ticketNumber, 
             string additionalInfo, 
             string stringDepartureDate, 
-            string stringArrivalDate, 
+            string stringArrivalDate,
+            bool isTicketUploaded,
             int userId)
         {
             this.Logistic = logistic;
@@ -72,6 +74,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateArrivalDate(stringArrivalDate);
 
             this.TicketNumber = ticketNumber?.Trim();
+            this.UpdateTicketUploadDate(isTicketUploaded, false);
             this.AdditionalInfo = additionalInfo?.Trim();
 
             this.IsDeleted = false;
@@ -93,6 +96,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="additionalInfo">The additional information.</param>
         /// <param name="stringDepartureDate">The string departure date.</param>
         /// <param name="stringArrivalDate">The string arrival date.</param>
+        /// <param name="isTicketUploaded">if set to <c>true</c> [is ticket uploaded].</param>
         /// <param name="userId">The user identifier.</param>
         public void Update(
             bool? isNational, 
@@ -103,6 +107,7 @@ namespace PlataformaRio2C.Domain.Entities
             string additionalInfo,
             string stringDepartureDate,
             string stringArrivalDate,
+            bool isTicketUploaded,
             int userId)
         {
             this.IsNational = isNational ?? false;
@@ -113,6 +118,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateArrivalDate(stringArrivalDate);
 
             this.TicketNumber = ticketNumber?.Trim();
+            this.UpdateTicketUploadDate(isTicketUploaded, false);
             this.AdditionalInfo = additionalInfo?.Trim();
 
             this.IsDeleted = false;
@@ -171,6 +177,21 @@ namespace PlataformaRio2C.Domain.Entities
             }
 
             this.ArrivalDate = arrivalDate.Value.ToUtcTimeZone();
+        }
+
+        /// <summary>Updates the ticket upload date.</summary>
+        /// <param name="isTicketUploaded">if set to <c>true</c> [is ticket uploaded].</param>
+        /// <param name="isTicketDeleted">if set to <c>true</c> [is ticket deleted].</param>
+        private void UpdateTicketUploadDate(bool isTicketUploaded, bool isTicketDeleted)
+        {
+            if (isTicketUploaded)
+            {
+                this.TicketUploadDate = DateTime.UtcNow;
+            }
+            else if (isTicketDeleted)
+            {
+                this.TicketUploadDate = null;
+            }
         }
 
         #endregion

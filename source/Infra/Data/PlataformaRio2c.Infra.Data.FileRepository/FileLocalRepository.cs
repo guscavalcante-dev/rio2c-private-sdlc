@@ -4,7 +4,7 @@
 // Created          : 08-15-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 03-16-2020
 // ***********************************************************************
 // <copyright file="FileLocalRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,6 +25,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
         private readonly string imagesHoldingsDirectory;
         private readonly string imagesOrganizationsDirectory;
         private readonly string imagesUsersDirectory;
+        private readonly string filesLogisticsAirfareDirectory;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FileLocalRepository"/> class.
@@ -35,6 +36,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
             this.imagesHoldingsDirectory = ConfigurationManager.AppSettings["LocalImagesHoldingsDirectory"];
             this.imagesOrganizationsDirectory = ConfigurationManager.AppSettings["LocalImagesOrganizationsDirectory"];
             this.imagesUsersDirectory = ConfigurationManager.AppSettings["LocalImagesUsersDirectory"];
+            this.filesLogisticsAirfareDirectory = ConfigurationManager.AppSettings["LocalFilesLogisticsAirfareDirectory"];
         }
 
         #region Get Url
@@ -54,6 +56,22 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
             }
 
             return this.GetUrl(fileRepositoryPathType, imageUid.Value) + (isThumbnail ? $"_thumbnail{additionalFileInfo}.png" : $"_original{additionalFileInfo}.png") + $"?v={imageUploadDate.Value.ToString("yyyyMMddHHmmss")}";
+        }
+
+        /// <summary>Gets the file URL.</summary>
+        /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
+        /// <param name="objectUid">The object uid.</param>
+        /// <param name="uploadDate">The upload date.</param>
+        /// <param name="additionalFileInfo">The additional file information.</param>
+        /// <returns></returns>
+        public string GetFileUrl(FileRepositoryPathType fileRepositoryPathType, Guid? objectUid, DateTimeOffset? uploadDate, string additionalFileInfo = null)
+        {
+            if (!uploadDate.HasValue || !objectUid.HasValue)
+            {
+                return string.Empty;
+            }
+
+            return this.GetUrl(fileRepositoryPathType, objectUid.Value) + $"{additionalFileInfo}.png" + $"?v={uploadDate.Value.ToString("yyyyMMddHHmmss")}";
         }
 
         /// <summary>Gets the URL.</summary>
@@ -147,6 +165,11 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
             if (fileRepositoryPathType.Uid == FileRepositoryPathType.UserImage.Uid)
             {
                 return string.Format(this.imagesUsersDirectory, args);
+            }
+
+            if (fileRepositoryPathType.Uid == FileRepositoryPathType.LogisticAirfareFile.Uid)
+            {
+                return string.Format(this.filesLogisticsAirfareDirectory, args);
             }
 
             return string.Empty;

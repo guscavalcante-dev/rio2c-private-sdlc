@@ -16,6 +16,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Web;
 using Foolproof;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -61,7 +62,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string AdditionalInfo { get; set; }
 
         [Display(Name = "AirfareTicket", ResourceType = typeof(Labels))]
-        public HttpPostedFile Ticket { get; set; }
+        [HttpPostedFileExtensions(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "InvalidPdf", Extensions = "pdf")]
+        public HttpPostedFileBase Ticket { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CreateLogisticSponsors"/> class.</summary>
         public CreateLogisticAirfare(Guid logisticsUid)

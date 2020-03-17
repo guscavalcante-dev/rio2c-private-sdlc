@@ -926,4 +926,12 @@
     <value>Calendar processing since &lt;b&gt;{0}&lt;/b&gt;.</value>
     <comment>Agenda processando desde &lt;b&gt;{0}&lt;/b&gt;.</comment>
   </data>
+  <data name="FileMustBePdf" xml:space="preserve">
+    <value>The file type must be a pdf.</value>
+    <comment>O arquivo deve ser do tipo pdf.</comment>
+  </data>
+  <data name="InvalidPdf" xml:space="preserve">
+    <value>The file format must be pdf.</value>
+    <comment>O arquivo deve estar no formato pdf.</comment>
+  </data>
 </root>

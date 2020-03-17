@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-21-2019
+// Last Modified On : 03-16-2020
 // ***********************************************************************
 // <copyright file="collaborators.update.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,17 +17,13 @@ var LogisticAirfareUpdate = function () {
     var modalId = '#UpdateLogisticAirfareModal';
     var formId = '#UpdateLogisticAirfareForm';
 
-    // Enable form validation ---------------------------------------------------------------------
-    var enableFormValidation = function () {
-        MyRio2cCommon.enableFormValidation({ formIdOrClass: formId, enableHiddenInputsValidation: true, enableMaxlength: true });
-    };
-
     // Enable plugins -----------------------------------------------------------------------------
     var enablePlugins = function () {
 	    MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2', allowClear: true });
-	    MyRio2cCommon.enableDateTimePicker({ inputIdOrClass: formId + ' .enable-datetimepicker', allowClear: true });
+        MyRio2cCommon.enableDateTimePicker({ inputIdOrClass: formId + ' .enable-datetimepicker', allowClear: true });
+        MyRio2cCommon.enableCustomFile();
         enableAjaxForm();
-        enableFormValidation();
+        MyRio2cCommon.enableFormValidation({ formIdOrClass: formId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
 
     // Show modal ---------------------------------------------------------------------------------

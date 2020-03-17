@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-13-2020
+// Last Modified On : 03-16-2020
 // ***********************************************************************
 // <copyright file="UpdateLogisticAirfareCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,8 +14,10 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -23,21 +25,21 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>UpdateLogisticAirfareCommandHandler</summary>
     public class UpdateLogisticAirfareCommandHandler : LogisticAirfareBaseCommandHandler, IRequestHandler<UpdateLogisticAirfare, AppValidationResult>
     {
-        private readonly ILogisticRepository logisticRepo;
+        private readonly IFileRepository fileRepo;
 
         /// <summary>Initializes a new instance of the <see cref="UpdateLogisticAirfareCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
-        /// <param name="logisticRepository">The logistic repository.</param>
         /// <param name="logisticsAirfareRepository">The logistics airfare repository.</param>
+        /// <param name="fileRepository">The file repository.</param>
         public UpdateLogisticAirfareCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            ILogisticRepository logisticRepository,
-            ILogisticAirfareRepository logisticsAirfareRepository) 
+            ILogisticAirfareRepository logisticsAirfareRepository,
+            IFileRepository fileRepository) 
             : base(eventBus, uow, logisticsAirfareRepository)
         {
-            this.logisticRepo = logisticRepository;
+            this.fileRepo = fileRepository;
         }
 
         /// <summary>Handles the specified create track.</summary>
@@ -69,6 +71,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.AdditionalInfo,
                 cmd.Departure,
                 cmd.Arrival,
+                cmd.Ticket != null,
                 cmd.UserId);
 
             if (!logisticAirfare.IsValid())
@@ -80,6 +83,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.LogisticAirfareRepo.Update(logisticAirfare);
             this.Uow.SaveChanges();
             this.AppValidationResult.Data = logisticAirfare;
+
+            if (cmd.Ticket != null)
+            {
+                fileRepo.Upload(
+                    cmd.Ticket.InputStream, 
+                    cmd.Ticket.ContentType,
+                    logisticAirfare.Uid + ".pdf",
+                    FileRepositoryPathType.LogisticAirfareFile);
+            }
 
             return this.AppValidationResult;
         }

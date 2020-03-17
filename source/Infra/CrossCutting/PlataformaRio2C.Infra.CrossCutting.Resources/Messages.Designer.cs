@@ -717,6 +717,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O arquivo deve ser do tipo pdf..
+        /// </summary>
+        public static string FileMustBePdf {
+            get {
+                return ResourceManager.GetString("FileMustBePdf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Plano de financiamento &lt;small&gt;(apenas projetos em desenvolvimento/produção)&lt;/small&gt;.
         /// </summary>
         public static string FundingPlan {
@@ -857,6 +866,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string InvalidLoginOrPassword {
             get {
                 return ResourceManager.GetString("InvalidLoginOrPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O arquivo deve estar no formato pdf..
+        /// </summary>
+        public static string InvalidPdf {
+            get {
+                return ResourceManager.GetString("InvalidPdf", resourceCulture);
             }
         }
         

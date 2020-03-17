@@ -36,6 +36,11 @@
     @Styles.Render("~/bundles/css/select2.css")
     @Styles.Render("~/bundles/css/bootstrap-datepicker.css")
     @Styles.Render("~/bundles/css/bootstrap-datetimepicker.css")
+    <style type="text/css">
+        .custom-file-input ~ .custom-file-label::after {
+            content: "@Labels.Choose";
+        }
+    </style>
 }
 @section Scripts {
     @Scripts.Render("~/bundles/js/select2.js")

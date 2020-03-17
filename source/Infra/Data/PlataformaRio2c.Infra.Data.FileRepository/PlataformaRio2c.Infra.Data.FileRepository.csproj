@@ -83,6 +83,7 @@
   <ItemGroup>
     <Compile Include="FileAwsRepository.cs" />
     <Compile Include="FileLocalRepository.cs" />
+    <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="IFileRepository.cs" />
     <Compile Include="FileRepositoryFactory.cs" />

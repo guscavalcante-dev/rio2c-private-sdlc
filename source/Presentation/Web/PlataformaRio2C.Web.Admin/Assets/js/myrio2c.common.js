@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-13-2020
+// Last Modified On : 03-16-2020
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -782,6 +782,23 @@ var MyRio2cCommon = function () {
             letterCase: 'uppercase',
             theme: 'bootstrap'
         });
+    };
+
+    var enableCustomFile = function (options) {
+	    if (isNullOrEmpty(options)) {
+		    options = new Object();
+        }
+
+	    // Id or class
+	    if (!hasProperty(options, 'inputIdOrClass') || isNullOrEmpty(options.inputIdOrClass)) {
+            options.inputIdOrClass = '.custom-file-input';
+	    }
+
+        $(options.inputIdOrClass).not('.change-event-enabled').on("change", function () {
+		    var fileName = $(this).val().split("\\").pop();
+		    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+        $(options.inputIdOrClass).addClass('change-event-enabled');
     };
 
     var submitForm = function (formIdOrClass) {
@@ -1608,6 +1625,9 @@ var MyRio2cCommon = function () {
         },
         enableColorPicker: function (options) {
             enableColorPicker(options);
+        },
+        enableCustomFile: function (options) {
+	        enableCustomFile(options);
         },
         submitForm: function (formIdOrClass) {
             submitForm(formIdOrClass);
