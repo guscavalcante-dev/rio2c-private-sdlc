@@ -102,6 +102,7 @@
     <Compile Include="Constants\OrganizationType.cs" />
     <Compile Include="Constants\CollaboratorType.cs" />
     <Compile Include="Constants\Role.cs" />
+    <Compile Include="Dtos\Addresses\AddressDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorListDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorNetworkDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorSiteDetailsDto.cs" />

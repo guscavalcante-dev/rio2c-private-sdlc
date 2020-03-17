@@ -27,13 +27,42 @@
                         <span class="kt-badge kt-badge--inline kt-badge--dark">@Labels.Others</span>
                     }
                 </div>
+                @{
+                    var location = Model.AddressDto?.GetLocation(ViewBag.UserInterfaceLanguage);
+                }
+                @if (!string.IsNullOrEmpty(location))
+                {
+                    <div class="kt-widget__subhead">
+                        <a onclick="return false;"><i class="flaticon-placeholder"></i>@location</a>
+                    </div>
+                }
+                @{
+                    var address = Model.AddressDto?.GetAddress();
+                }
+                @if (!string.IsNullOrEmpty(address))
+                {
+                    <div class="kt-widget__subhead pt-0">
+                        <a onclick="return false;"><i class="flaticon-map-location"></i>@address</a>
+                    </div>
+                }
             </div>
         </div>
         <div class="kt-widget__bottom">
             <div class="kt-widget__item">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.Website</span>
-                    <span class="kt-widget__value"><span>@(Model.Place.Website ?? "-")</span></span>
+                    <span class="kt-widget__value">
+                        <span>
+                            @if (!string.IsNullOrEmpty(Model.Place.Website))
+                            {
+                                <a href="@(Model.Place.Website.GetUrlWithProtocol())" target="_blank">@Model.Place.Website</a>
+                            }
+                            else
+                            {
+                                @:-
+                            }
+                        </span>
+                    </span>
                 </div>
             </div>
             <div class="kt-widget__item">

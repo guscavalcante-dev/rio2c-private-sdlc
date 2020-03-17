@@ -12,7 +12,9 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
@@ -40,19 +42,54 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(1000, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string AdditionalInfo { get; set; }
 
+        [Display(Name = "Country", ResourceType = typeof(Labels))]
+        public Guid? CountryUid { get; set; }
+
+        public AddressBaseCommand Address { get; set; }
+
+        public List<CountryBaseDto> CountriesBaseDtos { get; private set; }
+
         /// <summary>Initializes a new instance of the <see cref="UpdatePlaceMainInformation"/> class.</summary>
-        public UpdatePlaceMainInformation(PlaceDto placeDto)
+        /// <param name="placeDto">The place dto.</param>
+        /// <param name="countriesBaseDtos">The countries base dtos.</param>
+        public UpdatePlaceMainInformation(PlaceDto placeDto, List<CountryBaseDto> countriesBaseDtos)
         {
             this.PlaceUid = placeDto?.Place?.Uid;
             this.Name = placeDto?.Place?.Name;
             this.Type = placeDto?.GetPlaceType();
             this.Website = placeDto?.Place?.Website;
             this.AdditionalInfo = placeDto?.Place?.AdditionalInfo;
+            this.UpdateAddress(placeDto);
+
+            this.UpdateModelsAndLists(countriesBaseDtos);
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdatePlaceMainInformation"/> class.</summary>
         public UpdatePlaceMainInformation()
         {
         }
+
+        /// <summary>Updates the models and lists.</summary>
+        /// <param name="countriesBaseDtos">The countries base dtos.</param>
+        public void UpdateModelsAndLists(List<CountryBaseDto> countriesBaseDtos)
+        {
+            this.CountriesBaseDtos = countriesBaseDtos?
+                                        .OrderBy(c => c.Ordering)?
+                                        .ThenBy(c => c.DisplayName)?
+                                        .ToList();
+        }
+
+
+        #region Private Methods
+
+        /// <summary>Updates the address.</summary>
+        /// <param name="placeDto">The place dto.</param>
+        private void UpdateAddress(PlaceDto placeDto)
+        {
+            this.CountryUid = placeDto?.AddressBaseDto?.CountryUid;
+            this.Address = new AddressBaseCommand(placeDto?.AddressBaseDto, false);
+        }
+
+        #endregion
     }
 }

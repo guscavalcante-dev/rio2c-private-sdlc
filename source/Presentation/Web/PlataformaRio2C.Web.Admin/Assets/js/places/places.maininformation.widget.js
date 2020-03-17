@@ -74,6 +74,8 @@ var PlacesMainInformationWidget = function () {
     };
 
     var enableUpdatePlugins = function () {
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2' });
+	    AddressesForm.init();
         enableAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };

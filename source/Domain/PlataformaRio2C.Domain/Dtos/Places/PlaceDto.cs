@@ -19,6 +19,8 @@ namespace PlataformaRio2C.Domain.Dtos
     public class PlaceDto
     {
         public Place Place { get; set; }
+        public AddressBaseDto AddressBaseDto { get; set; }
+        public AddressDto AddressDto { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="PlaceDto"/> class.</summary>
         public PlaceDto()

@@ -40,18 +40,22 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     public class PlacesController : BaseController
     {
         private readonly IPlaceRepository placeRepo;
+        private readonly ICountryRepository countryRepo;
 
         /// <summary>Initializes a new instance of the <see cref="PlacesController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="placeRepository">The place repository.</param>
+        /// <param name="countryRepository">The country repository.</param>
         public PlacesController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
-            IPlaceRepository placeRepository)
+            IPlaceRepository placeRepository,
+            ICountryRepository countryRepository)
             : base(commandBus, identityController)
         {
             this.placeRepo = placeRepository;
+            this.countryRepo = countryRepository;
         }
 
         #region List
@@ -282,7 +286,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <summary>Shows the update main information modal.</summary>
         /// <param name="placeUid">The place uid.</param>
         /// <returns></returns>
-        /// <exception cref="DomainException"></exception>
         [HttpGet]
         public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? placeUid)
         {
@@ -296,7 +299,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Place, Labels.FoundM.ToLowerInvariant()));
                 }
 
-                cmd = new UpdatePlaceMainInformation(mainInformationWidgetDto);
+                cmd = new UpdatePlaceMainInformation(
+                    mainInformationWidgetDto,
+                    await this.countryRepo.FindAllBaseDtosAsync());
             }
             catch (DomainException ex)
             {
@@ -347,6 +352,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     var target = error.Target ?? "";
                     ModelState.AddModelError(target, error.Message);
                 }
+
+                cmd.UpdateModelsAndLists(await this.countryRepo.FindAllBaseDtosAsync());
 
                 return Json(new
                 {

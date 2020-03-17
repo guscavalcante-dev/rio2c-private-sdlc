@@ -30,14 +30,14 @@
 </div>
 <div class="row">
     <div class="form-group col-md-12">
-        @Html.LabelFor(m => m.Website, new { @class = "control-label" })
+        @Html.LabelFor(m => m.Website, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
         @Html.TextBoxFor(m => m.Website, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Website, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="row">
     <div class="form-group col-md-12">
-        @Html.LabelFor(m => m.AdditionalInfo, new { @class = "control-label" })
+        @Html.LabelFor(m => m.AdditionalInfo, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
         @Html.TextAreaFor(m => m.AdditionalInfo, new { @class = "form-control", rows = 8 })
         <span class="form-text text-muted">@Messages.TextInPortugueseInEnglish</span>
         @Html.ValidationMessageFor(m => m.AdditionalInfo, "", new { @class = "text-danger" })

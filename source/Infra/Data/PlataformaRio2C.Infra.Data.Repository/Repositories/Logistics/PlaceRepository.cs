@@ -155,7 +155,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByUid(placeUid)
                                 .Select(p => new PlaceDto
                                 {
-                                    Place = p
+                                    Place = p,
+                                    AddressBaseDto = p.Address == null || p.Address.IsDeleted ? null : new AddressBaseDto
+                                    {
+                                        Id = p.Address.Id,
+                                        Uid = p.Address.Uid,
+                                        CountryUid = p.Address.Country.Uid,
+                                        StateUid = p.Address.State.Uid,
+                                        CityUid = p.Address.City.Uid,
+                                        Address1 = p.Address.Address1,
+                                        AddressZipCode = p.Address.ZipCode,
+                                    }
                                 });
 
             return await query
@@ -171,7 +181,24 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByUid(placeUid)
                                 .Select(p => new PlaceDto
                                 {
-                                    Place = p
+                                    Place = p,
+                                    AddressBaseDto = p.Address == null || p.Address.IsDeleted ? null : new AddressBaseDto
+                                    {
+                                        Id = p.Address.Id,
+                                        Uid = p.Address.Uid,
+                                        CountryUid = p.Address.Country.Uid,
+                                        StateUid = p.Address.State.Uid,
+                                        CityUid = p.Address.City.Uid,
+                                        Address1 = p.Address.Address1,
+                                        AddressZipCode = p.Address.ZipCode,
+                                    },
+                                    AddressDto = p.Address == null || p.Address.IsDeleted ? null : new AddressDto
+                                    {
+                                        Address = p.Address,
+                                        City = p.Address.City,
+                                        State = p.Address.State,
+                                        Country = p.Address.Country
+                                    }
                                 });
 
             return await query

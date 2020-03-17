@@ -89,13 +89,33 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="type">The type.</param>
         /// <param name="website">The website.</param>
         /// <param name="additionalInfo">The additional information.</param>
+        /// <param name="country">The country.</param>
+        /// <param name="stateUid">The state uid.</param>
+        /// <param name="stateName">Name of the state.</param>
+        /// <param name="cityUid">The city uid.</param>
+        /// <param name="cityName">Name of the city.</param>
+        /// <param name="address1">The address1.</param>
+        /// <param name="addressZipCode">The address zip code.</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateMainInformation(string name, string type, string website, string additionalInfo, int userId)
+        public void UpdateMainInformation(
+            string name, 
+            string type, 
+            string website, 
+            string additionalInfo,
+            Country country,
+            Guid? stateUid,
+            string stateName,
+            Guid? cityUid,
+            string cityName,
+            string address1,
+            string addressZipCode,
+            int userId)
         {
             this.Name = name?.Trim();
             this.Website = website?.Trim();
             this.AdditionalInfo = additionalInfo;
             this.UpdateType(type);
+            this.UpdateAddress(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, userId);
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
@@ -192,6 +212,39 @@ namespace PlataformaRio2C.Domain.Entities
             else if (type == "Airport")
             {
                 this.IsAirport = true;
+            }
+        }
+
+        #endregion
+
+        #region Address
+
+        /// <summary>Updates the address.</summary>
+        /// <param name="country">The country.</param>
+        /// <param name="stateUid">The state uid.</param>
+        /// <param name="stateName">Name of the state.</param>
+        /// <param name="cityUid">The city uid.</param>
+        /// <param name="cityName">Name of the city.</param>
+        /// <param name="address1">The address1.</param>
+        /// <param name="addressZipCode">The address zip code.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateAddress(
+            Country country,
+            Guid? stateUid,
+            string stateName,
+            Guid? cityUid,
+            string cityName,
+            string address1,
+            string addressZipCode,
+            int userId)
+        {
+            if (this.Address == null)
+            {
+                this.Address = new Address(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, true, userId);
+            }
+            else
+            {
+                this.Address.Update(country, stateUid, stateName, cityUid, cityName, address1, addressZipCode, true, userId);
             }
         }
 

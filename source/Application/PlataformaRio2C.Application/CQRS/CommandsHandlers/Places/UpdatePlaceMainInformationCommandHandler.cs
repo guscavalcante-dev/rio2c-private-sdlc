@@ -25,16 +25,21 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>UpdatePlaceMainInformationCommandHandler</summary>
     public class UpdatePlaceMainInformationCommandHandler : PlaceBaseCommandHandler, IRequestHandler<UpdatePlaceMainInformation, AppValidationResult>
     {
-        /// <summary>Initializes a new instance of the <see cref="CreatePlaceCommandHandler"/> class.</summary>
+        private readonly ICountryRepository countryRepo;
+
+        /// <summary>Initializes a new instance of the <see cref="UpdatePlaceMainInformationCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="placeRepository">The place repository.</param>
+        /// <param name="countryRepository">The country repository.</param>
         public UpdatePlaceMainInformationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            IPlaceRepository placeRepository)
+            IPlaceRepository placeRepository,
+            ICountryRepository countryRepository)
             : base(eventBus, uow, placeRepository)
         {
+            this.countryRepo = countryRepository;
         }
 
         /// <summary>Handles the specified update place main information.</summary>
@@ -62,6 +67,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.Type,
                 cmd.Website,
                 cmd.AdditionalInfo,
+                await this.countryRepo.GetAsync(cmd.CountryUid ?? Guid.Empty),
+                cmd.Address?.StateUid,
+                cmd.Address?.StateName,
+                cmd.Address?.CityUid,
+                cmd.Address?.CityName,
+                cmd.Address?.Address1,
+                cmd.Address?.AddressZipCode,
                 cmd.UserId);
 
             if (!place.IsValid())

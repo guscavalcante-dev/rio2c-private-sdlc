@@ -30,16 +30,39 @@
 </div>
 <div class="row">
     <div class="form-group col-md-12">
-        @Html.LabelFor(m => m.Website, new { @class = "control-label" })
+        @Html.LabelFor(m => m.Website, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
         @Html.TextBoxFor(m => m.Website, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Website, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="row">
     <div class="form-group col-md-12">
-        @Html.LabelFor(m => m.AdditionalInfo, new { @class = "control-label" })
+        @Html.LabelFor(m => m.AdditionalInfo, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
         @Html.TextAreaFor(m => m.AdditionalInfo, new { @class = "form-control", rows = 8 })
         <span class="form-text text-muted">@Messages.TextInPortugueseInEnglish</span>
         @Html.ValidationMessageFor(m => m.AdditionalInfo, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="kt-section pt-4">
+    <h3 class="kt-section__title mb-0">
+        @Labels.Address <span class="form-optional-input text-muted">@Labels.Optional</span>
+    </h3>
+    <div class="form-group row mt-3">
+        <div class="col-md-6" data-id="Country">
+            @Html.LabelFor(m => m.CountryUid, new { @class = "control-label" })
+            <select name="@Html.NameFor(m => m.CountryUid)" id="@Html.IdFor(m => m.CountryUid)" @Html.GetUnobtrusiveValidationAttributesFor(m => m.CountryUid) class="form-control">
+                <option value="" data-country-code="" data-zipcode-mask="">@(Labels.Select)...</option>
+                @foreach (var countryBaseDto in Model.CountriesBaseDtos)
+                {
+                    <option value="@countryBaseDto.Uid" @(countryBaseDto.Uid == Model.CountryUid ? "selected" : "") data-country-code="@countryBaseDto.Code" data-zipcode-mask="@countryBaseDto.ZipCodeMask">
+                        @countryBaseDto.DisplayName
+                    </option>
+                }
+            </select>
+            @Html.ValidationMessageFor(m => m.CountryUid, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="kt-section__content">
+        @Html.EditorFor(m => m.Address)
     </div>
 </div>
