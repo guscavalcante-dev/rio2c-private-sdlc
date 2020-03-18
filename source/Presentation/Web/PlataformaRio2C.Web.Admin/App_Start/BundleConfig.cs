@@ -678,7 +678,11 @@ namespace PlataformaRio2C.Web.Admin
             #region Logistics - Sponsors
 
             bundles.Add(new ScriptBundle("~/bundles/js/logisticsponsors.list.js").Include(
+                "~/Assets/js/logisticsponsors/logisticsponsors.totalcount.widget.js",
                 "~/Assets/js/logisticsponsors/logisticsponsors.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/logisticsponsors.editioncount.js").Include(
+                "~/Assets/js/logisticsponsors/logisticsponsors.editioncount.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/logisticsponsors.create.js").Include(
                 "~/Assets/js/logisticsponsors/logisticsponsors.create.js"));

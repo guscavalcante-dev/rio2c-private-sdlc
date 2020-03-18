@@ -1,31 +1,33 @@
-﻿@using PlataformaRio2C.Domain.Dtos
-@model PlataformaRio2C.Application.CQRS.Commands.CreateLogisticSponsors
-@{
-    var editionDto = ViewBag.EditionDto as EditionDto;
-}
-
-<!--begin: Main Information-->
+﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateLogisticSponsor
+@Html.HiddenFor(m => m.LogisticSponsorUid)
 <div class="kt-section pt-2">
     @Html.ValidationMessage("Names", new { @class = "text-danger" })
     <div class="kt-section__content mt-3">
         @Html.EditorFor(m => m.Names)
     </div>
 </div>
-
-<div class="kt-section">    
-    <div class="kt-section__content mt-3">        
-        <div class="kt-checkbox-list">
-            <div class="row">                
-                <div class="col-md-6">
-                    <label class="kt-checkbox">
-                    <input type="checkbox"
-                            name="IsAirfareTicketRequired"
-                            value="true"
-                            @if (Model.IsAirfareTicketRequired) { <text> checked </text> } /> @Labels.IsAirfareTicketRequired                        
-                        <span></span>
-                    </label>
-                </div>
-            </div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.IsOther, new { @class = "control-label" })
+        <div class="kt-radio-inline">
+            <label class="kt-radio">
+                @Html.RadioButtonFor(m => m.IsOther, false) @Labels.Main
+                <span></span>
+            </label>
+            <label class="kt-radio">
+                @Html.RadioButtonFor(m => m.IsOther, true) @Labels.Others
+                <span></span>
+            </label>
+        </div>
+        @Html.ValidationMessageFor(m => m.IsOther, "", new { @class = "text-danger", })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.Label(Labels.Options, new { @class = "control-label" })
+        <div class="kt-checkbox-inline">
+            <label class="kt-checkbox">
+                @Html.CheckBoxFor(m => m.IsAirfareTicketRequired) @Labels.IsAirfareTicketRequired
+                <span></span>
+            </label>
         </div>
     </div>
 </div>

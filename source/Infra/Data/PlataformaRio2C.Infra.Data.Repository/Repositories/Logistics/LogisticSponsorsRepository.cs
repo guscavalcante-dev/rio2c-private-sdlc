@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="LogisticSponsorsRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,7 +26,6 @@ using X.PagedList;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
-
     #region Logistic Sponsor IQueryable Extensions
 
     /// <summary>
@@ -34,18 +33,25 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     /// </summary>
     internal static class LogisticSponsorsIQueryableExtensions
     {
+        /// <summary>Finds the by uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="logisticSponsorUid">The logistic sponsor uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<LogisticSponsor> FindByUid(this IQueryable<LogisticSponsor> query, Guid logisticSponsorUid)
+        {
+            return query.Where(ls => ls.Uid == logisticSponsorUid);
+        }
+
         /// <summary>Finds the by edition identifier.</summary>
         /// <param name="query">The query.</param>
-        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="editionId">The edition identifier.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <returns></returns>
-        internal static IQueryable<LogisticSponsor> FindByEditionId(this IQueryable<LogisticSponsor> query, bool showAllEditions, int? editionId)
+        internal static IQueryable<LogisticSponsor> FindByEditionId(this IQueryable<LogisticSponsor> query, int editionId, bool showAllEditions)
         {
-            if (!showAllEditions && editionId.HasValue)
+            if (!showAllEditions)
             {
-                query = query.Where(o => o.AttendeeLogisticSponsors.Any(ac => ac.EditionId == editionId
-                                                                              && !ac.IsDeleted
-                                                                              && !ac.Edition.IsDeleted));
+                query = query.Where(ls => ls.AttendeeLogisticSponsors.Any(als => als.EditionId == editionId && !als.IsDeleted));
             }
 
             return query;
@@ -62,9 +68,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>Finds the by keywords.</summary>
         /// <param name="query">The query.</param>
         /// <param name="keywords">The keywords.</param>
-        /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        internal static IQueryable<LogisticSponsor> FindByKeywords(this IQueryable<LogisticSponsor> query, string keywords, int? editionId)
+        internal static IQueryable<LogisticSponsor> FindByKeywords(this IQueryable<LogisticSponsor> query, string keywords)
         {
             if (!string.IsNullOrEmpty(keywords))
             {
@@ -75,7 +80,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 {
                     if (!string.IsNullOrEmpty(keyword))
                     {
-                        innerNameWhere = innerNameWhere.And(t => t.Name.Contains(keyword));
+                        innerNameWhere = innerNameWhere.And(ls => ls.Name.Contains(keyword));
                     }
                 }
 
@@ -91,29 +96,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<LogisticSponsor> IsNotDeleted(this IQueryable<LogisticSponsor> query)
         {
-            query = query.Where(c => !c.IsDeleted);
+            query = query.Where(ls => !ls.IsDeleted);
 
             return query;
         }
-
-        /// <summary>Finds the by edition identifier.</summary>
-        /// <param name="query">The query.</param>
-        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <returns></returns>
-        internal static IQueryable<LogisticSponsor> FindByUid(this IQueryable<LogisticSponsor> query, Guid uid)
-        {
-            return query.Where(e => e.Uid == uid);
-        }
-
     }
 
     #endregion
-    
-    #region CollaboratorBaseDto IQueryable Extensions
+
+    #region LogisticSponsorJsonDto IQueryable Extensions
 
     /// <summary>
-    /// CollaboratorBaseDtoIQueryableExtensions
+    /// LogisticSponsorsBaseDtoIQueryableExtensions
     /// </summary>
     internal static class LogisticSponsorsBaseDtoIQueryableExtensions
     {
@@ -124,7 +118,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        internal static async Task<IPagedList<AttendeeLogisticSponsorBaseDto>> ToListPagedAsync(this IQueryable<AttendeeLogisticSponsorBaseDto> query, int page, int pageSize)
+        internal static async Task<IPagedList<LogisticSponsorJsonDto>> ToListPagedAsync(this IQueryable<LogisticSponsorJsonDto> query, int page, int pageSize)
         {
             page++;
 
@@ -144,7 +138,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     {
         private PlataformaRio2CContext _context;
 
-        /// <summary>Initializes a new instance of the <see cref="SpeakerRepository"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="LogisticSponsorsRepository"/> class.</summary>
         /// <param name="context">The context.</param>
         public LogisticSponsorsRepository(PlataformaRio2CContext context)
             : base(context)
@@ -165,17 +159,44 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
-        public async Task<IPagedList<AttendeeLogisticSponsorBaseDto>> FindAllByDataTable(
+        /// <summary>Finds the dto asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="placeUid">The place uid.</param>
+        /// <returns></returns>
+        public async Task<LogisticSponsorDto> FindDtoAsync(int editionId, Guid placeUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(placeUid)
+                                .Select(ls => new LogisticSponsorDto
+                                {
+                                    LogisticSponsor = ls,
+                                    AttendeeLogisticSponsor = ls.AttendeeLogisticSponsors.FirstOrDefault(als => als.EditionId == editionId && !als.IsDeleted && !als.Edition.IsDeleted)
+                                });
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
+
+
+        /// <summary>Finds all by data table asynchronous.</summary>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<LogisticSponsorJsonDto>> FindAllByDataTableAsync(
             int page,
             int pageSize,
             string keywords,
             List<Tuple<string, string>> sortColumns,
             bool showAllEditions,
-            int? editionId)
+            int editionId)
         {
             var query = this.GetBaseQuery()
-                                .FindByKeywords(keywords, editionId)
-                                .FindByEditionId(showAllEditions, editionId);
+                                .FindByKeywords(keywords)
+                                .FindByEditionId(editionId, showAllEditions);
 
             return await query
                             .DynamicOrder<LogisticSponsor>(
@@ -185,45 +206,57 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     new Tuple<string, string>("Name", "Name"),
                                 },
                                 new List<string> { "Name", "CreateDate", "UpdateDate" }, "Name")
-                            .Select(c => new AttendeeLogisticSponsorBaseDto
+                            .Select(c => new LogisticSponsorJsonDto
                             {
                                 Id = c.Id,
                                 Uid = c.Uid,
                                 Name = c.Name,
+                                IsOther = !c.AttendeeLogisticSponsors.Any(als => als.EditionId == editionId && !als.IsDeleted && !als.Edition.IsDeleted) ? null :
+                                          (bool?)c.AttendeeLogisticSponsors.Any(als => als.EditionId == editionId && !als.IsDeleted && !als.Edition.IsDeleted && als.IsOther),
+                                IsInCurrentEdition = c.AttendeeLogisticSponsors.Any(als => als.EditionId == editionId && !als.IsDeleted && !als.Edition.IsDeleted),
+                                IsInOtherEdition = c.AttendeeLogisticSponsors.Any(als => als.EditionId != editionId && !als.IsDeleted && !als.Edition.IsDeleted),
                                 CreateDate = c.CreateDate,
                                 UpdateDate = c.UpdateDate,                                
-                                IsInCurrentEdition = c.AttendeeLogisticSponsors.Any(o => !o.IsDeleted
-                                                                                && o.EditionId == editionId
-                                                                                && !o.Edition.IsDeleted
-                                                                                && !o.IsDeleted)
                             })
                             .ToListPagedAsync(page, pageSize);
         }
-        
-        public async Task<AttendeeLogisticSponsorBaseDto> FindLogisticSponsorDtoByUid(Guid sponsorUid)
+
+        /// <summary>Counts all by data table asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <returns></returns>
+        public async Task<int> CountAllByDataTableAsync(int editionId, bool showAllEditions)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId, showAllEditions);
+
+            return await query
+                            .CountAsync();
+        }
+
+        public async Task<LogisticSponsorJsonDto> FindLogisticSponsorDtoByUid(Guid sponsorUid)
         {
             var query = this.GetBaseQuery()
                                 .FindByUid(sponsorUid);
 
             return await query
-                            .Select(c => new AttendeeLogisticSponsorBaseDto
+                            .Select(c => new LogisticSponsorJsonDto
                             {
                                 Id = c.Id,
                                 Uid = c.Uid,
                                 Name = c.Name,
                                 IsAirfareTicketRequired = c.IsAirfareTicketRequired
                             }).FirstOrDefaultAsync();
-
         }
 
-        public async Task<List<AttendeeLogisticSponsorBaseDto>> FindAllDtosByEditionUidAsync(int editionId)
+        public async Task<List<LogisticSponsorJsonDto>> FindAllDtosByEditionUidAsync(int editionId)
         {
             var query = this.GetBaseQuery(true)
-                                .FindByEditionId(false, editionId)
+                                .FindByEditionId(editionId, false)
                                 .FindByIsOther(editionId);
 
             return await query
-                            .Select(c => new AttendeeLogisticSponsorBaseDto
+                            .Select(c => new LogisticSponsorJsonDto
                             {
                                 Id = c.Id,
                                 Uid = c.Uid,
@@ -234,14 +267,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             }).ToListAsync();
         }
 
-        public async Task<List<AttendeeLogisticSponsorBaseDto>> FindAllDtosByIsOther(int editionId)
+        public async Task<List<LogisticSponsorJsonDto>> FindAllDtosByIsOther(int editionId)
         {
             var query = this.GetBaseQuery(true)
-                .FindByEditionId(false, editionId)
+                .FindByEditionId(editionId, false)
                 .FindByIsOther(editionId, true);
 
             return await query
-                .Select(c => new AttendeeLogisticSponsorBaseDto
+                .Select(c => new LogisticSponsorJsonDto
                 {
                     Id = c.Id,
                     Uid = c.Uid,

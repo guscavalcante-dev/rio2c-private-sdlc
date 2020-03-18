@@ -4,7 +4,7 @@
 // Created          : 02-03-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-13-2020
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="CreateLogistic.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -100,16 +100,16 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(1000, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string AdditionalInfo { get; set; }
 
-        public List<AttendeeLogisticSponsorBaseDto> MainSponsors { get; set; }
-        public List<AttendeeLogisticSponsorBaseDto> OtherSponsors { get; set; }
+        public List<AttendeeLogisticSponsorJsonDto> MainSponsors { get; set; }
+        public List<AttendeeLogisticSponsorJsonDto> OtherSponsors { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CreateLogistic"/> class.</summary>
         /// <param name="mainLogisticSponsorBaseDtos">The main logistic sponsor base dtos.</param>
         /// <param name="otherLogisticSponsorBaseDtos">The other logistic sponsor base dtos.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public CreateLogistic(
-            List<AttendeeLogisticSponsorBaseDto> mainLogisticSponsorBaseDtos,
-            List<AttendeeLogisticSponsorBaseDto> otherLogisticSponsorBaseDtos,
+            List<AttendeeLogisticSponsorJsonDto> mainLogisticSponsorBaseDtos,
+            List<AttendeeLogisticSponsorJsonDto> otherLogisticSponsorBaseDtos,
             string userInterfaceLanguage)
         {
             this.UpdateModelsAndLists(mainLogisticSponsorBaseDtos, otherLogisticSponsorBaseDtos, userInterfaceLanguage);
@@ -125,8 +125,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="otherLogisticSponsorBaseDtos">The other logistic sponsor base dtos.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public void UpdateModelsAndLists(
-            List<AttendeeLogisticSponsorBaseDto> mainLogisticSponsorBaseDtos,
-            List<AttendeeLogisticSponsorBaseDto> otherLogisticSponsorBaseDtos,
+            List<AttendeeLogisticSponsorJsonDto> mainLogisticSponsorBaseDtos,
+            List<AttendeeLogisticSponsorJsonDto> otherLogisticSponsorBaseDtos,
             string userInterfaceLanguage)
         {
             // Mains logistic sponsors

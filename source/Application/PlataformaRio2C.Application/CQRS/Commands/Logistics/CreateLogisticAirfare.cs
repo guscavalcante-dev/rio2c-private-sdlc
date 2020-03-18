@@ -4,7 +4,7 @@
 // Created          : 01-27-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-16-2020
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="CreateLogisticAirfare.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -70,7 +70,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public DateTimeOffset? TicketUploadDate { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="CreateLogisticSponsors"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="CreateLogisticSponsor"/> class.</summary>
         public CreateLogisticAirfare(Guid logisticsUid)
         {
             this.LogisticsUid = logisticsUid;

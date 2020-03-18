@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="LogisticsSponsor.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -32,15 +32,20 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeLogisticSponsor> AttendeeLogisticSponsors { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="LogisticSponsor"/> class.</summary>
+        /// <param name="logisticSponsorUid">The logistic sponsor uid.</param>
+        /// <param name="edition">The edition.</param>
         /// <param name="names">The names.</param>
+        /// <param name="isOther">if set to <c>true</c> [is other].</param>
         /// <param name="userId">The user identifier.</param>
-        public LogisticSponsor(List<TranslatedName> names, int userId)
+        public LogisticSponsor(Guid logisticSponsorUid, Edition edition, List<TranslatedName> names, bool isOther, int userId)
         {
-            UpdateName(names);
-
-            this.IsDeleted = false;
+            //this.Uid = logisticSponsorUid;
+            this.UpdateName(names);
             this.IsAirfareTicketRequired = false;
             this.IsOtherRequired = false;
+            this.SynchronizeAttendeeLogisticSponsors(edition, isOther, userId);
+
+            this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
         }
@@ -51,9 +56,10 @@ namespace PlataformaRio2C.Domain.Entities
         public LogisticSponsor(string name, int userId)
         {
             this.Name = name?.Trim();
-            this.IsDeleted = false;
             this.IsAirfareTicketRequired = false;
             this.IsOtherRequired = false;
+
+            this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
             this.CreateUserId = this.UpdateUserId = userId;
         }
@@ -67,22 +73,100 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="names">The names.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="isAirfareTicketRequired">if set to <c>true</c> [is airfare ticket required].</param>
-        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
+        /// <param name="isOther">if set to <c>true</c> [is other].</param>
         /// <param name="userId">The user identifier.</param>
         public void Update(
             List<TranslatedName> names, 
             Edition edition, 
             bool isAirfareTicketRequired,
-            bool isAddingToCurrentEdition, 
+            bool isOther,
             int userId)
         {
-            this.IsDeleted = false;
+            this.UpdateName(names);
             this.IsAirfareTicketRequired = isAirfareTicketRequired;
+            this.IsOtherRequired = false;
+            this.SynchronizeAttendeeLogisticSponsors(edition, isOther, userId);
+
+            this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
             this.UpdateUserId = userId;
-            this.UpdateName(names);
-            this.SynchronizeAttendeeSponsors(edition, isAddingToCurrentEdition, userId);
         }
+
+        /// <summary>Deletes the specified edition.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(Edition edition, int userId)
+        {
+            this.DeleteAttendeeLogisticSponsors(edition, userId);
+
+            if (this.FindAllAttendeeLogisticSponsorsNotDeleted(null)?.Any() == false)
+            {
+                this.IsDeleted = true;
+            }
+
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
+        #region Attendee Logistic Sponsors
+
+        /// <summary>Synchronizes the attendee logistic sponsors.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="isOther">if set to <c>true</c> [is other].</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeAttendeeLogisticSponsors(Edition edition, bool isOther, int userId)
+        {
+            if (this.AttendeeLogisticSponsors == null)
+            {
+                this.AttendeeLogisticSponsors = new List<AttendeeLogisticSponsor>();
+            }
+
+            if (edition == null)
+            {
+                return;
+            }
+
+            var attendeePlace = this.GetAttendeeLogisticSponsorByEditionId(edition.Id);
+            if (attendeePlace != null)
+            {
+                attendeePlace.Update(isOther, userId);
+            }
+            else
+            {
+                this.AttendeeLogisticSponsors.Add(new AttendeeLogisticSponsor(edition, this, isOther, userId));
+            }
+        }
+
+        /// <summary>Deletes the attendee logistic sponsors.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteAttendeeLogisticSponsors(Edition edition, int userId)
+        {
+            foreach (var attendeeLogisticSponsor in this.FindAllAttendeeLogisticSponsorsNotDeleted(edition))
+            {
+                attendeeLogisticSponsor?.Delete(userId);
+            }
+        }
+
+        /// <summary>Gets the attendee logistic sponsor by edition identifier.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        private AttendeeLogisticSponsor GetAttendeeLogisticSponsorByEditionId(int editionId)
+        {
+            return this.AttendeeLogisticSponsors?.FirstOrDefault(als => als.EditionId == editionId);
+        }
+
+        /// <summary>Finds all attendee logistic sponsors not deleted.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <returns></returns>
+        private List<AttendeeLogisticSponsor> FindAllAttendeeLogisticSponsorsNotDeleted(Edition edition)
+        {
+            return this.AttendeeLogisticSponsors?.Where(als => (edition == null || als.EditionId == edition.Id) && !als.IsDeleted)?.ToList();
+        }
+
+        #endregion
+
+        #region Names
 
         /// <summary>Updates the name.</summary>
         /// <param name="names">The names.</param>
@@ -96,66 +180,6 @@ namespace PlataformaRio2C.Domain.Entities
             }
 
             this.Name = name;
-        }
-
-        /// <summary>Deletes the specified user identifier.</summary>
-        /// <param name="userId">The user identifier.</param>
-        public void Delete(int userId)
-        {
-            this.IsDeleted = true;
-            this.UpdateDate = DateTime.Now;
-            this.UpdateUserId = userId;
-            
-            foreach(var attendee in this.AttendeeLogisticSponsors)
-            {
-                attendee.Delete(userId);
-            }
-        }
-
-        #region Attendee Logistic Sponsors
-
-        /// <summary>Synchronizes the attendee sponsors.</summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
-        /// <param name="userId">The user identifier.</param>
-        private void SynchronizeAttendeeSponsors(
-            Edition edition, 
-            bool isAddingToCurrentEdition, 
-            int userId)
-        {
-            // Synchronize only when is adding to current edition
-            if (!isAddingToCurrentEdition)
-            {
-                return;
-            }
-
-            if (this.AttendeeLogisticSponsors == null)
-            {
-                this.AttendeeLogisticSponsors = new List<AttendeeLogisticSponsor>();
-            }
-
-            if (edition == null)
-            {
-                return;
-            }
-
-            var attendeeSponsor = this.GetAttendeeByEditionId(edition.Id);
-            if (attendeeSponsor != null)
-            {
-                attendeeSponsor.Update(edition, this, userId);
-            }
-            else
-            {
-                this.AttendeeLogisticSponsors.Add(new AttendeeLogisticSponsor(edition, this, userId));
-            }
-        }
-
-        /// <summary>Gets the attendee collaborator by edition identifier.</summary>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <returns></returns>
-        public AttendeeLogisticSponsor GetAttendeeByEditionId(int editionId)
-        {
-            return this.AttendeeLogisticSponsors?.FirstOrDefault(ac => ac.EditionId == editionId);
         }
 
         #endregion

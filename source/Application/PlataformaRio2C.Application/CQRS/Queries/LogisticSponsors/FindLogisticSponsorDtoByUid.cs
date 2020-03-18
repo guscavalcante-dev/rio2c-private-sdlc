@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="FindLogisticSponsorDtoByUid.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,7 +17,7 @@ using PlataformaRio2C.Domain.Dtos;
 namespace PlataformaRio2C.Application.CQRS.Queries
 {
     /// <summary>FindLogisticSponsorDtoByUid</summary>
-    public class FindLogisticSponsorDtoByUid : BaseQuery<AttendeeLogisticSponsorBaseDto>
+    public class FindLogisticSponsorDtoByUid : BaseQuery<LogisticSponsorJsonDto>
     {
         public Guid SponsorUid { get; private set; }
 

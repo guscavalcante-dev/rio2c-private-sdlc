@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-13-2020
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="Logistic.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -195,13 +195,13 @@ namespace PlataformaRio2C.Domain.Entities
                 var otherAirfareAttendeeLogisticSponsor = otherAirfareLogisticSponsor.AttendeeLogisticSponsors.FirstOrDefault(als => als.EditionId == edition?.Id);
                 if (otherAirfareAttendeeLogisticSponsor != null)
                 {
-                    otherAirfareAttendeeLogisticSponsor.Restore(userId);
+                    otherAirfareAttendeeLogisticSponsor.Update(true, userId);
                     airfareAttendeeLogisticSponsor = otherAirfareAttendeeLogisticSponsor;
                 }
                 // Must create the attendee logistic sponsor typed
                 else
                 {
-                    airfareAttendeeLogisticSponsor = new AttendeeLogisticSponsor(edition, otherAirfareLogisticSponsor, userId);
+                    airfareAttendeeLogisticSponsor = new AttendeeLogisticSponsor(edition, otherAirfareLogisticSponsor, true, userId);
                 }
             }
             // Other logistic sponsor type does not exist in database and must be created
@@ -242,13 +242,13 @@ namespace PlataformaRio2C.Domain.Entities
                 var otherAccommodationAttendeeLogisticSponsor = otherAccommodationLogisticSponsor.AttendeeLogisticSponsors.FirstOrDefault(als => als.EditionId == edition?.Id);
                 if (otherAccommodationAttendeeLogisticSponsor != null)
                 {
-                    otherAccommodationAttendeeLogisticSponsor.Restore(userId);
+                    otherAccommodationAttendeeLogisticSponsor.Update(true, userId);
                     accommodationAttendeeLogisticSponsor = otherAccommodationAttendeeLogisticSponsor;
                 }
                 // Must create the attendee logistic sponsor typed
                 else
                 {
-                    accommodationAttendeeLogisticSponsor = new AttendeeLogisticSponsor(edition, otherAccommodationLogisticSponsor, userId);
+                    accommodationAttendeeLogisticSponsor = new AttendeeLogisticSponsor(edition, otherAccommodationLogisticSponsor, true, userId);
                 }
             }
             // Other logistic sponsor type does not exist in database and must be created
@@ -290,13 +290,13 @@ namespace PlataformaRio2C.Domain.Entities
                 var otherAirportTransferAttendeeLogisticSponsor = otherAirportTransferLogisticSponsor.AttendeeLogisticSponsors.FirstOrDefault(als => als.EditionId == edition?.Id);
                 if (otherAirportTransferAttendeeLogisticSponsor != null)
                 {
-                    otherAirportTransferAttendeeLogisticSponsor.Restore(userId);
+                    otherAirportTransferAttendeeLogisticSponsor.Update(true, userId);
                     airportTransferAttendeeLogisticSponsor = otherAirportTransferAttendeeLogisticSponsor;
                 }
                 // Must create the attendee logistic sponsor typed
                 else
                 {
-                    airportTransferAttendeeLogisticSponsor = new AttendeeLogisticSponsor(edition, otherAirportTransferLogisticSponsor, userId);
+                    airportTransferAttendeeLogisticSponsor = new AttendeeLogisticSponsor(edition, otherAirportTransferLogisticSponsor, true, userId);
                 }
             }
             // Other logistic sponsor type does not exist in database and must be created

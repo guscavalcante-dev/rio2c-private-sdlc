@@ -51,7 +51,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             if (!showAllEditions)
             {
-                query = query.Where(p => showAllEditions || p.AttendeePlaces.Any(ap => ap.EditionId == editionId && !ap.IsDeleted));
+                query = query.Where(p => p.AttendeePlaces.Any(ap => ap.EditionId == editionId && !ap.IsDeleted));
             }
 
             return query;

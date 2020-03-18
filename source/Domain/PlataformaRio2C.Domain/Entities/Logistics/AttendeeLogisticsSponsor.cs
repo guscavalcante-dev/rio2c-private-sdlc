@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-13-2020
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="AttendeeLogisticSponsor.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,6 +23,7 @@ namespace PlataformaRio2C.Domain.Entities
         public int LogisticSponsorId { get; private set; }
         public bool IsOther { get; private set; }
         public bool IsLogisticListDisplayed { get; private set; }
+
         public virtual Edition Edition { get; private set; }
         public virtual LogisticSponsor LogisticSponsor { get; private set; }
 
@@ -33,11 +34,13 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Initializes a new instance of the <see cref="AttendeeLogisticSponsor"/> class.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="logisticSponsor">The logistic sponsor.</param>
+        /// <param name="isOther">if set to <c>true</c> [is other].</param>
         /// <param name="userId">The user identifier.</param>
-        public AttendeeLogisticSponsor(Edition edition, LogisticSponsor logisticSponsor, int userId)
+        public AttendeeLogisticSponsor(Edition edition, LogisticSponsor logisticSponsor, bool isOther, int userId)
         {
             this.Edition = edition;
             this.LogisticSponsor = logisticSponsor;
+            this.IsOther = isOther;
 
             this.IsDeleted = false;
             this.CreateUserId = this.UpdateUserId = userId;
@@ -64,40 +67,28 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Updates the specified edition.</summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="logisticSponsor">The logistic sponsor.</param>
+        /// <summary>Updates the specified is other.</summary>
+        /// <param name="isOther">if set to <c>true</c> [is other].</param>
         /// <param name="userId">The user identifier.</param>
-        public void Update(Edition edition, LogisticSponsor logisticSponsor, int userId)
+        public void Update(bool isOther, int userId)
         {
-            this.Edition = edition;
-            this.LogisticSponsor = logisticSponsor;
-
+            this.IsOther = isOther;
             this.IsDeleted = false;
-            this.UpdateUserId = userId;
-            this.UpdateDate = DateTime.Now;
-        }
-
-        /// <summary>Restores the specified user identifier.</summary>
-        /// <param name="userId">The user identifier.</param>
-        public void Restore(int userId)
-        {
-            if (!this.IsDeleted)
-            {
-                return;
-            }
-
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
         /// <summary>Deletes the specified user identifier.</summary>
         /// <param name="userId">The user identifier.</param>
         public void Delete(int userId)
-        {            
+        {
+            if (this.IsDeleted)
+            {
+                return;
+            }
+
             this.IsDeleted = true;
-            this.UpdateDate = DateTime.Now;
+            this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 

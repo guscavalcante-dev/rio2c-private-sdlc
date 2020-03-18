@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="FindLogisticSponsorDtoByUidQueryHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,7 +21,7 @@ using PlataformaRio2C.Domain.Interfaces;
 namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
 {
     /// <summary>FindLogisticSponsorDtoByUidQueryHandler</summary>
-    public class FindLogisticSponsorDtoByUidQueryHandler : IRequestHandler<FindLogisticSponsorDtoByUid, AttendeeLogisticSponsorBaseDto>
+    public class FindLogisticSponsorDtoByUidQueryHandler : IRequestHandler<FindLogisticSponsorDtoByUid, LogisticSponsorJsonDto>
     {
         private readonly ILogisticSponsorRepository repo;
 
@@ -36,7 +36,7 @@ namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AttendeeLogisticSponsorBaseDto> Handle(FindLogisticSponsorDtoByUid cmd, CancellationToken cancellationToken)
+        public async Task<LogisticSponsorJsonDto> Handle(FindLogisticSponsorDtoByUid cmd, CancellationToken cancellationToken)
         {
             return await this.repo.FindLogisticSponsorDtoByUid(cmd.SponsorUid);
         }

@@ -21,33 +21,34 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
     /// <summary>DeleteLogisticSponsorCommandHandler</summary>
-    public class DeleteLogisticSponsorCommandHandler : LogisticSponsorBaseCommandHandler, IRequestHandler<DeleteLogisticSponsors, AppValidationResult>
+    public class DeleteLogisticSponsorCommandHandler : LogisticSponsorBaseCommandHandler, IRequestHandler<DeleteLogisticSponsor, AppValidationResult>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DeleteLogisticSponsorCommandHandler"/> class.
-        /// </summary>
+        private readonly IEditionRepository editionRepo;
+
+        /// <summary>Initializes a new instance of the <see cref="DeleteLogisticSponsorCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
-        /// <param name="repository">The repository.</param>
+        /// <param name="logisticSponsorRepository">The logistic sponsor repository.</param>
+        /// <param name="editionRepository">The edition repository.</param>
         public DeleteLogisticSponsorCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            ILogisticSponsorRepository repository)
-            : base(eventBus, uow, repository)
+            ILogisticSponsorRepository logisticSponsorRepository,
+            IEditionRepository editionRepository)
+            : base(eventBus, uow, logisticSponsorRepository)
         {
+            this.editionRepo = editionRepository;
         }
 
-        /// <summary>
-        /// Handles the specified command.
-        /// </summary>
+        /// <summary>Handles the specified delete logistic sponsor.</summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>Task&lt;AppValidationResult&gt;.</returns>
-        public async Task<AppValidationResult> Handle(DeleteLogisticSponsors cmd, CancellationToken cancellationToken)
+        /// <returns></returns>
+        public async Task<AppValidationResult> Handle(DeleteLogisticSponsor cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
-            var sponsor = await this.GetByUid(cmd.SponsorUid);
+            var logisticSponsor = await this.GetLogisticSponsorByUid(cmd.SponsorUid);
 
             #region Initial validations
 
@@ -59,15 +60,17 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
                         
-            sponsor.Delete(cmd.UserId);
+            logisticSponsor.Delete(
+                await this.editionRepo.GetAsync(cmd.EditionId ?? 0),
+                cmd.UserId);
 
-            if (!sponsor.IsValid())
+            if (!logisticSponsor.IsValid())
             {
-                this.AppValidationResult.Add(sponsor.ValidationResult);
+                this.AppValidationResult.Add(logisticSponsor.ValidationResult);
                 return this.AppValidationResult;
             }
 
-            this.repository.Update(sponsor);
+            this.logisticSponsorRepo.Update(logisticSponsor);
             this.Uow.SaveChanges();
             
             return this.AppValidationResult;

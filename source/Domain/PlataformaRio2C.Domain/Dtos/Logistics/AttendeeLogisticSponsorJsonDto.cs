@@ -4,9 +4,9 @@
 // Created          : 01-24-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-11-2020
+// Last Modified On : 03-17-2020
 // ***********************************************************************
-// <copyright file="AttendeeLogisticSponsorBaseDto.cs" company="Softo">
+// <copyright file="AttendeeLogisticSponsorJsonDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -17,16 +17,16 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
-    /// <summary>AttendeeLogisticSponsorBaseDto</summary>
-    public class AttendeeLogisticSponsorBaseDto
+    /// <summary>AttendeeLogisticSponsorJsonDto</summary>
+    public class AttendeeLogisticSponsorJsonDto
     {
         public int Id { get; set; }
         public Guid Uid { get; set; }
         public string Name { get; set; }
         public DateTimeOffset CreateDate { get; set; }
         public DateTimeOffset UpdateDate { get; set; }
-        public bool IsInOtherEdition { get; set; }
         public bool IsInCurrentEdition { get; set; }
+        public bool IsInOtherEdition { get; set; }
         public bool IsAirfareTicketRequired { get; set; }
         public bool IsOtherRequired { get; set; }
         public bool IsOthers { get; set; }

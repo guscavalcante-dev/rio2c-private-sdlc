@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="ILogisticSponsorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,10 +23,12 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>ILogisticSponsorRepository</summary>
     public interface ILogisticSponsorRepository : IRepository<LogisticSponsor>
     {
-        Task<IPagedList<AttendeeLogisticSponsorBaseDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllEditions, int? editionId);
-        Task<AttendeeLogisticSponsorBaseDto> FindLogisticSponsorDtoByUid(Guid sponsorUid);
-        Task<List<AttendeeLogisticSponsorBaseDto>> FindAllDtosByEditionUidAsync(int editionDtoId);
-        Task<List<AttendeeLogisticSponsorBaseDto>> FindAllDtosByIsOther(int editionDtoId);
+        Task<LogisticSponsorDto> FindDtoAsync(int editionId, Guid placeUid);
+        Task<IPagedList<LogisticSponsorJsonDto>> FindAllByDataTableAsync(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllEditions, int editionId);
+        Task<int> CountAllByDataTableAsync(int editionId, bool showAllEditions);
+        Task<LogisticSponsorJsonDto> FindLogisticSponsorDtoByUid(Guid sponsorUid);
+        Task<List<LogisticSponsorJsonDto>> FindAllDtosByEditionUidAsync(int editionDtoId);
+        Task<List<LogisticSponsorJsonDto>> FindAllDtosByIsOther(int editionDtoId);
         Task<Guid> GetByIsOthersRequired();
     }    
 }

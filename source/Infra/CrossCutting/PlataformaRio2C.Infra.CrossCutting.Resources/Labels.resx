@@ -2437,4 +2437,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Aeroporto</value>
     <comment>Aeroporto</comment>
   </data>
+  <data name="Main" xml:space="preserve">
+    <value>Principal</value>
+    <comment>Principal</comment>
+  </data>
 </root>

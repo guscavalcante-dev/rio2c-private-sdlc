@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="AttendeeLogisticSponsorsRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -144,12 +144,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="isOther">if set to <c>true</c> [is other].</param>
         /// <returns></returns>
-        public async Task<List<AttendeeLogisticSponsorBaseDto>> FindAllBaseDtosByIsOtherAsnyc(int editionId, bool isOther)
+        public async Task<List<AttendeeLogisticSponsorJsonDto>> FindAllBaseDtosByIsOtherAsnyc(int editionId, bool isOther)
         {
             var query = this.GetBaseQuery(true)
                                     .FindByEditionId(false, editionId)
                                     .FindByIsOther(editionId, isOther)
-                                    .Select(c => new AttendeeLogisticSponsorBaseDto
+                                    .Select(c => new AttendeeLogisticSponsorJsonDto
                                     {
                                         Id = c.Id,
                                         Uid = c.Uid,
@@ -167,11 +167,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>Finds the other dto asynchronous.</summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<AttendeeLogisticSponsorBaseDto> FindOtherDtoAsync(int editionId)
+        public async Task<AttendeeLogisticSponsorJsonDto> FindOtherDtoAsync(int editionId)
         {
             var query = this.GetBaseQuery(true)
                                 .IsOtherRequired()
-                                .Select(c => new AttendeeLogisticSponsorBaseDto
+                                .Select(c => new AttendeeLogisticSponsorJsonDto
                                 {
                                     Id = c.Id,
                                     Uid = c.Uid,

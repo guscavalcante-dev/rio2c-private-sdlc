@@ -4,7 +4,7 @@
 // Created          : 01-27-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="LogisticSponsorsNameBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,8 +28,18 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string LanguageName { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="LogisticSponsorsNameBaseCommand"/> class.</summary>
+        /// <param name="logisticSponsorDto">The logistic sponsor dto.</param>
+        /// <param name="languageDto">The language dto.</param>
+        public LogisticSponsorsNameBaseCommand(LogisticSponsorDto logisticSponsorDto, LanguageDto languageDto)
+        {
+            this.Value = logisticSponsorDto?.GetNameByLanguageCode(languageDto.Code); ;
+            this.LanguageCode = languageDto.Code;
+            this.LanguageName = languageDto.Name;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="LogisticSponsorsNameBaseCommand"/> class.</summary>
         /// <param name="entity">The entity.</param>
-        public LogisticSponsorsNameBaseCommand(AttendeeLogisticSponsorBaseDto entity, LanguageDto languageDto)
+        public LogisticSponsorsNameBaseCommand(LogisticSponsorJsonDto entity, LanguageDto languageDto)
         {
             this.Value = entity?.GetNameByLanguageCode(languageDto.Code);;
             this.LanguageCode = languageDto.Code;

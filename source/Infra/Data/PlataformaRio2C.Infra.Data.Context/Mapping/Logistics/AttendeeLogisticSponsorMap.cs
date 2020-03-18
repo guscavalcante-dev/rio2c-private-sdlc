@@ -3,8 +3,8 @@
 // Author           : Arthur Souza
 // Created          : 01-20-2020
 //
-// Last Modified By : Arthur Souza
-// Last Modified On : 01-24-2020
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="AttendeeLogisticSponsorMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,16 +27,15 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         public AttendeeLogisticSponsorMap()
         {
             this.ToTable("AttendeeLogisticSponsors");
-                        
+
             // Relationships
-            
+            this.HasRequired(t => t.Edition)
+                .WithMany()
+                .HasForeignKey(d => d.EditionId);
+
             this.HasRequired(t => t.LogisticSponsor)
                 .WithMany(e => e.AttendeeLogisticSponsors)
                 .HasForeignKey(d => d.LogisticSponsorId);
-            
-            this.HasRequired(t => t.Edition)
-                .WithMany(e => e.AttendeeLogisticSponsors)
-                .HasForeignKey(d => d.EditionId);
         }
     }
 }

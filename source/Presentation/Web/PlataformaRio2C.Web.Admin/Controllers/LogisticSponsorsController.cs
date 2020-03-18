@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="LogisticSponsorsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,6 +23,7 @@ using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
@@ -91,16 +92,17 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions)
         {
-            var sponsors = await this.logisticSponsorRepo.FindAllByDataTable(
+            var sponsors = await this.logisticSponsorRepo.FindAllByDataTableAsync(
                 request.Start / request.Length,
                 request.Length,
                 request.Search?.Value,
                 request.GetSortColumns(),
                 showAllEditions,
-                this.EditionDto?.Id);
+                this.EditionDto.Id);
 
-            foreach (var item in sponsors){
-                item.Name = item.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, '|');
+            foreach (var sponsor in sponsors)
+            {
+                sponsor.Name = sponsor.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, Language.Separator);
             }
 
             var response = DataTablesResponse.Create(request, sponsors.TotalItemCount, sponsors.TotalItemCount, sponsors);
@@ -115,18 +117,59 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         #endregion
 
         #endregion
-                       
+
+        #region Total Count Widget
+
+        /// <summary>Shows the total count widget.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowTotalCountWidget()
+        {
+            var placesCount = await this.logisticSponsorRepo.CountAllByDataTableAsync(this.EditionDto.Id, true);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", placesCount), divIdOrClass = "#LogisticSponsorsTotalCountWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Edition Count Widget
+
+        /// <summary>Shows the edition count widget.</summary>
+        /// <returns></returns>
+        public async Task<ActionResult> ShowEditionCountWidget()
+        {
+            var placesCount = await this.logisticSponsorRepo.CountAllByDataTableAsync(this.EditionDto.Id, false);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", placesCount), divIdOrClass = "#LogisticSponsorsEditionCountWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
         #region Create
 
         /// <summary>Shows the create modal.</summary>
         /// <returns></returns>
         [HttpGet]
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
-        public async Task<ActionResult> ShowCreateModal()
+        public async Task<ActionResult> ShowCreateModal(Guid? logisticSponsorUid)
         {
-            var cmd = new CreateLogisticSponsors(
-                await this.languageRepo.FindAllDtosAsync(),
-                this.UserInterfaceLanguage);
+            var cmd = new CreateLogisticSponsor(
+                logisticSponsorUid.HasValue ? await this.logisticSponsorRepo.FindDtoAsync(this.EditionDto.Id, logisticSponsorUid.Value) : null,
+                await this.languageRepo.FindAllDtosAsync());
 
             return Json(new
             {
@@ -138,12 +181,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        /// <summary>Creates the specified collaborator.</summary>
+        /// <summary>Creates the specified logistic sponsor.</summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
-        public async Task<ActionResult> Create(CreateLogisticSponsors cmd)
+        public async Task<ActionResult> Create(CreateLogisticSponsor cmd)
         {
             var result = new AppValidationResult();
 
@@ -181,7 +224,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     message = ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/_TinyForm", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("Modals/_CreateForm", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -191,7 +234,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Speaker, Labels.CreatedM) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Sponsor, Labels.CreatedM) });
         }
 
         #endregion
@@ -206,14 +249,13 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> ShowUpdateModal(Guid? sponsorUid, bool? isAddingToCurrentEdition)
         {
-            UpdateLogisticSponsors cmd;
+            UpdateLogisticSponsor cmd;
 
             try
             {
-                cmd = new UpdateLogisticSponsors(
+                cmd = new UpdateLogisticSponsor(
                     await this.CommandBus.Send(new FindLogisticSponsorDtoByUid(sponsorUid, this.UserInterfaceLanguage)),
                     await languageRepo.FindAllDtosAsync(),
-                    UserInterfaceLanguage,
                     isAddingToCurrentEdition);
             }
             catch (DomainException ex)
@@ -236,7 +278,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <returns></returns>
         [HttpPost]
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
-        public async Task<ActionResult> Update(UpdateLogisticSponsors cmd)
+        public async Task<ActionResult> Update(UpdateLogisticSponsor cmd)
         {
             var result = new AppValidationResult();
 
@@ -296,7 +338,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <returns></returns>
         [HttpPost]
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
-        public async Task<ActionResult> Delete(DeleteLogisticSponsors cmd)
+        public async Task<ActionResult> Delete(DeleteLogisticSponsor cmd)
         {
             var result = new AppValidationResult();
 

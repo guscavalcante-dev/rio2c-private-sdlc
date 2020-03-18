@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="LogisticsSponsorMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,11 +30,6 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                         
             this.Property(t => t.Name)
                 .HasMaxLength(LogisticSponsor.NameMaxLength);
-
-            // Relationships
-            this.HasMany(t => t.AttendeeLogisticSponsors)
-                .WithRequired(e => e.LogisticSponsor)
-                .HasForeignKey(e => e.LogisticSponsorId);
         }
     }
 }

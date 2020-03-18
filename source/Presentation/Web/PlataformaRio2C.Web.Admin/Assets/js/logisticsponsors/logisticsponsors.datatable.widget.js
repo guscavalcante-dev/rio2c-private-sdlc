@@ -3,8 +3,8 @@
 // Author           : Arthur Souza
 // Created          : 01-20-2020
 //
-// Last Modified By : Arthur Souza
-// Last Modified On : 01-20-2020
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="logisticsponsors.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -46,9 +46,9 @@ var LogisticSponsorsDataTableWidget = function () {
             "language": {
                 "url": "/Assets/components/datatables/datatables." + globalVariables.userInterfaceLanguage + ".js"
             },
-            select: {
-                style: 'multi'
-            },
+            //select: {
+            //    style: 'multi'
+            //},
             lengthMenu: [pageLengthOptions, pageLengthOptions],
             displayStart: displayStart,
             pageLength: pageLength,
@@ -106,20 +106,44 @@ var LogisticSponsorsDataTableWidget = function () {
                 {
                     data: 'Name',
                     render: function (data, type, full, meta) {
-                        return data;
+	                    var html = data;
+
+	                    if (!full.IsInCurrentEdition) {
+		                    html += ' <span class="kt-badge kt-badge--inline kt-badge--info mt-2">' + labels.notInEdition + '</span>';
+	                    }
+
+	                    return html;
                     }
                 },
+	            {
+                    data: 'IsOther',
+                    render: function (data, type, full, meta) {
+                        var html = '';
+                        if (data === null) {
+	                        return '';
+                        }
+
+	                    if (data !== true) {
+                            html += '<span class="kt-badge kt-badge--inline kt-badge--success">' + translate.main + '</span>';
+	                    }
+	                    else {
+                            html += '<span class="kt-badge kt-badge--inline kt-badge--info">' + translate.others + '</span>';
+                        }
+
+	                    return html;
+                    }
+	            },
                 {
                     data: 'CreateDate',
                     render: function (data) {
-                        return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+	                    return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
 
                 },
                 {
                     data: 'UpdateDate',
                     render: function (data) {
-                        return moment(data).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+	                    return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
                 },
                 {
@@ -134,16 +158,17 @@ var LogisticSponsorsDataTableWidget = function () {
                                             <div class="dropdown-menu dropdown-menu-right">';
 
                         if (!full.IsInCurrentEdition) {
-                            html += '<button class="dropdown-item" onclick="LogisticSponsorsUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
-                        }
-
-                        html += '<button class="dropdown-item" onclick="LogisticSponsorsUpdate.showModal(\'' + full.Uid + '\', false);"><i class="la la-edit"></i> ' + labels.edit + '</button>';
-
-                        if (full.IsInCurrentEdition && full.IsInOtherEdition) {
-                            html += '<button class="dropdown-item" onclick="LogisticSponsorsDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + removeFromEdition + '</button>';
+                            html += '<button class="dropdown-item" onclick="LogisticSponsorsCreate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         }
                         else {
-                            html += '<button class="dropdown-item" onclick="LogisticSponsorsDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+	                        html += '<button class="dropdown-item" onclick="LogisticSponsorsUpdate.showModal(\'' + full.Uid + '\', false);"><i class="la la-edit"></i> ' + labels.edit + '</button>';
+
+	                        if (full.IsInCurrentEdition && full.IsInOtherEdition) {
+		                        html += '<button class="dropdown-item" onclick="LogisticSponsorsDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + removeFromEdition + '</button>';
+	                        }
+	                        else {
+		                        html += '<button class="dropdown-item" onclick="LogisticSponsorsDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+	                        }
                         }
 
                         html += '\
@@ -157,8 +182,12 @@ var LogisticSponsorsDataTableWidget = function () {
             columnDefs: [
                 {
                     targets: [0],
-                    width: "25%",
-                    className: "dt-center"
+                    width: "50%"
+                },
+                {
+	                targets: [1],
+                    className: "dt-center",
+	                orderable: false
                 },
                 {
                     targets: [2, 3],

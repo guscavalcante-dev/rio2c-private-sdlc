@@ -4,7 +4,7 @@
 // Created          : 03-02-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-13-2020
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="UpdateLogisticMainInformation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -102,26 +102,26 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(1000, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string AdditionalInfo { get; set; }
 
-        public List<AttendeeLogisticSponsorBaseDto> MainSponsors { get; set; }
-        public List<AttendeeLogisticSponsorBaseDto> OtherSponsors { get; set; }
+        public List<AttendeeLogisticSponsorJsonDto> MainSponsors { get; set; }
+        public List<AttendeeLogisticSponsorJsonDto> OtherSponsors { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateLogisticMainInformation"/> class.</summary>
         /// <param name="logisticDto">The logistic dto.</param>
-        /// <param name="otherAttendeeLogisticSponsorBaseDto">The other attendee logistic sponsor base dto.</param>
+        /// <param name="otherLogisticSponsorJsonDto">The other attendee logistic sponsor base dto.</param>
         /// <param name="mainLogisticSponsorBaseDtos">The main logistic sponsor base dtos.</param>
         /// <param name="otherLogisticSponsorBaseDtos">The other logistic sponsor base dtos.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public UpdateLogisticMainInformation(
             LogisticDto logisticDto,
-            AttendeeLogisticSponsorBaseDto otherAttendeeLogisticSponsorBaseDto, 
-            List<AttendeeLogisticSponsorBaseDto> mainLogisticSponsorBaseDtos,
-            List<AttendeeLogisticSponsorBaseDto> otherLogisticSponsorBaseDtos,
+            AttendeeLogisticSponsorJsonDto otherLogisticSponsorJsonDto, 
+            List<AttendeeLogisticSponsorJsonDto> mainLogisticSponsorBaseDtos,
+            List<AttendeeLogisticSponsorJsonDto> otherLogisticSponsorBaseDtos,
             string userInterfaceLanguage)
         {
             this.LogisticUid = logisticDto?.Logistic?.Uid ?? Guid.Empty;
-            this.UpdateAirfareSponsor(logisticDto, otherAttendeeLogisticSponsorBaseDto);
-            this.UpdateAccommodationSponsor(logisticDto, otherAttendeeLogisticSponsorBaseDto);
-            this.UpdateAirportTransferSponsor(logisticDto, otherAttendeeLogisticSponsorBaseDto);
+            this.UpdateAirfareSponsor(logisticDto, otherLogisticSponsorJsonDto);
+            this.UpdateAccommodationSponsor(logisticDto, otherLogisticSponsorJsonDto);
+            this.UpdateAirportTransferSponsor(logisticDto, otherLogisticSponsorJsonDto);
             this.IsVehicleDisposalRequired = logisticDto?.Logistic?.IsVehicleDisposalRequired ?? false;
             this.IsCityTransferRequired = logisticDto?.Logistic?.IsCityTransferRequired ?? false;
             this.AdditionalInfo = logisticDto?.Logistic?.AdditionalInfo;
@@ -139,8 +139,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="otherLogisticSponsorBaseDtos">The other logistic sponsor base dtos.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public void UpdateModelsAndLists(
-            List<AttendeeLogisticSponsorBaseDto> mainLogisticSponsorBaseDtos,
-            List<AttendeeLogisticSponsorBaseDto> otherLogisticSponsorBaseDtos,
+            List<AttendeeLogisticSponsorJsonDto> mainLogisticSponsorBaseDtos,
+            List<AttendeeLogisticSponsorJsonDto> otherLogisticSponsorBaseDtos,
             string userInterfaceLanguage)
         {
             // Mains logistic sponsors
@@ -156,8 +156,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Updates the airfare sponsor.</summary>
         /// <param name="logisticDto">The logistic dto.</param>
-        /// <param name="otherAttendeeLogisticSponsorBaseDto">The other attendee logistic sponsor base dto.</param>
-        private void UpdateAirfareSponsor(LogisticDto logisticDto, AttendeeLogisticSponsorBaseDto otherAttendeeLogisticSponsorBaseDto)
+        /// <param name="otherLogisticSponsorJsonDto">The other attendee logistic sponsor base dto.</param>
+        private void UpdateAirfareSponsor(LogisticDto logisticDto, AttendeeLogisticSponsorJsonDto otherLogisticSponsorJsonDto)
         {
             this.IsAirfareSponsored = false;
 
@@ -171,7 +171,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
             if (airfareAttendeeLogisticSponsorDto.AttendeeLogisticSponsor.IsOther)
             {
-                this.AirfareSponsorUid = otherAttendeeLogisticSponsorBaseDto?.Uid;
+                this.AirfareSponsorUid = otherLogisticSponsorJsonDto?.Uid;
                 this.AirfareSponsorOtherUid = airfareAttendeeLogisticSponsorDto.AttendeeLogisticSponsor.Uid;
             }
             else
@@ -182,8 +182,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Updates the accommodation sponsor.</summary>
         /// <param name="logisticDto">The logistic dto.</param>
-        /// <param name="otherAttendeeLogisticSponsorBaseDto">The other attendee logistic sponsor base dto.</param>
-        private void UpdateAccommodationSponsor(LogisticDto logisticDto, AttendeeLogisticSponsorBaseDto otherAttendeeLogisticSponsorBaseDto)
+        /// <param name="otherLogisticSponsorJsonDto">The other attendee logistic sponsor base dto.</param>
+        private void UpdateAccommodationSponsor(LogisticDto logisticDto, AttendeeLogisticSponsorJsonDto otherLogisticSponsorJsonDto)
         {
             this.IsAccommodationSponsored = false;
 
@@ -197,7 +197,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
             if (accommodationAttendeeLogisticSponsorDto.AttendeeLogisticSponsor.IsOther)
             {
-                this.AccommodationSponsorUid = otherAttendeeLogisticSponsorBaseDto?.Uid;
+                this.AccommodationSponsorUid = otherLogisticSponsorJsonDto?.Uid;
                 this.AccommodationSponsorOtherUid = accommodationAttendeeLogisticSponsorDto.AttendeeLogisticSponsor.Uid;
             }
             else
@@ -208,8 +208,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Updates the airport transfer sponsor.</summary>
         /// <param name="logisticDto">The logistic dto.</param>
-        /// <param name="otherAttendeeLogisticSponsorBaseDto">The other attendee logistic sponsor base dto.</param>
-        private void UpdateAirportTransferSponsor(LogisticDto logisticDto, AttendeeLogisticSponsorBaseDto otherAttendeeLogisticSponsorBaseDto)
+        /// <param name="otherLogisticSponsorJsonDto">The other attendee logistic sponsor base dto.</param>
+        private void UpdateAirportTransferSponsor(LogisticDto logisticDto, AttendeeLogisticSponsorJsonDto otherLogisticSponsorJsonDto)
         {
             this.IsAirportTransferSponsored = false;
 
@@ -223,7 +223,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
             if (airportTransferAttendeeLogisticSponsorDto.AttendeeLogisticSponsor.IsOther)
             {
-                this.AirportTransferSponsorUid = otherAttendeeLogisticSponsorBaseDto?.Uid;
+                this.AirportTransferSponsorUid = otherLogisticSponsorJsonDto?.Uid;
                 this.AirportTransferSponsorOtherUid = airportTransferAttendeeLogisticSponsorDto.AttendeeLogisticSponsor.Uid;
             }
             else

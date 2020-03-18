@@ -162,10 +162,12 @@
     <Compile Include="Dtos\Logistics\LogisticAirfareDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticAirfareJsonDto.cs" />
     <Compile Include="Dtos\Logistics\AttendeeLogisticSponsorDto.cs" />
+    <Compile Include="Dtos\Logistics\AttendeeLogisticSponsorJsonDto.cs" />
+    <Compile Include="Dtos\Logistics\LogisticSponsorDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticTransferDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticRequestDetailsDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticRequestBaseDto.cs" />
-    <Compile Include="Dtos\Logistics\AttendeeLogisticSponsorBaseDto.cs" />
+    <Compile Include="Dtos\Logistics\LogisticSponsorJsonDto.cs" />
     <Compile Include="Dtos\Messages\NotificationEmailConversationDto.cs" />
     <Compile Include="Dtos\Messages\HubBaseDto.cs" />
     <Compile Include="Dtos\Messages\MessageHubDto.cs" />

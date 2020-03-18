@@ -332,9 +332,9 @@
     <Compile Include="CQRS\Commands\Logistics\DeleteLogistic.cs" />
     <Compile Include="CQRS\Commands\Logistics\UpdateLogisticMainInformation.cs" />
     <Compile Include="CQRS\Commands\LogisticSponsors\BaseCommands\LogisticSponsorsNameBaseCommand.cs" />
-    <Compile Include="CQRS\Commands\LogisticSponsors\DeleteLogisticSponsors.cs" />
-    <Compile Include="CQRS\Commands\LogisticSponsors\UpdateLogisticSponsors.cs" />
-    <Compile Include="CQRS\Commands\LogisticSponsors\CreateLogisticSponsors.cs" />
+    <Compile Include="CQRS\Commands\LogisticSponsors\DeleteLogisticSponsor.cs" />
+    <Compile Include="CQRS\Commands\LogisticSponsors\UpdateLogisticSponsor.cs" />
+    <Compile Include="CQRS\Commands\LogisticSponsors\CreateLogisticSponsor.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendMusicCommissionWelcomeEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Music\Projects\AcceptMusicProjectEvaluation.cs" />
     <Compile Include="CQRS\Commands\Music\Projects\DeleteMusicProject.cs" />

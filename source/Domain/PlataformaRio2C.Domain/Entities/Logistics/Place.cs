@@ -185,7 +185,6 @@ namespace PlataformaRio2C.Domain.Entities
             return this.AttendeePlaces?.FirstOrDefault(ac => ac.EditionId == editionId);
         }
 
-
         /// <summary>Finds all attendee places not deleted.</summary>
         /// <param name="edition">The edition.</param>
         /// <returns></returns>

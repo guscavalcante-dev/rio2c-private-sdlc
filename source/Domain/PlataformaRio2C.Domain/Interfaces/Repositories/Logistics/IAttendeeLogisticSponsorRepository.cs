@@ -4,7 +4,7 @@
 // Created          : 01-24-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="IAttendeeLogisticSponsorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,7 +21,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IAttendeeLogisticSponsorRepository</summary>
     public interface IAttendeeLogisticSponsorRepository : IRepository<AttendeeLogisticSponsor>
     {
-        Task<List<AttendeeLogisticSponsorBaseDto>> FindAllBaseDtosByIsOtherAsnyc(int editionDtoId, bool isOther);
-        Task<AttendeeLogisticSponsorBaseDto> FindOtherDtoAsync(int editionId);
+        Task<List<AttendeeLogisticSponsorJsonDto>> FindAllBaseDtosByIsOtherAsnyc(int editionDtoId, bool isOther);
+        Task<AttendeeLogisticSponsorJsonDto> FindOtherDtoAsync(int editionId);
     }    
 }

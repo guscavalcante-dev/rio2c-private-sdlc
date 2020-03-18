@@ -3,8 +3,8 @@
 // Author           : Arthur Souza
 // Created          : 01-27-2020
 //
-// Last Modified By : Arthur Souza
-// Last Modified On : 01-27-2020
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="collaborators.create.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,10 +29,11 @@ var LogisticSponsorsCreate = function () {
     };
 
     // Show modal ---------------------------------------------------------------------------------
-    var showModal = function () {
+    var showModal = function (logisticSponsorUid) {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
+        jsonParameters.logisticSponsorUid = logisticSponsorUid;
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/LogisticSponsors/ShowCreateModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -74,8 +75,8 @@ var LogisticSponsorsCreate = function () {
     };
 
     return {
-        showModal: function () {
-            showModal();
+        showModal: function (logisticSponsorUid) {
+            showModal(logisticSponsorUid);
         }
     };
 }();
