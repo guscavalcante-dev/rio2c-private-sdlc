@@ -418,6 +418,7 @@
     <Content Include="Assets\js\addresses\addresses.form.js" />
     <Content Include="Assets\js\logisticsponsors\logisticsponsors.editioncount.widget.js" />
     <Content Include="Assets\js\logisticsponsors\logisticsponsors.totalcount.widget.js" />
+    <Content Include="Assets\js\logisticsponsors\logisticsponsors.maininformation.widget.js" />
     <Content Include="Assets\js\logistics\logistics.accommodation.create.js" />
     <Content Include="Assets\js\logistics\logistics.accommodation.delete.js" />
     <Content Include="Assets\js\logistics\logistics.transfer.update.js" />
@@ -437,7 +438,6 @@
     <Content Include="Assets\js\logisticsponsors\logisticsponsors.create.js" />
     <Content Include="Assets\js\logisticsponsors\logisticsponsors.datatable.widget.js" />
     <Content Include="Assets\js\logisticsponsors\logisticsponsors.delete.js" />
-    <Content Include="Assets\js\logisticsponsors\logisticsponsors.update.js" />
     <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.editioncount.widget.js" />
     <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.rooms.widget.js" />
     <Content Include="Assets\js\audiovisual\meetingparameters\audiovisual.meetingparameters.totalcount.widget.js" />
@@ -8448,10 +8448,9 @@
     <Content Include="Views\Speakers\Modals\UpdateSocialNetworksModal.cshtml" />
     <Content Include="Views\LogisticSponsors\Widgets\DataTableWidget.cshtml" />
     <Content Include="Views\LogisticSponsors\Modals\CreateModal.cshtml" />
-    <Content Include="Views\LogisticSponsors\Modals\_CreateForm.cshtml" />
+    <Content Include="Views\LogisticSponsors\Modals\CreateForm.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\LogisticSponsorsNameBaseCommand.cshtml" />
     <Content Include="Views\LogisticSponsors\EditorTemplates\LogisticSponsorsNameBaseCommand.cshtml" />
-    <Content Include="Views\LogisticSponsors\Modals\UpdateModal.cshtml" />
     <Content Include="Views\Logistics\EditorTemplates\LogisticSponsorsNameBaseCommand.cshtml" />
     <Content Include="Views\Logistics\Modals\CreateForm.cshtml" />
     <Content Include="Views\Logistics\Modals\CreateModal.cshtml" />
@@ -8515,6 +8514,10 @@
     <Content Include="Views\Places\Modals\UpdateMainInformationForm.cshtml" />
     <Content Include="Views\LogisticSponsors\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Views\LogisticSponsors\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Views\LogisticSponsors\Details.cshtml" />
+    <Content Include="Views\LogisticSponsors\Widgets\MainInformationWidget.cshtml" />
+    <Content Include="Views\LogisticSponsors\Modals\UpdateMainInformationModal.cshtml" />
+    <Content Include="Views\LogisticSponsors\Modals\UpdateMainInformationForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -4,7 +4,7 @@
 // Created          : 01-07-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-16-2020
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="horizontaltracks.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -204,12 +204,12 @@ var PresentationFormatsDataTableWidget = function () {
         table.ajax.reload();
     };
 
-    var showDetails = function (collaboratorUid) {
-        if (MyRio2cCommon.isNullOrEmpty(collaboratorUid)) {
+    var showDetails = function (presentationFormatUid) {
+        if (MyRio2cCommon.isNullOrEmpty(presentationFormatUid)) {
             return;
         }
 
-        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/PresentationFormats/Details/' + collaboratorUid);
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/PresentationFormats/Details/' + presentationFormatUid);
     };
 
     return {
@@ -220,8 +220,8 @@ var PresentationFormatsDataTableWidget = function () {
         refreshData: function () {
             refreshData();
         },
-        showDetails: function (collaboratorUid) {
-            showDetails(collaboratorUid);
+        showDetails: function (presentationFormatUid) {
+            showDetails(presentationFormatUid);
         }
     };
 }();

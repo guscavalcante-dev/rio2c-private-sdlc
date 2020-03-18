@@ -15,6 +15,7 @@ using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using DataTables.AspNet.Core;
@@ -40,7 +41,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic + "," + Constants.CollaboratorType.CuratorshipAudiovisual)]
     public class LogisticSponsorsController : BaseController
     {
-        private readonly IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepo;
         private readonly ILogisticSponsorRepository logisticSponsorRepo;
         private readonly ILanguageRepository languageRepo;
 
@@ -48,19 +48,16 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="logisticSponsorRepo">The logistic sponsor repo.</param>
-        /// <param name="attendeeLogisticSponsorRepo">The attendee logistic sponsor repo.</param>
         /// <param name="languageRepo">The language repo.</param>
         public LogisticSponsorsController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             ILogisticSponsorRepository logisticSponsorRepo,
-            IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepo,
             ILanguageRepository languageRepo)
             : base(commandBus, identityController)
         {
             this.logisticSponsorRepo = logisticSponsorRepo;
             this.languageRepo = languageRepo;
-            this.attendeeLogisticSponsorRepo = attendeeLogisticSponsorRepo;
         }
 
         #region List
@@ -221,10 +218,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/_CreateForm", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("Modals/CreateForm", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -239,24 +236,79 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #endregion
 
+        #region Details
+
+        /// <summary>Detailses the specified identifier.</summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> Details(Guid? id)
+        {
+            var logisticSponsorDto = await this.logisticSponsorRepo.FindDtoAsync(this.EditionDto.Id, id ?? Guid.Empty);
+            if (logisticSponsorDto == null)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Sponsor, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "LogisticSponsors", new { Area = "" });
+            }
+
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Logistics, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Sponsors, Url.Action("Index", "LogisticSponsors", new { Area = "" })),
+                new BreadcrumbItemHelper(logisticSponsorDto.LogisticSponsor?.Name?.GetSeparatorTranslation(this.UserInterfaceLanguage, '|'), Url.Action("Details", "LogisticSponsors", new { Area = "", id }))
+            });
+
+            #endregion
+
+            return View(logisticSponsorDto);
+        }
+
+        #region Main Information Widget
+
+        /// <summary>Shows the main information widget.</summary>
+        /// <param name="logisticSponsorUid">The logistic sponsor uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowMainInformationWidget(Guid? logisticSponsorUid)
+        {
+            var mainInformationWidgetDto = await this.logisticSponsorRepo.FindMainInformationWidgetDtoAsync(this.EditionDto.Id, logisticSponsorUid ?? Guid.Empty);
+            if (mainInformationWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Sponsor, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#LogisticSponsorMainInformationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
         #region Update
 
-        /// <summary>Shows the update modal.</summary>
-        /// <param name="sponsorUid">The sponsor uid.</param>
-        /// <param name="isAddingToCurrentEdition">The is adding to current edition.</param>
+        /// <summary>Shows the update main information modal.</summary>
+        /// <param name="logisticSponsorUid">The logistic sponsor uid.</param>
         /// <returns></returns>
         [HttpGet]
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
-        public async Task<ActionResult> ShowUpdateModal(Guid? sponsorUid, bool? isAddingToCurrentEdition)
+        public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? logisticSponsorUid)
         {
-            UpdateLogisticSponsor cmd;
+            UpdateLogisticSponsorMainInformation cmd;
 
             try
             {
-                cmd = new UpdateLogisticSponsor(
-                    await this.CommandBus.Send(new FindLogisticSponsorDtoByUid(sponsorUid, this.UserInterfaceLanguage)),
-                    await languageRepo.FindAllDtosAsync(),
-                    isAddingToCurrentEdition);
+                var mainInformationWidgetDto = await this.logisticSponsorRepo.FindMainInformationWidgetDtoAsync(this.EditionDto.Id, logisticSponsorUid ?? Guid.Empty);
+                if (mainInformationWidgetDto == null)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Sponsor, Labels.FoundM.ToLowerInvariant()));
+                }
+
+                cmd = new UpdateLogisticSponsorMainInformation(
+                    mainInformationWidgetDto,
+                    await this.languageRepo.FindAllDtosAsync());
             }
             catch (DomainException ex)
             {
@@ -267,18 +319,18 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             {
                 status = "success",
                 pages = new List<dynamic>
-                { 
-                    new { page = this.RenderRazorViewToString("Modals/UpdateModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                {
+                    new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
 
-        /// <summary>Updates the specified tiny collaborator.</summary>
+        /// <summary>Updates the main information.</summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
-        public async Task<ActionResult> Update(UpdateLogisticSponsor cmd)
+        public async Task<ActionResult> UpdateMainInformation(UpdateLogisticSponsorMainInformation cmd)
         {
             var result = new AppValidationResult();
 
@@ -295,7 +347,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     this.EditionDto.Id,
                     this.EditionDto.Uid,
                     this.UserInterfaceLanguage);
-
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
                 {
@@ -313,10 +364,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new
                 {
                     status = "error",
-                    message = ex.GetInnerMessage(),
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/_CreateForm", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationForm", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -326,14 +377,18 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Speaker, Labels.UpdatedM) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Sponsor, Labels.UpdatedM) });
         }
+
+        #endregion
+
+        #endregion
 
         #endregion
 
         #region Delete
 
-        /// <summary>Deletes the specified command.</summary>
+        /// <summary>Deletes the specified logistic sponsor.</summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
@@ -382,26 +437,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Speaker, Labels.DeletedM) });
-        }
-
-        #endregion
-
-        #region Finds
-
-        /// <summary>Finds all by is other.</summary>
-        /// <returns></returns>
-        [HttpGet]
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic + "," + Constants.CollaboratorType.CuratorshipAudiovisual)]
-        public async Task<ActionResult> FindAllByIsOther()
-        {
-            var list = await this.attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, true);
-            
-            return Json(new
-            {
-                status = "success",
-                list
-            }, JsonRequestBehavior.AllowGet);
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Sponsor, Labels.DeletedM) });
         }
 
         #endregion

@@ -4,7 +4,7 @@
 // Created          : 02-25-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-26-2020
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="music.commissions.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -341,12 +341,12 @@ var MusicCommissionsDataTableWidget = function () {
         table.ajax.reload();
     };
 
-    var showDetails = function (collaboratorUid) {
-        if (MyRio2cCommon.isNullOrEmpty(collaboratorUid)) {
+    var showDetails = function (commissionUid) {
+        if (MyRio2cCommon.isNullOrEmpty(commissionUid)) {
             return;
         }
 
-        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Commissions/Details/' + collaboratorUid);
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Commissions/Details/' + commissionUid);
     };
 
     return {
@@ -360,8 +360,8 @@ var MusicCommissionsDataTableWidget = function () {
         exportEventbriteCsv: function() {
             exportEventbriteCsv();
         },
-        showDetails: function (collaboratorUid) {
-            showDetails(collaboratorUid);
+        showDetails: function (commissionUid) {
+            showDetails(commissionUid);
         }
     };
 }();

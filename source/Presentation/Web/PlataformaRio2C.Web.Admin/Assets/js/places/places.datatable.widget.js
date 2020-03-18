@@ -217,12 +217,12 @@ var PlacesDataTableWidget = function () {
         table.ajax.reload();
     };
 
-    var showDetails = function (collaboratorUid) {
-        if (MyRio2cCommon.isNullOrEmpty(collaboratorUid)) {
+    var showDetails = function (placeUid) {
+        if (MyRio2cCommon.isNullOrEmpty(placeUid)) {
             return;
         }
 
-        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Places/Details/' + collaboratorUid);
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Places/Details/' + placeUid);
     };
 
     return {
@@ -233,8 +233,8 @@ var PlacesDataTableWidget = function () {
         refreshData: function () {
             refreshData();
         },
-        showDetails: function (collaboratorUid) {
-            showDetails(collaboratorUid);
+        showDetails: function (placeUid) {
+            showDetails(placeUid);
         }
     };
 }();

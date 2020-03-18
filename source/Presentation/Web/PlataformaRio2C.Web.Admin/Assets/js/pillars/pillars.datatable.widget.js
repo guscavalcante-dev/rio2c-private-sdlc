@@ -217,12 +217,12 @@ var PillarsDataTableWidget = function () {
         table.ajax.reload();
     };
 
-    var showDetails = function (collaboratorUid) {
-        if (MyRio2cCommon.isNullOrEmpty(collaboratorUid)) {
+    var showDetails = function (pillarUid) {
+        if (MyRio2cCommon.isNullOrEmpty(pillarUid)) {
             return;
         }
 
-        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Pillars/Details/' + collaboratorUid);
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Pillars/Details/' + pillarUid);
     };
 
     return {
@@ -233,8 +233,8 @@ var PillarsDataTableWidget = function () {
         refreshData: function () {
             refreshData();
         },
-        showDetails: function (collaboratorUid) {
-            showDetails(collaboratorUid);
+        showDetails: function (pillarUid) {
+            showDetails(pillarUid);
         }
     };
 }();

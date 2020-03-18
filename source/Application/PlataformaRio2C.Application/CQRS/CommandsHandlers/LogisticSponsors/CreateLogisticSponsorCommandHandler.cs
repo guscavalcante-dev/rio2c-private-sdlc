@@ -29,6 +29,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IEditionRepository editionRepo;
         private readonly ILanguageRepository languageRepo;
 
+        /// <summary>Initializes a new instance of the <see cref="CreateLogisticSponsorCommandHandler"/> class.</summary>
+        /// <param name="eventBus">The event bus.</param>
+        /// <param name="uow">The uow.</param>
+        /// <param name="logisticSponsorRepository">The logistic sponsor repository.</param>
+        /// <param name="editionRepository">The edition repository.</param>
+        /// <param name="languageRepository">The language repository.</param>
         public CreateLogisticSponsorCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,

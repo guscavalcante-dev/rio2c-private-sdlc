@@ -1,0 +1,78 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Entities
+@model LogisticSponsorDto
+<div class="kt-portlet__body">
+    <div class="kt-widget kt-widget--user-profile-3">
+        <div class="kt-widget__top">
+            <div class="kt-widget__content pl-0" style="overflow: hidden;">
+                <div class="kt-widget__head">
+                    <span class="kt-widget__username">@(Model.LogisticSponsor.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, Language.Separator) ?? "-")</span>
+                    <div class="kt-widget__action">
+                        <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="LogisticSponsorsMainInformationWidget.showUpdateModal();">
+                            <i class="flaticon2-edit"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="kt-widget__subhead">
+                    @if (!Model.AttendeeLogisticSponsor.IsOther)
+                    {
+                        <span class="kt-badge kt-badge--inline kt-badge--success">@Labels.Main</span>
+                    }
+                    else
+                    {
+                        <span class="kt-badge kt-badge--inline kt-badge--info">@Labels.Others</span>
+                    }
+                </div>
+                @*@{
+                    var location = Model.AddressDto?.GetLocation(ViewBag.UserInterfaceLanguage);
+                }
+                @if (!string.IsNullOrEmpty(location))
+                {
+                    <div class="kt-widget__subhead">
+                        <a onclick="return false;"><i class="flaticon-placeholder"></i>@location</a>
+                    </div>
+                }
+                @{
+                    var address = Model.AddressDto?.GetAddress();
+                }
+                @if (!string.IsNullOrEmpty(address))
+                {
+                    <div class="kt-widget__subhead pt-0">
+                        <a onclick="return false;"><i class="flaticon-map-location"></i>@address</a>
+                    </div>
+                }*@
+            </div>
+        </div>
+        <div class="kt-widget__bottom">
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.Website</span>
+                    <span class="kt-widget__value">
+                        <span>
+                            @*@if (!string.IsNullOrEmpty(Model.Place.Website))
+                            {
+                                <a href="@(Model.Place.Website.GetUrlWithProtocol())" target="_blank">@Model.Place.Website</a>
+                            }
+                            else
+                            {
+                                @:-
+                            }*@
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.CreateDate</span>
+                    <span class="kt-widget__value"><span>@(Model.AttendeeLogisticSponsor.CreateDate.ToUserTimeZone().ToShortDateString()) @(Model.AttendeeLogisticSponsor.CreateDate.ToUserTimeZone().ToShortTimeString())</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.UpdateDate</span>
+                    <span class="kt-widget__value"><span>@(Model.AttendeeLogisticSponsor.UpdateDate.ToUserTimeZone().ToShortDateString()) @(Model.AttendeeLogisticSponsor.UpdateDate.ToUserTimeZone().ToShortTimeString())</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

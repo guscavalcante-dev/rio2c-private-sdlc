@@ -4,7 +4,7 @@
 // Created          : 01-07-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-16-2020
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="conferenceparticipantroles.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -204,12 +204,12 @@ var ConferenceParticipantRolesDataTableWidget = function () {
         table.ajax.reload();
     };
 
-    var showDetails = function (collaboratorUid) {
-        if (MyRio2cCommon.isNullOrEmpty(collaboratorUid)) {
+    var showDetails = function (conferenceParticipantRoleUid) {
+        if (MyRio2cCommon.isNullOrEmpty(conferenceParticipantRoleUid)) {
             return;
         }
 
-        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/ParticipantRoles/Details/' + collaboratorUid);
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/ParticipantRoles/Details/' + conferenceParticipantRoleUid);
     };
 
     return {
@@ -220,8 +220,8 @@ var ConferenceParticipantRolesDataTableWidget = function () {
         refreshData: function () {
             refreshData();
         },
-        showDetails: function (collaboratorUid) {
-            showDetails(collaboratorUid);
+        showDetails: function (conferenceParticipantRoleUid) {
+            showDetails(conferenceParticipantRoleUid);
         }
     };
 }();

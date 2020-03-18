@@ -204,12 +204,12 @@ var RoomsDataTableWidget = function () {
         table.ajax.reload();
     };
 
-    var showDetails = function (collaboratorUid) {
-        if (MyRio2cCommon.isNullOrEmpty(collaboratorUid)) {
+    var showDetails = function (roomUid) {
+        if (MyRio2cCommon.isNullOrEmpty(roomUid)) {
             return;
         }
 
-        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Rooms/Details/' + collaboratorUid);
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Rooms/Details/' + roomUid);
     };
 
     return {
@@ -220,8 +220,8 @@ var RoomsDataTableWidget = function () {
         refreshData: function () {
             refreshData();
         },
-        showDetails: function (collaboratorUid) {
-            showDetails(collaboratorUid);
+        showDetails: function (roomUid) {
+            showDetails(roomUid);
         }
     };
 }();

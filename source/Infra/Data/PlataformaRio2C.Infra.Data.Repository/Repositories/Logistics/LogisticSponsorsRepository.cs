@@ -177,6 +177,23 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        /// <summary>Finds the main information widget dto asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="placeUid">The place uid.</param>
+        /// <returns></returns>
+        public async Task<LogisticSponsorDto> FindMainInformationWidgetDtoAsync(int editionId, Guid placeUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(placeUid)
+                                .Select(ls => new LogisticSponsorDto
+                                {
+                                    LogisticSponsor = ls,
+                                    AttendeeLogisticSponsor = ls.AttendeeLogisticSponsors.FirstOrDefault(als => als.EditionId == editionId && !als.IsDeleted && !als.Edition.IsDeleted)
+                                });
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
 
         /// <summary>Finds all by data table asynchronous.</summary>
         /// <param name="page">The page.</param>

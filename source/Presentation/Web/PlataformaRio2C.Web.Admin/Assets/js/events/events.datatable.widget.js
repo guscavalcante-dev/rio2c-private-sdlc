@@ -4,7 +4,7 @@
 // Created          : 01-05-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-16-2020
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="events.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -215,12 +215,12 @@ var EventsDataTableWidget = function () {
         table.ajax.reload();
     };
 
-    var showDetails = function (collaboratorUid) {
-        if (MyRio2cCommon.isNullOrEmpty(collaboratorUid)) {
+    var showDetails = function (eventUid) {
+        if (MyRio2cCommon.isNullOrEmpty(eventUid)) {
             return;
         }
 
-        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Events/Details/' + collaboratorUid);
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Events/Details/' + eventUid);
     };
 
     return {
@@ -231,8 +231,8 @@ var EventsDataTableWidget = function () {
         refreshData: function () {
             refreshData();
         },
-        showDetails: function (collaboratorUid) {
-            showDetails(collaboratorUid);
+        showDetails: function (eventUid) {
+            showDetails(eventUid);
         }
     };
 }();

@@ -687,8 +687,8 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/logisticsponsors.create.js").Include(
                 "~/Assets/js/logisticsponsors/logisticsponsors.create.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/logisticsponsors.update.js").Include(
-                "~/Assets/js/logisticsponsors/logisticsponsors.update.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/logisticsponsors.details.js").Include(
+                "~/Assets/js/logisticsponsors/logisticsponsors.maininformation.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/logisticsponsors.delete.js").Include(
                 "~/Assets/js/logisticsponsors/logisticsponsors.delete.js"));

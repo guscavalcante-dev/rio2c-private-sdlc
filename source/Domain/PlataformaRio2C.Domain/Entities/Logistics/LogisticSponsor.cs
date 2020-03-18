@@ -92,6 +92,29 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
         }
 
+        /// <summary>Updates the main information.</summary>
+        /// <param name="names">The names.</param>
+        /// <param name="edition">The edition.</param>
+        /// <param name="isAirfareTicketRequired">if set to <c>true</c> [is airfare ticket required].</param>
+        /// <param name="isOther">if set to <c>true</c> [is other].</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateMainInformation(
+            List<TranslatedName> names,
+            Edition edition,
+            bool isAirfareTicketRequired,
+            bool isOther,
+            int userId)
+        {
+            this.UpdateName(names);
+            this.IsAirfareTicketRequired = isAirfareTicketRequired;
+            this.IsOtherRequired = false;
+            this.SynchronizeAttendeeLogisticSponsors(edition, isOther, userId);
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
         /// <summary>Deletes the specified edition.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="userId">The user identifier.</param>

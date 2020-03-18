@@ -161,7 +161,7 @@ var LogisticSponsorsDataTableWidget = function () {
                             html += '<button class="dropdown-item" onclick="LogisticSponsorsCreate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         }
                         else {
-	                        html += '<button class="dropdown-item" onclick="LogisticSponsorsUpdate.showModal(\'' + full.Uid + '\', false);"><i class="la la-edit"></i> ' + labels.edit + '</button>';
+                            html += '<button class="dropdown-item" onclick="LogisticSponsorsDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-edit"></i> ' + labels.edit + '</button>';
 
 	                        if (full.IsInCurrentEdition && full.IsInOtherEdition) {
 		                        html += '<button class="dropdown-item" onclick="LogisticSponsorsDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + removeFromEdition + '</button>';
@@ -223,6 +223,14 @@ var LogisticSponsorsDataTableWidget = function () {
         table.ajax.reload();
     };
 
+    var showDetails = function (logisticSponsorUid) {
+        if (MyRio2cCommon.isNullOrEmpty(logisticSponsorUid)) {
+		    return;
+	    }
+
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/LogisticSponsors/Details/' + logisticSponsorUid);
+    };
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
@@ -231,8 +239,8 @@ var LogisticSponsorsDataTableWidget = function () {
         refreshData: function () {
             refreshData();
         },
-        exportEventbriteCsv: function() {
-            exportEventbriteCsv();
+        showDetails: function (logisticSponsorUid) {
+            showDetails(logisticSponsorUid);
         }
     };
 }();

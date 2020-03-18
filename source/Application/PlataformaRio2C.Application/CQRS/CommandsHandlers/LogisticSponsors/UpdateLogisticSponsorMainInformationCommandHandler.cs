@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-17-2020
 // ***********************************************************************
-// <copyright file="CreateTrackCommandHandler.cs" company="Softo">
+// <copyright file="UpdateLogisticSponsorMainInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -23,41 +23,39 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>CreateTrackCommandHandler</summary>
-    public class UpdateLogisticSponsorCommandHandler : LogisticSponsorBaseCommandHandler, IRequestHandler<UpdateLogisticSponsor, AppValidationResult>
+    /// <summary>UpdateLogisticSponsorMainInformationCommandHandler</summary>
+    public class UpdateLogisticSponsorMainInformationCommandHandler : LogisticSponsorBaseCommandHandler, IRequestHandler<UpdateLogisticSponsorMainInformation, AppValidationResult>
     {
         private readonly IEditionRepository editionRepo;
         private readonly ILanguageRepository languageRepo;
-        private readonly ILogisticSponsorRepository logisticSponsorRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="CreateTrackCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="UpdateLogisticSponsorMainInformationCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
-        /// <param name="trackRepository">The track repository.</param>
+        /// <param name="logisticSponsorRepository">The logistic sponsor repository.</param>
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="languageRepository">The language repository.</param>
-        public UpdateLogisticSponsorCommandHandler(
+        public UpdateLogisticSponsorMainInformationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            ILogisticSponsorRepository logisticSponsorRepo,
+            ILogisticSponsorRepository logisticSponsorRepository,
             IEditionRepository editionRepository,
             ILanguageRepository languageRepository)
-            : base(eventBus, uow, logisticSponsorRepo)
+            : base(eventBus, uow, logisticSponsorRepository)
         {
             this.editionRepo = editionRepository;
             this.languageRepo = languageRepository;
-            this.logisticSponsorRepo = logisticSponsorRepo;
         }
 
-        /// <summary>Handles the specified create track.</summary>
+        /// <summary>Handles the specified update logistic sponsor main information.</summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(UpdateLogisticSponsor cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(UpdateLogisticSponsorMainInformation cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
-            var logisticSponsor = await this.GetLogisticSponsorByUid(cmd.LogisticSponsorUid);
+            var logisticSponsor = await this.GetLogisticSponsorByUid(cmd.LogisticSponsorUid ?? Guid.Empty);
 
             #region Initial validations
 
@@ -71,7 +69,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
 
-            logisticSponsor.Update(
+            logisticSponsor.UpdateMainInformation(
                 cmd.Names?.Select(d => new TranslatedName(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language))?.ToList(),
                 await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
                 cmd.IsAirfareTicketRequired,

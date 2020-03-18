@@ -24,6 +24,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface ILogisticSponsorRepository : IRepository<LogisticSponsor>
     {
         Task<LogisticSponsorDto> FindDtoAsync(int editionId, Guid placeUid);
+        Task<LogisticSponsorDto> FindMainInformationWidgetDtoAsync(int editionId, Guid placeUid);
         Task<IPagedList<LogisticSponsorJsonDto>> FindAllByDataTableAsync(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllEditions, int editionId);
         Task<int> CountAllByDataTableAsync(int editionId, bool showAllEditions);
         Task<LogisticSponsorJsonDto> FindLogisticSponsorDtoByUid(Guid sponsorUid);

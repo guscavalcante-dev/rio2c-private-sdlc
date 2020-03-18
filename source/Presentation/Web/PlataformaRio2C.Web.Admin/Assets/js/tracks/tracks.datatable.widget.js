@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-16-2020
+// Last Modified On : 03-17-2020
 // ***********************************************************************
 // <copyright file="tracks.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -217,12 +217,12 @@ var TracksDataTableWidget = function () {
         table.ajax.reload();
     };
 
-    var showDetails = function (collaboratorUid) {
-        if (MyRio2cCommon.isNullOrEmpty(collaboratorUid)) {
+    var showDetails = function (trackUid) {
+        if (MyRio2cCommon.isNullOrEmpty(trackUid)) {
             return;
         }
 
-        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Tracks/Details/' + collaboratorUid);
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Tracks/Details/' + trackUid);
     };
 
     return {
@@ -233,8 +233,8 @@ var TracksDataTableWidget = function () {
         refreshData: function () {
             refreshData();
         },
-        showDetails: function (collaboratorUid) {
-            showDetails(collaboratorUid);
+        showDetails: function (trackUid) {
+            showDetails(trackUid);
         }
     };
 }();
