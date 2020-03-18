@@ -57,14 +57,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
-        internal static IQueryable<LogisticSponsor> FindByIsOther(this IQueryable<LogisticSponsor> query, int editionId, bool isOther = false)
-        {
-            return query.Where(o => o.AttendeeLogisticSponsors.Any(ac => ac.EditionId == editionId
-                                                                         && !ac.IsDeleted
-                                                                         && !ac.Edition.IsDeleted
-                                                                         && ac.IsOther == isOther));
-        }
-
         /// <summary>Finds the by keywords.</summary>
         /// <param name="query">The query.</param>
         /// <param name="keywords">The keywords.</param>
@@ -87,6 +79,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 outerWhere = outerWhere.Or(innerNameWhere);
                 query = query.Where(outerWhere);
             }
+
+            return query;
+        }
+
+        /// <summary>Determines whether [is other required].</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<LogisticSponsor> IsOtherRequired(this IQueryable<LogisticSponsor> query)
+        {
+            query = query.Where(ls => ls.IsOtherRequired);
 
             return query;
         }
@@ -251,63 +253,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .CountAsync();
         }
 
-        public async Task<LogisticSponsorJsonDto> FindLogisticSponsorDtoByUid(Guid sponsorUid)
+        /// <summary>Finds the by other required asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<LogisticSponsor> FindByOtherRequiredAsync(int editionId)
         {
             var query = this.GetBaseQuery()
-                                .FindByUid(sponsorUid);
-
-            return await query
-                            .Select(c => new LogisticSponsorJsonDto
-                            {
-                                Id = c.Id,
-                                Uid = c.Uid,
-                                Name = c.Name,
-                                IsAirfareTicketRequired = c.IsAirfareTicketRequired
-                            }).FirstOrDefaultAsync();
-        }
-
-        public async Task<List<LogisticSponsorJsonDto>> FindAllDtosByEditionUidAsync(int editionId)
-        {
-            var query = this.GetBaseQuery(true)
                                 .FindByEditionId(editionId, false)
-                                .FindByIsOther(editionId);
+                                .IsOtherRequired();
 
             return await query
-                            .Select(c => new LogisticSponsorJsonDto
-                            {
-                                Id = c.Id,
-                                Uid = c.Uid,
-                                Name = c.Name,
-                                CreateDate = c.CreateDate,
-                                UpdateDate = c.UpdateDate,
-                                IsOtherRequired = c.IsOtherRequired
-                            }).ToListAsync();
-        }
-
-        public async Task<List<LogisticSponsorJsonDto>> FindAllDtosByIsOther(int editionId)
-        {
-            var query = this.GetBaseQuery(true)
-                .FindByEditionId(editionId, false)
-                .FindByIsOther(editionId, true);
-
-            return await query
-                .Select(c => new LogisticSponsorJsonDto
-                {
-                    Id = c.Id,
-                    Uid = c.Uid,
-                    Name = c.Name,
-                    CreateDate = c.CreateDate,
-                    UpdateDate = c.UpdateDate,
-                    IsOtherRequired = c.IsOtherRequired
-                }).ToListAsync();
-        }
-
-        public async Task<Guid> GetByIsOthersRequired()
-        {
-            return await this.GetBaseQuery(true)
-                                .Where(e => e.IsOtherRequired)
-                                .Select(e => e.Uid)
-                                .FirstOrDefaultAsync();
+                            .FirstOrDefaultAsync();
         }
     }
 }

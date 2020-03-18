@@ -24,11 +24,22 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         public Guid? LogisticSponsorUid { get; set; }
         public List<LogisticSponsorsNameBaseCommand> Names { get; set; }
-        public bool IsAirfareTicketRequired { get; set; }
 
         [Display(Name = "Type", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public bool? IsOther { get; set; }
+
+        [Display(Name = "IsAirfareTicketRequired", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public bool? IsAirfareTicketRequired { get; set; }
+
+        [Display(Name = "OpenOthersDropdown", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public bool? IsOtherRequired { get; set; }
+
+        [Display(Name = "DisplayedInitialLogisticList", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public bool? IsLogisticListDisplayed { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateLogisticSponsorMainInformation"/> class.</summary>
         /// <param name="logisticSponsorDto">The logistic sponsor dto.</param>
@@ -36,8 +47,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public UpdateLogisticSponsorMainInformation(LogisticSponsorDto logisticSponsorDto, List<LanguageDto> languagesDtos)
         {
             this.LogisticSponsorUid = logisticSponsorDto?.LogisticSponsor?.Uid;
-            this.IsAirfareTicketRequired = logisticSponsorDto?.LogisticSponsor?.IsAirfareTicketRequired ?? false;
             this.IsOther = logisticSponsorDto?.AttendeeLogisticSponsor?.IsOther;
+            this.IsAirfareTicketRequired = logisticSponsorDto?.LogisticSponsor?.IsAirfareTicketRequired;
+            this.IsOtherRequired = logisticSponsorDto?.LogisticSponsor?.IsOtherRequired;
+            this.IsLogisticListDisplayed = logisticSponsorDto?.AttendeeLogisticSponsor?.IsLogisticListDisplayed;
 
             this.UpdateNames(logisticSponsorDto, languagesDtos);
         }

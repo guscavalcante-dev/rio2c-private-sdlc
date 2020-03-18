@@ -24,7 +24,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         public Guid? LogisticSponsorUid { get; set; }
         public List<LogisticSponsorsNameBaseCommand> Names { get; set; }
-        public bool IsAirfareTicketRequired { get; set; }
 
         [Display(Name = "Type", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -36,7 +35,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public CreateLogisticSponsor(LogisticSponsorDto logisticSponsorDto, List<LanguageDto> languagesDtos)
         {
             this.LogisticSponsorUid = logisticSponsorDto?.LogisticSponsor?.Uid;
-            this.IsAirfareTicketRequired = logisticSponsorDto?.LogisticSponsor?.IsAirfareTicketRequired ?? false;
             this.IsOther = logisticSponsorDto?.AttendeeLogisticSponsor?.IsOther;
 
             this.UpdateNames(logisticSponsorDto, languagesDtos);

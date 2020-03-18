@@ -46,19 +46,20 @@
         <div class="kt-widget__bottom">
             <div class="kt-widget__item">
                 <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.Website</span>
-                    <span class="kt-widget__value">
-                        <span>
-                            @*@if (!string.IsNullOrEmpty(Model.Place.Website))
-                            {
-                                <a href="@(Model.Place.Website.GetUrlWithProtocol())" target="_blank">@Model.Place.Website</a>
-                            }
-                            else
-                            {
-                                @:-
-                            }*@
-                        </span>
-                    </span>
+                    <span class="kt-widget__title">@Labels.IsAirfareTicketRequired</span>
+                    <span class="kt-widget__value"><span>@(Model.LogisticSponsor.IsAirfareTicketRequired ? Labels.Yes : Labels.No)</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.OpenOthersDropdown</span>
+                    <span class="kt-widget__value"><span>@(Model.LogisticSponsor.IsOtherRequired ? Labels.Yes : Labels.No)</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.DisplayedInitialLogisticList</span>
+                    <span class="kt-widget__value"><span>@(Model.AttendeeLogisticSponsor.IsLogisticListDisplayed ? Labels.Yes : Labels.No)</span></span>
                 </div>
             </div>
             <div class="kt-widget__item">

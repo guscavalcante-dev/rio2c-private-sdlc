@@ -7,7 +7,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="form-group col-md-6">
+    <div class="form-group col-12">
         @Html.LabelFor(m => m.IsOther, new { @class = "control-label" })
         <div class="kt-radio-inline">
             <label class="kt-radio">
@@ -20,14 +20,5 @@
             </label>
         </div>
         @Html.ValidationMessageFor(m => m.IsOther, "", new { @class = "text-danger", })
-    </div>
-    <div class="form-group col-md-6">
-        @Html.Label(Labels.Options, new { @class = "control-label" })
-        <div class="kt-checkbox-inline">
-            <label class="kt-checkbox">
-                @Html.CheckBoxFor(m => m.IsAirfareTicketRequired) @Labels.IsAirfareTicketRequired
-                <span></span>
-            </label>
-        </div>
     </div>
 </div>

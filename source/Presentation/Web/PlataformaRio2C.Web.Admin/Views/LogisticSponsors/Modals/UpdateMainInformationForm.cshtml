@@ -21,12 +21,47 @@
         @Html.ValidationMessageFor(m => m.IsOther, "", new { @class = "text-danger", })
     </div>
     <div class="form-group col-md-6">
-        @Html.Label(Labels.Options, new { @class = "control-label" })
-        <div class="kt-checkbox-inline">
-            <label class="kt-checkbox">
-                @Html.CheckBoxFor(m => m.IsAirfareTicketRequired) @Labels.IsAirfareTicketRequired
+        @Html.LabelFor(m => m.IsAirfareTicketRequired, new { @class = "control-label" })
+        <div class="kt-radio-inline">
+            <label class="kt-radio">
+                @Html.RadioButtonFor(m => m.IsAirfareTicketRequired, true) @Labels.Yes
+                <span></span>
+            </label>
+            <label class="kt-radio">
+                @Html.RadioButtonFor(m => m.IsAirfareTicketRequired, false) @Labels.No
                 <span></span>
             </label>
         </div>
+        @Html.ValidationMessageFor(m => m.IsAirfareTicketRequired, "", new { @class = "text-danger", })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.IsOtherRequired, new { @class = "control-label" })
+        <div class="kt-radio-inline">
+            <label class="kt-radio">
+                @Html.RadioButtonFor(m => m.IsOtherRequired, true) @Labels.Yes
+                <span></span>
+            </label>
+            <label class="kt-radio">
+                @Html.RadioButtonFor(m => m.IsOtherRequired, false) @Labels.No
+                <span></span>
+            </label>
+        </div>
+        @Html.ValidationMessageFor(m => m.IsOtherRequired, "", new { @class = "text-danger", })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.IsLogisticListDisplayed, new { @class = "control-label" })
+        <div class="kt-radio-inline">
+            <label class="kt-radio">
+                @Html.RadioButtonFor(m => m.IsLogisticListDisplayed, true) @Labels.Yes
+                <span></span>
+            </label>
+            <label class="kt-radio">
+                @Html.RadioButtonFor(m => m.IsLogisticListDisplayed, false) @Labels.No
+                <span></span>
+            </label>
+        </div>
+        @Html.ValidationMessageFor(m => m.IsLogisticListDisplayed, "", new { @class = "text-danger", })
     </div>
 </div>

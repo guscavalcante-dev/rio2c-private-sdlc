@@ -2287,8 +2287,8 @@
     <comment>Patrocinadores</comment>
   </data>
   <data name="IsAirfareTicketRequired" xml:space="preserve">
-    <value>Is Airfare Ticket Required</value>
-    <comment>Ticket Aéreo Obrigatório</comment>
+    <value>Airfare ticket required</value>
+    <comment>Ticket aéreo obrigatório</comment>
   </data>
   <data name="Sponsor" xml:space="preserve">
     <value>Sponsor</value>
@@ -2437,5 +2437,13 @@
   <data name="Main" xml:space="preserve">
     <value>Main</value>
     <comment>Principal</comment>
+  </data>
+  <data name="DisplayedInitialLogisticList" xml:space="preserve">
+    <value>Displayed in the initial logistic list</value>
+    <comment>Exibido na lista inicial de logística</comment>
+  </data>
+  <data name="OpenOthersDropdown" xml:space="preserve">
+    <value>Open others dropdown</value>
+    <comment>Abre dropdown de outros</comment>
   </data>
 </root>

@@ -27,9 +27,6 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<LogisticSponsorDto> FindMainInformationWidgetDtoAsync(int editionId, Guid placeUid);
         Task<IPagedList<LogisticSponsorJsonDto>> FindAllByDataTableAsync(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllEditions, int editionId);
         Task<int> CountAllByDataTableAsync(int editionId, bool showAllEditions);
-        Task<LogisticSponsorJsonDto> FindLogisticSponsorDtoByUid(Guid sponsorUid);
-        Task<List<LogisticSponsorJsonDto>> FindAllDtosByEditionUidAsync(int editionDtoId);
-        Task<List<LogisticSponsorJsonDto>> FindAllDtosByIsOther(int editionDtoId);
-        Task<Guid> GetByIsOthersRequired();
-    }    
+        Task<LogisticSponsor> FindByOtherRequiredAsync(int editionId);
+    }
 }

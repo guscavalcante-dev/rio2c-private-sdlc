@@ -1321,6 +1321,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exibido na lista inicial de logística.
+        /// </summary>
+        public static string DisplayedInitialLogisticList {
+            get {
+                return ResourceManager.GetString("DisplayedInitialLogisticList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exibir no site.
         /// </summary>
         public static string DisplayOnSite {
@@ -2230,7 +2239,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ticket Aéreo Obrigatório.
+        ///   Looks up a localized string similar to Ticket aéreo obrigatório.
         /// </summary>
         public static string IsAirfareTicketRequired {
             get {
@@ -3018,6 +3027,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Oops {
             get {
                 return ResourceManager.GetString("Oops", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abre dropdown de outros.
+        /// </summary>
+        public static string OpenOthersDropdown {
+            get {
+                return ResourceManager.GetString("OpenOthersDropdown", resourceCulture);
             }
         }
         

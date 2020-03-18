@@ -43,7 +43,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateName(names);
             this.IsAirfareTicketRequired = false;
             this.IsOtherRequired = false;
-            this.SynchronizeAttendeeLogisticSponsors(edition, isOther, userId);
+            this.SynchronizeAttendeeLogisticSponsors(edition, isOther, false, userId);
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.Now;
@@ -72,20 +72,18 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Updates the specified names.</summary>
         /// <param name="names">The names.</param>
         /// <param name="edition">The edition.</param>
-        /// <param name="isAirfareTicketRequired">if set to <c>true</c> [is airfare ticket required].</param>
         /// <param name="isOther">if set to <c>true</c> [is other].</param>
         /// <param name="userId">The user identifier.</param>
         public void Update(
             List<TranslatedName> names, 
             Edition edition, 
-            bool isAirfareTicketRequired,
             bool isOther,
             int userId)
         {
             this.UpdateName(names);
-            this.IsAirfareTicketRequired = isAirfareTicketRequired;
+            this.IsAirfareTicketRequired = false;
             this.IsOtherRequired = false;
-            this.SynchronizeAttendeeLogisticSponsors(edition, isOther, userId);
+            this.SynchronizeAttendeeLogisticSponsors(edition, isOther, false, userId);
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
@@ -96,19 +94,34 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="names">The names.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="isAirfareTicketRequired">if set to <c>true</c> [is airfare ticket required].</param>
+        /// <param name="isOtherRequired">if set to <c>true</c> [is other required].</param>
         /// <param name="isOther">if set to <c>true</c> [is other].</param>
+        /// <param name="isLogisticListDisplayed">if set to <c>true</c> [is logistic list displayed].</param>
         /// <param name="userId">The user identifier.</param>
         public void UpdateMainInformation(
             List<TranslatedName> names,
             Edition edition,
             bool isAirfareTicketRequired,
+            bool isOtherRequired,
             bool isOther,
+            bool isLogisticListDisplayed,
             int userId)
         {
             this.UpdateName(names);
             this.IsAirfareTicketRequired = isAirfareTicketRequired;
+            this.IsOtherRequired = isOtherRequired;
+            this.SynchronizeAttendeeLogisticSponsors(edition, isOther, isLogisticListDisplayed, userId);
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.Now;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Disables the other required.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void DisableOtherRequired(int userId)
+        {
             this.IsOtherRequired = false;
-            this.SynchronizeAttendeeLogisticSponsors(edition, isOther, userId);
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.Now;
@@ -125,6 +138,7 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.FindAllAttendeeLogisticSponsorsNotDeleted(null)?.Any() == false)
             {
                 this.IsDeleted = true;
+                this.IsOtherRequired = false;
             }
 
             this.UpdateDate = DateTime.UtcNow;
@@ -136,8 +150,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Synchronizes the attendee logistic sponsors.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="isOther">if set to <c>true</c> [is other].</param>
+        /// <param name="isLogisticListDisplayed">if set to <c>true</c> [is logistic list displayed].</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeAttendeeLogisticSponsors(Edition edition, bool isOther, int userId)
+        private void SynchronizeAttendeeLogisticSponsors(Edition edition, bool isOther, bool isLogisticListDisplayed, int userId)
         {
             if (this.AttendeeLogisticSponsors == null)
             {
@@ -152,11 +167,11 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeePlace = this.GetAttendeeLogisticSponsorByEditionId(edition.Id);
             if (attendeePlace != null)
             {
-                attendeePlace.Update(isOther, userId);
+                attendeePlace.Update(isOther, isLogisticListDisplayed, userId);
             }
             else
             {
-                this.AttendeeLogisticSponsors.Add(new AttendeeLogisticSponsor(edition, this, isOther, userId));
+                this.AttendeeLogisticSponsors.Add(new AttendeeLogisticSponsor(edition, this, isOther, isLogisticListDisplayed, userId));
             }
         }
 

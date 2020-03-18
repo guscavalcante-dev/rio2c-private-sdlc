@@ -35,12 +35,14 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="edition">The edition.</param>
         /// <param name="logisticSponsor">The logistic sponsor.</param>
         /// <param name="isOther">if set to <c>true</c> [is other].</param>
+        /// <param name="isLogisticListDisplayed">if set to <c>true</c> [is logistic list displayed].</param>
         /// <param name="userId">The user identifier.</param>
-        public AttendeeLogisticSponsor(Edition edition, LogisticSponsor logisticSponsor, bool isOther, int userId)
+        public AttendeeLogisticSponsor(Edition edition, LogisticSponsor logisticSponsor, bool isOther, bool isLogisticListDisplayed, int userId)
         {
             this.Edition = edition;
             this.LogisticSponsor = logisticSponsor;
             this.IsOther = isOther;
+            this.IsLogisticListDisplayed = isLogisticListDisplayed;
 
             this.IsDeleted = false;
             this.CreateUserId = this.UpdateUserId = userId;
@@ -56,6 +58,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Edition = edition;
             this.LogisticSponsor = new LogisticSponsor(name, userId);
             this.IsOther = true;
+            this.IsLogisticListDisplayed = false;
 
             this.IsDeleted = false;
             this.CreateUserId = this.UpdateUserId = userId;
@@ -69,10 +72,13 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Updates the specified is other.</summary>
         /// <param name="isOther">if set to <c>true</c> [is other].</param>
+        /// <param name="isLogisticListDisplayed">if set to <c>true</c> [is logistic list displayed].</param>
         /// <param name="userId">The user identifier.</param>
-        public void Update(bool isOther, int userId)
+        public void Update(bool isOther, bool isLogisticListDisplayed, int userId)
         {
             this.IsOther = isOther;
+            this.IsLogisticListDisplayed = isLogisticListDisplayed;
+
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;

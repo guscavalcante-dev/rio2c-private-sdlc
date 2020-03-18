@@ -2206,8 +2206,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Patrocinadores</comment>
   </data>
   <data name="IsAirfareTicketRequired" xml:space="preserve">
-    <value>Ticket Aéreo Obrigatório</value>
-    <comment>Ticket Aéreo Obrigatório</comment>
+    <value>Ticket aéreo obrigatório</value>
+    <comment>Ticket aéreo obrigatório</comment>
   </data>
   <data name="Sponsor" xml:space="preserve">
     <value>Patrocinador</value>
@@ -2440,5 +2440,13 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Main" xml:space="preserve">
     <value>Principal</value>
     <comment>Principal</comment>
+  </data>
+  <data name="DisplayedInitialLogisticList" xml:space="preserve">
+    <value>Exibido na lista inicial de logística</value>
+    <comment>Exibido na lista inicial de logística</comment>
+  </data>
+  <data name="OpenOthersDropdown" xml:space="preserve">
+    <value>Abre dropdown de outros</value>
+    <comment>Abre dropdown de outros</comment>
   </data>
 </root>

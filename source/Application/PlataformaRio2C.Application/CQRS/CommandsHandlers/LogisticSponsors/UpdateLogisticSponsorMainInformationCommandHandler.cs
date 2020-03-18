@@ -72,14 +72,28 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             logisticSponsor.UpdateMainInformation(
                 cmd.Names?.Select(d => new TranslatedName(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language))?.ToList(),
                 await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
-                cmd.IsAirfareTicketRequired,
+                cmd.IsAirfareTicketRequired ?? false,
+                cmd.IsOtherRequired ?? false,
                 cmd.IsOther ?? false,
+                cmd.IsLogisticListDisplayed ?? false,
                 cmd.UserId);
 
             if (!logisticSponsor.IsValid())
             {
                 this.AppValidationResult.Add(logisticSponsor.ValidationResult);
                 return this.AppValidationResult;
+            }
+
+            // Unchecking IsOtherRequired for old logistic sponsor (can only have one)
+            if (cmd.IsOtherRequired == true)
+            {
+                var oldOtherRequiredLogisticSponsor = await this.logisticSponsorRepo.FindByOtherRequiredAsync(cmd.EditionId ?? 0);
+
+                if (oldOtherRequiredLogisticSponsor != null && logisticSponsor.Uid != oldOtherRequiredLogisticSponsor.Uid)
+                {
+                    oldOtherRequiredLogisticSponsor.DisableOtherRequired(cmd.UserId);
+                    this.logisticSponsorRepo.Update(oldOtherRequiredLogisticSponsor);
+                }
             }
 
             this.logisticSponsorRepo.Update(logisticSponsor);

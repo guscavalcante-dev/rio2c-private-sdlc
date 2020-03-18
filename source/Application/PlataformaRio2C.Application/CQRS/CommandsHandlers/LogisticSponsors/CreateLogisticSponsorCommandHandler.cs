@@ -95,7 +95,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 logisticSponsor.Update(
                     cmd.Names?.Select(d => new TranslatedName(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language))?.ToList(),
                     await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
-                    cmd.IsAirfareTicketRequired,
                     cmd.IsOther ?? false,
                     cmd.UserId);
 
