@@ -14,13 +14,13 @@ BEGIN
 	// Created          : 02-26-2020
 	//
 	// Last Modified By : Rafael Dantas Ruiz
-	// Last Modified On : 02-29-2020
+	// Last Modified On : 03-18-2020
 	// ***********************************************************************
 	// <copyright file="MigrateMusicProjects.sql" company="Softo">
 	//     Copyright (c) Softo. All rights reserved.
 	// </copyright>
 	// <summary>
-	//    v0.6 - Add Document to Collaborators
+	//    v0.7 - Alter query of MusicProjects to consider NULL for music1 and music2
 	// </summary>
 	// ***********************************************************************
 	*/
@@ -724,7 +724,7 @@ BEGIN
 			END;
 
 			-- Music Projects
-			SELECT @MusicProjectId = [Id] FROM dbo.MusicProjects WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND Music1Url = @Projeto1Musica1 AND Music2Url = @Projeto1Musica2;
+			SELECT @MusicProjectId = [Id] FROM dbo.MusicProjects WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND ISNULL(Music1Url, '') = ISNULL(@Projeto1Musica1, '') AND ISNULL(Music2Url, '') = ISNULL(@Projeto1Musica2, '');
 			IF (@MusicProjectId IS NULL)
 			BEGIN
 				PRINT N' ';
@@ -741,7 +741,7 @@ BEGIN
 				VALUES
 					(NEWID(), @AttendeeMusicBandId, @Projeto1VideoClip, @Projeto1Musica1, @Projeto1Musica2, @Projeto1Release, @Projeto1Clipping1, @Projeto1Clipping2, @Projeto1Clipping3, @ProjectEvaluationStatusId, NULL, NULL, NULL, NULL, 0, GETUTCDATE(), @UserId, GETUTCDATE(), @UserId);
 
-				SELECT @MusicProjectId = [Id] FROM dbo.MusicProjects WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND Music1Url = @Projeto1Musica1 AND Music2Url = @Projeto1Musica2;
+				SELECT @MusicProjectId = [Id] FROM dbo.MusicProjects WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND ISNULL(Music1Url, '') = ISNULL(@Projeto1Musica1, '') AND ISNULL(Music2Url, '') = ISNULL(@Projeto1Musica2, '');
 				IF (@MusicProjectId IS NULL)
 				BEGIN
 					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '2005', ErrorMessage = 'The music project could not be created.' WHERE Id = @id;
@@ -1260,7 +1260,7 @@ BEGIN
 			END;
 
 			-- Music Projects
-			SELECT @MusicProjectId = [Id] FROM dbo.MusicProjects WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND Music1Url = @Projeto2Musica1 AND Music2Url = @Projeto2Musica2;
+			SELECT @MusicProjectId = [Id] FROM dbo.MusicProjects WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND ISNULL(Music1Url, '') = ISNULL(@Projeto2Musica1, '') AND ISNULL(Music2Url, '') = ISNULL(@Projeto2Musica2, '');
 			IF (@MusicProjectId IS NULL)
 			BEGIN
 				PRINT N' ';
@@ -1277,7 +1277,7 @@ BEGIN
 				VALUES
 					(NEWID(), @AttendeeMusicBandId, @Projeto2VideoClip, @Projeto2Musica1, @Projeto2Musica2, @Projeto2Release, @Projeto2Clipping1, @Projeto2Clipping2, @Projeto2Clipping3, @ProjectEvaluationStatusId, NULL, NULL, NULL, NULL, 0, GETUTCDATE(), @UserId, GETUTCDATE(), @UserId);
 
-				SELECT @MusicProjectId = [Id] FROM dbo.MusicProjects WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND Music1Url = @Projeto2Musica1 AND Music2Url = @Projeto2Musica2;
+				SELECT @MusicProjectId = [Id] FROM dbo.MusicProjects WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND ISNULL(Music1Url, '') = ISNULL(@Projeto2Musica1, '') AND ISNULL(Music2Url, '') = ISNULL(@Projeto2Musica2, '');
 				IF (@MusicProjectId IS NULL)
 				BEGIN
 					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '3005', ErrorMessage = 'The music project could not be created.' WHERE Id = @id;
@@ -1796,7 +1796,7 @@ BEGIN
 			END;
 
 			-- Music Projects
-			SELECT @MusicProjectId = [Id] FROM dbo.MusicProjects WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND Music1Url = @Projeto3Musica1 AND Music2Url = @Projeto3Musica2;
+			SELECT @MusicProjectId = [Id] FROM dbo.MusicProjects WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND ISNULL(Music1Url, '') = ISNULL(@Projeto3Musica1, '') AND ISNULL(Music2Url, '') = ISNULL(@Projeto3Musica2, '');
 			IF (@MusicProjectId IS NULL)
 			BEGIN
 				PRINT N' ';
@@ -1813,7 +1813,7 @@ BEGIN
 				VALUES
 					(NEWID(), @AttendeeMusicBandId, @Projeto3VideoClip, @Projeto3Musica1, @Projeto3Musica2, @Projeto3Release, @Projeto3Clipping1, @Projeto3Clipping2, @Projeto3Clipping3, @ProjectEvaluationStatusId, NULL, NULL, NULL, NULL, 0, GETUTCDATE(), @UserId, GETUTCDATE(), @UserId);
 
-				SELECT @MusicProjectId = [Id] FROM dbo.MusicProjects WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND Music1Url = @Projeto3Musica1 AND Music2Url = @Projeto3Musica2;
+				SELECT @MusicProjectId = [Id] FROM dbo.MusicProjects WHERE AttendeeMusicBandId = @AttendeeMusicBandId AND ISNULL(Music1Url, '') = ISNULL(@Projeto3Musica1, '') AND ISNULL(Music2Url, '') = ISNULL(@Projeto3Musica2, '');
 				IF (@MusicProjectId IS NULL)
 				BEGIN
 					UPDATE dbo.pitching_show_submissions SET IsProcessed = 0, ProcessingDate = GETUTCDATE(), ErrorCode = '4005', ErrorMessage = 'The music project could not be created.' WHERE Id = @id;
