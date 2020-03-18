@@ -4,13 +4,14 @@
 // Created          : 09-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-09-2020
+// Last Modified On : 03-18-2020
 // ***********************************************************************
 // <copyright file="CollaboratorType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+
 namespace PlataformaRio2C.Domain.Constants
 {
     /// <summary>CollaboratorType</summary>
@@ -57,6 +58,24 @@ namespace PlataformaRio2C.Domain.Constants
         public static readonly string[] NetworksFullVisibilityArray =
         {
             ExecutiveAudiovisual, Speaker, Industry, Summit
+        };
+
+        #endregion
+
+        #region Speakers
+
+        // Read
+        public const string SpeakersReadString = AdminAudiovisual + "," + CuratorshipAudiovisual + "," + AdminLogistic;
+        public static readonly string[] SpeakersReadArray =
+        {
+            AdminAudiovisual, CuratorshipAudiovisual, AdminLogistic
+        };
+
+        // Write
+        public const string SpeakersWriteString = AdminAudiovisual + "," + CuratorshipAudiovisual;
+        public static readonly string[] SpeakersWriteArray =
+        {
+            AdminAudiovisual, CuratorshipAudiovisual
         };
 
         #endregion

@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2020
+// Last Modified On : 03-18-2020
 // ***********************************************************************
 // <copyright file="SpeakersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -41,7 +41,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>SpeakersController</summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
-    [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual)]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.SpeakersReadString)]
     public class SpeakersController : BaseController
     {
         private readonly ICollaboratorRepository collaboratorRepo;
@@ -73,6 +73,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
         public ActionResult Index(SpeakerSearchViewModel searchViewModel)
         {
             #region Breadcrumb
@@ -95,6 +96,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="showHighlights">if set to <c>true</c> [show highlights].</param>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
         public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllParticipants, bool? showHighlights)
         {
             var speakers = await this.collaboratorRepo.FindAllByDataTable(
@@ -130,6 +132,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
         public async Task<ActionResult> Details(Guid? id)
         {
             var attendeeCollaboratorDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUidAndByEditionIdAsync(id ?? Guid.Empty, this.EditionDto.Id);
@@ -157,6 +160,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
         public async Task<ActionResult> ShowMainInformationWidget(Guid? collaboratorUid)
         {
             var mainInformationWidgetDto = await this.attendeeCollaboratorRepo.FindSiteMainInformationWidgetDtoByCollaboratorUidAndByEditionIdAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
@@ -181,6 +185,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
         public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? collaboratorUid)
         {
             UpdateCollaboratorAdminMainInformation cmd;
@@ -222,6 +227,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
         public async Task<ActionResult> UpdateMainInformation(UpdateCollaboratorAdminMainInformation cmd)
         {
             var result = new AppValidationResult();
@@ -297,6 +303,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
         public async Task<ActionResult> ShowSocialNetworksWidget(Guid? collaboratorUid)
         {
             var socialNetworksWidgetDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUidAndByEditionIdAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
@@ -321,6 +328,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
         public async Task<ActionResult> ShowUpdateSocialNetworksModal(Guid? collaboratorUid)
         {
             UpdateCollaboratorSocialNetworks cmd;
@@ -354,6 +362,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
         public async Task<ActionResult> UpdateSocialNetworks(UpdateCollaboratorSocialNetworks cmd)
         {
             var result = new AppValidationResult();
@@ -415,6 +424,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
         public async Task<ActionResult> ShowCompanyWidget(Guid? collaboratorUid)
         {
             var companyWidgetDto = await this.attendeeCollaboratorRepo.FindSiteCompanyWidgetDtoByCollaboratorUidAndByEditionIdAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
@@ -438,6 +448,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <summary>Shows the update company information modal.</summary>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
         public async Task<ActionResult> ShowUpdateCompanyInfoModal(Guid? collaboratorUid, Guid? organizationUid)
         {
             CreateTicketBuyerOrganizationData cmd;
@@ -479,6 +490,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
         public async Task<ActionResult> UpdateCompanyInformation(CreateTicketBuyerOrganizationData cmd)
         {
             var result = new AppValidationResult();
@@ -541,6 +553,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
         public async Task<ActionResult> DeleteOrganization(DeleteCollaboratorOrganization cmd)
         {
             var result = new AppValidationResult();
@@ -599,6 +612,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersReadString)]
         public async Task<ActionResult> ShowParticipantsWidget(Guid? collaboratorUid)
         {
             var participantsWidgetDto = await this.attendeeCollaboratorRepo.FindParticipantsWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
@@ -625,6 +639,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersReadString)]
         public async Task<ActionResult> ShowConferencesWidget(Guid? collaboratorUid)
         {
             var conferencesWidgetDto = await this.attendeeCollaboratorRepo.FindConferenceWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
@@ -651,6 +666,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
         public async Task<ActionResult> ShowOnboardingInfoWidget(Guid? collaboratorUid)
         {
             var collaboratorTypeUid = CollaboratorType.Speaker.Uid;
@@ -681,6 +697,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
         public async Task<ActionResult> ShowApiConfigurationWidget(Guid? collaboratorUid)
         {
             var apiConfigurationWidgetDto = await this.attendeeCollaboratorRepo.FindApiConfigurationWidgetDtoByCollaboratorUidAndByEditionIdAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
@@ -705,6 +722,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
         public async Task<ActionResult> ShowUpdateApiConfigurationModal(Guid? collaboratorUid)
         {
             UpdateCollaboratorApiConfiguration cmd;
@@ -740,8 +758,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <summary>Updates the API configuration.</summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
-        /// <exception cref="DomainException"></exception>
         [HttpPost]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
         public async Task<ActionResult> UpdateApiConfiguration(UpdateCollaboratorApiConfiguration cmd)
         {
             var result = new AppValidationResult();
@@ -808,6 +826,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="selectedCollaboratorsUids">The selected collaborators uids.</param>
         /// <returns></returns>
         [HttpPost]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
         public async Task<ActionResult> SendInvitationEmails(string selectedCollaboratorsUids)
         {
             AppValidationResult result = null;
@@ -884,6 +903,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <summary>Shows the total count widget.</summary>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersReadString)]
         public async Task<ActionResult> ShowTotalCountWidget()
         {
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(Constants.CollaboratorType.Speaker, true, this.EditionDto.Id);
@@ -904,6 +924,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         /// <summary>Shows the edition count widget.</summary>
         /// <returns></returns>
+        [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersReadString)]
         public async Task<ActionResult> ShowEditionCountWidget()
         {
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(Constants.CollaboratorType.Speaker, false, this.EditionDto.Id);
@@ -925,6 +947,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <summary>Shows the create modal.</summary>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
         public async Task<ActionResult> ShowCreateModal()
         {
             var cmd = new CreateTinyCollaborator();
@@ -943,6 +966,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
         public async Task<ActionResult> Create(CreateTinyCollaborator cmd)
         {
             var result = new AppValidationResult();
@@ -1003,6 +1027,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="isAddingToCurrentEdition">The is adding to current edition.</param>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
         public async Task<ActionResult> ShowUpdateModal(Guid? collaboratorUid, bool? isAddingToCurrentEdition)
         {
             UpdateTinyCollaborator cmd;
@@ -1032,6 +1057,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
         public async Task<ActionResult> Update(UpdateTinyCollaborator cmd)
         {
             var result = new AppValidationResult();
@@ -1091,6 +1117,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd"></param>
         /// <returns></returns>
         [HttpPost]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersWriteString)]
         public async Task<ActionResult> Delete(DeleteCollaborator cmd)
         {
             var result = new AppValidationResult();
@@ -1148,7 +1175,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="page">The page.</param>
         /// <returns></returns>
         [HttpGet]
-        [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual + "," + Constants.CollaboratorType.CommissionAudiovisual)]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersReadString)]
         public async Task<ActionResult> FindAllByFilters(string keywords, int? page = 1)
         {
             var collaboratorsApiDtos = await this.collaboratorRepo.FindAllDropdownApiListDtoPaged(
