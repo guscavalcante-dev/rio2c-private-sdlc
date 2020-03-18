@@ -4,7 +4,7 @@
 // Created          : 01-27-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-16-2020
+// Last Modified On : 03-18-2020
 // ***********************************************************************
 // <copyright file="collaborators.create.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -31,7 +31,7 @@ var LogisticAirfareCreate = function () {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
-        jsonParameters.logisticsUid = $('#AggregateId').val();
+        jsonParameters.logisticsUid = $('#LogisticAggregateId').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/ShowCreateAirfareModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({

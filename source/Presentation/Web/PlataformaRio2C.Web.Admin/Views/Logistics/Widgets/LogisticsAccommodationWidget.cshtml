@@ -50,7 +50,7 @@
                                         {
                                             <tr>
                                                 <td>
-                                                    @logisticAccommodationDto.AttendeePlace
+                                                    @logisticAccommodationDto.AttendeePlace.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
                                                 </td>
                                                 <td class="text-center">
                                                     @logisticAccommodationDto.CheckInDate.ToUserTimeZone().ToString("g")

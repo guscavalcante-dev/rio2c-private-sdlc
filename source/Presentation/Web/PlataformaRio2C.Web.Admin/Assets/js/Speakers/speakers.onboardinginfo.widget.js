@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-26-2020
+// Last Modified On : 03-18-2020
 // ***********************************************************************
 // <copyright file="speakers.onboardinginfo.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -31,7 +31,7 @@ var CollaboratorsOnboardingInfoWidget = function () {
         }
 
         var jsonParameters = new Object();
-        jsonParameters.collaboratorUid = $('#AggregateId').val();
+        jsonParameters.collaboratorUid = $('#SpeakerAggregateId').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/ShowOnboardingInfoWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({

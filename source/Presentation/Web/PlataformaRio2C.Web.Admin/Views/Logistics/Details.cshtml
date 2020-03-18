@@ -3,35 +3,48 @@
 @{
     ViewBag.Title = Labels.Logistics;
 }
-@Html.Hidden("AggregateId", Model.Uid)
-<!--begin:Main Information Widget-->
+@Html.Hidden("LogisticAggregateId", Model.Uid)
+@Html.Hidden("SpeakerAggregateId", Model.CollaboratorUid)
 <div class="row">
+    <!--begin:Main Information Widget-->
     <div class="col-12">
         <div id="LogisticsMainInformationWidget" class="kt-portlet" style="min-height: 185px;"></div>
     </div>
+    <!--end:Main Information Widget-->
 </div>
-<!--end:Main Information Widget-->
-<!--begin:Airfare Widget-->
 <div class="row">
+    <!--begin:Participants Widget-->
+    <div class="col-6">
+        <div id="SpeakerParticipantsWidget" class="kt-portlet" style="min-height: 325px;"></div>
+    </div>
+    <!--end:Participants Widget-->
+    <!--begin:Conferences Widget-->
+    <div class="col-6">
+        <div id="SpeakerConferencesWidget" class="kt-portlet" style="min-height: 325px;"></div>
+    </div>
+    <!--end:Conferences Widget-->
+</div>
+<div class="row">
+    <!--begin:Airfare Widget-->
     <div class="col-12">
         <div id="LogisticsAirfareWidget" class="kt-portlet" style="min-height: 325px;"></div>
     </div>
+    <!--end:Airfare Widget-->
 </div>
-<!--end:Airfare Widget-->
-<!--begin:Accommodations Widget-->
 <div class="row">
+    <!--begin:Accommodations Widget-->
     <div class="col-12">
         <div id="LogisticsAccommodationWidget" class="kt-portlet" style="min-height: 325px;"></div>
     </div>
+    <!--end:Accommodations Widget-->
 </div>
-<!--end:Accommodations Widget-->
-<!--begin:Transfer Widget-->
 <div class="row">
+    <!--begin:Transfer Widget-->
     <div class="col-12">
         <div id="LogisticsTransferWidget" class="kt-portlet" style="min-height: 325px;"></div>
     </div>
+    <!--end:Transfer Widget-->
 </div>
-<!--end:Transfer Widget-->
 @section Styles {
     @Styles.Render("~/bundles/css/select2.css")
     @Styles.Render("~/bundles/css/bootstrap-datepicker.css")
@@ -48,6 +61,7 @@
     @Scripts.Render("~/bundles/js/bootstrap-datepicker.js")
     @Scripts.Render("~/bundles/js/bootstrap-datetimepicker.js")
     @Scripts.Render("~/bundles/js/logistics.details.js")
+    @Scripts.Render("~/bundles/js/speakers.details.js")
     <script>
         // Page translations ----------------------------------------------------------------------
         var translations = {
@@ -56,6 +70,8 @@
 
         jQuery(document).ready(function () {
             LogisticsMainInformationWidget.init();
+            SpeakersParticipantsWidget.init();
+            SpeakersConferencesWidget.init();
             LogisticsAirfareWidget.init();
             LogisticsTransferWidget.init();
             LogisticsAccommodationWidget.init();

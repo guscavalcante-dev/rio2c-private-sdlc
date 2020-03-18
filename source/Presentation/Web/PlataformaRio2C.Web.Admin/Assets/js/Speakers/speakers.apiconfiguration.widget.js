@@ -4,7 +4,7 @@
 // Created          : 12-18-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-21-2020
+// Last Modified On : 03-18-2020
 // ***********************************************************************
 // <copyright file="speakers.apiconfiguration.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -31,7 +31,7 @@ var SpeakersApiConfigurationWidget = function () {
         }
 
         var jsonParameters = new Object();
-        jsonParameters.collaboratorUid = $('#AggregateId').val();
+        jsonParameters.collaboratorUid = $('#SpeakerAggregateId').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/ShowApiConfigurationWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -87,7 +87,7 @@ var SpeakersApiConfigurationWidget = function () {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
-        jsonParameters.collaboratorUid = $('#AggregateId').val();
+        jsonParameters.collaboratorUid = $('#SpeakerAggregateId').val();
         jsonParameters.isAddingToCurrentEdition = true;
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/ShowUpdateApiConfigurationModal'), jsonParameters, function (data) {

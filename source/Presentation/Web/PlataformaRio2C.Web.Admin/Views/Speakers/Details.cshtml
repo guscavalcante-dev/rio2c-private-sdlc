@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = $"{Labels.Speaker}  {Model.Collaborator.GetFullName()}";
 }
-@Html.Hidden("AggregateId", Model.Collaborator.Uid)
+@Html.Hidden("SpeakerAggregateId", Model.Collaborator.Uid)
 <div class="row">
     <!--begin: Main Container-->
     <div class="col-md-8 col-lg-9">

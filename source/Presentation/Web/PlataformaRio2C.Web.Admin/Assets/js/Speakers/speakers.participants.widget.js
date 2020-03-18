@@ -4,7 +4,7 @@
 // Created          : 01-07-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 03-18-2020
 // ***********************************************************************
 // <copyright file="speakers.participants.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,7 +29,7 @@ var SpeakersParticipantsWidget = function () {
         }
 
         var jsonParameters = new Object();
-        jsonParameters.collaboratorUid = $('#AggregateId').val();
+        jsonParameters.collaboratorUid = $('#SpeakerAggregateId').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/ShowParticipantsWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({

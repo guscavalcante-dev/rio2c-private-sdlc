@@ -4,7 +4,7 @@
 // Created          : 01-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-13-2020
+// Last Modified On : 03-18-2020
 // ***********************************************************************
 // <copyright file="logistics.maininformation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,7 +29,7 @@ var LogisticsMainInformationWidget = function () {
         }
 
         var jsonParameters = new Object();
-        jsonParameters.logisticsUid = $('#AggregateId').val();
+        jsonParameters.logisticsUid = $('#LogisticAggregateId').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/ShowMainInformationWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -89,7 +89,7 @@ var LogisticsMainInformationWidget = function () {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
-        jsonParameters.logisticsUid = $('#AggregateId').val();
+        jsonParameters.logisticsUid = $('#LogisticAggregateId').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/ShowUpdateMainInformationModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({

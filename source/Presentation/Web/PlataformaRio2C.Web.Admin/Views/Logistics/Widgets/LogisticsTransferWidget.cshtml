@@ -50,10 +50,10 @@
                                         {
                                             <tr>
                                                 <td>
-                                                    @logisticTransferDto.FromAttendeePlace
+                                                    @logisticTransferDto.FromAttendeePlace.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
                                                 </td>
                                                 <td>
-                                                    @logisticTransferDto.ToAttendeePlace
+                                                    @logisticTransferDto.ToAttendeePlace.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
                                                 </td>
                                                 <td class="text-center">
                                                     @logisticTransferDto.Date.ToUserTimeZone().ToString("g")

@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-13-2020
+// Last Modified On : 03-18-2020
 // ***********************************************************************
 // <copyright file="LogisticsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,6 +23,7 @@ using DataTables.AspNet.Mvc5;
 using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
@@ -946,7 +947,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         {
             var cmd = new CreateLogisticTransfer(
                 logisticsUid ?? Guid.Empty,
-                await attendeePlacesRepo.FindAllDropdownDtosAsync(EditionDto.Id));
+                (await attendeePlacesRepo.FindAllDropdownDtosAsync(EditionDto.Id))?.GetSeparatorTranslation(m => m.Name, this.UserInterfaceLanguage, Language.Separator));
 
             return Json(new
             {
@@ -996,7 +997,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd.UpdateLists(
-                    await attendeePlacesRepo.FindAllDropdownDtosAsync(EditionDto.Id));
+                    (await attendeePlacesRepo.FindAllDropdownDtosAsync(EditionDto.Id))?.GetSeparatorTranslation(m => m.Name, this.UserInterfaceLanguage, Language.Separator));
 
                 return Json(new
                 {

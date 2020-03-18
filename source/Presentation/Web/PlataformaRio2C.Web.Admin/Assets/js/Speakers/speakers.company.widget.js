@@ -4,7 +4,7 @@
 // Created          : 12-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-26-2020
+// Last Modified On : 03-18-2020
 // ***********************************************************************
 // <copyright file="speakers.company.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -31,7 +31,7 @@ var CollaboratorsCompanyWidget = function () {
         }
 
         var jsonParameters = new Object();
-        jsonParameters.collaboratorUid = $('#AggregateId').val();
+        jsonParameters.collaboratorUid = $('#SpeakerAggregateId').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/ShowCompanyWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -94,7 +94,7 @@ var CollaboratorsCompanyWidget = function () {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
-        jsonParameters.collaboratorUid = $('#AggregateId').val();
+        jsonParameters.collaboratorUid = $('#SpeakerAggregateId').val();
         jsonParameters.organizationUid = organizationUid;
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/ShowUpdateCompanyInfoModal'), jsonParameters, function (data) {
