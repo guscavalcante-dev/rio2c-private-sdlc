@@ -4,7 +4,7 @@
 // Created          : 03-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-19-2020
 // ***********************************************************************
 // <copyright file="CreateNegotiationsCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -74,7 +74,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         public async Task<AppValidationResult> Handle(CreateNegotiations cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
-            this.NegotiationRepo.Truncate();
 
             var edition = await this.editionRepo.FindByUidAsync(cmd.EditionUid ?? Guid.Empty, true);
             if (edition.AudiovisualNegotiationsCreateStartDate.HasValue && !edition.AudiovisualNegotiationsCreateEndDate.HasValue)
@@ -83,12 +82,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
+            this.NegotiationRepo.Truncate();
+
             edition?.StartAudiovisualNegotiationsCreation(cmd.UserId);
             this.Uow.SaveChanges();
 
             var negotiationConfigs = await this.negotiationConfigRepo.FindAllForGenerateNegotiationsAsync();
             if (negotiationConfigs?.Count == 0)
             {
+                edition?.CancelAudiovisualNegotiationsCreation(cmd.UserId);
                 this.Uow.SaveChanges();
                 this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Rooms, Labels.FoundFP), new string[] { "ToastrError" })));
                 return this.AppValidationResult;
@@ -97,6 +99,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var negotiationSlots = this.GetNegotiationSlots(negotiationConfigs, cmd.UserId);
             if (negotiationConfigs?.Count == 0)
             {
+                edition?.CancelAudiovisualNegotiationsCreation(cmd.UserId);
                 this.Uow.SaveChanges();
                 this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Rooms, Labels.FoundFP), new string[] { "ToastrError" })));
                 return this.AppValidationResult;
@@ -105,6 +108,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var projectBuyerEvaluations = await this.projectBuyerEvaluationRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionId ?? 0);
             if (projectBuyerEvaluations?.Count == 0)
             {
+                edition?.CancelAudiovisualNegotiationsCreation(cmd.UserId);
                 this.Uow.SaveChanges();
                 this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Projects, Labels.FoundMP), new string[] { "ToastrError" })));
                 return this.AppValidationResult;

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-17-2020
+// Last Modified On : 03-19-2020
 // ***********************************************************************
 // <copyright file="Edition.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -80,6 +80,18 @@ namespace PlataformaRio2C.Domain.Entities
         public void FinishAudiovisualNegotiationsCreation(int userId)
         {
             this.AudiovisualNegotiationsCreateEndDate = DateTime.UtcNow;
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Cancels the audiovisual negotiations creation.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void CancelAudiovisualNegotiationsCreation(int userId)
+        {
+            this.AudiovisualNegotiationsCreateStartDate = null;
+            this.AudiovisualNegotiationsCreateEndDate = null;
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
