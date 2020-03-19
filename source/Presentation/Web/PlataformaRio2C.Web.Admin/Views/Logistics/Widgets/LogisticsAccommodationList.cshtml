@@ -1,0 +1,79 @@
+﻿@using PlataformaRio2C.Domain.Constants
+@using PlataformaRio2C.Domain.Dtos
+@model List<LogisticAccommodationDto>
+@{
+    var adminAccessControlDto = ViewBag.AdminAccessControlDto as AdminAccessControlDto;
+    var hasChangeDataPermission = adminAccessControlDto?.HasAnyCollaboratorType(new[] { CollaboratorType.AdminAudiovisual, CollaboratorType.AdminLogistic }) == true;
+    var hideActions = (bool?)ViewBag.HideActions ?? false;
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="kt-widget4">
+            @if (Model != null && Model.Any())
+            {
+                <div class="col-12">
+                    <table class="table table-sm table-head-bg-brand table-body-scroll">
+                        <thead class="thead-inverse">
+                            <tr>
+                                <th>@Labels.Hotel</th>
+                                <th class="text-center">@Labels.CheckInDate</th>
+                                <th class="text-center">@Labels.CheckOutDate</th>
+                                <th class="text-center">@Labels.CreateDate</th>
+                                <th class="text-center">@Labels.UpdateDate</th>
+                                @if (hasChangeDataPermission && !hideActions)
+                                {
+                                    <th class="text-center">@Labels.Actions</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody class="rio2c-scroll" style="height: 180px;">
+                            @foreach (var logisticAccommodationDto in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @logisticAccommodationDto.PlaceDto.Place.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                                    </td>
+                                    <td class="text-center">
+                                        @logisticAccommodationDto.LogisticAccommodation.CheckInDate.ToUserTimeZone().ToString("g")
+                                    </td>
+                                    <td class="text-center">
+                                        @logisticAccommodationDto.LogisticAccommodation.CheckOutDate.ToUserTimeZone().ToString("g")
+                                    </td>
+                                    <td class="text-center">
+                                        @logisticAccommodationDto.LogisticAccommodation.CreateDate.ToUserTimeZone().ToString("g")
+                                    </td>
+                                    <td class="text-center">
+                                        @logisticAccommodationDto.LogisticAccommodation.UpdateDate.ToUserTimeZone().ToString("g")
+                                    </td>
+                                    @if (hasChangeDataPermission && !hideActions)
+                                    {
+                                        <td class="text-center">
+                                            <span class="dropdown">
+                                                <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
+                                                    <i class="la la-ellipsis-h"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <button class="dropdown-item" onclick="LogisticAccommodationUpdate.showModal('@logisticAccommodationDto.LogisticAccommodation.Uid');"><i class="la la-edit"></i>@Labels.Edit</button>
+                                                    <button class="dropdown-item" onclick="LogisticAccommodationDelete.showModal('@logisticAccommodationDto.LogisticAccommodation.Uid');"><i class="la la-remove"></i>@Labels.Remove</button>
+                                                </div>
+                                            </span>
+                                        </td>
+
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="row mt-3">
+                    <div class="col-12 text-center">
+                        <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.Accommodations, Labels.FoundFP)</span>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

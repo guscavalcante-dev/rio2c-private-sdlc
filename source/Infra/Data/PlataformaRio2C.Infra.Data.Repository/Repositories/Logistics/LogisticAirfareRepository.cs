@@ -4,7 +4,7 @@
 // Created          : 03-08-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-19-2020
 // ***********************************************************************
 // <copyright file="LogisticAirfareRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -93,32 +93,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
-        /// <summary>Finds all json dtos asynchronous.</summary>
+        /// <summary>Finds all dtos asynchronous.</summary>
         /// <param name="logisticsUid">The logistics uid.</param>
         /// <returns></returns>
-        public Task<List<LogisticAirfareJsonDto>> FindAllJsonDtosAsync(Guid logisticsUid)
+        public Task<List<LogisticAirfareDto>> FindAllDtosAsync(Guid logisticsUid)
         {
             var query = this.GetBaseQuery()
                             .FindByLogisticsUid(logisticsUid)
-                            .Select(la => new LogisticAirfareJsonDto
+                            .Select(la => new LogisticAirfareDto
                             {
-                                AdditionalInfo = la.AdditionalInfo,
-                                Id = la.Id,
-                                Uid = la.Uid,
-                                CreateDate = la.CreateDate,
-                                ArrivalDate = la.ArrivalDate,
-                                DepartureDate = la.DepartureDate,
-                                IsNational = la.IsNational,
-                                IsArrival = la.IsArrival,
-                                From = la.From,
-                                To = la.To,
-                                TicketNumber = la.TicketNumber,
-                                TicketUploadDate = la.TicketUploadDate,
-                                UpdateDate = la.UpdateDate
+                                LogisticAirfare = la
                             });
                 
             return query
-                        .OrderBy(e => e.CreateDate)
+                        .OrderBy(lad => lad.LogisticAirfare.CreateDate)
                         .ToListAsync();
         }
 

@@ -421,6 +421,7 @@
     <Content Include="Assets\js\logisticsponsors\logisticsponsors.maininformation.widget.js" />
     <Content Include="Assets\js\logistics\logistics.accommodation.create.js" />
     <Content Include="Assets\js\logistics\logistics.accommodation.delete.js" />
+    <Content Include="Assets\js\logistics\logistics.info.widget.js" />
     <Content Include="Assets\js\logistics\logistics.transfer.update.js" />
     <Content Include="Assets\js\logistics\logistics.airfare.create.js" />
     <Content Include="Assets\js\logistics\logistics.airfare.delete.js" />
@@ -8518,6 +8519,10 @@
     <Content Include="Views\LogisticSponsors\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Views\LogisticSponsors\Modals\UpdateMainInformationModal.cshtml" />
     <Content Include="Views\LogisticSponsors\Modals\UpdateMainInformationForm.cshtml" />
+    <Content Include="Views\Logistics\Widgets\InfoWidget.cshtml" />
+    <Content Include="Views\Logistics\Widgets\LogisticsAirfareList.cshtml" />
+    <Content Include="Views\Logistics\Widgets\LogisticsAccommodationList.cshtml" />
+    <Content Include="Views\Logistics\Widgets\LogisticsTransferList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

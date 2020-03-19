@@ -1,10 +1,10 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
-@model LogisticRequestBaseDto
+@model LogisticDto
 @{
     ViewBag.Title = Labels.Logistics;
 }
-@Html.Hidden("LogisticAggregateId", Model.Uid)
-@Html.Hidden("SpeakerAggregateId", Model.CollaboratorUid)
+@Html.Hidden("LogisticAggregateId", Model.Logistic.Uid)
+@Html.Hidden("SpeakerAggregateId", Model.AttendeeCollaboratorDto.Collaborator.Uid)
 <div class="row">
     <!--begin:Main Information Widget-->
     <div class="col-12">

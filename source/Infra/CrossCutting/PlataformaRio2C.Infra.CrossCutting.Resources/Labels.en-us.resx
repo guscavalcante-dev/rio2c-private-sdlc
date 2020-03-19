@@ -2446,4 +2446,16 @@
     <value>Open others dropdown</value>
     <comment>Abre dropdown de outros</comment>
   </data>
+  <data name="Accommodations" xml:space="preserve">
+    <value>Accommodations</value>
+    <comment>Hospedagens</comment>
+  </data>
+  <data name="Airfares" xml:space="preserve">
+    <value>Airfares</value>
+    <comment>Aéreos</comment>
+  </data>
+  <data name="Transfers" xml:space="preserve">
+    <value>Transfers</value>
+    <comment>Transfers</comment>
+  </data>
 </root>

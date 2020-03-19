@@ -106,6 +106,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hospedagens.
+        /// </summary>
+        public static string Accommodations {
+            get {
+                return ResourceManager.GetString("Accommodations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Credenciamento.
         /// </summary>
         public static string Accreditation {
@@ -300,6 +309,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Airfare {
             get {
                 return ResourceManager.GetString("Airfare", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aéreos.
+        /// </summary>
+        public static string Airfares {
+            get {
+                return ResourceManager.GetString("Airfares", resourceCulture);
             }
         }
         
@@ -5205,6 +5223,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string TransferCity {
             get {
                 return ResourceManager.GetString("TransferCity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transfers.
+        /// </summary>
+        public static string Transfers {
+            get {
+                return ResourceManager.GetString("Transfers", resourceCulture);
             }
         }
         

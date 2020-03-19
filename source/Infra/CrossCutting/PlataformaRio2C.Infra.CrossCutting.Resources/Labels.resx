@@ -2449,4 +2449,16 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Abre dropdown de outros</value>
     <comment>Abre dropdown de outros</comment>
   </data>
+  <data name="Accommodations" xml:space="preserve">
+    <value>Hospedagens</value>
+    <comment>Hospedagens</comment>
+  </data>
+  <data name="Airfares" xml:space="preserve">
+    <value>Aéreos</value>
+    <comment>Aéreos</comment>
+  </data>
+  <data name="Transfers" xml:space="preserve">
+    <value>Transfers</value>
+    <comment>Transfers</comment>
+  </data>
 </root>

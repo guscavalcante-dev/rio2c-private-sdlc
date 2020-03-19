@@ -1,0 +1,39 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model AttendeeCollaboratorDto
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">@Labels.Logistics</h3>
+    </div>
+    <div class="kt-portlet__head-toolbar">
+        <ul class="nav nav-tabs nav-tabs-line nav-tabs-line-right" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#airfare-tab" role="tab">
+                    <i class="la la-plane"></i> @Labels.Airfare
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#accommodation-tab" role="tab">
+                    <i class="la la-hotel"></i> @Labels.Accommodation
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#transfer-tab" role="tab">
+                    <i class="la la-bus"></i> @Labels.Transfer
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="kt-portlet__body pt-0">
+    <div class="tab-content">
+        <div class="tab-pane active" id="airfare-tab" role="tabpanel">
+            @Html.Partial("widgets/LogisticsAirfareList", Model.LogisticDto?.LogisticAirfareDtos?.ToList(), new ViewDataDictionary())
+        </div>
+        <div class="tab-pane" id="accommodation-tab" role="tabpanel">
+            @Html.Partial("widgets/LogisticsAccommodationList", Model.LogisticDto?.LogisticAccommodationDtos?.ToList(), new ViewDataDictionary())
+        </div>
+        <div class="tab-pane" id="transfer-tab" role="tabpanel">
+            @Html.Partial("widgets/LogisticsTransferList", Model.LogisticDto?.LogisticTransferDtos?.ToList(), new ViewDataDictionary())
+        </div>
+    </div>
+</div>

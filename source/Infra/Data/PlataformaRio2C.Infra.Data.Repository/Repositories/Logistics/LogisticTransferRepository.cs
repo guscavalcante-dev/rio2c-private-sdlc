@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-19-2020
 // ***********************************************************************
 // <copyright file="LogisticTransferRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -83,26 +83,43 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
-        /// <summary>Finds all dtos paged.</summary>
+        /// <summary>Finds all dtos asynchronous.</summary>
         /// <param name="logisticsUid">The logistics uid.</param>
         /// <returns></returns>
-        public Task<List<LogisticTransferDto>> FindAllDtosPaged(Guid logisticsUid)
+        public Task<List<LogisticTransferDto>> FindAllDtosAsync(Guid logisticsUid)
         {
-            return this.GetBaseQuery()
-                .FindByLogisticsUid(logisticsUid)
-                .Select(e => new LogisticTransferDto()
-                {
-                    AdditionalInfo = e.AdditionalInfo,
-                    Id = e.Id,
-                    Uid = e.Uid,
-                    CreateDate = e.CreateDate,
-                    Date = e.Date,
-                    FromAttendeePlace = e.FromAttendeePlace.Place.Name,
-                    ToAttendeePlace = e.ToAttendeePlace.Place.Name,
-                    UpdateDate = e.UpdateDate
-                })
-                .OrderBy(e => e.CreateDate)
-                .ToListAsync();
+            var query = this.GetBaseQuery()
+                                .FindByLogisticsUid(logisticsUid)
+                                .Select(lt => new LogisticTransferDto
+                                {
+                                    LogisticTransfer = lt,
+                                    FromPlaceDto = new PlaceDto
+                                    {
+                                        Place = lt.FromAttendeePlace.Place,
+                                        AddressDto = lt.FromAttendeePlace.Place.Address == null || !lt.FromAttendeePlace.Place.Address.IsDeleted ? null : new AddressDto
+                                        {
+                                            Address = lt.FromAttendeePlace.Place.Address,
+                                            City = lt.FromAttendeePlace.Place.Address.City,
+                                            State = lt.FromAttendeePlace.Place.Address.State,
+                                            Country = lt.FromAttendeePlace.Place.Address.Country
+                                        }
+                                    },
+                                    ToPlaceDto = new PlaceDto
+                                    {
+                                        Place = lt.FromAttendeePlace.Place,
+                                        AddressDto = lt.ToAttendeePlace.Place.Address == null || !lt.ToAttendeePlace.Place.Address.IsDeleted ? null : new AddressDto
+                                        {
+                                            Address = lt.ToAttendeePlace.Place.Address,
+                                            City = lt.ToAttendeePlace.Place.Address.City,
+                                            State = lt.ToAttendeePlace.Place.Address.State,
+                                            Country = lt.ToAttendeePlace.Place.Address.Country
+                                        }
+                                    }
+                                });
+
+            return query
+                        .OrderBy(ltd => ltd.LogisticTransfer.CreateDate)
+                        .ToListAsync();
         }
     }
 }

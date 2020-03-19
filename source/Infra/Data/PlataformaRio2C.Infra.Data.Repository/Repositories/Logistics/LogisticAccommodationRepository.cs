@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-19-2020
 // ***********************************************************************
 // <copyright file="LogisticAccommodationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -104,33 +104,39 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         private IQueryable<LogisticAccommodation> GetBaseQuery(bool @readonly = false)
         {
             var consult = this.dbSet
-                .IsNotDeleted();
+                                .IsNotDeleted();
 
             return @readonly
-                ? consult.AsNoTracking()
-                : consult;
+                        ? consult.AsNoTracking()
+                        : consult;
         }
 
-        /// <summary>Finds all dtos paged.</summary>
+        /// <summary>Finds all dtos asynchronous.</summary>
         /// <param name="logisticsUid">The logistics uid.</param>
         /// <returns></returns>
-        public Task<List<LogisticAccommodationDto>> FindAllDtosPaged(Guid logisticsUid)
+        public Task<List<LogisticAccommodationDto>> FindAllDtosAsync(Guid logisticsUid)
         {
-            return this.GetBaseQuery()
-                .FindByLogisticsUid(logisticsUid)
-                .Select(e => new LogisticAccommodationDto()
-                {
-                    Id = e.Id,
-                    Uid = e.Uid,
-                    AdditionalInfo = e.AdditionalInfo,
-                    AttendeePlace = e.AttendeePlace.Place.Name,
-                    CheckOutDate = e.CheckOutDate,
-                    CheckInDate = e.CheckInDate,
-                    CreateDate = e.CreateDate,
-                    UpdateDate = e.UpdateDate
-                })
-                .OrderBy(e => e.CreateDate)
-                .ToListAsync();
+            var query = this.GetBaseQuery()
+                            .FindByLogisticsUid(logisticsUid)
+                            .Select(la => new LogisticAccommodationDto
+                            {
+                                LogisticAccommodation = la,
+                                PlaceDto = new PlaceDto
+                                {
+                                    Place = la.AttendeePlace.Place,
+                                    AddressDto = la.AttendeePlace.Place.Address == null || !la.AttendeePlace.Place.Address.IsDeleted ? null : new AddressDto
+                                    {
+                                        Address = la.AttendeePlace.Place.Address,
+                                        City = la.AttendeePlace.Place.Address.City,
+                                        State = la.AttendeePlace.Place.Address.State,
+                                        Country = la.AttendeePlace.Place.Address.Country
+                                    }
+                                }
+                            })
+                            .OrderBy(lad => lad.LogisticAccommodation.CreateDate);
+
+            return query
+                        .ToListAsync();
         }
     }
 }

@@ -4,6 +4,7 @@
     ViewBag.Title = $"{Labels.Speaker}  {Model.Collaborator.GetFullName()}";
 }
 @Html.Hidden("SpeakerAggregateId", Model.Collaborator.Uid)
+@Html.Hidden("CollaboratorUid", Model.Collaborator.Uid)
 <div class="row">
     <!--begin: Main Container-->
     <div class="col-md-8 col-lg-9">
@@ -41,6 +42,13 @@
                         <div id="SpeakerConferencesWidget" class="kt-portlet" style="min-height: 325px;"></div>
                     </div>
                     <!--end:Conferences Widget-->
+                </div>
+                <div class="row">
+                    <!--begin:Logistic Info Widget-->
+                    <div class="col-12">
+                        <div id="LogisticsInfoWidget" class="kt-portlet kt-portlet--tabs" style="min-height: 325px;"></div>
+                    </div>
+                    <!--end:Logistic Info Widget-->
                 </div>
             </div>
         </div>
@@ -81,6 +89,7 @@
     @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/addresses.form.js")
     @Scripts.Render("~/bundles/js/speakers.details.js")
+    @Scripts.Render("~/bundles/js/logistics.info.js")
     <script>
         // Page translations ----------------------------------------------------------------------
 
@@ -92,6 +101,7 @@
             SpeakersConferencesWidget.init();
             CollaboratorsOnboardingInfoWidget.init();
             SpeakersApiConfigurationWidget.init();
+            LogisticsInfoWidget.init();
         });
     </script>
 }

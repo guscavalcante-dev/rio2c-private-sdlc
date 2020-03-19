@@ -4,9 +4,9 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-19-2020
 // ***********************************************************************
-// <copyright file="LogisticRequestBaseDto.cs" company="Softo">
+// <copyright file="LogisticJsonDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -18,10 +18,8 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
-    /// <summary>
-    /// Class LogisticRequestBaseDto.
-    /// </summary>
-    public class LogisticRequestBaseDto
+    /// <summary>LogisticJsonDto</summary>
+    public class LogisticJsonDto
     {
         public int? Id { get; set; }
         public Guid? Uid { get; set; }
@@ -45,31 +43,25 @@ namespace PlataformaRio2C.Domain.Dtos
         public List<string> CollaboratorRoles { get; set; }
         public List<Pillar> CollaboratorPillars { get; set; }
 
-        /// <summary>
-        /// Gets the airfare sponsor by language.
-        /// </summary>
+        /// <summary>Gets the airfare sponsor translation.</summary>
         /// <param name="languageCode">The language code.</param>
-        /// <returns>System.String.</returns>
+        /// <returns></returns>
         public string GetAirfareSponsorTranslation(string languageCode)
         {
             return this.AirfareSponsor?.GetSeparatorTranslation(languageCode, Language.Separator);
         }
 
-        /// <summary>
-        /// Gets the accommodation sponsor by language.
-        /// </summary>
+        /// <summary>Gets the accommodation sponsor translation.</summary>
         /// <param name="languageCode">The language code.</param>
-        /// <returns>System.String.</returns>
+        /// <returns></returns>
         public string GetAccommodationSponsorTranslation(string languageCode)
         {
             return this.AccommodationSponsor?.GetSeparatorTranslation(languageCode, Language.Separator);
         }
 
-        /// <summary>
-        /// Gets the transfer sponsor by language.
-        /// </summary>
+        /// <summary>Gets the airport transfer sponsor translation.</summary>
         /// <param name="languageCode">The language code.</param>
-        /// <returns>System.String.</returns>
+        /// <returns></returns>
         public string GetAirportTransferSponsorTranslation(string languageCode)
         {
             return this.AirportTransferSponsor?.GetSeparatorTranslation(languageCode, Language.Separator);

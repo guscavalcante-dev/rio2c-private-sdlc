@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-18-2020
+// Last Modified On : 03-19-2020
 // ***********************************************************************
 // <copyright file="LogisticsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -42,47 +42,51 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic + "," + Constants.CollaboratorType.CuratorshipAudiovisual)]
     public class LogisticsController : BaseController
     {
-        private IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepo;
         private readonly ILogisticRepository logisticRepo;
+        private IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepo;
         private readonly ILogisticAirfareRepository logisticsAirfareRepo;
         private readonly ILogisticAccommodationRepository logisticsAccommodationRepo;
         private readonly ILogisticTransferRepository logisticsTransferRepo;
         private readonly IAttendeePlacesRepository attendeePlacesRepo;
-        private readonly ILanguageRepository languageRepo;
         private readonly ICollaboratorRepository collaboratorRepo;
+        private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
+        private readonly ILanguageRepository languageRepo;
 
         /// <summary>Initializes a new instance of the <see cref="LogisticsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="logisticRepository">The logistic repository.</param>
-        /// <param name="logisticsAccommodationRepository">The logistics accommodation repository.</param>
-        /// <param name="logisticsAirfareRepository">The logistics airfare repository.</param>
-        /// <param name="attendeePlacesRepository">The attendee places repository.</param>
         /// <param name="attendeeLogisticSponsorRepository">The attendee logistic sponsor repository.</param>
+        /// <param name="logisticsAirfareRepository">The logistics airfare repository.</param>
+        /// <param name="logisticsAccommodationRepository">The logistics accommodation repository.</param>
         /// <param name="logisticsTransferRepository">The logistics transfer repository.</param>
+        /// <param name="attendeePlacesRepository">The attendee places repository.</param>
+        /// <param name="collaboratorRepository">The collaborator repository.</param>
+        /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
         /// <param name="languageRepository">The language repository.</param>
         public LogisticsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
-            ICollaboratorRepository collaboratorRepository,
             ILogisticRepository logisticRepository,
-            ILogisticAccommodationRepository logisticsAccommodationRepository,
-            ILogisticAirfareRepository logisticsAirfareRepository,
-            IAttendeePlacesRepository attendeePlacesRepository,
             IAttendeeLogisticSponsorRepository attendeeLogisticSponsorRepository,
+            ILogisticAirfareRepository logisticsAirfareRepository,
+            ILogisticAccommodationRepository logisticsAccommodationRepository,
             ILogisticTransferRepository logisticsTransferRepository,
+            IAttendeePlacesRepository attendeePlacesRepository,
+            ICollaboratorRepository collaboratorRepository,
+            IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
             ILanguageRepository languageRepository)
             : base(commandBus, identityController)
         {
             this.logisticRepo = logisticRepository;
-            this.languageRepo = languageRepository;
-            this.attendeePlacesRepo = attendeePlacesRepository;
-            this.logisticsTransferRepo = logisticsTransferRepository;
-            this.logisticsAirfareRepo = logisticsAirfareRepository;
-            this.collaboratorRepo = collaboratorRepository;
-            this.logisticsAccommodationRepo = logisticsAccommodationRepository;
             this.attendeeLogisticSponsorRepo = attendeeLogisticSponsorRepository;
+            this.logisticsAirfareRepo = logisticsAirfareRepository;
+            this.logisticsAccommodationRepo = logisticsAccommodationRepository;
+            this.logisticsTransferRepo = logisticsTransferRepository;
+            this.attendeePlacesRepo = attendeePlacesRepository;
+            this.collaboratorRepo = collaboratorRepository;
+            this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
+            this.languageRepo = languageRepository;
         }
 
         #region List
@@ -237,8 +241,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Details(Guid? id)
         {
-            var logisticsRequestDto = await this.logisticRepo.FindDtoAsync(id ?? Guid.Empty, this.languageRepo.Get(f => f.Code == UserInterfaceLanguage));
-            if (logisticsRequestDto == null)
+            var logisticDto = await this.logisticRepo.FindDtoAsync(id ?? Guid.Empty, this.languageRepo.Get(f => f.Code == UserInterfaceLanguage));
+            if (logisticDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Logistics, Labels.FoundF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
                 return RedirectToAction("Index", "Logistics", new { Area = "" });
@@ -248,12 +252,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Logistics, new List<BreadcrumbItemHelper> {
                 new BreadcrumbItemHelper(Labels.Requests, Url.Action("Index", "Logistics", new { Area ="", id })),
-                new BreadcrumbItemHelper(logisticsRequestDto?.Name, Url.Action("Details", "Logistics", new { Area ="", id }))
+                new BreadcrumbItemHelper(logisticDto?.AttendeeCollaboratorDto?.Collaborator?.GetDisplayName(), Url.Action("Details", "Logistics", new { Area ="", id }))
             });
 
             #endregion
 
-            return View(logisticsRequestDto);
+            return View(logisticDto);
         }
 
         #region Main Information Widget
@@ -267,8 +271,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             var mainInformationWidgetDto = await this.logisticRepo.FindMainInformationWidgetDtoAsync(logisticsUid ?? Guid.Empty);
             if (mainInformationWidgetDto == null)
             {
-                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Request, Labels.FoundF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "Logistics", new { Area = "" });
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Request, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
             return Json(new
@@ -393,11 +396,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowAirfareWidget(Guid? logisticsUid)
         {
-            var logisticAirfareJsonDtos = await this.logisticsAirfareRepo.FindAllJsonDtosAsync(logisticsUid ?? Guid.Empty);
-            if (logisticAirfareJsonDtos == null)
+            var logisticAirfareDtos = await this.logisticsAirfareRepo.FindAllDtosAsync(logisticsUid ?? Guid.Empty);
+            if (logisticAirfareDtos == null)
             {
-                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Logistics, Labels.FoundF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "Logistics", new { Area = "" });
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Request, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
             return Json(new
@@ -405,7 +407,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/LogisticsAirfareWidget", logisticAirfareJsonDtos), divIdOrClass = "#LogisticsAirfareWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/LogisticsAirfareWidget", logisticAirfareDtos), divIdOrClass = "#LogisticsAirfareWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -649,11 +651,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowAccommodationWidget(Guid? logisticsUid)
         {
-            var logisticsRequestDto = await this.logisticsAccommodationRepo.FindAllDtosPaged(logisticsUid ?? Guid.Empty);
+            var logisticsRequestDto = await this.logisticsAccommodationRepo.FindAllDtosAsync(logisticsUid ?? Guid.Empty);
             if (logisticsRequestDto == null)
             {
-                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Logistics, Labels.FoundF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "Logistics", new { Area = "" });
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Request, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
             return Json(new
@@ -919,11 +920,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowTransferWidget(Guid? logisticsUid)
         {
-            var logisticsRequestDto = await this.logisticsTransferRepo.FindAllDtosPaged(logisticsUid ?? Guid.Empty);
+            var logisticsRequestDto = await this.logisticsTransferRepo.FindAllDtosAsync(logisticsUid ?? Guid.Empty);
             if (logisticsRequestDto == null)
             {
-                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Logistics, Labels.FoundF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "Logistics", new { Area = "" });
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Request, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
             return Json(new
@@ -1226,6 +1226,34 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             }
 
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Request, Labels.DeletedF) });
+        }
+
+        #endregion
+
+        #region Logistic Info Widget
+
+        /// <summary>Shows the information widget.</summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowInfoWidget(Guid? collaboratorUid)
+        {
+            var logisticInfoWidgetDto = await this.attendeeCollaboratorRepo.FindLogisticInfoWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
+            if (logisticInfoWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Logistics, Labels.FoundMP.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            ViewBag.HideActions = true;
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/InfoWidget", logisticInfoWidgetDto), divIdOrClass = "#LogisticsInfoWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

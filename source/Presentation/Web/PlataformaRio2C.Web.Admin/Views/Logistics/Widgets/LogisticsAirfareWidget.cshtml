@@ -1,8 +1,6 @@
-﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
-@using PlataformaRio2C.Domain.Constants
+﻿@using PlataformaRio2C.Domain.Constants
 @using PlataformaRio2C.Domain.Dtos
-@using PlataformaRio2C.Domain.Statics
-@model List<LogisticAirfareJsonDto>
+@model List<LogisticAirfareDto>
 @{
     var adminAccessControlDto = ViewBag.AdminAccessControlDto as AdminAccessControlDto;
     var hasChangeDataPermission = adminAccessControlDto?.HasAnyCollaboratorType(new[] { CollaboratorType.AdminAudiovisual, CollaboratorType.AdminLogistic }) == true;
@@ -27,98 +25,7 @@
 <div class="kt-portlet__body pt-0">
     <div class="kt-widget">
         <div class="kt-widget__bottom">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="kt-widget4">
-                        @if (Model != null && Model.Any())
-                        {
-                            <div class="col-12">
-                                <table class="table table-sm table-head-bg-brand table-body-scroll">
-                                    <thead class="thead-inverse">
-                                        <tr>
-                                            <th class="text-center">@Labels.Type</th>
-                                            <th>@Labels.FromPlace</th>
-                                            <th class="text-center">@Labels.DepartureDate</th>
-                                            <th>@Labels.ToPlace</th>
-                                            <th class="text-center">@Labels.ArrivalDate</th>
-                                            <th class="text-center">@Labels.ReservationCode</th>
-                                            @*<th class="text-center">@Labels.AirfareTicket</th>*@
-                                            <th class="text-center">@Labels.CreateDate</th>
-                                            <th class="text-center">@Labels.UpdateDate</th>
-                                            @if (hasChangeDataPermission)
-                                            {
-                                                <th class="text-center">@Labels.Actions</th>
-                                            }
-                                        </tr>
-                                    </thead>
-                                    <tbody class="rio2c-scroll" style="height: 180px;">
-                                        @foreach (var logisticAirfareJsonDto in Model)
-                                        {
-                                            <tr>
-                                                <td class="text-center">
-                                                    @(logisticAirfareJsonDto.IsNational ? Labels.National : Labels.International)
-                                                </td>
-                                                <td>
-                                                    @logisticAirfareJsonDto.From
-                                                </td>
-                                                <td class="text-center">
-                                                    @logisticAirfareJsonDto.DepartureDate.ToUserTimeZone().ToString("g")
-                                                </td>
-                                                <td>
-                                                    @logisticAirfareJsonDto.To
-                                                </td>
-                                                <td class="text-center">
-                                                    @logisticAirfareJsonDto.ArrivalDate.ToUserTimeZone().ToString("g")
-                                                </td>
-                                                <td class="text-center">
-                                                    @logisticAirfareJsonDto.TicketNumber
-                                                    @if (logisticAirfareJsonDto.TicketUploadDate.HasValue)
-                                                    {
-                                                        <a href="@FileHelper.GetFileUrl(FileRepositoryPathType.LogisticAirfareFile, logisticAirfareJsonDto.Uid, logisticAirfareJsonDto.TicketUploadDate)" target="_blank">
-                                                            <i class="flaticon-attachment"></i>
-                                                        </a>
-                                                    }
-                                                </td>
-                                                @*<td class="text-center">
-                                                    </td>*@
-                                                <td class="text-center">
-                                                    @logisticAirfareJsonDto.CreateDate.ToUserTimeZone().ToString("g")
-                                                </td>
-                                                <td class="text-center">
-                                                    @logisticAirfareJsonDto.UpdateDate.ToUserTimeZone().ToString("g")
-                                                </td>
-                                                @if (hasChangeDataPermission)
-                                                {
-                                                    <td class="text-center">
-                                                        <span class="dropdown">
-                                                            <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
-                                                                <i class="la la-ellipsis-h"></i>
-                                                            </a>
-                                                            <div class="dropdown-menu dropdown-menu-right">
-                                                                <button class="dropdown-item" onclick="LogisticAirfareUpdate.showModal('@logisticAirfareJsonDto.Uid');"><i class="la la-edit"></i>@Labels.Edit</button>
-                                                                @*<a class="dropdown-item" href="@Url.Content("~/Assets/img/200484580088054.pdf")" target="_blank"><i class="la la-download"></i>@Labels.Download</a>*@
-                                                                <button class="dropdown-item" onclick="LogisticAirfareDelete.showModal('@logisticAirfareJsonDto.Uid');"><i class="la la-remove"></i>@Labels.Remove</button>
-                                                            </div>
-                                                        </span>
-                                                    </td>
-                                                }
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="row mt-3">
-                                <div class="col-12 text-center">
-                                    <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.Requests, Labels.FoundFP)</span>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                </div>
-            </div>
+            @Html.Partial("Widgets/LogisticsAirfareList", Model)
         </div>
     </div>
 </div>

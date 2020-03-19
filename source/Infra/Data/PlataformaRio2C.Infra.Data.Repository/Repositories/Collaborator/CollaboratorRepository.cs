@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-19-2020
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -900,7 +900,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
         /// <param name="showAllSponsors">if set to <c>true</c> [show all sponsors].</param>
         /// <returns></returns>
-        public async Task<IPagedList<LogisticRequestBaseDto>> FindAllLogisticsByDatatable(
+        public async Task<IPagedList<LogisticJsonDto>> FindAllLogisticsByDatatable(
             int editionId,
             int page,
             int pageSize,
@@ -918,7 +918,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 sortColumns,
                                 new List<Tuple<string, string>>(),
                                 new List<string> { "FirstName", "CreateDate", "UpdateDate" }, "FirstName")
-                            .Select(c => new LogisticRequestBaseDto
+                            .Select(c => new LogisticJsonDto
                             {
                                 CollaboratorUid = c.Uid,
                                 Name = c.FirstName + " " + c.LastNames,

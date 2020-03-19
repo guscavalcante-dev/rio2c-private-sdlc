@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-11-2020
+// Last Modified On : 03-19-2020
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -512,7 +512,75 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 })
                             })
                             .FirstOrDefaultAsync();
-                    }
+        }
+
+        /// <summary>Finds the logistic information widget dto asynchronous.</summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeCollaboratorDto> FindLogisticInfoWidgetDtoAsync(Guid collaboratorUid, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByCollaboratorUid(collaboratorUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(ac => new AttendeeCollaboratorDto
+                            {
+                                AttendeeCollaborator = ac,
+                                Collaborator = ac.Collaborator,
+                                LogisticDto = ac.Logistics.Where(l => !l.IsDeleted).Select(l => new LogisticDto
+                                {
+                                    Logistic = l,
+                                    LogisticAirfareDtos = l.LogisticAirfares.Where(la => !la.IsDeleted).Select(la => new LogisticAirfareDto
+                                    {
+                                        LogisticAirfare = la
+                                    }),
+                                    LogisticAccommodationDtos = l.LogisticAccommodations.Where(la => !la.IsDeleted).Select(la => new LogisticAccommodationDto
+                                    {
+                                        LogisticAccommodation = la,
+                                        PlaceDto = new PlaceDto
+                                        {
+                                            Place = la.AttendeePlace.Place,
+                                            AddressDto = la.AttendeePlace.Place.Address == null || !la.AttendeePlace.Place.Address.IsDeleted ? null : new AddressDto
+                                            {
+                                                Address = la.AttendeePlace.Place.Address,
+                                                City = la.AttendeePlace.Place.Address.City,
+                                                State = la.AttendeePlace.Place.Address.State,
+                                                Country = la.AttendeePlace.Place.Address.Country
+                                            }
+                                        }
+                                    }),
+                                    LogisticTransferDtos = l.LogisticTransfers.Where(lt => !lt.IsDeleted).Select(lt => new LogisticTransferDto
+                                    {
+                                        LogisticTransfer = lt,
+                                        FromPlaceDto = new PlaceDto
+                                        {
+                                            Place = lt.FromAttendeePlace.Place,
+                                            AddressDto = lt.FromAttendeePlace.Place.Address == null || !lt.FromAttendeePlace.Place.Address.IsDeleted ? null : new AddressDto
+                                            {
+                                                Address = lt.FromAttendeePlace.Place.Address,
+                                                City = lt.FromAttendeePlace.Place.Address.City,
+                                                State = lt.FromAttendeePlace.Place.Address.State,
+                                                Country = lt.FromAttendeePlace.Place.Address.Country
+                                            }
+                                        },
+                                        ToPlaceDto = new PlaceDto
+                                        {
+                                            Place = lt.FromAttendeePlace.Place,
+                                            AddressDto = lt.ToAttendeePlace.Place.Address == null || !lt.ToAttendeePlace.Place.Address.IsDeleted ? null : new AddressDto
+                                            {
+                                                Address = lt.ToAttendeePlace.Place.Address,
+                                                City = lt.ToAttendeePlace.Place.Address.City,
+                                                State = lt.ToAttendeePlace.Place.Address.State,
+                                                Country = lt.ToAttendeePlace.Place.Address.Country
+                                            }
+                                        }
+                                    })
+                                }).FirstOrDefault()
+                            })
+                            .FirstOrDefaultAsync();
+        }
 
         #endregion
 

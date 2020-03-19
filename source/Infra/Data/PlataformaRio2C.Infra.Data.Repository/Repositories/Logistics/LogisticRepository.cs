@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-19-2020
 // ***********************************************************************
 // <copyright file="LogisticRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -52,7 +52,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
     #endregion
 
-    #region LogisticRequestBaseDto IQueryable Extensions
+    #region LogisticJsonDto IQueryable Extensions
 
     /// <summary>
     /// CollaboratorBaseDtoIQueryableExtensions
@@ -66,7 +66,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        internal static async Task<IPagedList<LogisticRequestBaseDto>> ToListPagedAsync(this IQueryable<LogisticRequestBaseDto> query, int page, int pageSize)
+        internal static async Task<IPagedList<LogisticJsonDto>> ToListPagedAsync(this IQueryable<LogisticJsonDto> query, int page, int pageSize)
         {
             page++;
 
@@ -113,7 +113,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
         /// <param name="showAllSponsored">if set to <c>true</c> [show all sponsored].</param>
         /// <returns></returns>
-        public async Task<IPagedList<LogisticRequestBaseDto>> FindAllByDataTableAsync(int page,
+        public async Task<IPagedList<LogisticJsonDto>> FindAllByDataTableAsync(int page,
             int pageSize,
             string keywords,
             List<Tuple<string, string>> sortColumns,
@@ -130,12 +130,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     new Tuple<string, string>("CreateDate", "CreateDate"),
                                 },
                                 new List<string> { "CreateDate", "UpdateDate" }, "CreateDate")
-                            .Select(c => new LogisticRequestBaseDto
+                            .Select(l => new LogisticJsonDto
                             {
-                                Id = c.Id,
-                                Uid = c.Uid,
-                                CreateDate = c.CreateDate,
-                                UpdateDate = c.UpdateDate,
+                                Id = l.Id,
+                                Uid = l.Uid,
+                                CreateDate = l.CreateDate,
+                                UpdateDate = l.UpdateDate,
                             })
                             .ToListPagedAsync(page, pageSize);
         }
@@ -144,35 +144,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="logisticUid">The logistic uid.</param>
         /// <param name="language">The language.</param>
         /// <returns></returns>
-        public Task<LogisticRequestBaseDto> FindDtoAsync(Guid logisticUid, Language language)
+        public Task<LogisticDto> FindDtoAsync(Guid logisticUid, Language language)
         {
             var query = this.GetBaseQuery()
                                 .FindByUid(logisticUid)
-                                .Select(e => new LogisticRequestBaseDto
+                                .Select(l => new LogisticDto
                                 {
-                                    CollaboratorUid = e.AttendeeCollaborator.Collaborator.Uid,
-                                    Name = e.AttendeeCollaborator.Collaborator.FirstName + " " +
-                                           e.AttendeeCollaborator.Collaborator.LastNames,
-                                    Id = e.Id,
-                                    Uid = e.Uid,
-                                    AccommodationSponsor = e.AccommodationAttendeeLogisticSponsor.LogisticSponsor.Name,
-                                    AirfareSponsor = e.AirfareAttendeeLogisticSponsor.LogisticSponsor.Name,
-                                    AirportTransferSponsor = e.AirportTransferAttendeeLogisticSponsor.LogisticSponsor.Name,
-                                    AdditionalInfo = e.AdditionalInfo,
-                                    TransferCity = e.IsCityTransferRequired,
-                                    IsVehicleDisposalRequired = e.IsVehicleDisposalRequired,
-                                    CreateDate = e.CreateDate,
-                                    CreateUser = e.CreateUser.Name,
-                                    CollaboratorPillars = e.AttendeeCollaborator.ConferenceParticipants
-                                                                .SelectMany(cp => cp.Conference.ConferencePillars)
-                                                                .Select(p => p.Pillar)
-                                                                .ToList(),
-                                    CollaboratorRoles = e.AttendeeCollaborator.ConferenceParticipants
-                                                                .Select(cp => cp.ConferenceParticipantRole)
-                                                                .SelectMany(cp => cp.ConferenceParticipantRoleTitles.Where(t => t.LanguageId == language.Id))
-                                                                .Select(cp => cp.Value)
-                                                                .ToList()
-
+                                    Logistic = l,
+                                    AttendeeCollaboratorDto = new AttendeeCollaboratorDto
+                                    {
+                                        AttendeeCollaborator = l.AttendeeCollaborator,
+                                        Collaborator = l.AttendeeCollaborator.Collaborator
+                                    }
                                 });
 
             return query

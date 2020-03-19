@@ -4,7 +4,7 @@
 // Created          : 03-08-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-19-2020
 // ***********************************************************************
 // <copyright file="ILogisticAirfareRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,7 +22,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>ILogisticAirfareRepository</summary>
     public interface ILogisticAirfareRepository : IRepository<LogisticAirfare>
     {
-        Task<List<LogisticAirfareJsonDto>> FindAllJsonDtosAsync(Guid logisticsUid);
+        Task<List<LogisticAirfareDto>> FindAllDtosAsync(Guid logisticsUid);
         Task<LogisticAirfareDto> FindDtoAsync(Guid logisticAirfareUid);
         Task<List<LogisticAirfare>> FindAllForGenerateNegotiationsAsync(Guid editionUid);
     }    

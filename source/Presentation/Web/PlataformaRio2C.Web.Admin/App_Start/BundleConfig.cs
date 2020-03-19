@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-17-2020
+// Last Modified On : 03-19-2020
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -723,6 +723,9 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/logistics/logistics.transfer.update.js",
                 "~/Assets/js/logistics/logistics.transfer.widget.js",
                 "~/Assets/js/logistics/logistics.transfer.delete.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/logistics.info.js").Include(
+                "~/Assets/js/logistics/logistics.info.widget.js"));
 
             #endregion
 
