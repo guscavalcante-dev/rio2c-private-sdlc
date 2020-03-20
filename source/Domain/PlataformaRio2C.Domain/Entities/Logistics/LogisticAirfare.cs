@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-16-2020
+// Last Modified On : 03-20-2020
 // ***********************************************************************
 // <copyright file="LogisticAirfare.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -134,6 +134,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void Delete(int userId)
         {
+            if (this.IsDeleted)
+            {
+                return;
+            }
+
             this.IsDeleted = true;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;

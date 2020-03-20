@@ -168,10 +168,87 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void Delete(int userId)
         {
+            if (this.IsDeleted)
+            {
+                return;
+            }
+
+            this.DeleteLogisticAirfares(userId);
+            this.DeleteLogisticAccommodations(userId);
+            this.DeleteLogisticTransfers(userId);
+
+            if (this.FindAllLogisticAirfaresNotDeleted()?.Any() == true || this.FindAllLogisticAccommodationsNotDeleted()?.Any() == true || this.FindAllLogisticTransfersNotDeleted()?.Any() == true)
+            {
+                return;
+            }
+
             this.IsDeleted = true;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
+
+        #region Logistic Airfares
+
+        /// <summary>Deletes the logistic airfares.</summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteLogisticAirfares(int userId)
+        {
+            foreach (var logisticAirfare in this.FindAllLogisticAirfaresNotDeleted())
+            {
+                logisticAirfare?.Delete(userId);
+            }
+        }
+
+        /// <summary>Finds all logistic airfares not deleted.</summary>
+        /// <returns></returns>
+        private List<LogisticAirfare> FindAllLogisticAirfaresNotDeleted()
+        {
+            return this.LogisticAirfares?.Where(la => !la.IsDeleted)?.ToList();
+        }
+
+        #endregion
+
+        #region Logistic Accommodations
+
+        /// <summary>Deletes the logistic accommodations.</summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteLogisticAccommodations(int userId)
+        {
+            foreach (var logisticAccommodation in this.FindAllLogisticAccommodationsNotDeleted())
+            {
+                logisticAccommodation?.Delete(userId);
+            }
+        }
+
+        /// <summary>Finds all logistic accommodations not deleted.</summary>
+        /// <returns></returns>
+        private List<LogisticAccommodation> FindAllLogisticAccommodationsNotDeleted()
+        {
+            return this.LogisticAccommodations?.Where(la => !la.IsDeleted)?.ToList();
+        }
+
+        #endregion
+
+        #region Logistic Transfers
+
+        /// <summary>Deletes the logistic transfers.</summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteLogisticTransfers(int userId)
+        {
+            foreach (var logisticTransfer in this.FindAllLogisticTransfersNotDeleted())
+            {
+                logisticTransfer?.Delete(userId);
+            }
+        }
+
+        /// <summary>Finds all logistic transfers not deleted.</summary>
+        /// <returns></returns>
+        private List<LogisticTransfer> FindAllLogisticTransfersNotDeleted()
+        {
+            return this.LogisticTransfers?.Where(la => !la.IsDeleted)?.ToList();
+        }
+
+        #endregion
 
         #region Airfare Attendee Logistic Sponsors
 
