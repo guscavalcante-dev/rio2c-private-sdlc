@@ -4,7 +4,7 @@
 // Created          : 03-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-16-2020
+// Last Modified On : 03-20-2020
 // ***********************************************************************
 // <copyright file="audiovisual.meetings.status.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -67,32 +67,9 @@ var AudiovisualMeetingsStatusWidget = function () {
                 data: data,
                 // Success
                 onSuccess: function () {
-                    if (typeof (AudiovisualMeetingsStatusWidget) !== 'undefined') {
-	                    AudiovisualMeetingsStatusWidget.init();
-                    }
-
-                    if (typeof (AudiovisualMeetingsEditionScheduledCountWidget) !== 'undefined') {
-	                    AudiovisualMeetingsEditionScheduledCountWidget.init();
-                    }
-
-                    if (typeof (AudiovisualMeetingsEditionUnscheduledCountWidget) !== 'undefined') {
-                        AudiovisualMeetingsEditionUnscheduledCountWidget.init();
-                    }
-
                 },
                 // Error
                 onError: function () {
-	                if (typeof (AudiovisualMeetingsStatusWidget) !== 'undefined') {
-		                AudiovisualMeetingsStatusWidget.init();
-	                }
-
-	                if (typeof (AudiovisualMeetingsEditionScheduledCountWidget) !== 'undefined') {
-		                AudiovisualMeetingsEditionScheduledCountWidget.init();
-	                }
-
-	                if (typeof (AudiovisualMeetingsEditionUnscheduledCountWidget) !== 'undefined') {
-		                AudiovisualMeetingsEditionUnscheduledCountWidget.init();
-	                }
                 }
             });
         })
@@ -100,6 +77,18 @@ var AudiovisualMeetingsStatusWidget = function () {
         })
         .always(function () {
             MyRio2cCommon.unblock();
+
+            if (typeof (AudiovisualMeetingsStatusWidget) !== 'undefined') {
+	            AudiovisualMeetingsStatusWidget.init();
+            }
+
+            if (typeof (AudiovisualMeetingsEditionScheduledCountWidget) !== 'undefined') {
+	            AudiovisualMeetingsEditionScheduledCountWidget.init();
+            }
+
+            if (typeof (AudiovisualMeetingsEditionUnscheduledCountWidget) !== 'undefined') {
+	            AudiovisualMeetingsEditionUnscheduledCountWidget.init();
+            }
         });
     };
 
