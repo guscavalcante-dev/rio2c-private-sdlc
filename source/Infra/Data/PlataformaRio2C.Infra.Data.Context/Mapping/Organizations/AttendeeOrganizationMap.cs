@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-14-2019
+// Last Modified On : 03-20-2020
 // ***********************************************************************
 // <copyright file="AttendeeOrganizationMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -32,14 +32,6 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.HasRequired(t => t.Organization)
                 .WithMany(e => e.AttendeeOrganizations)
                 .HasForeignKey(d => d.OrganizationId);
-
-            this.HasMany(t => t.AttendeeOrganizationTypes)
-                .WithRequired(e => e.AttendeeOrganization)
-                .HasForeignKey(e => e.AttendeeOrganizationId);
-
-            this.HasMany(t => t.AttendeeOrganizationCollaborators)
-                .WithRequired(e => e.AttendeeOrganization)
-                .HasForeignKey(e => e.AttendeeOrganizationId);
         }
     }
 }

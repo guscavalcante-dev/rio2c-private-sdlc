@@ -4,7 +4,7 @@
 // Created          : 03-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2020
+// Last Modified On : 03-20-2020
 // ***********************************************************************
 // <copyright file="MeetingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -119,7 +119,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     this.EditionDto.Id,
                     this.EditionDto.Uid,
                     this.UserInterfaceLanguage);
-
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
                 {

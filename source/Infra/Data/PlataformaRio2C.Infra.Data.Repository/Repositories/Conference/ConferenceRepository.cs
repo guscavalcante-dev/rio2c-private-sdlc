@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-20-2020
 // ***********************************************************************
 // <copyright file="ConferenceRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,7 +23,6 @@ using LinqKit;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using X.PagedList;
-using Z.EntityFramework.Plus;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -546,9 +545,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                 .FindByEditionUid(false, editionUid)
                                 .HasParticipants()
-                                .IncludeFilter(c => c.ConferenceParticipants.Where(cp => !cp.IsDeleted && !cp.AttendeeCollaborator.IsDeleted))
-                                .IncludeFilter(c => c.ConferenceParticipants.Where(cp => !cp.IsDeleted && !cp.AttendeeCollaborator.IsDeleted).Select(cp => cp.AttendeeCollaborator))
-                                .IncludeFilter(c => c.ConferenceParticipants.Where(cp => !cp.IsDeleted && !cp.AttendeeCollaborator.IsDeleted).Select(cp => cp.AttendeeCollaborator.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted)));
+                                .Include(c => c.ConferenceParticipants.Select(cp => cp.AttendeeCollaborator.AttendeeOrganizationCollaborators));
+                                //.IncludeFilter(c => c.ConferenceParticipants.Where(cp => !cp.IsDeleted && !cp.AttendeeCollaborator.IsDeleted))
+                                //.IncludeFilter(c => c.ConferenceParticipants.Where(cp => !cp.IsDeleted && !cp.AttendeeCollaborator.IsDeleted).Select(cp => cp.AttendeeCollaborator))
+                                //.IncludeFilter(c => c.ConferenceParticipants.Where(cp => !cp.IsDeleted && !cp.AttendeeCollaborator.IsDeleted).Select(cp => cp.AttendeeCollaborator.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted)));
 
             return await query
                             .ToListAsync();

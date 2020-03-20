@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-29-2020
+// Last Modified On : 03-20-2020
 // ***********************************************************************
 // <copyright file="CollaboratorMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -56,10 +56,6 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.HasRequired(t => t.User)
                 .WithOptional(e => e.Collaborator);
 
-            //this.HasOptional(t => t.Holding)
-            //    .WithMany(e => e.Organizations)
-            //    .HasForeignKey(d => d.HoldingId);
-
             this.HasRequired(t => t.Updater)
                 .WithMany(e => e.UpdatedCollaborators)
                 .HasForeignKey(d => d.UpdateUserId);
@@ -67,18 +63,6 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.HasOptional(t => t.Address)
                 .WithMany(e => e.Collaborators)
                 .HasForeignKey(d => d.AddressId);
-
-            this.HasMany(t => t.AttendeeCollaborators)
-                .WithRequired(e => e.Collaborator)
-                .HasForeignKey(e => e.CollaboratorId);
-
-            this.HasMany(t => t.JobTitles)
-                .WithRequired(e => e.Collaborator)
-                .HasForeignKey(e => e.CollaboratorId);
-
-            this.HasMany(t => t.MiniBios)
-                .WithRequired(e => e.Collaborator)
-                .HasForeignKey(e => e.CollaboratorId);
         }
     }
 }

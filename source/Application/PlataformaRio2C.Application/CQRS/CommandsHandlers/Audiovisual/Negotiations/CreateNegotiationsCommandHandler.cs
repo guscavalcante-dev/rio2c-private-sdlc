@@ -4,7 +4,7 @@
 // Created          : 03-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-19-2020
+// Last Modified On : 03-20-2020
 // ***********************************************************************
 // <copyright file="CreateNegotiationsCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -82,53 +82,62 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
-            this.NegotiationRepo.Truncate();
+            try
+            {
+                this.NegotiationRepo.Truncate();
 
-            edition?.StartAudiovisualNegotiationsCreation(cmd.UserId);
-            this.Uow.SaveChanges();
+                edition?.StartAudiovisualNegotiationsCreation(cmd.UserId);
+                this.Uow.SaveChanges();
 
-            var negotiationConfigs = await this.negotiationConfigRepo.FindAllForGenerateNegotiationsAsync();
-            if (negotiationConfigs?.Count == 0)
+                var negotiationConfigs = await this.negotiationConfigRepo.FindAllForGenerateNegotiationsAsync();
+                if (negotiationConfigs?.Count == 0)
+                {
+                    edition?.CancelAudiovisualNegotiationsCreation(cmd.UserId);
+                    this.Uow.SaveChanges();
+                    this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Rooms, Labels.FoundFP), new string[] { "ToastrError" })));
+                    return this.AppValidationResult;
+                }
+
+                var negotiationSlots = this.GetNegotiationSlots(negotiationConfigs, cmd.UserId);
+                if (negotiationConfigs?.Count == 0)
+                {
+                    edition?.CancelAudiovisualNegotiationsCreation(cmd.UserId);
+                    this.Uow.SaveChanges();
+                    this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Rooms, Labels.FoundFP), new string[] { "ToastrError" })));
+                    return this.AppValidationResult;
+                }
+
+                var projectBuyerEvaluations = await this.projectBuyerEvaluationRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionId ?? 0);
+                if (projectBuyerEvaluations?.Count == 0)
+                {
+                    edition?.CancelAudiovisualNegotiationsCreation(cmd.UserId);
+                    this.Uow.SaveChanges();
+                    this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Projects, Labels.FoundMP), new string[] { "ToastrError" })));
+                    return this.AppValidationResult;
+                }
+
+                this.logisticAirfares = await this.logisticAirfareRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionUid ?? Guid.Empty);
+                this.conferences = await this.conferenceRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionUid ?? Guid.Empty);
+
+                this.FillNegotiationSlots(negotiationSlots, projectBuyerEvaluations);
+
+                var negotiations = negotiationSlots
+                                    .Where(ns => ns.ProjectBuyerEvaluation != null)
+                                    .ToList();
+
+                this.NegotiationRepo.Truncate();
+                this.NegotiationRepo.CreateAll(negotiations);
+
+                edition?.FinishAudiovisualNegotiationsCreation(cmd.UserId);
+
+                this.Uow.SaveChanges();
+            }
+            catch (Exception)
             {
                 edition?.CancelAudiovisualNegotiationsCreation(cmd.UserId);
                 this.Uow.SaveChanges();
-                this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Rooms, Labels.FoundFP), new string[] { "ToastrError" })));
-                return this.AppValidationResult;
+                throw;
             }
-
-            var negotiationSlots = this.GetNegotiationSlots(negotiationConfigs, cmd.UserId);
-            if (negotiationConfigs?.Count == 0)
-            {
-                edition?.CancelAudiovisualNegotiationsCreation(cmd.UserId);
-                this.Uow.SaveChanges();
-                this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Rooms, Labels.FoundFP), new string[] { "ToastrError" })));
-                return this.AppValidationResult;
-            }
-
-            var projectBuyerEvaluations = await this.projectBuyerEvaluationRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionId ?? 0);
-            if (projectBuyerEvaluations?.Count == 0)
-            {
-                edition?.CancelAudiovisualNegotiationsCreation(cmd.UserId);
-                this.Uow.SaveChanges();
-                this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Projects, Labels.FoundMP), new string[] { "ToastrError" })));
-                return this.AppValidationResult;
-            }
-
-            this.logisticAirfares = await this.logisticAirfareRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionUid ?? Guid.Empty);
-            this.conferences = await this.conferenceRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionUid ?? Guid.Empty);
-
-            this.FillNegotiationSlots(negotiationSlots, projectBuyerEvaluations);
-
-            var negotiations = negotiationSlots
-                                .Where(ns => ns.ProjectBuyerEvaluation != null)
-                                .ToList();
-
-            this.NegotiationRepo.Truncate();
-            this.NegotiationRepo.CreateAll(negotiations);
-
-            edition?.FinishAudiovisualNegotiationsCreation(cmd.UserId);
-
-            this.Uow.SaveChanges();
 
             return this.AppValidationResult;
 
@@ -383,8 +392,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             // Airfare logistics
             var organizationLogisticAirfares = this.logisticAirfares
-                                                    .Where(la => (la.Logistic.AttendeeCollaborator.AttendeeOrganizationCollaborators
-                                                                        .Any(aoc => aoc.AttendeeOrganizationId == projectBuyerEvaluation.BuyerAttendeeOrganizationId)))
+                                                    .Where(la => !la.Logistic.AttendeeCollaborator.IsDeleted 
+                                                                 && la.Logistic.AttendeeCollaborator.AttendeeOrganizationCollaborators
+                                                                        .Any(aoc => !aoc.IsDeleted && aoc.AttendeeOrganizationId == projectBuyerEvaluation.BuyerAttendeeOrganizationId))
                                                     .ToList();
             if (organizationLogisticAirfares?.Any() != true)
             {
@@ -425,8 +435,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             // Airfare logistics
             var organizationLogisticAirfares = this.logisticAirfares
-                                                        .Where(la => (la.Logistic.AttendeeCollaborator.AttendeeOrganizationCollaborators
-                                                                            .Any(aoc => aoc.AttendeeOrganizationId == projectBuyerEvaluation.Project.SellerAttendeeOrganizationId)))
+                                                        .Where(la => !la.Logistic.AttendeeCollaborator.IsDeleted
+                                                                     && la.Logistic.AttendeeCollaborator.AttendeeOrganizationCollaborators
+                                                                            .Any(aoc => !aoc.IsDeleted && aoc.AttendeeOrganizationId == projectBuyerEvaluation.Project.SellerAttendeeOrganizationId))
                                                         .ToList();
             if (organizationLogisticAirfares?.Any() != true)
             {
@@ -480,8 +491,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var organizationConferences = this.conferences
                                                     .Where(c => c.ConferenceParticipants
-                                                                    .Any(cp => cp.AttendeeCollaborator.AttendeeOrganizationCollaborators
-                                                                                    .Any(aoc => aoc.AttendeeOrganizationId == projectBuyerEvaluation.BuyerAttendeeOrganizationId)))
+                                                                    .Any(cp => !cp.IsDeleted 
+                                                                               && !cp.AttendeeCollaborator.IsDeleted
+                                                                               && cp.AttendeeCollaborator.AttendeeOrganizationCollaborators
+                                                                                        .Any(aoc => !aoc.IsDeleted && aoc.AttendeeOrganizationId == projectBuyerEvaluation.BuyerAttendeeOrganizationId)))
                                                     .ToList();
             if (organizationConferences?.Any() != true)
             {
@@ -517,8 +530,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var organizationConferences = this.conferences
                                                     .Where(c => c.ConferenceParticipants
-                                                                    .Any(cp => cp.AttendeeCollaborator.AttendeeOrganizationCollaborators
-                                                                                    .Any(aoc => aoc.AttendeeOrganizationId == projectBuyerEvaluation.Project.SellerAttendeeOrganizationId)))
+                                                                    .Any(cp => !cp.IsDeleted
+                                                                               && !cp.AttendeeCollaborator.IsDeleted
+                                                                               && cp.AttendeeCollaborator.AttendeeOrganizationCollaborators
+                                                                                        .Any(aoc => !aoc.IsDeleted && aoc.AttendeeOrganizationId == projectBuyerEvaluation.Project.SellerAttendeeOrganizationId)))
                                                     .ToList();
             if (organizationConferences?.Any() != true)
             {

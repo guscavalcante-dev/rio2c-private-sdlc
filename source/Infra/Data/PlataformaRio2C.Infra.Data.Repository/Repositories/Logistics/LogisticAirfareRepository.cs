@@ -4,7 +4,7 @@
 // Created          : 03-08-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-19-2020
+// Last Modified On : 03-20-2020
 // ***********************************************************************
 // <copyright file="LogisticAirfareRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,7 +20,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using PlataformaRio2C.Domain.Dtos;
-using Z.EntityFramework.Plus;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -133,9 +132,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionUid(editionUid)
-                                .IncludeFilter(la => la.Logistic)
-                                .IncludeFilter(la => la.Logistic.AttendeeCollaborator)
-                                .IncludeFilter(la => la.Logistic.AttendeeCollaborator.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted));
+                                .Include(la => la.Logistic.AttendeeCollaborator.AttendeeOrganizationCollaborators);
+                                //.IncludeFilter(la => la.Logistic)
+                                //.IncludeFilter(la => la.Logistic.AttendeeCollaborator)
+                                //.IncludeFilter(la => la.Logistic.AttendeeCollaborator.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted));
 
             return await query
                             .OrderBy(la => la.DepartureDate)
