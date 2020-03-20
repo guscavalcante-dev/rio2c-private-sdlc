@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-17-2020
+// Last Modified On : 03-20-2020
 // ***********************************************************************
 // <copyright file="AttendeeLogisticSponsor.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,8 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using PlataformaRio2C.Domain.Validation;
 
 namespace PlataformaRio2C.Domain.Entities
@@ -27,9 +29,9 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual Edition Edition { get; private set; }
         public virtual LogisticSponsor LogisticSponsor { get; private set; }
 
-        //public virtual ICollection<Logistic> AccommodationSponsors { get; private set; }
-        //public virtual ICollection<Logistic> AirfareSponsors { get; private set; }
-        //public virtual ICollection<Logistic> AirportTransferSponsors { get; private set; }
+        public virtual ICollection<Logistic> AirfareLogistics { get; private set; }
+        public virtual ICollection<Logistic> AccommodationLogistics { get; private set; }
+        public virtual ICollection<Logistic> AirportTransferLogistics { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeLogisticSponsor"/> class.</summary>
         /// <param name="edition">The edition.</param>
@@ -93,10 +95,82 @@ namespace PlataformaRio2C.Domain.Entities
                 return;
             }
 
+            this.DissociateAirfareLogistics(userId);
+            this.DissociateAccommodationLogistics(userId);
+            this.DissociateAirportTransferLogistics(userId);
+
+            if (this.FindAllAirfareLogisticsNotDeleted()?.Any() == true || this.FindAllAccommodationLogisticsNotDeleted()?.Any() == true || this.FindAllAirportTransferLogisticsNotDeleted()?.Any() == true)
+            {
+                return;
+            }
+
             this.IsDeleted = true;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
+
+        #region Airfare Logistics
+
+        /// <summary>Dissociates the airfare logistics.</summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DissociateAirfareLogistics(int userId)
+        {
+            foreach (var airfareLogistic in this.FindAllAirfareLogisticsNotDeleted())
+            {
+                airfareLogistic?.DissociateAirfareAttendeeLogisticSponsor(userId);
+            }
+        }
+
+        /// <summary>Finds all airfare logistics not deleted.</summary>
+        /// <returns></returns>
+        private List<Logistic> FindAllAirfareLogisticsNotDeleted()
+        {
+            return this.AirfareLogistics?.Where(al => !al.IsDeleted && al.AirfareAttendeeLogisticSponsorId == this.Id)?.ToList();
+        }
+
+        #endregion
+
+        #region Accommodation Logistics
+
+        /// <summary>Dissociates the accommodation logistics.</summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DissociateAccommodationLogistics(int userId)
+        {
+            foreach (var accommodationLogistic in this.FindAllAccommodationLogisticsNotDeleted())
+            {
+                accommodationLogistic?.DissociateAccommodationAttendeeLogisticSponsor(userId);
+            }
+        }
+
+        /// <summary>Finds all accommodation logistics not deleted.</summary>
+        /// <returns></returns>
+        private List<Logistic> FindAllAccommodationLogisticsNotDeleted()
+        {
+            return this.AccommodationLogistics?.Where(al => !al.IsDeleted && al.AccommodationAttendeeLogisticSponsorId == this.Id)?.ToList();
+        }
+
+        #endregion
+
+        #region Airport Transfer Logistics
+
+        /// <summary>Dissociates the airport transfer logistics.</summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DissociateAirportTransferLogistics(int userId)
+        {
+            foreach (var airportTransferLogistic in this.FindAllAirportTransferLogisticsNotDeleted())
+            {
+                airportTransferLogistic?.DissociateAirportTransferAttendeeLogisticSponsor(userId);
+            }
+        }
+
+        /// <summary>Finds all airport transfer logistics not deleted.</summary>
+        /// <returns></returns>
+        private List<Logistic> FindAllAirportTransferLogisticsNotDeleted()
+        {
+            return this.AirportTransferLogistics?.Where(atl => !atl.IsDeleted && atl.AirportTransferAttendeeLogisticSponsorId == this.Id)?.ToList();
+        }
+
+        #endregion
 
         #region Validations
 

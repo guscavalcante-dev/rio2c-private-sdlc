@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-17-2020
+// Last Modified On : 03-20-2020
 // ***********************************************************************
 // <copyright file="Logistic.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -173,7 +173,19 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
         }
 
-        #region Attendee Logistic Sponsors
+        #region Airfare Attendee Logistic Sponsors
+
+        /// <summary>Dissociates the airfare attendee logistic sponsor.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void DissociateAirfareAttendeeLogisticSponsor(int userId)
+        {
+            this.AirfareAttendeeLogisticSponsorId = null;
+            this.AirfareAttendeeLogisticSponsor = null;
+            this.IsAirfareSponsored = false;
+
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
 
         /// <summary>Updates the airfare attendee logistic sponsor.</summary>
         /// <param name="edition">The edition.</param>
@@ -222,6 +234,22 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
+        #endregion
+
+        #region Accommodation Attendee Logistic Sponsors
+
+        /// <summary>Dissociates the accommodation attendee logistic sponsor.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void DissociateAccommodationAttendeeLogisticSponsor(int userId)
+        {
+            this.AccommodationAttendeeLogisticSponsorId = null;
+            this.AccommodationAttendeeLogisticSponsor = null;
+            this.IsAccommodationSponsored = false;
+
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
         /// <summary>Updates the accommodation attendee logistic sponsor.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="accommodationAttendeeLogisticSponsor">The accommodation attendee logistic sponsor.</param>
@@ -268,6 +296,22 @@ namespace PlataformaRio2C.Domain.Entities
                 this.AccommodationAttendeeLogisticSponsorId = null;
                 this.AccommodationAttendeeLogisticSponsor = null;
             }
+        }
+
+        #endregion
+
+        #region Airport Transfer Attendee Logistic Sponsors
+
+        /// <summary>Dissociates the airport transfer attendee logistic sponsor.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void DissociateAirportTransferAttendeeLogisticSponsor(int userId)
+        {
+            this.AirportTransferAttendeeLogisticSponsorId = null;
+            this.AirportTransferAttendeeLogisticSponsor = null;
+            this.IsAirportTransferSponsored = false;
+
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
         }
 
         /// <summary>Updates the airport transfer attendee logistic sponsor.</summary>

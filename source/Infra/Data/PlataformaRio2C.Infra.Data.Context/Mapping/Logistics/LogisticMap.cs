@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-20-2020
 // ***********************************************************************
 // <copyright file="LogisticMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -32,20 +32,17 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 .WithMany(t => t.Logistics)
                 .HasForeignKey(e => e.AttendeeCollaboratorId);
 
+            this.HasOptional(t => t.AirfareAttendeeLogisticSponsor)
+                .WithMany(e => e.AirfareLogistics)
+                .HasForeignKey(d => d.AirfareAttendeeLogisticSponsorId);
+
             this.HasOptional(t => t.AccommodationAttendeeLogisticSponsor)
-                .WithMany()
-                //.WithMany(e => e.AccommodationSponsors)
+                .WithMany(e => e.AccommodationLogistics)
               .HasForeignKey(d => d.AccommodationAttendeeLogisticSponsorId);
 
             this.HasOptional(t => t.AirportTransferAttendeeLogisticSponsor)
-                .WithMany()
-                //.WithMany(e => e.AirportTransferSponsors)
+                .WithMany(e => e.AirportTransferLogistics)
                 .HasForeignKey(d => d.AirportTransferAttendeeLogisticSponsorId);
-
-            this.HasOptional(t => t.AirfareAttendeeLogisticSponsor)
-                .WithMany()
-                //.WithMany(e => e.AirfareSponsors)
-                .HasForeignKey(d => d.AirfareAttendeeLogisticSponsorId);
 
             this.HasRequired(t => t.CreateUser)
                 .WithMany()

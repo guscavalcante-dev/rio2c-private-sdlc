@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-19-2020
+// Last Modified On : 03-20-2020
 // ***********************************************************************
 // <copyright file="LogisticsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -157,8 +157,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         public async Task<ActionResult> ShowCreateModal()
         {
             var cmd = new CreateLogistic(
-                await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, false),
-                await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, true),
+                (await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, false)).GetSeparatorTranslation(m => m.Name, this.UserInterfaceLanguage, Language.Separator),
+                (await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, true)).GetSeparatorTranslation(m => m.Name, this.UserInterfaceLanguage, Language.Separator),
                 UserInterfaceLanguage);
 
             return Json(new
@@ -208,8 +208,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd.UpdateModelsAndLists(
-                    await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, false),
-                    await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, true),
+                    (await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, false)).GetSeparatorTranslation(m => m.Name, this.UserInterfaceLanguage, Language.Separator),
+                    (await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, true)).GetSeparatorTranslation(m => m.Name, this.UserInterfaceLanguage, Language.Separator),
                     UserInterfaceLanguage);
 
                 return Json(new
@@ -305,8 +305,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 cmd = new UpdateLogisticMainInformation(
                     mainInformationWidgetDto,
                     await attendeeLogisticSponsorRepo.FindOtherDtoAsync(this.EditionDto.Id),
-                    await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, false),
-                    await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, true),
+                    (await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, false)).GetSeparatorTranslation(m => m.Name, this.UserInterfaceLanguage, Language.Separator),
+                    (await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, true)).GetSeparatorTranslation(m => m.Name, this.UserInterfaceLanguage, Language.Separator),
                     UserInterfaceLanguage);
             }
             catch (DomainException ex)
@@ -361,8 +361,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd.UpdateModelsAndLists(
-                    await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, false),
-                    await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, true),
+                    (await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, false)).GetSeparatorTranslation(m => m.Name, this.UserInterfaceLanguage, Language.Separator),
+                    (await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, true)).GetSeparatorTranslation(m => m.Name, this.UserInterfaceLanguage, Language.Separator),
                     UserInterfaceLanguage);
 
                 return Json(new

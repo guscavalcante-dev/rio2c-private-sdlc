@@ -32,7 +32,7 @@
                 foreach (var sponsor in Model.MainSponsors)
                 {
                     <label class="kt-radio">
-                        @Html.RadioButtonFor(m => m.AirfareSponsorUid, sponsor.Uid, new { data_isothers = sponsor.IsOtherRequired }) @sponsor.Name.GetSeparatorTranslation(UICulture, Language.Separator)
+                        @Html.RadioButtonFor(m => m.AirfareSponsorUid, sponsor.Uid, new { data_isothers = sponsor.IsOtherRequired }) @sponsor.Name
                         <span></span>
                     </label>
                 }
@@ -78,7 +78,7 @@
                 foreach (var sponsor in Model.MainSponsors)
                 {
                     <label class="kt-radio">
-                        @Html.RadioButtonFor(m => m.AccommodationSponsorUid, sponsor.Uid, new { data_isothers = sponsor.IsOtherRequired }) @sponsor.Name.GetSeparatorTranslation(UICulture, Language.Separator)
+                        @Html.RadioButtonFor(m => m.AccommodationSponsorUid, sponsor.Uid, new { data_isothers = sponsor.IsOtherRequired }) @sponsor.Name
                         <span></span>
                     </label>
                 }
@@ -129,7 +129,7 @@
                 foreach (var sponsor in Model.MainSponsors)
                 {
                     <label class="kt-radio">
-                        @Html.RadioButtonFor(m => m.AirportTransferSponsorUid, sponsor.Uid, new { data_isothers = sponsor.IsOtherRequired }) @sponsor.Name.GetSeparatorTranslation(UICulture, Language.Separator)
+                        @Html.RadioButtonFor(m => m.AirportTransferSponsorUid, sponsor.Uid, new { data_isothers = sponsor.IsOtherRequired }) @sponsor.Name
                         <span></span>
                     </label>
                 }
