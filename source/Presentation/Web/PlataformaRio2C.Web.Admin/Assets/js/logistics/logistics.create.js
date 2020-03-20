@@ -4,7 +4,7 @@
 // Created          : 01-27-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-12-2020
+// Last Modified On : 03-20-2020
 // ***********************************************************************
 // <copyright file="collaborators.create.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -59,10 +59,11 @@ var LogisticsCreate = function () {
     };
     
     // Show modal ---------------------------------------------------------------------------------
-    var showModal = function () {
+    var showModal = function (attendeeCollaboratorUid) {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
+        jsonParameters.attendeeCollaboratorUid = attendeeCollaboratorUid;
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/ShowCreateModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -134,8 +135,8 @@ var LogisticsCreate = function () {
     };
 
     return {
-        showModal: function () {
-	        showModal();
+        showModal: function (attendeeCollaboratorUid) {
+            showModal(attendeeCollaboratorUid);
         },
         enableNewSponsor: function(preffix) {
             return enableNewSponsor(preffix);

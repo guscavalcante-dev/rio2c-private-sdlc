@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-11-2020
+// Last Modified On : 03-20-2020
 // ***********************************************************************
 // <copyright file="logisticsponsors.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -121,9 +121,9 @@ var LogisticsDataTableWidget = function () {
                                     </tr>\
                                 </table>';
 
-	                    //if (!full.IsInCurrentEdition) {
-		                   // html += '<span class="kt-badge kt-badge--inline kt-badge--info mt-2">' + labels.notInEdition + '</span>';
-	                    //}
+                        if (!full.HasRequest) {
+		                    html += '<span class="kt-badge kt-badge--inline kt-badge--info mt-2">' + labels.notInEdition + '</span>';
+	                    }
 
 	                    return html;
                     }
@@ -184,12 +184,12 @@ var LogisticsDataTableWidget = function () {
                         
                         if (full.HasRequest) {
 	                        // View details
-	                        html += '<button class="dropdown-item" onclick="LogisticsDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-edit"></i> ' + view + '</button>';
+	                        html += '<button class="dropdown-item" onclick="LogisticsDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-edit"></i> ' + labels.edit + '</button>';
                         }
 
                         if (!full.HasRequest) {
                             // Create request
-                            html += '<button class="dropdown-item" onclick="LogisticsCreate.showModal(\'' + full.Uid + '\');"><i class="la la-edit"></i> ' + addRequest + '</button>';
+                            html += '<button class="dropdown-item" onclick="LogisticsCreate.showModal(\'' + full.AttendeeCollaboratorUid + '\');"><i class="la la-plus"></i> ' + addRequest + '</button>';
                         }
                         else if (!full.HasLogistics) {
 	                        html += '<button class="dropdown-item" onclick="LogisticsDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';

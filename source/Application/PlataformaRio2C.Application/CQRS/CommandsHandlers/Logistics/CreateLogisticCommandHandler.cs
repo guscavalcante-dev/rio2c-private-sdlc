@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-13-2020
+// Last Modified On : 03-20-2020
 // ***********************************************************************
 // <copyright file="CreateLogisticCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -65,7 +65,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.Uow.BeginTransaction();
             
             var attendeeCollaborator = await this.repository.GetAsync(l => l.AttendeeCollaborator.Uid == cmd.AttendeeCollaboratorUid && !l.IsDeleted);
-            if (attendeeCollaborator?.AttendeeCollaborator.Collaborator != null)
+            if (attendeeCollaborator?.AttendeeCollaborator?.Collaborator != null)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.Request.ToLower(), Labels.Participant, attendeeCollaborator.AttendeeCollaborator.Collaborator.GetDisplayName()), new string[] { "AttendeeCollaboratorUid" }));
             }
@@ -78,7 +78,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var logistic = new Logistic(
                 this.editionRepo.Get(cmd.EditionId),
-                this.attendeeCollaboratorRepo.Get(cmd.AttendeeCollaboratorUid),
+                this.attendeeCollaboratorRepo.Get(cmd.AttendeeCollaboratorUid ?? Guid.Empty),
                 cmd.IsAirfareSponsored,
                 this.attendeeLogisticSponsorRepo.Get(cmd.AirfareSponsorOtherUid ?? cmd.AirfareSponsorUid ?? Guid.Empty),
                 await this.logisticSponsorRepo.GetAsync(ls => ls.Name.ToLower() == cmd.AirfareSponsorOtherName.ToLower().Trim() && !ls.IsDeleted),

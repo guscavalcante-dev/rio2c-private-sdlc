@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-19-2020
+// Last Modified On : 03-20-2020
 // ***********************************************************************
 // <copyright file="LogisticJsonDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,6 +24,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public int? Id { get; set; }
         public Guid? Uid { get; set; }
         public Guid CollaboratorUid { get; set; }
+        public Guid AttendeeCollaboratorUid { get; set; }
         public string Name { get; set; }
         public DateTimeOffset? CollaboratorImageUploadDate { get; set; }
         public DateTimeOffset? CreateDate { get; set; }

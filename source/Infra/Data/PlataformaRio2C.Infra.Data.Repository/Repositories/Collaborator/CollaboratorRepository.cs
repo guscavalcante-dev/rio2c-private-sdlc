@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-19-2020
+// Last Modified On : 03-20-2020
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -921,6 +921,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Select(c => new LogisticJsonDto
                             {
                                 CollaboratorUid = c.Uid,
+                                AttendeeCollaboratorUid = c.AttendeeCollaborators.Where(ac => ac.EditionId == editionId && !ac.IsDeleted).Select(ac => ac.Uid).FirstOrDefault(),
                                 Name = c.FirstName + " " + c.LastNames,
                                 CollaboratorImageUploadDate = c.ImageUploadDate,
                                 HasRequest = c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId && !ac.IsDeleted && ac.Logistics.Any(l => !l.IsDeleted)),

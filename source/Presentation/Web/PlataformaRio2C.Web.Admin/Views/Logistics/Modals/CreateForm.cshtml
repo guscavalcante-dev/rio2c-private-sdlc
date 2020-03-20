@@ -1,16 +1,22 @@
-﻿@using PlataformaRio2C.Domain.Entities
-@model PlataformaRio2C.Application.CQRS.Commands.CreateLogistic
-<div class="kt-section">
-    <div class="kt-section__content mt-3">
-        <div class="row">
-            <div class="col-md-8">
-                @Html.LabelFor(m => m.AttendeeCollaboratorUid, new { @class = "control-label" })
-                @Html.DropDownListFor(m => m.AttendeeCollaboratorUid, Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control enable-collaborator-select2" })
-                @Html.ValidationMessageFor(m => m.AttendeeCollaboratorUid, "", new { @class = "text-danger" })
+﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateLogistic
+@if (!Model.AttendeeCollaboratorUid.HasValue)
+{
+    <div class="kt-section">
+        <div class="kt-section__content mt-3">
+            <div class="row">
+                <div class="col-md-8">
+                    @Html.LabelFor(m => m.AttendeeCollaboratorUid, new { @class = "control-label" })
+                    @Html.DropDownListFor(m => m.AttendeeCollaboratorUid, Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control enable-collaborator-select2" })
+                    @Html.ValidationMessageFor(m => m.AttendeeCollaboratorUid, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
     </div>
-</div>
+}
+else
+{
+    @Html.HiddenFor(m => m.AttendeeCollaboratorUid)
+}
 <!--begin: Airfare-->
 <div class="kt-section">
     <h3 class="kt-section__title mb-0 mt-30">@Labels.Airfare</h3>

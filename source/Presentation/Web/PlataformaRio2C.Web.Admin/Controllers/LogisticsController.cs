@@ -152,11 +152,13 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         #region Create
 
         /// <summary>Shows the create modal.</summary>
+        /// <param name="attendeeCollaboratorUid">The attendee collaborator uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowCreateModal()
+        public async Task<ActionResult> ShowCreateModal(Guid? attendeeCollaboratorUid)
         {
             var cmd = new CreateLogistic(
+                attendeeCollaboratorUid,
                 (await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, false)).GetSeparatorTranslation(m => m.Name, this.UserInterfaceLanguage, Language.Separator),
                 (await attendeeLogisticSponsorRepo.FindAllBaseDtosByIsOtherAsnyc(this.EditionDto.Id, true)).GetSeparatorTranslation(m => m.Name, this.UserInterfaceLanguage, Language.Separator),
                 UserInterfaceLanguage);

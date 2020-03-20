@@ -4,7 +4,7 @@
 // Created          : 02-03-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-17-2020
+// Last Modified On : 03-20-2020
 // ***********************************************************************
 // <copyright file="CreateLogistic.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,7 +28,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         [Display(Name = "Participant", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public Guid AttendeeCollaboratorUid { get; set; }
+        public Guid? AttendeeCollaboratorUid { get; set; }
 
         #region Airfare sponsor
 
@@ -104,14 +104,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<AttendeeLogisticSponsorJsonDto> OtherSponsors { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CreateLogistic"/> class.</summary>
+        /// <param name="attendeeCollaboratorUid">The attendee collaborator uid.</param>
         /// <param name="mainLogisticSponsorBaseDtos">The main logistic sponsor base dtos.</param>
         /// <param name="otherLogisticSponsorBaseDtos">The other logistic sponsor base dtos.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public CreateLogistic(
+            Guid? attendeeCollaboratorUid,
             List<AttendeeLogisticSponsorJsonDto> mainLogisticSponsorBaseDtos,
             List<AttendeeLogisticSponsorJsonDto> otherLogisticSponsorBaseDtos,
             string userInterfaceLanguage)
         {
+            this.AttendeeCollaboratorUid = attendeeCollaboratorUid;
             this.UpdateModelsAndLists(mainLogisticSponsorBaseDtos, otherLogisticSponsorBaseDtos, userInterfaceLanguage);
         }
 
