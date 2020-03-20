@@ -1,0 +1,46 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model List<LogisticTransferDto>
+<div class="row">
+    <div class="col-md-12">
+        <div class="kt-widget4">
+            @if (Model != null && Model.Any())
+            {
+                <div class="col-12">
+                    <table class="table table-sm table-head-bg-brand table-body-scroll">
+                        <thead class="thead-inverse">
+                            <tr>
+                                <th>@Labels.FromPlace</th>
+                                <th>@Labels.ToPlace</th>
+                                <th class="text-center">@Labels.Departure</th>
+                            </tr>
+                        </thead>
+                        <tbody class="rio2c-scroll" style="height: 180px;">
+                            @foreach (var logisticTransferDto in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @logisticTransferDto.FromPlaceDto.Place.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                                    </td>
+                                    <td>
+                                        @logisticTransferDto.ToPlaceDto.Place.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                                    </td>
+                                    <td class="text-center">
+                                        @logisticTransferDto.LogisticTransfer.Date.ToUserTimeZone().ToString("g")
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="row mt-3">
+                    <div class="col-12 text-center">
+                        <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.Transfers, Labels.FoundMP)</span>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

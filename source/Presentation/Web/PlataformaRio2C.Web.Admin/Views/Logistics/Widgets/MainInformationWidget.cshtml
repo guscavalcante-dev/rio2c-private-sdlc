@@ -97,7 +97,7 @@
                 <div class="kt-widget__item col-12">
                     <div class="kt-widget__details">
                         <span class="kt-widget__title">@Labels.AdditionalInfo</span>
-                        <span class="kt-widget__value"><span>@(Html.Raw(Model.Logistic?.AdditionalInfo.Replace("\n", "<br />")))</span></span>
+                        <span class="kt-widget__value"><span>@Html.Raw(Model.Logistic?.AdditionalInfo.Replace("\n", "<br />"))</span></span>
                     </div>
                 </div>
             }

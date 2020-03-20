@@ -1,0 +1,80 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model AttendeeCollaboratorDto
+@{
+    var accommodationPlaceDtos = Model?.LogisticDto?.LogisticAccommodationDtos?.Where(lad => lad.PlaceDto?.HasInformation() == true)?.Select(lad => lad.PlaceDto)?.Distinct()?.ToList();
+    var transferFromPlaceDtos = Model?.LogisticDto?.LogisticTransferDtos?.Where(ltd => ltd.FromPlaceDto?.HasInformation() == true)?.Select(ltd => ltd.FromPlaceDto)?.Distinct()?.ToList();
+    var transferToPlaceDtos = Model?.LogisticDto?.LogisticTransferDtos?.Where(ltd => ltd.ToPlaceDto?.HasInformation() == true)?.Select(ltd => ltd.ToPlaceDto)?.Distinct()?.ToList();
+    var placeDtos = (accommodationPlaceDtos ?? new List<PlaceDto>())
+                        .Union(transferFromPlaceDtos ?? new List<PlaceDto>())
+                        .Union(transferToPlaceDtos ?? new List<PlaceDto>())
+                        .ToList();
+}
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">@Labels.Logistics</h3>
+    </div>
+    <div class="kt-portlet__head-toolbar">
+        <ul class="nav nav-tabs nav-tabs-line nav-tabs-line-right" role="tablist">
+            @if (Model.LogisticDto?.LogisticAirfareDtos?.Any() == true)
+            {
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#airfare-tab" role="tab">
+                        <i class="la la-plane"></i> @Labels.Airfare
+                    </a>
+                </li>
+            }
+            @if (Model.LogisticDto?.LogisticAccommodationDtos?.Any() == true)
+            {
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#accommodation-tab" role="tab">
+                        <i class="la la-hotel"></i> @Labels.Accommodation
+                    </a>
+                </li>
+            }
+            @if (Model.LogisticDto?.LogisticTransferDtos?.Any() == true)
+            {
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#transfer-tab" role="tab">
+                        <i class="la la-bus"></i> @Labels.Transfer
+                    </a>
+                </li>
+            }
+            @if (placeDtos?.Any() == true)
+            {
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#places-tab" role="tab">
+                        <i class="la la-map-marker"></i> @Labels.Places
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+<div class="kt-portlet__body pt-0">
+    <div class="tab-content">
+        @if (Model.LogisticDto?.LogisticAirfareDtos?.Any() == true)
+        {
+            <div class="tab-pane active" id="airfare-tab" role="tabpanel">
+                @Html.Partial("widgets/LogisticsAirfareList", Model.LogisticDto?.LogisticAirfareDtos?.ToList())
+            </div>
+        }
+        @if (Model.LogisticDto?.LogisticAccommodationDtos?.Any() == true)
+        {
+            <div class="tab-pane" id="accommodation-tab" role="tabpanel">
+                @Html.Partial("widgets/LogisticsAccommodationList", Model.LogisticDto?.LogisticAccommodationDtos?.ToList())
+            </div>
+        }
+        @if (Model.LogisticDto?.LogisticTransferDtos?.Any() == true)
+        {
+            <div class="tab-pane" id="transfer-tab" role="tabpanel">
+                @Html.Partial("widgets/LogisticsTransferList", Model.LogisticDto?.LogisticTransferDtos?.ToList())
+            </div>
+        }
+        @if (placeDtos?.Any() == true)
+        {
+            <div class="tab-pane" id="places-tab" role="tabpanel">
+                @Html.Partial("widgets/LogisticsAddresses", placeDtos)
+            </div>
+        }
+    </div>
+</div>

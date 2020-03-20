@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-01-2020
+// Last Modified On : 03-20-2020
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -326,6 +326,7 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/js/executives/executives.company.widget.js",
                 "~/Assets/js/executives/executives.maininformation.widget.js",
                 "~/Assets/js/executives/executives.socialnetworks.widget.js",
+                "~/Assets/js/executives/executives.logisticinfo.widget.js",
                 "~/Assets/js/companies/companyinfo.autocomplete.js",
                 "~/Assets/js/myrio2c.companynumber.js",
                 "~/Assets/js/myrio2c.publicemail.js",

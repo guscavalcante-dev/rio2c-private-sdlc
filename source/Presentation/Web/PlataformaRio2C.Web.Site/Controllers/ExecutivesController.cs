@@ -4,7 +4,7 @@
 // Created          : 10-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-04-2020
+// Last Modified On : 03-20-2020
 // ***********************************************************************
 // <copyright file="ExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -470,9 +470,42 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
 
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Executive, Labels.CreatedM) });
-        } 
+        }
 
         #endregion
+
+        #endregion
+
+        #region Logistic Info Widget
+
+        /// <summary>Shows the logistic information widget.</summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowLogisticInfoWidget(Guid? collaboratorUid)
+        {
+            if (this.UserAccessControlDto.Collaborator.Uid != collaboratorUid)
+            {
+                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+            }
+
+            var logisticInfoWidgetDto = await this.attendeeCollaboratorRepo.FindLogisticInfoWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
+            if (logisticInfoWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Logistics, Labels.FoundMP.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            ViewBag.HideActions = true;
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/LogisticInfoWidget", logisticInfoWidgetDto), divIdOrClass = "#ExecutivesLogisticInfoWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
         #endregion
     }

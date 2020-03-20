@@ -451,6 +451,7 @@
     <Content Include="Assets\js\executives\executives.company.widget.js" />
     <Content Include="Assets\js\executives\executives.socialnetworks.widget.js" />
     <Content Include="Assets\js\executives\executives.maininformation.widget.js" />
+    <Content Include="Assets\js\executives\executives.logisticinfo.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.socialnetworks.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.videoandmusic.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.evaluation.list.widget.js" />
@@ -7308,6 +7309,11 @@
     <Content Include="Views\Shared\SocialNetworks\_WebsiteItem.cshtml" />
     <Content Include="Views\Shared\SocialNetworks\_YoutubeItem.cshtml" />
     <Content Include="Views\Shared\Collaborators\Widgets\SocialNetworksWidget.cshtml" />
+    <Content Include="Views\Executives\Widgets\LogisticInfoWidget.cshtml" />
+    <Content Include="Views\Executives\Widgets\LogisticsAccommodationList.cshtml" />
+    <Content Include="Views\Executives\Widgets\LogisticsAirfareList.cshtml" />
+    <Content Include="Views\Executives\Widgets\LogisticsTransferList.cshtml" />
+    <Content Include="Views\Executives\Widgets\LogisticsAddresses.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

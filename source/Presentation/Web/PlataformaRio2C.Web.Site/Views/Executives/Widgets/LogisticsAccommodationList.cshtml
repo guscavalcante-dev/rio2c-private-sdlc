@@ -1,0 +1,49 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model List<LogisticAccommodationDto>
+@{
+    var placeDtos = Model?.Select(lad => lad.PlaceDto)?.Distinct()?.ToList();
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="kt-widget4">
+            @if (Model != null && Model.Any())
+            {
+                <div class="col-12">
+                    <table class="table table-sm table-head-bg-brand table-body-scroll">
+                        <thead class="thead-inverse">
+                            <tr>
+                                <th>@Labels.Hotel</th>
+                                <th class="text-center">@Labels.CheckInDate</th>
+                                <th class="text-center">@Labels.CheckOutDate</th>
+                            </tr>
+                        </thead>
+                        <tbody class="rio2c-scroll" style="height: 180px;">
+                            @foreach (var logisticAccommodationDto in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @logisticAccommodationDto.PlaceDto.Place.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                                    </td>
+                                    <td class="text-center">
+                                        @logisticAccommodationDto.LogisticAccommodation.CheckInDate.ToUserTimeZone().ToString("g")
+                                    </td>
+                                    <td class="text-center">
+                                        @logisticAccommodationDto.LogisticAccommodation.CheckOutDate.ToUserTimeZone().ToString("g")
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="row mt-3">
+                    <div class="col-12 text-center">
+                        <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.Accommodations, Labels.FoundFP)</span>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

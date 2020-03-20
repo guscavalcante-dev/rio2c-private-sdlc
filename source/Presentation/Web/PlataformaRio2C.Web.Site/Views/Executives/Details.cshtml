@@ -2,31 +2,44 @@
 @model AttendeeCollaboratorSiteDetailsDto
 @{
     ViewBag.Title = $"{Labels.Executive}  {Model.Collaborator.GetFullName()}";
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var isCurrentUser = userAccessControlDto?.Collaborator?.Uid == Model.Collaborator?.Uid;
 }
 @Html.Hidden("AggregateId", Model.Collaborator.Uid)
+@Html.Hidden("CollaboratorUid", Model.Collaborator.Uid)
 <div class="row">
     <div class="col-md-12">
-        <!--begin:Main Information Widget-->
         <div class="row">
+            <!--begin:Main Information Widget-->
             <div class="col-12">
                 <div id="ExecutiveMainInformationWidget" class="kt-portlet" style="min-height: 200px;"></div>
             </div>
+            <!--end:Main Information Widget-->
         </div>
-        <!--end:Main Information Widget-->
-        <!--begin:Social Networks Widget-->
         <div class="row">
+            <!--begin:Social Networks Widget-->
             <div class="col-12">
                 <div id="ExecutiveSocialNetworksWidget" class="kt-portlet" style="min-height: 325px;"></div>
             </div>
+            <!--end:Social Networks Widget-->
         </div>
-        <!--end:Social Networks Widget-->
-        <!--begin:Company Widget-->
         <div class="row">
+            <!--begin:Company Widget-->
             <div class="col-12">
                 <div id="ExecutiveCompanyWidget" class="kt-portlet" style="min-height: 325px;"></div>
             </div>
+            <!--end:Company Widget-->
         </div>
-        <!--end:Company Widget-->
+        @if (Model.HasLogistic && isCurrentUser)
+        {
+            <div class="row">
+                <!--begin:Logistic Info Widget-->
+                <div class="col-12">
+                    <div id="ExecutivesLogisticInfoWidget" class="kt-portlet kt-portlet--tabs" style="min-height: 350px;"></div>
+                </div>
+                <!--end:Logistic Info Widget-->
+            </div>
+        }
     </div>
 </div>
 @section Styles {
@@ -52,6 +65,10 @@
             ExecutivesMainInformationWidget.init();
             ExecutivesSocialNetworksWidget.init();
             ExecutivesCompanyWidget.init();
+            @if (Model.HasLogistic && isCurrentUser)
+            {
+                <text>ExecutivesLogisticInfoWidget.init();</text>
+            }
         });
     </script>
 }

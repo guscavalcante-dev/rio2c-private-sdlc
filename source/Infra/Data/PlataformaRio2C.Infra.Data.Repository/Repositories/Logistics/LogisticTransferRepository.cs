@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-19-2020
+// Last Modified On : 03-20-2020
 // ***********************************************************************
 // <copyright file="LogisticTransferRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -106,7 +106,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     },
                                     ToPlaceDto = new PlaceDto
                                     {
-                                        Place = lt.FromAttendeePlace.Place,
+                                        Place = lt.ToAttendeePlace.Place,
                                         AddressDto = lt.ToAttendeePlace.Place.Address == null || !lt.ToAttendeePlace.Place.Address.IsDeleted ? null : new AddressDto
                                         {
                                             Address = lt.ToAttendeePlace.Place.Address,

@@ -4,7 +4,7 @@
 // Created          : 03-17-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-17-2020
+// Last Modified On : 03-20-2020
 // ***********************************************************************
 // <copyright file="PlaceDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -42,6 +42,17 @@ namespace PlataformaRio2C.Domain.Dtos
             }
 
             return "Others";
+        }
+
+        /// <summary>Determines whether this instance has information.</summary>
+        /// <returns>
+        ///   <c>true</c> if this instance has information; otherwise, <c>false</c>.</returns>
+        public bool HasInformation()
+        {
+            return !string.IsNullOrEmpty(this.Place?.Website)
+                   || !string.IsNullOrEmpty(this.Place?.AdditionalInfo)
+                   || this.AddressDto != null
+                   ||  this.AddressBaseDto != null;
         }
     }
 }

@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-19-2020
+// Last Modified On : 03-20-2020
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -287,7 +287,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Select(ac => new AttendeeCollaboratorSiteDetailsDto
                             {
                                 AttendeeCollaborator = ac,
-                                Collaborator = ac.Collaborator
+                                Collaborator = ac.Collaborator,
+                                HasLogistic = ac.Logistics.Any(l => !l.IsDeleted)
                             })
                             .FirstOrDefaultAsync();
         }
@@ -542,7 +543,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         PlaceDto = new PlaceDto
                                         {
                                             Place = la.AttendeePlace.Place,
-                                            AddressDto = la.AttendeePlace.Place.Address == null || !la.AttendeePlace.Place.Address.IsDeleted ? null : new AddressDto
+                                            AddressDto = la.AttendeePlace.Place.Address == null || la.AttendeePlace.Place.Address.IsDeleted ? null : new AddressDto
                                             {
                                                 Address = la.AttendeePlace.Place.Address,
                                                 City = la.AttendeePlace.Place.Address.City,
@@ -557,7 +558,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         FromPlaceDto = new PlaceDto
                                         {
                                             Place = lt.FromAttendeePlace.Place,
-                                            AddressDto = lt.FromAttendeePlace.Place.Address == null || !lt.FromAttendeePlace.Place.Address.IsDeleted ? null : new AddressDto
+                                            AddressDto = lt.FromAttendeePlace.Place.Address == null || lt.FromAttendeePlace.Place.Address.IsDeleted ? null : new AddressDto
                                             {
                                                 Address = lt.FromAttendeePlace.Place.Address,
                                                 City = lt.FromAttendeePlace.Place.Address.City,
@@ -567,8 +568,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         },
                                         ToPlaceDto = new PlaceDto
                                         {
-                                            Place = lt.FromAttendeePlace.Place,
-                                            AddressDto = lt.ToAttendeePlace.Place.Address == null || !lt.ToAttendeePlace.Place.Address.IsDeleted ? null : new AddressDto
+                                            Place = lt.ToAttendeePlace.Place,
+                                            AddressDto = lt.ToAttendeePlace.Place.Address == null || lt.ToAttendeePlace.Place.Address.IsDeleted ? null : new AddressDto
                                             {
                                                 Address = lt.ToAttendeePlace.Place.Address,
                                                 City = lt.ToAttendeePlace.Place.Address.City,
