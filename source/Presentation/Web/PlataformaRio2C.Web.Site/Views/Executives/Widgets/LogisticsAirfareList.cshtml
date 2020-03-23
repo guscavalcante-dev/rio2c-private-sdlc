@@ -5,52 +5,54 @@
 <div class="row">
     <div class="col-md-12">
         <div class="kt-widget4">
-            @if (Model != null && Model.Any())
+            @if (Model?.Any() == true)
             {
                 <div class="col-12">
-                    <table class="table table-sm table-head-bg-brand table-body-scroll">
-                        <thead class="thead-inverse">
-                            <tr>
-                                <th class="text-center">@Labels.Type</th>
-                                <th>@Labels.FromPlace</th>
-                                <th class="text-center">@Labels.DepartureDate</th>
-                                <th>@Labels.ToPlace</th>
-                                <th class="text-center">@Labels.ArrivalDate</th>
-                                <th class="text-center">@Labels.ReservationCode</th>
-                            </tr>
-                        </thead>
-                        <tbody class="rio2c-scroll" style="height: 180px;">
-                            @foreach (var logisticAirfareDto in Model)
-                            {
+                    <div class="table-responsive">
+                        <table class="table table-sm table-head-bg-brand">
+                            <thead class="thead-inverse">
                                 <tr>
-                                    <td class="text-center">
-                                        @(logisticAirfareDto.LogisticAirfare.IsNational ? Labels.National : Labels.International)
-                                    </td>
-                                    <td>
-                                        @logisticAirfareDto.LogisticAirfare.From
-                                    </td>
-                                    <td class="text-center">
-                                        @logisticAirfareDto.LogisticAirfare.DepartureDate.ToUserTimeZone().ToString("g")
-                                    </td>
-                                    <td>
-                                        @logisticAirfareDto.LogisticAirfare.To
-                                    </td>
-                                    <td class="text-center">
-                                        @logisticAirfareDto.LogisticAirfare.ArrivalDate.ToUserTimeZone().ToString("g")
-                                    </td>
-                                    <td class="text-center">
-                                        @logisticAirfareDto.LogisticAirfare.TicketNumber
-                                        @if (logisticAirfareDto.LogisticAirfare.TicketUploadDate.HasValue)
-                                        {
-                                            <a href="@FileHelper.GetFileUrl(FileRepositoryPathType.LogisticAirfareFile, logisticAirfareDto.LogisticAirfare.Uid, logisticAirfareDto.LogisticAirfare.TicketUploadDate)" target="_blank">
-                                                <i class="flaticon-attachment"></i>
-                                            </a>
-                                        }
-                                    </td>
+                                    <th class="text-center">@Labels.Type</th>
+                                    <th>@Labels.FromPlace</th>
+                                    <th class="text-center">@Labels.DepartureDate</th>
+                                    <th>@Labels.ToPlace</th>
+                                    <th class="text-center">@Labels.ArrivalDate</th>
+                                    <th class="text-center">@Labels.ReservationCode</th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach (var logisticAirfareDto in Model)
+                                {
+                                    <tr>
+                                        <td class="text-center">
+                                            @(logisticAirfareDto.LogisticAirfare.IsNational ? Labels.National : Labels.International)
+                                        </td>
+                                        <td>
+                                            @logisticAirfareDto.LogisticAirfare.From
+                                        </td>
+                                        <td class="text-center">
+                                            @logisticAirfareDto.LogisticAirfare.DepartureDate.ToUserTimeZone().ToString("g")
+                                        </td>
+                                        <td>
+                                            @logisticAirfareDto.LogisticAirfare.To
+                                        </td>
+                                        <td class="text-center">
+                                            @logisticAirfareDto.LogisticAirfare.ArrivalDate.ToUserTimeZone().ToString("g")
+                                        </td>
+                                        <td class="text-center">
+                                            @logisticAirfareDto.LogisticAirfare.TicketNumber
+                                            @if (logisticAirfareDto.LogisticAirfare.TicketUploadDate.HasValue)
+                                            {
+                                                <a href="@FileHelper.GetFileUrl(FileRepositoryPathType.LogisticAirfareFile, logisticAirfareDto.LogisticAirfare.Uid, logisticAirfareDto.LogisticAirfare.TicketUploadDate)" target="_blank">
+                                                    <i class="flaticon-attachment"></i>
+                                                </a>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             }
             else
@@ -64,3 +66,33 @@
         </div>
     </div>
 </div>
+@if (Model?.Any(m => m.LogisticAirfare?.TicketUploadDate != null) == true)
+{
+    <div class="kt-section mt-5">
+        <h3 class="kt-section__title mb-0">e-Tickets</h3>
+        <div class="kt-separator"></div>
+        <div class="kt-section__content mt-3">
+            <div class="row">
+                @foreach (var logisticAirfareDto in Model)
+                {
+                    <div class="col-md-6 mt-2">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="embed-responsive embed-responsive-16by9 d-flex">
+                                    @Html.Raw(FileHelper.GetFileUrl(FileRepositoryPathType.LogisticAirfareFile, logisticAirfareDto.LogisticAirfare.Uid, logisticAirfareDto.LogisticAirfare.TicketUploadDate).ConvertPdfToEmbed())
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <a href="@FileHelper.GetFileUrl(FileRepositoryPathType.LogisticAirfareFile, logisticAirfareDto.LogisticAirfare.Uid, logisticAirfareDto.LogisticAirfare.TicketUploadDate)" target="_blank">
+                                    @logisticAirfareDto.LogisticAirfare.From - @logisticAirfareDto.LogisticAirfare.To (@logisticAirfareDto.LogisticAirfare.DepartureDate.ToUserTimeZone().ToString("g"))
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}

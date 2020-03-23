@@ -6,31 +6,33 @@
             @if (Model != null && Model.Any())
             {
                 <div class="col-12">
-                    <table class="table table-sm table-head-bg-brand table-body-scroll">
-                        <thead class="thead-inverse">
-                            <tr>
-                                <th>@Labels.FromPlace</th>
-                                <th>@Labels.ToPlace</th>
-                                <th class="text-center">@Labels.Departure</th>
-                            </tr>
-                        </thead>
-                        <tbody class="rio2c-scroll" style="height: 180px;">
-                            @foreach (var logisticTransferDto in Model)
-                            {
+                    <div class="table-responsive">
+                        <table class="table table-sm table-head-bg-brand">
+                            <thead class="thead-inverse">
                                 <tr>
-                                    <td>
-                                        @logisticTransferDto.FromPlaceDto.Place.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
-                                    </td>
-                                    <td>
-                                        @logisticTransferDto.ToPlaceDto.Place.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
-                                    </td>
-                                    <td class="text-center">
-                                        @logisticTransferDto.LogisticTransfer.Date.ToUserTimeZone().ToString("g")
-                                    </td>
+                                    <th>@Labels.FromPlace</th>
+                                    <th>@Labels.ToPlace</th>
+                                    <th class="text-center">@Labels.Departure</th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach (var logisticTransferDto in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @logisticTransferDto.FromPlaceDto.Place.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                                        </td>
+                                        <td>
+                                            @logisticTransferDto.ToPlaceDto.Place.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                                        </td>
+                                        <td class="text-center">
+                                            @logisticTransferDto.LogisticTransfer.Date.ToUserTimeZone().ToString("g")
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             }
             else
