@@ -1,0 +1,27 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateNegotiation
+<div class="row">
+    <div class="form-group col-12">
+        @Html.DropDownListFor(m => m.BuyerOrganizationUid, Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAMEntity, Labels.Player.ToLowerInvariant())}...", new { @class = "form-control" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-12">
+        @Html.DropDownListFor(m => m.ProjectUid, Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAMEntity, Labels.Project.ToLowerInvariant())}...", new { @class = "form-control disabled", disabled = "disabled" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-12">
+        @Html.DropDownListFor(m => m.NegotiationConfigUid, Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAMEntity, Labels.Date.ToLowerInvariant())}...", new { @class = "form-control disabled", disabled = "disabled" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-12">
+        @Html.DropDownListFor(m => m.NegotiationRoomConfigUid, Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAMEntity, Labels.Room.ToLowerInvariant())}...", new { @class = "form-control disabled", disabled = "disabled" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-12">
+        @Html.HiddenFor(m => m.RoundNumber)
+        @Html.DropDownListFor(m => m.StartTime, Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAMEntity, Labels.StartTime.ToLowerInvariant())}...", new {@class = "form-control disabled", disabled = "disabled"})
+    </div>
+</div>

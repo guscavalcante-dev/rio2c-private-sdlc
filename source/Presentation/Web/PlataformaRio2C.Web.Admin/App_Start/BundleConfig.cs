@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-19-2020
+// Last Modified On : 03-25-2020
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -614,6 +614,9 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.unscheduled.widget.js").Include(
                 "~/Assets/js/audiovisual/meetings/audiovisual.meetings.unscheduled.widget.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.create.js").Include(
+                "~/Assets/js/audiovisual/meetings/audiovisual.meetings.create.js"));
+
             #endregion
 
             #endregion
@@ -748,7 +751,6 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/places/places.delete.js"));
 
             #endregion
-
 
             #region Scripts
 

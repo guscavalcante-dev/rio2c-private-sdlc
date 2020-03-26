@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2020
+// Last Modified On : 03-25-2020
 // ***********************************************************************
 // <copyright file="PlayersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -445,17 +445,17 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         /// <summary>Finds all by filters.</summary>
         /// <param name="keywords">The keywords.</param>
-        /// <param name="filterByProjectsInNegotiation">The filter by projects in negotiation.</param>
+        /// <param name="customFilter">The custom filter.</param>
         /// <param name="page">The page.</param>
         /// <returns></returns>
         [HttpGet]
         //[AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual + "," + Constants.CollaboratorType.CommissionAudiovisual)]
-        public async Task<ActionResult> FindAllByFilters(string keywords, bool? filterByProjectsInNegotiation = false, int? page = 1)
+        public async Task<ActionResult> FindAllByFilters(string keywords, string customFilter, int? page = 1)
         {
             var collaboratorsApiDtos = await this.organizationRepo.FindAllDropdownApiListDtoPaged(
                 this.EditionDto.Id,
                 keywords,
-                filterByProjectsInNegotiation.Value,
+                customFilter,
                 OrganizationType.Player.Uid,
                 page.Value,
                 10);

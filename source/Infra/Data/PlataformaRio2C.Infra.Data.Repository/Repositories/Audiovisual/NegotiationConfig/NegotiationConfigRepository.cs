@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 03-25-2020
 // ***********************************************************************
 // <copyright file="NegotiationConfigRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -44,6 +44,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the by negotiation room configu uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="negotiationRoomConfigUid">The negotiation room configuration uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<NegotiationConfig> FindByNegotiationRoomConfiguUid(this IQueryable<NegotiationConfig> query, Guid negotiationRoomConfigUid)
+        {
+            query = query.Where(nc => nc.NegotiationRoomConfigs.Any(nrc => !nrc.IsDeleted && nrc.Uid == negotiationRoomConfigUid));
+
+            return query;
+        }
+
         /// <summary>Finds the by edition identifier.</summary>
         /// <param name="query">The query.</param>
         /// <param name="editionId">The edition identifier.</param>
@@ -62,6 +73,25 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static IQueryable<NegotiationConfig> HasRoomsConfigured(this IQueryable<NegotiationConfig> query)
         {
             query = query.Where(nc => nc.NegotiationRoomConfigs.Any(nrc => !nrc.IsDeleted && !nrc.Room.IsDeleted));
+
+            return query;
+        }
+
+        /// <summary>Finds the by custom filer.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="customFilter">The custom filter.</param>
+        /// <returns></returns>
+        internal static IQueryable<NegotiationConfig> FindByCustomFiler(this IQueryable<NegotiationConfig> query, string customFilter)
+        {
+            if (!string.IsNullOrEmpty(customFilter))
+            {
+                if (customFilter == "HasManualTables")
+                {
+                    query = query
+                                .HasRoomsConfigured()
+                                .Where(n => n.NegotiationRoomConfigs.Any(nrc => !nrc.IsDeleted && nrc.CountManualTables > 0));
+                }
+            }
 
             return query;
         }
@@ -231,7 +261,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <returns></returns>
         public async Task<int> CountAsync(int editionId, bool showAllEditions = false)
-
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId, showAllEditions);
@@ -253,6 +282,105 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .ToListAsync();
         }
 
+        /// <summary>Finds all dates dtos asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="customFilter">The custom filter.</param>
+        /// <returns></returns>
+        public async Task<List<NegotiationConfigDto>> FindAllDatesDtosAsync(int editionId, string customFilter)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId, false)
+                                .FindByCustomFiler(customFilter);
+
+            return await query
+                            .Select(nc => new NegotiationConfigDto
+                            {
+                                NegotiationConfig = nc
+                            })
+                            .OrderBy(ncd => ncd.NegotiationConfig.StartDate)
+                            .ToListAsync();
+        }
+
+        /// <summary>Finds all rooms dtos asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="negotiationConfigUid">The negotiation configuration uid.</param>
+        /// <param name="customFilter">The custom filter.</param>
+        /// <returns></returns>
+        public async Task<List<NegotiationConfigDto>> FindAllRoomsDtosAsync(int editionId, Guid negotiationConfigUid, string customFilter)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId, false)
+                                .FindByUid(negotiationConfigUid)
+                                .FindByCustomFiler(customFilter);
+
+            return await query
+                            .Select(nc => new NegotiationConfigDto
+                            {
+                                NegotiationConfig = nc,
+                                NegotiationRoomConfigDtos = nc.NegotiationRoomConfigs
+                                                                    .Where(nrc => !nrc.IsDeleted && !nrc.Room.IsDeleted && nrc.CountManualTables > 0)
+                                                                    .Select(nrc => new NegotiationRoomConfigDto
+                                                                    {
+                                                                        NegotiationRoomConfig = nrc,
+                                                                        RoomDto = new RoomDto
+                                                                        {
+                                                                            Room = nrc.Room,
+                                                                            RoomNameDtos = nrc.Room.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto
+                                                                            {
+                                                                                RoomName = rn,
+                                                                                LanguageDto = new LanguageDto
+                                                                                {
+                                                                                    Id = rn.Language.Id,
+                                                                                    Uid = rn.Language.Uid,
+                                                                                    Code = rn.Language.Code
+                                                                                }
+                                                                            })
+                                                                        }
+                                                                    })
+                            })
+                            .OrderBy(ncd => ncd.NegotiationConfig.StartDate)
+                            .ToListAsync();
+        }
+
+        /// <summary>Finds all times dtos asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="negotiationRoomConfigUid">The negotiation room configuration uid.</param>
+        /// <param name="customFilter">The custom filter.</param>
+        /// <returns></returns>
+        public async Task<NegotiationConfigDto> FindAllTimesDtosAsync(int editionId, Guid negotiationRoomConfigUid, string customFilter)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId, false)
+                                .FindByNegotiationRoomConfiguUid(negotiationRoomConfigUid)
+                                .FindByCustomFiler(customFilter);
+
+            return await query
+                            .Select(nc => new NegotiationConfigDto
+                            {
+                                NegotiationConfig = nc,
+                                NegotiationRoomConfigDtos = nc.NegotiationRoomConfigs
+                                                                    .Where(nrc => !nrc.IsDeleted && !nrc.Room.IsDeleted && nrc.CountManualTables > 0 && nrc.Uid == negotiationRoomConfigUid)
+                                                                    .Select(nrc => new NegotiationRoomConfigDto
+                                                                    {
+                                                                        NegotiationRoomConfig = nrc,
+                                                                        RoomDto = new RoomDto
+                                                                        {
+                                                                            Room = nrc.Room,
+                                                                            RoomNameDtos = nrc.Room.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto
+                                                                            {
+                                                                                RoomName = rn,
+                                                                                LanguageDto = new LanguageDto
+                                                                                {
+                                                                                    Id = rn.Language.Id,
+                                                                                    Uid = rn.Language.Uid,
+                                                                                    Code = rn.Language.Code
+                                                                                }
+                                                                            })
+                                                                        }
+                                                                    })
+                            })
+                            .FirstOrDefaultAsync();
+        }
 
         #region Old methods
 

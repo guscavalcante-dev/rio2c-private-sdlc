@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2020
+// Last Modified On : 03-25-2020
 // ***********************************************************************
 // <copyright file="Negotiation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,7 +13,9 @@
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
 using System;
+using System.Linq;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -60,10 +62,64 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateUserId = this.UpdateUserId = userId;
         }
 
+        /// <summary>Initializes a new instance of the <see cref="Negotiation"/> class for manual negotiations.</summary>
+        /// <param name="negotiationUid">The negotiation uid.</param>
+        /// <param name="buyerOrganization">The buyer organization.</param>
+        /// <param name="project">The project.</param>
+        /// <param name="negotiationConfig">The negotiation configuration.</param>
+        /// <param name="negotiationRoomConfig">The negotiation room configuration.</param>
+        /// <param name="startTime">The start time.</param>
+        /// <param name="roundNumber">The round number.</param>
+        /// <param name="userId">The user identifier.</param>
+        public Negotiation(
+            Guid negotiationUid,
+            Organization buyerOrganization, 
+            Project project, 
+            NegotiationConfig negotiationConfig, 
+            NegotiationRoomConfig negotiationRoomConfig, 
+            string startTime,
+            int roundNumber,
+            int userId)
+        {
+            //this.Uid = negotiationUid;
+
+            // Project buyer evaluation
+            var projectBuyerEvaluation = project.ProjectBuyerEvaluations?.FirstOrDefault(pbe => pbe.BuyerAttendeeOrganization.Organization.Uid == buyerOrganization?.Uid && !pbe.IsDeleted);
+            this.ProjectBuyerEvaluationId = projectBuyerEvaluation?.Id ?? 0;
+            this.ProjectBuyerEvaluation = projectBuyerEvaluation;
+
+            // Room
+            var room = negotiationRoomConfig?.Room;
+            this.RoomId = room?.Id ?? 0;
+            this.Room = room;
+
+            // Dates
+            if (negotiationConfig != null)
+            {
+                this.StartDate = negotiationConfig.StartDate.Date.JoinDateAndTime(startTime, true).ToUtcTimeZone();
+                this.EndDate = this.StartDate.Add(negotiationConfig.TimeOfEachRound);
+
+                // Table Number
+                if (negotiationRoomConfig != null)
+                {
+                    this.TableNumber = negotiationRoomConfig.CountAutomaticTables + (negotiationConfig.GetNegotiationRoomConfigPosition(negotiationRoomConfig.Uid) ?? 0) + 1;
+                }
+            }
+
+            this.RoundNumber = roundNumber;
+            this.IsAutomatic = false;
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
         /// <summary>Initializes a new instance of the <see cref="Negotiation"/> class.</summary>
         protected Negotiation()
         {
         }
+
+
 
         /// <summary>Assigns the project buyer evaluation.</summary>
         /// <param name="projectBuyerEvaluation">The project buyer evaluation.</param>

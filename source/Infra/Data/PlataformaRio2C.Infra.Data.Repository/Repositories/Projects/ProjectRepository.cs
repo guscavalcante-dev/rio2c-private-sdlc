@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-01-2020
+// Last Modified On : 03-25-2020
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -215,9 +215,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
 
-        /// <summary>Finds by target audience uid.</summary>
+        /// <summary>Finds the by target audience uids.</summary>
         /// <param name="query">The query.</param>
-        /// <param name="targetAudienceUid">The target audience uid.</param>
+        /// <param name="targetAudienceUids">The target audience uids.</param>
         /// <returns></returns>
         internal static IQueryable<Project> FindByTargetAudienceUids(this IQueryable<Project> query, List<Guid> targetAudienceUids)
         {
@@ -269,6 +269,28 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the by custom filer.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="customFilter">The custom filter.</param>
+        /// <param name="buyerOrganizationUid">The buyer organization uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> FindByCustomFiler(this IQueryable<Project> query, string customFilter, Guid? buyerOrganizationUid)
+        {
+            if (!string.IsNullOrEmpty(customFilter))
+            {
+                if (customFilter == "HasNegotiationNotScheduled")
+                {
+                    query = query.Where(p => p.ProjectBuyerEvaluations
+                                                    .Any(pbe => !pbe.IsDeleted
+                                                                && pbe.ProjectEvaluationStatus.Uid == ProjectEvaluationStatus.Accepted.Uid
+                                                                && (!buyerOrganizationUid.HasValue || pbe.BuyerAttendeeOrganization.Organization.Uid == buyerOrganizationUid)
+                                                                && (!pbe.Negotiations.Any() || pbe.Negotiations.All(n => n.IsDeleted))));
+                }
+            }
+
+            return query;
+        }
+
         /// <summary>Determines whether this instance is finished.</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
@@ -279,18 +301,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
-        /// <summary>Determines whether [is not deleted].</summary>
+        /// <summary>Determines whether the specified is pitching is pitching.</summary>
         /// <param name="query">The query.</param>
-        /// <returns></returns>
-        internal static IQueryable<Project> IsNotDeleted(this IQueryable<Project> query)
-        {
-            query = query.Where(p => !p.IsDeleted);
-
-            return query;
-        }
-
-        /// <summary>Determines whether is pitching</summary>
-        /// <param name="query">The query.</param>
+        /// <param name="isPitching">if set to <c>true</c> [is pitching].</param>
         /// <returns></returns>
         internal static IQueryable<Project> IsPitching(this IQueryable<Project> query, bool isPitching = true)
         {
@@ -298,6 +311,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             {
                 query = query.Where(p => p.IsPitching);
             }
+
+            return query;
+        }
+
+        /// <summary>Determines whether [is not deleted].</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> IsNotDeleted(this IQueryable<Project> query)
+        {
+            query = query.Where(p => !p.IsDeleted);
 
             return query;
         }
@@ -1231,6 +1254,50 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .ThenBy(p => p.Project.CreateDate)
                             .ToListAsync();
         }
+        #endregion
+
+        #region Dropdown
+
+        /// <summary>Finds all dropdown dto paged.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="customFilter">The custom filter.</param>
+        /// <param name="buyerOrganizationUid">The buyer organization uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<ProjectDto>> FindAllDropdownDtoPaged(
+            int editionId,
+            string keywords,
+            string customFilter,
+            Guid? buyerOrganizationUid,
+            int page,
+            int pageSize)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId)
+                                .FindByKeywords(keywords)
+                                .FindByCustomFiler(customFilter, buyerOrganizationUid);
+
+            return await query
+                            .Select(p => new ProjectDto
+                            {
+                                Project = p,
+                                ProjectTitleDtos = p.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                {
+                                    ProjectTitle = t,
+                                    Language = t.Language
+                                }),
+                                SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                {
+                                    AttendeeOrganization = p.SellerAttendeeOrganization,
+                                    Organization = p.SellerAttendeeOrganization.Organization
+                                }
+                            })
+                            .OrderBy(pd => pd.SellerAttendeeOrganizationDto.Organization.TradeName)
+                            .ToListPagedAsync(page, pageSize);
+        }
+
         #endregion
 
         #region Old methods

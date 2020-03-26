@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2020
+// Last Modified On : 03-25-2020
 // ***********************************************************************
 // <copyright file="MusicBand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -162,6 +162,19 @@ namespace PlataformaRio2C.Domain.Entities
         {
             var negotiationRoomConfig = this.GetNegotiationRoomConfigByUid(negotiationRoomConfigUid);
             negotiationRoomConfig?.Delete(userId);
+        }
+
+        /// <summary>Gets the negotiation room configuration position.</summary>
+        /// <param name="negotiationRoomConfigUid">The negotiation room configuration uid.</param>
+        /// <returns></returns>
+        public int? GetNegotiationRoomConfigPosition(Guid negotiationRoomConfigUid)
+        {
+            return this.NegotiationRoomConfigs?
+                            .Where(nrc => !nrc.IsDeleted)?
+                            .Select((n, i) => new { Index = i, NegotiationRoomConfig = n })?
+                            .Where(item => item.NegotiationRoomConfig.Uid == negotiationRoomConfigUid)?
+                            .Single()?
+                            .Index;
         }
 
         /// <summary>Gets the negotiation room configuration by uid.</summary>

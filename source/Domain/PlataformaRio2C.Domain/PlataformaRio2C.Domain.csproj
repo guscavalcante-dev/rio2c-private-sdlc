@@ -129,9 +129,12 @@
     <Compile Include="Dtos\Audiovisual\Negotiations\NegotiationGroupedByRoomDto.cs" />
     <Compile Include="Dtos\Audiovisual\Negotiations\NegotiationGroupedByDateDto.cs" />
     <Compile Include="Dtos\Audiovisual\Negotiations\NegotiationDto.cs" />
+    <Compile Include="Dtos\Audiovisual\Negotiations\NegotiationTimeDropdownDto.cs" />
+    <Compile Include="Dtos\Audiovisual\Negotiations\NegotiationRoomConfigDropdownDto.cs" />
     <Compile Include="Dtos\Audiovisual\Negotiations\NegotiationRoomConfigDto.cs" />
     <Compile Include="Dtos\Audiovisual\Negotiations\NegotiationConfigDto.cs" />
     <Compile Include="Dtos\Audiovisual\Negotiations\NegotiationConfigJsonDto.cs" />
+    <Compile Include="Dtos\Audiovisual\Negotiations\NegotiationConfigDropdownDto.cs" />
     <Compile Include="Dtos\Cities\CityBaseDto.cs" />
     <Compile Include="Dtos\Collaborators\CollaboratorEditionParticipationBaseDto.cs" />
     <Compile Include="Dtos\Collaborators\SpeakerCollaboratorDto.cs" />
@@ -189,6 +192,7 @@
     <Compile Include="Dtos\Organizations\OrganizationActivityDto.cs" />
     <Compile Include="Dtos\Places\PlaceDto.cs" />
     <Compile Include="Dtos\Places\PlaceJsonDto.cs" />
+    <Compile Include="Dtos\Projects\ProjectDropdownDto.cs" />
     <Compile Include="Dtos\Projects\ProjectBaseDto.cs" />
     <Compile Include="Dtos\Projects\ProjectBuyerEvaluationEmailDto.cs" />
     <Compile Include="Dtos\Projects\ProjectBuyerEvaluationDto.cs" />

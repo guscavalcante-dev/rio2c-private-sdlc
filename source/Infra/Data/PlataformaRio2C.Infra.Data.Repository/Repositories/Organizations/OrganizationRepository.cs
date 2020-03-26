@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2020
+// Last Modified On : 03-25-2020
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -202,35 +202,65 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
-        /// <summary>Determines whether [has project in negotiation] [the specified edition identifier].</summary>
+        /// <summary>Finds the by custom filter.</summary>
         /// <param name="query">The query.</param>
+        /// <param name="customFilter">The custom filter.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="organizationTypeUid">The organization type uid.</param>
-        /// <param name="hasProjectNegotiation">if set to <c>true</c> [has project negotiation].</param>
         /// <returns></returns>
-        internal static IQueryable<Organization> HasProjectInNegotiation(this IQueryable<Organization> query, int editionId, Guid organizationTypeUid, bool hasProjectNegotiation)
+        internal static IQueryable<Organization> FindByCustomFilter(this IQueryable<Organization> query, string customFilter, int editionId, Guid organizationTypeUid)
         {
-            if (hasProjectNegotiation)
+            if (!string.IsNullOrEmpty(customFilter))
             {
-                if (organizationTypeUid == OrganizationType.Player.Uid)
+                if (customFilter == "HasProjectNegotiationScheduled")
                 {
-                    query = query.Where(o => o.AttendeeOrganizations
-                                                    .Any(ao => ao.EditionId == editionId
-                                                               && !ao.IsDeleted
-                                                               && ao.ProjectBuyerEvaluations
-                                                                       .Any(pbe => !pbe.IsDeleted && !pbe.Project.IsDeleted
-                                                                                   && pbe.Negotiations.Any(n => !n.IsDeleted))));
+                    if (organizationTypeUid == OrganizationType.Player.Uid)
+                    {
+                        query = query.Where(o => o.AttendeeOrganizations
+                                                        .Any(ao => ao.EditionId == editionId
+                                                                   && !ao.IsDeleted
+                                                                   && ao.ProjectBuyerEvaluations.Any(pbe => !pbe.IsDeleted 
+                                                                                                            && !pbe.Project.IsDeleted 
+                                                                                                            && pbe.ProjectEvaluationStatus.Uid == ProjectEvaluationStatus.Accepted.Uid
+                                                                                                            && pbe.Negotiations.Any(n => !n.IsDeleted))));
+                    }
+                    else if (organizationTypeUid == OrganizationType.Producer.Uid)
+                    {
+                        query = query.Where(o => o.AttendeeOrganizations
+                                                        .Any(ao => ao.EditionId == editionId
+                                                                   && !ao.IsDeleted
+                                                                   && ao.SellProjects
+                                                                               .Any(sp => !sp.IsDeleted
+                                                                                          && sp.ProjectBuyerEvaluations
+                                                                                              .Any(pbe => !pbe.IsDeleted
+                                                                                                          && pbe.ProjectEvaluationStatus.Uid == ProjectEvaluationStatus.Accepted.Uid
+                                                                                                          && pbe.Negotiations.Any(n => !n.IsDeleted)))));
+                    }
                 }
-                else if (organizationTypeUid == OrganizationType.Producer.Uid)
+                else if (customFilter == "HasProjectNegotiationNotScheduled")
                 {
-                    query = query.Where(o => o.AttendeeOrganizations
-                                                    .Any(ao => ao.EditionId == editionId
-                                                               && !ao.IsDeleted
-                                                               && ao.SellProjects
-                                                                       .Any(sp => !sp.IsDeleted 
-                                                                                  && sp.ProjectBuyerEvaluations
-                                                                                          .Any(pbe => !pbe.IsDeleted
-                                                                                                      && pbe.Negotiations.Any(n => !n.IsDeleted)))));
+                    if (organizationTypeUid == OrganizationType.Player.Uid)
+                    {
+                        query = query.Where(o => o.AttendeeOrganizations
+                                                        .Any(ao => ao.EditionId == editionId
+                                                                   && !ao.IsDeleted
+                                                                   && ao.ProjectBuyerEvaluations.Any(pbe => !pbe.IsDeleted 
+                                                                                                            && !pbe.Project.IsDeleted
+                                                                                                            && pbe.ProjectEvaluationStatus.Uid == ProjectEvaluationStatus.Accepted.Uid
+                                                                                                            && (!pbe.Negotiations.Any() || pbe.Negotiations.All(n => n.IsDeleted)))));
+                    }
+                    else if (organizationTypeUid == OrganizationType.Producer.Uid)
+                    {
+                        query = query.Where(o => o.AttendeeOrganizations
+                                                        .Any(ao => ao.EditionId == editionId
+                                                                   && !ao.IsDeleted
+                                                                   && ao.SellProjects
+                                                                               .Any(sp => !sp.IsDeleted
+                                                                                          && sp.ProjectBuyerEvaluations
+                                                                                              .Any(pbe => !pbe.IsDeleted
+                                                                                                          && pbe.ProjectEvaluationStatus.Uid == ProjectEvaluationStatus.Accepted.Uid
+                                                                                                          && (!pbe.Negotiations.Any() || pbe.Negotiations.All(n => n.IsDeleted))))));
+                    }
                 }
             }
 
@@ -575,7 +605,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>Finds all dropdown API list dto paged.</summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="keywords">The keywords.</param>
-        /// <param name="filterByProjectsInNegotiation">if set to <c>true</c> [filter by projects in negotiation].</param>
+        /// <param name="customFilter">The custom filter.</param>
         /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
@@ -583,7 +613,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<IPagedList<OrganizationApiListDto>> FindAllDropdownApiListDtoPaged(
             int editionId,
             string keywords,
-            bool filterByProjectsInNegotiation,
+            string customFilter,
             Guid organizationTypeUid,
             int page,
             int pageSize)
@@ -591,7 +621,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                 .FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, false, false, editionId)
                                 .FindByKeywords(keywords, true)
-                                .HasProjectInNegotiation(editionId, organizationTypeUid, filterByProjectsInNegotiation);
+                                .FindByCustomFilter(customFilter, editionId, organizationTypeUid);
 
             return await query
                             .Select(c => new OrganizationApiListDto

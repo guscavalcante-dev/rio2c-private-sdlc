@@ -59,7 +59,7 @@
                                 </div>
                             </div>
                             &nbsp;*@
-                        <button onclick="ConferencesCreate.showModal();" class="btn btn-brand btn-elevate btn-icon-sm">
+                        <button onclick="AudiovisualMeetingsCreate.showModal();" class="btn btn-brand btn-elevate btn-icon-sm">
                             <i class="la la-plus"></i>
                             @Labels.NewF @Labels.Negotiation
                         </button>
@@ -71,24 +71,24 @@
             <!--begin: SearchForm-->
             <div class="row">
                 <div class="col-12 col-md-6 mt-2">
-                    @Html.DropDownList("BuyerOrganizationUid", Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAMEntity, Labels.Player.ToLowerInvariant())}...", new { @class = "form-control" })
+                    @Html.DropDownList("SearchBuyerOrganizationUid", Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAMEntity, Labels.Player.ToLowerInvariant())}", new { @class = "form-control" })
                 </div>
                 <div class="col-12 col-md-6 mt-2">
-                    @Html.DropDownList("SellerOrganizationUid", Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAFEntity, Labels.Producer.ToLowerInvariant())}...", new { @class = "form-control" })
+                    @Html.DropDownList("SearchSellerOrganizationUid", Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAFEntity, Labels.Producer.ToLowerInvariant())}", new { @class = "form-control" })
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 col-md-4 mt-2">
-                    @Html.TextBox("ProjectKeywords", null, new { type = "search", @class = "form-control", autocomplete = "off", placeholder = $"{Labels.Project}" })
+                    @Html.TextBox("SearchProjectKeywords", null, new { type = "search", @class = "form-control", autocomplete = "off", placeholder = $"{Labels.Project}" })
                 </div>
                 <div class="col-12 col-md-3 mt-2">
-                    @Html.TextBox("Date", null, new { @class = "form-control enable-datepicker", type = "search", data_date_start_date = editionDto?.StartDate.ToUserTimeZone().ToShortDateString(), data_date_end_date = editionDto?.EndDate.ToUserTimeZone().ToShortDateString(), placeholder = Labels.Date })
+                    @Html.TextBox("SearchDate", null, new { @class = "form-control enable-datepicker", type = "search", data_date_start_date = editionDto?.StartDate.ToUserTimeZone().ToShortDateString(), data_date_end_date = editionDto?.EndDate.ToUserTimeZone().ToShortDateString(), placeholder = Labels.Date })
                 </div>
                 <div class="col-12 col-md-3 mt-2">
-                    @Html.DropDownList("RoomUid", new SelectList(ViewBag.Rooms, "Uid", "Name", null), $"{string.Format(Labels.SelectAMEntity, Labels.Room.ToLowerInvariant())}...", new { @class = "form-control enable-select2" })
+                    @Html.DropDownList("SearchRoomUid", new SelectList(ViewBag.Rooms, "Uid", "Name", null), $"{string.Format(Labels.SelectAMEntity, Labels.Room.ToLowerInvariant())}", new { @class = "form-control enable-select2" })
                 </div>
                 <div class="form-group col-2 col-md-1 mt-2">
-                    <button type="button" class="btn btn-primary btn-icon" onclick="AudiovisualMeetingParametersDelete.search();"><i class="fa fa-search"></i></button>
+                    <button type="button" class="btn btn-primary btn-icon" onclick="AudiovisualMeetingsScheduledWidget.search();"><i class="fa fa-search"></i></button>
                 </div>
             </div>
             <!--end: SearchForm-->

@@ -4,7 +4,7 @@
 // Created          : 03-04-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2020
+// Last Modified On : 03-25-2020
 // ***********************************************************************
 // <copyright file="MeetingParametersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,6 +23,7 @@ using DataTables.AspNet.Mvc5;
 using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
@@ -705,6 +706,146 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             }
 
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Parameter, Labels.DeletedM) });
+        }
+
+        #endregion
+
+        #region Finds
+
+        /// <summary>Finds all dates.</summary>
+        /// <param name="customFilter">The custom filter.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> FindAllDates(string customFilter = "")
+        {
+            var negotiationConfigDtos = await this.negotiationConfigRepo.FindAllDatesDtosAsync(this.EditionDto.Id, customFilter);
+
+            return Json(new
+            {
+                status = "success",
+                negotiationConfigs = negotiationConfigDtos?.Select(ncd => new NegotiationConfigDropdownDto
+                {
+                    Uid = ncd.NegotiationConfig.Uid,
+                    StartDate = ncd.NegotiationConfig.StartDate,
+                    EndDate = ncd.NegotiationConfig.EndDate
+                })
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Finds all rooms.</summary>
+        /// <param name="negotiationConfigUid">The negotiation configuration uid.</param>
+        /// <param name="customFilter">The custom filter.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> FindAllRooms(Guid? negotiationConfigUid = null, string customFilter = "")
+        {
+            var negotiationConfigDtos = await this.negotiationConfigRepo.FindAllRoomsDtosAsync(this.EditionDto.Id, negotiationConfigUid ?? Guid.Empty, customFilter);
+
+            return Json(new
+            {
+                status = "success",
+                rooms = negotiationConfigDtos?.SelectMany(ncd => ncd.NegotiationRoomConfigDtos.Select(nrc => new NegotiationRoomConfigDropdownDto
+                {
+                    NegotiationRoomConfigUid = nrc.NegotiationRoomConfig.Uid,
+                    RoomUid = nrc.RoomDto.Room.Uid,
+                    RoomName = nrc.RoomDto.GetRoomNameByLanguageCode(this.UserInterfaceLanguage).RoomName.Value
+                }))
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Finds all times.</summary>
+        /// <param name="negotiationRoomConfigUid">The negotiation room configuration uid.</param>
+        /// <param name="customFilter">The custom filter.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> FindAllTimes(Guid? negotiationRoomConfigUid = null, string customFilter = "")
+        {
+            var negotiationConfigDto = await this.negotiationConfigRepo.FindAllTimesDtosAsync(this.EditionDto.Id, negotiationRoomConfigUid ?? Guid.Empty, customFilter);
+
+            return Json(new
+            {
+                status = "success",
+                times = this.GetNegotiationTimesSlots(negotiationConfigDto)
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Gets the negotiation times slots.</summary>
+        /// <param name="negotiationConfigDto">The negotiation configuration dto.</param>
+        /// <returns></returns>
+        private List<NegotiationTimeDropdownDto> GetNegotiationTimesSlots(NegotiationConfigDto negotiationConfigDto)
+        {
+            var negotiationTimesSlots = new List<NegotiationTimeDropdownDto>();
+            var roundNumber = 1;
+
+            if (negotiationConfigDto == null)
+            {
+                return negotiationTimesSlots;
+            }
+
+            var startDate = negotiationConfigDto.NegotiationConfig.StartDate;
+
+            #region Round first turn
+
+            // Each slot
+            for (int iSlot = 0; iSlot < negotiationConfigDto.NegotiationConfig.RoundFirstTurn; iSlot++)
+            {
+                if (startDate.Add(negotiationConfigDto.NegotiationConfig.TimeOfEachRound) <= negotiationConfigDto.NegotiationConfig.EndDate)
+                {
+                    // Each room
+                    foreach (var negotiationRoomConfigDto in negotiationConfigDto.NegotiationRoomConfigDtos)
+                    {
+                        // Each automatic table
+                        for (int tableNumber = 1; tableNumber <= negotiationRoomConfigDto.NegotiationRoomConfig.CountManualTables; tableNumber++)
+                        {
+                            negotiationTimesSlots.Add(new NegotiationTimeDropdownDto
+                            {
+                                StartTime = startDate,
+                                EndTime = startDate.Add(negotiationConfigDto.NegotiationConfig.TimeOfEachRound),
+                                RoundNumber = roundNumber
+                            });
+                        }
+                    }
+                }
+
+                startDate = startDate.Add(negotiationConfigDto.NegotiationConfig.TimeOfEachRound.Add(negotiationConfigDto.NegotiationConfig.TimeIntervalBetweenRound));
+                roundNumber++;
+            }
+
+            #endregion
+
+            #region Round second turn
+
+            startDate = startDate.Add(negotiationConfigDto.NegotiationConfig.TimeIntervalBetweenTurn);
+
+            // Each slot
+            for (int iSlot = 0; iSlot < negotiationConfigDto.NegotiationConfig.RoundSecondTurn; iSlot++)
+            {
+
+                if (startDate.Add(negotiationConfigDto.NegotiationConfig.TimeOfEachRound) <= negotiationConfigDto.NegotiationConfig.EndDate)
+                {
+                    // Each room
+                    foreach (var negotiationRoomConfigDto in negotiationConfigDto.NegotiationRoomConfigDtos)
+                    {
+                        // Each automatic table
+                        for (int tableNumber = 1; tableNumber <= negotiationRoomConfigDto.NegotiationRoomConfig.CountManualTables; tableNumber++)
+                        {
+                            negotiationTimesSlots.Add(new NegotiationTimeDropdownDto
+                            {
+                                StartTime = startDate,
+                                EndTime = startDate.Add(negotiationConfigDto.NegotiationConfig.TimeOfEachRound),
+                                RoundNumber = roundNumber
+                            });
+                        }
+                    }
+                }
+
+                startDate = startDate.Add(negotiationConfigDto.NegotiationConfig.TimeOfEachRound.Add(negotiationConfigDto.NegotiationConfig.TimeIntervalBetweenRound));
+                roundNumber++;
+            }
+
+            #endregion
+
+            return negotiationTimesSlots;
         }
 
         #endregion
