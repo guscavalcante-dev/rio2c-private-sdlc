@@ -88,6 +88,26 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>Finds the by attendee collaborator identifier.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
+        /// <param name="showMyConferences">if set to <c>true</c> [show my conferences].</param>
+        /// <param name="showAllConferences">if set to <c>true</c> [show all conferences].</param>
+        /// <returns></returns>
+        internal static IQueryable<Conference> FindByAttendeeCollaboratorId(this IQueryable<Conference> query, int attendeeCollaboratorId, bool showMyConferences, bool showAllConferences)
+        {
+            if (!showMyConferences && !showAllConferences)
+            {
+                query = query.Where(c => 1 == 2);
+            }
+            else
+            {
+                query = query.Where(c => showAllConferences || c.ConferenceParticipants.Any(cp => cp.AttendeeCollaboratorId == attendeeCollaboratorId && !cp.IsDeleted));
+            }
+
+            return query;
+        }
+
         /// <summary>Finds the by keywords.</summary>
         /// <param name="query">The query.</param>
         /// <param name="keywords">The keywords.</param>
@@ -574,12 +594,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
         /// <param name="startDate">The start date.</param>
         /// <param name="endDate">The end date.</param>
+        /// <param name="showMyConferences">if set to <c>true</c> [show my conferences].</param>
+        /// <param name="showAllConferences">if set to <c>true</c> [show all conferences].</param>
         /// <returns></returns>
-        public Task<List<ConferenceDto>> FindAllScheduleDtosAsync(int editionId, int? attendeeCollaboratorId, DateTimeOffset startDate, DateTimeOffset endDate)
+        public Task<List<ConferenceDto>> FindAllScheduleDtosAsync(int editionId, int attendeeCollaboratorId, DateTimeOffset startDate, DateTimeOffset endDate, bool showMyConferences, bool showAllConferences)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(false, editionId)
                                 .FindByDateRange(startDate, endDate)
+                                .FindByAttendeeCollaboratorId(attendeeCollaboratorId, showMyConferences, showAllConferences)
                                 .Select(c => new ConferenceDto
                                 {
                                     Conference = c,

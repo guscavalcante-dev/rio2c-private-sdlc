@@ -1,20 +1,67 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
+@model AgendaSearchViewModel
 @{
     ViewBag.Title = Labels.Diary;
     var editionDto = ViewBag.EditionDto as EditionDto;
 }
 <div class="row">
-    <!--begin:Right column-->
+    <div class="col-12">
+        <!--begin:Search Widget-->
+        <div class="kt-portlet">
+            <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-sm-6 col-lg-4">
+                        <label class="kt-checkbox">
+                            @Html.CheckBoxFor(m => m.ShowMyConferences, new { @class = "enable-calendar-reload" }) @Labels.ShowMyConferences
+                            <span></span>
+                        </label>
+                    </div>
+                    <div class="col-sm-6 col-lg-4">
+                        <label class="kt-checkbox">
+                            @Html.CheckBoxFor(m => m.ShowAllConferences, new { @class = "enable-calendar-reload" }) @Labels.ShowAllConferences
+                            <span></span>
+                        </label>
+                    </div>
+                    <div class="col-sm-6 col-lg-4">
+                        <label class="kt-checkbox">
+                            @Html.CheckBoxFor(m => m.ShowOneToOneMeetings, new { @class = "enable-calendar-reload" }) @Labels.ShowOneToOneMeetings
+                            <span></span>
+                        </label>
+                    </div>
+                    <div class="col-sm-6 col-lg-4">
+                        <label class="kt-checkbox">
+                            @Html.CheckBoxFor(m => m.ShowFlights, new { @class = "enable-calendar-reload" }) @Labels.ShowFlights
+                            <span></span>
+                        </label>
+                    </div>
+                    <div class="col-sm-6 col-lg-4">
+                        <label class="kt-checkbox">
+                            @Html.CheckBoxFor(m => m.ShowTransfers, new { @class = "enable-calendar-reload" }) @Labels.ShowTransfers
+                            <span></span>
+                        </label>
+                    </div>
+                    <div class="col-sm-6 col-lg-4">
+                        <label class="kt-checkbox">
+                            @Html.CheckBoxFor(m => m.ShowAccommodations, new { @class = "enable-calendar-reload" }) @Labels.ShowAccommodations
+                            <span></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end:Search Widget-->
+    </div>
+</div>
+<div class="row">
     <div class="col-md-12">
-        <!--begin:Main-->
+        <!--begin:Agenda Widget-->
         <div class="kt-portlet kt-portlet--mobile">
             <div class="kt-portlet__body">
                 <div id="AgendaWidget" style="min-height: 325px;"></div>
             </div>
         </div>
-        <!--end:Main-->
+        <!--end:Agenda Widget-->
     </div>
-    <!--end:Right column-->
 </div>
 @section Styles {
     @Styles.Render("~/bundles/css/fullcalendar.css")
@@ -37,103 +84,3 @@
     </script>
 
 }
-@*<div class="content content-header-button clearfix">
-        <h1 class="page-title">@ViewBag.Title</h1>
-
-        <a href="@Url.Action("Print")" class="btn btn-lg btn-primary btn-link pull-right" target="_blank">
-            <i class="icon-print"></i>
-            @Labels.PrintSchedules
-        </a>
-    </div>
-
-
-    <section class="wrapper-no-margin-top" ng-controller="ScheduleList as vm">
-        @Html.Partial("_Schedule")
-
-        <script type="text/ng-template" id="modalAgenda.html">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="dismiss()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title" id="myModalLabel" ng-if="vmModalAgenda.thisItem.type == 'meetings'">@Labels.NegotiationDetails</h4>
-                <h4 class="modal-title" id="myModalLabel" ng-if="vmModalAgenda.thisItem.type == 'conference'">@Labels.ConferenceDetails</h4>
-            </div>
-            <div class="modal-body body-agenda">
-                @*<span ng-if="vm.processingAction" class="rio2c-loading"></span>@@
-
-                @*<div data-alerta="" ng-model="vm.messageResultProcessing"></div>@@
-
-
-                @*<pre>{{vmModalAgenda.thisItem | json}}</pre>@@
-
-
-                <div class="agenda-information">
-
-                    <div ng-if="vmModalAgenda.thisItem.type == 'meetings'">
-                        <div>
-                            <label>@Labels.Project: </label>
-                            <span class="link"><a href="@Url.Action("Detail", "Project")/?uid={{vmModalAgenda.thisItem.uid}}">{{vmModalAgenda.thisItem.title}} <i class="icon-external-link"></i></a> </span>
-                        </div>
-                        <div>
-                            <label>@Labels.Producer: </label>
-                            <span class="link"><a href="@Url.Action("Details", "Producer")/?uid={{vmModalAgenda.thisItem.producer.uid}}">{{vmModalAgenda.thisItem.producer.tradeName}} <i class="icon-external-link"></i></a></span>
-                        </div>
-                        <div>
-                            <label>@Labels.Player: </label>
-                            <span class="link"><a href="@Url.Action("ProfileDetails", "Player")/?uid={{vmModalAgenda.thisItem.player.uid}}">{{vmModalAgenda.thisItem.player.name}} <i class="icon-external-link"></i></a></span>
-                        </div>
-                        <div>
-                            <label>@Labels.Room: </label>
-                            <span>{{vmModalAgenda.thisItem.room}}</span>
-                        </div>
-                        <div>
-                            <label>@Labels.Table: </label>
-                            <span>{{vmModalAgenda.thisItem.table}}</span>
-                        </div>
-                    </div>
-
-                    <div ng-if="vmModalAgenda.thisItem.type == 'conference'">
-                        <div>
-                            <label>@Labels.Title: </label>
-                            <span class="link"><a href="@Url.Action("Detail", "Conference")/?uid={{vmModalAgenda.thisItem.uid}}">{{vmModalAgenda.thisItem.title}} <i class="icon-external-link"></i></a> </span>
-                        </div>
-                        <div>
-                            <label>@Labels.Room: </label>
-                            <span>{{vmModalAgenda.thisItem.room}}</span>
-                        </div>
-                        <div>
-                            @*<label>@Labels.LecturerMemberOneOrMany: </label>@@
-                            @*<span ng-repeat="lecturer in vmModalAgenda.thisItem.lecturers as lecturers">
-                                {{(lecturers.indexOf(lecturer) + 1) >= lecturers.length ? lecturer.name : lecturer.name + ', ';}}
-                            </span>@@
-
-                            <div ng-repeat="lecturerGroup in vmModalAgenda.thisItem.lecturersGroup as lecturerGroup">
-                                <label>{{lecturerGroup.roleLecturer | pluralize}}: </label>
-                                <span ng-repeat="lecturer in lecturerGroup.lecturers as lecturers">
-                                    {{(lecturers.indexOf(lecturer) + 1) >= lecturers.length ? lecturer.name : lecturer.name + ', ';}}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div>
-                        <label>@Labels.Date: </label>
-                        <span>{{vmModalAgenda.thisDate}}</span>
-                    </div>
-
-                    <div>
-                        <label>@Labels.Hour: </label>
-                        <span>{{vmModalAgenda.thisItem.startHour}} - {{vmModalAgenda.thisItem.endHour}}</span>
-                    </div>
-
-                </div>
-
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-default" ng-click="dismiss()">
-                    @Labels.Ok
-                </button>
-            </div>
-        </script>
-    </section>*@

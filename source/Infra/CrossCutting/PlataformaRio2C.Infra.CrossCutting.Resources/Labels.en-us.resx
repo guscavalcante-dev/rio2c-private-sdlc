@@ -2470,4 +2470,28 @@
     <value>One-to-One Meeting</value>
     <comment>Rodada de Negócio</comment>
   </data>
+  <data name="ShowAccommodations" xml:space="preserve">
+    <value>Show acommodations</value>
+    <comment>Exibir hospedagens</comment>
+  </data>
+  <data name="ShowAllConferences" xml:space="preserve">
+    <value>Show all conferences</value>
+    <comment>Exibir todas as palestras</comment>
+  </data>
+  <data name="ShowFlights" xml:space="preserve">
+    <value>Show flights</value>
+    <comment>Exibir voos</comment>
+  </data>
+  <data name="ShowMyConferences" xml:space="preserve">
+    <value>Show my conferences</value>
+    <comment>Exibir minhas palestras</comment>
+  </data>
+  <data name="ShowOneToOneMeetings" xml:space="preserve">
+    <value>Show one-to-one meetings</value>
+    <comment>Exibir rodadas de negócio</comment>
+  </data>
+  <data name="ShowTransfers" xml:space="preserve">
+    <value>Show transfers</value>
+    <comment>Exibir transfers</comment>
+  </data>
 </root>

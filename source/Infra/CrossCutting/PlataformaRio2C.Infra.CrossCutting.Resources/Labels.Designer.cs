@@ -4606,11 +4606,29 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exibir hospesagens.
+        /// </summary>
+        public static string ShowAccommodations {
+            get {
+                return ResourceManager.GetString("ShowAccommodations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exibir todas as empresas.
         /// </summary>
         public static string ShowAllCompanies {
             get {
                 return ResourceManager.GetString("ShowAllCompanies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exibir todas as palestras.
+        /// </summary>
+        public static string ShowAllConferences {
+            get {
+                return ResourceManager.GetString("ShowAllConferences", resourceCulture);
             }
         }
         
@@ -4651,11 +4669,47 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exibir voos.
+        /// </summary>
+        public static string ShowFlights {
+            get {
+                return ResourceManager.GetString("ShowFlights", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exibir destaques.
         /// </summary>
         public static string ShowHighlights {
             get {
                 return ResourceManager.GetString("ShowHighlights", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exibir minhas palestras.
+        /// </summary>
+        public static string ShowMyConferences {
+            get {
+                return ResourceManager.GetString("ShowMyConferences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exibir rodadas de negócio.
+        /// </summary>
+        public static string ShowOneToOneMeetings {
+            get {
+                return ResourceManager.GetString("ShowOneToOneMeetings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exibir transfers.
+        /// </summary>
+        public static string ShowTransfers {
+            get {
+                return ResourceManager.GetString("ShowTransfers", resourceCulture);
             }
         }
         

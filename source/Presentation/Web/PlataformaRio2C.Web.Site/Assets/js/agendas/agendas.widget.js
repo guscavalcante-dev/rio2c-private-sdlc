@@ -17,7 +17,8 @@ var AgendasWidget = function () {
 
     var widgetElementName = 'AgendaWidget';
     var widgetElementId = '#' + widgetElementName;
-	var widgetElement = $(widgetElementId);
+    var widgetElement = $(widgetElementId);
+    var calendar;
 
     var globalVariables = MyRio2cCommon.getGlobalVariables();
 
@@ -33,7 +34,7 @@ var AgendasWidget = function () {
 	    }
 
         var calendarEl = document.getElementById(widgetElementName);
-        var calendar = new FullCalendar.Calendar(calendarEl, {
+        calendar = new FullCalendar.Calendar(calendarEl, {
             plugins: ['interaction', 'dayGrid', 'timeGrid', 'list'],
             header: {
                 left: 'prev,next today',
@@ -61,7 +62,9 @@ var AgendasWidget = function () {
 					events: function(info, successCallback, failureCallback) {
 						var jsonParameters = new Object();
                         jsonParameters.startDate = moment(info.start).unix();
-                        jsonParameters.endDate = moment(info.end).unix()
+                        jsonParameters.endDate = moment(info.end).unix();
+                        jsonParameters.showMyConferences = $('#ShowMyConferences').is(':checked');
+                        jsonParameters.showAllConferences = $('#ShowAllConferences').is(':checked');
 
                         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Agendas/GetConferencesData'), jsonParameters, function(data) {
 							MyRio2cCommon.handleAjaxReturn({
@@ -103,9 +106,10 @@ var AgendasWidget = function () {
                     events: function (info, successCallback, failureCallback) {
                         var jsonParameters = new Object();
                         jsonParameters.startDate = moment(info.start).unix();
-                        jsonParameters.endDate = moment(info.end).unix()
+                        jsonParameters.endDate = moment(info.end).unix();
+                        jsonParameters.showOneToOneMeetings = $('#ShowOneToOneMeetings').is(':checked');
 
-                        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Agendas/GetLogisticsData'), jsonParameters, function (data) {
+                        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Agendas/GetAudiovisualMeetingsData'), jsonParameters, function (data) {
                             MyRio2cCommon.handleAjaxReturn({
                                 data: data,
                                 // Success
@@ -134,20 +138,23 @@ var AgendasWidget = function () {
                                 }
                             });
                         })
-                        .fail(function () {
-                        })
-                        .always(function () {
-                            //MyRio2cCommon.unblock();
-                        });
+                            .fail(function () {
+                            })
+                            .always(function () {
+                                //MyRio2cCommon.unblock();
+                            });
                     }
                 },
                 {
                     events: function (info, successCallback, failureCallback) {
                         var jsonParameters = new Object();
                         jsonParameters.startDate = moment(info.start).unix();
-                        jsonParameters.endDate = moment(info.end).unix()
+                        jsonParameters.endDate = moment(info.end).unix();
+                        jsonParameters.showFlights = $('#ShowFlights').is(':checked');
+                        jsonParameters.showAccommodations = $('#ShowAccommodations').is(':checked');
+                        jsonParameters.showTransfers = $('#ShowTransfers').is(':checked');
 
-                        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Agendas/GetAudiovisualMeetingsData'), jsonParameters, function (data) {
+                        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Agendas/GetLogisticsData'), jsonParameters, function (data) {
                             MyRio2cCommon.handleAjaxReturn({
                                 data: data,
                                 // Success
@@ -203,111 +210,24 @@ var AgendasWidget = function () {
         });
 
         calendar.render();
+    };
 
-        //var todayDate = moment().startOf('day');
-        //var YM = todayDate.format('YYYY-MM');
-        //var YESTERDAY = todayDate.clone().subtract(1, 'day').format('YYYY-MM-DD');
-        //var TODAY = todayDate.format('YYYY-MM-DD');
-        //var TOMORROW = todayDate.clone().add(1, 'day').format('YYYY-MM-DD');
+    var reload = function () {
+	    calendar.refetchEvents();
+    }
 
-        //var TODAYm1 = todayDate.clone().subtract(1, 'day').format('YYYY-MM-DD');
-        //var TODAYm2 = todayDate.clone().subtract(2, 'day').format('YYYY-MM-DD');
-        //var TODAYm3 = todayDate.clone().subtract(3, 'day').format('YYYY-MM-DD');
-        //var TODAYm4 = todayDate.clone().subtract(4, 'day').format('YYYY-MM-DD');
-
-        //var TODAYp1 = todayDate.clone().add(1, 'day').format('YYYY-MM-DD');
-        //var TODAYp2 = todayDate.clone().add(2, 'day').format('YYYY-MM-DD');
-        //var TODAYp3 = todayDate.clone().add(3, 'day').format('YYYY-MM-DD');
-        //var TODAYp4 = todayDate.clone().add(4, 'day').format('YYYY-MM-DD');
-
-        //var calendarEl = document.getElementById('kt_calendar');
-        //var calendar = new FullCalendar.Calendar(calendarEl, {
-	       // header: {
-		      //  left: 'prev,next today',
-		      //  center: 'title',
-		      //  right: 'dayGridMonth,timeGridWeek,timeGridDay'
-	       // },
-	       // views: {
-		      //  dayGridMonth: { buttonText: 'month' },
-		      //  timeGridWeek: { buttonText: 'week' },
-		      //  timeGridDay: { buttonText: 'day' },
-		      //  timeGridFourDay: {
-			     //   type: 'timeGrid',
-			     //   duration: { days: 4 },
-			     //   buttonText: '4 day'
-		      //  }
-	       // },
-        //    defaultView: 'timeGridFourDay',
-	       // slotMinutes: 15,
-        //    editable: false,
-	       // droppable: false, // this allows things to be dropped onto the calendar !!!
-        //    defaultDate: TODAY,
-        //    locale: initialLocaleCode,
-	       // plugins: ['interaction', 'dayGrid', 'timeGrid', 'list'],
-        //    isRTL: KTUtil.isRTL(),
-        //    height: 800,
-        //    contentHeight: 780,
-        //    aspectRatio: 1.35,  // see: https://fullcalendar.io/docs/aspectRatio
-        //    nowIndicator: true,
-        //    now: TODAY + 'T09:25:00', // just for demo
-        //    eventLimit: true, // allow "more" link when too many events
-        //    navLinks: true,
-        //    events: [
-        //        {
-        //            title: 'MULHERES NO AUDIOVISUAL BRAZILIAN CONTENT',
-        //            start: TODAYp3 + 'T10:30:00',
-        //            end: TODAYp3 + 'T12:30:00',
-        //            className: "fc-event-solid-danger fc-event-light"
-        //        },
-        //        {
-        //            title: 'DOC & IMPACTO SOCIAL SALA AUDIOVISUAL',
-        //            start: TODAYp2 + 'T13:30:00',
-        //            end: TODAYp2 + 'T15:30:00',
-        //            className: "fc-event-solid-danger fc-event-light"
-        //        },
-        //        {
-        //            title: 'E quem se importa? Rodadas de Negócios(Sala 2)',
-        //            start: TODAYp1 + 'T13:00:00',
-        //            end: TODAYp1 + 'T14:00:00',
-        //            className: "fc-event-solid-info fc-event-light"
-        //        },
-        //        {
-        //            title: '“Palco História – Mulheres Brasileiras”_3 Rodadas de Negócios(Sala 2)',
-        //            start: TODAYp1 + 'T14:00:00',
-        //            end: TODAYp1 + 'T15:00:00',
-        //            className: "fc-event-solid-info fc-event-light"
-        //        },
-        //        {
-        //            title: 'UM OUTRO FRANCISCO Rodadas de Negócios(Sala 2)',
-        //            start: TODAYp1 + 'T15:00:00',
-        //            end: TODAYp1 + 'T16:00:00',
-        //            className: "fc-event-solid-info fc-event-light"
-        //        }
-
-        //    ],
-        //    eventRender: function (info) {
-        //        var element = $(info.el);
-        //        if (info.event.extendedProps && info.event.extendedProps.description) {
-        //            if (element.hasClass('fc-day-grid-event')) {
-        //                element.data('content', info.event.extendedProps.description);
-        //                element.data('placement', 'top');
-        //                KTApp.initPopover(element);
-        //            } else if (element.hasClass('fc-time-grid-event')) {
-        //                element.find('.fc-title').append('<div class="fc-description">' + info.event.extendedProps.description + '</div>');
-        //            } else if (element.find('.fc-list-item-title').lenght !== 0) {
-        //                element.find('.fc-list-item-title').append('<div class="fc-description">' + info.event.extendedProps.description + '</div>');
-        //            }
-        //        }
-        //    }
-        //});
-
-        //calendar.render();
-	};
+    var enableChangeEvents = function () {
+        $('.enable-calendar-reload').not('.change-event-enabled').on('change', function () {
+	        reload();
+	    });
+        $('.enable-calendar-reload').addClass('change-event-enabled');
+    };
 
     return {
         //main function to initiate the module
         init: function () {
-	        enableCalendar();
+	        enableChangeEvents();
+            enableCalendar();
         }
     };
 }();

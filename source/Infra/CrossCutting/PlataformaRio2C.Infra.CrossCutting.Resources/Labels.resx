@@ -2473,4 +2473,28 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Rodada de Negócio</value>
     <comment>Rodada de Negócio</comment>
   </data>
+  <data name="ShowAccommodations" xml:space="preserve">
+    <value>Exibir hospesagens</value>
+    <comment>Exibir hospedagens</comment>
+  </data>
+  <data name="ShowAllConferences" xml:space="preserve">
+    <value>Exibir todas as palestras</value>
+    <comment>Exibir todas as palestras</comment>
+  </data>
+  <data name="ShowFlights" xml:space="preserve">
+    <value>Exibir voos</value>
+    <comment>Exibir voos</comment>
+  </data>
+  <data name="ShowMyConferences" xml:space="preserve">
+    <value>Exibir minhas palestras</value>
+    <comment>Exibir minhas palestras</comment>
+  </data>
+  <data name="ShowOneToOneMeetings" xml:space="preserve">
+    <value>Exibir rodadas de negócio</value>
+    <comment>Exibir rodadas de negócio</comment>
+  </data>
+  <data name="ShowTransfers" xml:space="preserve">
+    <value>Exibir transfers</value>
+    <comment>Exibir transfers</comment>
+  </data>
 </root>
