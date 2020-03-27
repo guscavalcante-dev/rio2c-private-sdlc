@@ -28,6 +28,34 @@ var AgendasWidget = function () {
     };
 
     // Enable calendar ----------------------------------------------------------------------------
+    var formatPopupDate = function (startDate, endDate) {
+        startDate = moment(startDate).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage);//.format('L LTS');
+        endDate = moment(endDate).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage);
+	    var date = startDate.format("ddd, D") + " of " + startDate.format("MMMM");
+
+	    ////if (eventType === birthdayEventType) {
+		   //// return date;
+	    ////}
+
+	    if (endDate == null
+		    || endDate === ''
+		    || (startDate.year() === endDate.year()
+			    && startDate.month() === endDate.month()
+			    && startDate.day() === endDate.day()
+			    && startDate.hours() === endDate.hours()
+			    && startDate.minutes() === endDate.minutes())) {
+		    date += ", " + startDate.format("HH:mm");
+	    }
+	    else if (startDate.day() === endDate.day()) {
+		    date += ", " + startDate.format("HH:mm") + " &#8210 " + endDate.format("HH:mm");
+	    }
+	    else {
+		    date += ", " + startDate.format("HH:mm") + " &#8210 " + endDate.format("ddd, D") + " of " + startDate.format("MMMM") + ", " + endDate.format("HH:mm");
+	    }
+
+	    return date;
+    }
+
     var enableCalendar = function () {
 	    if (widgetElement.length <= 0) {
 		    return;
@@ -84,7 +112,11 @@ var AgendasWidget = function () {
 												start: moment(eventEl.Start).tz(globalVariables.momentTimeZone).format(),
 												end: moment(eventEl.End).tz(globalVariables.momentTimeZone).format(),
                                                 allDay: eventEl.AllDay || false,
-                                                className: eventEl.Css
+                                                type: eventEl.Type,
+                                                className: eventEl.Css,
+												editionEvent: eventEl.EditionEvent,
+												synopsis: eventEl.Synopsis,
+												room: eventEl.Room
 											}
 										})
 									);
@@ -127,6 +159,7 @@ var AgendasWidget = function () {
                                                 start: moment(eventEl.Start).tz(globalVariables.momentTimeZone).format(),
                                                 end: moment(eventEl.End).tz(globalVariables.momentTimeZone).format(),
                                                 allDay: eventEl.AllDay || false,
+                                                type: eventEl.Type,
                                                 className: eventEl.Css
                                             }
                                         })
@@ -172,6 +205,7 @@ var AgendasWidget = function () {
                                                 start: moment(eventEl.Start).tz(globalVariables.momentTimeZone).format(),
                                                 end: moment(eventEl.End).tz(globalVariables.momentTimeZone).format(),
                                                 allDay: eventEl.AllDay || false,
+                                                type: eventEl.Type,
                                                 className: eventEl.Css
                                             }
                                         })
@@ -192,12 +226,16 @@ var AgendasWidget = function () {
                 }
             ],
             eventRender: function (info) {
-                var tooltip = new Tooltip(info.el, {
-                    title: 'Teste',
-                    placement: 'top',
-                    trigger: 'hover',
-                    container: 'body'
+	            var element = $(info.el);
+
+                // Close other open popovers
+                element.on('click', function (e) {
+                    $('.popover-enabled').popover('hide');
                 });
+
+                if (info.event.extendedProps.type === 'Conference') {
+	                showConferencePopover(element, info);
+                }
             },
             loading: function (isLoading, view) {
                 if (isLoading) {
@@ -221,7 +259,38 @@ var AgendasWidget = function () {
 	        reload();
 	    });
         $('.enable-calendar-reload').addClass('change-event-enabled');
+
+        $('body').on('click', function (e) {
+	        //did not click a popover toggle or popover
+            if (!$(e.target).hasClass('fc-content') && !$(e.target).hasClass('fc-title') && !$(e.target).hasClass('fc-event')
+		        && $(e.target).parents('.popover.in').length === 0) {
+                $('.popover-enabled').popover('hide');
+	        }
+        });
     };
+
+    // Popovers -----------------------------------------------------------------------------------
+    var showConferencePopover = function (element, info) {
+        var popoverHtml = $("#flight-popover-event-content").html();
+	    var startDate = info.event.start;
+        var endDate = info.event.end;
+
+        element.popover({
+	        html: true,
+	        //trigger: 'hover',
+	        placement: 'top',
+            content: function () {
+	            return popoverHtml
+		            .replace("popoverDate", formatPopupDate(startDate, endDate))
+		            .replace("popoverEditionEvent", info.event.extendedProps.editionEvent)
+		            .replace("popoverSynopsis", info.event.extendedProps.synopsis)
+		            .replace("popoverRoom", info.event.extendedProps.room);
+            },
+	        template: '<div class="fullcalendar-popover popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>',
+	        title: '<span class="text-info">' + info.event.title + '</span>',
+	        container: 'body'
+        });
+    }
 
     return {
         //main function to initiate the module

@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-27-2020
 // ***********************************************************************
-// <copyright file="ScheduleJsonDto.cs" company="Softo">
+// <copyright file="AgendaBaseEventJsonDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -15,8 +15,8 @@ using System;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
-    /// <summary>ScheduleJsonDto</summary>
-    public class ScheduleJsonDto
+    /// <summary>AgendaBaseEventJsonDto</summary>
+    public class AgendaBaseEventJsonDto
     {
         public string Id { get; set; }
         public string Type { get; set; }
@@ -26,8 +26,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public bool AllDay { get; set; }
         public string Css { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="ScheduleJsonDto"/> class.</summary>
-        public ScheduleJsonDto()
+        /// <summary>Initializes a new instance of the <see cref="AgendaBaseEventJsonDto"/> class.</summary>
+        public AgendaBaseEventJsonDto()
         {
         }
     }

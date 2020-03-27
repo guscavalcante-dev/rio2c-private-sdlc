@@ -7316,6 +7316,7 @@
     <Content Include="Views\Executives\Widgets\LogisticsAirfareList.cshtml" />
     <Content Include="Views\Executives\Widgets\LogisticsTransferList.cshtml" />
     <Content Include="Views\Executives\Widgets\LogisticsAddresses.cshtml" />
+    <Content Include="Views\Agendas\Shared\_LogisticAirfarePopover.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -81,7 +81,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         {
             if (!viewModel.ShowMyConferences && !viewModel.ShowAllConferences)
             {
-                return Json(new { status = "success", events = new List<ScheduleJsonDto>() }, JsonRequestBehavior.AllowGet);
+                return Json(new { status = "success", events = new List<AgendaBaseEventJsonDto>() }, JsonRequestBehavior.AllowGet);
             }
 
             if (!viewModel.StartDate.HasValue || !viewModel.EndDate.HasValue)
@@ -97,15 +97,18 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 viewModel.ShowMyConferences,
                 viewModel.ShowAllConferences);
 
-            var events = conferenceDtos?.Select(cd => new ScheduleJsonDto
+            var events = conferenceDtos?.Select(cd => new AgendaConferenceEventJsonDto
             {
                 Id = cd.Conference.Uid.ToString(),
                 Type = "Conference",
-                Title = $"[{Labels.Conference}] {cd.GetConferenceTitleDtoByLanguageCode(this.UserInterfaceLanguage)?.ConferenceTitle?.Value ?? "-"}",
+                Title = cd.GetConferenceTitleDtoByLanguageCode(this.UserInterfaceLanguage)?.ConferenceTitle?.Value,
                 Start = cd.Conference.StartDate,
                 End = cd.Conference.EndDate,
                 AllDay = false,
-                Css = cd.IsParticipant == true ? "fc-event-solid-primary fc-event-light" : "fc-event-solid-light fc-event-brand"
+                Css = cd.IsParticipant == true ? "fc-event-solid-primary fc-event-light popover-enabled" : "fc-event-solid-light fc-event-brand popover-enabled",
+                Room = cd.RoomDto.GetRoomNameByLanguageCode(this.UserInterfaceLanguage)?.RoomName.Value,
+                EditionEvent = cd.EditionEvent.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, Language.Separator),
+                Synopsis = cd.GetConferenceSynopsisDtoByLanguageCode(this.UserInterfaceLanguage)?.ConferenceSynopsis.Value
             });
 
             return Json(new
@@ -127,7 +130,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         {
             if (DateTime.UtcNow < this.EditionDto.OneToOneMeetingsScheduleDate || !viewModel.ShowOneToOneMeetings)
             {
-                return Json(new { status = "success", events = new List<ScheduleJsonDto>() }, JsonRequestBehavior.AllowGet);
+                return Json(new { status = "success", events = new List<AgendaBaseEventJsonDto>() }, JsonRequestBehavior.AllowGet);
             }
 
             if (!viewModel.StartDate.HasValue || !viewModel.EndDate.HasValue)
@@ -141,7 +144,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 DateTimeOffset.FromUnixTimeSeconds(viewModel.StartDate.Value),
                 DateTimeOffset.FromUnixTimeSeconds(viewModel.EndDate.Value));
 
-            var events = negotiationsDtos?.Select(nd => new ScheduleJsonDto
+            var events = negotiationsDtos?.Select(nd => new AgendaBaseEventJsonDto
             {
                 Id = nd.Negotiation.Uid.ToString(),
                 Type = "AudiovisualMeeting",
@@ -149,7 +152,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 Start = nd.Negotiation.StartDate,
                 End = nd.Negotiation.EndDate,
                 AllDay = false,
-                Css = "fc-event-solid-danger fc-event-light"
+                Css = "fc-event-solid-danger fc-event-light popover-enabled"
             });
 
             return Json(new
@@ -171,7 +174,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         {
             if (DateTime.UtcNow < this.EditionDto.OneToOneMeetingsScheduleDate)
             {
-                return Json(new { status = "success", events = new List<ScheduleJsonDto>() }, JsonRequestBehavior.AllowGet);
+                return Json(new { status = "success", events = new List<AgendaBaseEventJsonDto>() }, JsonRequestBehavior.AllowGet);
             }
 
             if (!viewModel.StartDate.HasValue || !viewModel.EndDate.HasValue)
@@ -186,7 +189,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 DateTimeOffset.FromUnixTimeSeconds(viewModel.EndDate.Value));
 
             // Logistic airfares (in day)
-            var events = (!viewModel.ShowFlights ? new List<ScheduleJsonDto>() : logisticDto?.LogisticAirfareDtos?.Select(lad => new ScheduleJsonDto
+            var events = (!viewModel.ShowFlights ? new List<AgendaBaseEventJsonDto>() : logisticDto?.LogisticAirfareDtos?.Select(lad => new AgendaBaseEventJsonDto
             {
                 Id = lad.LogisticAirfare.Uid.ToString(),
                 Type = "LogisticAirfare",
@@ -194,10 +197,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 Start = lad.LogisticAirfare.DepartureDate,
                 End = lad.LogisticAirfare.ArrivalDate,
                 AllDay = false,
-                Css = "fc-event-solid-warning fc-event-light"
-            }) ?? new List<ScheduleJsonDto>())?
+                Css = "fc-event-solid-warning fc-event-light popover-enabled"
+            }) ?? new List<AgendaBaseEventJsonDto>())?
             // Accommodations (all day)
-            .Union(!viewModel.ShowAccommodations ? new List<ScheduleJsonDto>() : logisticDto?.LogisticAccommodationDtos?.Select(lad => new ScheduleJsonDto
+            .Union(!viewModel.ShowAccommodations ? new List<AgendaBaseEventJsonDto>() : logisticDto?.LogisticAccommodationDtos?.Select(lad => new AgendaBaseEventJsonDto
             {
                 Id = lad.LogisticAccommodation.Uid.ToString(),
                 Type = "LogisticAccommodation",
@@ -205,10 +208,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 Start = lad.LogisticAccommodation.CheckInDate,
                 End = lad.LogisticAccommodation.CheckOutDate.AddDays(1),
                 AllDay = true,
-                Css = "fc-event-solid-success fc-event-light"
-            }) ?? new List<ScheduleJsonDto>())?
+                Css = "fc-event-solid-success fc-event-light popover-enabled"
+            }) ?? new List<AgendaBaseEventJsonDto>())?
             // Accommodations (check-in)
-            .Union(!viewModel.ShowAccommodations ? new List<ScheduleJsonDto>() : logisticDto?.LogisticAccommodationDtos?.Select(lad => new ScheduleJsonDto
+            .Union(!viewModel.ShowAccommodations ? new List<AgendaBaseEventJsonDto>() : logisticDto?.LogisticAccommodationDtos?.Select(lad => new AgendaBaseEventJsonDto
             {
                 Id = lad.LogisticAccommodation.Uid.ToString(),
                 Type = "LogisticAccommodation",
@@ -216,10 +219,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 Start = lad.LogisticAccommodation.CheckInDate,
                 End = lad.LogisticAccommodation.CheckInDate.AddMinutes(30),
                 AllDay = false,
-                Css = "fc-event-solid-success fc-event-info"
-            }) ?? new List<ScheduleJsonDto>())?
+                Css = "fc-event-solid-success fc-event-light popover-enabled"
+            }) ?? new List<AgendaBaseEventJsonDto>())?
             // Accommodations (check-out)
-            .Union(!viewModel.ShowAccommodations ? new List<ScheduleJsonDto>() : logisticDto?.LogisticAccommodationDtos?.Select(lad => new ScheduleJsonDto
+            .Union(!viewModel.ShowAccommodations ? new List<AgendaBaseEventJsonDto>() : logisticDto?.LogisticAccommodationDtos?.Select(lad => new AgendaBaseEventJsonDto
             {
                 Id = lad.LogisticAccommodation.Uid.ToString(),
                 Type = "LogisticAccommodation",
@@ -227,10 +230,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 Start = lad.LogisticAccommodation.CheckOutDate,
                 End = lad.LogisticAccommodation.CheckOutDate.AddMinutes(30),
                 AllDay = false,
-                Css = "fc-event-solid-success fc-event-light"
-            }) ?? new List<ScheduleJsonDto>())?
+                Css = "fc-event-solid-success fc-event-light popover-enabled"
+            }) ?? new List<AgendaBaseEventJsonDto>())?
             // Transfers
-            .Union(!viewModel.ShowTransfers ? new List<ScheduleJsonDto>() : logisticDto?.LogisticTransferDtos?.Select(ltd => new ScheduleJsonDto
+            .Union(!viewModel.ShowTransfers ? new List<AgendaBaseEventJsonDto>() : logisticDto?.LogisticTransferDtos?.Select(ltd => new AgendaBaseEventJsonDto
             {
                 Id = ltd.LogisticTransfer.Uid.ToString(),
                 Type = "LogisticTransfer",
@@ -238,8 +241,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 Start = ltd.LogisticTransfer.Date,
                 End = ltd.LogisticTransfer.Date.AddMinutes(30),
                 AllDay = false,
-                Css = "fc-event-solid-brand fc-event-light"
-            }) ?? new List<ScheduleJsonDto>())?
+                Css = "fc-event-solid-brand fc-event-light popover-enabled"
+            }) ?? new List<AgendaBaseEventJsonDto>())?
             .ToList();
 
             return Json(new

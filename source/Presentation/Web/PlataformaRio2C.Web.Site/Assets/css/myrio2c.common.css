@@ -431,3 +431,25 @@ a.r2c-login__footer-link, a.r2c-footer-link {
 .minicolors-theme-bootstrap .minicolors-swatch {
     top: 5px !important;
 }
+
+
+/*
+    Fullcalendar
+*/
+.fullcalendar-popover.popover {
+    max-width: 400px !important;
+    min-width: 400px !important;
+}
+
+    .fullcalendar-popover.popover .popover-title {
+        background-color: #fff !important;
+        border-bottom: #fff !important;
+    }
+
+    .fullcalendar-popover.popover .label-medium {
+        font-size: 11px;
+        color: #9b9b9b;
+        font-weight: bold;
+        height: 22px;
+        /*line-height: 22px;*/
+    }

@@ -256,7 +256,7 @@ namespace PlataformaRio2C.Web.Site
 
             #region Common Pages Bundles
 
-            #region Schedule
+            #region Agenda
 
             bundles.Add(new ScriptBundle("~/bundles/js/agendas.widget.js").Include(
                 "~/Assets/js/agendas/agendas.widget.js"));

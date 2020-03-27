@@ -169,4 +169,12 @@
     .w-50.w-xs-100 {
         width: 100% !important;
     }
+
+    /*
+        Fullcalendar
+    */
+    .fullcalendar-popover.popover {
+        max-width: 80% !important;
+        min-width: 80% !important;
+    }
 }

@@ -5641,6 +5641,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quando.
+        /// </summary>
+        public static string When {
+            get {
+                return ResourceManager.GetString("When", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Em qual edição?.
         /// </summary>
         public static string WhichEditionQ {

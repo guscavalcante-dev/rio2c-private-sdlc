@@ -103,6 +103,7 @@
     <Compile Include="Constants\CollaboratorType.cs" />
     <Compile Include="Constants\Role.cs" />
     <Compile Include="Dtos\Addresses\AddressDto.cs" />
+    <Compile Include="Dtos\Agendas\AgendaConferenceEventJsonDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorListDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorNetworkDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorSiteDetailsDto.cs" />
@@ -217,7 +218,7 @@
     <Compile Include="Dtos\SalesPlatforms\AttendeeSalesPlatformDto.cs" />
     <Compile Include="Dtos\SalesPlatforms\SalesPlatformDto.cs" />
     <Compile Include="Dtos\SalesPlatformWebhookRequests\SalesPlatformWebhookRequestDto.cs" />
-    <Compile Include="Dtos\Schedules\ScheduleJsonDto.cs" />
+    <Compile Include="Dtos\Agendas\AgendaBaseEventJsonDto.cs" />
     <Compile Include="Dtos\States\StateBaseDto.cs" />
     <Compile Include="Dtos\Countries\CountryBaseDto.cs" />
     <Compile Include="Dtos\OrganizationDescriptions\OrganizationDescriptionBaseDto.cs" />
