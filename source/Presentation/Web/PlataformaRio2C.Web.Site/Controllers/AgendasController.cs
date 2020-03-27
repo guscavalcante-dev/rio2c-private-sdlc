@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-27-2020
 // ***********************************************************************
-// <copyright file="ScheduleController.cs" company="Softo">
+// <copyright file="AgendasController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -27,14 +27,14 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
-    /// <summary>ScheduleController</summary>
+    /// <summary>AgendasController</summary>
     [Authorize(Order = 1)]
-    public class ScheduleController : BaseController
+    public class AgendasController : BaseController
     {
         private readonly IConferenceRepository conferenceRepo;
         private readonly ILogisticRepository logisticRepo;
 
-        public ScheduleController(
+        public AgendasController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             IConferenceRepository conferenceRepository,
@@ -57,8 +57,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper("Agenda", new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper("Dashboard", Url.Action("Index", "Home", new { Area = "Player" }))
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Agenda, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Agenda, Url.Action("Index", "Home", new { Area = "Player" }))
             });
 
             #endregion

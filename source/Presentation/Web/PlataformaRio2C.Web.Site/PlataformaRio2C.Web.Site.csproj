@@ -371,7 +371,7 @@
     <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Controllers\ProducerController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
-    <Compile Include="Controllers\ScheduleController.cs" />
+    <Compile Include="Controllers\AgendasController.cs" />
     <Compile Include="Controllers\TermController.cs" />
     <Compile Include="Controllers\Ticket4youController.cs" />
     <Compile Include="Filters\CustomExceptionFilterAttribute.cs" />
@@ -488,7 +488,7 @@
     <Content Include="Assets\js\projects\projects.producerinfo.js" />
     <Content Include="Assets\js\onboarding\onboarding.playerinfo.js" />
     <Content Include="Assets\js\onboarding\onboarding.collaboratordata.js" />
-    <Content Include="Assets\js\schedules\schedules.widget.js" />
+    <Content Include="Assets\js\agendas\agendas.widget.js" />
     <Content Include="Assets\js\companies\companyinfo.autocomplete.js" />
     <Content Include="Assets\js\projects\projects.projectinfo.js" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.css" />
@@ -7117,7 +7117,7 @@
     <Content Include="Views\Player\ProfileEdit.cshtml" />
     <Content Include="Views\Player\Interests.cshtml" />
     <Content Include="Views\Projects\Index.cshtml" />
-    <Content Include="Views\Schedule\Index.cshtml" />
+    <Content Include="Views\Agendas\Index.cshtml" />
     <Content Include="Views\Conference\Index.cshtml" />
     <Content Include="Views\Term\Player.cshtml" />
     <Content Include="Views\Account\UserNotFound.cshtml" />
@@ -7135,11 +7135,11 @@
     <Content Include="Views\Producer\ProfileEdit.cshtml" />
     <Content Include="Views\Conference\Detail.cshtml" />
     <Content Include="Views\Producer\Details.cshtml" />
-    <Content Include="Views\Schedule\_Schedule.cshtml" />
-    <Content Include="Views\Schedule\Disabled.cshtml" />
-    <Content Include="Views\Schedule\Print.cshtml" />
+    <Content Include="Views\Agendas\_Schedule.cshtml" />
+    <Content Include="Views\Agendas\Disabled.cshtml" />
+    <Content Include="Views\Agendas\Print.cshtml" />
     <Content Include="Views\Shared\_LayoutPrint.cshtml" />
-    <Content Include="Views\Schedule\_SchedulePrint.cshtml" />
+    <Content Include="Views\Agendas\_SchedulePrint.cshtml" />
     <Content Include="Views\Shared\ErrorUnexpected.cshtml" />
     <Content Include="Views\Quiz\Edition2018.cshtml" />
     <Content Include="Views\Themes\Metronic\_Layout.cshtml" />

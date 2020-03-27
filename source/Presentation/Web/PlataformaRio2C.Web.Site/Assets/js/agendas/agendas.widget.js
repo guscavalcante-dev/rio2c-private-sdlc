@@ -11,9 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-"use strict";
+//"use strict";
 
-var SchedulesWidget = function () {
+var AgendasWidget = function () {
 
     var globalVariables = MyRio2cCommon.getGlobalVariables();
 
@@ -55,7 +55,7 @@ var SchedulesWidget = function () {
                         jsonParameters.startDate = moment(info.start).unix();
                         jsonParameters.endDate = moment(info.end).unix()
 
-                        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Schedule/GetConferencesData'), jsonParameters, function(data) {
+                        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Agendas/GetConferencesData'), jsonParameters, function(data) {
 							MyRio2cCommon.handleAjaxReturn({
 								data: data,
 								// Success
@@ -97,7 +97,7 @@ var SchedulesWidget = function () {
                         jsonParameters.startDate = moment(info.start).unix();
                         jsonParameters.endDate = moment(info.end).unix()
 
-                        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Schedule/GetLogisticsData'), jsonParameters, function (data) {
+                        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Agendas/GetLogisticsData'), jsonParameters, function (data) {
                             MyRio2cCommon.handleAjaxReturn({
                                 data: data,
                                 // Success

@@ -258,8 +258,8 @@ namespace PlataformaRio2C.Web.Site
 
             #region Schedule
 
-            bundles.Add(new ScriptBundle("~/bundles/js/schedules.widget.js").Include(
-                "~/Assets/js/schedules/schedules.widget.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/agendas.widget.js").Include(
+                "~/Assets/js/agendas/agendas.widget.js"));
 
             #endregion
 
