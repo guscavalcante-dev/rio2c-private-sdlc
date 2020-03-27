@@ -1,7 +1,8 @@
-﻿@{
+﻿@using PlataformaRio2C.Domain.Dtos
+@{
     ViewBag.Title = Labels.Diary;
+    var editionDto = ViewBag.EditionDto as EditionDto;
 }
-
 <div class="row">
     <!--begin:Right column-->
     <div class="col-md-12">
@@ -17,10 +18,25 @@
     <!--end:Right column-->
 </div>
 @section Styles {
-    @Styles.Render("~/bundles/css/scheduleCustomStyles")
+    @Styles.Render("~/bundles/css/fullcalendar.css")
 }
 @section Scripts {
-    @Scripts.Render("~/bundles/js/scheduleCustomScripts")
+    @Scripts.Render("~/bundles/js/fullcalendar.js")
+    @Scripts.Render("~/bundles/js/schedules.widget.js")
+    <script>
+        // Page translations ----------------------------------------------------------------------
+        var translations = {
+            fourDaysButton: '4 @Labels.Days.ToLowerInvariant()'
+        };
+
+        // Variables ------------------------------------------------------------------------------
+        var editionStartDate = '@(editionDto?.Edition?.StartDate.ToUserTimeZone().ToString("yyyy-MM-dd"))';
+
+        jQuery(document).ready(function () {
+            SchedulesWidget.init();
+        });
+    </script>
+
 }
 @*<div class="content content-header-button clearfix">
         <h1 class="page-title">@ViewBag.Title</h1>

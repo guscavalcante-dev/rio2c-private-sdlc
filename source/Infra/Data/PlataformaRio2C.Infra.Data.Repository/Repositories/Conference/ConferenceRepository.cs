@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-20-2020
+// Last Modified On : 03-27-2020
 // ***********************************************************************
 // <copyright file="ConferenceRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -182,6 +182,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 query = query.Where(outerWhere);
                 //query = query.AsExpandable().Where(predicate);
             }
+
+            return query;
+        }
+
+        /// <summary>Finds the by date range.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <returns></returns>
+        internal static IQueryable<Conference> FindByDateRange(this IQueryable<Conference> query, DateTimeOffset startDate, DateTimeOffset endDate)
+        {
+            endDate = endDate.AddHours(23).AddMinutes(59).AddSeconds(59);
+
+            query = query.Where(c => (c.StartDate >= startDate && c.StartDate <= endDate)
+                                     || (c.EndDate >= startDate && c.EndDate <= endDate));
 
             return query;
         }
@@ -552,6 +567,64 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return await query
                             .ToListAsync();
+        }
+
+        /// <summary>Finds all schedule dtos asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <returns></returns>
+        public Task<List<ConferenceDto>> FindAllScheduleDtosAsync(int editionId, int? attendeeCollaboratorId, DateTimeOffset startDate, DateTimeOffset endDate)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(false, editionId)
+                                .FindByDateRange(startDate, endDate)
+                                .Select(c => new ConferenceDto
+                                {
+                                    Conference = c,
+                                    EditionEvent = c.EditionEvent,
+                                    RoomDto = new RoomDto
+                                    {
+                                        Room = c.Room,
+                                        RoomNameDtos = c.Room.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto
+                                        {
+                                            RoomName = rn,
+                                            LanguageDto = new LanguageDto
+                                            {
+                                                Id = rn.Language.Id,
+                                                Uid = rn.Language.Uid,
+                                                Code = rn.Language.Code
+                                            }
+                                        })
+                                    },
+                                    ConferenceTitleDtos = c.ConferenceTitles.Where(ct => !ct.IsDeleted).Select(ct => new ConferenceTitleDto
+                                    {
+                                        ConferenceTitle = ct,
+                                        LanguageDto = new LanguageBaseDto
+                                        {
+                                            Id = ct.Language.Id,
+                                            Uid = ct.Language.Uid,
+                                            Name = ct.Language.Name,
+                                            Code = ct.Language.Code
+                                        }
+                                    }),
+                                    ConferenceSynopsisDtos = c.ConferenceSynopses.Where(cs => !cs.IsDeleted).Select(cs => new ConferenceSynopsisDto
+                                    {
+                                        ConferenceSynopsis = cs,
+                                        LanguageDto = new LanguageBaseDto
+                                        {
+                                            Id = cs.Language.Id,
+                                            Uid = cs.Language.Uid,
+                                            Name = cs.Language.Name,
+                                            Code = cs.Language.Code
+                                        }
+                                    }),
+                                    IsParticipant = c.ConferenceParticipants.Any(cp => cp.AttendeeCollaboratorId == attendeeCollaboratorId && !cp.IsDeleted)
+                                });
+
+            return query
+                        .ToListAsync();
         }
 
         #region Api

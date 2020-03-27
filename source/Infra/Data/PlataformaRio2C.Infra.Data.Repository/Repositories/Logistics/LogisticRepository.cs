@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-19-2020
+// Last Modified On : 03-27-2020
 // ***********************************************************************
 // <copyright file="LogisticRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,23 +30,34 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     /// <summary>LogisticIQueryableExtensions</summary>
     internal static class LogisticIQueryableExtensions
     {
+        /// <summary>Finds the by uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="logisticUid">The logistic uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<Logistic> FindByUid(this IQueryable<Logistic> query, Guid logisticUid)
+        {
+            return query.Where(l => l.Uid == logisticUid);
+        }
+
+        /// <summary>Finds the by attendee collaborator identifier.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<Logistic> FindByAttendeeCollaboratorId(this IQueryable<Logistic> query, int attendeeCollaboratorId)
+        {
+            query = query.Where(l => l.AttendeeCollaboratorId == attendeeCollaboratorId);
+
+            return query;
+        }
+
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
         internal static IQueryable<Logistic> IsNotDeleted(this IQueryable<Logistic> query)
         {
-            query = query.Where(c => !c.IsDeleted);
+            query = query.Where(l => !l.IsDeleted);
 
             return query;
-        }
-
-        /// <summary>Finds the by uid.</summary>
-        /// <param name="query">The query.</param>
-        /// <param name="uid">The uid.</param>
-        /// <returns></returns>
-        internal static IQueryable<Logistic> FindByUid(this IQueryable<Logistic> query, Guid uid)
-        {
-            return query.Where(e => e.Uid == uid);
         }
     }
 
@@ -228,6 +239,60 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         User = l.CreateUser,
                                         Collaborator = l.CreateUser.Collaborator
                                     }
+                                });
+
+            return query
+                        .FirstOrDefaultAsync();
+        }
+
+        /// <summary>Finds the schedule dto asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <returns></returns>
+        public Task<LogisticDto> FindScheduleDtoAsync(int editionId, int attendeeCollaboratorId, DateTimeOffset startDate, DateTimeOffset endDate)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByAttendeeCollaboratorId(attendeeCollaboratorId)
+                                .Select(l => new LogisticDto
+                                {
+                                    Logistic = l,
+                                    LogisticAirfareDtos = l.LogisticAirfares
+                                                                    .Where(la => !la.IsDeleted 
+                                                                                 && ((la.DepartureDate >= startDate && la.DepartureDate <= endDate)
+                                                                                     || (la.ArrivalDate >= startDate && la.ArrivalDate <= endDate)))
+                                                                    .Select(la => new LogisticAirfareDto
+                                                                    {
+                                                                        LogisticAirfare = la
+                                                                    }),
+                                    LogisticAccommodationDtos = l.LogisticAccommodations
+                                                                    .Where(la => !la.IsDeleted
+                                                                                 && ((la.CheckInDate >= startDate && la.CheckInDate <= endDate)
+                                                                                     || (la.CheckOutDate >= startDate && la.CheckOutDate <= endDate)))
+                                                                    .Select(la => new LogisticAccommodationDto
+                                                                    {
+                                                                        LogisticAccommodation = la,
+                                                                        PlaceDto = new PlaceDto
+                                                                        {
+                                                                            Place = la.AttendeePlace.Place
+                                                                        }
+                                                                    }),
+                                    LogisticTransferDtos = l.LogisticTransfers
+                                                                    .Where(lt => !lt.IsDeleted
+                                                                                 && (lt.Date >= startDate && lt.Date <= endDate))
+                                                                    .Select(lt => new LogisticTransferDto
+                                                                    {
+                                                                        LogisticTransfer = lt,
+                                                                        FromPlaceDto = new PlaceDto
+                                                                        {
+                                                                            Place = lt.FromAttendeePlace.Place
+                                                                        },
+                                                                        ToPlaceDto = new PlaceDto
+                                                                        {
+                                                                            Place = lt.ToAttendeePlace.Place
+                                                                        }
+                                                                    })
                                 });
 
             return query

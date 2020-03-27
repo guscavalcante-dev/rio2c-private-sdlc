@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-16-2020
+// Last Modified On : 03-26-2020
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1400,7 +1400,7 @@ var MyRio2cCommon = function () {
                     var query = {
                         keywords: params.term,
                         page: params.page,
-                        filterByProjectsInNegotiation: options.filterByProjectsInNegotiation || false
+                        customFilter: options.customFilter
                     };
 
                     return query;
@@ -1571,6 +1571,127 @@ var MyRio2cCommon = function () {
         }
     };
 
+    // Project select2 ----------------------------------------------------------------------------
+    var formatProjectResult = function (project) {
+        if (project.loading) {
+            return project.text;
+        }
+
+        var imageDirectory = 'https://' + globalVariables.bucket + '/img/organizations/';
+
+        var container =
+            '<div class="select2-result-collaborator clearfix">' +
+            '<div class="select2-result-collaborator__avatar">';
+
+        // Picture
+        if (!MyRio2cCommon.isNullOrEmpty(project.SellerPicture)) {
+            container +=
+                '<img src="' + project.SellerPicture + '" />';
+        }
+        else {
+            container +=
+                '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" />';
+        }
+
+        container +=
+            '</div > ' +
+            '<div class="select2-result-collaborator__meta">' +
+            '<div class="select2-result-collaborator__title">' + project.ProjectTitle + '</div>' +
+            '<div class="select2-result-collaborator__description">' + project.SellerTradeName + '</div>' +
+            '<div class="select2-result-collaborator__description">' + project.SellerCompanyName + '</div>';
+
+
+        container +=
+            '   </div>' +
+            '</div>';
+
+        var $container = $(container);
+
+        return $container;
+    };
+
+    var formatProjectSelection = function (project) {
+        return project.text;
+    };
+
+    var enableProjectSelect2 = function (options) {
+        if (MyRio2cCommon.isNullOrEmpty(options)) {
+            options = new Object();
+        }
+
+        if (!MyRio2cCommon.hasProperty(options, 'inputIdOrClass') || MyRio2cCommon.isNullOrEmpty(options.inputIdOrClass)) {
+            options.inputIdOrClass = '.enable-project-select2';
+        }
+
+        if (!MyRio2cCommon.hasProperty(options, 'allowClear') || MyRio2cCommon.isNullOrEmpty(options.allowClear)) {
+            options.allowClear = true;
+        }
+
+        if (!MyRio2cCommon.hasProperty(options, 'placeholder') || MyRio2cCommon.isNullOrEmpty(options.placeholder)) {
+            options.placeholder = labels.selectPlaceholder;
+        }
+
+        if (!MyRio2cCommon.hasProperty(options, 'buyerOrganizationId') || MyRio2cCommon.isNullOrEmpty(options.buyerOrganizationId)) {
+            options.buyerOrganizationId = '';
+        }
+
+        $(options.inputIdOrClass).select2({
+            language: MyRio2cCommon.getGlobalVariable('userInterfaceLanguageUppercade'),
+            width: '100%',
+            allowClear: options.allowClear,
+            placeholder: options.placeholder,
+            delay: 250,
+            ajax: {
+                url: MyRio2cCommon.getUrlWithCultureAndEdition(options.url),
+                dataType: 'json',
+                type: "GET",
+                quietMillis: 50,
+                data: function (params) {
+                    var query = {
+                        keywords: params.term,
+                        page: params.page,
+                        customFilter: options.customFilter || '',
+                        buyerOrganizationUid: options.buyerOrganizationId !== '' ? $(options.buyerOrganizationId).val() || null : null
+                    };
+
+                    return query;
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+
+                    return MyRio2cCommon.handleAjaxReturn({
+                        data: data,
+                        // Success
+                        onSuccess: function () {
+                            for (var i = data.Projects.length - 1; i >= 0; i--) {
+                                data.Projects[i].id = data.Projects[i].Uid;
+                                data.Projects[i].text = data.Projects[i].ProjectTitle;
+                            }
+
+                            return {
+                                results: data.Projects,
+                                pagination: {
+                                    more: data.HasNextPage
+                                }
+                            };
+                        },
+                        // Error
+                        onError: function () {
+                        }
+                    });
+                }
+            },
+            templateResult: formatProjectResult,
+            templateSelection: formatProjectSelection
+        });
+
+        // Add pre-selected value
+        if (MyRio2cCommon.hasProperty(options, 'selectedOption') && !MyRio2cCommon.isNullOrEmpty(options.selectedOption) && MyRio2cCommon.hasProperty(options.selectedOption, 'id') && MyRio2cCommon.hasProperty(options.selectedOption, 'text')) {
+            var newOption = new Option(options.selectedOption.text, options.selectedOption.id, false, true);
+            $(options.inputIdOrClass).append(newOption).trigger('change');
+        }
+    };
+
     return {
         init: function (userInterfaceLanguage, editionUrlCode, bucket) {
             setGlobalVariables(userInterfaceLanguage, editionUrlCode, bucket);
@@ -1683,7 +1804,9 @@ var MyRio2cCommon = function () {
         enableCollaboratorSelect2: function (options) {
             enableCollaboratorSelect2(options);
         },
-
+        enableProjectSelect2: function (options) {
+            enableProjectSelect2(options);
+        },
         enableDropdownChangeEvent: function (elementId, requiredFieldId) {
             enableDropdownChangeEvent(elementId, requiredFieldId);
         },

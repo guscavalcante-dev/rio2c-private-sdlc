@@ -4,7 +4,7 @@
 // Created          : 03-12-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-19-2020
+// Last Modified On : 03-27-2020
 // ***********************************************************************
 // <copyright file="LogisticDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

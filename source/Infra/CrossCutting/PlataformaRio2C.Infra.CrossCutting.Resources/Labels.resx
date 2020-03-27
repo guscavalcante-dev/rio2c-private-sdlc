@@ -2461,4 +2461,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Transfers</value>
     <comment>Transfers</comment>
   </data>
+  <data name="Days" xml:space="preserve">
+    <value>Dias</value>
+    <comment>Dias</comment>
+  </data>
+  <data name="Flight" xml:space="preserve">
+    <value>Voo</value>
+    <comment>Voo</comment>
+  </data>
 </root>

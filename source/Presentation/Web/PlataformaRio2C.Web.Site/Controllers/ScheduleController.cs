@@ -1,69 +1,195 @@
-﻿//// ***********************************************************************
-//// Assembly         : PlataformaRio2C.Web.Site
-//// Author           : Rafael Dantas Ruiz
-//// Created          : 06-28-2019
-////
-//// Last Modified By : Rafael Dantas Ruiz
-//// Last Modified On : 09-10-2019
-//// ***********************************************************************
-//// <copyright file="ScheduleController.cs" company="Softo">
-////     Copyright (c) Softo. All rights reserved.
-//// </copyright>
-//// <summary></summary>
-//// ***********************************************************************
-//using System.Collections.Generic;
-//using PlataformaRio2C.Application.Interfaces.Services;
-//using System.Web.Mvc;
-//using MediatR;
-//using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
-//using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Web.Site
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-28-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-27-2020
+// ***********************************************************************
+// <copyright file="ScheduleController.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using MediatR;
+using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 
-//namespace PlataformaRio2C.Web.Site.Controllers
-//{
-//    /// <summary>ScheduleController</summary>
-//    //[TermFilter(Order = 2)]
-//    [Authorize(Order = 1)]
-//    public class ScheduleController : BaseController
-//    {
-//        private readonly IScheduleAppService _scheduleAppService;
+namespace PlataformaRio2C.Web.Site.Controllers
+{
+    /// <summary>ScheduleController</summary>
+    [Authorize(Order = 1)]
+    public class ScheduleController : BaseController
+    {
+        private readonly IConferenceRepository conferenceRepo;
+        private readonly ILogisticRepository logisticRepo;
 
-//        /// <summary>Initializes a new instance of the <see cref="ScheduleController"/> class.</summary>
-//        /// <param name="commandBus">The command bus.</param>
-//        /// <param name="identityController">The identity controller.</param>
-//        /// <param name="scheduleAppService">The schedule application service.</param>
-//        public ScheduleController(IMediator commandBus, IdentityAutenticationService identityController, IScheduleAppService scheduleAppService)
-//            : base(commandBus, identityController)
-//        {
-//            _scheduleAppService = scheduleAppService;
-//        }
+        public ScheduleController(
+            IMediator commandBus, 
+            IdentityAutenticationService identityController,
+            IConferenceRepository conferenceRepository,
+            ILogisticRepository logisticRepository)
+            : base(commandBus, identityController)
+        {
+            this.conferenceRepo = conferenceRepository;
+            this.logisticRepo = logisticRepository;
+        }
 
-//        // GET: Schedule
-//        public ActionResult Index()
-//        {
-//            //if (!_scheduleAppService.ScheduleIsEnable())
-//            //{
-//            //    return View("Disabled");
-//            //}
+        /// <summary>Indexes this instance.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Index()
+        {
+            //if (!_scheduleAppService.ScheduleIsEnable())
+            //{
+            //    return View("Disabled");
+            //}
 
-//            #region Breadcrumb
+            #region Breadcrumb
 
-//            ViewBag.Breadcrumb = new BreadcrumbHelper("Agenda", new List<BreadcrumbItemHelper> {
-//                new BreadcrumbItemHelper("Dashboard", Url.Action("Index", "Home", new { Area = "Player" }))
-//            });
+            ViewBag.Breadcrumb = new BreadcrumbHelper("Agenda", new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper("Dashboard", Url.Action("Index", "Home", new { Area = "Player" }))
+            });
 
-//            #endregion
+            #endregion
 
-//            return View();
-//        }
+            return View();
+        }
 
-//        public ActionResult Print()
-//        {
-//            if (!_scheduleAppService.ScheduleIsEnable())
-//            {
-//                //return View("Disabled");
-//            }
+        #region Conferences
 
-//            return View();
-//        }
-//    }
-//}
+        /// <summary>Gets the conferences data.</summary>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> GetConferencesData(long? startDate, long? endDate)
+        {
+            if (!startDate.HasValue || !endDate.HasValue)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.TheFieldIsRequired, Labels.Date) }, JsonRequestBehavior.AllowGet);
+            }
+
+            var conferenceDtos = await this.conferenceRepo.FindAllScheduleDtosAsync(
+                this.EditionDto.Id,
+                this.UserAccessControlDto?.EditionAttendeeCollaborator?.Id,
+                DateTimeOffset.FromUnixTimeSeconds(startDate.Value),
+                DateTimeOffset.FromUnixTimeSeconds(endDate.Value));
+
+            var events = conferenceDtos?.Select(cd => new ScheduleJsonDto
+            {
+                Id = cd.Conference.Uid.ToString(),
+                Type = "Conference",
+                Title = $"[{Labels.Conference}] {cd.GetConferenceTitleDtoByLanguageCode(this.UserInterfaceLanguage)?.ConferenceTitle?.Value ?? "-"}",
+                Start = cd.Conference.StartDate,
+                End = cd.Conference.EndDate,
+                AllDay = false,
+                Css = cd.IsParticipant == true ? "fc-event-solid-danger fc-event-light" : "fc-event-solid-info fc-event-light"
+            });
+
+            return Json(new
+            {
+                status = "success",
+                events
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Logistics
+
+        /// <summary>Gets the logistics data.</summary>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> GetLogisticsData(long? startDate, long? endDate)
+        {
+            if (!startDate.HasValue || !endDate.HasValue)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.TheFieldIsRequired, Labels.Date) }, JsonRequestBehavior.AllowGet);
+            }
+
+            var logisticDto = await this.logisticRepo.FindScheduleDtoAsync(
+                this.EditionDto.Id,
+                this.UserAccessControlDto?.EditionAttendeeCollaborator?.Id ?? 0,
+                DateTimeOffset.FromUnixTimeSeconds(startDate.Value),
+                DateTimeOffset.FromUnixTimeSeconds(endDate.Value));
+
+            // Logistic airfares (in day)
+            var events = logisticDto?.LogisticAirfareDtos?.Select(lad => new ScheduleJsonDto
+            {
+                Id = lad.LogisticAirfare.Uid.ToString(),
+                Type = "LogisticAirfare",
+                Title = $"[{Labels.Flight}] {lad.LogisticAirfare.From} - {lad.LogisticAirfare.To}",
+                Start = lad.LogisticAirfare.DepartureDate,
+                End = lad.LogisticAirfare.ArrivalDate,
+                AllDay = false,
+                Css = "fc-event-solid-warning fc-event-light"
+            })?
+            // Accommodations (all day)
+            .Union(logisticDto?.LogisticAccommodationDtos?.Select(lad => new ScheduleJsonDto
+            {
+                Id = lad.LogisticAccommodation.Uid.ToString(),
+                Type = "LogisticAccommodation",
+                Title = lad.PlaceDto.Place.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, Language.Separator),
+                Start = lad.LogisticAccommodation.CheckInDate,
+                End = lad.LogisticAccommodation.CheckOutDate.AddDays(1),
+                AllDay = true,
+                Css = "fc-event-solid-success fc-event-light"
+            }))?
+            // Accommodations (check-in)
+            .Union(logisticDto?.LogisticAccommodationDtos?.Select(lad => new ScheduleJsonDto
+            {
+                Id = lad.LogisticAccommodation.Uid.ToString(),
+                Type = "LogisticAccommodation",
+                Title = $"[Checkin] {lad.PlaceDto.Place.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, Language.Separator)}",
+                Start = lad.LogisticAccommodation.CheckInDate,
+                End = lad.LogisticAccommodation.CheckInDate.AddMinutes(30),
+                AllDay = false,
+                Css = "fc-event-solid-success fc-event-light"
+            }))?
+            // Accommodations (check-out)
+            .Union(logisticDto?.LogisticAccommodationDtos?.Select(lad => new ScheduleJsonDto
+            {
+                Id = lad.LogisticAccommodation.Uid.ToString(),
+                Type = "LogisticAccommodation",
+                Title = $"[Checkout] {lad.PlaceDto.Place.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, Language.Separator)}",
+                Start = lad.LogisticAccommodation.CheckOutDate,
+                End = lad.LogisticAccommodation.CheckOutDate.AddMinutes(30),
+                AllDay = false,
+                Css = "fc-event-solid-success fc-event-light"
+            }))?
+            .Union(logisticDto?.LogisticTransferDtos?.Select(ltd => new ScheduleJsonDto
+            {
+                Id = ltd.LogisticTransfer.Uid.ToString(),
+                Type = "LogisticTransfer",
+                Title = $"[Transfer] {ltd.FromPlaceDto.Place.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, Language.Separator)} - {ltd.ToPlaceDto.Place.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, Language.Separator)}",
+                Start = ltd.LogisticTransfer.Date,
+                End = ltd.LogisticTransfer.Date.AddMinutes(30),
+                AllDay = false,
+                Css = "fc-event-solid-light fc-event-light"
+            }))?
+            .ToList();
+
+            return Json(new
+            {
+                status = "success",
+                events
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+    }
+}

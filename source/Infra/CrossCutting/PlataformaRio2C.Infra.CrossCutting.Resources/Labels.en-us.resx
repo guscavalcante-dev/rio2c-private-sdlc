@@ -2458,4 +2458,12 @@
     <value>Transfers</value>
     <comment>Transfers</comment>
   </data>
+  <data name="Days" xml:space="preserve">
+    <value>Days</value>
+    <comment>Dias</comment>
+  </data>
+  <data name="Flight" xml:space="preserve">
+    <value>Flight</value>
+    <comment>Voo</comment>
+  </data>
 </root>

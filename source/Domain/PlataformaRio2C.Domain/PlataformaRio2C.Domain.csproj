@@ -217,6 +217,7 @@
     <Compile Include="Dtos\SalesPlatforms\AttendeeSalesPlatformDto.cs" />
     <Compile Include="Dtos\SalesPlatforms\SalesPlatformDto.cs" />
     <Compile Include="Dtos\SalesPlatformWebhookRequests\SalesPlatformWebhookRequestDto.cs" />
+    <Compile Include="Dtos\Schedules\ScheduleJsonDto.cs" />
     <Compile Include="Dtos\States\StateBaseDto.cs" />
     <Compile Include="Dtos\Countries\CountryBaseDto.cs" />
     <Compile Include="Dtos\OrganizationDescriptions\OrganizationDescriptionBaseDto.cs" />

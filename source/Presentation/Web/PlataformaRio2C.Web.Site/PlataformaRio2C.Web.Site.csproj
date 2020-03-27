@@ -400,6 +400,8 @@
     <Content Include="Assets\components\cropper\dist\cropper.min.js" />
     <Content Include="Assets\components\datatables\datatables.en-us.js" />
     <Content Include="Assets\components\datatables\datatables.pt-br.js" />
+    <Content Include="Assets\components\fullcalendar\locales-all.js" />
+    <Content Include="Assets\components\fullcalendar\locales-all.min.js" />
     <Content Include="Assets\components\hideshowpassword\css\example.minimal.css" />
     <Content Include="Assets\components\hideshowpassword\css\example.wink.css" />
     <Content Include="Assets\components\hideshowpassword\hideShowPassword.js" />
@@ -486,7 +488,7 @@
     <Content Include="Assets\js\projects\projects.producerinfo.js" />
     <Content Include="Assets\js\onboarding\onboarding.playerinfo.js" />
     <Content Include="Assets\js\onboarding\onboarding.collaboratordata.js" />
-    <Content Include="Assets\js\pages\schedule\components\calendar\basic.js" />
+    <Content Include="Assets\js\schedules\schedules.widget.js" />
     <Content Include="Assets\js\companies\companyinfo.autocomplete.js" />
     <Content Include="Assets\js\projects\projects.projectinfo.js" />
     <Content Include="Assets\themes\metronic\css\demo4\pages\error\error-1.css" />

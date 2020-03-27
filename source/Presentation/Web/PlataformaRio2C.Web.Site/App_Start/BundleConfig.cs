@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-20-2020
+// Last Modified On : 03-27-2020
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -234,10 +234,32 @@ namespace PlataformaRio2C.Web.Site
 
             #endregion
 
+            #region FullCalendar
+
+            bundles.Add(new StyleBundle("~/bundles/css/fullcalendar.css").Include(
+                "~/Assets/themes/metronic/vendors/custom/fullcalendar/fullcalendar.bundle.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/fullcalendar.js").Include(
+                "~/Assets/themes/metronic/vendors/custom/fullcalendar/fullcalendar.bundle.js",
+                "~/Assets/components/fullcalendar/locales-all.js"));
+
+            #endregion
+
             #region Dynamic List
 
             bundles.Add(new ScriptBundle("~/bundles/js/dynamic.list.js").Include(
                 "~/Assets/js/dynamic.list.js"));
+
+            #endregion
+
+            #endregion
+
+            #region Common Pages Bundles
+
+            #region Schedule
+
+            bundles.Add(new ScriptBundle("~/bundles/js/schedules.widget.js").Include(
+                "~/Assets/js/schedules/schedules.widget.js"));
 
             #endregion
 
@@ -479,13 +501,6 @@ namespace PlataformaRio2C.Web.Site
 
             //#endregion
 
-            //bundles.Add(new ScriptBundle("~/bundles/js/scheduleCustomScripts").Include(
-            //    "~/Assets/themes/metronic/vendors/custom/fullcalendar/fullcalendar.bundle.js",
-            //    "~/Assets/js/pages/schedule/components/calendar/basic.js"));
-
-            //bundles.Add(new ScriptBundle("~/bundles/js/projectSubmitCustomScripts").Include(
-            //    "~/Assets/themes/metronic/js/demo4/pages/wizard/wizard-3.js"));
-
             #endregion
 
             #region Styles
@@ -500,11 +515,8 @@ namespace PlataformaRio2C.Web.Site
                       "~/Content/font-awesome.css",
                       "~/Content/style.css"));
 
-            bundles.Add(new StyleBundle("~/bundles/css/scheduleCustomStyles").Include(
-                "~/Assets/themes/metronic/vendors/custom/fullcalendar/fullcalendar.bundle.css"));
-
-            bundles.Add(new StyleBundle("~/bundles/css/projectSubmitCustomStyles").Include(
-                "~/Assets/themes/metronic/css/demo4/pages/wizard/wizard-3.css"));
+            //bundles.Add(new StyleBundle("~/bundles/css/projectSubmitCustomStyles").Include(
+            //    "~/Assets/themes/metronic/css/demo4/pages/wizard/wizard-3.css"));
 
             #endregion
                         
