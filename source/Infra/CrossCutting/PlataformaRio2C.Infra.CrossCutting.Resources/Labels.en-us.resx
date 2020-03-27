@@ -2466,4 +2466,8 @@
     <value>Flight</value>
     <comment>Voo</comment>
   </data>
+  <data name="OneToOneMeeting" xml:space="preserve">
+    <value>One-to-One Meeting</value>
+    <comment>Rodada de Negócio</comment>
+  </data>
 </root>

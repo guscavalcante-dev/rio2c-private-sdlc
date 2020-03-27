@@ -38,12 +38,5 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<ConferenceDto> FindApiDtoByUidAsync(Guid conferenceUid, int editionId);
 
         #endregion
-
-        //#region Old Methods
-
-        //IQueryable<Conference> GetAllBySchedule();
-        //IQueryable<Conference> GetAllBySchedule(Expression<Func<Conference, bool>> filter);
-
-        //#endregion
     }    
 }

@@ -2469,4 +2469,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Voo</value>
     <comment>Voo</comment>
   </data>
+  <data name="OneToOneMeeting" xml:space="preserve">
+    <value>Rodada de Negócio</value>
+    <comment>Rodada de Negócio</comment>
+  </data>
 </root>

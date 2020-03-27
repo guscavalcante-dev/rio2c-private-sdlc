@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2020
+// Last Modified On : 03-27-2020
 // ***********************************************************************
 // <copyright file="INegotiationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,9 +23,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface INegotiationRepository : IRepository<Negotiation>
     {
         Task<List<NegotiationGroupedByDateDto>> FindScheduledWidgetDtoAsync(int editionId, Guid? buyerOrganizationUid, Guid? sellerOrganizationUid, string projectKeywords, DateTime? negotiationDate, Guid? roomUid);
-        //IEnumerable<Player> GetAllPlayers();
-        //IEnumerable<Producer> GetAllProducers();
-        //IQueryable<Negotiation> GetAllBySchedule(Expression<Func<Negotiation, bool>> filter);        
+        Task<List<NegotiationDto>> FindAllScheduleDtosAsync(int editionId, int? attendeeCollaboratorId, DateTimeOffset startDate, DateTimeOffset endDate);
         void Truncate();
     }    
 }

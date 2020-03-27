@@ -253,6 +253,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public Task<LogisticDto> FindScheduleDtoAsync(int editionId, int attendeeCollaboratorId, DateTimeOffset startDate, DateTimeOffset endDate)
         {
+            endDate = endDate.AddHours(23).AddMinutes(59).AddSeconds(59);
+
             var query = this.GetBaseQuery()
                                 .FindByAttendeeCollaboratorId(attendeeCollaboratorId)
                                 .Select(l => new LogisticDto
@@ -298,25 +300,5 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query
                         .FirstOrDefaultAsync();
         }
-
-        #region Old methods
-
-        /// <summary>Método que traz todos os registros</summary>
-        /// <param name="readonly"></param>
-        /// <returns></returns>
-        public override IQueryable<Logistic> GetAll(bool @readonly = false)
-        {
-            var consult = this.dbSet;
-            //.Include(i => i.Collaborator.Players)
-            //.Include(i => i.Collaborator.Players.Select(e => e.Holding))
-            //.Include(i => i.Collaborator.ProducersEvents)
-            //.Include(i => i.Collaborator.ProducersEvents.Select(e => e.Producer));
-
-            return @readonly
-                ? consult.AsNoTracking()
-                : consult;
-        }
-
-        #endregion
     }
 }

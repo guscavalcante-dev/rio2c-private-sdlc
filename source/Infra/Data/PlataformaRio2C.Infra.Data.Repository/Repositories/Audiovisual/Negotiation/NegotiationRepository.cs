@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2020
+// Last Modified On : 03-27-2020
 // ***********************************************************************
 // <copyright file="NegotiationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,7 +22,6 @@ using System.Threading.Tasks;
 using LinqKit;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using Z.EntityFramework.Plus;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -80,6 +79,37 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             {
                 query = query.Where(n => n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.Organization.Uid == sellerOrganizationUid);
             }
+
+            return query;
+        }
+
+        /// <summary>Finds the by attendee collaborator identifier.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<Negotiation> FindByAttendeeCollaboratorId(this IQueryable<Negotiation> query, int? attendeeCollaboratorId)
+        {
+            if (attendeeCollaboratorId.HasValue)
+            {
+                query = query
+                            .Where(n => n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.AttendeeOrganizationCollaborators.Any(aoc => aoc.AttendeeCollaboratorId == attendeeCollaboratorId)
+                                        || n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators.Any(aoc => aoc.AttendeeCollaboratorId == attendeeCollaboratorId));
+            }
+
+            return query;
+        }
+
+        /// <summary>Finds the by date range.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <returns></returns>
+        internal static IQueryable<Negotiation> FindByDateRange(this IQueryable<Negotiation> query, DateTimeOffset startDate, DateTimeOffset endDate)
+        {
+            endDate = endDate.AddHours(23).AddMinutes(59).AddSeconds(59);
+
+            query = query.Where(n => (n.StartDate >= startDate && n.StartDate <= endDate)
+                                     || (n.EndDate >= startDate && n.EndDate <= endDate));
 
             return query;
         }
@@ -236,79 +266,62 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             }
         }
 
-        #region Old methods
+        /// <summary>Finds all schedule dtos asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <returns></returns>
+        public Task<List<NegotiationDto>> FindAllScheduleDtosAsync(int editionId, int? attendeeCollaboratorId, DateTimeOffset startDate, DateTimeOffset endDate)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId, false)
+                                .FindByAttendeeCollaboratorId(attendeeCollaboratorId)
+                                .FindByDateRange(startDate, endDate)
+                                .Select(n => new NegotiationDto
+                                {
+                                    Negotiation = n,
+                                    ProjectBuyerEvaluationDto = new ProjectBuyerEvaluationDto
+                                    {
+                                        ProjectBuyerEvaluation = n.ProjectBuyerEvaluation,
+                                        BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                        {
+                                            AttendeeOrganization = n.ProjectBuyerEvaluation.BuyerAttendeeOrganization,
+                                            Organization = n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization
+                                        },
+                                        ProjectDto = new ProjectDto
+                                        {
+                                            Project = n.ProjectBuyerEvaluation.Project,
+                                            SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                            {
+                                                AttendeeOrganization = n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization,
+                                                Organization = n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.Organization
+                                            },
+                                            ProjectTitleDtos = n.ProjectBuyerEvaluation.Project.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                            {
+                                                ProjectTitle = t,
+                                                Language = t.Language
+                                            })
+                                        }
+                                    },
+                                    RoomDto = new RoomDto
+                                    {
+                                        Room = n.Room,
+                                        RoomNameDtos = n.Room.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto
+                                        {
+                                            RoomName = rn,
+                                            LanguageDto = new LanguageDto
+                                            {
+                                                Id = rn.Language.Id,
+                                                Uid = rn.Language.Uid,
+                                                Code = rn.Language.Code
+                                            }
+                                        })
+                                    }
+                                });
 
-        //public override IQueryable<Negotiation> GetAll(bool @readonly = false)
-        //{
-        //    var consult = this.dbSet;
-        //                        //.Include(i => i.Player)
-        //                        //.Include(i => i.Project)
-        //                        //.Include(i => i.Project.ProjectTitles.Select(e => e.Language))
-        //                        //.Include(i => i.Project.Producer)
-        //                        //.Include(i => i.Room);
-        //                        //.Include(i => i.Room.Names)
-        //                        //.Include(i => i.Room.Names.Select(e => e.Language));
-
-        //    return @readonly
-        //                  ? consult.AsNoTracking()
-        //                  : consult;
-        //}
-
-        //public override IQueryable<Negotiation> GetAllSimple()
-        //{
-        //    return this.dbSet
-        //                       //.Include(i => i.Player)
-        //                       //.Include(i => i.Project)
-        //                       //.Include(i => i.Project.Producer)
-        //                       //.Include(i => i.Room)
-        //                       //.Include(i => i.Room.Names)
-        //                       //.Include(i => i.Room.Names.Select(e => e.Language))
-        //                       .AsNoTracking();
-
-        //}
-
-
-        //public IEnumerable<Player> GetAllPlayers()
-        //{
-        //    return this.dbSet
-        //                       .Include(i => i.Player)
-        //                       .Include(i => i.Player.Holding)
-        //                       .AsNoTracking()
-        //                       .ToList()
-        //                       .Select(e => e.Player)
-        //                       .GroupBy(e => e.Id)
-        //                       .Select(e => e.First());
-
-        //}
-
-        //public IEnumerable<Producer> GetAllProducers()
-        //{
-        //    return null;
-        //    //return this.dbSet
-        //    //                   .Include(i => i.Project)
-        //    //                   .Include(i => i.Project.Producer)
-        //    //                   .AsNoTracking()
-        //    //                   .ToList()
-        //    //                   .Select(e => e.Project.Producer)
-        //    //                   .GroupBy(e => e.Id)
-        //    //                   .Select(e => e.First());
-        //}
-
-        //public IQueryable<Negotiation> GetAllBySchedule(Expression<Func<Negotiation, bool>> filter)
-        //{
-        //    return this.dbSet
-        //                       //.Include(i => i.Player)
-        //                       //.Include(i => i.Player.Holding)
-        //                       //.Include(i => i.Project)
-        //                       //.Include(i => i.Project.ProjectTitles)
-        //                       //.Include(i => i.Project.ProjectTitles.Select(e => e.Language))
-        //                       //.Include(i => i.Project.Producer)
-        //                       //.Include(i => i.Room)
-        //                       //.Include(i => i.Room.Names)
-        //                       //.Include(i => i.Room.Names.Select(e => e.Language))
-        //                       .Where(filter);
-        //}
-
-        #endregion
+            return query
+                        .ToListAsync();
+        }
     }
 }

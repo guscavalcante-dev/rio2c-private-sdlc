@@ -132,6 +132,48 @@ var AgendasWidget = function () {
                             //MyRio2cCommon.unblock();
                         });
                     }
+                },
+                {
+                    events: function (info, successCallback, failureCallback) {
+                        var jsonParameters = new Object();
+                        jsonParameters.startDate = moment(info.start).unix();
+                        jsonParameters.endDate = moment(info.end).unix()
+
+                        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Agendas/GetAudiovisualMeetingsData'), jsonParameters, function (data) {
+                            MyRio2cCommon.handleAjaxReturn({
+                                data: data,
+                                // Success
+                                onSuccess: function () {
+                                    if (data.events === null) {
+                                        successCallback([]);
+                                        return;
+                                    }
+
+                                    successCallback(
+                                        Array.prototype.slice.call(data.events).map(function (eventEl) {
+                                            return {
+                                                id: eventEl.Id,
+                                                title: eventEl.Title,
+                                                start: moment(eventEl.Start).tz(globalVariables.momentTimeZone).format(),
+                                                end: moment(eventEl.End).tz(globalVariables.momentTimeZone).format(),
+                                                allDay: eventEl.AllDay || false,
+                                                className: eventEl.Css
+                                            }
+                                        })
+                                    );
+                                },
+                                // Error
+                                onError: function () {
+                                    failureCallback('error');
+                                }
+                            });
+                        })
+                        .fail(function () {
+                        })
+                        .always(function () {
+                            //MyRio2cCommon.unblock();
+                        });
+                    }
                 }
             ],
             eventRender: function (info) {

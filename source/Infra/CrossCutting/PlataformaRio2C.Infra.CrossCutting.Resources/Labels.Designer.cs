@@ -3031,6 +3031,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rodada de Negócio.
+        /// </summary>
+        public static string OneToOneMeeting {
+            get {
+                return ResourceManager.GetString("OneToOneMeeting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parâmetros de Rodadas de Negócio.
         /// </summary>
         public static string OneToOneMeetingParameters {

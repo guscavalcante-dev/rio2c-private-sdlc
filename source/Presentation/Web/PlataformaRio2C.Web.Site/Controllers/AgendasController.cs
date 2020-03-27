@@ -33,16 +33,25 @@ namespace PlataformaRio2C.Web.Site.Controllers
     {
         private readonly IConferenceRepository conferenceRepo;
         private readonly ILogisticRepository logisticRepo;
+        private readonly INegotiationRepository negotiationRepo;
 
+        /// <summary>Initializes a new instance of the <see cref="AgendasController"/> class.</summary>
+        /// <param name="commandBus">The command bus.</param>
+        /// <param name="identityController">The identity controller.</param>
+        /// <param name="conferenceRepository">The conference repository.</param>
+        /// <param name="logisticRepository">The logistic repository.</param>
+        /// <param name="negotiationRepository">The negotiation repository.</param>
         public AgendasController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             IConferenceRepository conferenceRepository,
-            ILogisticRepository logisticRepository)
+            ILogisticRepository logisticRepository,
+            INegotiationRepository negotiationRepository)
             : base(commandBus, identityController)
         {
             this.conferenceRepo = conferenceRepository;
             this.logisticRepo = logisticRepository;
+            this.negotiationRepo = negotiationRepository;
         }
 
         /// <summary>Indexes this instance.</summary>
@@ -58,7 +67,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Agenda, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Agenda, Url.Action("Index", "Home", new { Area = "Player" }))
+                new BreadcrumbItemHelper(Labels.Agenda, Url.Action("Index", "Agendas", new { Area = "" }))
             });
 
             #endregion
@@ -94,7 +103,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 Start = cd.Conference.StartDate,
                 End = cd.Conference.EndDate,
                 AllDay = false,
-                Css = cd.IsParticipant == true ? "fc-event-solid-danger fc-event-light" : "fc-event-solid-info fc-event-light"
+                Css = cd.IsParticipant == true ? "fc-event-solid-primary fc-event-light" : "fc-event-solid-light fc-event-brand"
             });
 
             return Json(new
@@ -115,6 +124,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> GetLogisticsData(long? startDate, long? endDate)
         {
+            if (DateTime.UtcNow < this.EditionDto.OneToOneMeetingsScheduleDate)
+            {
+                return Json(new { status = "success", events = new List<ScheduleJsonDto>() }, JsonRequestBehavior.AllowGet);
+            }
+
             if (!startDate.HasValue || !endDate.HasValue)
             {
                 return Json(new { status = "error", message = string.Format(Messages.TheFieldIsRequired, Labels.Date) }, JsonRequestBehavior.AllowGet);
@@ -127,7 +141,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 DateTimeOffset.FromUnixTimeSeconds(endDate.Value));
 
             // Logistic airfares (in day)
-            var events = logisticDto?.LogisticAirfareDtos?.Select(lad => new ScheduleJsonDto
+            var events = (logisticDto?.LogisticAirfareDtos?.Select(lad => new ScheduleJsonDto
             {
                 Id = lad.LogisticAirfare.Uid.ToString(),
                 Type = "LogisticAirfare",
@@ -136,7 +150,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 End = lad.LogisticAirfare.ArrivalDate,
                 AllDay = false,
                 Css = "fc-event-solid-warning fc-event-light"
-            })?
+            }) ?? new List<ScheduleJsonDto>())?
             // Accommodations (all day)
             .Union(logisticDto?.LogisticAccommodationDtos?.Select(lad => new ScheduleJsonDto
             {
@@ -147,7 +161,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 End = lad.LogisticAccommodation.CheckOutDate.AddDays(1),
                 AllDay = true,
                 Css = "fc-event-solid-success fc-event-light"
-            }))?
+            }) ?? new List<ScheduleJsonDto>())?
             // Accommodations (check-in)
             .Union(logisticDto?.LogisticAccommodationDtos?.Select(lad => new ScheduleJsonDto
             {
@@ -157,8 +171,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 Start = lad.LogisticAccommodation.CheckInDate,
                 End = lad.LogisticAccommodation.CheckInDate.AddMinutes(30),
                 AllDay = false,
-                Css = "fc-event-solid-success fc-event-light"
-            }))?
+                Css = "fc-event-solid-success fc-event-info"
+            }) ?? new List<ScheduleJsonDto>())?
             // Accommodations (check-out)
             .Union(logisticDto?.LogisticAccommodationDtos?.Select(lad => new ScheduleJsonDto
             {
@@ -169,7 +183,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 End = lad.LogisticAccommodation.CheckOutDate.AddMinutes(30),
                 AllDay = false,
                 Css = "fc-event-solid-success fc-event-light"
-            }))?
+            }) ?? new List<ScheduleJsonDto>())?
+            // Transfers
             .Union(logisticDto?.LogisticTransferDtos?.Select(ltd => new ScheduleJsonDto
             {
                 Id = ltd.LogisticTransfer.Uid.ToString(),
@@ -178,8 +193,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 Start = ltd.LogisticTransfer.Date,
                 End = ltd.LogisticTransfer.Date.AddMinutes(30),
                 AllDay = false,
-                Css = "fc-event-solid-light fc-event-light"
-            }))?
+                Css = "fc-event-solid-brand fc-event-light"
+            }) ?? new List<ScheduleJsonDto>())?
             .ToList();
 
             return Json(new
@@ -191,5 +206,49 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #endregion
 
+        #region Meetings
+
+        /// <summary>Gets the audiovisual meetings data.</summary>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> GetAudiovisualMeetingsData(long? startDate, long? endDate)
+        {
+            if (DateTime.UtcNow < this.EditionDto.OneToOneMeetingsScheduleDate)
+            {
+                return Json(new { status = "success", events = new List<ScheduleJsonDto>() }, JsonRequestBehavior.AllowGet);
+            }
+
+            if (!startDate.HasValue || !endDate.HasValue)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.TheFieldIsRequired, Labels.Date) }, JsonRequestBehavior.AllowGet);
+            }
+
+            var negotiationsDtos = await this.negotiationRepo.FindAllScheduleDtosAsync(
+                this.EditionDto.Id,
+                this.UserAccessControlDto?.EditionAttendeeCollaborator?.Id ?? 0,
+                DateTimeOffset.FromUnixTimeSeconds(startDate.Value),
+                DateTimeOffset.FromUnixTimeSeconds(endDate.Value));
+
+            var events = negotiationsDtos?.Select(nd => new ScheduleJsonDto
+            {
+                Id = nd.Negotiation.Uid.ToString(),
+                Type = "AudiovisualMeeting",
+                Title = $"[{Labels.OneToOneMeeting}] {nd.ProjectBuyerEvaluationDto.ProjectDto.GetTitleDtoByLanguageCode(this.UserInterfaceLanguage).ProjectTitle.Value}",
+                Start = nd.Negotiation.StartDate,
+                End = nd.Negotiation.EndDate,
+                AllDay = false,
+                Css = "fc-event-solid-danger fc-event-light"
+            });
+
+            return Json(new
+            {
+                status = "success",
+                events
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
     }
 }
