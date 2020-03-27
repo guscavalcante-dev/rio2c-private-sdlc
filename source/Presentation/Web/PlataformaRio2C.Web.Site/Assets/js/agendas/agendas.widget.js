@@ -15,6 +15,10 @@
 
 var AgendasWidget = function () {
 
+    var widgetElementName = 'AgendaWidget';
+    var widgetElementId = '#' + widgetElementName;
+	var widgetElement = $(widgetElementId);
+
     var globalVariables = MyRio2cCommon.getGlobalVariables();
 
     // Calendar Data ------------------------------------------------------------------------------
@@ -24,7 +28,11 @@ var AgendasWidget = function () {
 
     // Enable calendar ----------------------------------------------------------------------------
     var enableCalendar = function () {
-        var calendarEl = document.getElementById('kt_calendar');
+	    if (widgetElement.length <= 0) {
+		    return;
+	    }
+
+        var calendarEl = document.getElementById(widgetElementName);
         var calendar = new FullCalendar.Calendar(calendarEl, {
             plugins: ['interaction', 'dayGrid', 'timeGrid', 'list'],
             header: {
@@ -183,6 +191,14 @@ var AgendasWidget = function () {
                     trigger: 'hover',
                     container: 'body'
                 });
+            },
+            loading: function (isLoading, view) {
+                if (isLoading) {
+                    MyRio2cCommon.block({ idOrClass: widgetElementId });
+                }
+                else {
+                    MyRio2cCommon.unblock({ idOrClass: widgetElementId });
+	            }
             }
         });
 
