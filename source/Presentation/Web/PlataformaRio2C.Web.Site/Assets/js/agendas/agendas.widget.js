@@ -368,7 +368,8 @@ var AgendasWidget = function () {
 
         $('body').on('click', function (e) {
 	        //did not click a popover toggle or popover
-            if (!$(e.target).hasClass('fc-content') && !$(e.target).hasClass('fc-title') && !$(e.target).hasClass('fc-event')
+            if (!$(e.target).hasClass('fc-content') && !$(e.target).hasClass('fc-title') && !$(e.target).hasClass('fc-event') 
+	            && !$(e.target).hasClass('fc-event-dot') && !$(e.target).hasClass('fc-list-item-marker') && !$(e.target).hasClass('fc-list-item-title') && !$(e.target).parent().hasClass('fc-list-item-title')
 		        && $(e.target).parents('.popover.in').length === 0) {
                 $('.popover-enabled').popover('hide');
 	        }

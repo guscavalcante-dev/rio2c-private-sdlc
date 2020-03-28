@@ -453,3 +453,13 @@ a.r2c-login__footer-link, a.r2c-footer-link {
         height: 22px;
         /*line-height: 22px;*/
     }
+
+.fc-unthemed .fc-event .fc-content {
+    padding-top: 0.2rem !important;
+}
+
+.fc-unthemed .fc-event .fc-content:before, 
+.fc-unthemed .fc-event-dot .fc-content:before {
+    top: 0.4rem !important;
+}
+
