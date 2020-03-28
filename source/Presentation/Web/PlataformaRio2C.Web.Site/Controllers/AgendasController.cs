@@ -33,26 +33,34 @@ namespace PlataformaRio2C.Web.Site.Controllers
     public class AgendasController : BaseController
     {
         private readonly IConferenceRepository conferenceRepo;
-        private readonly ILogisticRepository logisticRepo;
         private readonly INegotiationRepository negotiationRepo;
+        private readonly ILogisticAirfareRepository logisticAirfareRepo;
+        private readonly ILogisticAccommodationRepository logisticAccommodationRepo;
+        private readonly ILogisticTransferRepository logisticTransferRepo;
 
         /// <summary>Initializes a new instance of the <see cref="AgendasController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="conferenceRepository">The conference repository.</param>
-        /// <param name="logisticRepository">The logistic repository.</param>
         /// <param name="negotiationRepository">The negotiation repository.</param>
+        /// <param name="logisticAirfareRepository">The logistic airfare repository.</param>
+        /// <param name="logisticAccommodationRepository">The logistic accommodation repository.</param>
+        /// <param name="logisticTransferRepository">The logistic transfer repository.</param>
         public AgendasController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             IConferenceRepository conferenceRepository,
-            ILogisticRepository logisticRepository,
-            INegotiationRepository negotiationRepository)
+            INegotiationRepository negotiationRepository,
+            ILogisticAirfareRepository logisticAirfareRepository,
+            ILogisticAccommodationRepository logisticAccommodationRepository,
+            ILogisticTransferRepository logisticTransferRepository)
             : base(commandBus, identityController)
         {
             this.conferenceRepo = conferenceRepository;
-            this.logisticRepo = logisticRepository;
             this.negotiationRepo = negotiationRepository;
+            this.logisticAirfareRepo = logisticAirfareRepository;
+            this.logisticAccommodationRepo = logisticAccommodationRepository;
+            this.logisticTransferRepo = logisticTransferRepository;
         }
 
         /// <summary>Indexes this instance.</summary>
@@ -170,15 +178,15 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #endregion
 
-        #region Logistics
+        #region Logistic Airfares
 
-        /// <summary>Gets the logistics data.</summary>
+        /// <summary>Gets the logistic airfares data.</summary>
         /// <param name="viewModel">The view model.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> GetLogisticsData(AgendaSearchViewModel viewModel)
+        public async Task<ActionResult> GetLogisticAirfaresData(AgendaSearchViewModel viewModel)
         {
-            if (DateTime.UtcNow < this.EditionDto.OneToOneMeetingsScheduleDate)
+            if (DateTime.UtcNow < this.EditionDto.OneToOneMeetingsScheduleDate || !viewModel.ShowFlights)
             {
                 return Json(new { status = "success", events = new List<AgendaBaseEventJsonDto>() }, JsonRequestBehavior.AllowGet);
             }
@@ -188,14 +196,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.TheFieldIsRequired, Labels.Date) }, JsonRequestBehavior.AllowGet);
             }
 
-            var logisticDto = await this.logisticRepo.FindScheduleDtoAsync(
+            var logisticAirfareDtos = await this.logisticAirfareRepo.FindAllScheduleDtosAsync(
                 this.EditionDto.Id,
                 this.UserAccessControlDto?.EditionAttendeeCollaborator?.Id ?? 0,
                 DateTimeOffset.FromUnixTimeSeconds(viewModel.StartDate.Value),
                 DateTimeOffset.FromUnixTimeSeconds(viewModel.EndDate.Value));
 
             // Logistic airfares (in day)
-            var events = (!viewModel.ShowFlights ? new List<AgendaBaseEventJsonDto>() : logisticDto?.LogisticAirfareDtos?.Select(lad => new AgendaBaseEventJsonDto
+            var events = logisticAirfareDtos?.Select(lad => new AgendaBaseEventJsonDto
             {
                 Id = lad.LogisticAirfare.Uid.ToString(),
                 Type = "LogisticAirfare",
@@ -204,9 +212,43 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 End = lad.LogisticAirfare.ArrivalDate,
                 AllDay = false,
                 Css = "fc-event-solid-warning fc-event-light popover-enabled"
-            }) ?? new List<AgendaBaseEventJsonDto>())?
+            }) ?? new List<AgendaBaseEventJsonDto>();
+
+            return Json(new
+            {
+                status = "success",
+                events
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Logistic Accommodations
+
+        /// <summary>Gets the logistic accommodations data.</summary>
+        /// <param name="viewModel">The view model.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> GetLogisticAccommodationsData(AgendaSearchViewModel viewModel)
+        {
+            if (DateTime.UtcNow < this.EditionDto.OneToOneMeetingsScheduleDate || !viewModel.ShowAccommodations)
+            {
+                return Json(new { status = "success", events = new List<AgendaBaseEventJsonDto>() }, JsonRequestBehavior.AllowGet);
+            }
+
+            if (!viewModel.StartDate.HasValue || !viewModel.EndDate.HasValue)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.TheFieldIsRequired, Labels.Date) }, JsonRequestBehavior.AllowGet);
+            }
+
+            var logisticAccommodationDtos = await this.logisticAccommodationRepo.FindAllScheduleDtosAsync(
+                this.EditionDto.Id,
+                this.UserAccessControlDto?.EditionAttendeeCollaborator?.Id ?? 0,
+                DateTimeOffset.FromUnixTimeSeconds(viewModel.StartDate.Value),
+                DateTimeOffset.FromUnixTimeSeconds(viewModel.EndDate.Value));
+
             // Accommodations (all day)
-            .Union(!viewModel.ShowAccommodations ? new List<AgendaBaseEventJsonDto>() : logisticDto?.LogisticAccommodationDtos?.Select(lad => new AgendaBaseEventJsonDto
+            var events = (logisticAccommodationDtos?.Select(lad => new AgendaBaseEventJsonDto
             {
                 Id = lad.LogisticAccommodation.Uid.ToString(),
                 Type = "LogisticAccommodation",
@@ -216,40 +258,73 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 AllDay = true,
                 Css = "fc-event-solid-success fc-event-light popover-enabled"
             }) ?? new List<AgendaBaseEventJsonDto>())?
-            // Accommodations (check-in)
-            .Union(!viewModel.ShowAccommodations ? new List<AgendaBaseEventJsonDto>() : logisticDto?.LogisticAccommodationDtos?.Select(lad => new AgendaBaseEventJsonDto
+            // Accommodations (checkin)
+            .Union(logisticAccommodationDtos?.Select(lad => new AgendaBaseEventJsonDto
             {
                 Id = lad.LogisticAccommodation.Uid.ToString(),
                 Type = "LogisticAccommodation",
-                Title = $"[Checkin] {lad.PlaceDto.Place.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, Language.Separator)}",
+                Title = lad.PlaceDto.Place.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, Language.Separator) + " (checkin)",
                 Start = lad.LogisticAccommodation.CheckInDate,
                 End = lad.LogisticAccommodation.CheckInDate.AddMinutes(30),
                 AllDay = false,
                 Css = "fc-event-solid-success fc-event-light popover-enabled"
-            }) ?? new List<AgendaBaseEventJsonDto>())?
-            // Accommodations (check-out)
-            .Union(!viewModel.ShowAccommodations ? new List<AgendaBaseEventJsonDto>() : logisticDto?.LogisticAccommodationDtos?.Select(lad => new AgendaBaseEventJsonDto
+            }) ?? new List<AgendaBaseEventJsonDto>())
+            // Accommodations (checkout)
+            .Union(logisticAccommodationDtos?.Select(lad => new AgendaBaseEventJsonDto
             {
                 Id = lad.LogisticAccommodation.Uid.ToString(),
                 Type = "LogisticAccommodation",
-                Title = $"[Checkout] {lad.PlaceDto.Place.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, Language.Separator)}",
+                Title = lad.PlaceDto.Place.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, Language.Separator) + " (checkout)",
                 Start = lad.LogisticAccommodation.CheckOutDate,
                 End = lad.LogisticAccommodation.CheckOutDate.AddMinutes(30),
                 AllDay = false,
                 Css = "fc-event-solid-success fc-event-light popover-enabled"
-            }) ?? new List<AgendaBaseEventJsonDto>())?
+            }) ?? new List<AgendaBaseEventJsonDto>());
+
+            return Json(new
+            {
+                status = "success",
+                events
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Logistic Transfers
+
+        /// <summary>Gets the logistic transfers data.</summary>
+        /// <param name="viewModel">The view model.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> GetLogisticTransfersData(AgendaSearchViewModel viewModel)
+        {
+            if (DateTime.UtcNow < this.EditionDto.OneToOneMeetingsScheduleDate || !viewModel.ShowTransfers)
+            {
+                return Json(new { status = "success", events = new List<AgendaBaseEventJsonDto>() }, JsonRequestBehavior.AllowGet);
+            }
+
+            if (!viewModel.StartDate.HasValue || !viewModel.EndDate.HasValue)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.TheFieldIsRequired, Labels.Date) }, JsonRequestBehavior.AllowGet);
+            }
+
+            var logisticTransferDtos = await this.logisticTransferRepo.FindAllScheduleDtosAsync(
+                this.EditionDto.Id,
+                this.UserAccessControlDto?.EditionAttendeeCollaborator?.Id ?? 0,
+                DateTimeOffset.FromUnixTimeSeconds(viewModel.StartDate.Value),
+                DateTimeOffset.FromUnixTimeSeconds(viewModel.EndDate.Value));
+
             // Transfers
-            .Union(!viewModel.ShowTransfers ? new List<AgendaBaseEventJsonDto>() : logisticDto?.LogisticTransferDtos?.Select(ltd => new AgendaBaseEventJsonDto
+            var events = logisticTransferDtos?.Select(ltd => new AgendaBaseEventJsonDto
             {
                 Id = ltd.LogisticTransfer.Uid.ToString(),
                 Type = "LogisticTransfer",
-                Title = $"[Transfer] {ltd.FromPlaceDto.Place.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, Language.Separator)} - {ltd.ToPlaceDto.Place.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, Language.Separator)}",
+                Title = $"{ltd.FromPlaceDto.Place.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, Language.Separator)} - {ltd.ToPlaceDto.Place.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, Language.Separator)}",
                 Start = ltd.LogisticTransfer.Date,
                 End = ltd.LogisticTransfer.Date.AddMinutes(30),
                 AllDay = false,
                 Css = "fc-event-solid-brand fc-event-light popover-enabled"
-            }) ?? new List<AgendaBaseEventJsonDto>())?
-            .ToList();
+            }) ?? new List<AgendaBaseEventJsonDto>();
 
             return Json(new
             {

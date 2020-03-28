@@ -26,6 +26,5 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<IPagedList<LogisticJsonDto>> FindAllByDataTableAsync(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, bool showAllParticipants, bool showAllSponsored);
         Task<LogisticDto> FindDtoAsync(Guid logisticUid, Language language);
         Task<LogisticDto> FindMainInformationWidgetDtoAsync(Guid logisticUid);
-        Task<LogisticDto> FindScheduleDtoAsync(int editionId, int attendeeCollaboratorId, DateTimeOffset startDate, DateTimeOffset endDate);
     }    
 }

@@ -4,7 +4,7 @@
 // Created          : 03-08-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-19-2020
+// Last Modified On : 03-27-2020
 // ***********************************************************************
 // <copyright file="ILogisticAccommodationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,5 +23,6 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface ILogisticAccommodationRepository : IRepository<LogisticAccommodation>
     {
         Task<List<LogisticAccommodationDto>> FindAllDtosAsync(Guid logisticsUid);
+        Task<List<LogisticAccommodationDto>> FindAllScheduleDtosAsync(int editionId, int attendeeCollaboratorId, DateTimeOffset startDate, DateTimeOffset endDate);
     }    
 }

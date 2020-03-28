@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-19-2020
+// Last Modified On : 03-27-2020
 // ***********************************************************************
 // <copyright file="LogisticAccommodationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -31,23 +31,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     /// </summary>
     internal static class LogisticAccommodationIQueryableExtensions
     {
-        /// <summary>Determines whether [is not deleted].</summary>
-        /// <param name="query">The query.</param>
-        /// <returns></returns>
-        internal static IQueryable<LogisticAccommodation> IsNotDeleted(this IQueryable<LogisticAccommodation> query)
-        {
-            query = query.Where(c => !c.IsDeleted);
-
-            return query;
-        }
-
         /// <summary>Finds the by uid.</summary>
         /// <param name="query">The query.</param>
         /// <param name="uid">The uid.</param>
         /// <returns></returns>
         internal static IQueryable<LogisticAccommodation> FindByUid(this IQueryable<LogisticAccommodation> query, Guid uid)
         {
-            return query.Where(e => e.Uid == uid);
+            return query.Where(la => la.Uid == uid);
         }
 
         /// <summary>Finds the by logistics uid.</summary>
@@ -56,7 +46,41 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<LogisticAccommodation> FindByLogisticsUid(this IQueryable<LogisticAccommodation> query, Guid uid)
         {
-            return query.Where(e => e.Logistic.Uid == uid);
+            return query.Where(la => la.Logistic.Uid == uid);
+        }
+
+        /// <summary>Finds the by attendee collaborator identifier.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<LogisticAccommodation> FindByAttendeeCollaboratorId(this IQueryable<LogisticAccommodation> query, int attendeeCollaboratorId)
+        {
+            return query.Where(e => e.Logistic.AttendeeCollaboratorId == attendeeCollaboratorId);
+        }
+
+        /// <summary>Finds the by date range.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <returns></returns>
+        internal static IQueryable<LogisticAccommodation> FindByDateRange(this IQueryable<LogisticAccommodation> query, DateTimeOffset startDate, DateTimeOffset endDate)
+        {
+            endDate = endDate.AddHours(23).AddMinutes(59).AddSeconds(59);
+
+            query = query.Where(la => (la.CheckInDate >= startDate && la.CheckInDate <= endDate)
+                                     || (la.CheckOutDate >= startDate && la.CheckOutDate <= endDate));
+
+            return query;
+        }
+
+        /// <summary>Determines whether [is not deleted].</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<LogisticAccommodation> IsNotDeleted(this IQueryable<LogisticAccommodation> query)
+        {
+            query = query.Where(la => !la.IsDeleted);
+
+            return query;
         }
     }
 
@@ -134,6 +158,30 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 }
                             })
                             .OrderBy(lad => lad.LogisticAccommodation.CreateDate);
+
+            return query
+                        .ToListAsync();
+        }
+
+        /// <summary>Finds all schedule dtos asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <returns></returns>
+        public Task<List<LogisticAccommodationDto>> FindAllScheduleDtosAsync(int editionId, int attendeeCollaboratorId, DateTimeOffset startDate, DateTimeOffset endDate)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByAttendeeCollaboratorId(attendeeCollaboratorId)
+                                .FindByDateRange(startDate, endDate)
+                                .Select(la => new LogisticAccommodationDto
+                                {
+                                    LogisticAccommodation = la,
+                                    PlaceDto = new PlaceDto
+                                    {
+                                        Place = la.AttendeePlace.Place
+                                    }
+                                });
 
             return query
                         .ToListAsync();

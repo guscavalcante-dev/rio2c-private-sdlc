@@ -4,7 +4,7 @@
 // Created          : 03-08-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-20-2020
+// Last Modified On : 03-27-2020
 // ***********************************************************************
 // <copyright file="LogisticAirfareRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -48,6 +48,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query.Where(la => la.Logistic.Uid == logisticUid);
         }
 
+        /// <summary>Finds the by attendee collaborator identifier.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<LogisticAirfare> FindByAttendeeCollaboratorId(this IQueryable<LogisticAirfare> query, int attendeeCollaboratorId)
+        {
+            return query.Where(la => la.Logistic.AttendeeCollaboratorId == attendeeCollaboratorId);
+        }
+
         /// <summary>Finds the by edition uid.</summary>
         /// <param name="query">The query.</param>
         /// <param name="editionUid">The edition uid.</param>
@@ -55,6 +64,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static IQueryable<LogisticAirfare> FindByEditionUid(this IQueryable<LogisticAirfare> query, Guid editionUid)
         {
             return query.Where(la => la.Logistic.AttendeeCollaborator.Edition.Uid == editionUid);
+        }
+
+        /// <summary>Finds the by date range.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <returns></returns>
+        internal static IQueryable<LogisticAirfare> FindByDateRange(this IQueryable<LogisticAirfare> query, DateTimeOffset startDate, DateTimeOffset endDate)
+        {
+            endDate = endDate.AddHours(23).AddMinutes(59).AddSeconds(59);
+
+            query = query.Where(la => (la.DepartureDate >= startDate && la.DepartureDate <= endDate)
+                                      || (la.ArrivalDate >= startDate && la.ArrivalDate <= endDate));
+
+            return query;
         }
 
         /// <summary>Determines whether [is not deleted].</summary>
@@ -140,6 +164,26 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query
                             .OrderBy(la => la.DepartureDate)
                             .ToListAsync();
+        }
+
+        /// <summary>Finds all schedule dtos asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <returns></returns>
+        public Task<List<LogisticAirfareDto>> FindAllScheduleDtosAsync(int editionId, int attendeeCollaboratorId, DateTimeOffset startDate, DateTimeOffset endDate)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByAttendeeCollaboratorId(attendeeCollaboratorId)
+                                .FindByDateRange(startDate, endDate)
+                                .Select(la => new LogisticAirfareDto
+                                {
+                                    LogisticAirfare = la
+                                });
+
+            return query
+                        .ToListAsync();
         }
     }
 }

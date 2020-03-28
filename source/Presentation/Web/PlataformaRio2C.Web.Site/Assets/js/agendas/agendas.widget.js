@@ -190,10 +190,96 @@ var AgendasWidget = function () {
                         jsonParameters.startDate = moment(info.start).unix();
                         jsonParameters.endDate = moment(info.end).unix();
                         jsonParameters.showFlights = $('#ShowFlights').is(':checked');
+
+                        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Agendas/GetLogisticAirfaresData'), jsonParameters, function (data) {
+                            MyRio2cCommon.handleAjaxReturn({
+                                data: data,
+                                // Success
+                                onSuccess: function () {
+                                    if (data.events === null) {
+                                        successCallback([]);
+                                        return;
+                                    }
+
+                                    successCallback(
+                                        Array.prototype.slice.call(data.events).map(function (eventEl) {
+                                            return {
+                                                id: eventEl.Id,
+                                                title: eventEl.Title,
+                                                start: moment(eventEl.Start).tz(globalVariables.momentTimeZone).format(),
+                                                end: moment(eventEl.End).tz(globalVariables.momentTimeZone).format(),
+                                                allDay: eventEl.AllDay || false,
+                                                type: eventEl.Type,
+                                                className: eventEl.Css
+                                            }
+                                        })
+                                    );
+                                },
+                                // Error
+                                onError: function () {
+                                    failureCallback('error');
+                                }
+                            });
+                        })
+                        .fail(function () {
+                        })
+                        .always(function () {
+                            //MyRio2cCommon.unblock();
+                        });
+                    }
+                },
+                {
+                    events: function (info, successCallback, failureCallback) {
+                        var jsonParameters = new Object();
+                        jsonParameters.startDate = moment(info.start).unix();
+                        jsonParameters.endDate = moment(info.end).unix();
                         jsonParameters.showAccommodations = $('#ShowAccommodations').is(':checked');
+
+                        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Agendas/GetLogisticAccommodationsData'), jsonParameters, function (data) {
+                            MyRio2cCommon.handleAjaxReturn({
+                                data: data,
+                                // Success
+                                onSuccess: function () {
+                                    if (data.events === null) {
+                                        successCallback([]);
+                                        return;
+                                    }
+
+                                    successCallback(
+                                        Array.prototype.slice.call(data.events).map(function (eventEl) {
+                                            return {
+                                                id: eventEl.Id,
+                                                title: eventEl.Title,
+                                                start: moment(eventEl.Start).tz(globalVariables.momentTimeZone).format(),
+                                                end: moment(eventEl.End).tz(globalVariables.momentTimeZone).format(),
+                                                allDay: eventEl.AllDay || false,
+                                                type: eventEl.Type,
+                                                className: eventEl.Css
+                                            }
+                                        })
+                                    );
+                                },
+                                // Error
+                                onError: function () {
+                                    failureCallback('error');
+                                }
+                            });
+                        })
+                        .fail(function () {
+                        })
+                        .always(function () {
+                            //MyRio2cCommon.unblock();
+                        });
+                    }
+                },
+                {
+                    events: function (info, successCallback, failureCallback) {
+                        var jsonParameters = new Object();
+                        jsonParameters.startDate = moment(info.start).unix();
+                        jsonParameters.endDate = moment(info.end).unix();
                         jsonParameters.showTransfers = $('#ShowTransfers').is(':checked');
 
-                        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Agendas/GetLogisticsData'), jsonParameters, function (data) {
+                        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Agendas/GetLogisticTransfersData'), jsonParameters, function (data) {
                             MyRio2cCommon.handleAjaxReturn({
                                 data: data,
                                 // Success

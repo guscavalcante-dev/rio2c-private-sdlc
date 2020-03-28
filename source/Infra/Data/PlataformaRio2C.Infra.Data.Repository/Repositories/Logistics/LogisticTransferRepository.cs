@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-20-2020
+// Last Modified On : 03-27-2020
 // ***********************************************************************
 // <copyright file="LogisticTransferRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,23 +30,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     /// </summary>
     internal static class LogisticTransferIQueryableExtensions
     {
-        /// <summary>Determines whether [is not deleted].</summary>
-        /// <param name="query">The query.</param>
-        /// <returns></returns>
-        internal static IQueryable<LogisticTransfer> IsNotDeleted(this IQueryable<LogisticTransfer> query)
-        {
-            query = query.Where(c => !c.IsDeleted);
-
-            return query;
-        }
-
         /// <summary>Finds the by uid.</summary>
         /// <param name="query">The query.</param>
         /// <param name="uid">The uid.</param>
         /// <returns></returns>
         internal static IQueryable<LogisticTransfer> FindByUid(this IQueryable<LogisticTransfer> query, Guid uid)
         {
-            return query.Where(e => e.Uid == uid);
+            return query.Where(lt => lt.Uid == uid);
         }
 
         /// <summary>Finds the by logistics uid.</summary>
@@ -55,7 +45,40 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<LogisticTransfer> FindByLogisticsUid(this IQueryable<LogisticTransfer> query, Guid uid)
         {
-            return query.Where(e => e.Logistic.Uid == uid);
+            return query.Where(lt => lt.Logistic.Uid == uid);
+        }
+
+        /// <summary>Finds the by attendee collaborator identifier.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<LogisticTransfer> FindByAttendeeCollaboratorId(this IQueryable<LogisticTransfer> query, int attendeeCollaboratorId)
+        {
+            return query.Where(lt => lt.Logistic.AttendeeCollaboratorId == attendeeCollaboratorId);
+        }
+
+        /// <summary>Finds the by date range.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <returns></returns>
+        internal static IQueryable<LogisticTransfer> FindByDateRange(this IQueryable<LogisticTransfer> query, DateTimeOffset startDate, DateTimeOffset endDate)
+        {
+            endDate = endDate.AddHours(23).AddMinutes(59).AddSeconds(59);
+
+            query = query.Where(lt => lt.Date >= startDate && lt.Date <= endDate);
+
+            return query;
+        }
+
+        /// <summary>Determines whether [is not deleted].</summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<LogisticTransfer> IsNotDeleted(this IQueryable<LogisticTransfer> query)
+        {
+            query = query.Where(lt => !lt.IsDeleted);
+
+            return query;
         }
     }
 
@@ -119,6 +142,34 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query
                         .OrderBy(ltd => ltd.LogisticTransfer.CreateDate)
+                        .ToListAsync();
+        }
+
+        /// <summary>Finds all schedule dtos asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <returns></returns>
+        public Task<List<LogisticTransferDto>> FindAllScheduleDtosAsync(int editionId, int attendeeCollaboratorId, DateTimeOffset startDate, DateTimeOffset endDate)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByAttendeeCollaboratorId(attendeeCollaboratorId)
+                                .FindByDateRange(startDate, endDate)
+                                .Select(lt => new LogisticTransferDto
+                                {
+                                    LogisticTransfer = lt,
+                                    FromPlaceDto = new PlaceDto
+                                    {
+                                        Place = lt.FromAttendeePlace.Place
+                                    },
+                                    ToPlaceDto = new PlaceDto
+                                    {
+                                        Place = lt.ToAttendeePlace.Place
+                                    }
+                                });
+
+            return query
                         .ToListAsync();
         }
     }

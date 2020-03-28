@@ -4,7 +4,7 @@
 // Created          : 03-08-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-19-2020
+// Last Modified On : 03-27-2020
 // ***********************************************************************
 // <copyright file="ILogisticAirfareRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,5 +25,6 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<List<LogisticAirfareDto>> FindAllDtosAsync(Guid logisticsUid);
         Task<LogisticAirfareDto> FindDtoAsync(Guid logisticAirfareUid);
         Task<List<LogisticAirfare>> FindAllForGenerateNegotiationsAsync(Guid editionUid);
+        Task<List<LogisticAirfareDto>> FindAllScheduleDtosAsync(int editionId, int attendeeCollaboratorId, DateTimeOffset startDate, DateTimeOffset endDate);
     }    
 }
