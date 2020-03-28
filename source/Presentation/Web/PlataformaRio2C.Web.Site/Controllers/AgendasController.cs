@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-27-2020
+// Last Modified On : 03-28-2020
 // ***********************************************************************
 // <copyright file="AgendasController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -113,7 +113,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 Start = cd.Conference.StartDate,
                 End = cd.Conference.EndDate,
                 AllDay = false,
-                Css = cd.IsParticipant == true ? "fc-event-solid-primary fc-event-light popover-enabled" : "fc-event-solid-light fc-event-brand popover-enabled",
+                Css = cd.IsParticipant == true ? "fc-event-solid-warning fc-event-light" : "fc-event-solid-light fc-event-brand",
                 Room = cd.RoomDto.GetRoomNameByLanguageCode(this.UserInterfaceLanguage)?.RoomName.Value,
                 EditionEvent = cd.EditionEvent.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, Language.Separator),
                 Synopsis = cd.GetConferenceSynopsisDtoByLanguageCode(this.UserInterfaceLanguage)?.ConferenceSynopsis.Value
@@ -160,7 +160,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 Start = nd.Negotiation.StartDate,
                 End = nd.Negotiation.EndDate,
                 AllDay = false,
-                Css = "fc-event-solid-danger fc-event-light popover-enabled",
+                Css = "fc-event-solid-danger fc-event-light",
                 ProjectLogLine = nd.ProjectBuyerEvaluationDto.ProjectDto.GetLogLineDtoByLanguageCode(this.UserInterfaceLanguage)?.ProjectLogLine.Value,
                 Producer = nd.ProjectBuyerEvaluationDto.ProjectDto.SellerAttendeeOrganizationDto.Organization.Name,
                 Player = nd.ProjectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.TradeName,
@@ -211,7 +211,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 Start = lad.LogisticAirfare.DepartureDate,
                 End = lad.LogisticAirfare.ArrivalDate,
                 AllDay = false,
-                Css = "fc-event-solid-warning fc-event-light popover-enabled",
+                Css = "fc-event-solid-primary fc-event-light",
                 FlightType = lad.LogisticAirfare.IsNational ? Labels.National : Labels.International,
                 FromPlace = lad.LogisticAirfare.From,
                 ToPlace = lad.LogisticAirfare.To,
@@ -260,7 +260,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 Start = lad.LogisticAccommodation.CheckInDate,
                 End = lad.LogisticAccommodation.CheckOutDate.AddDays(1),
                 AllDay = true,
-                Css = "fc-event-solid-success fc-event-light popover-enabled",
+                Css = "fc-event-solid-success fc-event-light",
                 SubType = "AllDay",
                 CheckInDate = lad.LogisticAccommodation.CheckInDate,
                 CheckOutDate = lad.LogisticAccommodation.CheckOutDate
@@ -274,7 +274,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 Start = lad.LogisticAccommodation.CheckInDate,
                 End = lad.LogisticAccommodation.CheckInDate.AddMinutes(30),
                 AllDay = false,
-                Css = "fc-event-solid-success fc-event-light popover-enabled",
+                Css = "fc-event-solid-success fc-event-light",
                 SubType = "CheckIn",
                 CheckInDate = lad.LogisticAccommodation.CheckInDate,
                 CheckOutDate = lad.LogisticAccommodation.CheckOutDate
@@ -288,7 +288,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 Start = lad.LogisticAccommodation.CheckOutDate,
                 End = lad.LogisticAccommodation.CheckOutDate.AddMinutes(30),
                 AllDay = false,
-                Css = "fc-event-solid-success fc-event-light popover-enabled",
+                Css = "fc-event-solid-success fc-event-light",
                 SubType = "CheckOut",
                 CheckInDate = lad.LogisticAccommodation.CheckInDate,
                 CheckOutDate = lad.LogisticAccommodation.CheckOutDate
@@ -336,7 +336,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 Start = ltd.LogisticTransfer.Date,
                 End = ltd.LogisticTransfer.Date.AddMinutes(30),
                 AllDay = false,
-                Css = "fc-event-solid-brand fc-event-light popover-enabled"
+                Css = "fc-event-solid-info fc-event-light"
             }) ?? new List<AgendaLogisticTransferEventJsonDto>();
 
             return Json(new

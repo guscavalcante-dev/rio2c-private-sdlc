@@ -324,7 +324,7 @@ var AgendasWidget = function () {
 
                 // Close other open popovers
                 element.on('click', function (e) {
-                    $('.popover-enabled').popover('hide');
+                    $('.popover').popover('hide');
                 });
 
                 if (info.event.extendedProps.type === 'Conference') {
@@ -350,6 +350,9 @@ var AgendasWidget = function () {
                 else {
                     MyRio2cCommon.unblock({ idOrClass: widgetElementId });
 	            }
+            },
+            select: function (start, end, jsEvent) {
+	            $('.popover').popover('hide');
             }
         });
 
@@ -367,12 +370,14 @@ var AgendasWidget = function () {
         $('.enable-calendar-reload').addClass('change-event-enabled');
 
         $('body').on('click', function (e) {
-	        //did not click a popover toggle or popover
-            if (!$(e.target).hasClass('fc-content') && !$(e.target).hasClass('fc-title') && !$(e.target).hasClass('fc-event') 
-	            && !$(e.target).hasClass('fc-event-dot') && !$(e.target).hasClass('fc-list-item-marker') && !$(e.target).hasClass('fc-list-item-title') && !$(e.target).parent().hasClass('fc-list-item-title')
-		        && $(e.target).parents('.popover.in').length === 0) {
-                $('.popover-enabled').popover('hide');
+	        if ($(e.target).parents('.fc-event-container').length === 0 && $(e.target).parents('.fc-list-item').length === 0 && $(e.target).parents('.popover.in').length === 0) {
+	            $('.popover').popover('hide');
 	        }
+            //if (!$(e.target).hasClass('fc-content') && !$(e.target).hasClass('fc-title') && !$(e.target).hasClass('fc-event') 
+	        //    && !$(e.target).hasClass('fc-event-dot') && !$(e.target).hasClass('fc-list-item-marker') && !$(e.target).hasClass('fc-list-item-title') && !$(e.target).parent().hasClass('fc-list-item-title')
+		    //    && $(e.target).parents('.popover.in').length === 0) {
+            //    $('.popover-enabled').popover('hide');
+	        //}
         });
     };
 
