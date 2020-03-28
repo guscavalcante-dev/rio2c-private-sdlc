@@ -4,14 +4,13 @@
 // Created          : 03-27-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-27-2020
+// Last Modified On : 03-28-2020
 // ***********************************************************************
 // <copyright file="schedules.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-//"use strict";
 
 var AgendasWidget = function () {
 
@@ -451,7 +450,6 @@ var AgendasWidget = function () {
     var showLogisticAccommodationPopover = function (element, info) {
 	    var popoverHtml = $("#accommodation-popover-event-content").html();
 	    var startDate = info.event.start;
-	    var endDate = info.event.end;
 
 	    element.popover({
 		    html: true,
@@ -460,7 +458,7 @@ var AgendasWidget = function () {
 			    return popoverHtml
 						    .replace("popoverDate", formatPopupDate(
 							    info.event.extendedProps.subType === 'AllDay' ? info.event.extendedProps.checkInDate : startDate, 
-							    info.event.extendedProps.subType === 'AllDay' ? info.event.extendedProps.checkOutDate : endDate));
+							    info.event.extendedProps.subType === 'AllDay' ? info.event.extendedProps.checkOutDate : startDate));
 		    },
 		    template: '<div class="fullcalendar-popover popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>',
 		    title: '<span class="text-info">' + info.event.title + '</span>',
