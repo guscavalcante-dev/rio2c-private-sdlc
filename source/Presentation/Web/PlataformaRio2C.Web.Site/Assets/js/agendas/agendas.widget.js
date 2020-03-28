@@ -32,10 +32,6 @@ var AgendasWidget = function () {
         endDate = moment(endDate).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage);
 	    var date = startDate.format("ddd, D") + " of " + startDate.format("MMMM");
 
-	    ////if (eventType === birthdayEventType) {
-		   //// return date;
-	    ////}
-
 	    if (endDate == null
 		    || endDate === ''
 		    || (startDate.year() === endDate.year()
@@ -176,11 +172,11 @@ var AgendasWidget = function () {
                                 }
                             });
                         })
-                            .fail(function () {
-                            })
-                            .always(function () {
-                                //MyRio2cCommon.unblock();
-                            });
+                        .fail(function () {
+                        })
+                        .always(function () {
+                            //MyRio2cCommon.unblock();
+                        });
                     }
                 },
                 {
@@ -484,7 +480,6 @@ var AgendasWidget = function () {
     }
 
     return {
-        //main function to initiate the module
         init: function () {
 	        enableChangeEvents();
             enableCalendar();
