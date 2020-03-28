@@ -160,7 +160,13 @@ var AgendasWidget = function () {
                                                 end: moment(eventEl.End).tz(globalVariables.momentTimeZone).format(),
                                                 allDay: eventEl.AllDay || false,
                                                 type: eventEl.Type,
-                                                className: eventEl.Css
+                                                className: eventEl.Css,
+                                                projectLogLine: eventEl.ProjectLogLine,
+                                                producer: eventEl.Producer,
+                                                player: eventEl.Player,
+                                                room: eventEl.Room,
+                                                tableNumber: eventEl.TableNumber,
+                                                roundNumber: eventEl.RoundNumber
                                             }
                                         })
                                     );
@@ -236,6 +242,9 @@ var AgendasWidget = function () {
                 if (info.event.extendedProps.type === 'Conference') {
 	                showConferencePopover(element, info);
                 }
+                else if (info.event.extendedProps.type === 'AudiovisualMeeting') {
+	                showMeetingPopover(element, info);
+                }
             },
             loading: function (isLoading, view) {
                 if (isLoading) {
@@ -271,7 +280,7 @@ var AgendasWidget = function () {
 
     // Popovers -----------------------------------------------------------------------------------
     var showConferencePopover = function (element, info) {
-        var popoverHtml = $("#flight-popover-event-content").html();
+        var popoverHtml = $("#conference-popover-event-content").html();
 	    var startDate = info.event.start;
         var endDate = info.event.end;
 
@@ -290,6 +299,31 @@ var AgendasWidget = function () {
 	        title: '<span class="text-info">' + info.event.title + '</span>',
 	        container: 'body'
         });
+    }
+
+    var showMeetingPopover = function (element, info) {
+	    var popoverHtml = $("#meeting-popover-event-content").html();
+	    var startDate = info.event.start;
+	    var endDate = info.event.end;
+
+	    element.popover({
+		    html: true,
+		    //trigger: 'hover',
+		    placement: 'top',
+		    content: function () {
+			    return popoverHtml
+				    .replace("popoverDate", formatPopupDate(startDate, endDate))
+				    .replace("popoverProjectLogLine", info.event.extendedProps.projectLogLine)
+				    .replace("popoverProducer", info.event.extendedProps.producer)
+				    .replace("popoverPlayer", info.event.extendedProps.player)
+				    .replace("popoverRoom", info.event.extendedProps.room)
+				    .replace("popoverTableNumber", info.event.extendedProps.tableNumber)
+					.replace("popoverRoundNumber", info.event.extendedProps.roundNumber);
+		    },
+		    template: '<div class="fullcalendar-popover popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>',
+		    title: '<span class="text-info">' + info.event.title + '</span>',
+		    container: 'body'
+	    });
     }
 
     return {

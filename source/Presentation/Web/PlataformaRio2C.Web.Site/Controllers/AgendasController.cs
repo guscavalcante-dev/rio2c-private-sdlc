@@ -144,15 +144,21 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 DateTimeOffset.FromUnixTimeSeconds(viewModel.StartDate.Value),
                 DateTimeOffset.FromUnixTimeSeconds(viewModel.EndDate.Value));
 
-            var events = negotiationsDtos?.Select(nd => new AgendaBaseEventJsonDto
+            var events = negotiationsDtos?.Select(nd => new AgendaNegotiationEventJsonDto
             {
                 Id = nd.Negotiation.Uid.ToString(),
                 Type = "AudiovisualMeeting",
-                Title = $"[{Labels.OneToOneMeeting}] {nd.ProjectBuyerEvaluationDto.ProjectDto.GetTitleDtoByLanguageCode(this.UserInterfaceLanguage).ProjectTitle.Value}",
+                Title = nd.ProjectBuyerEvaluationDto.ProjectDto.GetTitleDtoByLanguageCode(this.UserInterfaceLanguage).ProjectTitle.Value,
                 Start = nd.Negotiation.StartDate,
                 End = nd.Negotiation.EndDate,
                 AllDay = false,
-                Css = "fc-event-solid-danger fc-event-light popover-enabled"
+                Css = "fc-event-solid-danger fc-event-light popover-enabled",
+                ProjectLogLine = nd.ProjectBuyerEvaluationDto.ProjectDto.GetLogLineDtoByLanguageCode(this.UserInterfaceLanguage)?.ProjectLogLine.Value,
+                Producer = nd.ProjectBuyerEvaluationDto.ProjectDto.SellerAttendeeOrganizationDto.Organization.Name,
+                Player = nd.ProjectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.TradeName,
+                Room = nd.RoomDto.GetRoomNameByLanguageCode(this.UserInterfaceLanguage)?.RoomName?.Value,
+                TableNumber = nd.Negotiation.TableNumber,
+                RoundNumber = nd.Negotiation.RoundNumber,
             });
 
             return Json(new
