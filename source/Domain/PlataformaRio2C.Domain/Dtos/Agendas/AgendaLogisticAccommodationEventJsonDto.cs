@@ -6,23 +6,24 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-27-2020
 // ***********************************************************************
-// <copyright file="AgendaConferenceEventJsonDto.cs" company="Softo">
+// <copyright file="AgendaLogisticAccommodationEventJsonDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
-    /// <summary>AgendaConferenceEventJsonDto</summary>
-    public class AgendaConferenceEventJsonDto : AgendaBaseEventJsonDto
+    /// <summary>AgendaLogisticAccommodationEventJsonDto</summary>
+    public class AgendaLogisticAccommodationEventJsonDto : AgendaBaseEventJsonDto
     {
-        public string EditionEvent { get; set; }
-        public string Synopsis { get; set; }
-        public string Room { get; set; }
+        public string SubType { get; set; }
+        public DateTimeOffset CheckInDate { get; set; }
+        public DateTimeOffset CheckOutDate { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="AgendaConferenceEventJsonDto"/> class.</summary>
-        public AgendaConferenceEventJsonDto()
+        /// <summary>Initializes a new instance of the <see cref="AgendaLogisticAccommodationEventJsonDto"/> class.</summary>
+        public AgendaLogisticAccommodationEventJsonDto()
         {
         }
     }

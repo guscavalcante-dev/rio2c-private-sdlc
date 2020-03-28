@@ -252,7 +252,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 DateTimeOffset.FromUnixTimeSeconds(viewModel.EndDate.Value));
 
             // Accommodations (all day)
-            var events = (logisticAccommodationDtos?.Select(lad => new AgendaBaseEventJsonDto
+            var events = (logisticAccommodationDtos?.Select(lad => new AgendaLogisticAccommodationEventJsonDto
             {
                 Id = lad.LogisticAccommodation.Uid.ToString(),
                 Type = "LogisticAccommodation",
@@ -260,10 +260,13 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 Start = lad.LogisticAccommodation.CheckInDate,
                 End = lad.LogisticAccommodation.CheckOutDate.AddDays(1),
                 AllDay = true,
-                Css = "fc-event-solid-success fc-event-light popover-enabled"
-            }) ?? new List<AgendaBaseEventJsonDto>())?
+                Css = "fc-event-solid-success fc-event-light popover-enabled",
+                SubType = "AllDay",
+                CheckInDate = lad.LogisticAccommodation.CheckInDate,
+                CheckOutDate = lad.LogisticAccommodation.CheckOutDate
+            }) ?? new List<AgendaLogisticAccommodationEventJsonDto>())?
             // Accommodations (checkin)
-            .Union(logisticAccommodationDtos?.Select(lad => new AgendaBaseEventJsonDto
+            .Union(logisticAccommodationDtos?.Select(lad => new AgendaLogisticAccommodationEventJsonDto
             {
                 Id = lad.LogisticAccommodation.Uid.ToString(),
                 Type = "LogisticAccommodation",
@@ -271,10 +274,13 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 Start = lad.LogisticAccommodation.CheckInDate,
                 End = lad.LogisticAccommodation.CheckInDate.AddMinutes(30),
                 AllDay = false,
-                Css = "fc-event-solid-success fc-event-light popover-enabled"
-            }) ?? new List<AgendaBaseEventJsonDto>())
+                Css = "fc-event-solid-success fc-event-light popover-enabled",
+                SubType = "CheckIn",
+                CheckInDate = lad.LogisticAccommodation.CheckInDate,
+                CheckOutDate = lad.LogisticAccommodation.CheckOutDate
+            }) ?? new List<AgendaLogisticAccommodationEventJsonDto>())
             // Accommodations (checkout)
-            .Union(logisticAccommodationDtos?.Select(lad => new AgendaBaseEventJsonDto
+            .Union(logisticAccommodationDtos?.Select(lad => new AgendaLogisticAccommodationEventJsonDto
             {
                 Id = lad.LogisticAccommodation.Uid.ToString(),
                 Type = "LogisticAccommodation",
@@ -282,8 +288,11 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 Start = lad.LogisticAccommodation.CheckOutDate,
                 End = lad.LogisticAccommodation.CheckOutDate.AddMinutes(30),
                 AllDay = false,
-                Css = "fc-event-solid-success fc-event-light popover-enabled"
-            }) ?? new List<AgendaBaseEventJsonDto>());
+                Css = "fc-event-solid-success fc-event-light popover-enabled",
+                SubType = "CheckOut",
+                CheckInDate = lad.LogisticAccommodation.CheckInDate,
+                CheckOutDate = lad.LogisticAccommodation.CheckOutDate
+            }) ?? new List<AgendaLogisticAccommodationEventJsonDto>());
 
             return Json(new
             {

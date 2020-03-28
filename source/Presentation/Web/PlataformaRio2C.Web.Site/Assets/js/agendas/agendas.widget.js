@@ -258,7 +258,10 @@ var AgendasWidget = function () {
                                                 end: moment(eventEl.End).tz(globalVariables.momentTimeZone).format(),
                                                 allDay: eventEl.AllDay || false,
                                                 type: eventEl.Type,
-                                                className: eventEl.Css
+                                                className: eventEl.Css,
+                                                subType: eventEl.SubType,
+                                                checkInDate: eventEl.CheckInDate,
+                                                checkOutDate: eventEl.CheckOutDate
                                             }
                                         })
                                     );
@@ -337,6 +340,9 @@ var AgendasWidget = function () {
                 }
                 else if (info.event.extendedProps.type === 'LogisticAirfare') {
 	                showLogisticAirfarePopover(element, info);
+                }
+                else if (info.event.extendedProps.type === 'LogisticAccommodation') {
+	                showLogisticAccommodationPopover(element, info);
                 }
             },
             loading: function (isLoading, view) {
@@ -432,6 +438,26 @@ var AgendasWidget = function () {
 						    .replace("popoverFromPlace", info.event.extendedProps.fromPlace)
 						    .replace("popoverToPlace", info.event.extendedProps.toPlace)
 						    .replace("popoverTicketNumber", info.event.extendedProps.ticketNumber);
+		    },
+		    template: '<div class="fullcalendar-popover popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>',
+		    title: '<span class="text-info">' + info.event.title + '</span>',
+		    container: 'body'
+	    });
+    }
+
+    var showLogisticAccommodationPopover = function (element, info) {
+	    var popoverHtml = $("#accommodation-popover-event-content").html();
+	    var startDate = info.event.start;
+	    var endDate = info.event.end;
+
+	    element.popover({
+		    html: true,
+		    placement: 'top',
+		    content: function () {
+			    return popoverHtml
+						    .replace("popoverDate", formatPopupDate(
+							    info.event.extendedProps.subType === 'AllDay' ? info.event.extendedProps.checkInDate : startDate, 
+							    info.event.extendedProps.subType === 'AllDay' ? info.event.extendedProps.checkOutDate : endDate));
 		    },
 		    template: '<div class="fullcalendar-popover popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>',
 		    title: '<span class="text-info">' + info.event.title + '</span>',
