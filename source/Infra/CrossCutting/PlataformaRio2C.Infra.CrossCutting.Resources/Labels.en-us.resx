@@ -2494,6 +2494,10 @@
     <value>Show transfers</value>
     <comment>Exibir transfers</comment>
   </data>
+  <data name="ToDest" xml:space="preserve">
+    <value>To</value>
+    <comment>Para</comment>
+  </data>
   <data name="When" xml:space="preserve">
     <value>When</value>
     <comment>Quando</comment>

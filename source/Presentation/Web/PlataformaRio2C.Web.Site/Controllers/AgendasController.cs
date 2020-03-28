@@ -207,7 +207,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             {
                 Id = lad.LogisticAirfare.Uid.ToString(),
                 Type = "LogisticAirfare",
-                Title = $"{lad.LogisticAirfare.From} - {lad.LogisticAirfare.To}",
+                Title = $"{lad.LogisticAirfare.From} > {lad.LogisticAirfare.To}",
                 Start = lad.LogisticAirfare.DepartureDate,
                 End = lad.LogisticAirfare.ArrivalDate,
                 AllDay = false,
@@ -328,16 +328,16 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 DateTimeOffset.FromUnixTimeSeconds(viewModel.EndDate.Value));
 
             // Transfers
-            var events = logisticTransferDtos?.Select(ltd => new AgendaBaseEventJsonDto
+            var events = logisticTransferDtos?.Select(ltd => new AgendaLogisticTransferEventJsonDto
             {
                 Id = ltd.LogisticTransfer.Uid.ToString(),
                 Type = "LogisticTransfer",
-                Title = $"{ltd.FromPlaceDto.Place.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, Language.Separator)} - {ltd.ToPlaceDto.Place.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, Language.Separator)}",
+                Title = $"{ltd.FromPlaceDto.Place.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, Language.Separator)} > {ltd.ToPlaceDto.Place.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, Language.Separator)}",
                 Start = ltd.LogisticTransfer.Date,
                 End = ltd.LogisticTransfer.Date.AddMinutes(30),
                 AllDay = false,
                 Css = "fc-event-solid-brand fc-event-light popover-enabled"
-            }) ?? new List<AgendaBaseEventJsonDto>();
+            }) ?? new List<AgendaLogisticTransferEventJsonDto>();
 
             return Json(new
             {

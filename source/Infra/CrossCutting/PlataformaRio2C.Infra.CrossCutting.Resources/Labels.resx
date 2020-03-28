@@ -2497,6 +2497,10 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Exibir transfers</value>
     <comment>Exibir transfers</comment>
   </data>
+  <data name="ToDest" xml:space="preserve">
+    <value>Para</value>
+    <comment>Para</comment>
+  </data>
   <data name="When" xml:space="preserve">
     <value>Quando</value>
     <comment>Quando</comment>

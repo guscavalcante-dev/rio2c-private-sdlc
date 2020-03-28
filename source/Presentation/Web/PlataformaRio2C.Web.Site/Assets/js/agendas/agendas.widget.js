@@ -344,6 +344,9 @@ var AgendasWidget = function () {
                 else if (info.event.extendedProps.type === 'LogisticAccommodation') {
 	                showLogisticAccommodationPopover(element, info);
                 }
+                else if (info.event.extendedProps.type === 'LogisticTransfer') {
+	                showLogisticTransferPopover(element, info);
+                }
             },
             loading: function (isLoading, view) {
                 if (isLoading) {
@@ -458,6 +461,23 @@ var AgendasWidget = function () {
 						    .replace("popoverDate", formatPopupDate(
 							    info.event.extendedProps.subType === 'AllDay' ? info.event.extendedProps.checkInDate : startDate, 
 							    info.event.extendedProps.subType === 'AllDay' ? info.event.extendedProps.checkOutDate : endDate));
+		    },
+		    template: '<div class="fullcalendar-popover popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>',
+		    title: '<span class="text-info">' + info.event.title + '</span>',
+		    container: 'body'
+	    });
+    }
+
+    var showLogisticTransferPopover = function (element, info) {
+	    var popoverHtml = $("#transfer-popover-event-content").html();
+	    var startDate = info.event.start;
+
+	    element.popover({
+		    html: true,
+		    placement: 'top',
+		    content: function () {
+			    return popoverHtml
+							.replace("popoverDate", formatPopupDate(startDate, startDate));
 		    },
 		    template: '<div class="fullcalendar-popover popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>',
 		    title: '<span class="text-info">' + info.event.title + '</span>',

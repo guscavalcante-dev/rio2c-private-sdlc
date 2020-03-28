@@ -5229,6 +5229,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Para.
         /// </summary>
+        public static string ToDest {
+            get {
+                return ResourceManager.GetString("ToDest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Para.
+        /// </summary>
         public static string ToPlace {
             get {
                 return ResourceManager.GetString("ToPlace", resourceCulture);
