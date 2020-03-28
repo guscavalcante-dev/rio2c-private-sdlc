@@ -210,7 +210,11 @@ var AgendasWidget = function () {
                                                 end: moment(eventEl.End).tz(globalVariables.momentTimeZone).format(),
                                                 allDay: eventEl.AllDay || false,
                                                 type: eventEl.Type,
-                                                className: eventEl.Css
+                                                className: eventEl.Css,
+                                                flightType: eventEl.FlightType,
+                                                fromPlace: eventEl.FromPlace,
+                                                toPlace: eventEl.ToPlace,
+                                                ticketNumber: eventEl.TicketNumber,
                                             }
                                         })
                                     );
@@ -331,6 +335,9 @@ var AgendasWidget = function () {
                 else if (info.event.extendedProps.type === 'AudiovisualMeeting') {
 	                showMeetingPopover(element, info);
                 }
+                else if (info.event.extendedProps.type === 'LogisticAirfare') {
+	                showLogisticAirfarePopover(element, info);
+                }
             },
             loading: function (isLoading, view) {
                 if (isLoading) {
@@ -372,14 +379,13 @@ var AgendasWidget = function () {
 
         element.popover({
 	        html: true,
-	        //trigger: 'hover',
 	        placement: 'top',
             content: function () {
 	            return popoverHtml
-		            .replace("popoverDate", formatPopupDate(startDate, endDate))
-		            .replace("popoverEditionEvent", info.event.extendedProps.editionEvent)
-		            .replace("popoverSynopsis", info.event.extendedProps.synopsis)
-		            .replace("popoverRoom", info.event.extendedProps.room);
+				            .replace("popoverDate", formatPopupDate(startDate, endDate))
+				            .replace("popoverEditionEvent", info.event.extendedProps.editionEvent)
+				            .replace("popoverSynopsis", info.event.extendedProps.synopsis)
+				            .replace("popoverRoom", info.event.extendedProps.room);
             },
 	        template: '<div class="fullcalendar-popover popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>',
 	        title: '<span class="text-info">' + info.event.title + '</span>',
@@ -394,17 +400,38 @@ var AgendasWidget = function () {
 
 	    element.popover({
 		    html: true,
-		    //trigger: 'hover',
 		    placement: 'top',
 		    content: function () {
 			    return popoverHtml
-				    .replace("popoverDate", formatPopupDate(startDate, endDate))
-				    .replace("popoverProjectLogLine", info.event.extendedProps.projectLogLine)
-				    .replace("popoverProducer", info.event.extendedProps.producer)
-				    .replace("popoverPlayer", info.event.extendedProps.player)
-				    .replace("popoverRoom", info.event.extendedProps.room)
-				    .replace("popoverTableNumber", info.event.extendedProps.tableNumber)
-					.replace("popoverRoundNumber", info.event.extendedProps.roundNumber);
+						    .replace("popoverDate", formatPopupDate(startDate, endDate))
+						    .replace("popoverProjectLogLine", info.event.extendedProps.projectLogLine)
+						    .replace("popoverProducer", info.event.extendedProps.producer)
+						    .replace("popoverPlayer", info.event.extendedProps.player)
+						    .replace("popoverRoom", info.event.extendedProps.room)
+						    .replace("popoverTableNumber", info.event.extendedProps.tableNumber)
+							.replace("popoverRoundNumber", info.event.extendedProps.roundNumber);
+		    },
+		    template: '<div class="fullcalendar-popover popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>',
+		    title: '<span class="text-info">' + info.event.title + '</span>',
+		    container: 'body'
+	    });
+    }
+
+    var showLogisticAirfarePopover = function (element, info) {
+	    var popoverHtml = $("#airfare-popover-event-content").html();
+	    var startDate = info.event.start;
+	    var endDate = info.event.end;
+
+	    element.popover({
+		    html: true,
+		    placement: 'top',
+		    content: function () {
+			    return popoverHtml
+						    .replace("popoverDate", formatPopupDate(startDate, endDate))
+						    .replace("popoverFlightType", info.event.extendedProps.flightType)
+						    .replace("popoverFromPlace", info.event.extendedProps.fromPlace)
+						    .replace("popoverToPlace", info.event.extendedProps.toPlace)
+						    .replace("popoverTicketNumber", info.event.extendedProps.ticketNumber);
 		    },
 		    template: '<div class="fullcalendar-popover popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>',
 		    title: '<span class="text-info">' + info.event.title + '</span>',

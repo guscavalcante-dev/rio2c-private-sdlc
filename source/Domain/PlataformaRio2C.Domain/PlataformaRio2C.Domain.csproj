@@ -103,6 +103,7 @@
     <Compile Include="Constants\CollaboratorType.cs" />
     <Compile Include="Constants\Role.cs" />
     <Compile Include="Dtos\Addresses\AddressDto.cs" />
+    <Compile Include="Dtos\Agendas\AgendaLogisticAirfareEventJsonDto.cs" />
     <Compile Include="Dtos\Agendas\AgendaNegotiationEventJsonDto.cs" />
     <Compile Include="Dtos\Agendas\AgendaConferenceEventJsonDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorListDto.cs" />

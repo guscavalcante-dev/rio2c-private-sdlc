@@ -7318,6 +7318,7 @@
     <Content Include="Views\Executives\Widgets\LogisticsAddresses.cshtml" />
     <Content Include="Views\Agendas\Shared\_MeetingPopover.cshtml" />
     <Content Include="Views\Agendas\Shared\_ConferencePopover.cshtml" />
+    <Content Include="Views\Agendas\Shared\_LogisticAirfarePopover.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -203,16 +203,20 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 DateTimeOffset.FromUnixTimeSeconds(viewModel.EndDate.Value));
 
             // Logistic airfares (in day)
-            var events = logisticAirfareDtos?.Select(lad => new AgendaBaseEventJsonDto
+            var events = logisticAirfareDtos?.Select(lad => new AgendaLogisticAirfareEventJsonDto
             {
                 Id = lad.LogisticAirfare.Uid.ToString(),
                 Type = "LogisticAirfare",
-                Title = $"[{Labels.Flight}] {lad.LogisticAirfare.From} - {lad.LogisticAirfare.To}",
+                Title = $"{lad.LogisticAirfare.From} - {lad.LogisticAirfare.To}",
                 Start = lad.LogisticAirfare.DepartureDate,
                 End = lad.LogisticAirfare.ArrivalDate,
                 AllDay = false,
-                Css = "fc-event-solid-warning fc-event-light popover-enabled"
-            }) ?? new List<AgendaBaseEventJsonDto>();
+                Css = "fc-event-solid-warning fc-event-light popover-enabled",
+                FlightType = lad.LogisticAirfare.IsNational ? Labels.National : Labels.International,
+                FromPlace = lad.LogisticAirfare.From,
+                ToPlace = lad.LogisticAirfare.To,
+                TicketNumber = lad.LogisticAirfare.TicketNumber ?? "-"
+            }) ?? new List<AgendaLogisticAirfareEventJsonDto>();
 
             return Json(new
             {
