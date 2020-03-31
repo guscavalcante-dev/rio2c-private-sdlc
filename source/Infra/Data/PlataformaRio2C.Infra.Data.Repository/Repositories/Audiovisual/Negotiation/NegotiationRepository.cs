@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-27-2020
+// Last Modified On : 03-30-2020
 // ***********************************************************************
 // <copyright file="NegotiationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -327,6 +327,48 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query
                         .ToListAsync();
+        }
+
+        /// <summary>Finds the report widget dto asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="buyerOrganizationUid">The buyer organization uid.</param>
+        /// <param name="sellerOrganizationUid">The seller organization uid.</param>
+        /// <param name="projectKeywords">The project keywords.</param>
+        /// <param name="negotiationDate">The negotiation date.</param>
+        /// <param name="roomUid">The room uid.</param>
+        /// <returns></returns>
+        public async Task<List<NegotiationReportGroupedByDateDto>> FindReportWidgetDtoAsync(
+            int editionId,
+            Guid? buyerOrganizationUid,
+            Guid? sellerOrganizationUid,
+            string projectKeywords,
+            DateTime? negotiationDate,
+            Guid? roomUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId)
+                                .FindByBuyerOrganizationUid(buyerOrganizationUid)
+                                .FindBySellerOrganizationUid(sellerOrganizationUid)
+                                .FindByProjectKeywords(projectKeywords)
+                                .FindByDate(negotiationDate)
+                                .FindByRoomUid(roomUid)
+                                .Include(n => n.Room)
+                                .Include(n => n.Room.RoomNames)
+                                .Include(n => n.Room.RoomNames.Select(rn => rn.Language))
+                                .Include(n => n.ProjectBuyerEvaluation)
+                                .Include(n => n.ProjectBuyerEvaluation.Project)
+                                .Include(n => n.ProjectBuyerEvaluation.Project.ProjectTitles)
+                                .Include(n => n.ProjectBuyerEvaluation.Project.ProjectTitles.Select(pt => pt.Language))
+                                .Include(n => n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization)
+                                .Include(n => n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.Organization)
+                                .Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization)
+                                .Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization);
+
+            return (await query.ToListAsync())
+                                .GroupBy(n => n.StartDate.ToUserTimeZone().Date)
+                                .Select(nd => new NegotiationReportGroupedByDateDto(nd.Key, nd.ToList()))
+                                .OrderBy(ngd => ngd.Date)
+                                .ToList();
         }
     }
 }

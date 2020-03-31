@@ -130,6 +130,9 @@
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorBaseDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorTicketDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationBaseDto.cs" />
+    <Compile Include="Dtos\Audiovisual\Negotiations\NegotiationReportGroupedByStartDateDto.cs" />
+    <Compile Include="Dtos\Audiovisual\Negotiations\NegotiationReportGroupedByRoomDto.cs" />
+    <Compile Include="Dtos\Audiovisual\Negotiations\NegotiationReportGroupedByDateDto.cs" />
     <Compile Include="Dtos\Audiovisual\Negotiations\NegotiationGroupedByRoundDto.cs" />
     <Compile Include="Dtos\Audiovisual\Negotiations\NegotiationGroupedByRoomDto.cs" />
     <Compile Include="Dtos\Audiovisual\Negotiations\NegotiationGroupedByDateDto.cs" />
