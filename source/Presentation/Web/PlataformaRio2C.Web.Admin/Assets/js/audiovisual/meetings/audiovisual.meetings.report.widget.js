@@ -100,6 +100,22 @@ var AudiovisualMeetingsReportWidget = function () {
         });
     };
 
+    var exportExcel = function () {
+	    var jsonParameters = new Object();
+	    jsonParameters.buyerOrganizationUid = $('#SearchBuyerOrganizationUid').val();
+	    jsonParameters.sellerOrganizationUid = $('#SearchSellerOrganizationUid').val();
+	    jsonParameters.projectKeywords = $('#SearchProjectKeywords').val();
+	    jsonParameters.roomUid = $('#SearchRoomUid').val();
+
+	    var date = $('#SearchDate').val();
+	    if (!MyRio2cCommon.isNullOrEmpty(date)) {
+		    jsonParameters.date = moment(date, "L", MyRio2cCommon.getGlobalVariable('userInterfaceLanguageUppercase')).format('YYYY-MM-DD');
+	    }
+
+	    //$('#btnExportToExcel').addClass('disabled');
+        location.href = '/Audiovisual/Meetings/ExportReportExcel?' + jQuery.param(jsonParameters);
+    }
+
     return {
         init: function () {
 	        enableSearchForm();
@@ -108,6 +124,9 @@ var AudiovisualMeetingsReportWidget = function () {
         search: function() {
 	        MyRio2cCommon.block({ idOrClass: widgetElementId });
 	        show();
+        },
+        exportExcel: function() {
+	        exportExcel();
         }
     };
 }();

@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using ClosedXML.Excel;
 using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
@@ -25,6 +26,7 @@ using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.CustomActionResults;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Admin.Controllers;
@@ -440,7 +442,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
         #endregion
 
-        #region Generate Agenda
+        #region Report
 
         /// <summary>Indexes the specified search view model.</summary>
         /// <returns></returns>
@@ -477,7 +479,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowReportDataWidget(Guid? buyerOrganizationUid, Guid? sellerOrganizationUid, string projectKeywords, DateTime? date, Guid? roomUid)
         {
-            var negotiations = await this.negotiationRepo.FindReportWidgetDtoAsync(
+            var negotiationDtos = await this.negotiationRepo.FindReportWidgetDtoAsync(
                 this.EditionDto.Id,
                 buyerOrganizationUid,
                 sellerOrganizationUid,
@@ -492,7 +494,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     status = "success",
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Widgets/ReportDataWidget", negotiations), divIdOrClass = "#AudiovisualMeetingsReportWidget" },
+                        new { page = this.RenderRazorViewToString("Widgets/ReportDataWidget", negotiationDtos), divIdOrClass = "#AudiovisualMeetingsReportWidget" },
                     }
                 },
                 //ContentType = contentType,
@@ -500,6 +502,159 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet,
                 MaxJsonLength = Int32.MaxValue
             };
+        }
+
+        #endregion
+
+        #region Export Excel
+
+        /// <summary>Exports the report excel.</summary>
+        /// <param name="buyerOrganizationUid">The buyer organization uid.</param>
+        /// <param name="sellerOrganizationUid">The seller organization uid.</param>
+        /// <param name="projectKeywords">The project keywords.</param>
+        /// <param name="date">The date.</param>
+        /// <param name="roomUid">The room uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ExportReportExcel(Guid? buyerOrganizationUid, Guid? sellerOrganizationUid, string projectKeywords, DateTime? date, Guid? roomUid)
+        {
+            var negotiationDtos = await this.negotiationRepo.FindReportWidgetDtoAsync(
+                this.EditionDto.Id,
+                buyerOrganizationUid,
+                sellerOrganizationUid,
+                projectKeywords,
+                date,
+                roomUid);
+
+            var workbook = new XLWorkbook();
+            var worksheet = workbook.Worksheets.Add(Labels.CalendarReport);
+            worksheet.Outline.SummaryVLocation = XLOutlineSummaryVLocation.Top;
+            worksheet.ShowGridLines = true;
+
+            // Excel colors and formatting
+            var dateBackgroundColor = XLColor.FromHtml("#808080");
+            var dateFontColor = XLColor.White;
+            var roomBackgroundColor = XLColor.FromHtml("#d1d1d1");
+            var roomFontColor = XLColor.Black;
+            var tableBackgroundColor = XLColor.FromHtml("#d1d1d1");
+            var tableFontColor = XLColor.Black;
+            var totalColumns = 1;
+
+            if (negotiationDtos?.Any() == true)
+            {
+                var lineIndex = 1;
+
+                foreach (var negotiationReportGroupedByDateDto in negotiationDtos)
+                {
+                    #region Date Header
+
+                    var columnsCount = negotiationReportGroupedByDateDto.NegotiationReportGroupedByRoomDtos.SelectMany(nr => nr.NegotiationReportGroupedByStartDateDtos?.SelectMany(nd => nd.Negotiations.Select(n => n.TableNumber)))?.Distinct()?.Count() ?? 0;
+
+                    var columnIndex = 0;
+
+                    worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = negotiationReportGroupedByDateDto.Date.ToShortDateString();
+                    worksheet.Range(columnIndex.GetExcelColumnLetters() + lineIndex + ":" + (columnsCount + 1).GetExcelColumnLetters() + lineIndex).Row(1).Merge();
+                    worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Left);
+                    worksheet.Cell(lineIndex, columnIndex).Style.Font.Bold = true;
+                    worksheet.Cell(lineIndex, columnIndex).Style.Fill.BackgroundColor = dateBackgroundColor;
+                    worksheet.Cell(lineIndex, columnIndex).Style.Font.SetFontColor(dateFontColor);
+
+                    #endregion Date Header
+
+                    if(negotiationReportGroupedByDateDto.NegotiationReportGroupedByRoomDtos?.Any() == true)
+                    {
+                        foreach (var negotiationReportGroupedByRoomDto in negotiationReportGroupedByDateDto.NegotiationReportGroupedByRoomDtos)
+                        {
+                            var roomName = negotiationReportGroupedByRoomDto?.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value;
+                            var tableNumbers = negotiationReportGroupedByRoomDto?.NegotiationReportGroupedByStartDateDtos?.SelectMany(nd => nd.Negotiations.Select(n => n.TableNumber))?.Distinct()?.OrderBy(tn => tn)?.ToList() ?? 
+                                               new List<int>();
+
+                            #region Room Sub Header
+
+                            lineIndex++;
+                            columnIndex = 0;
+
+                            worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = roomName;
+                            worksheet.Range(columnIndex.GetExcelColumnLetters() + lineIndex + ":" + (tableNumbers.Count() + 1).GetExcelColumnLetters() + lineIndex).Row(1).Merge();
+                            worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Left);
+                            worksheet.Cell(lineIndex, columnIndex).Style.Font.Bold = true;
+                            worksheet.Cell(lineIndex, columnIndex).Style.Fill.BackgroundColor = roomBackgroundColor;
+                            worksheet.Cell(lineIndex, columnIndex).Style.Font.SetFontColor(roomFontColor);
+
+                            #endregion Room Sub Headers
+
+                            #region Table Header
+
+                            lineIndex++;
+                            columnIndex = 0;
+
+                            worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = Labels.Hour;
+                            worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                            worksheet.Cell(lineIndex, columnIndex).Style.Font.Bold = true;
+                            worksheet.Cell(lineIndex, columnIndex).Style.Fill.BackgroundColor = tableBackgroundColor;
+                            worksheet.Cell(lineIndex, columnIndex).Style.Font.SetFontColor(tableFontColor);
+
+                            foreach (var tableNumber in tableNumbers)
+                            {
+                                worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = $"{Labels.Table} {tableNumber}";
+                                worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                                worksheet.Cell(lineIndex, columnIndex).Style.Font.Bold = true;
+                                worksheet.Cell(lineIndex, columnIndex).Style.Fill.BackgroundColor = tableBackgroundColor;
+                                worksheet.Cell(lineIndex, columnIndex).Style.Font.SetFontColor(tableFontColor);
+                            }
+
+                            #endregion Table Header
+
+                            #region Hours
+
+                            foreach (var negotiationReportGroupedByStartDateDto in negotiationReportGroupedByRoomDto.NegotiationReportGroupedByStartDateDtos.OrderBy(n => n.StartDate))
+                            {
+                                lineIndex++;
+                                columnIndex = 0;
+
+                                worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = $"{negotiationReportGroupedByStartDateDto.StartDate.ToString("HH:mm")}\n{negotiationReportGroupedByStartDateDto.EndDate.ToString("HH:mm")}";
+                                worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                                worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center);
+                                worksheet.Cell(lineIndex, columnIndex).Style.Font.Bold = true;
+                                worksheet.Cell(lineIndex, columnIndex).Style.Alignment.WrapText = true;
+
+                                foreach (var tableNumber in tableNumbers)
+                                {
+                                    totalColumns = columnIndex > totalColumns ? columnIndex : totalColumns;
+
+                                    var negotiation = negotiationReportGroupedByStartDateDto.Negotiations.FirstOrDefault(n => n.TableNumber == tableNumber);
+                                    if (negotiation != null)
+                                    {
+                                        worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = negotiation.ProjectBuyerEvaluation?.BuyerAttendeeOrganization?.Organization?.TradeName +
+                                                                                                                   "\n" + negotiation.ProjectBuyerEvaluation?.Project?.ProjectTitles?.FirstOrDefault(pt => pt.Language.Code == ViewBag.UserInterfaceLanguage)?.Value +
+                                                                                                                   "\n" + negotiation.ProjectBuyerEvaluation?.Project?.SellerAttendeeOrganization?.Organization?.TradeName;
+                                    }
+                                    else
+                                    {
+                                        worksheet.Cell(lineIndex, columnIndex = columnIndex + 1).Value = string.Empty;
+                                    }
+
+                                    worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                                    worksheet.Cell(lineIndex, columnIndex).Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center);
+                                    worksheet.Cell(lineIndex, columnIndex).Style.Alignment.WrapText = true;
+                                }
+                            }
+
+                            #endregion Hours
+                        }
+                    }
+
+                    lineIndex++;
+                }
+            }
+
+            // AdjustColumns
+            for (var i = 1; i <= totalColumns + 1; i++)
+            {
+                worksheet.Column(i).AdjustToContents();
+            }
+
+            return new ExcelResult(workbook, Labels.CalendarReport + "_" + DateTime.UtcNow.ToUserTimeZone().ToString("yyyyMMdd"));
         }
 
         #endregion
