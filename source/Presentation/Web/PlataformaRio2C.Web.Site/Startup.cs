@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-01-2019
+// Last Modified On : 05-12-2020
 // ***********************************************************************
 // <copyright file="Startup.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,12 +18,12 @@ using Owin;
 using PlataformaRio2C.Web.Site.Areas.WebApi;
 using PlataformaRio2C.Web.Site.Models;
 using System;
+using System.Configuration;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using PlataformaRio2C.Web.Site.Hub;
-using PlataformaRio2C.Web.Site.Helpers;
 
 [assembly: OwinStartupAttribute(typeof(PlataformaRio2C.Web.Site.Startup))]
 namespace PlataformaRio2C.Web.Site
@@ -66,7 +66,13 @@ namespace PlataformaRio2C.Web.Site
             
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new RazorViewEngine());
-            
+
+            // SignalR
+            var sqlConnectionString = ConfigurationManager.ConnectionStrings["SignalRConnection"]?.ConnectionString;
+            if (!string.IsNullOrEmpty(sqlConnectionString))
+            {
+                GlobalHost.DependencyResolver.UseSqlServer(sqlConnectionString);
+            }
             app.MapSignalR("/signalr", hubConfiguration);
         }
     }
