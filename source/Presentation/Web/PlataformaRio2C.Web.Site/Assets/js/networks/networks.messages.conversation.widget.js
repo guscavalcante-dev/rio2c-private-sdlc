@@ -4,7 +4,7 @@
 // Created          : 11-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-17-2020
+// Last Modified On : 05-12-2020
 // ***********************************************************************
 // <copyright file="networks.messages.conversation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -217,8 +217,6 @@ jQuery(document).ready(function () {
 
     messageHub.client.receiveSenderMessage = function (message) {
         var globalVariables = MyRio2cCommon.getGlobalVariables();
-        console.log(globalVariables);
-
         var messageHubDto = JSON.parse(message);
 
         MyRio2cCommon.handleAjaxReturn({
@@ -270,7 +268,6 @@ jQuery(document).ready(function () {
 
     messageHub.client.receiveRecipientMessage = function (message) {
         var globalVariables = MyRio2cCommon.getGlobalVariables();
-
         var messageHubDto = JSON.parse(message);
 
         MyRio2cCommon.handleAjaxReturn({
