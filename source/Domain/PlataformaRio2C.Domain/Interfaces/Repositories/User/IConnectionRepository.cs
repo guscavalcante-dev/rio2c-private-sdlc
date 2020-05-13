@@ -21,5 +21,6 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface IConnectionRepository : IRepository<Connection>
     {
         Task<List<Connection>> FindAllConnectedByUserNameAsync(string userName);
+        void CleanUp();
     }    
 }

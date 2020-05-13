@@ -4,7 +4,7 @@
 // Created          : 12-03-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-11-2019
+// Last Modified On : 05-13-2020
 // ***********************************************************************
 // <copyright file="NetworksApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -73,6 +73,45 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             }
 
             return await Json(new { status = "success", message = "Send unread conversations emails processed successfully without errors." });
+        }
+
+        #endregion
+
+        #region Clean up connections
+
+        /// <summary>Cleans up connections.</summary>
+        /// <param name="key">The key.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("CleanUpConnections/{key?}")]
+        public async Task<IHttpActionResult> CleanUpConnections(string key)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (key?.ToLowerInvariant() != ConfigurationManager.AppSettings["CleanUpConnectionsApiKey"]?.ToLowerInvariant())
+                {
+                    throw new Exception("Invalid key to execute connections clean up.");
+                }
+
+                result = await this.commandBus.Send(new CleanUpConnectionsAsync());
+                if (!result.IsValid)
+                {
+                    throw new DomainException("Connections clean  up processed with some errors.");
+                }
+            }
+            catch (DomainException ex)
+            {
+                return await Json(new { status = "success", message = ex.GetInnerMessage(), errors = result?.Errors?.Select(e => new { e.Code, e.Message }) });
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return await Json(new { status = "error", message = "Connections clean up failed." });
+            }
+
+            return await Json(new { status = "success", message = "Connections clean up executed successfully." });
         }
 
         #endregion
