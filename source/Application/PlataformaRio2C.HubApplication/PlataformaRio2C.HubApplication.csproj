@@ -44,9 +44,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CQRS\CommandsHandlers\Connections\ConnectionBaseCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Connections\DeleteConnectionCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Connections\CreateConnectionCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Messages\BaseMessageCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Messages\ReadMessagesCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Messages\CreateMessageCommandHandler.cs" />
+    <Compile Include="CQRS\Commands\Connections\DeleteConnection.cs" />
+    <Compile Include="CQRS\Commands\Connections\CreateConnection.cs" />
     <Compile Include="CQRS\Commands\Messages\ReadMessages.cs" />
     <Compile Include="CQRS\Commands\Messages\CreateMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

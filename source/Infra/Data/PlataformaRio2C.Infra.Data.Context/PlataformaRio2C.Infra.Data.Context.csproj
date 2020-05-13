@@ -190,6 +190,7 @@
     <Compile Include="Mapping\Collaborator\CollaboratorTypeMap.cs" />
     <Compile Include="Mapping\Common\PresentationFormatMap.cs" />
     <Compile Include="Mapping\Common\TrackMap.cs" />
+    <Compile Include="Mapping\User\ConnectionMap.cs" />
     <Compile Include="Mapping\User\UserRoleMap.cs" />
     <Compile Include="Mapping\User\RoleMap.cs" />
     <Compile Include="Mapping\User\UserUseTermMap.cs" />
@@ -406,6 +407,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="SqlScripts\Deltas\20190930_114613_0001_ChangesForPlayersApi.sql" />
+    <Content Include="SqlScripts\Deltas\20200513_100215_0030_ChangesForSignalR.sql" />
     <Content Include="SqlScripts\Deltas\20200316_161033_0029_ChangesForAgenda.sql" />
     <Content Include="SqlScripts\Deltas\20200316_140312_0028_ChangesForUnsubscribeLists.sql" />
     <Content Include="SqlScripts\Deltas\20200310_111845_0027_ChangesForAgendaInLogistics.sql" />
