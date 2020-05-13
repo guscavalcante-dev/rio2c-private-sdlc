@@ -19,6 +19,7 @@ using PlataformaRio2C.Infra.Data.Context;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using Z.EntityFramework.Plus;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -84,6 +85,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query
                 .ToListAsync();
+        }
+
+        /// <summary>Cleans up.</summary>
+        public void CleanUp()
+        {
+            var limitDate = DateTime.UtcNow.AddDays(-2);
+            this.dbSet
+                .Where(c => c.CreateDate < limitDate)
+                .Delete();
         }
     }
 }
