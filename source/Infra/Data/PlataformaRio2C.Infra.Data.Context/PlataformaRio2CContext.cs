@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 05-13-2020
 // ***********************************************************************
 // <copyright file="PlataformaRio2CContext.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -42,6 +42,7 @@ namespace PlataformaRio2C.Infra.Data.Context
             // User
             modelBuilder.Configurations.Add(new UserMap());
             modelBuilder.Configurations.Add(new RoleMap());
+            modelBuilder.Configurations.Add(new ConnectionMap());
 
             // Edition
             modelBuilder.Configurations.Add(new EditionMap());
@@ -220,12 +221,14 @@ namespace PlataformaRio2C.Infra.Data.Context
         public DbSet<Activity> Activities { get; set; }
         public DbSet<TargetAudience> TargetAudiences { get; set; }
 
+        // Users
+        public DbSet<User> Users { get; set; }
+        public DbSet<Connection> Connections { get; set; }
 
         // TODO: Old dbsets that must be reviewed
         public DbSet<Language> Languages { get; set; }
         //public DbSet<ImageFile> ImageFiles { get; set; }
         //public DbSet<Player> Players { get; set; }
-        public DbSet<User> Users { get; set; }
         //public DbSet<UserUseTerm> UserUseTerms { get; set; }
         public DbSet<InterestGroup> InterestGroups { get; set; }
         public DbSet<Interest> Interests { get; set; }

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-07-2020
+// Last Modified On : 05-13-2020
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -39,6 +39,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
         /// <summary>Finds the by uid.</summary>
         /// <param name="query">The query.</param>
         /// <param name="userUid">The user uid.</param>
@@ -46,6 +47,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static IQueryable<User> FindByUid(this IQueryable<User> query, Guid userUid)
         {
             query = query.Where(u => u.Uid == userUid);
+
+            return query;
+        }
+
+        /// <summary>Finds by userName.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="userName">The user name.</param>
+        /// <returns></returns>
+        internal static IQueryable<User> FindByUserName(this IQueryable<User> query, string userName)
+        {
+            query = query.Where(u => u.UserName == userName);
 
             return query;
         }
@@ -96,6 +108,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return await query
                             .FirstOrDefaultAsync();
+        }
+
+        /// <summary>Finds by user name asynchronous.</summary>
+        /// <param name="userName">The user name.</param>
+        /// <returns></returns>
+        public Task<User> FindByUserNameAsync(string userName)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUserName(userName);
+
+            return query
+                .FirstOrDefaultAsync();
         }
 
         /// <summary>Finds the user dto by user identifier asynchronous.</summary>

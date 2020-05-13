@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-16-2020
+// Last Modified On : 05-13-2020
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -150,6 +150,16 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         public static string GetFirstChar(this string s)
         {
             return s?.Substring(0, 1);
+        }
+
+        /// <summary>Gets the limit.</summary>
+        /// <param name="s">The s.</param>
+        /// <param name="limit">The limit.</param>
+        /// <returns></returns>
+        public static string GetLimit(this string s, int limit)
+        {
+            return s?.Length <= limit ? s : 
+                   s?.Substring(0, limit - 1);
         }
 
         /// <summary>Converts the string representation of a number to an integer.</summary>

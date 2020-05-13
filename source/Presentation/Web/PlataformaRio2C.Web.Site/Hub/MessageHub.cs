@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-17-2020
+// Last Modified On : 05-13-2020
 // ***********************************************************************
 // <copyright file="MessageHub.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,12 +22,15 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.HubApplication.CQRS.Commands;
 using PlataformaRio2C.Infra.CrossCutting.IOC;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Infra.Data.Context;
+using PlataformaRio2C.Infra.Data.Repository.Repositories;
 using SimpleInjector.Lifestyles;
 
 namespace PlataformaRio2C.Web.Site.Hub
@@ -36,7 +39,14 @@ namespace PlataformaRio2C.Web.Site.Hub
     [Microsoft.AspNet.SignalR.Authorize]
     public class MessageHub: Microsoft.AspNet.SignalR.Hub
     {
-        private static readonly ConnectionMapping<string> _connections = new ConnectionMapping<string>();
+        private IConnectionRepository connectionRepo;
+        //private static readonly ConnectionMapping<string> _connections = new ConnectionMapping<string>(); //TODO: Remove this
+
+        /// <summary>Initializes a new instance of the <see cref="MessageHub" /> class.</summary>
+        public MessageHub()
+        {
+            this.connectionRepo = new ConnectionRepository(new PlataformaRio2CContext());
+        }
 
         /// <summary>Sends the message.</summary>
         /// <param name="editionId">The edition identifier.</param>
@@ -133,21 +143,42 @@ namespace PlataformaRio2C.Web.Site.Hub
             var viewModelSerialize = JsonConvert.SerializeObject(hubBaseDto, Formatting.None, jsonSerializerSettings);
 
             // Send message to sender
-            foreach (var connectionId in _connections.GetConnections(senderEmail))
+            var senderConnections = await this.connectionRepo.FindAllConnectedByUserNameAsync(senderEmail);
+            if (senderConnections?.Any() == true)
             {
-                Clients.Client(connectionId).receiveSenderMessage(viewModelSerialize);
-                //Clients.Client(connectionId).addUnreadsMessages(viewModelSerialize);
+                foreach (var senderConnection in senderConnections)
+                {
+                    Clients.Client(senderConnection.ConnectionId.ToString()).receiveSenderMessage(viewModelSerialize);
+                    //Clients.Client(connectionId).addUnreadsMessages(viewModelSerialize);
+                }
             }
+
+            //foreach (var connectionId in _connections.GetConnections(senderEmail))
+            //{
+            //    Clients.Client(connectionId).receiveSenderMessage(viewModelSerialize);
+            //    //Clients.Client(connectionId).addUnreadsMessages(viewModelSerialize);
+            //}
 
             // Send message to receiver
             if (!string.IsNullOrEmpty(hubBaseDto?.Data?.RecipientEmail))
             {
-                foreach (var connectionId in _connections.GetConnections(hubBaseDto.Data.RecipientEmail))
+                var receiverConnections = await this.connectionRepo.FindAllConnectedByUserNameAsync(hubBaseDto.Data.RecipientEmail);
+                if (receiverConnections?.Any() == true)
                 {
-                    Clients.Client(connectionId).receiveRecipientMessage(viewModelSerialize);
-                    Clients.Client(connectionId).receiveNotification(viewModelSerialize);
-                    //Clients.Client(connectionId).addUnreadsMessages(viewModelSerialize);
+                    foreach (var receiverConnection in receiverConnections)
+                    {
+                        Clients.Client(receiverConnection.ConnectionId.ToString()).receiveRecipientMessage(viewModelSerialize);
+                        Clients.Client(receiverConnection.ConnectionId.ToString()).receiveNotification(viewModelSerialize);
+                        //Clients.Client(connectionId).addUnreadsMessages(viewModelSerialize);
+                    }
                 }
+
+                //foreach (var connectionId in _connections.GetConnections(hubBaseDto.Data.RecipientEmail))
+                //{
+                //    Clients.Client(connectionId).receiveRecipientMessage(viewModelSerialize);
+                //    Clients.Client(connectionId).receiveNotification(viewModelSerialize);
+                //    //Clients.Client(connectionId).addUnreadsMessages(viewModelSerialize);
+                //}
             }
 
             return viewModelSerialize;
@@ -203,25 +234,33 @@ namespace PlataformaRio2C.Web.Site.Hub
 
         /// <summary>Called when the connection connects to this hub instance.</summary>
         /// <returns>A <see cref="T:System.Threading.Tasks.Task"/></returns>
-        public override Task OnConnected()
+        public override async Task OnConnected()
         {
             try
             {
-                CultureInfo callerCultureInfo = new CultureInfo(Context.Request.Cookies["_culture"].Value);
+                //var callerCultureInfo = new CultureInfo(Context.Request.Cookies["_culture"].Value);
+                //Thread.CurrentThread.CurrentUICulture = callerCultureInfo;
+                //Thread.CurrentThread.CurrentCulture = callerCultureInfo;
 
-                Thread.CurrentThread.CurrentUICulture = callerCultureInfo;
-                Thread.CurrentThread.CurrentCulture = callerCultureInfo;
+                var container = HubBootStrapper.InitializeThreadScoped();
+                using (ThreadScopedLifestyle.BeginScope(container))
+                {
+                    var commandBus = container.GetInstance<IMediator>();
+
+                    var result = await commandBus.Send(new CreateConnection(
+                        new Guid(Context.ConnectionId),
+                        Context.User.Identity.Name,
+                        Context.Request.Headers["User-Agent"]));
+                }
+
+                //var userName = Context.User.Identity.Name; //TODO: Remove this
+                //_connections.Add(userName, Context.ConnectionId); //TODO: Remove this
             }
             catch (Exception)
             {                
             }
-                     
 
-            string name = Context.User.Identity.Name;
-
-            _connections.Add(name, Context.ConnectionId);
-
-            return base.OnConnected();
+            await base.OnConnected();
         }
 
         /// <summary>Called when a connection disconnects from this hub gracefully or due to a timeout.</summary>
@@ -232,28 +271,37 @@ namespace PlataformaRio2C.Web.Site.Hub
         /// Timeouts can be caused by clients reconnecting to another SignalR server in scaleout.
         /// </param>
         /// <returns>A <see cref="T:System.Threading.Tasks.Task"/></returns>
-        public override Task OnDisconnected(bool stopCalled)
+        public override async Task OnDisconnected(bool stopCalled)
         {
-            string name = Context.User.Identity.Name;
-
-            _connections.Remove(name, Context.ConnectionId);
-
-            return base.OnDisconnected(stopCalled);
-        }
-
-        /// <summary>Called when the connection reconnects to this hub instance.</summary>
-        /// <returns>A <see cref="T:System.Threading.Tasks.Task"/></returns>
-        public override Task OnReconnected()
-        {
-            string name = Context.User.Identity.Name;
-
-            if (!_connections.GetConnections(name).Contains(Context.ConnectionId))
+            var container = HubBootStrapper.InitializeThreadScoped();
+            using (ThreadScopedLifestyle.BeginScope(container))
             {
-                _connections.Add(name, Context.ConnectionId);
+                var commandBus = container.GetInstance<IMediator>();
+
+                var result = await commandBus.Send(new DeleteConnection(
+                    new Guid(Context.ConnectionId)));
             }
 
-            return base.OnReconnected();
+            //// TODO: remove below
+            //var name = Context.User.Identity.Name;
+            //_connections.Remove(name, Context.ConnectionId);
+
+            await base.OnDisconnected(stopCalled);
         }
+
+        ///// <summary>Called when the connection reconnects to this hub instance.</summary>
+        ///// <returns>A <see cref="T:System.Threading.Tasks.Task"/></returns>
+        //public override Task OnReconnected()
+        //{
+        //    string name = Context.User.Identity.Name;
+
+        //    //if (!_connections.GetConnections(name).Contains(Context.ConnectionId))
+        //    //{
+        //    //    _connections.Add(name, Context.ConnectionId);
+        //    //}
+
+        //    return base.OnReconnected();
+        //}
     }
 
     /// <summary>CallerCulturePipelineModule</summary>
