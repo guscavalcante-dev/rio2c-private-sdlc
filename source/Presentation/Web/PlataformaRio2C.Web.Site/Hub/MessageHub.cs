@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 05-13-2020
+// Last Modified On : 05-14-2020
 // ***********************************************************************
 // <copyright file="MessageHub.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -81,7 +81,8 @@ namespace PlataformaRio2C.Web.Site.Hub
                         null));
                     if (!result.IsValid)
                     {
-                        throw new DomainException(string.Format(Messages.EntityCouldNotBeAction, Labels.Message, Labels.CreatedF.ToLowerInvariant()));
+                        var firstError = result.Errors?.FirstOrDefault();
+                        throw new DomainException(firstError != null ? firstError.Message : string.Format(Messages.EntityCouldNotBeAction, Labels.Message, Labels.CreatedF.ToLowerInvariant()));
                     }
 
                     messageDto = result.Data as MessageDto;
@@ -106,7 +107,7 @@ namespace PlataformaRio2C.Web.Site.Hub
                 hubBaseDto = new HubBaseDto<MessageHubDto>
                 {
                     Status = "error",
-                    Message = "Generic message",
+                    Message = "Undefined error. Please contact Rio2C.",
                     Data = null
                 };
             }

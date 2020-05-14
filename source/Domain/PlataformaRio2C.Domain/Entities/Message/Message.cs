@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 05-14-2020
 // ***********************************************************************
 // <copyright file="Message.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -101,12 +101,12 @@ namespace PlataformaRio2C.Domain.Entities
         {
             if (string.IsNullOrEmpty(this.Text?.Trim()))
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Name), new string[] { "Text" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Message), new string[] { "Text" }));
             }
 
             if (this.Text?.Trim().Length < TextMinLength || this.Text?.Trim().Length > TextMaxLength)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, TextMaxLength, TextMinLength), new string[] { "Text" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Message, TextMaxLength, TextMinLength), new string[] { "Text" }));
             }
         }
 

@@ -115,7 +115,7 @@
 <div class="kt-portlet__foot">
     <div class="kt-chat__input">
         <div class="kt-chat__editor">
-            @Html.TextArea("Text", null, new { placeholder = Labels.TypeYourMessage + "...", rows = 3, disabled = true })
+            @Html.TextArea("Text", null, new { @class = "maxlength-allowovermax", placeholder = Labels.TypeYourMessage + "...", rows = 3, disabled = true, data_val_length_max = 1200 })
             @*<textarea style="height: 50px" placeholder="Type here..."></textarea>*@
         </div>
         <div class="kt-chat__toolbar">
