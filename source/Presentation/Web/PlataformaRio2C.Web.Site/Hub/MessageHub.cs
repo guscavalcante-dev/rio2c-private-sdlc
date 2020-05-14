@@ -239,10 +239,6 @@ namespace PlataformaRio2C.Web.Site.Hub
         {
             try
             {
-                //var callerCultureInfo = new CultureInfo(Context.Request.Cookies["_culture"].Value);
-                //Thread.CurrentThread.CurrentUICulture = callerCultureInfo;
-                //Thread.CurrentThread.CurrentCulture = callerCultureInfo;
-
                 var container = HubBootStrapper.InitializeThreadScoped();
                 using (ThreadScopedLifestyle.BeginScope(container))
                 {
@@ -322,9 +318,13 @@ namespace PlataformaRio2C.Web.Site.Hub
         {
             try
             {
-                CultureInfo callerCultureInfo = new CultureInfo(context.Hub.Context.Request.Cookies["_culture"].Value);
-                Thread.CurrentThread.CurrentUICulture = callerCultureInfo;
-                Thread.CurrentThread.CurrentCulture = callerCultureInfo;
+                var cookieCulture = context?.Hub?.Context?.Request?.Cookies["MyRio2CCulture"]?.Value;
+                if (!string.IsNullOrEmpty(cookieCulture))
+                {
+                    var callerCultureInfo = new CultureInfo(cookieCulture);
+                    Thread.CurrentThread.CurrentUICulture = callerCultureInfo;
+                    Thread.CurrentThread.CurrentCulture = callerCultureInfo;
+                }
             }
             catch (Exception)
             {
