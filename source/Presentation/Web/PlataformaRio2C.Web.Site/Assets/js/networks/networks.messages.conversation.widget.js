@@ -25,6 +25,8 @@ var NetworksMessagesConversationWidget = function () {
         startHub();
 
         $('#SendMessage').click(function () {
+            $('#SendMessage').attr('disabled', true);
+
             // Call the Send method on the hub.
             window.messageHub.server.sendMessage(
                 messagesConfig.editionId,
@@ -51,9 +53,9 @@ var NetworksMessagesConversationWidget = function () {
             //$('#Messages').append(html);
             //$('#Messages').scrollTop($('#Messages')[0].scrollHeight);
             // Clear text box and reset focus for next comment.
-
-            $('#Text').val('').focus();
         });
+
+        MyRio2cCommon.enableInputMaxlength();
 
         $('#Text').focus();
     };
@@ -224,6 +226,9 @@ jQuery(document).ready(function () {
             // Success
             onSuccess: function () {
                 if (otherUserUid === messageHubDto.data.recipientUserUid) {
+                    $('#SendMessage').attr('disabled', false);
+                    $('#Text').val('').focus();
+
                     var sendDateFormatted = moment(messageHubDto.data.sendDate).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
 
                     var html =
@@ -262,6 +267,7 @@ jQuery(document).ready(function () {
             },
             // Error
             onError: function () {
+                $('#SendMessage').attr('disabled', false);
             }
         });
     };

@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-26-2020
+// Last Modified On : 05-14-2020
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -75,31 +75,31 @@ var MyRio2cCommon = function () {
         };
     };
 
-        // Enable change events -----------------------------------------------------------------------
+    // Enable change events -----------------------------------------------------------------------
     var enableCheckboxChangeEvent = function (elementId, callback) {
-            var element = $('#' + elementId);
-        
-            function toggleChanged(element) {       
-                if (element.prop('checked')) {
-                    $("[data-additionalinfo='"+ element.attr("id") +"']").removeClass('d-none');
-                }
-                else {
-                    $("[data-additionalinfo='"+element.attr("id")+"']").addClass('d-none');
-                }
+        var element = $('#' + elementId);
 
-                if (callback) {
-	                callback(element.prop('checked'));
-                }
+        function toggleChanged(element) {
+            if (element.prop('checked')) {
+                $("[data-additionalinfo='" + element.attr("id") + "']").removeClass('d-none');
             }
-        
+            else {
+                $("[data-additionalinfo='" + element.attr("id") + "']").addClass('d-none');
+            }
+
+            if (callback) {
+                callback(element.prop('checked'));
+            }
+        }
+
+        toggleChanged(element);
+
+        element.not('.change-event-enabled').on('click', function () {
             toggleChanged(element);
+        });
 
-            element.not('.change-event-enabled').on('click', function () {   
-                toggleChanged(element);
-            });
-
-            element.addClass('change-event-enabled');
-        };
+        element.addClass('change-event-enabled');
+    };
 
     var enableDropdownChangeEvent = function (elementId, requiredFieldId) {
         var element = $('#' + elementId);
@@ -118,30 +118,30 @@ var MyRio2cCommon = function () {
         }
 
         toggleChanged(element);
-        element.not('.change-event-enabled').on('change', function () {            
+        element.not('.change-event-enabled').on('change', function () {
             toggleChanged(element);
         });
 
         element.addClass('change-event-enabled');
     };
-    
+
     var enableYesNoRadioEvent = function (elementId) {
-	    function toggleChanged(radio) {
-		    if (radio === "True") {
-			    $("[data-additionalinfo='" + elementId + "']").removeClass('d-none');
-		    }
-		    else {
-			    $("[data-additionalinfo='" + elementId + "']").addClass('d-none');
-		    }
-	    }
+        function toggleChanged(radio) {
+            if (radio === "True") {
+                $("[data-additionalinfo='" + elementId + "']").removeClass('d-none');
+            }
+            else {
+                $("[data-additionalinfo='" + elementId + "']").addClass('d-none');
+            }
+        }
 
-	    toggleChanged($("[data-id='" + elementId + "']").find(":checked").val());
+        toggleChanged($("[data-id='" + elementId + "']").find(":checked").val());
 
-	    var selector = $("[data-id='" + elementId + "'] input");
-	    selector.not('.change-event-enabled').change(function () {
-		    toggleChanged($(this).val());
-	    });
-	    selector.addClass('change-event-enabled');
+        var selector = $("[data-id='" + elementId + "'] input");
+        selector.not('.change-event-enabled').change(function () {
+            toggleChanged($(this).val());
+        });
+        selector.addClass('change-event-enabled');
     };
 
     //var fixCkEditorValidation = function () {
@@ -207,77 +207,77 @@ var MyRio2cCommon = function () {
 
         // Radiobutton required if
         jQuery.validator.addMethod("radiobuttonrequiredif", function (value, element, params) {
-	        var dependentProperty = foolproof.getName(element, params["dependentproperty"]);
-	        var dependentTestValue = params["dependentvalue"];
-	        var operator = params["operator"];
-	        var pattern = params["pattern"];
-	        var dependentPropertyElement = document.getElementsByName(dependentProperty);
-	        var dependentValue = null;
+            var dependentProperty = foolproof.getName(element, params["dependentproperty"]);
+            var dependentTestValue = params["dependentvalue"];
+            var operator = params["operator"];
+            var pattern = params["pattern"];
+            var dependentPropertyElement = document.getElementsByName(dependentProperty);
+            var dependentValue = null;
 
-	        if (dependentPropertyElement.length > 1) {
-		        for (var index = 0; index != dependentPropertyElement.length; index++)
-			        if (dependentPropertyElement[index]["checked"]) {
-				        dependentValue = dependentPropertyElement[index].value;
-				        break;
-			        }
+            if (dependentPropertyElement.length > 1) {
+                for (var index = 0; index != dependentPropertyElement.length; index++)
+                    if (dependentPropertyElement[index]["checked"]) {
+                        dependentValue = dependentPropertyElement[index].value;
+                        break;
+                    }
 
-		        if (dependentValue == null) {
-			        dependentValue = false;
-		        }
-	        }
-	        else
-		        dependentValue = dependentPropertyElement[0].value;
+                if (dependentValue == null) {
+                    dependentValue = false;
+                }
+            }
+            else
+                dependentValue = dependentPropertyElement[0].value;
 
             if (foolproof.is(dependentValue, operator, dependentTestValue)) {
-	            if (pattern == null) {
-		            var jElement = $(element);
+                if (pattern == null) {
+                    var jElement = $(element);
                     if (jElement.is(":radio")) {
                         if ($("[name='" + element.name + "']:checked").length) {
-	                        return true;
+                            return true;
                         }
                     }
                     else if (value != null && value.toString().replace(/^\s\s*/, '').replace(/\s\s*$/, '') != "") {
-	                    return true;
+                        return true;
                     }
                 }
-	            else {
-		            return (new RegExp(pattern)).test(value);
-	            }
+                else {
+                    return (new RegExp(pattern)).test(value);
+                }
             }
             else {
-	            return true;
+                return true;
             }
 
-	        return false;
+            return false;
         });
 
         $.validator.unobtrusive.adapters.add("radiobuttonrequiredif", ["dependentproperty", "dependentvalue"], function (options) {
-	        var value = {
-		        dependentproperty: options.params.dependentproperty,
+            var value = {
+                dependentproperty: options.params.dependentproperty,
                 dependentvalue: options.params.dependentvalue,
                 operator: 'EqualTo'
-	        };
+            };
 
             options.rules["radiobuttonrequiredif"] = value;
-	        if (options.message) {
+            if (options.message) {
                 options.messages["radiobuttonrequiredif"] = options.message;
-	        }
+            }
         });
 
         //jQuery.validator.addMethod("radiobuttonrequiredif", function (value, element, params) {
-	       // var dependentproperty = foolproof.getId(element, params["dependentproperty"]);
-	       // var dependentpropertyvalue = $('#' + dependentproperty).val();
-	       // if (MyRio2cCommon.isNullOrEmpty(dependentpropertyvalue)) {
-		      //  return true;
-	       // }
+        // var dependentproperty = foolproof.getId(element, params["dependentproperty"]);
+        // var dependentpropertyvalue = $('#' + dependentproperty).val();
+        // if (MyRio2cCommon.isNullOrEmpty(dependentpropertyvalue)) {
+        //  return true;
+        // }
 
-	       // if (dependentpropertyvalue != params["dependentpropertyvalue"]) {
-		      //  return true;
-	       // }
+        // if (dependentpropertyvalue != params["dependentpropertyvalue"]) {
+        //  return true;
+        // }
 
 
 
-	       // return false;
+        // return false;
         //});
 
         // Required if one not empty and other empty
@@ -612,8 +612,8 @@ var MyRio2cCommon = function () {
 
     // Forms --------------------------------------------------------------------------------------
     var enableFormValidation = function (options) {
-	    var globalValidations = extendGlobalValidations;
-	    globalValidations();
+        var globalValidations = extendGlobalValidations;
+        globalValidations();
 
         if (!hasProperty(options, 'formIdOrClass') || isNullOrEmpty(options.formIdOrClass)) {
             return;
@@ -702,7 +702,7 @@ var MyRio2cCommon = function () {
             autoclose: options.autoclose,
             language: MyRio2cCommon.getGlobalVariable('userInterfaceLanguage')
         });
-                
+
         $(options.inputIdOrClass).inputmask("datetime", {
             inputFormat: format,
             placeholder: "__/__/____",
@@ -710,23 +710,23 @@ var MyRio2cCommon = function () {
     };
 
     var enableDateTimePicker = function (options) {
-	    // Id or class
-	    if (!hasProperty(options, 'inputIdOrClass') || isNullOrEmpty(options.inputIdOrClass)) {
-		    options.inputIdOrClass = '.enable-datetimepicker';
-	    }
+        // Id or class
+        if (!hasProperty(options, 'inputIdOrClass') || isNullOrEmpty(options.inputIdOrClass)) {
+            options.inputIdOrClass = '.enable-datetimepicker';
+        }
 
-	    var language = MyRio2cCommon.getGlobalVariable('userInterfaceLanguage');
+        var language = MyRio2cCommon.getGlobalVariable('userInterfaceLanguage');
         var dateFormat = $.fn.datepicker.dates[language].format;
 
-	    $(options.inputIdOrClass).datetimepicker({
-		    format: dateFormat + ' hh:ii',
+        $(options.inputIdOrClass).datetimepicker({
+            format: dateFormat + ' hh:ii',
             language: language
         });
 
         $(options.inputIdOrClass).inputmask("datetime", {
-	        inputFormat: dateFormat + ' HH:MM',
+            inputFormat: dateFormat + ' HH:MM',
             placeholder: (dateFormat + ' HH:ii').replace(/([(A-Z)|(a-z)])/g, "_")
-		});
+        });
     }
 
     var enableTimePicker = function (options) {
@@ -785,18 +785,18 @@ var MyRio2cCommon = function () {
     };
 
     var enableCustomFile = function (options) {
-	    if (isNullOrEmpty(options)) {
-		    options = new Object();
+        if (isNullOrEmpty(options)) {
+            options = new Object();
         }
 
-	    // Id or class
-	    if (!hasProperty(options, 'inputIdOrClass') || isNullOrEmpty(options.inputIdOrClass)) {
+        // Id or class
+        if (!hasProperty(options, 'inputIdOrClass') || isNullOrEmpty(options.inputIdOrClass)) {
             options.inputIdOrClass = '.custom-file-input';
-	    }
+        }
 
         $(options.inputIdOrClass).not('.change-event-enabled').on("change", function () {
-		    var fileName = $(this).val().split("\\").pop();
-		    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
         });
         $(options.inputIdOrClass).addClass('change-event-enabled');
     };
@@ -1331,37 +1331,37 @@ var MyRio2cCommon = function () {
     var formatOrganizationResult = function (organization) {
         if (organization.loading) {
             return organization.text;
-	    }
+        }
 
-	    var imageDirectory = 'https://' + globalVariables.bucket + '/img/organizations/';
+        var imageDirectory = 'https://' + globalVariables.bucket + '/img/organizations/';
 
-	    var container =
-		    '<div class="select2-result-collaborator clearfix">' +
-			    '<div class="select2-result-collaborator__avatar">';
+        var container =
+            '<div class="select2-result-collaborator clearfix">' +
+            '<div class="select2-result-collaborator__avatar">';
 
-	    // Picture
-	    if (!MyRio2cCommon.isNullOrEmpty(organization.Picture)) {
-		    container +=
+        // Picture
+        if (!MyRio2cCommon.isNullOrEmpty(organization.Picture)) {
+            container +=
                 '<img src="' + organization.Picture + '" />';
-	    }
-	    else {
-		    container +=
-			    '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" />';
-	    }
+        }
+        else {
+            container +=
+                '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" />';
+        }
 
-	    container +=
-		    '</div > ' +
-		    '<div class="select2-result-collaborator__meta">' +
+        container +=
+            '</div > ' +
+            '<div class="select2-result-collaborator__meta">' +
             '<div class="select2-result-collaborator__title">' + organization.TradeName + '</div>' +
-			'<div class="select2-result-collaborator__description">' + organization.CompanyName + '</div>';
+            '<div class="select2-result-collaborator__description">' + organization.CompanyName + '</div>';
 
-	    container +=
-		    '   </div>' +
-		    '</div>';
+        container +=
+            '   </div>' +
+            '</div>';
 
-	    var $container = $(container);
+        var $container = $(container);
 
-	    return $container;
+        return $container;
     };
 
     var formatOrganizationSelection = function (organization) {
@@ -1443,59 +1443,59 @@ var MyRio2cCommon = function () {
 
     // Collaborator select2 -----------------------------------------------------------------------
     var formatCollaboratorResult = function (collaborator) {
-	    if (collaborator.loading) {
-		    return collaborator.text;
-	    }
-
-	    var imageDirectory = 'https://' + globalVariables.bucket + '/img/users/';
-
-	    var container =
-		    '<div class="select2-result-collaborator clearfix">' +
-			    '<div class="select2-result-collaborator__avatar">';
-
-	    // Picture
-	    if (!MyRio2cCommon.isNullOrEmpty(collaborator.Picture)) {
-		    container +=
-			    '<img src="' + collaborator.Picture + '" />';
-	    }
-	    else {
-		    container +=
-			    '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" />';
+        if (collaborator.loading) {
+            return collaborator.text;
         }
 
-	    var mainName = collaborator.BadgeName || collaborator.Name;
+        var imageDirectory = 'https://' + globalVariables.bucket + '/img/users/';
 
-	    container +=
-		    '</div > ' +
-		    '<div class="select2-result-collaborator__meta">' +
+        var container =
+            '<div class="select2-result-collaborator clearfix">' +
+            '<div class="select2-result-collaborator__avatar">';
+
+        // Picture
+        if (!MyRio2cCommon.isNullOrEmpty(collaborator.Picture)) {
+            container +=
+                '<img src="' + collaborator.Picture + '" />';
+        }
+        else {
+            container +=
+                '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" />';
+        }
+
+        var mainName = collaborator.BadgeName || collaborator.Name;
+
+        container +=
+            '</div > ' +
+            '<div class="select2-result-collaborator__meta">' +
             '<div class="select2-result-collaborator__title">' + mainName + '</div>';
 
         if (mainName !== collaborator.Name) {
-	        container +=
+            container +=
                 '<div class="select2-result-collaborator__description">' + collaborator.Name + '</div>';
         }
 
-	    if (!MyRio2cCommon.isNullOrEmpty(collaborator.JobTitle)) {
-		    container +=
-			    '<div class="select2-result-collaborator__description">' + collaborator.JobTitle + '</div>';
-	    }
+        if (!MyRio2cCommon.isNullOrEmpty(collaborator.JobTitle)) {
+            container +=
+                '<div class="select2-result-collaborator__description">' + collaborator.JobTitle + '</div>';
+        }
 
-	    if (!MyRio2cCommon.isNullOrEmpty(collaborator.Companies) && collaborator.Companies.length > 0) {
-		    container +=
-			    '<div class="select2-result-collaborator__description">' + collaborator.Companies[0].TradeName + '</div>';
-	    }
+        if (!MyRio2cCommon.isNullOrEmpty(collaborator.Companies) && collaborator.Companies.length > 0) {
+            container +=
+                '<div class="select2-result-collaborator__description">' + collaborator.Companies[0].TradeName + '</div>';
+        }
 
-	    container +=
-		    '   </div>' +
-		    '</div>';
+        container +=
+            '   </div>' +
+            '</div>';
 
-	    var $container = $(container);
+        var $container = $(container);
 
-	    return $container;
+        return $container;
     };
 
     var formatCollaboratorSelection = function (collaborator) {
-	    return collaborator.text;
+        return collaborator.text;
     };
 
     var enableCollaboratorSelect2 = function (options) {
@@ -1748,10 +1748,13 @@ var MyRio2cCommon = function () {
             enableColorPicker(options);
         },
         enableCustomFile: function (options) {
-	        enableCustomFile(options);
+            enableCustomFile(options);
         },
         submitForm: function (formIdOrClass) {
             submitForm(formIdOrClass);
+        },
+        enableInputMaxlength: function () {
+            enableInputMaxlength();
         },
         hide: function (element) {
             hide(element);
@@ -1799,25 +1802,25 @@ var MyRio2cCommon = function () {
             showAlert(options);
         },
         enableOrganizationSelect2: function (options) {
-	        enableOrganizationSelect2(options);
+            enableOrganizationSelect2(options);
         },
         enableCollaboratorSelect2: function (options) {
             enableCollaboratorSelect2(options);
         },
-        enableProjectSelect2: function(options) {
-	        enableProjectSelect2(options);
+        enableProjectSelect2: function (options) {
+            enableProjectSelect2(options);
         },
         enableDropdownChangeEvent: function (elementId, requiredFieldId) {
             enableDropdownChangeEvent(elementId, requiredFieldId);
         },
         enableCheckboxChangeEvent: function (elementId, callback) {
-	        enableCheckboxChangeEvent(elementId, callback);
+            enableCheckboxChangeEvent(elementId, callback);
         },
-        enableDateTimePicker: function(options) {
-	        enableDateTimePicker(options);
+        enableDateTimePicker: function (options) {
+            enableDateTimePicker(options);
         },
-        enableYesNoRadioEvent: function(elementId) {
-	        enableYesNoRadioEvent(elementId);
+        enableYesNoRadioEvent: function (elementId) {
+            enableYesNoRadioEvent(elementId);
         }
     };
 }();
