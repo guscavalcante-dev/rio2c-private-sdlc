@@ -1,6 +1,11 @@
-﻿@using PlataformaRio2C.Domain.Dtos
+﻿@using PlataformaRio2C.Domain.Constants
+@using PlataformaRio2C.Domain.Dtos
 @{
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var hasSurveyPermission = userAccessControlDto?.HasAnyCollaboratorType(new[]
+    {
+        CollaboratorType.ExecutiveAudiovisual
+    }) ?? false;
     DateTime date;
 }
 <div class="kt-portlet">
@@ -18,7 +23,34 @@
                     <div class="kt-timeline-v1__items">
                         <div class="kt-timeline-v1__marker"></div>
                         <!--begin: Timeline item-->
-                        <div class="kt-timeline-v1__item kt-timeline-v1__item--first">
+                        @if (hasSurveyPermission)
+                        {
+                            <div class="kt-timeline-v1__item kt-timeline-v1__item--first">
+                                @{
+                                    date = new DateTime(2020, 5, 23);
+                                }
+                                <div class="kt-timeline-v1__item-circle">
+                                    <div class="kt-bg-danger"></div>
+                                </div>
+                                <span class="kt-timeline-v1__item-time kt-font-brand">@date.ToShortDateString()</span>
+                                <div class="kt-timeline-v1__item-content">
+                                    @*<div class="kt-timeline-v1__item-title">
+                                        New Members Joined!
+                                    </div>*@
+                                    <div class="kt-timeline-v1__item-body">
+                                        <a href="@(ViewBag.UserInterfaceLanguage?.ToLowerInvariant() == "pt-br" ? "https://forms.gle/p9Bx8xiERT2o1DCYA" : "https://forms.gle/7xe9QWffSfVmEtj8A")" target="_blank">
+                                            <img class="r2c-we-connected-banner" src="https://assets.my.rio2c.com/img/we-connected/@(date.ToString("yyyyMMdd"))_dashboard-banner-@(ViewBag.UserInterfaceLanguage).jpg?v=@(date.ToString("yyyyMMdd"))" />
+                                        </a>
+                                    </div>
+                                    @*<div class="kt-timeline-v1__item-actions">
+                                        <a href="#" class="btn btn-sm btn-brand">Check all</a>
+                                    </div>*@
+                                </div>
+                            </div>
+                        }
+                        <!--end: Timeline item-->
+                        <!--begin: Timeline item-->
+                        <div class="kt-timeline-v1__item @(hasSurveyPermission ? string.Empty : "kt-timeline-v1__item--first")">
                             @{
                                 date = new DateTime(2020, 3, 11);
                             }
