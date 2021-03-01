@@ -99,7 +99,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
 
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+            return View(new LoginViewModel());
         }
 
         /// <summary>Logins the specified model.</summary>
