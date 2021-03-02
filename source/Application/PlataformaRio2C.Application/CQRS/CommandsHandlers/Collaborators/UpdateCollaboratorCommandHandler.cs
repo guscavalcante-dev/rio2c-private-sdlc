@@ -117,7 +117,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             collaborator.Update(
                 await this.attendeeOrganizationRepo.FindAllByUidsAsync(cmd.AttendeeOrganizationBaseCommands?.Where(aobc => aobc.AttendeeOrganizationUid.HasValue)?.Select(aobc => aobc.AttendeeOrganizationUid.Value)?.ToList()),
                 await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
-                await this.collaboratorTypeRepo.FindByNameAsunc(cmd.CollaboratorTypeName),
+                await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
                 cmd.BirthDate,
                 genderRepo.Get(cmd.CollaboratorGenderUid ?? Guid.Empty),
                 cmd.CollaboratorGenderAdditionalInfo,

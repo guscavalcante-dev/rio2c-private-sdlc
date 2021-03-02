@@ -106,6 +106,10 @@ namespace PlataformaRio2C.Infra.Data.Repository
                : this.dbSet;
         }
 
+        /// <summary>
+        /// Gets all simple.
+        /// </summary>
+        /// <returns></returns>
         public virtual IQueryable<T> GetAllSimple()
         {
             return
@@ -113,14 +117,17 @@ namespace PlataformaRio2C.Infra.Data.Repository
               
         }
 
+        /// <summary>
+        /// Gets all simple.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
         public virtual IQueryable<T> GetAllSimple(Expression<Func<T, bool>> filter)
         {
             return
                 this.dbSet.Where(filter);
 
         }
-
-
 
         /// <summary>
         /// Metodo que traz todos os registros que satisfaçam a condição do filtro

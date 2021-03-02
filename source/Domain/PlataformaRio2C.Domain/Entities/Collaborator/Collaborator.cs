@@ -810,7 +810,7 @@ namespace PlataformaRio2C.Domain.Entities
             return this.AttendeeCollaborators?
                             .Where(ac => !ac.IsDeleted)?
                             .SelectMany(ac => ac.AttendeeCollaboratorTypes
-                                                    .Where(act => !act.IsDeleted && !act.CollaboratorType.IsDeleted)
+                                                    .Where(act => !act.IsDeleted && act.CollaboratorType?.IsDeleted == false)
                                                     .Select(act => act.CollaboratorType.Role))?.Distinct()?.ToList();
         }
 

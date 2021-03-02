@@ -77,7 +77,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+            return View(new LoginViewModel());
         }
 
         /// <summary>Logins the specified model.</summary>

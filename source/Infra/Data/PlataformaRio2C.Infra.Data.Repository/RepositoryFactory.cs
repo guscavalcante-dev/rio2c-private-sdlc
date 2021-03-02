@@ -74,6 +74,15 @@ namespace PlataformaRio2C.Infra.Data.Repository
         //    }
         //}
 
+        private ICollaboratorTypeRepository _collaboratorTypeRepository;
+        public ICollaboratorTypeRepository CollaboratorTypeRepository
+        {
+            get
+            {
+                return this._collaboratorTypeRepository ?? (this._collaboratorTypeRepository = new CollaboratorTypeRepository(_context));
+            }
+        }
+
         private ICollaboratorRepository _collaboratorRepository;
         public ICollaboratorRepository CollaboratorRepository
         {

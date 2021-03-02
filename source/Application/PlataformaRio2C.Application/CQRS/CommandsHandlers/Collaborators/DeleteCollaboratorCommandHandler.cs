@@ -74,7 +74,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             collaborator.Delete(
                 edition,
-                await this.collaboratorTypeRepo.FindByNameAsunc(cmd.CollaboratorTypeName),
+                await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
                 cmd.UserId);
             if (!collaborator.IsValid())
             {

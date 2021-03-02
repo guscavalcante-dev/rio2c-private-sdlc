@@ -37,6 +37,7 @@ var CollaboratorsCreate = function () {
         MyRio2cCommon.enableDropdownChangeEvent("CollaboratorIndustryUid", "CollaboratorIndustryAdditionalInfo");
         MyRio2cCommon.enableYesNoRadioEvent("HasAnySpecialNeeds");
         MyRio2cCommon.enableYesNoRadioEvent("HaveYouBeenToRio2CBefore");
+        MyRio2cCommon.enableDatePicker({ inputIdOrClass: formId + ' .enable-datepicker' });
         changePreviousEditionsRequired();
         MyRio2cCommon.enableAtLeastOnCheckboxByNameValidation("HaveYouBeenToRio2CBefore");
         enableAjaxForm();

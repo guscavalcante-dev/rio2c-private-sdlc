@@ -67,7 +67,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #endregion
 
             var edition = await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty);
-            var collaboratorType = await this.collaboratorTypeRepo.FindByNameAsunc(cmd.CollaboratorTypeName);
+            var collaboratorType = await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName);
 
             collaborator.UpdateApiConfiguration(
                 edition,

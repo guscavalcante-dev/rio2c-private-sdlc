@@ -80,7 +80,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             collaborator.UpdateTiny(
                 await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
-                await this.collaboratorTypeRepo.FindByNameAsunc(cmd.CollaboratorTypeName),
+                await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
                 cmd.FirstName,
                 cmd.LastNames,
                 cmd.Email,

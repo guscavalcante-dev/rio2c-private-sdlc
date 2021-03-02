@@ -105,7 +105,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
             if(cmd.EditionsUids == null || (!cmd.HaveYouBeenToRio2CBefore ?? false)) cmd.EditionsUids = new List<Guid>();
             collaborator.UpdateAdminMainInformation(
-                await this.collaboratorTypeRepo.FindByNameAsunc(cmd.CollaboratorTypeName),
+                await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
                 cmd.FirstName,
                 cmd.LastNames,
                 cmd.Email,

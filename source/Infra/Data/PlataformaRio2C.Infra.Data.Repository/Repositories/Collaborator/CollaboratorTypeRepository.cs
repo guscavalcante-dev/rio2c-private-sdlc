@@ -89,7 +89,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>Finds the by name asunc.</summary>
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
         /// <returns></returns>
-        public async Task<CollaboratorType> FindByNameAsunc(string collaboratorTypeName)
+        public async Task<CollaboratorType> FindByNameAsync(string collaboratorTypeName)
         {
             var query = this.GetBaseQuery()
                                 .FindByName(collaboratorTypeName);
