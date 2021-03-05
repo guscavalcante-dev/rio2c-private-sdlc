@@ -2505,4 +2505,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Quando</value>
     <comment>Quando</comment>
   </data>
+  <data name="Editions" xml:space="preserve">
+    <value>Edições</value>
+    <comment>Edições</comment>
+  </data>
 </root>

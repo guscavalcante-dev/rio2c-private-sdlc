@@ -379,6 +379,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CompaniesController.cs" />
+    <Compile Include="Controllers\EditionsController.cs" />
     <Compile Include="Controllers\LogisticsController.cs" />
     <Compile Include="Controllers\PlacesController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
@@ -439,6 +440,13 @@
     <Content Include="Assets\js\addresses\addresses.form.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.create.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.report.widget.js" />
+    <Content Include="Assets\js\editions\editions.conferences.widget.js" />
+    <Content Include="Assets\js\editions\editions.create.js" />
+    <Content Include="Assets\js\editions\editions.datatable.widget.js" />
+    <Content Include="Assets\js\editions\editions.delete.js" />
+    <Content Include="Assets\js\editions\editions.editioncount.widget.js" />
+    <Content Include="Assets\js\editions\editions.maininformation.widget.js" />
+    <Content Include="Assets\js\editions\editions.totalcount.widget.js" />
     <Content Include="Assets\js\logisticsponsors\logisticsponsors.editioncount.widget.js" />
     <Content Include="Assets\js\logisticsponsors\logisticsponsors.totalcount.widget.js" />
     <Content Include="Assets\js\logisticsponsors\logisticsponsors.maininformation.widget.js" />
@@ -8551,6 +8559,16 @@
     <Content Include="Views\Logistics\Widgets\LogisticsAirfareList.cshtml" />
     <Content Include="Views\Logistics\Widgets\LogisticsAccommodationList.cshtml" />
     <Content Include="Views\Logistics\Widgets\LogisticsTransferList.cshtml" />
+    <Content Include="Views\Editions\Details.cshtml" />
+    <Content Include="Views\Editions\Index.cshtml" />
+    <Content Include="Views\Editions\Modals\_CreateForm.cshtml" />
+    <Content Include="Views\Editions\Modals\CreateModal.cshtml" />
+    <Content Include="Views\Editions\Modals\UpdateMainInformationForm.cshtml" />
+    <Content Include="Views\Editions\Modals\UpdateMainInformationModal.cshtml" />
+    <Content Include="Views\Editions\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Views\Editions\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Views\Editions\Widgets\MainInformationWidget.cshtml" />
+    <Content Include="Views\Editions\Widgets\TotalCountWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -16,9 +16,13 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using LinqKit;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context;
+using X.PagedList;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -36,6 +40,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static IQueryable<Edition> FindByUid(this IQueryable<Edition> query, Guid editionUid)
         {
             query = query.Where(e => e.Uid == editionUid);
+
+            return query;
+        }
+
+        /// <summary>Finds the by uids.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="editionUids">The edition event uids.</param>
+        /// <returns></returns>
+        internal static IQueryable<Edition> FindByUids(this IQueryable<Edition> query, List<Guid> editionUids)
+        {
+            if (editionUids?.Any() == true)
+            {
+                query = query.Where(c => editionUids.Contains(c.Uid));
+            }
 
             return query;
         }
@@ -72,6 +90,59 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             query = query.Where(e => !e.IsDeleted);
 
             return query;
+        }
+
+        /// <summary>Finds the by keywords.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <returns></returns>
+        internal static IQueryable<Edition> FindByKeywords(this IQueryable<Edition> query, string keywords)
+        {
+            if (!string.IsNullOrEmpty(keywords))
+            {
+                var outerWhere = PredicateBuilder.New<Edition>(false);
+                var innerEditionNameWhere = PredicateBuilder.New<Edition>(true);
+
+                foreach (var keyword in keywords.Split(' '))
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        innerEditionNameWhere = innerEditionNameWhere.And(e => e.Name.Contains(keyword));
+                    }
+                }
+
+                outerWhere = outerWhere.Or(innerEditionNameWhere);
+                query = query.Where(outerWhere);
+            }
+
+            return query;
+        }
+    }
+
+    #endregion
+
+    #region EditionJsonDto IQueryable Extensions
+
+    /// <summary>
+    /// EditionJsonDtoIQueryableExtensions
+    /// </summary>
+    internal static class EditionJsonDtoIQueryableExtensions
+    {
+        /// <summary>Converts to listpagedasync.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        internal static async Task<IPagedList<EditionJsonDto>> ToListPagedAsync(this IQueryable<EditionJsonDto> query, int page, int pageSize)
+        {
+            page++;
+
+            // Page the list
+            var pagedList = await query.ToPagedListAsync(page, pageSize);
+            if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
+                pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
+
+            return pagedList;
         }
     }
 
@@ -135,6 +206,101 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query.ToList();
         }
+
+        public async Task<EditionDto> FindDtoAsync(Guid editionUid)
+        {
+            var query = this.GetBaseQuery()
+                               .FindByUid(editionUid);
+
+            return await query
+                            .Select(e => new EditionDto() 
+                            { 
+                                Edition = e
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the conference widget dto asynchronous.
+        /// </summary>
+        /// <param name="editionUid">The edition uid.</param>
+        /// <returns></returns>
+        public async Task<EditionDto> FindConferenceWidgetDtoAsync(Guid editionUid)
+        {
+            var query = this.GetBaseQuery()
+                               .FindByUid(editionUid);
+
+            return await query
+                            .Select(e => new EditionDto()
+                            {
+                                Edition = e
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds all by data table.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <param name="editionUids">The edition uids.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="languageId">The language identifier.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<IPagedList<EditionJsonDto>> FindAllByDataTable(
+            int page, 
+            int pageSize, 
+            string keywords, 
+            List<Tuple<string, string>> sortColumns, 
+            List<Guid> editionUids, 
+            int editionId, 
+            int languageId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByKeywords(keywords)
+                                .FindByUids(editionUids);
+
+            return await query
+                            .DynamicOrder<Edition>(
+                                sortColumns,
+                                new List<Tuple<string, string>>
+                                {
+                                    //new Tuple<string, string>("EditionEventJsonDto", "EditionEvent.Name"),
+                                    //new Tuple<string, string>("Email", "User.Email"),
+                                },
+                                new List<string> { "Name", "StartDate", "EndDate", "CreateDate", "UpdateDate" },
+                                "StartDate")
+                            .Select(c => new EditionJsonDto
+                            {
+                                Id = c.Id,
+                                Uid = c.Uid,
+                                Name = c.Name,
+                                StartDate = c.StartDate,
+                                EndDate = c.EndDate,
+                                CreateDate = c.CreateDate,
+                                UpdateDate = c.UpdateDate
+                            })
+                            .ToListPagedAsync(page, pageSize);
+        }
+
+        /// <summary>
+        /// Counts all by data table.
+        /// </summary>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="editionUid">The edition uid.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<int> CountAllByDataTable(bool showAllEditions, Guid editionUid)
+        {
+            var query = this.GetBaseQuery();
+
+            return await query
+                            .CountAsync();
+        }
+
 
         #region Old Methods
 

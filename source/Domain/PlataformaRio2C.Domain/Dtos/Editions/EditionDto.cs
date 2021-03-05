@@ -19,7 +19,7 @@ namespace PlataformaRio2C.Domain.Dtos
     /// <summary>EditionDto</summary>
     public class EditionDto
     {
-        public Edition Edition { get; private set; }
+        public Edition Edition { get; set; }
         public int Id { get; private set; }
         public Guid Uid { get; private set; }
         public string Name { get; private set; }
@@ -53,9 +53,6 @@ namespace PlataformaRio2C.Domain.Dtos
         public int CreateUserId { get; private set; }
         public DateTimeOffset UpdateDate { get; private set; }
         public int UpdateUserId { get; private set; }
-
-        //public UserAppViewModel Creator { get; set; }
-        //public UserAppViewModel Updated { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="EditionDto"/> class.</summary>
         public EditionDto()
@@ -107,16 +104,6 @@ namespace PlataformaRio2C.Domain.Dtos
             this.CreateUserId = entity.CreateUserId;
             this.UpdateDate = entity.UpdateDate;
             this.UpdateUserId = entity.UpdateUserId;
-
-            //if (entity.Creator != null)
-            //{
-            //    this.Creator = new UserAppViewModel(entity.Creator);
-            //}
-
-            //if (entity.Updater != null)
-            //{
-            //    this.Updater = new UserAppViewModel(entity.Updater);
-            //}
         }
 
         #region Audiovisual

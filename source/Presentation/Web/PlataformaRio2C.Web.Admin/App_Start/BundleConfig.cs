@@ -420,6 +420,27 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            #region Editions
+
+            bundles.Add(new ScriptBundle("~/bundles/js/editions.list.js").Include(
+                "~/Assets/js/editions/editions.totalcount.widget.js",
+                "~/Assets/js/editions/editions.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/editions.editioncount.js").Include(
+                "~/Assets/js/editions/editions.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/editions.create.js").Include(
+                "~/Assets/js/editions/editions.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/editions.details.js").Include(
+                "~/Assets/js/editions/editions.maininformation.widget.js",
+                "~/Assets/js/editions/editions.conferences.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/editions.delete.js").Include(
+                "~/Assets/js/editions/editions.delete.js"));
+
+            #endregion
+
             #region Events
 
             bundles.Add(new ScriptBundle("~/bundles/js/events.list.js").Include(

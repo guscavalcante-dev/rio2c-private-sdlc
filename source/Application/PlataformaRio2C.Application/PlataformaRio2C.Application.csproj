@@ -323,6 +323,9 @@
     <Compile Include="CQRS\Commands\ConferenceParticipantRoles\DeleteConferenceParticipantRole.cs" />
     <Compile Include="CQRS\Commands\ConferenceParticipantRoles\UpdateConferenceParticipantRoleMainInformation.cs" />
     <Compile Include="CQRS\Commands\Connections\CleanUpConnectionsAsync.cs" />
+    <Compile Include="CQRS\Commands\Editions\CreateEdition.cs" />
+    <Compile Include="CQRS\Commands\Editions\DeleteEdition.cs" />
+    <Compile Include="CQRS\Commands\Editions\UpdateEditionMainInformation.cs" />
     <Compile Include="CQRS\Commands\Logistics\UpdateLogisticAccomodation.cs" />
     <Compile Include="CQRS\Commands\Logistics\CreateLogisticAccommodation.cs" />
     <Compile Include="CQRS\Commands\Logistics\UpdateLogisticAirfare.cs" />
@@ -672,6 +675,7 @@
     <Compile Include="ViewModels\Common\Speaker\SpeakerItemListAppViewModel.cs" />
     <Compile Include="ViewModels\Conferences\ConferenceSearchViewModel.cs" />
     <Compile Include="ViewModels\ConferenceParticipantRoles\ConferenceParticipantRoleSearchViewModel.cs" />
+    <Compile Include="ViewModels\Editions\EditionSearchViewModel.cs" />
     <Compile Include="ViewModels\Places\PlaceSearchViewModel.cs" />
     <Compile Include="ViewModels\Rooms\RoomSearchViewModel.cs" />
     <Compile Include="ViewModels\Editions\EditionEventSearchViewModel.cs" />

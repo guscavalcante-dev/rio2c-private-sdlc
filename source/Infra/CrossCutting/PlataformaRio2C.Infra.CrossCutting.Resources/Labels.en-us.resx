@@ -2502,4 +2502,8 @@
     <value>When</value>
     <comment>Quando</comment>
   </data>
+  <data name="Editions" xml:space="preserve">
+    <value>Editions</value>
+    <comment>Edições</comment>
+  </data>
 </root>

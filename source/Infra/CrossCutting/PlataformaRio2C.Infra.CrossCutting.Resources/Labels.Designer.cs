@@ -1456,6 +1456,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edições.
+        /// </summary>
+        public static string Editions {
+            get {
+                return ResourceManager.GetString("Editions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Editar Comissão Musical.
         /// </summary>
         public static string EditMusicalCommission {
