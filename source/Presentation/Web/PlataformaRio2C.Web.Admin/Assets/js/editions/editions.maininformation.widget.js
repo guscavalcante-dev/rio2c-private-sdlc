@@ -63,8 +63,8 @@ var EditionsMainInformationWidget = function () {
                     EditionsMainInformationWidget.init();
                 }
 
-                if (typeof (EditionsConferencesWidget) !== 'undefined') {
-                    EditionsConferencesWidget.init();
+                if (typeof (EditionsEventsWidget) !== 'undefined') {
+                    EditionsEventsWidget.init();
                 }
             },
             onError: function (data) {

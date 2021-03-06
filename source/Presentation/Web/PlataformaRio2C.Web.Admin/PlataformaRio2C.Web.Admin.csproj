@@ -440,7 +440,7 @@
     <Content Include="Assets\js\addresses\addresses.form.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.create.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.report.widget.js" />
-    <Content Include="Assets\js\editions\editions.conferences.widget.js" />
+    <Content Include="Assets\js\editions\editions.events.widget.js" />
     <Content Include="Assets\js\editions\editions.create.js" />
     <Content Include="Assets\js\editions\editions.datatable.widget.js" />
     <Content Include="Assets\js\editions\editions.delete.js" />
@@ -8569,6 +8569,7 @@
     <Content Include="Views\Editions\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Views\Editions\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Views\Editions\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Views\Events\Widgets\RelatedEventsWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

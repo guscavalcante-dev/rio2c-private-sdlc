@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Generic;
 using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Domain.Dtos
@@ -20,6 +21,9 @@ namespace PlataformaRio2C.Domain.Dtos
     public class EditionDto
     {
         public Edition Edition { get; set; }
+        public IEnumerable<EditionEventDto> EditionEventDtos { get; set; }
+
+        #region EditionDto Properties
         public int Id { get; private set; }
         public Guid Uid { get; private set; }
         public string Name { get; private set; }
@@ -53,6 +57,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public int CreateUserId { get; private set; }
         public DateTimeOffset UpdateDate { get; private set; }
         public int UpdateUserId { get; private set; }
+
+        #endregion
 
         /// <summary>Initializes a new instance of the <see cref="EditionDto"/> class.</summary>
         public EditionDto()

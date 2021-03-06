@@ -18,7 +18,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>DeleteEdition</summary>
     public class DeleteEdition : BaseCommand
     {
-        //public Guid EditionUid { get; set; }
+        public new Guid EditionUid { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="DeleteEdition"/> class.</summary>
         public DeleteEdition()

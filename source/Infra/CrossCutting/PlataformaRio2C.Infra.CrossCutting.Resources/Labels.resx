@@ -2509,4 +2509,104 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Edições</value>
     <comment>Edições</comment>
   </data>
+  <data name="UrlCode" xml:space="preserve">
+    <value>Código da URL</value>
+    <comment>Código da URL</comment>
+  </data>
+  <data name="IsCurrent" xml:space="preserve">
+    <value>Atual</value>
+    <comment>Atual</comment>
+  </data>
+  <data name="AttendeeOrganizationMaxSellProjectsCount" xml:space="preserve">
+    <value>Quantidade máxima de projetos à venda do participante</value>
+    <comment>Quantidade máxima de projetos à venda do participante</comment>
+  </data>
+  <data name="AudiovisualNegotiationsCreateEndDate" xml:space="preserve">
+    <value>Data de término da criação de negociações audiovisuais</value>
+    <comment>Data de término da criação de negociações audiovisuais</comment>
+  </data>
+  <data name="AudiovisualNegotiationsCreateStartDate" xml:space="preserve">
+    <value>Data de início da criação de negociações audiovisuais</value>
+    <comment>Data de início da criação de negociações audiovisuais</comment>
+  </data>
+  <data name="InnovationProjectEvaluationEndDate" xml:space="preserve">
+    <value>Data de término da avaliação de projeto de inovação</value>
+    <comment>Data de término da avaliação de projeto de inovação</comment>
+  </data>
+  <data name="InnovationProjectEvaluationStartDate" xml:space="preserve">
+    <value>Data de início da avaliação de projeto de inovação</value>
+    <comment>Data de início da avaliação de projeto de inovação</comment>
+  </data>
+  <data name="InnovationProjectSubmitEndDate" xml:space="preserve">
+    <value>Data de término de envio de projeto de inovação</value>
+    <comment>Data de término de envio de projeto de inovação</comment>
+  </data>
+  <data name="InnovationProjectSubmitStartDate" xml:space="preserve">
+    <value>Data de início de envio de projeto de inovação</value>
+    <comment>Data de início de envio de projeto de inovação</comment>
+  </data>
+  <data name="IsActive" xml:space="preserve">
+    <value>Ativo</value>
+    <comment>Ativo</comment>
+  </data>
+  <data name="MusicProjectEvaluationEndDate" xml:space="preserve">
+    <value>Data de término da avaliação de projeto musical</value>
+    <comment>Data de término da avaliação de projeto musical</comment>
+  </data>
+  <data name="MusicProjectEvaluationStartDate" xml:space="preserve">
+    <value>Data de início da avaliação de projeto musical</value>
+    <comment>Data de início da avaliação de projeto musical</comment>
+  </data>
+  <data name="MusicProjectSubmitEndDate" xml:space="preserve">
+    <value>Data de término de envio de projeto musical</value>
+    <comment>Data de término de envio de projeto musical</comment>
+  </data>
+  <data name="MusicProjectSubmitStartDate" xml:space="preserve">
+    <value>Data de início de envio de projeto musical</value>
+    <comment>Data de início de envio de projeto musical</comment>
+  </data>
+  <data name="NegotiationEndDate" xml:space="preserve">
+    <value>Data de término das negociações</value>
+    <comment>Data de término das negociações</comment>
+  </data>
+  <data name="NegotiationStartDate" xml:space="preserve">
+    <value>Data de início das negociações</value>
+    <comment>Data de início das negociações</comment>
+  </data>
+  <data name="OneToOneMeetingsScheduleDate" xml:space="preserve">
+    <value>Data da agenda de reuniões particulares</value>
+    <comment>Data da agenda de reuniões particulares</comment>
+  </data>
+  <data name="ProjectEvaluationEndDate" xml:space="preserve">
+    <value>Data de término de envio de projeto</value>
+    <comment>Data de término de envio de projeto</comment>
+  </data>
+  <data name="ProjectEvaluationStartDate" xml:space="preserve">
+    <value>Data de início da avaliação de projeto</value>
+    <comment>Data de início da avaliação de projeto</comment>
+  </data>
+  <data name="ProjectMaxBuyerEvaluationsCount" xml:space="preserve">
+    <value>Quantidade máxima de avaliações por comprador de projeto</value>
+    <comment>Quantidade máxima de avaliações por comprador de projeto</comment>
+  </data>
+  <data name="ProjectSubmitEndDate" xml:space="preserve">
+    <value>Data de término de envio de projeto</value>
+    <comment>Data de término de envio de projeto</comment>
+  </data>
+  <data name="ProjectSubmitStartDate" xml:space="preserve">
+    <value>Data de início de envio de projeto</value>
+    <comment>Data de início de envio de projeto</comment>
+  </data>
+  <data name="Quiz" xml:space="preserve">
+    <value>Quiz</value>
+    <comment>Quiz</comment>
+  </data>
+  <data name="SellEndDate" xml:space="preserve">
+    <value>Data de término das vendas</value>
+    <comment>Data de término das vendas</comment>
+  </data>
+  <data name="SellStartDate" xml:space="preserve">
+    <value>Data de início das vendas</value>
+    <comment>Data de início das vendas</comment>
+  </data>
 </root>

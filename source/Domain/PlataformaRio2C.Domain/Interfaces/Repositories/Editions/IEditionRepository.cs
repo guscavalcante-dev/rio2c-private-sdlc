@@ -24,7 +24,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface IEditionRepository : IRepository<Edition>
     {
         Task<EditionDto> FindDtoAsync(Guid editionUid);
-        Task<EditionDto> FindConferenceWidgetDtoAsync(Guid editionUid);
+        Task<EditionDto> FindEventsWidgetDtoAsync(Guid editionUid);
         Task<Edition> FindByUidAsync(Guid editionUid, bool showInactive);
         Task<Edition> FindByIsCurrentAsync();
         List<Edition> FindAllByIsActive(bool showInactive);

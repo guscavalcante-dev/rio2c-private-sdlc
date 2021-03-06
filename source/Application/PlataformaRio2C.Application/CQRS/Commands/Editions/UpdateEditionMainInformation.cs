@@ -26,7 +26,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public UpdateEditionMainInformation(EditionDto editionDto)
             : base(editionDto)
         {
-            this.EditionUid = editionDto?.Uid ?? Guid.Empty;
+            this.EditionUid = editionDto?.Edition?.Uid ?? Guid.Empty;
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateEditionMainInformation"/> class.</summary>

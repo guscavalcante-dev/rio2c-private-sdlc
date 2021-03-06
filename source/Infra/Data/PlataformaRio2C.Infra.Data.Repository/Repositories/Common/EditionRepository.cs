@@ -221,11 +221,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
-        /// Finds the conference widget dto asynchronous.
+        /// Finds the events widget dto asynchronous.
         /// </summary>
         /// <param name="editionUid">The edition uid.</param>
         /// <returns></returns>
-        public async Task<EditionDto> FindConferenceWidgetDtoAsync(Guid editionUid)
+        public async Task<EditionDto> FindEventsWidgetDtoAsync(Guid editionUid)
         {
             var query = this.GetBaseQuery()
                                .FindByUid(editionUid);
@@ -233,7 +233,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query
                             .Select(e => new EditionDto()
                             {
-                                Edition = e
+                                Edition = e,
+                                EditionEventDtos = e.EditionEvents.Select(ee => new EditionEventDto()
+                                {
+                                    EditionEvent = ee
+                                }).ToList()
                             })
                             .FirstOrDefaultAsync();
         }

@@ -434,7 +434,7 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/editions.details.js").Include(
                 "~/Assets/js/editions/editions.maininformation.widget.js",
-                "~/Assets/js/editions/editions.conferences.widget.js"));
+                "~/Assets/js/editions/editions.events.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/editions.delete.js").Include(
                 "~/Assets/js/editions/editions.delete.js"));

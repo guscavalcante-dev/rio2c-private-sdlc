@@ -12,9 +12,9 @@
 // <summary></summary>
 // ***********************************************************************
 
-var EditionsConferencesWidget = function () {
+var EditionsEventsWidget = function () {
 
-    var widgetElementId = '#EditionConferencesWidget';
+    var widgetElementId = '#EditionEventsWidget';
     var widgetElement = $(widgetElementId);
 
     // Show ---------------------------------------------------------------------------------------
@@ -31,7 +31,7 @@ var EditionsConferencesWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.editionUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Editions/ShowConferencesWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Editions/ShowEventsWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

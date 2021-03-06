@@ -26,7 +26,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
 
             // Relationships
             this.HasRequired(t => t.Edition)
-                .WithMany()
+                .WithMany(e => e.EditionEvents)
                 .HasForeignKey(d => d.EditionId);
         }
     }

@@ -30,6 +30,18 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         }
 
         /// <summary>Converts to usertimezone.</summary>
+        /// <param name="dt">The dt.</param>
+        /// <returns></returns>
+        public static DateTime? ToUserTimeZone(this DateTimeOffset? dt)
+        {
+            if (!dt.HasValue)
+                return null;
+
+            var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(UserTimeZone);
+            return TimeZoneInfo.ConvertTimeFromUtc(dt.Value.DateTime, userTimeZone);
+        }
+
+        /// <summary>Converts to usertimezone.</summary>
         /// <param name="dtUtc">The dt UTC.</param>
         /// <returns></returns>
         public static DateTime ToUserTimeZone(this DateTime dtUtc)
@@ -45,6 +57,26 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         {
             var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(UserTimeZone);
             return TimeZoneInfo.ConvertTimeToUtc(dt, userTimeZone);
+        }
+
+        /// <summary>
+        /// Converts to enddatetime.
+        /// </summary>
+        /// <param name="dt">The dt.</param>
+        /// <returns></returns>
+        public static DateTime ToEndDateTime(this DateTime dt)
+        {
+            return dt.AddHours(23).AddMinutes(59).AddSeconds(59);
+        }
+
+        /// <summary>
+        /// Converts to enddatetimeoffset.
+        /// </summary>
+        /// <param name="dt">The dt.</param>
+        /// <returns></returns>
+        public static DateTimeOffset ToEndDateTimeOffset(this DateTime dt)
+        {
+            return dt.AddHours(23).AddMinutes(59).AddSeconds(59).ToUtcTimeZone();
         }
 
         /// <summary>Gets the day suffix.</summary>

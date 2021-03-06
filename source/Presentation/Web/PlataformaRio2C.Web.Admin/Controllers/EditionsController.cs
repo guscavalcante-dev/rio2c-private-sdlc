@@ -164,7 +164,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Conferences, new List<BreadcrumbItemHelper> {
                 new BreadcrumbItemHelper(Labels.Editions, Url.Action("Index", "Editions", new { Area = "" })),
-                new BreadcrumbItemHelper(editionDto.Name, Url.Action("Details", "Editions", new { id }))
+                new BreadcrumbItemHelper(editionDto.Edition.Name, Url.Action("Details", "Editions", new { id }))
             });
 
             #endregion
@@ -226,7 +226,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                    new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationModal", cmd), divIdOrClass = "#GlobalModalContainer" }
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -289,30 +289,29 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #endregion
 
-        #region Conferences Widget
+        #region Events Widget
 
-        /// <summary>Shows the conferences widget.</summary>
+        /// <summary>Shows the events widget.</summary>
         /// <param name="editionUid">The edition uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowConferencesWidget(Guid? editionUid)
+        public async Task<ActionResult> ShowEventsWidget(Guid? editionUid)
         {
-            var conferencesWidgetDto = await this.editionRepo.FindConferenceWidgetDtoAsync(editionUid ?? Guid.Empty);
-            if (conferencesWidgetDto == null)
+            var eventsWidgetDto = await this.editionRepo.FindEventsWidgetDtoAsync(editionUid ?? Guid.Empty);
+            if (eventsWidgetDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Edition, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            ViewBag.StartDate = conferencesWidgetDto.Edition.StartDate;
-            ViewBag.EndDate = conferencesWidgetDto.Edition.EndDate;
+            ViewBag.StartDate = eventsWidgetDto.Edition.StartDate;
+            ViewBag.EndDate = eventsWidgetDto.Edition.EndDate;
 
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    //new { page = this.RenderRazorViewToString("~/Views/Conferences/Widgets/RelatedConferencesWidget.cshtml", conferencesWidgetDto.ConferenceDtos), divIdOrClass = "#EventConferencesWidget" },
-                    null
+                    new { page = this.RenderRazorViewToString("~/Views/Events/Widgets/RelatedEventsWidget.cshtml", eventsWidgetDto.EditionEventDtos), divIdOrClass = "#EditionEventsWidget" }
                 }
             }, JsonRequestBehavior.AllowGet);
         }

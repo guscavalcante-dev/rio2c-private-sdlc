@@ -59,7 +59,7 @@ var EditionsDataTableWidget = function () {
             processing: true,
             serverSide: true,
             buttons: [],
-            order: [[1, "asc"]],
+            order: [[1, "desc"]],
             sDom: '<"row"<"col-sm-6"l><"col-sm-6 text-right"B>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
             oSearch: {
                 sSearch: $('#Search').val()

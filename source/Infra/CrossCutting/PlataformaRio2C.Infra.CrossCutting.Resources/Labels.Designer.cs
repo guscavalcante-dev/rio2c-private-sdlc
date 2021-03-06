@@ -457,11 +457,38 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quantidade máxima de projetos à venda do participante.
+        /// </summary>
+        public static string AttendeeOrganizationMaxSellProjectsCount {
+            get {
+                return ResourceManager.GetString("AttendeeOrganizationMaxSellProjectsCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Audiovisual.
         /// </summary>
         public static string AudioVisual {
             get {
                 return ResourceManager.GetString("AudioVisual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de término da criação de negociações audiovisuais.
+        /// </summary>
+        public static string AudiovisualNegotiationsCreateEndDate {
+            get {
+                return ResourceManager.GetString("AudiovisualNegotiationsCreateEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de início da criação de negociações audiovisuais.
+        /// </summary>
+        public static string AudiovisualNegotiationsCreateStartDate {
+            get {
+                return ResourceManager.GetString("AudiovisualNegotiationsCreateStartDate", resourceCulture);
             }
         }
         
@@ -2221,6 +2248,42 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data de término da avaliação de projeto de inovação.
+        /// </summary>
+        public static string InnovationProjectEvaluationEndDate {
+            get {
+                return ResourceManager.GetString("InnovationProjectEvaluationEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de início da avaliação de projeto de inovação.
+        /// </summary>
+        public static string InnovationProjectEvaluationStartDate {
+            get {
+                return ResourceManager.GetString("InnovationProjectEvaluationStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de término de envio de projeto de inovação.
+        /// </summary>
+        public static string InnovationProjectSubmitEndDate {
+            get {
+                return ResourceManager.GetString("InnovationProjectSubmitEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de início de envio de projeto de inovação.
+        /// </summary>
+        public static string InnovationProjectSubmitStartDate {
+            get {
+                return ResourceManager.GetString("InnovationProjectSubmitStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Interesses.
         /// </summary>
         public static string Interests {
@@ -2284,11 +2347,29 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ativo.
+        /// </summary>
+        public static string IsActive {
+            get {
+                return ResourceManager.GetString("IsActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ticket aéreo obrigatório.
         /// </summary>
         public static string IsAirfareTicketRequired {
             get {
                 return ResourceManager.GetString("IsAirfareTicketRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Atual.
+        /// </summary>
+        public static string IsCurrent {
+            get {
+                return ResourceManager.GetString("IsCurrent", resourceCulture);
             }
         }
         
@@ -2752,11 +2833,47 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data de término da avaliação de projeto musical.
+        /// </summary>
+        public static string MusicProjectEvaluationEndDate {
+            get {
+                return ResourceManager.GetString("MusicProjectEvaluationEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de início da avaliação de projeto musical.
+        /// </summary>
+        public static string MusicProjectEvaluationStartDate {
+            get {
+                return ResourceManager.GetString("MusicProjectEvaluationStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Projetos de Música.
         /// </summary>
         public static string MusicProjects {
             get {
                 return ResourceManager.GetString("MusicProjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de término de envio de projeto musical.
+        /// </summary>
+        public static string MusicProjectSubmitEndDate {
+            get {
+                return ResourceManager.GetString("MusicProjectSubmitEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de início de envio de projeto musical.
+        /// </summary>
+        public static string MusicProjectSubmitStartDate {
+            get {
+                return ResourceManager.GetString("MusicProjectSubmitStartDate", resourceCulture);
             }
         }
         
@@ -2811,6 +2928,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string NegotiationDetails {
             get {
                 return ResourceManager.GetString("NegotiationDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de término das negociações.
+        /// </summary>
+        public static string NegotiationEndDate {
+            get {
+                return ResourceManager.GetString("NegotiationEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de início das negociações.
+        /// </summary>
+        public static string NegotiationStartDate {
+            get {
+                return ResourceManager.GetString("NegotiationStartDate", resourceCulture);
             }
         }
         
@@ -3063,6 +3198,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string OneToOneMeetings {
             get {
                 return ResourceManager.GetString("OneToOneMeetings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data da agenda de reuniões particulares.
+        /// </summary>
+        public static string OneToOneMeetingsScheduleDate {
+            get {
+                return ResourceManager.GetString("OneToOneMeetingsScheduleDate", resourceCulture);
             }
         }
         
@@ -3746,6 +3890,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data de término de envio de projeto.
+        /// </summary>
+        public static string ProjectEvaluationEndDate {
+            get {
+                return ResourceManager.GetString("ProjectEvaluationEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de início da avaliação de projeto.
+        /// </summary>
+        public static string ProjectEvaluationStartDate {
+            get {
+                return ResourceManager.GetString("ProjectEvaluationStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ID do Projeto.
         /// </summary>
         public static string ProjectId {
@@ -3760,6 +3922,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ProjectInfo {
             get {
                 return ResourceManager.GetString("ProjectInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade máxima de avaliações por comprador de projeto.
+        /// </summary>
+        public static string ProjectMaxBuyerEvaluationsCount {
+            get {
+                return ResourceManager.GetString("ProjectMaxBuyerEvaluationsCount", resourceCulture);
             }
         }
         
@@ -3854,11 +4025,38 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data de término de envio de projeto.
+        /// </summary>
+        public static string ProjectSubmitEndDate {
+            get {
+                return ResourceManager.GetString("ProjectSubmitEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de início de envio de projeto.
+        /// </summary>
+        public static string ProjectSubmitStartDate {
+            get {
+                return ResourceManager.GetString("ProjectSubmitStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inscrições de Projeto.
         /// </summary>
         public static string ProjectSubscriptions {
             get {
                 return ResourceManager.GetString("ProjectSubscriptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quiz.
+        /// </summary>
+        public static string Quiz {
+            get {
+                return ResourceManager.GetString("Quiz", resourceCulture);
             }
         }
         
@@ -4503,6 +4701,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string SelectOrSendPlayer {
             get {
                 return ResourceManager.GetString("SelectOrSendPlayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de término das vendas.
+        /// </summary>
+        public static string SellEndDate {
+            get {
+                return ResourceManager.GetString("SellEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de início das vendas.
+        /// </summary>
+        public static string SellStartDate {
+            get {
+                return ResourceManager.GetString("SellStartDate", resourceCulture);
             }
         }
         
@@ -5439,6 +5655,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string UpdatedM {
             get {
                 return ResourceManager.GetString("UpdatedM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Código da URL.
+        /// </summary>
+        public static string UrlCode {
+            get {
+                return ResourceManager.GetString("UrlCode", resourceCulture);
             }
         }
         

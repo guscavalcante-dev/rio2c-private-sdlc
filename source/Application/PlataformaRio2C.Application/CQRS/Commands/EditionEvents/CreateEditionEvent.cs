@@ -23,17 +23,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>CreateEditionEvent</summary>
     public class CreateEditionEvent : BaseCommand
     {
-        [Display(Name = "Name", ResourceType = typeof(Labels))]
+        [Display(Name = nameof(Name), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public string Name { get; set; }
 
-        [Display(Name = "StartDate", ResourceType = typeof(Labels))]
+        [Display(Name = nameof(StartDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public DateTime? StartDate { get; set; }
 
-        [Display(Name = "EndDate", ResourceType = typeof(Labels))]
+        [Display(Name = (nameof(EndDate)), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [GreaterThanOrEqualTo("StartDate", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
+        [GreaterThanOrEqualTo(nameof(StartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
         public DateTime? EndDate { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CreateEditionEvent"/> class.</summary>

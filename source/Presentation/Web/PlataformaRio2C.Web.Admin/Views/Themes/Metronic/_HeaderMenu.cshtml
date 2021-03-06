@@ -155,6 +155,9 @@
                         <a href="@Url.Action("Index", "Speakers", new { Area = "" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Speakers</span></a>
                     </li>
                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Events", null)" aria-haspopup="true">
+                        <a href="@Url.Action("Index", "Editions", new { Area = "" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Editions</span></a>
+                    </li>
+                    <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Events", null)" aria-haspopup="true">
                         <a href="@Url.Action("Index", "Events", new { Area = "" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Events</span></a>
                     </li>
                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Rooms", null)" aria-haspopup="true">
