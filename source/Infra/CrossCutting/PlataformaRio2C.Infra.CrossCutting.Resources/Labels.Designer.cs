@@ -3890,7 +3890,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data de término de envio de projeto.
+        ///   Looks up a localized string similar to Data de término da avaliação de projeto.
         /// </summary>
         public static string ProjectEvaluationEndDate {
             get {

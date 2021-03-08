@@ -2578,8 +2578,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Data da agenda de reuniões particulares</comment>
   </data>
   <data name="ProjectEvaluationEndDate" xml:space="preserve">
-    <value>Data de término de envio de projeto</value>
-    <comment>Data de término de envio de projeto</comment>
+    <value>Data de término da avaliação de projeto</value>
+    <comment>Data de término da avaliação de projeto</comment>
   </data>
   <data name="ProjectEvaluationStartDate" xml:space="preserve">
     <value>Data de início da avaliação de projeto</value>
