@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 05-13-2020
+// Last Modified On : 03-08-2021
 // ***********************************************************************
 // <copyright file="PlataformaRio2CContext.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -204,7 +204,7 @@ namespace PlataformaRio2C.Infra.Data.Context
         }
 
         // Edition
-        public DbSet<Edition> Events { get; set; } //TODO: Rename Events to Editions on context
+        public DbSet<Edition> Editions { get; set; }
 
         // Holding
         public DbSet<Holding> Holdings { get; set; }

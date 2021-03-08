@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-19-2020
+// Last Modified On : 03-08-2021
 // ***********************************************************************
 // <copyright file="Edition.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,6 +25,41 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public static readonly int NameMinLength = 2;
         public static readonly int NameMaxLength = 50;
+
+        public string Name { get; private set; }
+        public int UrlCode { get; private set; }
+        public bool IsCurrent { get; private set; }
+        public bool IsActive { get; private set; }
+        public DateTimeOffset StartDate { get; private set; }
+        public DateTimeOffset EndDate { get; private set; }
+        public DateTimeOffset SellStartDate { get; private set; }
+        public DateTimeOffset SellEndDate { get; private set; }
+        public DateTimeOffset ProjectSubmitStartDate { get; private set; }
+        public DateTimeOffset ProjectSubmitEndDate { get; private set; }
+        public DateTimeOffset ProjectEvaluationStartDate { get; private set; }
+        public DateTimeOffset ProjectEvaluationEndDate { get; private set; }
+        public DateTimeOffset OneToOneMeetingsScheduleDate { get; private set; }
+        public DateTimeOffset NegotiationStartDate { get; private set; }
+        public DateTimeOffset NegotiationEndDate { get; private set; }
+        public int AttendeeOrganizationMaxSellProjectsCount { get; private set; }
+        public int ProjectMaxBuyerEvaluationsCount { get; private set; }
+        public DateTimeOffset MusicProjectSubmitStartDate { get; private set; }
+        public DateTimeOffset MusicProjectSubmitEndDate { get; private set; }
+        public DateTimeOffset MusicProjectEvaluationStartDate { get; private set; }
+        public DateTimeOffset MusicProjectEvaluationEndDate { get; private set; }
+        public DateTimeOffset InnovationProjectSubmitStartDate { get; private set; }
+        public DateTimeOffset InnovationProjectSubmitEndDate { get; private set; }
+        public DateTimeOffset InnovationProjectEvaluationStartDate { get; private set; }
+        public DateTimeOffset InnovationProjectEvaluationEndDate { get; private set; }
+        public DateTimeOffset? AudiovisualNegotiationsCreateStartDate { get; private set; }
+        public DateTimeOffset? AudiovisualNegotiationsCreateEndDate { get; private set; }
+
+        //public virtual Quiz Quiz { get; private set; }
+
+        public virtual ICollection<AttendeeOrganization> AttendeeOrganizations { get; private set; }
+        public virtual ICollection<AttendeeCollaborator> AttendeeCollaborators { get; private set; }
+        public virtual ICollection<AttendeeSalesPlatform> AttendeeSalesPlatforms { get; private set; }
+        public virtual ICollection<EditionEvent> EditionEvents { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Edition"/> class.
@@ -76,7 +111,7 @@ namespace PlataformaRio2C.Domain.Entities
             DateTimeOffset projectEvaluationEndDate,
             DateTimeOffset oneToOneMeetingsScheduleDate,
             DateTimeOffset negotiationStartDate,
-            DateTimeOffset negotiationEndDate,       
+            DateTimeOffset negotiationEndDate,
             DateTimeOffset musicProjectSubmitStartDate,
             DateTimeOffset musicProjectSubmitEndDate,
             DateTimeOffset musicProjectEvaluationStartDate,
@@ -123,42 +158,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateUserId = this.UpdateUserId = userId;
         }
 
-        public string Name { get; private set; }
-        public int UrlCode { get; private set; }
-        public bool IsCurrent { get; private set; }
-        public bool IsActive { get; private set; }
-        public DateTimeOffset StartDate { get; private set; }
-        public DateTimeOffset EndDate { get; private set; }
-        public DateTimeOffset SellStartDate { get; private set; }
-        public DateTimeOffset SellEndDate { get; private set; }
-        public DateTimeOffset ProjectSubmitStartDate { get; private set; }
-        public DateTimeOffset ProjectSubmitEndDate { get; private set; }
-        public DateTimeOffset ProjectEvaluationStartDate { get; private set; }
-        public DateTimeOffset ProjectEvaluationEndDate { get; private set; }
-        public DateTimeOffset OneToOneMeetingsScheduleDate { get; private set; }
-        public DateTimeOffset NegotiationStartDate { get; private set; }
-        public DateTimeOffset NegotiationEndDate { get; private set; }
-        public int AttendeeOrganizationMaxSellProjectsCount { get; private set; }
-        public int ProjectMaxBuyerEvaluationsCount { get; private set; }
-        public DateTimeOffset MusicProjectSubmitStartDate { get; private set; }
-        public DateTimeOffset MusicProjectSubmitEndDate { get; private set; }
-        public DateTimeOffset MusicProjectEvaluationStartDate { get; private set; }
-        public DateTimeOffset MusicProjectEvaluationEndDate { get; private set; }
-        public DateTimeOffset InnovationProjectSubmitStartDate { get; private set; }
-        public DateTimeOffset InnovationProjectSubmitEndDate { get; private set; }
-        public DateTimeOffset InnovationProjectEvaluationStartDate { get; private set; }
-        public DateTimeOffset InnovationProjectEvaluationEndDate { get; private set; }
-        public DateTimeOffset? AudiovisualNegotiationsCreateStartDate { get; private set; }
-        public DateTimeOffset? AudiovisualNegotiationsCreateEndDate { get; private set; }
-
-        public virtual Quiz Quiz { get; private set; }
-
-        public virtual ICollection<AttendeeOrganization> AttendeeOrganizations { get; private set; }
-        public virtual ICollection<AttendeeCollaborator> AttendeeCollaborators { get; private set; }
-        public virtual ICollection<AttendeeSalesPlatform> AttendeeSalesPlatforms { get; private set; }
-        public virtual ICollection<EditionEvent> EditionEvents { get; private set; }
-
-        
         /// <summary>Initializes a new instance of the <see cref="Edition"/> class.</summary>
         protected Edition()
         {
