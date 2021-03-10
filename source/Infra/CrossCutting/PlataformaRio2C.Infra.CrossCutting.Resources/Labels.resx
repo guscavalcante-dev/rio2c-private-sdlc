@@ -2609,4 +2609,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Data de início das vendas</value>
     <comment>Data de início das vendas</comment>
   </data>
+  <data name="IsActiveF" xml:space="preserve">
+    <value>Ativa</value>
+    <comment>Ativa</comment>
+  </data>
+  <data name="IsActiveM" xml:space="preserve">
+    <value>Ativo</value>
+    <comment>Ativo</comment>
+  </data>
 </root>

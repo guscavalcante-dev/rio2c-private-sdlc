@@ -357,8 +357,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 cmd.UpdatePreSendProperties(
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
-                    null,
-                    null,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
                     this.UserInterfaceLanguage);
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)

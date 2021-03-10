@@ -124,7 +124,7 @@ namespace PlataformaRio2C.Domain.Entities
             DateTimeOffset audiovisualNegotiationsCreateEndDate,
             int userId)
         {
-            this.Uid = uid;
+            //this.Uid = uid;
             this.Name = name;
             this.UrlCode = urlCode;
             this.IsCurrent = isCurrent;
@@ -304,6 +304,14 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
         }
 
+        /// <summary>
+        /// Disables the is current.
+        /// </summary>
+        public void DisableIsCurrent()
+        {
+            this.IsCurrent = false;
+        }
+
         #region Edition Events
 
         /// <summary>
@@ -336,11 +344,15 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.ValidateName();
             this.ValidateUrlCode();
+            this.ValidateIsCurrentAndIsActive();
+            this.ValidateIsCurrentAndIsDeleted();
 
             return this.ValidationResult.IsValid;
         }
 
-        /// <summary>Validates the name.</summary>
+        /// <summary>
+        /// Validates the name.
+        /// </summary>
         public void ValidateName()
         {
             if (string.IsNullOrEmpty(this.Name?.Trim()))
@@ -354,7 +366,9 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        /// <summary>Validates the URL code.</summary>
+        /// <summary>
+        /// Validates the URL code.
+        /// </summary>
         public void ValidateUrlCode()
         {
             if (this.UrlCode < 0)
@@ -363,53 +377,27 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        ///// <summary>Validates the dates.</summary>
-        //public void ValidateDates()
-        //{
-        //    if (this.StartDate < this.Edition.StartDate || this.StartDate > this.Edition.EndDate
-        //        || this.EndDate < this.Edition.StartDate || this.EndDate > this.Edition.EndDate)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.Date, this.Edition.EndDate.ToUserTimeZone().ToShortDateString(), this.Edition.StartDate.ToUserTimeZone().ToShortDateString()), new string[] { "Date" }));
-        //    }
+        /// <summary>
+        /// Validates the is current and is active.
+        /// </summary>
+        public void ValidateIsCurrentAndIsActive()
+        {
+            if(this.IsCurrent && !this.IsActive)
+            {
+                this.ValidationResult.Add(new ValidationError(Messages.CanNotDisableCurrentEdition, new string[] { "IsActive" }));
+            }
+        }
 
-        //    if (this.StartDate > this.EndDate)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyGreaterThanProperty, Labels.EndTime, Labels.StartTime), new string[] { "EndTime" }));
-        //    }
-        //}
-
-        #endregion
-
-        #region Old Methods
-
-        ///// <summary>Initializes a new instance of the <see cref="Edition"/> class.</summary>
-        ///// <param name="name">The name.</param>
-        //public Edition(string name)
-        //{
-        //    Name = name;
-        //}
-
-        ///// <summary>Sets the start date.</summary>
-        ///// <param name="startDate">The start date.</param>
-        //public void SetStartDate(DateTime startDate)
-        //{
-        //    StartDate = startDate;
-        //}
-
-        ///// <summary>Sets the end date.</summary>
-        ///// <param name="endDate">The end date.</param>
-        //public void SetEndDate(DateTime endDate)
-        //{
-        //    EndDate = endDate;
-        //}
-
-        ///// <summary>Returns true if ... is valid.</summary>
-        ///// <returns>
-        /////   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
-        //public override bool IsValid()
-        //{
-        //    return true;
-        //}
+        /// <summary>
+        /// Validates the is current and is deleted.
+        /// </summary>
+        public void ValidateIsCurrentAndIsDeleted()
+        {
+            if (this.IsCurrent && this.IsDeleted)
+            {
+                this.ValidationResult.Add(new ValidationError(Messages.CanNotDeleteCurrentEdition, new string[] { "IsDeleted" }));
+            }
+        }
 
         #endregion
     }

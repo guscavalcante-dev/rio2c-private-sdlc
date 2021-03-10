@@ -18,6 +18,8 @@ using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -39,6 +41,22 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         public async Task<AppValidationResult> Handle(CreateEdition cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
+
+            #region Initial Validations
+
+            var existentUrlCodeEdition = editionRepo.FindByUrlCode(cmd.UrlCode);
+            if (existentUrlCodeEdition != null && existentUrlCodeEdition.Uid != cmd.EditionUid)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.Edition.ToLowerInvariant(), $"{Labels.TheM.ToLowerInvariant()} {Labels.UrlCode.ToLowerInvariant()}", cmd.UrlCode), new string[] { "ToastrError" }));
+            }
+
+            if (!this.ValidationResult.IsValid)
+            {
+                this.AppValidationResult.Add(this.ValidationResult);
+                return this.AppValidationResult;
+            }
+
+            #endregion
 
             var editionUid = Guid.NewGuid();
 
@@ -71,7 +89,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                       cmd.AudiovisualNegotiationsCreateEndDate.Value,
                                       cmd.AudiovisualNegotiationsCreateEndDate.Value,
                                       cmd.UserId);
-                
+
             if (!edition.IsValid())
             {
                 this.AppValidationResult.Add(edition.ValidationResult);

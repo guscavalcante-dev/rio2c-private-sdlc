@@ -11,7 +11,15 @@ foolproof.is = function (value1, operator, value2, passOnNull) {
         if ((value1nullish && !value2nullish) || (value2nullish && !value1nullish))
             return true;
     }
-    
+
+    var isNullOrEmpty = function (value) {
+        if (typeof (value) === 'undefined' || value == null || value === '' || isNaN(value)) {
+            return true;
+        }
+
+        return false;
+    };
+
     var isNumeric = function (input) {
         return (input - 0) == input && input.length > 0;
     };
@@ -27,8 +35,24 @@ foolproof.is = function (value1, operator, value2, passOnNull) {
     };
 
     if (isDate(value1)) {
-        value1 = Date.parse(value1);
-        value2 = Date.parse(value2);
+        var dateValue1 = Date.parse(value1);
+        var dateValue2 = Date.parse(value2);
+
+        if (isNullOrEmpty(dateValue1)) {
+            value1 = new Date(value1.split('/').reverse().join('-'));
+        }
+        else {
+            value1 = dateValue1;
+        }
+
+        if (isNullOrEmpty(dateValue2)) {
+            value2 = new Date(value2.split('/').reverse().join('-'));
+        }
+        else {
+            value2 = dateValue2;
+        }
+        //value1 = Date.parse(value1);
+        //value2 = Date.parse(value2);
     }
     else if (isBool(value1)) {
         if (value1 == "false") value1 = false;

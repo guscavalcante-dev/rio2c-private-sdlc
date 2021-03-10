@@ -44,6 +44,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>
+        /// Finds the by URL code.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="urlCode">The URL code.</param>
+        /// <returns></returns>
+        internal static IQueryable<Edition> FindByUrlCode(this IQueryable<Edition> query, int urlCode)
+        {
+            query = query.Where(e => e.UrlCode == urlCode);
+
+            return query;
+        }
+
         /// <summary>Finds the by uids.</summary>
         /// <param name="query">The query.</param>
         /// <param name="editionUids">The edition event uids.</param>
@@ -207,6 +220,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query.ToList();
         }
 
+        /// <summary>
+        /// Finds the dto asynchronous.
+        /// </summary>
+        /// <param name="editionUid">The edition uid.</param>
+        /// <returns></returns>
         public async Task<EditionDto> FindDtoAsync(Guid editionUid)
         {
             var query = this.GetBaseQuery()
@@ -253,7 +271,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="languageId">The language identifier.</param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         public async Task<IPagedList<EditionJsonDto>> FindAllByDataTable(
             int page, 
             int pageSize, 
@@ -296,7 +313,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="editionUid">The edition uid.</param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         public async Task<int> CountAllByDataTable(bool showAllEditions, Guid editionUid)
         {
             var query = this.GetBaseQuery();
@@ -305,6 +321,30 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .CountAsync();
         }
 
+        /// <summary>
+        /// Finds the by URL code.
+        /// </summary>
+        /// <param name="urlCode">The URL code.</param>
+        /// <returns></returns>
+        public Edition FindByUrlCode(int urlCode)
+        {
+            var query = this.GetBaseQuery()
+                            .FindByUrlCode(urlCode);
+
+            return query.FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Finds all by is current.
+        /// </summary>
+        /// <returns></returns>
+        public List<Edition> FindAllByIsCurrent()
+        {
+            var query = this.GetBaseQuery()
+                            .IsCurrent();
+
+            return query.ToList();
+        }
 
         #region Old Methods
 

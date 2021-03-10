@@ -187,6 +187,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Esta Edição não pode ser excluída enquanto for a edição atual..
+        /// </summary>
+        public static string CanNotDeleteCurrentEdition {
+            get {
+                return ResourceManager.GetString("CanNotDeleteCurrentEdition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Esta Edição não pode ser desativada enquanto for a edição atual..
+        /// </summary>
+        public static string CanNotDisableCurrentEdition {
+            get {
+                return ResourceManager.GetString("CanNotDisableCurrentEdition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Não é possível editar um projeto submetido para avaliação de player.
         /// </summary>
         public static string CanNotEditASubmittedProjectForPlayerEvaluation {

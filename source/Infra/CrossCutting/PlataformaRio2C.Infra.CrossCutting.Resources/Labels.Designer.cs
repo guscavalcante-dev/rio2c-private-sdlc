@@ -2356,6 +2356,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ativa.
+        /// </summary>
+        public static string IsActiveF {
+            get {
+                return ResourceManager.GetString("IsActiveF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ativo.
+        /// </summary>
+        public static string IsActiveM {
+            get {
+                return ResourceManager.GetString("IsActiveM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ticket aéreo obrigatório.
         /// </summary>
         public static string IsAirfareTicketRequired {

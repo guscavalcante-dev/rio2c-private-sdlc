@@ -16,6 +16,8 @@ using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -23,16 +25,19 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>UpdateEditionMainInformationCommandHandler</summary>
     public class UpdateEditionMainInformationCommandHandler : EditionBaseCommandHandler, IRequestHandler<UpdateEditionMainInformation, AppValidationResult>
     {
+        private readonly IEditionRepository editionRepo;
+
         /// <summary>Initializes a new instance of the <see cref="UpdateEditionMainInformationCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
-        /// <param name="EditionRepository">The edition event repository.</param>
+        /// <param name="editionRepository">The edition event repository.</param>
         public UpdateEditionMainInformationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            IEditionRepository EditionRepository)
-            : base(eventBus, uow, EditionRepository)
+            IEditionRepository editionRepository)
+            : base(eventBus, uow, editionRepository)
         {
+            this.editionRepo = editionRepository;
         }
 
         /// <summary>Handles the specified update edition event main information.</summary>
@@ -46,6 +51,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var edition = await this.GetEditionByUid(cmd.EditionUid);
 
             #region Initial validations
+
+            var existentUrlCodeEdition = editionRepo.FindByUrlCode(cmd.UrlCode);
+            if (existentUrlCodeEdition != null && existentUrlCodeEdition.Uid != cmd.EditionUid)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.Edition.ToLowerInvariant(), $"{Labels.TheM.ToLowerInvariant()} {Labels.UrlCode.ToLowerInvariant()}", cmd.UrlCode), new string[] { "ToastrError" }));
+            }
 
             if (!this.ValidationResult.IsValid)
             {
@@ -89,6 +100,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 this.AppValidationResult.Add(edition.ValidationResult);
                 return this.AppValidationResult;
             }
+
+            var currentEditions = this.editionRepo.FindAllByIsCurrent();
+            currentEditions.ForEach(e => e.DisableIsCurrent());
+            this.EditionRepo.UpdateAll(currentEditions);
 
             this.EditionRepo.Update(edition);
             this.Uow.SaveChanges();

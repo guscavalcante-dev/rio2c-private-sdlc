@@ -939,4 +939,12 @@
     <value>O arquivo deve estar no formato pdf.</value>
     <comment>O arquivo deve estar no formato pdf.</comment>
   </data>
+  <data name="CanNotDeleteCurrentEdition" xml:space="preserve">
+    <value>Esta Edição não pode ser excluída enquanto for a edição atual.</value>
+    <comment>Esta Edição não pode ser excluída enquanto for a edição atual.</comment>
+  </data>
+  <data name="CanNotDisableCurrentEdition" xml:space="preserve">
+    <value>Esta Edição não pode ser desativada enquanto for a edição atual.</value>
+    <comment>Esta Edição não pode ser desativada enquanto for a edição atual.</comment>
+  </data>
 </root>
