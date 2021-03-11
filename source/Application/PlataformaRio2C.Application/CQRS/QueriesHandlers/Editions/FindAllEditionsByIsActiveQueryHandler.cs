@@ -38,7 +38,7 @@ namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
         protected override List<EditionDto> Handle(FindAllEditionsByIsActive cmd)
         {
             var edition = this.repo.FindAllByIsActive(cmd.ShowInactive);
-            return edition?.Select(e => new EditionDto(e))?.ToList();
+            return edition?.Select(e => new EditionDto(e))?.OrderByDescending(e => e.UrlCode).ToList();
         }
     }
 }

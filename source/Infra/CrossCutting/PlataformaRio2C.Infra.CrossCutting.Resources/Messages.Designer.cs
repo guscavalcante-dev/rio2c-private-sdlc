@@ -214,6 +214,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Esta Edição não pode ser desmarcada como atual pois não existe nenhuma outra edição marcada como atual para substituí-la. Configure alguma outra edição como atual e tente novamente..
+        /// </summary>
+        public static string CanNotUncheckCurrentEdition {
+            get {
+                return ResourceManager.GetString("CanNotUncheckCurrentEdition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cidade inválida..
         /// </summary>
         public static string CityIsInvalid {

@@ -1,8 +1,7 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
+@*@using System.Globalization*@
 @model PlataformaRio2C.Application.CQRS.Commands.CreateEdition
-@{
-    //var editionDto = ViewBag.EditionDto as EditionDto;
-}
+
 <div class="row">
     <div class="form-group col-8">
         @Html.LabelFor(m => m.Name, new { @class = "control-label" })
@@ -14,11 +13,12 @@
         @Html.TextBoxFor(m => m.UrlCode, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.UrlCode, "", new { @class = "text-danger" })
     </div>
+
 </div>
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.StartDate, new { @class = "control-label" })
-        @Html.TextBox("StartDate", Model.StartDate?.ToShortDateString(), new { @class = "form-control enable-datepicker"})
+        @Html.TextBox("StartDate", Model.StartDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
         @Html.ValidationMessageFor(m => m.StartDate, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
@@ -32,7 +32,8 @@
         @Html.LabelFor(m => m.SellStartDate, new { @class = "control-label" })
         @Html.TextBox("SellStartDate", Model.SellStartDate?.ToShortDateString(), new
    {
-       @class = "form-control enable-datepicker"/*, @readonly = "readonly", data_date_start_date = Model?.StartDate?.ToUserTimeZone().ToShortDateString(), data_date_end_date = Model?.EndDate?.ToUserTimeZone().ToShortDateString()*/})
+       @class = "form-control enable-datepicker"/*, @readonly = "readonly", data_date_start_date = Model?.StartDate?.ToUserTimeZone().ToShortDateString(), data_date_end_date = Model?.EndDate?.ToUserTimeZone().ToShortDateString()*/
+        })
         @Html.ValidationMessageFor(m => m.SellStartDate, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
@@ -233,5 +234,5 @@
     </div>
 </div>
 <div class="row">
-   
+
 </div>

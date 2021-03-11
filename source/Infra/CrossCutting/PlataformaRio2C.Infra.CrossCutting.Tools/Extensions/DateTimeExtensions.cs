@@ -76,7 +76,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         /// <returns></returns>
         public static DateTimeOffset ToEndDateTimeOffset(this DateTime dt)
         {
-            return dt.AddHours(23).AddMinutes(59).AddSeconds(59).ToUtcTimeZone();
+            return dt.AddHours(23).AddMinutes(59).AddSeconds(59);
         }
 
         /// <summary>Gets the day suffix.</summary>

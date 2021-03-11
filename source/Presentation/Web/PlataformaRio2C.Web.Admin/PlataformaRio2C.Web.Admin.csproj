@@ -1659,6 +1659,7 @@
     <Content Include="Assets\themes\metronic\media\icons\svg\Tools\Angle Grinder.svg" />
     <Content Include="Assets\themes\metronic\media\icons\svg\Tools\Axe.svg" />
     <Content Include="Assets\themes\metronic\media\icons\svg\Tools\Brush.svg" />
+    <Content Include="Assets\themes\metronic\media\icons\svg\Tools\Calendar.svg" />
     <Content Include="Assets\themes\metronic\media\icons\svg\Tools\Compass.svg" />
     <Content Include="Assets\themes\metronic\media\icons\svg\Tools\Hummer#2.svg" />
     <Content Include="Assets\themes\metronic\media\icons\svg\Tools\Hummer.svg" />
@@ -8570,6 +8571,7 @@
     <Content Include="Views\Editions\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Views\Editions\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Views\Events\Widgets\RelatedEventsWidget.cshtml" />
+    <Content Include="Views\Themes\Metronic\_EditionSelector.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -23,7 +23,7 @@ var EditionsMainInformationWidget = function () {
     var enableDatePickerDateRangeChangeEvent = function () {
         $("#StartDate").datepicker({
             todayBtn: 1,
-            autoclose: true,
+            autoclose: true
         }).on('changeDate', function (selected) {
             setStartDateMinDate(selected.date.valueOf());
         });
@@ -44,17 +44,18 @@ var EditionsMainInformationWidget = function () {
         }
     }
 
-    var setStartDateMinDate = function (selectedDate) {
+    var setStartDateMinDate = function (el, selectedDate) {
         var minDate = new Date(selectedDate);
+        var element = el;
+        var elementId = element.attr('id');
+        element.datepicker('setStartDate', minDate);
+        checkIfDateIsInRange(elementId);
+    }
 
-        $(".enable-datepicker").each(function () {
-            var element = $(this);
-            var elementId = element.attr('id');
-
-            if (elementId != 'StartDate' && elementId != 'EndDate') {
-                element.datepicker('setStartDate', minDate);
-                checkIfDateIsInRange(elementId);
-            }
+    var setGeneralDates = function (selectedDate) {
+        $(".enable-datepicker").each(function (el) {
+            if (el != 'StartDate' && el != 'EndDate')
+                setStartDateMinDate(el, selectedDate);
         });
     }
 
@@ -87,7 +88,7 @@ var EditionsMainInformationWidget = function () {
             var datePickerSelectedDate = datePickerElement.datepicker("getDate");
 
             if (datePickerSelectedDate > maxDate || datePickerSelectedDate < minDate) {
-                datePickerElement.datepicker('setDate', null);
+                //datePickerElement.datepicker('setDate', null);
                 datePickerElement.valid();
 
                 //const diffTime = Math.abs(minDate - new Date());
@@ -100,7 +101,6 @@ var EditionsMainInformationWidget = function () {
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         KTApp.initTooltips();
-        enableDatePickerDateRangeChangeEvent();
     };
 
     var show = function () {
@@ -159,7 +159,7 @@ var EditionsMainInformationWidget = function () {
         MyRio2cCommon.enableDatePicker({ inputIdOrClass: updateFormId + ' .enable-datepicker' });
         enableAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
-        enableDatePickerDateRangeChangeEvent();
+        //enableDatePickerDateRangeChangeEvent();
     };
 
     var showUpdateModal = function () {

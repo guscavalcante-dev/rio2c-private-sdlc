@@ -107,6 +107,18 @@ var EditionsDataTableWidget = function () {
                     data: 'Name'
                 },
                 {
+                    data: 'IsCurrent',
+                    render: function (data) {
+                        return (data === true) ? translate.yes : translate.no;
+                    }
+                },
+                {
+                    data: 'IsActive',
+                    render: function (data) {
+                        return (data === true) ? translate.yes : translate.no;
+                    }
+                },
+                {
                     data: 'StartDate',
                     render: function (data) {
                         return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L');

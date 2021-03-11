@@ -2518,7 +2518,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Atual</comment>
   </data>
   <data name="AttendeeOrganizationMaxSellProjectsCount" xml:space="preserve">
-    <value>Quantidade máxima de projetos à venda do participante</value>
+    <value>Quantidade máxima de projetos por produtora</value>
     <comment>Quantidade máxima de projetos à venda do participante</comment>
   </data>
   <data name="AudiovisualNegotiationsCreateEndDate" xml:space="preserve">
@@ -2586,7 +2586,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Data de início da avaliação de projeto</comment>
   </data>
   <data name="ProjectMaxBuyerEvaluationsCount" xml:space="preserve">
-    <value>Quantidade máxima de avaliações por comprador de projeto</value>
+    <value>Quantidade máxima de avaliadores por projeto</value>
     <comment>Quantidade máxima de avaliações por comprador de projeto</comment>
   </data>
   <data name="ProjectSubmitEndDate" xml:space="preserve">
@@ -2616,5 +2616,9 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="IsActiveM" xml:space="preserve">
     <value>Ativo</value>
     <comment>Ativo</comment>
+  </data>
+  <data name="PastEditions" xml:space="preserve">
+    <value>Edições Passadas</value>
+    <comment>Edições Passadas</comment>
   </data>
 </root>

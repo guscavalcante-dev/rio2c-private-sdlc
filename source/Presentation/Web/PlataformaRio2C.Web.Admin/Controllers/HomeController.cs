@@ -111,5 +111,50 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        /// <summary>
+        /// Sets the edition.
+        /// </summary>
+        /// <param name="urlCode">The URL code.</param>
+        /// <param name="returnUrl">The return URL.</param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public ActionResult SetEdition(string urlCode, string returnUrl = null)
+        {
+            var oldUrlCode = RouteData.Values["edition"].ToString();
+
+            RouteData.Values["edition"] = urlCode;  // set urlCode from Edition
+
+            #region Create/Update cookie culture
+
+            //if (this.AdminAccessControlDto != null)
+            //{
+            //    var result = await this.CommandBus.Send(new UpdateUserInterfaceLanguage(
+            //        this.AdminAccessControlDto.User.Uid,
+            //        culture));
+            //}
+
+            //var cookie = ApplicationCookieControl.SetCookie(culture, Response.Cookies[Constants.CookieName.MyRio2CCookie], Constants.CookieName.MyRio2CCookie);
+            //Response.Cookies.Add(cookie);
+
+            #endregion
+
+            if (returnUrl == null && Request.UrlReferrer != null)
+            {
+                returnUrl = Request.UrlReferrer.PathAndQuery;
+            }
+
+            if (!string.IsNullOrEmpty(returnUrl))
+            {
+                returnUrl = Regex.Replace(returnUrl, oldUrlCode, urlCode, RegexOptions.IgnoreCase);
+            }
+
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

@@ -292,13 +292,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     //new Tuple<string, string>("EditionEventJsonDto", "EditionEvent.Name"),
                                     //new Tuple<string, string>("Email", "User.Email"),
                                 },
-                                new List<string> { "Name", "StartDate", "EndDate", "CreateDate", "UpdateDate" },
-                                "StartDate")
+                                new List<string> { nameof(Edition.Name), nameof(Edition.IsCurrent), nameof(Edition.IsActive), nameof(Edition.StartDate), nameof(Edition.EndDate), nameof(Edition.CreateDate), nameof(Edition.UpdateDate) },
+                                nameof(Edition.StartDate))
                             .Select(c => new EditionJsonDto
                             {
                                 Id = c.Id,
                                 Uid = c.Uid,
                                 Name = c.Name,
+                                IsCurrent = c.IsCurrent,
+                                IsActive = c.IsActive,
                                 StartDate = c.StartDate,
                                 EndDate = c.EndDate,
                                 CreateDate = c.CreateDate,

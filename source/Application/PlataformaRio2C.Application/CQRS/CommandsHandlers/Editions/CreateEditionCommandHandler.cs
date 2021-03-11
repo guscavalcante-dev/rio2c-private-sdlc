@@ -96,6 +96,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
+            var currentEditions = this.editionRepo.FindAllByIsCurrent();
+            if (edition.IsCurrent && currentEditions?.Count > 0)
+            {
+                currentEditions.ForEach(e => e.DisableIsCurrent());
+                this.EditionRepo.UpdateAll(currentEditions);
+            }
+
             this.EditionRepo.Create(edition);
             this.Uow.SaveChanges();
             this.AppValidationResult.Data = edition;

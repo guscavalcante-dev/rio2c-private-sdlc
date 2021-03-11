@@ -457,7 +457,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quantidade máxima de projetos à venda do participante.
+        ///   Looks up a localized string similar to Quantidade máxima de projetos por produtora.
         /// </summary>
         public static string AttendeeOrganizationMaxSellProjectsCount {
             get {
@@ -3364,6 +3364,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edições Passadas.
+        /// </summary>
+        public static string PastEditions {
+            get {
+                return ResourceManager.GetString("PastEditions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lida.
         /// </summary>
         public static string PastReadF {
@@ -3944,7 +3953,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quantidade máxima de avaliações por comprador de projeto.
+        ///   Looks up a localized string similar to Quantidade máxima de avaliadores por projeto.
         /// </summary>
         public static string ProjectMaxBuyerEvaluationsCount {
             get {

@@ -947,4 +947,8 @@
     <value>Esta Edição não pode ser desativada enquanto for a edição atual.</value>
     <comment>Esta Edição não pode ser desativada enquanto for a edição atual.</comment>
   </data>
+  <data name="CanNotUncheckCurrentEdition" xml:space="preserve">
+    <value>Esta Edição não pode ser desmarcada como atual pois não existe nenhuma outra edição marcada como atual para substituí-la. Configure alguma outra edição como atual e tente novamente.</value>
+    <comment>Esta Edição não pode ser desmarcada como atual pois não existe nenhuma outra edição marcada como atual para substituí-la. Configure alguma outra edição como atual e tente novamente.</comment>
+  </data>
 </root>
