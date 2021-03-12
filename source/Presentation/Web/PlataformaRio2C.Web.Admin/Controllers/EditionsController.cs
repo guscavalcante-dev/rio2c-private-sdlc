@@ -68,7 +68,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             //    new BreadcrumbItemHelper(Labels.Editions, Url.Action("Index", "Editions", new { Area = "" }))
             //});
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper("Editions", null);
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Editions, null);
 
             #endregion
 
@@ -164,10 +164,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Conferences, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Editions, Url.Action("Index", "Editions", new { Area = "" })),
-                new BreadcrumbItemHelper(editionDto.Edition.Name, Url.Action("Details", "Editions", new { id }))
-            });
+            //ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Conferences, new List<BreadcrumbItemHelper> {
+            //    new BreadcrumbItemHelper(Labels.Editions, Url.Action("Index", "Editions", new { Area = "" })),
+            //    new BreadcrumbItemHelper(editionDto.Edition.Name, Url.Action("Details", "Editions", new { id }))
+            //});
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Editions, null);
 
             #endregion
 

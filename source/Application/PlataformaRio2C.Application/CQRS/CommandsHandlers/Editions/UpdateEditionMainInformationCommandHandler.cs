@@ -11,6 +11,7 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -58,7 +59,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.Edition.ToLowerInvariant(), $"{Labels.TheM.ToLowerInvariant()} {Labels.UrlCode.ToLowerInvariant()}", cmd.UrlCode), new string[] { "ToastrError" }));
             }
 
-            var currentEditions = this.editionRepo.FindAllByIsCurrent();
+            var currentEditions = this.editionRepo.FindAllByIsCurrent()?
+                                                    .Where(e => e.Id != cmd.EditionId) //Discard the currentEdition for the checks below
+                                                    .ToList();
+
             if (!cmd.IsCurrent && currentEditions?.Count == 0)
             {
                 this.ValidationResult.Add(new ValidationError(Messages.CanNotUncheckCurrentEdition, new string[] { "ToastrError" }));
