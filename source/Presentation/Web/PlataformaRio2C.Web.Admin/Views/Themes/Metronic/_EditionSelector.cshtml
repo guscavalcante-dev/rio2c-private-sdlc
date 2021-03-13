@@ -1,31 +1,4 @@
-﻿@*@using System.Globalization
-    @{
-        var currentCulture = System.Threading.Thread.CurrentThread.CurrentUICulture;
-    }*@
-@*<div class="kt-header__topbar-item kt-header__topbar-item--langs">
-        <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">
-            <span class="kt-header__topbar-icon">
-                <i class="flaticon-calendar-with-a-clock-time-tools"></i>
-            </span>
-        </div>
-        <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim">
-            <ul class="kt-nav kt-margin-t-10 kt-margin-b-10">
-                @foreach (var edition in ViewBag.ActiveEditions)
-                {
-                    <li class="kt-nav__item">
-                        <a href="@Url.Action("SetEdition", "Home", new { Area = "", urlCode = edition.UrlCode, returnUrl = Request.Path })" class="kt-nav__link @(edition.IsCurrent ? "kt-nav__link--active" : "")">
-                            <span class="kt-nav__link-icon">
-                                <img src="~/Assets/themes/metronic/media/icons/svg/Tools/Calendar.svg" style="margin-right:5px;" />
-                            </span>
-    <span class="kt-nav__link-text">@(edition.Name)</span>
-                        </a>
-                    </li>
-                }
-            </ul>
-        </div>
-    </div>*@
-
-<div class="kt-header__topbar-item kt-header__topbar-item--langs" style="margin-right:100px;">
+﻿<div class="kt-header__topbar-item kt-header__topbar-item--langs" style="margin-right:100px;">
     <div class="kt-header__topbar-wrapper" data-offset="10px,0px">
         <div class="kt-header__topbar-icon">
             <div class="dropdown">

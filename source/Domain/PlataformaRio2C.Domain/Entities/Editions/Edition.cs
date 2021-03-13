@@ -395,7 +395,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             if (this.IsCurrent && this.IsDeleted)
             {
-                this.ValidationResult.Add(new ValidationError(Messages.CanNotDeleteCurrentEdition, new string[] { "IsDeleted" }));
+                this.ValidationResult.Add(new ValidationError(Messages.CanNotDeleteCurrentEdition, new string[] { "ToastrError" }));
             }
         }
 

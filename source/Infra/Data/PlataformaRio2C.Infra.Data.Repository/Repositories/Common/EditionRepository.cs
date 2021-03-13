@@ -171,13 +171,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
         }
 
-        /// <summary>Gets the base query.</summary>
+        /// <summary>
+        /// Gets the base query.
+        /// </summary>
         /// <param name="readonly">if set to <c>true</c> [readonly].</param>
+        /// <param name="getDeleted">if set to <c>true</c> [get deleted].</param>
         /// <returns></returns>
-        private IQueryable<Edition> GetBaseQuery(bool @readonly = false)
+        private IQueryable<Edition> GetBaseQuery(bool @readonly = false, bool getDeleted = false)
         {
-            var consult = this.dbSet
-                                .IsNotDeleted();
+            var consult = getDeleted
+                            ? this.dbSet
+                            : this.dbSet.IsNotDeleted();
 
             return @readonly
                         ? consult.AsNoTracking()
@@ -330,7 +334,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public Edition FindByUrlCode(int urlCode)
         {
-            var query = this.GetBaseQuery()
+            var query = this.GetBaseQuery(getDeleted:true)
                             .FindByUrlCode(urlCode);
 
             return query.FirstOrDefault();
