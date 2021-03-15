@@ -165,6 +165,7 @@
     <Compile Include="Enums\StatusMessageType.cs" />
     <Compile Include="Exceptions\DomainException.cs" />
     <Compile Include="Extensions\AsyncHelpers.cs" />
+    <Compile Include="Extensions\BooleanExtensions.cs" />
     <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="Extensions\TranslateExtensions.cs" />
     <Compile Include="Extensions\PagedListExtensions.cs" />

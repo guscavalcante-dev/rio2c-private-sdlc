@@ -75,6 +75,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             return View(searchViewModel);
         }
 
+        #endregion
+
         #region DataTable Widget
 
         /// <summary>Searches the specified request.</summary>
@@ -88,7 +90,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 request.Length,
                 request.Search?.Value,
                 request.GetSortColumns(),
-                new List<Guid>(), 
+                new List<Guid>(),
                 this.EditionDto.Id,
                 this.AdminAccessControlDto.Language.Id
             );
@@ -99,49 +101,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             {
                 status = "success",
                 dataTable = response
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        #endregion
-
-        #endregion
-
-        #region Total Count Widget
-
-        /// <summary>Shows the total count widget.</summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ShowTotalCountWidget()
-        {
-            var editionEventsCount = await this.editionRepo.CountAllByDataTable(true, this.EditionDto.Uid);
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", editionEventsCount), divIdOrClass = "#EventsTotalCountWidget" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        #endregion
-
-        #region Edition Count Widget
-
-        /// <summary>Shows the edition count widget.</summary>
-        /// <returns></returns>
-        public async Task<ActionResult> ShowEditionCountWidget()
-        {
-            var editionEventsCount = await this.editionRepo.CountAllByDataTable(false, this.EditionDto.Uid);
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", editionEventsCount), divIdOrClass = "#EventsEditionCountWidget" },
-                }
             }, JsonRequestBehavior.AllowGet);
         }
 
@@ -176,29 +135,82 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             return View(editionDto);
         }
 
-        #region Main Information Widget
+        #endregion
 
-        /// <summary>Shows the main information widget.</summary>
-        /// <param name="editionUid">The edition event uid.</param>
+        #region Create
+
+        /// <summary>Shows the create modal.</summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowMainInformationWidget(Guid? editionUid)
+        public async Task<ActionResult> ShowCreateModal()
         {
-            var mainInformationWidgetDto = await this.editionRepo.FindDtoAsync(editionUid ?? Guid.Empty);
-            if (mainInformationWidgetDto == null)
-            {
-                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Edition, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-            }
+            var cmd = new CreateEdition(null);
 
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#EditionMainInformationWidget" },
+                    new { page = this.RenderRazorViewToString("Modals/CreateModal", cmd), divIdOrClass = "#GlobalModalContainer" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
+
+        /// <summary>Creates the specified edition event.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> Create(CreateEdition cmd)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    null,
+                    null,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/_CreateForm", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Edition, Labels.CreatedM) });
+        }
+
+        #endregion
 
         #region Update
 
@@ -253,8 +265,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 cmd.UpdatePreSendProperties(
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
-                    this.EditionDto.Id,
-                    this.EditionDto.Uid,
+                    null,
+                    null,
                     this.UserInterfaceLanguage);
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
@@ -287,114 +299,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             }
 
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Edition, Labels.UpdatedM) });
-        }
-
-        #endregion
-
-        #endregion
-
-        #region Events Widget
-
-        /// <summary>Shows the events widget.</summary>
-        /// <param name="editionUid">The edition uid.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ShowEventsWidget(Guid? editionUid)
-        {
-            var eventsWidgetDto = await this.editionRepo.FindEventsWidgetDtoAsync(editionUid ?? Guid.Empty);
-            if (eventsWidgetDto == null)
-            {
-                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Edition, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-            }
-
-            ViewBag.StartDate = eventsWidgetDto.Edition.StartDate;
-            ViewBag.EndDate = eventsWidgetDto.Edition.EndDate;
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("~/Views/Events/Widgets/RelatedEventsWidget.cshtml", eventsWidgetDto.EditionEventDtos), divIdOrClass = "#EditionEventsWidget" }
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        #endregion
-
-        #endregion
-
-        #region Create
-
-        /// <summary>Shows the create modal.</summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ShowCreateModal()
-        {
-            var cmd = new CreateEdition(null);
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Modals/CreateModal", cmd), divIdOrClass = "#GlobalModalContainer" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>Creates the specified edition event.</summary>
-        /// <param name="cmd">The command.</param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> Create(CreateEdition cmd)
-        {
-            var result = new AppValidationResult();
-
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-
-                cmd.UpdatePreSendProperties(
-                    this.AdminAccessControlDto.User.Id,
-                    this.AdminAccessControlDto.User.Uid,
-                    this.EditionDto.Id,
-                    this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
-                result = await this.CommandBus.Send(cmd);
-                if (!result.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-            }
-            catch (DomainException ex)
-            {
-                foreach (var error in result.Errors)
-                {
-                    var target = error.Target ?? "";
-                    ModelState.AddModelError(target, error.Message);
-                }
-
-                return Json(new
-                {
-                    status = "error",
-                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
-                    pages = new List<dynamic>
-                    {
-                        new { page = this.RenderRazorViewToString("Modals/_CreateForm", cmd), divIdOrClass = "#form-container" },
-                    }
-                }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Edition, Labels.CreatedM) });
         }
 
         #endregion
@@ -450,6 +354,102 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             }
 
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Edition, Labels.DeletedM) });
+        }
+
+        #endregion
+
+        #region Main Information Widget
+
+        /// <summary>Shows the main information widget.</summary>
+        /// <param name="editionUid">The edition event uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowMainInformationWidget(Guid? editionUid)
+        {
+            var mainInformationWidgetDto = await this.editionRepo.FindDtoAsync(editionUid ?? Guid.Empty);
+            if (mainInformationWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Edition, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#EditionMainInformationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Events Widget
+
+        /// <summary>Shows the events widget.</summary>
+        /// <param name="editionUid">The edition uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowEventsWidget(Guid? editionUid)
+        {
+            var eventsWidgetDto = await this.editionRepo.FindEventsWidgetDtoAsync(editionUid ?? Guid.Empty);
+            if (eventsWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Edition, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            ViewBag.StartDate = eventsWidgetDto.Edition.StartDate;
+            ViewBag.EndDate = eventsWidgetDto.Edition.EndDate;
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("~/Views/Events/Widgets/RelatedEventsWidget.cshtml", eventsWidgetDto.EditionEventDtos), divIdOrClass = "#EditionEventsWidget" }
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Total Count Widget
+
+        /// <summary>Shows the total count widget.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowTotalCountWidget()
+        {
+            var editionEventsCount = await this.editionRepo.CountAllByDataTable(true, this.EditionDto.Uid);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", editionEventsCount), divIdOrClass = "#EventsTotalCountWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Edition Count Widget
+
+        /// <summary>Shows the edition count widget.</summary>
+        /// <returns></returns>
+        public async Task<ActionResult> ShowEditionCountWidget()
+        {
+            var editionEventsCount = await this.editionRepo.CountAllByDataTable(false, this.EditionDto.Uid);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", editionEventsCount), divIdOrClass = "#EventsEditionCountWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

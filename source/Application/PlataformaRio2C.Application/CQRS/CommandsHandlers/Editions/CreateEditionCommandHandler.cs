@@ -45,7 +45,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #region Initial Validations
 
             var existentUrlCodeEdition = editionRepo.FindByUrlCode(cmd.UrlCode);
-            if (existentUrlCodeEdition != null && existentUrlCodeEdition.Uid != cmd.EditionUid)
+            if (existentUrlCodeEdition != null)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.Edition.ToLowerInvariant(), $"{Labels.TheM.ToLowerInvariant()} {Labels.UrlCode.ToLowerInvariant()}", cmd.UrlCode), new string[] { "ToastrError" }));
             }

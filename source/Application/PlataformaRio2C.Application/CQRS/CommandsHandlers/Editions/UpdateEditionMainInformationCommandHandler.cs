@@ -60,7 +60,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             var currentEditions = this.editionRepo.FindAllByIsCurrent()?
-                                                    .Where(e => e.Id != cmd.EditionId) //Discard the currentEdition for the checks below
+                                                    .Where(e => e.Uid != cmd.EditionUid) //Discard the currentEdition for the checks below
                                                     .ToList();
 
             if (!cmd.IsCurrent && currentEditions?.Count == 0)

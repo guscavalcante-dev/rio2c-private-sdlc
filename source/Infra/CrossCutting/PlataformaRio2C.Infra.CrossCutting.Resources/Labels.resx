@@ -2574,8 +2574,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Data de início das negociações</comment>
   </data>
   <data name="OneToOneMeetingsScheduleDate" xml:space="preserve">
-    <value>Data da agenda de reuniões particulares</value>
-    <comment>Data da agenda de reuniões particulares</comment>
+    <value>Data do agendamento das reuniões particulares</value>
+    <comment>Data do agendamento das reuniões particulares</comment>
   </data>
   <data name="ProjectEvaluationEndDate" xml:space="preserve">
     <value>Data de término da avaliação de projeto</value>

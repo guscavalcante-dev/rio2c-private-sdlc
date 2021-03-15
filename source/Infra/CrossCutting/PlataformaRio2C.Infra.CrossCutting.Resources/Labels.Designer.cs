@@ -3220,7 +3220,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data da agenda de reuniões particulares.
+        ///   Looks up a localized string similar to Data do agendamento das reuniões particulares.
         /// </summary>
         public static string OneToOneMeetingsScheduleDate {
             get {

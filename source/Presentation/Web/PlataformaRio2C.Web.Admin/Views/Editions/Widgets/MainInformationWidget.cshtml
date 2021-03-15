@@ -2,7 +2,7 @@
 @model EditionDto
 <div class="kt-portlet__body">
     <div class="kt-widget kt-widget--user-profile-3">
-        <div class="kt-widget__top"> 
+        <div class="kt-widget__top">
             <div class="kt-widget__content pl-0" style="overflow: hidden;">
                 <div class="kt-widget__head">
                     <span class="kt-widget__username">
@@ -17,6 +17,18 @@
             </div>
         </div>
         <div class="kt-widget__bottom">
+            @*<div class="kt-widget__item">
+            <div class="kt-widget__details">
+                <span class="kt-widget__title">@Labels.Name</span>
+                <span class="kt-widget__value"><span>@(Model.Edition.Name)</span></span>
+            </div>
+        </div>*@
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.UrlCode</span>
+                    <span class="kt-widget__value"><span>@(Model.Edition.UrlCode)</span></span>
+                </div>
+            </div>
             <div class="kt-widget__item">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.StartDate</span>
@@ -27,6 +39,38 @@
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.EndDate</span>
                     <span class="kt-widget__value"><span>@(Model.Edition.EndDate.ToUserTimeZone().ToShortDateString())</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.IsCurrent</span>
+                    <span class="kt-widget__value"><span>@(Model.Edition.IsCurrent.ToYesOrNoString())</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.IsActiveF</span>
+                    <span class="kt-widget__value"><span>@(Model.Edition.IsActive.ToYesOrNoString())</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="kt-widget__bottom">
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.OneToOneMeetingsScheduleDate</span>
+                    <span class="kt-widget__value"><span>@(Model.Edition.OneToOneMeetingsScheduleDate.ToUserTimeZone().ToShortDateString())</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.AttendeeOrganizationMaxSellProjectsCount</span>
+                    <span class="kt-widget__value"><span>@(Model.Edition.AttendeeOrganizationMaxSellProjectsCount)</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.ProjectMaxBuyerEvaluationsCount</span>
+                    <span class="kt-widget__value"><span>@(Model.Edition.ProjectMaxBuyerEvaluationsCount)</span></span>
                 </div>
             </div>
         </div>
