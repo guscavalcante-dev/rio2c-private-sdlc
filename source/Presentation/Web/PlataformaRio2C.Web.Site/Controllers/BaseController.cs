@@ -60,7 +60,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <returns>Returns an IAsyncController instance.</returns>
         protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, object state)
         {
-
             // Set environment
             this.SetEnvironment();
 
@@ -101,7 +100,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             if (userAccessControlDto != null && !userAccessControlDto.IsAdmin())
             {
-                ViewBag.ActiveEditions = ((List<EditionDto>)ViewBag.ActiveEditions).Where(e => userAccessControlDto.EditionAttendeeOrganizations.Select(eao => eao.EditionId).Contains(e.Id)).ToList();
+                ViewBag.ActiveEditions = ((List<EditionDto>)ViewBag.ActiveEditions).Where(e => userAccessControlDto.EditionAttendeeCollaborators.Select(eao => eao.EditionId).Contains(e.Id)).ToList();
             }
 
             base.OnActionExecuting(filterContext);

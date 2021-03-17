@@ -8,7 +8,7 @@
             <div class="form-group col-md-12">
                 @Html.LabelFor(m => m.TradeName, new { @class = "control-label" })
                 <div class="spinner-container">
-                    @Html.TextBoxFor(m => m.TradeName, new { @class = "form-control ", autocomplete = "off" })
+                    @Html.TextBoxFor(m => m.TradeName, new { @class = "form-control ", @autocomplete = "nope" })
                 </div>
                 @Html.ValidationMessageFor(m => m.TradeName, "", new { @class = "text-danger" })
             </div>
@@ -17,7 +17,7 @@
             <div class="form-group col-md-12">
                 @Html.LabelFor(m => m.CompanyName, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
                 <div class="spinner-container">
-                    @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control", autocomplete = "off" })
+                    @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control", @autocomplete = "nope" })
                 </div>
                 @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
             </div>

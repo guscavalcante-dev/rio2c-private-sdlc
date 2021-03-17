@@ -189,6 +189,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                                                                                   && pbe.ProjectEvaluationStatus.Code == ProjectEvaluationStatus.UnderEvaluation.Code))) ?? 0,
                             Collaborator = u.Collaborator,
                             EditionAttendeeCollaborator = u.Collaborator.AttendeeCollaborators.FirstOrDefault(ac => !ac.IsDeleted && ac.EditionId == editionId),
+                            EditionAttendeeCollaborators = u.Collaborator.AttendeeCollaborators.Where(ac => !ac.IsDeleted),
                             EditionCollaboratorTypes = u.Collaborator.AttendeeCollaborators
                                                                 .Where(ac => !ac.IsDeleted && ac.EditionId == editionId)
                                                                 .SelectMany(ac => ac.AttendeeCollaboratorTypes

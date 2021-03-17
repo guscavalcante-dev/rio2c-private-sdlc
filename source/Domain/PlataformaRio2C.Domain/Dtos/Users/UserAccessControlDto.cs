@@ -30,6 +30,7 @@ namespace PlataformaRio2C.Domain.Dtos
 
         public Collaborator Collaborator { get; set; }
         public AttendeeCollaborator EditionAttendeeCollaborator { get; set; }
+        public IEnumerable<AttendeeCollaborator> EditionAttendeeCollaborators { get; set; }
         public IEnumerable<CollaboratorType> EditionCollaboratorTypes { get; set; }
         public IEnumerable<AttendeeOrganization> EditionAttendeeOrganizations { get; set; } //TODO: Remove EditionAttendeeOrganizations from UserAccessControlDto
         public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }  //TODO: Remove EditionAttendeeOrganizations from UserAccessControlDto

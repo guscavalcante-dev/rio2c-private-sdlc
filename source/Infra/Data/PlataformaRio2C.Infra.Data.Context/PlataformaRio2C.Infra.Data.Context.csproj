@@ -408,6 +408,7 @@
   <ItemGroup>
     <Content Include="SqlScripts\Deltas\20190930_114613_0001_ChangesForPlayersApi.sql" />
     <Content Include="SqlScripts\Deltas\20200513_100215_0030_ChangesForSignalR.sql" />
+    <Content Include="SqlScripts\Deltas\20210315_185800_0031_ChangesForEditionEvents.sql" />
     <Content Include="SqlScripts\Deltas\20200316_161033_0029_ChangesForAgenda.sql" />
     <Content Include="SqlScripts\Deltas\20200316_140312_0028_ChangesForUnsubscribeLists.sql" />
     <Content Include="SqlScripts\Deltas\20200310_111845_0027_ChangesForAgendaInLogistics.sql" />

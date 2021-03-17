@@ -934,4 +934,16 @@
     <value>The file format must be pdf.</value>
     <comment>O arquivo deve estar no formato pdf.</comment>
   </data>
+  <data name="CanNotDeleteCurrentEdition" xml:space="preserve">
+    <value>This Edition cannot be deleted while it is the current edition.</value>
+    <comment>Esta Edição não pode ser excluída enquanto for a edição atual.</comment>
+  </data>
+  <data name="CanNotDisableCurrentEdition" xml:space="preserve">
+    <value>This Edition cannot be deactivated while it is the current edition.</value>
+    <comment>Esta Edição não pode ser desativada enquanto for a edição atual.</comment>
+  </data>
+  <data name="CanNotUncheckCurrentEdition" xml:space="preserve">
+    <value>This Edition cannot be unchecked as current as there is no other edition marked as current to replace it. Set some other edition as current and try again.</value>
+    <comment>Esta Edição não pode ser desmarcada como atual pois não existe nenhuma outra edição marcada como atual para substituí-la. Configure alguma outra edição como atual e tente novamente.</comment>
+  </data>
 </root>

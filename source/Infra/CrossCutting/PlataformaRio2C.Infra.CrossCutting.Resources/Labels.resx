@@ -2474,7 +2474,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Rodada de Negócio</comment>
   </data>
   <data name="ShowAccommodations" xml:space="preserve">
-    <value>Exibir hospesagens</value>
+    <value>Exibir hospedagens</value>
     <comment>Exibir hospedagens</comment>
   </data>
   <data name="ShowAllConferences" xml:space="preserve">
@@ -2519,7 +2519,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   </data>
   <data name="AttendeeOrganizationMaxSellProjectsCount" xml:space="preserve">
     <value>Quantidade máxima de projetos por produtora</value>
-    <comment>Quantidade máxima de projetos à venda do participante</comment>
+    <comment>Quantidade máxima de projetos por participante</comment>
   </data>
   <data name="AudiovisualNegotiationsCreateEndDate" xml:space="preserve">
     <value>Data de término da criação de negociações audiovisuais</value>
@@ -2587,7 +2587,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   </data>
   <data name="ProjectMaxBuyerEvaluationsCount" xml:space="preserve">
     <value>Quantidade máxima de avaliadores por projeto</value>
-    <comment>Quantidade máxima de avaliações por comprador de projeto</comment>
+    <comment>Quantidade máxima de avaliadores por projeto</comment>
   </data>
   <data name="ProjectSubmitEndDate" xml:space="preserve">
     <value>Data de término de envio de projeto</value>

@@ -4858,7 +4858,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exibir hospesagens.
+        ///   Looks up a localized string similar to Exibir hospedagens.
         /// </summary>
         public static string ShowAccommodations {
             get {
