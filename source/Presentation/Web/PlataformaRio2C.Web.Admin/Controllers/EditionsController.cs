@@ -212,97 +212,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #endregion
 
-        #region Update
-
-        /// <summary>Shows the update main information modal.</summary>
-        /// <param name="editionUid">The edition uid.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? editionUid)
-        {
-            UpdateEditionMainInformation cmd;
-
-            try
-            {
-                var mainInformationWidgetDto = await this.editionRepo.FindDtoAsync(editionUid ?? Guid.Empty);
-                if (mainInformationWidgetDto == null)
-                {
-                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Edition, Labels.FoundM.ToLowerInvariant()));
-                }
-
-                cmd = new UpdateEditionMainInformation(mainInformationWidgetDto);
-            }
-            catch (DomainException ex)
-            {
-                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationModal", cmd), divIdOrClass = "#GlobalModalContainer" }
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>Updates the main information.</summary>
-        /// <param name="cmd">The command.</param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> UpdateMainInformation(UpdateEditionMainInformation cmd)
-        {
-            var result = new AppValidationResult();
-
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-
-                cmd.UpdatePreSendProperties(
-                    this.AdminAccessControlDto.User.Id,
-                    this.AdminAccessControlDto.User.Uid,
-                    null,
-                    null,
-                    this.UserInterfaceLanguage);
-                result = await this.CommandBus.Send(cmd);
-                if (!result.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-            }
-            catch (DomainException ex)
-            {
-                foreach (var error in result.Errors)
-                {
-                    var target = error.Target ?? "";
-                    ModelState.AddModelError(target, error.Message);
-                }
-
-                return Json(new
-                {
-                    status = "error",
-                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
-                    pages = new List<dynamic>
-                    {
-                        new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationForm", cmd), divIdOrClass = "#form-container" },
-                    }
-                }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Edition, Labels.UpdatedM) });
-        }
-
-        #endregion
-
         #region Delete
 
         /// <summary>Deletes the specified delete edition event.</summary>
@@ -380,6 +289,248 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#EditionMainInformationWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Shows the update main information modal.</summary>
+        /// <param name="editionUid">The edition uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? editionUid)
+        {
+            UpdateEditionMainInformation cmd;
+
+            try
+            {
+                var mainInformationWidgetDto = await this.editionRepo.FindDtoAsync(editionUid ?? Guid.Empty);
+                if (mainInformationWidgetDto == null)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Edition, Labels.FoundM.ToLowerInvariant()));
+                }
+
+                cmd = new UpdateEditionMainInformation(mainInformationWidgetDto);
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationModal", cmd), divIdOrClass = "#GlobalModalContainer" }
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Updates the main information.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> UpdateMainInformation(UpdateEditionMainInformation cmd)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                //Remove DatesInformation properties from ModelState validation.
+                CreateEdition c;
+                ModelState.Remove(nameof(c.SellStartDate));
+                ModelState.Remove(nameof(c.SellEndDate));
+                ModelState.Remove(nameof(c.ProjectSubmitStartDate));
+                ModelState.Remove(nameof(c.ProjectSubmitEndDate));
+                ModelState.Remove(nameof(c.ProjectEvaluationStartDate));
+                ModelState.Remove(nameof(c.ProjectEvaluationEndDate));
+                ModelState.Remove(nameof(c.NegotiationStartDate));
+                ModelState.Remove(nameof(c.NegotiationEndDate));
+                ModelState.Remove(nameof(c.MusicProjectSubmitStartDate));
+                ModelState.Remove(nameof(c.MusicProjectSubmitEndDate));
+                ModelState.Remove(nameof(c.MusicProjectEvaluationStartDate));
+                ModelState.Remove(nameof(c.MusicProjectEvaluationEndDate));
+                ModelState.Remove(nameof(c.InnovationProjectSubmitStartDate));
+                ModelState.Remove(nameof(c.InnovationProjectSubmitEndDate));
+                ModelState.Remove(nameof(c.InnovationProjectEvaluationStartDate));
+                ModelState.Remove(nameof(c.InnovationProjectEvaluationEndDate));
+                ModelState.Remove(nameof(c.AudiovisualNegotiationsCreateStartDate));
+                ModelState.Remove(nameof(c.AudiovisualNegotiationsCreateEndDate));
+
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    null,
+                    null,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationForm", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Edition, Labels.UpdatedM) });
+        }
+
+        #endregion
+
+        #region Dates Information Widget
+
+        /// <summary>
+        /// Shows the dates information widget.
+        /// </summary>
+        /// <param name="editionUid">The edition uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowDatesInformationWidget(Guid? editionUid)
+        {
+            var mainInformationWidgetDto = await this.editionRepo.FindDtoAsync(editionUid ?? Guid.Empty);
+            if (mainInformationWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Edition, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/DatesInformationWidget", mainInformationWidgetDto), divIdOrClass = "#DatesInformationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Shows the update dates information modal.
+        /// </summary>
+        /// <param name="editionUid">The edition uid.</param>
+        /// <returns></returns>
+        /// <exception cref="DomainException"></exception>
+        [HttpGet]
+        public async Task<ActionResult> ShowUpdateDatesInformationModal(Guid? editionUid)
+        {
+            UpdateEditionMainInformation cmd;
+
+            try
+            {
+                var mainInformationWidgetDto = await this.editionRepo.FindDtoAsync(editionUid ?? Guid.Empty);
+                if (mainInformationWidgetDto == null)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Edition, Labels.FoundM.ToLowerInvariant()));
+                }
+
+                cmd = new UpdateEditionMainInformation(mainInformationWidgetDto);
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/UpdateDatesInformationModal", cmd), divIdOrClass = "#GlobalModalContainer" }
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Updates the dates information.
+        /// </summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        /// <exception cref="DomainException">
+        /// </exception>
+        [HttpPost]
+        public async Task<ActionResult> UpdateDatesInformation(UpdateEditionDatesInformation cmd)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                //Remove MainInformation properties from ModelState validation.
+                CreateEdition c;
+                ModelState.Remove(nameof(c.Name));
+                ModelState.Remove(nameof(c.UrlCode));
+                ModelState.Remove(nameof(c.IsCurrent));
+                ModelState.Remove(nameof(c.IsActive));
+                ModelState.Remove(nameof(c.AttendeeOrganizationMaxSellProjectsCount));
+                ModelState.Remove(nameof(c.ProjectMaxBuyerEvaluationsCount));
+                ModelState.Remove(nameof(c.StartDate));
+                ModelState.Remove(nameof(c.EndDate));
+                ModelState.Remove(nameof(c.OneToOneMeetingsScheduleDate));
+
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    null,
+                    null,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/UpdateDatesInformationForm", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Edition, Labels.UpdatedM) });
         }
 
         #endregion

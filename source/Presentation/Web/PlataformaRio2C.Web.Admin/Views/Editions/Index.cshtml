@@ -2,20 +2,6 @@
 @{
     ViewBag.Title = Labels.Editions;
 }
-<!--begin:: Quick Stats-->
-<!--<div class="row">
-    <div class="col-sm-6">-->
-<!--begin:: Total Count Widget-->
-<!--<div id="EditionsTotalCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>-->
-<!--end:: Total Count Widget-->
-<!--</div>
-<div class="col-sm-6">-->
-<!--begin:: Edition Count-->
-<!--<div id="EditionsCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>-->
-<!--end:: Edition Count-->
-<!--</div>
-</div>-->
-<!--end:: Quick Stats-->
 @Html.Partial("Widgets/DataTablewidget", Model)
 @section Styles {
     @Styles.Render("~/bundles/css/dataTables.css")
@@ -33,15 +19,14 @@
     @Scripts.Render("~/bundles/js/editions.delete.js")
 <script>
         // Page translations ----------------------------------------------------------------------
-
-        // Pagination -----------------------------------------------------------------------------
-        var initialPage = @(Model.Page?.ToString() ?? "null");
-        var initialPageSize = @(Model.PageSize?.ToString() ?? "null");
-
         var translate = {
             yes: '@Labels.Yes',
             no: '@Labels.No'
         };
+
+        // Pagination -----------------------------------------------------------------------------
+        var initialPage = @(Model.Page?.ToString() ?? "null");
+        var initialPageSize = @(Model.PageSize?.ToString() ?? "null");
 
         jQuery(document).ready(function () {
             //EditionsTotalCountWidget.init();

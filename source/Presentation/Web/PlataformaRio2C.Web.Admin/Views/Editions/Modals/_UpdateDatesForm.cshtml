@@ -3,30 +3,6 @@
 @model PlataformaRio2C.Application.CQRS.Commands.CreateEdition
 
 <div class="row">
-    <div class="form-group col-8">
-        @Html.LabelFor(m => m.Name, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
-    </div>
-    <div class="form-group col-4">
-        @Html.LabelFor(m => m.UrlCode, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.UrlCode, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.UrlCode, "", new { @class = "text-danger" })
-    </div>
-</div>
-<div class="row">
-    <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.StartDate, new { @class = "control-label" })
-        @Html.TextBox("StartDate", Model.StartDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
-        @Html.ValidationMessageFor(m => m.StartDate, "", new { @class = "text-danger" })
-    </div>
-    <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.EndDate, new { @class = "control-label" })
-        @Html.TextBox("EndDate", Model.EndDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
-        @Html.ValidationMessageFor(m => m.EndDate, "", new { @class = "text-danger" })
-    </div>
-</div>
-<div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.SellStartDate, new { @class = "control-label" })
         @Html.TextBox("SellStartDate", Model.SellStartDate?.ToShortDateString(), new
@@ -169,66 +145,5 @@
         {
             @class = "form-control enable-datepicker"@*, @readonly = "readonly", data_date_audiovisualnegotiationscreate_start_date = editionDto?.AudiovisualNegotiationsCreateStartDate?.ToUserTimeZone().ToShortDateString(), data_date_audiovisualnegotiationscreate_end_date = editionDto?.AudiovisualNegotiationsCreateEndDate?.ToUserTimeZone().ToShortDateString()*@})
         @Html.ValidationMessageFor(m => m.AudiovisualNegotiationsCreateEndDate, "", new { @class = "text-danger" })
-    </div>
-</div>
-<div class="row">
-    <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.AttendeeOrganizationMaxSellProjectsCount, new { @class = "control-label" })
-        @Html.TextBox("AttendeeOrganizationMaxSellProjectsCount", Model.AttendeeOrganizationMaxSellProjectsCount, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.AttendeeOrganizationMaxSellProjectsCount, "", new { @class = "text-danger" })
-    </div>
-    <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.ProjectMaxBuyerEvaluationsCount, new { @class = "control-label" })
-        @Html.TextBox("ProjectMaxBuyerEvaluationsCount", Model.ProjectMaxBuyerEvaluationsCount, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.ProjectMaxBuyerEvaluationsCount, "", new { @class = "text-danger" })
-    </div>
-</div>
-<div class="row">
-    <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.OneToOneMeetingsScheduleDate, new { @class = "control-label" })
-        @Html.TextBox("OneToOneMeetingsScheduleDate", Model.OneToOneMeetingsScheduleDate?.ToShortDateString(), new
-        {
-            @class = "form-control enable-datepicker"@*, @readonly = "readonly", data_date_start_date = editionDto?.StartDate.ToUserTimeZone().ToShortDateString(), data_date_end_date = editionDto?.EndDate.ToUserTimeZone().ToShortDateString()*@})
-        @Html.ValidationMessageFor(m => m.OneToOneMeetingsScheduleDate, "", new { @class = "text-danger" })
-    </div>
-    <div class="form-group col-3">
-        <div class="row">
-            <div class="col-12">
-                @Html.Label(Labels.IsCurrent, new { @class = "control-label" })
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-12">
-                <span class="kt-switch kt-switch--icon">
-                    <label>
-                        @Html.CheckBoxFor(m => m.IsCurrent)
-                        <span></span>
-                    </label>
-                </span>
-                <div class="row">
-                    @Html.ValidationMessageFor(m => m.IsCurrent, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="form-group col-3">
-        <div class="row">
-            <div class="col-12">
-                @Html.Label(Labels.IsActiveF, new { @class = "control-label" })
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-12">
-                <span class="kt-switch kt-switch--icon">
-                    <label>
-                        @Html.CheckBoxFor(m => m.IsActive)
-                        <span></span>
-                    </label>
-                </span>
-                <div class="row">
-                    @Html.ValidationMessageFor(m => m.IsActive, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
     </div>
 </div>

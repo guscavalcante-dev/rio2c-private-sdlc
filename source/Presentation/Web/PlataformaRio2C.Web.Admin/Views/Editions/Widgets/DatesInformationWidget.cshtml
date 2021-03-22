@@ -1,0 +1,146 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model EditionDto
+<div class="kt-portlet__body">
+    <div class="kt-widget kt-widget--user-profile-3">
+        <div class="kt-widget__top">
+            <div class="kt-widget__content pl-0" style="overflow: hidden;">
+                <div class="kt-widget__head">
+                    <span class="kt-widget__username">
+                        @(Labels.Dates)
+                    </span>
+                    <div class="kt-widget__action">
+                        <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="EditionsDatesInformationWidget.showUpdateModal();">
+                            <i class="flaticon2-edit"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="kt-widget__bottom">
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.SellStartDate</span>
+                    <span class="kt-widget__value"><span>@(Model.Edition.SellStartDate.ToUserTimeZone().ToShortDateString())</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.SellEndDate</span>
+                    <span class="kt-widget__value"><span>@(Model.Edition.SellEndDate.ToUserTimeZone().ToShortDateString())</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="kt-widget__bottom">
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.ProjectSubmitStartDate</span>
+                    <span class="kt-widget__value"><span>@(Model.Edition.ProjectSubmitStartDate.ToUserTimeZone().ToShortDateString())</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.ProjectSubmitEndDate</span>
+                    <span class="kt-widget__value"><span>@(Model.Edition.ProjectSubmitEndDate.ToUserTimeZone().ToShortDateString())</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="kt-widget__bottom">
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.ProjectEvaluationStartDate</span>
+                    <span class="kt-widget__value"><span>@(Model.Edition.ProjectEvaluationStartDate.ToUserTimeZone().ToShortDateString())</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.ProjectEvaluationEndDate</span>
+                    <span class="kt-widget__value"><span>@(Model.Edition.ProjectEvaluationEndDate.ToUserTimeZone().ToShortDateString())</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="kt-widget__bottom">
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.NegotiationStartDate</span>
+                    <span class="kt-widget__value"><span>@(Model.Edition.NegotiationStartDate.ToUserTimeZone().ToShortDateString())</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.NegotiationEndDate</span>
+                    <span class="kt-widget__value"><span>@(Model.Edition.NegotiationEndDate.ToUserTimeZone().ToShortDateString())</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="kt-widget__bottom">
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.MusicProjectSubmitStartDate</span>
+                    <span class="kt-widget__value"><span>@(Model.Edition.MusicProjectSubmitStartDate.ToUserTimeZone().ToShortDateString())</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.MusicProjectSubmitEndDate</span>
+                    <span class="kt-widget__value"><span>@(Model.Edition.MusicProjectSubmitEndDate.ToUserTimeZone().ToShortDateString())</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="kt-widget__bottom">
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.MusicProjectEvaluationStartDate</span>
+                    <span class="kt-widget__value"><span>@(Model.Edition.MusicProjectEvaluationStartDate.ToUserTimeZone().ToShortDateString())</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.MusicProjectEvaluationEndDate</span>
+                    <span class="kt-widget__value"><span>@(Model.Edition.MusicProjectEvaluationEndDate.ToUserTimeZone().ToShortDateString())</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="kt-widget__bottom">
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.InnovationProjectSubmitStartDate</span>
+                    <span class="kt-widget__value"><span>@(Model.Edition.InnovationProjectSubmitStartDate.ToUserTimeZone().ToShortDateString())</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.InnovationProjectSubmitEndDate</span>
+                    <span class="kt-widget__value"><span>@(Model.Edition.InnovationProjectSubmitEndDate.ToUserTimeZone().ToShortDateString())</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="kt-widget__bottom">
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.InnovationProjectEvaluationStartDate</span>
+                    <span class="kt-widget__value"><span>@(Model.Edition.InnovationProjectEvaluationStartDate.ToUserTimeZone().ToShortDateString())</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.InnovationProjectEvaluationEndDate</span>
+                    <span class="kt-widget__value"><span>@(Model.Edition.InnovationProjectEvaluationEndDate.ToUserTimeZone().ToShortDateString())</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="kt-widget__bottom">
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.AudiovisualNegotiationsCreateStartDate</span>
+                    <span class="kt-widget__value"><span>@(Model.Edition.AudiovisualNegotiationsCreateStartDate?.ToUserTimeZone().ToShortDateString())</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.AudiovisualNegotiationsCreateEndDate</span>
+                    <span class="kt-widget__value"><span>@(Model.Edition.AudiovisualNegotiationsCreateEndDate?.ToUserTimeZone().ToShortDateString())</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

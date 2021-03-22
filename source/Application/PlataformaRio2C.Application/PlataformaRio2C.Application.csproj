@@ -219,6 +219,7 @@
     <Compile Include="CQRS\CommandsHandlers\Editions\CreateEditionCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Editions\DeleteEditionCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Editions\EditionBaseCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Editions\UpdateEditionDatesInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Editions\UpdateEditionMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendMusicCommissionWelcomeEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendSpeakerWelcomeEmailAsyncCommandHandler.cs" />
@@ -329,6 +330,7 @@
     <Compile Include="CQRS\Commands\Connections\CleanUpConnectionsAsync.cs" />
     <Compile Include="CQRS\Commands\Editions\CreateEdition.cs" />
     <Compile Include="CQRS\Commands\Editions\DeleteEdition.cs" />
+    <Compile Include="CQRS\Commands\Editions\UpdateEditionDatesInformation.cs" />
     <Compile Include="CQRS\Commands\Editions\UpdateEditionMainInformation.cs" />
     <Compile Include="CQRS\Commands\Logistics\UpdateLogisticAccomodation.cs" />
     <Compile Include="CQRS\Commands\Logistics\CreateLogisticAccommodation.cs" />

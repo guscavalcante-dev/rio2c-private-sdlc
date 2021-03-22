@@ -53,6 +53,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #region Initial validations
 
+            //Validates existent URLCode. Must be unique!
             var existentUrlCodeEdition = editionRepo.FindByUrlCode(cmd.UrlCode);
             if (existentUrlCodeEdition != null && existentUrlCodeEdition.Uid != cmd.EditionUid)
             {
@@ -63,6 +64,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                                     .Where(e => e.Uid != cmd.EditionUid) //Discard the currentEdition for the checks below
                                                     .ToList();
 
+            //Validates any active current edition. There should always be a single current edition!
             if (!cmd.IsCurrent && currentEditions?.Count == 0)
             {
                 this.ValidationResult.Add(new ValidationError(Messages.CanNotUncheckCurrentEdition, new string[] { "ToastrError" }));
@@ -84,33 +86,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                           cmd.ProjectMaxBuyerEvaluationsCount,
                                           cmd.StartDate.Value,
                                           cmd.EndDate.Value,
-                                          cmd.SellStartDate.Value,
-                                          cmd.SellEndDate.Value,
-                                          cmd.ProjectSubmitStartDate.Value,
-                                          cmd.ProjectSubmitEndDate.Value,
-                                          cmd.ProjectEvaluationStartDate.Value,
-                                          cmd.ProjectEvaluationEndDate.Value,
                                           cmd.OneToOneMeetingsScheduleDate.Value,
-                                          cmd.NegotiationStartDate.Value,
-                                          cmd.NegotiationEndDate.Value,
-                                          cmd.MusicProjectSubmitStartDate.Value,
-                                          cmd.MusicProjectSubmitEndDate.Value,
-                                          cmd.MusicProjectEvaluationStartDate.Value,
-                                          cmd.MusicProjectEvaluationEndDate.Value,
-                                          cmd.InnovationProjectSubmitStartDate.Value,
-                                          cmd.InnovationProjectSubmitEndDate.Value,
-                                          cmd.InnovationProjectEvaluationStartDate.Value,
-                                          cmd.InnovationProjectEvaluationEndDate.Value,
-                                          cmd.AudiovisualNegotiationsCreateStartDate.Value,
-                                          cmd.AudiovisualNegotiationsCreateEndDate.Value,
                                           cmd.UserId);
-            
+
             if (!edition.IsValid())
             {
                 this.AppValidationResult.Add(edition.ValidationResult);
                 return this.AppValidationResult;
             }
 
+            //Uncheck all other editions IsCurrent property.
             if (edition.IsCurrent && currentEditions?.Count > 0)
             {
                 currentEditions.ForEach(e => e.DisableIsCurrent());

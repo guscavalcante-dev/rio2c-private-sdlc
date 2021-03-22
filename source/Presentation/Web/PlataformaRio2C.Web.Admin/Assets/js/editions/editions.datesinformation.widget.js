@@ -1,24 +1,24 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Renan Valentim
-// Created          : 04-03-2021
+// Created          : 19-03-2021
 //
 // Last Modified By : Renan Valentim
 // Last Modified On : 19-03-2021
 // ***********************************************************************
-// <copyright file="editions.maininformation.widget.js" company="Softo">
+// <copyright file="editions.datesinformation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var EditionsMainInformationWidget = function () {
+var EditionsDatesInformationWidget = function () {
 
-    var widgetElementId = '#EditionMainInformationWidget';
+    var widgetElementId = '#DatesInformationWidget';
     var widgetElement = $(widgetElementId);
 
-    var updateModalId = '#UpdateMainInformationModal';
-    var updateFormId = '#UpdateMainInformationForm';
+    var updateModalId = '#UpdateDatesInformationModal';
+    var updateFormId = '#UpdateDatesInformationForm';
 
     var enableDatePickerDateRangeChangeEvent = function () {
         $("#StartDate").datepicker({
@@ -111,7 +111,7 @@ var EditionsMainInformationWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.editionUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Editions/ShowMainInformationWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Editions/ShowDatesInformationWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -137,12 +137,16 @@ var EditionsMainInformationWidget = function () {
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (EditionsMainInformationWidget) !== 'undefined') {
-                    EditionsMainInformationWidget.init();
-                }
+                //if (typeof (EditionsMainInformationWidget) !== 'undefined') {
+                //    EditionsMainInformationWidget.init();
+                //}
 
-                if (typeof (EditionsEventsWidget) !== 'undefined') {
-                    EditionsEventsWidget.init();
+                //if (typeof (EditionsEventsWidget) !== 'undefined') {
+                //    EditionsEventsWidget.init();
+                //}
+
+                if (typeof (EditionsDatesInformationWidget) !== 'undefined') {
+                    EditionsDatesInformationWidget.init();
                 }
             },
             onError: function (data) {
@@ -168,7 +172,7 @@ var EditionsMainInformationWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.editionUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Editions/ShowUpdateMainInformationModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Editions/ShowUpdateDatesInformationModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

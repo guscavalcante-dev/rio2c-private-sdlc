@@ -445,6 +445,7 @@
     <Content Include="Assets\js\editions\editions.datatable.widget.js" />
     <Content Include="Assets\js\editions\editions.delete.js" />
     <Content Include="Assets\js\editions\editions.editioncount.widget.js" />
+    <Content Include="Assets\js\editions\editions.datesinformation.widget.js" />
     <Content Include="Assets\js\editions\editions.maininformation.widget.js" />
     <Content Include="Assets\js\editions\editions.totalcount.widget.js" />
     <Content Include="Assets\js\logisticsponsors\logisticsponsors.editioncount.widget.js" />
@@ -8572,6 +8573,11 @@
     <Content Include="Views\Editions\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Views\Events\Widgets\RelatedEventsWidget.cshtml" />
     <Content Include="Views\Themes\Metronic\_EditionSelector.cshtml" />
+    <Content Include="Views\Editions\Widgets\DatesInformationWidget.cshtml" />
+    <Content Include="Views\Editions\Modals\UpdateDatesInformationForm.cshtml" />
+    <Content Include="Views\Editions\Modals\UpdateDatesInformationModal.cshtml" />
+    <Content Include="Views\Editions\Modals\_UpdateDatesForm.cshtml" />
+    <Content Include="Views\Editions\Modals\_UpdateForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

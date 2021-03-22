@@ -209,13 +209,44 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="projectMaxBuyerEvaluationsCount">The project maximum buyer evaluations count.</param>
         /// <param name="startDate">The start date.</param>
         /// <param name="endDate">The end date.</param>
+        /// <param name="oneToOneMeetingsScheduleDate">The one to one meetings schedule date.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateMainInformation(
+            string name,
+            int urlCode,
+            bool isCurrent,
+            bool isActive,
+            int attendeeOrganizationMaxSellProjectsCount,
+            int projectMaxBuyerEvaluationsCount,
+            DateTime startDate,
+            DateTime endDate,
+            DateTime oneToOneMeetingsScheduleDate,
+            int userId)
+        {
+            this.Name = name;
+            this.UrlCode = urlCode;
+            this.IsCurrent = isCurrent;
+            this.IsActive = isActive;
+            this.AttendeeOrganizationMaxSellProjectsCount = attendeeOrganizationMaxSellProjectsCount;
+            this.ProjectMaxBuyerEvaluationsCount = projectMaxBuyerEvaluationsCount;
+            this.StartDate = startDate.ToEndDateTimeOffset();
+            this.EndDate = endDate.ToEndDateTimeOffset();        
+            this.OneToOneMeetingsScheduleDate = oneToOneMeetingsScheduleDate.ToEndDateTimeOffset();
+            
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>
+        /// Updates the dates information.
+        /// </summary>
         /// <param name="sellStartDate">The sell start date.</param>
         /// <param name="sellEndDate">The sell end date.</param>
         /// <param name="projectSubmitStartDate">The project submit start date.</param>
         /// <param name="projectSubmitEndDate">The project submit end date.</param>
         /// <param name="projectEvaluationStartDate">The project evaluation start date.</param>
         /// <param name="projectEvaluationEndDate">The project evaluation end date.</param>
-        /// <param name="oneToOneMeetingsScheduleDate">The one to one meetings schedule date.</param>
         /// <param name="negotiationStartDate">The negotiation start date.</param>
         /// <param name="negotiationEndDate">The negotiation end date.</param>
         /// <param name="musicProjectSubmitStartDate">The music project submit start date.</param>
@@ -229,22 +260,13 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="audiovisualNegotiationsCreateStartDate">The audiovisual negotiations create start date.</param>
         /// <param name="audiovisualNegotiationsCreateEndDate">The audiovisual negotiations create end date.</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateMainInformation(
-            string name,
-            int urlCode,
-            bool isCurrent,
-            bool isActive,
-            int attendeeOrganizationMaxSellProjectsCount,
-            int projectMaxBuyerEvaluationsCount,
-            DateTime startDate,
-            DateTime endDate,
+        public void UpdateDatesInformation(     
             DateTime sellStartDate,
             DateTime sellEndDate,
             DateTime projectSubmitStartDate,
             DateTime projectSubmitEndDate,
             DateTime projectEvaluationStartDate,
             DateTime projectEvaluationEndDate,
-            DateTime oneToOneMeetingsScheduleDate,
             DateTime negotiationStartDate,
             DateTime negotiationEndDate,
             DateTime musicProjectSubmitStartDate,
@@ -259,22 +281,12 @@ namespace PlataformaRio2C.Domain.Entities
             DateTime audiovisualNegotiationsCreateEndDate,
             int userId)
         {
-            this.Name = name;
-            this.UrlCode = urlCode;
-            this.IsCurrent = isCurrent;
-            this.IsActive = isActive;
-            this.AttendeeOrganizationMaxSellProjectsCount = attendeeOrganizationMaxSellProjectsCount;
-            this.ProjectMaxBuyerEvaluationsCount = projectMaxBuyerEvaluationsCount;
-
-            this.StartDate = startDate.ToEndDateTimeOffset();
-            this.EndDate = endDate.ToEndDateTimeOffset();
             this.SellStartDate = sellStartDate.ToEndDateTimeOffset();
             this.SellEndDate = sellEndDate.ToEndDateTimeOffset();
             this.ProjectSubmitStartDate = projectSubmitStartDate.ToEndDateTimeOffset();
             this.ProjectSubmitEndDate = projectSubmitEndDate.ToEndDateTimeOffset();
             this.ProjectEvaluationStartDate = projectEvaluationStartDate.ToEndDateTimeOffset();
             this.ProjectEvaluationEndDate = projectEvaluationEndDate.ToEndDateTimeOffset();
-            this.OneToOneMeetingsScheduleDate = oneToOneMeetingsScheduleDate.ToEndDateTimeOffset();
             this.NegotiationStartDate = negotiationStartDate.ToEndDateTimeOffset();
             this.NegotiationEndDate = negotiationEndDate.ToEndDateTimeOffset();
             this.MusicProjectSubmitStartDate = musicProjectSubmitStartDate.ToEndDateTimeOffset();
