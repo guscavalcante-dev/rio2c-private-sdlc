@@ -68,6 +68,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
@@ -90,6 +91,9 @@
     <Compile Include="ApiModels\Conferences\Responses\ConferencesApiResponse.cs" />
     <Compile Include="ApiModels\EditionEvents\Responses\EditionEventApiResponse.cs" />
     <Compile Include="ApiModels\LanguageValueApiResponse.cs" />
+    <Compile Include="ApiModels\MusicBands\Responses\TargetAudiencesApiResponse.cs" />
+    <Compile Include="ApiModels\MusicBands\Responses\MusicGenresApiResponse.cs" />
+    <Compile Include="ApiModels\MusicBands\Responses\MusicBandTypesApiResponse.cs" />
     <Compile Include="ApiModels\PresentationFormats\Responses\PresentationFormatBaseApiResponse.cs" />
     <Compile Include="ApiModels\EditionEvents\Responses\EditionEventBaseApiResponse.cs" />
     <Compile Include="ApiModels\Rooms\Responses\RoomBaseApiResponse.cs" />
@@ -184,10 +188,17 @@
     <Compile Include="Dtos\Messages\MessageDto.cs" />
     <Compile Include="Dtos\Messages\ConversationDto.cs" />
     <Compile Include="Dtos\Interests\InterestDto.cs" />
+    <Compile Include="Dtos\Music\API\MusicProjectApiDto.cs" />
     <Compile Include="Dtos\Music\AttendeeMusicBandDto.cs" />
     <Compile Include="Dtos\Music\AttendeeMusicBandCollaboratorDto.cs" />
+    <Compile Include="Dtos\Music\API\TargetAudienceApiDto.cs" />
+    <Compile Include="Dtos\Music\API\MusicGenreApiDto.cs" />
+    <Compile Include="Dtos\Music\API\ReleasedMusicProjectApiDto.cs" />
+    <Compile Include="Dtos\Music\API\MusicBandTeamMemberApiDto.cs" />
+    <Compile Include="Dtos\Music\API\MusicBandMemberApiDto.cs" />
     <Compile Include="Dtos\Music\MusicBandTargetAudienceDto.cs" />
     <Compile Include="Dtos\Music\MusicBandGenreDto.cs" />
+    <Compile Include="Dtos\Music\API\MusicBandApiDto.cs" />
     <Compile Include="Dtos\Music\MusicProjectJsonDto.cs" />
     <Compile Include="Dtos\Music\MusicProjectEvaluationDto.cs" />
     <Compile Include="Dtos\Music\MusicProjectDto.cs" />
@@ -381,6 +392,11 @@
     <Compile Include="Interfaces\Repositories\Logistics\ILogisticRepository.cs" />
     <Compile Include="Interfaces\Repositories\Logistics\IPlaceRepository.cs" />
     <Compile Include="Interfaces\Repositories\Logistics\ILogisticSponsorRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Music\Bands\IMusicBandTypeRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Music\Bands\IReleasedMusicProjectRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Music\Bands\IMusicBandTeamMemberRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Music\Bands\IMusicBandMemberRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Music\Bands\IMusicBandRepository.cs" />
     <Compile Include="Interfaces\Repositories\Music\Projects\IMusicProjectRepository.cs" />
     <Compile Include="Interfaces\Repositories\Music\Projects\IMusicGenreRepository.cs" />
     <Compile Include="Interfaces\Repositories\Projects\IProjectEvaluationRefuseReasonRepository.cs" />

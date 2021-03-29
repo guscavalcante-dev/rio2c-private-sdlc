@@ -26,6 +26,17 @@ namespace PlataformaRio2C.Domain.Entities
         public string Name { get; private set; }
         public int DisplayOrder { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MusicBandType"/> class.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="displayOrder">The display order.</param>
+        public MusicBandType(string name, int displayOrder)
+        {
+            this.Name = name;
+            this.DisplayOrder = displayOrder;
+        }
+
         /// <summary>Initializes a new instance of the <see cref="MusicBandType"/> class.</summary>
         protected MusicBandType()
         {

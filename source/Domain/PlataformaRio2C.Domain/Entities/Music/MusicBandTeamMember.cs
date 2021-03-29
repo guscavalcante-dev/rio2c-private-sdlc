@@ -14,6 +14,7 @@
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using System;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -30,6 +31,23 @@ namespace PlataformaRio2C.Domain.Entities
         public string Role { get; private set; }
 
         public virtual MusicBand MusicBand { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MusicBandTeamMember"/> class.
+        /// </summary>
+        /// <param name="musicBandId">The music band identifier.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="role">The role.</param>
+        public MusicBandTeamMember(MusicBand musicBand, string name, string role, int userId)
+        {
+            this.MusicBand = musicBand;
+            this.Name = name;
+            this.Role = role;
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
 
         /// <summary>Initializes a new instance of the <see cref="MusicBandTeamMember"/> class.</summary>
         protected MusicBandTeamMember()

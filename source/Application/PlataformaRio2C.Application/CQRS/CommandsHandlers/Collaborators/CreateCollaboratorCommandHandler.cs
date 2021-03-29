@@ -109,7 +109,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             if (user == null)
             {
                 var collaborator = new Collaborator(
-                    collaboratorUid,
                     await this.attendeeOrganizationRepo.FindAllByUidsAsync(cmd.AttendeeOrganizationBaseCommands?.Where(aobc => aobc.AttendeeOrganizationUid.HasValue)?.Select(aobc => aobc.AttendeeOrganizationUid.Value)?.ToList()),
                     await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
                     await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),

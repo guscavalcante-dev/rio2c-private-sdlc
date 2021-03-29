@@ -14,6 +14,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
@@ -44,8 +45,6 @@ namespace PlataformaRio2C.Domain.Entities
         public string Youtube { get; private set; }
 
         public virtual MusicBandType MusicBandType { get; private set; }
-        //public virtual Address Address { get; private set; }
-        //public virtual User Updater { get; private set; }
 
         public virtual ICollection<AttendeeMusicBand> AttendeeMusicBands { get; private set; }
         public virtual ICollection<MusicBandGenre> MusicBandGenres { get; private set; }
@@ -53,6 +52,61 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<MusicBandMember> MusicBandMembers { get; private set; }
         public virtual ICollection<MusicBandTeamMember> MusicBandTeamMembers { get; private set; }
         public virtual ICollection<ReleasedMusicProject> ReleasedMusicProjects { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MusicBand"/> class.
+        /// </summary>
+        /// <param name="musicBandTypeId">The music band type identifier.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="imageUrl">The image URL.</param>
+        /// <param name="formationDate">The formation date.</param>
+        /// <param name="mainMusicInfluences">The main music influences.</param>
+        /// <param name="facebook">The facebook.</param>
+        /// <param name="instagram">The instagram.</param>
+        /// <param name="twitter">The twitter.</param>
+        /// <param name="youtube">The youtube.</param>
+        /// <param name="userId">The user identifier.</param>
+        public MusicBand(
+            MusicBandType musicBandType,
+            Edition edition,
+            string name,
+            string imageUrl,
+            string formationDate,
+            string mainMusicInfluences,
+            string facebook,
+            string instagram,
+            string twitter,
+            string youtube,
+            MusicProjectApiDto musicProjectApiDto,
+            AttendeeCollaborator attendeeCollaborator,
+            List<MusicGenreApiDto> musicGenreApiDtos,
+            List<TargetAudienceApiDto> targetAudienceApiDtos,
+            List<MusicBandMemberApiDto> musicBandMemberApiDtos,
+            List<MusicBandTeamMemberApiDto> musicBandTeamMemberApiDtos,
+            List<ReleasedMusicProjectApiDto> releasedMusicProjectApiDtos,
+            int userId)
+        {
+            this.MusicBandType = musicBandType;
+            this.Name = name;
+            this.ImageUrl = imageUrl;
+            this.FormationDate = formationDate;
+            this.MainMusicInfluences = mainMusicInfluences;
+            this.Facebook = facebook;
+            this.Instagram = instagram;
+            this.Twitter = twitter;
+            this.Youtube = youtube;
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+
+            this.SynchronizeAttendeeMusicBandsCollaborators(edition, attendeeCollaborator, musicProjectApiDto, true, userId);  
+            this.AddMusicBandGenres(musicGenreApiDtos, userId);
+            this.AddMusicBandTargetAudience(targetAudienceApiDtos, userId);
+            this.AddMusicBandMembers(musicBandMemberApiDtos, userId);
+            this.AddMusicBandTeamMembers(musicBandTeamMemberApiDtos, userId);
+            this.AddReleasedMusicProjects(releasedMusicProjectApiDtos, userId);
+        }
 
         /// <summary>Initializes a new instance of the <see cref="MusicBand"/> class.</summary>
         protected MusicBand()
@@ -145,77 +199,23 @@ namespace PlataformaRio2C.Domain.Entities
             return !string.IsNullOrEmpty(this.ImageUrl);
         }
 
-        //#region Address
-
-        ///// <summary>Updates the address.</summary>
-        ///// <param name="country">The country.</param>
-        ///// <param name="stateUid">The state uid.</param>
-        ///// <param name="stateName">Name of the state.</param>
-        ///// <param name="cityUid">The city uid.</param>
-        ///// <param name="cityName">Name of the city.</param>
-        ///// <param name="address1">The address1.</param>
-        ///// <param name="addressZipCode">The address zip code.</param>
-        ///// <param name="addressIsManual">if set to <c>true</c> [address is manual].</param>
-        ///// <param name="userId">The user identifier.</param>
-        //public void UpdateAddress(
-        //    Country country,
-        //    Guid? stateUid,
-        //    string stateName,
-        //    Guid? cityUid,
-        //    string cityName,
-        //    string address1,
-        //    string addressZipCode,
-        //    bool addressIsManual,
-        //    int userId)
-        //{
-        //    if (this.Address == null)
-        //    {
-        //        this.Address = new Address(
-        //            country, 
-        //            stateUid, 
-        //            stateName, 
-        //            cityUid, 
-        //            cityName, 
-        //            address1,
-        //            addressZipCode, 
-        //            addressIsManual, 
-        //            userId);
-        //    }
-        //    else
-        //    {
-        //        this.Address.Update(
-        //            country, 
-        //            stateUid, 
-        //            stateName, 
-        //            cityUid, 
-        //            cityName,
-        //            address1,
-        //            addressZipCode,
-        //            addressIsManual, 
-        //            userId);
-        //    }
-        //}
-
-        //#endregion
-
         #region Attendee Music Bands
 
-        /// <summary>Synchronizes the attendee music bands.</summary>
+        /// <summary>
+        /// Synchronizes the attendee music bands collaborators.
+        /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
         /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeAttendeeMusicBands(
-            Edition edition,
-            AttendeeCollaborator attendeeCollaborator,
-            bool isAddingToCurrentEdition,
-            int userId)
+        /// <param name="musicProjectApiDto">The music project API dto.</param>
+        private void SynchronizeAttendeeMusicBandsCollaborators(Edition edition, AttendeeCollaborator attendeeCollaborator, MusicProjectApiDto musicProjectApiDto, bool isAddingToCurrentEdition, int userId)
         {
-            //// Synchronize only when is adding to current edition
-            //if (!isAddingToCurrentEdition)
-            //{
-            //    return;
-            //}
+            // Synchronize only when is adding to current edition
+            if (!isAddingToCurrentEdition)
+            {
+                return;
+            }
 
             if (this.AttendeeMusicBands == null)
             {
@@ -235,7 +235,7 @@ namespace PlataformaRio2C.Domain.Entities
             }
             else
             {
-                var newAttendeeMusicBand = new AttendeeMusicBand(edition, this, userId);
+                var newAttendeeMusicBand = new AttendeeMusicBand(edition, this, musicProjectApiDto, userId);
                 this.AttendeeMusicBands.Add(newAttendeeMusicBand);
                 attendeeCollaborator?.SynchronizeAttendeeMusicBandCollaborators(new List<AttendeeMusicBand> { newAttendeeMusicBand }, false, userId);
             }
@@ -270,128 +270,116 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        //#region Target Audiences
+        #region Music Band Members
 
-        ///// <summary>Updates the organization target audiences.</summary>
-        ///// <param name="targetAudiences">The target audiences.</param>
-        ///// <param name="userId">The user identifier.</param>
-        //public void UpdateOrganizationTargetAudiences(List<TargetAudience> targetAudiences, int userId)
-        //{
-        //    this.UpdateDate = DateTime.UtcNow;
-        //    this.UpdateUserId = userId;
-        //    this.SynchronizeOrganizationTargetAudiences(targetAudiences, userId);
-        //}
+        /// <summary>
+        /// Synchronizes the attendee music bands.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
+        /// <param name="userId">The user identifier.</param>
+        private void AddMusicBandMembers(List<MusicBandMemberApiDto> musicBandMemberApiDtos, int userId)
+        {
+            if (this.MusicBandMembers == null)
+            {
+                this.MusicBandMembers = new List<MusicBandMember>();
+            }
 
-        ///// <summary>Synchronizes the organization target audiences.</summary>
-        ///// <param name="targetAudiences">The target audiences.</param>
-        ///// <param name="userId">The user identifier.</param>
-        //private void SynchronizeOrganizationTargetAudiences(List<TargetAudience> targetAudiences, int userId)
-        //{
-        //    if (this.OrganizationTargetAudiences == null)
-        //    {
-        //        this.OrganizationTargetAudiences = new List<OrganizationTargetAudience>();
-        //    }
+            foreach(var bandMember in musicBandMemberApiDtos)
+            {
+                this.MusicBandMembers.Add(new MusicBandMember(this, bandMember.Name, bandMember.MusicInstrumentName, userId));
+            }
+        }
 
-        //    this.DeleteOrganizationTargetAudiences(targetAudiences, userId);
+        #endregion
 
-        //    if (targetAudiences?.Any() != true)
-        //    {
-        //        return;
-        //    }
+        #region Music Band Team Members
 
-        //    // Create or update target audiences
-        //    foreach (var targetAudience in targetAudiences)
-        //    {
-        //        var organizationTargetAudienceDb = this.OrganizationTargetAudiences.FirstOrDefault(a => a.TargetAudience.Uid == targetAudience.Uid);
-        //        if (organizationTargetAudienceDb != null)
-        //        {
-        //            organizationTargetAudienceDb.Update(userId);
-        //        }
-        //        else
-        //        {
-        //            this.CreateOrganizationTargetAudience(targetAudience, userId);
-        //        }
-        //    }
-        //}
+        /// <summary>
+        /// Adds the music band team members.
+        /// </summary>
+        /// <param name="musicBandTeamMemberApiDtos">The music band team member API dtos.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void AddMusicBandTeamMembers(List<MusicBandTeamMemberApiDto> musicBandTeamMemberApiDtos, int userId)
+        {
+            if (this.MusicBandTeamMembers == null)
+            {
+                this.MusicBandTeamMembers = new List<MusicBandTeamMember>();
+            }
 
-        ///// <summary>Deletes the organization target audiences.</summary>
-        ///// <param name="newTargetAudiences">The new target audiences.</param>
-        ///// <param name="userId">The user identifier.</param>
-        //private void DeleteOrganizationTargetAudiences(List<TargetAudience> newTargetAudiences, int userId)
-        //{
-        //    var organizationTargetAudiencesToDelete = this.OrganizationTargetAudiences.Where(db => newTargetAudiences?.Select(a => a.Uid)?.Contains(db.TargetAudience.Uid) == false && !db.IsDeleted).ToList();
-        //    foreach (var organizationTargetAudienceToDelete in organizationTargetAudiencesToDelete)
-        //    {
-        //        organizationTargetAudienceToDelete.Delete(userId);
-        //    }
-        //}
+            foreach (var bandTeamMember in musicBandTeamMemberApiDtos)
+            {
+                this.MusicBandTeamMembers.Add(new MusicBandTeamMember(this, bandTeamMember.Name, bandTeamMember.Role, userId));
+            }
+        }
 
-        ///// <summary>Creates the organization target audience.</summary>
-        ///// <param name="targetAudience">The target audience.</param>
-        ///// <param name="userId">The user identifier.</param>
-        //private void CreateOrganizationTargetAudience(TargetAudience targetAudience, int userId)
-        //{
-        //    this.OrganizationTargetAudiences.Add(new OrganizationTargetAudience(this, targetAudience, userId));
-        //}
+        #endregion
 
-        //#endregion
+        #region Released Music Projects
 
-        //#region Interests
+        /// <summary>
+        /// Adds the released music projects.
+        /// </summary>
+        /// <param name="releasedMusicProjectApiDtos">The released music project API dtos.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void AddReleasedMusicProjects(List<ReleasedMusicProjectApiDto> releasedMusicProjectApiDtos, int userId)
+        {
+            if (this.ReleasedMusicProjects == null)
+            {
+                this.ReleasedMusicProjects = new List<ReleasedMusicProject>();
+            }
 
-        ///// <summary>Updates the organization interests.</summary>
-        ///// <param name="organizationInterests">The organization interests.</param>
-        ///// <param name="userId">The user identifier.</param>
-        //public void UpdateOrganizationInterests(List<OrganizationInterest> organizationInterests, int userId)
-        //{
-        //    this.SynchronizeOrganizationInterests(organizationInterests, userId);
+            foreach (var releasedMusicProject in releasedMusicProjectApiDtos)
+            {
+                this.ReleasedMusicProjects.Add(new ReleasedMusicProject(this, releasedMusicProject.Name, releasedMusicProject.Year, userId));
+            }
+        }
 
-        //    this.IsDeleted = false;
-        //    this.UpdateUserId = userId;
-        //    this.UpdateDate = DateTime.UtcNow;
-        //}
+        #endregion
 
-        ///// <summary>Synchronizes the organization interests.</summary>
-        ///// <param name="organizationInterests">The organization interests.</param>
-        ///// <param name="userId">The user identifier.</param>
-        //private void SynchronizeOrganizationInterests(List<OrganizationInterest> organizationInterests, int userId)
-        //{
-        //    if (this.OrganizationInterests == null)
-        //    {
-        //        this.OrganizationInterests = new List<OrganizationInterest>();
-        //    }
+        #region Music Band Genres
 
-        //    this.DeleteOrganizationInterests(organizationInterests, userId);
+        /// <summary>
+        /// Adds the music band genres.
+        /// </summary>
+        /// <param name="musicGenreApiDtos">The music genre API dtos.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void AddMusicBandGenres(List<MusicGenreApiDto> musicGenreApiDtos, int userId)
+        {
+            if (this.MusicBandGenres == null)
+            {
+                this.MusicBandGenres = new List<MusicBandGenre>();
+            }
 
-        //    if (organizationInterests?.Any() != true)
-        //    {
-        //        return;
-        //    }
+            foreach (var musicGenre in musicGenreApiDtos)
+            {
+                this.MusicBandGenres.Add(new MusicBandGenre(this, musicGenre.MusicGenre, null, userId));
+            }
+        }
 
-        //    // Create or update interests
-        //    foreach (var organizationInterest in organizationInterests)
-        //    {
-        //        var interestDb = this.OrganizationInterests.FirstOrDefault(a => a.Interest.Uid == organizationInterest.Interest.Uid);
-        //        if (interestDb != null)
-        //        {
-        //            interestDb.Update(organizationInterest, userId);
-        //        }
-        //        else
-        //        {
-        //            this.OrganizationInterests.Add(organizationInterest);
-        //        }
-        //    }
-        //}
+        #endregion
 
-        //private void DeleteOrganizationInterests(List<OrganizationInterest> newOrganizationInterests, int userId)
-        //{
-        //    var organizationInterestsToDelete = this.OrganizationInterests.Where(db => newOrganizationInterests?.Select(a => a.Interest.Uid)?.Contains(db.Interest.Uid) == false && !db.IsDeleted).ToList();
-        //    foreach (var organizationInterestToDelete in organizationInterestsToDelete)
-        //    {
-        //        organizationInterestToDelete.Delete(userId);
-        //    }
-        //}
+        #region Music Band Target Audiences
 
-        //#endregion
+        /// <summary>
+        /// Adds the music band target audience.
+        /// </summary>
+        /// <param name="targetAudienceApiDtos">The target audience API dtos.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void AddMusicBandTargetAudience(List<TargetAudienceApiDto> targetAudienceApiDtos, int userId)
+        {
+            if (this.MusicBandTargetAudiences == null)
+            {
+                this.MusicBandTargetAudiences = new List<MusicBandTargetAudience>();
+            }
+
+            foreach (var targetAudience in targetAudienceApiDtos)
+            {
+                this.MusicBandTargetAudiences.Add(new MusicBandTargetAudience(this, targetAudience.TargetAudience, userId));
+            }
+        }
+
+        #endregion
 
         #region Validations
 

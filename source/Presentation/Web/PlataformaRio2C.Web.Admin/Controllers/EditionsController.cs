@@ -85,7 +85,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Search(IDataTablesRequest request)
         {
-            var editionEvents = await this.editionRepo.FindAllByDataTable(
+            var editionEvents = await this.editionRepo.FindAllByDataTableAsync(
                 request.Start / request.Length,
                 request.Length,
                 request.Search?.Value,
@@ -571,7 +571,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowTotalCountWidget()
         {
-            var editionEventsCount = await this.editionRepo.CountAllByDataTable(true, this.EditionDto.Uid);
+            var editionEventsCount = await this.editionRepo.CountAllByDataTableAsync(true, this.EditionDto.Uid);
 
             return Json(new
             {
@@ -591,7 +591,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <returns></returns>
         public async Task<ActionResult> ShowEditionCountWidget()
         {
-            var editionEventsCount = await this.editionRepo.CountAllByDataTable(false, this.EditionDto.Uid);
+            var editionEventsCount = await this.editionRepo.CountAllByDataTableAsync(false, this.EditionDto.Uid);
 
             return Json(new
             {

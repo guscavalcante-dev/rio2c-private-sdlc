@@ -90,7 +90,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="email">The email.</param>
         /// <param name="userId">The user identifier.</param>
         public Collaborator(
-            Guid uid,
             Edition edition,
             CollaboratorType collaboratorType,
             string firstName,
@@ -101,6 +100,7 @@ namespace PlataformaRio2C.Domain.Entities
             //this.Uid = uid;
             this.FirstName = firstName?.Trim();
             this.LastNames = lastNames?.Trim();
+            this.PublicEmail = email?.Trim();
             this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, null, null, true, userId);
             this.UpdateUser(email);
 
@@ -143,7 +143,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="miniBios">The mini bios.</param>
         /// <param name="userId">The user identifier.</param>
         public Collaborator(
-            Guid uid,
             List<AttendeeOrganization> attendeeOrganizations,
             Edition edition,
             CollaboratorType collaboratorType,

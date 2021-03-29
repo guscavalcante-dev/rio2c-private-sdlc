@@ -235,7 +235,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return pagedList;
         }
 
-        internal static async Task<IPagedList<AttendeeCollaboratorListDto>> ToListPagedAsync(this IQueryable<AttendeeCollaboratorListDto> query, int page, int pageSize)
+        internal static async Task<IPagedList<List>> ToListPagedAsync(this IQueryable<List> query, int page, int pageSize)
         {
             // Page the list
             var pagedList = await query.ToPagedListAsync(page, pageSize);
@@ -721,14 +721,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<AttendeeCollaboratorListDto>> FindAllDropdownApiListDtoPaged(int editionId, string keywords, int page, int pageSize)
+        public async Task<IPagedList<List>> FindAllDropdownApiListDtoPaged(int editionId, string keywords, int page, int pageSize)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId, false)
                                 .FindByKeywords(keywords);
 
             return await query
-                            .Select(c => new AttendeeCollaboratorListDto()
+                            .Select(c => new List()
                             {
                                 Uid = c.Uid,
                                 CollaboratorUid = c.Collaborator.Uid,

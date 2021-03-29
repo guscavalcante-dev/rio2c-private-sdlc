@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-04-2020
 // ***********************************************************************
-// <copyright file="BaseMusicProjectCommandHandler.cs" company="Softo">
+// <copyright file="MusicProjectBaseCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -22,17 +22,16 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>BaseMusicProjectCommandHandler</summary>
-    public class BaseMusicProjectCommandHandler : BaseCommandHandler
+    /// <summary>MusicProjectBaseCommandHandler</summary>
+    public class MusicProjectBaseCommandHandler : BaseCommandHandler
     {
-        protected readonly IAttendeeOrganizationRepository AttendeeOrganizationRepo;
         protected readonly IMusicProjectRepository MusicProjectRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="BaseMusicProjectCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="MusicProjectBaseCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="musicProjectRepository">The music project repository.</param>
-        public BaseMusicProjectCommandHandler(IMediator eventBus, IUnitOfWork uow, IMusicProjectRepository musicProjectRepository)
+        public MusicProjectBaseCommandHandler(IMediator eventBus, IUnitOfWork uow, IMusicProjectRepository musicProjectRepository)
             : base(eventBus, uow)
         {
             this.MusicProjectRepo = musicProjectRepository;

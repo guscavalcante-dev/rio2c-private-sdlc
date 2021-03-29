@@ -25,12 +25,14 @@ namespace PlataformaRio2C.Domain.Interfaces
     {
         Task<EditionDto> FindDtoAsync(Guid editionUid);
         Task<EditionDto> FindEventsWidgetDtoAsync(Guid editionUid);
+        Task<Edition> FindByIdAsync(int id);
         Task<Edition> FindByUidAsync(Guid editionUid, bool showInactive);
         Task<Edition> FindByIsCurrentAsync();
-        Task<IPagedList<EditionJsonDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> editionUids, int editionId, int languageId);
-        Task<int> CountAllByDataTable(bool showAllEditions, Guid editionUid);
-        List<Edition> FindAllByIsCurrent();
+        Task<IPagedList<EditionJsonDto>> FindAllByDataTableAsync(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> editionUids, int editionId, int languageId);
+        Task<int> CountAllByDataTableAsync(bool showAllEditions, Guid editionUid);
+        Task<List<Edition>> FindAllByIsCurrentAsync();
+        Task<List<Edition>> FindAllByIsActiveAsync(bool showInactive);
+        Task<Edition> FindByUrlCodeAsync(int urlCode);
         List<Edition> FindAllByIsActive(bool showInactive);
-        Edition FindByUrlCode(int urlCode);
     }    
 }

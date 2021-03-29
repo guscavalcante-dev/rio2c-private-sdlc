@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MediatR;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Web.Admin.Areas.WebApi.Models;
@@ -14,6 +15,17 @@ namespace PlataformaRio2C.Web.Admin.Areas.WebApi.Controllers
 {
     public class BaseApiController : ApiController
     {
+        protected IMediator CommandBus;
+
+        public BaseApiController(IMediator commandBus)
+        {
+            this.CommandBus = commandBus;
+        }
+
+        protected BaseApiController()
+        {
+        }
+
         protected Task<IHttpActionResult> BadRequest(AppValidationResult validationResult)
         {
             IHttpActionResult response;

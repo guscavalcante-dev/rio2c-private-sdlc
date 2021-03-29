@@ -35,6 +35,7 @@ using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.Report.Models;
 using Constants = PlataformaRio2C.Domain.Constants;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {

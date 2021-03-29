@@ -2797,6 +2797,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Integrante.
+        /// </summary>
+        public static string MusicBandMember {
+            get {
+                return ResourceManager.GetString("MusicBandMember", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Integrantes.
         /// </summary>
         public static string MusicBandMembers {
@@ -2820,6 +2829,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string MusicBandStaff {
             get {
                 return ResourceManager.GetString("MusicBandStaff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Membro da Equipe.
+        /// </summary>
+        public static string MusicBandTeamMember {
+            get {
+                return ResourceManager.GetString("MusicBandTeamMember", resourceCulture);
             }
         }
         

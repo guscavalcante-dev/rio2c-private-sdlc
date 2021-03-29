@@ -185,8 +185,13 @@
     <Compile Include="Repositories\Logistics\LogisticSponsorsRepository.cs" />
     <Compile Include="Repositories\Logistics\LogisticAccommodationRepository.cs" />
     <Compile Include="Repositories\Logistics\LogisticRepository.cs" />
-    <Compile Include="Repositories\Music\MusicProjectRepository.cs" />
-    <Compile Include="Repositories\Music\MusicGenreRepository.cs" />
+    <Compile Include="Repositories\Music\Bands\MusicBandTypeRepository.cs" />
+    <Compile Include="Repositories\Music\Bands\ReleasedMusicProjectRepository.cs" />
+    <Compile Include="Repositories\Music\Bands\MusicBandTeamMemberRepository.cs" />
+    <Compile Include="Repositories\Music\Bands\MusicBandMemberRepository.cs" />
+    <Compile Include="Repositories\Music\Bands\MusicBandRepository.cs" />
+    <Compile Include="Repositories\Music\Projects\MusicProjectRepository.cs" />
+    <Compile Include="Repositories\Music\Projects\MusicGenreRepository.cs" />
     <Compile Include="Repositories\Organizations\OrganizationTypeRepository.cs" />
     <Compile Include="Repositories\Organizations\OrganizationRepository.cs" />
     <Compile Include="Repositories\Mail\MailCollaboratorRepository.cs" />

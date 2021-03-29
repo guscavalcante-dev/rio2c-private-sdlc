@@ -14,6 +14,7 @@
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using System;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -29,6 +30,24 @@ namespace PlataformaRio2C.Domain.Entities
         public string Year { get; private set; }
 
         public virtual MusicBand MusicBand { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReleasedMusicProject"/> class.
+        /// </summary>
+        /// <param name="musicBand">The music band.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="year">The year.</param>
+        /// <param name="userId">The user identifier.</param>
+        public ReleasedMusicProject(MusicBand musicBand, string name, string year, int userId)
+        {
+            this.MusicBand = musicBand;
+            this.Name = name;
+            this.Year = year;
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
 
         /// <summary>Initializes a new instance of the <see cref="ReleasedMusicProject"/> class.</summary>
         protected ReleasedMusicProject()

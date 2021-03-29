@@ -21,6 +21,9 @@ namespace PlataformaRio2C.Domain.Entities
 
         public string Name { get; private set; }
         public int DisplayOrder { get; private set; }
+        public int ProjectTypeId { get; private set; }
+
+        public virtual ProjectType ProjectType { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="TargetAudience"/> class.</summary>
         protected TargetAudience()

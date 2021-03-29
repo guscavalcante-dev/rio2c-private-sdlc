@@ -5,11 +5,16 @@
         [SystemParametersDescription((int)SiteUrl, "Url do site", typeof(string), (int)SystemParameterGroupCodes.General, (int)LanguageCodes.PtBr, "http://www.rio2c.com")]
         SiteUrl = 1,
 
+        [SystemParametersDescription((int)BandRegistrationApiKey, "Senha para cadastro de bandas via API", typeof(string), (int)SystemParameterGroupCodes.General, (int)LanguageCodes.PtBr, "26bd3f3f-a0e7-4391-9edf-d6f8152b1d62")]
+        BandRegistrationApiKey = 2,
+
         [SystemParametersDescription((int)MockEnableRecipientSendEmail, "Mock envio de destinatário ao enviar e-mail email", typeof(bool), (int)SystemParameterGroupCodes.General, (int)LanguageCodes.PtBr, false)]
         MockEnableRecipientSendEmail = 20,
 
         [SystemParametersDescription((int)MockRecipientSendEmail, "Mock envio de destinatário ao enviar e-mail email", typeof(bool), (int)SystemParameterGroupCodes.General, (int)LanguageCodes.PtBr, "credenciamento@rio2c.com.br")]
         MockRecipientSendEmail = 21,
+
+
 
         [SystemParametersDescription((int)SmtpHost, "SMTP HOST", typeof(string), (int)SystemParameterGroupCodes.Emails, (int)LanguageCodes.PtBr, "mail.agenciaguppy.com.br")]
         SmtpHost = 100,

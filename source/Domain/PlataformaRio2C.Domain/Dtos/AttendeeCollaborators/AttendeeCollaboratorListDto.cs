@@ -18,7 +18,7 @@ using System.Linq;
 namespace PlataformaRio2C.Domain.Dtos
 {
     /// <summary>AttendeeCollaboratorBaseDto</summary>
-    public class AttendeeCollaboratorListDto
+    public class List
     {
         public Guid Uid { get; set; }
         public Guid CollaboratorUid { get; set; }

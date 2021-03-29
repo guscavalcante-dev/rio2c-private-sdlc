@@ -2621,4 +2621,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Edições Passadas</value>
     <comment>Edições Passadas</comment>
   </data>
+  <data name="MusicBandMember" xml:space="preserve">
+    <value>Integrante</value>
+    <comment>Integrante</comment>
+  </data>
+  <data name="MusicBandTeamMember" xml:space="preserve">
+    <value>Membro da Equipe</value>
+    <comment>Membro da Equipe</comment>
+  </data>
 </root>

@@ -62,7 +62,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("speakers")]
         public async Task<IHttpActionResult> Speakers([FromUri]SpeakersApiRequest request)
         {
-            var editions = this.editionRepo.FindAllByIsActive(false);
+            var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
             if (editions?.Any() == false)
             {
                 return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." } });
@@ -115,51 +115,6 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             });
         }
 
-        ///// <summary>Filterses this instance.</summary>
-        ///// <returns></returns>
-        //[HttpGet]
-        //[Route("players/filters")]
-        //public async Task<IHttpActionResult> Filters()
-        //{
-        //    try
-        //    {
-        //        var activities = await this.activityRepo.FindAllAsync();
-        //        var targetAudiences = await this.targetAudienceRepo.FindAllAsync();
-        //        var intrests = await this.interestRepo.FindAllGroupedByInterestGroupsAsync();
-
-        //        return await Json(new PlayersFiltersApiResponse
-        //        {
-        //            Status = ApiStatus.Success,
-        //            Error = null,
-        //            ActivityApiResponses = activities?.OrderBy(ta => ta.DisplayOrder)?.Select(ta => new ActivityApiResponse
-        //            {
-        //                Uid = ta.Uid,
-        //                Name = ta.Name
-        //            })?.ToList(),
-        //            TargetAudienceApiResponses = targetAudiences?.OrderBy(ta => ta.DisplayOrder)?.Select(ta => new TargetAudienceApiResponse
-        //            {
-        //                Uid = ta.Uid,
-        //                Name = ta.Name
-        //            })?.ToList(),
-        //            InterestGroupApiResponses = intrests?.OrderBy(i => i.Key.DisplayOrder)?.Select(intrest => new InterestGroupApiResponse
-        //            {
-        //                Uid = intrest.Key.Uid,
-        //                Name = intrest.Key.Name,
-        //                InterestsApiResponses = intrest?.OrderBy(i => i.DisplayOrder)?.Select(i => new InterestApiResponse
-        //                {
-        //                    Uid = i.Uid,
-        //                    Name = i.Name
-        //                })?.ToList()
-        //            })?.ToList()
-        //        });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-        //        return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "Players filters api failed." } });
-        //    }
-        //}
-
         #endregion
 
         #region Details
@@ -171,7 +126,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("speaker/{uid?}")]
         public async Task<IHttpActionResult> Speaker([FromUri]SpeakerApiRequest request)
         {
-            var editions = this.editionRepo.FindAllByIsActive(false);
+            var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
             if (editions?.Any() == false)
             {
                 return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." } });

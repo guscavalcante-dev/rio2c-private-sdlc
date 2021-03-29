@@ -372,7 +372,6 @@
     <Compile Include="Areas\WebApi\Controllers\ScheduleOneToOneMeetingsController.cs" />
     <Compile Include="Areas\WebApi\Controllers\RoleLecturerController.cs" />
     <Compile Include="Areas\WebApi\Controllers\RoomController.cs" />
-    <Compile Include="Areas\WebApi\Controllers\ProjetcController.cs" />
     <Compile Include="Areas\WebApi\Controllers\ProducerController.cs" />
     <Compile Include="Areas\WebApi\Models\Error.cs" />
     <Compile Include="Areas\WebApi\WebApiConfig.cs" />

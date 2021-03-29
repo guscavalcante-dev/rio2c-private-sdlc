@@ -23,6 +23,11 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         public TargetAudienceMap()
         {
             this.ToTable("TargetAudiences");
+
+            // Relationships
+            this.HasRequired(ta => ta.ProjectType)
+                .WithMany()
+                .HasForeignKey(ta => ta.ProjectTypeId);
         }
     }
 }

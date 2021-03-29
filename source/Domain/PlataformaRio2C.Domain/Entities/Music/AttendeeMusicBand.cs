@@ -14,6 +14,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Validation;
 
 namespace PlataformaRio2C.Domain.Entities
@@ -37,10 +38,24 @@ namespace PlataformaRio2C.Domain.Entities
         public AttendeeMusicBand(
             Edition edition, 
             MusicBand musicBand, 
+            MusicProjectApiDto musicProjectApiDto,
             int userId)
         {
             this.Edition = edition;
             this.MusicBand = musicBand;
+            this.EditionId = edition.Id;
+            this.MusicBandId = musicBand.Id;
+
+            this.CreateProject(
+                musicProjectApiDto.VideoUrl,
+                musicProjectApiDto.Music1Url,
+                musicProjectApiDto.Music2Url,
+                musicProjectApiDto.Release,
+                musicProjectApiDto.Clipping1,
+                musicProjectApiDto.Clipping2,
+                musicProjectApiDto.Clipping3,
+                false,
+                userId);
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
@@ -114,7 +129,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="clipping3">The clipping3.</param>
         /// <param name="isClippingUploaded">if set to <c>true</c> [is clipping uploaded].</param>
         /// <param name="userId">The user identifier.</param>
-        public void CreateProject(
+        private void CreateProject(
             string videoUrl,
             string music1Url,
             string music2Url,

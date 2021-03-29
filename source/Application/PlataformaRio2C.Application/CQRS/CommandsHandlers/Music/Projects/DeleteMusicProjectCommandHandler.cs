@@ -21,7 +21,7 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
     /// <summary>DeleteMusicProjectCommandHandler</summary>
-    public class DeleteMusicProjectCommandHandler : BaseMusicProjectCommandHandler, IRequestHandler<DeleteMusicProject, AppValidationResult>
+    public class DeleteMusicProjectCommandHandler : MusicProjectBaseCommandHandler, IRequestHandler<DeleteMusicProject, AppValidationResult>
     {
         /// <summary>Initializes a new instance of the <see cref="DeleteMusicProjectCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>

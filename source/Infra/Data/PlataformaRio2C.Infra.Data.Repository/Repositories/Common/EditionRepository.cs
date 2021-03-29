@@ -33,6 +33,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     /// </summary>
     internal static class EditionIQueryableExtensions
     {
+        /// <summary>
+        /// Finds the by identifier.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<Edition> FindById(this IQueryable<Edition> query, int editionId)
+        {
+            query = query.Where(e => e.Id == editionId);
+
+            return query;
+        }
         /// <summary>Finds the by uid.</summary>
         /// <param name="query">The query.</param>
         /// <param name="editionUid">The edition uid.</param>
@@ -188,6 +200,39 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
+        /// <summary>
+        /// Finds the dto asynchronous.
+        /// </summary>
+        /// <param name="editionUid">The edition uid.</param>
+        /// <returns></returns>
+        public async Task<EditionDto> FindDtoAsync(Guid editionUid)
+        {
+            var query = this.GetBaseQuery()
+                               .FindByUid(editionUid);
+
+            return await query
+                            .Select(e => new EditionDto()
+                            {
+                                Edition = e
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the by identifier asynchronous.
+        /// </summary>
+        /// <param name="editionId">The identifier.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<Edition> FindByIdAsync(int editionId)
+        {
+            var query = this.GetBaseQuery()
+                               .FindById(editionId);
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
+
         /// <summary>Finds the by uid asynchronous.</summary>
         /// <param name="editionUid">The edition uid.</param>
         /// <param name="showInactive">if set to <c>true</c> [show inactive].</param>
@@ -213,33 +258,42 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        /// <summary>
+        /// Finds the by URL code.
+        /// </summary>
+        /// <param name="urlCode">The URL code.</param>
+        /// <returns></returns>
+        public async Task<Edition> FindByUrlCodeAsync(int urlCode)
+        {
+            var query = this.GetBaseQuery(getDeleted:true)
+                            .FindByUrlCode(urlCode);
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds all by is current.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Edition>> FindAllByIsCurrentAsync()
+        {
+            var query = this.GetBaseQuery()
+                            .IsCurrent();
+
+            return await query
+                            .ToListAsync();
+        }
+
         /// <summary>Finds all by is active.</summary>
         /// <param name="showInactive">if set to <c>true</c> [show inactive].</param>
         /// <returns></returns>
-        public List<Edition> FindAllByIsActive(bool showInactive)
+        public async Task<List<Edition>> FindAllByIsActiveAsync(bool showInactive)
         {
             var query = this.GetBaseQuery()
                                 .IsActive(showInactive);
 
-            return query.ToList();
-        }
-
-        /// <summary>
-        /// Finds the dto asynchronous.
-        /// </summary>
-        /// <param name="editionUid">The edition uid.</param>
-        /// <returns></returns>
-        public async Task<EditionDto> FindDtoAsync(Guid editionUid)
-        {
-            var query = this.GetBaseQuery()
-                               .FindByUid(editionUid);
-
-            return await query
-                            .Select(e => new EditionDto() 
-                            { 
-                                Edition = e
-                            })
-                            .FirstOrDefaultAsync();
+            return await query.ToListAsync();
         }
 
         /// <summary>
@@ -275,13 +329,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="languageId">The language identifier.</param>
         /// <returns></returns>
-        public async Task<IPagedList<EditionJsonDto>> FindAllByDataTable(
-            int page, 
-            int pageSize, 
-            string keywords, 
-            List<Tuple<string, string>> sortColumns, 
-            List<Guid> editionUids, 
-            int editionId, 
+        public async Task<IPagedList<EditionJsonDto>> FindAllByDataTableAsync(
+            int page,
+            int pageSize,
+            string keywords,
+            List<Tuple<string, string>> sortColumns,
+            List<Guid> editionUids,
+            int editionId,
             int languageId)
         {
             var query = this.GetBaseQuery()
@@ -319,7 +373,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="editionUid">The edition uid.</param>
         /// <returns></returns>
-        public async Task<int> CountAllByDataTable(bool showAllEditions, Guid editionUid)
+        public async Task<int> CountAllByDataTableAsync(bool showAllEditions, Guid editionUid)
         {
             var query = this.GetBaseQuery();
 
@@ -328,26 +382,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
-        /// Finds the by URL code.
+        /// Finds all by is active.
         /// </summary>
-        /// <param name="urlCode">The URL code.</param>
+        /// <param name="showInactive">if set to <c>true</c> [show inactive].</param>
         /// <returns></returns>
-        public Edition FindByUrlCode(int urlCode)
-        {
-            var query = this.GetBaseQuery(getDeleted:true)
-                            .FindByUrlCode(urlCode);
-
-            return query.FirstOrDefault();
-        }
-
-        /// <summary>
-        /// Finds all by is current.
-        /// </summary>
-        /// <returns></returns>
-        public List<Edition> FindAllByIsCurrent()
+        /// <exception cref="NotImplementedException"></exception>
+        public List<Edition> FindAllByIsActive(bool showInactive)
         {
             var query = this.GetBaseQuery()
-                            .IsCurrent();
+                                .IsActive(showInactive);
 
             return query.ToList();
         }

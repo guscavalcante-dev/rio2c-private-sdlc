@@ -80,7 +80,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("conferences")]
         public async Task<IHttpActionResult> Conferences([FromUri]ConferencesApiRequest request)
         {
-            var editions = this.editionRepo.FindAllByIsActive(false);
+            var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
             if (editions?.Any() == false)
             {
                 return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." } });
@@ -175,7 +175,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         {
             try
             {
-                var editions = this.editionRepo.FindAllByIsActive(false);
+                var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
                 if (editions?.Any() == false)
                 {
                     return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." } });
@@ -252,7 +252,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("conference/{uid?}")]
         public async Task<IHttpActionResult> Conference([FromUri]ConferenceApiRequest request)
         {
-            var editions = this.editionRepo.FindAllByIsActive(false);
+            var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
             if (editions?.Any() == false)
             {
                 return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." } });

@@ -60,8 +60,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.Uow.BeginTransaction();
 
-            var collaboratorUid = Guid.NewGuid();
-
             #region Initial validations
 
             var user = await this.userRepo.GetAsync(u => u.Email == cmd.Email.Trim());
@@ -84,7 +82,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             if (user == null)
             {
                 var collaborator = new Collaborator(
-                    collaboratorUid,
                     await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
                     await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
                     cmd.FirstName,

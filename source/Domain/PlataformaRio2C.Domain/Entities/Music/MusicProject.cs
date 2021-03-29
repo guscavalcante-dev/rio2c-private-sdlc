@@ -82,6 +82,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Clipping2 = clipping2?.Trim();
             this.Clipping3 = clipping3?.Trim();
 
+            this.ProjectEvaluationStatusId = ProjectEvaluationStatus.UnderEvaluation.Id;
             this.IsDeleted = false;
             this.CreateUserId = this.UpdateUserId = userId;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
@@ -91,6 +92,9 @@ namespace PlataformaRio2C.Domain.Entities
         protected MusicProject()
         {
         }
+
+
+        #region MusicProjects
 
         /// <summary>Accepts the specified project evaluation statuses.</summary>
         /// <param name="projectEvaluationStatuses">The project evaluation statuses.</param>
@@ -145,7 +149,28 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
         }
 
+        #endregion
+
         #region Attendee Music Band
+
+        /// <summary>Synchronizes the attendee music band collaborators.</summary>
+        /// <param name="attendeeMusicBands">The attendee music bands.</param>
+        /// <param name="shouldDeleteMusicBand">if set to <c>true</c> [should delete music bands].</param>
+        /// <param name="userId">The user identifier.</param>
+        public void SynchronizeAttendeeMusicBandProject(AttendeeMusicBand attendeeMusicBand, bool shouldDeleteMusicBand, int userId)
+        {
+            if (shouldDeleteMusicBand)
+            {
+                this.DeleteAttendeeMusicBand(userId);
+            }
+
+            if (attendeeMusicBand == null)
+            {
+                return;
+            }
+
+            this.AttendeeMusicBand = attendeeMusicBand;
+        }
 
         /// <summary>Deletes the attendee music band.</summary>
         /// <param name="userId">The user identifier.</param>
@@ -260,7 +285,7 @@ namespace PlataformaRio2C.Domain.Entities
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Clipping + " 3", Clipping3MaxLength, 1), new string[] { "Clipping3" }));
             }
         }
-        
+
         /// <summary>Validates the refuse reason.</summary>
         public void ValidateRefuseReason()
         {

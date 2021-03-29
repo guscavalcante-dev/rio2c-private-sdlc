@@ -44,7 +44,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #region Initial Validations
 
-            var existentUrlCodeEdition = editionRepo.FindByUrlCode(cmd.UrlCode);
+            // Check if have existent editions with current UrlCode.
+            // URLCode musb be unique.
+            var existentUrlCodeEdition = await editionRepo.FindByUrlCodeAsync(cmd.UrlCode);
             if (existentUrlCodeEdition != null)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.Edition.ToLowerInvariant(), $"{Labels.TheM.ToLowerInvariant()} {Labels.UrlCode.ToLowerInvariant()}", cmd.UrlCode), new string[] { "ToastrError" }));
@@ -96,7 +98,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
-            var currentEditions = this.editionRepo.FindAllByIsCurrent();
+            // Disable all other current Editions. 
+            // There can be only one active current Edition!
+            var currentEditions = await this.editionRepo.FindAllByIsCurrentAsync();
             if (edition.IsCurrent && currentEditions?.Count > 0)
             {
                 currentEditions.ForEach(e => e.DisableIsCurrent());

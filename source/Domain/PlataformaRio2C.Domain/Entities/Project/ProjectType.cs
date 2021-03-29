@@ -25,9 +25,9 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Configurations
 
-        public static ProjectType Audiovisual = new ProjectType(new Guid("3CE14508-8F6F-4D9D-B5F2-C7B53BA031E0"), Labels.AudioVisual);
-        public static ProjectType Inovation = new ProjectType(new Guid("736A7169-EF69-4AFB-BD43-D7C3BDA8BD74"), Labels.Innovation);
-        public static ProjectType Music = new ProjectType(new Guid("EA460BF8-B7B5-4BAD-AC3F-242F3B6BFA0E"), Labels.Music);
+        public static ProjectType Audiovisual = new ProjectType(1, new Guid("3CE14508-8F6F-4D9D-B5F2-C7B53BA031E0"), Labels.AudioVisual);
+        public static ProjectType Inovation = new ProjectType(2, new Guid("736A7169-EF69-4AFB-BD43-D7C3BDA8BD74"), Labels.Innovation);
+        public static ProjectType Music = new ProjectType(3, new Guid("EA460BF8-B7B5-4BAD-AC3F-242F3B6BFA0E"), Labels.Music);
 
         #endregion
 
@@ -47,8 +47,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Initializes a new instance of the <see cref="ProjectType"/> class.</summary>
         /// <param name="uid">The uid.</param>
         /// <param name="name">The name.</param>
-        public ProjectType(Guid uid, string name)
+        public ProjectType(int id, Guid uid, string name)
         {
+            this.Id = id;
             this.Uid = uid;
             this.Name = name;
         }

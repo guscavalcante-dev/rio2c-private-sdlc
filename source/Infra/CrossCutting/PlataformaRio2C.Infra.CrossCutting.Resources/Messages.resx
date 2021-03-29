@@ -951,4 +951,8 @@
     <value>Esta Edição não pode ser desmarcada como atual pois não existe nenhuma outra edição marcada como atual para substituí-la. Configure alguma outra edição como atual e tente novamente.</value>
     <comment>Esta Edição não pode ser desmarcada como atual pois não existe nenhuma outra edição marcada como atual para substituí-la. Configure alguma outra edição como atual e tente novamente.</comment>
   </data>
+  <data name="CurrentEditionNotFound" xml:space="preserve">
+    <value>Nenhuma Edição atual encontrada</value>
+    <comment>Nenhuma Edição atual encontrada</comment>
+  </data>
 </root>

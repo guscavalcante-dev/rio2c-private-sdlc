@@ -484,6 +484,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nenhuma Edição atual encontrada.
+        /// </summary>
+        public static string CurrentEditionNotFound {
+            get {
+                return ResourceManager.GetString("CurrentEditionNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Você está navegando como.
         /// </summary>
         public static string CurrentlyBrowsingAs {

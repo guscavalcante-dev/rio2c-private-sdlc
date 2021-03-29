@@ -54,6 +54,22 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Email = entity?.Email;
         }
 
+        /// <summary>
+        /// Updates the base properties.
+        /// </summary>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastName">The last name.</param>
+        /// <param name="email">The email.</param>
+        public void UpdateBaseProperties(
+            string firstName,
+            string lastName,
+            string email)
+        {
+            this.FirstName = firstName;
+            this.LastNames = lastName;
+            this.Email = email;
+        }
+
         /// <summary>Updates the pre send properties.</summary>
         /// <param name="collabboratorTypeName">Name of the collabborator type.</param>
         /// <param name="userId">The user identifier.</param>

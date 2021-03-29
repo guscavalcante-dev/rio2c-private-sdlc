@@ -70,7 +70,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("players")]
         public async Task<IHttpActionResult> Players([FromUri]PlayersApiRequest request)
         {
-            var editions = this.editionRepo.FindAllByIsActive(false);
+            var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
             if (editions?.Any() == false)
             {
                 return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." }});
@@ -172,7 +172,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         [Route("player/{uid?}")]
         public async Task<IHttpActionResult> Player([FromUri]PlayerApiRequest request)
         {
-            var editions = this.editionRepo.FindAllByIsActive(false);
+            var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
             if (editions?.Any() == false)
             {
                 return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." }});

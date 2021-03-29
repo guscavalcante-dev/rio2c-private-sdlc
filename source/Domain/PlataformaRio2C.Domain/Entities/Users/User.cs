@@ -28,6 +28,12 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int UserNameMaxLength = 256;
         public static readonly int EmailMaxLength = 256;
 
+        #region Configurations
+
+        public static User BatchProcessUser = new User(new Guid("d08cbb7c-6197-4b8a-b91b-40bbb38bdd2d"), "Batch Process", "batchprocess@rio2c.com");
+
+        #endregion
+
         public string Name { get; set; }
         public bool Active { get; set; }
         public string UserName { get; set; }
@@ -48,14 +54,11 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual Language UserInterfaceLanguage { get; set; }
 
         public virtual ICollection<Role> Roles { get; set; }
-        //public virtual ICollection<UserUseTerm> UserUseTerms { get; set; }
         public virtual ICollection<Holding> UpdatedHoldings { get; set; }
         public virtual ICollection<Organization> UpdatedOrganizations { get; set; }
         public virtual ICollection<Collaborator> UpdatedCollaborators { get; set; }
         public virtual ICollection<UserUnsubscribedList> UserUnsubscribedLists { get; set; }
         public virtual ICollection<Message> RecipientMessages { get; set; }
-
-        //public override ValidationResult ValidationResult { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="User"/> class.</summary>
         /// <param name="fullName">The full name.</param>
@@ -74,6 +77,20 @@ namespace PlataformaRio2C.Domain.Entities
             this.AccessFailedCount = 0;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.SynchronizeRoles(roles);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="User"/> class.
+        /// </summary>
+        /// <param name="userUid">The user uid.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="email">The email.</param>
+        public User(Guid userUid, string name, string email)
+        {
+            this.Active = true;
+            this.Uid = userUid;
+            this.Name = name;
+            this.Email = email;
         }
 
         /// <summary>Initializes a new instance of the <see cref="User"/> class.</summary>

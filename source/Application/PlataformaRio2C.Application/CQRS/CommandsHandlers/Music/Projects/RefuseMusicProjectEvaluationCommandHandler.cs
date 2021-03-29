@@ -22,7 +22,7 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
     /// <summary>RefuseMusicProjectEvaluationCommandHandler</summary>
-    public class RefuseMusicProjectEvaluationCommandHandler : BaseMusicProjectCommandHandler, IRequestHandler<RefuseMusicProjectEvaluation, AppValidationResult>
+    public class RefuseMusicProjectEvaluationCommandHandler : MusicProjectBaseCommandHandler, IRequestHandler<RefuseMusicProjectEvaluation, AppValidationResult>
     {
         private readonly IProjectEvaluationStatusRepository projectEvaluationStatusRepo;
         private readonly IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo;

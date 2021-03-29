@@ -946,4 +946,8 @@
     <value>This Edition cannot be unchecked as current as there is no other edition marked as current to replace it. Set some other edition as current and try again.</value>
     <comment>Esta Edição não pode ser desmarcada como atual pois não existe nenhuma outra edição marcada como atual para substituí-la. Configure alguma outra edição como atual e tente novamente.</comment>
   </data>
+  <data name="CurrentEditionNotFound" xml:space="preserve">
+    <value>Current Edition not found</value>
+    <comment>Current Edition not found</comment>
+  </data>
 </root>

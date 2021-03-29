@@ -54,15 +54,17 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #region Initial validations
 
             //Validates existent URLCode. Must be unique!
-            var existentUrlCodeEdition = editionRepo.FindByUrlCode(cmd.UrlCode);
+            var existentUrlCodeEdition = await editionRepo.FindByUrlCodeAsync(cmd.UrlCode);
             if (existentUrlCodeEdition != null && existentUrlCodeEdition.Uid != cmd.EditionUid)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.Edition.ToLowerInvariant(), $"{Labels.TheM.ToLowerInvariant()} {Labels.UrlCode.ToLowerInvariant()}", cmd.UrlCode), new string[] { "ToastrError" }));
             }
 
-            var currentEditions = this.editionRepo.FindAllByIsCurrent()?
-                                                    .Where(e => e.Uid != cmd.EditionUid) //Discard the currentEdition for the checks below
-                                                    .ToList();
+            var currentEditions = await this.editionRepo.FindAllByIsCurrentAsync();
+            currentEditions = currentEditions
+                                .Where(e => e.Uid != cmd.EditionUid) //Discard the currentEdition for the checks below
+                                .ToList(); 
+
 
             //Validates any active current edition. There should always be a single current edition!
             if (!cmd.IsCurrent && currentEditions?.Count == 0)

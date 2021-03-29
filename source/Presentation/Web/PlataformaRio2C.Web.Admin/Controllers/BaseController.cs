@@ -143,7 +143,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             // Attempt to read the edition cookie from Request
             var routeEdition = (RouteData.Values["edition"] as string).ToInt();
 
-            var activeEditions = this.CommandBus.Send(new FindAllEditionsByIsActive()).Result;
+            var activeEditions = this.CommandBus.Send(new FindAllEditionsDtosAsync()).Result;
             if (activeEditions?.Any() != true)
             {
                 return false;

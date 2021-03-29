@@ -2614,4 +2614,12 @@
     <value>URL Code</value>
     <comment>Código da URL</comment>
   </data>
+  <data name="MusicBandMember" xml:space="preserve">
+    <value>Band Member</value>
+    <comment>Integrante</comment>
+  </data>
+  <data name="MusicBandTeamMember" xml:space="preserve">
+    <value>Team Member</value>
+    <comment>Membro da Equipe</comment>
+  </data>
 </root>

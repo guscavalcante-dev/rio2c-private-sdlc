@@ -26,9 +26,9 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Configurations
 
-        public static ProjectEvaluationStatus UnderEvaluation = new ProjectEvaluationStatus(new Guid("44368049-923D-41C6-9EAB-A9CECA05C296"), "UnderEvaluation");
-        public static ProjectEvaluationStatus Accepted = new ProjectEvaluationStatus(new Guid("3DFA9E93-CAB8-4A5E-83D1-BF945DD7C137"), "Accepted");
-        public static ProjectEvaluationStatus Refused = new ProjectEvaluationStatus(new Guid("CA9C8F5D-C368-4A50-B85C-49C7CFD48625"), "Refused");
+        public static ProjectEvaluationStatus UnderEvaluation = new ProjectEvaluationStatus(1, new Guid("44368049-923D-41C6-9EAB-A9CECA05C296"), "UnderEvaluation");
+        public static ProjectEvaluationStatus Accepted = new ProjectEvaluationStatus(2, new Guid("3DFA9E93-CAB8-4A5E-83D1-BF945DD7C137"), "Accepted");
+        public static ProjectEvaluationStatus Refused = new ProjectEvaluationStatus(3, new Guid("CA9C8F5D-C368-4A50-B85C-49C7CFD48625"), "Refused");
 
         #endregion
 
@@ -44,8 +44,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Initializes a new instance of the <see cref="ProjectEvaluationStatus"/> class.</summary>
         /// <param name="projectEvaluationStatusUid">The project evaluation status uid.</param>
         /// <param name="code">The code.</param>
-        private ProjectEvaluationStatus(Guid projectEvaluationStatusUid, string code)
+        private ProjectEvaluationStatus(int projectEvaluationStatusId, Guid projectEvaluationStatusUid, string code)
         {
+            this.Id = projectEvaluationStatusId;
             this.Uid = projectEvaluationStatusUid;
             this.Code = code?.Trim();
         }

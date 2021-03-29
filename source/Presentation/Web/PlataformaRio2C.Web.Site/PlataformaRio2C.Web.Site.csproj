@@ -338,6 +338,7 @@
     <Compile Include="Areas\WebApi\Controllers\BaseApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\ConferenceController.cs" />
     <Compile Include="Areas\WebApi\Controllers\MessageController.cs" />
+    <Compile Include="Areas\WebApi\Controllers\MusicBandsApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\ProjectsApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\OrganizationsApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\PlayersApiController.cs" />

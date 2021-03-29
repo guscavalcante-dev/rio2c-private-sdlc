@@ -257,7 +257,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
-                await this.CommandBus.Send(new FindAllEditionsByIsActive(true)),
+                await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
                 EditionDto.Id,
                 false,
                 false,
@@ -315,7 +315,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllEditionsByIsActive(true)),
+                    await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
                     EditionDto.Id,
                     UserInterfaceLanguage);
 
@@ -361,7 +361,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllEditionsByIsActive(true)),
+                    await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
                     EditionDto.Id,
                     isAddingToCurrentEdition,
                     false,
@@ -426,7 +426,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllEditionsByIsActive(true)),
+                    await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
                     EditionDto.Id,
                     UserInterfaceLanguage);
 

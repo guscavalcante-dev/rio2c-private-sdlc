@@ -108,7 +108,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
         /// <param name="apiHighlightPosition">The API highlight position.</param>
         /// <param name="userId">The user identifier.</param>
-        public void SynchronizeAttendeeOrganizationTypes(OrganizationType organizationType, bool? isApiDisplayEnabled, int? apiHighlightPosition, int userId)
+        private void SynchronizeAttendeeOrganizationTypes(OrganizationType organizationType, bool? isApiDisplayEnabled, int? apiHighlightPosition, int userId)
         {
             if (this.AttendeeOrganizationTypes == null)
             {

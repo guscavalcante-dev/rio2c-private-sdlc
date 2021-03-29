@@ -28,6 +28,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<IPagedList<CollaboratorBaseDto>> FindAllByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> collaboratorsUids, string collaboratorTypeName, bool showAllEditions, bool showAllExecutives, bool showAllParticipants, bool? showHighlights, int? editionId);
         Task<int> CountAllByDataTable(string collaboratorTypeName, bool showAllEditions, int? editionId);
         Task<Collaborator> FindBySalesPlatformAttendeeIdAsync(string salesPlatformAttendeeId);
+        Task<Collaborator> FindByEmailAsync(string email);
         Task<IPagedList<CollaboratorApiListDto>> FindAllDropdownApiListDtoPaged(int editionId, string keywords, bool filterByProjectsInNegotiation, string collaboratorTypeName, bool showAllParticipants, int page, int pageSize);
         Task<IPagedList<LogisticJsonDto>> FindAllLogisticsByDatatable(int editionId, int page, int pageSize, string searchValue, List<Tuple<string, string>> getSortColumns, bool showAllParticipants, bool showAllSponsors);
 
