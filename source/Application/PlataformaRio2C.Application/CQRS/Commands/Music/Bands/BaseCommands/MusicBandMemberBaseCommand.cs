@@ -40,7 +40,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="musicBandMemberDto">The music band member dto.</param>
         public void UpdateBaseProperties(MusicBandMemberApiDto musicBandMemberDto)
         {
-            this.MusicBandId = musicBandMemberDto.MusicBandId;
+            //this.MusicBandId = musicBandMemberDto.MusicBandId;
             this.Name = musicBandMemberDto.Name;
             this.MusicInstrumentName = musicBandMemberDto.MusicInstrumentName;
         }

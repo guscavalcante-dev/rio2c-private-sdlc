@@ -25,12 +25,26 @@ namespace PlataformaRio2C.Domain.Dtos
 
         [JsonIgnore]
         public int? AttendeeMusicBandId { get; set; }
+
+        [JsonProperty(PropertyName = "videoUrl", Order = 100)]
         public string VideoUrl { get; set; }
+
+        [JsonProperty(PropertyName = "music1Url", Order = 200)]
         public string Music1Url { get; set; }
+
+        [JsonProperty(PropertyName = "music2Url", Order = 300)]
         public string Music2Url { get; set; }
+
+        [JsonProperty(PropertyName = "clipping1", Order = 400)]
         public string Clipping1 { get; set; }
+
+        [JsonProperty(PropertyName = "clipping2", Order = 500)]
         public string Clipping2 { get; set; }
+
+        [JsonProperty(PropertyName = "clipping3", Order = 600)]
         public string Clipping3 { get; set; }
+
+        [JsonProperty(PropertyName = "release", Order = 700)]
         public string Release { get; set; }
 
         #endregion

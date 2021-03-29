@@ -58,7 +58,7 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonProperty(PropertyName = "musicBandTeamMembers", Order = 1200)]
         public List<MusicBandTeamMemberApiDto> MusicBandTeamMembersApiDtos { get; set; }
 
-        [JsonProperty(PropertyName = "ReleasedMusicProjects", Order = 1300)]
+        [JsonProperty(PropertyName = "releasedMusicProjects", Order = 1300)]
         public List<ReleasedMusicProjectApiDto> ReleasedMusicProjectsApiDtos { get; set; }
 
         [JsonProperty(PropertyName = "musicGenres", Order = 1400)]
@@ -100,29 +100,24 @@ namespace PlataformaRio2C.Domain.Dtos
             this.MusicProjectApiDto.Clipping3 = "clipping3.com";
             this.MusicProjectApiDto.Release = "My definitive band has been formed at 2021.";
 
-            var _bandId = 1;
-
             this.MusicBandMembersApiDtos = new List<MusicBandMemberApiDto>()
             {
                 new MusicBandMemberApiDto()
                 {
-                    MusicBandId = _bandId,
                     IsProjectResponsible = true,
-                    Name = "Renan valentim",
-                    MusicInstrumentName = "Bateria",
-                    Email = "rn.oliveira95@gmail.com"
+                    Name = "Glenn Danzig",
+                    MusicInstrumentName = "Vocal",
+                    Email = "email@gmail.com"
                 },
                 new MusicBandMemberApiDto()
                 {
-                    MusicBandId = _bandId,
                     Name = "Jimmy Hendrix",
                     MusicInstrumentName = "Guitarra"
                 },
                 new MusicBandMemberApiDto()
                 {
-                    MusicBandId = _bandId,
-                    Name = "Corey Taylor",
-                    MusicInstrumentName = "Vocal"
+                    Name = "Joey Jordison",
+                    MusicInstrumentName = "Bateria"
                 }
             };
 
@@ -130,14 +125,12 @@ namespace PlataformaRio2C.Domain.Dtos
             {
                 new MusicBandTeamMemberApiDto()
                 {
-                    MusicBandId = _bandId,
                     Name = "Calango Tour",
                     Role = "Motorista"
                 },
                 new MusicBandTeamMemberApiDto()
                 {
-                    MusicBandId = _bandId,
-                    Name = "Senegal",
+                    Name = "Fakir Pawlovsky",
                     Role = "Intervenção Artística"
                 }
             };
@@ -146,13 +139,11 @@ namespace PlataformaRio2C.Domain.Dtos
             {
                 new ReleasedMusicProjectApiDto()
                 {
-                    MusicBandId = _bandId,
                     Name = "Só modão vol. 1",
                     Year = "2021"
                 },
                 new ReleasedMusicProjectApiDto()
                 {
-                    MusicBandId = _bandId,
                     Name = "Só modão do heavy metal vol. 666",
                     Year = "2021"
                 }
@@ -166,8 +157,8 @@ namespace PlataformaRio2C.Domain.Dtos
 
             this.TargetAudiencesApiDtos = new List<TargetAudienceApiDto>()
             {
-                new TargetAudienceApiDto() { Id = 6},
-                new TargetAudienceApiDto() { Id = 7}
+                new TargetAudienceApiDto() { Id = 6 },
+                new TargetAudienceApiDto() { Id = 7 }
             };
 
             return Newtonsoft.Json.JsonConvert.SerializeObject(this);

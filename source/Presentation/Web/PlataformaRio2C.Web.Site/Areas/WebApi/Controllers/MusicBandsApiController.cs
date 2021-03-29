@@ -14,7 +14,9 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Configuration;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Script.Serialization;
 
@@ -59,7 +61,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// </exception>
         [HttpPost]
         [Route("CreateMusicBand/{key?}")]
-        public async Task<IHttpActionResult> CreateMusicBand(string key, [FromBody] MusicBandApiDto musicBandApiDto)
+        public async Task<IHttpActionResult> CreateMusicBand(string key, HttpRequestMessage request) //[FromBody] MusicBandApiDto musicBandApiDto, 
         {
             var result = new AppValidationResult();
 
@@ -89,6 +91,9 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 {
                     throw new DomainException(Messages.CorrectFormValues);
                 }
+
+                string jsonContent = request.Content.ReadAsStringAsync().Result;
+                var musicBandApiDto = Newtonsoft.Json.JsonConvert.DeserializeObject<MusicBandApiDto>(jsonContent);
 
                 var cmd = new CreateMusicBand(musicBandApiDto);
                 cmd.UpdatePreSendProperties(

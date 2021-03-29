@@ -21,9 +21,6 @@ namespace PlataformaRio2C.Domain.Dtos
     /// <summary>MusicBandTeamMemberApiDto</summary>
     public class MusicBandTeamMemberApiDto
     {
-        [JsonIgnore]
-        public int MusicBandId { get; set; }
-
         [JsonProperty(PropertyName = "name", Order = 100)]
         public string Name { get; set; }
 
