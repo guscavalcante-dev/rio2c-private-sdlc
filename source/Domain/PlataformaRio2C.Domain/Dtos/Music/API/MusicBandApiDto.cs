@@ -12,27 +12,36 @@
 // <summary></summary>
 // ***********************************************************************
 using Newtonsoft.Json;
-using PlataformaRio2C.Domain.Entities;
-using System;
+using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
     /// <summary>MusicBandApiDto</summary>
     public class MusicBandApiDto
     {
+        [JsonIgnore]
+        public ValidationResult ValidationResult { get; set; }
+
+        [JsonRequired]
         [JsonProperty(PropertyName = "musicBandTypeId", Order = 100)]
         public int MusicBandTypeId { get; set; } //1-Banda/Grupo Musical | 2-Artista Solo
 
+        [JsonRequired]
         [JsonProperty(PropertyName = "name", Order = 200)]
         public string Name { get; set; }
 
+        [JsonRequired]
         [JsonProperty(PropertyName = "imageUrl", Order = 300)]
         public string ImageUrl { get; set; }
 
+        [JsonRequired]
         [JsonProperty(PropertyName = "formationDate", Order = 400)]
         public string FormationDate { get; set; }
 
+        [JsonRequired]
         [JsonProperty(PropertyName = "mainMusicInfluences", Order = 500)]
         public string MainMusicInfluences { get; set; }
 
@@ -44,33 +53,64 @@ namespace PlataformaRio2C.Domain.Dtos
 
         [JsonProperty(PropertyName = "twitter", Order = 800)]
         public string Twitter { get; set; }
-
+   
         [JsonProperty(PropertyName = "youtube", Order = 900)]
         public string Youtube { get; set; }
 
-
+        [JsonRequired]
         [JsonProperty(PropertyName = "musicProject", Order = 1000)]
         public MusicProjectApiDto MusicProjectApiDto { get; set; }
 
-        [JsonProperty(PropertyName = "musicBandMembers", Order = 1100)]
+        [JsonRequired]
+        [JsonProperty(PropertyName = "musicBandResponsible", Order = 1100)]
+        public MusicBandResponsibleApiDto MusicBandResponsibleApiDto { get; set; }
+
+        [JsonRequired]
+        [JsonProperty(PropertyName = "musicBandMembers", Order = 1200)]
         public List<MusicBandMemberApiDto> MusicBandMembersApiDtos { get; set; }
 
-        [JsonProperty(PropertyName = "musicBandTeamMembers", Order = 1200)]
+        [JsonProperty(PropertyName = "musicBandTeamMembers", Order = 1300)]
         public List<MusicBandTeamMemberApiDto> MusicBandTeamMembersApiDtos { get; set; }
 
-        [JsonProperty(PropertyName = "releasedMusicProjects", Order = 1300)]
+        [JsonProperty(PropertyName = "releasedMusicProjects", Order = 1400)]
         public List<ReleasedMusicProjectApiDto> ReleasedMusicProjectsApiDtos { get; set; }
 
-        [JsonProperty(PropertyName = "musicGenres", Order = 1400)]
+        [JsonRequired]
+        [JsonProperty(PropertyName = "musicGenres", Order = 1500)]
         public List<MusicGenreApiDto> MusicGenresApiDtos { get; set; }
 
-        [JsonProperty(PropertyName = "targetAudiences", Order = 1500)]
+        [JsonRequired]
+        [JsonProperty(PropertyName = "targetAudiences", Order = 1600)]
         public List<TargetAudienceApiDto> TargetAudiencesApiDtos { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="MusicBandApiDto"/> class.</summary>
         public MusicBandApiDto()
         {
         }
+
+        #region Validations
+
+        /// <summary>Returns true if ... is valid.</summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
+        public bool IsValid()
+        {
+            this.ValidationResult = new ValidationResult();
+
+            this.ValidadeResponsible();
+
+            return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>
+        /// Validades the responsible.
+        /// </summary>
+        /// <returns></returns>
+        private void ValidadeResponsible()
+        {
+        }
+
+        #endregion
 
         /// <summary>
         /// Generates the test json.
@@ -88,26 +128,32 @@ namespace PlataformaRio2C.Domain.Dtos
             this.Twitter = "twitter.com";
             this.Youtube = "youtube.com";
 
-            if (this.MusicProjectApiDto == null)
-                this.MusicProjectApiDto = new MusicProjectApiDto();
+            this.MusicProjectApiDto = new MusicProjectApiDto()
+            {
+                VideoUrl = "youtube.com",
+                Music1Url = "music1Url.com",
+                Music2Url = "music2Url.com",
+                Clipping1 = "clipping1.com",
+                Clipping2 = "clipping2.com",
+                Clipping3 = "clipping3.com",
+                Release = "My definitive band has been formed at 2021."
+            };
 
-            this.MusicProjectApiDto.AttendeeMusicBandId = null;
-            this.MusicProjectApiDto.VideoUrl = "youtube.com";
-            this.MusicProjectApiDto.Music1Url = "music1Url.com";
-            this.MusicProjectApiDto.Music2Url = "music2Url.com";
-            this.MusicProjectApiDto.Clipping1 = "clipping1.com";
-            this.MusicProjectApiDto.Clipping2 = "clipping2.com";
-            this.MusicProjectApiDto.Clipping3 = "clipping3.com";
-            this.MusicProjectApiDto.Release = "My definitive band has been formed at 2021.";
+            this.MusicBandResponsibleApiDto = new MusicBandResponsibleApiDto()
+            {
+                Name = "Ozzy Osbourne",
+                Document = "56.998.566/0001-09",
+                Email = "email@email.com",
+                PhoneNumber = "+55 14 99999-9999",
+                CellPhone = "+55 11 88888-8888"
+            };
 
             this.MusicBandMembersApiDtos = new List<MusicBandMemberApiDto>()
             {
                 new MusicBandMemberApiDto()
                 {
-                    IsProjectResponsible = true,
                     Name = "Glenn Danzig",
-                    MusicInstrumentName = "Vocal",
-                    Email = "email@gmail.com"
+                    MusicInstrumentName = "Vocal"
                 },
                 new MusicBandMemberApiDto()
                 {

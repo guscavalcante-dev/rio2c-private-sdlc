@@ -87,6 +87,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.FirstName,
                     cmd.LastNames,
                     cmd.Email,
+                    cmd.PhoneNumber,
+                    cmd.CellPhone,
+                    cmd.Document,
                     cmd.UserId);
                 if (!collaborator.IsValid())
                 {

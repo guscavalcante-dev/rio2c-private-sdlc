@@ -188,6 +188,7 @@
     <Compile Include="Dtos\Messages\MessageDto.cs" />
     <Compile Include="Dtos\Messages\ConversationDto.cs" />
     <Compile Include="Dtos\Interests\InterestDto.cs" />
+    <Compile Include="Dtos\Music\API\MusicBandResponsibleApiDto.cs" />
     <Compile Include="Dtos\Music\API\MusicProjectApiDto.cs" />
     <Compile Include="Dtos\Music\AttendeeMusicBandDto.cs" />
     <Compile Include="Dtos\Music\AttendeeMusicBandCollaboratorDto.cs" />
@@ -299,6 +300,7 @@
     <Compile Include="Entities\Logistics\AttendeeLogisticsSponsor.cs" />
     <Compile Include="Entities\Logistics\Logistic.cs" />
     <Compile Include="Entities\Message\Message.cs" />
+    <Compile Include="Entities\Music\AttendeeMusicBandEvaluation.cs" />
     <Compile Include="Entities\Music\AttendeeMusicBand.cs" />
     <Compile Include="Entities\Music\AttendeeMusicBandCollaborator.cs" />
     <Compile Include="Entities\Music\ReleasedMusicProject.cs" />

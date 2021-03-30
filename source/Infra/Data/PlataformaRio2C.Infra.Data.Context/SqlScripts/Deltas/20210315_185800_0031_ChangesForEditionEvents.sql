@@ -1,4 +1,9 @@
-﻿BEGIN TRY
+﻿--must run on deploy | test: yes, done
+--must run on deploy | prod: yes, not done
+
+--possible values are: "no", "yes, not done" and "yes, done"
+
+BEGIN TRY
 	BEGIN TRANSACTION
 		ALTER TABLE "dbo"."EditionEvents"
 		DROP CONSTRAINT "FK_Languages_EditionEvents_EditionId"

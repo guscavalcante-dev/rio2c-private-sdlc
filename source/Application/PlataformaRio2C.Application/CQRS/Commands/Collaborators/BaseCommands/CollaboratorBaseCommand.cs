@@ -37,6 +37,18 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
+        [Display(Name = "PhoneNumber", ResourceType = typeof(Labels))]
+        [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string PhoneNumber { get; set; }
+
+        [Display(Name = "CellPhone", ResourceType = typeof(Labels))]
+        [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string CellPhone { get; set; }
+
+        [Display(Name = "Document", ResourceType = typeof(Labels))]
+        [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string Document { get; set; }
+
         public string CollaboratorTypeName { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="CollaboratorBaseCommand"/> class.</summary>
@@ -63,11 +75,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public void UpdateBaseProperties(
             string firstName,
             string lastName,
-            string email)
+            string email,
+            string phoneNumber,
+            string cellPhone,
+            string document)
         {
             this.FirstName = firstName;
             this.LastNames = lastName;
             this.Email = email;
+            this.PhoneNumber = phoneNumber;
+            this.CellPhone = cellPhone;
+            this.Document = document;
         }
 
         /// <summary>Updates the pre send properties.</summary>

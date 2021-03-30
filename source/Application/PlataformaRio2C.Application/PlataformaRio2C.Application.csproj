@@ -365,6 +365,7 @@
     <Compile Include="CQRS\Commands\Music\Bands\CreateReleasedMusicProject.cs" />
     <Compile Include="CQRS\Commands\Music\Bands\CreateMusicBandTeamMember.cs" />
     <Compile Include="CQRS\Commands\Music\Bands\CreateMusicBandMember.cs" />
+    <Compile Include="CQRS\Commands\Music\Projects\EvaluateProject.cs" />
     <Compile Include="CQRS\Commands\Music\Projects\AcceptMusicProjectEvaluation.cs" />
     <Compile Include="CQRS\Commands\Music\Bands\CreateMusicBand.cs" />
     <Compile Include="CQRS\Commands\Music\Projects\BaseCommands\MusicProjectBaseCommand.cs" />

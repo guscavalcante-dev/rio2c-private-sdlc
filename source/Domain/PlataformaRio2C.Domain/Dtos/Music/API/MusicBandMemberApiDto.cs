@@ -18,17 +18,13 @@ namespace PlataformaRio2C.Domain.Dtos
     /// <summary>MusicBandMemberApiDto</summary>
     public class MusicBandMemberApiDto
     {
+        [JsonRequired]
         [JsonProperty(PropertyName = "name", Order = 100)]
         public string Name { get; set; }
 
-        [JsonProperty(PropertyName = "email", Order = 200)]
-        public string Email { get; set; }
-
-        [JsonProperty(PropertyName = "musicInstrumentName", Order = 300)]
+        [JsonRequired]
+        [JsonProperty(PropertyName = "musicInstrumentName", Order = 200)]
         public string MusicInstrumentName { get; set; }
-
-        [JsonProperty(PropertyName = "isProjectResponsible", Order = 400)]
-        public bool IsProjectResponsible { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="MusicBandMemberApiDto"/> class.</summary>
         public MusicBandMemberApiDto()

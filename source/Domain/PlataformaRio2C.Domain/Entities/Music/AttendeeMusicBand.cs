@@ -24,12 +24,17 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public int EditionId { get; private set; }
         public int MusicBandId { get; private set; }
+        public decimal Grade { get; private set; }
+        public int EvaluationsCount { get; private set; }
+        public DateTimeOffset? LastEvaluationDate { get; private set; }
+        public DateTimeOffset? EvaluationEmailSendDate { get; private set; }
 
         public virtual Edition Edition { get; private set; }
         public virtual MusicBand MusicBand { get; private set; }
 
         public virtual ICollection<AttendeeMusicBandCollaborator> AttendeeMusicBandCollaborators { get; private set; }
         public virtual ICollection<MusicProject> MusicProjects { get; private set; }
+        public virtual ICollection<AttendeeMusicBandEvaluation> AttendeeMusicBandEvaluations { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeMusicBand"/> class.</summary>
         /// <param name="edition">The edition.</param>

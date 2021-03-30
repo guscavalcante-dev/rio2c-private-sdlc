@@ -136,6 +136,7 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new MusicBandTypeMap());
             modelBuilder.Configurations.Add(new AttendeeMusicBandMap());
             modelBuilder.Configurations.Add(new AttendeeMusicBandCollaboratorMap());
+            modelBuilder.Configurations.Add(new AttendeeMusicBandEvaluationMap());
             modelBuilder.Configurations.Add(new MusicProjectMap());
             modelBuilder.Configurations.Add(new MusicGenreMap());
             modelBuilder.Configurations.Add(new MusicBandGenreMap());

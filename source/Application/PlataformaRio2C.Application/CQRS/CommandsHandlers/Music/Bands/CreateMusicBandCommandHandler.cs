@@ -109,19 +109,32 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var edition = await editionRepo.FindByIdAsync(cmd.EditionId ?? 0);
 
             Collaborator collaborator = null;
-            var projectResponsible = musicBandApiDto.MusicBandMembersApiDtos.FirstOrDefault(mbm => mbm.IsProjectResponsible);
-            if (projectResponsible != null)
-            {
-                #region Opção 1 - Criar colaborador via command
 
-                collaborator = await collaboratorRepo.FindByEmailAsync(projectResponsible.Email);
+            if (musicBandApiDto.MusicBandResponsibleApiDto != null)
+            {
+                collaborator = await collaboratorRepo.FindByEmailAsync(musicBandApiDto.MusicBandResponsibleApiDto.Email);
 
                 if (collaborator == null)
                 {
+                    #region Creates new Collaborator and User
+
                     var createCollaboratorCommand = new CreateTinyCollaborator();
-                    createCollaboratorCommand.UpdateBaseProperties(projectResponsible.Name, null, projectResponsible.Email);
-                    //"Music" is fixed because in [dbo].[MigrateMusicProjects] procedure, its is fixed too!
-                    createCollaboratorCommand.UpdatePreSendProperties("Music", cmd.UserId, cmd.UserUid, edition.Id, edition.Uid, "");
+                    
+                    createCollaboratorCommand.UpdateBaseProperties(
+                        musicBandApiDto.MusicBandResponsibleApiDto.Name, 
+                        null, 
+                        musicBandApiDto.MusicBandResponsibleApiDto.Email,
+                        musicBandApiDto.MusicBandResponsibleApiDto.PhoneNumber,
+                        musicBandApiDto.MusicBandResponsibleApiDto.CellPhone,
+                        musicBandApiDto.MusicBandResponsibleApiDto.Document);
+                    
+                    createCollaboratorCommand.UpdatePreSendProperties(
+                        "Music", //"Music" is fixed because in [dbo].[MigrateMusicProjects] procedure, its is fixed too!
+                        cmd.UserId, 
+                        cmd.UserUid, 
+                        edition.Id, 
+                        edition.Uid, 
+                        "");
 
                     var commandResult = await base.CommandBus.Send(createCollaboratorCommand);
                     if (!commandResult.IsValid)
@@ -130,34 +143,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     }
 
                     collaborator = commandResult.Data as Collaborator;
+
+                    #endregion
                 }
-
-                #endregion
-
-                #region Opção 2 - Criar colaborador via new object (Disabled)
-
-                ////TODO: É esse collaboratorType que deve usar pra criar um colaborador para a banda?
-                //var collaboratorType = await collaboratorTypeRepo.FindByNameAsync(Domain.Constants.CollaboratorType.Music);
-
-                ////TODO: Deve ser separado Name e LastName em MusicBandMemberApiDto? Está passando nulo aqui e na proc do SQL também.
-                //var collaborator = new Collaborator(edition, collaboratorType, projectResponsible.Name, null, projectResponsible.Email, cmd.UserId);
-                //if (!collaborator.IsValid())
-                //{
-                //    this.AppValidationResult.Add(collaborator.ValidationResult);
-                //    return this.AppValidationResult;
-                //}
-
-                //this.collaboratorRepo.Create(collaborator);
-                //this.Uow.SaveChanges();
-                ////this.AppValidationResult.Data = collaborator;
-
-                #endregion
-
-                #region Opção 3 - Criar via event (Not Implemented)
-
-                //TODO: Implementar evento que cria colaborador aqui!
-
-                #endregion
             }
 
             var musicBand = new MusicBand(

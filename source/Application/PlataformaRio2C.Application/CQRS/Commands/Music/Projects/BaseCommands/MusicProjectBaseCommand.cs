@@ -25,7 +25,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>MusicProjectBaseCommand</summary>
     public class MusicProjectBaseCommand : BaseCommand
     {
-        public int AttendeeMusicBandId { get; set; }
         public string VideoUrl { get; set; }
         public string Music1Url { get; set; }
         public string Music2Url { get; set; }
@@ -39,6 +38,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
         }
 
+        /// <summary>
+        /// Updates the base properties.
+        /// </summary>
+        /// <param name="musicProjectDto">The music project dto.</param>
         public void UpdateBaseProperties(MusicProjectDto musicProjectDto)
         {
             if(musicProjectDto?.MusicProject == null)
@@ -46,7 +49,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 return;
             }
 
-            this.AttendeeMusicBandId = musicProjectDto.MusicProject.AttendeeMusicBandId;
             this.VideoUrl = musicProjectDto.MusicProject.VideoUrl;
             this.Music1Url = musicProjectDto.MusicProject.Music1Url;
             this.Music2Url = musicProjectDto.MusicProject.Music2Url;
@@ -56,6 +58,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Clipping3 = musicProjectDto.MusicProject.Clipping3;
         }
 
+        /// <summary>
+        /// Updates the base properties.
+        /// </summary>
+        /// <param name="musicBandApiDto">The music band API dto.</param>
         public void UpdateBaseProperties(MusicBandApiDto musicBandApiDto)
         {
             if (musicBandApiDto == null || musicBandApiDto?.MusicProjectApiDto == null)
@@ -63,7 +69,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 return;
             }
 
-            this.AttendeeMusicBandId = musicBandApiDto.MusicProjectApiDto.AttendeeMusicBandId.Value;
             this.VideoUrl = musicBandApiDto.MusicProjectApiDto.VideoUrl;
             this.Music1Url = musicBandApiDto.MusicProjectApiDto.Music1Url;
             this.Music2Url = musicBandApiDto.MusicProjectApiDto.Music2Url;

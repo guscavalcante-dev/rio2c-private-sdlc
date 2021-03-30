@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Newtonsoft.Json;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.ApiModels;
@@ -23,7 +24,7 @@ using System.Web.Script.Serialization;
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 {
     [System.Web.Http.RoutePrefix("api/v1.0")]
-    public class MusicBandsController : BaseApiController
+    public class MusicBandsApiController : BaseApiController
     {
         private readonly IMediator commandBus;
         private readonly IdentityAutenticationService identityController;
@@ -33,10 +34,10 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         private readonly ITargetAudienceRepository targetAudiencesRepo;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MusicBandsController"/> class.
+        /// Initializes a new instance of the <see cref="MusicBandsApiController"/> class.
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
-        public MusicBandsController(
+        public MusicBandsApiController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
             IEditionRepository editionsRepo,
@@ -61,15 +62,14 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// </exception>
         [HttpPost]
         [Route("CreateMusicBand/{key?}")]
-        public async Task<IHttpActionResult> CreateMusicBand(string key, HttpRequestMessage request) //[FromBody] MusicBandApiDto musicBandApiDto, 
+        public async Task<IHttpActionResult> CreateMusicBand(string key, HttpRequestMessage request)
         {
-            var result = new AppValidationResult();
-
-            //Create test payload
-            //var json = musicBandApiDto.GenerateTestJson();
+            var validationResult = new AppValidationResult();
 
             try
             {
+                #region Initial Validations
+
                 if (key.ToLowerInvariant() != ConfigurationManager.AppSettings["CreateMusicBandApiKey"].ToLowerInvariant())
                 {
                     throw new DomainException(Messages.AccessDenied);
@@ -87,13 +87,15 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     throw new DomainException(Messages.CurrentEditionNotFound);
                 }
 
-                if (!ModelState.IsValid)
+                #endregion
+
+                string jsonMusicBandApiDto = request.Content.ReadAsStringAsync().Result;
+                var musicBandApiDto = Newtonsoft.Json.JsonConvert.DeserializeObject<MusicBandApiDto>(jsonMusicBandApiDto);
+                if (!musicBandApiDto.IsValid())
                 {
+                    validationResult.Add(musicBandApiDto.ValidationResult);
                     throw new DomainException(Messages.CorrectFormValues);
                 }
-
-                string jsonContent = request.Content.ReadAsStringAsync().Result;
-                var musicBandApiDto = Newtonsoft.Json.JsonConvert.DeserializeObject<MusicBandApiDto>(jsonContent);
 
                 var cmd = new CreateMusicBand(musicBandApiDto);
                 cmd.UpdatePreSendProperties(
@@ -103,15 +105,19 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     currentEdition.Uid,
                     ""); //TODO: Implements User interface language?
 
-                result = await this.commandBus.Send(cmd);
-                if (!result.IsValid)
+                validationResult = await this.commandBus.Send(cmd);
+                if (!validationResult.IsValid)
                 {
                     throw new DomainException(Messages.CorrectFormValues);
                 }
             }
             catch (DomainException ex)
             {
-                return await Json(new { status = ApiStatus.Error, message = ex.GetInnerMessage(), errors = result?.Errors?.Select(e => new { e.Code, e.Message }) });
+                return await Json(new { status = ApiStatus.Error, message = ex.GetInnerMessage(), errors = validationResult?.Errors?.Select(e => new { e.Code, e.Message }) });
+            }
+            catch (JsonSerializationException ex)
+            {
+                return await Json(new { status = ApiStatus.Error, message = ex.GetInnerMessage(), errors = validationResult?.Errors?.Select(e => new { e.Code, e.Message }) });
             }
             catch (Exception ex)
             {

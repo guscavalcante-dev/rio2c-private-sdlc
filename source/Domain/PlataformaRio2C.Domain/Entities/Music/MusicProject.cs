@@ -39,17 +39,17 @@ namespace PlataformaRio2C.Domain.Entities
         public string Clipping1 { get; private set; }
         public string Clipping2 { get; private set; }
         public string Clipping3 { get; private set; }
-        public int ProjectEvaluationStatusId { get; private set; }
-        public int? ProjectEvaluationRefuseReasonId { get; private set; }
-        public string Reason { get; private set; }
-        public int? EvaluationUserId { get; private set; }
-        public DateTimeOffset? EvaluationDate { get; private set; }
-        public DateTimeOffset? EvaluationEmailSendDate { get; private set; }
+        //public int ProjectEvaluationStatusId { get; private set; }
+        //public int? ProjectEvaluationRefuseReasonId { get; private set; }
+        //public string Reason { get; private set; }
+        //public int? EvaluationUserId { get; private set; }
+        //public DateTimeOffset? EvaluationDate { get; private set; }
+        //public DateTimeOffset? EvaluationEmailSendDate { get; private set; }
 
         public virtual AttendeeMusicBand AttendeeMusicBand { get; private set; }
-        public virtual ProjectEvaluationStatus ProjectEvaluationStatus { get; private set; }
-        public virtual ProjectEvaluationRefuseReason ProjectEvaluationRefuseReason { get; private set; }
-        public virtual User EvaluationUser { get; private set; }
+        //public virtual ProjectEvaluationStatus ProjectEvaluationStatus { get; private set; }
+        //public virtual ProjectEvaluationRefuseReason ProjectEvaluationRefuseReason { get; private set; }
+        //public virtual User EvaluationUser { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="MusicProject"/> class.</summary>
         /// <param name="attendeeMusicBand">The attendee music band.</param>
@@ -82,7 +82,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Clipping2 = clipping2?.Trim();
             this.Clipping3 = clipping3?.Trim();
 
-            this.ProjectEvaluationStatusId = ProjectEvaluationStatus.UnderEvaluation.Id;
+            //this.ProjectEvaluationStatusId = ProjectEvaluationStatus.UnderEvaluation.Id;
             this.IsDeleted = false;
             this.CreateUserId = this.UpdateUserId = userId;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
@@ -102,14 +102,14 @@ namespace PlataformaRio2C.Domain.Entities
         public void Accept(List<ProjectEvaluationStatus> projectEvaluationStatuses, int userId)
         {
             var projectEvaluationStatus = projectEvaluationStatuses?.FirstOrDefault(pes => pes.Code == ProjectEvaluationStatus.Accepted.Code);
-            this.ProjectEvaluationStatusId = projectEvaluationStatus?.Id ?? 0;
-            this.ProjectEvaluationStatus = projectEvaluationStatus;
+            //this.ProjectEvaluationStatusId = projectEvaluationStatus?.Id ?? 0;
+            //this.ProjectEvaluationStatus = projectEvaluationStatus;
 
-            this.ProjectEvaluationRefuseReasonId = null;
-            this.ProjectEvaluationRefuseReason = null;
-            this.Reason = null;
-            this.EvaluationUserId = userId;
-            this.EvaluationDate = DateTime.UtcNow;
+            //this.ProjectEvaluationRefuseReasonId = null;
+            //this.ProjectEvaluationRefuseReason = null;
+            //this.Reason = null;
+            //this.EvaluationUserId = userId;
+            //this.EvaluationDate = DateTime.UtcNow;
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
@@ -124,14 +124,14 @@ namespace PlataformaRio2C.Domain.Entities
         public void Refuse(ProjectEvaluationRefuseReason projectEvaluationRefuseReason, string reason, List<ProjectEvaluationStatus> projectEvaluationStatuses, int userId)
         {
             var projectEvaluationStatus = projectEvaluationStatuses?.FirstOrDefault(pes => pes.Code == ProjectEvaluationStatus.Refused.Code);
-            this.ProjectEvaluationStatusId = projectEvaluationStatus?.Id ?? 0;
-            this.ProjectEvaluationStatus = projectEvaluationStatus;
+            //this.ProjectEvaluationStatusId = projectEvaluationStatus?.Id ?? 0;
+            //this.ProjectEvaluationStatus = projectEvaluationStatus;
 
-            this.ProjectEvaluationRefuseReasonId = projectEvaluationRefuseReason?.Id;
-            this.ProjectEvaluationRefuseReason = projectEvaluationRefuseReason;
-            this.Reason = reason?.Trim();
-            this.EvaluationUserId = userId;
-            this.EvaluationDate = DateTime.UtcNow;
+            //this.ProjectEvaluationRefuseReasonId = projectEvaluationRefuseReason?.Id;
+            //this.ProjectEvaluationRefuseReason = projectEvaluationRefuseReason;
+            //this.Reason = reason?.Trim();
+            //this.EvaluationUserId = userId;
+            //this.EvaluationDate = DateTime.UtcNow;
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
@@ -289,15 +289,15 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Validates the refuse reason.</summary>
         public void ValidateRefuseReason()
         {
-            if (this.ProjectEvaluationRefuseReason?.HasAdditionalInfo == true && string.IsNullOrEmpty(this.Reason?.Trim()))
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Reason), new string[] { "Reason" }));
-            }
+            //if (this.ProjectEvaluationRefuseReason?.HasAdditionalInfo == true && string.IsNullOrEmpty(this.Reason?.Trim()))
+            //{
+            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Reason), new string[] { "Reason" }));
+            //}
 
-            if (this.Reason?.Trim().Length > ReasonMaxLength)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, ReasonMaxLength, 1), new string[] { "Reason" }));
-            }
+            //if (this.Reason?.Trim().Length > ReasonMaxLength)
+            //{
+            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, ReasonMaxLength, 1), new string[] { "Reason" }));
+            //}
         }
 
         #endregion

@@ -21,9 +21,11 @@ namespace PlataformaRio2C.Domain.Dtos
     /// <summary>ReleasedMusicProjectApiDto</summary>
     public class ReleasedMusicProjectApiDto
     {
+        [JsonRequired]
         [JsonProperty(PropertyName = "name", Order = 100)]
         public string Name { get; set; }
 
+        [JsonRequired]
         [JsonProperty(PropertyName = "year", Order = 200)]
         public string Year { get; set; }
 

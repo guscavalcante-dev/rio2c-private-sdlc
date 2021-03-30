@@ -95,6 +95,9 @@ namespace PlataformaRio2C.Domain.Entities
             string firstName,
             string lastNames,
             string email,
+            string phoneNumber,
+            string cellPhone,
+            string document,
             int userId)
         {
             //this.Uid = uid;
@@ -103,6 +106,9 @@ namespace PlataformaRio2C.Domain.Entities
             this.PublicEmail = email?.Trim();
             this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, null, null, true, userId);
             this.UpdateUser(email);
+            this.PhoneNumber = phoneNumber?.Trim();
+            this.CellPhone = cellPhone?.Trim();
+            this.Document = document?.Trim();
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;

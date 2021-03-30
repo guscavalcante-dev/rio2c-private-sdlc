@@ -122,6 +122,7 @@
     <Compile Include="Mapping\Message\MessageMap.cs" />
     <Compile Include="Mapping\MusicalCommission\MusicalCommissionMap.cs" />
     <Compile Include="Mapping\Music\AttendeeMusicBandCollaboratorMap.cs" />
+    <Compile Include="Mapping\Music\AttendeeMusicBandEvaluationMap.cs" />
     <Compile Include="Mapping\Music\AttendeeMusicBandMap.cs" />
     <Compile Include="Mapping\Music\ReleasedMusicProjectMap.cs" />
     <Compile Include="Mapping\Music\MusicBandTeamMemberMap.cs" />
@@ -408,7 +409,7 @@
   <ItemGroup>
     <Content Include="SqlScripts\Deltas\20190930_114613_0001_ChangesForPlayersApi.sql" />
     <Content Include="SqlScripts\Deltas\20200513_100215_0030_ChangesForSignalR.sql" />
-    <Content Include="SqlScripts\Deltas\20210326_161300_0032_AddBatchUser.sql" />
+    <Content Include="SqlScripts\Deltas\20210330_164000_0032_AddAttendeeMusicBandEvaluations.sql" />
     <Content Include="SqlScripts\Deltas\20210315_185800_0031_ChangesForEditionEvents.sql" />
     <Content Include="SqlScripts\Deltas\20200316_161033_0029_ChangesForAgenda.sql" />
     <Content Include="SqlScripts\Deltas\20200316_140312_0028_ChangesForUnsubscribeLists.sql" />

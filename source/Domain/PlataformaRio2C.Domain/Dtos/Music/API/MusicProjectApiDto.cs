@@ -21,11 +21,6 @@ namespace PlataformaRio2C.Domain.Dtos
     /// <summary>MusicProjectApiDto</summary>
     public class MusicProjectApiDto
     {
-        #region MusicProject properties
-
-        [JsonIgnore]
-        public int? AttendeeMusicBandId { get; set; }
-
         [JsonProperty(PropertyName = "videoUrl", Order = 100)]
         public string VideoUrl { get; set; }
 
@@ -47,9 +42,7 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonProperty(PropertyName = "release", Order = 700)]
         public string Release { get; set; }
 
-        #endregion
-
-        /// <summary>Initializes a new instance of the <see cref="MusicBandApiDto"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="MusicProjectApiDto"/> class.</summary>
         public MusicProjectApiDto()
         {
         }
