@@ -144,10 +144,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<MusicProject> FindByProjectEvaluationStatus(this IQueryable<MusicProject> query, Guid? evaluationStatusUid)
         {
-            if (evaluationStatusUid != null)
-            {
-                query = query.Where(mp => mp.ProjectEvaluationStatus.Uid == evaluationStatusUid);
-            }
+            //if (evaluationStatusUid != null)
+            //{
+            //    query = query.Where(mp => mp.ProjectEvaluationStatus.Uid == evaluationStatusUid);
+            //}
 
             return query;
         }
@@ -284,15 +284,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                 TargetAudience = mbta.TargetAudience
                                                                             })
                                     },
-                                    MusicProjectEvaluationDto = new MusicProjectEvaluationDto
-                                    {
-                                        EvaluationCollaboratorUser = mp.EvaluationUser,
-                                        EvaluationCollaborator = mp.EvaluationUser.Collaborator,
-                                        ProjectEvaluationStatus = mp.ProjectEvaluationStatus,
-                                        ProjectEvaluationRefuseReason = mp.ProjectEvaluationRefuseReason,
-                                        Reason = mp.Reason,
-                                        EvaluationDate = mp.EvaluationDate
-                                    }
+                                    //MusicProjectEvaluationDto = new MusicProjectEvaluationDto
+                                    //{
+                                    //    EvaluationCollaboratorUser = mp.EvaluationUser,
+                                    //    EvaluationCollaborator = mp.EvaluationUser.Collaborator,
+                                    //    ProjectEvaluationStatus = mp.ProjectEvaluationStatus,
+                                    //    ProjectEvaluationRefuseReason = mp.ProjectEvaluationRefuseReason,
+                                    //    Reason = mp.Reason,
+                                    //    EvaluationDate = mp.EvaluationDate
+                                    //}
                                 });
 
             return await query
@@ -332,15 +332,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                 TargetAudience = mbta.TargetAudience
                                                                             })
                                     },
-                                    MusicProjectEvaluationDto = new MusicProjectEvaluationDto
-                                    {
-                                        EvaluationCollaboratorUser = mp.EvaluationUser,
-                                        EvaluationCollaborator = mp.EvaluationUser.Collaborator,
-                                        ProjectEvaluationStatus = mp.ProjectEvaluationStatus,
-                                        ProjectEvaluationRefuseReason = mp.ProjectEvaluationRefuseReason,
-                                        Reason = mp.Reason,
-                                        EvaluationDate = mp.EvaluationDate
-                                    }
+                                    //MusicProjectEvaluationDto = new MusicProjectEvaluationDto
+                                    //{
+                                    //    EvaluationCollaboratorUser = mp.EvaluationUser,
+                                    //    EvaluationCollaborator = mp.EvaluationUser.Collaborator,
+                                    //    ProjectEvaluationStatus = mp.ProjectEvaluationStatus,
+                                    //    ProjectEvaluationRefuseReason = mp.ProjectEvaluationRefuseReason,
+                                    //    Reason = mp.Reason,
+                                    //    EvaluationDate = mp.EvaluationDate
+                                    //}
                                 });
 
             return await query
@@ -544,15 +544,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Select(mp => new MusicProjectDto
                                 {
                                     MusicProject = mp,
-                                    MusicProjectEvaluationDto = new MusicProjectEvaluationDto
+                                    AttendeeMusicBandDto = new AttendeeMusicBandDto()
                                     {
-                                        EvaluationCollaboratorUser = mp.EvaluationUser,
-                                        EvaluationCollaborator = mp.EvaluationUser.Collaborator,
-                                        ProjectEvaluationStatus = mp.ProjectEvaluationStatus,
-                                        ProjectEvaluationRefuseReason = mp.ProjectEvaluationRefuseReason,
-                                        Reason = mp.Reason,
-                                        EvaluationDate = mp.EvaluationDate
+                                        AttendeeMusicBand = mp.AttendeeMusicBand,
+                                        MusicBand = mp.AttendeeMusicBand.MusicBand
                                     }
+                                    //MusicProjectEvaluationDto = new MusicProjectEvaluationDto
+                                    //{
+                                    //    EvaluationCollaboratorUser = mp.EvaluationUser,
+                                    //    EvaluationCollaborator = mp.EvaluationUser.Collaborator,
+                                    //    ProjectEvaluationStatus = mp.ProjectEvaluationStatus,
+                                    //    ProjectEvaluationRefuseReason = mp.ProjectEvaluationRefuseReason,
+                                    //    Reason = mp.Reason,
+                                    //    EvaluationDate = mp.EvaluationDate
+                                    //}
                                 });
 
             return await query
@@ -595,8 +600,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     MusicBandName = mp.AttendeeMusicBand.MusicBand.Name,
                                     MusicBandImageUrl = mp.AttendeeMusicBand.MusicBand.ImageUrl,
                                     MusicBandTypeName = mp.AttendeeMusicBand.MusicBand.MusicBandType.Name,
-                                    EvaluationStatusName = mp.ProjectEvaluationStatus.Name,
-                                    EvaluationUserName = mp.EvaluationUser.Name,
+                                    //EvaluationStatusName = mp.ProjectEvaluationStatus.Name,
+                                    ///EvaluationUserName = mp.EvaluationUser.Name,
                                     MusicGenreNames = mp.AttendeeMusicBand.MusicBand.MusicBandGenres
                                                             .Where(mbg => !mbg.IsDeleted && !mbg.MusicGenre.IsDeleted)
                                                             .OrderBy(mbg => mbg.MusicGenre.DisplayOrder)

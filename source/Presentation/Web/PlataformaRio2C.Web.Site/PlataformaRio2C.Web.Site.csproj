@@ -322,6 +322,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SimpleInjectorInitializer.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Music\Controllers\MusicBandController.cs" />
     <Compile Include="Areas\Music\Controllers\ProjectsController.cs" />
     <Compile Include="Areas\Music\MusicAreaRegistration.cs" />
     <Compile Include="Areas\Player\Controllers\HomeController.cs" />
@@ -6476,6 +6477,7 @@
     <Content Include="Areas\Music\Views\Projects\Shared\_VideoItem.cshtml" />
     <Content Include="Areas\Music\Views\Projects\Widgets\EvaluationWidget.cshtml" />
     <Content Include="Areas\Music\Views\Projects\Widgets\SocialNetworksWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Projects\Widgets\EvaluationGradeWidget.cshtml" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />

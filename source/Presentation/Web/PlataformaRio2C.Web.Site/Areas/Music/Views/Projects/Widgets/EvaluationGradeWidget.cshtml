@@ -1,0 +1,39 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model MusicProjectDto
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+}
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">@Labels.Evaluation</h3>
+    </div>
+</div>
+<div class="kt-portlet__body">
+    @*<div class="kt-widget5">
+            <div class="kt-widget kt-widget--project-1" style="@(editionDto?.IsMusicProjectEvaluationOpen() == true ? "border-bottom: 0.07rem dashed #ebedf2;" : string.Empty)">
+                <div class="kt-widget__body pb-0">
+                    <div class="kt-widget__content">
+                        @Html.Partial("Shared/_Evaluation", Model)
+                    </div>
+                </div>
+            </div>
+        </div>*@
+    <div class="row mt-20 justify-content-center">
+        @if (editionDto?.IsMusicProjectEvaluationOpen() == true)
+        {
+            <div class="col-md-8">
+                @Html.TextBox("AttendeeMusicBandGrade", Model.AttendeeMusicBandDto.AttendeeMusicBand.Grade, new { @class = "form-control text-center", @type = "number", @min = "1", @max = "10", @step = ".10" })
+                @Html.ValidationMessageFor(m => m.AttendeeMusicBandDto.AttendeeMusicBand.Grade, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-success form-control" onclick="MusicProjectsEvaluationUpdateWidget.submitEvaluationGrade('@Model.MusicProject.AttendeeMusicBand.MusicBandId');">
+                    @Labels.Evaluate
+                </button>
+            </div>
+        }
+        else
+        {
+            <button class="btn btn-danger form-control disable">Fora do perído de avaliação.</button>
+        }
+    </div>
+</div>

@@ -865,6 +865,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   </data>
   <data name="NegotiationDetails" xml:space="preserve">
     <value>Detalhes da Negociação</value>
+    <comment>Detalhes da Negociação</comment>
   </data>
   <data name="Project" xml:space="preserve">
     <value>Projeto</value>
@@ -914,6 +915,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   </data>
   <data name="MusicalCommission" xml:space="preserve">
     <value>Comissão Musical</value>
+    <comment>Comissão Musical</comment>
   </data>
   <data name="DownloadPdfs" xml:space="preserve">
     <value>Baixar PDF's</value>
@@ -1206,8 +1208,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Música</comment>
   </data>
   <data name="MusicBand" xml:space="preserve">
-    <value>Banda de Música</value>
-    <comment>Banda de Música</comment>
+    <value>Banda</value>
+    <comment>Banda</comment>
   </data>
   <data name="NewCompany" xml:space="preserve">
     <value>Nova Empresa</value>
@@ -1278,8 +1280,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Investidores</comment>
   </data>
   <data name="MusicBands" xml:space="preserve">
-    <value>Bandas de Música</value>
-    <comment>Bandas de Música</comment>
+    <value>Bandas</value>
+    <comment>Bandas</comment>
   </data>
   <data name="Recorders" xml:space="preserve">
     <value>Gravadoras</value>
@@ -2628,5 +2630,25 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="MusicBandTeamMember" xml:space="preserve">
     <value>Membro da Equipe</value>
     <comment>Membro da Equipe</comment>
+  </data>
+  <data name="Grade" xml:space="preserve">
+    <value>Nota</value>
+    <comment>Nota</comment>
+  </data>
+  <data name="Juror" xml:space="preserve">
+    <value>Juror</value>
+    <comment>Jurado</comment>
+  </data>
+  <data name="Jurors" xml:space="preserve">
+    <value>Jurors</value>
+    <comment>Jurados</comment>
+  </data>
+  <data name="Evaluated" xml:space="preserve">
+    <value>Avaliado</value>
+    <comment>Avaliado</comment>
+  </data>
+  <data name="EvaluatorUser" xml:space="preserve">
+    <value>Usuário da Avaliação</value>
+    <comment>Usuário da Avaliação</comment>
   </data>
 </root>

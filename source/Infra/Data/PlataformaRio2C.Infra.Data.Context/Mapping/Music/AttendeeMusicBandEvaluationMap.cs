@@ -26,16 +26,12 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
 
             // Relationships
             this.HasRequired(t => t.AttendeeMusicBand)
-                .WithMany()
+                .WithMany(e => e.AttendeeMusicBandEvaluations)
                 .HasForeignKey(d => d.AttendeeMusicBandId);
 
             this.HasRequired(t => t.EvaluatorUser)
                 .WithMany()
                 .HasForeignKey(d => d.EvaluatorUserId);
-
-            this.HasOptional(t => t.AttendeeMusicBand)
-                .WithMany(e => e.AttendeeMusicBandEvaluations)
-                .HasForeignKey(t => t.AttendeeMusicBandId);
         }
     }
 }

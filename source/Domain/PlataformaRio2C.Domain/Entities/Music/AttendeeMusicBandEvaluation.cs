@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -38,12 +39,14 @@ namespace PlataformaRio2C.Domain.Entities
         public AttendeeMusicBandEvaluation(
             AttendeeMusicBand attendeeMusicBand,
             User evaluatorUser, 
+            decimal grade,
             int userId)
         {
             this.AttendeeMusicBand = attendeeMusicBand;
             this.EvaluatorUser = evaluatorUser;
             this.AttendeeMusicBandId = attendeeMusicBand.Id;
             this.EvaluatorUserId = evaluatorUser.Id;
+            this.Grade = grade;
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
@@ -75,6 +78,20 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
         }
 
+        /// <summary>
+        /// Updates the specified grade.
+        /// </summary>
+        /// <param name="grade">The grade.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(decimal grade, int userId)
+        {
+            this.Grade = grade;
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
         #region Validations
 
         /// <summary>Returns true if ... is valid.</summary>
@@ -82,7 +99,34 @@ namespace PlataformaRio2C.Domain.Entities
         ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
         public override bool IsValid()
         {
-            return true;
+            this.ValidationResult = new ValidationResult();
+
+            this.ValidateGrade();
+            this.ValidateEvaluatorUser();
+
+            return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>
+        /// Validates the grade.
+        /// </summary>
+        public void ValidateGrade()
+        {
+            if (this.Grade < 1 || this.Grade > 10)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.Grade, "1", "10"), new string[] { "Grade" }));
+            }
+        }
+
+        /// <summary>
+        /// Validates the evaluator user.
+        /// </summary>
+        public void ValidateEvaluatorUser()
+        {
+            if (this.EvaluatorUser == null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.EvaluatorUser), new string[] { "EvaluatorUserId" }));
+            }
         }
 
         #endregion

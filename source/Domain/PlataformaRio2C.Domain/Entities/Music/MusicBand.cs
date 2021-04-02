@@ -255,7 +255,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Gets the attendee organization by edition identifier.</summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        private AttendeeMusicBand GetAttendeeOrganizationByEditionId(int editionId)
+        private AttendeeMusicBand FindAttendeeMusicBandByEditionId(int editionId)
         {
             return this.AttendeeMusicBands?.FirstOrDefault(amb => amb.Edition.Id == editionId);
         }
@@ -266,6 +266,18 @@ namespace PlataformaRio2C.Domain.Entities
         private List<AttendeeMusicBand> FindAllAttendeeMusicBandsNotDeleted(Edition edition)
         {
             return this.AttendeeMusicBands?.Where(amb => (edition == null || amb.EditionId == edition.Id) && !amb.IsDeleted)?.ToList();
+        }
+
+        #endregion
+
+        #region Evaluation
+
+        public void Evaluate(Edition edition, User evaluatorUser, decimal grade)
+        {
+            var attendeeMusicBand = this.FindAttendeeMusicBandByEditionId(edition.Id);
+
+            if(attendeeMusicBand != null)
+                attendeeMusicBand.Evaluate(evaluatorUser, grade);
         }
 
         #endregion
@@ -404,6 +416,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateMusicBandMembers();
             this.ValidateMusicBandTeamMembers();
             this.ValidateReleasedMusicProjects();
+            this.ValidateAttendeeMusicBand();
 
             return this.ValidationResult.IsValid;
         }
@@ -564,14 +577,21 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        ///// <summary>Validates the address.</summary>
-        //public void ValidateAddress()
-        //{
-        //    if (this.Address != null && !this.Address.IsValid())
-        //    {
-        //        this.ValidationResult.Add(this.Address.ValidationResult);
-        //    }
-        //}
+        /// <summary>
+        /// Validates the attendee music band.
+        /// </summary>
+        public void ValidateAttendeeMusicBand()
+        {
+            if (this.AttendeeMusicBands?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var attendeeMusicBand in this.AttendeeMusicBands?.Where(d => !d.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(attendeeMusicBand.ValidationResult);
+            }
+        }
 
         #endregion
     }

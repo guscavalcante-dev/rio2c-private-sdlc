@@ -9,12 +9,12 @@
         @{
             var color = "warning";
             var icon = "fa-diagnoses";
-            if (musicProjectEvaluationDto.ProjectEvaluationStatus?.Code == ProjectEvaluationStatus.Accepted.Code)
+            if (musicProjectEvaluationDto?.ProjectEvaluationStatus?.Code == ProjectEvaluationStatus.Accepted.Code)
             {
                 color = "success";
                 icon = "fa-thumbs-up";
             }
-            else if (musicProjectEvaluationDto.ProjectEvaluationStatus?.Code == ProjectEvaluationStatus.Refused.Code)
+            else if (musicProjectEvaluationDto?.ProjectEvaluationStatus?.Code == ProjectEvaluationStatus.Refused.Code)
             {
                 color = "danger";
                 icon = "fa-thumbs-down";
@@ -22,30 +22,30 @@
         }
         <span class="kt-widget__button">
             <label class="btn btn-label-@(color) btn-sm">
-                <i class="fa @(icon) mr-1"></i> @(musicProjectEvaluationDto.ProjectEvaluationStatus?.Name?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                <i class="fa @(icon) mr-1"></i> @(musicProjectEvaluationDto?.ProjectEvaluationStatus?.Name?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
             </label>
         </span>
         @if (musicProjectEvaluationDto?.EvaluationCollaboratorUser != null)
         {
             <span class="kt-widget--user-profile-1 kt-widget__username d-block">
-                <small>@Labels.By</small> @(musicProjectEvaluationDto.EvaluationCollaboratorUser.Name ?? musicProjectEvaluationDto.EvaluationCollaborator.GetDisplayName())
-                @if (musicProjectEvaluationDto.EvaluationDate.HasValue)
+                <small>@Labels.By</small> @(musicProjectEvaluationDto?.EvaluationCollaboratorUser.Name ?? musicProjectEvaluationDto?.EvaluationCollaborator.GetDisplayName())
+                @if (musicProjectEvaluationDto?.EvaluationDate.HasValue == true)
                 {
-                    <br /><small>@Labels.At @(musicProjectEvaluationDto.EvaluationDate?.ToUserTimeZone())</small>
+                    <br /><small>@Labels.At @(musicProjectEvaluationDto?.EvaluationDate?.ToUserTimeZone())</small>
                 }
             </span>
         }
-        @if (musicProjectEvaluationDto.ProjectEvaluationStatus?.Code == ProjectEvaluationStatus.Refused.Code && musicProjectEvaluationDto.ProjectEvaluationRefuseReason != null)
+        @if (musicProjectEvaluationDto?.ProjectEvaluationStatus?.Code == ProjectEvaluationStatus.Refused.Code && musicProjectEvaluationDto?.ProjectEvaluationRefuseReason != null)
         {
             <span class="kt-widget--user-profile-1 kt-widget__username d-block">
                 <small>
-                    @if (musicProjectEvaluationDto.ProjectEvaluationRefuseReason.HasAdditionalInfo && !string.IsNullOrEmpty(musicProjectEvaluationDto?.Reason))
+                    @if (musicProjectEvaluationDto?.ProjectEvaluationRefuseReason?.HasAdditionalInfo == true && !string.IsNullOrEmpty(musicProjectEvaluationDto?.Reason))
                     {
                         @(musicProjectEvaluationDto?.Reason?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
                     }
                     else
                     {
-                        @(musicProjectEvaluationDto.ProjectEvaluationRefuseReason.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                        @(musicProjectEvaluationDto?.ProjectEvaluationRefuseReason.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
                     }
                 </small>
             </span>

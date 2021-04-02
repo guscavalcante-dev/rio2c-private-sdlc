@@ -24,7 +24,7 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public int EditionId { get; private set; }
         public int MusicBandId { get; private set; }
-        public decimal Grade { get; private set; }
+        public decimal? Grade { get; private set; }
         public int EvaluationsCount { get; private set; }
         public DateTimeOffset? LastEvaluationDate { get; private set; }
         public DateTimeOffset? EvaluationEmailSendDate { get; private set; }
@@ -41,8 +41,8 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="musicBand">The music band.</param>
         /// <param name="userId">The user identifier.</param>
         public AttendeeMusicBand(
-            Edition edition, 
-            MusicBand musicBand, 
+            Edition edition,
+            MusicBand musicBand,
             MusicProjectApiDto musicProjectApiDto,
             int userId)
         {
@@ -100,6 +100,82 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
+
+        #region Evaluation
+
+        /// <summary>
+        /// Evaluates the specified evaluation user.
+        /// </summary>
+        /// <param name="evaluatorUser">The evaluation user.</param>
+        /// <param name="grade">The grade.</param>
+        public void Evaluate(User evaluatorUser, decimal grade)
+        {
+            if (this.AttendeeMusicBandEvaluations == null)
+                this.AttendeeMusicBandEvaluations = new List<AttendeeMusicBandEvaluation>();
+
+            var existentEvaluation = this.GetAttendeeMusicBandEvaluationByEvaluatorId(evaluatorUser.Id);
+            if (existentEvaluation != null)
+            {
+                existentEvaluation.Update(grade, evaluatorUser.Id);
+            }
+            else
+            {
+                this.AttendeeMusicBandEvaluations.Add(new AttendeeMusicBandEvaluation(
+                    this,
+                    evaluatorUser,
+                    grade,
+                    evaluatorUser.Id));
+            }
+
+            this.Grade = this.GetAverageEvaluation();
+            this.EvaluationsCount = AttendeeMusicBandEvaluations.Count;
+            this.LastEvaluationDate = DateTime.UtcNow;
+            this.EvaluationEmailSendDate = null;//TODO: Oque passar aqui?
+        }
+
+        /// <summary>
+        /// Gets the average evaluation.
+        /// </summary>
+        /// <returns></returns>
+        private decimal? GetAverageEvaluation()
+        {
+            if (this.AttendeeMusicBandEvaluations == null)
+                return 0;
+
+            //Can only generate the 'AverageEvaluation' when the 'AttendeeMusicBandEvaluations' count 
+            //is greather or equal than minimum necessary evaluations quantity
+            if (GetAttendeeMusicBandEvaluationTotalCount() >= this.Edition.MusicProjectMinimumEvaluationsCount)
+            {
+                return this.AttendeeMusicBandEvaluations.Sum(e => e.Grade) / this.AttendeeMusicBandEvaluations.Count;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the attendee music band evaluation by evaluator identifier.
+        /// </summary>
+        /// <param name="evaluatorUserId">The evaluator user identifier.</param>
+        /// <returns></returns>
+        private AttendeeMusicBandEvaluation GetAttendeeMusicBandEvaluationByEvaluatorId(int evaluatorUserId)
+        {
+            return this.AttendeeMusicBandEvaluations.FirstOrDefault(ambe =>
+                ambe.AttendeeMusicBand.EditionId == this.EditionId &&
+                ambe.EvaluatorUserId == evaluatorUserId);
+        }
+
+        /// <summary>
+        /// Gets the attendee music band evaluation total count.
+        /// </summary>
+        /// <returns></returns>
+        private int GetAttendeeMusicBandEvaluationTotalCount()
+        {
+            return this.AttendeeMusicBandEvaluations.Count(ambe => ambe.AttendeeMusicBand.EditionId == this.EditionId);
+        }
+
+        #endregion
 
         #region Attendee Music Band Collaborators
 
@@ -236,47 +312,28 @@ namespace PlataformaRio2C.Domain.Entities
         ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
         public override bool IsValid()
         {
-            return true;
+            this.ValidationResult = new ValidationResult();
+
+            this.ValidateAttendeeMusicBandEvaluations();
+
+            return this.ValidationResult.IsValid;
         }
 
-        ///// <summary>Determines whether [is create project valid].</summary>
-        ///// <returns>
-        /////   <c>true</c> if [is create project valid]; otherwise, <c>false</c>.</returns>
-        //public bool IsCreateProjectValid()
-        //{
-        //    if (this.ValidationResult == null)
-        //    {
-        //        this.ValidationResult = new ValidationResult();
-        //    }
+        /// <summary>
+        /// Validates the attendee music band evaluations.
+        /// </summary>
+        public void ValidateAttendeeMusicBandEvaluations()
+        {
+            if (this.AttendeeMusicBandEvaluations?.Any() != true)
+            {
+                return;
+            }
 
-        //    this.ValidateProjectsLimits();
-        //    this.ValidateProjects();
-
-        //    return this.ValidationResult.IsValid;
-        //}
-
-        ///// <summary>Validates the projects limits.</summary>
-        //public void ValidateProjectsLimits()
-        //{
-        //    if (this.SellProjectsCount > this.GetMaxSellProjectsCount())
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(Messages.IsNotPossibleCreateProjectLimit, new string[] { "ToastrError" }));
-        //    }
-        //}
-
-        ///// <summary>Validates the projects.</summary>
-        //public void ValidateProjects()
-        //{
-        //    if (this.SellProjects?.Any() != true)
-        //    {
-        //        return;
-        //    }
-
-        //    foreach (var project in this.SellProjects?.Where(d => !d.IsDeleted && !d.IsCreateValid())?.ToList())
-        //    {
-        //        this.ValidationResult.Add(project.ValidationResult);
-        //    }
-        //}
+            foreach (var attendeeMusicBandEvaluation in this.AttendeeMusicBandEvaluations?.Where(d => !d.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(attendeeMusicBandEvaluation.ValidationResult);
+            }
+        }
 
         #endregion
     }

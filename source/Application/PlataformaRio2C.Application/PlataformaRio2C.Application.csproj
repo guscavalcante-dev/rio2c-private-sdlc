@@ -256,6 +256,7 @@
     <Compile Include="CQRS\CommandsHandlers\Music\Bands\BaseCommandHandlers\MusicBandTeamMemberBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\Bands\BaseCommandHandlers\MusicBandMemberBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\Bands\BaseCommandHandlers\MusicBandBaseCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Music\Bands\EvaluateMusicBandCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\Bands\CreateReleasedProjectCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\Bands\CreateMusicBandTeamMemberCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\Bands\CreateMusicBandMemberCommandHandler.cs" />
@@ -365,7 +366,7 @@
     <Compile Include="CQRS\Commands\Music\Bands\CreateReleasedMusicProject.cs" />
     <Compile Include="CQRS\Commands\Music\Bands\CreateMusicBandTeamMember.cs" />
     <Compile Include="CQRS\Commands\Music\Bands\CreateMusicBandMember.cs" />
-    <Compile Include="CQRS\Commands\Music\Projects\EvaluateProject.cs" />
+    <Compile Include="CQRS\Commands\Music\Bands\EvaluateMusicBand.cs" />
     <Compile Include="CQRS\Commands\Music\Projects\AcceptMusicProjectEvaluation.cs" />
     <Compile Include="CQRS\Commands\Music\Bands\CreateMusicBand.cs" />
     <Compile Include="CQRS\Commands\Music\Projects\BaseCommands\MusicProjectBaseCommand.cs" />

@@ -1194,7 +1194,7 @@
   </data>
   <data name="MusicBand" xml:space="preserve">
     <value>Music Band</value>
-    <comment>Banda de Música</comment>
+    <comment>Banda</comment>
   </data>
   <data name="NewCompany" xml:space="preserve">
     <value>New Company</value>
@@ -1266,7 +1266,7 @@
   </data>
   <data name="MusicBands" xml:space="preserve">
     <value>Music Bands</value>
-    <comment>Bandas de Música</comment>
+    <comment>Bandas</comment>
   </data>
   <data name="Recorders" xml:space="preserve">
     <value>Recorders</value>
@@ -2621,5 +2621,25 @@
   <data name="MusicBandTeamMember" xml:space="preserve">
     <value>Team Member</value>
     <comment>Membro da Equipe</comment>
+  </data>
+  <data name="Grade" xml:space="preserve">
+    <value>Grade</value>
+    <comment>Nota</comment>
+  </data>
+  <data name="Juror" xml:space="preserve">
+    <value>Juror</value>
+    <comment>Jurado</comment>
+  </data>
+  <data name="Jurors" xml:space="preserve">
+    <value>Jurors</value>
+    <comment>Jurados</comment>
+  </data>
+  <data name="Evaluated" xml:space="preserve">
+    <value>Evaluated</value>
+    <comment>Avaliado</comment>
+  </data>
+  <data name="EvaluatorUser" xml:space="preserve">
+    <value>Evaluator User</value>
+    <comment>Usuário da Avaliação</comment>
   </data>
 </root>

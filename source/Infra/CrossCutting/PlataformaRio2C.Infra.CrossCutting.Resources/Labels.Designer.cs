@@ -1699,6 +1699,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Avaliado.
+        /// </summary>
+        public static string Evaluated {
+            get {
+                return ResourceManager.GetString("Evaluated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Avaliar projeto.
         /// </summary>
         public static string EvaluateProject {
@@ -1731,6 +1740,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Evaluations {
             get {
                 return ResourceManager.GetString("Evaluations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usuário da Avaliação.
+        /// </summary>
+        public static string EvaluatorUser {
+            get {
+                return ResourceManager.GetString("EvaluatorUser", resourceCulture);
             }
         }
         
@@ -2046,6 +2064,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string GoBackToSignIn {
             get {
                 return ResourceManager.GetString("GoBackToSignIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nota.
+        /// </summary>
+        public static string Grade {
+            get {
+                return ResourceManager.GetString("Grade", resourceCulture);
             }
         }
         
@@ -2419,6 +2446,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Juror.
+        /// </summary>
+        public static string Juror {
+            get {
+                return ResourceManager.GetString("Juror", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jurors.
+        /// </summary>
+        public static string Jurors {
+            get {
+                return ResourceManager.GetString("Jurors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Idioma.
         /// </summary>
         public static string Language {
@@ -2779,7 +2824,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Banda de Música.
+        ///   Looks up a localized string similar to Banda.
         /// </summary>
         public static string MusicBand {
             get {
@@ -2815,7 +2860,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bandas de Música.
+        ///   Looks up a localized string similar to Bandas.
         /// </summary>
         public static string MusicBands {
             get {

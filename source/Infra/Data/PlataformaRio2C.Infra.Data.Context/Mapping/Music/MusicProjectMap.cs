@@ -45,25 +45,25 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.Property(t => t.Clipping3)
                 .HasMaxLength(MusicProject.Clipping3MaxLength);
             
-            this.Property(t => t.Reason)
-                .HasMaxLength(MusicProject.ReasonMaxLength);
+            //this.Property(t => t.Reason)
+            //    .HasMaxLength(MusicProject.ReasonMaxLength);
 
             // Relationships
             this.HasRequired(t => t.AttendeeMusicBand)
                 .WithMany(e => e.MusicProjects)
                 .HasForeignKey(t => t.AttendeeMusicBandId);
 
-            this.HasRequired(t => t.ProjectEvaluationStatus)
-                .WithMany()
-                .HasForeignKey(t => t.ProjectEvaluationStatusId);
+            //this.HasRequired(t => t.ProjectEvaluationStatus)
+            //    .WithMany()
+            //    .HasForeignKey(t => t.ProjectEvaluationStatusId);
 
-            this.HasOptional(t => t.ProjectEvaluationRefuseReason)
-                .WithMany()
-                .HasForeignKey(t => t.ProjectEvaluationRefuseReasonId);
+            //this.HasOptional(t => t.ProjectEvaluationRefuseReason)
+            //    .WithMany()
+            //    .HasForeignKey(t => t.ProjectEvaluationRefuseReasonId);
 
-            this.HasOptional(t => t.EvaluationUser)
-                .WithMany()
-                .HasForeignKey(t => t.EvaluationUserId);
+            //this.HasOptional(t => t.EvaluationUser)
+            //    .WithMany()
+            //    .HasForeignKey(t => t.EvaluationUserId);
         }
     }
 }
