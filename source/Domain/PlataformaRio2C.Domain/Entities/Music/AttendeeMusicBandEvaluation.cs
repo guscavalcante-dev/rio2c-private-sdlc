@@ -114,7 +114,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             if (this.Grade < 1 || this.Grade > 10)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.Grade, "1", "10"), new string[] { "Grade" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.Grade, "10", "1"), new string[] { "Grade" }));
             }
         }
 

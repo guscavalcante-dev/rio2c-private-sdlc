@@ -55,6 +55,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>
+        /// Finds the by is evaluated.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<MusicProject> FindByIsEvaluated(this IQueryable<MusicProject> query)
+        {
+            query = query.Where(mp => mp.AttendeeMusicBand.Grade != null);
+
+            return query;
+        }
+
         /// <summary>Finds the by music genre uid.</summary>
         /// <param name="query">The query.</param>
         /// <param name="musicGenreUid">The music genre uid.</param>
@@ -262,7 +274,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Select(mp => new MusicProjectDto
                                 {
                                     MusicProject = mp,
-                                    AttendeeMusicBandDto = new AttendeeMusicBandDto
+                                    AttendeeMusicBandDto = new MusicBandDto
                                     {
                                         AttendeeMusicBand = mp.AttendeeMusicBand,
                                         MusicBand = mp.AttendeeMusicBand.MusicBand,
@@ -310,7 +322,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Select(mp => new MusicProjectDto
                                 {
                                     MusicProject = mp,
-                                    AttendeeMusicBandDto = new AttendeeMusicBandDto
+                                    AttendeeMusicBandDto = new MusicBandDto
                                     {
                                         AttendeeMusicBand = mp.AttendeeMusicBand,
                                         MusicBand = mp.AttendeeMusicBand.MusicBand,
@@ -357,7 +369,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Select(mp => new MusicProjectDto
                                 {
                                     MusicProject = mp,
-                                    AttendeeMusicBandDto = new AttendeeMusicBandDto
+                                    AttendeeMusicBandDto = new MusicBandDto
                                     {
                                         AttendeeMusicBand = mp.AttendeeMusicBand,
                                         MusicBand = mp.AttendeeMusicBand.MusicBand,
@@ -377,7 +389,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                             {
                                                                                 MusicBandTargetAudience = mbta,
                                                                                 TargetAudience = mbta.TargetAudience
-                                                                            })
+                                                                            }),
+                                        AttendeeMusicBandEvaluationsDtos = mp.AttendeeMusicBand.AttendeeMusicBandEvaluations
+                                                                                    .Where(ambe => !ambe.IsDeleted)
+                                                                                    .Select(ambe => new AttendeeMusicBandEvaluationDto
+                                                                                    {
+                                                                                        AttendeeMusicBandEvaluation = ambe,
+                                                                                        EvaluatorUser = ambe.EvaluatorUser
+                                                                                    }).ToList()
                                     }
                                 });
 
@@ -395,7 +414,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Select(mp => new MusicProjectDto
                                 {
                                     MusicProject = mp,
-                                    AttendeeMusicBandDto = new AttendeeMusicBandDto
+                                    AttendeeMusicBandDto = new MusicBandDto
                                     {
                                         AttendeeMusicBand = mp.AttendeeMusicBand,
                                         MusicBand = mp.AttendeeMusicBand.MusicBand,
@@ -417,7 +436,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Select(mp => new MusicProjectDto
                                 {
                                     MusicProject = mp,
-                                    AttendeeMusicBandDto = new AttendeeMusicBandDto
+                                    AttendeeMusicBandDto = new MusicBandDto
                                     {
                                         AttendeeMusicBand = mp.AttendeeMusicBand,
                                         MusicBand = mp.AttendeeMusicBand.MusicBand,
@@ -439,7 +458,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Select(mp => new MusicProjectDto
                                 {
                                     MusicProject = mp,
-                                    AttendeeMusicBandDto = new AttendeeMusicBandDto
+                                    AttendeeMusicBandDto = new MusicBandDto
                                     {
                                         AttendeeMusicBand = mp.AttendeeMusicBand,
                                         MusicBand = mp.AttendeeMusicBand.MusicBand,
@@ -461,7 +480,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Select(mp => new MusicProjectDto
                                 {
                                     MusicProject = mp,
-                                    AttendeeMusicBandDto = new AttendeeMusicBandDto
+                                    AttendeeMusicBandDto = new MusicBandDto
                                     {
                                         AttendeeMusicBand = mp.AttendeeMusicBand,
                                         AttendeeMusicBandCollaboratorDto = mp.AttendeeMusicBand.AttendeeMusicBandCollaborators
@@ -523,7 +542,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Select(mp => new MusicProjectDto
                                 {
                                     MusicProject = mp,
-                                    AttendeeMusicBandDto = new AttendeeMusicBandDto
+                                    AttendeeMusicBandDto = new MusicBandDto
                                     {
                                         AttendeeMusicBand = mp.AttendeeMusicBand,
                                         MusicBand = mp.AttendeeMusicBand.MusicBand,
@@ -544,7 +563,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Select(mp => new MusicProjectDto
                                 {
                                     MusicProject = mp,
-                                    AttendeeMusicBandDto = new AttendeeMusicBandDto()
+                                    AttendeeMusicBandDto = new MusicBandDto()
                                     {
                                         AttendeeMusicBand = mp.AttendeeMusicBand,
                                         MusicBand = mp.AttendeeMusicBand.MusicBand
@@ -562,6 +581,138 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return await query
                             .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the evaluation grade widget dto asynchronous.
+        /// </summary>
+        /// <param name="musicProjectUid">The music project uid.</param>
+        /// <returns></returns>
+        public async Task<MusicProjectDto> FindEvaluationGradeWidgetDtoAsync(Guid musicProjectUid, int userId)
+        {
+            var query = this.GetBaseQuery()
+                               .FindByUid(musicProjectUid)
+                               .Select(mp => new MusicProjectDto
+                               {
+                                   MusicProject = mp,
+                                   AttendeeMusicBandDto = new MusicBandDto()
+                                   {
+                                       AttendeeMusicBand = mp.AttendeeMusicBand,
+                                       MusicBand = mp.AttendeeMusicBand.MusicBand,
+                                       AttendeeMusicBandEvaluationsDtos = mp.AttendeeMusicBand.AttendeeMusicBandEvaluations
+                                                                                    .Where(ambe => !ambe.IsDeleted)
+                                                                                    .Select(ambe => new AttendeeMusicBandEvaluationDto
+                                                                                    {
+                                                                                        AttendeeMusicBandEvaluation = ambe,
+                                                                                        EvaluatorUser = ambe.EvaluatorUser
+                                                                                    }).ToList(),
+
+                                       //Current AttendeeMusicBandEvaluation by user Id
+                                       AttendeeMusicBandEvaluationDto = mp.AttendeeMusicBand.AttendeeMusicBandEvaluations
+                                                                                    .Where(ambe => !ambe.IsDeleted && ambe.EvaluatorUserId == userId)
+                                                                                    .Select(ambe => new AttendeeMusicBandEvaluationDto
+                                                                                    {
+                                                                                        AttendeeMusicBandEvaluation = ambe,
+                                                                                        EvaluatorUser = ambe.EvaluatorUser
+                                                                                    }).FirstOrDefault()
+                                   },
+                               });
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the evaluators widget dto asynchronous.
+        /// </summary>
+        /// <param name="musicProjectUid">The music project uid.</param>
+        /// <returns></returns>
+        public async Task<MusicProjectDto> FindEvaluatorsWidgetDtoAsync(Guid musicProjectUid)
+        {
+            var query = this.GetBaseQuery()
+                               .FindByUid(musicProjectUid)
+                               .Select(mp => new MusicProjectDto
+                               {
+                                   MusicProject = mp,
+                                   AttendeeMusicBandDto = new MusicBandDto()
+                                   {
+                                       AttendeeMusicBand = mp.AttendeeMusicBand,
+                                       MusicBand = mp.AttendeeMusicBand.MusicBand,
+                                       AttendeeMusicBandEvaluationsDtos = mp.AttendeeMusicBand.AttendeeMusicBandEvaluations
+                                                                                    .Where(ambe => !ambe.IsDeleted)
+                                                                                    .Select(ambe => new AttendeeMusicBandEvaluationDto
+                                                                                    {
+                                                                                        AttendeeMusicBandEvaluation = ambe,
+                                                                                        EvaluatorUser = ambe.EvaluatorUser
+                                                                                    }).ToList()
+                                   },
+                               });
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds all approved music projects by edition identifier.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<List<MusicProjectDto>> FindAllApprovedAttendeeMusicBandsAsync(int editionId, int musicProjectMaximumApprovedBandsCount)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId)
+                                .FindByIsEvaluated()
+                                .Select(mp => new MusicProjectDto
+                                {
+                                    MusicProject = mp,
+                                    AttendeeMusicBandDto = new MusicBandDto()
+                                    {
+                                        AttendeeMusicBand = mp.AttendeeMusicBand,
+                                        MusicBand = mp.AttendeeMusicBand.MusicBand,
+                                        AttendeeMusicBandEvaluationsDtos = mp.AttendeeMusicBand.AttendeeMusicBandEvaluations
+                                                                                    .Where(ambe => !ambe.IsDeleted)
+                                                                                    .Select(ambe => new AttendeeMusicBandEvaluationDto
+                                                                                    {
+                                                                                        AttendeeMusicBandEvaluation = ambe,
+                                                                                        EvaluatorUser = ambe.EvaluatorUser
+                                                                                    }).ToList()
+                                    },
+                                });
+
+            return await query
+                            .OrderByDescending(mp => mp.AttendeeMusicBandDto.AttendeeMusicBand.Grade)
+                            .Take(musicProjectMaximumApprovedBandsCount)
+                            .ToListAsync();
+        }
+
+        /// <summary>
+        /// Finds all approved music project ids by edition identifier asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="musicProjectMaximumApprovedBandsCount">The music project maximum approved bands count.</param>
+        /// <returns></returns>
+        public async Task<int[]> FindAllApprovedAttendeeMusicBandsIdsAsync(int editionId, int musicProjectMaximumApprovedBandsCount)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId)
+                                .FindByIsEvaluated()
+                                .Select(mp => new MusicProjectDto
+                                {
+                                    MusicProject = mp,
+                                    AttendeeMusicBandDto = new MusicBandDto()
+                                    {
+                                        AttendeeMusicBand = mp.AttendeeMusicBand
+                                    },
+                                });
+
+            query = query
+                        .OrderByDescending(mp => mp.AttendeeMusicBandDto.AttendeeMusicBand.Grade)
+                        .Take(musicProjectMaximumApprovedBandsCount);
+
+            return await query
+                            .Select(mp => mp.AttendeeMusicBandDto.AttendeeMusicBand.Id)
+                            .ToArrayAsync();
         }
 
         /// <summary>Finds all json dtos paged asynchronous.</summary>
@@ -597,11 +748,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 {
                                     MusicProjectId = mp.Id,
                                     MusicProjectUid = mp.Uid,
+                                    AttendeeMusicBandId = mp.AttendeeMusicBand.Id,
                                     MusicBandName = mp.AttendeeMusicBand.MusicBand.Name,
                                     MusicBandImageUrl = mp.AttendeeMusicBand.MusicBand.ImageUrl,
                                     MusicBandTypeName = mp.AttendeeMusicBand.MusicBand.MusicBandType.Name,
                                     //EvaluationStatusName = mp.ProjectEvaluationStatus.Name,
-                                    ///EvaluationUserName = mp.EvaluationUser.Name,
+                                    //EvaluationUserName = mp.EvaluationUser.Name,
+                                    Grade = mp.AttendeeMusicBand.Grade,
+                                    EvaluationsCount = mp.AttendeeMusicBand.AttendeeMusicBandEvaluations.Count,
+
+
                                     MusicGenreNames = mp.AttendeeMusicBand.MusicBand.MusicBandGenres
                                                             .Where(mbg => !mbg.IsDeleted && !mbg.MusicGenre.IsDeleted)
                                                             .OrderBy(mbg => mbg.MusicGenre.DisplayOrder)

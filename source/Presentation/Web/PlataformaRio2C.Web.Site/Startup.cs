@@ -24,6 +24,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using PlataformaRio2C.Web.Site.Hub;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Mvc;
 
 [assembly: OwinStartupAttribute(typeof(PlataformaRio2C.Web.Site.Startup))]
 namespace PlataformaRio2C.Web.Site
@@ -63,7 +64,11 @@ namespace PlataformaRio2C.Web.Site
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);      
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            
+
+            ModelBinders.Binders.DefaultBinder = new IdentityModelBinder();
+            ModelBinders.Binders.Add(typeof(decimal), new DecimalModelBinder());
+            ModelBinders.Binders.Add(typeof(decimal?), new DecimalModelBinder());
+
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new RazorViewEngine());
 

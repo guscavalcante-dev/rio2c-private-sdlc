@@ -32,6 +32,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Web.Admin.Controllers;
 using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
+using System.Text;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 {
@@ -113,16 +114,86 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 this.UserInterfaceLanguage,
                 this.EditionDto.Id);
 
-            // Translate Target Audiences
+            var approvedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(
+                this.EditionDto.Id,
+                this.EditionDto.Edition.MusicProjectMaximumApprovedBandsCount);
+
+
+;
+
+            //var color = "warning";
+            //var icon = "fa-diagnoses";
+            //if (musicProjectEvaluationDto?.ProjectEvaluationStatus?.Code == ProjectEvaluationStatus.Accepted.Code)
+            //{
+            //    color = "success";
+            //    icon = "fa-thumbs-up";
+            //}
+            //else if (musicProjectEvaluationDto?.ProjectEvaluationStatus?.Code == ProjectEvaluationStatus.Refused.Code)
+            //{
+            //    color = "danger";
+            //    icon = "fa-thumbs-down";
+            //}    
+            //<span class="kt-widget__button">
+            //    <label class="btn btn-label-@(color) btn-sm">
+            //        <i class="fa @(icon) mr-1"></i> @(musicProjectEvaluationDto?.ProjectEvaluationStatus?.Name?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+            //    </label>
+            //</span>
+
+
+            StringBuilder sb = new StringBuilder();
+
             foreach (var musicProjectJsonDto in musicProjects)
             {
-                musicProjectJsonDto.EvaluationStatusName = musicProjectJsonDto.EvaluationStatusName.GetSeparatorTranslation(this.UserInterfaceLanguage, '|');
+                var icon = "fa-diagnoses";
+                var color = "warning";
+                var text = Labels.UnderEvaluation;
 
-                for (int i = 0; i < musicProjectJsonDto.MusicTargetAudiencesNames.Count(); i++)
+                if (approvedAttendeeMusicBandsIds.Contains(musicProjectJsonDto.AttendeeMusicBandId))
                 {
-                    musicProjectJsonDto.MusicTargetAudiencesNames[i] = musicProjectJsonDto.MusicTargetAudiencesNames[i].GetSeparatorTranslation(this.UserInterfaceLanguage, '|');
+                    icon = "fa-thumbs-up";
+                    color = "success";
+                    text = Labels.ProjectAccepted;
                 }
+                else if (musicProjectJsonDto.EvaluationsCount > 0)
+                {
+                    icon = "fa-thumbs-down";
+                    color = "danger";
+                    text = Labels.ProjectRefused;
+                }
+
+                sb.Append($"<table class=\"image-side-text text-left\">");
+                sb.Append($"    <tr>");
+                sb.Append($"        <td>");
+                sb.Append($"            <span class=\"kt-widget__button\" style=\"\" data-toggle=\"tooltip\" title=\"{text}\">");
+                sb.Append($"                <label class=\"btn btn-label-{color} btn-sm\">");
+                sb.Append($"                    <i class=\"fa {icon} mr-1\"></i>");
+                sb.Append($"                </label>");
+                sb.Append($"            </span>");
+                sb.Append($"            <span class=\"margin-left: 5px;\">");
+                sb.Append($"                <b>{musicProjectJsonDto.Grade?.ToString() ?? ""}</b>");
+                sb.Append($"            </span>");
+                sb.Append($"            <span class=\"margin-left: 5px;\">");
+                sb.Append($"                ({musicProjectJsonDto.EvaluationsCount} {(musicProjectJsonDto.EvaluationsCount == 1 ? Labels.Vote : Labels.Votes)})");
+                sb.Append($"            </span>");
+                sb.Append($"        </td>");
+                sb.Append($"    </tr>");
+                sb.Append($"</table>");
+
+                musicProjectJsonDto.EvaluationHtmlString = sb.ToString();
+
+                sb.Clear();
             }
+
+            // Translate Target Audiences
+            //foreach (var musicProjectJsonDto in musicProjects)
+            //{
+            //    musicProjectJsonDto.EvaluationStatusName = musicProjectJsonDto.EvaluationStatusName.GetSeparatorTranslation(this.UserInterfaceLanguage, '|');
+
+            //    for (int i = 0; i < musicProjectJsonDto.MusicTargetAudiencesNames.Count(); i++)
+            //    {
+            //        musicProjectJsonDto.MusicTargetAudiencesNames[i] = musicProjectJsonDto.MusicTargetAudiencesNames[i].GetSeparatorTranslation(this.UserInterfaceLanguage, '|');
+            //    }
+            //}
 
             ViewBag.MusicGenreUid = musicGenreUid;
             ViewBag.EvaluationStatusUid = evaluationStatusUid;

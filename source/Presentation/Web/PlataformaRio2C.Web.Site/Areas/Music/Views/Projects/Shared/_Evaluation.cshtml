@@ -2,11 +2,11 @@
 @using PlataformaRio2C.Domain.Entities
 @model MusicProjectDto
 @{
-    var musicProjectEvaluationDto = Model.MusicProjectEvaluationDto;
+    //var musicProjectEvaluationDto = Model.MusicProjectEvaluationDto;
 }
 <div class="kt-widget__details" style="width: 100%;">
     <span class="kt-widget__value text-center" style="min-height: 85px;">
-        @{
+        @*@{
             var color = "warning";
             var icon = "fa-diagnoses";
             if (musicProjectEvaluationDto?.ProjectEvaluationStatus?.Code == ProjectEvaluationStatus.Accepted.Code)
@@ -49,6 +49,6 @@
                     }
                 </small>
             </span>
-        }
+        }*@
     </span>
 </div>

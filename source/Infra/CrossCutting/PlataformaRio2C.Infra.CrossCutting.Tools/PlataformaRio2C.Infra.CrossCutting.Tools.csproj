@@ -87,6 +87,9 @@
     <Reference Include="Migrations, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Migrations.1.0.1.0\lib\net40-Client\Migrations.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PostSharp, Version=6.2.8.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\PostSharp.Redist.6.2.8\lib\net45\PostSharp.dll</HintPath>
     </Reference>
@@ -108,10 +111,16 @@
     <Reference Include="System.Linq.Dynamic, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Linq.Dynamic.1.0.4\lib\net45\System.Linq.Dynamic.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
@@ -197,6 +206,9 @@
     <Compile Include="Model\PasswordHelper.cs" />
     <Compile Include="Model\SelectListItemParent.cs" />
     <Compile Include="Model\ValidationResultExtend.cs" />
+    <Compile Include="Mvc\ModelBinders\DecimalModelBinder.cs" />
+    <Compile Include="Mvc\ModelBinders\Identity.cs" />
+    <Compile Include="Mvc\ModelBinders\IdentityModelBinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Log\LogService.cs" />
     <Compile Include="Attributes\RequiredIfOneNotEmptyAndOtherEmptyAttribute.cs" />
@@ -205,9 +217,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\NewFolder1\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\PlataformaRio2C.Infra.CrossCutting.Resources\PlataformaRio2C.Infra.CrossCutting.Resources.csproj">
       <Project>{7E1DE835-DDC4-416A-A2B7-9B4F5FFFFBF4}</Project>

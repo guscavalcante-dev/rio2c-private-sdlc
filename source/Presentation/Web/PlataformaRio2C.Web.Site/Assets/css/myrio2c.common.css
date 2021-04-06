@@ -1,6 +1,10 @@
 ﻿/*
     General 
 */
+.backgroundMouseOver:hover {
+    background: #ddd;
+    cursor: pointer;
+}
 
 .list-unstyled ul {
     list-style-type: none;

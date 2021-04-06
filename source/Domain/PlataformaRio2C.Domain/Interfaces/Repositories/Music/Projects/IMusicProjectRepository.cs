@@ -34,6 +34,11 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<MusicProjectDto> FindVideoAndMusicWidgetDtoAsync(Guid musicProjectUid);
         Task<MusicProjectDto> FindSocialNetworksWidgetDtoAsync(Guid musicProjectUid);
         Task<MusicProjectDto> FindEvaluationWidgetDtoAsync(Guid musicProjectUid);
+        Task<MusicProjectDto> FindEvaluationGradeWidgetDtoAsync(Guid musicProjectUid, int userId);
+        Task<MusicProjectDto> FindEvaluatorsWidgetDtoAsync(Guid musicProjectUid);
+        Task<List<MusicProjectDto>> FindAllApprovedAttendeeMusicBandsAsync(int editionId, int musicProjectMaximumApprovedBandsCount);
+        Task<int[]> FindAllApprovedAttendeeMusicBandsIdsAsync(int editionId, int musicProjectMaximumApprovedBandsCount);
+
         Task<IPagedList<MusicProjectJsonDto>> FindAllJsonDtosPagedAsync(int page, int pageSize, List<Tuple<string, string>> sortColumns, string keywords, Guid? musicGenreUid, Guid? evaluationStatusUid, string languageCode, int editionId);
         Task<int> CountAsync(int editionId, bool showAllEditions = false);
     }

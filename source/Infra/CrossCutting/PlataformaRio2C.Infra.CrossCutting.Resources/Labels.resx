@@ -2651,4 +2651,36 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Usuário da Avaliação</value>
     <comment>Usuário da Avaliação</comment>
   </data>
+  <data name="Evaluator" xml:space="preserve">
+    <value>Avaliador</value>
+    <comment>Avaliador</comment>
+  </data>
+  <data name="Evaluators" xml:space="preserve">
+    <value>Avaliadores</value>
+    <comment>Avaliadores</comment>
+  </data>
+  <data name="Average" xml:space="preserve">
+    <value>Média</value>
+    <comment>Média</comment>
+  </data>
+  <data name="Document" xml:space="preserve">
+    <value>Documento</value>
+    <comment>Documento</comment>
+  </data>
+  <data name="ClickHereToEvaluateProject" xml:space="preserve">
+    <value>Clique aqui para avaliar o projeto</value>
+    <comment>Clique aqui para avaliar o projeto</comment>
+  </data>
+  <data name="UnderEvaluation" xml:space="preserve">
+    <value>Em Avaliação</value>
+    <comment>Em Avaliação</comment>
+  </data>
+  <data name="Vote" xml:space="preserve">
+    <value>Voto</value>
+    <comment>Voto</comment>
+  </data>
+  <data name="Votes" xml:space="preserve">
+    <value>Votos</value>
+    <comment>Votos</comment>
+  </data>
 </root>

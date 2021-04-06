@@ -125,6 +125,7 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/layoutGlobalCustomized.js").Include(
                 "~/Assets/js/myrio2c.common.js",
+                "~/Assets/components/globalize/globalize.js",
                 "~/Assets/components/jquery.form/jquery.form.js",
                 "~/Assets/components/hideshowpassword/hideShowPassword.js",
                 "~/Assets/js/myrio2c.showhidepassword.js",

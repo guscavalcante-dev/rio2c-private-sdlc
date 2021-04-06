@@ -19,8 +19,8 @@ namespace PlataformaRio2C.Domain.Dtos
     public class MusicProjectDto
     {
         public MusicProject MusicProject { get; set; }
-        public AttendeeMusicBandDto AttendeeMusicBandDto { get; set; }
-        public MusicProjectEvaluationDto MusicProjectEvaluationDto { get; set; }
+        public MusicBandDto AttendeeMusicBandDto { get; set; }
+        //public MusicProjectEvaluationDto MusicProjectEvaluationDto { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="MusicProjectDto"/> class.</summary>
         public MusicProjectDto()

@@ -2,6 +2,11 @@
 @model MusicProjectDto
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var evaluationsCount = Model.AttendeeMusicBandDto.AttendeeMusicBandEvaluationsDtos?.Count();
+    var currentEvaluation = Model.AttendeeMusicBandDto.AttendeeMusicBandEvaluationDto;
+    var approvedAttendeeMusicBandsIds = ViewBag.ApprovedAttendeeMusicBandsIds as int[];
+    var isThisMusicProjectApproved = approvedAttendeeMusicBandsIds.Contains(Model.AttendeeMusicBandDto.AttendeeMusicBand.Id);
 }
 <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
@@ -9,31 +14,82 @@
     </div>
 </div>
 <div class="kt-portlet__body">
-    @*<div class="kt-widget5">
-            <div class="kt-widget kt-widget--project-1" style="@(editionDto?.IsMusicProjectEvaluationOpen() == true ? "border-bottom: 0.07rem dashed #ebedf2;" : string.Empty)">
-                <div class="kt-widget__body pb-0">
-                    <div class="kt-widget__content">
-                        @Html.Partial("Shared/_Evaluation", Model)
-                    </div>
+    <div class="kt-widget">
+        <div class="kt-widget__bottom text-center">
+            <div class="kt-widget__item">
+                <div class="row col-md-12 justify-content-center">
+                    @if (editionDto?.IsMusicProjectEvaluationOpen() == true)
+                    {
+                        <div class="row col-md-12 justify-content-center">
+                            <div class="col-md-8">
+                                @Html.TextBox("AttendeeMusicBandEvaluationGrade", Model.AttendeeMusicBandDto?.AttendeeMusicBandEvaluationDto?.AttendeeMusicBandEvaluation?.Grade, new { @class = "form-control text-center decimal-globalize-mask" }) @*, @type = "number", @min = "1", @max = "10", @step = ".10"*@
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-offset-8">
+                                        <button type="button" class="btn btn-success" onclick="MusicProjectsEvaluationUpdateWidget.submitEvaluationGrade('@Model.MusicProject.AttendeeMusicBand.MusicBandId');">
+                                            @Labels.Evaluate
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        if (evaluationsCount >= editionDto.Edition.MusicProjectMinimumEvaluationsCount)
+                        {
+                            <div class="row col-md-12 justify-content-center" style="margin-top:20px;">
+                                @{
+                                    var icon = "fa-diagnoses";
+                                    var color = "warning";
+                                    var text = Labels.UnderEvaluation;
+
+                                    if (isThisMusicProjectApproved)
+                                    {
+                                        icon = "fa-thumbs-up";
+                                        color = "success";
+                                        text = Labels.ProjectAccepted;
+                                    }
+                                    else
+                                    {
+                                        icon = "fa-thumbs-down";
+                                        color = "danger";
+                                        text = Labels.ProjectRefused;
+                                    }
+                                }
+                                <div class="row" style="display: flex; align-items: center;">
+                                    <span class="kt-widget__button">
+                                        <label class="btn btn-label-@(color) btn-sm">
+                                            <i class="fa @(icon) mr-1"></i> @text
+                                        </label>
+                                    </span>
+                                    @*<button type="button" class="btn btn-@(color)">
+                                            <i class="fa @(icon)"></i> @text
+                                        </button>*@
+                                    <div class="card bg-gray" style="margin-left:5px;">
+                                        <div class="card-body">
+                                            <span>@Labels.Average</span>
+                                            <span><b>@(Model.AttendeeMusicBandDto?.AttendeeMusicBand?.Grade)</b></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="kt-widget__item w-100" style="margin-top:10px">
+                                    @if (currentEvaluation != null)
+                                    {
+                                        <span class="kt-widget--user-profile-1 kt-widget__username d-block">
+                                            <small>@Labels.By</small> <b>@(currentEvaluation.EvaluatorUser?.Name)</b>
+                                            <small>@Labels.At <b>@currentEvaluation.AttendeeMusicBandEvaluation.UpdateDate.ToUserTimeZone()</b></small>
+                                        </span>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <button class="btn btn-danger form-control">@Messages.EvaluationPeriodClosed</button>
+                    }
                 </div>
             </div>
-        </div>*@
-    <div class="row mt-20 justify-content-center">
-        @if (editionDto?.IsMusicProjectEvaluationOpen() == true)
-        {
-            <div class="col-md-8">
-                @Html.TextBox("AttendeeMusicBandGrade", Model.AttendeeMusicBandDto.AttendeeMusicBand.Grade, new { @class = "form-control text-center", @type = "number", @min = "1", @max = "10", @step = ".10" })
-                @Html.ValidationMessageFor(m => m.AttendeeMusicBandDto.AttendeeMusicBand.Grade, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-md-4">
-                <button type="button" class="btn btn-success form-control" onclick="MusicProjectsEvaluationUpdateWidget.submitEvaluationGrade('@Model.MusicProject.AttendeeMusicBand.MusicBandId');">
-                    @Labels.Evaluate
-                </button>
-            </div>
-        }
-        else
-        {
-            <button class="btn btn-danger form-control disable">Fora do perído de avaliação.</button>
-        }
+        </div>
     </div>
 </div>

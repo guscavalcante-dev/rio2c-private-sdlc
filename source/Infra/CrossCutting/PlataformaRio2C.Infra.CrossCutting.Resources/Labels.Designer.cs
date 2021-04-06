@@ -556,6 +556,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Média.
+        /// </summary>
+        public static string Average {
+            get {
+                return ResourceManager.GetString("Average", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Voltar.
         /// </summary>
         public static string Back {
@@ -759,6 +768,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ClickHere {
             get {
                 return ResourceManager.GetString("ClickHere", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clique aqui para avaliar o projeto.
+        /// </summary>
+        public static string ClickHereToEvaluateProject {
+            get {
+                return ResourceManager.GetString("ClickHereToEvaluateProject", resourceCulture);
             }
         }
         
@@ -1411,6 +1429,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Documento.
+        /// </summary>
+        public static string Document {
+            get {
+                return ResourceManager.GetString("Document", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Baixar.
         /// </summary>
         public static string Download {
@@ -1740,6 +1767,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Evaluations {
             get {
                 return ResourceManager.GetString("Evaluations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Avaliador.
+        /// </summary>
+        public static string Evaluator {
+            get {
+                return ResourceManager.GetString("Evaluator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Avaliadores.
+        /// </summary>
+        public static string Evaluators {
+            get {
+                return ResourceManager.GetString("Evaluators", resourceCulture);
             }
         }
         
@@ -5677,6 +5722,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Em Avaliação.
+        /// </summary>
+        public static string UnderEvaluation {
+            get {
+                return ResourceManager.GetString("UnderEvaluation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Negociações não agendadas.
         /// </summary>
         public static string UnscheduledNegotiations {
@@ -5898,6 +5952,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ViewProfile {
             get {
                 return ResourceManager.GetString("ViewProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voto.
+        /// </summary>
+        public static string Vote {
+            get {
+                return ResourceManager.GetString("Vote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Votos.
+        /// </summary>
+        public static string Votes {
+            get {
+                return ResourceManager.GetString("Votes", resourceCulture);
             }
         }
         

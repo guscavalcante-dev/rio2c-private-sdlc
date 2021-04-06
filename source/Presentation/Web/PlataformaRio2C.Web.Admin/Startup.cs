@@ -14,6 +14,7 @@
 using Microsoft.Owin;
 using Newtonsoft.Json.Serialization;
 using Owin;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Mvc;
 using PlataformaRio2C.Web.Admin.App_Start;
 using PlataformaRio2C.Web.Admin.Areas.WebApi;
 using PlataformaRio2C.Web.Admin.Models;
@@ -55,6 +56,10 @@ namespace PlataformaRio2C.Web.Admin
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+
+            ModelBinders.Binders.DefaultBinder = new IdentityModelBinder();
+            ModelBinders.Binders.Add(typeof(decimal), new DecimalModelBinder());
+            ModelBinders.Binders.Add(typeof(decimal?), new DecimalModelBinder());
 
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new RazorViewEngine());

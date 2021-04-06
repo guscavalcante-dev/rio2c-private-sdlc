@@ -250,6 +250,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
+            ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id, this.EditionDto.Edition.MusicProjectMaximumApprovedBandsCount);
+
             return Json(new
             {
                 status = "success",
@@ -444,7 +446,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
         #endregion
 
-        #region Evaluation Widget (Disabled 01/04/2021)
+        #region Evaluation Widget Old (Disabled 01/04/2021)
 
         /// <summary>Shows the evaluation widget.</summary>
         /// <param name="projectUid">The project uid.</param>
@@ -591,7 +593,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         /// <summary>Shows the refuse evaluation modal.</summary>
         /// <param name="projectUid">The project uid.</param>
         /// <returns></returns>
-        [Obsolete(@"Please, use the 'Evaluate' method.")]
+        [Obsolete("Please, use the 'Evaluate' endpoint.")]
         [HttpGet]
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
         public async Task<ActionResult> ShowRefuseEvaluationModal(Guid? projectUid)
@@ -719,11 +721,13 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
 
-            var evaluationDto = await this.musicProjectRepo.FindEvaluationWidgetDtoAsync(projectUid ?? Guid.Empty);
+            var evaluationDto = await this.musicProjectRepo.FindEvaluationGradeWidgetDtoAsync(projectUid ?? Guid.Empty, this.UserAccessControlDto.User.Id);
             if (evaluationDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
+
+            ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id, this.EditionDto.Edition.MusicProjectMaximumApprovedBandsCount);
 
             return Json(new
             {
@@ -788,6 +792,34 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 //projectUid = cmd.MusicBandId,
                 message = string.Format(Messages.EntityActionSuccessfull, Labels.MusicBand, Labels.Evaluated.ToLowerInvariant())
             });
+        }
+
+        #endregion
+
+        #region Evaluators Widget
+
+        [HttpGet]
+        public async Task<ActionResult> ShowEvaluatorsWidget(Guid? projectUid)
+        {
+            if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
+            {
+                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+            }
+
+            var evaluationDto = await this.musicProjectRepo.FindEvaluatorsWidgetDtoAsync(projectUid ?? Guid.Empty);
+            if (evaluationDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EvaluatorsWidget", evaluationDto), divIdOrClass = "#ProjectEvaluatorsWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

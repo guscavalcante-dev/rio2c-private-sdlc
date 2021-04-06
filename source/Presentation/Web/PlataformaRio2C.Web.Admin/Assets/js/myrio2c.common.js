@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-09-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 05-14-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 04-02-2021
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -816,6 +816,41 @@ var MyRio2cCommon = function () {
         }
         else {
             validator.focusInvalid();
+        }
+    };
+
+    var enableDecimal = function (inputIdOrClass, size) {
+        if (inputIdOrClass != undefined && inputIdOrClass != '' && size != undefined && size != '') {
+            // Change validation form for currency to use globalize
+            $.validator.methods.number = function (value, element) {
+                var val = Globalize.parseFloat(value);
+                return this.optional(element) || ($.isNumeric(val));
+            };
+
+            if (inputIdOrClass.charAt(0) != '.' && inputIdOrClass.charAt(0) != '#') {
+                inputIdOrClass = '.' + inputIdOrClass;
+            }
+
+            $(inputIdOrClass).each(function () {
+                // Mask currency fields
+                $(this).inputmask('decimal', {
+                    radixPoint: Globalize.culture().numberFormat["."],
+                    autoGroup: true,
+                    groupSeparator: Globalize.culture().numberFormat[","],
+                    groupSize: Globalize.culture().numberFormat.currency.groupSizes[0],
+                    digits: Globalize.culture().numberFormat.currency.decimals,
+                    repeat: size,
+                    onUnMask: function (maskedValue, unmaskedValue) {
+                        if (unmaskedValue.length > 0) {
+                            return maskedValue;
+                        }
+                        return unmaskedValue;
+                    }
+                });
+            });
+        }
+        else {
+            console.error('enable-decimal::enableDecimal(): inputIdOrClass and size are mandatory.');
         }
     };
 
@@ -1752,6 +1787,9 @@ var MyRio2cCommon = function () {
         },
         submitForm: function (formIdOrClass) {
             submitForm(formIdOrClass);
+        },
+        enableDecimal: function (inputIdOrClass, size) {
+            enableDecimal(inputIdOrClass, size);
         },
         enableInputMaxlength: function () {
             enableInputMaxlength();

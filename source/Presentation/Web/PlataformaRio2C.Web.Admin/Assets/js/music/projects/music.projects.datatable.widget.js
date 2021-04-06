@@ -167,8 +167,12 @@ var MusicProjectsDataTableWidget = function () {
 		                return html;
 	                }
                 },
-                { data: 'EvaluationStatusName' },
-	            { data: 'EvaluationUserName' },
+                {
+                    data: 'Evaluation',
+                    render: function (data, type, row, meta) {
+                        return row.EvaluationHtmlString;
+                    }
+                },
                 {
                     data: 'CreateDate',
                     render: function (data) {
@@ -221,7 +225,7 @@ var MusicProjectsDataTableWidget = function () {
 	                orderable: false
                 },
                 {
-                    targets: [6, 7],
+                    targets: [6],
                     width: "8%",
                     className: "dt-center"
                 },

@@ -31,6 +31,7 @@ var MusicProjectsEvaluationUpdateWidget = function () {
     var enableShowPlugins = function () {
         KTApp.initTooltips();
         MyRio2cCommon.initScroll();
+        MyRio2cCommon.enableDecimal('decimal-globalize-mask', 15);
     };
 
     var show = function () {
@@ -63,7 +64,7 @@ var MusicProjectsEvaluationUpdateWidget = function () {
             });
     };
 
-    // Accept -------------------------------------------------------------------------------------
+    // Accept (Disabled 02/04/2021) -------------------------------------------------------------------------------------
     var enableAcceptAjaxForm = function () {
         MyRio2cCommon.enableAjaxForm({
             idOrClass: acceptFormId,
@@ -124,7 +125,7 @@ var MusicProjectsEvaluationUpdateWidget = function () {
             });
     };
 
-    // Refuse -------------------------------------------------------------------------------------
+    // Refuse (Disabled 02/04/2021) -------------------------------------------------------------------------------------
     var changeIsRequired = function () {
         var hasAdditionalInfoElement = $('#HasAdditionalInfo');
 
@@ -217,7 +218,7 @@ var MusicProjectsEvaluationUpdateWidget = function () {
     var submitEvaluationGrade = function (musicBandId) {
         var jsonParameters = new Object();
         jsonParameters.musicBandId = musicBandId;
-        jsonParameters.grade = JSON.stringify($('#AttendeeMusicBandGrade').val());
+        jsonParameters.grade = $('#AttendeeMusicBandEvaluationGrade').val();
 
         $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/Evaluate'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -234,6 +235,9 @@ var MusicProjectsEvaluationUpdateWidget = function () {
             })
             .always(function () {
                 MyRio2cCommon.unblock();
+                MusicProjectsEvaluationUpdateWidget.init();
+                MusicProjectsEvaluatorsWidget.init();
+                MusicProjectsMainInformationWidget.init();
             });
     };
 

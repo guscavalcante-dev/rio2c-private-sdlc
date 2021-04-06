@@ -2642,4 +2642,36 @@
     <value>Evaluator User</value>
     <comment>Usuário da Avaliação</comment>
   </data>
+  <data name="Evaluator" xml:space="preserve">
+    <value>Evaluator</value>
+    <comment>Avaliador</comment>
+  </data>
+  <data name="Evaluators" xml:space="preserve">
+    <value>Evaluators</value>
+    <comment>Avaliadores</comment>
+  </data>
+  <data name="Average" xml:space="preserve">
+    <value>Average</value>
+    <comment>Média</comment>
+  </data>
+  <data name="Document" xml:space="preserve">
+    <value>Document</value>
+    <comment>Documento</comment>
+  </data>
+  <data name="ClickHereToEvaluateProject" xml:space="preserve">
+    <value>Click here to evaluate the project</value>
+    <comment>Clique aqui para avaliar o projeto</comment>
+  </data>
+  <data name="UnderEvaluation" xml:space="preserve">
+    <value>Under Evaluation</value>
+    <comment>Em Avaliação</comment>
+  </data>
+  <data name="Vote" xml:space="preserve">
+    <value>Vote</value>
+    <comment>Voto</comment>
+  </data>
+  <data name="Votes" xml:space="preserve">
+    <value>Votes</value>
+    <comment>Votos</comment>
+  </data>
 </root>
