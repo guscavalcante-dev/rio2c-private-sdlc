@@ -46,6 +46,14 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Display(Name = nameof(ProjectMaxBuyerEvaluationsCount), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public int ProjectMaxBuyerEvaluationsCount { get; set; }
+                        
+        [Display(Name = nameof(MusicProjectMaximumApprovedBandsCount), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public int MusicProjectMaximumApprovedBandsCount { get; set; }
+
+        [Display(Name = nameof(MusicProjectMinimumEvaluationsCount), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public int MusicProjectMinimumEvaluationsCount { get; set; }
 
         [Display(Name = nameof(StartDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]

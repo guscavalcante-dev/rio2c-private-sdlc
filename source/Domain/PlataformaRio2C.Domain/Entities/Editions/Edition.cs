@@ -53,8 +53,8 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset InnovationProjectEvaluationEndDate { get; private set; }
         public DateTimeOffset? AudiovisualNegotiationsCreateStartDate { get; private set; }
         public DateTimeOffset? AudiovisualNegotiationsCreateEndDate { get; private set; }
-        public int MusicProjectMinimumEvaluationsCount { get; private set; }
-        public int MusicProjectMaximumApprovedBandsCount { get; private set; }
+        public int MusicProjectMinimumEvaluationsCount { get; set; }
+        public int MusicProjectMaximumApprovedBandsCount { get; set; }
 
         //public virtual Quiz Quiz { get; private set; }
 
@@ -220,6 +220,8 @@ namespace PlataformaRio2C.Domain.Entities
             bool isActive,
             int attendeeOrganizationMaxSellProjectsCount,
             int projectMaxBuyerEvaluationsCount,
+            int musicProjectMinimumEvaluationsCount,
+            int musicProjectMaximumApprovedBandsCount,
             DateTime startDate,
             DateTime endDate,
             DateTime oneToOneMeetingsScheduleDate,
@@ -231,6 +233,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsActive = isActive;
             this.AttendeeOrganizationMaxSellProjectsCount = attendeeOrganizationMaxSellProjectsCount;
             this.ProjectMaxBuyerEvaluationsCount = projectMaxBuyerEvaluationsCount;
+            this.MusicProjectMinimumEvaluationsCount = musicProjectMinimumEvaluationsCount;
+            this.MusicProjectMaximumApprovedBandsCount = musicProjectMaximumApprovedBandsCount;
             this.StartDate = startDate.ToEndDateTimeOffset();
             this.EndDate = endDate.ToEndDateTimeOffset();        
             this.OneToOneMeetingsScheduleDate = oneToOneMeetingsScheduleDate.ToEndDateTimeOffset();

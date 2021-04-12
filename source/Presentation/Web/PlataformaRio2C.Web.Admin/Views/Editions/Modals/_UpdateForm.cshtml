@@ -40,6 +40,18 @@
 </div>
 <div class="row">
     <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.MusicProjectMinimumEvaluationsCount, new { @class = "control-label" })
+        @Html.TextBox("MusicProjectMinimumEvaluationsCount", Model.MusicProjectMinimumEvaluationsCount, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.MusicProjectMinimumEvaluationsCount, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.MusicProjectMaximumApprovedBandsCount, new { @class = "control-label" })
+        @Html.TextBox("MusicProjectMaximumApprovedBandsCount", Model.MusicProjectMaximumApprovedBandsCount, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.MusicProjectMaximumApprovedBandsCount, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
         @Html.LabelFor(m => m.OneToOneMeetingsScheduleDate, new { @class = "control-label" })
         @Html.TextBox("OneToOneMeetingsScheduleDate", Model.OneToOneMeetingsScheduleDate?.ToShortDateString(), new
         {

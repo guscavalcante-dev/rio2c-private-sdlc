@@ -100,6 +100,8 @@ namespace PlataformaRio2C.Domain.Dtos
             this.MusicProjectSubmitEndDate = entity.MusicProjectSubmitEndDate;
             this.MusicProjectEvaluationStartDate = entity.MusicProjectEvaluationStartDate;
             this.MusicProjectEvaluationEndDate = entity.MusicProjectEvaluationEndDate;
+            this.Edition.MusicProjectMinimumEvaluationsCount = entity.MusicProjectMinimumEvaluationsCount;
+            this.Edition.MusicProjectMaximumApprovedBandsCount = entity.MusicProjectMaximumApprovedBandsCount;
             this.InnovationProjectSubmitStartDate = entity.InnovationProjectSubmitStartDate;
             this.InnovationProjectSubmitEndDate = entity.InnovationProjectSubmitEndDate;
             this.InnovationProjectEvaluationStartDate = entity.InnovationProjectEvaluationStartDate;

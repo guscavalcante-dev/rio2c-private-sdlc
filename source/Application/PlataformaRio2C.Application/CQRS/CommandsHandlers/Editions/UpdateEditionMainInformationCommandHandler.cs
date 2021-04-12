@@ -86,6 +86,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                           cmd.IsActive,
                                           cmd.AttendeeOrganizationMaxSellProjectsCount,
                                           cmd.ProjectMaxBuyerEvaluationsCount,
+                                          cmd.MusicProjectMinimumEvaluationsCount,
+                                          cmd.MusicProjectMaximumApprovedBandsCount,
                                           cmd.StartDate.Value,
                                           cmd.EndDate.Value,
                                           cmd.OneToOneMeetingsScheduleDate.Value,
