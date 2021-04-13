@@ -2678,4 +2678,12 @@
     <value>of</value>
     <comment>of</comment>
   </data>
+  <data name="MusicProjectMaximumApprovedBandsCount" xml:space="preserve">
+    <value>Quantidade mínima de votos para gerar média</value>
+    <comment>Quantidade mínima de votos para gerar média</comment>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value>Quantidade máxima de bandas aprovadas</value>
+    <comment>Quantidade máxima de bandas aprovadas</comment>
+  </data>
 </root>

@@ -2977,7 +2977,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Máximo de aprovações para projeto musical.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Quantidade máxima de bandas aprovadas.
         /// </summary>
         public static string MusicProjectMaximumApprovedBandsCount {
             get {
@@ -2986,7 +2986,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Minimo de votos para projeto musical.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Quantidade mínima de votos para gerar média.
         /// </summary>
         public static string MusicProjectMinimumEvaluationsCount {
             get {
@@ -3279,6 +3279,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string NumberOfEpisodes {
             get {
                 return ResourceManager.GetString("NumberOfEpisodes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a de.
+        /// </summary>
+        public static string Of {
+            get {
+                return ResourceManager.GetString("Of", resourceCulture);
             }
         }
         

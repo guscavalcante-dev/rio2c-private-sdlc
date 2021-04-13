@@ -2684,11 +2684,15 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Votos</comment>
   </data>
   <data name="MusicProjectMaximumApprovedBandsCount" xml:space="preserve">
-    <value>Máximo de aprovações para projeto musical</value>
-    <comment>Máximo de aprovações para projeto musical</comment>
+    <value>Quantidade máxima de bandas aprovadas</value>
+    <comment>Quantidade máxima de bandas aprovadas</comment>
   </data>
   <data name="MusicProjectMinimumEvaluationsCount" xml:space="preserve">
-    <value>Minimo de votos para projeto musical</value>
-    <comment>Minimo de votos para projeto musical</comment>
+    <value>Quantidade mínima de votos para gerar média</value>
+    <comment>Quantidade mínima de votos para gerar média</comment>
+  </data>
+  <data name="Of" xml:space="preserve">
+    <value>de</value>
+    <comment>de</comment>
   </data>
 </root>
