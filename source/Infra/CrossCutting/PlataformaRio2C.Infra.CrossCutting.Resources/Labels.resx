@@ -2683,4 +2683,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Votos</value>
     <comment>Votos</comment>
   </data>
+  <data name="Of" xml:space="preserve">
+    <value>de</value>
+    <comment>de</comment>
+  </data>
 </root>

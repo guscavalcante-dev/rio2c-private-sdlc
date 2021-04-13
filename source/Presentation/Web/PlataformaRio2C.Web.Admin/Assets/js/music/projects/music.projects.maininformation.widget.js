@@ -55,68 +55,40 @@ var MusicProjectsMainInformationWidget = function () {
         });
     };
 
-    //// Update -------------------------------------------------------------------------------------
-    //var enableAjaxForm = function () {
-    //    MyRio2cCommon.enableAjaxForm({
-    //        idOrClass: updateFormId,
-    //        onSuccess: function (data) {
-    //            $(updateModalId).modal('hide');
+    // Evaluation Grade ---------------------------------------------------------------------------
+    var submitEvaluationGrade = function (musicBandId) {
+        var jsonParameters = new Object();
+        jsonParameters.musicBandId = musicBandId;
+        jsonParameters.grade = $('#AttendeeMusicBandEvaluationGradeMain').val();
 
-    //            if (typeof (MusicProjectsMainInformationWidget) !== 'undefined') {
-	   //             MusicProjectsMainInformationWidget.init();
-    //            }
-    //        },
-    //        onError: function (data) {
-    //            if (MyRio2cCommon.hasProperty(data, 'pages')) {
-    //                enableUpdatePlugins();
-    //            }
-
-    //            $(updateFormId).find(":input.input-validation-error:first").focus();
-    //        }
-    //    });
-    //};
-
-    //var enableUpdatePlugins = function () {
-    //    //MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2' });
-    //    MyRio2cInputMask.enableMask('#TotalPlayingTime', '99:99:99');
-    //    MyRio2cInputMask.enableMask('#EachEpisodePlayingTime', '99:99:99');
-    //    enableAjaxForm();
-    //    MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
-    //};
-
-    //var showUpdateModal = function () {
-    //    MyRio2cCommon.block({ isModal: true });
-
-    //    var jsonParameters = new Object();
-    //    jsonParameters.projectUid = $('#AggregateId').val();
-
-    //    $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/ShowUpdateMainInformationModal'), jsonParameters, function (data) {
-    //        MyRio2cCommon.handleAjaxReturn({
-    //        data: data,
-    //        // Success
-    //        onSuccess: function () {
-    //            enableUpdatePlugins();
-    //            $(updateModalId).modal();
-    //        },
-    //        // Error
-    //        onError: function () {
-    //        }
-    //    });
-    //    })
-    //    .fail(function () {
-    //    })
-    //    .always(function () {
-    //        MyRio2cCommon.unblock();
-    //    });
-    //};
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/Evaluate'), jsonParameters, function (data) {
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function () {
+                },
+                // Error
+                onError: function () {
+                }
+            });
+        })
+            .fail(function () {
+            })
+            .always(function () {
+                MyRio2cCommon.unblock();
+                MusicProjectsEvaluationWidget.init();
+                MusicProjectsEvaluatorsWidget.init();
+                MusicProjectsMainInformationWidget.init();
+            });
+    };
 
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
         },
-        //showUpdateModal: function () {
-        //    showUpdateModal();
-        //}
+        submitEvaluationGrade: function (musicBandId) {
+            submitEvaluationGrade(musicBandId);
+        },
     };
 }();

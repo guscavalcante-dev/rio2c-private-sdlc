@@ -2,111 +2,99 @@
 @model MusicProjectDto
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
+    var evaluationsCount = Model.AttendeeMusicBandDto.AttendeeMusicBandEvaluationsDtos?.Count();
+
+    var evaluationDetailsAction = Url.Action("EvaluationDetails", "Projects", new
+    {
+        Area = "Music",
+        id = Model.MusicProject.Id,
+        step = 0,
+        searchKeywords = ViewBag.SearchKeywords,
+        musicGenreUid = ViewBag.MusicGenreUid,
+        evaluationStatusUid = ViewBag.EvaluationStatusUid,
+        Page = ViewBag.Page,
+        pageSize = ViewBag.PageSize
+    });
 }
 @if (Model != null)
 {
     <div class="kt-portlet__body">
         <div class="kt-widget5">
-            <div class="kt-widget kt-widget--project-1" style="border-bottom: 0.07rem dashed #ebedf2;">
-                <div class="kt-widget__head pt-0">
-                    <div class="kt-widget__label">
-                        <div class="kt-widget__media" style="padding-right: 10px">
-                            <a href="@Url.Action("EvaluationDetails", "Projects", new { Area = "Music", id = Model.MusicProject.Uid })" target="_blank">
-                                @if (Model.AttendeeMusicBandDto?.MusicBand?.HasImage() == true)
+            <div class="kt-widget kt-widget--project-1">
+                <div class="kt-widget__head p-0">
+                    <div class="kt-widget__media">
+                        <a href="@evaluationDetailsAction" target="_blank">
+                            @if (Model.AttendeeMusicBandDto?.MusicBand?.HasImage() == true)
+                            {
+                                <span class="col-md-12 p-0 m-0">
+                                    <img src="@(Model.AttendeeMusicBandDto?.MusicBand.ImageUrl)" class="img-fluid" alt="">
+                                </span>
+                            }
+                            else
+                            {
+                                <div class="kt-userpic kt-userpic--lg kt-userpic--brand">
+                                    <span>@(Model.AttendeeMusicBandDto?.MusicBand?.GetNameAbbreviation())</span>
+                                </div>
+                            }
+                        </a>
+                    </div>
+                    <div class="kt-widget__info mt-3">
+                        <span class="kt-widget__title h5">
+                            @(Model.AttendeeMusicBandDto?.MusicBand?.Name ?? "-")
+                        </span>
+                        <br />
+                        <span class="kt-widget__desc">
+                            @(Model.AttendeeMusicBandDto?.MusicBandType?.Name ?? "-")
+                        </span>
+                        <br />
+                        <span class="kt-widget__desc">
+                            @Labels.MusicGenre:
+                            @if (Model.AttendeeMusicBandDto?.MusicBandGenreDtos?.Any() == true)
+                            {
+                                foreach (var musicBandGenreDto in Model.AttendeeMusicBandDto.MusicBandGenreDtos)
                                 {
-                                    <span class="kt-media kt-media--lg kt-margin-r-5 kt-margin-t-5">
-                                        <img src="@(Model.AttendeeMusicBandDto?.MusicBand.ImageUrl)" alt="" style="max-width: 65px; max-height: 65px;">
+                                    <span class="kt-badge kt-badge--inline kt-badge--info">
+                                        @(musicBandGenreDto.MusicGenre.Name)
+                                        @if (musicBandGenreDto.MusicGenre.HasAdditionalInfo && !string.IsNullOrEmpty(musicBandGenreDto.MusicBandGenre.AdditionalInfo))
+                                        {
+                                            @musicBandGenreDto.MusicBandGenre.AdditionalInfo
+                                        }
                                     </span>
                                 }
-                                else
+                            }
+                            else
+                            {
+                                @:-
+                            }
+                        </span>
+                        <br />
+                        <span class="kt-widget__desc">
+                            @Labels.TargetAudience:
+                            @if (Model.AttendeeMusicBandDto?.MusicBandTargetAudienceDtos?.Any() == true)
+                            {
+                                foreach (var musicBandTargetAudienceDto in Model.AttendeeMusicBandDto.MusicBandTargetAudienceDtos)
                                 {
-                                    <div class="kt-userpic kt-userpic--lg kt-userpic--brand kt-margin-r-5 kt-margin-t-5">
-                                        <span>@(Model.AttendeeMusicBandDto?.MusicBand?.GetNameAbbreviation())</span>
-                                    </div>
+                                    <span class="kt-badge kt-badge--inline kt-badge--primary">@(musicBandTargetAudienceDto.TargetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
                                 }
-                            </a>
-                        </div>
-                        <div class="kt-widget__info mt-0 pl-0">
-                            <a href="@Url.Action("EvaluationDetails", "Projects", new { Area = "Music", id = Model.MusicProject.Uid })" class="kt-widget__title">
-                                @(Model.AttendeeMusicBandDto?.MusicBand?.Name ?? "-")
-                            </a>
-                            <span class="kt-widget__desc">
-                                @(Model.AttendeeMusicBandDto?.MusicBandType?.Name ?? "-")
-                            </span>
-                            <span class="kt-widget__desc">
-                                @Labels.MusicGenre: 
-                                @if (Model.AttendeeMusicBandDto?.MusicBandGenreDtos?.Any() == true)
-                                {
-                                    foreach (var musicBandGenreDto in Model.AttendeeMusicBandDto.MusicBandGenreDtos)
-                                    {
-                                        <span class="kt-badge kt-badge--inline kt-badge--info">
-                                            @(musicBandGenreDto.MusicGenre.Name)
-                                            @if (musicBandGenreDto.MusicGenre.HasAdditionalInfo && !string.IsNullOrEmpty(musicBandGenreDto.MusicBandGenre.AdditionalInfo))
-                                            {
-                                                @musicBandGenreDto.MusicBandGenre.AdditionalInfo
-                                            }
-                                        </span>
-                                    }
-                                }
-                                else
-                                {
-                                    @:-
-                                }
-                            </span>
-                            <span class="kt-widget__desc">
-                                @Labels.TargetAudience: 
-                                @if (Model.AttendeeMusicBandDto?.MusicBandTargetAudienceDtos?.Any() == true)
-                                {
-                                    foreach (var musicBandTargetAudienceDto in Model.AttendeeMusicBandDto.MusicBandTargetAudienceDtos)
-                                    {
-                                        <span class="kt-badge kt-badge--inline kt-badge--primary">@(musicBandTargetAudienceDto.TargetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
-                                    }
-                                }
-                                else
-                                {
-                                    @:-
-                                }
-                            </span>
-                            @*<span class="kt-widget__desc">
-                                    @{
-                                        var totalInterestGroupsMatchesCount = Model.GetTotalInterestGroupsMatchesCount();
-                                    }
-                                    <small>@totalInterestGroupsMatchesCount @((totalInterestGroupsMatchesCount != 1 ? Labels.Matches : Labels.Match).ToLowerInvariant()):</small>
-                                    @foreach (var interestGroupsMatch in Model.InterestGroupsMatches.OrderBy(igm => igm.DisplayOrder))
-                                    {
-                                        <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@interestGroupsMatch.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
-                                    }
-                                </span>*@
-                        </div>
+                            }
+                            else
+                            {
+                                @:-
+                            }
+                        </span>
                     </div>
                 </div>
-                <div class="kt-widget__body pb-0">
+                <div class="kt-widget__body p-0">
                     <div class="kt-widget__content">
-                        @*<span class="kt-widget__text mt-0">
-                            @(Html.Raw(Model.GetLogLineDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectLogLine?.Value))
-                        </span>*@
                         @Html.Partial("Shared/_Evaluation", Model)
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row mt-20 justify-content-end">
-            <div class="col-4 text-center">
-                <a href="@Url.Action("EvaluationDetails", "Projects", new { Area = "Music", id = Model.MusicProject.Uid })" class="btn btn-brand">@Labels.View</a>
+        <div class="row mt-20 justify-content-center">
+            <div class="col-md-12 text-center">
+                <a href="@evaluationDetailsAction" class="btn btn-brand">@Labels.View</a>
             </div>
-            @if (editionDto?.IsMusicProjectEvaluationOpen() == true)
-            {
-                <div class="col-4 text-center">
-                    <button type="button" class="btn btn-success" onclick="MusicProjectsEvaluationUpdateWidget.showAcceptModal('@Model.MusicProject.Uid');">
-                        <i class="fa fa-thumbs-up"></i> @Labels.AcceptProject
-                    </button>
-                </div>
-                <div class="col-4 text-center">
-                    <button type="button" class="btn btn-danger" onclick="MusicProjectsEvaluationUpdateWidget.showRefuseModal('@Model.MusicProject.Uid');">
-                        <i class="fa fa-thumbs-down"></i> @Labels.RefuseProject
-                    </button>
-                </div>
-            }
         </div>
     </div>
 }

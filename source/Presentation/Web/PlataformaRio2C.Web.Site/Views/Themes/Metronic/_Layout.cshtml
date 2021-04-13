@@ -151,7 +151,6 @@
         // MyRio2CCommon script -----------------------------------------------
         MyRio2cCommon.init('@ViewBag.UserInterfaceLanguage', '@(ViewBag.EditionDto?.UrlCode)', '@ConfigurationManager.AppSettings["AWSBucket"]');
 
-        //TODO: Não está habilitando para 'pt', está sempre como 'en' e isso gera erro nos inputs decimais
         //Enable Globalize with current culture
         Globalize.culture(@(new HtmlString(string.Format("\'{0}\'", CultureInfo.CurrentCulture))));
 

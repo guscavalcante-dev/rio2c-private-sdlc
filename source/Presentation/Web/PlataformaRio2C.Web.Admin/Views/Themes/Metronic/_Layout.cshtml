@@ -95,7 +95,7 @@
     @Scripts.Render("~/bundles/js/layoutGlobalCustomized.js")
     <!--end::Global Theme Bundle -->
     <!--begin: MyRio2C Scripts-->
-    <script>
+<script>
         // Show alert translations --------------------------------------------
         var alertMessageTypeTranslated = {};
         alertMessageTypeTranslated['success'] = '@Labels.Success';
@@ -127,8 +127,11 @@
         // MyRio2CCommon script -----------------------------------------------
         MyRio2cCommon.init('@ViewBag.UserInterfaceLanguage', '@(ViewBag.EditionDto?.UrlCode)', '@ConfigurationManager.AppSettings["AWSBucket"]');
 
+        //Enable Globalize with current culture
+        Globalize.culture(@(new HtmlString(string.Format("\'{0}\'", CultureInfo.CurrentCulture))));
+
         @Html.StatusMessageToastr()
-    </script>
+</script>
     <!--end: MyRio2C Scripts-->
     <!--begin::Page Scripts -->
     <script type="text/javascript">

@@ -45,6 +45,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         private readonly IMusicGenreRepository musicGenreRepo;
         private readonly IProjectEvaluationStatusRepository evaluationStatusRepo;
         private readonly IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo;
+        private readonly IMusicBandRepository musicBandRepo;
 
         /// <summary>Initializes a new instance of the <see cref="ProjectsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -59,13 +60,15 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             IMusicProjectRepository musicProjectRepository,
             IMusicGenreRepository musicGenreRepository,
             IProjectEvaluationStatusRepository evaluationStatusRepository,
-            IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepository)
+            IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepository,
+            IMusicBandRepository musicBandRepository)
             : base(commandBus, identityController)
         {
             this.musicProjectRepo = musicProjectRepository;
             this.musicGenreRepo = musicGenreRepository;
             this.evaluationStatusRepo = evaluationStatusRepository;
             this.projectEvaluationRefuseReasonRepo = projectEvaluationRefuseReasonRepository;
+            this.musicBandRepo = musicBandRepository;
         }
 
         #region List
@@ -118,47 +121,35 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 this.EditionDto.Id,
                 this.EditionDto.Edition.MusicProjectMaximumApprovedBandsCount);
 
-
-;
-
-            //var color = "warning";
-            //var icon = "fa-diagnoses";
-            //if (musicProjectEvaluationDto?.ProjectEvaluationStatus?.Code == ProjectEvaluationStatus.Accepted.Code)
-            //{
-            //    color = "success";
-            //    icon = "fa-thumbs-up";
-            //}
-            //else if (musicProjectEvaluationDto?.ProjectEvaluationStatus?.Code == ProjectEvaluationStatus.Refused.Code)
-            //{
-            //    color = "danger";
-            //    icon = "fa-thumbs-down";
-            //}    
-            //<span class="kt-widget__button">
-            //    <label class="btn btn-label-@(color) btn-sm">
-            //        <i class="fa @(icon) mr-1"></i> @(musicProjectEvaluationDto?.ProjectEvaluationStatus?.Name?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
-            //    </label>
-            //</span>
-
+            ViewBag.MusicGenreUid = musicGenreUid;
+            ViewBag.EvaluationStatusUid = evaluationStatusUid;
+            ViewBag.Page = request.Start / request.Length;
+            ViewBag.PageSize = request.Length;
 
             StringBuilder sb = new StringBuilder();
-
             foreach (var musicProjectJsonDto in musicProjects)
             {
+                #region Evaluation Column
+
                 var icon = "fa-diagnoses";
                 var color = "warning";
                 var text = Labels.UnderEvaluation;
+                bool isMusicProjectEvaluationClosed = !this.EditionDto.IsMusicProjectEvaluationOpen();
 
-                if (approvedAttendeeMusicBandsIds.Contains(musicProjectJsonDto.AttendeeMusicBandId))
+                if (isMusicProjectEvaluationClosed)
                 {
-                    icon = "fa-thumbs-up";
-                    color = "success";
-                    text = Labels.ProjectAccepted;
-                }
-                else if (musicProjectJsonDto.EvaluationsCount > 0)
-                {
-                    icon = "fa-thumbs-down";
-                    color = "danger";
-                    text = Labels.ProjectRefused;
+                    if (approvedAttendeeMusicBandsIds.Contains(musicProjectJsonDto.AttendeeMusicBandId))
+                    {
+                        icon = "fa-thumbs-up";
+                        color = "success";
+                        text = Labels.ProjectAccepted;
+                    }
+                    else if (musicProjectJsonDto.EvaluationsCount > 0)
+                    {
+                        icon = "fa-thumbs-down";
+                        color = "danger";
+                        text = Labels.ProjectRefused;
+                    }
                 }
 
                 sb.Append($"<table class=\"image-side-text text-left\">");
@@ -169,19 +160,44 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 sb.Append($"                    <i class=\"fa {icon} mr-1\"></i>");
                 sb.Append($"                </label>");
                 sb.Append($"            </span>");
-                sb.Append($"            <span class=\"margin-left: 5px;\">");
-                sb.Append($"                <b>{musicProjectJsonDto.Grade?.ToString() ?? ""}</b>");
-                sb.Append($"            </span>");
-                sb.Append($"            <span class=\"margin-left: 5px;\">");
-                sb.Append($"                ({musicProjectJsonDto.EvaluationsCount} {(musicProjectJsonDto.EvaluationsCount == 1 ? Labels.Vote : Labels.Votes)})");
-                sb.Append($"            </span>");
+
+                if (isMusicProjectEvaluationClosed)
+                {
+                    sb.Append($"            <span class=\"margin-left: 5px;\">");
+                    sb.Append($"                <b>{musicProjectJsonDto.Grade?.ToString() ?? ""}</b>");
+                    sb.Append($"            </span>");
+                    sb.Append($"            <span class=\"margin-left: 5px;\">");
+                    sb.Append($"                ({musicProjectJsonDto.EvaluationsCount} {(musicProjectJsonDto.EvaluationsCount == 1 ? Labels.Vote : Labels.Votes)})");
+                    sb.Append($"            </span>");
+                }
+
                 sb.Append($"        </td>");
                 sb.Append($"    </tr>");
                 sb.Append($"</table>");
-
                 musicProjectJsonDto.EvaluationHtmlString = sb.ToString();
-
                 sb.Clear();
+
+                #endregion
+
+                #region Menu Actions Column
+
+                sb.Append($"<span class=\"dropdown\">");
+                sb.Append($"     <a href = \"#\" class=\"btn btn-sm btn-clean btn-icon btn-icon-md\" data-toggle=\"dropdown\" aria-expanded=\"true\">");
+                sb.Append($"         <i class=\"la la-ellipsis-h\"></i>");
+                sb.Append($"     </a>");
+                sb.Append($"     <div class=\"dropdown-menu dropdown-menu-right\">");
+                sb.Append($"        <button class=\"dropdown-item\" onclick=\"MusicProjectsDataTableWidget.showDetails({musicProjectJsonDto.MusicProjectId}, '', '{musicGenreUid}', '{evaluationStatusUid}', '1', '{ViewBag.PageSize}');\">");
+                sb.Append($"            <i class=\"la la-edit\"></i> {@Labels.Edit}");
+                sb.Append($"        </button>");
+                sb.Append($"        <button class=\"dropdown-item\" onclick=\"MusicProjectsDelete.showModal({musicProjectJsonDto.MusicProjectId});\">");
+                sb.Append($"            <i class=\"la la-remove\"></i> {Labels.Remove}");
+                sb.Append($"        </button>");
+                sb.Append($"    </div>");
+                sb.Append($"</span>");
+                musicProjectJsonDto.MenuActionsHtmlString = sb.ToString();
+                sb.Clear();
+
+                #endregion
             }
 
             // Translate Target Audiences
@@ -194,11 +210,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             //        musicProjectJsonDto.MusicTargetAudiencesNames[i] = musicProjectJsonDto.MusicTargetAudiencesNames[i].GetSeparatorTranslation(this.UserInterfaceLanguage, '|');
             //    }
             //}
-
-            ViewBag.MusicGenreUid = musicGenreUid;
-            ViewBag.EvaluationStatusUid = evaluationStatusUid;
-            ViewBag.Page = request.Start / request.Length;
-            ViewBag.PageSize = request.Length;
 
             var response = DataTablesResponse.Create(request, musicProjects.TotalItemCount, musicProjects.TotalItemCount, musicProjects);
 
@@ -256,6 +267,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <summary>Evaluations the details.</summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
+        [Obsolete("Please use 'EvaluationDetails'.")]
         public async Task<ActionResult> Details(Guid? id)
         {
             var musicProjectDto = await this.musicProjectRepo.FindDtoToEvaluateAsync(id ?? Guid.Empty);
@@ -276,6 +288,85 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
             return View(musicProjectDto);
         }
+
+        /// <summary>
+        /// Evaluations the details.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="step">The step.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="musicGenreUid">The music genre uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<ActionResult> EvaluationDetails(int? id, int step = 0, string searchKeywords = null, Guid? musicGenreUid = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 10)
+        {
+            if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
+            {
+                return RedirectToAction("Index", "Projects", new { Area = "Music" });
+            }
+
+            var allMusicProjectsIds = await this.musicProjectRepo.FindAllMusicProjectsIdsAsync(
+                this.EditionDto.Edition.Id,
+                searchKeywords,
+                musicGenreUid,
+                evaluationStatusUid,
+                page.Value,
+                pageSize.Value);
+
+            var currentMusicProjectIdIndex = Array.IndexOf(allMusicProjectsIds, id.Value);
+
+            var nextProjectId = allMusicProjectsIds.ElementAtOrDefault(currentMusicProjectIdIndex + 1);
+            if (nextProjectId == 0)
+                nextProjectId = id.Value;
+
+            var previousProjectId = allMusicProjectsIds.ElementAtOrDefault(currentMusicProjectIdIndex - 1);
+            if (previousProjectId == 0)
+                previousProjectId = id.Value;
+
+            if (step > 0)
+            {
+                id = nextProjectId;
+            }
+            else if (step < 0)
+            {
+                id = previousProjectId;
+            }
+
+            var musicProjectDto = await this.musicProjectRepo.FindDtoToEvaluateAsync(id ?? 0);
+            if (musicProjectDto == null)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("EvaluationList", "Projects", new { Area = "Music" });
+            }
+
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.PitchingShow, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("", "Projects", new { Area = "Music" })),
+                new BreadcrumbItemHelper(musicProjectDto.AttendeeMusicBandDto?.MusicBand?.Name ?? Labels.Project, Url.Action("EvaluationDetails", "Projects", new { Area = "Music", id }))
+            });
+
+            #endregion
+
+            ViewBag.SearchKeywords = searchKeywords;
+            ViewBag.MusicGenreUid = musicGenreUid;
+            ViewBag.EvaluationStatusUid = evaluationStatusUid;
+            ViewBag.Page = page;
+            ViewBag.PageSize = pageSize;
+
+            ViewBag.NextProjectId = nextProjectId;
+            ViewBag.PreviousProjectId = previousProjectId;
+            ViewBag.CurrentMusicProjectIndex = currentMusicProjectIdIndex + 1;
+
+            ViewBag.MusicProjectsTotalCount = await this.musicProjectRepo.CountAsync(this.EditionDto.Edition.Id, searchKeywords, musicGenreUid, evaluationStatusUid, page.Value, pageSize.Value);
+            ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id, this.EditionDto.Edition.MusicProjectMaximumApprovedBandsCount);
+
+            return View(musicProjectDto);
+        }
+
+        #endregion
 
         #region Main Information Widget
 
@@ -485,20 +576,355 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
         #endregion
 
-        #region Evaluation Widget
+        #region Evaluation Widget Old (Disabled 09/04/2021)
 
-        /// <summary>Shows the evaluation widget.</summary>
+        ///// <summary>Shows the evaluation widget.</summary>
+        ///// <param name="projectUid">The project uid.</param>
+        ///// <returns></returns>
+        //[Obsolete(@"Please, use the 'ShowEvaluationGradeWidget'")]
+        //[HttpGet]
+        //public async Task<ActionResult> ShowEvaluationWidget(Guid? projectUid)
+        //{
+        //    if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
+        //    {
+        //        return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    var evaluationDto = await this.musicProjectRepo.FindEvaluationWidgetDtoAsync(projectUid ?? Guid.Empty);
+        //    if (evaluationDto == null)
+        //    {
+        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        pages = new List<dynamic>
+        //        {
+        //            new { page = this.RenderRazorViewToString("Widgets/EvaluationWidget", evaluationDto), divIdOrClass = "#ProjectEvaluationWidget" },
+        //        }
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
+
+        //#region Accept (Obsolete 09/04/2021)
+
+        ///// <summary>Shows the accept evaluation modal.</summary>
+        ///// <param name="projectUid">The project uid.</param>
+        ///// <returns></returns>
+        //[Obsolete(@"Please, use the 'ShowEvaluationGradeWidget'")]
+        //[HttpGet]
+        //public async Task<ActionResult> ShowAcceptEvaluationModal(Guid? projectUid)
+        //{
+        //    AcceptMusicProjectEvaluation cmd;
+
+        //    try
+        //    {
+        //        var projectDto = await this.musicProjectRepo.FindDtoToEvaluateAsync(projectUid ?? Guid.Empty);
+        //        if (projectDto == null)
+        //        {
+        //            throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
+        //        }
+
+        //        cmd = new AcceptMusicProjectEvaluation(projectDto);
+        //    }
+        //    catch (DomainException ex)
+        //    {
+        //        return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        pages = new List<dynamic>
+        //        {
+        //            new { page = this.RenderRazorViewToString("Modals/AcceptEvaluationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+        //        }
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
+
+        ///// <summary>Accepts the specified project evaluation.</summary>
+        ///// <param name="cmd">The command.</param>
+        ///// <returns></returns>
+        //[Obsolete(@"Please, use the 'Evaluate' method.")]
+        //[HttpPost]
+        //public async Task<ActionResult> Accept(AcceptMusicProjectEvaluation cmd)
+        //{
+        //    var result = new AppValidationResult();
+
+        //    try
+        //    {
+        //        if (this.EditionDto?.IsMusicProjectEvaluationOpen() != true)
+        //        {
+        //            throw new DomainException(Texts.ForbiddenErrorMessage);
+        //        }
+
+        //        if (!ModelState.IsValid)
+        //        {
+        //            throw new DomainException(Messages.CorrectFormValues);
+        //        }
+
+        //        cmd.UpdatePreSendProperties(
+        //            this.AdminAccessControlDto.User.Id,
+        //            this.AdminAccessControlDto.User.Uid,
+        //            this.EditionDto.Id,
+        //            this.EditionDto.Uid,
+        //            this.UserInterfaceLanguage);
+        //        result = await this.CommandBus.Send(cmd);
+        //        if (!result.IsValid)
+        //        {
+        //            throw new DomainException(Messages.CorrectFormValues);
+        //        }
+        //    }
+        //    catch (DomainException ex)
+        //    {
+        //        foreach (var error in result.Errors)
+        //        {
+        //            var target = error.Target ?? "";
+        //            ModelState.AddModelError(target, error.Message);
+        //        }
+        //        var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
+
+        //        cmd.UpdateModelsAndLists(await this.musicProjectRepo.FindDtoToEvaluateAsync(cmd.ProjectUid ?? Guid.Empty));
+
+        //        return Json(new
+        //        {
+        //            status = "error",
+        //            message = toastrError?.Message ?? ex.GetInnerMessage(),
+        //            pages = new List<dynamic>
+        //            {
+        //                new { page = this.RenderRazorViewToString("Modals/AcceptEvaluationForm", cmd), divIdOrClass = "#form-container" },
+        //            }
+        //        }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        projectUid = cmd.ProjectUid,
+        //        message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.ProjectAccepted.ToLowerInvariant())
+        //    });
+        //}
+
+        //#endregion
+
+        //#region Refuse (Obsolete 09/04/2021)
+
+        ///// <summary>Shows the refuse evaluation modal.</summary>
+        ///// <param name="projectUid">The project uid.</param>
+        ///// <returns></returns>
+        //[Obsolete(@"Please, use the 'ShowEvaluationGradeWidget'")]
+        //[HttpGet]
+        //public async Task<ActionResult> ShowRefuseEvaluationModal(Guid? projectUid)
+        //{
+        //    RefuseMusicProjectEvaluation cmd;
+
+        //    try
+        //    {
+        //        var projectDto = await this.musicProjectRepo.FindDtoToEvaluateAsync(projectUid ?? Guid.Empty);
+        //        if (projectDto == null)
+        //        {
+        //            throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
+        //        }
+
+        //        cmd = new RefuseMusicProjectEvaluation(
+        //            projectDto,
+        //            await this.projectEvaluationRefuseReasonRepo.FindAllByProjectTypeUidAsync(ProjectType.Music.Uid));
+        //    }
+        //    catch (DomainException ex)
+        //    {
+        //        return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        pages = new List<dynamic>
+        //        {
+        //            new { page = this.RenderRazorViewToString("Modals/RefuseEvaluationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+        //        }
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
+
+        ///// <summary>Refuses the specified music project evaluation.</summary>
+        ///// <param name="cmd">The command</param>
+        ///// <returns></returns>
+        //[Obsolete(@"Please, use the 'Evaluate' method.")]
+        //[HttpPost]
+        //public async Task<ActionResult> Refuse(RefuseMusicProjectEvaluation cmd)
+        //{
+        //    var result = new AppValidationResult();
+
+        //    try
+        //    {
+        //        if (this.EditionDto?.IsMusicProjectEvaluationOpen() != true)
+        //        {
+        //            throw new DomainException(Texts.ForbiddenErrorMessage);
+        //        }
+
+        //        if (!ModelState.IsValid)
+        //        {
+        //            throw new DomainException(Messages.CorrectFormValues);
+        //        }
+
+        //        cmd.UpdatePreSendProperties(
+        //            this.AdminAccessControlDto.User.Id,
+        //            this.AdminAccessControlDto.User.Uid,
+        //            this.EditionDto.Id,
+        //            this.EditionDto.Uid,
+        //            this.UserInterfaceLanguage);
+        //        result = await this.CommandBus.Send(cmd);
+        //        if (!result.IsValid)
+        //        {
+        //            throw new DomainException(Messages.CorrectFormValues);
+        //        }
+        //    }
+        //    catch (DomainException ex)
+        //    {
+        //        foreach (var error in result.Errors)
+        //        {
+        //            var target = error.Target ?? "";
+        //            ModelState.AddModelError(target, error.Message);
+        //        }
+        //        var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
+
+        //        cmd.UpdateModelsAndLists(
+        //            await this.musicProjectRepo.FindDtoToEvaluateAsync(cmd.ProjectUid ?? Guid.Empty),
+        //            await this.projectEvaluationRefuseReasonRepo.FindAllByProjectTypeUidAsync(ProjectType.Music.Uid));
+
+        //        return Json(new
+        //        {
+        //            status = "error",
+        //            message = toastrError?.Message ?? ex.GetInnerMessage(),
+        //            pages = new List<dynamic>
+        //            {
+        //                new { page = this.RenderRazorViewToString("Modals/RefuseEvaluationForm", cmd), divIdOrClass = "#form-container" },
+        //            }
+        //        }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        projectUid = cmd.ProjectUid,
+        //        message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.ProjectRefused.ToLowerInvariant())
+        //    });
+        //}
+
+        //#endregion
+
+        #endregion
+
+        #region Evaluation Grade Widget 
+
+        /// <summary>
+        /// Shows the evaluation grade widget.
+        /// </summary>
         /// <param name="projectUid">The project uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowEvaluationWidget(Guid? projectUid)
+        public async Task<ActionResult> ShowEvaluationGradeWidget(Guid? projectUid)
         {
             if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
 
-            var evaluationDto = await this.musicProjectRepo.FindEvaluationWidgetDtoAsync(projectUid ?? Guid.Empty);
+            var evaluationDto = await this.musicProjectRepo.FindEvaluationGradeWidgetDtoAsync(projectUid ?? Guid.Empty, this.AdminAccessControlDto.User.Id);
+            if (evaluationDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id, this.EditionDto.Edition.MusicProjectMaximumApprovedBandsCount);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EvaluationGradeWidget", evaluationDto), divIdOrClass = "#ProjectEvaluationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Accepts the specified project evaluation.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
+        public async Task<ActionResult> Evaluate(int musicBandId, decimal? grade)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (this.EditionDto?.IsMusicProjectEvaluationOpen() != true)
+                {
+                    throw new DomainException(Texts.ForbiddenErrorMessage);
+                }
+
+                var cmd = new EvaluateMusicBand(
+                    await this.musicBandRepo.FindByIdAsync(musicBandId),
+                    grade.Value);
+
+                cmd.UpdatePreSendProperties(
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors.Select(e => e = new AppValidationError(e.Message, "ToastrError", e.Code))?
+                                            .FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                //projectUid = cmd.MusicBandId,
+                message = string.Format(Messages.EntityActionSuccessfull, Labels.MusicBand, Labels.Evaluated.ToLowerInvariant())
+            });
+        }
+
+        #endregion
+
+        #region Evaluators Widget
+
+        [HttpGet]
+        public async Task<ActionResult> ShowEvaluatorsWidget(Guid? projectUid)
+        {
+            if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
+            {
+                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+            }
+
+            var evaluationDto = await this.musicProjectRepo.FindEvaluatorsWidgetDtoAsync(projectUid ?? Guid.Empty);
             if (evaluationDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
@@ -509,224 +935,10 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/EvaluationWidget", evaluationDto), divIdOrClass = "#ProjectEvaluationWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/EvaluatorsWidget", evaluationDto), divIdOrClass = "#ProjectEvaluatorsWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
-
-        #endregion
-
-        #region Accept
-
-        /// <summary>Shows the accept evaluation modal.</summary>
-        /// <param name="projectUid">The project uid.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ShowAcceptEvaluationModal(Guid? projectUid)
-        {
-            AcceptMusicProjectEvaluation cmd;
-
-            try
-            {
-                var projectDto = await this.musicProjectRepo.FindDtoToEvaluateAsync(projectUid ?? Guid.Empty);
-                if (projectDto == null)
-                {
-                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
-                }
-
-                cmd = new AcceptMusicProjectEvaluation(projectDto);
-            }
-            catch (DomainException ex)
-            {
-                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Modals/AcceptEvaluationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>Accepts the specified project evaluation.</summary>
-        /// <param name="cmd">The command.</param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> Accept(AcceptMusicProjectEvaluation cmd)
-        {
-            var result = new AppValidationResult();
-
-            try
-            {
-                if (this.EditionDto?.IsMusicProjectEvaluationOpen() != true)
-                {
-                    throw new DomainException(Texts.ForbiddenErrorMessage);
-                }
-
-                if (!ModelState.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-
-                cmd.UpdatePreSendProperties(
-                    this.AdminAccessControlDto.User.Id,
-                    this.AdminAccessControlDto.User.Uid,
-                    this.EditionDto.Id,
-                    this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
-                result = await this.CommandBus.Send(cmd);
-                if (!result.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-            }
-            catch (DomainException ex)
-            {
-                foreach (var error in result.Errors)
-                {
-                    var target = error.Target ?? "";
-                    ModelState.AddModelError(target, error.Message);
-                }
-                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
-
-                cmd.UpdateModelsAndLists(await this.musicProjectRepo.FindDtoToEvaluateAsync(cmd.ProjectUid ?? Guid.Empty));
-
-                return Json(new
-                {
-                    status = "error",
-                    message = toastrError?.Message ?? ex.GetInnerMessage(),
-                    pages = new List<dynamic>
-                    {
-                        new { page = this.RenderRazorViewToString("Modals/AcceptEvaluationForm", cmd), divIdOrClass = "#form-container" },
-                    }
-                }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new
-            {
-                status = "success",
-                projectUid = cmd.ProjectUid,
-                message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.ProjectAccepted.ToLowerInvariant())
-            });
-        }
-
-        #endregion
-
-        #region Refuse
-
-        /// <summary>Shows the refuse evaluation modal.</summary>
-        /// <param name="projectUid">The project uid.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ShowRefuseEvaluationModal(Guid? projectUid)
-        {
-            RefuseMusicProjectEvaluation cmd;
-
-            try
-            {
-                var projectDto = await this.musicProjectRepo.FindDtoToEvaluateAsync(projectUid ?? Guid.Empty);
-                if (projectDto == null)
-                {
-                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
-                }
-
-                cmd = new RefuseMusicProjectEvaluation(
-                    projectDto,
-                    await this.projectEvaluationRefuseReasonRepo.FindAllByProjectTypeUidAsync(ProjectType.Music.Uid));
-            }
-            catch (DomainException ex)
-            {
-                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Modals/RefuseEvaluationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>Refuses the specified music project evaluation.</summary>
-        /// <param name="cmd">The command</param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> Refuse(RefuseMusicProjectEvaluation cmd)
-        {
-            var result = new AppValidationResult();
-
-            try
-            {
-                if (this.EditionDto?.IsMusicProjectEvaluationOpen() != true)
-                {
-                    throw new DomainException(Texts.ForbiddenErrorMessage);
-                }
-
-                if (!ModelState.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-
-                cmd.UpdatePreSendProperties(
-                    this.AdminAccessControlDto.User.Id,
-                    this.AdminAccessControlDto.User.Uid,
-                    this.EditionDto.Id,
-                    this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
-                result = await this.CommandBus.Send(cmd);
-                if (!result.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-            }
-            catch (DomainException ex)
-            {
-                foreach (var error in result.Errors)
-                {
-                    var target = error.Target ?? "";
-                    ModelState.AddModelError(target, error.Message);
-                }
-                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
-
-                cmd.UpdateModelsAndLists(
-                    await this.musicProjectRepo.FindDtoToEvaluateAsync(cmd.ProjectUid ?? Guid.Empty),
-                    await this.projectEvaluationRefuseReasonRepo.FindAllByProjectTypeUidAsync(ProjectType.Music.Uid));
-
-                return Json(new
-                {
-                    status = "error",
-                    message = toastrError?.Message ?? ex.GetInnerMessage(),
-                    pages = new List<dynamic>
-                    {
-                        new { page = this.RenderRazorViewToString("Modals/RefuseEvaluationForm", cmd), divIdOrClass = "#form-container" },
-                    }
-                }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new
-            {
-                status = "success",
-                projectUid = cmd.ProjectUid,
-                message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.ProjectRefused.ToLowerInvariant())
-            });
-        }
-
-        #endregion
 
         #endregion
 

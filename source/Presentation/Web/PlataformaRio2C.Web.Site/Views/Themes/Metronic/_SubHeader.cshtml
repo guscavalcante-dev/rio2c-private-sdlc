@@ -4,8 +4,8 @@
 }
 @if (breadcrumb != null)
 {
-    <div class="kt-subheader   kt-grid__item" id="kt_subheader">
-        <div class="kt-container ">
+    <div class="kt-subheader kt-grid__item" id="kt_subheader">
+        <div class="kt-container">
             <div class="kt-subheader__main">
                 <h3 class="kt-subheader__title">@breadcrumb.Title</h3>
                 <div class="kt-subheader__breadcrumbs">
@@ -22,6 +22,7 @@
                     }
                 </div>
             </div>
+
             @if (breadcrumb.MenuActions?.Any() == true)
             {
                 <div class="kt-subheader__toolbar">

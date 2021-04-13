@@ -2,8 +2,50 @@
 @model MusicProjectDto
 @{
     ViewBag.Title = $"{Labels.PitchingShow} {Model.AttendeeMusicBandDto?.MusicBand?.Name}";
+    var totalMusicProjectsCount = ViewBag.MusicProjectsTotalCount as int?;
+    var currentMusicProjectIndex = ViewBag.CurrentMusicProjectIndex as int?;
+
+    var previousStepEvent = Url.Action("EvaluationDetails", "Projects", new
+    {
+        Area = "Music",
+        id = ViewBag.PreviousProjectId,
+        step = -1,
+        searchKeywords = ViewBag.SearchKeywords,
+        musicGenreUid = ViewBag.MusicGenreUid,
+        evaluationStatusUid = ViewBag.EvaluationStatusUid,
+        Page = ViewBag.Page,
+        pageSize = ViewBag.PageSize
+    });
+
+    var nextStepEvent = Url.Action("EvaluationDetails", "Projects", new
+    {
+        Area = "Music",
+        id = ViewBag.NextProjectId,
+        step = 1,
+        searchKeywords = ViewBag.SearchKeywords,
+        musicGenreUid = ViewBag.MusicGenreUid,
+        evaluationStatusUid = ViewBag.EvaluationStatusUid,
+        Page = ViewBag.Page,
+        pageSize = ViewBag.PageSize
+    });
 }
 @Html.Hidden("AggregateId", Model.MusicProject.Uid)
+
+<div class="row">
+    <div class="col-md-12 d-flex justify-content-end pb-3">
+        <div class="row d-flex font-weight-bold text-white" style="align-items: center;">
+            <div class="mr-3">
+                <span>@currentMusicProjectIndex @Labels.Of @totalMusicProjectsCount @Labels.Projects</span>
+            </div>
+            <button class="btn btn-outline-secondary" onclick="location.href='@previousStepEvent'">
+                <span class="font-weight-bold text-white"><</span>
+            </button>
+            <button class="btn btn-outline-secondary" onclick="location.href='@nextStepEvent'">
+                <span class="font-weight-bold text-white">></span>
+            </button>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-12">
         <div class="row">
@@ -80,7 +122,7 @@
     @Scripts.Render("~/bundles/js/inputmask.js")
     @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/music.projects.widget.js")
-    @Scripts.Render("~/bundles/js/music.projects.evaluation.update.widget.js")
+    @Scripts.Render("~/bundles/js/music.projects.evaluation.widget.js")
     <script>
         // Page translations ----------------------------------------------------------------------
         var translations = {
@@ -95,7 +137,7 @@
             MusicProjectsVideoAndMusicWidget.init();
             MusicProjectsClippingWidget.init();
             MusicProjectsSocialNetworksWidget.init();
-            MusicProjectsEvaluationUpdateWidget.init();
+            MusicProjectsEvaluationWidget.init();
             MusicProjectsEvaluatorsWidget.init();
         });
     </script>

@@ -1,54 +1,64 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Domain.Entities
+@using System.Linq;
+
 @model MusicProjectDto
 @{
-    //var musicProjectEvaluationDto = Model.MusicProjectEvaluationDto;
+    var editionDto = ViewBag.EditionDto as EditionDto;
+    var approvedAttendeeMusicBandsIds = ViewBag.ApprovedAttendeeMusicBandsIds as int[];
+    var isThisMusicProjectApproved = approvedAttendeeMusicBandsIds.Contains(Model.AttendeeMusicBandDto.AttendeeMusicBand.Id);
 }
-<div class="kt-widget__details" style="width: 100%;">
-    <span class="kt-widget__value text-center" style="min-height: 85px;">
-        @*@{
-            var color = "warning";
-            var icon = "fa-diagnoses";
-            if (musicProjectEvaluationDto?.ProjectEvaluationStatus?.Code == ProjectEvaluationStatus.Accepted.Code)
-            {
-                color = "success";
-                icon = "fa-thumbs-up";
-            }
-            else if (musicProjectEvaluationDto?.ProjectEvaluationStatus?.Code == ProjectEvaluationStatus.Refused.Code)
-            {
-                color = "danger";
-                icon = "fa-thumbs-down";
-            }
-        }
-        <span class="kt-widget__button">
-            <label class="btn btn-label-@(color) btn-sm">
-                <i class="fa @(icon) mr-1"></i> @(musicProjectEvaluationDto?.ProjectEvaluationStatus?.Name?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
-            </label>
-        </span>
-        @if (musicProjectEvaluationDto?.EvaluationCollaboratorUser != null)
+<div class="kt-widget__details w-100">
+    <div class="kt-widget__value text-center">
+
+        @if (editionDto?.IsMusicProjectEvaluationOpen() == true)
         {
-            <span class="kt-widget--user-profile-1 kt-widget__username d-block">
-                <small>@Labels.By</small> @(musicProjectEvaluationDto?.EvaluationCollaboratorUser.Name ?? musicProjectEvaluationDto?.EvaluationCollaborator.GetDisplayName())
-                @if (musicProjectEvaluationDto?.EvaluationDate.HasValue == true)
-                {
-                    <br /><small>@Labels.At @(musicProjectEvaluationDto?.EvaluationDate?.ToUserTimeZone())</small>
+            <div class="col-md-12 justify-content-center" style="display: flex; align-items: center;">
+                <span class="kt-widget__button">
+                    <label class="btn btn-label-warning btn-sm">
+                        <i class="fa fa-diagnoses mr-1"></i> @Labels.UnderEvaluation
+                    </label>
+                </span>
+            </div>
+        }
+        else
+        {
+            <div class="col-md-12 justify-content-center" style="display: flex; align-items: center;">
+                @{
+                    var color = "warning";
+                    var icon = "fa-diagnoses";
+                    var text = Labels.UnderEvaluation;
+
+                    if (isThisMusicProjectApproved)
+                    {
+                        color = "success";
+                        icon = "fa-thumbs-up";
+                        text = Labels.ProjectAccepted;
+                    }
+                    else if (Model.AttendeeMusicBandDto.AttendeeMusicBandEvaluationsDtos?.Count() > 0)
+                    {
+                        color = "danger";
+                        icon = "fa-thumbs-down";
+                        text = Labels.ProjectRefused;
+                    }
                 }
-            </span>
+                <span class="kt-widget__button">
+                    <label class="btn btn-label-@(color) btn-sm">
+                        <i class="fa @(icon) mr-1"></i> @text
+                    </label>
+                </span>
+                @if (Model.AttendeeMusicBandDto?.AttendeeMusicBand?.Grade != null)
+                {
+                    <div class="card bg-gray ml-3">
+                        <div class="card-body">
+                            <div class="card-text h6">
+                                <span>@Labels.Average</span>
+                                <span><b>@(Model.AttendeeMusicBandDto.AttendeeMusicBand.Grade)</b></span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
         }
-        @if (musicProjectEvaluationDto?.ProjectEvaluationStatus?.Code == ProjectEvaluationStatus.Refused.Code && musicProjectEvaluationDto?.ProjectEvaluationRefuseReason != null)
-        {
-            <span class="kt-widget--user-profile-1 kt-widget__username d-block">
-                <small>
-                    @if (musicProjectEvaluationDto?.ProjectEvaluationRefuseReason?.HasAdditionalInfo == true && !string.IsNullOrEmpty(musicProjectEvaluationDto?.Reason))
-                    {
-                        @(musicProjectEvaluationDto?.Reason?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
-                    }
-                    else
-                    {
-                        @(musicProjectEvaluationDto?.ProjectEvaluationRefuseReason.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
-                    }
-                </small>
-            </span>
-        }*@
-    </span>
+    </div>
 </div>

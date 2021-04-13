@@ -2674,4 +2674,8 @@
     <value>Votes</value>
     <comment>Votos</comment>
   </data>
+  <data name="Of" xml:space="preserve">
+    <value>of</value>
+    <comment>of</comment>
+  </data>
 </root>

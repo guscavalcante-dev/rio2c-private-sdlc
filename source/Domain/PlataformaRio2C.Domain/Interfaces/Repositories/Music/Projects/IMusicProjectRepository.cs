@@ -25,6 +25,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     {
         Task<IPagedList<MusicProjectDto>> FindAllDtosToEvaluateAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize);
         Task<MusicProjectDto> FindDtoToEvaluateAsync(Guid musicProjectUid);
+        Task<MusicProjectDto> FindDtoToEvaluateAsync(int musicProjectId);
         Task<MusicProjectDto> FindMainInformationWidgetDtoAsync(Guid musicProjectUid);
         Task<MusicProjectDto> FindMembersWidgetDtoAsync(Guid musicProjectUid);
         Task<MusicProjectDto> FindTeamMembersWidgetDtoAsync(Guid musicProjectUid);
@@ -38,8 +39,11 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<MusicProjectDto> FindEvaluatorsWidgetDtoAsync(Guid musicProjectUid);
         Task<List<MusicProjectDto>> FindAllApprovedAttendeeMusicBandsAsync(int editionId, int musicProjectMaximumApprovedBandsCount);
         Task<int[]> FindAllApprovedAttendeeMusicBandsIdsAsync(int editionId, int musicProjectMaximumApprovedBandsCount);
+        Task<int[]> FindAllMusicProjectsIdsAsync(int editionId);
+        Task<int[]> FindAllMusicProjectsIdsAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize);
 
         Task<IPagedList<MusicProjectJsonDto>> FindAllJsonDtosPagedAsync(int page, int pageSize, List<Tuple<string, string>> sortColumns, string keywords, Guid? musicGenreUid, Guid? evaluationStatusUid, string languageCode, int editionId);
         Task<int> CountAsync(int editionId, bool showAllEditions = false);
+        Task<int> CountAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize);
     }
 }

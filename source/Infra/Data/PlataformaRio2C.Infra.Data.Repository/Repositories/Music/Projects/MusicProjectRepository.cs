@@ -43,6 +43,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>
+        /// Finds the by identifier.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="musicProjectId">The music project identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<MusicProject> FindById(this IQueryable<MusicProject> query, int musicProjectId)
+        {
+            query = query.Where(mp => mp.Id == musicProjectId);
+
+            return query;
+        }
+
         /// <summary>Finds the by edition identifier.</summary>
         /// <param name="query">The query.</param>
         /// <param name="editionId">The edition identifier.</param>
@@ -175,6 +188,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>
+        /// Orders the specified query.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<MusicProject> Order(this IQueryable<MusicProject> query)
+        {
+            query = query.OrderBy(mp => mp.CreateDate);
+
+            return query;
+        }
     }
 
     #endregion
@@ -201,6 +226,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
 
             return pagedList;
+        }
+
+        /// <summary>
+        /// Orders the specified query.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<MusicProjectDto> Order(this IQueryable<MusicProjectDto> query)
+        {
+            query = query.OrderBy(mpd => mpd.MusicProject.CreateDate);
+
+            return query;
         }
     }
 
@@ -294,6 +331,61 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                             {
                                                                                 MusicBandTargetAudience = mbta,
                                                                                 TargetAudience = mbta.TargetAudience
+                                                                            }),
+                                        AttendeeMusicBandEvaluationsDtos = mp.AttendeeMusicBand.AttendeeMusicBandEvaluations
+                                                                                    .Where(ambe => !ambe.IsDeleted)
+                                                                                    .Select(ambe => new AttendeeMusicBandEvaluationDto
+                                                                                    {
+                                                                                        AttendeeMusicBandEvaluation = ambe,
+                                                                                        EvaluatorUser = ambe.EvaluatorUser
+                                                                                    }).ToList()
+                                    },
+                                    //MusicProjectEvaluationDto = new MusicProjectEvaluationDto
+                                    //{
+                                    //    EvaluationCollaboratorUser = mp.EvaluationUser,
+                                    //    EvaluationCollaborator = mp.EvaluationUser.Collaborator,
+                                    //    ProjectEvaluationStatus = mp.ProjectEvaluationStatus,
+                                    //    ProjectEvaluationRefuseReason = mp.ProjectEvaluationRefuseReason,
+                                    //    Reason = mp.Reason,
+                                    //    EvaluationDate = mp.EvaluationDate
+                                    //}
+                                });
+
+            return await query
+                            .Order()
+                            .ToListPagedAsync(page, pageSize);
+        }
+
+        /// <summary>Finds the dto to evaluate asynchronous.</summary>
+        /// <param name="musicProjectUid">The music project uid.</param>
+        /// <returns></returns>
+        public async Task<MusicProjectDto> FindDtoToEvaluateAsync(Guid musicProjectUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(musicProjectUid)
+                                .Select(mp => new MusicProjectDto
+                                {
+                                    MusicProject = mp,
+                                    AttendeeMusicBandDto = new MusicBandDto
+                                    {
+                                        AttendeeMusicBand = mp.AttendeeMusicBand,
+                                        MusicBand = mp.AttendeeMusicBand.MusicBand,
+                                        MusicBandType = mp.AttendeeMusicBand.MusicBand.MusicBandType,
+                                        MusicBandGenreDtos = mp.AttendeeMusicBand.MusicBand.MusicBandGenres
+                                                                    .Where(mbg => !mbg.IsDeleted && !mbg.MusicGenre.IsDeleted)
+                                                                    .OrderBy(mbg => mbg.MusicGenre.DisplayOrder)
+                                                                    .Select(mbg => new MusicBandGenreDto
+                                                                    {
+                                                                        MusicBandGenre = mbg,
+                                                                        MusicGenre = mbg.MusicGenre
+                                                                    }),
+                                        MusicBandTargetAudienceDtos = mp.AttendeeMusicBand.MusicBand.MusicBandTargetAudiences
+                                                                            .Where(mbta => !mbta.IsDeleted && !mbta.TargetAudience.IsDeleted)
+                                                                            .OrderBy(mbta => mbta.TargetAudience.DisplayOrder)
+                                                                            .Select(mbta => new MusicBandTargetAudienceDto
+                                                                            {
+                                                                                MusicBandTargetAudience = mbta,
+                                                                                TargetAudience = mbta.TargetAudience
                                                                             })
                                     },
                                     //MusicProjectEvaluationDto = new MusicProjectEvaluationDto
@@ -308,17 +400,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 });
 
             return await query
-                            .OrderBy(mpd => mpd.MusicProject.CreateDate)
-                            .ToListPagedAsync(page, pageSize);
+                            .FirstOrDefaultAsync();
         }
 
-        /// <summary>Finds the dto to evaluate asynchronous.</summary>
-        /// <param name="musicProjectUid">The music project uid.</param>
+        /// <summary>
+        /// Finds the dto to evaluate asynchronous.
+        /// </summary>
+        /// <param name="musicProjectId">The music project identifier.</param>
         /// <returns></returns>
-        public async Task<MusicProjectDto> FindDtoToEvaluateAsync(Guid musicProjectUid)
+        public async Task<MusicProjectDto> FindDtoToEvaluateAsync(int musicProjectId)
         {
             var query = this.GetBaseQuery()
-                                .FindByUid(musicProjectUid)
+                                .FindById(musicProjectId)
                                 .Select(mp => new MusicProjectDto
                                 {
                                     MusicProject = mp,
@@ -694,7 +787,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<int[]> FindAllApprovedAttendeeMusicBandsIdsAsync(int editionId, int musicProjectMaximumApprovedBandsCount)
         {
-            var query = this.GetBaseQuery()
+            var query = this.GetBaseQuery(@readonly: true)
                                 .FindByEditionId(editionId)
                                 .FindByIsEvaluated()
                                 .Select(mp => new MusicProjectDto
@@ -713,6 +806,53 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query
                             .Select(mp => mp.AttendeeMusicBandDto.AttendeeMusicBand.Id)
                             .ToArrayAsync();
+        }
+
+        /// <summary>
+        /// Finds all music projects ids asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<int[]> FindAllMusicProjectsIdsAsync(int editionId)
+        {
+            var query = this.GetBaseQuery(@readonly: true)
+                                .FindByEditionId(editionId)
+                                .Select(mp => mp.Id);
+                                
+            return await query
+                            .OrderBy(mp => mp)
+                            .ToArrayAsync();
+        }
+
+        /// <summary>
+        /// Finds all music projects ids asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="musicGenreUid">The music genre uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<int[]> FindAllMusicProjectsIdsAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId)
+                                .FindByKeywords(searchKeywords)
+                                .FindByMusicGenreUid(musicGenreUid)
+                                .FindByProjectEvaluationStatus(evaluationStatusUid)
+                                .Select(mp => new MusicProjectDto
+                                {
+                                    MusicProject = mp
+                                });
+
+            var musicProjectPagedList = await query
+                             .Order()
+                             .ToListPagedAsync(page, pageSize);
+
+            return musicProjectPagedList
+                            .Select(mppl => mppl.MusicProject.Id)
+                            .ToArray();
         }
 
         /// <summary>Finds all json dtos paged asynchronous.</summary>
@@ -785,6 +925,36 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByEditionId(editionId, showAllEditions);
 
             return await query.CountAsync();
+        }
+
+        /// <summary>
+        /// Counts the asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="musicGenreUid">The music genre uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<int> CountAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize)
+
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId)
+                                .FindByKeywords(searchKeywords)
+                                .FindByMusicGenreUid(musicGenreUid)
+                                .FindByProjectEvaluationStatus(evaluationStatusUid)
+                                .Select(mp => new MusicProjectDto
+                                {
+                                    MusicProject = mp
+                                });
+
+            var musicProjectPagedList = await query
+                             .Order()
+                             .ToListPagedAsync(page, pageSize);
+
+            return musicProjectPagedList.Count;
         }
     }
 }

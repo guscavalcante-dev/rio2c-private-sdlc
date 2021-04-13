@@ -25,12 +25,10 @@ namespace PlataformaRio2C.Domain.Dtos
         public string MusicBandName { get; set; }
         public string MusicBandImageUrl { get; set; }
         public string MusicBandTypeName { get; set; }
-
-        //public string EvaluationStatusName { get; set; }
-        //public string EvaluationUserName { get; set; }
         public decimal? Grade { get; set; }
         public int EvaluationsCount { get; set; }
         public string EvaluationHtmlString { get; set; }
+        public string MenuActionsHtmlString { get; set; }
 
         public IList<string> MusicGenreNames { get; set; }
         public IList<string> MusicTargetAudiencesNames { get; set; }
