@@ -76,7 +76,7 @@ var MusicProjectsMainInformationWidget = function () {
             })
             .always(function () {
                 MyRio2cCommon.unblock();
-                MusicProjectsEvaluationUpdateWidget.init();
+                MusicProjectsEvaluationWidget.init();
                 MusicProjectsEvaluatorsWidget.init();
                 MusicProjectsMainInformationWidget.init();
             });

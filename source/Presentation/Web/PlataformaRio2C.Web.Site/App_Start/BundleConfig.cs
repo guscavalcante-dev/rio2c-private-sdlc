@@ -407,8 +407,8 @@ namespace PlataformaRio2C.Web.Site
                 "~/Assets/js/music/projects/music.projects.evaluation.list.widget.js",
                 "~/Scripts/jquery.unobtrusive-ajax.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/music.projects.evaluation.update.widget.js").Include(
-                "~/Assets/js/music/projects/music.projects.evaluation.update.widget.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/music.projects.evaluation.widget.js").Include(
+                "~/Assets/js/music/projects/music.projects.evaluation.widget.js"));
 
             #endregion
 

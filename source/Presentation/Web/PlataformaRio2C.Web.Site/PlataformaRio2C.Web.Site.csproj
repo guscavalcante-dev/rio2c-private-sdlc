@@ -817,7 +817,7 @@
     <Content Include="Assets\js\music\projects\music.projects.socialnetworks.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.videoandmusic.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.evaluation.list.widget.js" />
-    <Content Include="Assets\js\music\projects\music.projects.evaluation.update.widget.js" />
+    <Content Include="Assets\js\music\projects\music.projects.evaluation.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.clipping.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.responsible.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.releasedprojects.widget.js" />

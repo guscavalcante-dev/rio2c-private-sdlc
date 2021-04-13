@@ -7,13 +7,13 @@
     var isMusicCommission = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.CommissionMusic) == true;
     var currentEvaluation = Model.AttendeeMusicBandDto.GetAttendeeMusicBandEvaluationByUserId(userAccessControlDto.User.Id);
     var approvedAttendeeMusicBandsIds = ViewBag.ApprovedAttendeeMusicBandsIds as int[];
-    var isThisMusicProjectApproved = approvedAttendeeMusicBandsIds.Contains(Model.AttendeeMusicBandDto.AttendeeMusicBand.Id);
+    var isThisMusicProjectApproved = (approvedAttendeeMusicBandsIds?.Contains(Model.AttendeeMusicBandDto.AttendeeMusicBand.Id) == true);
 }
 <div class="kt-portlet__body">
     <div class="kt-widget kt-widget--user-profile-3">
         <div class="kt-widget__top">
             <div style="float: right;">
-                <a href="@Url.Action("EvaluatioNDetails", "Projects", new { Area = "Music", id = Model.MusicProject?.Uid })" target="_blank">
+                <a href="@Url.Action("EvaluationDetails", "Projects", new { Area = "Music", id = Model.MusicProject?.Id })" target="_blank">
                     @if (Model.AttendeeMusicBandDto?.MusicBand?.HasImage() == true)
                     {
                         <div class="kt-widget__media">

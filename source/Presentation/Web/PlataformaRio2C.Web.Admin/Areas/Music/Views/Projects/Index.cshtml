@@ -28,7 +28,7 @@
     @Scripts.Render("~/bundles/js/music.projects.list.widget.js")
     @Scripts.Render("~/bundles/js/music.projects.editioncount.widget.js")
     @Scripts.Render("~/bundles/js/music.projects.delete.js")
-    <script>
+<script>
         // Page translations ----------------------------------------------------------------------
         var translations = {
         };
@@ -36,11 +36,15 @@
         // Pagination -----------------------------------------------------------------------------
         var initialPage = @(ViewBag.Page?.ToString() ?? "null");
         var initialPageSize = @(ViewBag.PageSize?.ToString() ?? "null");
+        var searchKeywords = '@ViewBag.SearchKeywords';
+        var musicGenreUid = '@ViewBag.MusicGenreUid';
+        var evaluationStatusUid = '@ViewBag.EvaluationStatusUid';
 
         jQuery(document).ready(function () {
             MusicProjectsDataTableWidget.init();
             MusicProjectsTotalCountWidget.init();
             MusicProjectsEditionCountWidget.init();
         });
-    </script>
+</script>
+
 }

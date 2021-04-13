@@ -112,14 +112,14 @@ var MusicProjectsDataTableWidget = function () {
             columns: [
                 {
                     data: 'MusicBandName',
-                    render: function (data, type, full, meta) {
+                    render: function (data, type, row, meta) {
                         var html = '\
                                 <table class="image-side-text text-left">\
                                     <tr>\
                                         <td>';
 
-                        if (!MyRio2cCommon.isNullOrEmpty(full.MusicBandImageUrl)) {
-                            html += '<img src="' + full.MusicBandImageUrl + '" /> ';
+                        if (!MyRio2cCommon.isNullOrEmpty(row.MusicBandImageUrl)) {
+                            html += '<img src="' + row.MusicBandImageUrl + '" /> ';
                         }
                         else {
                             html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';
@@ -188,22 +188,8 @@ var MusicProjectsDataTableWidget = function () {
                 {
 	                data: 'Actions',
 	                responsivePriority: -1,
-	                render: function (data, type, full, meta) {
-		                var html = '\
-                                        <span class="dropdown">\
-                                            <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">\
-                                              <i class="la la-ellipsis-h"></i>\
-                                            </a>\
-                                            <div class="dropdown-menu dropdown-menu-right">';
-
-                        html += '               <button class="dropdown-item" onclick="MusicProjectsDataTableWidget.showDetails(\'' + full.MusicProjectUid + '\', false);"><i class="la la-edit"></i> ' + labels.edit + '</button>';
-                        html += '               <button class="dropdown-item" onclick="MusicProjectsDelete.showModal(\'' + full.MusicProjectUid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
-
-		                html += '\
-                                            </div>\
-                                        </span>';
-
-		                return html;
+	                render: function (data, type, row, meta) {
+                        return row.MenuActionsHtmlString;
 	                }
                 }
             ],
@@ -270,12 +256,19 @@ var MusicProjectsDataTableWidget = function () {
     };
 
     // Details ------------------------------------------------------------------------------------
-    var showDetails = function (musicProjectUid) {
+    var showDetails = function (musicProjectUid, searchKeywords, musicGenreUid, evaluationStatusUid, page, pageSize) {
 	    if (MyRio2cCommon.isNullOrEmpty(musicProjectUid)) {
 		    return;
 	    }
 
-	    window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/Details/' + musicProjectUid);
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/EvaluationDetails/' + musicProjectUid
+            + '?step=0'
+            + '&searchKeywords=' + searchKeywords
+            + '&musicGenreUid=' + musicGenreUid
+            + '&evaluationStatusUid=' + evaluationStatusUid
+            + '&page=' + page
+            + '&pageSize=' + pageSize
+        );
     };
 
     return {
@@ -286,8 +279,8 @@ var MusicProjectsDataTableWidget = function () {
         refreshData: function () {
             refreshData();
         },
-        showDetails: function (musicProjectUid) {
-	        showDetails(musicProjectUid);
+        showDetails: function (musicProjectUid, searchKeywords, musicGenreUid, evaluationStatusUid, page, pageSize) {
+            showDetails(musicProjectUid, searchKeywords, musicGenreUid, evaluationStatusUid, page, pageSize);
         }
     };
 }();
