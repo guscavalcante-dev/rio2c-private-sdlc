@@ -80,6 +80,13 @@ namespace PlataformaRio2C.Web.Site.Controllers
             this.SetUserInfo();
             this.SetArea();
 
+            // Edition User
+            var changedEditionWithUserRouteValue = this.ValidateEditionUser();
+            if (changedEditionWithUserRouteValue)
+            {
+                return base.BeginExecuteCore(callback, state);
+            }
+
             // Onboarding
             var changedOnboardingRoute = this.ValidateOnboarding();
             if (changedOnboardingRoute)
@@ -100,7 +107,12 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             if (userAccessControlDto != null && !userAccessControlDto.IsAdmin())
             {
-                ViewBag.ActiveEditions = ((List<EditionDto>)ViewBag.ActiveEditions).Where(e => userAccessControlDto.EditionAttendeeCollaborators.Select(eao => eao.EditionId).Contains(e.Id)).ToList();
+                ViewBag.ActiveEditions = ((List<EditionDto>)ViewBag.ActiveEditions)
+                                            .Where(e => userAccessControlDto.EditionAttendeeCollaborators
+                                                                            .Select(eac => eac.EditionId)
+                                                                            .Contains(e.Id)
+                                                                            ).ToList();
+
             }
 
             base.OnActionExecuting(filterContext);
@@ -246,6 +258,74 @@ namespace PlataformaRio2C.Web.Site.Controllers
         private void SetArea()
         {
             this.Area = ViewBag.Area = RouteData.Values["Area"] as string;
+        }
+
+        /// <summary>
+        /// Validates the edition user.
+        /// </summary>
+        /// <returns></returns>
+        private bool ValidateEditionUser()
+        {
+            var activeEditions = (List<EditionDto>)ViewBag.ActiveEditions;
+            if (activeEditions?.Any() != true)
+            {
+                return false;
+            }
+
+            var userAccessControlDto = (UserAccessControlDto)ViewBag.UserAccessControlDto;
+            if (userAccessControlDto == null)
+            {
+                return false;
+            }
+
+            var userActiveEditions = activeEditions.Where(e => userAccessControlDto.EditionAttendeeCollaborators != null
+                                                               && userAccessControlDto.EditionAttendeeCollaborators
+                                                                    .Select(eac => eac.EditionId)
+                                                                    .Contains(e.Id)
+                                                                    ).ToList();
+
+            if (userActiveEditions == null)
+            {
+                return false;
+            }
+
+            //If user doesn't participating at current edition (this.EditionDto.Edition.Id), redirects user to last participated edition.
+            if (!userActiveEditions.Select(e => e.Id).Contains(this.EditionDto.Edition.Id))
+            {
+                if (userAccessControlDto?.EditionAttendeeCollaborators?.Any() != true)
+                {
+                    return false;
+                }
+
+                var lastParticipatedEditionId = userAccessControlDto.EditionAttendeeCollaborators.Max(ac => ac.EditionId);
+                var activeEditionDtos = this.CommandBus.Send(new FindAllEditionsDtosAsync()).Result;
+
+                var lastParticipatedEdition = activeEditionDtos?.FirstOrDefault(w => w.Id == lastParticipatedEditionId);
+                if(lastParticipatedEdition == null)
+                {
+                    return false;
+                }
+
+                ViewBag.EditionDto = this.EditionDto = lastParticipatedEdition;
+
+                var routes = new RouteValueDictionary(RouteData.Values);
+
+                // Add or change edition on routes
+                if (!routes.ContainsKey("edition"))
+                {
+                    routes.Add("edition", lastParticipatedEdition.UrlCode);
+                }
+                else
+                {
+                    routes["edition"] = lastParticipatedEdition.UrlCode;
+                }
+
+                this.beginExecuteCoreActionResult = this.RedirectToRoute(routes);
+
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>Validates the onboarding.</summary>

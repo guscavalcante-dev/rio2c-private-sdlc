@@ -102,7 +102,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         /// <returns></returns>
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
         [HttpGet]
-        public async Task<ActionResult> EvaluationList(string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 10)
+        public async Task<ActionResult> EvaluationList(string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 12)
         {
             if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
             {
@@ -138,14 +138,14 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         /// <returns></returns>
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
         [HttpGet]
-        public async Task<ActionResult> ShowEvaluationListWidget(string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 10)
+        public async Task<ActionResult> ShowEvaluationListWidget(string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 12)
         {
             if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
 
-            var projects = await this.musicProjectRepo.FindAllDtosToEvaluateAsync(
+            var projects = await this.musicProjectRepo.FindAllMusicProjectDtosPagedAsync(
                 this.EditionDto.Id,
                 searchKeywords,
                 musicGenreUid,
@@ -158,7 +158,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             ViewBag.EvaluationStatusUid = evaluationStatusUid;
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
-            ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id, this.EditionDto.Edition.MusicProjectMaximumApprovedBandsCount);
+            ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id);
 
             return Json(new
             {
@@ -204,23 +204,18 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         #region Evaluation Details
 
         /// <summary>
-        /// Evaluations the details.
+        /// Previouses the evaluation details.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="step">
-        /// This parameter is responsible by next and previous pagination in EvaluationDetails.cshtml.
-        /// Pass any value > 0 to step next.
-        /// Pass any value < 0 to step previous.
-        /// Pass 0 to dont execute any step. (default)</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="musicGenreUid">The music genre uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
-        public async Task<ActionResult> EvaluationDetails(int? id, int step = 0, string searchKeywords = null, Guid? musicGenreUid= null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 10)
+        public async Task<ActionResult> PreviousEvaluationDetails(int? id, string searchKeywords = null, Guid? musicGenreUid = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 12)
         {
-            if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
-            {
-                return RedirectToAction("Index", "Projects", new { Area = "Music" });
-            }
-
             var allMusicProjectsIds = await this.musicProjectRepo.FindAllMusicProjectsIdsAsync(
                 this.EditionDto.Edition.Id,
                 searchKeywords,
@@ -230,22 +225,74 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 pageSize.Value);
 
             var currentMusicProjectIdIndex = Array.IndexOf(allMusicProjectsIds, id.Value);
-
-            var nextProjectId = allMusicProjectsIds.ElementAtOrDefault(currentMusicProjectIdIndex + 1);
-            if(nextProjectId == 0)
-                nextProjectId = id.Value;
-
             var previousProjectId = allMusicProjectsIds.ElementAtOrDefault(currentMusicProjectIdIndex - 1);
-            if(previousProjectId == 0)
+            if (previousProjectId == 0)
                 previousProjectId = id.Value;
 
-            if (step > 0)
+            return RedirectToAction("EvaluationDetails", 
+                new { 
+                    id = previousProjectId, 
+                    searchKeywords, 
+                    musicGenreUid, 
+                    evaluationStatusUid, 
+                    page, 
+                    pageSize
+                });
+        }
+
+        /// <summary>
+        /// Nexts the evaluation details.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="musicGenreUid">The music genre uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
+        public async Task<ActionResult> NextEvaluationDetails(int? id, string searchKeywords = null, Guid? musicGenreUid = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 12)
+        {
+            var allMusicProjectsIds = await this.musicProjectRepo.FindAllMusicProjectsIdsAsync(
+                this.EditionDto.Edition.Id,
+                searchKeywords,
+                musicGenreUid,
+                evaluationStatusUid,
+                page.Value,
+                pageSize.Value);
+
+            var currentMusicProjectIdIndex = Array.IndexOf(allMusicProjectsIds, id.Value);
+            var nextProjectId = allMusicProjectsIds.ElementAtOrDefault(currentMusicProjectIdIndex + 1);
+            if (nextProjectId == 0)
+                nextProjectId = id.Value;
+
+            return RedirectToAction("EvaluationDetails", 
+                new { 
+                    id = nextProjectId, 
+                    searchKeywords, 
+                    musicGenreUid, 
+                    evaluationStatusUid, 
+                    page, 
+                    pageSize
+                });
+        }
+
+        /// <summary>
+        /// Evaluations the details.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="step">
+        /// This parameter is responsible by next and previous pagination in EvaluationDetails.cshtml.
+        /// Pass any value > 0 to step next.
+        /// Pass any value < 0 to step previous.
+        /// Pass 0 to dont execute any step. (default)</param>
+        /// <returns></returns>
+        /// [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
+        public async Task<ActionResult> EvaluationDetails(int? id, string searchKeywords = null, Guid? musicGenreUid = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 12)
+        {
+            if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
             {
-                id = nextProjectId;
-            }
-            else if(step < 0)
-            {
-                id = previousProjectId;
+                return RedirectToAction("Index", "Projects", new { Area = "Music" });
             }
 
             var musicProjectDto = await this.musicProjectRepo.FindDtoToEvaluateAsync(id ?? 0);
@@ -264,18 +311,24 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
             #endregion
 
+            var allMusicProjectsIds = await this.musicProjectRepo.FindAllMusicProjectsIdsAsync(
+                this.EditionDto.Edition.Id,
+                searchKeywords,
+                musicGenreUid,
+                evaluationStatusUid,
+                page.Value,
+                pageSize.Value);
+            var currentMusicProjectIdIndex = Array.IndexOf(allMusicProjectsIds, id.Value) + 1; //Index start at 0, its a fix to "start at 1"
+
             ViewBag.SearchKeywords = searchKeywords;
             ViewBag.MusicGenreUid = musicGenreUid;
             ViewBag.EvaluationStatusUid = evaluationStatusUid;
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
-
-            ViewBag.NextProjectId = nextProjectId;
-            ViewBag.PreviousProjectId = previousProjectId;
-            ViewBag.CurrentMusicProjectIndex = currentMusicProjectIdIndex + 1;
+            ViewBag.CurrentMusicProjectIndex = currentMusicProjectIdIndex;
 
             ViewBag.MusicProjectsTotalCount = await this.musicProjectRepo.CountAsync(this.EditionDto.Edition.Id, searchKeywords, musicGenreUid, evaluationStatusUid, page.Value, pageSize.Value);
-            ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id, this.EditionDto.Edition.MusicProjectMaximumApprovedBandsCount);
+            ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id);
 
             return View(musicProjectDto);
         }
@@ -296,7 +349,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id, this.EditionDto.Edition.MusicProjectMaximumApprovedBandsCount);
+            ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id);
 
             return Json(new
             {
@@ -775,7 +828,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id, this.EditionDto.Edition.MusicProjectMaximumApprovedBandsCount);
+            ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id);
 
             return Json(new
             {

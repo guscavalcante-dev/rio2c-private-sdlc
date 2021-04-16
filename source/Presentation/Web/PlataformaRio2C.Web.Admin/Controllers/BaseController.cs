@@ -24,6 +24,7 @@ using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using Constants = PlataformaRio2C.Domain.Constants;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
@@ -70,6 +71,13 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             this.SetUserInfo();
             this.SetArea();
+
+            // Edition User
+            var changedEditionWithUserRouteValue = this.ValidateEditionUser();
+            if (changedEditionWithUserRouteValue)
+            {
+                return base.BeginExecuteCore(callback, state);
+            }
 
             return base.BeginExecuteCore(callback, state);
         }
@@ -217,6 +225,58 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             }
 
             ViewBag.AdminAccessControlDto = this.AdminAccessControlDto = this.CommandBus.Send(new FindAdminAccessControlDto(userId, this.EditionDto?.Id ?? 0, this.UserInterfaceLanguage)).Result;
+        }
+
+        /// <summary>
+        /// Validates the edition user.
+        /// </summary>
+        /// <returns></returns>
+        private bool ValidateEditionUser()
+        {
+            //var activeEditions = (List<EditionDto>)ViewBag.ActiveEditions;
+            //if (activeEditions?.Any() != true)
+            //{
+            //    return false;
+            //}
+
+            //var adminAccessControlDto = (AdminAccessControlDto)ViewBag.AdminAccessControlDto;
+            //if (adminAccessControlDto == null)
+            //{
+            //    return false;
+            //}
+
+            //var userActiveEditions = activeEditions.Where(e => adminAccessControlDto.EditionAttendeeCollaborators
+            //                                                        .Select(eac => eac.EditionId)
+            //                                                        .Contains(e.Id)
+            //                                                        ).ToList();
+
+            ////If user doesn't participating at current edition (this.EditionDto.Edition.Id), redirects user to last participated edition.
+            //if (!userActiveEditions.Select(e => e.Id).Contains(this.EditionDto.Edition.Id))
+            //{
+            //    var lastParticipatedEditionId = adminAccessControlDto.EditionAttendeeCollaborators?.Max(ac => ac.EditionId);
+            //    var activeEditionDtos = this.CommandBus.Send(new FindAllEditionsDtosAsync()).Result;
+            //    var lastParticipatedEdition = activeEditionDtos.FirstOrDefault(w => w.Id == lastParticipatedEditionId);
+
+            //    ViewBag.EditionDto = this.EditionDto = lastParticipatedEdition;
+
+            //    var routes = new RouteValueDictionary(RouteData.Values);
+
+            //    // Add or change culture on routes
+            //    if (!routes.ContainsKey("edition"))
+            //    {
+            //        routes.Add("edition", lastParticipatedEdition.UrlCode);
+            //    }
+            //    else
+            //    {
+            //        routes["edition"] = lastParticipatedEdition.UrlCode;
+            //    }
+
+            //    this.beginExecuteCoreActionResult = this.RedirectToRoute(routes);
+
+            //    return true;
+            //}
+
+            return false;
         }
     }
 }

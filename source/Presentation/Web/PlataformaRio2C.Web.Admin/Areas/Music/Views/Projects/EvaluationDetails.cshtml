@@ -1,15 +1,15 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @model MusicProjectDto
 @{
+    var editionDto = ViewBag.EditionDto as EditionDto;
     ViewBag.Title = $"{Labels.PitchingShow} {Model.AttendeeMusicBandDto?.MusicBand?.Name}";
     var totalMusicProjectsCount = ViewBag.MusicProjectsTotalCount as int?;
     var currentMusicProjectIndex = ViewBag.CurrentMusicProjectIndex as int?;
 
-    var previousStepEvent = Url.Action("EvaluationDetails", "Projects", new
+    var previousStepEvent = Url.Action("PreviousEvaluationDetails", "Projects", new
     {
         Area = "Music",
-        id = ViewBag.PreviousProjectId,
-        step = -1,
+        id = Model.MusicProject.Id,
         searchKeywords = ViewBag.SearchKeywords,
         musicGenreUid = ViewBag.MusicGenreUid,
         evaluationStatusUid = ViewBag.EvaluationStatusUid,
@@ -17,11 +17,10 @@
         pageSize = ViewBag.PageSize
     });
 
-    var nextStepEvent = Url.Action("EvaluationDetails", "Projects", new
+    var nextStepEvent = Url.Action("NextEvaluationDetails", "Projects", new
     {
         Area = "Music",
-        id = ViewBag.NextProjectId,
-        step = 1,
+        id = Model.MusicProject.Id,
         searchKeywords = ViewBag.SearchKeywords,
         musicGenreUid = ViewBag.MusicGenreUid,
         evaluationStatusUid = ViewBag.EvaluationStatusUid,
@@ -32,12 +31,12 @@
 @Html.Hidden("AggregateId", Model.MusicProject.Uid)
 
 <div class="row">
-    <div class="col-md-12 d-flex justify-content-end pb-3">
+    <div class="col-md-12 d-flex justify-content-end pb-3 pr-4">
         <div class="row d-flex font-weight-bold text-white" style="align-items: center;">
             <div class="mr-3">
                 <span>@currentMusicProjectIndex @Labels.Of @totalMusicProjectsCount @Labels.Projects</span>
             </div>
-            <button class="btn btn-outline-secondary" onclick="location.href='@previousStepEvent'">
+            <button class="btn btn-outline-secondary mr-2" onclick="location.href='@previousStepEvent'">
                 <span class="font-weight-bold text-white"><</span>
             </button>
             <button class="btn btn-outline-secondary" onclick="location.href='@nextStepEvent'">
@@ -101,16 +100,27 @@
             <!--end:Social Networks Widget-->
         </div>
         <div class="row">
-            <!--begin:Evaluation Widget-->
-            <div class="col-6">
-                <div id="ProjectEvaluationWidget" class="kt-portlet" style="min-height: 296px;"></div>
-            </div>
-            <!--end:Evaluation Widget-->
-            <!--begin:Project Evaluators Widget-->
-            <div class="col-6">
-                <div id="ProjectEvaluatorsWidget" class="kt-portlet" style="min-height: 296px;"></div>
-            </div>
-            <!--end:Project Evaluators Widget-->
+            @if (editionDto?.IsMusicProjectEvaluationOpen() == true)
+            {
+                <!--begin:Evaluation Widget-->
+                <div class="col-12">
+                    <div id="ProjectEvaluationWidget" class="kt-portlet" style="min-height: 296px;"></div>
+                </div>
+                <!--end:Evaluation Widget-->
+            }
+            else
+            {
+                <!--begin:Evaluation Widget-->
+                <div class="col-6">
+                    <div id="ProjectEvaluationWidget" class="kt-portlet" style="min-height: 296px;"></div>
+                </div>
+                <!--end:Evaluation Widget-->
+                <!--begin:Project Evaluators Widget-->
+                <div class="col-6">
+                    <div id="ProjectEvaluatorsWidget" class="kt-portlet" style="min-height: 296px;"></div>
+                </div>
+                <!--end:Project Evaluators Widget-->
+            }
         </div>
     </div>
 </div>

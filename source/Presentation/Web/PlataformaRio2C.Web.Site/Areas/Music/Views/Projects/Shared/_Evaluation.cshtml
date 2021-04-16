@@ -35,7 +35,7 @@
                         icon = "fa-thumbs-up";
                         text = Labels.ProjectAccepted;
                     }
-                    else if (Model.AttendeeMusicBandDto.AttendeeMusicBandEvaluationsDtos?.Count() > 0)
+                    else
                     {
                         color = "danger";
                         icon = "fa-thumbs-down";
@@ -43,21 +43,20 @@
                     }
                 }
                 <span class="kt-widget__button">
-                    <label class="btn btn-label-@(color) btn-sm">
+                    <label class="btn btn-label-@(color) btn-sm m-0">
                         <i class="fa @(icon) mr-1"></i> @text
                     </label>
                 </span>
-                @if (Model.AttendeeMusicBandDto?.AttendeeMusicBand?.Grade != null)
-                {
-                    <div class="card bg-gray ml-3">
-                        <div class="card-body">
-                            <div class="card-text h6">
-                                <span>@Labels.Average</span>
-                                <span><b>@(Model.AttendeeMusicBandDto.AttendeeMusicBand.Grade)</b></span>
-                            </div>
+
+                <div class="card bg-gray ml-3">
+                    <div class="card-body">
+                        <div class="card-text h6">
+                            <span>@Labels.Average</span>
+                            <span><b>@(Model.AttendeeMusicBandDto.AttendeeMusicBand.Grade?.ToString() ?? "-")</b></span>
                         </div>
                     </div>
-                }
+                </div>
+
             </div>
         }
     </div>

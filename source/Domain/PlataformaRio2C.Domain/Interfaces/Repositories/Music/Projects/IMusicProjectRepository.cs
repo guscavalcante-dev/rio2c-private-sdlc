@@ -23,7 +23,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IMusicProjectRepository</summary>
     public interface IMusicProjectRepository : IRepository<MusicProject>
     {
-        Task<IPagedList<MusicProjectDto>> FindAllDtosToEvaluateAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize);
+        Task<IPagedList<MusicProjectDto>> FindAllMusicProjectDtosPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize);
         Task<MusicProjectDto> FindDtoToEvaluateAsync(Guid musicProjectUid);
         Task<MusicProjectDto> FindDtoToEvaluateAsync(int musicProjectId);
         Task<MusicProjectDto> FindMainInformationWidgetDtoAsync(Guid musicProjectUid);
@@ -37,8 +37,8 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<MusicProjectDto> FindEvaluationWidgetDtoAsync(Guid musicProjectUid);
         Task<MusicProjectDto> FindEvaluationGradeWidgetDtoAsync(Guid musicProjectUid, int userId);
         Task<MusicProjectDto> FindEvaluatorsWidgetDtoAsync(Guid musicProjectUid);
-        Task<List<MusicProjectDto>> FindAllApprovedAttendeeMusicBandsAsync(int editionId, int musicProjectMaximumApprovedBandsCount);
-        Task<int[]> FindAllApprovedAttendeeMusicBandsIdsAsync(int editionId, int musicProjectMaximumApprovedBandsCount);
+        Task<List<MusicProjectDto>> FindAllApprovedAttendeeMusicBandsAsync(int editionId);
+        Task<int[]> FindAllApprovedAttendeeMusicBandsIdsAsync(int editionId);
         Task<int[]> FindAllMusicProjectsIdsAsync(int editionId);
         Task<int[]> FindAllMusicProjectsIdsAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize);
 

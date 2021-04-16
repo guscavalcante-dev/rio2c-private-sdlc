@@ -81,7 +81,7 @@
                         {
                             <div class="view">
                                 <div class="row" style="display: flex; align-items: center;">
-                                    <div class="card bg-gray" data-toggle="tooltip" title="@Labels.ClickHereToEvaluateProject" style="margin-left:5px;cursor:pointer;" onclick="MyRio2cCommon.enableFieldEdit({ dataId: 'EvaluationGradeMain' })">
+                                    <div class="card bg-gray" style="margin-left:5px;cursor:pointer;" data-toggle="tooltip" title="@Labels.ClickHereToEvaluateProject" onclick="MyRio2cCommon.enableFieldEdit({ dataId: 'EvaluationGradeMain' })">
                                         <div class="card-body">
                                             <span>@Labels.Evaluation</span>
                                             <span><b>@(currentEvaluation?.AttendeeMusicBandEvaluation?.Grade)</b></span>
@@ -97,7 +97,7 @@
                             <div class="col-md-8">
                                 <div class="row d-flex flex-row">
                                     <div class="col-md-5">
-                                        @Html.TextBox("AttendeeMusicBandEvaluationGradeMain", currentEvaluation?.AttendeeMusicBandEvaluation?.Grade, new { @class = "form-control text-center decimal-globalize-mask" })
+                                        @Html.TextBox("AttendeeMusicBandEvaluationGradeMain", currentEvaluation?.AttendeeMusicBandEvaluation?.Grade, new { @class = "form-control text-center decimal-globalize-mask", @autocomplete = "off" })
                                     </div>
                                     <div class="col-md-7">
                                         <div class="row">
@@ -106,11 +106,14 @@
                                                     @Labels.Evaluate
                                                 </button>
                                             </div>
-                                            <div class="col-md-2">
-                                                <button type="button" class="btn btn-secondary" onclick="MyRio2cCommon.disableFieldEdit({ dataId: 'EvaluationGradeMain' })" data-toggle="tooltip" title="@(Labels.Cancel)">
-                                                    <i class="fa fa-times" style="padding:5px;"></i>
-                                                </button>
-                                            </div>
+                                            @if (hasCurrentEvaluation)
+                                            {
+                                                <div class="col-md-2">
+                                                    <button type="button" class="btn btn-secondary" onclick="MyRio2cCommon.disableFieldEdit({ dataId: 'EvaluationGradeMain' })" data-toggle="tooltip" title="@(Labels.Cancel)">
+                                                        <i class="fa fa-times" style="padding:5px;"></i>
+                                                    </button>
+                                                </div>
+                                            }
                                         </div>
                                     </div>
                                 </div>

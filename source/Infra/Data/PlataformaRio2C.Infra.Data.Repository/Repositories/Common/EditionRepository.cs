@@ -45,6 +45,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
         /// <summary>Finds the by uid.</summary>
         /// <param name="query">The query.</param>
         /// <param name="editionUid">The edition uid.</param>
@@ -209,6 +210,24 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                                .FindByUid(editionUid);
+
+            return await query
+                            .Select(e => new EditionDto()
+                            {
+                                Edition = e
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the dto asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<EditionDto> FindDtoAsync(int editionId)
+        {
+            var query = this.GetBaseQuery()
+                               .FindById(editionId);
 
             return await query
                             .Select(e => new EditionDto()

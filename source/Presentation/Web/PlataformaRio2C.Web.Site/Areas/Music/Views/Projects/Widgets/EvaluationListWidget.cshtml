@@ -52,7 +52,7 @@
                                 }
                                 , new AjaxOptions { HttpMethod = "GET", OnBegin = "MusicProjectsEvaluationListWidget.changePage", OnSuccess = "MusicProjectsEvaluationListWidget.handlePaginationReturn" }))
                         <div class="kt-pagination__toolbar">
-                            @Html.DropDownList("PageSizeDropdown", new SelectList(new[] { 1, 5, 10, 15, 30 }, ViewBag.PageSize), null, new { @class = "form-control kt-font-brand", style = "width: 60px;" })
+                            @Html.DropDownList("PageSizeDropdown", new SelectList(new[] { 1, 3, 6, 9, 12, 24, 36 }, ViewBag.PageSize), null, new { @class = "form-control kt-font-brand", style = "width: 60px;" })
                             @Html.PagedListPager(
                                 Model,
                                 page => Url.Action(null, new { page }),

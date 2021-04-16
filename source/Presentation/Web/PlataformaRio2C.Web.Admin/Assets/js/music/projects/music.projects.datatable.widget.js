@@ -262,8 +262,7 @@ var MusicProjectsDataTableWidget = function () {
 	    }
 
         window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/EvaluationDetails/' + musicProjectUid
-            + '?step=0'
-            + '&searchKeywords=' + searchKeywords
+            + '?searchKeywords=' + searchKeywords
             + '&musicGenreUid=' + musicGenreUid
             + '&evaluationStatusUid=' + evaluationStatusUid
             + '&page=' + page
