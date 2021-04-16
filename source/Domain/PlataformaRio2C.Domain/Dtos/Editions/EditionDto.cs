@@ -60,14 +60,16 @@ namespace PlataformaRio2C.Domain.Dtos
 
         #endregion
 
-        /// <summary>Initializes a new instance of the <see cref="EditionDto"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EditionDto"/> class.
+        /// </summary>
         public EditionDto()
         {
         }
 
         /// <summary>Initializes a new instance of the <see cref="EditionDto"/> class.</summary>
         /// <param name="entity">The entity.</param>
-        public EditionDto(Domain.Entities.Edition entity)
+        public EditionDto(Edition entity)
         {
             if (entity == null)
             {

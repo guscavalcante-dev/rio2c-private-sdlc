@@ -201,24 +201,26 @@ var MusicProjectsDataTableWidget = function () {
                     orderable: false
                 },
                 {
-                    targets: [1, 2, 3, 5],
+                    targets: [1, 2, 3],
                     className: "dt-left",
                     orderable: false
                 },
                 {
-	                targets: [4],
+                    targets: [4],
+                    width: "15%",
                     className: "dt-center",
-	                orderable: false
+                    orderable: false
                 },
                 {
-                    targets: [6],
+                    targets: [5, 6],
                     width: "8%",
-                    className: "dt-center"
+                    className: "dt-center",
+                    orderable: true,
                 },
                 {
 	                targets: -1,
 	                width: "6%",
-	                orderable: false,
+                    orderable: false,
 	                searchable: false,
 	                className: "dt-center"
                 }

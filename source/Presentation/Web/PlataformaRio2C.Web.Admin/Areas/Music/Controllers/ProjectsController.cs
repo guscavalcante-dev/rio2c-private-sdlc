@@ -112,14 +112,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             page++; //Necessary because DataTable is zero index based.
 
             var musicProjectJsonDtos = await this.musicProjectRepo.FindAllJsonDtosPagedAsync(
-                page,
-                pageSize,
-                request.GetSortColumns(),
+                this.EditionDto.Id,
                 request.Search?.Value,
                 musicGenreUid,
                 evaluationStatusUid,
-                this.UserInterfaceLanguage,
-                this.EditionDto.Id);
+                page,
+                pageSize,
+                request.GetSortColumns());
 
             var approvedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Id);
 
@@ -149,26 +148,25 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     }
                 }
 
-                sb.Append($"<table class=\"image-side-text text-left\">");
+                sb.Append($"<table class=\"image-side-text\">");
                 sb.Append($"    <tr>");
                 sb.Append($"        <td>");
-                sb.Append($"            <span class=\"kt-widget__button\" style=\"\" data-toggle=\"tooltip\" title=\"{text}\">");
-                sb.Append($"                <label class=\"btn btn-label-{color} btn-sm\">");
-                sb.Append($"                    <i class=\"fa {icon} mr-1\"></i>");
-                sb.Append($"                </label>");
-                sb.Append($"            </span>");
-
+                sb.Append($"            <div class=\"col-md-12 justify-content-center\">");
+                sb.Append($"                <span class=\"kt-widget__button\" style=\"\" data-toggle=\"tooltip\" title=\"{text}\">");
+                sb.Append($"                    <label class=\"btn btn-label-{color} btn-sm\">");
+                sb.Append($"                        <i class=\"fa {icon}\"></i>");
+                sb.Append($"                    </label>");
+                sb.Append($"                </span>");
                 if (isMusicProjectEvaluationClosed)
                 {
                     sb.Append($"            <span class=\"margin-left: 5px;\">");
-                    sb.Append($"                <b>{musicProjectJsonDto.Grade?.ToString() ?? ""}</b>");
+                    sb.Append($"                <b>{musicProjectJsonDto.Grade?.ToString() ?? "-"}</b>");
                     sb.Append($"            </span>");
                 }
-
-                sb.Append($"            <span class=\"margin-left: 5px;\">");
-                sb.Append($"                ({musicProjectJsonDto.EvaluationsCount} {(musicProjectJsonDto.EvaluationsCount == 1 ? Labels.Vote : Labels.Votes)})");
-                sb.Append($"            </span>");
-
+                sb.Append($"                <span class=\"margin-left: 5px;\">");
+                sb.Append($"                    ({musicProjectJsonDto.EvaluationsCount} {(musicProjectJsonDto.EvaluationsCount == 1 ? Labels.Vote : Labels.Votes)})");
+                sb.Append($"                </span>");
+                sb.Append($"            </div>");
                 sb.Append($"        </td>");
                 sb.Append($"    </tr>");
                 sb.Append($"</table>");
