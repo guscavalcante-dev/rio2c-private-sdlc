@@ -53,6 +53,9 @@ var MusicProjectsDataTableWidget = function () {
             "language": {
                 "url": "/Assets/components/datatables/datatables." + globalVariables.userInterfaceLanguage + ".js"
             },
+            //"oLanguage": {
+            //    "sEmptyTable": "My Custom Message On Empty Table"
+            //},
             select: {
                 style: 'multi'
             },
@@ -93,6 +96,13 @@ var MusicProjectsDataTableWidget = function () {
                             json.recordsTotal = jsonReturned.dataTable.TotalRecords;
                             json.recordsFiltered = jsonReturned.dataTable.TotalRecordsFiltered;
                             json.data = jsonReturned.dataTable.Data;
+
+                            if (jsonReturned.dataTable.TotalRecords == 0 && !MyRio2cCommon.isNullOrEmpty(jsonReturned.dataTable.AdditionalParameters.noRecordsFoundMessage)) {
+                                table.context[0].oLanguage.sEmptyTable = jsonReturned.dataTable.AdditionalParameters.noRecordsFoundMessage;
+                            }
+                            else {
+                                table.context[0].oLanguage.sEmptyTable = null;
+                            }
 
                             return JSON.stringify(json); // return JSON string
                         },

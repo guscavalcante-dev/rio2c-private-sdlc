@@ -33,6 +33,7 @@ using PlataformaRio2C.Web.Admin.Controllers;
 using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 using System.Text;
+using System.Collections;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 {
@@ -212,7 +213,23 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
 
-            var response = DataTablesResponse.Create(request, musicProjectJsonDtos.TotalItemCount, musicProjectJsonDtos.TotalItemCount, musicProjectJsonDtos);
+            IDictionary<string, object> additionalParameters = new Dictionary<string, object>();
+            if (musicProjectJsonDtos.TotalItemCount <= 0)
+            {
+                if (this.EditionDto.IsMusicProjectEvaluationOpen() && (
+                    evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid ||
+                    evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid))
+                {
+                    additionalParameters.Add("noRecordsFoundMessage", $"{string.Format(Messages.TheEvaluationPeriodRunsFrom, this.EditionDto.MusicProjectEvaluationStartDate.ToUserTimeZone().ToShortDateString(), this.EditionDto.MusicProjectEvaluationEndDate.ToUserTimeZone().ToShortDateString())}.</br>{Messages.TheBandsWillReceiveFinalGradeAtPeriodEnds}");
+                }
+                else if (!this.EditionDto.IsMusicProjectEvaluationOpen() && 
+                    evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
+                {
+                    additionalParameters.Add("noRecordsFoundMessage", $"{Messages.EvaluationPeriodClosed}<br/>{string.Format(Messages.MusicBandsNotFoundWithStatus, Labels.UnderEvaluation)}");
+                }
+            }
+
+            var response = DataTablesResponse.Create(request, musicProjectJsonDtos.TotalItemCount, musicProjectJsonDtos.TotalItemCount, musicProjectJsonDtos, additionalParameters);
 
             return Json(new
             {
@@ -399,7 +416,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
             return View(musicProjectDto);
         }
-        
+
         ///// <summary>
         ///// Evaluations the details.
         ///// </summary>

@@ -735,7 +735,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Período de avaliação encerrado.
+        ///   Looks up a localized string similar to Período de avaliação encerrado!.
         /// </summary>
         public static string EvaluationPeriodClosed {
             get {
@@ -1082,6 +1082,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string MinimumNumberOfCharacters {
             get {
                 return ResourceManager.GetString("MinimumNumberOfCharacters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nenhuma banda com status &apos;{0}&apos; encontrada.
+        /// </summary>
+        public static string MusicBandsNotFoundWithStatus {
+            get {
+                return ResourceManager.GetString("MusicBandsNotFoundWithStatus", resourceCulture);
             }
         }
         
@@ -1883,6 +1892,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string TextInPortugueseInEnglish {
             get {
                 return ResourceManager.GetString("TextInPortugueseInEnglish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to As bandas receberão a nota final e o status de aprovação somente ao final desse período.
+        /// </summary>
+        public static string TheBandsWillReceiveFinalGradeAtPeriodEnds {
+            get {
+                return ResourceManager.GetString("TheBandsWillReceiveFinalGradeAtPeriodEnds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O período de avaliações acontece de {0} até {1}.
+        /// </summary>
+        public static string TheEvaluationPeriodRunsFrom {
+            get {
+                return ResourceManager.GetString("TheEvaluationPeriodRunsFrom", resourceCulture);
             }
         }
         
