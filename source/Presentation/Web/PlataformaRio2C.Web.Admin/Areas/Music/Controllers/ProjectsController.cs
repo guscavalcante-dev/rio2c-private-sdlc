@@ -33,6 +33,9 @@ using PlataformaRio2C.Web.Admin.Controllers;
 using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 using System.Text;
+using System.IO;
+using System.Reflection;
+using System.Web;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 {
@@ -220,6 +223,53 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             {
                 status = "success",
                 dataTable = response
+            }, JsonRequestBehavior.AllowGet);
+        }              
+
+        /// <summary>Export to Excel the evaluation list widget.</summary>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="musicGenreUid">The music genre uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
+        [HttpGet]
+        public async Task<ActionResult> ExportEvaluationListWidget(string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 1000)
+        {
+            StringBuilder data = new StringBuilder();
+            bool ptBR = this.UserInterfaceLanguage == "pt-br";                        
+            if(ptBR)
+                data.AppendLine("Banda; Tipo de artista; Estilo musical; Público-Alvo; Data de Criação; Qtd. Votos; Status;");
+            else
+                data.AppendLine("Music Band; Participant profile; Musical style; Target Audience; Create Date; Qty. Evaluation; Status;");
+
+            var musicProjectJsonDtos = await this.musicProjectRepo.FindAllJsonDtosPagedAsync(1,1000,null,null,musicGenreUid,evaluationStatusUid,this.UserInterfaceLanguage,this.EditionDto.Id);
+            var approvedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Id);
+
+            foreach (var item in musicProjectJsonDtos)
+            {
+                var audiences = string.Join(",", item.MusicTargetAudiencesNames);
+                var genre = string.Join("|", item.MusicGenreNames);
+                var createDate = ptBR ? item.CreateDate.ToString("dd/MM/yy"): item.CreateDate.ToString("MM/dd/yy");
+                var status = ptBR ?
+                    approvedAttendeeMusicBandsIds.Contains(item.AttendeeMusicBandId)?"Aprovado":"Reprovado":
+                    approvedAttendeeMusicBandsIds.Contains(item.AttendeeMusicBandId)?"Accepted":"Refused";
+
+                data.AppendLine(item.MusicBandName + ";" +
+                                item.MusicBandTypeName + ";" +
+                                audiences + ";" +
+                                genre + ";" +
+                                createDate + ";" +
+                                item.EvaluationsCount + ";" +
+                                status);
+            }
+
+            var dtFileName = ptBR ? DateTime.Now.ToString("yyMMddHHmmss") : DateTime.Now.ToString("yyddMMHHmmss");
+            return Json(new
+            {
+                fileName = "MusicProjects_"+ dtFileName + ".csv",
+                fileContent = data.ToString()
             }, JsonRequestBehavior.AllowGet);
         }
 

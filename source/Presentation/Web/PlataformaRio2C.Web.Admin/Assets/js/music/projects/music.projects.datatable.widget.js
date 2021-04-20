@@ -270,6 +270,23 @@ var MusicProjectsDataTableWidget = function () {
         );
     };
 
+    // Export -------------------------------------------------------------------------------------
+    var exportExcel = function () {
+        var jsonParameters = new Object();
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/ExportEvaluationListWidget'), jsonParameters, function (resp) {
+
+            var hiddenElement = document.createElement('a');
+            hiddenElement.href = 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURI(resp.fileContent);
+            hiddenElement.download = resp.fileName;
+            hiddenElement.click();
+        })
+        .fail(function () {
+        })
+        .always(function () {
+            MyRio2cCommon.unblock();
+        });
+    };
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
@@ -280,6 +297,9 @@ var MusicProjectsDataTableWidget = function () {
         },
         showDetails: function (musicProjectUid, searchKeywords, musicGenreUid, evaluationStatusUid, page, pageSize) {
             showDetails(musicProjectUid, searchKeywords, musicGenreUid, evaluationStatusUid, page, pageSize);
+        },
+        exportExcel: function () {
+            exportExcel();
         }
     };
 }();

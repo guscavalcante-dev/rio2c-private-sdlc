@@ -47,6 +47,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset MusicProjectSubmitEndDate { get; private set; }
         public DateTimeOffset MusicProjectEvaluationStartDate { get; private set; }
         public DateTimeOffset MusicProjectEvaluationEndDate { get; private set; }
+        public int MusicProjectMinimumEvaluationsCount { get; private set; }
+        public int MusicProjectMaximumApprovedBandsCount { get; private set; }
         public DateTimeOffset InnovationProjectSubmitStartDate { get; private set; }
         public DateTimeOffset InnovationProjectSubmitEndDate { get; private set; }
         public DateTimeOffset InnovationProjectEvaluationStartDate { get; private set; }
@@ -100,8 +102,8 @@ namespace PlataformaRio2C.Domain.Dtos
             this.MusicProjectSubmitEndDate = entity.MusicProjectSubmitEndDate;
             this.MusicProjectEvaluationStartDate = entity.MusicProjectEvaluationStartDate;
             this.MusicProjectEvaluationEndDate = entity.MusicProjectEvaluationEndDate;
-            this.Edition.MusicProjectMinimumEvaluationsCount = entity.MusicProjectMinimumEvaluationsCount;
-            this.Edition.MusicProjectMaximumApprovedBandsCount = entity.MusicProjectMaximumApprovedBandsCount;
+            this.MusicProjectMinimumEvaluationsCount = entity.MusicProjectMinimumEvaluationsCount;
+            this.MusicProjectMaximumApprovedBandsCount = entity.MusicProjectMaximumApprovedBandsCount;
             this.InnovationProjectSubmitStartDate = entity.InnovationProjectSubmitStartDate;
             this.InnovationProjectSubmitEndDate = entity.InnovationProjectSubmitEndDate;
             this.InnovationProjectEvaluationStartDate = entity.InnovationProjectEvaluationStartDate;
