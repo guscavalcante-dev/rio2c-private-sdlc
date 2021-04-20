@@ -851,6 +851,12 @@
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.maininformation.widget.js" />
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.totalcount.widget.js" />
     <Content Include="Assets\js\logistics\logistics.airfare.widget.js" />
+    <Content Include="Assets\js\managers\managers.create.js" />
+    <Content Include="Assets\js\managers\managers.datatable.widget.js" />
+    <Content Include="Assets\js\managers\managers.delete.js" />
+    <Content Include="Assets\js\managers\managers.editioncount.widget.js" />
+    <Content Include="Assets\js\managers\managers.totalcount.widget.js" />
+    <Content Include="Assets\js\managers\managers.update.js" />
     <Content Include="Assets\js\music\commissions\music.commissions.onboardinginfo.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.clipping.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.datatable.widget.js" />
@@ -943,12 +949,12 @@
     <Content Include="Assets\js\holdings\holdings.editioncount.widget.js" />
     <Content Include="Assets\js\holdings\holdings.totalcount.widget.js" />
     <Content Include="Assets\js\holdings\holdings.datatable.widget.js" />
-    <Content Include="Assets\js\collaborators\collaborators.create.js" />
-    <Content Include="Assets\js\collaborators\collaborators.datatable.widget.js" />
-    <Content Include="Assets\js\collaborators\collaborators.delete.js" />
-    <Content Include="Assets\js\collaborators\collaborators.editioncount.widget.js" />
-    <Content Include="Assets\js\collaborators\collaborators.totalcount.widget.js" />
-    <Content Include="Assets\js\collaborators\collaborators.update.js" />
+    <Content Include="Assets\js\audiovisual\collaborators\collaborators.create.js" />
+    <Content Include="Assets\js\audiovisual\collaborators\collaborators.datatable.widget.js" />
+    <Content Include="Assets\js\audiovisual\collaborators\collaborators.delete.js" />
+    <Content Include="Assets\js\audiovisual\collaborators\collaborators.editioncount.widget.js" />
+    <Content Include="Assets\js\audiovisual\collaborators\collaborators.totalcount.widget.js" />
+    <Content Include="Assets\js\audiovisual\collaborators\collaborators.update.js" />
     <Content Include="Assets\js\attendeeorganizations\attendeeorganizations.form.js" />
     <Content Include="Assets\js\myrio2c.inputmask.js" />
     <Content Include="Assets\js\myrio2c.showhidepassword.js" />
@@ -8933,6 +8939,17 @@
     <Content Include="Views\Editions\Modals\UpdateDatesInformationModal.cshtml" />
     <Content Include="Views\Editions\Modals\_UpdateDatesForm.cshtml" />
     <Content Include="Views\Editions\Modals\_UpdateForm.cshtml" />
+    <Content Include="Views\Collaborators\Managers\Modals\_Form.cshtml" />
+    <Content Include="Views\Collaborators\Managers\Modals\CreateModal.cshtml" />
+    <Content Include="Views\Collaborators\Managers\Modals\UpdateModal.cshtml" />
+    <Content Include="Views\Collaborators\Managers\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Views\Collaborators\Managers\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Views\Collaborators\Managers\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Views\Collaborators\Managers\_Editor.cshtml" />
+    <Content Include="Views\Collaborators\Managers\Create.cshtml" />
+    <Content Include="Views\Collaborators\Managers\Edit.cshtml" />
+    <Content Include="Views\Collaborators\ManagersIndex.cshtml" />
+    <Content Include="Views\Collaborators\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

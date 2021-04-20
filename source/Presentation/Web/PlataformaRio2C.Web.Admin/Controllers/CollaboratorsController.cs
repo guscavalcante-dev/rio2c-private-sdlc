@@ -11,24 +11,35 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using DataTables.AspNet.Core;
+using DataTables.AspNet.Mvc5;
 using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository;
+using PlataformaRio2C.Application.ViewModels;
+using PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>SpeakersController</summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
+    [RoutePrefix("{culture}/{edition}")]
     public class CollaboratorsController : BaseController
     {
+        private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
         private readonly IFileRepository fileRepo;
 
@@ -41,14 +52,36 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
+            ICollaboratorRepository collaboratorRepository,
             IFileRepository fileRepository)
             : base(commandBus, identityController)
         {
+            this.collaboratorRepo = collaboratorRepository;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
             this.fileRepo = fileRepository;
         }
 
-        #region Finds
+        #region Collaborators
+
+        /// <summary>Indexes the specified search view model.</summary>
+        /// <param name="searchViewModel">The search view model.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Index(CollaboratorSearchViewModel searchViewModel)
+        {
+            return RedirectToAction(nameof(ManagersIndex));
+            //#region Breadcrumb
+
+            //ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Editions, new List<BreadcrumbItemHelper> {
+            //    new BreadcrumbItemHelper(Labels.Managers, Url.Action("Index", "Collaborators", new { Area = "" }))
+            //});
+
+            //#endregion
+
+            //return View(searchViewModel);
+        }
+
+        #region List
 
         /// <summary>Finds all by filters.</summary>
         /// <param name="keywords">The keywords.</param>
@@ -89,6 +122,77 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 })?.ToList()
             }, JsonRequestBehavior.AllowGet);
         }
+
+        #endregion
+
+        #endregion
+
+        #region Managers
+
+        /// <summary>Indexes the specified search view model.</summary>
+        /// <param name="searchViewModel">The search view model.</param>
+        /// <returns></returns>
+        [HttpGet, Route("Collaborators/Managers")]
+        public ActionResult ManagersIndex(ManagerSearchViewModel searchViewModel)
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Managers, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Managers, Url.Action("Index", "Collaborators/Managers", new { Area = "" }))
+            });
+
+            #endregion
+
+            //ViewBag.CollaboratorTypes = CollaboratorType.Admins;
+
+            return View(searchViewModel);
+        }
+
+        #region List
+
+        #region DataTable Widget
+
+        /// <summary>Searches the specified request.</summary>
+        /// <param name="request">The request.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="showAllExecutives">if set to <c>true</c> [show all executives].</param>
+        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <param name="showHighlights">The show highlights.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("Collaborators/Managers/Search")]
+        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, string collaboratorType = "")
+        {
+            string[] collaboratorTypes = string.IsNullOrEmpty(collaboratorType) ? CollaboratorType.Admins : new string[] { collaboratorType };
+
+            var playersExecutives = await this.collaboratorRepo.FindAllByDataTable(
+                request.Start / request.Length,
+                request.Length,
+                request.Search?.Value,
+                request.GetSortColumns(),
+                new List<Guid>(),
+                collaboratorTypes,
+                showAllEditions,
+                false,
+                false,
+                false,
+                this.EditionDto?.Id);
+
+            var response = DataTablesResponse.Create(request, playersExecutives.TotalItemCount, playersExecutives.TotalItemCount, playersExecutives);
+
+            ViewBag.CollaboratorType = collaboratorType;
+            //ViewBag.CollaboratorTypes = CollaboratorType.Admins;
+
+            return Json(new
+            {
+                status = "success",
+                dataTable = response
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #endregion
 
         #endregion
     }

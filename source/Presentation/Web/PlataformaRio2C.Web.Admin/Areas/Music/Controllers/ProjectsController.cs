@@ -220,12 +220,14 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid ||
                     evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid))
                 {
-                    additionalParameters.Add("noRecordsFoundMessage", $"{string.Format(Messages.TheEvaluationPeriodRunsFrom, this.EditionDto.MusicProjectEvaluationStartDate.ToUserTimeZone().ToShortDateString(), this.EditionDto.MusicProjectEvaluationEndDate.ToUserTimeZone().ToShortDateString())}.</br>{Messages.TheBandsWillReceiveFinalGradeAtPeriodEnds}");
+                    additionalParameters.Add("noRecordsFoundMessage", 
+                        $"{string.Format(Messages.TheEvaluationPeriodRunsFrom, this.EditionDto.MusicProjectEvaluationStartDate.ToUserTimeZone().ToShortDateString(), this.EditionDto.MusicProjectEvaluationEndDate.ToUserTimeZone().ToShortDateString())}.</br>{Messages.TheBandsWillReceiveFinalGradeAtPeriodEnds}");
                 }
                 else if (!this.EditionDto.IsMusicProjectEvaluationOpen() && 
                     evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
                 {
-                    additionalParameters.Add("noRecordsFoundMessage", $"{Messages.EvaluationPeriodClosed}<br/>{string.Format(Messages.MusicBandsNotFoundWithStatus, Labels.UnderEvaluation)}");
+                    additionalParameters.Add("noRecordsFoundMessage", 
+                        $"{Messages.EvaluationPeriodClosed}<br/>{string.Format(Messages.MusicBandsNotFoundWithStatus, Labels.UnderEvaluation)}");
                 }
             }
 

@@ -96,7 +96,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 request.Search?.Value,
                 request.GetSortColumns(),
                 new List<Guid>(),
-                Constants.CollaboratorType.CommissionMusic,
+                new string[] { Constants.CollaboratorType.CommissionMusic },
                 showAllEditions,
                 false,
                 showAllParticipants,

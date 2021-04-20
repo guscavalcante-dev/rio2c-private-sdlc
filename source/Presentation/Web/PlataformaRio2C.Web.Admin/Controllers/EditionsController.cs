@@ -75,8 +75,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             return View(searchViewModel);
         }
 
-        #endregion
-
         #region DataTable Widget
 
         /// <summary>Searches the specified request.</summary>
@@ -103,6 +101,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 dataTable = response
             }, JsonRequestBehavior.AllowGet);
         }
+
+        #endregion
 
         #endregion
 
@@ -134,138 +134,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             return View(editionDto);
         }
-
-        #endregion
-
-        #region Create
-
-        /// <summary>Shows the create modal.</summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ShowCreateModal()
-        {
-            var cmd = new CreateEdition(null);
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Modals/CreateModal", cmd), divIdOrClass = "#GlobalModalContainer" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>Creates the specified edition event.</summary>
-        /// <param name="cmd">The command.</param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> Create(CreateEdition cmd)
-        {
-            var result = new AppValidationResult();
-
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-
-                cmd.UpdatePreSendProperties(
-                    this.AdminAccessControlDto.User.Id,
-                    this.AdminAccessControlDto.User.Uid,
-                    null,
-                    null,
-                    this.UserInterfaceLanguage);
-                result = await this.CommandBus.Send(cmd);
-                if (!result.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-            }
-            catch (DomainException ex)
-            {
-                foreach (var error in result.Errors)
-                {
-                    var target = error.Target ?? "";
-                    ModelState.AddModelError(target, error.Message);
-                }
-
-                return Json(new
-                {
-                    status = "error",
-                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
-                    pages = new List<dynamic>
-                    {
-                        new { page = this.RenderRazorViewToString("Modals/_CreateForm", cmd), divIdOrClass = "#form-container" },
-                    }
-                }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Edition, Labels.CreatedM) });
-        }
-
-        #endregion
-
-        #region Delete
-
-        /// <summary>Deletes the specified delete edition event.</summary>
-        /// <param name="cmd">The command.</param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> Delete(DeleteEdition cmd)
-        {
-            var result = new AppValidationResult();
-
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-
-                cmd.UpdatePreSendProperties(
-                    this.AdminAccessControlDto.User.Id,
-                    this.AdminAccessControlDto.User.Uid,
-                    this.EditionDto.Id,
-                    this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
-
-                result = await this.CommandBus.Send(cmd);
-                if (!result.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-            }
-            catch (DomainException ex)
-            {
-                foreach (var error in result.Errors)
-                {
-                    var target = error.Target ?? "";
-                    ModelState.AddModelError(target, error.Message);
-                }
-
-                return Json(new
-                {
-                    status = "error",
-                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
-                }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Edition, Labels.DeletedM) });
-        }
-
-        #endregion
 
         #region Main Information Widget
 
@@ -560,6 +428,138 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     new { page = this.RenderRazorViewToString("~/Views/Events/Widgets/RelatedEventsWidget.cshtml", eventsWidgetDto.EditionEventDtos), divIdOrClass = "#EditionEventsWidget" }
                 }
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Create
+
+        /// <summary>Shows the create modal.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowCreateModal()
+        {
+            var cmd = new CreateEdition(null);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/CreateModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Creates the specified edition event.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> Create(CreateEdition cmd)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    null,
+                    null,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/_CreateForm", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Edition, Labels.CreatedM) });
+        }
+
+        #endregion
+
+        #region Delete
+
+        /// <summary>Deletes the specified delete edition event.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> Delete(DeleteEdition cmd)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Edition, Labels.DeletedM) });
         }
 
         #endregion

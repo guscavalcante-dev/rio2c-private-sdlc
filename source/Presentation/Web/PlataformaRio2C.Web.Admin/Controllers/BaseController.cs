@@ -57,23 +57,30 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <returns>Returns an IAsyncController instance.</returns>
         protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, object state)
         {
-            var changedCultureRouteValue = this.ValidateCulture();
+            //Fix to enable RouteAttribute at MVC 5.0+
+            var routeData = RouteData;
+            if (routeData.Values.ContainsKey("MS_DirectRouteMatches"))
+            {
+                routeData = ((IEnumerable<RouteData>)routeData.Values["MS_DirectRouteMatches"]).First();
+            }
+
+            var changedCultureRouteValue = this.ValidateCulture(routeData);
             if (changedCultureRouteValue)
             {
                 return base.BeginExecuteCore(callback, state);
             }
 
-            var changedEditionRouteValue = this.ValidateEdition();
+            var changedEditionRouteValue = this.ValidateEdition(routeData);
             if (changedEditionRouteValue)
             {
                 return base.BeginExecuteCore(callback, state);
             }
 
             this.SetUserInfo();
-            this.SetArea();
+            this.SetArea(routeData);
 
             // Edition User
-            var changedEditionWithUserRouteValue = this.ValidateEditionUser();
+            var changedEditionWithUserRouteValue = this.ValidateEditionUser(routeData);
             if (changedEditionWithUserRouteValue)
             {
                 return base.BeginExecuteCore(callback, state);
@@ -93,11 +100,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         /// <summary>Validates the culture.</summary>
         /// <returns></returns>
-        private bool ValidateCulture()
+        private bool ValidateCulture(RouteData routeData)
         {
             // Attempt to read the culture cookie from Request
-           
-            var routeCulture = RouteData.Values["culture"] as string;
+
+            var routeCulture = routeData.Values["culture"] as string;
             var cookieCulture = Request.Cookies[Constants.CookieName.MyRio2CAdminCookie]?.Value;
             var cultureName = routeCulture ??
                               cookieCulture ??
@@ -106,9 +113,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             // Validate culture name
             cultureName = CultureHelper.GetImplementedCulture(cultureName); // This is safe
 
-            if (RouteData.Values["culture"] as string != cultureName)
+            if (routeData.Values["culture"] as string != cultureName)
             {
-                var routes = new RouteValueDictionary(RouteData.Values);
+                var routes = new RouteValueDictionary(routeData.Values);
 
                 // Add or change culture on routes
                 if (!routes.ContainsKey("culture"))
@@ -146,10 +153,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         /// <summary>Validates the edition.</summary>
         /// <returns></returns>
-        private bool ValidateEdition()
+        private bool ValidateEdition(RouteData routeData)
         {
             // Attempt to read the edition cookie from Request
-            var routeEdition = (RouteData.Values["edition"] as string).ToInt();
+            var routeEdition = (routeData.Values["edition"] as string).ToInt();
 
             var activeEditions = this.CommandBus.Send(new FindAllEditionsDtosAsync()).Result;
             if (activeEditions?.Any() != true)
@@ -177,7 +184,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return false;
             }
 
-            var routes = new RouteValueDictionary(RouteData.Values);
+            var routes = new RouteValueDictionary(routeData.Values);
 
             // Add or change culture on routes
             if (!routes.ContainsKey("edition"))
@@ -205,9 +212,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         }
 
         /// <summary>Sets the area.</summary>
-        private void SetArea()
+        private void SetArea(RouteData routeData)
         {
-            this.Area = ViewBag.Area = RouteData.Values["Area"] as string;
+            this.Area = ViewBag.Area = routeData.Values["Area"] as string;
         }
 
         /// <summary>Sets the user information.</summary>
@@ -231,7 +238,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// Validates the edition user.
         /// </summary>
         /// <returns></returns>
-        private bool ValidateEditionUser()
+        private bool ValidateEditionUser(RouteData routeData)
         {
             //var activeEditions = (List<EditionDto>)ViewBag.ActiveEditions;
             //if (activeEditions?.Any() != true)

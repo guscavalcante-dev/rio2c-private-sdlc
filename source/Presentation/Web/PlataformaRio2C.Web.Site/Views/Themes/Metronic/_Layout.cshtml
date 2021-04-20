@@ -124,7 +124,7 @@
     @Scripts.Render("~/bundles/js/layoutGlobalCustomized.js")
     <!--end::Global Theme Bundle -->
     <!--begin: MyRio2C Scripts-->
-    <script>
+<script>
         // Show alert translations --------------------------------------------
         var alertMessageTypeTranslated = {};
         alertMessageTypeTranslated['success'] = '@Labels.Success';
@@ -138,6 +138,7 @@
         var labels = {
             selectPlaceholder: '@(Labels.Select)...',
             edit: '@Labels.Edit',
+            view: '@Labels.View',
             remove: '@Labels.Remove',
             cancel: '@Labels.Cancel',
             confirm: '@Labels.ToConfirm',
@@ -155,7 +156,7 @@
         Globalize.culture(@(new HtmlString(string.Format("\'{0}\'", CultureInfo.CurrentCulture))));
 
         @Html.StatusMessageToastr()
-    </script>
+</script>
     <!--end: MyRio2C Scripts-->
     <!--begin::Page Scripts -->
     <script type="text/javascript">

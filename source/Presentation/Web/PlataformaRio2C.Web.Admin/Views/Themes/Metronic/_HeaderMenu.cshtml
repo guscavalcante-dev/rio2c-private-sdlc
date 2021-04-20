@@ -18,12 +18,29 @@
             <span class="kt-menu__link-text">@Labels.Dashboard</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
         </a>
     </li>
-    <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "Index", "Editions", null)" aria-haspopup="false">
-        <a href="@Url.Action("Index", "Editions", new { Area = "" })" class="kt-menu__link">
-            <span class="kt-menu__link-text">@Labels.Editions</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
-        </a>
-    </li>
 
+    @if (isAdminFull)
+    {
+        <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel @this.IsOpen(menuOpenCssClass, null, "Editions", null) @this.IsOpen(menuOpenCssClass, "ManagersIndex", "Collaborators", null)" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
+            <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">@Labels.Management</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
+            <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
+                <ul class="kt-menu__subnav">
+                    <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "Index", "Editions", null)" aria-haspopup="true">
+                        <a href="@Url.Action("Index", "Editions", new { Area = "" })" class="kt-menu__link">
+                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                            <span class="kt-menu__link-text">@Labels.Editions</span>
+                        </a>
+                    </li>
+                    <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "ManagersIndex", "Collaborators", null)" aria-haspopup="true">
+                        <a href="@Url.Action("Index", "Collaborators/Managers", new { Area = "" })" class="kt-menu__link">
+                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                            <span class="kt-menu__link-text">@Labels.Managers</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    }
     @if (isAdminFull || isAdminAudiovisual || isComissionAudiovisual)
     {
         <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel @this.IsOpen(menuOpenCssClass, null, null, "Audiovisual") @this.IsOpen(menuOpenCssClass, null, "Holdings,Players,PlayersExecutives", null)  @this.IsOpen(menuOpenCssClass, "Pitchings", "Projects", null)" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
@@ -206,7 +223,12 @@
             <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
                 <ul class="kt-menu__subnav">
                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Logistics", null)" aria-haspopup="true">
-                        <a href="@Url.Action("Index", "Logistics", new { Area = "" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Requests</span></a>
+                        <a href="@Url.Action("Index", "Logistics", new { Area = "" })" class="kt-menu__link ">
+                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot">
+                                <span></span>
+                            </i>
+                            <span class="kt-menu__link-text">@Labels.Requests</span>
+                        </a>
                     </li>
                     @if (isAdminFull || isAdminAudiovisual || isAdminLogistic)
                     {
