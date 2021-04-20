@@ -208,15 +208,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<EditionDto> FindDtoAsync(Guid editionUid)
         {
-            var query = this.GetBaseQuery()
-                               .FindByUid(editionUid);
+            var edition = await this.GetBaseQuery()
+                              .FindByUid(editionUid)
+                              .FirstOrDefaultAsync();
 
-            return await query
-                            .Select(e => new EditionDto()
-                            {
-                                Edition = e
-                            })
-                            .FirstOrDefaultAsync();
+            return new EditionDto(edition);
+
+            //var query = this.GetBaseQuery()
+            //                   .FindByUid(editionUid);
+
+            //return await query
+            //                .Select(e => new EditionDto()
+            //                {
+            //                    Edition = e
+            //                })
+            //                .FirstOrDefaultAsync();
         }
 
         /// <summary>
@@ -226,15 +232,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<EditionDto> FindDtoAsync(int editionId)
         {
-            var query = this.GetBaseQuery()
-                               .FindById(editionId);
+            var edition = await this.GetBaseQuery()
+                              .FindById(editionId)
+                              .FirstOrDefaultAsync();
 
-            return await query
-                            .Select(e => new EditionDto()
-                            {
-                                Edition = e
-                            })
-                            .FirstOrDefaultAsync();
+            return new EditionDto(edition);
+
+            //var query = this.GetBaseQuery()
+            //                   .FindById(editionId);
+
+            //return await query
+            //                .Select(e => new EditionDto()
+            //                {
+            //                    Edition = e
+            //                })
+            //                .FirstOrDefaultAsync();
         }
 
         /// <summary>

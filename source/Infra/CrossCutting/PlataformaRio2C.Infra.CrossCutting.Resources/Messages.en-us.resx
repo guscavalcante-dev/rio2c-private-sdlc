@@ -217,7 +217,7 @@
     <value>An error has been ocurred while saving this operation in the database.</value>
   </data>
   <data name="EvaluationPeriodClosed" xml:space="preserve">
-    <value>Evaluation period closed</value>
+    <value>Evaluation period closed!</value>
   </data>
   <data name="EvaluationSavesSuccessfully" xml:space="preserve">
     <value>Evaluation saved successfully</value>
@@ -949,5 +949,17 @@
   <data name="CurrentEditionNotFound" xml:space="preserve">
     <value>Current Edition not found</value>
     <comment>Current Edition not found</comment>
+  </data>
+  <data name="MusicBandsNotFoundWithStatus" xml:space="preserve">
+    <value>Music bands not found with status '{0}'</value>
+    <comment>Nenhuma banda com status '{0}' encontrada</comment>
+  </data>
+  <data name="TheBandsWillReceiveFinalGradeAtPeriodEnds" xml:space="preserve">
+    <value>The bands will receive the final grade and approval status only at the period ends.</value>
+    <comment>As bandas receberão a nota final e o status de aprovação somente ao final desse período</comment>
+  </data>
+  <data name="TheEvaluationPeriodRunsFrom" xml:space="preserve">
+    <value>The evaluation period runs from {0} to {1}</value>
+    <comment>O período de avaliações acontece de {0} até {1}</comment>
   </data>
 </root>

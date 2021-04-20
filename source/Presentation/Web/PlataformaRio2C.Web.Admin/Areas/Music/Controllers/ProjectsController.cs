@@ -36,6 +36,7 @@ using System.Text;
 using System.IO;
 using System.Reflection;
 using System.Web;
+using System.Collections;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 {
@@ -115,14 +116,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             page++; //Necessary because DataTable is zero index based.
 
             var musicProjectJsonDtos = await this.musicProjectRepo.FindAllJsonDtosPagedAsync(
-                page,
-                pageSize,
-                request.GetSortColumns(),
+                this.EditionDto.Id,
                 request.Search?.Value,
                 musicGenreUid,
                 evaluationStatusUid,
-                this.UserInterfaceLanguage,
-                this.EditionDto.Id);
+                page,
+                pageSize,
+                request.GetSortColumns());
 
             var approvedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Id);
 
@@ -152,26 +152,25 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     }
                 }
 
-                sb.Append($"<table class=\"image-side-text text-left\">");
+                sb.Append($"<table class=\"image-side-text\">");
                 sb.Append($"    <tr>");
                 sb.Append($"        <td>");
-                sb.Append($"            <span class=\"kt-widget__button\" style=\"\" data-toggle=\"tooltip\" title=\"{text}\">");
-                sb.Append($"                <label class=\"btn btn-label-{color} btn-sm\">");
-                sb.Append($"                    <i class=\"fa {icon} mr-1\"></i>");
-                sb.Append($"                </label>");
-                sb.Append($"            </span>");
-
+                sb.Append($"            <div class=\"col-md-12 justify-content-center\">");
+                sb.Append($"                <span class=\"kt-widget__button\" style=\"\" data-toggle=\"tooltip\" title=\"{text}\">");
+                sb.Append($"                    <label class=\"btn btn-label-{color} btn-sm\">");
+                sb.Append($"                        <i class=\"fa {icon}\"></i>");
+                sb.Append($"                    </label>");
+                sb.Append($"                </span>");
                 if (isMusicProjectEvaluationClosed)
                 {
                     sb.Append($"            <span class=\"margin-left: 5px;\">");
-                    sb.Append($"                <b>{musicProjectJsonDto.Grade?.ToString() ?? ""}</b>");
+                    sb.Append($"                <b>{musicProjectJsonDto.Grade?.ToString() ?? "-"}</b>");
                     sb.Append($"            </span>");
                 }
-
-                sb.Append($"            <span class=\"margin-left: 5px;\">");
-                sb.Append($"                ({musicProjectJsonDto.EvaluationsCount} {(musicProjectJsonDto.EvaluationsCount == 1 ? Labels.Vote : Labels.Votes)})");
-                sb.Append($"            </span>");
-
+                sb.Append($"                <span class=\"margin-left: 5px;\">");
+                sb.Append($"                    ({musicProjectJsonDto.EvaluationsCount} {(musicProjectJsonDto.EvaluationsCount == 1 ? Labels.Vote : Labels.Votes)})");
+                sb.Append($"                </span>");
+                sb.Append($"            </div>");
                 sb.Append($"        </td>");
                 sb.Append($"    </tr>");
                 sb.Append($"</table>");
@@ -217,7 +216,23 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
 
-            var response = DataTablesResponse.Create(request, musicProjectJsonDtos.TotalItemCount, musicProjectJsonDtos.TotalItemCount, musicProjectJsonDtos);
+            IDictionary<string, object> additionalParameters = new Dictionary<string, object>();
+            if (musicProjectJsonDtos.TotalItemCount <= 0)
+            {
+                if (this.EditionDto.IsMusicProjectEvaluationOpen() && (
+                    evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid ||
+                    evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid))
+                {
+                    additionalParameters.Add("noRecordsFoundMessage", $"{string.Format(Messages.TheEvaluationPeriodRunsFrom, this.EditionDto.MusicProjectEvaluationStartDate.ToUserTimeZone().ToShortDateString(), this.EditionDto.MusicProjectEvaluationEndDate.ToUserTimeZone().ToShortDateString())}.</br>{Messages.TheBandsWillReceiveFinalGradeAtPeriodEnds}");
+                }
+                else if (!this.EditionDto.IsMusicProjectEvaluationOpen() && 
+                    evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
+                {
+                    additionalParameters.Add("noRecordsFoundMessage", $"{Messages.EvaluationPeriodClosed}<br/>{string.Format(Messages.MusicBandsNotFoundWithStatus, Labels.UnderEvaluation)}");
+                }
+            }
+
+            var response = DataTablesResponse.Create(request, musicProjectJsonDtos.TotalItemCount, musicProjectJsonDtos.TotalItemCount, musicProjectJsonDtos, additionalParameters);
 
             return Json(new
             {
@@ -330,7 +345,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
         public async Task<ActionResult> PreviousEvaluationDetails(int? id, string searchKeywords = null, Guid? musicGenreUid = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 12)
         {
-            var allMusicProjectsIds = await this.musicProjectRepo.FindAllMusicProjectsIdsAsync(
+            var allMusicProjectsIds = await this.musicProjectRepo.FindAllMusicProjectsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
                 searchKeywords,
                 musicGenreUid,
@@ -368,7 +383,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
         public async Task<ActionResult> NextEvaluationDetails(int? id, string searchKeywords = null, Guid? musicGenreUid = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 12)
         {
-            var allMusicProjectsIds = await this.musicProjectRepo.FindAllMusicProjectsIdsAsync(
+            var allMusicProjectsIds = await this.musicProjectRepo.FindAllMusicProjectsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
                 searchKeywords,
                 musicGenreUid,
@@ -430,7 +445,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
             #endregion
 
-            var allMusicProjectsIds = await this.musicProjectRepo.FindAllMusicProjectsIdsAsync(
+            var allMusicProjectsIds = await this.musicProjectRepo.FindAllMusicProjectsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
                 searchKeywords,
                 musicGenreUid,
@@ -446,12 +461,12 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             ViewBag.PageSize = pageSize;
             ViewBag.CurrentMusicProjectIndex = currentMusicProjectIdIndex;
 
-            ViewBag.MusicProjectsTotalCount = await this.musicProjectRepo.CountAsync(this.EditionDto.Edition.Id, searchKeywords, musicGenreUid, evaluationStatusUid, page.Value, pageSize.Value);
+            ViewBag.MusicProjectsTotalCount = await this.musicProjectRepo.CountPagedAsync(this.EditionDto.Edition.Id, searchKeywords, musicGenreUid, evaluationStatusUid, page.Value, pageSize.Value);
             ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id);
 
             return View(musicProjectDto);
         }
-        
+
         ///// <summary>
         ///// Evaluations the details.
         ///// </summary>

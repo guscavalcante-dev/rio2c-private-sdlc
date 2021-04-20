@@ -1,7 +1,11 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @using X.PagedList.Mvc
 @using X.PagedList.Mvc.Common
+@using PlataformaRio2C.Domain.Entities;
 @model X.PagedList.IPagedList<MusicProjectDto>
+@{ 
+    var editionDto = ViewBag.EditionDto as EditionDto;
+}
 
 @if (Model?.Any() == true)
 {
@@ -83,10 +87,27 @@
 }
 else
 {
+    var message = string.Format(Messages.NoneEntityAction, Labels.Project.ToLowerInvariant(), Labels.FoundM);
+    var evaluationStatusUid = ViewBag.EvaluationStatusUid;
+
+    if (editionDto.IsMusicProjectEvaluationOpen() && (
+        evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid ||
+        evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid))
+    {
+        message = $"{string.Format(Messages.TheEvaluationPeriodRunsFrom, editionDto.MusicProjectEvaluationStartDate.ToUserTimeZone().ToShortDateString(), editionDto.MusicProjectEvaluationEndDate.ToUserTimeZone().ToShortDateString())}{Environment.NewLine}{Messages.TheBandsWillReceiveFinalGradeAtPeriodEnds}";
+    }
+    else if(!editionDto.IsMusicProjectEvaluationOpen() &&
+        evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
+    {
+        message = $"{Messages.EvaluationPeriodClosed}{Environment.NewLine}{string.Format(Messages.MusicBandsNotFoundWithStatus, Labels.UnderEvaluation)}";
+    }
+
     <div class="kt-portlet">
         <div class="kt-portlet__body">
             <div class="row">
-                <div class="col-12 text-center">@string.Format(Messages.NoneEntityAction, Labels.Project.ToLowerInvariant(), Labels.FoundM)</div>
+                <div class="col-12 text-center">
+                    <p class="m-0 p-0" style="white-space: pre-line">@MvcHtmlString.Create(message.Replace(Environment.NewLine, "<br />"))</p>
+                </div>
             </div>
         </div>
     </div>

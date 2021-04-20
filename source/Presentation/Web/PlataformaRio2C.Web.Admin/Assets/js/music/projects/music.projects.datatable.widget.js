@@ -53,6 +53,9 @@ var MusicProjectsDataTableWidget = function () {
             "language": {
                 "url": "/Assets/components/datatables/datatables." + globalVariables.userInterfaceLanguage + ".js"
             },
+            //"oLanguage": {
+            //    "sEmptyTable": "My Custom Message On Empty Table"
+            //},
             select: {
                 style: 'multi'
             },
@@ -93,6 +96,13 @@ var MusicProjectsDataTableWidget = function () {
                             json.recordsTotal = jsonReturned.dataTable.TotalRecords;
                             json.recordsFiltered = jsonReturned.dataTable.TotalRecordsFiltered;
                             json.data = jsonReturned.dataTable.Data;
+
+                            if (jsonReturned.dataTable.TotalRecords == 0 && !MyRio2cCommon.isNullOrEmpty(jsonReturned.dataTable.AdditionalParameters.noRecordsFoundMessage)) {
+                                table.context[0].oLanguage.sEmptyTable = jsonReturned.dataTable.AdditionalParameters.noRecordsFoundMessage;
+                            }
+                            else {
+                                table.context[0].oLanguage.sEmptyTable = null;
+                            }
 
                             return JSON.stringify(json); // return JSON string
                         },
@@ -201,24 +211,26 @@ var MusicProjectsDataTableWidget = function () {
                     orderable: false
                 },
                 {
-                    targets: [1, 2, 3, 5],
+                    targets: [1, 2, 3],
                     className: "dt-left",
                     orderable: false
                 },
                 {
-	                targets: [4],
+                    targets: [4],
+                    width: "15%",
                     className: "dt-center",
-	                orderable: false
+                    orderable: false
                 },
                 {
-                    targets: [6],
+                    targets: [5, 6],
                     width: "8%",
-                    className: "dt-center"
+                    className: "dt-center",
+                    orderable: true,
                 },
                 {
 	                targets: -1,
 	                width: "6%",
-	                orderable: false,
+                    orderable: false,
 	                searchable: false,
 	                className: "dt-center"
                 }

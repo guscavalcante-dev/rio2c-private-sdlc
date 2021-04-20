@@ -216,7 +216,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
         public async Task<ActionResult> PreviousEvaluationDetails(int? id, string searchKeywords = null, Guid? musicGenreUid = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 12)
         {
-            var allMusicProjectsIds = await this.musicProjectRepo.FindAllMusicProjectsIdsAsync(
+            var allMusicProjectsIds = await this.musicProjectRepo.FindAllMusicProjectsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
                 searchKeywords,
                 musicGenreUid,
@@ -253,7 +253,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
         public async Task<ActionResult> NextEvaluationDetails(int? id, string searchKeywords = null, Guid? musicGenreUid = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 12)
         {
-            var allMusicProjectsIds = await this.musicProjectRepo.FindAllMusicProjectsIdsAsync(
+            var allMusicProjectsIds = await this.musicProjectRepo.FindAllMusicProjectsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
                 searchKeywords,
                 musicGenreUid,
@@ -311,7 +311,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
             #endregion
 
-            var allMusicProjectsIds = await this.musicProjectRepo.FindAllMusicProjectsIdsAsync(
+            var allMusicProjectsIds = await this.musicProjectRepo.FindAllMusicProjectsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
                 searchKeywords,
                 musicGenreUid,
@@ -327,7 +327,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             ViewBag.PageSize = pageSize;
             ViewBag.CurrentMusicProjectIndex = currentMusicProjectIdIndex;
 
-            ViewBag.MusicProjectsTotalCount = await this.musicProjectRepo.CountAsync(this.EditionDto.Edition.Id, searchKeywords, musicGenreUid, evaluationStatusUid, page.Value, pageSize.Value);
+            ViewBag.MusicProjectsTotalCount = await this.musicProjectRepo.CountPagedAsync(this.EditionDto.Edition.Id, searchKeywords, musicGenreUid, evaluationStatusUid, page.Value, pageSize.Value);
             ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id);
 
             return View(musicProjectDto);
