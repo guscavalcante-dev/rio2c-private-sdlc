@@ -1,0 +1,66 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateCollaborator
+<div class="modal fade" id="UpdatePlayerExecutiveModal" role="dialog" aria-labelledby="UpdatePlayerExecutiveModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    @if (!Model.IsAddingToCurrentEdition)
+                    {
+                        @(Labels.Update + " " + Labels.Executive)
+                    }
+                    else
+                    {
+                        @(Labels.NewM + " " + Labels.Executive + " " + string.Format(Labels.InEditionYear, ViewBag.EditionDto?.UrlCode))
+                    }
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Update", "PlayersExecutives", new { Area = "" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UpdatePlayerExecutiveForm" }))
+                {
+                    @Html.HiddenFor(m => m.CollaboratorUid)
+                    @Html.HiddenFor(m => m.IsAddingToCurrentEdition)
+                    <div id="form-container">
+                        @Html.Partial("Modals/_Form", Model)
+                    </div>
+                    <div class="kt-section pt-4">
+                        <div class="kt-separator kt-separator--border-dashed"></div>
+                        <h3 class="kt-section__title mb-0">@Labels.Dates</h3>
+                        <div class="kt-separator kt-separator--border-dashed"></div>
+                        <div class="kt-section__content mt-3">
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label>@Labels.WelcomeEmailSendDate</label>
+                                    <p class="form-control-static">@(Model.WelcomeEmailSendDate?.ToString() ?? "-")</p>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label>@Labels.TermsAcceptanceDate</label>
+                                    <p class="form-control-static">@(Model.PlayerTermsAcceptanceDate?.ToString() ?? "-")</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label>@Labels.OnboardingStartDate</label>
+                                    <p class="form-control-static">@(Model.OnboardingStartDate?.ToString() ?? "-")</p>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label>@Labels.OnboardingFinishDate</label>
+                                    <p class="form-control-static">@(Model.OnboardingFinishDate?.ToString() ?? "-")</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 text-right">
+                            @Labels.LastUpdateOn <b>@Model.UpdateDate.ToUserTimeZone().ToShortDateString() @Model.UpdateDate.ToUserTimeZone().ToLongTimeString()</b> @Labels.By <b>@Model.UpdaterBaseDto.Name</b>.
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">@Labels.Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="$('#UpdatePlayerExecutiveForm').submit();">@Labels.Save</button>
+            </div>
+        </div>
+    </div>
+</div>

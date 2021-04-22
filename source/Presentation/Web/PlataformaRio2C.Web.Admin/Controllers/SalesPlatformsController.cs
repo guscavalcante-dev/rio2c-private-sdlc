@@ -104,7 +104,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     request?.Search?.Value,
                     request?.GetSortColumns(),
                     selectedCollaboratorsUids?.ToListGuid(','),
-                    collaboratorTypeName,
+                    new string[] { collaboratorTypeName },
                     showAllEditions,
                     false,
                     showAllParticipants,

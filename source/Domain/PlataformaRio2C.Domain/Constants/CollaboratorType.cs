@@ -36,7 +36,12 @@ namespace PlataformaRio2C.Domain.Constants
         public const string Music = "Music";
         public const string Innovation = "Innovation";
 
-        public static readonly string[] TicketBuyers = 
+        public static readonly string[] Admins =
+        {
+            AdminAudiovisual, AdminLogistic
+        };
+
+        public static readonly string[] TicketBuyers =
         {
             Speaker, Industry, Creator, Summit, Festvalia
         };

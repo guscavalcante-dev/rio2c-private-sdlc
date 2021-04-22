@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Script.Serialization;
 using PlataformaRio2C.Domain.Entities;
 
@@ -31,6 +32,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public string PhoneNumber { get; set; }
         public string CellPhone { get; set; }
         public string PublicEmail { get; set; }
+        public string JobTitle { get; set; }
         public HoldingBaseDto HoldingBaseDto { get; set; }
         public OrganizationBaseDto OrganizatioBaseDto { get; set; }
         public DateTimeOffset? ImageUploadDate { get; set; }
@@ -42,6 +44,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public bool IsInOtherEdition { get; set; }
 
         public IEnumerable<AttendeeOrganizationBaseDto> AttendeeOrganizationBasesDtos { get; set; }
+        public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }
 
         #region Json ignored properties 
 
@@ -49,6 +52,20 @@ namespace PlataformaRio2C.Domain.Dtos
         public AttendeeCollaborator EditionAttendeeCollaborator { get; set; }
 
         #endregion
+
+        /// <summary>Gets the collaborator job title base dto by language code.</summary>
+        /// <param name="languageCode">The language code.</param>
+        /// <returns></returns>
+        public CollaboratorJobTitleBaseDto GetCollaboratorJobTitleBaseDtoByLanguageCode(string languageCode)
+        {
+            if (string.IsNullOrEmpty(languageCode))
+            {
+                languageCode = "pt-br";
+            }
+
+            return this.JobTitlesDtos?.FirstOrDefault(jtd => jtd.LanguageDto.Code == languageCode) ??
+                   this.JobTitlesDtos?.FirstOrDefault(jtd => jtd.LanguageDto.Code == "pt-br");
+        }
 
         /// <summary>Initializes a new instance of the <see cref="CollaboratorBaseDto"/> class.</summary>
         public CollaboratorBaseDto()

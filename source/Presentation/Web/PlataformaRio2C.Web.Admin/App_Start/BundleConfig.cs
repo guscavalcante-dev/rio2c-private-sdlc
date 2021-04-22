@@ -281,6 +281,53 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            #region Management Page Bundles
+
+            #region Managers
+
+            bundles.Add(new ScriptBundle("~/bundles/js/managers.list.js").Include(
+                "~/Assets/js/managers/managers.totalcount.widget.js",
+                "~/Assets/js/managers/managers.datatable.widget.js",
+                "~/Assets/js/salesplatforms/salesplatforms.export.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/managers.editioncount.js").Include(
+                "~/Assets/js/managers/managers.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/managers.create.js").Include(
+                "~/Assets/js/managers/managers.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/managers.update.js").Include(
+                "~/Assets/js/managers/managers.update.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/managers.delete.js").Include(
+                "~/Assets/js/managers/managers.delete.js"));
+
+            #endregion
+
+            #region Editions
+
+            bundles.Add(new ScriptBundle("~/bundles/js/editions.list.js").Include(
+                "~/Assets/js/editions/editions.totalcount.widget.js",
+                "~/Assets/js/editions/editions.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/editions.editioncount.js").Include(
+                "~/Assets/js/editions/editions.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/editions.create.js").Include(
+                "~/Assets/js/editions/editions.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/editions.details.js").Include(
+                "~/Assets/js/editions/editions.maininformation.widget.js",
+                "~/Assets/js/editions/editions.datesinformation.widget.js",
+                "~/Assets/js/editions/editions.events.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/editions.delete.js").Include(
+                "~/Assets/js/editions/editions.delete.js"));
+
+            #endregion
+
+            #endregion
+
             #region Audiovisual Pages Bundles
 
             #region Holdings
@@ -325,25 +372,25 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
-            #region Collaborators
+            #region Collaborators - Executives
 
             bundles.Add(new ScriptBundle("~/bundles/js/collaborators.list.js").Include(
-                "~/Assets/js/collaborators/collaborators.totalcount.widget.js",
-                "~/Assets/js/collaborators/collaborators.datatable.widget.js",
+                "~/Assets/js/audiovisual/collaborators/collaborators.totalcount.widget.js",
+                "~/Assets/js/audiovisual/collaborators/collaborators.datatable.widget.js",
                 "~/Assets/js/salesplatforms/salesplatforms.export.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/collaborators.editioncount.js").Include(
-                "~/Assets/js/collaborators/collaborators.editioncount.widget.js"));
+                "~/Assets/js/audiovisual/collaborators/collaborators.editioncount.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/collaborators.create.js").Include(
-                "~/Assets/js/collaborators/collaborators.create.js",
+                "~/Assets/js/audiovisual/collaborators/collaborators.create.js",
                 "~/Assets/js/myrio2c.publicemail.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/collaborators.update.js").Include(
-                "~/Assets/js/collaborators/collaborators.update.js"));
+                "~/Assets/js/audiovisual/collaborators/collaborators.update.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/collaborators.delete.js").Include(
-                "~/Assets/js/collaborators/collaborators.delete.js"));
+                "~/Assets/js/audiovisual/collaborators/collaborators.delete.js"));
 
             #endregion
 
@@ -419,28 +466,6 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/conferences.delete.js").Include(
                 "~/Assets/js/conferences/conferences.delete.js"));
-
-            #endregion
-
-            #region Editions
-
-            bundles.Add(new ScriptBundle("~/bundles/js/editions.list.js").Include(
-                "~/Assets/js/editions/editions.totalcount.widget.js",
-                "~/Assets/js/editions/editions.datatable.widget.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/editions.editioncount.js").Include(
-                "~/Assets/js/editions/editions.editioncount.widget.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/editions.create.js").Include(
-                "~/Assets/js/editions/editions.create.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/editions.details.js").Include(
-                "~/Assets/js/editions/editions.maininformation.widget.js",
-                "~/Assets/js/editions/editions.datesinformation.widget.js",
-                "~/Assets/js/editions/editions.events.widget.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/editions.delete.js").Include(
-                "~/Assets/js/editions/editions.delete.js"));
 
             #endregion
 

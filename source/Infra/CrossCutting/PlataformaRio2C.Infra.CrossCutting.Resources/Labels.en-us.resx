@@ -2690,4 +2690,20 @@
     <value>Music Project Minimum Evaluations Count</value>
     <comment>Quantidade mínima de votos para gerar média</comment>
   </data>
+  <data name="Management" xml:space="preserve">
+    <value>Management</value>
+    <comment>Administração</comment>
+  </data>
+  <data name="Manager" xml:space="preserve">
+    <value>Manager</value>
+    <comment>Administrador</comment>
+  </data>
+  <data name="Managers" xml:space="preserve">
+    <value>Managers</value>
+    <comment>Administradores</comment>
+  </data>
+  <data name="Block" xml:space="preserve">
+    <value>Block</value>
+    <comment>Bloquear</comment>
+  </data>
 </root>

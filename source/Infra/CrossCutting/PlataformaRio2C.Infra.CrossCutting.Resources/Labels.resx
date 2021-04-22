@@ -2695,4 +2695,20 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>de</value>
     <comment>de</comment>
   </data>
+  <data name="Management" xml:space="preserve">
+    <value>Administração</value>
+    <comment>Administração</comment>
+  </data>
+  <data name="Manager" xml:space="preserve">
+    <value>Administrador</value>
+    <comment>Administrador</comment>
+  </data>
+  <data name="Managers" xml:space="preserve">
+    <value>Administradores</value>
+    <comment>Administradores</comment>
+  </data>
+  <data name="Block" xml:space="preserve">
+    <value>Bloquear</value>
+    <comment>Bloquear</comment>
+  </data>
 </root>

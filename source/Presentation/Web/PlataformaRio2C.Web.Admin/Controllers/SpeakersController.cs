@@ -105,7 +105,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 request.Search?.Value,
                 request.GetSortColumns(),
                 new List<Guid>(),
-                Constants.CollaboratorType.Speaker,
+                new string[] { Constants.CollaboratorType.Speaker },
                 showAllEditions,
                 false,
                 showAllParticipants,
