@@ -259,7 +259,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             else
                 data.AppendLine("Music Band; Participant profile; Musical style; Target Audience; Create Date; Qty. Evaluation; Status;");
 
-            var musicProjectJsonDtos = await this.musicProjectRepo.FindAllJsonDtosPagedAsync(1,1000,null,null,musicGenreUid,evaluationStatusUid,this.UserInterfaceLanguage,this.EditionDto.Id);
+            var musicProjectJsonDtos = await this.musicProjectRepo.FindAllJsonDtosPagedAsync(this.EditionDto.Id,"",musicGenreUid,evaluationStatusUid, 1, 1000,new List<Tuple<string, string>>());
             var approvedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Id);
 
             foreach (var item in musicProjectJsonDtos)
@@ -1115,6 +1115,49 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 {
                     new { page = this.RenderRazorViewToString("Widgets/EvaluatorsWidget", evaluationDto), divIdOrClass = "#ProjectEvaluatorsWidget" },
                 }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Export to Excel the evaluators list widget.</summary>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="musicGenreUid">The music genre uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
+        [HttpGet]
+        public async Task<ActionResult> ExportEvaluatorsListWidget(string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 1000)
+        {
+            StringBuilder data = new StringBuilder();
+            bool ptBR = this.UserInterfaceLanguage == "pt-br";
+            if (ptBR)
+                data.AppendLine("Banda; Avaliação; Jurado; Nota;");
+            else
+                data.AppendLine("Music Band; Avaliation; Evaluator; Grade;");
+
+            var musicProjectJsonDtos = await this.musicProjectRepo.FindAllJsonDtosPagedAsync(this.EditionDto.Id, "", musicGenreUid, evaluationStatusUid, 1, 1000, new List<Tuple<string, string>>());
+            var approvedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Id);
+                      
+            foreach (var item in musicProjectJsonDtos)
+            {
+                var evaluationDto = await this.musicProjectRepo.FindEvaluatorsWidgetDtoAsync(item.MusicProjectUid);
+                foreach(var eval in evaluationDto.AttendeeMusicBandDto.AttendeeMusicBandEvaluationsDtos)
+                {  
+                    data.AppendLine(
+                        item.MusicBandName + ";" +
+                        item.Grade + ";" +
+                        eval.EvaluatorUser.Name + ";" +
+                        eval.AttendeeMusicBandEvaluation.Grade
+                    );
+                }
+            }
+
+            var dtFileName = ptBR ? DateTime.Now.ToString("yyMMddHHmmss") : DateTime.Now.ToString("yyddMMHHmmss");
+            return Json(new
+            {
+                fileName = "MusicProjects_" + dtFileName + ".csv",
+                fileContent = data.ToString()
             }, JsonRequestBehavior.AllowGet);
         }
 

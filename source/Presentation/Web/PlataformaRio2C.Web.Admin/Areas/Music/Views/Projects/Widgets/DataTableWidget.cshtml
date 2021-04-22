@@ -18,10 +18,19 @@
         </div>
 
         <div class="kt-portlet__head-label">
-            <a href="javascript:;" onclick="MusicProjectsDataTableWidget.exportExcel()" class="btn btn-sm btn-primary btn-link">
-                <i class="icon-download-alt"></i>
-                Exportar para Excel
-            </a>
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                    
+                    <span>Exportar para Excel</span>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a href="javascript:;" class="dropdown-item" onclick="MusicProjectsDataTableWidget.exportExcelReportByProject()">
+                        <span class="kt-nav__link-text">Relatório por Projeto</span>
+                    </a>
+                    <a href="javascript:;" class="dropdown-item" onclick="MusicProjectsDataTableWidget.exportExcelReportByEvaluators()">
+                        <span class="kt-nav__link-text">Relatório por Jurado</span>
+                    </a>
+                </div>
+            </div>
         </div>
 
     </div>
