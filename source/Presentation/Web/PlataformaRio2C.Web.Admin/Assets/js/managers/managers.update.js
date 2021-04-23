@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Rafael Dantas Ruiz
-// Created          : 08-26-2019
+// Author           : Renan Valentim
+// Created          : 04-20-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-21-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 04-20-2021
 // ***********************************************************************
 // <copyright file="managers.update.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,8 +33,6 @@ var ManagersUpdate = function () {
         MyRio2cCommon.enableDatePicker({ inputIdOrClass: formId + ' .enable-datepicker' });        
         AttendeeOrganizationsForm.init(formId);
         AddressesForm.init();
-        //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-jobtitle', maxCharCount: 81 });
-        //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-minibio', maxCharCount: 710 });
 
         MyRio2cCommon.enableDropdownChangeEvent("CollaboratorGenderUid", "CollaboratorGenderAdditionalInfo");
         MyRio2cCommon.enableDropdownChangeEvent("CollaboratorRoleUid", "CollaboratorRoleAdditionalInfo");
@@ -45,7 +43,6 @@ var ManagersUpdate = function () {
         enableAjaxForm();
         enableFormValidation();
     };
-    
 
     var changePreviousEditionsRequired = function () {
 	    $("#HasEditionSelected").val($('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox:checked').length > 0 ? "True" : null);
@@ -74,7 +71,7 @@ var ManagersUpdate = function () {
         jsonParameters.collaboratorUid = collaboratorUid;
         jsonParameters.isAddingToCurrentEdition = isAddingToCurrentEdition;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/ShowUpdateModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Collaborators/Managers/ShowUpdateModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -102,15 +99,15 @@ var ManagersUpdate = function () {
                 $(modalId).modal('hide');
 
                 if (typeof (CollaboratorsDataTableWidget) !== 'undefined') {
-                    CollaboratorsDataTableWidget.refreshData();
+                    ManagersDataTableWidget.refreshData();
                 }
 
                 if (typeof (CollaboratorsTotalCountWidget) !== 'undefined') {
-                    CollaboratorsTotalCountWidget.init();
+                    ManagersTotalCountWidget.init();
                 }
 
                 if (typeof (CollaboratorsEditionCountWidget) !== 'undefined') {
-                    CollaboratorsEditionCountWidget.init();
+                    ManagersEditionCountWidget.init();
                 }
             },
             onError: function (data) {

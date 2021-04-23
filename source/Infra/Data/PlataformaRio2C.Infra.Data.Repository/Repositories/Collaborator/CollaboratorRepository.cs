@@ -64,7 +64,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<Collaborator> FindBySalesPlatformAttendeeId(this IQueryable<Collaborator> query, string salesPlatformAttendeeId)
         {
-            query = query.Where(c => c.AttendeeCollaborators.Any(ac => ac.AttendeeCollaboratorTickets.Any(act => !act.IsDeleted 
+            query = query.Where(c => c.AttendeeCollaborators.Any(ac => ac.AttendeeCollaboratorTickets.Any(act => !act.IsDeleted
                                                                                                                  && act.SalesPlatformAttendeeId == salesPlatformAttendeeId)));
 
             return query;
@@ -115,12 +115,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<Collaborator> FindLogisticsByEditionId(this IQueryable<Collaborator> query, int editionId, bool showAllParticipants, bool showAllSponsored)
         {
-            query = query.Where(c => c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId 
+            query = query.Where(c => c.AttendeeCollaborators.Any(ac => ac.EditionId == editionId
                                                                        && !ac.IsDeleted
                                                                        && !ac.Edition.IsDeleted
-                                                                       && (showAllParticipants 
+                                                                       && (showAllParticipants
                                                                            || (showAllSponsored && ac.Logistics.Any(l => !l.IsDeleted))
-                                                                               || (!showAllSponsored && ac.Logistics.Any(l => !l.IsDeleted 
+                                                                               || (!showAllSponsored && ac.Logistics.Any(l => !l.IsDeleted
                                                                                                                               && (l.AirfareAttendeeLogisticSponsor.IsLogisticListDisplayed
                                                                                                                                   || l.AccommodationAttendeeLogisticSponsor.IsLogisticListDisplayed
                                                                                                                                   || l.AirportTransferAttendeeLogisticSponsor.IsLogisticListDisplayed
@@ -276,7 +276,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             if (hasProjectNegotiation)
             {
                 query = query.Where(c => c.AttendeeCollaborators
-                                                .Any(ac => ac.EditionId == editionId 
+                                                .Any(ac => ac.EditionId == editionId
                                                            && ac.AttendeeOrganizationCollaborators
                                                                     .Any(aoc => !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted
                                                                                 && aoc.AttendeeOrganization.ProjectBuyerEvaluations
@@ -525,7 +525,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                 OrganizationBaseDto = new OrganizationBaseDto
                                                                                                 {
                                                                                                     Name = aoc.AttendeeOrganization.Organization.Name,
-                                                                                                    HoldingBaseDto = aoc.AttendeeOrganization.Organization.Holding == null ? null :new HoldingBaseDto
+                                                                                                    HoldingBaseDto = aoc.AttendeeOrganization.Organization.Holding == null ? null : new HoldingBaseDto
                                                                                                     {
                                                                                                         Name = aoc.AttendeeOrganization.Organization.Holding.Name
                                                                                                     }
@@ -551,7 +551,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             int page,
             int pageSize,
             string keywords,
-            List<Tuple<string, string>> sortColumns, 
+            List<Tuple<string, string>> sortColumns,
             List<Guid> collaboratorsUids,
             string[] collaboratorTypeNames,
             bool showAllEditions,
@@ -594,7 +594,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                                                 && !ac.Edition.IsDeleted
                                                                                                                                 && !ac.IsDeleted
                                                                                                                                 && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
-                                                                                                                                                                           && collaboratorTypeNames.Contains(act.CollaboratorType.Name))) : 
+                                                                                                                                                                           && collaboratorTypeNames.Contains(act.CollaboratorType.Name))) :
                                                                                    null,
                                 IsInOtherEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId
                                                                                                            && !ac.IsDeleted),
@@ -615,7 +615,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                 }
                                                                                             })),
 
-                                JobTitle= c.JobTitles.FirstOrDefault(jb => !jb.IsDeleted && jb.CollaboratorId == c.Id).Value
+                                JobTitle = c.JobTitles.FirstOrDefault(jb => !jb.IsDeleted && jb.CollaboratorId == c.Id).Value,
+
+                                CollaboratorTypeName = c.AttendeeCollaborators.FirstOrDefault(ac => !ac.IsDeleted)
+                                                                                .AttendeeCollaboratorTypes.FirstOrDefault(act => !act.IsDeleted)
+                                                                                .CollaboratorType.Name
                             })
                             .ToListPagedAsync(page, pageSize);
         }
@@ -921,7 +925,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .ThenBy(o => o.BadgeName)
                             .FirstOrDefaultAsync();
         }
-        
+
         /// <summary>Finds all dropdown API list dto paged.</summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="keywords">The keywords.</param>
@@ -932,12 +936,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         public async Task<IPagedList<CollaboratorApiListDto>> FindAllDropdownApiListDtoPaged(
-            int editionId, 
+            int editionId,
             string keywords,
             bool filterByProjectsInNegotiation,
-            string collaboratorTypeName, 
+            string collaboratorTypeName,
             bool showAllParticipants,
-            int page, 
+            int page,
             int pageSize)
         {
             var query = this.GetBaseQuery()

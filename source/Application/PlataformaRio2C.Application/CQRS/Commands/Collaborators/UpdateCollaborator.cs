@@ -25,7 +25,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         public Guid CollaboratorUid { get; set; }
         public bool IsAddingToCurrentEdition { get; set; }
-
+        
         public DateTimeOffset? WelcomeEmailSendDate { get; private set; }
         public DateTimeOffset? OnboardingStartDate { get; private set; }
         public DateTimeOffset? OnboardingFinishDate { get; private set; }

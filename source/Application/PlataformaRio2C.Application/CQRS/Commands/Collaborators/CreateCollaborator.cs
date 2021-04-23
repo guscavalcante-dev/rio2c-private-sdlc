@@ -25,7 +25,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="genders">The genders.</param>
         /// <param name="industries">The industries.</param>
-        /// <param name="roles">The roles.</param>
+        /// <param name="collaboratorRoles">The roles.</param>
         /// <param name="editionsDtos">The editions dtos.</param>
         /// <param name="currentEditionId">The current edition identifier.</param>
         /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
@@ -37,7 +37,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<LanguageDto> languagesDtos, 
             List<CollaboratorGender> genders, 
             List<CollaboratorIndustry> industries, 
-            List<CollaboratorRole> roles,
+            List<CollaboratorRole> collaboratorRoles,
             List<EditionDto> editionsDtos,
             int currentEditionId,
             bool isJobTitleRequired,
@@ -50,12 +50,65 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 languagesDtos, 
                 genders, 
                 industries, 
-                roles, 
+                collaboratorRoles, 
                 editionsDtos, 
                 currentEditionId, 
                 isJobTitleRequired, 
                 isMiniBioRequired, 
                 isImageRequired, 
+                userInterfaceLanguage);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateCollaborator"/> class.
+        /// </summary>
+        /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
+        /// <param name="languagesDtos">The languages dtos.</param>
+        /// <param name="genders">The genders.</param>
+        /// <param name="industries">The industries.</param>
+        /// <param name="collaboratorRoles">The collaborator roles.</param>
+        /// <param name="editionsDtos">The editions dtos.</param>
+        /// <param name="roles">The roles.</param>
+        /// <param name="collaboratorTypes">The collaborator types.</param>
+        /// <param name="userRoleId">The user role identifier.</param>
+        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
+        /// <param name="currentEditionId">The current edition identifier.</param>
+        /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
+        /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
+        /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public CreateCollaborator(
+            List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos,
+            List<LanguageDto> languagesDtos,
+            List<CollaboratorGender> genders,
+            List<CollaboratorIndustry> industries,
+            List<CollaboratorRole> collaboratorRoles,
+            List<EditionDto> editionsDtos,
+            List<Role> roles,
+            List<CollaboratorType> collaboratorTypes,
+            int userRoleId,
+            string collaboratorTypeName,
+            int currentEditionId,
+            bool isJobTitleRequired,
+            bool isMiniBioRequired,
+            bool isImageRequired,
+            string userInterfaceLanguage)
+        {
+            this.UpdateBaseProperties(null,
+                attendeeOrganizationsBaseDtos,
+                languagesDtos,
+                genders,
+                industries,
+                collaboratorRoles,
+                editionsDtos,
+                roles,
+                collaboratorTypes,
+                userRoleId,
+                collaboratorTypeName,
+                currentEditionId,
+                isJobTitleRequired,
+                isMiniBioRequired,
+                isImageRequired,
                 userInterfaceLanguage);
         }
 

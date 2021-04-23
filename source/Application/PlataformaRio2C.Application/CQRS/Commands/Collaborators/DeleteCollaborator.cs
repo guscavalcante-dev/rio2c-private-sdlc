@@ -19,7 +19,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     public class DeleteCollaborator : BaseCommand
     {
         public Guid CollaboratorUid { get; set; }
-        public string CollaboratorTypeName { get; private set; }
+        public string CollaboratorTypeName { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="DeleteCollaborator"/> class.</summary>
         public DeleteCollaborator()
@@ -42,7 +42,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string userInterfaceLanguage)
         {
             this.CollaboratorTypeName = collaboratorTypeName;
-            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
+            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, userInterfaceLanguage);
         }
     }
 }

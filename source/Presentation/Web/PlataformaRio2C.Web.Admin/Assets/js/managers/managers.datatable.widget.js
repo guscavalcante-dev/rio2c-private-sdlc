@@ -253,16 +253,15 @@ var ManagersDataTableWidget = function () {
                             html += '<button class="dropdown-item" onclick="ManagersUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         }
 
-                        html += '<button class="dropdown-item" onclick="ManagersUpdate.showModal(\'' + full.Uid + '\', false);"><i class="la la-view"></i> ' + labels.view + '</button>';
-                        html += '<button class="dropdown-item" onclick="ManagersDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+                        html += '<button class="dropdown-item" onclick="ManagersUpdate.showModal(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
                         html += '<button class="dropdown-item" onclick="ManagersUpdate.showModal(\'' + full.Uid + '\', false);"><i class="la la-key"></i> ' + changePassword + '</button>';
                         html += '<button class="dropdown-item" onclick="ManagersUpdate.showModal(\'' + full.Uid + '\', false);"><i class="la la-lock"></i> ' + block + '</button>';
 
                         if (full.IsInCurrentEdition && full.IsInOtherEdition) {
-                            html += '<button class="dropdown-item" onclick="ManagersDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + removeFromEdition + '</button>';
+                            html += '<button class="dropdown-item" onclick="ManagersDelete.showModal(\'' + full.Uid + '\', \'' + full.CollaboratorTypeName + '\', true);"><i class="la la-minus"></i> ' + removeFromEdition + '</button>';
                         }
                         else {
-                            html += '<button class="dropdown-item" onclick="ManagersDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+                            html += '<button class="dropdown-item" onclick="ManagersDelete.showModal(\'' + full.Uid + '\', \'' + full.CollaboratorTypeName + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
                         }
 
                         html += '\</div>\</span>';

@@ -261,7 +261,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             else
                 data.AppendLine("Music Band; Participant profile; Musical style; Target Audience; Create Date; Qty. Evaluation; Status;");
 
-            var musicProjectJsonDtos = await this.musicProjectRepo.FindAllJsonDtosPagedAsync(this.EditionDto.Id,"",musicGenreUid,evaluationStatusUid, 1, 1000,new List<Tuple<string, string>>());
+            var musicProjectJsonDtos = await this.musicProjectRepo.FindAllJsonDtosPagedAsync(this.EditionDto.Id, searchKeywords, musicGenreUid, evaluationStatusUid, 1, 10000, new List<Tuple<string, string>>());
             var approvedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Id);
 
             foreach (var item in musicProjectJsonDtos)
@@ -468,83 +468,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
             return View(musicProjectDto);
         }
-
-        ///// <summary>
-        ///// Evaluations the details.
-        ///// </summary>
-        ///// <param name="id">The identifier.</param>
-        ///// <param name="step">The step.</param>
-        ///// <param name="searchKeywords">The search keywords.</param>
-        ///// <param name="musicGenreUid">The music genre uid.</param>
-        ///// <param name="evaluationStatusUid">The evaluation status uid.</param>
-        ///// <param name="page">The page.</param>
-        ///// <param name="pageSize">Size of the page.</param>
-        ///// <returns></returns>
-        //public async Task<ActionResult> EvaluationDetails(int? id, int step = 0, string searchKeywords = null, Guid? musicGenreUid = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 12)
-        //{
-        //    if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
-        //    {
-        //        return RedirectToAction("Index", "Projects", new { Area = "Music" });
-        //    }
-
-        //    var allMusicProjectsIds = await this.musicProjectRepo.FindAllMusicProjectsIdsAsync(
-        //        this.EditionDto.Edition.Id,
-        //        searchKeywords,
-        //        musicGenreUid,
-        //        evaluationStatusUid,
-        //        page.Value,
-        //        pageSize.Value);
-
-        //    var currentMusicProjectIdIndex = Array.IndexOf(allMusicProjectsIds, id.Value);
-
-        //    var nextProjectId = allMusicProjectsIds.ElementAtOrDefault(currentMusicProjectIdIndex + 1);
-        //    if (nextProjectId == 0)
-        //        nextProjectId = id.Value;
-
-        //    var previousProjectId = allMusicProjectsIds.ElementAtOrDefault(currentMusicProjectIdIndex - 1);
-        //    if (previousProjectId == 0)
-        //        previousProjectId = id.Value;
-
-        //    if (step > 0)
-        //    {
-        //        id = nextProjectId;
-        //    }
-        //    else if (step < 0)
-        //    {
-        //        id = previousProjectId;
-        //    }
-
-        //    var musicProjectDto = await this.musicProjectRepo.FindDtoToEvaluateAsync(id ?? 0);
-        //    if (musicProjectDto == null)
-        //    {
-        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("EvaluationList", "Projects", new { Area = "Music" });
-        //    }
-
-        //    #region Breadcrumb
-
-        //    ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.PitchingShow, new List<BreadcrumbItemHelper> {
-        //        new BreadcrumbItemHelper(Labels.Projects, Url.Action("", "Projects", new { Area = "Music" })),
-        //        new BreadcrumbItemHelper(musicProjectDto.AttendeeMusicBandDto?.MusicBand?.Name ?? Labels.Project, Url.Action("EvaluationDetails", "Projects", new { Area = "Music", id }))
-        //    });
-
-        //    #endregion
-
-        //    ViewBag.SearchKeywords = searchKeywords;
-        //    ViewBag.MusicGenreUid = musicGenreUid;
-        //    ViewBag.EvaluationStatusUid = evaluationStatusUid;
-        //    ViewBag.Page = page;
-        //    ViewBag.PageSize = pageSize;
-
-        //    ViewBag.NextProjectId = nextProjectId;
-        //    ViewBag.PreviousProjectId = previousProjectId;
-        //    ViewBag.CurrentMusicProjectIndex = currentMusicProjectIdIndex + 1;
-
-        //    ViewBag.MusicProjectsTotalCount = await this.musicProjectRepo.CountAsync(this.EditionDto.Edition.Id, searchKeywords, musicGenreUid, evaluationStatusUid, page.Value, pageSize.Value);
-        //    ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id, this.EditionDto.Edition.MusicProjectMaximumApprovedBandsCount);
-
-        //    return View(musicProjectDto);
-        //}
 
         #endregion
 

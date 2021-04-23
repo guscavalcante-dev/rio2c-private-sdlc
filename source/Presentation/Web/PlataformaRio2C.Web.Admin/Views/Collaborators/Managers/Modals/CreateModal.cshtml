@@ -1,22 +1,22 @@
 ﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateCollaborator
-<div class="modal fade" id="CreatePlayerExecutiveModal" role="dialog" aria-labelledby="CreatePlayerExecutiveModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<div class="modal fade" id="CreateManagerModal" role="dialog" aria-labelledby="CreateManagerModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">@Labels.NewM @Labels.Executive</h5>
+                <h5 class="modal-title">@Labels.NewM @Labels.Manager</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Create", "PlayersExecutives", new { Area = "" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "CreatePlayerExecutiveForm" }))
+                @using (Html.BeginForm("Create", "Collaborators/Managers", new { Area = "" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "CreateManagerForm" }))
                 {
                     <div id="form-container">
-                        @Html.Partial("Modals/_Form", Model)
+                        @Html.Partial("Managers/Modals/_Form", Model)
                     </div>
                 }
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">@Labels.Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="$('#CreatePlayerExecutiveForm').submit();">@Labels.Save</button>
+                <button type="button" class="btn btn-primary" onclick="$('#CreateManagerForm').submit();">@Labels.Save</button>
             </div>
         </div>
     </div>

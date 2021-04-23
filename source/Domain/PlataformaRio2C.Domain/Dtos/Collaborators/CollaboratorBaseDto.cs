@@ -33,6 +33,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public string CellPhone { get; set; }
         public string PublicEmail { get; set; }
         public string JobTitle { get; set; }
+        public string CollaboratorTypeName { get; set; }
+        
         public HoldingBaseDto HoldingBaseDto { get; set; }
         public OrganizationBaseDto OrganizatioBaseDto { get; set; }
         public DateTimeOffset? ImageUploadDate { get; set; }

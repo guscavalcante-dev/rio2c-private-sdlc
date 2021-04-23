@@ -1,27 +1,27 @@
 ﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateCollaborator
-<div class="modal fade" id="UpdatePlayerExecutiveModal" role="dialog" aria-labelledby="UpdatePlayerExecutiveModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<div class="modal fade" id="UpdateManagerModal" role="dialog" aria-labelledby="UpdateManagerModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">
                     @if (!Model.IsAddingToCurrentEdition)
                     {
-                        @(Labels.Update + " " + Labels.Executive)
+                        @(Labels.Update + " " + Labels.Manager)
                     }
                     else
                     {
-                        @(Labels.NewM + " " + Labels.Executive + " " + string.Format(Labels.InEditionYear, ViewBag.EditionDto?.UrlCode))
+                        @(Labels.NewM + " " + Labels.Manager + " " + string.Format(Labels.InEditionYear, ViewBag.EditionDto?.UrlCode))
                     }
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Update", "PlayersExecutives", new { Area = "" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UpdatePlayerExecutiveForm" }))
+                @using (Html.BeginForm("Update", "Collaborators/Managers", new { Area = "" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UpdateManagerForm" }))
                 {
                     @Html.HiddenFor(m => m.CollaboratorUid)
                     @Html.HiddenFor(m => m.IsAddingToCurrentEdition)
                     <div id="form-container">
-                        @Html.Partial("Modals/_Form", Model)
+                        @Html.Partial("Managers/Modals/_Form", Model)
                     </div>
                     <div class="kt-section pt-4">
                         <div class="kt-separator kt-separator--border-dashed"></div>
@@ -59,7 +59,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">@Labels.Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="$('#UpdatePlayerExecutiveForm').submit();">@Labels.Save</button>
+                <button type="button" class="btn btn-primary" onclick="$('#UpdateManagerForm').submit();">@Labels.Save</button>
             </div>
         </div>
     </div>

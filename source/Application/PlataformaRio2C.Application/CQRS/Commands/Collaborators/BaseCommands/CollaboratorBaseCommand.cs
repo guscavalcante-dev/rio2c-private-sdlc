@@ -49,7 +49,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Document { get; set; }
 
-        public string CollaboratorTypeName { get; private set; }
+        public int RoleId { get; set; }
+        public string CollaboratorTypeName { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CollaboratorBaseCommand"/> class.</summary>
         public CollaboratorBaseCommand()

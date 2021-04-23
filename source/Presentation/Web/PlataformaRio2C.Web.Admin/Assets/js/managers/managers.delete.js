@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Rafael Dantas Ruiz
-// Created          : 08-26-2019
+// Author           : Renan Valentim
+// Created          : 04-20-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 04-20-2021
 // ***********************************************************************
 // <copyright file="managers.delete.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,27 +15,28 @@
 var ManagersDelete = function () {
 
     // Delete -------------------------------------------------------------------------------------
-    var executeDelete = function (collaboratorUid) {
+    var executeDelete = function (collaboratorUid, collaboratorTypeName) {
         MyRio2cCommon.block();
 
         var jsonParameters = new Object();
-        jsonParameters.collaboratorUid = collaboratorUid;
+        jsonParameters.CollaboratorUid = collaboratorUid;
+        jsonParameters.CollaboratorTypeName = collaboratorTypeName;
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/Delete'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Collaborators/Managers/Delete'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
                 onSuccess: function () {
-                    if (typeof (CollaboratorsDataTableWidget) !== 'undefined') {
-                        CollaboratorsDataTableWidget.refreshData();
+                    if (typeof (ManagersDataTableWidget) !== 'undefined') {
+                        ManagersDataTableWidget.refreshData();
                     }
 
-                    if (typeof (CollaboratorsTotalCountWidget) !== 'undefined') {
-                        CollaboratorsTotalCountWidget.init();
+                    if (typeof (ManagersTotalCountWidget) !== 'undefined') {
+                        ManagersTotalCountWidget.init();
                     }
 
-                    if (typeof (CollaboratorsEditionCountWidget) !== 'undefined') {
-                        CollaboratorsEditionCountWidget.init();
+                    if (typeof (ManagersEditionCountWidget) !== 'undefined') {
+                        ManagersEditionCountWidget.init();
                     }
                 },
                 // Error
@@ -50,7 +51,7 @@ var ManagersDelete = function () {
         });
     };
 
-    var showModal = function (collaboratorUid, isDeletingFromCurrentEdition) {
+    var showModal = function (collaboratorUid, collaboratorTypeName, isDeletingFromCurrentEdition) {
         var message = labels.deleteConfirmationMessage;
 
         if (isDeletingFromCurrentEdition) {
@@ -70,7 +71,7 @@ var ManagersDelete = function () {
                     label: labels.remove,
                     className: "btn btn-danger",
                     callback: function () {
-                        executeDelete(collaboratorUid);
+                        executeDelete(collaboratorUid, collaboratorTypeName);
                     }
                 }
             }
