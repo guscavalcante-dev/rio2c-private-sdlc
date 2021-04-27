@@ -852,6 +852,7 @@
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.maininformation.widget.js" />
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.totalcount.widget.js" />
     <Content Include="Assets\js\logistics\logistics.airfare.widget.js" />
+    <Content Include="Assets\js\managers\managers.maininformation.widget.js" />
     <Content Include="Assets\js\managers\managers.create.js" />
     <Content Include="Assets\js\managers\managers.datatable.widget.js" />
     <Content Include="Assets\js\managers\managers.delete.js" />
@@ -8948,7 +8949,7 @@
     <Content Include="Views\Managers\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Views\Managers\Index.cshtml" />
     <Content Include="Views\Collaborators\Index.cshtml" />
-    <Content Include="Views\AdminMailerService\AdminWelcomeEmail.cshtml" />
+    <Content Include="Views\AdminMailerService\AdminWelcomeEmail.cshtml" />   
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

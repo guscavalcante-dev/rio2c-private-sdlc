@@ -29,11 +29,8 @@ var ManagersUpdate = function () {
         }
 
         MyRio2cCropper.init({ formIdOrClass: formId });
-        MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });        
-        MyRio2cCommon.enableDatePicker({ inputIdOrClass: formId + ' .enable-datepicker' });        
-        //AttendeeOrganizationsForm.init(formId);
-        AddressesForm.init();
-
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
+        MyRio2cCommon.enableDatePicker({ inputIdOrClass: formId + ' .enable-datepicker' });
         MyRio2cCommon.enableDropdownChangeEvent("CollaboratorGenderUid", "CollaboratorGenderAdditionalInfo");
         MyRio2cCommon.enableDropdownChangeEvent("CollaboratorRoleUid", "CollaboratorRoleAdditionalInfo");
         MyRio2cCommon.enableDropdownChangeEvent("CollaboratorIndustryUid", "CollaboratorIndustryAdditionalInfo");
