@@ -302,6 +302,9 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/managers.delete.js").Include(
                 "~/Assets/js/managers/managers.delete.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/managers.maininformation.widget.js").Include(
+                "~/Assets/js/managers/managers.maininformation.widget.js"));
+
             #endregion
 
             #region Editions

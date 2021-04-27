@@ -253,7 +253,7 @@ var ManagersDataTableWidget = function () {
                             html += '<button class="dropdown-item" onclick="ManagersUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         }
 
-                        html += '<button class="dropdown-item" onclick="ManagersUpdate.showModal(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
+                        html += '<button class="dropdown-item" onclick="ManagersDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
                         html += '<button class="dropdown-item" onclick="ManagersUpdate.showModal(\'' + full.Uid + '\', false);"><i class="la la-key"></i> ' + changePassword + '</button>';
                         html += '<button class="dropdown-item" onclick="ManagersUpdate.showModal(\'' + full.Uid + '\', false);"><i class="la la-lock"></i> ' + block + '</button>';
 
@@ -320,6 +320,14 @@ var ManagersDataTableWidget = function () {
         table.ajax.reload();
     };
 
+    var showDetails = function (collaboratorUid) {
+        if (MyRio2cCommon.isNullOrEmpty(collaboratorUid)) {
+            return;
+        }
+
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Collaborators/Managers/Details/' + collaboratorUid);
+    };
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
@@ -330,6 +338,9 @@ var ManagersDataTableWidget = function () {
         },
         exportEventbriteCsv: function () {
             exportEventbriteCsv();
+        },
+        showDetails: function (collaboratorUid) {
+            showDetails(collaboratorUid);
         }
     };
 }();

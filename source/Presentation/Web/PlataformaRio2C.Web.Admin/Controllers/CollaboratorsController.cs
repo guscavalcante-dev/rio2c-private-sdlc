@@ -198,6 +198,52 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #endregion
 
+
+        /// <summary>Detailses the specified identifier.</summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpGet, Route("Collaborators/Managers/Details/{collaboratorUid}")]
+        public async Task<ActionResult> Details(Guid? collaboratorUid)
+        {   
+            var collaboratorDto =  await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage));
+            
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper("Administradores", new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper("Administradores", Url.Action("Index", "Collaborators/Managers", new { Area = "" })),
+                //new BreadcrumbItemHelper(editionDto.Edition.Name, Url.Action("Details", "Collaborators", new { id }))
+            });
+
+            //ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Editions, null);
+
+            #endregion
+
+            return View(collaboratorDto);
+        }
+
+        /// <summary>Shows the main information widget.</summary>
+        /// <param name="collaboratorUid">The edition event uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowMainInformationWidget(Guid collaboratorUid)
+        {      
+            var mainInformationWidgetDto = await this.collaboratorRepo.FindDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id);
+            if (mainInformationWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Edition, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Managers/Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#ManagersMainInformationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+
         #region Create
 
         /// <summary>Shows the create modal.</summary>
