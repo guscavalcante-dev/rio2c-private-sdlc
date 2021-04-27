@@ -31,7 +31,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public CollaboratorGender Gender { get; set; }
         public string CollaboratorGenderAdditionalInfo { get; set; }
         public int? CollaboratorRoleId { get; set; }
-        public CollaboratorRole Role { get; set; }
+        public CollaboratorRole CollaboratorRole { get; set; }
         public string CollaboratorRoleAdditionalInfo { get; set; }
         public int? CollaboratorIndustryId { get; set; }
         public CollaboratorIndustry Industry { get; set; }
@@ -41,6 +41,11 @@ namespace PlataformaRio2C.Domain.Dtos
         public List<Guid> EditionsUids { get; set; }
         public int CreateUserId { get; set; }
         public int UpdateUserId { get; set; }
+
+        public string RoleName { get; set; }
+        public Role Role { get; set; }
+        public string CollaboratorTypeName { get; set; }
+        public CollaboratorType CollaboratorType { get; set; }
 
         public UserBaseDto CreatorDto { get; set; }
         public UserBaseDto UpdaterDto { get; set; }

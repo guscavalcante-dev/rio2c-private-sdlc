@@ -30,7 +30,7 @@ var ManagersCreate = function () {
 
         MyRio2cCropper.init({ formIdOrClass: formId });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
-        AttendeeOrganizationsForm.init(formId);
+        //AttendeeOrganizationsForm.init(formId);
         AddressesForm.init();        
         MyRio2cCommon.enableDropdownChangeEvent("CollaboratorGenderUid", "CollaboratorGenderAdditionalInfo");
         MyRio2cCommon.enableDropdownChangeEvent("CollaboratorRoleUid", "CollaboratorRoleAdditionalInfo");
@@ -69,7 +69,7 @@ var ManagersCreate = function () {
 
         var jsonParameters = new Object();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Collaborators/Managers/ShowCreateModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Managers/ShowCreateModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -96,16 +96,16 @@ var ManagersCreate = function () {
             onSuccess: function (data) {
                 $(modalId).modal('hide');
 
-                if (typeof (CollaboratorsDataTableWidget) !== 'undefined') {
-                    CollaboratorsDataTableWidget.refreshData();
+                if (typeof (ManagersDataTableWidget) !== 'undefined') {
+                    ManagersDataTableWidget.refreshData();
                 }
 
-                if (typeof (CollaboratorsTotalCountWidget) !== 'undefined') {
-                    CollaboratorsTotalCountWidget.init();
+                if (typeof (ManagersTotalCountWidget) !== 'undefined') {
+                    ManagersTotalCountWidget.init();
                 }
 
-                if (typeof (CollaboratorsEditionCountWidget) !== 'undefined') {
-                    CollaboratorsEditionCountWidget.init();
+                if (typeof (ManagersEditionCountWidget) !== 'undefined') {
+                    ManagersEditionCountWidget.init();
                 }
             },
             onError: function (data) {

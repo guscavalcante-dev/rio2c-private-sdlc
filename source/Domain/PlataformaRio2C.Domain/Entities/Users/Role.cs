@@ -11,12 +11,16 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System.Linq;
+
 namespace PlataformaRio2C.Domain.Entities
 {
     /// <summary>Role</summary>
     public class Role : Entity
     {
         public string Name { get; set; }
+
+        public bool HasAdditionalInfo => Constants.Role.AdminPartial == this.Name;
 
         #region Validations
 

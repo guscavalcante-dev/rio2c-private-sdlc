@@ -26,6 +26,12 @@ namespace PlataformaRio2C.Application.ViewModels
         [Display(Name = "ShowAllEditions", ResourceType = typeof(Labels))]
         public bool ShowAllEditions { get; set; }
 
+        [Display(Name = "Roles", ResourceType = typeof(Labels))]
+        public string[] Roles { get; set; }
+
+        [Display(Name = "SelectedRoles", ResourceType = typeof(Labels))]
+        public string[] SelectedRoles { get; set; }
+
         [Display(Name = "CollaboratorTypes", ResourceType = typeof(Labels))]
         public string[] CollaboratorTypes { get; set; }
 
@@ -40,6 +46,7 @@ namespace PlataformaRio2C.Application.ViewModels
         {
             //this.ShowAllEditions = true;
             this.CollaboratorTypes = CollaboratorType.Admins;
+            this.Roles = Role.AnyAdminArray;
         }
     }
 }

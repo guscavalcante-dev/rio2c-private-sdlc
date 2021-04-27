@@ -34,7 +34,30 @@ namespace PlataformaRio2C.Domain.Dtos
         public string PublicEmail { get; set; }
         public string JobTitle { get; set; }
         public string CollaboratorTypeName { get; set; }
-        
+        public string RoleName { get; set; }
+        public string RoleWithCollaboratorTypeNameHtmlString
+        {
+            get 
+            {
+                var name = "";
+
+                if (!string.IsNullOrEmpty(RoleName) && !string.IsNullOrEmpty(CollaboratorTypeName))
+                {
+                    name = $"{RoleName}<br/>{CollaboratorTypeName}";
+                }
+                else if (!string.IsNullOrEmpty(CollaboratorTypeName))
+                {
+                    name = CollaboratorTypeName;
+                }
+                else if (!string.IsNullOrEmpty(RoleName))
+                {
+                    name = RoleName;
+                }
+
+                return name;
+            }
+        }
+
         public HoldingBaseDto HoldingBaseDto { get; set; }
         public OrganizationBaseDto OrganizatioBaseDto { get; set; }
         public DateTimeOffset? ImageUploadDate { get; set; }

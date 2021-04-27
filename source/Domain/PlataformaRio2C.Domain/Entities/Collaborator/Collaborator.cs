@@ -74,49 +74,9 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeCollaborator> AttendeeCollaborators { get; private set; }
         public virtual ICollection<CollaboratorEditionParticipation> EditionParticipantions { get; private set; }
 
-        //public virtual ICollection<Player> Players { get; private set; }
-        //public virtual ICollection<CollaboratorProducer> ProducersEvents { get; private set; }
-
-        //public int? SpeakerId { get;  set; }
-        //public int? MusicalCommissionId { get;  set; }
-        //public virtual ICollection<Speaker> Speaker { get;  set; }
-
-        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class for tiny create on admin.</summary>
-        /// <param name="uid">The uid.</param>
-        /// <param name="edition">The edition.</param>
-        /// <param name="collaboratorType">Type of the collaborator.</param>
-        /// <param name="firstName">The first name.</param>
-        /// <param name="lastNames">The last names.</param>
-        /// <param name="email">The email.</param>
-        /// <param name="userId">The user identifier.</param>
-        public Collaborator(
-            Edition edition,
-            CollaboratorType collaboratorType,
-            string firstName,
-            string lastNames,
-            string email,
-            string phoneNumber,
-            string cellPhone,
-            string document,
-            int userId)
-        {
-            //this.Uid = uid;
-            this.FirstName = firstName?.Trim();
-            this.LastNames = lastNames?.Trim();
-            this.PublicEmail = email?.Trim();
-            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, null, null, true, userId);
-            this.UpdateUser(email);
-            this.PhoneNumber = phoneNumber?.Trim();
-            this.CellPhone = cellPhone?.Trim();
-            this.Document = document?.Trim();
-
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
-        }
-
-        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class for admin.</summary>
-        /// <param name="uid">The uid.</param>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Collaborator"/> class.
+        /// </summary>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
@@ -200,7 +160,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Industry = collaboratorIndustry;
             this.Role = collaboratorRole;
             this.CollaboratorGenderId = collaboratorGender?.Id;
-            this.CollaboratorGenderAdditionalInfo =  collaboratorGenderAdditionalInfo;
+            this.CollaboratorGenderAdditionalInfo = collaboratorGenderAdditionalInfo;
             this.CollaboratorRoleId = collaboratorRole?.Id;
             this.CollaboratorRoleAdditionalInfo = collaboratorRoleAdditionalInfo;
             this.CollaboratorIndustryId = collaboratorIndustry?.Id;
@@ -215,7 +175,43 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUser(email);
         }
 
-        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class for webhook requests.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class for tiny create on admin.</summary>
+        /// <param name="uid">The uid.</param>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="userId">The user identifier.</param>
+        public Collaborator(
+            Edition edition,
+            CollaboratorType collaboratorType,
+            string firstName,
+            string lastNames,
+            string email,
+            string phoneNumber,
+            string cellPhone,
+            string document,
+            int userId)
+        {
+            //this.Uid = uid;
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.PublicEmail = email?.Trim();
+            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, null, null, true, userId);
+            this.UpdateUser(email);
+            this.PhoneNumber = phoneNumber?.Trim();
+            this.CellPhone = cellPhone?.Trim();
+            this.Document = document?.Trim();
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Collaborator"/> class.
+        /// </summary>
         /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="newAttendeeOrganizations">The new attendee organizations.</param>
@@ -279,6 +275,40 @@ namespace PlataformaRio2C.Domain.Entities
                 barcodeUpdateDate,
                 userId);
             this.UpdateUser(email);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Collaborator"/> class.
+        /// </summary>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="document">The document.</param>
+        /// <param name="userId">The user identifier.</param>
+        public Collaborator(
+            string firstName,
+            string lastNames,
+            string email,
+            string phoneNumber,
+            string cellPhone,
+            string document,
+            List<Role> roles,
+            int userId)
+        {
+            //this.Uid = uid;
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.PublicEmail = email?.Trim();
+            this.UpdateUser(email, roles);
+            this.PhoneNumber = phoneNumber?.Trim();
+            this.CellPhone = cellPhone?.Trim();
+            this.Document = document?.Trim();
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
         }
 
         /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class.</summary>
@@ -788,6 +818,23 @@ namespace PlataformaRio2C.Domain.Entities
             else
             {
                 this.User = new User(this.GetFullName(), email, this.FindAllRolesByAttendeeCollaboratorTypes());
+            }
+        }
+
+        /// <summary>
+        /// Updates the user.
+        /// </summary>
+        /// <param name="email">The email.</param>
+        /// <param name="roles">The roles.</param>
+        public void UpdateUser(string email, List<Role> roles)
+        {
+            if (this.User != null)
+            {
+                this.User.Update(this.GetFullName(), email, roles);
+            }
+            else
+            {
+                this.User = new User(this.GetFullName(), email, roles);
             }
         }
 

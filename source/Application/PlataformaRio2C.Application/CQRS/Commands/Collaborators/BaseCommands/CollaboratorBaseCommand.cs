@@ -12,8 +12,10 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
@@ -49,8 +51,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Document { get; set; }
 
-        public int RoleId { get; set; }
+        [Display(Name = "Profile", ResourceType = typeof(Labels))]
+        public int? RoleId { get; set; }
+        public IEnumerable<Role> Roles { get; set; }
+
+        [Display(Name = "CollaboratorType", ResourceType = typeof(Labels))]
         public string CollaboratorTypeName { get; set; }
+        public IEnumerable<CollaboratorType> CollaboratorTypes { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CollaboratorBaseCommand"/> class.</summary>
         public CollaboratorBaseCommand()

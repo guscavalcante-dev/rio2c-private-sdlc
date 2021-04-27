@@ -377,6 +377,7 @@
     <Compile Include="Areas\WebApi\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ManagersController.cs" />
     <Compile Include="Controllers\CompaniesController.cs" />
     <Compile Include="Controllers\EditionsController.cs" />
     <Compile Include="Controllers\LogisticsController.cs" />
@@ -8939,17 +8940,15 @@
     <Content Include="Views\Editions\Modals\UpdateDatesInformationModal.cshtml" />
     <Content Include="Views\Editions\Modals\_UpdateDatesForm.cshtml" />
     <Content Include="Views\Editions\Modals\_UpdateForm.cshtml" />
-    <Content Include="Views\Collaborators\Managers\Modals\_Form.cshtml" />
-    <Content Include="Views\Collaborators\Managers\Modals\CreateModal.cshtml" />
-    <Content Include="Views\Collaborators\Managers\Modals\UpdateModal.cshtml" />
-    <Content Include="Views\Collaborators\Managers\Widgets\DataTableWidget.cshtml" />
-    <Content Include="Views\Collaborators\Managers\Widgets\EditionCountWidget.cshtml" />
-    <Content Include="Views\Collaborators\Managers\Widgets\TotalCountWidget.cshtml" />
-    <Content Include="Views\Collaborators\Managers\_Editor.cshtml" />
-    <Content Include="Views\Collaborators\Managers\Create.cshtml" />
-    <Content Include="Views\Collaborators\Managers\Edit.cshtml" />
-    <Content Include="Views\Collaborators\ManagersIndex.cshtml" />
+    <Content Include="Views\Managers\Modals\_Form.cshtml" />
+    <Content Include="Views\Managers\Modals\CreateModal.cshtml" />
+    <Content Include="Views\Managers\Modals\UpdateModal.cshtml" />
+    <Content Include="Views\Managers\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Views\Managers\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Views\Managers\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Views\Managers\Index.cshtml" />
     <Content Include="Views\Collaborators\Index.cshtml" />
+    <Content Include="Views\AdminMailerService\AdminWelcomeEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

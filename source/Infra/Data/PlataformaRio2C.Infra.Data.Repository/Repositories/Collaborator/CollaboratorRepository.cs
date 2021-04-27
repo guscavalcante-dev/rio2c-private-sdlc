@@ -23,6 +23,7 @@ using LinqKit;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using X.PagedList;
+using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -93,16 +94,65 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<Collaborator> FindByCollaboratorTypeNameAndByEditionId(this IQueryable<Collaborator> query, string[] collaboratorTypeNames, bool showAllEditions, bool showAllExecutives, bool showAllParticipants, int? editionId)
         {
-            query = query.Where(c => c.AttendeeCollaborators.Any(ac => (showAllEditions || ac.EditionId == editionId)
-                                                                       && !ac.IsDeleted
-                                                                       && !ac.Edition.IsDeleted
-                                                                       && (showAllParticipants
-                                                                           || (showAllExecutives && ac.AttendeeOrganizationCollaborators
-                                                                                                            .Any(aoc => !aoc.IsDeleted))
-                                                                           || (!showAllExecutives && ac.AttendeeCollaboratorTypes
-                                                                                                            .Any(act => !act.IsDeleted
-                                                                                                                        && !act.CollaboratorType.IsDeleted
-                                                                                                                        && collaboratorTypeNames.Contains(act.CollaboratorType.Name))))));
+            if (collaboratorTypeNames?.Any(ctn => !string.IsNullOrEmpty(ctn)) == true)
+            {
+                query = query.Where(c => c.AttendeeCollaborators.Any(ac => (showAllEditions || ac.EditionId == editionId)
+                                                                           && !ac.IsDeleted
+                                                                           && !ac.Edition.IsDeleted
+                                                                           && (showAllParticipants
+                                                                               || (showAllExecutives && ac.AttendeeOrganizationCollaborators
+                                                                                                                .Any(aoc => !aoc.IsDeleted))
+                                                                               || (!showAllExecutives && ac.AttendeeCollaboratorTypes
+                                                                                                                .Any(act => !act.IsDeleted
+                                                                                                                            && !act.CollaboratorType.IsDeleted
+                                                                                                                            && collaboratorTypeNames.Contains(act.CollaboratorType.Name))))));
+            }
+
+            return query;
+        }
+
+        /// <summary>
+        /// Finds the by collaborator type name and by edition identifier.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="collaboratorTypeNames">The collaborator type names.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> FindByCollaboratorTypeNameAndByEditionId(this IQueryable<Collaborator> query, string[] collaboratorTypeNames, bool showAllEditions, int? editionId)
+        {
+            //Preciso:
+            //Trazer todos os usuários independente da role
+            //Trazer todos os usuários com collaboratorTypeName != User
+            //Porém um AdminFull não tem collaboratorType, logo se eu adicionar esta clausula where e definir que quero todos os AttendeeCollaboratorTypes != User, não trará os AdminFull!
+
+            if (collaboratorTypeNames?.Any(ctn => !string.IsNullOrEmpty(ctn)) == true)
+            {
+                query = query.Where(c => (c.AttendeeCollaborators.Any(ac => (showAllEditions || ac.EditionId == editionId)
+                                                                                                               && !ac.IsDeleted
+                                                                                                               && !ac.Edition.IsDeleted
+                                                                                                               && ac.AttendeeOrganizationCollaborators.Any(aoc => !aoc.IsDeleted)
+                                                                                                               || (ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
+                                                                                                                                                            && !act.CollaboratorType.IsDeleted
+                                                                                                                                                            && collaboratorTypeNames.Contains(act.CollaboratorType.Name))))));
+            }
+
+            return query;
+        }
+
+        /// <summary>
+        /// Finds the by role.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="rolesNames">The roles names.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> FindByRole(this IQueryable<Collaborator> query, string[] rolesNames)
+        {
+            if (rolesNames?.Any(rn => !string.IsNullOrEmpty(rn)) == true)
+            {
+                query = query.Where(c => !c.IsDeleted
+                                            && c.User.Roles.Any(r => rolesNames.Contains(r.Name)));
+            }
 
             return query;
         }
@@ -161,7 +211,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<Collaborator> FindByHighlights(this IQueryable<Collaborator> query, string[] collaboratorTypeNames, bool? showHighlights)
         {
-            if (showHighlights.HasValue && showHighlights.Value)
+            if (showHighlights.HasValue && showHighlights.Value
+                && collaboratorTypeNames?.Any(ctn => !string.IsNullOrEmpty(ctn)) == true)
             {
                 query = query.Where(o => o.AttendeeCollaborators.Any(ac => !ac.IsDeleted
                                                                            && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
@@ -441,7 +492,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 BirthDate = c.BirthDate,
                                 Gender = c.Gender,
                                 Industry = c.Industry,
-                                Role = c.Role,
+                                CollaboratorRole = c.Role,
                                 CollaboratorGenderAdditionalInfo = c.CollaboratorGenderAdditionalInfo,
                                 CollaboratorIndustryAdditionalInfo = c.CollaboratorIndustryAdditionalInfo,
                                 CollaboratorRoleAdditionalInfo = c.CollaboratorRoleAdditionalInfo,
@@ -534,13 +585,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             }).FirstOrDefaultAsync();
         }
 
-        /// <summary>Finds all by data table.</summary>
+        /// <summary>
+        /// Finds all by data table.
+        /// </summary>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="keywords">The keywords.</param>
         /// <param name="sortColumns">The sort columns.</param>
         /// <param name="collaboratorsUids">The collaborators uids.</param>
-        /// <param name="collaboratorTypeNames">Name of the collaborator type.</param>
+        /// <param name="collaboratorTypeNames">The collaborator type names.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="showAllExecutives">if set to <c>true</c> [show all executives].</param>
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
@@ -562,8 +615,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords, editionId)
-                                .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeNames, showAllEditions, showAllExecutives, showAllParticipants, editionId)
                                 .FindByUids(collaboratorsUids)
+                                .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeNames, showAllEditions, showAllExecutives, showAllParticipants, editionId)
                                 .FindByHighlights(collaboratorTypeNames, showHighlights);
 
             return await query
@@ -619,7 +672,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
                                 CollaboratorTypeName = c.AttendeeCollaborators.FirstOrDefault(ac => !ac.IsDeleted)
                                                                                 .AttendeeCollaboratorTypes.FirstOrDefault(act => !act.IsDeleted)
-                                                                                .CollaboratorType.Name
+                                                                                .CollaboratorType.Name,
+
+                                RoleName = c.User.Roles.FirstOrDefault().Name
                             })
                             .ToListPagedAsync(page, pageSize);
         }
@@ -745,6 +800,98 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     .Select(ac => ac.Logistics.FirstOrDefault(l => !l.IsDeleted))
                                     .Select(e => e.IsVehicleDisposalRequired)
                                     .FirstOrDefault(),
+                            })
+                            .ToListPagedAsync(page, pageSize);
+        }
+
+        /// <summary>
+        /// Finds all amins by data table.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <param name="collaboratorsUids">The collaborators uids.</param>
+        /// <param name="collaboratorTypeNames">The collaborator type names.</param>
+        /// <param name="rolesNames">The roles names.</param>
+        /// <param name="showHighlights">The show highlights.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<CollaboratorBaseDto>> FindAllAminsByDataTable(
+            int page,
+            int pageSize,
+            string keywords,
+            List<Tuple<string, string>> sortColumns,
+            List<Guid> collaboratorsUids,
+            string[] collaboratorTypeNames,
+            string[] rolesNames,
+            bool showAllEditions,
+            bool? showHighlights,
+            int? editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByKeywords(keywords, editionId)
+                                .FindByUids(collaboratorsUids)
+                                .FindByRole(rolesNames)
+                                .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeNames, showAllEditions, editionId)
+                                .FindByHighlights(collaboratorTypeNames, showHighlights);
+
+            return await query
+                            .DynamicOrder<Collaborator>(
+                                sortColumns,
+                                new List<Tuple<string, string>>
+                                {
+                                    new Tuple<string, string>("FullName", "User.Name"),
+                                    new Tuple<string, string>("Email", "User.Email"),
+                                },
+                                new List<string> { "User.Name", "User.Email", "CreateDate", "UpdateDate" },
+                                "User.Name")
+                            .Select(c => new CollaboratorBaseDto
+                            {
+                                Id = c.Id,
+                                Uid = c.Uid,
+                                FirstName = c.FirstName,
+                                LastNames = c.LastNames,
+                                Badge = c.Badge,
+                                Email = c.User.Email,
+                                PhoneNumber = c.PhoneNumber,
+                                CellPhone = c.CellPhone,
+                                PublicEmail = c.PublicEmail,
+                                ImageUploadDate = c.ImageUploadDate,
+                                CreateDate = c.CreateDate,
+                                UpdateDate = c.UpdateDate,
+                                EditionAttendeeCollaborator = editionId.HasValue ? c.AttendeeCollaborators.FirstOrDefault(ac => ac.EditionId == editionId
+                                                                                                                                && !ac.Edition.IsDeleted
+                                                                                                                                && !ac.IsDeleted
+                                                                                                                                && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
+                                                                                                                                                                           && collaboratorTypeNames.Contains(act.CollaboratorType.Name))) :
+                                                                                   null,
+                                IsInOtherEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId
+                                                                                                           && !ac.IsDeleted),
+                                AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
+                                                                    .Where(at => !at.IsDeleted && at.EditionId == editionId)
+                                                                    .SelectMany(at => at.AttendeeOrganizationCollaborators
+                                                                                            .Where(aoc => !aoc.IsDeleted)
+                                                                                            .Select(aoc => new AttendeeOrganizationBaseDto
+                                                                                            {
+                                                                                                Uid = aoc.AttendeeOrganization.Uid,
+                                                                                                OrganizationBaseDto = new OrganizationBaseDto
+                                                                                                {
+                                                                                                    Name = aoc.AttendeeOrganization.Organization.Name,
+                                                                                                    HoldingBaseDto = aoc.AttendeeOrganization.Organization.Holding == null ? null : new HoldingBaseDto
+                                                                                                    {
+                                                                                                        Name = aoc.AttendeeOrganization.Organization.Holding.Name
+                                                                                                    }
+                                                                                                }
+                                                                                            })),
+
+                                JobTitle = c.JobTitles.FirstOrDefault(jb => !jb.IsDeleted && jb.CollaboratorId == c.Id).Value,
+
+                                CollaboratorTypeName = c.AttendeeCollaborators.FirstOrDefault(ac => !ac.IsDeleted)
+                                                                                .AttendeeCollaboratorTypes.FirstOrDefault(act => !act.IsDeleted)
+                                                                                .CollaboratorType.Name,
+
+                                RoleName = c.User.Roles.FirstOrDefault().Name
                             })
                             .ToListPagedAsync(page, pageSize);
         }

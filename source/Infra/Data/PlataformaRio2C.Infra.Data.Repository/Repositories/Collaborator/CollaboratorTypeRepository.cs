@@ -15,9 +15,11 @@ using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
@@ -59,6 +61,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>
+        /// Determines whether this instance is admin.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<CollaboratorType> IsAdmin(this IQueryable<CollaboratorType> query)
+        {
+            query = query.Where(c => Constants.CollaboratorType.Admins.Contains(c.Name));
+
+            return query;
+        }
     }
 
     #endregion
@@ -97,6 +111,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query
                             .Include(ct => ct.Role)
                             .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds all admin collaborator types asynchronous.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<CollaboratorType>> FindAllAdminCollaboratorTypesAsync()
+        {
+            var query = this.GetBaseQuery()
+                            .IsAdmin();
+
+            return await query
+                            .ToListAsync();
         }
     }
 }

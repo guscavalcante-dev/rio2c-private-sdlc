@@ -2711,4 +2711,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Bloquear</value>
     <comment>Bloquear</comment>
   </data>
+  <data name="CollaboratorType" xml:space="preserve">
+    <value>Tipo de colaborador</value>
+    <comment>Tipo de colaborador</comment>
+  </data>
 </root>

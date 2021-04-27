@@ -2706,4 +2706,8 @@
     <value>Block</value>
     <comment>Bloquear</comment>
   </data>
+  <data name="CollaboratorType" xml:space="preserve">
+    <value>Collaborator type</value>
+    <comment>Tipo de colaborador</comment>
+  </data>
 </root>

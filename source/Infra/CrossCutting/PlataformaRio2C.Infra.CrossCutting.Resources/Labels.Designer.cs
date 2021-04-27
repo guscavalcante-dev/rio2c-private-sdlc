@@ -853,6 +853,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tipo de colaborador.
+        /// </summary>
+        public static string CollaboratorType {
+            get {
+                return ResourceManager.GetString("CollaboratorType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cor.
         /// </summary>
         public static string Color {

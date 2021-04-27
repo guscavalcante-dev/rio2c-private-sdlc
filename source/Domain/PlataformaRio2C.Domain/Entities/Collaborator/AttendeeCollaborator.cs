@@ -307,6 +307,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         private void SynchronizeAttendeeCollaboratorType(CollaboratorType collaboratorType, bool? isApiDisplayEnabled, int? apiHighlightPosition, int userId)
         {
+            if(collaboratorType == null)
+            {
+                return;
+            }
+
             if (this.AttendeeCollaboratorTypes == null)
             {
                 this.AttendeeCollaboratorTypes = new List<AttendeeCollaboratorType>();

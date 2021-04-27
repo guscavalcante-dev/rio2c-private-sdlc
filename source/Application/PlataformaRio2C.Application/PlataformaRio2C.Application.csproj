@@ -221,6 +221,7 @@
     <Compile Include="CQRS\CommandsHandlers\Editions\EditionBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Editions\UpdateEditionDatesInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Editions\UpdateEditionMainInformationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendAdminWelcomeEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendMusicCommissionWelcomeEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendSpeakerWelcomeEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Common\SendForgotPasswordEmailAsyncCommandHandler.cs" />
@@ -251,6 +252,10 @@
     <Compile Include="CQRS\CommandsHandlers\Logistics\LogisticAccommodationBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Logistics\LogisticsBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Logistics\LogisticAirfareBaseCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Managers\BaseManagerCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Managers\CreateManagerCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Managers\DeleteManagerCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Managers\UpdateManagerCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Messages\SendUnreadConversationsEmailsAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\Bands\BaseCommandHandlers\ReleasedMusicProjectBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\Bands\BaseCommandHandlers\MusicBandTeamMemberBaseCommandHandler.cs" />
@@ -342,6 +347,7 @@
     <Compile Include="CQRS\Commands\Editions\DeleteEdition.cs" />
     <Compile Include="CQRS\Commands\Editions\UpdateEditionDatesInformation.cs" />
     <Compile Include="CQRS\Commands\Editions\UpdateEditionMainInformation.cs" />
+    <Compile Include="CQRS\Commands\Emails\Admin\SendAdminWelcomeEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Logistics\UpdateLogisticAccomodation.cs" />
     <Compile Include="CQRS\Commands\Logistics\CreateLogisticAccommodation.cs" />
     <Compile Include="CQRS\Commands\Logistics\UpdateLogisticAirfare.cs" />
@@ -359,6 +365,10 @@
     <Compile Include="CQRS\Commands\LogisticSponsors\UpdateLogisticSponsorMainInformation.cs" />
     <Compile Include="CQRS\Commands\LogisticSponsors\CreateLogisticSponsor.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendMusicCommissionWelcomeEmailAsync.cs" />
+    <Compile Include="CQRS\Commands\Managers\BaseCommands\ManagerBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Managers\CreateManager.cs" />
+    <Compile Include="CQRS\Commands\Managers\DeleteManager.cs" />
+    <Compile Include="CQRS\Commands\Managers\UpdateManager.cs" />
     <Compile Include="CQRS\Commands\Music\Bands\BaseCommands\ReleasedMusicProjectBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Music\Bands\BaseCommands\MusicBandTeamMemberBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Music\Bands\BaseCommands\MusicBandMemberBaseCommand.cs" />

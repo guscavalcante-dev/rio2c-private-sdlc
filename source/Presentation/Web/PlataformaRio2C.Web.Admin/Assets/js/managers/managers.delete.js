@@ -22,7 +22,7 @@ var ManagersDelete = function () {
         jsonParameters.CollaboratorUid = collaboratorUid;
         jsonParameters.CollaboratorTypeName = collaboratorTypeName;
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Collaborators/Managers/Delete'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Managers/Delete'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

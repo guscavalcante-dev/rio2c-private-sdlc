@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
-// Author           : Rafael Dantas Ruiz
-// Created          : 08-27-2019
+// Author           : Renan Valentim
+// Created          : 04-24-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-16-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 04-24-2021
 // ***********************************************************************
-// <copyright file="UpdateCollaboratorCommandHandler.cs" company="Softo">
+// <copyright file="UpdateManagerCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -28,8 +28,8 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>UpdateCollaboratorCommandHandler</summary>
-    public class UpdateCollaboratorCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<UpdateCollaborator, AppValidationResult>
+    /// <summary>UpdateManagerCommandHandler</summary>
+    public class UpdateManagerCommandHandler : BaseManagerCommandHandler, IRequestHandler<UpdateManager, AppValidationResult>
     {
         private readonly IUserRepository userRepo;
         private readonly IEditionRepository editionRepo;
@@ -40,7 +40,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly ICollaboratorIndustryRepository industryRepo;
         private readonly ICollaboratorRoleRepository roleRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorCommandHandler"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="UpdateManagerCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
@@ -52,7 +52,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="genderRepo">The gender repo.</param>
         /// <param name="industryRepo">The industry repo.</param>
         /// <param name="roleRepo">The role repo.</param>
-        public UpdateCollaboratorCommandHandler(
+        public UpdateManagerCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             ICollaboratorRepository collaboratorRepository,
@@ -81,7 +81,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="cmd"></param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(UpdateCollaborator cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(UpdateManager cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 

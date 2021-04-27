@@ -1,4 +1,4 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateCollaborator
+﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateManager
 <div class="modal fade" id="CreateManagerModal" role="dialog" aria-labelledby="CreateManagerModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -7,10 +7,10 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Create", "Collaborators/Managers", new { Area = "" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "CreateManagerForm" }))
+                @using (Html.BeginForm("Create", "Managers", new { Area = "" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "CreateManagerForm" }))
                 {
                     <div id="form-container">
-                        @Html.Partial("Managers/Modals/_Form", Model)
+                        @Html.Partial("Modals/_Form", Model)
                     </div>
                 }
             </div>

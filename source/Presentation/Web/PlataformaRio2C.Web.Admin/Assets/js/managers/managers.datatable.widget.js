@@ -23,52 +23,6 @@ var ManagersDataTableWidget = function () {
         MyRio2cCommon.enableSelect2({ inputIdOrClass: '.enable-select2' });
     };
 
-    // Invitation email ---------------------------------------------------------------------------
-    var sendInvitationEmails = function () {
-        MyRio2cCommon.block();
-
-        var jsonParameters = new Object();
-        jsonParameters.selectedCollaboratorsUids = $('#managers-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
-
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/SendInvitationEmails'), jsonParameters, function (data) {
-            MyRio2cCommon.handleAjaxReturn({
-                data: data,
-                // Success
-                onSuccess: function () {
-                },
-                // Error
-                onError: function () {
-                }
-            });
-        })
-            .fail(function () {
-            })
-            .always(function () {
-                MyRio2cCommon.unblock();
-            });
-    };
-
-    var showSendInvitationEmailsModal = function () {
-        bootbox.dialog({
-            message: confirmToSendInvitationEmails,
-            buttons: {
-                cancel: {
-                    label: labels.cancel,
-                    className: "btn btn-secondary btn-elevate mr-auto",
-                    callback: function () {
-                    }
-                },
-                confirm: {
-                    label: labels.send,
-                    className: "btn btn-brand btn-elevate",
-                    callback: function () {
-                        sendInvitationEmails();
-                    }
-                }
-            }
-        });
-    };
-
     // Init datatable -----------------------------------------------------------------------------
     var initiListTable = function () {
 
@@ -117,27 +71,6 @@ var ManagersDataTableWidget = function () {
                     extend: 'collection',
                     text: labels.actions,
                     buttons: [
-                        //{
-                        //    text: sendInvitationEmail,
-                        //    action: function (e, dt, node, config) {
-                        //        $('.dt-button-background').remove();
-                        //        showSendInvitationEmailsModal();
-                        //    }
-                        //},
-                        //{
-                        //    text: exportToEventbrite,
-                        //    action: function (e, dt, node, config) {
-                        //        $('.dt-button-background').remove();
-                        //        var eventbriteCsvExport = dt.ajax.params();
-                        //        eventbriteCsvExport.selectedCollaboratorsUids = $('#managers-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
-                        //        eventbriteCsvExport.showAllEditions = $('#ShowAllEditions').prop('checked');
-                        //        eventbriteCsvExport.showAllExecutives = $('#ShowAllExecutives').prop('checked');
-                        //        eventbriteCsvExport.showAllParticipants = $('#ShowAllParticipants').prop('checked');
-                        //        eventbriteCsvExport.collaboratorTypeName = collaboratorTypeName;
-
-                        //        SalesPlatformsExport.showExportEventbriteCsvModal(eventbriteCsvExport);
-                        //    }
-                        //},
                         {
                             text: labels.selectAll,
                             action: function (e, dt, node, config) {
@@ -159,10 +92,11 @@ var ManagersDataTableWidget = function () {
                 sSearch: $('#Search').val()
             },
             ajax: {
-                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Collaborators/Managers/Search'),
+                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Managers/Search'),
                 data: function (d) {
                     d.showAllEditions = $('#ShowAllEditions').prop('checked');
                     d.collaboratorType = $('#CollaboratorType').val();
+                    d.roleName = $('#Role').val();
                 },
                 dataFilter: function (data) {
                     var jsonReturned = jQuery.parseJSON(data);
@@ -225,7 +159,7 @@ var ManagersDataTableWidget = function () {
                     data: 'Email'
                 },
                 {
-                    data: 'JobTitle'
+                    data: 'RoleWithCollaboratorTypeNameHtmlString'
                 },
                 {
                     data: 'CreateDate',
@@ -303,6 +237,11 @@ var ManagersDataTableWidget = function () {
                 table.search($(this).val()).draw();
             }
         });
+
+        $('#Role').not('.change-event-enabled').on('change', function (e) {
+            table.ajax.reload();
+        });
+        $('#Role').addClass('change-event-enabled');
 
         $('#CollaboratorType').not('.change-event-enabled').on('change', function (e) {
             table.ajax.reload();

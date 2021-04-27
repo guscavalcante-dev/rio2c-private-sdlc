@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
-// Author           : Rafael Dantas Ruiz
-// Created          : 08-26-2019
+// Author           : Renan Valentim
+// Created          : 04-24-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 04-24-2021
 // ***********************************************************************
-// <copyright file="UpdateCollaborator.cs" company="Softo">
+// <copyright file="UpdateManager.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -20,8 +20,8 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>UpdateCollaborator</summary>
-    public class UpdateCollaborator : CollaboratorDataBaseCommand
+    /// <summary>UpdateManager</summary>
+    public class UpdateManager : ManagerBaseCommand
     {
         public Guid CollaboratorUid { get; set; }
         public bool IsAddingToCurrentEdition { get; set; }
@@ -36,15 +36,19 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public UserBaseDto UpdaterBaseDto { get; private set; }
         public DateTimeOffset UpdateDate { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateCollaborator"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateManager"/> class.
+        /// </summary>
         /// <param name="entity">The entity.</param>
         /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="countriesBaseDtos">The countries base dtos.</param>
         /// <param name="genders">The genders.</param>
         /// <param name="industries">The industries.</param>
-        /// <param name="collaboratorRoles">The roles.</param>
+        /// <param name="collaboratorRoles">The collaborator roles.</param>
         /// <param name="editionsDtos">The editions dtos.</param>
+        /// <param name="roles">The roles.</param>
+        /// <param name="collaboratorTypes">The collaborator types.</param>
         /// <param name="currentEditionId">The current edition identifier.</param>
         /// <param name="isAddingToCurrentEdition">The is adding to current edition.</param>
         /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
@@ -52,64 +56,42 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         /// <exception cref="DomainException"></exception>
-        public UpdateCollaborator(
-            CollaboratorDto entity, 
-            List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos, 
-            List<LanguageDto> languagesDtos, 
-            List<CountryBaseDto> countriesBaseDtos, 
-            List<CollaboratorGender> genders, 
-            List<CollaboratorIndustry> industries, 
-            List<CollaboratorRole> collaboratorRoles,
-            List<EditionDto> editionsDtos,
-            int currentEditionId,
-            bool? isAddingToCurrentEdition, 
-            bool isJobTitleRequired,
-            bool isMiniBioRequired, 
-            bool isImageRequired,
+        public UpdateManager(
+            CollaboratorDto entity,
+            List<Role> roles,
+            List<CollaboratorType> collaboratorTypes,          
             string userInterfaceLanguage)
         {
             if (entity == null)
             {
-                throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Player, Labels.FoundM));
+                throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Manager, Labels.FoundM));
             }
 
-            this.BirthDate = entity?.BirthDate;
-            this.HasAnySpecialNeeds = entity?.HasAnySpecialNeeds;
-            this.SpecialNeedsDescription = entity?.SpecialNeedsDescription;
-            this.CollaboratorGenderUid = entity?.Gender?.Uid;
-            this.CollaboratorGenderAdditionalInfo = entity?.CollaboratorGenderAdditionalInfo;
-            this.CollaboratorIndustryUid = entity?.Industry?.Uid;
-            this.CollaboratorIndustryAdditionalInfo = entity?.CollaboratorIndustryAdditionalInfo;
-            this.CollaboratorRoleUid = entity?.CollaboratorRole?.Uid;
-            this.CollaboratorRoleAdditionalInfo = entity?.CollaboratorRoleAdditionalInfo;
             this.CollaboratorUid = entity.Uid;
-            this.IsAddingToCurrentEdition = isAddingToCurrentEdition ?? false;
-            this.UpdateBaseProperties(entity, attendeeOrganizationsBaseDtos, languagesDtos, genders, industries, collaboratorRoles, editionsDtos, currentEditionId, isJobTitleRequired, isMiniBioRequired, isImageRequired, userInterfaceLanguage);
-            this.UpdateDropdownProperties(entity, attendeeOrganizationsBaseDtos, genders, industries, collaboratorRoles, editionsDtos, currentEditionId, userInterfaceLanguage);
+            this.IsAddingToCurrentEdition = false;//isAddingToCurrentEdition ?? false;
+
+            base.UpdateBaseProperties(entity, roles, collaboratorTypes, userInterfaceLanguage);
+            this.UpdateDropdownProperties(entity, roles, collaboratorTypes, userInterfaceLanguage);
         }
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateCollaborator"/> class.</summary>
-        public UpdateCollaborator()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateManager"/> class.
+        /// </summary>
+        public UpdateManager()
         {
         }
 
-        /// <summary>Updates the dropdown properties.</summary>
+        /// <summary>
+        /// Updates the dropdown properties.
+        /// </summary>
         /// <param name="entity">The entity.</param>
-        /// <param name="attendeeOrganizationsBaseDtos">The attendee organizations base dtos.</param>
-        /// <param name="genders">The genders.</param>
-        /// <param name="industries">The industries.</param>
-        /// <param name="collaboratorRoles">The roles.</param>
-        /// <param name="editionsDtos">The editions dtos.</param>
-        /// <param name="currentEditionId">The current edition identifier.</param>
+        /// <param name="roles">The roles.</param>
+        /// <param name="collaboratorTypes">The collaborator types.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public void UpdateDropdownProperties(
             CollaboratorDto entity,
-            List<AttendeeOrganizationBaseDto> attendeeOrganizationsBaseDtos,
-            List<CollaboratorGender> genders,
-            List<CollaboratorIndustry> industries,
-            List<CollaboratorRole> collaboratorRoles,
-            List<EditionDto> editionsDtos,
-            int currentEditionId,
+            List<Role> roles,
+            List<CollaboratorType> collaboratorTypes,
             string userInterfaceLanguage)
         {
             this.WelcomeEmailSendDate = entity.EditionAttendeeCollaboratorBaseDto?.WelcomeEmailSendDate;
@@ -121,7 +103,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.ProducerTermsAcceptanceDate = entity.EditionAttendeeCollaboratorBaseDto?.ProducerTermsAcceptanceDate;
             this.UpdaterBaseDto = entity.UpdaterDto;
             this.UpdateDate = entity.UpdateDate;
-            this.UpdateDropdownProperties(attendeeOrganizationsBaseDtos, genders, industries, collaboratorRoles, editionsDtos, currentEditionId, userInterfaceLanguage);
+            base.UpdateDropdownProperties(roles, collaboratorTypes, userInterfaceLanguage);
         }
     }
 }

@@ -31,7 +31,7 @@ var ManagersUpdate = function () {
         MyRio2cCropper.init({ formIdOrClass: formId });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });        
         MyRio2cCommon.enableDatePicker({ inputIdOrClass: formId + ' .enable-datepicker' });        
-        AttendeeOrganizationsForm.init(formId);
+        //AttendeeOrganizationsForm.init(formId);
         AddressesForm.init();
 
         MyRio2cCommon.enableDropdownChangeEvent("CollaboratorGenderUid", "CollaboratorGenderAdditionalInfo");
@@ -71,7 +71,7 @@ var ManagersUpdate = function () {
         jsonParameters.collaboratorUid = collaboratorUid;
         jsonParameters.isAddingToCurrentEdition = isAddingToCurrentEdition;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Collaborators/Managers/ShowUpdateModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Managers/ShowUpdateModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -98,15 +98,15 @@ var ManagersUpdate = function () {
             onSuccess: function (data) {
                 $(modalId).modal('hide');
 
-                if (typeof (CollaboratorsDataTableWidget) !== 'undefined') {
+                if (typeof (ManagersDataTableWidget) !== 'undefined') {
                     ManagersDataTableWidget.refreshData();
                 }
 
-                if (typeof (CollaboratorsTotalCountWidget) !== 'undefined') {
+                if (typeof (ManagersDataTableWidget) !== 'undefined') {
                     ManagersTotalCountWidget.init();
                 }
 
-                if (typeof (CollaboratorsEditionCountWidget) !== 'undefined') {
+                if (typeof (ManagersDataTableWidget) !== 'undefined') {
                     ManagersEditionCountWidget.init();
                 }
             },

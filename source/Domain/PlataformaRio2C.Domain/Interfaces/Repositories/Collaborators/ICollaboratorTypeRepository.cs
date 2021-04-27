@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Entities;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Domain.Interfaces
@@ -20,5 +21,6 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface ICollaboratorTypeRepository : IRepository<CollaboratorType>
     {
         Task<CollaboratorType> FindByNameAsync(string collaboratorTypeName);
+        Task<List<CollaboratorType>> FindAllAdminCollaboratorTypesAsync();
     }    
 }
