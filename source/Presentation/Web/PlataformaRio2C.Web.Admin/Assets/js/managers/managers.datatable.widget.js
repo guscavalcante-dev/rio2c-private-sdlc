@@ -264,7 +264,7 @@ var ManagersDataTableWidget = function () {
             return;
         }
 
-        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Collaborators/Managers/Details/' + collaboratorUid);
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Managers/Details/' + collaboratorUid);
     };
 
     return {

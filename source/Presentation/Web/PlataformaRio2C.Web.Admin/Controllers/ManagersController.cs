@@ -40,7 +40,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>ManagersController</summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
-    [RoutePrefix("{culture}/{edition}")]
+    [RoutePrefix("{culture}/{edition}/Managers")]
     public class ManagersController : BaseController
     {
         private readonly ICollaboratorRepository collaboratorRepo;
@@ -136,6 +136,54 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #endregion
 
+        #region Details
+
+        /// <summary>Detailses the specified identifier.</summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpGet, Route("Details/{collaboratorUid}")] //Route("Collaborators/Managers/Details/{collaboratorUid}")
+        public async Task<ActionResult> Details(Guid? collaboratorUid)
+        {
+            var collaboratorDto = await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage));
+
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper("Administradores", new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper("Administradores", Url.Action("Index", "Managers", new { Area = "" })),
+		        //new BreadcrumbItemHelper(editionDto.Edition.Name, Url.Action("Details", "Collaborators", new { id }))
+	        });
+
+            //ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Editions, null);
+
+            #endregion
+
+            return View(collaboratorDto);
+        }
+
+        /// <summary>Shows the main information widget.</summary>
+        /// <param name="collaboratorUid">The edition event uid.</param>
+        /// <returns></returns>
+        [HttpGet, Route("ShowMainInformationWidget/{collaboratorUid}")]
+        public async Task<ActionResult> ShowMainInformationWidget(Guid collaboratorUid)
+        {
+            var mainInformationWidgetDto = await this.collaboratorRepo.FindDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id);
+            if (mainInformationWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Edition, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+        {
+            new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#ManagersMainInformationWidget" },
+        }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
         #region Create
 
         /// <summary>Shows the create modal.</summary>
@@ -185,7 +233,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 {
                     throw new DomainException(Messages.CorrectFormValues);
                 }
-                
+
                 var createdCollaborator = result.Data as Collaborator;
                 if (createdCollaborator != null)
                 {
