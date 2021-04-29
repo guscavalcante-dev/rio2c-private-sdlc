@@ -311,5 +311,15 @@ namespace PlataformaRio2C.Infra.Data.Repository
             var result = this.GetAll(filter);
             return result != null && result.Any();
         }
+
+        /// <summary>
+        /// Sets the proxy enable.
+        /// </summary>
+        /// <param name="isEnabled">if set to <c>true</c> [is enabled].</param>
+        public void SetProxyEnabled(bool isEnabled)
+        {
+            this._context.Configuration.ProxyCreationEnabled = isEnabled;
+            this._context.Configuration.LazyLoadingEnabled = isEnabled;
+        }
     }
 }

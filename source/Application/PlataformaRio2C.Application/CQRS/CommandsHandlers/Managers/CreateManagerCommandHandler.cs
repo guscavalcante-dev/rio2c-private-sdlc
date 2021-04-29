@@ -23,6 +23,7 @@ using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -111,68 +112,40 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
 
-            // Create if the user was not found in database
-            if (user == null)
+            Collaborator collaborator = null;
+
+            if (cmd.CollaboratorTypeNames.HasValue())
             {
-                Collaborator collaborator = null;
-
-                if (!string.IsNullOrEmpty(cmd.CollaboratorTypeName))
-                {
-                   collaborator = new Collaborator(
-                                        await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
-                                        await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
-                                        cmd.FirstName,
-                                        cmd.LastNames,
-                                        cmd.Email,
-                                        "",//cmd.PhoneNumber,
-                                        "",//cmd.CellPhone,
-                                        "",//cmd.Document,
-                                        cmd.UserId);
-                }
-                else
-                {
-                    collaborator = new Collaborator(
-                                        cmd.FirstName,
-                                        cmd.LastNames,
-                                        cmd.Email,
-                                        "",//cmd.PhoneNumber,
-                                        "",//cmd.CellPhone,
-                                        "",//cmd.Document,
-                                        await this.roleRepo.FindByNameAsync(cmd.RoleName),
-                                        cmd.UserId);
-                }
-
-                if (!collaborator.IsValid())
-                {
-                    this.AppValidationResult.Add(collaborator.ValidationResult);
-                    return this.AppValidationResult;
-                }
-
-                this.CollaboratorRepo.Create(collaborator);
-                this.Uow.SaveChanges();
-                this.AppValidationResult.Data = collaborator;
+                collaborator = new Collaborator(
+                                     await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
+                                     await this.collaboratorTypeRepo.FindByNamesAsync(cmd.CollaboratorTypeNames),
+                                     cmd.FirstName,
+                                     cmd.LastNames,
+                                     cmd.Email,
+                                     cmd.PasswordHash,
+                                     cmd.UserId);
             }
             else
             {
-                var updateCmd = new UpdateCollaborator
-                {
-                    CollaboratorUid = user.Collaborator.Uid,
-                    IsAddingToCurrentEdition = true,
-                    FirstName = cmd.FirstName,
-                    LastNames = cmd.LastNames,
-                    Badge = cmd.Badge,
-                    Email = cmd.Email,
-                    PhoneNumber = cmd.PhoneNumber,
-                    CellPhone = cmd.CellPhone,
-                    AttendeeOrganizationBaseCommands = cmd.AttendeeOrganizationBaseCommands,
-                    JobTitles = cmd.JobTitles,
-                    MiniBios = cmd.MiniBios,
-                    CropperImage = cmd.CropperImage
-                };
-                updateCmd.UpdatePreSendProperties(cmd.CollaboratorTypeName, cmd.UserId, cmd.UserUid, cmd.EditionId, cmd.EditionUid, cmd.UserInterfaceLanguage);
-
-                this.AppValidationResult = await this.CommandBus.Send(updateCmd, cancellationToken);
+                collaborator = new Collaborator(
+                                    cmd.FirstName,
+                                    cmd.LastNames,
+                                    cmd.Email,
+                                    cmd.PasswordHash,
+                                    await this.roleRepo.FindByNameAsync(cmd.RoleName),
+                                    cmd.UserId);
             }
+
+            if (!collaborator.IsValid())
+            {
+                this.AppValidationResult.Add(collaborator.ValidationResult);
+                return this.AppValidationResult;
+            }
+
+            this.CollaboratorRepo.Create(collaborator);
+            this.Uow.SaveChanges();
+            this.AppValidationResult.Data = collaborator;
+
 
             if (cmd.CropperImage?.ImageFile != null)
             {

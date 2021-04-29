@@ -104,55 +104,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            if(cmd.EditionsUids == null || (!cmd.HaveYouBeenToRio2CBefore ?? false))
-            {
-                cmd.EditionsUids = new List<Guid>();
-            }
-
-            // Before update values
-            var beforeImageUploadDate = collaborator.ImageUploadDate;
-
-            var languageDtos = await this.languageRepo.FindAllDtosAsync();
-            var attendeeOrganizations = await this.attendeeOrganizationRepo.FindAllByUidsAsync(cmd.AttendeeOrganizationBaseCommands?.Where(aobc => aobc.AttendeeOrganizationUid.HasValue)?.Select(aobc => aobc.AttendeeOrganizationUid.Value)?.ToList());
             var edition = await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty);
-            var collaboratorType = await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName);
-            var collaboratorGender = genderRepo.Get(cmd.CollaboratorGenderUid ?? Guid.Empty);
-            var collaboratorRole = roleRepo.Get(cmd.CollaboratorRoleUid ?? Guid.Empty);
-            var collaboratorIndustry = industryRepo.Get(cmd.CollaboratorIndustryUid ?? Guid.Empty);
-            var editions = this.editionRepo.GetAll(e => cmd.EditionsUids.Contains(e.Uid)).ToList();
+            var collaboratorTypes = await this.collaboratorTypeRepo.FindByNamesAsync(cmd.CollaboratorTypeNames);
 
-            collaborator.Update(attendeeOrganizations,
+            collaborator.Update(
                 edition,
-                collaboratorType,
-                cmd.BirthDate,
-                collaboratorGender,
-                cmd.CollaboratorGenderAdditionalInfo,
-                collaboratorRole,
-                cmd.CollaboratorRoleAdditionalInfo,
-                collaboratorIndustry,
-                cmd.CollaboratorIndustryAdditionalInfo,
-                cmd.HasAnySpecialNeeds ?? false,
-                cmd.SpecialNeedsDescription,
-                cmd.HaveYouBeenToRio2CBefore,
-                editions,
+                collaboratorTypes,
                 cmd.FirstName,
                 cmd.LastNames,
-                cmd.Badge,
                 cmd.Email,
-                cmd.PhoneNumber,
-                cmd.CellPhone,
-                cmd.SharePublicEmail,
-                cmd.PublicEmail,
-                cmd.Website,
-                cmd.Linkedin,
-                cmd.Twitter,
-                cmd.Instagram,
-                cmd.Youtube,
-                cmd.CropperImage?.ImageFile != null,
-                cmd.CropperImage?.IsImageDeleted == true,
-                cmd.JobTitles?.Select(d => new CollaboratorJobTitle(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
-                cmd.MiniBios?.Select(d => new CollaboratorMiniBio(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
-                true, // TODO: Get isAddingToCurrentEdition from command for UpdateCollaborator
+                cmd.IsAddingToCurrentEdition, 
                 cmd.UserId);
 
             if (!collaborator.IsValid())
@@ -165,29 +126,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.Uow.SaveChanges();
             this.AppValidationResult.Data = collaborator;
 
-            // Update images
-            if (cmd.CropperImage?.ImageFile != null)
-            {
-                ImageHelper.UploadOriginalAndCroppedImages(
-                    collaborator.Uid,
-                    cmd.CropperImage.ImageFile,
-                    cmd.CropperImage.DataX,
-                    cmd.CropperImage.DataY,
-                    cmd.CropperImage.DataWidth,
-                    cmd.CropperImage.DataHeight,
-                    FileRepositoryPathType.UserImage);
-            }
-            // Delete images
-            else if (cmd.CropperImage?.IsImageDeleted == true && beforeImageUploadDate.HasValue)
-            {
-                ImageHelper.DeleteOriginalAndCroppedImages(collaborator.Uid, FileRepositoryPathType.UserImage);
-            }
-
             return this.AppValidationResult;
-
-            //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);
-
-            //return Task.FromResult(propertyId); // use it when the methed is not async
         }
     }
 }

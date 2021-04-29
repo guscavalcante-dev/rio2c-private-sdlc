@@ -19,6 +19,7 @@ using System.Web.Mvc;
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
+using Newtonsoft.Json;
 using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
@@ -107,6 +108,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         {
             //Show only Admin Users
             string[] collaboratorTypes = string.IsNullOrEmpty(collaboratorType) ? Constants.CollaboratorType.Admins : new string[] { collaboratorType };
+            string[] rolesNames = string.IsNullOrEmpty(roleName) ? Constants.Role.AnyAdminArray : new string[] { roleName };
 
             var playersExecutives = await this.collaboratorRepo.FindAllAminsByDataTable(
                 request.Start / request.Length,
@@ -114,8 +116,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 request.Search?.Value,
                 request.GetSortColumns(),
                 new List<Guid>(),
-                collaboratorTypes, //new string[] { collaboratorType }
-                new string[] { roleName }, //rolesNames,
+                collaboratorTypes,// new string[] { collaboratorType }, // //
+                rolesNames,//new string[] { roleName }, // //
                 showAllEditions,
                 false,
                 this.EditionDto?.Id);
@@ -141,7 +143,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <summary>Detailses the specified identifier.</summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        [HttpGet, Route("Details/{collaboratorUid}")] //Route("Collaborators/Managers/Details/{collaboratorUid}")
+        [HttpGet, Route("Details/{collaboratorUid}")]
         public async Task<ActionResult> Details(Guid? collaboratorUid)
         {
             var collaboratorDto = await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage));
@@ -222,23 +224,24 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
+                    this.IdentityController.HashPassword(cmd.Password),
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
                     this.EditionDto.Uid,
                     this.UserInterfaceLanguage);
-
                 result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
                 {
                     throw new DomainException(Messages.CorrectFormValues);
                 }
 
-                var createdCollaborator = result.Data as Collaborator;
-                if (createdCollaborator != null)
-                {
-                    var emailSendResult = await this.SendAdminInvitationEmails(createdCollaborator.Uid.ToString());
-                }
+                //Send invitation email (Disabled)
+                //var createdCollaborator = result.Data as Collaborator;
+                //if (createdCollaborator != null)
+                //{
+                //    var emailSendResult = await this.SendAdminInvitationEmails(createdCollaborator.Uid.ToString());
+                //}
             }
             catch (DomainException ex)
             {
@@ -291,6 +294,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
                     await this.roleRepo.FindAllAdminRolesAsync(),
                     await this.collaboratorTypeRepo.FindAllAdminCollaboratorTypesAsync(),
+                    isAddingToCurrentEdition ?? false,
                     UserInterfaceLanguage);
             }
             catch (DomainException ex)
@@ -324,6 +328,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
+                    this.IdentityController.HashPassword(cmd.Password),
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,

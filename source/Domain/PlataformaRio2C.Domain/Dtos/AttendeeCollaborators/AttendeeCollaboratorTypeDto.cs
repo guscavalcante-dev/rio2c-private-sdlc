@@ -12,12 +12,21 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Entities;
+using System;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
     /// <summary>AttendeeCollaboratorTypeDto</summary>
     public class AttendeeCollaboratorTypeDto
     {
+        public int AttendeeCollaboratorId { get; private set; }
+        public int CollaboratorTypeId { get; private set; }
+        public bool IsApiDisplayEnabled { get; private set; }
+        public int? ApiHighlightPosition { get; private set; }
+        public DateTimeOffset? TermsAcceptanceDate { get; private set; }
+
+
+
         public AttendeeCollaboratorType AttendeeCollaboratorType { get; set; }
         public CollaboratorType CollaboratorType { get; set; }
 

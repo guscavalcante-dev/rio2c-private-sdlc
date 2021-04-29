@@ -148,7 +148,7 @@ var ManagersDataTableWidget = function () {
                                     </tr>\
                                 </table>';
 
-                        if (!full.IsInCurrentEdition) {
+                        if (!full.IsInCurrentEdition && !full.IsAdminFull) {
                             html += '<span class="kt-badge kt-badge--inline kt-badge--info mt-2">' + labels.notInEdition + '</span>';
                         }
 

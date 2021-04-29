@@ -53,14 +53,14 @@ namespace PlataformaRio2C.Domain.Entities
         public int? AddressId { get; private set; }
         public DateTimeOffset? ImageUploadDate { get; private set; }
         public DateTime? BirthDate { get; private set; }
-        public int? CollaboratorGenderId  { get; private set; }
-        public string CollaboratorGenderAdditionalInfo  { get; private set; }
-        public int? CollaboratorRoleId  { get; private set; }
-        public string CollaboratorRoleAdditionalInfo  { get; private set; }
-        public int? CollaboratorIndustryId  { get; private set; }
-        public string CollaboratorIndustryAdditionalInfo  { get; private set; }
+        public int? CollaboratorGenderId { get; private set; }
+        public string CollaboratorGenderAdditionalInfo { get; private set; }
+        public int? CollaboratorRoleId { get; private set; }
+        public string CollaboratorRoleAdditionalInfo { get; private set; }
+        public int? CollaboratorIndustryId { get; private set; }
+        public string CollaboratorIndustryAdditionalInfo { get; private set; }
         public bool? HasAnySpecialNeeds { get; private set; }
-        public string SpecialNeedsDescription  { get; private set; }
+        public string SpecialNeedsDescription { get; private set; }
 
         public virtual User User { get; private set; }
         public virtual Address Address { get; private set; }
@@ -175,40 +175,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUser(email);
         }
 
-        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class for tiny create on admin.</summary>
-        /// <param name="uid">The uid.</param>
-        /// <param name="edition">The edition.</param>
-        /// <param name="collaboratorType">Type of the collaborator.</param>
-        /// <param name="firstName">The first name.</param>
-        /// <param name="lastNames">The last names.</param>
-        /// <param name="email">The email.</param>
-        /// <param name="userId">The user identifier.</param>
-        public Collaborator(
-            Edition edition,
-            CollaboratorType collaboratorType,
-            string firstName,
-            string lastNames,
-            string email,
-            string phoneNumber,
-            string cellPhone,
-            string document,
-            int userId)
-        {
-            //this.Uid = uid;
-            this.FirstName = firstName?.Trim();
-            this.LastNames = lastNames?.Trim();
-            this.PublicEmail = email?.Trim();
-            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, null, null, true, userId);
-            this.UpdateUser(email);
-            this.PhoneNumber = phoneNumber?.Trim();
-            this.CellPhone = cellPhone?.Trim();
-            this.Document = document?.Trim();
-
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Collaborator"/> class.
         /// </summary>
@@ -280,28 +246,85 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>
         /// Initializes a new instance of the <see cref="Collaborator"/> class.
         /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorTypes">The collaborator types.</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastNames">The last names.</param>
         /// <param name="email">The email.</param>
-        /// <param name="phoneNumber">The phone number.</param>
-        /// <param name="cellPhone">The cell phone.</param>
-        /// <param name="document">The document.</param>
+        /// <param name="passwordHash">The password hash.</param>
         /// <param name="userId">The user identifier.</param>
         public Collaborator(
+            Edition edition,
+            List<CollaboratorType> collaboratorTypes,
+            string firstName,
+            string lastNames,
+            string email,
+            string passwordHash,
+            int userId)
+        {
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.PublicEmail = email?.Trim();
+            this.SynchronizeAttendeeCollaborators(edition, collaboratorTypes, null, null, null, true, userId);
+            this.UpdateUser(email, passwordHash);
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Collaborator"/> class.
+        /// </summary>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="passwordHash">The password hash.</param>
+        /// <param name="roles">The roles.</param>
+        /// <param name="userId">The user identifier.</param>
+        public Collaborator(
+            string firstName,
+            string lastNames,
+            string email,
+            string passwordHash,
+            List<Role> roles,
+            int userId)
+        {
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.PublicEmail = email?.Trim();
+            this.UpdateUser(email, passwordHash, roles);
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class for tiny create on admin.</summary>
+        /// <param name="uid">The uid.</param>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="userId">The user identifier.</param>
+        public Collaborator(
+            Edition edition,
+            CollaboratorType collaboratorType,
             string firstName,
             string lastNames,
             string email,
             string phoneNumber,
             string cellPhone,
             string document,
-            List<Role> roles,
             int userId)
         {
             //this.Uid = uid;
             this.FirstName = firstName?.Trim();
             this.LastNames = lastNames?.Trim();
             this.PublicEmail = email?.Trim();
-            this.UpdateUser(email, roles);
+            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, null, null, true, userId);
+            this.UpdateUser(email);
             this.PhoneNumber = phoneNumber?.Trim();
             this.CellPhone = cellPhone?.Trim();
             this.Document = document?.Trim();
@@ -440,6 +463,61 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUser(email);
         }
 
+        /// <summary>
+        /// Updates the specified edition.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorTypes">The collaborator types.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="passwordHash">The password hash.</param>
+        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(
+            Edition edition,
+            List<CollaboratorType> collaboratorTypes,
+            string firstName,
+            string lastNames,
+            string email,
+            bool isAddingToCurrentEdition,
+            int userId)
+        {
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+
+            this.UpdatePublicEmail(false, email);
+            this.SynchronizeAttendeeCollaborators(edition, collaboratorTypes, null, null, null, isAddingToCurrentEdition, userId);
+            this.UpdateUser(email);
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+        //public void Update(
+        //        Edition edition,
+        //        List<CollaboratorType> collaboratorTypes,
+        //        string firstName,
+        //        string lastNames,
+        //        string email,
+        //        bool? sharePublicEmail,
+        //        string publicEmail,
+        //        bool isAddingToCurrentEdition,
+        //        int userId)
+        //    {
+        //        this.FirstName = firstName?.Trim();
+        //        this.LastNames = lastNames?.Trim();
+
+
+        //        this.IsDeleted = false;
+        //        this.UpdateDate = DateTime.UtcNow;
+        //        this.UpdateUserId = userId;
+
+        //        this.SynchronizeAttendeeCollaborators(edition, collaboratorTypes, null, null, attendeeOrganizations, isAddingToCurrentEdition, userId);
+        //        this.UpdateUser(email);
+        //    }
+
+
         /// <summary>Updates the admin main information.</summary>
         /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="firstName">The first name.</param>
@@ -468,32 +546,32 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="edition">The edition.</param>
         /// <param name="userId">The user identifier.</param>
         public void UpdateAdminMainInformation(
-            CollaboratorType collaboratorType,
-            string firstName,
-            string lastNames,
-            string email,
-            string badge,
-            string cellPhone,
-            string phoneNumber,
-            bool? sharePublicEmail,
-            string publicEmail,
-            bool isImageUploaded,
-            bool isImageDeleted,
-            List<CollaboratorJobTitle> jobTitles,
-            List<CollaboratorMiniBio> miniBios,
-            DateTime? birthDate,
-            CollaboratorGender collaboratorGender,
-            string collaboratorGenderAdditionalInfo,
-            CollaboratorRole collaboratorRole,
-            string collaboratorRoleAdditionalInfo,
-            CollaboratorIndustry collaboratorIndustry,
-            string collaboratorIndustryAdditionalInfo,
-            bool hasAnySpecialNeeds,
-            string specialNeedsDescription,
-            bool? haveYouBeenToRio2CBefore,
-            List<Edition> editionsParticipated,
-            Edition edition,
-            int userId)
+                CollaboratorType collaboratorType,
+                string firstName,
+                string lastNames,
+                string email,
+                string badge,
+                string cellPhone,
+                string phoneNumber,
+                bool? sharePublicEmail,
+                string publicEmail,
+                bool isImageUploaded,
+                bool isImageDeleted,
+                List<CollaboratorJobTitle> jobTitles,
+                List<CollaboratorMiniBio> miniBios,
+                DateTime? birthDate,
+                CollaboratorGender collaboratorGender,
+                string collaboratorGenderAdditionalInfo,
+                CollaboratorRole collaboratorRole,
+                string collaboratorRoleAdditionalInfo,
+                CollaboratorIndustry collaboratorIndustry,
+                string collaboratorIndustryAdditionalInfo,
+                bool hasAnySpecialNeeds,
+                string specialNeedsDescription,
+                bool? haveYouBeenToRio2CBefore,
+                List<Edition> editionsParticipated,
+                Edition edition,
+                int userId)
         {
             this.FirstName = firstName?.Trim();
             this.LastNames = lastNames?.Trim();
@@ -506,7 +584,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
             this.UpdateEditions(haveYouBeenToRio2CBefore, editionsParticipated, userId);
-                        
+
             this.BirthDate = birthDate;
             this.UpdateGender(collaboratorGender, collaboratorGenderAdditionalInfo);
             this.UpdateRole(collaboratorRole, collaboratorRoleAdditionalInfo);
@@ -578,7 +656,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeJobTitles(jobTitles, userId);
             this.SynchronizeMiniBios(miniBios, userId);
             this.OnboardAttendeeCollaboratorData(edition, userId);
-            
+
             this.BirthDate = birthDate;
             UpdateGender(collaboratorGender, collaboratorGenderAdditionalInfo);
             UpdateRole(collaboratorRole, collaboratorRoleAdditionalInfo);
@@ -807,6 +885,45 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Users
 
+        /// <summary>
+        /// Updates the user.
+        /// </summary>
+        /// <param name="email">The email.</param>
+        /// <param name="passwordHash">The password hash.</param>
+        public void UpdateUser(string email, string passwordHash)
+        {
+            if (this.User != null)
+            {
+                this.User.Update(this.GetFullName(), email, this.FindAllRolesByAttendeeCollaboratorTypes());
+            }
+            else
+            {
+                this.User = new User(this.GetFullName(), email, this.FindAllRolesByAttendeeCollaboratorTypes());
+            }
+
+            this.OnboardUser(passwordHash);
+        }
+
+        /// <summary>
+        /// Updates the user.
+        /// </summary>
+        /// <param name="email">The email.</param>
+        /// <param name="passwordHash">The password hash.</param>
+        /// <param name="roles">The roles.</param>
+        public void UpdateUser(string email, string passwordHash, List<Role> roles)
+        {
+            if (this.User != null)
+            {
+                this.User.Update(this.GetFullName(), email, roles);
+            }
+            else
+            {
+                this.User = new User(this.GetFullName(), email, roles);
+            }
+
+            this.OnboardUser(passwordHash);
+        }
+
         /// <summary>Updates the user.</summary>
         /// <param name="email">The email.</param>
         public void UpdateUser(string email)
@@ -818,23 +935,6 @@ namespace PlataformaRio2C.Domain.Entities
             else
             {
                 this.User = new User(this.GetFullName(), email, this.FindAllRolesByAttendeeCollaboratorTypes());
-            }
-        }
-
-        /// <summary>
-        /// Updates the user.
-        /// </summary>
-        /// <param name="email">The email.</param>
-        /// <param name="roles">The roles.</param>
-        public void UpdateUser(string email, List<Role> roles)
-        {
-            if (this.User != null)
-            {
-                this.User.Update(this.GetFullName(), email, roles);
-            }
-            else
-            {
-                this.User = new User(this.GetFullName(), email, roles);
             }
         }
 
@@ -1150,13 +1250,13 @@ namespace PlataformaRio2C.Domain.Entities
                 }
 
                 this.AttendeeCollaborators.Add(new AttendeeCollaborator(
-                    edition, 
+                    edition,
+                    new CollaboratorType(),
                     null,
                     null,
                     null,
-                    null, 
-                    this, 
-                    false, 
+                    this,
+                    false,
                     userId)); //TODO: Onboard collaborator when the attendee collaborator does not exists (collaborator type)
             }
         }
@@ -1181,12 +1281,12 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
         /// <param name="userId">The user identifier.</param>
         private void SynchronizeAttendeeCollaborators(
-            Edition edition, 
+            Edition edition,
             CollaboratorType collaboratorType,
             bool? isApiDisplayEnabled,
             int? apiHighlightPosition,
-            List<AttendeeOrganization> attendeeOrganizations, 
-            bool isAddingToCurrentEdition, 
+            List<AttendeeOrganization> attendeeOrganizations,
+            bool isAddingToCurrentEdition,
             int userId)
         {
             // Synchronize only when is adding to current edition
@@ -1208,11 +1308,57 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
             if (attendeeCollaborator != null)
             {
-                attendeeCollaborator.Update(edition, collaboratorType, isApiDisplayEnabled, apiHighlightPosition, attendeeOrganizations, true, userId);
+                attendeeCollaborator.Update(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, attendeeOrganizations, true, userId);
             }
             else
             {
                 this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, collaboratorType, isApiDisplayEnabled, apiHighlightPosition, attendeeOrganizations, this, true, userId));
+            }
+        }
+
+        /// <summary>
+        /// Synchronizes the attendee collaborators.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorTypes">The collaborator types.</param>
+        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
+        /// <param name="attendeeOrganizations">The attendee organizations.</param>
+        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeAttendeeCollaborators(
+            Edition edition,
+            List<CollaboratorType> collaboratorTypes,
+            bool? isApiDisplayEnabled,
+            int? apiHighlightPosition,
+            List<AttendeeOrganization> attendeeOrganizations,
+            bool isAddingToCurrentEdition,
+            int userId)
+        {
+            // Synchronize only when is adding to current edition
+            if (!isAddingToCurrentEdition)
+            {
+                return;
+            }
+
+            if (this.AttendeeCollaborators == null)
+            {
+                this.AttendeeCollaborators = new List<AttendeeCollaborator>();
+            }
+
+            if (edition == null)
+            {
+                return;
+            }
+
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+            if (attendeeCollaborator != null)
+            {
+                attendeeCollaborator.Update(collaboratorTypes, isApiDisplayEnabled, apiHighlightPosition, attendeeOrganizations, true, true, userId);
+            }
+            else
+            {
+                this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, collaboratorTypes, isApiDisplayEnabled, apiHighlightPosition, attendeeOrganizations, this, true, true, userId));
             }
         }
 
@@ -1560,7 +1706,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Industry = collaboratorIndustry;
             this.Role = collaboratorRole;
             this.CollaboratorGenderId = collaboratorGender?.Id;
-            this.CollaboratorGenderAdditionalInfo =  collaboratorGenderAdditionalInfo;
+            this.CollaboratorGenderAdditionalInfo = collaboratorGenderAdditionalInfo;
             this.CollaboratorRoleId = collaboratorRole?.Id;
             this.CollaboratorRoleAdditionalInfo = collaboratorRoleAdditionalInfo;
             this.CollaboratorIndustryId = collaboratorIndustry?.Id;
@@ -1807,7 +1953,7 @@ namespace PlataformaRio2C.Domain.Entities
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.AdditionalInfo, SpecialNeedsDescriptionMaxLength, 1), new string[] { "CollaboratorGenderAdditionalInfo" }));
             }
         }
-                
+
         /// <summary>Validates the first name.</summary>
         public void ValidateIndustry()
         {
@@ -1821,7 +1967,7 @@ namespace PlataformaRio2C.Domain.Entities
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.AdditionalInfo, SpecialNeedsDescriptionMaxLength, 1), new string[] { "CollaboratorIndustryAdditionalInfo" }));
             }
         }
-                
+
         /// <summary>Validates the first name.</summary>
         public void ValidateRole()
         {
@@ -1835,7 +1981,7 @@ namespace PlataformaRio2C.Domain.Entities
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.AdditionalInfo, SpecialNeedsDescriptionMaxLength, 1), new string[] { "CollaboratorRoleAdditionalInfo" }));
             }
         }
-                
+
         /// <summary>Validates the attendee collaborators.</summary>
         public void ValidateAttendeeCollaborators()
         {

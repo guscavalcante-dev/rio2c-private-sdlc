@@ -13,6 +13,7 @@
 // ***********************************************************************
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context;
 using System;
 using System.Collections.Generic;
@@ -48,6 +49,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static IQueryable<CollaboratorType> FindByName(this IQueryable<CollaboratorType> query, string collaboratorTypeName)
         {
             query = query.Where(ct => ct.Name == collaboratorTypeName);
+
+            return query;
+        }
+
+        /// <summary>
+        /// Finds the by names.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
+        /// <returns></returns>
+        internal static IQueryable<CollaboratorType> FindByNames(this IQueryable<CollaboratorType> query, string[] collaboratorTypeNames)
+        {
+            //if (collaboratorTypeNames.HasValue())
+            //{
+                query = query.Where(ct => collaboratorTypeNames.Contains(ct.Name));
+            //}
 
             return query;
         }
@@ -112,6 +129,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Include(ct => ct.Role)
                             .FirstOrDefaultAsync();
         }
+
+        /// <summary>
+        /// Finds the by names asynchronous.
+        /// </summary>
+        /// <param name="collaboratorTypeNames">The collaborator type names.</param>
+        /// <returns></returns>
+        public async Task<List<CollaboratorType>> FindByNamesAsync(string[] collaboratorTypeNames)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByNames(collaboratorTypeNames);
+
+            return await query
+                            .Include(ct => ct.Role)
+                            .ToListAsync();
+        }
+
 
         /// <summary>
         /// Finds all admin collaborator types asynchronous.

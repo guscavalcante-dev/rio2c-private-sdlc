@@ -30,7 +30,7 @@ var ManagersCreate = function () {
 
         MyRio2cCropper.init({ formIdOrClass: formId });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
-        //AttendeeOrganizationsForm.init(formId);
+        ManagersForm.init(formId);
         AddressesForm.init();        
         MyRio2cCommon.enableDropdownChangeEvent("CollaboratorGenderUid", "CollaboratorGenderAdditionalInfo");
         MyRio2cCommon.enableDropdownChangeEvent("CollaboratorRoleUid", "CollaboratorRoleAdditionalInfo");
@@ -117,6 +117,14 @@ var ManagersCreate = function () {
             }
         });
     };
+
+
+
+
+
+
+
+
 
     return {
         showModal: function () {

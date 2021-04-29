@@ -43,6 +43,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [StringLength(100, MinimumLength = 6, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password", ResourceType = typeof(Labels))]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "ConfirmPassword", ResourceType = typeof(Labels))]
+        [Compare("Password", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PasswordConfirmationDoesNotMatch")]
+        public string ConfirmPassword { get; set; }
+
         [Display(Name = "PhoneNumber", ResourceType = typeof(Labels))]
         [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string PhoneNumber { get; set; }
@@ -133,12 +144,15 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = "CollaboratorType", ResourceType = typeof(Labels))]
         [RequiredIf(nameof(RoleName), Constants.Role.AdminPartial, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public string CollaboratorTypeName { get; set; }
+        public string[] CollaboratorTypeNames { get; set; }
 
         public bool? SharePublicEmail { get; set; }
         public bool CollaboratorIndustryAdditionalInfoRequired { get; set; }
         public bool CollaboratorGenderAdditionalInfoRequired { get; set; }
         public bool CollaboratorRoleAdditionalInfoRequired { get; set; }
+        
+        public bool IsUpdatingManager { get; set; }
+        public string PasswordHash { get; private set; }
 
         public IEnumerable<Role> Roles { get; set; }
         public IEnumerable<CollaboratorType> CollaboratorTypes { get; set; }
@@ -192,9 +206,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Youtube = entity?.Youtube;
             this.EditionsUids = entity?.EditionsUids;
             this.HaveYouBeenToRio2CBefore = entity?.EditionsUids?.Any();
-
-            this.RoleName = entity?.RoleName;
-            this.CollaboratorTypeName = entity?.CollaboratorTypeName;
+            this.RoleName = entity?.Role?.Name;
+            this.CollaboratorTypeNames = entity?.AttendeeCollaboratorTypeDtos?.Select(s => s.CollaboratorType.Name)?.ToArray();
 
             this.UpdateDropdownProperties(roles, collaboratorTypes, userInterfaceLanguage);
         }
@@ -210,20 +223,24 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Email = entity?.Email;
         }
 
-        /// <summary>Updates the pre send properties.</summary>
-        /// <param name="collabboratorTypeName">Name of the collabborator type.</param>
+        /// <summary>
+        /// Updates the pre send properties.
+        /// </summary>
+        /// <param name="passwordHash">The password hash.</param>
         /// <param name="userId">The user identifier.</param>
         /// <param name="userUid">The user uid.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="editionUid">The edition uid.</param>
-        /// <param name="userInterfaceLanguage">The user interface language.</param>
         public void UpdatePreSendProperties(
+            string passwordHash,
             int userId,
             Guid userUid,
             int? editionId,
-            Guid? editionUid)
+            Guid? editionUid,
+            string userInterfaceLanguage)
         {
-            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
+            this.PasswordHash = passwordHash;
+            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, userInterfaceLanguage);
         }
 
         /// <summary>

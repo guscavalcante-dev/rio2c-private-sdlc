@@ -80,7 +80,7 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>Initializes a new instance of the <see cref="CollaboratorType"/> class.</summary>
-        private CollaboratorType()
+        public CollaboratorType()
         {
         }
 
