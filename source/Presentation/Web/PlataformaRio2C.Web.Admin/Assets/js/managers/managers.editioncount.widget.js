@@ -136,6 +136,8 @@ var ManagersEditionCountWidget = function () {
         });
     };
 
+    var tootle
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });

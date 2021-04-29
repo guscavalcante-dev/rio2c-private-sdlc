@@ -110,6 +110,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        /// <summary>Finds the by identifier asynchronous.</summary>
+        /// <param name="userUid">The user identifier.</param>
+        /// <returns></returns>
+        public async Task<User> FindByUidAsync(Guid userUid)
+        {
+            var query = this.GetBaseQuery()
+                                 .FindByUid(userUid);
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
+
         /// <summary>Finds by user name asynchronous.</summary>
         /// <param name="userName">The user name.</param>
         /// <returns></returns>
@@ -285,6 +297,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             base.Delete(entity);
         }
+
+       
 
         #endregion
     }

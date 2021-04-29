@@ -11,6 +11,7 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using System.Threading.Tasks;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
@@ -21,6 +22,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface IUserRepository : IRepository<User>
     {
         Task<User> FindByIdAsync(int userId);
+        Task<User> FindByUidAsync(Guid userUid);
         Task<User> FindByUserNameAsync(string userName);
         Task<UserDto> FindUserDtoByUserIdAsync(int userId);
         AdminAccessControlDto FindAdminAccessControlDtoByUserIdAndByEditionId(int userId, int editionId);

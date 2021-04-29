@@ -255,6 +255,7 @@
     <Compile Include="CQRS\CommandsHandlers\Managers\BaseManagerCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Managers\CreateManagerCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Managers\DeleteManagerCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Managers\UpdateManagerStatusCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Managers\UpdateManagerCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Messages\SendUnreadConversationsEmailsAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\Bands\BaseCommandHandlers\ReleasedMusicProjectBaseCommandHandler.cs" />
@@ -368,6 +369,7 @@
     <Compile Include="CQRS\Commands\Managers\BaseCommands\ManagerBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Managers\CreateManager.cs" />
     <Compile Include="CQRS\Commands\Managers\DeleteManager.cs" />
+    <Compile Include="CQRS\Commands\Managers\UpdateManagerStatus.cs" />
     <Compile Include="CQRS\Commands\Managers\UpdateManager.cs" />
     <Compile Include="CQRS\Commands\Music\Bands\BaseCommands\ReleasedMusicProjectBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Music\Bands\BaseCommands\MusicBandTeamMemberBaseCommand.cs" />

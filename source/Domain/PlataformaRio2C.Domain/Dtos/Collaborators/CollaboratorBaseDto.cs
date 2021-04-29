@@ -26,6 +26,13 @@ namespace PlataformaRio2C.Domain.Dtos
     {
         public int Id { get; set; }
         public Guid Uid { get; set; }
+
+        public bool? Active { get; set; }
+        public Guid? UserUid { get; set; }
+
+        //[ScriptIgnore]
+        public UserDto User { get; set; }
+
         public string FullName => this.FirstName + (!string.IsNullOrEmpty(this.LastNames) ? " " + this.LastNames : String.Empty);
         public string FirstName { get; set; }
         public string LastNames { get; set; }

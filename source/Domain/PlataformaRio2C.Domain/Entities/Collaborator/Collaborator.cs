@@ -73,7 +73,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<CollaboratorMiniBio> MiniBios { get; private set; }
         public virtual ICollection<AttendeeCollaborator> AttendeeCollaborators { get; private set; }
         public virtual ICollection<CollaboratorEditionParticipation> EditionParticipantions { get; private set; }
-
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="Collaborator"/> class.
         /// </summary>

@@ -140,6 +140,28 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #region Details
 
+        /// <summary>Shows the main information widget.</summary>
+        /// <param name="collaboratorUid">The edition event uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowMainInformationWidget(Guid collaboratorUid)
+        {
+            var mainInformationWidgetDto = await this.collaboratorRepo.FindDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id);
+            if (mainInformationWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Edition, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+        {
+            new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#ManagersMainInformationWidget" },
+        }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
         /// <summary>Detailses the specified identifier.</summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
@@ -161,28 +183,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             return View(collaboratorDto);
         }
-
-        /// <summary>Shows the main information widget.</summary>
-        /// <param name="collaboratorUid">The edition event uid.</param>
-        /// <returns></returns>
-        [HttpGet, Route("ShowMainInformationWidget/{collaboratorUid}")]
-        public async Task<ActionResult> ShowMainInformationWidget(Guid collaboratorUid)
-        {
-            var mainInformationWidgetDto = await this.collaboratorRepo.FindDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id);
-            if (mainInformationWidgetDto == null)
-            {
-                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Edition, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-        {
-            new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#ManagersMainInformationWidget" },
-        }
-            }, JsonRequestBehavior.AllowGet);
-        }
+     
 
         #endregion
 
@@ -329,6 +330,58 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd.UpdatePreSendProperties(
                     this.IdentityController.HashPassword(cmd.Password),
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                cmd.UpdateDropdownProperties(
+                    await this.roleRepo.FindAllAdminRolesAsync(),
+                    await this.collaboratorTypeRepo.FindAllAdminCollaboratorTypesAsync(),
+                    UserInterfaceLanguage);
+
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Manager, Labels.UpdatedM) });
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> UpdateManagerStatus(Guid userUid, bool active)
+        {
+            var result = new AppValidationResult();
+            UpdateManagerStatus cmd = new UpdateManagerStatus(userUid, active);
+
+            try
+            {                               
+                cmd.UpdatePreSendProperties(
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
