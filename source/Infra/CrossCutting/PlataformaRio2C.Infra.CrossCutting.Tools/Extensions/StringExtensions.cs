@@ -596,5 +596,49 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
 
             return $"https://www.instagram.com/{s}";
         }
+
+        /// <summary>
+        /// Determines whether this instance has value.
+        /// </summary>
+        /// <param name="array">The array.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified array has value; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool HasValue(this string[] array)
+        {
+            return array?.Any(ctn => !string.IsNullOrEmpty(ctn)) == true;
+        }
+
+        /// <summary>
+        /// Converts to string.
+        /// </summary>
+        /// <param name="array">The array.</param>
+        /// <param name="separator">The separator.</param>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public static string ToString(this string[] array, string separator)
+        {
+            if (string.IsNullOrEmpty(separator))
+                separator = ",";
+
+            return string.Join(separator, array);
+        }
+
+        /// <summary>
+        /// Converts to string.
+        /// </summary>
+        /// <param name="list">The list.</param>
+        /// <param name="separator">The separator.</param>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public static string ToString(this List<string> list, string separator)
+        {
+            if (string.IsNullOrEmpty(separator))
+                separator = ",";
+
+            return string.Join(separator, list);
+        }
     }
 }

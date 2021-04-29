@@ -16,6 +16,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Script.Serialization;
 using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -40,30 +42,6 @@ namespace PlataformaRio2C.Domain.Dtos
         public string CellPhone { get; set; }
         public string PublicEmail { get; set; }
         public string JobTitle { get; set; }
-        public string CollaboratorTypeName { get; set; }
-        public string RoleName { get; set; }
-        public string RoleWithCollaboratorTypeNameHtmlString
-        {
-            get 
-            {
-                var name = "";
-
-                if (!string.IsNullOrEmpty(RoleName) && !string.IsNullOrEmpty(CollaboratorTypeName))
-                {
-                    name = $"{RoleName}<br/>{CollaboratorTypeName}";
-                }
-                else if (!string.IsNullOrEmpty(CollaboratorTypeName))
-                {
-                    name = CollaboratorTypeName;
-                }
-                else if (!string.IsNullOrEmpty(RoleName))
-                {
-                    name = RoleName;
-                }
-
-                return name;
-            }
-        }
 
         public HoldingBaseDto HoldingBaseDto { get; set; }
         public OrganizationBaseDto OrganizatioBaseDto { get; set; }
@@ -77,6 +55,56 @@ namespace PlataformaRio2C.Domain.Dtos
 
         public IEnumerable<AttendeeOrganizationBaseDto> AttendeeOrganizationBasesDtos { get; set; }
         public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }
+
+
+        public Role Role { get; set; }
+        public List<AttendeeCollaboratorTypeDto> AttendeeCollaboratorTypeDtos { get; set; }
+        public string CollaboratorTypeNames => GetAttendeeCollaboratorTypesNames();
+        public string RoleWithCollaboratorTypeNameHtmlString
+        {
+            get
+            {
+                var name = "";
+                var roleName = this.Role?.Name;
+
+                if (!string.IsNullOrEmpty(roleName) && !string.IsNullOrEmpty(this.CollaboratorTypeNames))
+                {
+                    name = $"{roleName}<br/>{this.CollaboratorTypeNames}";
+                }
+                else if (!string.IsNullOrEmpty(this.CollaboratorTypeNames))
+                {
+                    name = this.CollaboratorTypeNames;
+                }
+                else if (!string.IsNullOrEmpty(roleName))
+                {
+                    name = roleName;
+                }
+
+                return name;
+            }
+        }
+        public bool? IsAdminFull => this.Role?.Name == Constants.Role.Admin;
+
+        #region Private Methods
+
+        /// <summary>
+        /// Gets the attendee collaborator types names.
+        /// </summary>
+        /// <returns></returns>
+        private string GetAttendeeCollaboratorTypesNames()
+        {
+            if (AttendeeCollaboratorTypeDtos != null && AttendeeCollaboratorTypeDtos.Count > 0)
+            {
+                return this.AttendeeCollaboratorTypeDtos.Select(act => act.CollaboratorType.Name).ToList().ToString("<br/>");
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        #endregion
+
 
         #region Json ignored properties 
 

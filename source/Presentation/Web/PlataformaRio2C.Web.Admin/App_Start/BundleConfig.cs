@@ -305,8 +305,13 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/managers.maininformation.widget.js").Include(
                 "~/Assets/js/managers/managers.maininformation.widget.js"));
 
+
             bundles.Add(new ScriptBundle("~/bundles/js/managers.changepassword.widget.js").Include(
                 "~/Assets/js/managers/managers.changepassword.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/managers.form.js").Include(
+                "~/Assets/js/managers/managers.form.js"));
+
 
             #endregion
 

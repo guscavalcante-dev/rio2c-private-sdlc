@@ -12,8 +12,10 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -25,7 +27,9 @@ namespace PlataformaRio2C.Domain.Dtos
         public string Twitter { get; set; }
         public string Instagram { get; set; }
         public string Youtube { get; set; }
-        
+        public string Password { get; set; }
+        public string ConfirmPassword { get; set; }
+
         public DateTime? BirthDate { get; set; }
         public int? CollaboratorGenderId { get; set; }
         public CollaboratorGender Gender { get; set; }
@@ -42,14 +46,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public int CreateUserId { get; set; }
         public int UpdateUserId { get; set; }
 
-        public string RoleName { get; set; }
-        public Role Role { get; set; }
-        public string CollaboratorTypeName { get; set; }
-        public CollaboratorType CollaboratorType { get; set; }
-
         public UserBaseDto CreatorDto { get; set; }
         public UserBaseDto UpdaterDto { get; set; }
-
         public AttendeeCollaboratorBaseDto EditionAttendeeCollaboratorBaseDto { get; set; }
 
         public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }
@@ -59,5 +57,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public CollaboratorDto()
         {
         }
+
+        
     }
 }

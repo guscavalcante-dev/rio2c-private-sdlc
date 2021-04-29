@@ -853,6 +853,7 @@
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.totalcount.widget.js" />
     <Content Include="Assets\js\logistics\logistics.airfare.widget.js" />
     <Content Include="Assets\js\managers\managers.changepassword.widget.js" />
+    <Content Include="Assets\js\managers\managers.form.js" />
     <Content Include="Assets\js\managers\managers.maininformation.widget.js" />
     <Content Include="Assets\js\managers\managers.create.js" />
     <Content Include="Assets\js\managers\managers.datatable.widget.js" />

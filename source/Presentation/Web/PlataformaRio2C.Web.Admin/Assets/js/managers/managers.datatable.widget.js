@@ -156,7 +156,7 @@ var ManagersDataTableWidget = function () {
                             html += '<span class="kt-badge kt-badge--inline kt-badge--info mt-2" style="color: #ffffff; background: #E66E72">' + blocked + '</span><br>';
                         }
 
-                        if (!full.IsInCurrentEdition) {
+                        if (!full.IsInCurrentEdition && !full.IsAdminFull) {
                             html += '<span class="kt-badge kt-badge--inline kt-badge--info mt-2">' + labels.notInEdition + '</span>';
                         }
 

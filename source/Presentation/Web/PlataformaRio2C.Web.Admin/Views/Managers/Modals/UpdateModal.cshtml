@@ -23,7 +23,7 @@
                     <div id="form-container">
                         @Html.Partial("Modals/_Form", Model)
                     </div>
-                    <div class="kt-section pt-4">
+                    @*<div class="kt-section pt-4">
                         <div class="kt-separator kt-separator--border-dashed"></div>
                         <h3 class="kt-section__title mb-0">@Labels.Dates</h3>
                         <div class="kt-separator kt-separator--border-dashed"></div>
@@ -49,7 +49,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>*@
                     <div class="row">
                         <div class="col-sm-12 text-right">
                             @Labels.LastUpdateOn <b>@Model.UpdateDate.ToUserTimeZone().ToShortDateString() @Model.UpdateDate.ToUserTimeZone().ToLongTimeString()</b> @Labels.By <b>@Model.UpdaterBaseDto.Name</b>.

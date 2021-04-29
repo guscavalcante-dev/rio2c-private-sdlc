@@ -59,7 +59,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public UpdateManager(
             CollaboratorDto entity,
             List<Role> roles,
-            List<CollaboratorType> collaboratorTypes,          
+            List<CollaboratorType> collaboratorTypes, 
+            bool isAddingToCurrentEdition,
             string userInterfaceLanguage)
         {
             if (entity == null)
@@ -67,8 +68,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Manager, Labels.FoundM));
             }
 
+            base.IsUpdatingManager = true;
             this.CollaboratorUid = entity.Uid;
-            this.IsAddingToCurrentEdition = false;//isAddingToCurrentEdition ?? false;
+            this.IsAddingToCurrentEdition = isAddingToCurrentEdition;
 
             base.UpdateBaseProperties(entity, roles, collaboratorTypes, userInterfaceLanguage);
             this.UpdateDropdownProperties(entity, roles, collaboratorTypes, userInterfaceLanguage);

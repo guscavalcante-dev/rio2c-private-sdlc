@@ -225,6 +225,18 @@ namespace PlataformaRio2C.Web.Site.Services
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Sends the admin welcome email.
+        /// </summary>
+        /// <param name="cmd">The command.</param>
+        /// <param name="sentEmailUid">The sent email uid.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public MvcMailMessage SendAdminWelcomeEmail(SendAdminWelcomeEmailAsync cmd, Guid sentEmailUid)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

@@ -71,6 +71,37 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorTypes">The collaborator types.</param>
+        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
+        /// <param name="attendeeOrganizations">The attendee organizations.</param>
+        /// <param name="collaborator">The collaborator.</param>
+        /// <param name="shouldDeleteOrganizations">if set to <c>true</c> [should delete organizations].</param>
+        /// <param name="userId">The user identifier.</param>
+        public AttendeeCollaborator(
+            Edition edition,
+            List<CollaboratorType> collaboratorTypes,
+            bool? isApiDisplayEnabled,
+            int? apiHighlightPosition,
+            List<AttendeeOrganization> attendeeOrganizations,
+            Collaborator collaborator,
+            bool shouldDeleteOrganizations,
+            bool shouldDeleteCollaboratorTypes,
+            int userId)
+        {
+            this.Edition = edition;
+            this.Collaborator = collaborator;
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+            this.SynchronizeAttendeeCollaboratorTypes(collaboratorTypes, shouldDeleteCollaboratorTypes, isApiDisplayEnabled, apiHighlightPosition, userId);
+            this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
+        }
+
         /// <summary>Initializes a new instance of the <see cref="AttendeeCollaborator"/> class for ticket.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
@@ -142,18 +173,42 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="shouldDeleteOrganizations">if set to <c>true</c> [should delete organizations].</param>
         /// <param name="userId">The user identifier.</param>
         public void Update(
-            Edition edition, 
             CollaboratorType collaboratorType,
             bool? isApiDisplayEnabled,
             int? apiHighlightPosition,
             List<AttendeeOrganization> attendeeOrganizations, 
-            bool shouldDeleteOrganizations , 
+            bool shouldDeleteOrganizations, 
             int userId)
         {
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
             this.SynchronizeAttendeeCollaboratorType(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
+            this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
+        }
+
+        /// <summary>
+        /// Updates the specified collaborator types.
+        /// </summary>
+        /// <param name="collaboratorTypes">The collaborator types.</param>
+        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
+        /// <param name="attendeeOrganizations">The attendee organizations.</param>
+        /// <param name="shouldDeleteOrganizations">if set to <c>true</c> [should delete organizations].</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(
+            List<CollaboratorType> collaboratorTypes,
+            bool? isApiDisplayEnabled,
+            int? apiHighlightPosition,
+            List<AttendeeOrganization> attendeeOrganizations,
+            bool shouldDeleteOrganizations,
+            bool shouldDeleteCollaboratortypes,
+            int userId)
+        {
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+            this.SynchronizeAttendeeCollaboratorTypes(collaboratorTypes, shouldDeleteCollaboratortypes, isApiDisplayEnabled, apiHighlightPosition, userId);
             this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
         }
 
@@ -307,7 +362,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         private void SynchronizeAttendeeCollaboratorType(CollaboratorType collaboratorType, bool? isApiDisplayEnabled, int? apiHighlightPosition, int userId)
         {
-            if(collaboratorType == null)
+            if(collaboratorType == null || string.IsNullOrEmpty(collaboratorType.Name))
             {
                 return;
             }
@@ -336,6 +391,60 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeeCollaboratorType = this.FindAttendeeCollaboratorTypeByUid(collaboratorType?.Uid ?? Guid.Empty);
             attendeeCollaboratorType?.Delete(userId);
         }
+
+
+
+        /// <summary>Synchronizes the type of the attendee collaborator.</summary>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeAttendeeCollaboratorTypes(List<CollaboratorType> collaboratorTypes, bool shouldDeleteCollaboratorTypes, bool? isApiDisplayEnabled, int? apiHighlightPosition, int userId)
+        {
+            if (this.AttendeeCollaboratorTypes == null)
+            {
+                this.AttendeeCollaboratorTypes = new List<AttendeeCollaboratorType>();
+            }
+
+            if (shouldDeleteCollaboratorTypes)
+            {
+                this.DeleteAttendeeCollaboratorTypes(collaboratorTypes, userId);
+            }
+
+            if (collaboratorTypes?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var collaboratorType in collaboratorTypes)
+            {
+                var attendeeCollaboratorType = this.FindAttendeeCollaboratorTypeByUid(collaboratorType?.Uid ?? Guid.Empty);
+                if (attendeeCollaboratorType == null)
+                {
+                    this.AttendeeCollaboratorTypes.Add(new AttendeeCollaboratorType(this, collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId));
+                }
+                else
+                {
+                    attendeeCollaboratorType.Update(isApiDisplayEnabled, apiHighlightPosition, userId);
+                }
+            }
+        }
+
+        /// <summary>Deletes the attendee organization collaborators.</summary>
+        /// <param name="newCollaboratorTypes">The new attendee organizations.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteAttendeeCollaboratorTypes(List<CollaboratorType> newCollaboratorTypes, int userId)
+        {
+            var collaboratorTypesToDelete = this.AttendeeCollaboratorTypes.Where(act => !act.IsDeleted
+                                                                                        && newCollaboratorTypes?.Select(nct => nct.Id)?.Contains(act.CollaboratorTypeId) == false)
+                                                                                        .ToList();
+            foreach (var attendeeCollaboratorType in collaboratorTypesToDelete)
+            {
+                attendeeCollaboratorType.Delete(userId);
+            }
+        }
+
+
 
         /// <summary>Finds the attendee collaborator type by uid.</summary>
         /// <param name="collaboratorTypeUid">The collaborator type uid.</param>
@@ -425,6 +534,7 @@ namespace PlataformaRio2C.Domain.Entities
                 attendeeOrganizationCollaborator.Delete(userId);
             }
         }
+
 
         /// <summary>Creates the attendee organization collaborator.</summary>
         /// <param name="attendeeOrganization">The attendee organization.</param>
