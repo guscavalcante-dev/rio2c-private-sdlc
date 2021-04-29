@@ -43,7 +43,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [RequiredIf(nameof(IsUpdatingManager), "False", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(100, MinimumLength = 6, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         [DataType(DataType.Password)]
         [Display(Name = "Password", ResourceType = typeof(Labels))]

@@ -328,8 +328,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     throw new DomainException(Messages.CorrectFormValues);
                 }
 
-                cmd.UpdatePreSendProperties(
-                    this.IdentityController.HashPassword(cmd.Password),
+                cmd.UpdatePreSendProperties(                
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,

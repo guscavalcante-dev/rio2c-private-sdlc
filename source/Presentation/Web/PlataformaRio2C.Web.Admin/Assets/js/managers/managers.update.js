@@ -30,7 +30,7 @@ var ManagersUpdate = function () {
 
         MyRio2cCropper.init({ formIdOrClass: formId });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
-        ManagersForm.init(formId);
+        //ManagersForm.init(formId);
         MyRio2cCommon.enableDatePicker({ inputIdOrClass: formId + ' .enable-datepicker' });
         MyRio2cCommon.enableDropdownChangeEvent("CollaboratorGenderUid", "CollaboratorGenderAdditionalInfo");
         MyRio2cCommon.enableDropdownChangeEvent("CollaboratorRoleUid", "CollaboratorRoleAdditionalInfo");
@@ -100,12 +100,16 @@ var ManagersUpdate = function () {
                     ManagersDataTableWidget.refreshData();
                 }
 
-                if (typeof (ManagersDataTableWidget) !== 'undefined') {
+                if (typeof (ManagersTotalCountWidget) !== 'undefined') {
                     ManagersTotalCountWidget.init();
                 }
 
-                if (typeof (ManagersDataTableWidget) !== 'undefined') {
+                if (typeof (ManagersEditionCountWidget) !== 'undefined') {
                     ManagersEditionCountWidget.init();
+                }
+
+                if (typeof (ManagersMainInformationWidget) !== 'undefined') {
+                    ManagersMainInformationWidget.init();
                 }
             },
             onError: function (data) {
