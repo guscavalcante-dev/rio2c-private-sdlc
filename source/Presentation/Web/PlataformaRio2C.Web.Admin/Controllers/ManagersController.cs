@@ -19,6 +19,7 @@ using System.Web.Mvc;
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
+using Microsoft.AspNet.Identity;
 using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
@@ -30,6 +31,7 @@ using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
+using PlataformaRio2C.Infra.CrossCutting.Identity.ViewModels;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
@@ -43,6 +45,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     [RoutePrefix("{culture}/{edition}/Managers")]
     public class ManagersController : BaseController
     {
+        private readonly IdentityAutenticationService _identityController;
         private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
@@ -56,7 +59,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
         /// <param name="fileRepository">The file repository.</param>
         public ManagersController(
-            IMediator commandBus,
+            IMediator commandBus,            
             IdentityAutenticationService identityController,
             ICollaboratorRepository collaboratorRepository,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
@@ -66,6 +69,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             IFileRepository fileRepository)
             : base(commandBus, identityController)
         {
+            _identityController = identityController;
             this.collaboratorRepo = collaboratorRepository;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
@@ -369,8 +373,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Manager, Labels.UpdatedM) });
         }
 
-
-
         [HttpPost]
         public async Task<ActionResult> UpdateManagerStatus(Guid userUid, bool active)
         {
@@ -423,7 +425,33 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Manager, Labels.UpdatedM) });
         }
 
+        [HttpPost]
+        public async Task<ActionResult> UpdatePassword(int userId, string newPassword)
+        {
+            IdentityResult result = null;
+            try
+            {
 
+                //result = await _identityController.AddPasswordAsync(userId, newPassword);
+                //.ChangePasswordAsync(this.UserAccessControlDto.User.Id, cmd.OldPassword, cmd.NewPassword);
+
+                //var user = await _identityController.FindByIdAsync(userId);
+                var token = await _identityController.GeneratePasswordResetTokenAsync(userId);
+                result = await _identityController.ResetPasswordAsync(userId, token, newPassword);
+
+                if (!result.Succeeded)
+                {
+                    throw new DomainException(Messages.ErrorUpdatingPassword);
+                }
+            }            
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Password, Labels.UpdatedF) });
+        }
 
 
         #endregion

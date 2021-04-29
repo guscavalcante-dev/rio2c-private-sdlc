@@ -199,7 +199,7 @@ var ManagersDataTableWidget = function () {
                         }
 
                         html += '<button class="dropdown-item" onclick="ManagersDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
-                        html += '<button class="dropdown-item" onclick="ManagersUpdate.showModal(\'' + full.Uid + '\', false);"><i class="la la-key"></i> ' + changePassword + '</button>';
+                        html += '<button class="dropdown-item" onclick="ManagersChangePassword.showModal(\'' + full.Uid + '\',\'novasenha\');"><i class="la la-key"></i> ' + changePassword + '</button>';
                         html += '<button class="dropdown-item" onclick="ManagersDataTableWidget.toogleStatus(\'' + full.UserUid + '\',\'' + !full.Active + '\');"><i class="la la-lock"></i> ' + ((full.Active)?block:unblock) + '</button>';
 
                         if (full.IsInCurrentEdition && full.IsInOtherEdition) {

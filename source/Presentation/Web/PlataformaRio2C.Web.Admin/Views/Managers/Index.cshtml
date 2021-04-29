@@ -5,15 +5,15 @@
 <!--begin:: Quick Stats-->
 <!--<div class="row">
     <div class="col-sm-6">-->
-        <!--begin:: Total Count Widget-->
-        <!--<div id="ManagersTotalCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>-->
-        <!--end:: Total Count Widget-->
-    <!--</div>
-    <div class="col-sm-6">-->
-        <!--begin:: Edition Count-->
-        <!--<div id="ManagersEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>-->
-        <!--end:: Edition Count-->
-    <!--</div>
+<!--begin:: Total Count Widget-->
+<!--<div id="ManagersTotalCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>-->
+<!--end:: Total Count Widget-->
+<!--</div>
+<div class="col-sm-6">-->
+<!--begin:: Edition Count-->
+<!--<div id="ManagersEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>-->
+<!--end:: Edition Count-->
+<!--</div>
 </div>-->
 <!--end:: Quick Stats-->
 @Html.Partial("Widgets/DataTablewidget", Model)
@@ -36,6 +36,7 @@
     @Scripts.Render("~/bundles/js/attendeeorganizations.form.js")
     @Scripts.Render("~/bundles/js/managers.create.js")
     @Scripts.Render("~/bundles/js/managers.update.js")
+    @Scripts.Render("~/bundles/js/managers.changepassword.widget.js")
     @Scripts.Render("~/bundles/js/managers.delete.js")
     @Scripts.Render("~/bundles/js/addresses.form.js")
     <script>
