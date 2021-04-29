@@ -89,9 +89,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         public async Task<AppValidationResult> Handle(CreateManager cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
-
-            var collaboratorUid = Guid.NewGuid();
-
+            
             #region Initial validations
 
             var user = await this.userRepo.GetAsync(u => u.Email == cmd.Email.Trim());
@@ -109,8 +107,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             #endregion
-
-            var languageDtos = await this.languageRepo.FindAllDtosAsync();
 
             Collaborator collaborator = null;
 
@@ -146,24 +142,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.Uow.SaveChanges();
             this.AppValidationResult.Data = collaborator;
 
-
-            if (cmd.CropperImage?.ImageFile != null)
-            {
-                ImageHelper.UploadOriginalAndCroppedImages(
-                    ((Collaborator)this.AppValidationResult.Data).Uid,
-                    cmd.CropperImage.ImageFile,
-                    cmd.CropperImage.DataX,
-                    cmd.CropperImage.DataY,
-                    cmd.CropperImage.DataWidth,
-                    cmd.CropperImage.DataHeight,
-                    FileRepositoryPathType.UserImage);
-            }
-
             return this.AppValidationResult;
-
-            //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);
-
-            //return Task.FromResult(propertyId); // use it when the methed is not async
         }
     }
 }
