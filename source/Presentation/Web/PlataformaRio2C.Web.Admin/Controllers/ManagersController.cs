@@ -160,9 +160,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             {
                 status = "success",
                 pages = new List<dynamic>
-        {
-            new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#ManagersMainInformationWidget" },
-        }
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#ManagersMainInformationWidget" },
+                }
             }, JsonRequestBehavior.AllowGet);
         }
 
@@ -178,10 +178,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             ViewBag.Breadcrumb = new BreadcrumbHelper("Administradores", new List<BreadcrumbItemHelper> {
                 new BreadcrumbItemHelper("Administradores", Url.Action("Index", "Managers", new { Area = "" })),
-		        //new BreadcrumbItemHelper(editionDto.Edition.Name, Url.Action("Details", "Collaborators", new { id }))
-	        });
-
-            //ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Editions, null);
+                 new BreadcrumbItemHelper(collaboratorDto.FullName, Url.Action("Index", "Managers/Details/"+collaboratorDto.Uid.ToString(), new { Area = "" })),
+		    });
 
             #endregion
 
