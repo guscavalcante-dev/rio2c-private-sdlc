@@ -85,9 +85,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userUid">The user uid.</param>
         /// <param name="name">The name.</param>
         /// <param name="email">The email.</param>
-        public User(Guid userUid, string name, string email)
+        public User(Guid userUid, string name, string email, bool active = true)
         {
-            this.Active = true;
+            this.Active = active;
             this.Uid = userUid;
             this.Name = name;
             this.Email = email;
@@ -109,6 +109,12 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
             this.SynchronizeRoles(roles);
+        }
+
+        public void UpdateStatus(bool active)
+        {
+            this.Active = active;
+            this.UpdateDate = DateTime.UtcNow;
         }
 
         /// <summary>Deletes this instance.</summary>

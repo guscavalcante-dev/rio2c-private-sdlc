@@ -50,5 +50,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             return collaborator;
         }
+
+       
     }
 }

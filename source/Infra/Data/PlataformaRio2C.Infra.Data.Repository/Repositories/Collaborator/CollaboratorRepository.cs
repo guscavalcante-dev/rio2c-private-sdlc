@@ -844,12 +844,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     new Tuple<string, string>("FullName", "User.Name"),
                                     new Tuple<string, string>("Email", "User.Email"),
                                 },
-                                new List<string> { "User.Name", "User.Email", "CreateDate", "UpdateDate" },
+                                new List<string> {"User.Name", "User.Email", "CreateDate", "UpdateDate" },
                                 "User.Name")
                             .Select(c => new CollaboratorBaseDto
                             {
                                 Id = c.Id,
                                 Uid = c.Uid,
+
+                                Active = c.User.Active,
+                                UserUid = c.User.Uid,
+
                                 FirstName = c.FirstName,
                                 LastNames = c.LastNames,
                                 Badge = c.Badge,

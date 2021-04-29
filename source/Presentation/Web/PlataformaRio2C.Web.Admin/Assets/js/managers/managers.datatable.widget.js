@@ -132,6 +132,7 @@ var ManagersDataTableWidget = function () {
                 {
                     data: 'FullName',
                     render: function (data, type, full, meta) {
+                        var blocked = 'Bloqueado';
                         var html = '\
                                 <table class="image-side-text text-left">\
                                     <tr>\
@@ -144,13 +145,22 @@ var ManagersDataTableWidget = function () {
                             html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';
                         }
 
-                        html += '       <td> ' + full.FullName + '</td>\
-                                    </tr>\
-                                </table>';
+                        html += '       <td> ' + full.FullName + '</td>';
+                        html +='    </tr>';
+
+                        
+
+                        html +='        </table>';
+
+                        if (!full.Active) {
+                            html += '<span class="kt-badge kt-badge--inline kt-badge--info mt-2" style="color: #ffffff; background: #E66E72">' + blocked + '</span><br>';
+                        }
 
                         if (!full.IsInCurrentEdition) {
                             html += '<span class="kt-badge kt-badge--inline kt-badge--info mt-2">' + labels.notInEdition + '</span>';
                         }
+
+                        
 
                         return html;
                     }
@@ -177,6 +187,7 @@ var ManagersDataTableWidget = function () {
                     data: 'Actions',
                     responsivePriority: -1,
                     render: function (data, type, full, meta) {
+                        var unblock = 'Desbloquear'
                         var html = '\<span class="dropdown">\
                                             <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">\
                                               <i class="la la-ellipsis-h"></i>\
@@ -189,7 +200,7 @@ var ManagersDataTableWidget = function () {
 
                         html += '<button class="dropdown-item" onclick="ManagersDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
                         html += '<button class="dropdown-item" onclick="ManagersUpdate.showModal(\'' + full.Uid + '\', false);"><i class="la la-key"></i> ' + changePassword + '</button>';
-                        html += '<button class="dropdown-item" onclick="ManagersUpdate.showModal(\'' + full.Uid + '\', false);"><i class="la la-lock"></i> ' + block + '</button>';
+                        html += '<button class="dropdown-item" onclick="ManagersDataTableWidget.toogleStatus(\'' + full.UserUid + '\',\'' + !full.Active + '\');"><i class="la la-lock"></i> ' + ((full.Active)?block:unblock) + '</button>';
 
                         if (full.IsInCurrentEdition && full.IsInOtherEdition) {
                             html += '<button class="dropdown-item" onclick="ManagersDelete.showModal(\'' + full.Uid + '\', \'' + full.CollaboratorTypeName + '\', true);"><i class="la la-minus"></i> ' + removeFromEdition + '</button>';
@@ -267,6 +278,54 @@ var ManagersDataTableWidget = function () {
         window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Managers/Details/' + collaboratorUid);
     };
 
+    var toogleStatus = function (userUid, active) {
+
+        var jsonParameters = new Object();
+        jsonParameters.userUid = userUid;
+        jsonParameters.active = active;
+
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Managers/UpdateManagerStatus'), jsonParameters, function (data) {
+
+            /*
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function () {
+                    enablePlugins();
+                    $(modalId).modal();
+                },
+                // Error
+                onError: function () {
+                }
+            });
+            */
+        })
+            .fail(function () {
+            })
+            .always(function () {
+                ManagersDataTableWidget.refreshData();
+                MyRio2cCommon.unblock();
+            });
+
+        /*
+        $.ajax({
+            url: MyRio2cCommon.getUrlWithCultureAndEdition('/Managers/UpdateManagerStatus'),
+            type: "get",
+            data: JSON.stringify({
+                userUid: userUid,
+                active: active
+            }),
+            success: function (response) {
+                alert('deu certo');
+                // You will get response from your PHP page (what you echo or print)
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(textStatus, errorThrown);
+            }
+        });
+        */
+    }
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
@@ -280,6 +339,9 @@ var ManagersDataTableWidget = function () {
         },
         showDetails: function (collaboratorUid) {
             showDetails(collaboratorUid);
+        },
+        toogleStatus: function (userUid, active) {
+            toogleStatus(userUid, active);
         }
     };
 }();
