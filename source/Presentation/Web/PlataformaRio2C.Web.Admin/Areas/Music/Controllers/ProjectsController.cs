@@ -187,7 +187,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 sb.Append($"     </a>");
                 sb.Append($"     <div class=\"dropdown-menu dropdown-menu-right\">");
                 sb.Append($"        <button class=\"dropdown-item\" onclick=\"MusicProjectsDataTableWidget.showDetails({musicProjectJsonDto.MusicProjectId}, '', '{musicGenreUid}', '{evaluationStatusUid}', '{page}', '{pageSize}');\">");
-                sb.Append($"            <i class=\"la la-edit\"></i> {@Labels.Edit}");
+                sb.Append($"            <i class=\"la la-eye\"></i> {@Labels.View}");
                 sb.Append($"        </button>");
                 sb.Append($"        <button class=\"dropdown-item\" onclick=\"MusicProjectsDelete.showModal({musicProjectJsonDto.MusicProjectId});\">");
                 sb.Append($"            <i class=\"la la-remove\"></i> {Labels.Remove}");

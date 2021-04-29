@@ -17,7 +17,7 @@
                         <i class="flaticon2-correct"></i>
                     </span>
                     <div class="kt-widget__action">
-                        <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="ManagersUpdate.showModal('@(Model.Uid)');">
+                        <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick=@(String.Format("ManagersUpdate.showModal('{0}','{1}');", @Model.Uid, @Model.IsInCurrentEdition))>
                             <i class="flaticon2-edit"></i>
                         </button>
                     </div>

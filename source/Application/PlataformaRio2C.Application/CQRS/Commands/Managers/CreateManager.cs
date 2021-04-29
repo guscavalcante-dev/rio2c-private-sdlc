@@ -43,6 +43,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<CollaboratorType> collaboratorTypes,
             string userInterfaceLanguage)
         {
+            base.IsCreatingNewManager = true;
+
             this.UpdateBaseProperties(
                 null,
                 roles,

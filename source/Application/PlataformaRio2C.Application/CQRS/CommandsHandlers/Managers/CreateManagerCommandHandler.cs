@@ -25,6 +25,7 @@ using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -89,7 +90,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         public async Task<AppValidationResult> Handle(CreateManager cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
-            
+
             #region Initial validations
 
             var user = await this.userRepo.GetAsync(u => u.Email == cmd.Email.Trim());
@@ -108,29 +109,39 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            Collaborator collaborator = null;
+            //Collaborator collaborator = null;
 
-            if (cmd.CollaboratorTypeNames.HasValue())
-            {
-                collaborator = new Collaborator(
-                                     await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
-                                     await this.collaboratorTypeRepo.FindByNamesAsync(cmd.CollaboratorTypeNames),
-                                     cmd.FirstName,
-                                     cmd.LastNames,
-                                     cmd.Email,
-                                     cmd.PasswordHash,
-                                     cmd.UserId);
-            }
-            else
-            {
-                collaborator = new Collaborator(
+            //if (cmd.RoleName == Constants.Role.AdminPartial && cmd.CollaboratorTypeNames.HasValue())
+            //{
+            //    collaborator = new Collaborator(
+            //                         await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
+            //                         await this.collaboratorTypeRepo.FindByNamesAsync(cmd.CollaboratorTypeNames),
+            //                         cmd.FirstName,
+            //                         cmd.LastNames,
+            //                         cmd.Email,
+            //                         cmd.PasswordHash,
+            //                         cmd.UserId);
+            //}
+            //else
+            //{
+            //    collaborator = new Collaborator(
+            //                        cmd.FirstName,
+            //                        cmd.LastNames,
+            //                        cmd.Email,
+            //                        cmd.PasswordHash,
+            //                        await this.roleRepo.FindByNameAsync(cmd.RoleName),
+            //                        cmd.UserId);
+            //}
+
+            var collaborator = new Collaborator(
+                                    await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
+                                    await this.collaboratorTypeRepo.FindByNamesAsync(cmd.CollaboratorTypeNames),
+                                    await this.roleRepo.FindByNameAsync(cmd.RoleName),
                                     cmd.FirstName,
                                     cmd.LastNames,
                                     cmd.Email,
                                     cmd.PasswordHash,
-                                    await this.roleRepo.FindByNameAsync(cmd.RoleName),
                                     cmd.UserId);
-            }
 
             if (!collaborator.IsValid())
             {

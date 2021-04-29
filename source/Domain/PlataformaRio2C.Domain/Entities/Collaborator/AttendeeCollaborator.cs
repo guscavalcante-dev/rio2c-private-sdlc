@@ -231,6 +231,29 @@ namespace PlataformaRio2C.Domain.Entities
             this.DeleteAttendeeOrganizationCollaborators(new List<AttendeeOrganization>(), userId);
         }
 
+        /// <summary>Deletes the specified collaborator type.</summary>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(List<CollaboratorType> collaboratorTypes, int userId)
+        {
+            foreach(var collaboratorType in collaboratorTypes)
+            {
+                this.DeleteAttendeeCollaboratorType(collaboratorType, userId);
+            }
+            
+            this.DeleteConferenceParticipants(userId);
+
+            if (this.FindAllAttendeeCollaboratorTypesNotDeleted()?.Any() == true)
+            {
+                return;
+            }
+
+            this.IsDeleted = true;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+            this.DeleteAttendeeOrganizationCollaborators(new List<AttendeeOrganization>(), userId);
+        }
+
         /// <summary>Sends the welcome email send date.</summary>
         /// <param name="userId">The user identifier.</param>
         public void SendWelcomeEmailSendDate(int userId)

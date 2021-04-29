@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Rafael Dantas Ruiz
-// Created          : 08-26-2019
+// Author           : Renan Valentim
+// Created          : 04-20-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-21-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 04-20-2021
 // ***********************************************************************
 // <copyright file="managers.create.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,38 +30,10 @@ var ManagersCreate = function () {
 
         MyRio2cCropper.init({ formIdOrClass: formId });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
-        //ManagersForm.init(formId);
-        AddressesForm.init();        
-        MyRio2cCommon.enableDropdownChangeEvent("CollaboratorGenderUid", "CollaboratorGenderAdditionalInfo");
-        MyRio2cCommon.enableDropdownChangeEvent("CollaboratorRoleUid", "CollaboratorRoleAdditionalInfo");
-        MyRio2cCommon.enableDropdownChangeEvent("CollaboratorIndustryUid", "CollaboratorIndustryAdditionalInfo");
-        MyRio2cCommon.enableYesNoRadioEvent("HasAnySpecialNeeds");
-        MyRio2cCommon.enableYesNoRadioEvent("HaveYouBeenToRio2CBefore");
-        MyRio2cCommon.enableDatePicker({ inputIdOrClass: formId + ' .enable-datepicker' });
-        changePreviousEditionsRequired();
-        MyRio2cCommon.enableAtLeastOnCheckboxByNameValidation("HaveYouBeenToRio2CBefore");
+        MyRio2cCommon.enableDropdownChangeEvent("RoleName", "Role");
         enableAjaxForm();
         enableFormValidation();
     };
-
-    var changePreviousEditionsRequired = function () {
-	    $("#HasEditionSelected").val($('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox:checked').length > 0 ? "True" : null);
-        var dataValMsgFor = $('[data-valmsg-for="HasEditionSelected"]');
-
-        $('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox').on('click', function () {
-            if ($('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox:checked').length > 0) {
-                $("#HasEditionSelected").val("True");
-                dataValMsgFor.html('');
-                dataValMsgFor.addClass('field-validation-valid');
-                dataValMsgFor.removeClass('field-validation-error');
-            } else {
-                $("#HasEditionSelected").val("False");
-                dataValMsgFor.html('<span for="' + name + '" generated="true" class="">' + labels.selectAtLeastOneOption + '</span>');
-                dataValMsgFor.removeClass('field-validation-valid');
-                dataValMsgFor.addClass('field-validation-error');
-            }
-	    });
-    }
 
     // Show modal ---------------------------------------------------------------------------------
     var showModal = function () {
@@ -117,14 +89,6 @@ var ManagersCreate = function () {
             }
         });
     };
-
-
-
-
-
-
-
-
 
     return {
         showModal: function () {

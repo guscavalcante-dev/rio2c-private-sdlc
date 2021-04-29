@@ -1,6 +1,8 @@
 ﻿@using PlataformaRio2C.Application.CQRS.Commands
+@using Constants = PlataformaRio2C.Domain.Constants;
 @model ManagerBaseCommand
 <div class="kt-section">
+    @Html.HiddenFor(m => m.IsCreatingNewManager)
     <div class="kt-section__content mt-3">
         <div class="form-group row">
             <div class="col-md-5">
@@ -22,7 +24,7 @@
                 @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
             </div>
         </div>
-        @if (!Model.IsUpdatingManager)
+        @if (Model.IsCreatingNewManager == true)
         {
             <div class="form-group row">
                 <div class="col-md-6">
@@ -51,7 +53,7 @@
                     {
                         foreach (var role in Model.Roles)
                         {
-                            <option value="@role.Name" @(Model.RoleName == role.Name ? "selected" : "") data-additionalinfo="@role.HasAdditionalInfo">
+                            <option value="@role.Name" @(Model.RoleName == role.Name ? "selected" : "") data-additionalinfo="@(role.Name == Constants.Role.AdminPartial)">
                                 @role.Name
                             </option>
                         }

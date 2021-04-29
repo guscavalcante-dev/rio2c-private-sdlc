@@ -43,7 +43,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        [RequiredIf(nameof(IsUpdatingManager), "False", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public bool? IsCreatingNewManager { get; set; }
+        [RequiredIf("IsCreatingNewManager", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(100, MinimumLength = 6, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         [DataType(DataType.Password)]
         [Display(Name = "Password", ResourceType = typeof(Labels))]
@@ -146,12 +147,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [RequiredIf(nameof(RoleName), Constants.Role.AdminPartial, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public string[] CollaboratorTypeNames { get; set; }
 
+        public bool? IsAdminFull => RoleName == Constants.Role.Admin;
+
         public bool? SharePublicEmail { get; set; }
         public bool CollaboratorIndustryAdditionalInfoRequired { get; set; }
         public bool CollaboratorGenderAdditionalInfoRequired { get; set; }
         public bool CollaboratorRoleAdditionalInfoRequired { get; set; }
-        
-        public bool IsUpdatingManager { get; set; }
+          
         public string PasswordHash { get; private set; }
 
         public IEnumerable<Role> Roles { get; set; }

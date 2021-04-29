@@ -114,6 +114,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             string[] collaboratorTypes = string.IsNullOrEmpty(collaboratorType) ? Constants.CollaboratorType.Admins : new string[] { collaboratorType };
             string[] rolesNames = string.IsNullOrEmpty(roleName) ? Constants.Role.AnyAdminArray : new string[] { roleName };
 
+            if (rolesNames.Contains(Constants.Role.Admin))
+            {
+                collaboratorTypes = new string[] { };
+            }
+
             var playersExecutives = await this.collaboratorRepo.FindAllAminsByDataTable(
                 request.Start / request.Length,
                 request.Length,

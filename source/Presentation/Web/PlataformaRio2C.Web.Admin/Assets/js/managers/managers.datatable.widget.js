@@ -194,7 +194,7 @@ var ManagersDataTableWidget = function () {
                                             </a>\
                                             <div class="dropdown-menu dropdown-menu-right">';
 
-                        if (!full.IsInCurrentEdition) {
+                        if (!full.IsInCurrentEdition && !full.IsAdminFull) {
                             html += '<button class="dropdown-item" onclick="ManagersUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         }
 
