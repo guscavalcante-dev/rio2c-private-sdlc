@@ -23,33 +23,6 @@
                     <div id="form-container">
                         @Html.Partial("Modals/_Form", Model)
                     </div>
-                    @*<div class="kt-section pt-4">
-                        <div class="kt-separator kt-separator--border-dashed"></div>
-                        <h3 class="kt-section__title mb-0">@Labels.Dates</h3>
-                        <div class="kt-separator kt-separator--border-dashed"></div>
-                        <div class="kt-section__content mt-3">
-                            <div class="row">
-                                <div class="form-group col-sm-6">
-                                    <label>@Labels.WelcomeEmailSendDate</label>
-                                    <p class="form-control-static">@(Model.WelcomeEmailSendDate?.ToString() ?? "-")</p>
-                                </div>
-                                <div class="form-group col-sm-6">
-                                    <label>@Labels.TermsAcceptanceDate</label>
-                                    <p class="form-control-static">@(Model.PlayerTermsAcceptanceDate?.ToString() ?? "-")</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-sm-6">
-                                    <label>@Labels.OnboardingStartDate</label>
-                                    <p class="form-control-static">@(Model.OnboardingStartDate?.ToString() ?? "-")</p>
-                                </div>
-                                <div class="form-group col-sm-6">
-                                    <label>@Labels.OnboardingFinishDate</label>
-                                    <p class="form-control-static">@(Model.OnboardingFinishDate?.ToString() ?? "-")</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>*@
                     <div class="row">
                         <div class="col-sm-12 text-right">
                             @Labels.LastUpdateOn <b>@Model.UpdateDate.ToUserTimeZone().ToShortDateString() @Model.UpdateDate.ToUserTimeZone().ToLongTimeString()</b> @Labels.By <b>@Model.UpdaterBaseDto.Name</b>.

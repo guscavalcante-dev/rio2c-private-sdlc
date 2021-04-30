@@ -46,6 +46,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public int CreateUserId { get; set; }
         public int UpdateUserId { get; set; }
 
+        public bool IsInCurrentEdition => EditionAttendeeCollaboratorBaseDto != null;
+
         public UserBaseDto CreatorDto { get; set; }
         public UserBaseDto UpdaterDto { get; set; }
         public AttendeeCollaboratorBaseDto EditionAttendeeCollaboratorBaseDto { get; set; }

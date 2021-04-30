@@ -300,6 +300,47 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateUserId = this.UpdateUserId = userId;
         }
 
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Collaborator"/> class.
+        /// </summary>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="passwordHash">The password hash.</param>
+        /// <param name="roles">The roles.</param>
+        /// <param name="userId">The user identifier.</param>
+        public Collaborator(
+            Edition edition,
+            List<CollaboratorType> collaboratorTypes,
+            List<Role> roles,
+            string firstName,
+            string lastNames,
+            string email,
+            string passwordHash,
+            int userId)
+        {
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.UpdatePublicEmail(false, email);
+
+            if (roles.Select(r => r.Name).Contains(Constants.Role.AdminPartial))
+            {
+                this.SynchronizeAttendeeCollaborators(edition, collaboratorTypes, null, null, null, true, userId);
+                this.UpdateUser(email, passwordHash);
+            }
+            else if(roles.Select(r => r.Name).Contains(Constants.Role.Admin))
+            {
+                this.UpdateUser(email, passwordHash, roles);
+                this.DeleteAttendeeCollaborators(edition, collaboratorTypes, userId);
+                //TODO: Delete CollaboratorTypes from this user
+            }
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
         /// <summary>Initializes a new instance of the <see cref="Collaborator"/> class for tiny create on admin.</summary>
         /// <param name="uid">The uid.</param>
         /// <param name="edition">The edition.</param>
@@ -477,6 +518,7 @@ namespace PlataformaRio2C.Domain.Entities
         public void Update(
             Edition edition,
             List<CollaboratorType> collaboratorTypes,
+            List<Role> roles,
             string firstName,
             string lastNames,
             string email,
@@ -485,39 +527,27 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.FirstName = firstName?.Trim();
             this.LastNames = lastNames?.Trim();
-
             this.UpdatePublicEmail(false, email);
-            this.SynchronizeAttendeeCollaborators(edition, collaboratorTypes, null, null, null, isAddingToCurrentEdition, userId);
-            this.UpdateUser(email);
+
+            //this.SynchronizeAttendeeCollaborators(edition, collaboratorTypes, null, null, null, isAddingToCurrentEdition, userId);
+            //this.UpdateUser(email);
+            if (roles.Select(r => r.Name).Contains(Constants.Role.AdminPartial))
+            {
+                this.SynchronizeAttendeeCollaborators(edition, collaboratorTypes, null, null, null, true, userId);
+                this.UpdateUser(email);
+            }
+            else if (roles.Select(r => r.Name).Contains(Constants.Role.Admin))
+            {
+                this.UpdateUser(email, roles);
+                this.DeleteAttendeeCollaborators(edition, collaboratorTypes, userId);
+                //TODO: Delete CollaboratorTypes from this user
+            }
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
-        //public void Update(
-        //        Edition edition,
-        //        List<CollaboratorType> collaboratorTypes,
-        //        string firstName,
-        //        string lastNames,
-        //        string email,
-        //        bool? sharePublicEmail,
-        //        string publicEmail,
-        //        bool isAddingToCurrentEdition,
-        //        int userId)
-        //    {
-        //        this.FirstName = firstName?.Trim();
-        //        this.LastNames = lastNames?.Trim();
-
-
-        //        this.IsDeleted = false;
-        //        this.UpdateDate = DateTime.UtcNow;
-        //        this.UpdateUserId = userId;
-
-        //        this.SynchronizeAttendeeCollaborators(edition, collaboratorTypes, null, null, attendeeOrganizations, isAddingToCurrentEdition, userId);
-        //        this.UpdateUser(email);
-        //    }
-
-
+        
         /// <summary>Updates the admin main information.</summary>
         /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="firstName">The first name.</param>
@@ -922,6 +952,23 @@ namespace PlataformaRio2C.Domain.Entities
             }
 
             this.OnboardUser(passwordHash);
+        }
+
+        /// <summary>
+        /// Updates the user.
+        /// </summary>
+        /// <param name="email">The email.</param>
+        /// <param name="roles">The roles.</param>
+        public void UpdateUser(string email, List<Role> roles)
+        {
+            if (this.User != null)
+            {
+                this.User.Update(this.GetFullName(), email, roles);
+            }
+            else
+            {
+                this.User = new User(this.GetFullName(), email, roles);
+            }
         }
 
         /// <summary>Updates the user.</summary>
@@ -1371,6 +1418,21 @@ namespace PlataformaRio2C.Domain.Entities
             foreach (var attendeeCollaborator in this.FindAllAttendeeCollaboratorsNotDeleted(edition))
             {
                 attendeeCollaborator?.Delete(collaboratorType, userId);
+            }
+        }
+
+        /// <summary>Deletes the attendee collaborators.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteAttendeeCollaborators(Edition edition, List<CollaboratorType> collaboratorTypes, int userId)
+        {
+            if (AttendeeCollaborators != null)
+            {
+                foreach (var attendeeCollaborator in this.FindAllAttendeeCollaboratorsNotDeleted(edition))
+                {
+                    attendeeCollaborator?.Delete(collaboratorTypes, userId);
+                }
             }
         }
 

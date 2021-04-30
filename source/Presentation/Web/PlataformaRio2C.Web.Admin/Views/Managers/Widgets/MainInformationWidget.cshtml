@@ -17,14 +17,14 @@
                         <i class="flaticon2-correct"></i>
                     </span>
                     <div class="kt-widget__action">
-                        <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="ManagersUpdate.showModal('@(Model.Uid)');">
+                        <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick=@(String.Format("ManagersUpdate.showModal('{0}','{1}');", @Model.Uid, @Model.IsInCurrentEdition))>
                             <i class="flaticon2-edit"></i>
                         </button>
                     </div>
                 </div>
 
                 <div class="kt-widget__subhead pt-0">
-                    @(Model.JobTitle)
+                    @(Model.Role.Name)
                 </div>                
             </div>
         </div>
@@ -43,54 +43,31 @@
             </div>
             <div class="kt-widget__item">
                 <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.BirthDate</span>
-                    <span class="kt-widget__value"><span>@(Model.BirthDate?.ToShortDateString())</span></span>
-                </div>
-            </div>
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.Gender</span>
-                    <span class="kt-widget__value"><span>@(Model.Gender?.Name)</span></span>
-                </div>
-            </div>
-        </div>
-        <div class="kt-widget__bottom">
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.Email</span>
                     <span class="kt-widget__value"><span>@(Model.Email)</span></span>
                 </div>
             </div>
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.CellPhone</span>
-                    <span class="kt-widget__value"><span>@(Model.CellPhone)</span></span>
-                </div>
-            </div>
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.PhoneNumber</span>
-                    <span class="kt-widget__value"><span>@(Model.PhoneNumber)</span></span>
-                </div>
-            </div>
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.Website</span>
-                    <span class="kt-widget__value"><span>@(Model.Website)</span></span>
-                </div>
-            </div>
         </div>
-        <div class="kt-widget__bottom">
+        <div class="kt-widget__bottom">                        
             <div class="kt-widget__item">
                 <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.BadgeName</span>
-                    <span class="kt-widget__value"><span>@(Model.Badge)</span></span>
+                    <span class="kt-widget__title">@Labels.Profile</span>
+                    <span class="kt-widget__value">                        
+                        <span>@(Model.Role.Name)</span>
+                    </span>
                 </div>
             </div>
             <div class="kt-widget__item">
                 <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.JobTitle</span>
-                    <span class="kt-widget__value"><span>@(Model.JobTitle)</span></span>
+                    <span class="kt-widget__title">@Labels.CollaboratorType</span>
+                    <span class="kt-widget__value">
+                        @foreach (var item in Model.AttendeeCollaboratorTypeDtos)
+                        {
+                            <span>
+                                @Html.DisplayFor(x => item.CollaboratorType.Name);
+                            </span><br />
+                        }
+                    </span>
                 </div>
             </div>
 

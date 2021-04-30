@@ -121,16 +121,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<Collaborator> FindByRoleNameAndCollaboratorTypeNameAndByEditionId(this IQueryable<Collaborator> query, string[] rolesNames, string[] collaboratorTypeNames, bool showAllEditions, int? editionId)
         {
-            if (collaboratorTypeNames.HasValue())
-            {
-                query = query.Where(c => (c.User.Roles.Any(r => rolesNames.Contains(r.Name)))
-                                         && (c.AttendeeCollaborators.Any(ac => (showAllEditions || ac.EditionId == editionId)
-                                                                            && !ac.IsDeleted
-                                                                            && !ac.Edition.IsDeleted
-                                                                            && (ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
-                                                                                                                        && !act.CollaboratorType.IsDeleted
-                                                                                                                        && collaboratorTypeNames.Contains(act.CollaboratorType.Name))))));
-            }
+            /*TODO: Esta clausula está com problema!
+             * AdminFull não contem registro em AttendeeCollaborator
+             * portanto, se adicionar o where AttendeeCollaborator na clausula, para de trazer os AdminFull.
+             * 
+             */
+            query = query.Where(c => (c.User.Roles.Any(r => rolesNames.Contains(r.Name)))
+                                     || (c.AttendeeCollaborators.Any(ac => (showAllEditions || ac.EditionId == editionId)
+                                                                        && !ac.IsDeleted
+                                                                        && !ac.Edition.IsDeleted
+                                                                        && (ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
+                                                                                                                    && !act.CollaboratorType.IsDeleted
+                                                                                                                    && (collaboratorTypeNames.Contains(act.CollaboratorType.Name)))))));
 
             return query;
         }
@@ -509,7 +511,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 AttendeeCollaboratorTypeDtos = c.AttendeeCollaborators
                                                                     .FirstOrDefault(ac => !ac.IsDeleted && ac.EditionId == editionId)
                                                                         .AttendeeCollaboratorTypes
-                                                                            .Where(act => !act.IsDeleted 
+                                                                            .Where(act => !act.IsDeleted
                                                                                             && !act.CollaboratorType.IsDeleted)
                                                                             .Select(act => new AttendeeCollaboratorTypeDto()
                                                                             {
@@ -836,7 +838,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     new Tuple<string, string>("FullName", "User.Name"),
                                     new Tuple<string, string>("Email", "User.Email"),
                                 },
-                                new List<string> {"User.Name", "User.Email", "CreateDate", "UpdateDate" },
+                                new List<string> { "User.Name", "User.Email", "CreateDate", "UpdateDate" },
                                 "User.Name")
                             .Select(c => new CollaboratorBaseDto
                             {
@@ -887,8 +889,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 AttendeeCollaboratorTypeDtos = c.AttendeeCollaborators
                                                                     .FirstOrDefault(ac => !ac.IsDeleted && ac.EditionId == editionId)
                                                                         .AttendeeCollaboratorTypes
-                                                                            .Where(act => !act.IsDeleted 
-                                                                                            && !act.CollaboratorType.IsDeleted 
+                                                                            .Where(act => !act.IsDeleted
+                                                                                            && !act.CollaboratorType.IsDeleted
                                                                                             && collaboratorTypeNames.Contains(act.CollaboratorType.Name))
                                                                             .Select(act => new AttendeeCollaboratorTypeDto()
                                                                             {

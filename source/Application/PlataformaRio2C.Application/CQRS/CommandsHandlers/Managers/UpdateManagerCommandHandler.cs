@@ -24,6 +24,7 @@ using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -38,7 +39,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly ILanguageRepository languageRepo;
         private readonly ICollaboratorGenderRepository genderRepo;
         private readonly ICollaboratorIndustryRepository industryRepo;
-        private readonly ICollaboratorRoleRepository roleRepo;
+        private readonly ICollaboratorRoleRepository collaboratorRoleRepo;
+        private readonly IRoleRepository roleRepo;
 
         /// <summary>Initializes a new instance of the <see cref="UpdateManagerCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
@@ -51,7 +53,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="languageRepository">The language repository.</param>
         /// <param name="genderRepo">The gender repo.</param>
         /// <param name="industryRepo">The industry repo.</param>
-        /// <param name="roleRepo">The role repo.</param>
+        /// <param name="collaboratorRoleRepository">The role repo.</param>
         public UpdateManagerCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
@@ -63,7 +65,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             ILanguageRepository languageRepository,
             ICollaboratorGenderRepository genderRepo,
             ICollaboratorIndustryRepository industryRepo,
-            ICollaboratorRoleRepository roleRepo)
+            ICollaboratorRoleRepository collaboratorRoleRepository,
+            IRoleRepository roleRepository)
             : base(eventBus, uow, collaboratorRepository)
         {
             this.userRepo = userRepository;
@@ -74,7 +77,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.genderRepo = genderRepo;
             this.industryRepo = industryRepo;
             this.languageRepo = languageRepository;
-            this.roleRepo = roleRepo;
+            this.collaboratorRoleRepo = collaboratorRoleRepository;
+            this.roleRepo = roleRepository;
         }
 
         /// <summary>Handles the specified update collaborator.</summary>
@@ -105,11 +109,18 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #endregion
 
             var edition = await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty);
-            var collaboratorTypes = await this.collaboratorTypeRepo.FindByNamesAsync(cmd.CollaboratorTypeNames);
+            var roles = await this.roleRepo.FindByNameAsync(cmd.RoleName);
+
+            List<CollaboratorType> collaboratorTypes = null;
+            if (cmd.CollaboratorTypeNames.HasValue())
+            {
+                collaboratorTypes = await this.collaboratorTypeRepo.FindByNamesAsync(cmd.CollaboratorTypeNames);
+            }
 
             collaborator.Update(
                 edition,
                 collaboratorTypes,
+                roles,
                 cmd.FirstName,
                 cmd.LastNames,
                 cmd.Email,

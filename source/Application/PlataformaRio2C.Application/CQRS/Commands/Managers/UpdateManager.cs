@@ -68,7 +68,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Manager, Labels.FoundM));
             }
 
-            base.IsUpdatingManager = true;
+            base.IsCreatingNewManager = false;
             this.CollaboratorUid = entity.Uid;
             this.IsAddingToCurrentEdition = isAddingToCurrentEdition;
 
