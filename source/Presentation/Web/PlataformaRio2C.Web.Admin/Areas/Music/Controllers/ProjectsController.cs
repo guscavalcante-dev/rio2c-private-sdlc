@@ -971,11 +971,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
             try
             {
-                if (this.EditionDto?.IsMusicProjectEvaluationOpen() != true)
-                {
-                    throw new DomainException(Texts.ForbiddenErrorMessage);
-                }
-
                 var cmd = new EvaluateMusicBand(
                     await this.musicBandRepo.FindByIdAsync(musicBandId),
                     grade.Value);

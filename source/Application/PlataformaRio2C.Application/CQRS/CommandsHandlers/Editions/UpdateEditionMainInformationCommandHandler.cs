@@ -27,21 +27,29 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     public class UpdateEditionMainInformationCommandHandler : EditionBaseCommandHandler, IRequestHandler<UpdateEditionMainInformation, AppValidationResult>
     {
         private readonly IEditionRepository editionRepo;
+        private readonly IAttendeeMusicBandRepository attendeeMusicBandRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateEditionMainInformationCommandHandler"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateEditionMainInformationCommandHandler" /> class.
+        /// </summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="editionRepository">The edition event repository.</param>
+        /// <param name="attendeeMusicBandRepository">The attendee music band repository.</param>
         public UpdateEditionMainInformationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            IEditionRepository editionRepository)
+            IEditionRepository editionRepository,
+            IAttendeeMusicBandRepository attendeeMusicBandRepository)
             : base(eventBus, uow, editionRepository)
         {
             this.editionRepo = editionRepository;
+            this.attendeeMusicBandRepo = attendeeMusicBandRepository;
         }
 
-        /// <summary>Handles the specified update edition event main information.</summary>
+        /// <summary>
+        /// Handles the specified update edition event main information.
+        /// </summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
@@ -50,6 +58,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.Uow.BeginTransaction();
 
             var edition = await this.GetEditionByUid(cmd.EditionUid);
+
+            bool changedMusicProjectMinimumEvaluationsCount = edition.MusicProjectMinimumEvaluationsCount != cmd.MusicProjectMinimumEvaluationsCount;
 
             #region Initial validations
 
@@ -104,6 +114,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             {
                 currentEditions.ForEach(e => e.DisableIsCurrent());
                 this.EditionRepo.UpdateAll(currentEditions);
+            }
+
+            //AttendeeMusicBandsGrades must be recalculated when changed "MusicProjectMinimumEvaluationsCount".
+            if (changedMusicProjectMinimumEvaluationsCount)
+            {
+                var attendeeMusicBands = await this.attendeeMusicBandRepo.FindAllByEditionIdAsync(edition.Id);
+                attendeeMusicBands.ForEach(amb => amb.RecalculateGrade(edition));
+                this.attendeeMusicBandRepo.UpdateAll(attendeeMusicBands);
             }
 
             this.EditionRepo.Update(edition);

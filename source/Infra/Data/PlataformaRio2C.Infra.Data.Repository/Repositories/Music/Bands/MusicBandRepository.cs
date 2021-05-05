@@ -125,7 +125,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<MusicBand> FindByIdAsync(int musicBandId)
         {
             var query = this.GetBaseQuery()
-                               .IsNotDeleted()
                                .FindById(musicBandId);
 
             return await query
@@ -140,7 +139,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<MusicBand> FindByUidAsync(Guid musicBandUid)
         {
             var query = this.GetBaseQuery()
-                                .IsNotDeleted()
                                 .FindByUid(musicBandUid);
 
             return await query
