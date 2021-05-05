@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="kt-widget__subhead pt-0">
-                    @(Model.Role.Name)
+                    @(Model.Role?.Name ?? "-")
                 </div>                
             </div>
         </div>
@@ -53,7 +53,7 @@
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.Profile</span>
                     <span class="kt-widget__value">                        
-                        <span>@(Model.Role.Name)</span>
+                        <span>@(Model.Role?.Name ?? "-")</span>
                     </span>
                 </div>
             </div>

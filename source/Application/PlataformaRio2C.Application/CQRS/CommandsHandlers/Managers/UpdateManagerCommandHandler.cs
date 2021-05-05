@@ -11,21 +11,18 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using MediatR;
+using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.Data.Context.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
-using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
-using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Domain.Statics;
-using PlataformaRio2C.Domain.Validation;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using Constants = PlataformaRio2C.Domain.Constants;
+
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -35,11 +32,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IUserRepository userRepo;
         private readonly IEditionRepository editionRepo;
         private readonly ICollaboratorTypeRepository collaboratorTypeRepo;
-        private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
-        private readonly ILanguageRepository languageRepo;
-        private readonly ICollaboratorGenderRepository genderRepo;
-        private readonly ICollaboratorIndustryRepository industryRepo;
-        private readonly ICollaboratorRoleRepository collaboratorRoleRepo;
         private readonly IRoleRepository roleRepo;
 
         /// <summary>Initializes a new instance of the <see cref="UpdateManagerCommandHandler"/> class.</summary>
@@ -61,23 +53,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IUserRepository userRepository,
             IEditionRepository editionRepository,
             ICollaboratorTypeRepository collaboratorTypeRepository,
-            IAttendeeOrganizationRepository attendeeOrganizationRepository,
-            ILanguageRepository languageRepository,
-            ICollaboratorGenderRepository genderRepo,
-            ICollaboratorIndustryRepository industryRepo,
-            ICollaboratorRoleRepository collaboratorRoleRepository,
             IRoleRepository roleRepository)
             : base(eventBus, uow, collaboratorRepository)
         {
             this.userRepo = userRepository;
             this.editionRepo = editionRepository;
             this.collaboratorTypeRepo = collaboratorTypeRepository;
-            this.attendeeOrganizationRepo = attendeeOrganizationRepository;
-            this.languageRepo = languageRepository;
-            this.genderRepo = genderRepo;
-            this.industryRepo = industryRepo;
-            this.languageRepo = languageRepository;
-            this.collaboratorRoleRepo = collaboratorRoleRepository;
             this.roleRepo = roleRepository;
         }
 
@@ -109,13 +90,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #endregion
 
             var edition = await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty);
+            var collaboratorTypes = await this.collaboratorTypeRepo.FindByNamesAsync(cmd.CollaboratorTypeNames);
             var roles = await this.roleRepo.FindByNameAsync(cmd.RoleName);
-
-            List<CollaboratorType> collaboratorTypes = null;
-            if (cmd.CollaboratorTypeNames.HasValue())
-            {
-                collaboratorTypes = await this.collaboratorTypeRepo.FindByNamesAsync(cmd.CollaboratorTypeNames);
-            }
 
             collaborator.Update(
                 edition,
@@ -124,7 +100,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.FirstName,
                 cmd.LastNames,
                 cmd.Email,
-                cmd.IsAddingToCurrentEdition, 
                 cmd.UserId);
 
             if (!collaborator.IsValid())

@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 04-30-2021
 // ***********************************************************************
 // <copyright file="Role.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,9 +18,27 @@ namespace PlataformaRio2C.Domain.Entities
     /// <summary>Role</summary>
     public class Role : Entity
     {
-        public string Name { get; set; }
+        public string Name { get; private set; }
+        //public string Description { get; private set; }
 
-        public bool HasAdditionalInfo => Constants.Role.AdminPartial == this.Name;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Role"/> class.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="description">The description.</param>
+        public Role(string name, string description)
+        {
+            this.Name = name?.Trim();
+            //this.Description = description?.Trim();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Role"/> class.
+        /// </summary>
+        public Role()
+        {
+
+        }
 
         #region Validations
 

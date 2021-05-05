@@ -56,24 +56,25 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<AttendeeOrganizationBaseDto> AttendeeOrganizationBasesDtos { get; set; }
         public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }
 
-
         public Role Role { get; set; }
         public List<AttendeeCollaboratorTypeDto> AttendeeCollaboratorTypeDtos { get; set; }
-        public string CollaboratorTypeNames => GetAttendeeCollaboratorTypesNames();
+        public string[] CollaboratorTypeNames => this.AttendeeCollaboratorTypeDtos?.Select(act => act.CollaboratorType?.Name)?.ToArray();
         public string RoleWithCollaboratorTypeNameHtmlString
         {
             get
             {
+                //Tolist to string aqui!! TODO:
                 var name = "";
                 var roleName = this.Role?.Name;
+                var collaboratorTypeNames = this.CollaboratorTypeNames?.ToString("<br/>");
 
-                if (!string.IsNullOrEmpty(roleName) && !string.IsNullOrEmpty(this.CollaboratorTypeNames))
+                if (!string.IsNullOrEmpty(roleName) && !string.IsNullOrEmpty(collaboratorTypeNames))
                 {
-                    name = $"{roleName}<br/>{this.CollaboratorTypeNames}";
+                    name = $"{roleName}<br/>{collaboratorTypeNames}";
                 }
-                else if (!string.IsNullOrEmpty(this.CollaboratorTypeNames))
+                else if (!string.IsNullOrEmpty(collaboratorTypeNames))
                 {
-                    name = this.CollaboratorTypeNames;
+                    name = collaboratorTypeNames;
                 }
                 else if (!string.IsNullOrEmpty(roleName))
                 {
@@ -83,28 +84,18 @@ namespace PlataformaRio2C.Domain.Dtos
                 return name;
             }
         }
-        public bool? IsAdminFull => this.Role?.Name == Constants.Role.Admin;
-
-        #region Private Methods
-
-        /// <summary>
-        /// Gets the attendee collaborator types names.
-        /// </summary>
-        /// <returns></returns>
-        private string GetAttendeeCollaboratorTypesNames()
+        public bool? IsAdminFull
         {
-            if (AttendeeCollaboratorTypeDtos != null && AttendeeCollaboratorTypeDtos.Count > 0)
+            get
             {
-                return this.AttendeeCollaboratorTypeDtos.Select(act => act.CollaboratorType.Name).ToList().ToString("<br/>");
-            }
-            else
-            {
-                return "";
+                if (this.Role == null)
+                    return null;
+                else if (this.Role.Name == Constants.Role.Admin)
+                    return true;
+                else
+                    return false;
             }
         }
-
-        #endregion
-
 
         #region Json ignored properties 
 

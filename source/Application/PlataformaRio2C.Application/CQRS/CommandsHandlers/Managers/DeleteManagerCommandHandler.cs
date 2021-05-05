@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -74,7 +75,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             collaborator.Delete(
                 edition,
-                await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
+                cmd.IsDeletingFromCurrentEdition,
                 cmd.UserId);
             if (!collaborator.IsValid())
             {

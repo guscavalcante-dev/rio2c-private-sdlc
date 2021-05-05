@@ -31,7 +31,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<Collaborator> FindByEmailAsync(string email);
         Task<IPagedList<CollaboratorApiListDto>> FindAllDropdownApiListDtoPaged(int editionId, string keywords, bool filterByProjectsInNegotiation, string collaboratorTypeName, bool showAllParticipants, int page, int pageSize);
         Task<IPagedList<LogisticJsonDto>> FindAllLogisticsByDatatable(int editionId, int page, int pageSize, string searchValue, List<Tuple<string, string>> getSortColumns, bool showAllParticipants, bool showAllSponsors);
-        Task<IPagedList<CollaboratorBaseDto>> FindAllAminsByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, List<Guid> collaboratorsUids, string[] collaboratorTypeNames, string[] rolesNames, bool showAllEditions, bool? showHighlights, int? editionId);
+        Task<IPagedList<CollaboratorBaseDto>> FindAllAdminsByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, string collaboratorTypeName, string roleName, bool showAllEditions, bool? showHighlights, int? editionId);
 
         #region Api
 

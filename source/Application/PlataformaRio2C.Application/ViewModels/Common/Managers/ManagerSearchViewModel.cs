@@ -29,14 +29,8 @@ namespace PlataformaRio2C.Application.ViewModels
         [Display(Name = "Roles", ResourceType = typeof(Labels))]
         public string[] Roles { get; set; }
 
-        [Display(Name = "SelectedRoles", ResourceType = typeof(Labels))]
-        public string[] SelectedRoles { get; set; }
-
         [Display(Name = "CollaboratorTypes", ResourceType = typeof(Labels))]
         public string[] CollaboratorTypes { get; set; }
-
-        [Display(Name = "SelectedCollaboratorTypes", ResourceType = typeof(Labels))]
-        public string[] SelectedCollaboratorTypes { get; set; }
 
         public int? Page { get; set; }
         public int? PageSize { get; set; }
@@ -44,7 +38,6 @@ namespace PlataformaRio2C.Application.ViewModels
         /// <summary>Initializes a new instance of the <see cref="ManagerSearchViewModel"/> class.</summary>
         public ManagerSearchViewModel()
         {
-            //this.ShowAllEditions = true;
             this.CollaboratorTypes = CollaboratorType.Admins;
             this.Roles = Role.AnyAdminArray;
         }

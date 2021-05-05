@@ -35,11 +35,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IUserRepository userRepo;
         private readonly IEditionRepository editionRepo;
         private readonly ICollaboratorTypeRepository collaboratorTypeRepo;
-        private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
-        private readonly ILanguageRepository languageRepo;
-        private readonly ICollaboratorGenderRepository genderRepo;
-        private readonly ICollaboratorIndustryRepository industryRepo;
-        private readonly ICollaboratorRoleRepository collaboratorRoleRepo;
         private readonly IRoleRepository roleRepo;
 
         /// <summary>
@@ -64,22 +59,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IUserRepository userRepository,
             IEditionRepository editionRepository,
             ICollaboratorTypeRepository collaboratorTypeRepository,
-            IAttendeeOrganizationRepository attendeeOrganizationRepository,
-            ILanguageRepository languageRepository,
-            ICollaboratorGenderRepository genderRepository,
-            ICollaboratorIndustryRepository industryRepository,
-            ICollaboratorRoleRepository collaboratorRoleRepository,
             IRoleRepository roleRepository)
             : base(eventBus, uow, collaboratorRepository)
         {
             this.userRepo = userRepository;
             this.editionRepo = editionRepository;
             this.collaboratorTypeRepo = collaboratorTypeRepository;
-            this.attendeeOrganizationRepo = attendeeOrganizationRepository;
-            this.languageRepo = languageRepository;
-            this.genderRepo = genderRepository;
-            this.industryRepo = industryRepository;
-            this.collaboratorRoleRepo = collaboratorRoleRepository;
             this.roleRepo = roleRepository;
         }
 
@@ -109,34 +94,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            //Collaborator collaborator = null;
-
-            //if (cmd.RoleName == Constants.Role.AdminPartial && cmd.CollaboratorTypeNames.HasValue())
-            //{
-            //    collaborator = new Collaborator(
-            //                         await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
-            //                         await this.collaboratorTypeRepo.FindByNamesAsync(cmd.CollaboratorTypeNames),
-            //                         cmd.FirstName,
-            //                         cmd.LastNames,
-            //                         cmd.Email,
-            //                         cmd.PasswordHash,
-            //                         cmd.UserId);
-            //}
-            //else
-            //{
-            //    collaborator = new Collaborator(
-            //                        cmd.FirstName,
-            //                        cmd.LastNames,
-            //                        cmd.Email,
-            //                        cmd.PasswordHash,
-            //                        await this.roleRepo.FindByNameAsync(cmd.RoleName),
-            //                        cmd.UserId);
-            //}
+            var edition = await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty);
+            var collaboratorTypes = await this.collaboratorTypeRepo.FindByNamesAsync(cmd.CollaboratorTypeNames);
+            var role = await this.roleRepo.FindByNameAsync(cmd.RoleName);
 
             var collaborator = new Collaborator(
-                                    await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
-                                    await this.collaboratorTypeRepo.FindByNamesAsync(cmd.CollaboratorTypeNames),
-                                    await this.roleRepo.FindByNameAsync(cmd.RoleName),
+                                    edition,
+                                    collaboratorTypes,
+                                    role,
                                     cmd.FirstName,
                                     cmd.LastNames,
                                     cmd.Email,

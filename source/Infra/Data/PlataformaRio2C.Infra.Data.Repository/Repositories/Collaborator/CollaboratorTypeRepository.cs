@@ -61,10 +61,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<CollaboratorType> FindByNames(this IQueryable<CollaboratorType> query, string[] collaboratorTypeNames)
         {
-            //if (collaboratorTypeNames.HasValue())
-            //{
+            if (collaboratorTypeNames.HasValue())
+            {
                 query = query.Where(ct => collaboratorTypeNames.Contains(ct.Name));
-            //}
+            }
 
             return query;
         }
@@ -94,7 +94,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
     #endregion
 
-    /// <summary>CollaboratorTypeRepository</summary>
+    /// <summary> CollaboratorTypeRepository </summary>
     public class CollaboratorTypeRepository : Repository<PlataformaRio2CContext, CollaboratorType>, ICollaboratorTypeRepository
     {
         /// <summary>Initializes a new instance of the <see cref="CollaboratorRepository"/> class.</summary>
@@ -144,7 +144,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Include(ct => ct.Role)
                             .ToListAsync();
         }
-
 
         /// <summary>
         /// Finds all admin collaborator types asynchronous.
