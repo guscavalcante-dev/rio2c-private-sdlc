@@ -95,6 +95,18 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         {
             filterContext.Result = this.beginExecuteCoreActionResult;
 
+            var adminAccessControlDto = (AdminAccessControlDto)filterContext.Controller.ViewBag.AdminAccessControlDto;
+
+            if (adminAccessControlDto != null && !adminAccessControlDto.IsAdmin())
+            {
+                ViewBag.ActiveEditions = ((List<EditionDto>)ViewBag.ActiveEditions)
+                                            .Where(e => adminAccessControlDto.EditionAttendeeCollaborators
+                                                                            .Select(eac => eac.EditionId)
+                                                                            .Contains(e.Id)
+                                                                            ).ToList();
+
+            }
+
             base.OnActionExecuting(filterContext);
         }
 
@@ -240,6 +252,67 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <returns></returns>
         private bool ValidateEditionUser(RouteData routeData)
         {
+            var activeEditions = (List<EditionDto>)ViewBag.ActiveEditions;
+            if (activeEditions?.Any() != true)
+            {
+                return false;
+            }
+
+            var AdminAccessControlDto = (AdminAccessControlDto)ViewBag.AdminAccessControlDto;
+            if (AdminAccessControlDto == null)
+            {
+                return false;
+            }
+
+            var adminActiveEditions = activeEditions.Where(e => AdminAccessControlDto.EditionAttendeeCollaborators != null
+                                                               && AdminAccessControlDto.EditionAttendeeCollaborators
+                                                                    .Select(eac => eac.EditionId)
+                                                                    .Contains(e.Id)
+                                                                    ).ToList();
+
+            if (adminActiveEditions == null)
+            {
+                return false;
+            }
+
+            //If user doesn't participating at current edition (this.EditionDto.Edition.Id), redirects user to last participated edition.
+            if (!adminActiveEditions.Select(e => e.Id).Contains(this.EditionDto.Edition.Id))
+            {
+                if (AdminAccessControlDto?.EditionAttendeeCollaborators?.Any() != true)
+                {
+                    return false;
+                }
+
+                var lastParticipatedEditionId = AdminAccessControlDto.EditionAttendeeCollaborators.Max(ac => ac.EditionId);
+                var activeEditionDtos = this.CommandBus.Send(new FindAllEditionsDtosAsync()).Result;
+
+                var lastParticipatedEdition = activeEditionDtos?.FirstOrDefault(w => w.Id == lastParticipatedEditionId);
+                if (lastParticipatedEdition == null)
+                {
+                    return false;
+                }
+
+                ViewBag.EditionDto = this.EditionDto = lastParticipatedEdition;
+
+                var routes = routeData.Values;
+
+                // Add or change edition on routes
+                if (!routes.ContainsKey("edition"))
+                {
+                    routes.Add("edition", lastParticipatedEdition.UrlCode);
+                }
+                else
+                {
+                    routes["edition"] = lastParticipatedEdition.UrlCode;
+                }
+
+                this.beginExecuteCoreActionResult = this.RedirectToRoute(routes);
+
+                return true;
+            }
+
+            return false;
+
             //var activeEditions = (List<EditionDto>)ViewBag.ActiveEditions;
             //if (activeEditions?.Any() != true)
             //{
