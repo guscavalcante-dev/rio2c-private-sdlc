@@ -92,6 +92,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             #endregion
 
+            searchViewModel.UpdateCollaboratorTypes(this.collaboratorTypeRepo.FindAllAdmins(), this.UserInterfaceLanguage);
+            searchViewModel.UpdateRoles(this.roleRepo.FindAllAdminRoles(), this.UserInterfaceLanguage);
             return View(searchViewModel);
         }
 
@@ -204,7 +206,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                                     collaboratorType,
                                     roleName,
                                     showAllEditions,
-                                    false,
+                                    this.UserInterfaceLanguage,
                                     this.EditionDto?.Id);
 
             var response = DataTablesResponse.Create(request, admins.TotalItemCount, admins.TotalItemCount, admins);
@@ -231,7 +233,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowMainInformationWidget(Guid collaboratorUid)
         {
-            var mainInformationWidgetDto = await this.collaboratorRepo.FindDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id);
+            var mainInformationWidgetDto = await this.collaboratorRepo.FindDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage);
             if (mainInformationWidgetDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Edition, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
@@ -279,7 +281,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         {
             var cmd = new CreateManager(
                 await this.roleRepo.FindAllAdminRolesAsync(),
-                await this.collaboratorTypeRepo.FindAllAdminCollaboratorTypesAsync(),
+                await this.collaboratorTypeRepo.FindAllAdminsAsync(),
                 UserInterfaceLanguage);
 
             return Json(new
@@ -337,7 +339,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd.UpdateDropdownProperties(
                     await this.roleRepo.FindAllAdminRolesAsync(),
-                    await this.collaboratorTypeRepo.FindAllAdminCollaboratorTypesAsync(),
+                    await this.collaboratorTypeRepo.FindAllAdminsAsync(),
                     UserInterfaceLanguage);
 
                 return Json(new
@@ -377,7 +379,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 cmd = new UpdateManager(
                     await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
                     await this.roleRepo.FindAllAdminRolesAsync(),
-                    await this.collaboratorTypeRepo.FindAllAdminCollaboratorTypesAsync(),
+                    await this.collaboratorTypeRepo.FindAllAdminsAsync(),
                     isAddingToCurrentEdition ?? false,
                     UserInterfaceLanguage);
             }
@@ -433,7 +435,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd.UpdateDropdownProperties(
                     await this.roleRepo.FindAllAdminRolesAsync(),
-                    await this.collaboratorTypeRepo.FindAllAdminCollaboratorTypesAsync(),
+                    await this.collaboratorTypeRepo.FindAllAdminsAsync(),
                     UserInterfaceLanguage);
 
                 return Json(new
@@ -485,7 +487,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd.UpdateDropdownProperties(
                     await this.roleRepo.FindAllAdminRolesAsync(),
-                    await this.collaboratorTypeRepo.FindAllAdminCollaboratorTypesAsync(),
+                    await this.collaboratorTypeRepo.FindAllAdminsAsync(),
                     UserInterfaceLanguage);
 
                 return Json(new

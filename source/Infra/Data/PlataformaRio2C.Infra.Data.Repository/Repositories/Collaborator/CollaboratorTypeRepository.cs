@@ -149,13 +149,25 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// Finds all admin collaborator types asynchronous.
         /// </summary>
         /// <returns></returns>
-        public async Task<List<CollaboratorType>> FindAllAdminCollaboratorTypesAsync()
+        public async Task<List<CollaboratorType>> FindAllAdminsAsync()
         {
             var query = this.GetBaseQuery()
                             .IsAdmin();
 
             return await query
                             .ToListAsync();
+        }
+
+        /// <summary>
+        /// Finds all admin collaborator types.
+        /// </summary>
+        /// <returns></returns>
+        public List<CollaboratorType> FindAllAdmins()
+        {
+            var query = this.GetBaseQuery()
+                            .IsAdmin();
+
+            return query.ToList();
         }
     }
 }

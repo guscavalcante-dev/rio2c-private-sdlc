@@ -13,7 +13,7 @@
             <div class="kt-widget__content" style="overflow: hidden;">
                 <div class="kt-widget__head">
                     <span class="kt-widget__username">
-                        @(Model.FirstName) @(Model.LastNames)
+                        @(Model.FirstName.GetDashIfNullOrEmpty()) @(Model.LastNames.GetDashIfNullOrEmpty())
                         <i class="flaticon2-correct"></i>
                     </span>
                     <div class="kt-widget__action">
@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="kt-widget__subhead pt-0">
-                    @(Model.Role?.Name ?? "-")
+                    @(Model.Role?.Description.GetDashIfNullOrEmpty())
                 </div>                
             </div>
         </div>
@@ -32,19 +32,19 @@
             <div class="kt-widget__item">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.FirstName</span>
-                    <span class="kt-widget__value"><span>@(Model.FirstName)</span></span>
+                    <span class="kt-widget__value"><span>@(Model.FirstName.GetDashIfNullOrEmpty())</span></span>
                 </div>
             </div>
             <div class="kt-widget__item">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.LastNames</span>
-                    <span class="kt-widget__value"><span>@(Model.LastNames)</span></span>
+                    <span class="kt-widget__value"><span>@(Model.LastNames.GetDashIfNullOrEmpty())</span></span>
                 </div>
             </div>
             <div class="kt-widget__item">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.Email</span>
-                    <span class="kt-widget__value"><span>@(Model.Email)</span></span>
+                    <span class="kt-widget__value"><span>@(Model.Email.GetDashIfNullOrEmpty())</span></span>
                 </div>
             </div>
         </div>
@@ -53,7 +53,7 @@
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.Profile</span>
                     <span class="kt-widget__value">                        
-                        <span>@(Model.Role?.Name ?? "-")</span>
+                        <span>@(Model.Role?.Description.GetDashIfNullOrEmpty())</span>
                     </span>
                 </div>
             </div>
@@ -61,19 +61,24 @@
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.CollaboratorType</span>
                     <span class="kt-widget__value">
-                        @foreach (var item in Model.AttendeeCollaboratorTypeDtos)
+
+                        @if (Model.AttendeeCollaboratorTypeDtos.Count > 0)
                         {
-                            <span>
-                                @Html.DisplayFor(x => item.CollaboratorType.Name);
-                            </span><br />
+                            foreach (var item in Model.AttendeeCollaboratorTypeDtos)
+                            {
+                                <span>
+                                    @(item.CollaboratorType.Description.GetDashIfNullOrEmpty());
+                                </span><br />
+                            }
+                        }
+                        else
+                        {
+                            <span>-</span>
                         }
                     </span>
                 </div>
             </div>
-
         </div>
-
-
     </div>
     <br /><br /><br /><br /><br />
 </div>

@@ -11,6 +11,7 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System.Linq;
 
 namespace PlataformaRio2C.Domain.Entities
@@ -19,7 +20,7 @@ namespace PlataformaRio2C.Domain.Entities
     public class Role : Entity
     {
         public string Name { get; private set; }
-        //public string Description { get; private set; }
+        public string Description { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Role"/> class.
@@ -29,7 +30,7 @@ namespace PlataformaRio2C.Domain.Entities
         public Role(string name, string description)
         {
             this.Name = name?.Trim();
-            //this.Description = description?.Trim();
+            this.Description = description?.Trim();
         }
 
         /// <summary>
@@ -38,6 +39,14 @@ namespace PlataformaRio2C.Domain.Entities
         public Role()
         {
 
+        }
+
+        /// <summary>
+        /// Translates this instance.
+        /// </summary>
+        public void Translate(string userInterfaceLanguage)
+        {
+            this.Description = this.Description?.GetSeparatorTranslation(userInterfaceLanguage, '|');
         }
 
         #region Validations

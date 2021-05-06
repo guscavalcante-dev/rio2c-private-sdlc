@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -46,7 +47,7 @@ namespace PlataformaRio2C.Domain.Entities
         #endregion
 
         public string Name { get; private set; }
-        //public string Description { get; private set; }
+        public string Description { get; private set; }
         public int RoleId { get; private set; }
 
         public virtual Role Role { get; private set; }
@@ -65,7 +66,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.Uid = collaboratorTypeUid;
             this.Name = name?.Trim();
-            //this.Description = description?.TrimStart().TrimEnd();
+            this.Description = description?.TrimStart().TrimEnd();
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
@@ -88,9 +89,19 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="CollaboratorType"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CollaboratorType"/> class.
+        /// </summary>
         public CollaboratorType()
         {
+        }
+
+        /// <summary>
+        /// Translates this instance.
+        /// </summary>
+        public void Translate(string userInterfaceLanguage)
+        {
+            this.Description = this.Description?.GetSeparatorTranslation(userInterfaceLanguage, '|');
         }
 
         #region Validations

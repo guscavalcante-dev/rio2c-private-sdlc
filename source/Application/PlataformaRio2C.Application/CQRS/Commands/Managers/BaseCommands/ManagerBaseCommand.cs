@@ -265,44 +265,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         #region Private Methods
 
-        /// <summary>Updates the job titles.</summary>
-        /// <param name="entity">The entity.</param>
-        /// <param name="languagesDtos">The languages dtos.</param>
-        /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
-        private void UpdateJobTitles(CollaboratorDto entity, List<LanguageDto> languagesDtos, bool isJobTitleRequired)
-        {
-            this.JobTitles = new List<CollaboratorJobTitleBaseCommand>();
-            foreach (var languageDto in languagesDtos)
-            {
-                var jobTitle = entity?.JobTitlesDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
-                this.JobTitles.Add(jobTitle != null ? new CollaboratorJobTitleBaseCommand(jobTitle, isJobTitleRequired) :
-                                                      new CollaboratorJobTitleBaseCommand(languageDto, isJobTitleRequired));
-            }
-        }
-
-        /// <summary>Updates the mini bios.</summary>
-        /// <param name="entity">The entity.</param>
-        /// <param name="languagesDtos">The languages dtos.</param>
-        /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
-        private void UpdateMiniBios(CollaboratorDto entity, List<LanguageDto> languagesDtos, bool isMiniBioRequired)
-        {
-            this.MiniBios = new List<CollaboratorMiniBioBaseCommand>();
-            foreach (var languageDto in languagesDtos)
-            {
-                var miniBio = entity?.MiniBiosDtos?.FirstOrDefault(d => d.LanguageDto.Code == languageDto.Code);
-                this.MiniBios.Add(miniBio != null ? new CollaboratorMiniBioBaseCommand(miniBio, isMiniBioRequired) :
-                                                    new CollaboratorMiniBioBaseCommand(languageDto, isMiniBioRequired));
-            }
-        }
-
-        /// <summary>Updates the cropper image.</summary>
-        /// <param name="entity">The entity.</param>
-        /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
-        private void UpdateCropperImage(CollaboratorDto entity, bool isImageRequired)
-        {
-            this.CropperImage = new CropperImageBaseCommand(entity?.ImageUploadDate, entity?.Uid, FileRepositoryPathType.UserImage, isImageRequired);
-        }
-
         /// <summary>
         /// Updates the roles.
         /// </summary>
@@ -311,7 +273,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <returns></returns>
         private void UpdateRoles(List<Role> roles, string userInterfaceLanguage)
         {
-            //roles.ForEach(g => g.Translate(userInterfaceLanguage));
+            roles.ForEach(g => g.Translate(userInterfaceLanguage));
             this.Roles = roles;
         }
 
@@ -323,7 +285,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <exception cref="NotImplementedException"></exception>
         private void UpdateCollaboratorTypes(List<CollaboratorType> collaboratorTypes, string userInterfaceLanguage)
         {
-            //collaboratorTypes.ForEach(g => g.Translate(userInterfaceLanguage));
+            collaboratorTypes.ForEach(g => g.Translate(userInterfaceLanguage));
             this.CollaboratorTypes = collaboratorTypes;
         }
 

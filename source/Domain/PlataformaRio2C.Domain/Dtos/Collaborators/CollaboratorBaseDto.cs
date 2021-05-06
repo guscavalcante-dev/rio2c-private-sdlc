@@ -58,27 +58,24 @@ namespace PlataformaRio2C.Domain.Dtos
 
         public Role Role { get; set; }
         public List<AttendeeCollaboratorTypeDto> AttendeeCollaboratorTypeDtos { get; set; }
-        public string[] CollaboratorTypeNames => this.AttendeeCollaboratorTypeDtos?.Select(act => act.CollaboratorType?.Name)?.ToArray();
         public string RoleWithCollaboratorTypeNameHtmlString
         {
             get
             {
-                //Tolist to string aqui!! TODO:
-                var name = "";
-                var roleName = this.Role?.Name;
-                var collaboratorTypeNames = this.CollaboratorTypeNames?.ToString("<br/>");
-
-                if (!string.IsNullOrEmpty(roleName) && !string.IsNullOrEmpty(collaboratorTypeNames))
+                this.Translate();
+                var roleDescription = this.Role?.Description;
+                var collaboratorTypesDescriptions = this.AttendeeCollaboratorTypeDtos?
+                                                            .Select(act => act.CollaboratorType?.Description)?
+                                                            .ToArray()?
+                                                            .ToString("<br/>");
+                string name = "";
+                if (!string.IsNullOrEmpty(collaboratorTypesDescriptions))
                 {
-                    name = $"{roleName}<br/>{collaboratorTypeNames}";
+                    name = collaboratorTypesDescriptions;
                 }
-                else if (!string.IsNullOrEmpty(collaboratorTypeNames))
+                else if (!string.IsNullOrEmpty(roleDescription))
                 {
-                    name = collaboratorTypeNames;
-                }
-                else if (!string.IsNullOrEmpty(roleName))
-                {
-                    name = roleName;
+                    name = roleDescription;
                 }
 
                 return name;
@@ -94,6 +91,16 @@ namespace PlataformaRio2C.Domain.Dtos
                     return true;
                 else
                     return false;
+            }
+        }
+
+        public string UserInterfaceLanguage { get; set; }
+        public void Translate()
+        {
+            if (!string.IsNullOrEmpty(this.UserInterfaceLanguage))
+            {
+                this.Role?.Translate(this.UserInterfaceLanguage);
+                this.AttendeeCollaboratorTypeDtos?.ForEach(act => act.CollaboratorType?.Translate(this.UserInterfaceLanguage));
             }
         }
 

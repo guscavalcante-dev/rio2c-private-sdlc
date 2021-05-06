@@ -466,118 +466,124 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<CollaboratorDto> FindDtoByUidAndByEditionIdAsync(Guid collaboratorUid, int editionId)
+        public async Task<CollaboratorDto> FindDtoByUidAndByEditionIdAsync(Guid collaboratorUid, int editionId, string userInterfaceLanguage)
         {
             var query = this.GetBaseQuery()
                                 .FindByUid(collaboratorUid);
 
-            return await query
-                            .Select(c => new CollaboratorDto
-                            {
-                                Id = c.Id,
-                                Uid = c.Uid,
-                                FirstName = c.FirstName,
-                                LastNames = c.LastNames,
-                                Badge = c.Badge,
-                                Email = c.User.Email,
-                                PhoneNumber = c.PhoneNumber,
-                                CellPhone = c.CellPhone,
-                                PublicEmail = c.PublicEmail,
-                                BirthDate = c.BirthDate,
-                                Gender = c.Gender,
-                                Industry = c.Industry,
-                                CollaboratorRole = c.Role,
-                                CollaboratorGenderAdditionalInfo = c.CollaboratorGenderAdditionalInfo,
-                                CollaboratorIndustryAdditionalInfo = c.CollaboratorIndustryAdditionalInfo,
-                                CollaboratorRoleAdditionalInfo = c.CollaboratorRoleAdditionalInfo,
-                                HasAnySpecialNeeds = c.HasAnySpecialNeeds,
-                                SpecialNeedsDescription = c.SpecialNeedsDescription,
-                                EditionsUids = c.EditionParticipantions.Where(p => !p.IsDeleted).Select(p => p.Edition.Uid).ToList(),
-                                ImageUploadDate = c.ImageUploadDate,
-                                Website = c.Website,
-                                Linkedin = c.Linkedin,
-                                Twitter = c.Twitter,
-                                Instagram = c.Instagram,
-                                Youtube = c.Youtube,
-                                CreateDate = c.CreateDate,
-                                CreateUserId = c.CreateUserId,
-                                UpdateDate = c.UpdateDate,
-                                UpdateUserId = c.UpdateUserId,
-
-                                Role = c.User.Roles.FirstOrDefault(),
-                                AttendeeCollaboratorTypeDtos = c.AttendeeCollaborators
-                                                                    .FirstOrDefault(ac => !ac.IsDeleted && ac.EditionId == editionId)
-                                                                        .AttendeeCollaboratorTypes
-                                                                            .Where(act => !act.IsDeleted
-                                                                                            && !act.CollaboratorType.IsDeleted)
-                                                                            .Select(act => new AttendeeCollaboratorTypeDto()
-                                                                            {
-                                                                                AttendeeCollaboratorType = act,
-                                                                                CollaboratorType = act.CollaboratorType
-                                                                            })
-                                                                        .ToList(),
-
-                                EditionAttendeeCollaboratorBaseDto = c.AttendeeCollaborators.Where(ac => !ac.IsDeleted && ac.EditionId == editionId).Select(ac => new AttendeeCollaboratorBaseDto
-                                {
-                                    Id = ac.Id,
-                                    Uid = ac.Uid,
-                                    WelcomeEmailSendDate = ac.WelcomeEmailSendDate,
-                                    OnboardingStartDate = ac.OnboardingStartDate,
-                                    OnboardingFinishDate = ac.OnboardingFinishDate,
-                                    OnboardingUserDate = ac.OnboardingUserDate,
-                                    OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
-                                    PlayerTermsAcceptanceDate = ac.PlayerTermsAcceptanceDate,
-                                    ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate
-                                }).FirstOrDefault(),
-                                UpdaterDto = new UserBaseDto
-                                {
-                                    Uid = c.Updater.Uid,
-                                    Name = c.Updater.Name,
-                                    Email = c.Updater.Email
-                                },
-                                JobTitlesDtos = c.JobTitles.Select(d => new CollaboratorJobTitleBaseDto
-                                {
-                                    Id = d.Id,
-                                    Uid = d.Uid,
-                                    Value = d.Value,
-                                    LanguageDto = new LanguageBaseDto
+            var collaboratorDto = await query
+                                    .Select(c => new CollaboratorDto
                                     {
-                                        Id = d.Language.Id,
-                                        Uid = d.Language.Uid,
-                                        Name = d.Language.Name,
-                                        Code = d.Language.Code
-                                    }
-                                }),
-                                MiniBiosDtos = c.MiniBios.Select(d => new CollaboratorMiniBioBaseDto
-                                {
-                                    Id = d.Id,
-                                    Uid = d.Uid,
-                                    Value = d.Value,
-                                    LanguageDto = new LanguageBaseDto
-                                    {
-                                        Id = d.Language.Id,
-                                        Uid = d.Language.Uid,
-                                        Name = d.Language.Name,
-                                        Code = d.Language.Code
-                                    }
-                                }),
-                                AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
-                                                                    .Where(at => !at.IsDeleted && at.EditionId == editionId)
-                                                                    .SelectMany(at => at.AttendeeOrganizationCollaborators
-                                                                                            .Where(aoc => !aoc.IsDeleted)
-                                                                                            .Select(aoc => new AttendeeOrganizationBaseDto
-                                                                                            {
-                                                                                                Uid = aoc.AttendeeOrganization.Uid,
-                                                                                                OrganizationBaseDto = new OrganizationBaseDto
-                                                                                                {
-                                                                                                    Name = aoc.AttendeeOrganization.Organization.Name,
-                                                                                                    HoldingBaseDto = aoc.AttendeeOrganization.Organization.Holding == null ? null : new HoldingBaseDto
+                                        Id = c.Id,
+                                        Uid = c.Uid,
+                                        FirstName = c.FirstName,
+                                        LastNames = c.LastNames,
+                                        Badge = c.Badge,
+                                        Email = c.User.Email,
+                                        PhoneNumber = c.PhoneNumber,
+                                        CellPhone = c.CellPhone,
+                                        PublicEmail = c.PublicEmail,
+                                        BirthDate = c.BirthDate,
+                                        Gender = c.Gender,
+                                        Industry = c.Industry,
+                                        CollaboratorRole = c.Role,
+                                        CollaboratorGenderAdditionalInfo = c.CollaboratorGenderAdditionalInfo,
+                                        CollaboratorIndustryAdditionalInfo = c.CollaboratorIndustryAdditionalInfo,
+                                        CollaboratorRoleAdditionalInfo = c.CollaboratorRoleAdditionalInfo,
+                                        HasAnySpecialNeeds = c.HasAnySpecialNeeds,
+                                        SpecialNeedsDescription = c.SpecialNeedsDescription,
+                                        EditionsUids = c.EditionParticipantions.Where(p => !p.IsDeleted).Select(p => p.Edition.Uid).ToList(),
+                                        ImageUploadDate = c.ImageUploadDate,
+                                        Website = c.Website,
+                                        Linkedin = c.Linkedin,
+                                        Twitter = c.Twitter,
+                                        Instagram = c.Instagram,
+                                        Youtube = c.Youtube,
+                                        CreateDate = c.CreateDate,
+                                        CreateUserId = c.CreateUserId,
+                                        UpdateDate = c.UpdateDate,
+                                        UpdateUserId = c.UpdateUserId,
+                                        UserInterfaceLanguage = userInterfaceLanguage,
+
+                                        Role = c.User.Roles.FirstOrDefault(),
+                                        AttendeeCollaboratorTypeDtos = c.AttendeeCollaborators
+                                                                            .FirstOrDefault(ac => !ac.IsDeleted && ac.EditionId == editionId)
+                                                                                .AttendeeCollaboratorTypes
+                                                                                    .Where(act => !act.IsDeleted
+                                                                                                    && !act.CollaboratorType.IsDeleted)
+                                                                                    .Select(act => new AttendeeCollaboratorTypeDto()
+                                                                                    {
+                                                                                        AttendeeCollaboratorType = act,
+                                                                                        CollaboratorType = act.CollaboratorType
+                                                                                    })
+                                                                                .ToList(),
+
+                                        EditionAttendeeCollaboratorBaseDto = c.AttendeeCollaborators.Where(ac => !ac.IsDeleted && ac.EditionId == editionId).Select(ac => new AttendeeCollaboratorBaseDto
+                                        {
+                                            Id = ac.Id,
+                                            Uid = ac.Uid,
+                                            WelcomeEmailSendDate = ac.WelcomeEmailSendDate,
+                                            OnboardingStartDate = ac.OnboardingStartDate,
+                                            OnboardingFinishDate = ac.OnboardingFinishDate,
+                                            OnboardingUserDate = ac.OnboardingUserDate,
+                                            OnboardingCollaboratorDate = ac.OnboardingCollaboratorDate,
+                                            PlayerTermsAcceptanceDate = ac.PlayerTermsAcceptanceDate,
+                                            ProducerTermsAcceptanceDate = ac.ProducerTermsAcceptanceDate
+                                        }).FirstOrDefault(),
+                                        UpdaterDto = new UserBaseDto
+                                        {
+                                            Uid = c.Updater.Uid,
+                                            Name = c.Updater.Name,
+                                            Email = c.Updater.Email
+                                        },
+                                        JobTitlesDtos = c.JobTitles.Select(d => new CollaboratorJobTitleBaseDto
+                                        {
+                                            Id = d.Id,
+                                            Uid = d.Uid,
+                                            Value = d.Value,
+                                            LanguageDto = new LanguageBaseDto
+                                            {
+                                                Id = d.Language.Id,
+                                                Uid = d.Language.Uid,
+                                                Name = d.Language.Name,
+                                                Code = d.Language.Code
+                                            }
+                                        }),
+                                        MiniBiosDtos = c.MiniBios.Select(d => new CollaboratorMiniBioBaseDto
+                                        {
+                                            Id = d.Id,
+                                            Uid = d.Uid,
+                                            Value = d.Value,
+                                            LanguageDto = new LanguageBaseDto
+                                            {
+                                                Id = d.Language.Id,
+                                                Uid = d.Language.Uid,
+                                                Name = d.Language.Name,
+                                                Code = d.Language.Code
+                                            }
+                                        }),
+                                        AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
+                                                                            .Where(at => !at.IsDeleted && at.EditionId == editionId)
+                                                                            .SelectMany(at => at.AttendeeOrganizationCollaborators
+                                                                                                    .Where(aoc => !aoc.IsDeleted)
+                                                                                                    .Select(aoc => new AttendeeOrganizationBaseDto
                                                                                                     {
-                                                                                                        Name = aoc.AttendeeOrganization.Organization.Holding.Name
-                                                                                                    }
-                                                                                                }
-                                                                                            }))
-                            }).FirstOrDefaultAsync();
+                                                                                                        Uid = aoc.AttendeeOrganization.Uid,
+                                                                                                        OrganizationBaseDto = new OrganizationBaseDto
+                                                                                                        {
+                                                                                                            Name = aoc.AttendeeOrganization.Organization.Name,
+                                                                                                            HoldingBaseDto = aoc.AttendeeOrganization.Organization.Holding == null ? null : new HoldingBaseDto
+                                                                                                            {
+                                                                                                                Name = aoc.AttendeeOrganization.Organization.Holding.Name
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }))
+                                    })
+                                    .FirstOrDefaultAsync();
+
+            collaboratorDto.Translate();
+
+            return collaboratorDto;
         }
 
         /// <summary>
@@ -815,7 +821,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             string collaboratorTypeName,
             string roleName,
             bool showAllEditions,
-            bool? showHighlights,
+            string userInterfaceLanguage,
             int? editionId)
         {
             this.SetProxyEnabled(false);
@@ -852,6 +858,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                             ImageUploadDate = c.ImageUploadDate,
                                             CreateDate = c.CreateDate,
                                             UpdateDate = c.UpdateDate,
+                                            UserInterfaceLanguage = userInterfaceLanguage,
 
                                             IsInOtherEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId
                                                                                                  && !ac.IsDeleted),
@@ -999,9 +1006,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             //};
             #endregion
         }
-
-
-
 
         ///// <summary>
         ///// Finds all admins by data table and collaborator types.
