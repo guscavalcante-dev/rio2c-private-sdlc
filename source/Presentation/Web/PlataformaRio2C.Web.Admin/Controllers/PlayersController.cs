@@ -204,7 +204,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 false,
                 false,
                 false,
-                false);
+                false,
+                true);
 
             return Json(new
             {
@@ -277,7 +278,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Player, Labels.CreatedM) });
         }
 
-        #endregion#region Create
+        #endregion
 
         #region Update
 
@@ -305,7 +306,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     false,
                     false,
                     false,
-                    false);
+                    false,
+                    true);
             }
             catch (DomainException ex)
             {

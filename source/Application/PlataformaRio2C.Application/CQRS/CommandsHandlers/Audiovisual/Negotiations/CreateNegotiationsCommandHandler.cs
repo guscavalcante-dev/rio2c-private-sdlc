@@ -86,6 +86,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             {
                 this.NegotiationRepo.Truncate();
 
+                //TODO: Makes softdelete!
+                //var editionNegotiations = await this.NegotiationRepo.FindNegotiationsByEditionIdAsync(cmd.EditionId.Value);
+                //editionNegotiations.ForEach(n => n.Delete(cmd.UserId));
+                //this.NegotiationRepo.UpdateAll(editionNegotiations);
+                //this.Uow.SaveChanges();
+
                 edition?.StartAudiovisualNegotiationsCreation(cmd.UserId);
                 this.Uow.SaveChanges();
 
@@ -122,7 +128,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 this.FillNegotiationSlots(negotiationSlots, projectBuyerEvaluations);
 
                 var negotiations = negotiationSlots
-                                    .Where(ns => ns.ProjectBuyerEvaluation != null)
+                                    .Where(ns => ns.ProjectBuyerEvaluation != null && !ns.IsDeleted)
                                     .ToList();
 
                 this.NegotiationRepo.Truncate();
@@ -238,6 +244,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             int userId)
         {
             return new Negotiation(
+                dateConfig.EditionId,
                 roomConfig.Room,
                 startDate,
                 startDate.Add(dateConfig.TimeOfEachRound),

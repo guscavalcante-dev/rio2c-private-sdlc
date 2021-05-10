@@ -445,6 +445,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 UpdateDate = o.UpdateDate,
                                 UpdateUserId = o.UpdateUserId,
                                 //Creator = h.Creator,
+                                IsVirtualMeeting = o.AttendeeOrganizations.FirstOrDefault(ao => !ao.IsDeleted && ao.EditionId == editionId).IsVirtualMeeting,
                                 HoldingBaseDto = o.Holding == null ? null : new HoldingBaseDto
                                 {
                                     Id = o.Holding.Id,

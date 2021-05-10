@@ -71,6 +71,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(300, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Youtube { get; set; }
 
+        [Display(Name = "AcceptsVirtualMeeting", ResourceType = typeof(Labels))]
+        //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public bool? IsVirtualMeeting { get; set; }
+
         public AddressBaseCommand Address { get; set; }
 
         [Display(Name = "Activities", ResourceType = typeof(Labels))]

@@ -24,6 +24,7 @@ var CompaniesMainInformationWidget = function () {
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         KTApp.initTooltips();
+        $('[data-toggle="tooltip"]').tooltip();
     };
 
     var show = function () {

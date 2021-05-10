@@ -62,6 +62,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var negotiationUid = Guid.NewGuid();
             var negotiation = new Negotiation(
+                cmd.EditionId.Value,
                 negotiationUid,
                 buyerOrganization, 
                 project, 

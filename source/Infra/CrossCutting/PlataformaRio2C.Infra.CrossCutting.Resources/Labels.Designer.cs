@@ -88,6 +88,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aceita reunião virtual.
+        /// </summary>
+        public static string AcceptsVirtualMeeting {
+            get {
+                return ResourceManager.GetString("AcceptsVirtualMeeting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dados de acesso.
         /// </summary>
         public static string AccessData {
@@ -3899,6 +3908,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Presencial.
+        /// </summary>
+        public static string Presential {
+            get {
+                return ResourceManager.GetString("Presential", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Imprensa.
         /// </summary>
         public static string Press {
@@ -4440,6 +4458,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string RememberMe {
             get {
                 return ResourceManager.GetString("RememberMe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remoto.
+        /// </summary>
+        public static string Remote {
+            get {
+                return ResourceManager.GetString("Remote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remota.
+        /// </summary>
+        public static string RemoteF {
+            get {
+                return ResourceManager.GetString("RemoteF", resourceCulture);
             }
         }
         
@@ -6024,6 +6060,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ViewProfile {
             get {
                 return ResourceManager.GetString("ViewProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configuração de reunião virtual.
+        /// </summary>
+        public static string VirtualMeetingConfiguration {
+            get {
+                return ResourceManager.GetString("VirtualMeetingConfiguration", resourceCulture);
             }
         }
         

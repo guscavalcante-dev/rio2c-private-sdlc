@@ -246,6 +246,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .ToList();
         }
 
+        /// <summary>
+        /// Finds the negotiations by edition identifier asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<List<Negotiation>> FindNegotiationsByEditionIdAsync(int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId);
+
+            return await query.ToListAsync();
+        }
+
         /// <summary>Truncates this instance.</summary>
         public void Truncate()
         {

@@ -60,9 +60,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
 
             var room = new Room(
-                roomUid,
                 await this.editionRepo.GetAsync(cmd.EditionId ?? 0),
                 cmd.Names?.Select(d => new RoomName(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
+                cmd.IsVirtualMeeting,
                 cmd.UserId);
             if (!room.IsValid())
             {
@@ -75,10 +75,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.AppValidationResult.Data = room;
 
             return this.AppValidationResult;
-
-            //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);
-
-            //return Task.FromResult(propertyId); // use it when the methed is not async
         }
     }
 }

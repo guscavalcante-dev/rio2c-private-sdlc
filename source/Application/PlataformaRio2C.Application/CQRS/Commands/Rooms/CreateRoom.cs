@@ -12,7 +12,9 @@
 // <summary></summary>
 // ***********************************************************************
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -20,6 +22,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     public class CreateRoom : BaseCommand
     {
         public List<RoomNameBaseCommand> Names { get; set; }
+
+        [Display(Name = "AcceptsVirtualMeeting", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public bool IsVirtualMeeting { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CreateRoom"/> class.</summary>
         /// <param name="roomDto">The room dto.</param>

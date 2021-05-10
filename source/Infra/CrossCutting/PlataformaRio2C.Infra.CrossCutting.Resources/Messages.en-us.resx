@@ -962,4 +962,8 @@
     <value>The evaluation period runs from {0} to {1}</value>
     <comment>O período de avaliações acontece de {0} até {1}</comment>
   </data>
+  <data name="PlayerMeetingPreference" xml:space="preserve">
+    <value>The Player prefers {0} meeting to execute the business round</value>
+    <comment>O Player prefere reunião {0} para execução da rodada de negócios</comment>
+  </data>
 </root>

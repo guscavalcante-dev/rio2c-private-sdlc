@@ -2710,4 +2710,24 @@
     <value>Collaborator type</value>
     <comment>Tipo de colaborador</comment>
   </data>
+  <data name="AcceptsVirtualMeeting" xml:space="preserve">
+    <value>Accepts virtual meeting</value>
+    <comment>Aceita reunião virtual</comment>
+  </data>
+  <data name="VirtualMeetingConfiguration" xml:space="preserve">
+    <value>Virtual meeting configuration</value>
+    <comment>Virtual meeting configuration</comment>
+  </data>
+  <data name="Presential" xml:space="preserve">
+    <value>Presential</value>
+    <comment>Presencial</comment>
+  </data>
+  <data name="Remote" xml:space="preserve">
+    <value>Remote</value>
+    <comment>Remoto</comment>
+  </data>
+  <data name="RemoteF" xml:space="preserve">
+    <value>Remote</value>
+    <comment>Remote</comment>
+  </data>
 </root>
