@@ -23,6 +23,7 @@ var ProjectsBuyerCompanyWidget = function () {
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         KTApp.initTooltips();
+        MyRio2cCommon.enableTooltips();
         MyRio2cCommon.initScroll();
     };
 
@@ -361,6 +362,7 @@ var ProjectsBuyerCompanySelectedWidget = function () {
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         KTApp.initTooltips();
+        MyRio2cCommon.enableTooltips();
         MyRio2cCommon.initScroll();
 
         if (typeof (ProjectsBuyerCompanyWidget) !== 'undefined') {
@@ -420,6 +422,7 @@ var ProjectsMatchBuyerCompanyWidget = function () {
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         KTApp.initTooltips();
+        MyRio2cCommon.enableTooltips();
         MyRio2cCommon.initScroll();
 
         if (typeof (ProjectsBuyerCompanyWidget) !== 'undefined') {
