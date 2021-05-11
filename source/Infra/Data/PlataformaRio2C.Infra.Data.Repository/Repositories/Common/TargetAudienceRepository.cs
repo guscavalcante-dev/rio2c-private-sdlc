@@ -113,18 +113,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
-
-        /// <summary>Finds all asynchronous.</summary>
-        /// <returns></returns>
-        public async Task<List<TargetAudience>> FindAllAsync()
-        {
-            var query = this.GetBaseQuery();
-
-            return await query
-                            .Order()
-                            .ToListAsync();
-        }
-
         /// <summary>Finds all by uids asynchronous.</summary>
         /// <param name="targetAudiencesUids">The target audiences uids.</param>
         /// <returns></returns>

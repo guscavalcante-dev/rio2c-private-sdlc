@@ -223,7 +223,7 @@
     <Compile Include="Repositories\Producer\ProducerActivityRepository.cs" />
     <Compile Include="Repositories\Player\PlayerTargetAudienceRepository.cs" />
     <Compile Include="Repositories\Player\PlayerActivityRepository.cs" />
-    <Compile Include="Repositories\Common\TargetAudianceRepository.cs" />
+    <Compile Include="Repositories\Common\TargetAudienceRepository.cs" />
     <Compile Include="Repositories\Player\PlayerRestrictionsSpecificsRepository.cs" />
     <Compile Include="Repositories\Collaborator\CollaboratorJobTitleRepository.cs" />
     <Compile Include="Repositories\Collaborator\CollaboratorMiniBioRepository.cs" />

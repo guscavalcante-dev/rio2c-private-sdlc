@@ -361,7 +361,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
 
             ViewBag.GroupedInterests = await this.interestRepo.FindAllGroupedByInterestGroupsAsync();
-            ViewBag.TargetAudiences = await this.targetAudienceRepo.FindAllAsync();
+            ViewBag.TargetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id);
 
             return Json(new
             {
@@ -409,7 +409,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 cmd = new UpdateProjectInterests(
                     interestWidgetDto,
                     await this.interestRepo.FindAllDtosAsync(),
-                    await this.targetAudienceRepo.FindAllAsync());
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
             }
             catch (DomainException ex)
             {
@@ -463,7 +463,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
 
                 cmd.UpdateDropdownProperties(
-                    await this.targetAudienceRepo.FindAllAsync());
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
 
                 return Json(new
                 {
@@ -779,7 +779,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             var cmd = new CreateProject(
                 projectDto,
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
-                await this.targetAudienceRepo.FindAllAsync(),
+                await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
                 await this.interestRepo.FindAllDtosAsync(),
                 true,
                 false,
@@ -850,7 +850,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 this.StatusMessageToastr(toastrError?.Message ?? ex.GetInnerMessage(), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
 
                 cmd.UpdateDropdownProperties(
-                    await this.targetAudienceRepo.FindAllAsync());
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
 
                 return View(cmd);
             }
@@ -860,7 +860,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 this.StatusMessageToastr(Messages.WeFoundAndError, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
 
                 cmd.UpdateDropdownProperties(
-                    await this.targetAudienceRepo.FindAllAsync());
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
 
                 return View(cmd);
             }
@@ -989,7 +989,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
                 cmd.UpdateDropdownProperties(
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                    await this.targetAudienceRepo.FindAllAsync());
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
 
                 return View(cmd);
             }
@@ -1000,7 +1000,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
                 cmd.UpdateDropdownProperties(
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                    await this.targetAudienceRepo.FindAllAsync());
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
 
                 return View(cmd);
             }

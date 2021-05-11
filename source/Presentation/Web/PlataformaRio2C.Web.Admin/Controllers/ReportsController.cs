@@ -79,7 +79,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             #endregion
 
             ViewBag.GenreInterests = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.Genre.Uid);
-            ViewBag.TargetAudience = await this.targetAudienceRepo.FindAllAsync();
+            ViewBag.TargetAudience = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id);
 
             return View("Audiovisual/AudiovisualSubscriptions", searchViewModel);
         }
