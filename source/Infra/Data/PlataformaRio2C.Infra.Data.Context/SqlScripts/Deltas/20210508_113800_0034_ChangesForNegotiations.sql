@@ -1,4 +1,4 @@
-﻿--must run on deploy | test: yes, not done
+﻿--must run on deploy | test: yes, done
 --must run on deploy | prod: yes, not done
 
 --possible values are: "no", "yes, not done" and "yes, done"
@@ -7,7 +7,14 @@ BEGIN TRY
 	BEGIN TRANSACTION
 		--Changes for Negotiations
 		ALTER TABLE "dbo"."Negotiations"
-		ADD EditionId  int  NOT NULL
+		ADD EditionId  int  NULL
+		;
+
+		EXEC('UPDATE "dbo"."Negotiations" SET EditionId = (SELECT Id FROM "dbo"."Editions" WHERE UrlCode = 2020)')
+		;
+
+		ALTER TABLE "dbo"."Negotiations"
+		ALTER COLUMN EditionId  int  NOT NULL
 		;
 
 		--Changes for Rooms

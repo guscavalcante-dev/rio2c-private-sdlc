@@ -270,9 +270,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         /// <summary>Finds all for generate negotiations asynchronous.</summary>
         /// <returns></returns>
-        public async Task<List<NegotiationConfig>> FindAllForGenerateNegotiationsAsync()
+        public async Task<List<NegotiationConfig>> FindAllForGenerateNegotiationsAsync(int editionId)
         {
             var query = this.GetBaseQuery()
+                                    .FindByEditionId(editionId, false)
                                     .HasRoomsConfigured()
                                     .IncludeFilter(nc => nc.NegotiationRoomConfigs.Where(nrc => !nrc.IsDeleted && !nrc.Room.IsDeleted))
                                     .IncludeFilter(nc => nc.NegotiationRoomConfigs.Where(nrc => !nrc.IsDeleted && !nrc.Room.IsDeleted).Select(nrc => nrc.Room));
@@ -289,7 +290,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<List<NegotiationConfigDto>> FindAllDatesDtosAsync(int editionId, string customFilter)
         {
             var query = this.GetBaseQuery()
-                                .FindByEditionId(editionId, false)
+                                .FindByEditionId(editionId)
                                 .FindByCustomFiler(customFilter);
 
             return await query

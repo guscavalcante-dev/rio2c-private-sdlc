@@ -50,7 +50,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<Negotiation> FindByEditionId(this IQueryable<Negotiation> query, int editionId, bool showAllEditions = false)
         {
-            query = query.Where(n => (showAllEditions || n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.EditionId == editionId));
+            query = query.Where(n => (showAllEditions || n.EditionId == editionId));
 
             return query;
         }
