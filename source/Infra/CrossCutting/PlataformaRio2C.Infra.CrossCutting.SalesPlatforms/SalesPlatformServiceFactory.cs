@@ -14,6 +14,7 @@
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms
@@ -34,6 +35,11 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms
             if (salesPlatformWebhookRequestDto?.SalesPlatformDto?.Name == "Eventbrite")
             {
                 return new EventbriteSalesPlatformService(salesPlatformWebhookRequestDto);
+            }
+
+            if (salesPlatformWebhookRequestDto?.SalesPlatformDto?.Name == "Inti")
+            {
+                return new IntiSalesPlatformService(salesPlatformWebhookRequestDto);
             }
 
             throw new DomainException("Unknown sales platform on webhook request.");

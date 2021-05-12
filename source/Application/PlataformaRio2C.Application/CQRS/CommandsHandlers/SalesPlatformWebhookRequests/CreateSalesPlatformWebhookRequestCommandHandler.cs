@@ -55,16 +55,21 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.uow.BeginTransaction();
 
+            
+
             var salesPlatform = await this.salesPlatformRepo.FindByNameAsync(cmd.SalesPlatformName);
 
             var salesPlatformWebhookRequest = new SalesPlatformWebhookRequest(
                 cmd.SalesPlatformWebhookRequestUid,
                 salesPlatform,
-                cmd.WebhookSecurityKey,
+                "8ed95423-0c36-4dc8-bf86-76aa79882b20", //cmd.WebhookSecurityKey,
                 cmd.Endpoint,
                 cmd.Header,
                 cmd.Payload,
                 cmd.IpAddress);
+
+            //salesPlatformWebhookRequest.CreateDate = DateTime.Now;
+
 
             this.salesPlatformWebhookRequestRepo.Create(salesPlatformWebhookRequest);
             this.uow.SaveChanges();

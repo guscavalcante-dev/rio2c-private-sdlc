@@ -22,6 +22,9 @@ using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Models;
+using System.IO;
+using System.Web.Script.Serialization;
 
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 {
@@ -38,16 +41,55 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             this.commandBus = commandBus;
         }
 
-        #region Ping
+        #region Inti requests
 
-        /// <summary>Pings this instance.</summary>
+        /// <summary>Ticket Sold.</summary>
         /// <returns></returns>
-        [HttpGet]
-        [Route("ping")]
-        public async Task<IHttpActionResult> Ping()
-        {
-            return await Json(new { status = "success", message = "Pong" });
+        [HttpPost]
+        [Route("inti-ticket-sold")]
+        public async Task<IHttpActionResult> IntiTicketSold()
+        {            
+            var ctx = HttpContext.Current;
+            var json = String.Empty;
+            ctx.Request.InputStream.Position = 0;
+            using (var inputStream = new StreamReader(ctx.Request.InputStream)){
+                json = inputStream.ReadToEnd();
+            }
+            var dto = new JavaScriptSerializer().Deserialize<IntiSaleOrCancellation>(json);
+
+            var headers = Request.Headers.ToString();
+            var ip = HttpContext.Current.Request.GetIpAddress();
+            var salesPlatformWebhooRequestUid = Guid.NewGuid();
+            var result = await this.commandBus.Send(new CreateSalesPlatformWebhookRequest(
+                salesPlatformWebhooRequestUid,
+                "Inti",
+                dto.id.ToString(),
+                HttpContext.Current.Request.Url.AbsoluteUri,
+                headers,
+                json, // Request.Content.ReadAsStringAsync().Result,
+                ip)); 
+
+            return await Json(new { status = "success", message = "Received ticket sold" });
         }
+
+
+        [HttpPost]
+        [Route("receive-payload")]
+        public async Task<IHttpActionResult> receivePayload()
+        {
+            var ctx = HttpContext.Current;
+            var json = String.Empty;
+            ctx.Request.InputStream.Position = 0;
+            using (var inputStream = new StreamReader(ctx.Request.InputStream))
+            {
+                json = inputStream.ReadToEnd();
+            }
+
+            var content = json;
+            
+            return await Json(new { status = "ok" });
+        }
+
 
         #endregion
 

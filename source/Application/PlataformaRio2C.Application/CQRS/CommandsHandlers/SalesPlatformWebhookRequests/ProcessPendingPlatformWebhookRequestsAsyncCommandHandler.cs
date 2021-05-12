@@ -25,6 +25,9 @@ using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System.Web.Script.Serialization;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Models;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -99,22 +102,43 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             // Loop webhook requests
             foreach (var processingRequestDto in pendingRequestsDtos)
             {
+
+
+                var payload = processingRequestDto.SalesPlatformWebhookRequest.Payload;
+                var dto = new JavaScriptSerializer().Deserialize<IntiSaleOrCancellation>(payload);
+
+                //salesPlatformServiceFactory
+
+                /*
+                List<SalesPlatformAttendeeDto> listAtt = new List<SalesPlatformAttendeeDto>()
+                {
+                    
+                    new SalesPlatformAttendeeDto()
+                    {
+                        Name = processingRequestDto.na
+                    }
+                    
+                };
+                */
                 Tuple<string, List<SalesPlatformAttendeeDto>> salesPlatformResponse;
 
                 #region Get info from api
 
                 try
                 {
-                    var salesPlatformService = this.SalesPlatformServiceFactory.Get(processingRequestDto);
-                    salesPlatformResponse = salesPlatformService.ExecuteRequest();
-                    if (salesPlatformResponse?.Item2?.Any() != true)
-                    {
-                        var errorMessage = $"No attendee returned by api for Uid: {processingRequestDto.Uid}";
-                        this.ValidationResult.Add(new ValidationError(errorMessage));
-                        processingRequestDto.SalesPlatformWebhookRequest.Postpone("000000001", errorMessage);
-                        this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
-                        continue;
-                    }
+
+                    //if (processingRequestDto.SalesPlatformDto.Name == "Eventbrite"){
+                        var salesPlatformService = this.SalesPlatformServiceFactory.Get(processingRequestDto);
+                        salesPlatformResponse = salesPlatformService.ExecuteRequest();
+                        if (salesPlatformResponse?.Item2?.Any() != true)
+                        {
+                            var errorMessage = $"No attendee returned by api for Uid: {processingRequestDto.Uid}";
+                            this.ValidationResult.Add(new ValidationError(errorMessage));
+                            processingRequestDto.SalesPlatformWebhookRequest.Postpone("000000001", errorMessage);
+                            this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
+                            continue;
+                        }
+                    //}
                 }
                 catch (Exception ex)
                 {
