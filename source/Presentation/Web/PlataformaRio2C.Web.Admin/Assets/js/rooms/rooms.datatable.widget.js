@@ -59,31 +59,7 @@ var RoomsDataTableWidget = function () {
             processing: true,
             serverSide: true,
             buttons: [],
-            //buttons: [
-            //{
-            //    extend: 'collection',
-            //    text: labels.actions,
-            //    buttons: [
-            //        {
-            //            text: sendInvitationEmail,
-            //            action: function (e, dt, node, config) {
-            //                showSendInvitationEmailsModal();
-            //            }
-            //        },
-            //        {
-            //            text: exportToEventbrite,
-            //            action: function (e, dt, node, config) {
-            //                eventbriteCsvExport = dt.ajax.params();
-            //                eventbriteCsvExport.selectedCollaboratorsUids = $('#conferences-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
-            //                eventbriteCsvExport.showAllEditions = $('#ShowAllEditions').prop('checked');
-            //                eventbriteCsvExport.showAllParticipants = $('#ShowAllParticipants').prop('checked');
-            //                eventbriteCsvExport.showHighlights = $('#ShowHighlights').prop('checked');
-
-            //                showExportEventbriteCsvModal();
-            //            }
-            //        }]
-            //}],
-            order: [[1, "asc"]],
+            order: [[2, "asc"]],
             sDom: '<"row"<"col-sm-6"l><"col-sm-6 text-right"B>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
             oSearch: {
                 sSearch: $('#Search').val()
@@ -131,6 +107,19 @@ var RoomsDataTableWidget = function () {
                     data: 'Name'
                 },
                 {
+                    data: 'IsVirtualMeeting',
+                    render: function (data) {
+                        var html = '';
+
+                        if (!MyRio2cCommon.isNullOrEmpty(data)) {
+                            var virtualOrPresentialText = (data === true) ? translate.virtual : translate.presential;;
+                            html += '<span class="kt-badge kt-badge--inline kt-badge--warning kt-font-boldest mt-2">' + virtualOrPresentialText + '</span>';
+                        }
+
+                        return html;
+                    }
+                },
+                {
                     data: 'CreateDate',
                     render: function (data) {
                         return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
@@ -153,7 +142,7 @@ var RoomsDataTableWidget = function () {
                                             </a>\
                                             <div class="dropdown-menu dropdown-menu-right">';
 
-                        html += '               <button class="dropdown-item" onclick="RoomsDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-edit"></i> ' + labels.edit + '</button>';
+                        html += '               <button class="dropdown-item" onclick="RoomsDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
                         html += '               <button class="dropdown-item" onclick="RoomsDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
 
                         html += '\
@@ -171,7 +160,11 @@ var RoomsDataTableWidget = function () {
                     orderable: false
                 },
                 {
-                    targets: [1, 2],
+                    targets: [1],
+                    orderable: false
+                },
+                {
+                    targets: [1, 2, 3],
                     className: "dt-center"
                 },
                 {

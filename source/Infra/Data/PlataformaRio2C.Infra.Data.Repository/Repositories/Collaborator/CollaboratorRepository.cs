@@ -665,7 +665,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                     HoldingBaseDto = aoc.AttendeeOrganization.Organization.Holding == null ? null : new HoldingBaseDto
                                                                                                     {
                                                                                                         Name = aoc.AttendeeOrganization.Organization.Holding.Name
-                                                                                                    }
+                                                                                                    },
+                                                                                                    IsVirtualMeeting = aoc.AttendeeOrganization.IsVirtualMeeting
                                                                                                 }
                                                                                             })),
 

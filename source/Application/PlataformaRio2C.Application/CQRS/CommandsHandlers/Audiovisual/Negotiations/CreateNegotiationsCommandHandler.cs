@@ -84,17 +84,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             try
             {
+                //this.NegotiationRepo.Truncate();
                 var editionNegotiations = await this.NegotiationRepo.FindNegotiationsByEditionIdAsync(cmd.EditionId.Value);
                 if (editionNegotiations.Count > 0)
                 {
                     this.NegotiationRepo.DeleteAll(editionNegotiations);
                     this.Uow.SaveChanges();
                 }
-                //this.NegotiationRepo.Truncate();
 
                 edition?.StartAudiovisualNegotiationsCreation(cmd.UserId);
                 this.Uow.SaveChanges();
-
 
                 var negotiationConfigs = await this.negotiationConfigRepo.FindAllForGenerateNegotiationsAsync(cmd.EditionId.Value);
                 if (negotiationConfigs?.Count == 0)
@@ -132,14 +131,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                     .Where(ns => ns.ProjectBuyerEvaluation != null && !ns.IsDeleted)
                                     .ToList();
 
-
+                //this.NegotiationRepo.Truncate();
                 var remainingEditionNegotiations = await this.NegotiationRepo.FindNegotiationsByEditionIdAsync(cmd.EditionId.Value);
                 if (remainingEditionNegotiations.Count > 0)
                 {
                     this.NegotiationRepo.DeleteAll(remainingEditionNegotiations);
                     this.Uow.SaveChanges();
                 }
-                //this.NegotiationRepo.Truncate();
 
                 this.NegotiationRepo.CreateAll(negotiations);
 
@@ -279,9 +277,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     var possibleNegotiationSlots = negotiationSlots?
                                                         .Where(ns => ns.ProjectBuyerEvaluation == null 
                                                                      && ns.ProjectBuyerEvaluation?.ProjectId != projectBuyerEvaluation.ProjectId 
-                                                                     && ns.ProjectBuyerEvaluation?.BuyerAttendeeOrganizationId !=  projectBuyerEvaluation.BuyerAttendeeOrganizationId
+                                                                     && ns.ProjectBuyerEvaluation?.BuyerAttendeeOrganizationId != projectBuyerEvaluation.BuyerAttendeeOrganizationId
                                                                      && !slotsExceptions.Contains(ns.RoundNumber))?
                                                         .ToList();
+
                     if (possibleNegotiationSlots?.Any() == true)
                     {
                         var dateTest = possibleNegotiationSlots
