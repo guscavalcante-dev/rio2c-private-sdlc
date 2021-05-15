@@ -677,6 +677,9 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.create.js").Include(
                 "~/Assets/js/audiovisual/meetings/audiovisual.meetings.create.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.update.js").Include(
+                "~/Assets/js/audiovisual/meetings/audiovisual.meetings.update.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.report.widget.js").Include(
                 "~/Assets/js/audiovisual/meetings/audiovisual.meetings.report.widget.js"));
 

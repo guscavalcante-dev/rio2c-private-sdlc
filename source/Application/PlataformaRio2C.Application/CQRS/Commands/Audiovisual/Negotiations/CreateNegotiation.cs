@@ -11,6 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using System;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
@@ -24,6 +26,20 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public Guid? NegotiationRoomConfigUid { get; set; }
         public string StartTime { get; set; }
         public int? RoundNumber { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateNegotiation"/> class.
+        /// </summary>
+        /// <param name="negotiationDto">The negotiation.</param>
+        public CreateNegotiation(NegotiationDto negotiationDto)
+        {
+            this.BuyerOrganizationUid = negotiationDto?.ProjectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.Organization?.Uid;
+            this.ProjectUid = negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.Project?.Uid;
+            //this.NegotiationConfigUid = negotiation.
+            //this.NegotiationRoomConfigUid = negotiation.
+            //this.RoundNumber = negotiation.
+            //this.StartTime = negotiation.
+        }
 
         /// <summary>Initializes a new instance of the <see cref="CreateNegotiation"/> class.</summary>
         public CreateNegotiation()

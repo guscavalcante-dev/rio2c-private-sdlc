@@ -22,6 +22,10 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>INegotiationRepository</summary>
     public interface INegotiationRepository : IRepository<Negotiation>
     {
+        Task<Negotiation> FindByIdAsync(int negotiationId);
+        Task<Negotiation> FindByUidAsync(Guid negotiationUid);
+        Task<NegotiationDto> FindDtoAsync(Guid negotiationUid);
+
         Task<List<NegotiationGroupedByDateDto>> FindScheduledWidgetDtoAsync(int editionId, Guid? buyerOrganizationUid, Guid? sellerOrganizationUid, string projectKeywords, DateTime? negotiationDate, Guid? roomUid);
         Task<List<Negotiation>> FindNegotiationsByEditionIdAsync(int editionId);
         Task<List<NegotiationDto>> FindAllScheduleDtosAsync(int editionId, int? attendeeCollaboratorId, DateTimeOffset startDate, DateTimeOffset endDate);

@@ -77,6 +77,9 @@
                                                                                     @*<button class="dropdown-item" onclick="AudiovisualMeetingParametersRoomsWidget.showUpdateModal('');">
                                                                                         <i class="la la-edit"></i>@Labels.Edit
                                                                                     </button>*@
+                                                                                    <button class="dropdown-item" onclick="AudiovisualMeetingsUpdate.showModal('@(negotiation?.Uid)');">
+                                                                                        <i class="la la-edit"></i>@Labels.Edit
+                                                                                    </button>
                                                                                     <button class="dropdown-item" onclick="AudiovisualMeetingsScheduledDelete.showModal('@(negotiation?.Uid)');">
                                                                                         <i class="la la-remove"></i>@Labels.Remove
                                                                                     </button>

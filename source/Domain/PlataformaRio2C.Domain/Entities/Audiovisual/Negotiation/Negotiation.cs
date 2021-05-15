@@ -85,7 +85,6 @@ namespace PlataformaRio2C.Domain.Entities
             int roundNumber,
             int userId)
         {
-            //this.Uid = negotiationUid;
             this.EditionId = editionId;
 
             // Project buyer evaluation
@@ -120,9 +119,52 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateUserId = this.UpdateUserId = userId;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="Negotiation"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Negotiation"/> class.
+        /// </summary>
         protected Negotiation()
         {
+        }
+
+        /// <summary>
+        /// Updates the specified room.
+        /// </summary>
+        /// <param name="room">The room.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <param name="tableNumber">The table number.</param>
+        /// <param name="roundNumber">The round number.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(
+            NegotiationConfig negotiationConfig,
+            NegotiationRoomConfig negotiationRoomConfig,
+            string startTime,
+            int roundNumber,
+            int userId)
+        {
+            // Room
+            var room = negotiationRoomConfig?.Room;
+            this.RoomId = room?.Id ?? 0;
+            this.Room = room;
+
+            // Dates
+            if (negotiationConfig != null)
+            {
+                this.StartDate = negotiationConfig.StartDate.Date.JoinDateAndTime(startTime, true).ToUtcTimeZone();
+                this.EndDate = this.StartDate.Add(negotiationConfig.TimeOfEachRound);
+
+                // Table Number
+                if (negotiationRoomConfig != null)
+                {
+                    this.TableNumber = negotiationRoomConfig.CountAutomaticTables + (negotiationConfig.GetNegotiationRoomConfigPosition(negotiationRoomConfig.Uid) ?? 0) + 1;
+                }
+            }
+
+            this.RoundNumber = roundNumber;
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
         }
 
         /// <summary>Assigns the project buyer evaluation.</summary>
