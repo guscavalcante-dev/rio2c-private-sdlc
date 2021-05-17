@@ -2743,7 +2743,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Virtual</value>
     <comment>Virtual</comment>
   </data>
-  <data name="VirtualMeetingRoomLink" xml:space="preserve">
+  <data name="VirtualMeetingUrl" xml:space="preserve">
     <value>Link da sala virtual</value>
     <comment>Link da sala virtual</comment>
   </data>

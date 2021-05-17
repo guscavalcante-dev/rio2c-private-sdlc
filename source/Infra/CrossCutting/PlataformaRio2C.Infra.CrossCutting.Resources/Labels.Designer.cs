@@ -6093,9 +6093,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Link da sala virtual.
         /// </summary>
-        public static string VirtualMeetingRoomLink {
+        public static string VirtualMeetingUrl {
             get {
-                return ResourceManager.GetString("VirtualMeetingRoomLink", resourceCulture);
+                return ResourceManager.GetString("VirtualMeetingUrl", resourceCulture);
             }
         }
         

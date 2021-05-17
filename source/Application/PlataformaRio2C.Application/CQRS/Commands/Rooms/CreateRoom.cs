@@ -28,9 +28,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public bool IsVirtualMeeting { get; set; }
 
-        [Display(Name = "VirtualMeetingRoomLink", ResourceType = typeof(Labels))]
+        [Display(Name = "VirtualMeetingUrl", ResourceType = typeof(Labels))]
         [RequiredIf(nameof(IsVirtualMeeting), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public string VirtualMeetingRoomLink { get; set; }
+        public string VirtualMeetingUrl { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CreateRoom"/> class.</summary>
         /// <param name="roomDto">The room dto.</param>
@@ -41,7 +41,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             this.UpdateNames(roomDto, languagesDtos);
             this.IsVirtualMeeting = roomDto?.Room?.IsVirtualMeeting == true;
-            this.VirtualMeetingRoomLink = roomDto?.Room?.VirtualMeetingRoomLink;
+            this.VirtualMeetingUrl = roomDto?.Room?.VirtualMeetingUrl;
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateRoom"/> class.</summary>

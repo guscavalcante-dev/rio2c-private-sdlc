@@ -22,6 +22,10 @@ BEGIN TRY
 		ADD IsVirtualMeeting  bit  NULL
 		;
 
+		ALTER TABLE "dbo"."Rooms"
+		ADD VirtualMeetingUrl  varchar(400)  NULL
+		;
+
 		EXEC('UPDATE "dbo"."Rooms" SET IsVirtualMeeting = 0')
 		;
 

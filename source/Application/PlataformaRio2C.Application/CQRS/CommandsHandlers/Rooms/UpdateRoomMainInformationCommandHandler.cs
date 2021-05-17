@@ -68,7 +68,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             room.UpdateMainInformation(
                 cmd.Names?.Select(d => new RoomName(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.IsVirtualMeeting,
-                cmd.VirtualMeetingRoomLink,
+                cmd.VirtualMeetingUrl,
                 cmd.UserId);
             if (!room.IsValid())
             {

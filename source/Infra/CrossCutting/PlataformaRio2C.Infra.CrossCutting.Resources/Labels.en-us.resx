@@ -2738,8 +2738,8 @@
     <value>Virtual</value>
     <comment>Virtual</comment>
   </data>
-  <data name="VirtualMeetingRoomLink" xml:space="preserve">
-    <value>Virtual meeting room link</value>
-    <comment>Virtual meeting room link</comment>
+  <data name="VirtualMeetingUrl" xml:space="preserve">
+    <value>Virtual meeting url</value>
+    <comment>Virtual meeting url</comment>
   </data>
 </root>

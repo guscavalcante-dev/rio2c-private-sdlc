@@ -24,7 +24,7 @@ namespace PlataformaRio2C.Domain.Entities
     {       
         public int EditionId { get; private set; }
         public bool IsVirtualMeeting { get; private set; }
-        public string VirtualMeetingRoomLink { get; private set; }
+        public string VirtualMeetingUrl { get; private set; }
 
         public virtual Edition Edition { get; private set; }
 
@@ -40,13 +40,13 @@ namespace PlataformaRio2C.Domain.Entities
             Edition edition,
             List<RoomName> roomNames,
             bool isVirtualMeeting,
-            string virtualMeetingRoomLink,
+            string virtualMeetingUrl,
             int userId)
         {
             this.EditionId = edition?.Id ?? 0;
             this.Edition = edition;
             this.SynchronizeRoomNames(roomNames, userId);
-            this.UpdateIsVirtualMeeting(isVirtualMeeting, virtualMeetingRoomLink);
+            this.UpdateIsVirtualMeeting(isVirtualMeeting, virtualMeetingUrl);
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
@@ -64,11 +64,11 @@ namespace PlataformaRio2C.Domain.Entities
         public void UpdateMainInformation(
             List<RoomName> roomNames,
             bool isVirtualMeeting,
-            string virtualMeetingRoomLink,
+            string virtualMeetingUrl,
             int userId)
         {
             this.SynchronizeRoomNames(roomNames, userId);
-            this.UpdateIsVirtualMeeting(isVirtualMeeting, virtualMeetingRoomLink);
+            this.UpdateIsVirtualMeeting(isVirtualMeeting, virtualMeetingUrl);
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
@@ -167,18 +167,18 @@ namespace PlataformaRio2C.Domain.Entities
         /// Updates the is virtual meeting.
         /// </summary>
         /// <param name="isVirtualMeeting">if set to <c>true</c> [is virtual meeting].</param>
-        /// <param name="virtualMeetingRoomLink">The virtual meeting room link.</param>
-        private void UpdateIsVirtualMeeting(bool isVirtualMeeting, string virtualMeetingRoomLink)
+        /// <param name="virtualMeetingUrl">The virtual meeting room link.</param>
+        private void UpdateIsVirtualMeeting(bool isVirtualMeeting, string virtualMeetingUrl)
         {
             this.IsVirtualMeeting = isVirtualMeeting;
 
             if (isVirtualMeeting)
             {
-                this.VirtualMeetingRoomLink = virtualMeetingRoomLink;
+                this.VirtualMeetingUrl = virtualMeetingUrl;
             }
             else
             {
-                this.VirtualMeetingRoomLink = null;
+                this.VirtualMeetingUrl = null;
             }
         }
 
@@ -195,7 +195,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.ValidateEdition();
             this.ValidateRoomNames();
-            this.ValidateVirtualMeetingRoomLink();
+            this.ValidateVirtualMeetingUrl();
 
             return this.ValidationResult.IsValid;
         }
@@ -228,11 +228,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>
         /// Validates the virtual meeting room link.
         /// </summary>
-        public void ValidateVirtualMeetingRoomLink()
+        public void ValidateVirtualMeetingUrl()
         {
-            if (this.IsVirtualMeeting && string.IsNullOrEmpty(this.VirtualMeetingRoomLink))
+            if (this.IsVirtualMeeting && string.IsNullOrEmpty(this.VirtualMeetingUrl))
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.VirtualMeetingRoomLink), new string[] { nameof(VirtualMeetingRoomLink) }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.VirtualMeetingUrl), new string[] { nameof(VirtualMeetingUrl) }));
             }
         }
 
