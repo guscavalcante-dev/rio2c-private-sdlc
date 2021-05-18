@@ -598,6 +598,16 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         }
 
         /// <summary>
+        /// Gets the dash if null or empty.
+        /// </summary>
+        /// <param name="s">The s.</param>
+        /// <returns></returns>
+        public static string GetDashIfNullOrEmpty(this string s)
+        {
+            return string.IsNullOrEmpty(s) ? "-" : s;
+        }
+
+        /// <summary>
         /// Determines whether this instance has value.
         /// </summary>
         /// <param name="array">The array.</param>

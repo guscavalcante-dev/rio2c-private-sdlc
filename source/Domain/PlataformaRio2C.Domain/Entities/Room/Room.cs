@@ -23,6 +23,7 @@ namespace PlataformaRio2C.Domain.Entities
     public class Room : Entity
     {       
         public int EditionId { get; private set; }
+        public bool IsVirtualMeeting { get; private set; }
 
         public virtual Edition Edition { get; private set; }
 
@@ -35,15 +36,15 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="roomNames">The room names.</param>
         /// <param name="userId">The user identifier.</param>
         public Room(
-            Guid roomUid,
             Edition edition,
             List<RoomName> roomNames,
+            bool isVirtualMeeting,
             int userId)
         {
-            //this.Uid = roomUid;
             this.EditionId = edition?.Id ?? 0;
             this.Edition = edition;
             this.SynchronizeRoomNames(roomNames, userId);
+            this.IsVirtualMeeting = isVirtualMeeting;
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;

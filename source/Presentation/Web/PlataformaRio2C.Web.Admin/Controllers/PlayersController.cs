@@ -199,12 +199,13 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                 await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                 await this.activityRepo.FindAllAsync(),
-                await this.targetAudienceRepo.FindAllAsync(),
+                await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
                 await this.interestRepo.FindAllDtosAsync(),
                 false,
                 false,
                 false,
-                false);
+                false,
+                true);
 
             return Json(new
             {
@@ -256,7 +257,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                     await this.activityRepo.FindAllAsync(),
-                    await this.targetAudienceRepo.FindAllAsync());
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
 
                 return Json(new
                 {
@@ -277,7 +278,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Player, Labels.CreatedM) });
         }
 
-        #endregion#region Create
+        #endregion
 
         #region Update
 
@@ -299,13 +300,14 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                     await this.activityRepo.FindAllAsync(),
-                    await this.targetAudienceRepo.FindAllAsync(),
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
                     await this.interestRepo.FindAllDtosAsync(),
                     isAddingToCurrentEdition,
                     false,
                     false,
                     false,
-                    false);
+                    false,
+                    true);
             }
             catch (DomainException ex)
             {
@@ -362,7 +364,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                     await this.activityRepo.FindAllAsync(),
-                    await this.targetAudienceRepo.FindAllAsync());
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
 
                 return Json(new
                 {

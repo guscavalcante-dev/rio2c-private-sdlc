@@ -854,6 +854,10 @@ var MyRio2cCommon = function () {
         }
     };
 
+    var enableTooltips = function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    };
+
     // Enable input maxlength ---------------------------------------------------------------------
     var enableInputMaxlength = function () {
         $('input[data-val-length-max],textarea[data-val-length-max]').not('.maxlength-enabled').each(function () {
@@ -1790,6 +1794,9 @@ var MyRio2cCommon = function () {
         },
         enableDecimal: function (inputIdOrClass, size) {
             enableDecimal(inputIdOrClass, size);
+        },
+        enableTooltips: function () {
+            enableTooltips();
         },
         enableInputMaxlength: function() {
             enableInputMaxlength();

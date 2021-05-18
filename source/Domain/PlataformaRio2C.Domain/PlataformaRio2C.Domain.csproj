@@ -395,6 +395,7 @@
     <Compile Include="Interfaces\Repositories\Logistics\ILogisticRepository.cs" />
     <Compile Include="Interfaces\Repositories\Logistics\IPlaceRepository.cs" />
     <Compile Include="Interfaces\Repositories\Logistics\ILogisticSponsorRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Music\Bands\IAttendeeMusicBandRepository.cs" />
     <Compile Include="Interfaces\Repositories\Music\Bands\IMusicBandTypeRepository.cs" />
     <Compile Include="Interfaces\Repositories\Music\Bands\IReleasedMusicProjectRepository.cs" />
     <Compile Include="Interfaces\Repositories\Music\Bands\IMusicBandTeamMemberRepository.cs" />

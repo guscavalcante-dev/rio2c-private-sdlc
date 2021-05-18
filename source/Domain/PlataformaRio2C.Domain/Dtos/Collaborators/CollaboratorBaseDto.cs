@@ -56,55 +56,53 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<AttendeeOrganizationBaseDto> AttendeeOrganizationBasesDtos { get; set; }
         public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }
 
-
         public Role Role { get; set; }
         public List<AttendeeCollaboratorTypeDto> AttendeeCollaboratorTypeDtos { get; set; }
-        public string CollaboratorTypeNames => GetAttendeeCollaboratorTypesNames();
         public string RoleWithCollaboratorTypeNameHtmlString
         {
             get
             {
-                var name = "";
-                var roleName = this.Role?.Name;
-
-                if (!string.IsNullOrEmpty(roleName) && !string.IsNullOrEmpty(this.CollaboratorTypeNames))
+                this.Translate();
+                var roleDescription = this.Role?.Description;
+                var collaboratorTypesDescriptions = this.AttendeeCollaboratorTypeDtos?
+                                                            .Select(act => act.CollaboratorType?.Description)?
+                                                            .ToArray()?
+                                                            .ToString("<br/>");
+                string name = "";
+                if (!string.IsNullOrEmpty(collaboratorTypesDescriptions))
                 {
-                    name = $"{roleName}<br/>{this.CollaboratorTypeNames}";
+                    name = collaboratorTypesDescriptions;
                 }
-                else if (!string.IsNullOrEmpty(this.CollaboratorTypeNames))
+                else if (!string.IsNullOrEmpty(roleDescription))
                 {
-                    name = this.CollaboratorTypeNames;
-                }
-                else if (!string.IsNullOrEmpty(roleName))
-                {
-                    name = roleName;
+                    name = roleDescription;
                 }
 
                 return name;
             }
         }
-        public bool? IsAdminFull => this.Role?.Name == Constants.Role.Admin;
-
-        #region Private Methods
-
-        /// <summary>
-        /// Gets the attendee collaborator types names.
-        /// </summary>
-        /// <returns></returns>
-        private string GetAttendeeCollaboratorTypesNames()
+        public bool? IsAdminFull
         {
-            if (AttendeeCollaboratorTypeDtos != null && AttendeeCollaboratorTypeDtos.Count > 0)
+            get
             {
-                return this.AttendeeCollaboratorTypeDtos.Select(act => act.CollaboratorType.Name).ToList().ToString("<br/>");
-            }
-            else
-            {
-                return "";
+                if (this.Role == null)
+                    return null;
+                else if (this.Role.Name == Constants.Role.Admin)
+                    return true;
+                else
+                    return false;
             }
         }
 
-        #endregion
-
+        public string UserInterfaceLanguage { get; set; }
+        public void Translate()
+        {
+            if (!string.IsNullOrEmpty(this.UserInterfaceLanguage))
+            {
+                this.Role?.Translate(this.UserInterfaceLanguage);
+                this.AttendeeCollaboratorTypeDtos?.ForEach(act => act.CollaboratorType?.Translate(this.UserInterfaceLanguage));
+            }
+        }
 
         #region Json ignored properties 
 

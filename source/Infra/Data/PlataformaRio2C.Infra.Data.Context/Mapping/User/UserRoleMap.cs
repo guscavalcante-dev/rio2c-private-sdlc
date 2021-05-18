@@ -22,7 +22,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         /// <summary>Initializes a new instance of the <see cref="UserRoleMap"/> class.</summary>
         public UserRoleMap()
         {
-            this.ToTable("UserRoles");
+            this.ToTable("UsersRoles");
 
             this.HasKey(p => new {p.UserId, p.RoleId });
 

@@ -43,7 +43,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isDescriptionRequired, 
             bool isAddressRequired, 
             bool isRestrictionSpecificRequired, 
-            bool isImageRequired)
+            bool isImageRequired,
+            bool isVirtualMeetingRequired)
         {
             this.UpdateBaseProperties(
                 null,
@@ -57,7 +58,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 isDescriptionRequired, 
                 isAddressRequired, 
                 isRestrictionSpecificRequired,
-                isImageRequired);
+                isImageRequired,
+                isVirtualMeetingRequired);
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateOrganization"/> class.</summary>

@@ -171,6 +171,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                             .SelectMany(ac => ac.AttendeeCollaboratorTypes
                                                                                                         .Where(act => !act.IsDeleted && !act.CollaboratorType.IsDeleted)
                                                                                                         .Select(act => act.CollaboratorType)),
+                            EditionAttendeeCollaborators = u.Collaborator.AttendeeCollaborators.Where(ac => !ac.IsDeleted)
                         })
                         .FirstOrDefault();
         }

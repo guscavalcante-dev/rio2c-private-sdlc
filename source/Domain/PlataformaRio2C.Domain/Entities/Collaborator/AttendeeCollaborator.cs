@@ -53,12 +53,12 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="shouldDeleteOrganizations">if set to <c>true</c> [should delete organizations].</param>
         /// <param name="userId">The user identifier.</param>
         public AttendeeCollaborator(
-            Edition edition, 
+            Edition edition,
             CollaboratorType collaboratorType,
             bool? isApiDisplayEnabled,
             int? apiHighlightPosition,
             List<AttendeeOrganization> attendeeOrganizations,
-            Collaborator collaborator, 
+            Collaborator collaborator,
             bool shouldDeleteOrganizations,
             int userId)
         {
@@ -123,13 +123,13 @@ namespace PlataformaRio2C.Domain.Entities
             Edition edition,
             CollaboratorType collaboratorType,
             List<AttendeeOrganization> newAttendeeOrganizations,
-            Collaborator collaborator, 
-            AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType, 
+            Collaborator collaborator,
+            AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
             string salesPlatformAttendeeId,
             DateTime salesPlatformUpdateDate,
-            string firstName, 
-            string lastName, 
-            string cellPhone, 
+            string firstName,
+            string lastName,
+            string cellPhone,
             string jobTitle,
             string barcode,
             bool isBarcodePrinted,
@@ -145,12 +145,12 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeAttendeeCollaboratorType(collaboratorType, null, null, userId);
             this.SynchronizeAttendeeOrganizationCollaborators(newAttendeeOrganizations, false, userId);
             this.SynchronizeAttendeeCollaboratorTickets(
-                attendeeSalesPlatformTicketType, 
+                attendeeSalesPlatformTicketType,
                 salesPlatformAttendeeId,
                 salesPlatformUpdateDate,
-                firstName, 
-                lastName, 
-                cellPhone, 
+                firstName,
+                lastName,
+                cellPhone,
                 jobTitle,
                 barcode,
                 isBarcodePrinted,
@@ -176,8 +176,8 @@ namespace PlataformaRio2C.Domain.Entities
             CollaboratorType collaboratorType,
             bool? isApiDisplayEnabled,
             int? apiHighlightPosition,
-            List<AttendeeOrganization> attendeeOrganizations, 
-            bool shouldDeleteOrganizations, 
+            List<AttendeeOrganization> attendeeOrganizations,
+            bool shouldDeleteOrganizations,
             int userId)
         {
             this.IsDeleted = false;
@@ -231,16 +231,20 @@ namespace PlataformaRio2C.Domain.Entities
             this.DeleteAttendeeOrganizationCollaborators(new List<AttendeeOrganization>(), userId);
         }
 
-        /// <summary>Deletes the specified collaborator type.</summary>
-        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <summary>
+        /// Deletes the specified collaborator types.
+        /// </summary>
         /// <param name="userId">The user identifier.</param>
-        public void Delete(List<CollaboratorType> collaboratorTypes, int userId)
+        public void Delete(int userId)
         {
-            foreach(var collaboratorType in collaboratorTypes)
+            if (this.AttendeeCollaboratorTypes?.Any() == true)
             {
-                this.DeleteAttendeeCollaboratorType(collaboratorType, userId);
+                foreach (var attendeeCollaboratorType in this.FindAllAttendeeCollaboratorTypesNotDeleted())
+                {
+                    this.DeleteAttendeeCollaboratorType(attendeeCollaboratorType.CollaboratorType, userId);
+                }
             }
-            
+
             this.DeleteConferenceParticipants(userId);
 
             if (this.FindAllAttendeeCollaboratorTypesNotDeleted()?.Any() == true)
@@ -385,7 +389,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         private void SynchronizeAttendeeCollaboratorType(CollaboratorType collaboratorType, bool? isApiDisplayEnabled, int? apiHighlightPosition, int userId)
         {
-            if(collaboratorType == null || string.IsNullOrEmpty(collaboratorType.Name))
+            if (collaboratorType == null || string.IsNullOrEmpty(collaboratorType.Name))
             {
                 return;
             }
@@ -414,8 +418,6 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeeCollaboratorType = this.FindAttendeeCollaboratorTypeByUid(collaboratorType?.Uid ?? Guid.Empty);
             attendeeCollaboratorType?.Delete(userId);
         }
-
-
 
         /// <summary>Synchronizes the type of the attendee collaborator.</summary>
         /// <param name="collaboratorType">Type of the collaborator.</param>
@@ -475,6 +477,17 @@ namespace PlataformaRio2C.Domain.Entities
         private AttendeeCollaboratorType FindAttendeeCollaboratorTypeByUid(Guid collaboratorTypeUid)
         {
             return this.AttendeeCollaboratorTypes?.FirstOrDefault(act => act.CollaboratorType.Uid == collaboratorTypeUid);
+        }
+
+        /// <summary>
+        /// Finds the attendee collaborator type by uid.
+        /// </summary>
+        /// <param name="collaboratorTypeUid">The collaborator type uid.</param>
+        /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
+        /// <returns></returns>
+        private AttendeeCollaboratorType FindAttendeeCollaboratorTypeByUid(Guid collaboratorTypeUid, int attendeeCollaboratorId)
+        {
+            return this.AttendeeCollaboratorTypes?.FirstOrDefault(act => act.CollaboratorType.Uid == collaboratorTypeUid && act.AttendeeCollaboratorId == attendeeCollaboratorId);
         }
 
         /// <summary>Finds all attendee collaborator types not deleted.</summary>
@@ -549,7 +562,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         private void DeleteAttendeeOrganizationCollaborators(List<AttendeeOrganization> newAttendeeOrganizations, int userId)
         {
-            var attendeeOrganizationCollaboratorToDelete = this.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted 
+            var attendeeOrganizationCollaboratorToDelete = this.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted
                                                                                                                && newAttendeeOrganizations?.Select(nao => nao.Id)?.Contains(aoc.AttendeeOrganizationId) == false)
                                                                                                  .ToList();
             foreach (var attendeeOrganizationCollaborator in attendeeOrganizationCollaboratorToDelete)
@@ -620,12 +633,12 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeAttendeeCollaboratorType(collaboratorType, null, null, userId);
             this.SynchronizeAttendeeOrganizationCollaborators(newAttendeeOrganizations, false, userId);
             this.SynchronizeAttendeeCollaboratorTickets(
-                attendeeSalesPlatformTicketType, 
+                attendeeSalesPlatformTicketType,
                 salesPlatformAttendeeId,
                 salesPlatformUpdateDate,
-                firstName, 
-                lastName, 
-                cellPhone, 
+                firstName,
+                lastName,
+                cellPhone,
                 jobTitle,
                 barcode,
                 isBarcodePrinted,
@@ -648,12 +661,12 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="barcodeUpdateDate">The barcode update date.</param>
         /// <param name="userId">The user identifier.</param>
         private void SynchronizeAttendeeCollaboratorTickets(
-            AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType, 
+            AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
             string salesPlatformAttendeeId,
             DateTime salesPlatformUpdateDate,
-            string firstName, 
-            string lastName, 
-            string cellPhone, 
+            string firstName,
+            string lastName,
+            string cellPhone,
             string jobTitle,
             string barcode,
             bool isBarcodePrinted,
@@ -670,7 +683,7 @@ namespace PlataformaRio2C.Domain.Entities
             if (attendeeCollaboratorTicket == null)
             {
                 this.AttendeeCollaboratorTickets.Add(new AttendeeCollaboratorTicket(
-                    this, 
+                    this,
                     attendeeSalesPlatformTicketType,
                     salesPlatformAttendeeId,
                     salesPlatformUpdateDate,
@@ -689,9 +702,9 @@ namespace PlataformaRio2C.Domain.Entities
                 attendeeCollaboratorTicket.Update(
                     attendeeSalesPlatformTicketType,
                     salesPlatformUpdateDate,
-                    firstName, 
-                    lastName, 
-                    cellPhone, 
+                    firstName,
+                    lastName,
+                    cellPhone,
                     jobTitle,
                     barcode,
                     isBarcodePrinted,
@@ -724,7 +737,7 @@ namespace PlataformaRio2C.Domain.Entities
                 return;
             }
 
-            var attendeeCollaboratorTicket = this.AttendeeCollaboratorTickets.FirstOrDefault(act => act.SalesPlatformAttendeeId == salesPlatformAttendeeId 
+            var attendeeCollaboratorTicket = this.AttendeeCollaboratorTickets.FirstOrDefault(act => act.SalesPlatformAttendeeId == salesPlatformAttendeeId
                                                                                                     && !act.IsDeleted);
             attendeeCollaboratorTicket?.Delete(salesPlatformUpdateDate, barcodeUpdateDate, userId);
 

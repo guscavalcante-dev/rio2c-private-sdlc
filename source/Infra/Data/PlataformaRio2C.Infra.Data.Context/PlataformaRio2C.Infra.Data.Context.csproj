@@ -409,6 +409,8 @@
   <ItemGroup>
     <Content Include="SqlScripts\Deltas\20190930_114613_0001_ChangesForPlayersApi.sql" />
     <Content Include="SqlScripts\Deltas\20200513_100215_0030_ChangesForSignalR.sql" />
+    <Content Include="SqlScripts\Deltas\20210508_113800_0034_ChangesForNegotiations.sql" />
+    <Content Include="SqlScripts\Deltas\20210506_123400_0033_ChangesForRolesAndCollaboratorTypes.sql" />
     <Content Include="SqlScripts\Deltas\20210330_164000_0032_AddAttendeeMusicBandEvaluations.sql" />
     <Content Include="SqlScripts\Deltas\20210315_185800_0031_ChangesForEditionEvents.sql" />
     <Content Include="SqlScripts\Deltas\20200316_161033_0029_ChangesForAgenda.sql" />

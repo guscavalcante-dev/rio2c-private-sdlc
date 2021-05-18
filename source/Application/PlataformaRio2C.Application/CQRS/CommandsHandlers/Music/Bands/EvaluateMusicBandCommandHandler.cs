@@ -15,6 +15,8 @@ using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
@@ -71,9 +73,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
+            var editionDto = await editionRepo.FindDtoAsync(cmd.EditionId.Value);
+            if (editionDto.IsMusicProjectEvaluationOpen() != true)
+            {
+                this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(Texts.ForbiddenErrorMessage, new string[] { "ToastrError" })));
+                return this.AppValidationResult;
+            }
+
             var musicBand = await musicBandRepo.FindByIdAsync(cmd.MusicBandId.Value);
             musicBand.Evaluate(
-                await editionRepo.FindByIdAsync(cmd.EditionId.Value),
+                editionDto.Edition,
                 await userRepo.FindByIdAsync(cmd.UserId),
                 cmd.Grade);
 

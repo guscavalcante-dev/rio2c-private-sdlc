@@ -125,7 +125,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             try
             {
                 var activities = await this.activityRepo.FindAllAsync();
-                var targetAudiences = await this.targetAudienceRepo.FindAllAsync();
+                var targetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id);
                 var intrests = await this.interestRepo.FindAllGroupedByInterestGroupsAsync();
 
                 return await Json(new PlayersFiltersApiResponse

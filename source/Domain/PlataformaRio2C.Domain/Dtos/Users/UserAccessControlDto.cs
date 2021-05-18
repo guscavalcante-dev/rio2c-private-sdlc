@@ -124,7 +124,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if this instance is admin; otherwise, <c>false</c>.</returns>
         public bool IsAdmin()
         {
-            return this.Roles?.Any(r => Constants.Role.AnyAdminArray.Contains(r.Name)) == true;
+            return this.Roles?.Any(r => r.Name == Constants.Role.Admin) == true;
         }
 
         /// <summary>Determines whether [has collaborator type] [the specified collaborator type].</summary>

@@ -50,7 +50,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<Negotiation> FindByEditionId(this IQueryable<Negotiation> query, int editionId, bool showAllEditions = false)
         {
-            query = query.Where(n => (showAllEditions || n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.EditionId == editionId));
+            query = query.Where(n => (showAllEditions || n.EditionId == editionId));
 
             return query;
         }
@@ -244,6 +244,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Select(nd => new NegotiationGroupedByDateDto(nd.Key, nd.ToList()))
                                 .OrderBy(ngd => ngd.Date)
                                 .ToList();
+        }
+
+        /// <summary>
+        /// Finds the negotiations by edition identifier asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<List<Negotiation>> FindNegotiationsByEditionIdAsync(int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId);
+
+            return await query.ToListAsync();
         }
 
         /// <summary>Truncates this instance.</summary>

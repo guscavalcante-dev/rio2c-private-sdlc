@@ -11,32 +11,29 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc;
 using DataTables.AspNet.Core;
 using DataTables.AspNet.Mvc5;
 using MediatR;
 using Microsoft.AspNet.Identity;
-using Newtonsoft.Json;
 using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
-using PlataformaRio2C.Infra.CrossCutting.Identity.ViewModels;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using X.PagedList;
 using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
@@ -90,15 +87,106 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Managers, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Managers, Url.Action("Index", "Collaborators/Managers", new { Area = "" }))
+                new BreadcrumbItemHelper(Labels.Managers, Url.Action("Index", "Managers", new { Area = "" }))
             });
 
             #endregion
 
+            searchViewModel.UpdateCollaboratorTypes(this.collaboratorTypeRepo.FindAllAdmins(), this.UserInterfaceLanguage);
+            searchViewModel.UpdateRoles(this.roleRepo.FindAllAdminRoles(), this.UserInterfaceLanguage);
             return View(searchViewModel);
         }
 
         #region DataTable Widget
+
+        ///// <summary>Searches the specified request.</summary>
+        ///// <param name="request">The request.</param>
+        ///// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        ///// <param name="showAllExecutives">if set to <c>true</c> [show all executives].</param>
+        ///// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        ///// <param name="showHighlights">The show highlights.</param>
+        ///// <returns></returns>
+        //[HttpGet]
+        //public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, string collaboratorType = "", string roleName = "")
+        //{
+        //    //Show only Admin Users
+        //    //string[] collaboratorTypes = string.IsNullOrEmpty(collaboratorType) ? Constants.CollaboratorType.Admins : new string[] { collaboratorType };
+        //    //string[] rolesNames = string.IsNullOrEmpty(roleName) ? Constants.Role.AnyAdminArray : new string[] { roleName };
+
+        //    IDataTablesResponse response = null;
+        //    var page = request.Start / request.Length;
+        //    var pageSize = request.Length;
+        //    var keywords = request.Search?.Value;
+        //    var sortColumns = request.GetSortColumns();
+
+        //    if (!string.IsNullOrEmpty(collaboratorType))
+        //    {
+        //       var adminsByCollaboratoType = await this.collaboratorRepo.FindAllAdminsByDataTableAndCollaboratorTypes(
+        //                    page,
+        //                    pageSize,
+        //                    keywords,
+        //                    sortColumns,
+        //                    collaboratorType,
+        //                    roleName,
+        //                    showAllEditions,
+        //                    false,
+        //                    this.EditionDto?.Id);
+
+        //        //response = DataTablesResponse.Create(request, adminsByCollaboratoType.TotalItemCount, adminsByCollaboratoType.TotalItemCount, adminsByCollaboratoType);
+        //    }
+        //    else if (!string.IsNullOrEmpty(roleName))
+        //    {
+        //        var adminsByRole = await this.collaboratorRepo.FindAllAdminsByDataTableAndCollaboratorTypes(
+        //                               page,
+        //                               pageSize,
+        //                               keywords,
+        //                               sortColumns,
+        //                               collaboratorType,
+        //                               roleName,
+        //                               showAllEditions,
+        //                               false,
+        //                               this.EditionDto?.Id);
+
+        //        //response = DataTablesResponse.Create(request, adminsByRole.TotalItemCount, adminsByRole.TotalItemCount, adminsByRole);
+        //    }
+        //    else
+        //    {
+        //        var adminsByCollaboratoType = await this.collaboratorRepo.FindAllAdminsByDataTableAndCollaboratorTypes(
+        //                                        page,
+        //                                        pageSize,
+        //                                        keywords,
+        //                                        sortColumns,
+        //                                        collaboratorType,
+        //                                        roleName,
+        //                                        showAllEditions,
+        //                                        false,
+        //                                        this.EditionDto?.Id);
+
+        //        var adminsByRole = await this.collaboratorRepo.FindAllAdminsByDataTableAndCollaboratorTypes(
+        //                            page,
+        //                            pageSize,
+        //                            keywords,
+        //                            sortColumns,
+        //                            collaboratorType,
+        //                            roleName,
+        //                            showAllEditions,
+        //                            false,
+        //                            this.EditionDto?.Id);
+
+        //        var adminsConcat = await adminsByCollaboratoType.Concat(adminsByRole).ToList().ToListPagedAsync(page, pageSize);
+        //        //PagedList<CollaboratorBaseDto> admins = new PagedList<CollaboratorBaseDto>(adminsConcat, page, pageSize);
+        //        response = DataTablesResponse.Create(request, adminsConcat.TotalItemCount, adminsConcat.TotalItemCount, adminsConcat);
+        //    }
+
+        //    ViewBag.CollaboratorType = collaboratorType;
+        //    ViewBag.Role = roleName;
+
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        dataTable = response
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
 
         /// <summary>Searches the specified request.</summary>
         /// <param name="request">The request.</param>
@@ -110,28 +198,18 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, string collaboratorType = "", string roleName = "")
         {
-            //Show only Admin Users
-            string[] collaboratorTypes = string.IsNullOrEmpty(collaboratorType) ? Constants.CollaboratorType.Admins : new string[] { collaboratorType };
-            string[] rolesNames = string.IsNullOrEmpty(roleName) ? Constants.Role.AnyAdminArray : new string[] { roleName };
+            var admins = await this.collaboratorRepo.FindAllAdminsByDataTable(
+                                    request.Start / request.Length,
+                                    request.Length,
+                                    request.Search?.Value,
+                                    request.GetSortColumns(),
+                                    collaboratorType,
+                                    roleName,
+                                    showAllEditions,
+                                    this.UserInterfaceLanguage,
+                                    this.EditionDto?.Id);
 
-            if (rolesNames.Contains(Constants.Role.Admin))
-            {
-                collaboratorTypes = new string[] { };
-            }
-
-            var playersExecutives = await this.collaboratorRepo.FindAllAminsByDataTable(
-                request.Start / request.Length,
-                request.Length,
-                request.Search?.Value,
-                request.GetSortColumns(),
-                new List<Guid>(),
-                collaboratorTypes,// new string[] { collaboratorType }, // //
-                rolesNames,//new string[] { roleName }, // //
-                showAllEditions,
-                false,
-                this.EditionDto?.Id);
-
-            var response = DataTablesResponse.Create(request, playersExecutives.TotalItemCount, playersExecutives.TotalItemCount, playersExecutives);
+            var response = DataTablesResponse.Create(request, admins.TotalItemCount, admins.TotalItemCount, admins);
 
             ViewBag.CollaboratorType = collaboratorType;
             ViewBag.Role = roleName;
@@ -155,7 +233,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowMainInformationWidget(Guid collaboratorUid)
         {
-            var mainInformationWidgetDto = await this.collaboratorRepo.FindDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id);
+            var mainInformationWidgetDto = await this.collaboratorRepo.FindDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage);
             if (mainInformationWidgetDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Edition, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
@@ -203,7 +281,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         {
             var cmd = new CreateManager(
                 await this.roleRepo.FindAllAdminRolesAsync(),
-                await this.collaboratorTypeRepo.FindAllAdminCollaboratorTypesAsync(),
+                await this.collaboratorTypeRepo.FindAllAdminsAsync(),
                 UserInterfaceLanguage);
 
             return Json(new
@@ -261,7 +339,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd.UpdateDropdownProperties(
                     await this.roleRepo.FindAllAdminRolesAsync(),
-                    await this.collaboratorTypeRepo.FindAllAdminCollaboratorTypesAsync(),
+                    await this.collaboratorTypeRepo.FindAllAdminsAsync(),
                     UserInterfaceLanguage);
 
                 return Json(new
@@ -301,7 +379,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 cmd = new UpdateManager(
                     await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
                     await this.roleRepo.FindAllAdminRolesAsync(),
-                    await this.collaboratorTypeRepo.FindAllAdminCollaboratorTypesAsync(),
+                    await this.collaboratorTypeRepo.FindAllAdminsAsync(),
                     isAddingToCurrentEdition ?? false,
                     UserInterfaceLanguage);
             }
@@ -357,7 +435,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd.UpdateDropdownProperties(
                     await this.roleRepo.FindAllAdminRolesAsync(),
-                    await this.collaboratorTypeRepo.FindAllAdminCollaboratorTypesAsync(),
+                    await this.collaboratorTypeRepo.FindAllAdminsAsync(),
                     UserInterfaceLanguage);
 
                 return Json(new
@@ -409,7 +487,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
                 cmd.UpdateDropdownProperties(
                     await this.roleRepo.FindAllAdminRolesAsync(),
-                    await this.collaboratorTypeRepo.FindAllAdminCollaboratorTypesAsync(),
+                    await this.collaboratorTypeRepo.FindAllAdminsAsync(),
                     UserInterfaceLanguage);
 
                 return Json(new
@@ -463,7 +541,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Delete(DeleteCollaborator cmd)
+        public async Task<ActionResult> Delete(DeleteManager cmd)
         {
             var result = new AppValidationResult();
 

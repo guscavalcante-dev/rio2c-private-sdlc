@@ -23,6 +23,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public string Name { get; set; }
         public HoldingBaseDto HoldingBaseDto { get; set; }
         public bool IsCompanyNumberRequired { get; set; }
+        public bool? IsVirtualMeeting { get; set; }
         public string Document { get; set; }
         public string Website { get; set; }
         public string PhoneNumber { get; set; }

@@ -1221,6 +1221,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O Player prefere reunião {0} para execução da rodada de negócios.
+        /// </summary>
+        public static string PlayerMeetingPreference {
+            get {
+                return ResourceManager.GetString("PlayerMeetingPreference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Player não encontrado.
         /// </summary>
         public static string PlayerNotFound {

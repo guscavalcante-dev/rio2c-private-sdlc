@@ -21,9 +21,8 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface ICollaboratorTypeRepository : IRepository<CollaboratorType>
     {
         Task<CollaboratorType> FindByNameAsync(string collaboratorTypeName);
-
         Task<List<CollaboratorType>> FindByNamesAsync(string[] collaboratorTypeNames);
-
-        Task<List<CollaboratorType>> FindAllAdminCollaboratorTypesAsync();
+        Task<List<CollaboratorType>> FindAllAdminsAsync();
+        List<CollaboratorType> FindAllAdmins();
     }    
 }

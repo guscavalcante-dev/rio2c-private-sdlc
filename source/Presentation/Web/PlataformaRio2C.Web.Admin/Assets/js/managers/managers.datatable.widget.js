@@ -203,10 +203,10 @@ var ManagersDataTableWidget = function () {
                         html += '<button class="dropdown-item" onclick="ManagersDataTableWidget.toogleStatus(\'' + full.UserUid + '\',\'' + !full.Active + '\');"><i class="la la-lock"></i> ' + ((full.Active)?block:unblock) + '</button>';
 
                         if (full.IsInCurrentEdition && full.IsInOtherEdition) {
-                            html += '<button class="dropdown-item" onclick="ManagersDelete.showModal(\'' + full.Uid + '\', \'' + full.CollaboratorTypeName + '\', true);"><i class="la la-minus"></i> ' + removeFromEdition + '</button>';
+                            html += '<button class="dropdown-item" onclick="ManagersDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-minus"></i> ' + removeFromEdition + '</button>';
                         }
                         else {
-                            html += '<button class="dropdown-item" onclick="ManagersDelete.showModal(\'' + full.Uid + '\', \'' + full.CollaboratorTypeName + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+                            html += '<button class="dropdown-item" onclick="ManagersDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
                         }
 
                         html += '\</div>\</span>';

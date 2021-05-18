@@ -15,12 +15,12 @@
 var ManagersDelete = function () {
 
     // Delete -------------------------------------------------------------------------------------
-    var executeDelete = function (collaboratorUid, collaboratorTypeName) {
+    var executeDelete = function (collaboratorUid, isDeletingFromCurrentEdition) {
         MyRio2cCommon.block();
 
         var jsonParameters = new Object();
         jsonParameters.CollaboratorUid = collaboratorUid;
-        jsonParameters.CollaboratorTypeName = collaboratorTypeName;
+        jsonParameters.IsDeletingFromCurrentEdition = isDeletingFromCurrentEdition;
 
         $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Managers/Delete'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -51,7 +51,7 @@ var ManagersDelete = function () {
         });
     };
 
-    var showModal = function (collaboratorUid, collaboratorTypeName, isDeletingFromCurrentEdition) {
+    var showModal = function (collaboratorUid, isDeletingFromCurrentEdition) {
         var message = labels.deleteConfirmationMessage;
 
         if (isDeletingFromCurrentEdition) {
@@ -71,7 +71,7 @@ var ManagersDelete = function () {
                     label: labels.remove,
                     className: "btn btn-danger",
                     callback: function () {
-                        executeDelete(collaboratorUid, collaboratorTypeName);
+                        executeDelete(collaboratorUid, isDeletingFromCurrentEdition);
                     }
                 }
             }

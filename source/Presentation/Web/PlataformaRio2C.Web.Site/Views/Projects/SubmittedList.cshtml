@@ -10,6 +10,13 @@
     var isEvaluationReleasedForDisclosure = editionDto?.IsEvaluationReleasedForDisclosure() == true;
     var hasProjectSpace = Model.Any(m => m.IsFakeProject);
 }
+@section Scripts {
+    <script>
+        jQuery(document).ready(function () {
+            MyRio2cCommon.enableTooltips();
+    });
+    </script>
+}
 <div class="row">
     <div class="col-md-12">
         @if (Model?.Any() == true)
@@ -98,6 +105,17 @@
                                                                                             <a href="@Url.Action("Details", "Companies", new {id = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Uid})" class="kt-widget__username" target="_blank" style="min-height: 70px;">
                                                                                                 <small>@projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.Name</small>
                                                                                             </a>
+                                                                                            @if (projectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.AttendeeOrganization?.IsVirtualMeeting != null)
+                                                                                            {
+                                                                                                var isVirtualMeeting = projectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.AttendeeOrganization.IsVirtualMeeting == true;
+                                                                                                var tooltipTile = string.Format(Messages.PlayerMeetingPreference, (isVirtualMeeting ? Labels.RemoteF : Labels.Presential).ToLowerInvariant());
+
+                                                                                                <div class="kt-widget__username text-center mt-0 pt-0">
+                                                                                                    <span class="kt-badge kt-badge--inline kt-badge--warning mt-2 kt-font-boldest" data-toggle="tooltip" data-placement="right" title="@tooltipTile" style="cursor: pointer;">
+                                                                                                        @(isVirtualMeeting ? Labels.Remote : Labels.Presential)
+                                                                                                    </span>
+                                                                                                </div>
+                                                                                            }
                                                                                             @if (isEvaluationReleasedForDisclosure)
                                                                                             {
                                                                                                 var color = "warning";

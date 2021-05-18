@@ -24,6 +24,7 @@ var CompaniesMainInformationWidget = function () {
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         KTApp.initTooltips();
+        MyRio2cCommon.enableTooltips();
     };
 
     var show = function () {

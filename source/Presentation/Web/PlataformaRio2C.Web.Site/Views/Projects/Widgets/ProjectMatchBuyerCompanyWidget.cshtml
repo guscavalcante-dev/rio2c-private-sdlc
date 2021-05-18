@@ -43,11 +43,22 @@
                                                     <small><i class="flaticon-profile"></i> @Labels.SeeDescription</small>
                                                 </a>
                                             </span>
+                                            @if (matchAttendeeOrganizationDto?.AttendeeOrganization?.IsVirtualMeeting != null)
+                                            {
+                                                var isVirtualMeeting = matchAttendeeOrganizationDto.AttendeeOrganization.IsVirtualMeeting == true;
+                                                var tooltipTile = string.Format(Messages.PlayerMeetingPreference, (isVirtualMeeting ? Labels.RemoteF : Labels.Presential).ToLowerInvariant());
+
+                                                <div class="kt-widget__subhead pt-0 mt-0">
+                                                    <span class="kt-badge kt-badge--inline kt-badge--warning mt-2 kt-font-boldest" data-toggle="tooltip" data-placement="right" title="@tooltipTile" style="cursor: pointer;">
+                                                        @(isVirtualMeeting ? Labels.Remote : Labels.Presential)
+                                                    </span>
+                                                </div>
+                                            }
                                             <span class="kt-widget__desc">
                                                 @{
                                                     var totalInterestGroupsMatchesCount = matchAttendeeOrganizationDto.GetTotalInterestGroupsMatchesCount();
                                                 }
-                                                <small>@totalInterestGroupsMatchesCount @((totalInterestGroupsMatchesCount != 1 ? Labels.Matches : Labels.Match).ToLowerInvariant()):</small><br/>
+                                                <small>@totalInterestGroupsMatchesCount @((totalInterestGroupsMatchesCount != 1 ? Labels.Matches : Labels.Match).ToLowerInvariant()):</small><br />
                                                 @foreach (var interestGroupsMatch in matchAttendeeOrganizationDto.InterestGroupsMatches.OrderBy(igm => igm.DisplayOrder))
                                                 {
                                                     <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@interestGroupsMatch.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>

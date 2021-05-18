@@ -21,7 +21,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>ITargetAudienceRepository</summary>
     public interface ITargetAudienceRepository : IRepository<TargetAudience>
     {
-        Task<List<TargetAudience>> FindAllAsync();
+        //Task<List<TargetAudience>> FindAllAsync();
         Task<List<TargetAudience>> FindAllByUidsAsync(List<Guid> targetAudiencesUids);
         Task<List<TargetAudience>> FindAllByProjectTypeIdAsync(int projectTypeId);
     }    

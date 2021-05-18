@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-26-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-09-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 04-30-2021
 // ***********************************************************************
 // <copyright file="TicketType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -46,6 +47,7 @@ namespace PlataformaRio2C.Domain.Entities
         #endregion
 
         public string Name { get; private set; }
+        public string Description { get; private set; }
         public int RoleId { get; private set; }
 
         public virtual Role Role { get; private set; }
@@ -53,35 +55,53 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeCollaboratorType> AttendeeCollaboratorTypes { get; private set; }
         public virtual ICollection<AttendeeSalesPlatformTicketType> AttendeeSalesPlatformTicketTypes { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="CollaboratorType"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CollaboratorType"/> class.
+        /// </summary>
         /// <param name="collaboratorTypeUid">The collaborator type uid.</param>
         /// <param name="name">The name.</param>
+        /// <param name="description">The description.</param>
         /// <param name="userId">The user identifier.</param>
-        public CollaboratorType(Guid collaboratorTypeUid, string name, int userId)
+        public CollaboratorType(Guid collaboratorTypeUid, string name, string description, int userId)
         {
             this.Uid = collaboratorTypeUid;
             this.Name = name?.Trim();
+            this.Description = description?.TrimStart().TrimEnd();
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="CollaboratorType"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CollaboratorType"/> class.
+        /// </summary>
         /// <param name="collaboratorTypeUid">The collaborator type uid.</param>
         /// <param name="name">The name.</param>
-        private CollaboratorType(Guid collaboratorTypeUid, string name)
+        /// <param name="description">The description.</param>
+        private CollaboratorType(Guid collaboratorTypeUid, string name, string description = "Description do CollaboratorType")
         {
             this.Uid = collaboratorTypeUid;
             this.Name = name?.Trim();
+            //this.Description = description?.TrimStart().TrimEnd();
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="CollaboratorType"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CollaboratorType"/> class.
+        /// </summary>
         public CollaboratorType()
         {
+        }
+
+        /// <summary>
+        /// Translates this instance.
+        /// </summary>
+        public void Translate(string userInterfaceLanguage)
+        {
+            this.Description = this.Description?.GetSeparatorTranslation(userInterfaceLanguage, '|');
         }
 
         #region Validations

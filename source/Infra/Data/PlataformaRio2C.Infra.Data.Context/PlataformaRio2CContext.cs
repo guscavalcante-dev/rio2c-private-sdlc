@@ -201,8 +201,18 @@ namespace PlataformaRio2C.Infra.Data.Context
 
             //modelBuilder.Configurations.Add(new MusicalCommissionMap());
 
+            //modelBuilder.Configurations.Add(new UserRoleMap());
+
             base.OnModelCreating(modelBuilder);
         }
+
+        public DbSet<UserRole> UsersRoles { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<AttendeeCollaborator> AttendeeCollaborators { get; set; }
+        public DbSet<AttendeeCollaboratorType> AttendeeCollaboratorTypes { get; set; }
+        public DbSet<CollaboratorType> CollaboratorTypes { get; set; }
+
+
 
         // Edition
         public DbSet<Edition> Editions { get; set; }

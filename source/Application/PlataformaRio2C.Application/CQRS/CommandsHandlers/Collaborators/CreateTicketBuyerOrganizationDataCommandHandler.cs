@@ -115,6 +115,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     true, //TODO: get AddressIsManual from form
                     cmd.CropperImage?.ImageFile != null,
                     cmd.CropperImage?.IsImageDeleted == true,
+                    cmd.IsVirtualMeeting,
                     cmd.Descriptions?.Select(d => new OrganizationDescription(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                     cmd.UserId);
                 if (!organization.IsValid())
@@ -183,6 +184,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.Address?.AddressZipCode,
                     true, //TODO: get AddressIsManual from form
                     cmd.CropperImage?.ImageFile != null,
+                    cmd.IsVirtualMeeting,
                     cmd.Descriptions?.Select(d => new OrganizationDescription(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                     cmd.UserId);
                 if (!organization.IsValid())
