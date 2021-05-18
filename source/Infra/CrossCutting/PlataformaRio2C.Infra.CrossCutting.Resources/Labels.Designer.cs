@@ -4678,6 +4678,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tipo de Sala.
+        /// </summary>
+        public static string RoomType {
+            get {
+                return ResourceManager.GetString("RoomType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rodada.
         /// </summary>
         public static string Round {
@@ -6064,11 +6073,29 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Virtual.
+        /// </summary>
+        public static string Virtual {
+            get {
+                return ResourceManager.GetString("Virtual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configuração de reunião virtual.
         /// </summary>
         public static string VirtualMeetingConfiguration {
             get {
                 return ResourceManager.GetString("VirtualMeetingConfiguration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Link da sala virtual.
+        /// </summary>
+        public static string VirtualMeetingRoomLink {
+            get {
+                return ResourceManager.GetString("VirtualMeetingRoomLink", resourceCulture);
             }
         }
         

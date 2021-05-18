@@ -53,6 +53,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public bool IsInCurrentEdition => EditionAttendeeCollaborator != null;
         public bool IsInOtherEdition { get; set; }
 
+        public bool? IsVirtualMeeting => this.EditionAttendeeCollaborator?.AttendeeOrganizationCollaborators?.Any(aoc => aoc.AttendeeOrganization?.IsVirtualMeeting == true);
+
         public IEnumerable<AttendeeOrganizationBaseDto> AttendeeOrganizationBasesDtos { get; set; }
         public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }
 

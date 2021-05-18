@@ -2730,4 +2730,16 @@
     <value>Remote</value>
     <comment>Remote</comment>
   </data>
+  <data name="RoomType" xml:space="preserve">
+    <value>Room Type</value>
+    <comment>Room Type</comment>
+  </data>
+  <data name="Virtual" xml:space="preserve">
+    <value>Virtual</value>
+    <comment>Virtual</comment>
+  </data>
+  <data name="VirtualMeetingRoomLink" xml:space="preserve">
+    <value>Virtual meeting room link</value>
+    <comment>Virtual meeting room link</comment>
+  </data>
 </root>

@@ -116,6 +116,11 @@ var OrganizationsDataTableWidget = function () {
                                     </tr>\
                                 </table>';
 
+                        if (!MyRio2cCommon.isNullOrEmpty(full.IsVirtualMeeting)) {
+                            var virtualOrPresentialText = (full.IsVirtualMeeting === true) ? virtual : presential;
+                            html += '<span class="kt-badge kt-badge--inline kt-badge--warning kt-font-boldest mt-2 w-50">' + virtualOrPresentialText + '</span>';
+                        }
+
                         if (!full.IsInCurrentEdition) {
                             html += '<span class="kt-badge kt-badge--inline kt-badge--info mt-2">' + labels.notInEdition + '</span>';
                         }

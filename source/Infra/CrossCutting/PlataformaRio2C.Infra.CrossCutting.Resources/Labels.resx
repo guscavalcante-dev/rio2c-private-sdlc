@@ -2735,4 +2735,16 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Remota</value>
     <comment>Remota</comment>
   </data>
+  <data name="RoomType" xml:space="preserve">
+    <value>Tipo de Sala</value>
+    <comment>Tipo de Sala</comment>
+  </data>
+  <data name="Virtual" xml:space="preserve">
+    <value>Virtual</value>
+    <comment>Virtual</comment>
+  </data>
+  <data name="VirtualMeetingRoomLink" xml:space="preserve">
+    <value>Link da sala virtual</value>
+    <comment>Link da sala virtual</comment>
+  </data>
 </root>

@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
@@ -23,9 +24,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         public List<RoomNameBaseCommand> Names { get; set; }
 
-        [Display(Name = "AcceptsVirtualMeeting", ResourceType = typeof(Labels))]
+        [Display(Name = "RoomType", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public bool IsVirtualMeeting { get; set; }
+
+        [Display(Name = "VirtualMeetingRoomLink", ResourceType = typeof(Labels))]
+        [RequiredIf(nameof(IsVirtualMeeting), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public string VirtualMeetingRoomLink { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CreateRoom"/> class.</summary>
         /// <param name="roomDto">The room dto.</param>
@@ -35,11 +40,14 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<LanguageDto> languagesDtos)
         {
             this.UpdateNames(roomDto, languagesDtos);
+            this.IsVirtualMeeting = roomDto?.Room?.IsVirtualMeeting == true;
+            this.VirtualMeetingRoomLink = roomDto?.Room?.VirtualMeetingRoomLink;
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateRoom"/> class.</summary>
         public CreateRoom()
         {
+            this.IsVirtualMeeting = false;
         }
 
         #region Private Methods
