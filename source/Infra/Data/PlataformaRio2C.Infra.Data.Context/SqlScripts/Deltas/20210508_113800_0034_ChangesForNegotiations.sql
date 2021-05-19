@@ -38,6 +38,19 @@ BEGIN TRY
 		ADD IsVirtualMeeting  bit  NULL
 		;
 
+		EXEC('UPDATE dbo.AttendeeOrganizations 
+					SET IsVirtualMeeting = 0
+					WHERE Id in
+					(
+						select ao.Id
+						from 
+							dbo.AttendeeOrganizations ao
+							INNER JOIN dbo.AttendeeOrganizationTypes aot ON ao.Id = aot.AttendeeOrganizationId
+							INNER JOIN dbo.OrganizationTypes ot ON aot.OrganizationTypeId = ot.Id
+						WHERE
+							ot.Name = ''Player''
+					)');
+
 		--Create Indexes
 		CREATE NONCLUSTERED INDEX "IDX_Negotiations_EditionId_ProjectBuyerEvaluationId" ON "dbo"."Negotiations"
 		( 

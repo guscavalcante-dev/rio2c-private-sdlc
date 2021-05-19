@@ -24,56 +24,7 @@ var AudiovisualMeetingsUpdate = function () {
     var roundNumberId = '#RoundNumber';
     var globalVariables = MyRio2cCommon.getGlobalVariables();
 
-    // Buyer organization select2 -----------------------------------------------------------------
-    var enableBuyerOrganizationChangeEvent = function () {
-        var element = $(buyerOrganizationId);
-
-        element.not('.change-event-enabled').on('change', function () {
-		    toogleProjectSelect2();
-	    });
-	    element.addClass('change-event-enabled');
-    };
-
-    // Project select2 ----------------------------------------------------------------------------
-    var toogleProjectSelect2 = function () {
-	    var element = $(projectId);
-
-	    if ($(buyerOrganizationId).val() !== '') {
-		    element.removeClass('disabled');
-		    element.prop("disabled", false);
-	    }
-	    else {
-		    element.addClass('disabled');
-		    element.prop("disabled", true);
-		    $(projectId).val('').trigger('change');
-	    }
-    };
-
-    var enableProjectChangeEvent = function () {
-        var element = $(projectId);
-
-	    element.not('.change-event-enabled').on('change', function () {
-		    toogleDateSelect2();
-	    });
-	    element.addClass('change-event-enabled');
-    };
-
     // Date select2 ------------------------------------------------------------------------------
-    var toogleDateSelect2 = function () {
-        var element = $(negotiationConfigId);
-
-        if ($(projectId).val() !== '') {
-	        enableDateSelect2();
-		    element.removeClass('disabled');
-		    element.prop("disabled", false);
-	    }
-	    else {
-		    element.addClass('disabled');
-		    element.prop("disabled", true);
-            $(negotiationConfigId).val('').trigger('change');
-	    }
-    };
-
     var emptyStateSelect2 = function () {
         $(negotiationConfigId).val('').trigger('change');
 
@@ -129,8 +80,10 @@ var AudiovisualMeetingsUpdate = function () {
                             placeholder: translations.dateDropdownPlaceholder,
 	                        triggerChange: true,
 	                        allowClear: true,
-	                        data: negotiationConfigsData
-	                    });
+                            data: negotiationConfigsData
+                        });
+
+                        setDateInitialSelection();
 	                },
 	                // Error
 	                onError: function () {
@@ -143,8 +96,21 @@ var AudiovisualMeetingsUpdate = function () {
 	        })
 	        .always(function () {
 	            MyRio2cCommon.unblock();
-	        });
+            });
         }
+    };
+
+    var setDateInitialSelection = function () {
+        //var selectedItem = $('#InitialDate').val();
+        //var element = $(negotiationConfigId);
+        //var existentOption = element.find("option:contains('" + selectedItem + "')");
+
+        //if (existentOption.length) {
+        //    element.val(existentOption.val()).trigger('change');
+        //} else {
+        //    var newOption = new Option(selectedItem, selectedItem, false, true);
+        //    element.append(newOption).trigger('change');
+        //}
     };
 
     var enableDateChangeEvent = function () {
@@ -230,6 +196,8 @@ var AudiovisualMeetingsUpdate = function () {
                             allowClear: true,
                             data: roomsData
                         });
+
+                        setRoomInitialSelection();
                     },
                     // Error
                     onError: function () {
@@ -246,6 +214,20 @@ var AudiovisualMeetingsUpdate = function () {
         }
     };
 
+    var setRoomInitialSelection = function () {
+        //var selectedValue = $('#InitialNegotiationRoomConfigUid').val();
+        //var element = $(negotiationRoomConfigId);
+
+        //var existentOption = element.find("option[value='" + selectedValue + "']");
+        //if (existentOption.length) {
+        //    element.val(existentOption.val()).trigger('change');
+        //} else {
+        //    var selectedText = $('#InitialNegotiationRoomConfigName').val();
+        //    var newOption = new Option(selectedText, selectedValue, false, true);
+        //    element.append(newOption).trigger('change');
+        //}
+    };
+
     var enableRoomChangeEvent = function () {
 	    var element = $(negotiationRoomConfigId);
 
@@ -254,7 +236,6 @@ var AudiovisualMeetingsUpdate = function () {
 	    });
 	    element.addClass('change-event-enabled');
     };
-
 
     // Start time select2 -------------------------------------------------------------------------
     var toogleStartTimeSelect2 = function () {
@@ -360,15 +341,34 @@ var AudiovisualMeetingsUpdate = function () {
     // Enable plugins -----------------------------------------------------------------------------
     var enablePlugins = function () {
         // Select2
-        MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: buyerOrganizationId, url: '/Players/FindAllByFilters', customFilter: 'HasProjectNegotiationNotScheduled', placeholder: translations.playerDropdownPlaceholder });
-        MyRio2cCommon.enableProjectSelect2({ inputIdOrClass: projectId, url: '/Projects/FindAllByFilters', customFilter: 'HasNegotiationNotScheduled', buyerOrganizationId: buyerOrganizationId, placeholder: translations.projectDropdownPlaceholder });
+        MyRio2cCommon.enableOrganizationSelect2({
+            inputIdOrClass: buyerOrganizationId,
+            url: '/Players/FindAllByFilters',
+            customFilter: 'HasProjectNegotiationNotScheduled',
+            placeholder: translations.playerDropdownPlaceholder,
+            selectedOption: {
+                id: $('#InitialBuyerOrganizationUid').val(),
+                text: $('#InitialBuyerOrganizationName').val()
+            }
+        });
+
+        MyRio2cCommon.enableProjectSelect2({
+            inputIdOrClass: projectId,
+            url: '/Projects/FindAllByFilters',
+            customFilter: 'HasNegotiationNotScheduled',
+            buyerOrganizationId: buyerOrganizationId,
+            placeholder: translations.projectDropdownPlaceholder,
+            selectedOption: {
+                id: $('#InitialProjectUid').val(),
+                text: $('#InitialProjectName').val()
+            }
+        });
+
         enableDateSelect2();
         enableRoomSelect2();
         enableStartTimeSelect2();
 
         // Change events
-        enableBuyerOrganizationChangeEvent();
-        enableProjectChangeEvent();
         enableDateChangeEvent();
         enableRoomChangeEvent();
         enableStartTimeChangeEvent();

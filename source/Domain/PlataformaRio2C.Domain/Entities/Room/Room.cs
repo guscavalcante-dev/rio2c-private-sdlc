@@ -30,6 +30,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         public virtual ICollection<RoomName> RoomNames { get; private set; }
         public virtual ICollection<Conference> Conferences { get; private set; }
+        public virtual ICollection<NegotiationRoomConfig> NegotiationRoomConfigs { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Room"/> class.</summary>
         /// <param name="roomUid">The room uid.</param>

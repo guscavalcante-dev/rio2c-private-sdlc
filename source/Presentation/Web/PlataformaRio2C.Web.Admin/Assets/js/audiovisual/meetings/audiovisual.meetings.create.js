@@ -24,7 +24,7 @@ var AudiovisualMeetingsCreate = function () {
     var roundNumberId = '#RoundNumber';
     var globalVariables = MyRio2cCommon.getGlobalVariables();
 
-    // Buyer organization select2 -----------------------------------------------------------------
+    // Buyer organization select2 ----------------------------------------------------------------
     var enableBuyerOrganizationChangeEvent = function () {
         var element = $(buyerOrganizationId);
 
@@ -34,7 +34,7 @@ var AudiovisualMeetingsCreate = function () {
 	    element.addClass('change-event-enabled');
     };
 
-    // Project select2 ----------------------------------------------------------------------------
+    // Project select2 ---------------------------------------------------------------------------
     var toogleProjectSelect2 = function () {
 	    var element = $(projectId);
 
@@ -254,7 +254,6 @@ var AudiovisualMeetingsCreate = function () {
 	    });
 	    element.addClass('change-event-enabled');
     };
-
 
     // Start time select2 -------------------------------------------------------------------------
     var toogleStartTimeSelect2 = function () {

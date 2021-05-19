@@ -13,18 +13,31 @@
 // ***********************************************************************
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>CreateNegotiation</summary>
     public class CreateNegotiation : BaseCommand
     {
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? BuyerOrganizationUid { get; set; }
+
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? ProjectUid { get; set; }
+
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? NegotiationConfigUid { get; set; }
+
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? NegotiationRoomConfigUid { get; set; }
+
+        [Display(Name = "Date", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public string StartTime { get; set; }
+
         public int? RoundNumber { get; set; }
 
         /// <summary>
@@ -35,10 +48,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             this.BuyerOrganizationUid = negotiationDto?.ProjectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.Organization?.Uid;
             this.ProjectUid = negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.Project?.Uid;
-            //this.NegotiationConfigUid = negotiation.
-            //this.NegotiationRoomConfigUid = negotiation.
-            //this.RoundNumber = negotiation.
-            //this.StartTime = negotiation.
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateNegotiation"/> class.</summary>

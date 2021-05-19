@@ -258,7 +258,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/CreateForm", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("/Areas/Audiovisual/Views/Meetings/Modals/CreateForm.cshtml", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -291,8 +291,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundM.ToLowerInvariant()));
                 }
-
-                cmd = new UpdateNegotiation(negotiationDto);
+                
+                cmd = new UpdateNegotiation(negotiationDto, this.UserInterfaceLanguage);
             }
             catch (DomainException ex)
             {
@@ -354,7 +354,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/CreateForm", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("/Areas/Audiovisual/Views/Meetings/Modals/UpdateForm.cshtml", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }

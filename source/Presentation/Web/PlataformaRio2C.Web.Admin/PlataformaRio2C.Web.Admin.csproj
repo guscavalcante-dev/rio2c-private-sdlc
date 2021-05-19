@@ -7599,6 +7599,7 @@
     <Content Include="Areas\Music\Views\Projects\Widgets\EvaluationGradeWidget.cshtml" />
     <Content Include="Areas\Music\Views\Projects\Widgets\EvaluatorsWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Modals\UpdateModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Modals\UpdateForm.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

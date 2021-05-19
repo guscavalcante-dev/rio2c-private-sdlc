@@ -10,7 +10,7 @@
                 @using (Html.BeginForm("Update", "Meetings", new { Area = "" }, FormMethod.Post, new { id = "UpdateAudiovisualMeetingForm" }))
                 {
                     <div id="form-container">
-                        @Html.Partial("Modals/CreateForm", Model)
+                        @Html.Partial("Modals/UpdateForm", Model)
                     </div>
                 }
             </div>

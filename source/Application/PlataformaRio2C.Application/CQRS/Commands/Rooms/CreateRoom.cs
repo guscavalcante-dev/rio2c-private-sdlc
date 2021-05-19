@@ -30,6 +30,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = "VirtualMeetingUrl", ResourceType = typeof(Labels))]
         [RequiredIf(nameof(IsVirtualMeeting), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [StringLength(400, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string VirtualMeetingUrl { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CreateRoom"/> class.</summary>
