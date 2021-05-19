@@ -514,12 +514,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         {
             IdentityResult result = null;
             try
-            {
-
-                //result = await _identityController.AddPasswordAsync(userId, newPassword);
-                //.ChangePasswordAsync(this.UserAccessControlDto.User.Id, cmd.OldPassword, cmd.NewPassword);
-
-                //var user = await _identityController.FindByIdAsync(userId);
+            {                
                 var token = await _identityController.GeneratePasswordResetTokenAsync(userId);
                 result = await _identityController.ResetPasswordAsync(userId, token, newPassword);
 
