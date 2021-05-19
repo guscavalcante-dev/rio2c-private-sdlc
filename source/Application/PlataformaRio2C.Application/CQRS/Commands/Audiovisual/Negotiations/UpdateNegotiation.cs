@@ -22,6 +22,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>UpdateNegotiation</summary>
     public class UpdateNegotiation : CreateNegotiation
     {
+        public NegotiationDto NegotiationDto { get; set; }
+
         public Guid NegotiationUid { get; set; }
 
         public Guid? InitialBuyerOrganizationUid { get; set; }
@@ -45,6 +47,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public UpdateNegotiation(NegotiationDto negotiationDto, string userInterfaceLanguage) 
             : base(negotiationDto)
         {
+            this.NegotiationDto = negotiationDto;
             this.NegotiationUid = negotiationDto?.Negotiation?.Uid ?? Guid.Empty;
 
             this.InitialBuyerOrganizationUid = negotiationDto?.ProjectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.Organization?.Uid;
@@ -52,10 +55,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.InitialProjectUid = negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.Project?.Uid;
             this.InitialProjectName = negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.Project?.ProjectTitles?.FirstOrDefault(pt => pt.Language.Code == userInterfaceLanguage)?.Value;
             
-            //this.InitialNegotiationRoomConfigUid = negotiationDto?.Negoti
-            this.InitialNegotiationRoomConfigName = negotiationDto?.RoomDto.GetRoomNameByLanguageCode(userInterfaceLanguage)?.RoomName.Value;
-
-            this.InitialDate = negotiationDto?.Negotiation?.StartDate.ToUserTimeZone().Date.ToShortDateString();
+            //this.InitialNegotiationRoomConfigName = negotiationDto?.RoomDto.GetRoomNameByLanguageCode(userInterfaceLanguage)?.RoomName.Value;
+            //this.InitialDate = negotiationDto?.Negotiation?.StartDate.ToUserTimeZone().Date.ToShortDateString();
         }
 
         /// <summary>

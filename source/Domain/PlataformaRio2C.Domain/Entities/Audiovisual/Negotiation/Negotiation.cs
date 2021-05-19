@@ -33,7 +33,8 @@ namespace PlataformaRio2C.Domain.Entities
 
         public virtual ProjectBuyerEvaluation ProjectBuyerEvaluation { get; private set; }
         public virtual Room Room { get; private set; }
-
+        public virtual User Updater { get; private set; }
+        
         /// <summary>Initializes a new instance of the <see cref="Negotiation"/> class for automatic negotiation slots.</summary>
         /// <param name="room">The room.</param>
         /// <param name="startDate">The start date.</param>

@@ -44,24 +44,30 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         private readonly INegotiationConfigRepository negotiationConfigRepo;
         private readonly INegotiationRoomConfigRepository negotiationRoomConfigRepo;
         private readonly IRoomRepository roomRepo;
+        private readonly IOrganizationRepository organizationRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="MeetingParametersController"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MeetingParametersController" /> class.
+        /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="negotiationConfigRepository">The negotiation configuration repository.</param>
         /// <param name="negotiationRoomConfigRepository">The negotiation room configuration repository.</param>
         /// <param name="roomRepository">The room repository.</param>
+        /// <param name="organizationRepository">The attendee organization repository.</param>
         public MeetingParametersController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             INegotiationConfigRepository negotiationConfigRepository,
             INegotiationRoomConfigRepository negotiationRoomConfigRepository,
-            IRoomRepository roomRepository)
+            IRoomRepository roomRepository,
+            IOrganizationRepository organizationRepository)
             : base(commandBus, identityController)
         {
             this.negotiationConfigRepo = negotiationConfigRepository;
             this.negotiationRoomConfigRepo = negotiationRoomConfigRepository;
             this.roomRepo = roomRepository;
+            this.organizationRepo = organizationRepository;
         }
 
         #region List
@@ -716,9 +722,10 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="customFilter">The custom filter.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> FindAllDates(string customFilter = "")
+        public async Task<ActionResult> FindAllDates(Guid? buyerOrganizationUid = null, string customFilter = "")
         {
-            var negotiationConfigDtos = await this.negotiationConfigRepo.FindAllDatesDtosAsync(this.EditionDto.Id, customFilter);
+            var buyerOrganizationDto = await this.organizationRepo.FindDtoByUidAsync(buyerOrganizationUid ?? Guid.Empty, this.EditionDto.Edition.Id);
+            var negotiationConfigDtos = await this.negotiationConfigRepo.FindAllDatesDtosAsync(this.EditionDto.Id, customFilter, buyerOrganizationDto.IsVirtualMeeting == true);
 
             return Json(new
             {
@@ -737,9 +744,10 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="customFilter">The custom filter.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> FindAllRooms(Guid? negotiationConfigUid = null, string customFilter = "")
+        public async Task<ActionResult> FindAllRooms(Guid? negotiationConfigUid = null, Guid? buyerOrganizationUid = null, string customFilter = "")
         {
-            var negotiationConfigDtos = await this.negotiationConfigRepo.FindAllRoomsDtosAsync(this.EditionDto.Id, negotiationConfigUid ?? Guid.Empty, customFilter);
+            var buyerOrganizationDto = await this.organizationRepo.FindDtoByUidAsync(buyerOrganizationUid ?? Guid.Empty, this.EditionDto.Edition.Id);
+            var negotiationConfigDtos = await this.negotiationConfigRepo.FindAllRoomsDtosAsync(this.EditionDto.Id, negotiationConfigUid ?? Guid.Empty, customFilter, buyerOrganizationDto.IsVirtualMeeting == true);
 
             return Json(new
             {
@@ -758,9 +766,10 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="customFilter">The custom filter.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> FindAllTimes(Guid? negotiationRoomConfigUid = null, string customFilter = "")
+        public async Task<ActionResult> FindAllTimes(Guid? negotiationRoomConfigUid = null, Guid? buyerOrganizationUid = null, string customFilter = "")
         {
-            var negotiationConfigDto = await this.negotiationConfigRepo.FindAllTimesDtosAsync(this.EditionDto.Id, negotiationRoomConfigUid ?? Guid.Empty, customFilter);
+            var buyerOrganizationDto = await this.organizationRepo.FindDtoByUidAsync(buyerOrganizationUid ?? Guid.Empty, this.EditionDto.Edition.Id);
+            var negotiationConfigDto = await this.negotiationConfigRepo.FindAllTimesDtosAsync(this.EditionDto.Id, negotiationRoomConfigUid ?? Guid.Empty, customFilter, buyerOrganizationDto.IsVirtualMeeting == true);
 
             return Json(new
             {

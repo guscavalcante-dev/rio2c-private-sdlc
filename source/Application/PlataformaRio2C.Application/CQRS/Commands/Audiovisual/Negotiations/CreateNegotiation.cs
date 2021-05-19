@@ -22,19 +22,23 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>CreateNegotiation</summary>
     public class CreateNegotiation : BaseCommand
     {
+        [Display(Name = nameof(Labels.Player), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? BuyerOrganizationUid { get; set; }
 
+        [Display(Name = nameof(Labels.Project), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? ProjectUid { get; set; }
 
+        [Display(Name = nameof(Labels.Date), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? NegotiationConfigUid { get; set; }
 
+        [Display(Name = nameof(Labels.Room), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? NegotiationRoomConfigUid { get; set; }
 
-        [Display(Name = "Date", ResourceType = typeof(Labels))]
+        [Display(Name = nameof(Labels.StartTime), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public string StartTime { get; set; }
 

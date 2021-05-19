@@ -1,4 +1,4 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateNegotiation
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateNegotiation
 <div class="modal fade" id="UpdateAudiovisualMeetingModal" role="dialog" aria-labelledby="UpdateAudiovisualMeetingModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -12,11 +12,19 @@
                     <div id="form-container">
                         @Html.Partial("Modals/UpdateForm", Model)
                     </div>
+                    if (Model.NegotiationDto.Negotiation.UpdateDate != Model.NegotiationDto.Negotiation.CreateDate)
+                    {
+                        <div class="row">
+                            <div class="col-sm-12 text-right">
+                                @Labels.LastUpdateOn <b>@Model.NegotiationDto.Negotiation.UpdateDate.ToUserTimeZone().ToShortDateString() @Model.NegotiationDto.Negotiation.UpdateDate.ToUserTimeZone().ToLongTimeString()</b> @Labels.By <b>@Model.NegotiationDto.UpdaterDto.Name</b>.
+                            </div>
+                        </div>
+                    }
                 }
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">@Labels.Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="$('#UpdateAudiovisualMeetingForm').submit();">@Labels.Save</button>
+                <button type="button" class="btn btn-primary" onclick="AudiovisualMeetingsUpdate.submit();">@Labels.Save</button>
             </div>
         </div>
     </div>

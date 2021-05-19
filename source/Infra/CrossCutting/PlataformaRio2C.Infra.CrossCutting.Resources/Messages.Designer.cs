@@ -223,6 +223,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Essa alteração pode gerar um conflito com outras rodadas do Player ou da Produtora, deseja continuar?.
+        /// </summary>
+        public static string ChangeScheduledNegotiationConfirmationMessage {
+            get {
+                return ResourceManager.GetString("ChangeScheduledNegotiationConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cidade inválida..
         /// </summary>
         public static string CityIsInvalid {

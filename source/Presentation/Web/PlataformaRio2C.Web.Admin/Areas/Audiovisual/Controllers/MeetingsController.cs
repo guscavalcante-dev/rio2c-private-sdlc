@@ -323,6 +323,15 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             try
             {
+                //BuyerOrganizationUid and ProjectUid get allways null from dropdown selected item, because dropdown is populated via JavaScript and has initialSelection.
+                //These fiels isn't enabled to change, so don't worry with this backend fix!
+                cmd.BuyerOrganizationUid = cmd.InitialBuyerOrganizationUid;
+                cmd.ProjectUid = cmd.InitialProjectUid;
+                
+                UpdateNegotiation u;
+                ModelState.Remove(nameof(u.BuyerOrganizationUid));
+                ModelState.Remove(nameof(u.ProjectUid));
+
                 if (!ModelState.IsValid)
                 {
                     throw new DomainException(Messages.CorrectFormValues);

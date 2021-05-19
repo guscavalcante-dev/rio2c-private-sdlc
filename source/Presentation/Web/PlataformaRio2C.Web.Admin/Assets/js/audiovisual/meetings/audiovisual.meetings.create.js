@@ -96,6 +96,7 @@ var AudiovisualMeetingsCreate = function () {
         else {
 	        var jsonParameters = new Object();
 	        jsonParameters.customFilter = 'HasManualTables';
+            jsonParameters.buyerOrganizationUid = $(buyerOrganizationId).val();
 
 	        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/FindAllDates'), jsonParameters, function (data) {
 	            MyRio2cCommon.handleAjaxReturn({
@@ -195,6 +196,7 @@ var AudiovisualMeetingsCreate = function () {
             var jsonParameters = new Object();
             jsonParameters.customFilter = 'HasManualTables';
             jsonParameters.negotiationConfigUid = $(negotiationConfigId).val();
+            jsonParameters.buyerOrganizationUid = $(buyerOrganizationId).val();
 
             $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/FindAllRooms'), jsonParameters, function (data) {
                 MyRio2cCommon.handleAjaxReturn({
@@ -294,6 +296,7 @@ var AudiovisualMeetingsCreate = function () {
             var jsonParameters = new Object();
             jsonParameters.customFilter = 'HasManualTables';
             jsonParameters.negotiationRoomConfigUid = negotiationRoomConfigUid;
+            jsonParameters.buyerOrganizationUid = $(buyerOrganizationId).val();
 
             $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/FindAllTimes'), jsonParameters, function (data) {
                 MyRio2cCommon.handleAjaxReturn({

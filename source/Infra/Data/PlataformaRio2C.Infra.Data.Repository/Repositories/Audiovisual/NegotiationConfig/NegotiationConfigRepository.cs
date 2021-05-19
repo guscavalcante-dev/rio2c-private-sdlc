@@ -77,11 +77,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
-        /// <summary>Finds the by custom filer.</summary>
+        /// <summary>
+        /// Finds the by custom filter.
+        /// </summary>
         /// <param name="query">The query.</param>
         /// <param name="customFilter">The custom filter.</param>
         /// <returns></returns>
-        internal static IQueryable<NegotiationConfig> FindByCustomFiler(this IQueryable<NegotiationConfig> query, string customFilter)
+        internal static IQueryable<NegotiationConfig> FindByCustomFilter(this IQueryable<NegotiationConfig> query, string customFilter, bool buyerAttendeeOrganizationAcceptsVirtualMeeting)
         {
             if (!string.IsNullOrEmpty(customFilter))
             {
@@ -89,7 +91,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 {
                     query = query
                                 .HasRoomsConfigured()
-                                .Where(n => n.NegotiationRoomConfigs.Any(nrc => !nrc.IsDeleted && nrc.CountManualTables > 0));
+                                .Where(n => n.NegotiationRoomConfigs.Any(nrc => !nrc.IsDeleted 
+                                                                                && nrc.CountManualTables > 0
+                                                                                && nrc.Room.IsVirtualMeeting == buyerAttendeeOrganizationAcceptsVirtualMeeting));
                 }
             }
 
@@ -287,16 +291,25 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="customFilter">The custom filter.</param>
         /// <returns></returns>
-        public async Task<List<NegotiationConfigDto>> FindAllDatesDtosAsync(int editionId, string customFilter)
+        public async Task<List<NegotiationConfigDto>> FindAllDatesDtosAsync(int editionId, string customFilter, bool buyerAttendeeOrganizationAcceptsVirtualMeeting)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId)
-                                .FindByCustomFiler(customFilter);
+                                .FindByCustomFilter(customFilter, buyerAttendeeOrganizationAcceptsVirtualMeeting);
 
             return await query
                             .Select(nc => new NegotiationConfigDto
                             {
-                                NegotiationConfig = nc
+                                NegotiationConfig = nc,
+                                NegotiationRoomConfigDtos = nc.NegotiationRoomConfigs.Select(nrc => new NegotiationRoomConfigDto() 
+                                { 
+                                    NegotiationConfig = nc,
+                                    NegotiationRoomConfig = nrc,
+                                    RoomDto = new RoomDto()
+                                    {
+                                        Room = nrc.Room
+                                    }
+                                })
                             })
                             .OrderBy(ncd => ncd.NegotiationConfig.StartDate)
                             .ToListAsync();
@@ -307,19 +320,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="negotiationConfigUid">The negotiation configuration uid.</param>
         /// <param name="customFilter">The custom filter.</param>
         /// <returns></returns>
-        public async Task<List<NegotiationConfigDto>> FindAllRoomsDtosAsync(int editionId, Guid negotiationConfigUid, string customFilter)
+        public async Task<List<NegotiationConfigDto>> FindAllRoomsDtosAsync(int editionId, Guid negotiationConfigUid, string customFilter, bool buyerAttendeeOrganizationAcceptsVirtualMeeting)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId, false)
                                 .FindByUid(negotiationConfigUid)
-                                .FindByCustomFiler(customFilter);
+                                .FindByCustomFilter(customFilter, buyerAttendeeOrganizationAcceptsVirtualMeeting);
 
             return await query
                             .Select(nc => new NegotiationConfigDto
                             {
                                 NegotiationConfig = nc,
                                 NegotiationRoomConfigDtos = nc.NegotiationRoomConfigs
-                                                                    .Where(nrc => !nrc.IsDeleted && !nrc.Room.IsDeleted && nrc.CountManualTables > 0)
+                                                                    .Where(nrc => !nrc.IsDeleted 
+                                                                                    && !nrc.Room.IsDeleted 
+                                                                                    && nrc.CountManualTables > 0 
+                                                                                    && nrc.Room.IsVirtualMeeting == buyerAttendeeOrganizationAcceptsVirtualMeeting)
                                                                     .Select(nrc => new NegotiationRoomConfigDto
                                                                     {
                                                                         NegotiationRoomConfig = nrc,
@@ -348,12 +364,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="negotiationRoomConfigUid">The negotiation room configuration uid.</param>
         /// <param name="customFilter">The custom filter.</param>
         /// <returns></returns>
-        public async Task<NegotiationConfigDto> FindAllTimesDtosAsync(int editionId, Guid negotiationRoomConfigUid, string customFilter)
+        public async Task<NegotiationConfigDto> FindAllTimesDtosAsync(int editionId, Guid negotiationRoomConfigUid, string customFilter, bool buyerAttendeeOrganizationAcceptsVirtualMeeting)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId, false)
                                 .FindByNegotiationRoomConfiguUid(negotiationRoomConfigUid)
-                                .FindByCustomFiler(customFilter);
+                                .FindByCustomFilter(customFilter, buyerAttendeeOrganizationAcceptsVirtualMeeting);
 
             return await query
                             .Select(nc => new NegotiationConfigDto

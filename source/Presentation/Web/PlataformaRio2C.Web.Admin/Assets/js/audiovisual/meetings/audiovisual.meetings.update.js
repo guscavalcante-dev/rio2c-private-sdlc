@@ -46,7 +46,8 @@ var AudiovisualMeetingsUpdate = function () {
         }
         else {
 	        var jsonParameters = new Object();
-	        jsonParameters.customFilter = 'HasManualTables';
+            jsonParameters.customFilter = 'HasManualTables';
+            jsonParameters.buyerOrganizationUid = $(buyerOrganizationId).val();
 
 	        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/FindAllDates'), jsonParameters, function (data) {
 	            MyRio2cCommon.handleAjaxReturn({
@@ -161,6 +162,7 @@ var AudiovisualMeetingsUpdate = function () {
             var jsonParameters = new Object();
             jsonParameters.customFilter = 'HasManualTables';
             jsonParameters.negotiationConfigUid = $(negotiationConfigId).val();
+            jsonParameters.buyerOrganizationUid = $(buyerOrganizationId).val();
 
             $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/FindAllRooms'), jsonParameters, function (data) {
                 MyRio2cCommon.handleAjaxReturn({
@@ -276,6 +278,7 @@ var AudiovisualMeetingsUpdate = function () {
             var jsonParameters = new Object();
             jsonParameters.customFilter = 'HasManualTables';
             jsonParameters.negotiationRoomConfigUid = negotiationRoomConfigUid;
+            jsonParameters.buyerOrganizationUid = $(buyerOrganizationId).val();
 
             $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/FindAllTimes'), jsonParameters, function (data) {
                 MyRio2cCommon.handleAjaxReturn({
@@ -433,9 +436,36 @@ var AudiovisualMeetingsUpdate = function () {
         });
     };
 
+    // Submit -------------------------------------------------------------------------------------
+    var submit = function () {
+        var message = translations.changeScheduledNegotiationConfirmationMessage;
+
+        bootbox.dialog({
+            message: message,
+            buttons: {
+                cancel: {
+                    label: labels.cancel,
+                    className: "btn btn-secondary mr-auto",
+                    callback: function () {
+                    }
+                },
+                confirm: {
+                    label: labels.confirm,
+                    className: "btn btn-primary",
+                    callback: function () {
+                        $('#UpdateAudiovisualMeetingForm').submit();
+                    }
+                }
+            }
+        });
+    }
+
     return {
         showModal: function (negotiationUid) {
             showModal(negotiationUid);
-        }
+        },
+        submit: function () {
+            submit();
+        },
     };
 }();

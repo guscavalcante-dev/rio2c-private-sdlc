@@ -322,6 +322,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query.ToListAsync();
         }
 
+        /// <summary>
+        /// Finds the by uid asynchronous.
+        /// </summary>
+        /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
+        /// <returns></returns>
+        public async Task<AttendeeOrganization> FindByUidAsync(Guid attendeeOrganizationUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUid(attendeeOrganizationUid);
+
+            return await query.FirstOrDefaultAsync();
+        }
+
         #region Site Project Widgets
 
         /// <summary>Finds all dto by buyer project uid.</summary>

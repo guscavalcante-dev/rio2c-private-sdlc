@@ -966,4 +966,8 @@
     <value>The Player prefers {0} meeting to execute the business round</value>
     <comment>O Player prefere reunião {0} para execução da rodada de negócios</comment>
   </data>
+  <data name="ChangeScheduledNegotiationConfirmationMessage" xml:space="preserve">
+    <value>This change can conflicts with other Player or Producer rounds, do you want to continue?</value>
+    <comment>This change can conflicts with other Player or Producer rounds, do you want to continue?</comment>
+  </data>
 </root>

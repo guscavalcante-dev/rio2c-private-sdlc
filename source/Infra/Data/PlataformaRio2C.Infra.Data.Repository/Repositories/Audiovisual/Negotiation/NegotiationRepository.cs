@@ -284,6 +284,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                               Code = rn.Language.Code
                                           }
                                       })
+                                  },
+                                  UpdaterDto = new UserBaseDto()
+                                  {
+                                      Uid = n.Updater.Uid,
+                                      Name = n.Updater.Name,
+                                      Email = n.Updater.Email
                                   }
                               })
                               .FirstOrDefaultAsync();
