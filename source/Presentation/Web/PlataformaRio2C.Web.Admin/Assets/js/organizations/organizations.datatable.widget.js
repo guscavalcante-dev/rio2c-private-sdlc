@@ -159,7 +159,7 @@ var OrganizationsDataTableWidget = function () {
                             html += '<button class="dropdown-item" onclick="OrganizationsUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         }
 
-                        html += '<button class="dropdown-item" onclick="OrganizationsUpdate.showModal(\'' + full.Uid + '\', false);"><i class="la la-edit"></i> ' + labels.edit + '</button>';
+                        html += '<button class="dropdown-item" onclick="OrganizationsDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
 
                         if (full.IsInCurrentEdition && full.IsInOtherEdition) {
                             html += '<button class="dropdown-item" onclick="OrganizationsDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + removeFromEdition + '</button>';
@@ -221,6 +221,14 @@ var OrganizationsDataTableWidget = function () {
         table.ajax.reload();
     };
 
+    var showDetails = function (playerUid) {
+        if (MyRio2cCommon.isNullOrEmpty(playerUid)) {
+            return;
+        }
+
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Players/Details/' + playerUid);
+    };
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
@@ -228,6 +236,9 @@ var OrganizationsDataTableWidget = function () {
         },
         refreshData: function() {
             refreshData();
+        },
+        showDetails: function (editionUid) {
+            showDetails(editionUid);
         }
     };
 }();

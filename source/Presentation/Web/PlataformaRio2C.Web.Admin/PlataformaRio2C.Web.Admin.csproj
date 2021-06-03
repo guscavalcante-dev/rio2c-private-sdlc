@@ -877,6 +877,13 @@
     <Content Include="Assets\js\music\projects\music.projects.totalcount.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.videoandmusic.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.delete.js" />
+    <Content Include="Assets\js\organizations\organizations.activity.widget.js" />
+    <Content Include="Assets\js\organizations\organizations.address.widget.js" />
+    <Content Include="Assets\js\organizations\organizations.executive.widget.js" />
+    <Content Include="Assets\js\organizations\organizations.interest.widget.js" />
+    <Content Include="Assets\js\organizations\organizations.maininformation.widget.js" />
+    <Content Include="Assets\js\organizations\organizations.socialnetworks.widget.js" />
+    <Content Include="Assets\js\organizations\organizations.targetaudience.widget.js" />
     <Content Include="Assets\js\places\places.maininformation.widget.js" />
     <Content Include="Assets\js\places\places.delete.js" />
     <Content Include="Assets\js\places\places.create.js" />
@@ -8957,6 +8964,26 @@
     <Content Include="Views\AdminMailerService\AdminWelcomeEmail.cshtml" />
     <Content Include="Views\Managers\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Views\Managers\Details.cshtml" />
+    <Content Include="Views\Players\Widgets\ActivityWidget.cshtml" />
+    <Content Include="Views\Players\Widgets\AddressWidget.cshtml" />
+    <Content Include="Views\Players\Widgets\ExecutiveWidget.cshtml" />
+    <Content Include="Views\Players\Widgets\InterestWidget.cshtml" />
+    <Content Include="Views\Players\Widgets\MainInformationWidget.cshtml" />
+    <Content Include="Views\Players\Widgets\SocialNetworksWidget.cshtml" />
+    <Content Include="Views\Players\Widgets\TargetAudienceWidget.cshtml" />
+    <Content Include="Views\Players\Details.cshtml" />
+    <Content Include="Views\Players\Modals\UpdateActivityForm.cshtml" />
+    <Content Include="Views\Players\Modals\UpdateActivityModal.cshtml" />
+    <Content Include="Views\Players\Modals\UpdateAddressForm.cshtml" />
+    <Content Include="Views\Players\Modals\UpdateAddressModal.cshtml" />
+    <Content Include="Views\Players\Modals\UpdateInterestForm.cshtml" />
+    <Content Include="Views\Players\Modals\UpdateInterestModal.cshtml" />
+    <Content Include="Views\Players\Modals\UpdateMainInformationForm.cshtml" />
+    <Content Include="Views\Players\Modals\UpdateMainInformationModal.cshtml" />
+    <Content Include="Views\Players\Modals\UpdateSocialNetworksForm.cshtml" />
+    <Content Include="Views\Players\Modals\UpdateSocialNetworksModal.cshtml" />
+    <Content Include="Views\Players\Modals\UpdateTargetAudienceForm.cshtml" />
+    <Content Include="Views\Players\Modals\UpdateTargetAudienceModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

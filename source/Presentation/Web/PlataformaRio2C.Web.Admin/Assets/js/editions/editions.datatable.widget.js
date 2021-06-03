@@ -153,7 +153,7 @@ var EditionsDataTableWidget = function () {
                                             </a>\
                                             <div class="dropdown-menu dropdown-menu-right">';
 
-                        html += '               <button class="dropdown-item" onclick="EditionsDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-edit"></i> ' + labels.edit + '</button>';
+                        html += '               <button class="dropdown-item" onclick="EditionsDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
                         html += '               <button class="dropdown-item" onclick="EditionsDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
 
                         html += '\
