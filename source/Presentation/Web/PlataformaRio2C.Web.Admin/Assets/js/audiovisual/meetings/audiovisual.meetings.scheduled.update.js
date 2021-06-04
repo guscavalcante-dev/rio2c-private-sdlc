@@ -1,21 +1,21 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Rafael Dantas Ruiz
-// Created          : 01-24-2020
+// Assembly         : PlataformaRio2C.Application
+// Author           : Renan Valentim
+// Created          : 05-15-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-25-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 05-15-2021
 // ***********************************************************************
-// <copyright file="audiovisual.meetings.create.js" company="Softo">
+// <copyright file="audiovisual.meetings.scheduled.update.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var AudiovisualMeetingsCreate = function () {
+var AudiovisualMeetingsUpdate = function () {
 
-    var modalId = '#CreateAudiovisualMeetingModal';
-    var formId = '#CreateAudiovisualMeetingForm';
+    var modalId = '#UpdateAudiovisualMeetingModal';
+    var formId = '#UpdateAudiovisualMeetingForm';
     var buyerOrganizationId = '#BuyerOrganizationUid';
     var projectId = '#ProjectUid';
     var negotiationConfigId = '#NegotiationConfigUid';
@@ -24,56 +24,7 @@ var AudiovisualMeetingsCreate = function () {
     var roundNumberId = '#RoundNumber';
     var globalVariables = MyRio2cCommon.getGlobalVariables();
 
-    // Buyer organization select2 ----------------------------------------------------------------
-    var enableBuyerOrganizationChangeEvent = function () {
-        var element = $(buyerOrganizationId);
-
-        element.not('.change-event-enabled').on('change', function () {
-		    toogleProjectSelect2();
-	    });
-	    element.addClass('change-event-enabled');
-    };
-
-    // Project select2 ---------------------------------------------------------------------------
-    var toogleProjectSelect2 = function () {
-	    var element = $(projectId);
-
-	    if ($(buyerOrganizationId).val() !== '') {
-		    element.removeClass('disabled');
-		    element.prop("disabled", false);
-	    }
-	    else {
-		    element.addClass('disabled');
-		    element.prop("disabled", true);
-		    $(projectId).val('').trigger('change');
-	    }
-    };
-
-    var enableProjectChangeEvent = function () {
-        var element = $(projectId);
-
-	    element.not('.change-event-enabled').on('change', function () {
-		    toogleDateSelect2();
-	    });
-	    element.addClass('change-event-enabled');
-    };
-
     // Date select2 ------------------------------------------------------------------------------
-    var toogleDateSelect2 = function () {
-        var element = $(negotiationConfigId);
-
-        if ($(projectId).val() !== '') {
-	        enableDateSelect2();
-		    element.removeClass('disabled');
-		    element.prop("disabled", false);
-	    }
-	    else {
-		    element.addClass('disabled');
-		    element.prop("disabled", true);
-            $(negotiationConfigId).val('').trigger('change');
-	    }
-    };
-
     var emptyStateSelect2 = function () {
         $(negotiationConfigId).val('').trigger('change');
 
@@ -95,7 +46,7 @@ var AudiovisualMeetingsCreate = function () {
         }
         else {
 	        var jsonParameters = new Object();
-	        jsonParameters.customFilter = 'HasManualTables';
+            jsonParameters.customFilter = 'HasManualTables';
             jsonParameters.buyerOrganizationUid = $(buyerOrganizationId).val();
 
 	        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/FindAllDates'), jsonParameters, function (data) {
@@ -130,8 +81,8 @@ var AudiovisualMeetingsCreate = function () {
                             placeholder: translations.dateDropdownPlaceholder,
 	                        triggerChange: true,
 	                        allowClear: true,
-	                        data: negotiationConfigsData
-	                    });
+                            data: negotiationConfigsData
+                        });
 	                },
 	                // Error
 	                onError: function () {
@@ -144,7 +95,7 @@ var AudiovisualMeetingsCreate = function () {
 	        })
 	        .always(function () {
 	            MyRio2cCommon.unblock();
-	        });
+            });
         }
     };
 
@@ -362,15 +313,32 @@ var AudiovisualMeetingsCreate = function () {
     // Enable plugins -----------------------------------------------------------------------------
     var enablePlugins = function () {
         // Select2
-        MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: buyerOrganizationId, url: '/Players/FindAllByFilters', customFilter: 'HasProjectNegotiationNotScheduled', placeholder: translations.playerDropdownPlaceholder });
-        MyRio2cCommon.enableProjectSelect2({ inputIdOrClass: projectId, url: '/Projects/FindAllByFilters', customFilter: 'HasNegotiationNotScheduled', buyerOrganizationId: buyerOrganizationId, placeholder: translations.projectDropdownPlaceholder });
+        MyRio2cCommon.enableOrganizationSelect2({
+            inputIdOrClass: buyerOrganizationId,
+            url: '/Players/FindAllByFilters',
+            customFilter: 'HasProjectNegotiationNotScheduled',
+            placeholder: translations.playerDropdownPlaceholder,
+            selectedOption: {
+                id: $('#InitialBuyerOrganizationUid').val(),
+                text: $('#InitialBuyerOrganizationName').val()
+            }
+        });
+        MyRio2cCommon.enableProjectSelect2({
+            inputIdOrClass: projectId,
+            url: '/Projects/FindAllByFilters',
+            customFilter: 'HasNegotiationNotScheduled',
+            buyerOrganizationId: buyerOrganizationId,
+            placeholder: translations.projectDropdownPlaceholder,
+            selectedOption: {
+                id: $('#InitialProjectUid').val(),
+                text: $('#InitialProjectName').val()
+            }
+        });
         enableDateSelect2();
         enableRoomSelect2();
         enableStartTimeSelect2();
 
         // Change events
-        enableBuyerOrganizationChangeEvent();
-        enableProjectChangeEvent();
         enableDateChangeEvent();
         enableRoomChangeEvent();
         enableStartTimeChangeEvent();
@@ -380,12 +348,13 @@ var AudiovisualMeetingsCreate = function () {
     };
 
     // Show modal ---------------------------------------------------------------------------------
-    var showModal = function () {
+    var showModal = function (negotiationUid) {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
+        jsonParameters.negotiationUid = negotiationUid;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Meetings/ShowCreateModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Meetings/ShowUpdateModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -434,9 +403,36 @@ var AudiovisualMeetingsCreate = function () {
         });
     };
 
+    // Submit -------------------------------------------------------------------------------------
+    var submit = function () {
+        var message = translations.changeScheduledNegotiationConfirmationMessage;
+
+        bootbox.dialog({
+            message: message,
+            buttons: {
+                cancel: {
+                    label: labels.cancel,
+                    className: "btn btn-secondary mr-auto",
+                    callback: function () {
+                    }
+                },
+                confirm: {
+                    label: labels.confirm,
+                    className: "btn btn-primary",
+                    callback: function () {
+                        $('#UpdateAudiovisualMeetingForm').submit();
+                    }
+                }
+            }
+        });
+    }
+
     return {
-        showModal: function () {
-            showModal();
-        }
+        showModal: function (negotiationUid) {
+            showModal(negotiationUid);
+        },
+        submit: function () {
+            submit();
+        },
     };
 }();

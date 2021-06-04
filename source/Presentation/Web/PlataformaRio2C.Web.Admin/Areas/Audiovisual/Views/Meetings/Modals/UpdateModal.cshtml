@@ -12,7 +12,7 @@
                     <div id="form-container">
                         @Html.Partial("Modals/UpdateForm", Model)
                     </div>
-                    if (Model.NegotiationDto.Negotiation.UpdateDate != Model.NegotiationDto.Negotiation.CreateDate)
+                    if (Model.NegotiationDto != null && Model.NegotiationDto.Negotiation.UpdateDate != Model.NegotiationDto.Negotiation.CreateDate)
                     {
                         <div class="row">
                             <div class="col-sm-12 text-right">

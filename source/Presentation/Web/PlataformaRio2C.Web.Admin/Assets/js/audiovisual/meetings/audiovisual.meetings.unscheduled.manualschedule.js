@@ -1,21 +1,21 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Application
-// Author           : Renan Valentim
-// Created          : 05-15-2021
+// Assembly         : PlataformaRio2C.Web.Admin
+// Author           : Rafael Dantas Ruiz
+// Created          : 01-24-2020
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 05-15-2021
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 03-25-2020
 // ***********************************************************************
-// <copyright file="audiovisual.meetings.update.js" company="Softo">
+// <copyright file="audiovisual.meetings.unscheduled.manualschedule.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var AudiovisualMeetingsUpdate = function () {
+var AudiovisualMeetingsManualSchedule = function () {
 
-    var modalId = '#UpdateAudiovisualMeetingModal';
-    var formId = '#UpdateAudiovisualMeetingForm';
+    var modalId = '#ManualScheduleAudiovisualMeetingModal';
+    var formId = '#ManualScheduleAudiovisualMeetingForm';
     var buyerOrganizationId = '#BuyerOrganizationUid';
     var projectId = '#ProjectUid';
     var negotiationConfigId = '#NegotiationConfigUid';
@@ -45,82 +45,67 @@ var AudiovisualMeetingsUpdate = function () {
             emptyStateSelect2();
         }
         else {
-	        var jsonParameters = new Object();
+            var jsonParameters = new Object();
             jsonParameters.customFilter = 'HasManualTables';
             jsonParameters.buyerOrganizationUid = $(buyerOrganizationId).val();
 
-	        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/FindAllDates'), jsonParameters, function (data) {
-	            MyRio2cCommon.handleAjaxReturn({
-	                data: data,
-	                // Success
-	                onSuccess: function () {
+            $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/FindAllDates'), jsonParameters, function (data) {
+                MyRio2cCommon.handleAjaxReturn({
+                    data: data,
+                    // Success
+                    onSuccess: function () {
                         if (data.negotiationConfigs.length <= 0) {
-	                        emptyStateSelect2();
-	                    }
+                            emptyStateSelect2();
+                        }
 
-	                    var negotiationConfigsData = new Array();
+                        var negotiationConfigsData = new Array();
 
-	                    // Placeholder
-	                    var negotiationConfigObject = new Object();
-	                    negotiationConfigObject.id = '';
-	                    negotiationConfigObject.text = labels.selectPlaceholder;
-	                    negotiationConfigsData.push(negotiationConfigObject);
+                        // Placeholder
+                        var negotiationConfigObject = new Object();
+                        negotiationConfigObject.id = '';
+                        negotiationConfigObject.text = labels.selectPlaceholder;
+                        negotiationConfigsData.push(negotiationConfigObject);
 
-	                    for (var i in data.negotiationConfigs) {
-	                        if (data.negotiationConfigs.hasOwnProperty(i)) {
-	                            negotiationConfigObject = new Object();
-	                            negotiationConfigObject.id = data.negotiationConfigs[i].Uid;
+                        for (var i in data.negotiationConfigs) {
+                            if (data.negotiationConfigs.hasOwnProperty(i)) {
+                                negotiationConfigObject = new Object();
+                                negotiationConfigObject.id = data.negotiationConfigs[i].Uid;
                                 negotiationConfigObject.text = moment(data.negotiationConfigs[i].StartDate).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L');
-	                            negotiationConfigsData.push(negotiationConfigObject);
-	                        }
-	                    }
+                                negotiationConfigsData.push(negotiationConfigObject);
+                            }
+                        }
 
-	                    $(negotiationConfigId).empty().select2({
+                        $(negotiationConfigId).empty().select2({
                             language: globalVariables.userInterfaceLanguage,
-	                        width: '100%',
+                            width: '100%',
                             placeholder: translations.dateDropdownPlaceholder,
-	                        triggerChange: true,
-	                        allowClear: true,
+                            triggerChange: true,
+                            allowClear: true,
                             data: negotiationConfigsData
                         });
-
-                        setDateInitialSelection();
-	                },
-	                // Error
-	                onError: function () {
-	                    emptyStateSelect2();
-	                }
-	            });
-	        })
-	        .fail(function () {
-	            emptyStateSelect2();
-	        })
-	        .always(function () {
-	            MyRio2cCommon.unblock();
-            });
+                    },
+                    // Error
+                    onError: function () {
+                        emptyStateSelect2();
+                    }
+                });
+            })
+                .fail(function () {
+                    emptyStateSelect2();
+                })
+                .always(function () {
+                    MyRio2cCommon.unblock();
+                });
         }
     };
 
-    var setDateInitialSelection = function () {
-        //var selectedItem = $('#InitialDate').val();
-        //var element = $(negotiationConfigId);
-        //var existentOption = element.find("option:contains('" + selectedItem + "')");
-
-        //if (existentOption.length) {
-        //    element.val(existentOption.val()).trigger('change');
-        //} else {
-        //    var newOption = new Option(selectedItem, selectedItem, false, true);
-        //    element.append(newOption).trigger('change');
-        //}
-    };
-
     var enableDateChangeEvent = function () {
-	    var element = $(negotiationConfigId);
+        var element = $(negotiationConfigId);
 
-	    element.not('.change-event-enabled').on('change', function () {
-		    toogleRoomSelect2();
-	    });
-	    element.addClass('change-event-enabled');
+        element.not('.change-event-enabled').on('change', function () {
+            toogleRoomSelect2();
+        });
+        element.addClass('change-event-enabled');
     };
 
     // Room select2 ------------------------------------------------------------------------------
@@ -156,7 +141,7 @@ var AudiovisualMeetingsUpdate = function () {
         var projectUid = $(negotiationConfigId).val();
 
         if (MyRio2cCommon.isNullOrEmpty(projectUid)) {
-	        emptyRoomSelect2();
+            emptyRoomSelect2();
         }
         else {
             var jsonParameters = new Object();
@@ -170,7 +155,7 @@ var AudiovisualMeetingsUpdate = function () {
                     // Success
                     onSuccess: function () {
                         if (data.rooms.length <= 0) {
-	                        emptyRoomSelect2();
+                            emptyRoomSelect2();
                         }
 
                         var roomsData = new Array();
@@ -198,45 +183,29 @@ var AudiovisualMeetingsUpdate = function () {
                             allowClear: true,
                             data: roomsData
                         });
-
-                        setRoomInitialSelection();
                     },
                     // Error
                     onError: function () {
-	                    emptyRoomSelect2();
+                        emptyRoomSelect2();
                     }
                 });
             })
-            .fail(function () {
-                emptyRoomSelect2();
-            })
-            .always(function () {
-                MyRio2cCommon.unblock();
-            });
+                .fail(function () {
+                    emptyRoomSelect2();
+                })
+                .always(function () {
+                    MyRio2cCommon.unblock();
+                });
         }
     };
 
-    var setRoomInitialSelection = function () {
-        //var selectedValue = $('#InitialNegotiationRoomConfigUid').val();
-        //var element = $(negotiationRoomConfigId);
-
-        //var existentOption = element.find("option[value='" + selectedValue + "']");
-        //if (existentOption.length) {
-        //    element.val(existentOption.val()).trigger('change');
-        //} else {
-        //    var selectedText = $('#InitialNegotiationRoomConfigName').val();
-        //    var newOption = new Option(selectedText, selectedValue, false, true);
-        //    element.append(newOption).trigger('change');
-        //}
-    };
-
     var enableRoomChangeEvent = function () {
-	    var element = $(negotiationRoomConfigId);
+        var element = $(negotiationRoomConfigId);
 
-	    element.not('.change-event-enabled').on('change', function () {
-		    toogleStartTimeSelect2();
-	    });
-	    element.addClass('change-event-enabled');
+        element.not('.change-event-enabled').on('change', function () {
+            toogleStartTimeSelect2();
+        });
+        element.addClass('change-event-enabled');
     };
 
     // Start time select2 -------------------------------------------------------------------------
@@ -272,7 +241,7 @@ var AudiovisualMeetingsUpdate = function () {
         var negotiationRoomConfigUid = $(negotiationRoomConfigId).val();
 
         if (MyRio2cCommon.isNullOrEmpty(negotiationRoomConfigUid)) {
-	        emptyStartTimeSelect2();
+            emptyStartTimeSelect2();
         }
         else {
             var jsonParameters = new Object();
@@ -286,7 +255,7 @@ var AudiovisualMeetingsUpdate = function () {
                     // Success
                     onSuccess: function () {
                         if (data.times.length <= 0) {
-	                        emptyStartTimeSelect2();
+                            emptyStartTimeSelect2();
                         }
 
                         var timesData = new Array();
@@ -302,7 +271,7 @@ var AudiovisualMeetingsUpdate = function () {
                                 timesObject = new Object();
                                 timesObject.id = moment(data.times[i].StartTime).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('LTS');
                                 timesObject.text = moment(data.times[i].StartTime).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('LTS')
-												   + ' - ' + moment(data.times[i].EndTime).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('LTS');
+                                    + ' - ' + moment(data.times[i].EndTime).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('LTS');
                                 timesObject.roundNumber = data.times[i].RoundNumber;
                                 timesData.push(timesObject);
                             }
@@ -319,12 +288,12 @@ var AudiovisualMeetingsUpdate = function () {
                     },
                     // Error
                     onError: function () {
-	                    emptyStartTimeSelect2();
+                        emptyStartTimeSelect2();
                     }
                 });
             })
                 .fail(function () {
-	                emptyStartTimeSelect2();
+                    emptyStartTimeSelect2();
                 })
                 .always(function () {
                     MyRio2cCommon.unblock();
@@ -335,10 +304,10 @@ var AudiovisualMeetingsUpdate = function () {
     var enableStartTimeChangeEvent = function () {
         var element = $(startTimeId);
 
-	    element.not('.change-event-enabled').on('change', function () {
+        element.not('.change-event-enabled').on('change', function () {
             $(roundNumberId).val(element.select2('data')[0].roundNumber || '');
-	    });
-	    element.addClass('change-event-enabled');
+        });
+        element.addClass('change-event-enabled');
     };
 
     // Enable plugins -----------------------------------------------------------------------------
@@ -354,7 +323,6 @@ var AudiovisualMeetingsUpdate = function () {
                 text: $('#InitialBuyerOrganizationName').val()
             }
         });
-
         MyRio2cCommon.enableProjectSelect2({
             inputIdOrClass: projectId,
             url: '/Projects/FindAllByFilters',
@@ -366,7 +334,6 @@ var AudiovisualMeetingsUpdate = function () {
                 text: $('#InitialProjectName').val()
             }
         });
-
         enableDateSelect2();
         enableRoomSelect2();
         enableStartTimeSelect2();
@@ -381,13 +348,15 @@ var AudiovisualMeetingsUpdate = function () {
     };
 
     // Show modal ---------------------------------------------------------------------------------
-    var showModal = function (negotiationUid) {
+    var showModal = function (projectBuyerEvaluationUid) {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
-        jsonParameters.negotiationUid = negotiationUid;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Meetings/ShowUpdateModal'), jsonParameters, function (data) {
+        if (!MyRio2cCommon.isNullOrEmpty(projectBuyerEvaluationUid))
+            jsonParameters.projectBuyerEvaluationUid = projectBuyerEvaluationUid;
+
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Meetings/ShowManualScheduleModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -414,8 +383,8 @@ var AudiovisualMeetingsUpdate = function () {
             onSuccess: function (data) {
                 $(modalId).modal('hide');
 
-                if (typeof (AudiovisualMeetingsScheduledWidget) !== 'undefined') {
-	                AudiovisualMeetingsScheduledWidget.search();
+                if (typeof (AudiovisualMeetingsUnscheduledWidget) !== 'undefined') {
+                    AudiovisualMeetingsUnscheduledWidget.init();
                 }
 
                 if (typeof (AudiovisualMeetingsEditionScheduledCountWidget) !== 'undefined') {
@@ -436,36 +405,9 @@ var AudiovisualMeetingsUpdate = function () {
         });
     };
 
-    // Submit -------------------------------------------------------------------------------------
-    var submit = function () {
-        var message = translations.changeScheduledNegotiationConfirmationMessage;
-
-        bootbox.dialog({
-            message: message,
-            buttons: {
-                cancel: {
-                    label: labels.cancel,
-                    className: "btn btn-secondary mr-auto",
-                    callback: function () {
-                    }
-                },
-                confirm: {
-                    label: labels.confirm,
-                    className: "btn btn-primary",
-                    callback: function () {
-                        $('#UpdateAudiovisualMeetingForm').submit();
-                    }
-                }
-            }
-        });
-    }
-
     return {
-        showModal: function (negotiationUid) {
-            showModal(negotiationUid);
-        },
-        submit: function () {
-            submit();
-        },
+        showModal: function (projectBuyerEvaluationUid) {
+            showModal(projectBuyerEvaluationUid);
+        }
     };
 }();

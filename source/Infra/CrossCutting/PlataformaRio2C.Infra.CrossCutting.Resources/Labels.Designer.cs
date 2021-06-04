@@ -4759,6 +4759,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Agendar Manualmente.
+        /// </summary>
+        public static string ScheduleManually {
+            get {
+                return ResourceManager.GetString("ScheduleManually", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Agendar Negociação.
         /// </summary>
         public static string ScheduleNegotiation {

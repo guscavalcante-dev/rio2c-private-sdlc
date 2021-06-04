@@ -14,47 +14,37 @@
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>CreateNegotiation</summary>
-    public class CreateNegotiation : BaseCommand
+    public class CreateNegotiation : NegotiationBaseCommand
     {
-        [Display(Name = nameof(Labels.Player), ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public Guid? BuyerOrganizationUid { get; set; }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateNegotiation"/> class.
+        /// </summary>
+        /// <param name="projectBuyerEvaluationDto">The project buyer evaluation dto.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        /// <exception cref="DomainException"></exception>
+        public CreateNegotiation(
+            ProjectBuyerEvaluationDto projectBuyerEvaluationDto,
+            string userInterfaceLanguage)
+        {
+            if (projectBuyerEvaluationDto == null )
+            {
+                throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundM));
+            }
 
-        [Display(Name = nameof(Labels.Project), ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public Guid? ProjectUid { get; set; }
-
-        [Display(Name = nameof(Labels.Date), ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public Guid? NegotiationConfigUid { get; set; }
-
-        [Display(Name = nameof(Labels.Room), ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public Guid? NegotiationRoomConfigUid { get; set; }
-
-        [Display(Name = nameof(Labels.StartTime), ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public string StartTime { get; set; }
-
-        public int? RoundNumber { get; set; }
+            this.UpdateBaseProperties(projectBuyerEvaluationDto, userInterfaceLanguage);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateNegotiation"/> class.
         /// </summary>
         /// <param name="negotiationDto">The negotiation.</param>
-        public CreateNegotiation(NegotiationDto negotiationDto)
-        {
-            this.BuyerOrganizationUid = negotiationDto?.ProjectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.Organization?.Uid;
-            this.ProjectUid = negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.Project?.Uid;
-        }
-
-        /// <summary>Initializes a new instance of the <see cref="CreateNegotiation"/> class.</summary>
         public CreateNegotiation()
         {
         }

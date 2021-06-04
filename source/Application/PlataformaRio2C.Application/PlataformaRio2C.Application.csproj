@@ -184,6 +184,7 @@
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationRoomConfigs\DeleteNegotiationRoomConfigCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationRoomConfigs\UpdateNegotiationRoomConfigCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationRoomConfigs\CreateNegotiationRoomConfigCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Audiovisual\Negotiations\ScheduleManualNegotiationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\Negotiations\UpdateNegotiationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\Negotiations\CreateNegotiationsCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\Negotiations\CreateNegotiationCommandHandler.cs" />
@@ -336,6 +337,8 @@
     <Compile Include="CQRS\Commands\Audiovisual\NegotiationRoomConfigs\DeleteNegotiationRoomConfig.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\NegotiationRoomConfigs\UpdateNegotiationRoomConfig.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\NegotiationRoomConfigs\CreateNegotiationRoomConfig.cs" />
+    <Compile Include="CQRS\Commands\Audiovisual\Negotiations\BaseCommands\NegotiationBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Audiovisual\Negotiations\ScheduleManualNegotiation.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\Negotiations\UpdateNegotiation.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\Negotiations\CreateNegotiation.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\Negotiations\CreateNegotiations.cs" />
