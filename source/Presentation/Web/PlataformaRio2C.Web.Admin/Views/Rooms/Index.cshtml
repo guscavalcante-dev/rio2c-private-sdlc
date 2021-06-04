@@ -28,8 +28,12 @@
     @Scripts.Render("~/bundles/js/rooms.editioncount.js")
     @Scripts.Render("~/bundles/js/rooms.create.js")
     @Scripts.Render("~/bundles/js/rooms.delete.js")
-    <script>
+<script>
         // Page translations ----------------------------------------------------------------------
+        var translate = {
+            presential: '@Labels.Presential',
+            virtual: '@Labels.Virtual'
+        };
 
         // Pagination -----------------------------------------------------------------------------
         var initialPage = @(Model.Page?.ToString() ?? "null");
@@ -40,5 +44,5 @@
             RoomsEditionCountWidget.init();
             RoomsDataTableWidget.init();
         });
-    </script>
+</script>
 }

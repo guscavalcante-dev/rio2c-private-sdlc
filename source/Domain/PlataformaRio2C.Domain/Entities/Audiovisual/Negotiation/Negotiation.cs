@@ -29,10 +29,12 @@ namespace PlataformaRio2C.Domain.Entities
         public int TableNumber { get; private set; }
         public int RoundNumber { get; private set; }
         public bool IsAutomatic { get; private set; }
+        public int EditionId { get; private set; }
 
         public virtual ProjectBuyerEvaluation ProjectBuyerEvaluation { get; private set; }
         public virtual Room Room { get; private set; }
-
+        public virtual User Updater { get; private set; }
+        
         /// <summary>Initializes a new instance of the <see cref="Negotiation"/> class for automatic negotiation slots.</summary>
         /// <param name="room">The room.</param>
         /// <param name="startDate">The start date.</param>
@@ -41,6 +43,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="roundNumber">The round number.</param>
         /// <param name="userId">The user identifier.</param>
         public Negotiation(
+            int editionId,
             Room room,
             DateTimeOffset startDate,
             DateTimeOffset endDate,
@@ -49,6 +52,7 @@ namespace PlataformaRio2C.Domain.Entities
             int userId)
         {
             this.Uid = Guid.NewGuid();
+            this.EditionId = editionId;
             this.RoomId = room?.Id ?? 0;
             this.Room = room;
             this.StartDate = startDate;
@@ -72,6 +76,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="roundNumber">The round number.</param>
         /// <param name="userId">The user identifier.</param>
         public Negotiation(
+            int editionId,
             Guid negotiationUid,
             Organization buyerOrganization, 
             Project project, 
@@ -81,7 +86,7 @@ namespace PlataformaRio2C.Domain.Entities
             int roundNumber,
             int userId)
         {
-            //this.Uid = negotiationUid;
+            this.EditionId = editionId;
 
             // Project buyer evaluation
             var projectBuyerEvaluation = project.ProjectBuyerEvaluations?.FirstOrDefault(pbe => pbe.BuyerAttendeeOrganization.Organization.Uid == buyerOrganization?.Uid && !pbe.IsDeleted);
@@ -107,6 +112,7 @@ namespace PlataformaRio2C.Domain.Entities
             }
 
             this.RoundNumber = roundNumber;
+            
             this.IsAutomatic = false;
 
             this.IsDeleted = false;
@@ -114,12 +120,53 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateUserId = this.UpdateUserId = userId;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="Negotiation"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Negotiation"/> class.
+        /// </summary>
         protected Negotiation()
         {
         }
 
+        /// <summary>
+        /// Updates the specified room.
+        /// </summary>
+        /// <param name="room">The room.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <param name="tableNumber">The table number.</param>
+        /// <param name="roundNumber">The round number.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(
+            NegotiationConfig negotiationConfig,
+            NegotiationRoomConfig negotiationRoomConfig,
+            string startTime,
+            int roundNumber,
+            int userId)
+        {
+            // Room
+            var room = negotiationRoomConfig?.Room;
+            this.RoomId = room?.Id ?? 0;
+            this.Room = room;
 
+            // Dates
+            if (negotiationConfig != null)
+            {
+                this.StartDate = negotiationConfig.StartDate.Date.JoinDateAndTime(startTime, true).ToUtcTimeZone();
+                this.EndDate = this.StartDate.Add(negotiationConfig.TimeOfEachRound);
+
+                // Table Number
+                if (negotiationRoomConfig != null)
+                {
+                    this.TableNumber = negotiationRoomConfig.CountAutomaticTables + (negotiationConfig.GetNegotiationRoomConfigPosition(negotiationRoomConfig.Uid) ?? 0) + 1;
+                }
+            }
+
+            this.RoundNumber = roundNumber;
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
 
         /// <summary>Assigns the project buyer evaluation.</summary>
         /// <param name="projectBuyerEvaluation">The project buyer evaluation.</param>

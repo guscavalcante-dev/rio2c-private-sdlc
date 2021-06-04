@@ -223,6 +223,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Essa alteração pode gerar um conflito com outras rodadas do Player ou da Produtora, deseja continuar?.
+        /// </summary>
+        public static string ChangeScheduledNegotiationConfirmationMessage {
+            get {
+                return ResourceManager.GetString("ChangeScheduledNegotiationConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cidade inválida..
         /// </summary>
         public static string CityIsInvalid {
@@ -1217,6 +1226,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string PlayerInterestsSuccessfullyUpdated {
             get {
                 return ResourceManager.GetString("PlayerInterestsSuccessfullyUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O Player prefere reunião {0} para execução da rodada de negócios.
+        /// </summary>
+        public static string PlayerMeetingPreference {
+            get {
+                return ResourceManager.GetString("PlayerMeetingPreference", resourceCulture);
             }
         }
         

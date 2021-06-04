@@ -59,6 +59,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<Collaborator> UpdatedCollaborators { get; set; }
         public virtual ICollection<UserUnsubscribedList> UserUnsubscribedLists { get; set; }
         public virtual ICollection<Message> RecipientMessages { get; set; }
+        public virtual ICollection<Negotiation> UpdatedNegotiations { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="User"/> class.</summary>
         /// <param name="fullName">The full name.</param>

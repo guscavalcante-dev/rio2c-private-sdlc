@@ -28,6 +28,7 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Web.Site.Filters;
+using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -611,7 +612,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.TargetAudience, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            ViewBag.TargetAudiences = await this.targetAudienceRepo.FindAllAsync();
+            ViewBag.TargetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id);
 
             return Json(new
             {
@@ -648,7 +649,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
                 cmd = new UpdateOrganizationTargetAudiences(
                     targetAudienceWidgetDto,
-                    await this.targetAudienceRepo.FindAllAsync());
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
             }
             catch (DomainException ex)
             {
@@ -700,7 +701,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
-                cmd.UpdateModelsAndLists(await this.targetAudienceRepo.FindAllAsync());
+                cmd.UpdateModelsAndLists(await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id));
 
                 return Json(new
                 {
@@ -938,7 +939,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
                     await this.activityRepo.FindAllAsync(),
-                    await this.targetAudienceRepo.FindAllAsync(),
+                    await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id),
                     true,
                     true,
                     true);

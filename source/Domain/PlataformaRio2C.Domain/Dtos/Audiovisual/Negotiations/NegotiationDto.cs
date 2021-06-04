@@ -21,6 +21,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public Negotiation Negotiation { get; set; }
         public ProjectBuyerEvaluationDto ProjectBuyerEvaluationDto { get; set; }
         public RoomDto RoomDto { get; set; }
+        public UserBaseDto UpdaterDto { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="NegotiationDto"/> class.</summary>
         public NegotiationDto()

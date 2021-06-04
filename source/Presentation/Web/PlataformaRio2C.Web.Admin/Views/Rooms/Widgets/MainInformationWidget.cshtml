@@ -3,28 +3,10 @@
 <div class="kt-portlet__body">
     <div class="kt-widget kt-widget--user-profile-3">
         <div class="kt-widget__top">
-            @*<div style="float: right;">
-                @if (Model.Collaborator?.HasImage() == true)
-                {
-                    <div class="kt-widget__media">
-                        <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, Model.Collaborator.Uid, Model.Collaborator.ImageUploadDate, true)" alt="image">
-                    </div>
-                }
-                else
-                {
-                    <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest" style="width: 110px; height: 110px;">
-                        @(Model.Collaborator?.GetDisplayNameAbbreviation() ?? "-")
-                    </div>
-                }
-            </div>*@ 
             <div class="kt-widget__content pl-0" style="overflow: hidden;">
                 <div class="kt-widget__head">
                     <span class="kt-widget__username">
                         @(Model.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.RoomName?.Value ?? "-")
-                        @*@if (Model.AttendeeCollaborator?.OnboardingFinishDate != null)
-                        {
-                            <i class="flaticon2-correct"></i>
-                        }*@
                     </span>
                     <div class="kt-widget__action">
                         <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="RoomsMainInformationWidget.showUpdateModal();">
@@ -32,39 +14,35 @@
                         </button>
                     </div>
                 </div>
-                @*@{
-                    var synopsisDto = Model.GetConferenceSynopsisDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
-                }
-                @if (synopsisDto != null)
-                {
-                    <div class="kt-widget__subhead pt-0">
-                        @synopsisDto.Value
-                    </div>
-                }*@
-                @*<div class="kt-widget__subhead">
-                    <a onclick="return false;"><i class="flaticon-event-calendar-symbol"></i>@Model.EditionEvent.Name</a>
-                    @{
-                        var roomDto = Model.RoomDto?.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage);
-                    }
-                    @if (roomDto != null)
-                    {
-                        <a onclick="return false;"><i class="flaticon-placeholder"></i>@roomDto.RoomName.Value</a>
-                    }
-                </div>
-                <div class="kt-widget__info" style="display: block;">
-                    @{
-                        var synopsisDto = Model.GetConferenceSynopsisDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
-                    }
-                    @if (synopsisDto != null)
-                    {
-                        <div class="kt-widget__desc" style="word-wrap: break-word;">
-                            @Html.Raw(synopsisDto.ConferenceSynopsis.Value)
-                        </div>
-                    }
-                </div>*@
             </div>
         </div>
+        @if (Model.Room.IsVirtualMeeting == true)
+        {
+            <div class="kt-widget__bottom">
+                <div class="kt-widget__item">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.RoomType</span>
+                        <span class="kt-widget__value"><span>@(Model.Room.IsVirtualMeeting ? Labels.Virtual : Labels.Presential)</span></span>
+                    </div>
+                </div>
+                <div class="kt-widget__item">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.VirtualMeetingUrl</span>
+                        <span class="kt-widget__value"><span>@Model.Room.VirtualMeetingUrl</span></span>
+                    </div>
+                </div>
+            </div>
+        }
         <div class="kt-widget__bottom">
+            @if (!Model.Room.IsVirtualMeeting)
+            {
+                <div class="kt-widget__item">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.RoomType</span>
+                        <span class="kt-widget__value"><span>@(Model.Room.IsVirtualMeeting ? Labels.Virtual : Labels.Presential)</span></span>
+                    </div>
+                </div>
+            }
             <div class="kt-widget__item">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.CreateDate</span>

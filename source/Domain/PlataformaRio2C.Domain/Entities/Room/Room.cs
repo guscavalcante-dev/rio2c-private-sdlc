@@ -23,11 +23,14 @@ namespace PlataformaRio2C.Domain.Entities
     public class Room : Entity
     {       
         public int EditionId { get; private set; }
+        public bool IsVirtualMeeting { get; private set; }
+        public string VirtualMeetingUrl { get; private set; }
 
         public virtual Edition Edition { get; private set; }
 
         public virtual ICollection<RoomName> RoomNames { get; private set; }
         public virtual ICollection<Conference> Conferences { get; private set; }
+        public virtual ICollection<NegotiationRoomConfig> NegotiationRoomConfigs { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="Room"/> class.</summary>
         /// <param name="roomUid">The room uid.</param>
@@ -35,15 +38,16 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="roomNames">The room names.</param>
         /// <param name="userId">The user identifier.</param>
         public Room(
-            Guid roomUid,
             Edition edition,
             List<RoomName> roomNames,
+            bool isVirtualMeeting,
+            string virtualMeetingUrl,
             int userId)
         {
-            //this.Uid = roomUid;
             this.EditionId = edition?.Id ?? 0;
             this.Edition = edition;
             this.SynchronizeRoomNames(roomNames, userId);
+            this.UpdateIsVirtualMeeting(isVirtualMeeting, virtualMeetingUrl);
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
@@ -60,9 +64,12 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void UpdateMainInformation(
             List<RoomName> roomNames,
+            bool isVirtualMeeting,
+            string virtualMeetingUrl,
             int userId)
         {
             this.SynchronizeRoomNames(roomNames, userId);
+            this.UpdateIsVirtualMeeting(isVirtualMeeting, virtualMeetingUrl);
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
@@ -155,6 +162,29 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
+        #region Virtual Meeting
+
+        /// <summary>
+        /// Updates the is virtual meeting.
+        /// </summary>
+        /// <param name="isVirtualMeeting">if set to <c>true</c> [is virtual meeting].</param>
+        /// <param name="virtualMeetingUrl">The virtual meeting room link.</param>
+        private void UpdateIsVirtualMeeting(bool isVirtualMeeting, string virtualMeetingUrl)
+        {
+            this.IsVirtualMeeting = isVirtualMeeting;
+
+            if (isVirtualMeeting)
+            {
+                this.VirtualMeetingUrl = virtualMeetingUrl;
+            }
+            else
+            {
+                this.VirtualMeetingUrl = null;
+            }
+        }
+
+        #endregion
+
         #region Validations
 
         /// <summary>Returns true if ... is valid.</summary>
@@ -166,6 +196,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.ValidateEdition();
             this.ValidateRoomNames();
+            this.ValidateVirtualMeetingUrl();
 
             return this.ValidationResult.IsValid;
         }
@@ -179,6 +210,9 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
+        /// <summary>
+        /// Validates the room names.
+        /// </summary>
         public void ValidateRoomNames()
         {
             if (this.RoomNames?.Any() != true)
@@ -189,6 +223,17 @@ namespace PlataformaRio2C.Domain.Entities
             foreach (var roomName in this.RoomNames?.Where(d => !d.IsValid())?.ToList())
             {
                 this.ValidationResult.Add(roomName.ValidationResult);
+            }
+        }
+
+        /// <summary>
+        /// Validates the virtual meeting room link.
+        /// </summary>
+        public void ValidateVirtualMeetingUrl()
+        {
+            if (this.IsVirtualMeeting && string.IsNullOrEmpty(this.VirtualMeetingUrl))
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.VirtualMeetingUrl), new string[] { nameof(VirtualMeetingUrl) }));
             }
         }
 

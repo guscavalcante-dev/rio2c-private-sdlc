@@ -1,0 +1,84 @@
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Statics
+@model AttendeeOrganizationSiteExecutiveWidgetDto
+@*@{
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var isCollaborator = userAccessControlDto?.HasEditionAttendeeOrganization(Model.AttendeeOrganization.Uid) == true;
+}*@
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+            @Labels.Executives
+        </h3>
+    </div>
+    @*@if (isCollaborator)
+    {
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-actions">
+                <a class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="return false;" data-toggle="kt-tooltip" title="" data-placement="right" data-original-title="@Labels.ComingSoon...">
+                    <i class="flaticon2-edit"></i>
+                </a>
+            </div>
+        </div>
+    }*@
+</div>
+<div class="kt-portlet__body">
+    @if (Model.AttendeeCollaboratorsDtos?.Any() == true)
+    {
+        <div class="row rio2c-scroll" style="height: 200px;">
+            @foreach (var attendeeCollaboratorDto in Model.AttendeeCollaboratorsDtos?.OrderBy(acd => acd.Collaborator.GetDisplayName()))
+            {
+                <div class="col-sm-6 col-md-6 col-xl-4">
+                    <!--Begin::Portlet-->
+                    <div class="kt-portlet kt-portlet--height-fluid">
+                        @*<div class="kt-portlet__head kt-portlet__head--noborder"></div>*@
+                        <div class="kt-portlet__body mt-40">
+                            <!--begin::Widget -->
+                            <div class="kt-widget kt-widget--user-profile-2" style="flex-direction: row;">
+                                <div class="kt-widget__head">
+                                    <div class="kt-widget__media">
+                                        @if (attendeeCollaboratorDto.Collaborator.HasImage())
+                                        {
+                                            <img class="kt-widget__img" src="@ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, attendeeCollaboratorDto.Collaborator.Uid, attendeeCollaboratorDto.Collaborator.ImageUploadDate, true)" alt="image">
+                                        }
+                                        else
+                                        {
+                                            <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest">
+                                                @attendeeCollaboratorDto.Collaborator.GetDisplayNameAbbreviation()
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="kt-widget__info">
+                                        <a href="@Url.Action("Details", "Executives", new {id = attendeeCollaboratorDto.Collaborator.Uid})" class="kt-widget__username">
+                                            @attendeeCollaboratorDto.Collaborator.GetDisplayName()
+                                        </a>
+                                        @{
+                                            var jobTitle = attendeeCollaboratorDto.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value;
+                                        }
+                                        @if (!string.IsNullOrEmpty(jobTitle))
+                                        {
+                                            <span class="kt-widget__desc">@jobTitle</span>
+                                        }
+                                        <span class="kt-widget__desc"><a href="@Url.Action("Details", "Executives", new { id = attendeeCollaboratorDto.Collaborator.Uid })">
+                                            <small><i class="flaticon-profile"></i> @Labels.SeeMiniBio</small>
+                                        </a></span>
+                                    </div>
+                                </div>
+                                @*<div class="kt-widget__footer">
+                                    <button type="button" class="btn btn-label-warning btn-lg btn-upper">write message</button>
+                                </div>*@
+                            </div>         
+                            <!--end::Widget -->
+                        </div>
+                    </div>
+                    <!--End::Portlet--> 
+                </div>            
+            }
+        </div>
+    }
+    else
+    {
+        <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundF)</span>
+    }
+</div>

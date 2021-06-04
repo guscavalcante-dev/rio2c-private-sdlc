@@ -36,10 +36,12 @@
     @Scripts.Render("~/bundles/js/organizations.update.js")
     @Scripts.Render("~/bundles/js/organizations.delete.js")
     @Scripts.Render("~/bundles/js/addresses.form.js")
-    <script>
+<script>
         // Page translations ----------------------------------------------------------------------
         var addToEdition = '@string.Format(Labels.AddToEdition, ViewBag.EditionDto.UrlCode)';
         var removeFromEdition = '@string.Format(Labels.RemoveFromEdition, ViewBag.EditionDto.UrlCode)';
+        var virtual = '@Labels.Virtual';
+        var presential = '@Labels.Presential';
 
         // Pagination -----------------------------------------------------------------------------
         var initialPage = @(Model.Page?.ToString() ?? "null");
@@ -50,5 +52,5 @@
             OrganizationsEditionCountWidget.init();
             OrganizationsDataTableWidget.init();
         });
-    </script>
+</script>
 }

@@ -32,6 +32,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     /// </summary>
     internal static class NegotiationIQueryableExtensions
     {
+        /// <summary>
+        /// Finds the by identifier.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="negotiationId">The negotiation identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<Negotiation> FindById(this IQueryable<Negotiation> query, int negotiationId)
+        {
+            query = query.Where(n => n.Id == negotiationId);
+
+            return query;
+        }
+
         /// <summary>Finds the by uid.</summary>
         /// <param name="query">The query.</param>
         /// <param name="negotiationUid">The negotiation uid.</param>
@@ -50,7 +63,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<Negotiation> FindByEditionId(this IQueryable<Negotiation> query, int editionId, bool showAllEditions = false)
         {
-            query = query.Where(n => (showAllEditions || n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.EditionId == editionId));
+            query = query.Where(n => (showAllEditions || n.EditionId == editionId));
 
             return query;
         }
@@ -204,6 +217,86 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
+        /// <summary>
+        /// Finds the by identifier asynchronous.
+        /// </summary>
+        /// <param name="negotiationId">The negotiation identifier.</param>
+        /// <returns></returns>
+        public async Task<Negotiation> FindByIdAsync(int negotiationId)
+        {
+            var query = this.GetBaseQuery()
+                               .FindById(negotiationId);
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the by uid asynchronous.
+        /// </summary>
+        /// <param name="negotiationUid">The negotiation uid.</param>
+        /// <returns></returns>
+        public async Task<Negotiation> FindByUidAsync(Guid negotiationUid)
+        {
+            var query = this.GetBaseQuery()
+                               .FindByUid(negotiationUid);
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the dto asynchronous.
+        /// </summary>
+        /// <param name="negotiationUid">The edition uid.</param>
+        /// <returns></returns>
+        public async Task<NegotiationDto> FindDtoAsync(Guid negotiationUid)
+        {
+            var negotiationDto = await this.GetBaseQuery()
+                              .FindByUid(negotiationUid)
+                              .Select(n => new NegotiationDto
+                              {
+                                  Negotiation = n,
+                                  ProjectBuyerEvaluationDto = new ProjectBuyerEvaluationDto()
+                                  {
+                                      ProjectBuyerEvaluation = n.ProjectBuyerEvaluation,
+                                      ProjectEvaluationStatus = n.ProjectBuyerEvaluation.ProjectEvaluationStatus,
+                                      BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto()
+                                      {
+                                          AttendeeOrganization = n.ProjectBuyerEvaluation.BuyerAttendeeOrganization,
+                                          Organization = n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization
+                                      },
+                                      ProjectDto = new ProjectDto()
+                                      {
+                                          Project = n.ProjectBuyerEvaluation.Project
+                                      }
+                                  },
+                                  RoomDto = new RoomDto()
+                                  {
+                                      Room = n.Room,
+                                      RoomNameDtos = n.Room.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto
+                                      {
+                                          RoomName = rn,
+                                          LanguageDto = new LanguageDto
+                                          {
+                                              Id = rn.Language.Id,
+                                              Uid = rn.Language.Uid,
+                                              Code = rn.Language.Code
+                                          }
+                                      })
+                                  },
+                                  UpdaterDto = new UserBaseDto()
+                                  {
+                                      Uid = n.Updater.Uid,
+                                      Name = n.Updater.Name,
+                                      Email = n.Updater.Email
+                                  }
+                              })
+                              .FirstOrDefaultAsync();
+
+            return negotiationDto;
+        }
+
         /// <summary>Finds the scheduled widget dto asynchronous.</summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="buyerOrganizationUid">The buyer organization uid.</param>
@@ -213,11 +306,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="roomUid">The room uid.</param>
         /// <returns></returns>
         public async Task<List<NegotiationGroupedByDateDto>> FindScheduledWidgetDtoAsync(
-            int editionId, 
+            int editionId,
             Guid? buyerOrganizationUid,
-            Guid? sellerOrganizationUid, 
-            string projectKeywords, 
-            DateTime? negotiationDate, 
+            Guid? sellerOrganizationUid,
+            string projectKeywords,
+            DateTime? negotiationDate,
             Guid? roomUid)
         {
             var query = this.GetBaseQuery()
@@ -244,6 +337,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Select(nd => new NegotiationGroupedByDateDto(nd.Key, nd.ToList()))
                                 .OrderBy(ngd => ngd.Date)
                                 .ToList();
+        }
+
+        /// <summary>
+        /// Finds the negotiations by edition identifier asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<List<Negotiation>> FindNegotiationsByEditionIdAsync(int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId);
+
+            return await query.ToListAsync();
         }
 
         /// <summary>Truncates this instance.</summary>

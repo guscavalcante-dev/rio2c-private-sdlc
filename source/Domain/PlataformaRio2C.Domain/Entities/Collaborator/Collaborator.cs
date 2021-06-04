@@ -73,7 +73,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<CollaboratorMiniBio> MiniBios { get; private set; }
         public virtual ICollection<AttendeeCollaborator> AttendeeCollaborators { get; private set; }
         public virtual ICollection<CollaboratorEditionParticipation> EditionParticipantions { get; private set; }
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Collaborator"/> class.
         /// </summary>
@@ -329,11 +329,10 @@ namespace PlataformaRio2C.Domain.Entities
                 this.SynchronizeAttendeeCollaborators(edition, collaboratorTypes, null, null, null, true, userId);
                 this.UpdateUser(email, passwordHash);
             }
-            else if(roles.Select(r => r.Name).Contains(Constants.Role.Admin))
+            else if (roles.Select(r => r.Name).Contains(Constants.Role.Admin))
             {
                 this.UpdateUser(email, passwordHash, roles);
-                this.DeleteAttendeeCollaborators(edition, collaboratorTypes, userId);
-                //TODO: Delete CollaboratorTypes from this user
+                this.DeleteAttendeeCollaborators(edition, userId);
             }
 
             this.IsDeleted = false;
@@ -513,7 +512,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="lastNames">The last names.</param>
         /// <param name="email">The email.</param>
         /// <param name="passwordHash">The password hash.</param>
-        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
         /// <param name="userId">The user identifier.</param>
         public void Update(
             Edition edition,
@@ -522,15 +520,12 @@ namespace PlataformaRio2C.Domain.Entities
             string firstName,
             string lastNames,
             string email,
-            bool isAddingToCurrentEdition,
             int userId)
         {
             this.FirstName = firstName?.Trim();
             this.LastNames = lastNames?.Trim();
             this.UpdatePublicEmail(false, email);
 
-            //this.SynchronizeAttendeeCollaborators(edition, collaboratorTypes, null, null, null, isAddingToCurrentEdition, userId);
-            //this.UpdateUser(email);
             if (roles.Select(r => r.Name).Contains(Constants.Role.AdminPartial))
             {
                 this.SynchronizeAttendeeCollaborators(edition, collaboratorTypes, null, null, null, true, userId);
@@ -539,15 +534,14 @@ namespace PlataformaRio2C.Domain.Entities
             else if (roles.Select(r => r.Name).Contains(Constants.Role.Admin))
             {
                 this.UpdateUser(email, roles);
-                this.DeleteAttendeeCollaborators(edition, collaboratorTypes, userId);
-                //TODO: Delete CollaboratorTypes from this user
+                this.DeleteAttendeeCollaborators(edition, userId);
             }
 
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
-        
+
         /// <summary>Updates the admin main information.</summary>
         /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="firstName">The first name.</param>
@@ -855,6 +849,34 @@ namespace PlataformaRio2C.Domain.Entities
             this.DeleteAttendeeCollaborators(edition, collaboratorType, userId);
 
             if (this.FindAllAttendeeCollaboratorsNotDeleted(edition)?.Any() == false)
+            {
+                this.IsDeleted = true;
+                this.UpdateImageUploadDate(false, true);
+                this.Deleteuser();
+            }
+        }
+
+        /// <summary>
+        /// Deletes the specified edition.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(Edition edition, bool isDeletingFromCurrentEdition, int userId)
+        {
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+            this.DeleteAttendeeCollaborators(edition, userId);
+
+            if (isDeletingFromCurrentEdition)
+            {
+                if (this.FindAllAttendeeCollaboratorsNotDeleted()?.Any() == false)
+                {
+                    this.IsDeleted = true;
+                    this.UpdateImageUploadDate(false, true);
+                    this.Deleteuser();
+                }
+            }
+            else
             {
                 this.IsDeleted = true;
                 this.UpdateImageUploadDate(false, true);
@@ -1421,17 +1443,19 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        /// <summary>Deletes the attendee collaborators.</summary>
+        /// <summary>
+        /// Deletes the attendee collaborators.
+        /// </summary>
         /// <param name="edition">The edition.</param>
-        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="collaboratorTypes">The collaborator types.</param>
         /// <param name="userId">The user identifier.</param>
-        private void DeleteAttendeeCollaborators(Edition edition, List<CollaboratorType> collaboratorTypes, int userId)
+        private void DeleteAttendeeCollaborators(Edition edition, int userId)
         {
             if (AttendeeCollaborators != null)
             {
                 foreach (var attendeeCollaborator in this.FindAllAttendeeCollaboratorsNotDeleted(edition))
                 {
-                    attendeeCollaborator?.Delete(collaboratorTypes, userId);
+                    attendeeCollaborator?.Delete( userId);
                 }
             }
         }
@@ -1442,6 +1466,15 @@ namespace PlataformaRio2C.Domain.Entities
         private List<AttendeeCollaborator> FindAllAttendeeCollaboratorsNotDeleted(Edition edition)
         {
             return this.AttendeeCollaborators?.Where(ac => (edition == null || ac.EditionId == edition.Id) && !ac.IsDeleted)?.ToList();
+        }
+
+        /// <summary>
+        /// Finds all attendee collaborators not deleted.
+        /// </summary>
+        /// <returns></returns>
+        private List<AttendeeCollaborator> FindAllAttendeeCollaboratorsNotDeleted()
+        {
+            return this.AttendeeCollaborators?.Where(ac => !ac.IsDeleted)?.ToList();
         }
 
         #endregion

@@ -11,9 +11,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Domain.Constants;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace PlataformaRio2C.Application.ViewModels
 {
@@ -27,16 +29,12 @@ namespace PlataformaRio2C.Application.ViewModels
         public bool ShowAllEditions { get; set; }
 
         [Display(Name = "Roles", ResourceType = typeof(Labels))]
-        public string[] Roles { get; set; }
-
-        [Display(Name = "SelectedRoles", ResourceType = typeof(Labels))]
-        public string[] SelectedRoles { get; set; }
+        public IEnumerable<Role> Roles { get; private set; }
+        //public string[] Roles { get; set; }
 
         [Display(Name = "CollaboratorTypes", ResourceType = typeof(Labels))]
-        public string[] CollaboratorTypes { get; set; }
-
-        [Display(Name = "SelectedCollaboratorTypes", ResourceType = typeof(Labels))]
-        public string[] SelectedCollaboratorTypes { get; set; }
+        public IEnumerable<CollaboratorType> CollaboratorTypes { get; private set; }
+        //public string[] CollaboratorTypes { get; set; }
 
         public int? Page { get; set; }
         public int? PageSize { get; set; }
@@ -44,9 +42,30 @@ namespace PlataformaRio2C.Application.ViewModels
         /// <summary>Initializes a new instance of the <see cref="ManagerSearchViewModel"/> class.</summary>
         public ManagerSearchViewModel()
         {
-            //this.ShowAllEditions = true;
-            this.CollaboratorTypes = CollaboratorType.Admins;
-            this.Roles = Role.AnyAdminArray;
+            //this.CollaboratorTypes = CollaboratorType.Admins;
+            //this.Roles = Role.AnyAdminArray;
+        }
+
+        /// <summary>
+        /// Updates the roles.
+        /// </summary>
+        /// <param name="roles">The roles.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public void UpdateRoles(List<Role> roles, string userInterfaceLanguage)
+        {
+            roles.ForEach(r => r.Translate(userInterfaceLanguage));
+            this.Roles = roles.OrderBy(ct => ct.Description);
+        }
+
+        /// <summary>
+        /// Updates the collaborator types.
+        /// </summary>
+        /// <param name="collaboratorTypes">The collaborator types.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public void UpdateCollaboratorTypes(List<CollaboratorType> collaboratorTypes, string userInterfaceLanguage)
+        {
+            collaboratorTypes.ForEach(ct => ct.Translate(userInterfaceLanguage));
+            this.CollaboratorTypes = collaboratorTypes.OrderBy(ct => ct.Description);
         }
     }
 }

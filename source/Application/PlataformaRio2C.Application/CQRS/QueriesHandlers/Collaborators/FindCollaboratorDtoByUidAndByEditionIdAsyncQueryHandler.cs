@@ -38,7 +38,7 @@ namespace PlataformaRio2C.Application.CQRS.QueriesHandlers
         /// <returns></returns>
         public async Task<CollaboratorDto> Handle(FindCollaboratorDtoByUidAndByEditionIdAsync cmd, CancellationToken cancellationToken)
         {
-            return await this.repo.FindDtoByUidAndByEditionIdAsync(cmd.CollaboratorUid, cmd.EditionId);
+            return await this.repo.FindDtoByUidAndByEditionIdAsync(cmd.CollaboratorUid, cmd.EditionId, cmd.UserInterfaceLanguage);
         }
     }
 }

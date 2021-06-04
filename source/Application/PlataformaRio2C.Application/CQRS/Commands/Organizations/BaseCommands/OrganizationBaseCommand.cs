@@ -15,11 +15,13 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
+using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -44,7 +46,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string TradeName { get; set; }
 
         [Display(Name = "Country", ResourceType = typeof(Labels))]
-        //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? CountryUid { get; set; }
 
         public bool IsCompanyNumberRequired { get; set; }
@@ -77,6 +78,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Display(Name = "PhoneNumber", ResourceType = typeof(Labels))]
         [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string PhoneNumber { get; set; }
+
+        public bool IsVirtualMeetingRequired => (this.OrganizationType != null && this.OrganizationType?.Name == Constants.OrganizationType.AudiovisualBuyer);
+        [Display(Name = "AcceptsVirtualMeeting", ResourceType = typeof(Labels))]
+        [RequiredIf(nameof(IsVirtualMeetingRequired), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public bool? IsVirtualMeeting { get; set; }
 
         public AddressBaseCommand Address { get; set; }
 
@@ -135,7 +141,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isDescriptionRequired, 
             bool isAddressRequired, 
             bool isRestrictionSpecificRequired, 
-            bool isImageRequired)
+            bool isImageRequired,
+            bool isVirtualMeetingRequired)
         {
             this.HoldingUid = entity?.HoldingBaseDto?.Uid;
             this.Name = entity?.Name;
@@ -150,6 +157,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Instagram = entity?.Instagram;
             this.Youtube = entity?.Youtube;
             this.PhoneNumber = entity?.PhoneNumber;
+
+            this.OrganizationType = organizationType;
+            this.IsVirtualMeeting = entity?.IsVirtualMeeting == true;
+
             this.UpdateAddress(entity, isAddressRequired);
             this.UpdateDescriptions(entity, languagesDtos, isDescriptionRequired);
             this.UpdateRestrictionSpecifics(entity, languagesDtos, isRestrictionSpecificRequired);
@@ -186,7 +197,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="userId">The user identifier.</param>
         /// <param name="userUid">The user uid.</param>
         /// <param name="editionId">The edition identifier.</param>
-        /// <param name="editionUid">The edition uid.</param>
+        /// <param name="editionUid">The edition uid.</param>d
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public void UpdatePreSendProperties(
             OrganizationType organizationType,

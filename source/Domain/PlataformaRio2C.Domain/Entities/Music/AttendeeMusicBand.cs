@@ -113,10 +113,10 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.AttendeeMusicBandEvaluations == null)
                 this.AttendeeMusicBandEvaluations = new List<AttendeeMusicBandEvaluation>();
 
-            var existentEvaluation = this.GetAttendeeMusicBandEvaluationByEvaluatorId(evaluatorUser.Id);
-            if (existentEvaluation != null)
+            var existentAttendeeMusicBandEvaluation = this.GetAttendeeMusicBandEvaluationByEvaluatorId(evaluatorUser.Id);
+            if (existentAttendeeMusicBandEvaluation != null)
             {
-                existentEvaluation.Update(grade, evaluatorUser.Id);
+                existentAttendeeMusicBandEvaluation.Update(grade, evaluatorUser.Id);
             }
             else
             {
@@ -127,24 +127,32 @@ namespace PlataformaRio2C.Domain.Entities
                     evaluatorUser.Id));
             }
 
-            this.Grade = this.GetAverageEvaluation();
+            this.Grade = this.GetAverageEvaluation(this.Edition);
             this.EvaluationsCount = AttendeeMusicBandEvaluations.Count;
             this.LastEvaluationDate = DateTime.UtcNow;
-            this.EvaluationEmailSendDate = null;//TODO: Oque passar aqui?
+            this.EvaluationEmailSendDate = null;//TODO: ?
+        }
+
+        /// <summary>
+        /// Recalculates the grade.
+        /// </summary>
+        public void RecalculateGrade(Edition edition)
+        {
+            this.Grade = this.GetAverageEvaluation(edition);
         }
 
         /// <summary>
         /// Gets the average evaluation.
         /// </summary>
         /// <returns></returns>
-        private decimal? GetAverageEvaluation()
+        private decimal? GetAverageEvaluation(Edition edition)
         {
             if (this.AttendeeMusicBandEvaluations == null)
                 return 0;
 
             //Can only generate the 'AverageEvaluation' when the 'AttendeeMusicBandEvaluations' count 
             //is greather or equal than minimum necessary evaluations quantity
-            if (GetAttendeeMusicBandEvaluationTotalCount() >= this.Edition.MusicProjectMinimumEvaluationsCount)
+            if (GetAttendeeMusicBandEvaluationTotalCount() >= edition.MusicProjectMinimumEvaluationsCount)
             {
                 return this.AttendeeMusicBandEvaluations.Sum(e => e.Grade) / this.AttendeeMusicBandEvaluations.Count;
             }

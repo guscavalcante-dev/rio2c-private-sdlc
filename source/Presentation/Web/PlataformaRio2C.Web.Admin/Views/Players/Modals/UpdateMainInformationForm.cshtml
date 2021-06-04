@@ -1,0 +1,43 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateOrganizationMainInformation
+@if (Model.Country != null)
+{
+    <select name="CountryUid" id="CountryUid" class="d-none">
+        <option value="@(Model.Country.Uid)" data-country-code="@(Model.Country.Code)" data-companynumber-required="@(Model.Country.IsCompanyNumberRequired)" data-companynumber-mask="@(Model.Country.CompanyNumberMask)" data-zipcode-mask="@(Model.Country.ZipCodeMask)" data-phonenumber-mask="@(Model.Country.PhoneNumberMask)" data-mobile-mask="@(Model.Country.MobileMask)" selected>@(Model.Country.Name)</option>
+    </select>
+}
+<div class="row">
+    <div class="form-group col-lg-4 text-center">
+        @Html.EditorFor(m => m.CropperImage)
+    </div>
+    <div class="col-lg-8">
+        <div class="row">
+            <div class="form-group col-md-12">
+                @Html.LabelFor(m => m.TradeName, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.TradeName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.TradeName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12">
+                @Html.LabelFor(m => m.CompanyName, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-12 col-xl-6">
+                @Html.HiddenFor(m => m.IsCompanyNumberRequired)
+                @Html.LabelFor(m => m.Document, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Document, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Document, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+</div>
+<div class="kt-section mt-30">
+    <h3 class="kt-heading kt-heading--md">@Labels.CompanyResume</h3>
+    @Html.ValidationMessage("Descriptions", new { @class = "text-danger" })
+    <div class="kt-section__content mt-3">
+        @Html.EditorFor(m => m.Descriptions)
+    </div>
+</div>

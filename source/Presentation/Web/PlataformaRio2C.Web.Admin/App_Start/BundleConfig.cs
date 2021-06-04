@@ -381,6 +381,17 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/organizations.delete.js").Include(
                 "~/Assets/js/organizations/organizations.delete.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/organizations.widget.js").Include(
+                "~/Assets/js/organizations/organizations.maininformation.widget.js",
+                "~/Assets/js/organizations/organizations.socialnetworks.widget.js",
+                "~/Assets/js/organizations/organizations.address.widget.js",
+                "~/Assets/js/organizations/organizations.activity.widget.js",
+                "~/Assets/js/organizations/organizations.targetaudience.widget.js",
+                "~/Assets/js/organizations/organizations.interest.widget.js",
+                "~/Assets/js/organizations/organizations.executive.widget.js",
+                "~/Assets/js/myrio2c.companynumber.js",
+                "~/Assets/js/myrio2c.additionalinfo.js"));
+
             #endregion
 
             #region Collaborators - Executives
@@ -676,6 +687,9 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.create.js").Include(
                 "~/Assets/js/audiovisual/meetings/audiovisual.meetings.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.update.js").Include(
+                "~/Assets/js/audiovisual/meetings/audiovisual.meetings.update.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.report.widget.js").Include(
                 "~/Assets/js/audiovisual/meetings/audiovisual.meetings.report.widget.js"));

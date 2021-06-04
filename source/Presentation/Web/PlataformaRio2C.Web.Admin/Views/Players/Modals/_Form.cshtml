@@ -61,13 +61,62 @@
                 @Html.ValidationMessageFor(m => m.Document, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        <div class="kt-section mt-50 mb-0">
+            <h3 class="kt-heading kt-heading--md">@Labels.VirtualMeetingConfiguration</h3>
+            <div class="kt-section__content">
+                <div class="row">
+                    <div class="col-sm-6">
+                        @Html.HiddenFor(m => m.IsVirtualMeetingRequired)
+                        <div class="row">
+                            <div class="col-12">
+                                @Html.LabelFor(m => m.IsVirtualMeeting, new { @class = "control-label" }) ?
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-12">
+                                <div class="kt-radio-list ml-3" data-id="IsVirtualMeeting">
+                                    <label class="kt-radio">
+                                        @Html.RadioButtonFor(m => m.IsVirtualMeeting, true) @Labels.Yes
+                                        <span></span>
+                                    </label>
+                                    <label class="kt-radio">
+                                        @Html.RadioButtonFor(m => m.IsVirtualMeeting, false) @Labels.No
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-12">
+                                    @Html.LabelFor(m => m.IsVirtualMeeting, new { @class = "control-label" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-12 m-0">
+                                    <span class="kt-switch kt-switch--icon">
+                                        <label>
+                                            @Html.HiddenFor(m => m.IsVirtualMeetingRequired)
+                                            @Html.CheckBoxFor(m => m.IsVirtualMeeting)
+                                            <span></span>
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>*@
+                </div>
+            </div>
+        </div>
+
         <div class="kt-section mt-50 mb-0">
             <h3 class="kt-heading kt-heading--md">@Labels.SocialNetworks</h3>
             <div class="kt-section__content mt-3">
                 <div class="row">
                     <div class="form-group col-xl-6">
                         @Html.LabelFor(m => m.Website, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
-                        @Html.TextBoxFor(m => m.Website, new { @class = "form-control" }) 
+                        @Html.TextBoxFor(m => m.Website, new { @class = "form-control" })
                         <span class="form-text text-muted">@Messages.WebsiteUrl</span>
                         <span class="form-text text-muted">@Labels.Eg: site.com @Labels.Or www.site.com</span>
                         @Html.ValidationMessageFor(m => m.Website, "", new { @class = "text-danger" })
@@ -106,14 +155,7 @@
                     </div>
                 </div>
             </div>
-        </div>        
-            @*<div class="form-group row">
-                <div class="col-md-12">
-                    @Html.LabelFor(m => m.PhoneNumber, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
-                    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
+        </div>
         <div class="kt-section pt-4">
             <h3 class="kt-section__title mb-0">
                 @Labels.Address <span class="form-optional-input text-muted">@Labels.Optional</span>

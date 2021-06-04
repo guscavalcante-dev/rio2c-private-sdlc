@@ -1,0 +1,57 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Entities
+@model AttendeeOrganizationSiteTargetAudienceWidgetDto
+@{
+    //var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    //var isCollaborator = userAccessControlDto?.HasEditionAttendeeOrganization(Model.AttendeeOrganization.Uid) == true;
+    var targetAudiences = ViewBag.TargetAudiences as List<TargetAudience>;
+}
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+            @Labels.TargetAudience
+        </h3>
+    </div>
+    @*@if (isCollaborator)
+    {*@
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-actions">
+                <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="OrganizationsTargetAudienceWidget.showUpdateModal();">
+                    <i class="flaticon2-edit"></i>
+                </button>
+            </div>
+        </div>
+    @*}*@
+</div>
+<div class="kt-portlet__body">
+    @if (targetAudiences?.Any() == true)
+    {
+        <div class="kt-widget4">
+            @foreach (var targetAudience in targetAudiences.OrderBy(a => a.DisplayOrder))
+            {
+                var organiationTargetAudienceDto = Model.GetOrganizationTargetAudienceDtoByTargetAudienceUid(targetAudience.Uid);
+                <div class="kt-widget4__item pt-2 pb-2">
+                    @if (organiationTargetAudienceDto != null)
+                    {
+                        <div class="kt-widget4__pic kt-font-success">
+                            <i class="la la-check"></i>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="kt-widget4__pic kt-font-danger">
+                            <i class="la la-close"></i>
+                        </div>
+                    }
+                    <div class="kt-widget4__info">
+                        <span class="kt-widget4__title">@targetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.TargetAudience, Labels.FoundF)</span>
+    }
+</div>

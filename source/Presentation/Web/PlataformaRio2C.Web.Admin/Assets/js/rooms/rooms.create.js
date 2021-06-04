@@ -26,6 +26,7 @@ var RoomsCreate = function () {
     var enablePlugins = function () {
         enableAjaxForm();
         enableFormValidation();
+        MyRio2cCommon.enableYesNoRadioEvent("IsVirtualMeeting");
     };
 
     // Show modal ---------------------------------------------------------------------------------

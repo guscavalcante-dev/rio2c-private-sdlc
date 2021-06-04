@@ -116,6 +116,11 @@ var OrganizationsDataTableWidget = function () {
                                     </tr>\
                                 </table>';
 
+                        if (!MyRio2cCommon.isNullOrEmpty(full.IsVirtualMeeting)) {
+                            var virtualOrPresentialText = (full.IsVirtualMeeting === true) ? virtual : presential;
+                            html += '<span class="kt-badge kt-badge--inline kt-badge--warning kt-font-boldest mt-2 w-50">' + virtualOrPresentialText + '</span>';
+                        }
+
                         if (!full.IsInCurrentEdition) {
                             html += '<span class="kt-badge kt-badge--inline kt-badge--info mt-2">' + labels.notInEdition + '</span>';
                         }
@@ -154,7 +159,7 @@ var OrganizationsDataTableWidget = function () {
                             html += '<button class="dropdown-item" onclick="OrganizationsUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         }
 
-                        html += '<button class="dropdown-item" onclick="OrganizationsUpdate.showModal(\'' + full.Uid + '\', false);"><i class="la la-edit"></i> ' + labels.edit + '</button>';
+                        html += '<button class="dropdown-item" onclick="OrganizationsDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
 
                         if (full.IsInCurrentEdition && full.IsInOtherEdition) {
                             html += '<button class="dropdown-item" onclick="OrganizationsDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + removeFromEdition + '</button>';
@@ -216,6 +221,14 @@ var OrganizationsDataTableWidget = function () {
         table.ajax.reload();
     };
 
+    var showDetails = function (playerUid) {
+        if (MyRio2cCommon.isNullOrEmpty(playerUid)) {
+            return;
+        }
+
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Players/Details/' + playerUid);
+    };
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
@@ -223,6 +236,9 @@ var OrganizationsDataTableWidget = function () {
         },
         refreshData: function() {
             refreshData();
+        },
+        showDetails: function (editionUid) {
+            showDetails(editionUid);
         }
     };
 }();

@@ -213,16 +213,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                               .FirstOrDefaultAsync();
 
             return new EditionDto(edition);
-
-            //var query = this.GetBaseQuery()
-            //                   .FindByUid(editionUid);
-
-            //return await query
-            //                .Select(e => new EditionDto()
-            //                {
-            //                    Edition = e
-            //                })
-            //                .FirstOrDefaultAsync();
         }
 
         /// <summary>
@@ -237,16 +227,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                               .FirstOrDefaultAsync();
 
             return new EditionDto(edition);
-
-            //var query = this.GetBaseQuery()
-            //                   .FindById(editionId);
-
-            //return await query
-            //                .Select(e => new EditionDto()
-            //                {
-            //                    Edition = e
-            //                })
-            //                .FirstOrDefaultAsync();
         }
 
         /// <summary>

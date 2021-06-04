@@ -19,7 +19,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     public class DeleteManager : BaseCommand
     {
         public Guid CollaboratorUid { get; set; }
-        public string CollaboratorTypeName { get; set; }
+        public bool IsDeletingFromCurrentEdition { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="DeleteManager"/> class.</summary>
         public DeleteManager()

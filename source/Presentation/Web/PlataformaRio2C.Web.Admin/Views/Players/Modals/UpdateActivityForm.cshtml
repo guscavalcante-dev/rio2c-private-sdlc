@@ -1,0 +1,14 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateOrganizationActivities
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.ValidationMessage("OrganizationActivities", new { @class = "text-danger OrganizationActivities" })
+        <div class="error">
+            <span></span>
+        </div>
+        <div class="kt-section__content mt-3">
+            <div class="kt-checkbox-list">
+                @Html.EditorFor(m => m.OrganizationActivities)
+            </div>
+        </div>
+    </div>
+</div>

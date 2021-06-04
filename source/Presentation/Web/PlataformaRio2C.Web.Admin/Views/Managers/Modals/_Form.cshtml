@@ -54,7 +54,7 @@
                         foreach (var role in Model.Roles)
                         {
                             <option value="@role.Name" @(Model.RoleName == role.Name ? "selected" : "") data-additionalinfo="@(role.Name == Constants.Role.AdminPartial)">
-                                @role.Name
+                                @role.Description
                             </option>
                         }
                     }
@@ -70,7 +70,7 @@
                         foreach (var collaboratorType in Model.CollaboratorTypes)
                         {
                             <option value="@collaboratorType.Name" @(Model.CollaboratorTypeNames?.Contains(collaboratorType.Name) == true ? "selected" : "")>
-                                @collaboratorType.Name
+                                @collaboratorType.Description
                             </option>
                         }
                     }

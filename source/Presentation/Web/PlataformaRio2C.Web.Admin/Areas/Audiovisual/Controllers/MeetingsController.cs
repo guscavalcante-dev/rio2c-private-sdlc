@@ -258,7 +258,112 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/CreateForm", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("/Areas/Audiovisual/Views/Meetings/Modals/CreateForm.cshtml", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Negotiation, Labels.CreatedF) });
+        }
+
+        #endregion
+
+        #region Update
+
+        /// <summary>
+        /// Shows the update modal.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowUpdateModal(Guid? negotiationUid)
+        {
+            UpdateNegotiation cmd;
+
+            try
+            {
+                var negotiationDto = await this.negotiationRepo.FindDtoAsync(negotiationUid ?? Guid.Empty);
+                if (negotiationDto == null)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundM.ToLowerInvariant()));
+                }
+                
+                cmd = new UpdateNegotiation(negotiationDto, this.UserInterfaceLanguage);
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/UpdateModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Updates the specified command.
+        /// </summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        /// <exception cref="DomainException">
+        /// </exception>
+        [HttpPost]
+        public async Task<ActionResult> Update(UpdateNegotiation cmd)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                //BuyerOrganizationUid and ProjectUid get allways null from dropdown selected item, because dropdown is populated via JavaScript and has initialSelection.
+                //These fiels isn't enabled to change, so don't worry with this backend fix!
+                cmd.BuyerOrganizationUid = cmd.InitialBuyerOrganizationUid;
+                cmd.ProjectUid = cmd.InitialProjectUid;
+                
+                UpdateNegotiation u;
+                ModelState.Remove(nameof(u.BuyerOrganizationUid));
+                ModelState.Remove(nameof(u.ProjectUid));
+
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("/Areas/Audiovisual/Views/Meetings/Modals/UpdateForm.cshtml", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }

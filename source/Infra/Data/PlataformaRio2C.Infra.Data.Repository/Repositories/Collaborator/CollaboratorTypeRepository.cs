@@ -61,10 +61,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<CollaboratorType> FindByNames(this IQueryable<CollaboratorType> query, string[] collaboratorTypeNames)
         {
-            //if (collaboratorTypeNames.HasValue())
-            //{
+            if (collaboratorTypeNames.HasValue())
+            {
                 query = query.Where(ct => collaboratorTypeNames.Contains(ct.Name));
-            //}
+            }
 
             return query;
         }
@@ -94,7 +94,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
     #endregion
 
-    /// <summary>CollaboratorTypeRepository</summary>
+    /// <summary> CollaboratorTypeRepository </summary>
     public class CollaboratorTypeRepository : Repository<PlataformaRio2CContext, CollaboratorType>, ICollaboratorTypeRepository
     {
         /// <summary>Initializes a new instance of the <see cref="CollaboratorRepository"/> class.</summary>
@@ -145,18 +145,29 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .ToListAsync();
         }
 
-
         /// <summary>
         /// Finds all admin collaborator types asynchronous.
         /// </summary>
         /// <returns></returns>
-        public async Task<List<CollaboratorType>> FindAllAdminCollaboratorTypesAsync()
+        public async Task<List<CollaboratorType>> FindAllAdminsAsync()
         {
             var query = this.GetBaseQuery()
                             .IsAdmin();
 
             return await query
                             .ToListAsync();
+        }
+
+        /// <summary>
+        /// Finds all admin collaborator types.
+        /// </summary>
+        /// <returns></returns>
+        public List<CollaboratorType> FindAllAdmins()
+        {
+            var query = this.GetBaseQuery()
+                            .IsAdmin();
+
+            return query.ToList();
         }
     }
 }

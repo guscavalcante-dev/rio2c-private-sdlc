@@ -9,7 +9,6 @@
         <div class="kt-portlet kt-portlet--solid-brand kt-portlet--height-fluid mb-0" style="background: #808080;">
             <div class="kt-portlet__head">
                 <div class="kt-portlet__head-label">
-                    @*<span class="kt-portlet__head-icon"><i class="flaticon-stopwatch"></i></span>*@
                     <h3 class="kt-portlet__head-title" style="font-size: 25px;">@date</h3>
                 </div>
             </div>
@@ -22,9 +21,12 @@
 
                         <div class="kt-portlet kt-portlet--solid-warning kt-portletk-portlet--height-fluid" style="background: #d1d1d1;">
                             <div class="kt-portlet__head">
-                                <div class="kt-portlet__head-label">
-                                    @*<span class="kt-portlet__head-icon"><i class="flaticon-stopwatch"></i></span>*@
+                                <div class="kt-portlet__head-label text-center">
                                     <h3 class="kt-portlet__head-title" style="font-size: 20px;">@roomName</h3>
+                                    @{
+                                        var virtualOrPresentialText = negotiationGroupedByRoomDto.Room.IsVirtualMeeting ? Labels.Virtual : Labels.Presential;
+                                        <span class="kt-badge kt-badge--inline kt-badge--warning kt-font-boldest ml-3">@virtualOrPresentialText</span>
+                                    }
                                 </div>
                             </div>
                             <div class="kt-portlet__body">
@@ -75,8 +77,11 @@
                                                                                 </a>
                                                                                 <div class="dropdown-menu dropdown-menu-right">
                                                                                     @*<button class="dropdown-item" onclick="AudiovisualMeetingParametersRoomsWidget.showUpdateModal('');">
+                                                                                            <i class="la la-edit"></i>@Labels.Edit
+                                                                                        </button>*@
+                                                                                    <button class="dropdown-item" onclick="AudiovisualMeetingsUpdate.showModal('@(negotiation?.Uid)');">
                                                                                         <i class="la la-edit"></i>@Labels.Edit
-                                                                                    </button>*@
+                                                                                    </button>
                                                                                     <button class="dropdown-item" onclick="AudiovisualMeetingsScheduledDelete.showModal('@(negotiation?.Uid)');">
                                                                                         <i class="la la-remove"></i>@Labels.Remove
                                                                                     </button>

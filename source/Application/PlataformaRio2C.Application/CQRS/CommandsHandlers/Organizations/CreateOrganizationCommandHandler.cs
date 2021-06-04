@@ -149,6 +149,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.Address?.AddressZipCode,
                 true, //TODO: get AddressIsManual from form
                 cmd.CropperImage?.ImageFile != null,
+                cmd.IsVirtualMeeting,
                 cmd.Descriptions?.Select(d => new OrganizationDescription(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.RestrictionSpecifics?.Select(d => new OrganizationRestrictionSpecific(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.OrganizationActivities?.Where(oa => oa.IsChecked)?.Select(oa => new OrganizationActivity(activities?.FirstOrDefault(a => a.Uid == oa.ActivityUid), oa.AdditionalInfo, cmd.UserId))?.ToList(),

@@ -27,7 +27,7 @@ namespace PlataformaRio2C.Domain.Dtos
 
         public Collaborator Collaborator { get; set; }
         public IEnumerable<CollaboratorType> EditionCollaboratorTypes { get; set; }
-
+        public IEnumerable<AttendeeCollaborator> EditionAttendeeCollaborators { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="AdminAccessControlDto"/> class.</summary>
         public AdminAccessControlDto()

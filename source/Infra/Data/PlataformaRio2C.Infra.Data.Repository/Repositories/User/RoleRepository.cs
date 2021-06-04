@@ -98,6 +98,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
+        /// Finds all admin roles.
+        /// </summary>
+        /// <returns></returns>
+        public List<Role> FindAllAdminRoles()
+        {
+            var query = this.GetBaseQuery()
+                           .IsAdmin();
+
+            return query.ToList();
+        }
+
+        /// <summary>
         /// Finds the by name asynchronous.
         /// </summary>
         /// <param name="roleName">Name of the role.</param>

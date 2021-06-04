@@ -64,7 +64,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #region Initial validations
 
             // Check if exists an user with the same email
-            var user = await this.userRepo.GetAsync(u => u.Email == cmd.Email.Trim());
+            var user = await this.userRepo.GetAsync(u => u.Email == cmd.Email.Trim() && !u.IsDeleted);
             if (user != null && (collaborator?.User == null || user.Uid != collaborator?.User?.Uid))
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.User.ToLowerInvariant(), $"{Labels.TheM.ToLowerInvariant()} {Labels.Email.ToLowerInvariant()}", cmd.Email), new string[] { "Email" }));

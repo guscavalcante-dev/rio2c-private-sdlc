@@ -24,7 +24,7 @@ var AudiovisualMeetingsCreate = function () {
     var roundNumberId = '#RoundNumber';
     var globalVariables = MyRio2cCommon.getGlobalVariables();
 
-    // Buyer organization select2 -----------------------------------------------------------------
+    // Buyer organization select2 ----------------------------------------------------------------
     var enableBuyerOrganizationChangeEvent = function () {
         var element = $(buyerOrganizationId);
 
@@ -34,7 +34,7 @@ var AudiovisualMeetingsCreate = function () {
 	    element.addClass('change-event-enabled');
     };
 
-    // Project select2 ----------------------------------------------------------------------------
+    // Project select2 ---------------------------------------------------------------------------
     var toogleProjectSelect2 = function () {
 	    var element = $(projectId);
 
@@ -96,6 +96,7 @@ var AudiovisualMeetingsCreate = function () {
         else {
 	        var jsonParameters = new Object();
 	        jsonParameters.customFilter = 'HasManualTables';
+            jsonParameters.buyerOrganizationUid = $(buyerOrganizationId).val();
 
 	        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/FindAllDates'), jsonParameters, function (data) {
 	            MyRio2cCommon.handleAjaxReturn({
@@ -195,6 +196,7 @@ var AudiovisualMeetingsCreate = function () {
             var jsonParameters = new Object();
             jsonParameters.customFilter = 'HasManualTables';
             jsonParameters.negotiationConfigUid = $(negotiationConfigId).val();
+            jsonParameters.buyerOrganizationUid = $(buyerOrganizationId).val();
 
             $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/FindAllRooms'), jsonParameters, function (data) {
                 MyRio2cCommon.handleAjaxReturn({
@@ -255,7 +257,6 @@ var AudiovisualMeetingsCreate = function () {
 	    element.addClass('change-event-enabled');
     };
 
-
     // Start time select2 -------------------------------------------------------------------------
     var toogleStartTimeSelect2 = function () {
         var element = $(startTimeId);
@@ -295,6 +296,7 @@ var AudiovisualMeetingsCreate = function () {
             var jsonParameters = new Object();
             jsonParameters.customFilter = 'HasManualTables';
             jsonParameters.negotiationRoomConfigUid = negotiationRoomConfigUid;
+            jsonParameters.buyerOrganizationUid = $(buyerOrganizationId).val();
 
             $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/FindAllTimes'), jsonParameters, function (data) {
                 MyRio2cCommon.handleAjaxReturn({

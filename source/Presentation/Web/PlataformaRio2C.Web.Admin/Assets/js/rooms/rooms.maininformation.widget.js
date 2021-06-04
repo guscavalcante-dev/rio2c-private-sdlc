@@ -76,6 +76,7 @@ var RoomsMainInformationWidget = function () {
     var enableUpdatePlugins = function () {
         enableAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
+        MyRio2cCommon.enableYesNoRadioEvent("IsVirtualMeeting");
     };
 
     var showUpdateModal = function () {
