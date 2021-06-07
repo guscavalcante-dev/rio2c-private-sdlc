@@ -101,35 +101,17 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             // Loop webhook requests
             foreach (var processingRequestDto in pendingRequestsDtos)
-            {
-
-
-                var payload = processingRequestDto.SalesPlatformWebhookRequest.Payload;
-                var dto = new JavaScriptSerializer().Deserialize<IntiSaleOrCancellation>(payload);
-
-                //salesPlatformServiceFactory
-
-                /*
-                List<SalesPlatformAttendeeDto> listAtt = new List<SalesPlatformAttendeeDto>()
-                {
-                    
-                    new SalesPlatformAttendeeDto()
-                    {
-                        Name = processingRequestDto.na
-                    }
-                    
-                };
-                */
+            {                                
                 Tuple<string, List<SalesPlatformAttendeeDto>> salesPlatformResponse;
 
                 #region Get info from api
+                var salesPlatformService = this.SalesPlatformServiceFactory.Get(processingRequestDto);
+                salesPlatformResponse = salesPlatformService.ExecuteRequest();
 
                 try
-                {
-
-                    //if (processingRequestDto.SalesPlatformDto.Name == "Eventbrite"){
-                        var salesPlatformService = this.SalesPlatformServiceFactory.Get(processingRequestDto);
-                        salesPlatformResponse = salesPlatformService.ExecuteRequest();
+                {      
+                    if (processingRequestDto.SalesPlatformDto.Name == "Eventbrite"){
+                       
                         if (salesPlatformResponse?.Item2?.Any() != true)
                         {
                             var errorMessage = $"No attendee returned by api for Uid: {processingRequestDto.Uid}";
@@ -138,7 +120,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                             this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
                             continue;
                         }
-                    //}
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -348,6 +330,47 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         processingRequestDto.SalesPlatformWebhookRequest.Abort("000000008", errorMessage);
                         this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
                         continue;
+                    }
+                    // Order Placed
+                    else if(salesPlatformResponse.Item1 == SalesPlatformAction.OrderPlaced)
+                    {
+                        // Check if the edition exits                        
+                        var attendeeSalesPlatformDto = attendeeSalesPlatformsDtos?.FirstOrDefault();
+                        if (attendeeSalesPlatformDto == null)
+                        {
+                            var errorMessage = $"Edition not found or not active " +
+                                               $"(SalesPlatformAttendeeId: {salesPlatformAttendeeDto.AttendeeId}; " +
+                                               $"SalesPlatformEventId: {salesPlatformAttendeeDto.EventId}).";
+                            currentValidationResult.Add(new ValidationError("000000003", errorMessage));
+                            continue;
+                        }
+
+                        var collaboratorByAttendeeId = await this.collaboratorRepo.FindBySalesPlatformAttendeeIdAsync(salesPlatformAttendeeDto.AttendeeId);
+
+                        // Check if the ticket type exists
+                        var attendeeSalesPlatformTicketTypeDto = attendeeSalesPlatformDto.AttendeeSalesPlatformTicketTypesDtos.FirstOrDefault();
+                        if (attendeeSalesPlatformTicketTypeDto == null)
+                        {
+                            var errorMessage = $"Ticket class not found or not active " +
+                                               $"(SalesPlatformAttendeeId: {salesPlatformAttendeeDto.AttendeeId}; " +
+                                               $"TicketClassId: {salesPlatformAttendeeDto.TicketClassId}; " +
+                                               $"TicketClassName: {salesPlatformAttendeeDto.TicketClassName}).";
+                            currentValidationResult.Add(new ValidationError("000000004", errorMessage));
+                            continue;
+                        }
+
+                        // Create collaborator ant ticket for new email
+                        var response2 = await this.CommandBus.Send(new CreateCollaboratorTicket(
+                            salesPlatformAttendeeDto,
+                            attendeeSalesPlatformDto.Edition,
+                            collaboratorByAttendeeId?.GetAttendeeCollaboratorByEditionId(attendeeSalesPlatformDto.Edition.Id)?.GetAllAttendeeOrganizations(),
+                            attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType,
+                            attendeeSalesPlatformTicketTypeDto.CollaboratorType,
+                            attendeeSalesPlatformTicketTypeDto.Role), cancellationToken);
+                        foreach (var error in response2?.Errors)
+                        {
+                            currentValidationResult.Add(new ValidationError(error.Message));
+                        }
                     }
                     // Action not mapped
                     else

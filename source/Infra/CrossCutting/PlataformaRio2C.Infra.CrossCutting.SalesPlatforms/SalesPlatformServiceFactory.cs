@@ -39,7 +39,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms
 
             if (salesPlatformWebhookRequestDto?.SalesPlatformDto?.Name == "Inti")
             {
-                return new IntiSalesPlatformService(salesPlatformWebhookRequestDto);
+               return new IntiSalesPlatformService(salesPlatformWebhookRequestDto);
             }
 
             throw new DomainException("Unknown sales platform on webhook request.");

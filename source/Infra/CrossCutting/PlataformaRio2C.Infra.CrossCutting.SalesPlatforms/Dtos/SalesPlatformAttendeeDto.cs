@@ -13,7 +13,10 @@
 // ***********************************************************************
 
 using System;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
+
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.Models;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Models;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
 {
@@ -93,6 +96,41 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
             this.IsBarcodePrinted = barcode?.IsPrinted ?? false;
             this.IsBarcodeUsed = barcode?.IsBarcodeUsed() ?? false;
             this.BarcodeUpdateDate = barcode?.Changed;
+        }
+
+        public SalesPlatformAttendeeDto(IntiSaleOrCancellation intiSale)
+        {
+            // Event
+            this.EventId = intiSale.relationships.event_id;
+
+            // Order
+            this.OrderId = intiSale.relationships.order_id;
+
+            // Attendee
+            this.AttendeeId = intiSale.relationships.buyer_id; // FIXME
+            this.SalesPlatformUpdateDate = DateTime.Now;
+            this.SalesPlatformAttendeeStatus = Dtos.SalesPlatformAttendeeStatus.Attending;
+            this.IsCancelled = false;
+            this.IsCheckedIn = false;
+            this.TicketClassId = intiSale.price_name;
+            this.TicketClassName = intiSale.price_name;
+
+            // Profile
+            this.FirstName = intiSale.name.Contains(" ") ? intiSale.name.Split(Convert.ToChar(" "))[0] : intiSale.name;
+            this.LastMame = intiSale.name.Contains(" ") ? intiSale.name.Split(Convert.ToChar(" "))[1] : ""; 
+            this.Gender = "";
+            this.Age = null;
+            this.Name = intiSale.name;
+            this.BirthDate = "";
+            this.CellPhone = "0";
+            this.Email = intiSale.email;
+            this.JobTitle = "_";
+
+            // Barcode            
+            this.Barcode = intiSale.validator_code;
+            this.IsBarcodePrinted = false;
+            this.IsBarcodeUsed = false;
+            this.BarcodeUpdateDate = null;
         }
     }
 }

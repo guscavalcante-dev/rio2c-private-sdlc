@@ -63,14 +63,14 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Mode
 
     public partial class AgeRating
     {
-        [JsonProperty("name")]
-        public string Name { get; set; }
+        //[JsonProperty("name")]
+        //public string Name { get; set; }
 
-        [JsonProperty("description")]
-        public string Description { get; set; }
+        //[JsonProperty("description")]
+        //public string Description { get; set; }
 
-        [JsonProperty("image_url")]
-        public Uri ImageUrl { get; set; }
+        //[JsonProperty("image_url")]
+        //public Uri ImageUrl { get; set; }
     }
 
     public partial class Establishment
