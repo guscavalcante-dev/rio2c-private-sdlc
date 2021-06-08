@@ -1131,6 +1131,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Não há mesas disponíveis com início às &apos;{0}&apos; na sala &apos;{1}&apos; .
+        /// </summary>
+        public static string NoMoreTablesAvailableAtTheRoomAndStartTime {
+            get {
+                return ResourceManager.GetString("NoMoreTablesAvailableAtTheRoomAndStartTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nenhum {0} {1}..
         /// </summary>
         public static string NoneEntityAction {

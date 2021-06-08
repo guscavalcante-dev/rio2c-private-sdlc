@@ -970,4 +970,8 @@
     <value>This change can conflicts with other Player or Producer rounds, do you want to continue?</value>
     <comment>This change can conflicts with other Player or Producer rounds, do you want to continue?</comment>
   </data>
+  <data name="NoMoreTablesAvailableAtTheRoomAndStartTime" xml:space="preserve">
+    <value>There are no tables available starting at '{0}' in room '{1}'</value>
+    <comment>There are no tables available starting at '{0}' in room '{1}'</comment>
+  </data>
 </root>

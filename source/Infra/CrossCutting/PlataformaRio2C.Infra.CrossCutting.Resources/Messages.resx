@@ -975,4 +975,8 @@
     <value>Essa alteração pode gerar um conflito com outras rodadas do Player ou da Produtora, deseja continuar?</value>
     <comment>Essa alteração pode gerar um conflito com outras rodadas do Player ou da Produtora, deseja continuar?</comment>
   </data>
+  <data name="NoMoreTablesAvailableAtTheRoomAndStartTime" xml:space="preserve">
+    <value>Não há mesas disponíveis com início às '{0}' na sala '{1}' </value>
+    <comment>Não há mesas disponíveis com início às '{0}' na sala '{1}'</comment>
+  </data>
 </root>

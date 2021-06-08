@@ -88,6 +88,22 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
         }
 
+        /// <summary>
+        /// Gets the room name by language code.
+        /// </summary>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        /// <returns></returns>
+        public string GetRoomNameByLanguageCode(string userInterfaceLanguage)
+        {
+            if (string.IsNullOrEmpty(userInterfaceLanguage))
+            {
+                userInterfaceLanguage = "pt-br";
+            }
+
+            return this.RoomNames?.FirstOrDefault(rn => rn.Language.Code == userInterfaceLanguage).Value ??
+                   this.RoomNames?.FirstOrDefault(rn => rn.Language.Code == "pt-br").Value;
+        }
+
         #region Room Names
 
         /// <summary>Synchronizes the room names.</summary>
