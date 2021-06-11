@@ -43,6 +43,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         private readonly INegotiationRepository negotiationRepo;
         private readonly IProjectBuyerEvaluationRepository projectBuyerEvaluationRepo;
         private readonly IRoomRepository roomRepo;
+        private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
 
         /// <summary>Initializes a new instance of the <see cref="MeetingsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -55,12 +56,14 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             IdentityAutenticationService identityController,
             INegotiationRepository negotiationRepository,
             IProjectBuyerEvaluationRepository projectBuyerEvaluationRepository,
-            IRoomRepository roomRepository)
+            IRoomRepository roomRepository,
+            IAttendeeCollaboratorRepository attendeeCollaboratorRepository)
             : base(commandBus, identityController)
         {
             this.negotiationRepo = negotiationRepository;
             this.projectBuyerEvaluationRepo = projectBuyerEvaluationRepository;
             this.roomRepo = roomRepository;
+            this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
         }
 
         #region Generate Agenda
@@ -270,6 +273,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             try
             {
+                //cmd.InitialBuyerOrganizationUid = cmd.BuyerOrganizationUid;
+                //cmd.InitialProjectUid = cmd.ProjectUid;
+
+                //CreateNegotiation c;
+                //ModelState.Remove(nameof(c.InitialBuyerOrganizationUid));
+                //ModelState.Remove(nameof(c.InitialProjectUid));
+
                 if (!ModelState.IsValid)
                 {
                     throw new DomainException(Messages.CorrectFormValues);
@@ -641,6 +651,35 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         }
 
         #endregion
+
+        #endregion
+
+        #region Logistic Info Widget
+
+        /// <summary>
+        /// Shows the logistics information widget.
+        /// </summary>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowLogisticsInfoWidget(Guid? organizationUid)
+        {
+            var attendeeCollaboratorDtos = await this.attendeeCollaboratorRepo.FindPlayerExecutivesLogisticsDtosAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id);
+            if (attendeeCollaboratorDtos == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Logistics, Labels.FoundMP.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+            
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    //~/Areas/Audiovisual/Views/Meetings/Widgets/LogisticsInfoWidget.cshtml
+                    new { page = this.RenderRazorViewToString("~/Areas/Audiovisual/Views/Meetings/Widgets/LogisticsInfoWidget.cshtml", attendeeCollaboratorDtos), divIdOrClass = "#AudiovisualMeetingsLogisticsInfoWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
         #endregion
 

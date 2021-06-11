@@ -21,6 +21,7 @@
 </div>
 <div class="row">
     <div class="form-group col-12">
+        @Html.Hidden("InitialNegotiationConfigUid", Model.NegotiationConfigUid)
         @Html.LabelFor(m => m.NegotiationConfigUid, new { @class = "control-label" })
         @Html.DropDownListFor(m => m.NegotiationConfigUid, Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAMEntity, Labels.Date.ToLowerInvariant())}...", new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.NegotiationConfigUid, "", new { @class = "text-danger" })
@@ -28,6 +29,7 @@
 </div>
 <div class="row">
     <div class="form-group col-12">
+        @Html.Hidden("InitialNegotiationRoomConfigUid", Model.NegotiationRoomConfigUid)
         @Html.LabelFor(m => m.NegotiationRoomConfigUid, new { @class = "control-label" })
         @Html.DropDownListFor(m => m.NegotiationRoomConfigUid, Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAMEntity, Labels.Room.ToLowerInvariant())}...", new { @class = "form-control disabled", disabled = "disabled" })
         @Html.ValidationMessageFor(m => m.NegotiationRoomConfigUid, "", new { @class = "text-danger" })
@@ -35,6 +37,7 @@
 </div>
 <div class="row">
     <div class="form-group col-12">
+        @Html.Hidden("InitialStartTime", Model.StartTime)
         @Html.LabelFor(m => m.StartTime, new { @class = "control-label" })
         @Html.DropDownListFor(m => m.StartTime, Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAMEntity, Labels.StartTime.ToLowerInvariant())}...", new { @class = "form-control disabled", disabled = "disabled" })
         @Html.ValidationMessageFor(m => m.StartTime, "", new { @class = "text-danger" })

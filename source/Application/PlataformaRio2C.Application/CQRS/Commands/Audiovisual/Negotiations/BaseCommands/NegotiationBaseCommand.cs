@@ -53,8 +53,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         // Properties used to set initial selection at select2.selectedOption --------------------------------------------------------
         public Guid? InitialBuyerOrganizationUid { get; set; }
         public string InitialBuyerOrganizationName { get; set; }
+
         public Guid? InitialProjectUid { get; set; }
         public string InitialProjectName { get; set; }
+
+        public ProjectBuyerEvaluationDto ProjectBuyerEvaluationDto { get; set; }
 
         /// <summary>
         /// Updates the base properties.
@@ -64,6 +67,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             if (projectBuyerEvaluationDto == null)
                 return;
+
+            this.ProjectBuyerEvaluationDto = projectBuyerEvaluationDto;
 
             this.InitialBuyerOrganizationUid = projectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.Organization?.Uid;
             this.InitialBuyerOrganizationName = projectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.Organization?.TradeName;

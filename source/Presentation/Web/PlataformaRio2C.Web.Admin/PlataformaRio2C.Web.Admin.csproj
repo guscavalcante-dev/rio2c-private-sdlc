@@ -796,6 +796,7 @@
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.scheduled.update.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.scheduled.create.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.report.widget.js" />
+    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.logistics.info.widget.js" />
     <Content Include="Assets\js\editions\editions.events.widget.js" />
     <Content Include="Assets\js\editions\editions.create.js" />
     <Content Include="Assets\js\editions\editions.datatable.widget.js" />
@@ -7610,6 +7611,9 @@
     <Content Include="Areas\Audiovisual\Views\Meetings\Modals\UpdateForm.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Modals\ManualScheduleModal.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Modals\ManualScheduleForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\LogisticsInfoWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\LogisticsAirfareList.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\ConferencesList.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
