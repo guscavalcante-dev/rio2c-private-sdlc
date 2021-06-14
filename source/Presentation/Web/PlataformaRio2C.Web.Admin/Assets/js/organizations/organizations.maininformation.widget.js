@@ -79,9 +79,9 @@ var OrganizationsMainInformationWidget = function () {
 
     var enableUpdatePlugins = function () {
         MyRio2cCropper.init({ formIdOrClass: updateFormId });
-        //MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2' });
-        //AddressesForm.init();
-        //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c', maxCharCount: 710 });
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2' });
+        /*MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c', maxCharCount: 710 });*/
+
         MyRio2cCompanyDocument.enableCompanyNumberMask(countryUid, '#Document');
         enableAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
