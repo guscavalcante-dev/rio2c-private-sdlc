@@ -161,7 +161,8 @@ var AgendasWidget = function () {
                                                 player: eventEl.Player,
                                                 room: eventEl.Room,
                                                 tableNumber: eventEl.TableNumber,
-                                                roundNumber: eventEl.RoundNumber
+                                                roundNumber: eventEl.RoundNumber,
+                                                virtualMeetingUrl: eventEl.VirtualMeetingUrl
                                             }
                                         })
                                     );
@@ -412,14 +413,21 @@ var AgendasWidget = function () {
 		    html: true,
 		    placement: 'top',
 		    content: function () {
-			    return popoverHtml
-						    .replace("popoverDate", formatPopupDate(startDate, endDate))
-						    .replace("popoverProjectLogLine", info.event.extendedProps.projectLogLine)
-						    .replace("popoverProducer", info.event.extendedProps.producer)
-						    .replace("popoverPlayer", info.event.extendedProps.player)
-						    .replace("popoverRoom", info.event.extendedProps.room)
-						    .replace("popoverTableNumber", info.event.extendedProps.tableNumber)
-							.replace("popoverRoundNumber", info.event.extendedProps.roundNumber);
+                var popover = popoverHtml
+                                .replace("popoverDate", formatPopupDate(startDate, endDate))
+                                .replace("popoverProjectLogLine", info.event.extendedProps.projectLogLine)
+                                .replace("popoverProducer", info.event.extendedProps.producer)
+                                .replace("popoverPlayer", info.event.extendedProps.player)
+                                .replace("popoverRoom", info.event.extendedProps.room)
+                                .replace("popoverTableNumber", info.event.extendedProps.tableNumber)
+                                .replace("popoverRoundNumber", info.event.extendedProps.roundNumber);
+
+                if (!MyRio2cCommon.isNullOrEmpty(info.event.extendedProps.virtualMeetingUrl)) {
+                    popover = popover.replaceAll("popoverVirtualMeetingUrl", info.event.extendedProps.virtualMeetingUrl);
+                    popover = popover.replace("d-none", "");
+                }
+
+                return popover;
 		    },
 		    template: '<div class="fullcalendar-popover popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>',
 		    title: '<span class="text-info">' + info.event.title + '</span>',
