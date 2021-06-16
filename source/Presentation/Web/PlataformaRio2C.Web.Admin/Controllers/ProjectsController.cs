@@ -286,7 +286,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     ProjectTitle = p.GetTitleDtoByLanguageCode(this.UserInterfaceLanguage)?.ProjectTitle?.Value,
                     SellerTradeName = p.SellerAttendeeOrganizationDto.Organization.TradeName,
                     SellerCompanyName = p.SellerAttendeeOrganizationDto.Organization.CompanyName,
-                    SellerPicture = p.SellerAttendeeOrganizationDto.Organization.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, p.SellerAttendeeOrganizationDto.Organization.Uid, p.SellerAttendeeOrganizationDto.Organization.ImageUploadDate, true) : null
+                    SellerPicture = p.SellerAttendeeOrganizationDto.Organization.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, p.SellerAttendeeOrganizationDto.Organization.Uid, p.SellerAttendeeOrganizationDto.Organization.ImageUploadDate, true) : null,
+                    SellerUid = p.SellerAttendeeOrganizationDto.Organization.Uid
                 })?.ToList()
             }, JsonRequestBehavior.AllowGet);
         }

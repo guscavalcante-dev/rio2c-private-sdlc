@@ -33,5 +33,8 @@ namespace PlataformaRio2C.Domain.Dtos
 
         [JsonProperty("sellerPicture", Order = 400)]
         public string SellerPicture { get; set; }
+
+        [JsonProperty("sellerUid", Order = 500)]
+        public Guid SellerUid { get; set; }
     }
 }

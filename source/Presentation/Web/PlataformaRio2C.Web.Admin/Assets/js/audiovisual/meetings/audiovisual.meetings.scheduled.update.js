@@ -23,6 +23,7 @@ var AudiovisualMeetingsUpdate = function () {
     var negotiationRoomConfigUid = '#NegotiationRoomConfigUid';
     var startTimeId = '#StartTime';
     var roundNumberId = '#RoundNumber';
+    var sellerOrganizationUid = '#SellerOrganizationUid';
 
     var initialBuyerOrganizationUid = '#InitialBuyerOrganizationUid';
     var initialBuyerOrganizationName = '#InitialBuyerOrganizationName';
@@ -41,6 +42,7 @@ var AudiovisualMeetingsUpdate = function () {
     var negotiationRoomConfigUidElement;
     var startTimeIdElement;
     var roundNumberIdElement;
+    var sellerOrganizationUidElement;
 
     var initialBuyerOrganizationUidElement;
     var initialBuyerOrganizationNameElement;
@@ -59,6 +61,7 @@ var AudiovisualMeetingsUpdate = function () {
         negotiationRoomConfigUidElement = $(negotiationRoomConfigUid);
         startTimeIdElement = $(startTimeId);
         roundNumberIdElement = $(roundNumberId);
+        sellerOrganizationUidElement = $(sellerOrganizationUid);
 
         initialBuyerOrganizationUidElement = $(initialBuyerOrganizationUid);
         initialBuyerOrganizationNameElement = $(initialBuyerOrganizationName);
@@ -75,7 +78,7 @@ var AudiovisualMeetingsUpdate = function () {
         var element = $(buyerOrganizationUid);
 
         element.not('.change-event-enabled').on('change', function () {
-            AudiovisualMeetingsLogisticsInfoWidget.init(this.value);
+            AudiovisualMeetingsLogisticsInfoWidget.init([this.value, sellerOrganizationUidElement.val()]);
         });
         element.addClass('change-event-enabled');
 

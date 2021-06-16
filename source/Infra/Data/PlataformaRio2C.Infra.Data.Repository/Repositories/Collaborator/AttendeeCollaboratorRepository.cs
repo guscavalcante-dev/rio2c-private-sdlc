@@ -83,11 +83,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// Finds the by organization uid.
         /// </summary>
         /// <param name="query">The query.</param>
-        /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="organizationUids">The organization uid.</param>
         /// <returns></returns>
-        internal static IQueryable<AttendeeCollaborator> FindByOrganizationUid(this IQueryable<AttendeeCollaborator> query, Guid organizationUid)
+        internal static IQueryable<AttendeeCollaborator> FindByOrganizationUids(this IQueryable<AttendeeCollaborator> query, List<Guid> organizationUids)
         {
-            query = query.Where(ac => ac.AttendeeOrganizationCollaborators.Any(aoc => aoc.AttendeeOrganization.Organization.Uid == organizationUid));
+            query = query.Where(ac => ac.AttendeeOrganizationCollaborators.Any(aoc => organizationUids.Contains(aoc.AttendeeOrganization.Organization.Uid)));
 
             return query;
         }
@@ -97,9 +97,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
-        internal static IQueryable<AttendeeCollaborator> HasLogistics(this IQueryable<AttendeeCollaborator> query)
+        internal static IQueryable<AttendeeCollaborator> HasLogisticsOrConferenceParticipants(this IQueryable<AttendeeCollaborator> query)
         {
-            query = query.Where(ac => ac.Logistics.Count > 0);
+            query = query.Where(ac => ac.Logistics.Count(l => !l.IsDeleted) > 0 
+                                        || ac.ConferenceParticipants.Count(cp => !cp.IsDeleted && !cp.Conference.IsDeleted) > 0);
 
             return query;
         }
@@ -611,14 +612,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>
         /// Finds the player executives logistics information widget dto asynchronous.
         /// </summary>
-        /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="organizationUids">The organization uid.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<List<AttendeeCollaboratorDto>> FindPlayerExecutivesLogisticsDtosAsync(Guid organizationUid, int editionId)
+        public async Task<List<AttendeeCollaboratorDto>> FindPlayerExecutivesLogisticsDtosAsync(List<Guid> organizationUids, int editionId)
         {
             var query = this.GetBaseQuery(true)
-                                .HasLogistics()
-                                .FindByOrganizationUid(organizationUid)
+                                .HasLogisticsOrConferenceParticipants()
+                                .FindByOrganizationUids(organizationUids)
                                 .FindByEditionId(editionId, false);
 
             return await query
@@ -626,70 +627,87 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             {
                                 AttendeeCollaborator = ac,
                                 Collaborator = ac.Collaborator,
-                                LogisticDto = ac.Logistics.Where(l => !l.IsDeleted).Select(l => new LogisticDto
-                                {
-                                    Logistic = l,
-                                    LogisticAirfareDtos = l.LogisticAirfares.Where(la => !la.IsDeleted).Select(la => new LogisticAirfareDto
-                                    {
-                                        LogisticAirfare = la
-                                    }),
-                                    LogisticAccommodationDtos = l.LogisticAccommodations.Where(la => !la.IsDeleted).Select(la => new LogisticAccommodationDto
-                                    {
-                                        LogisticAccommodation = la,
-                                        PlaceDto = new PlaceDto
-                                        {
-                                            Place = la.AttendeePlace.Place,
-                                            AddressDto = la.AttendeePlace.Place.Address == null || la.AttendeePlace.Place.Address.IsDeleted ? null : new AddressDto
-                                            {
-                                                Address = la.AttendeePlace.Place.Address,
-                                                City = la.AttendeePlace.Place.Address.City,
-                                                State = la.AttendeePlace.Place.Address.State,
-                                                Country = la.AttendeePlace.Place.Address.Country
-                                            }
-                                        }
-                                    }),
-                                    LogisticTransferDtos = l.LogisticTransfers.Where(lt => !lt.IsDeleted).Select(lt => new LogisticTransferDto
-                                    {
-                                        LogisticTransfer = lt,
-                                        FromPlaceDto = new PlaceDto
-                                        {
-                                            Place = lt.FromAttendeePlace.Place,
-                                            AddressDto = lt.FromAttendeePlace.Place.Address == null || lt.FromAttendeePlace.Place.Address.IsDeleted ? null : new AddressDto
-                                            {
-                                                Address = lt.FromAttendeePlace.Place.Address,
-                                                City = lt.FromAttendeePlace.Place.Address.City,
-                                                State = lt.FromAttendeePlace.Place.Address.State,
-                                                Country = lt.FromAttendeePlace.Place.Address.Country
-                                            }
-                                        },
-                                        ToPlaceDto = new PlaceDto
-                                        {
-                                            Place = lt.ToAttendeePlace.Place,
-                                            AddressDto = lt.ToAttendeePlace.Place.Address == null || lt.ToAttendeePlace.Place.Address.IsDeleted ? null : new AddressDto
-                                            {
-                                                Address = lt.ToAttendeePlace.Place.Address,
-                                                City = lt.ToAttendeePlace.Place.Address.City,
-                                                State = lt.ToAttendeePlace.Place.Address.State,
-                                                Country = lt.ToAttendeePlace.Place.Address.Country
-                                            }
-                                        }
-                                    })
-                                }).FirstOrDefault(),
-                                ConferenceDtos = ac.ConferenceParticipants.Where(cp => !cp.IsDeleted && !cp.Conference.IsDeleted).Select(cp => cp.Conference).Distinct().Select(c => new ConferenceDto
-                                {
-                                    Conference = c,
-                                    ConferenceTitleDtos = c.ConferenceTitles.Where(ct => !ct.IsDeleted).Select(ct => new ConferenceTitleDto
-                                    {
-                                        ConferenceTitle = ct,
-                                        LanguageDto = new LanguageBaseDto
-                                        {
-                                            Id = ct.Language.Id,
-                                            Uid = ct.Language.Uid,
-                                            Name = ct.Language.Name,
-                                            Code = ct.Language.Code
-                                        }
-                                    })
-                                }).ToList(),
+                                AttendeeOrganizationsDtos = ac.AttendeeOrganizationCollaborators
+                                                                .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted && !aoc.AttendeeOrganization.Organization.IsDeleted)
+                                                                .Select(aoc => new AttendeeOrganizationDto
+                                                                {
+                                                                    AttendeeOrganization = aoc.AttendeeOrganization,
+                                                                    Organization = aoc.AttendeeOrganization.Organization
+                                                                })
+                                                                .ToList(),
+                                LogisticDto = ac.Logistics
+                                                    //.Where(l => !l.IsDeleted)
+                                                    .Select(l => new LogisticDto
+                                                    {
+                                                        Logistic = l,
+                                                        LogisticAirfareDtos = l.LogisticAirfares.Where(la => !la.IsDeleted).Select(la => new LogisticAirfareDto
+                                                        {
+                                                            LogisticAirfare = la
+                                                        }),
+                                                        LogisticAccommodationDtos = l.LogisticAccommodations.Where(la => !la.IsDeleted).Select(la => new LogisticAccommodationDto
+                                                        {
+                                                            LogisticAccommodation = la,
+                                                            PlaceDto = new PlaceDto
+                                                            {
+                                                                Place = la.AttendeePlace.Place,
+                                                                AddressDto = la.AttendeePlace.Place.Address == null || la.AttendeePlace.Place.Address.IsDeleted ? null : new AddressDto
+                                                                {
+                                                                    Address = la.AttendeePlace.Place.Address,
+                                                                    City = la.AttendeePlace.Place.Address.City,
+                                                                    State = la.AttendeePlace.Place.Address.State,
+                                                                    Country = la.AttendeePlace.Place.Address.Country
+                                                                }
+                                                            }
+                                                        }),
+                                                        LogisticTransferDtos = l.LogisticTransfers.Where(lt => !lt.IsDeleted).Select(lt => new LogisticTransferDto
+                                                        {
+                                                            LogisticTransfer = lt,
+                                                            FromPlaceDto = new PlaceDto
+                                                            {
+                                                                Place = lt.FromAttendeePlace.Place,
+                                                                AddressDto = lt.FromAttendeePlace.Place.Address == null || lt.FromAttendeePlace.Place.Address.IsDeleted ? null : new AddressDto
+                                                                {
+                                                                    Address = lt.FromAttendeePlace.Place.Address,
+                                                                    City = lt.FromAttendeePlace.Place.Address.City,
+                                                                    State = lt.FromAttendeePlace.Place.Address.State,
+                                                                    Country = lt.FromAttendeePlace.Place.Address.Country
+                                                                }
+                                                            },
+                                                            ToPlaceDto = new PlaceDto
+                                                            {
+                                                                Place = lt.ToAttendeePlace.Place,
+                                                                AddressDto = lt.ToAttendeePlace.Place.Address == null || lt.ToAttendeePlace.Place.Address.IsDeleted ? null : new AddressDto
+                                                                {
+                                                                    Address = lt.ToAttendeePlace.Place.Address,
+                                                                    City = lt.ToAttendeePlace.Place.Address.City,
+                                                                    State = lt.ToAttendeePlace.Place.Address.State,
+                                                                    Country = lt.ToAttendeePlace.Place.Address.Country
+                                                                }
+                                                            }
+                                                        })
+                                                    })
+                                                    .FirstOrDefault(),
+                                ConferenceDtos = ac.ConferenceParticipants
+                                                        //.Where(cp => !cp.IsDeleted && !cp.Conference.IsDeleted)
+                                                        .Select(cp => cp.Conference)
+                                                        .Distinct()
+                                                        .Select(c => new ConferenceDto
+                                                        {
+                                                            Conference = c,
+                                                            ConferenceTitleDtos = c.ConferenceTitles.Where(ct => !ct.IsDeleted).Select(ct => new ConferenceTitleDto
+                                                            {
+                                                                ConferenceTitle = ct,
+                                                                LanguageDto = new LanguageBaseDto
+                                                                {
+                                                                    Id = ct.Language.Id,
+                                                                    Uid = ct.Language.Uid,
+                                                                    Name = ct.Language.Name,
+                                                                    Code = ct.Language.Code
+                                                                }
+                                                            })
+                                                        })
+                                                        .ToList(),
+                                
                             })
                             .ToListAsync();
         }

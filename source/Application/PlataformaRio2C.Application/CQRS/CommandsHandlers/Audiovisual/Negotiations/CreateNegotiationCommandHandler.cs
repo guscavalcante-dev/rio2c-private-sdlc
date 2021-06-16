@@ -34,6 +34,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IProjectRepository projectRepo;
         private readonly INegotiationConfigRepository negotiationConfigRepo;
         private readonly INegotiationRoomConfigRepository negotiationRoomConfigRepo;
+        private readonly IConferenceRepository conferenceRepo;
+        private readonly INegotiationRepository negotiationRepo;
+        private readonly ILogisticAirfareRepository logisticAirfareRepo;
+        private readonly ILogisticAccommodationRepository logisticAccommodationRepo;
+        private readonly ILogisticTransferRepository logisticTransferRepo;
 
         public CreateNegotiationCommandHandler(
             IMediator eventBus,
@@ -42,13 +47,22 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IOrganizationRepository organizationRepository,
             IProjectRepository projectRepository,
             INegotiationConfigRepository negotiationConfigRepository,
-            INegotiationRoomConfigRepository negotiationRoomConfigRepository)
+            INegotiationRoomConfigRepository negotiationRoomConfigRepository,
+            IConferenceRepository conferenceRepository,
+            ILogisticAirfareRepository logisticAirfareRepository,
+            ILogisticAccommodationRepository logisticAccommodationRepository,
+            ILogisticTransferRepository logisticTransferRepository)
             : base(eventBus, uow, negotiationRepository)
         {
+            this.negotiationRepo = negotiationRepository;
             this.organizationRepo = organizationRepository;
             this.projectRepo = projectRepository;
             this.negotiationConfigRepo = negotiationConfigRepository;
             this.negotiationRoomConfigRepo = negotiationRoomConfigRepository;
+            this.conferenceRepo = conferenceRepository;
+            this.logisticAirfareRepo = logisticAirfareRepository;
+            this.logisticAccommodationRepo = logisticAccommodationRepository;
+            this.logisticTransferRepo = logisticTransferRepository;
         }
 
         /// <summary>Handles the specified create negotiation.</summary>
@@ -63,16 +77,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var project = await this.projectRepo.GetAsync(cmd.ProjectUid ?? Guid.Empty);
             var negotiationConfig = await this.negotiationConfigRepo.GetAsync(cmd.NegotiationConfigUid ?? Guid.Empty);
             var negotiationRoomConfig = await this.negotiationRoomConfigRepo.GetAsync(cmd.NegotiationRoomConfigUid ?? Guid.Empty);
-            var negotiationsInThisRoom = await this.NegotiationRepo.FindManualScheduledNegotiationsByRoomIdAsync(negotiationRoomConfig?.Room?.Id ?? 0);
+            var manualNegotiationsInThisRoom = await this.negotiationRepo.FindManualScheduledNegotiationsByRoomIdAsync(negotiationRoomConfig?.Room?.Id ?? 0);
 
-            //Update command properties
+            //Update command properties to return to form when throws any ValidationError
             cmd.InitialProjectUid = project.Uid;
             cmd.InitialProjectName = project.GetTitleByLanguageCode(cmd.UserInterfaceLanguage);
             cmd.InitialBuyerOrganizationUid = buyerOrganization.Uid;
             cmd.InitialBuyerOrganizationName = buyerOrganization.CompanyName;
 
             var startDatePreview = negotiationConfig.StartDate.Date.JoinDateAndTime(cmd.StartTime, true).ToUtcTimeZone();
-            var negotiationsGroupedByRoomAndStartDate = negotiationsInThisRoom.GroupBy(n => n.StartDate.ToUserTimeZone());
+            var negotiationsGroupedByRoomAndStartDate = manualNegotiationsInThisRoom.GroupBy(n => n.StartDate.ToUserTimeZone());
             var hasNoMoreTablesAvailable = negotiationsGroupedByRoomAndStartDate.Any(n => n.Count(w => w.StartDate.ToUserTimeZone() == startDatePreview) >= negotiationRoomConfig.CountManualTables);
             if (hasNoMoreTablesAvailable)
             {
@@ -85,18 +99,18 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
-            var negotiationsAtThisRoomAndStartDate = negotiationsInThisRoom.Where(n => n.StartDate.ToUserTimeZone() == startDatePreview).ToList();
+            var negotiationsAtThisRoomAndStartDate = manualNegotiationsInThisRoom.Where(n => n.StartDate.ToUserTimeZone() == startDatePreview).ToList();
 
             var negotiationUid = Guid.NewGuid();
             var negotiation = new Negotiation(
                 cmd.EditionId.Value,
                 negotiationUid,
-                buyerOrganization, 
-                project, 
-                negotiationConfig, 
+                buyerOrganization,
+                project,
+                negotiationConfig,
                 negotiationRoomConfig,
                 negotiationsAtThisRoomAndStartDate,
-                cmd.StartTime, 
+                cmd.StartTime,
                 cmd.RoundNumber ?? 0,
                 cmd.UserId);
             if (!negotiation.IsValid())

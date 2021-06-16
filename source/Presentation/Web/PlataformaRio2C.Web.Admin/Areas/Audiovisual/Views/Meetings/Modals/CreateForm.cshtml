@@ -1,5 +1,9 @@
 ﻿@model PlataformaRio2C.Application.CQRS.Commands.CreateNegotiation
 @Html.HiddenFor(m => m.RoundNumber)
+@{
+    var sellerOrganizationUid = Model?.ProjectBuyerEvaluationDto?.ProjectBuyerEvaluation?.Project?.SellerAttendeeOrganization?.Organization?.Uid;
+}
+@Html.Hidden("SellerOrganizationUid", sellerOrganizationUid)
 
 <div class="row">
     <div class="form-group col-12">

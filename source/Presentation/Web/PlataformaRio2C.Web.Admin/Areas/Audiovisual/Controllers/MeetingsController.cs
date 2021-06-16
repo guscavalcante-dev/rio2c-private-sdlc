@@ -273,13 +273,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             try
             {
-                //cmd.InitialBuyerOrganizationUid = cmd.BuyerOrganizationUid;
-                //cmd.InitialProjectUid = cmd.ProjectUid;
-
-                //CreateNegotiation c;
-                //ModelState.Remove(nameof(c.InitialBuyerOrganizationUid));
-                //ModelState.Remove(nameof(c.InitialProjectUid));
-
                 if (!ModelState.IsValid)
                 {
                     throw new DomainException(Messages.CorrectFormValues);
@@ -662,9 +655,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="organizationUid">The organization uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowLogisticsInfoWidget(Guid? organizationUid)
+        public async Task<ActionResult> ShowLogisticsInfoWidget(string organizationsUids)
         {
-            var attendeeCollaboratorDtos = await this.attendeeCollaboratorRepo.FindPlayerExecutivesLogisticsDtosAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id);
+            var attendeeCollaboratorDtos = await this.attendeeCollaboratorRepo.FindPlayerExecutivesLogisticsDtosAsync(organizationsUids?.ToListGuid(','), this.EditionDto.Id);
             if (attendeeCollaboratorDtos == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Logistics, Labels.FoundMP.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
@@ -675,7 +668,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    //~/Areas/Audiovisual/Views/Meetings/Widgets/LogisticsInfoWidget.cshtml
                     new { page = this.RenderRazorViewToString("~/Areas/Audiovisual/Views/Meetings/Widgets/LogisticsInfoWidget.cshtml", attendeeCollaboratorDtos), divIdOrClass = "#AudiovisualMeetingsLogisticsInfoWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);

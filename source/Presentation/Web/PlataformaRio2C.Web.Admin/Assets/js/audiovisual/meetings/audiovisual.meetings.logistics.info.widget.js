@@ -27,9 +27,9 @@ var AudiovisualMeetingsLogisticsInfoWidget = function () {
         }
     };
 
-    var show = function (organizationUid) {
+    var show = function (organizationUids) {
         var jsonParameters = new Object();
-        jsonParameters.organizationUid = organizationUid;
+        jsonParameters.organizationsUids = organizationUids.join(',');;
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Meetings/ShowLogisticsInfoWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -51,9 +51,8 @@ var AudiovisualMeetingsLogisticsInfoWidget = function () {
     };
 
     return {
-        init: function (organizationUid) {
-            //MyRio2cCommon.block({ idOrClass: widgetElementId });
-            show(organizationUid);
+        init: function (organizationUids) {
+            show(organizationUids);
         }
     };
 }();

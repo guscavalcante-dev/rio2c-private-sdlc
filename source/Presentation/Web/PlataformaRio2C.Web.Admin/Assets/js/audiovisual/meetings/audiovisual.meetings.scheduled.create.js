@@ -23,6 +23,7 @@ var AudiovisualMeetingsCreate = function () {
     var negotiationRoomConfigUid = '#NegotiationRoomConfigUid';
     var startTimeId = '#StartTime';
     var roundNumberId = '#RoundNumber';
+    var sellerOrganizationUid = '#SellerOrganizationUid';
 
     var initialBuyerOrganizationUid = '#InitialBuyerOrganizationUid';
     var initialBuyerOrganizationName = '#InitialBuyerOrganizationName';
@@ -41,6 +42,7 @@ var AudiovisualMeetingsCreate = function () {
     var negotiationRoomConfigUidElement;
     var startTimeIdElement;
     var roundNumberIdElement;
+    var sellerOrganizationUidElement;
 
     var initialBuyerOrganizationUidElement;
     var initialBuyerOrganizationNameElement;
@@ -59,6 +61,7 @@ var AudiovisualMeetingsCreate = function () {
         negotiationRoomConfigUidElement = $(negotiationRoomConfigUid);
         startTimeIdElement = $(startTimeId);
         roundNumberIdElement = $(roundNumberId);
+        sellerOrganizationUidElement = $(sellerOrganizationUid);
 
         initialBuyerOrganizationUidElement = $(initialBuyerOrganizationUid);
         initialBuyerOrganizationNameElement = $(initialBuyerOrganizationName);
@@ -76,7 +79,7 @@ var AudiovisualMeetingsCreate = function () {
 
         element.not('.change-event-enabled').on('change', function () {
             toogleProjectSelect2();
-            AudiovisualMeetingsLogisticsInfoWidget.init(this.value);
+            AudiovisualMeetingsLogisticsInfoWidget.init([this.value, sellerOrganizationUidElement.val()]);
         });
         element.addClass('change-event-enabled');
     };
@@ -123,9 +126,15 @@ var AudiovisualMeetingsCreate = function () {
     var enableProjectChangeEvent = function () {
         var element = $(projectUid);
 
-        element.not('.change-event-enabled').on('change', function () {
+        //element.not('.change-event-enabled').on('change', function (e) {
+        //    toogleDateSelect2();
+        //    AudiovisualMeetingsLogisticsInfoWidget.init([this.value, buyerOrganizationUidElement.val()]);
+        //});
+        element.on('select2:select', function (e) {
             toogleDateSelect2();
+            AudiovisualMeetingsLogisticsInfoWidget.init([e.params.data.SellerUid, buyerOrganizationUidElement.val()]);
         });
+
         element.addClass('change-event-enabled');
     };
 

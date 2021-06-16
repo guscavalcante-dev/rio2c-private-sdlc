@@ -1639,7 +1639,6 @@ var MyRio2cCommon = function () {
             '<div class="select2-result-collaborator__description">' + project.SellerTradeName + '</div>' +
             '<div class="select2-result-collaborator__description">' + project.SellerCompanyName + '</div>';
 
-
         container +=
             '   </div>' +
             '</div>';

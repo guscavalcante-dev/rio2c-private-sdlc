@@ -5,6 +5,10 @@
 @Html.HiddenFor(m => m.InitialProjectUid)
 @Html.HiddenFor(m => m.InitialProjectName)
 @Html.HiddenFor(m => m.RoundNumber)
+@{
+    var sellerOrganizationUid = Model?.ProjectBuyerEvaluationDto?.ProjectBuyerEvaluation?.Project?.SellerAttendeeOrganization?.Organization?.Uid;
+}
+@Html.Hidden("SellerOrganizationUid", sellerOrganizationUid)
 
 <div class="row">
     <div class="form-group col-12">
