@@ -77,21 +77,40 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var project = await this.projectRepo.GetAsync(cmd.ProjectUid ?? Guid.Empty);
             var negotiationConfig = await this.negotiationConfigRepo.GetAsync(cmd.NegotiationConfigUid ?? Guid.Empty);
             var negotiationRoomConfig = await this.negotiationRoomConfigRepo.GetAsync(cmd.NegotiationRoomConfigUid ?? Guid.Empty);
-            var manualNegotiationsInThisRoom = await this.negotiationRepo.FindManualScheduledNegotiationsByRoomIdAsync(negotiationRoomConfig?.Room?.Id ?? 0);
-
-            //Update command properties to return to form when throws any ValidationError
-            cmd.InitialProjectUid = project.Uid;
-            cmd.InitialProjectName = project.GetTitleByLanguageCode(cmd.UserInterfaceLanguage);
-            cmd.InitialBuyerOrganizationUid = buyerOrganization.Uid;
-            cmd.InitialBuyerOrganizationName = buyerOrganization.CompanyName;
+            var negotiationsInThisRoom = await this.NegotiationRepo.FindManualScheduledNegotiationsByRoomIdAsync(negotiationRoomConfig?.Room?.Id ?? 0);
 
             var startDatePreview = negotiationConfig.StartDate.Date.JoinDateAndTime(cmd.StartTime, true).ToUtcTimeZone();
-            var negotiationsGroupedByRoomAndStartDate = manualNegotiationsInThisRoom.GroupBy(n => n.StartDate.ToUserTimeZone());
+            var endDatePreview = startDatePreview.Add(negotiationConfig.TimeOfEachRound);
+
+            #region Overbooking Validations
+
+            var negotiationsGroupedByRoomAndStartDate = negotiationsInThisRoom.GroupBy(n => n.StartDate.ToUserTimeZone());
             var hasNoMoreTablesAvailable = negotiationsGroupedByRoomAndStartDate.Any(n => n.Count(w => w.StartDate.ToUserTimeZone() == startDatePreview) >= negotiationRoomConfig.CountManualTables);
             if (hasNoMoreTablesAvailable)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.NoMoreTablesAvailableAtTheRoomAndStartTime, cmd.StartTime, negotiationRoomConfig.Room.GetRoomNameByLanguageCode(cmd.UserInterfaceLanguage)), new string[] { "ToastrError" }));
             }
+
+            var scheduledNegotiationsAtThisTime = await this.NegotiationRepo.FindAllScheduleDtosAsync(cmd.EditionId.Value, null, startDatePreview, endDatePreview);
+            var hasPlayerScheduledNegotiationsAtThisTime = scheduledNegotiationsAtThisTime.Count(ndto => ndto.ProjectBuyerEvaluationDto.ProjectBuyerEvaluation.BuyerAttendeeOrganization.OrganizationId == buyerOrganization.Id) > 0;
+            if (hasPlayerScheduledNegotiationsAtThisTime)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.HasAlreadyBusinessRoundScheduled, Labels.TheM, Labels.Player, startDatePreview.ToUserTimeZone().ToStringHourMinuteSecond()), new string[] { "ToastrError" }));
+            }
+
+            var hasProducerScheduledNegotiationsAtThisTime = scheduledNegotiationsAtThisTime.Count(ndto => ndto.ProjectBuyerEvaluationDto.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.OrganizationId == project.SellerAttendeeOrganization.OrganizationId) > 0;
+            if (hasProducerScheduledNegotiationsAtThisTime)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.HasAlreadyBusinessRoundScheduled, Labels.TheF, Labels.Producer, startDatePreview.ToUserTimeZone().ToStringHourMinuteSecond()), new string[] { "ToastrError" }));
+            }
+
+            #endregion
+
+            //Update command properties to return to form before throws any ValidationError
+            cmd.InitialProjectUid = project.Uid;
+            cmd.InitialProjectName = project.GetTitleByLanguageCode(cmd.UserInterfaceLanguage);
+            cmd.InitialBuyerOrganizationUid = buyerOrganization.Uid;
+            cmd.InitialBuyerOrganizationName = buyerOrganization.CompanyName;
 
             if (!this.ValidationResult.IsValid)
             {
@@ -99,7 +118,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
-            var negotiationsAtThisRoomAndStartDate = manualNegotiationsInThisRoom.Where(n => n.StartDate.ToUserTimeZone() == startDatePreview).ToList();
+            var negotiationsInThisRoomAndStartDate = negotiationsInThisRoom.Where(n => n.StartDate.ToUserTimeZone() == startDatePreview).ToList();
 
             var negotiationUid = Guid.NewGuid();
             var negotiation = new Negotiation(
@@ -109,7 +128,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 project,
                 negotiationConfig,
                 negotiationRoomConfig,
-                negotiationsAtThisRoomAndStartDate,
+                negotiationsInThisRoomAndStartDate,
                 cmd.StartTime,
                 cmd.RoundNumber ?? 0,
                 cmd.UserId);

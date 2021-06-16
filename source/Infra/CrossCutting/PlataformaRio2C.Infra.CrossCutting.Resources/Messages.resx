@@ -979,4 +979,8 @@
     <value>Não há mesas disponíveis com início às '{0}' na sala '{1}' </value>
     <comment>Não há mesas disponíveis com início às '{0}' na sala '{1}'</comment>
   </data>
+  <data name="HasAlreadyBusinessRoundScheduled" xml:space="preserve">
+    <value>{0} {1} já possui uma rodada de negócios agendada para {2}</value>
+    <comment>{0} {1} já possui uma rodada de negócios agendada para {2}</comment>
+  </data>
 </root>

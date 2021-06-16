@@ -61,17 +61,38 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.Uow.BeginTransaction();
 
+            var buyerOrganization = await this.organizationRepo.GetAsync(cmd.BuyerOrganizationUid ?? Guid.Empty);
+            var project = await this.projectRepo.GetAsync(cmd.ProjectUid ?? Guid.Empty);
             var negotiationConfig = await this.negotiationConfigRepo.GetAsync(cmd.NegotiationConfigUid ?? Guid.Empty);
             var negotiationRoomConfig = await this.negotiationRoomConfigRepo.GetAsync(cmd.NegotiationRoomConfigUid ?? Guid.Empty);
             var negotiationsInThisRoom = await this.NegotiationRepo.FindManualScheduledNegotiationsByRoomIdAsync(negotiationRoomConfig?.Room?.Id ?? 0);
 
             var startDatePreview = negotiationConfig.StartDate.Date.JoinDateAndTime(cmd.StartTime, true).ToUtcTimeZone();
+            var endDatePreview = startDatePreview.Add(negotiationConfig.TimeOfEachRound);
+
+            #region Overbooking Validations
+
             var negotiationsGroupedByRoomAndStartDate = negotiationsInThisRoom.GroupBy(n => n.StartDate.ToUserTimeZone());
-            var hasNoMoreTablesAvailable = negotiationsGroupedByRoomAndStartDate.Any(n => n.Count(i => i.StartDate.ToUserTimeZone() == startDatePreview) >= negotiationRoomConfig.CountManualTables);
+            var hasNoMoreTablesAvailable = negotiationsGroupedByRoomAndStartDate.Any(n => n.Count(w => w.StartDate.ToUserTimeZone() == startDatePreview) >= negotiationRoomConfig.CountManualTables);
             if (hasNoMoreTablesAvailable)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.NoMoreTablesAvailableAtTheRoomAndStartTime, cmd.StartTime, negotiationRoomConfig.Room.GetRoomNameByLanguageCode(cmd.UserInterfaceLanguage)), new string[] { "ToastrError" }));
             }
+
+            var scheduledNegotiationsAtThisTime = await this.NegotiationRepo.FindAllScheduleDtosAsync(cmd.EditionId.Value, null, startDatePreview, endDatePreview);
+            var hasPlayerScheduledNegotiationsAtThisTime = scheduledNegotiationsAtThisTime.Count(ndto => ndto.ProjectBuyerEvaluationDto.ProjectBuyerEvaluation.BuyerAttendeeOrganization.OrganizationId == buyerOrganization.Id) > 0;
+            if (hasPlayerScheduledNegotiationsAtThisTime)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.HasAlreadyBusinessRoundScheduled, Labels.TheM, Labels.Player, startDatePreview.ToUserTimeZone().ToStringHourMinuteSecond()), new string[] { "ToastrError" }));
+            }
+
+            var hasProducerScheduledNegotiationsAtThisTime = scheduledNegotiationsAtThisTime.Count(ndto => ndto.ProjectBuyerEvaluationDto.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.OrganizationId == project.SellerAttendeeOrganization.OrganizationId) > 0;
+            if (hasProducerScheduledNegotiationsAtThisTime)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.HasAlreadyBusinessRoundScheduled, Labels.TheF, Labels.Producer, startDatePreview.ToUserTimeZone().ToStringHourMinuteSecond()), new string[] { "ToastrError" }));
+            }
+
+            #endregion
 
             if (!this.ValidationResult.IsValid)
             {
@@ -79,13 +100,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
-            var negotiationsAtThisRoomAndStartDate = negotiationsInThisRoom.Where(n => n.StartDate.ToUserTimeZone() == startDatePreview).ToList();
+            var negotiationsInThisRoomAndStartDate = negotiationsInThisRoom.Where(n => n.StartDate.ToUserTimeZone() == startDatePreview).ToList();
             
             var negotiation = await this.GetNegotiationByUid(cmd.NegotiationUid);
             negotiation.Update(
                 negotiationConfig,
                 negotiationRoomConfig,
-                negotiationsAtThisRoomAndStartDate,
+                negotiationsInThisRoomAndStartDate,
                 cmd.StartTime,
                 cmd.RoundNumber ?? 0,
                 cmd.UserId);

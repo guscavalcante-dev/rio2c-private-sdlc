@@ -974,4 +974,8 @@
     <value>There are no tables available starting at '{0}' in room '{1}'</value>
     <comment>There are no tables available starting at '{0}' in room '{1}'</comment>
   </data>
+  <data name="HasAlreadyBusinessRoundScheduled" xml:space="preserve">
+    <value>{0} {1} has already a business round scheduled at {2}</value>
+    <comment>{0} {1} has already a business round scheduled at {2}</comment>
+  </data>
 </root>

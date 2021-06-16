@@ -789,6 +789,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} {1} já possui uma rodada de negócios agendada para {2}.
+        /// </summary>
+        public static string HasAlreadyBusinessRoundScheduled {
+            get {
+                return ResourceManager.GetString("HasAlreadyBusinessRoundScheduled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O holding deve ter um nome..
         /// </summary>
         public static string HoldingMustHaveName {
