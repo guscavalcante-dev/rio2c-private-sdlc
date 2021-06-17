@@ -109,7 +109,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
             // Attendee
             this.AttendeeId = intiSale.relationships.buyer_id; // FIXME
             this.SalesPlatformUpdateDate = DateTime.Now;
-            this.SalesPlatformAttendeeStatus = Dtos.SalesPlatformAttendeeStatus.Attending;
+
+            if(intiSale.action=="ticket_sold")
+                this.SalesPlatformAttendeeStatus = Dtos.SalesPlatformAttendeeStatus.Attending;
+            else if(intiSale.action== "ticket_canceled")
+                this.SalesPlatformAttendeeStatus = Dtos.SalesPlatformAttendeeStatus.Deleted;
+            else if (intiSale.action == "participant_updated")
+                this.SalesPlatformAttendeeStatus = Dtos.SalesPlatformAttendeeStatus.Transferred;
+
+
             this.IsCancelled = false;
             this.IsCheckedIn = false;
             this.TicketClassId = intiSale.price_name;
@@ -125,7 +133,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
             this.CellPhone = "0";
             this.Email = intiSale.email;
             this.JobTitle = "_";
-
+            
             // Barcode            
             this.Barcode = intiSale.validator_code;
             this.IsBarcodePrinted = false;

@@ -42,7 +42,20 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti
             SalesPlatformAttendeeDto att = new SalesPlatformAttendeeDto(intiSaleOrCancellation);
             listAttendeeDto.Add(att);
 
-            return new Tuple<string, List<SalesPlatformAttendeeDto>>(SalesPlatformAction.OrderPlaced, listAttendeeDto);
+            //if (intiSaleOrCancellation.action == "ticket_sold")
+            //{
+               return new Tuple<string, List<SalesPlatformAttendeeDto>>(SalesPlatformAction.OrderPlaced, listAttendeeDto);
+            //}
+            //else if (intiSaleOrCancellation.action == "ticket_canceled")
+            //{                
+            //    return new Tuple<string, List<SalesPlatformAttendeeDto>>(SalesPlatformAction.AttendeeUpdated, listAttendeeDto);
+            //}
+            //else if (intiSaleOrCancellation.action == "participant_updated")
+            //{
+            //    return new Tuple<string, List<SalesPlatformAttendeeDto>>(SalesPlatformAction.AttendeeUpdated, listAttendeeDto);
+            //}
+
+
         }
 
     }
