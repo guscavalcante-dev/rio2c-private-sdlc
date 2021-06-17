@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
 using Newtonsoft.Json;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
@@ -26,7 +24,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti
             this.salesPlatformWebhookRequestDto = salesPlatformWebhookRequestDto;
         }
 
-
         /// <summary>Executes the request.</summary>
         public Tuple<string, List<SalesPlatformAttendeeDto>> ExecuteRequest()
         {
@@ -35,15 +32,13 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti
                 throw new DomainException("The webhook request is required.");
             }
 
-            var payload = salesPlatformWebhookRequestDto.SalesPlatformWebhookRequest.Payload;
-            var intiSaleOrCancellation = JsonConvert.DeserializeObject<IntiSaleOrCancellation>(payload);
+            var payload = JsonConvert.DeserializeObject<IntiPayload>(salesPlatformWebhookRequestDto.SalesPlatformWebhookRequest.Payload);
 
             var listAttendeeDto = new List<SalesPlatformAttendeeDto>();
-            SalesPlatformAttendeeDto att = new SalesPlatformAttendeeDto(intiSaleOrCancellation);
+            var att = new SalesPlatformAttendeeDto(payload);
             listAttendeeDto.Add(att);
 
-            return new Tuple<string, List<SalesPlatformAttendeeDto>>(SalesPlatformAction.OrderPlaced, listAttendeeDto);
+            return new Tuple<string, List<SalesPlatformAttendeeDto>>(payload.GetSalesPlatformAttendeeStatus(), listAttendeeDto);
         }
-
     }
 }

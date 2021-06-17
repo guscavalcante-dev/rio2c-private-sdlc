@@ -69,7 +69,7 @@
     <Compile Include="Services\ByInti\IntiSalesPlatformService.cs" />
     <Compile Include="Services\ByInti\Models\IntiAction.cs" />
     <Compile Include="Services\ByInti\Models\IntiAttendee.cs" />
-    <Compile Include="Services\ByInti\Models\IntiSaleOrCancellation.cs" />
+    <Compile Include="Services\ByInti\Models\IntiPayload.cs" />
     <Compile Include="Services\ByInti\Models\IntiSearchListTicket.cs" />
     <Compile Include="Services\ByInti\Models\IntiSearchEvent.cs" />
     <Compile Include="Services\ByInti\Models\IntiSearchTicket.cs" />

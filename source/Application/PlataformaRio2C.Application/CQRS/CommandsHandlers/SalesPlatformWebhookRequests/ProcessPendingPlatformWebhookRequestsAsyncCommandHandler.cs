@@ -110,16 +110,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
                 try
                 {      
-                    if (processingRequestDto.SalesPlatformDto.Name == "Eventbrite"){
-                       
-                        if (salesPlatformResponse?.Item2?.Any() != true)
-                        {
-                            var errorMessage = $"No attendee returned by api for Uid: {processingRequestDto.Uid}";
-                            this.ValidationResult.Add(new ValidationError(errorMessage));
-                            processingRequestDto.SalesPlatformWebhookRequest.Postpone("000000001", errorMessage);
-                            this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
-                            continue;
-                        }
+                    if (salesPlatformResponse?.Item2?.Any() != true)
+                    {
+                        var errorMessage = $"No attendee returned by api for Uid: {processingRequestDto.Uid}";
+                        this.ValidationResult.Add(new ValidationError(errorMessage));
+                        processingRequestDto.SalesPlatformWebhookRequest.Postpone("000000001", errorMessage);
+                        this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
+                        continue;
                     }
                 }
                 catch (Exception ex)

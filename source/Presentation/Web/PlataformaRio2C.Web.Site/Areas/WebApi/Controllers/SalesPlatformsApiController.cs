@@ -43,53 +43,93 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
         #region Inti requests
 
-        /// <summary>Ticket Sold.</summary>
+        /// <summary>
+        /// Intis the specified key.
+        /// </summary>
+        /// <param name="key">The key.</param>
         /// <returns></returns>
         [HttpPost]
-        [Route("inti-ticket-sold")]
-        public async Task<IHttpActionResult> IntiTicketSold()
-        {            
-            var ctx = HttpContext.Current;
-            var json = String.Empty;
-            ctx.Request.InputStream.Position = 0;
-            using (var inputStream = new StreamReader(ctx.Request.InputStream)){
-                json = inputStream.ReadToEnd();
-            }
-            var dto = new JavaScriptSerializer().Deserialize<IntiSaleOrCancellation>(json);
-
-            var headers = Request.Headers.ToString();
-            var ip = HttpContext.Current.Request.GetIpAddress();
-            var salesPlatformWebhooRequestUid = Guid.NewGuid();
-            var result = await this.commandBus.Send(new CreateSalesPlatformWebhookRequest(
-                salesPlatformWebhooRequestUid,
-                "Inti",
-                dto.id.ToString(),
-                HttpContext.Current.Request.Url.AbsoluteUri,
-                headers,
-                json, // Request.Content.ReadAsStringAsync().Result,
-                ip)); 
-
-            return await Json(new { status = "success", message = "Received ticket sold" });
-        }
-
-
-        [HttpPost]
-        [Route("receive-payload")]
-        public async Task<IHttpActionResult> receivePayload()
+        [Route("inti/{key?}")]
+        public async Task<IHttpActionResult> Inti(string key)
         {
-            var ctx = HttpContext.Current;
-            var json = String.Empty;
-            ctx.Request.InputStream.Position = 0;
-            using (var inputStream = new StreamReader(ctx.Request.InputStream))
+            try
             {
-                json = inputStream.ReadToEnd();
+                var salesPlatformWebhooRequestUid = Guid.NewGuid();
+                var result = await this.commandBus.Send(new CreateSalesPlatformWebhookRequest(
+                    salesPlatformWebhooRequestUid,
+                    "Inti",
+                    key,
+                    HttpContext.Current.Request.Url.AbsoluteUri,
+                    Request.Headers.ToString(),
+                    Request.Content.ReadAsStringAsync().Result,
+                    HttpContext.Current.Request.GetIpAddress()));
+                //if (response.Errors.Any())
+                //{
+                //    return BadRequest(response.Errors);
+                //}
+
+                //return Ok(response.Value);
+            }
+            catch (DomainException ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return await BadRequest(ex.GetInnerMessage());
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return await BadRequest(ex.GetInnerMessage());
             }
 
-            var content = json;
-            
-            return await Json(new { status = "ok" });
+            return await Json(new { status = "success", message = "Eventbrite event saved successfully." });
         }
 
+        ///// <summary>Ticket Sold.</summary>
+        ///// <returns></returns>
+        //[HttpPost]
+        //[Route("inti-ticket-sold")]
+        //public async Task<IHttpActionResult> IntiTicketSold()
+        //{            
+        //    var ctx = HttpContext.Current;
+        //    var json = String.Empty;
+        //    ctx.Request.InputStream.Position = 0;
+        //    using (var inputStream = new StreamReader(ctx.Request.InputStream)){
+        //        json = inputStream.ReadToEnd();
+        //    }
+        //    var dto = new JavaScriptSerializer().Deserialize<IntiPayload>(json);
+
+        //    var headers = Request.Headers.ToString();
+        //    var ip = HttpContext.Current.Request.GetIpAddress();
+        //    var salesPlatformWebhookRequestUid = Guid.NewGuid();
+        //    var result = await this.commandBus.Send(new CreateSalesPlatformWebhookRequest(
+        //        salesPlatformWebhookRequestUid,
+        //        "Inti",
+        //        dto.id.ToString(),
+        //        HttpContext.Current.Request.Url.AbsoluteUri,
+        //        headers,
+        //        json, // Request.Content.ReadAsStringAsync().Result,
+        //        ip)); 
+
+        //    return await Json(new { status = "success", message = "Received ticket sold" });
+        //}
+
+
+        //[HttpPost]
+        //[Route("receive-payload")]
+        //public async Task<IHttpActionResult> receivePayload()
+        //{
+        //    var ctx = HttpContext.Current;
+        //    var json = String.Empty;
+        //    ctx.Request.InputStream.Position = 0;
+        //    using (var inputStream = new StreamReader(ctx.Request.InputStream))
+        //    {
+        //        json = inputStream.ReadToEnd();
+        //    }
+
+        //    var content = json;
+
+        //    return await Json(new { status = "ok" });
+        //}
 
         #endregion
 

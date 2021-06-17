@@ -98,36 +98,40 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
             this.BarcodeUpdateDate = barcode?.Changed;
         }
 
-        public SalesPlatformAttendeeDto(IntiSaleOrCancellation intiSale)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SalesPlatformAttendeeDto"/> class.
+        /// </summary>
+        /// <param name="intiPayload">The inti payload.</param>
+        public SalesPlatformAttendeeDto(IntiPayload intiPayload)
         {
             // Event
-            this.EventId = intiSale.relationships.event_id;
+            this.EventId = intiPayload.relationships.event_id;
 
             // Order
-            this.OrderId = intiSale.relationships.order_id;
+            this.OrderId = intiPayload.relationships.order_id;
 
             // Attendee
-            this.AttendeeId = intiSale.relationships.buyer_id; // FIXME
+            this.AttendeeId = intiPayload.relationships.buyer_id; // FIXME
             this.SalesPlatformUpdateDate = DateTime.Now;
-            this.SalesPlatformAttendeeStatus = Dtos.SalesPlatformAttendeeStatus.Attending;
+            this.SalesPlatformAttendeeStatus = intiPayload.GetSalesPlatformAttendeeStatus(); //TODO: CHECK THIS
             this.IsCancelled = false;
             this.IsCheckedIn = false;
-            this.TicketClassId = intiSale.price_name;
-            this.TicketClassName = intiSale.price_name;
+            this.TicketClassId = intiPayload.price_name;
+            this.TicketClassName = intiPayload.price_name;
 
             // Profile
-            this.FirstName = intiSale.name.Contains(" ") ? intiSale.name.Split(Convert.ToChar(" "))[0] : intiSale.name;
-            this.LastMame = intiSale.name.Contains(" ") ? intiSale.name.Split(Convert.ToChar(" "))[1] : ""; 
+            this.FirstName = intiPayload.name.Contains(" ") ? intiPayload.name.Split(Convert.ToChar(" "))[0] : intiPayload.name;
+            this.LastMame = intiPayload.name.Contains(" ") ? intiPayload.name.Split(Convert.ToChar(" "))[1] : ""; 
             this.Gender = "";
             this.Age = null;
-            this.Name = intiSale.name;
+            this.Name = intiPayload.name;
             this.BirthDate = "";
             this.CellPhone = "0";
-            this.Email = intiSale.email;
+            this.Email = intiPayload.email;
             this.JobTitle = "_";
 
             // Barcode            
-            this.Barcode = intiSale.validator_code;
+            this.Barcode = intiPayload.validator_code;
             this.IsBarcodePrinted = false;
             this.IsBarcodeUsed = false;
             this.BarcodeUpdateDate = null;
