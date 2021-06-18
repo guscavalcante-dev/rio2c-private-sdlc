@@ -380,10 +380,3 @@ table.dataTable tbody tr.selected {
 .minicolors-theme-bootstrap .minicolors-swatch {
     top: 5px !important;
 }
-
-/*
-    Bootbox bugfix
-*/
-.bootbox.modal {
-    z-index: 9999 !important;
-}

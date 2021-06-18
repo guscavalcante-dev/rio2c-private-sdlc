@@ -119,7 +119,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<Negotiation> FindByDateRange(this IQueryable<Negotiation> query, DateTimeOffset startDate, DateTimeOffset endDate)
         {
-            endDate = endDate.AddHours(23).AddMinutes(59).AddSeconds(59);
+            //endDate = endDate.AddHours(23).AddMinutes(59).AddSeconds(59);
 
             query = query.Where(n => (n.StartDate >= startDate && n.StartDate <= endDate)
                                      || (n.EndDate >= startDate && n.EndDate <= endDate));

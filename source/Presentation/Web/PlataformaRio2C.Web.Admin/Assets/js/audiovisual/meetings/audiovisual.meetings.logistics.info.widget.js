@@ -28,6 +28,8 @@ var AudiovisualMeetingsLogisticsInfoWidget = function () {
     };
 
     var show = function (organizationUids) {
+        MyRio2cCommon.block({ idOrClass: widgetElementId });
+
         var jsonParameters = new Object();
         jsonParameters.organizationsUids = organizationUids.join(',');;
 

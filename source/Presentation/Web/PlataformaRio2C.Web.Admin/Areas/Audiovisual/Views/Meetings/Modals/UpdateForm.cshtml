@@ -1,9 +1,5 @@
 ﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateNegotiation
 @Html.HiddenFor(m => m.NegotiationUid)
-@Html.HiddenFor(m => m.InitialBuyerOrganizationUid)
-@Html.HiddenFor(m => m.InitialBuyerOrganizationName)
-@Html.HiddenFor(m => m.InitialProjectUid)
-@Html.HiddenFor(m => m.InitialProjectName)
 @Html.HiddenFor(m => m.RoundNumber)
 @{
     var sellerOrganizationUid = Model?.ProjectBuyerEvaluationDto?.ProjectBuyerEvaluation?.Project?.SellerAttendeeOrganization?.Organization?.Uid;
@@ -12,6 +8,8 @@
 
 <div class="row">
     <div class="form-group col-12">
+        @Html.HiddenFor(m => m.InitialBuyerOrganizationUid)
+        @Html.HiddenFor(m => m.InitialBuyerOrganizationName)
         @Html.LabelFor(m => m.BuyerOrganizationUid, new { @class = "control-label" })
         @Html.DropDownListFor(m => m.BuyerOrganizationUid, Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAMEntity, Labels.Player.ToLowerInvariant())}...", new { @class = "form-control disabled", disabled = "disabled" })
         @Html.ValidationMessageFor(m => m.BuyerOrganizationUid, "", new { @class = "text-danger" })
@@ -19,6 +17,8 @@
 </div>
 <div class="row">
     <div class="form-group col-12">
+        @Html.HiddenFor(m => m.InitialProjectUid)
+        @Html.HiddenFor(m => m.InitialProjectName)
         @Html.LabelFor(m => m.ProjectUid, new { @class = "control-label" })
         @Html.DropDownListFor(m => m.ProjectUid, Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAMEntity, Labels.Project.ToLowerInvariant())}...", new { @class = "form-control disabled", disabled = "disabled" })
         @Html.ValidationMessageFor(m => m.ProjectUid, "", new { @class = "text-danger" })

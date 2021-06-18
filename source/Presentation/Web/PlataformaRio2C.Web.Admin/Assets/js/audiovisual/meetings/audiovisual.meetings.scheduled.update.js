@@ -523,7 +523,7 @@ var AudiovisualMeetingsUpdate = function () {
     var submit = function () {
         var message = translations.changeScheduledNegotiationConfirmationMessage;
 
-        bootbox.dialog({
+        var box = bootbox.dialog({
             message: message,
             buttons: {
                 cancel: {
@@ -541,6 +541,8 @@ var AudiovisualMeetingsUpdate = function () {
                 }
             }
         });
+
+        box.modal('show');
     }
 
     return {

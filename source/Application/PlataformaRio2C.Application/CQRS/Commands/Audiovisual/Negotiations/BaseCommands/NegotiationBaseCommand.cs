@@ -50,7 +50,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public int? RoundNumber { get; set; }
 
-        // Properties used to set initial selection at select2.selectedOption --------------------------------------------------------
+        // Properties used to set initial selection at select2.selectedOption
         public Guid? InitialBuyerOrganizationUid { get; set; }
         public string InitialBuyerOrganizationName { get; set; }
 
@@ -77,6 +77,14 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.InitialProjectUid = projectBuyerEvaluationDto?.ProjectDto?.Project?.Uid;
             this.InitialProjectName = projectBuyerEvaluationDto?.ProjectDto?.Project?.ProjectTitles?.FirstOrDefault(pt => pt.Language.Code == userInterfaceLanguage)?.Value;
             this.ProjectUid = this.InitialProjectUid;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NegotiationBaseCommand"/> class.
+        /// </summary>
+        public NegotiationBaseCommand()
+        {
+
         }
     }
 }

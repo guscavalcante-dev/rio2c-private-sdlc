@@ -11,49 +11,47 @@
 <div class="kt-widget4">
     @if (Model != null && Model.Any(ac => ac.ConferenceDtos != null && ac.ConferenceDtos.Count() > 0))
     {
-        <div class="col-12">
-            <table class="table table-sm table-head-bg-brand table-body-scroll">
-                <thead class="thead-inverse">
-                    <tr>
-                        <th>@Labels.Speaker</th>
-                        <th>@Labels.Title</th>
-                        <th class="text-center">@Labels.StartDate</th>
-                        <th class="text-center">@Labels.EndDate</th>
-                    </tr>
-                </thead>
-                <tbody class="rio2c-scroll" style="height: 150px;">
-                    @foreach (var attendeeCollaboratorDto in Model.Where(ac => ac.ConferenceDtos != null && ac.ConferenceDtos.Count() > 0))
+        <table class="table table-sm table-head-bg-brand table-body-scroll table-striped">
+            <thead class="thead-inverse">
+                <tr>
+                    <th class="col-md-5">@Labels.Speaker</th>
+                    <th class="col-md-4">@Labels.Title</th>
+                    <th class="text-center">@Labels.StartDate</th>
+                    <th class="text-center">@Labels.EndDate</th>
+                </tr>
+            </thead>
+            <tbody class="rio2c-scroll" style="height: 150px;">
+                @foreach (var attendeeCollaboratorDto in Model.Where(ac => ac.ConferenceDtos != null && ac.ConferenceDtos.Count() > 0))
+                {
+                    foreach (var conferenceDto in attendeeCollaboratorDto.ConferenceDtos)
                     {
-                        foreach (var conferenceDto in attendeeCollaboratorDto.ConferenceDtos)
-                        {
-                            <tr>
-                                <td>
-                                    <a href="@Url.Action("Details", "Speakers", new { Area = "", id = attendeeCollaboratorDto?.Collaborator.Uid })" target="_blank">
-                                        @attendeeCollaboratorDto.Collaborator.GetFullName()
-                                    </a>
-                                    <div class="row col-md-12">
-                                        <span class="kt-badge kt-badge--inline kt-badge--info">
-                                            @(attendeeCollaboratorDto.AttendeeOrganizationsDtos.FirstOrDefault().Organization.Name)
-                                        </span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <a href="@Url.Action("Details", "Conferences", new { Area = "", id = conferenceDto.Conference.Uid })" target="_blank">
-                                        @(conferenceDto.GetConferenceTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ConferenceTitle?.Value)
-                                    </a>
-                                </td>
-                                <td class="text-center @(startDate.HasValue && endDate.HasValue && (conferenceDto.Conference.StartDate < startDate.Value || conferenceDto.Conference.StartDate > endDate.Value) ? "kt-font-danger" : string.Empty)">
-                                    @(conferenceDto.Conference.StartDate.ToUserTimeZone().ToShortDateString()) @(conferenceDto.Conference.StartDate.ToUserTimeZone().ToShortTimeString())
-                                </td>
-                                <td class="text-center @(startDate.HasValue && endDate.HasValue && (conferenceDto.Conference.EndDate < startDate.Value || conferenceDto.Conference.EndDate > endDate.Value) ? "kt-font-danger" : string.Empty)">
-                                    @(conferenceDto.Conference.EndDate.ToUserTimeZone().ToShortDateString()) @(conferenceDto.Conference.EndDate.ToUserTimeZone().ToShortTimeString())
-                                </td>
-                            </tr>
-                        }
+                        <tr>
+                            <td class="col-md-5">
+                                <a href="@Url.Action("Details", "Speakers", new { Area = "", id = attendeeCollaboratorDto?.Collaborator.Uid })" target="_blank">
+                                    @attendeeCollaboratorDto.Collaborator.GetFullName()
+                                </a>
+                                <div class="row col-md-12">
+                                    <span class="kt-badge kt-badge--inline kt-badge--info">
+                                        @(attendeeCollaboratorDto.AttendeeOrganizationsDtos.FirstOrDefault().Organization.Name)
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="col-md-4">
+                                <a href="@Url.Action("Details", "Conferences", new { Area = "", id = conferenceDto.Conference.Uid })" target="_blank">
+                                    @(conferenceDto.GetConferenceTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ConferenceTitle?.Value)
+                                </a>
+                            </td>
+                            <td class="text-center @(startDate.HasValue && endDate.HasValue && (conferenceDto.Conference.StartDate < startDate.Value || conferenceDto.Conference.StartDate > endDate.Value) ? "kt-font-danger" : string.Empty)">
+                                @(conferenceDto.Conference.StartDate.ToUserTimeZone().ToStringHourMinute())
+                            </td>
+                            <td class="text-center @(startDate.HasValue && endDate.HasValue && (conferenceDto.Conference.EndDate < startDate.Value || conferenceDto.Conference.EndDate > endDate.Value) ? "kt-font-danger" : string.Empty)">
+                                @(conferenceDto.Conference.EndDate.ToUserTimeZone().ToStringHourMinute())
+                            </td>
+                        </tr>
                     }
-                </tbody>
-            </table>
-        </div>
+                }
+            </tbody>
+        </table>
     }
     else
     {

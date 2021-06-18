@@ -7614,6 +7614,7 @@
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\LogisticsInfoWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\LogisticsAirfareList.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\ConferencesList.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\MeetingsList.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

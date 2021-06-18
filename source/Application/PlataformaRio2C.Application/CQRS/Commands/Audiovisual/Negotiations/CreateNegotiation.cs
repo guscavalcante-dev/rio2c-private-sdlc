@@ -12,11 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
-using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -33,11 +29,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             ProjectBuyerEvaluationDto projectBuyerEvaluationDto,
             string userInterfaceLanguage)
         {
-            if (projectBuyerEvaluationDto == null )
-            {
-                throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundM));
-            }
-
             this.UpdateBaseProperties(projectBuyerEvaluationDto, userInterfaceLanguage);
         }
 

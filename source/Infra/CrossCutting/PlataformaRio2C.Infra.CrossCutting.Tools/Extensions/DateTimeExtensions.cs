@@ -125,53 +125,53 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         }
 
         /// <summary>
-        /// Converts to stringhourminutesecond.
+        /// Converts to stringhourminute.
         /// </summary>
         /// <param name="dt">The dt.</param>
         /// <returns></returns>
-        public static string ToStringHourMinuteSecond(this DateTimeOffset dt)
+        public static string ToStringHourMinute(this DateTimeOffset dt)
         {
-            return dt.ToString("dd/MM/yyyy hh:mm:ss");
+            return dt.ToString("dd/MM/yyyy hh:mm");
         }
 
         /// <summary>
-        /// Converts to stringhourminutesecond.
+        /// Converts to stringhourminute.
         /// </summary>
         /// <param name="dt">The dt.</param>
         /// <returns></returns>
-        public static string ToStringHourMinuteSecond(this DateTimeOffset? dt)
+        public static string ToStringHourMinute(this DateTimeOffset? dt)
         {
             if (dt == null)
             {
                 return "";
             }
 
-            return dt?.ToString("dd/MM/yyyy hh:mm:ss");
+            return dt?.ToString("dd/MM/yyyy hh:mm");
         }
 
         /// <summary>
-        /// Converts to stringhourminutesecond.
+        /// Converts to stringhourminute.
         /// </summary>
         /// <param name="dt">The dt.</param>
         /// <returns></returns>
-        public static string ToStringHourMinuteSecond(this DateTime dt)
+        public static string ToStringHourMinute(this DateTime dt)
         {
-            return dt.ToString("dd/MM/yyyy hh:mm:ss");
+            return dt.ToString("dd/MM/yyyy hh:mm");
         }
 
         /// <summary>
-        /// Converts to stringhourminutesecond.
+        /// Converts to stringhourminute.
         /// </summary>
         /// <param name="dt">The dt.</param>
         /// <returns></returns>
-        public static string ToStringHourMinuteSecond(this DateTime? dt)
+        public static string ToStringHourMinute(this DateTime? dt)
         {
             if(dt == null)
             {
                 return "";
             }
 
-            return dt?.ToString("dd/MM/yyyy hh:mm:ss");
+            return dt?.ToString("dd/MM/yyyy hh:mm");
         }
     }
 }
