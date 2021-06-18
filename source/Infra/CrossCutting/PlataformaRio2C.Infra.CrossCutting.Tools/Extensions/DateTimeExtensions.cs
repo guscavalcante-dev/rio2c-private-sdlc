@@ -59,6 +59,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             return TimeZoneInfo.ConvertTimeToUtc(dt, userTimeZone);
         }
 
+
         /// <summary>
         /// Converts to enddatetime.
         /// </summary>
