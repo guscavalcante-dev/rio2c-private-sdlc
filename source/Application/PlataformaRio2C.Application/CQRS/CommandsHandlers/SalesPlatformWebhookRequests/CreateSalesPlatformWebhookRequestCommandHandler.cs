@@ -53,9 +53,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <returns></returns>
         public async Task<Guid?> Handle(CreateSalesPlatformWebhookRequest cmd, CancellationToken cancellationToken)
         {
-            this.uow.BeginTransaction();
-
-            
+            this.uow.BeginTransaction();            
 
             var salesPlatform = await this.salesPlatformRepo.FindByNameAsync(cmd.SalesPlatformName);
 
