@@ -70,8 +70,8 @@
     <Compile Include="Services\ByInti\Models\IntiAction.cs" />
     <Compile Include="Services\ByInti\Models\IntiAttendee.cs" />
     <Compile Include="Services\ByInti\Models\IntiPayload.cs" />
-    <Compile Include="Services\ByInti\Models\IntiSearchListTicket.cs" />
     <Compile Include="Services\ByInti\Models\IntiSearchEvent.cs" />
+    <Compile Include="Services\ByInti\Models\IntiSearchListTicket.cs" />
     <Compile Include="Services\ByInti\Models\IntiSearchTicket.cs" />
     <Compile Include="Services\Eventbrite\Models\EventbriteCsv.cs" />
     <Compile Include="Services\Eventbrite\Models\EventbriteAttendeeStatus.cs" />

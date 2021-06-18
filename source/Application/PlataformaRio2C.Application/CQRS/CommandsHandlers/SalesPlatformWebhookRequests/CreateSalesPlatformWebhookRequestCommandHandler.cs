@@ -60,23 +60,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var salesPlatformWebhookRequest = new SalesPlatformWebhookRequest(
                 cmd.SalesPlatformWebhookRequestUid,
                 salesPlatform,
-                "8ed95423-0c36-4dc8-bf86-76aa79882b20", //cmd.WebhookSecurityKey,
+                "7A8C7EDC-3084-47D5-AD5A-DF6A128B341C",//"8ed95423-0c36-4dc8-bf86-76aa79882b20", //cmd.WebhookSecurityKey,
                 cmd.Endpoint,
                 cmd.Header,
                 cmd.Payload,
                 cmd.IpAddress);
 
-            //salesPlatformWebhookRequest.CreateDate = DateTime.Now;
-
-
             this.salesPlatformWebhookRequestRepo.Create(salesPlatformWebhookRequest);
             this.uow.SaveChanges();
 
-            //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);
-
             return cmd.SalesPlatformWebhookRequestUid;
-
-            //return Task.FromResult(propertyId); // use it when the methed is not async
         }
     }
 }

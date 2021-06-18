@@ -22,9 +22,6 @@ using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Models;
-using System.IO;
-using System.Web.Script.Serialization;
 
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 {
@@ -63,12 +60,6 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     Request.Headers.ToString(),
                     Request.Content.ReadAsStringAsync().Result,
                     HttpContext.Current.Request.GetIpAddress()));
-                //if (response.Errors.Any())
-                //{
-                //    return BadRequest(response.Errors);
-                //}
-
-                //return Ok(response.Value);
             }
             catch (DomainException ex)
             {
@@ -81,7 +72,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 return await BadRequest(ex.GetInnerMessage());
             }
 
-            return await Json(new { status = "success", message = "Eventbrite event saved successfully." });
+            return await Json(new { status = "success", message = "Inti event saved successfully." });
         }
 
         ///// <summary>Ticket Sold.</summary>

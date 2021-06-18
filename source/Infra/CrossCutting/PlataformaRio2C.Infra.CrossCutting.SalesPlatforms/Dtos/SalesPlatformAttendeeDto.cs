@@ -114,13 +114,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
             this.AttendeeId = intiPayload.relationships.buyer_id; // FIXME
             this.SalesPlatformUpdateDate = DateTime.Now;
 
-            //this.SalesPlatformAttendeeStatus = intiPayload.GetSalesPlatformAttendeeStatus(); //TODO: CHECK THIS
-            if(intiSale.action=="ticket_sold")
-                this.SalesPlatformAttendeeStatus = Dtos.SalesPlatformAttendeeStatus.Attending;
-            else if(intiSale.action== "ticket_canceled")
-                this.SalesPlatformAttendeeStatus = Dtos.SalesPlatformAttendeeStatus.Deleted;
-            else if (intiSale.action == "participant_updated")
-                this.SalesPlatformAttendeeStatus = Dtos.SalesPlatformAttendeeStatus.Transferred;
+            this.SalesPlatformAttendeeStatus = intiPayload.GetSalesPlatformAttendeeStatus();
+            
+            //TODO: CHECK THIS
+            //if(intiPayload.Action == "ticket_sold")
+            //    this.SalesPlatformAttendeeStatus = Dtos.SalesPlatformAttendeeStatus.Attending;
+            //else if(intiPayload.Action == "ticket_canceled")
+            //    this.SalesPlatformAttendeeStatus = Dtos.SalesPlatformAttendeeStatus.Deleted;
+            //else if (intiPayload.Action == "participant_updated")
+            //    this.SalesPlatformAttendeeStatus = Dtos.SalesPlatformAttendeeStatus.Transferred;
 
             this.IsCancelled = false;
             this.IsCheckedIn = false;
