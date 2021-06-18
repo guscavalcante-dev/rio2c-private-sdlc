@@ -6,7 +6,7 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 05-15-2021
 // ***********************************************************************
-// <copyright file="audiovisual.meetings.update.js" company="Softo">
+// <copyright file="audiovisual.meetings.scheduled.update.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -16,153 +16,223 @@ var AudiovisualMeetingsUpdate = function () {
 
     var modalId = '#UpdateAudiovisualMeetingModal';
     var formId = '#UpdateAudiovisualMeetingForm';
-    var buyerOrganizationId = '#BuyerOrganizationUid';
-    var projectId = '#ProjectUid';
-    var negotiationConfigId = '#NegotiationConfigUid';
-    var negotiationRoomConfigId = '#NegotiationRoomConfigUid';
+
+    var buyerOrganizationUid = '#BuyerOrganizationUid';
+    var projectUid = '#ProjectUid';
+    var negotiationConfigUid = '#NegotiationConfigUid';
+    var negotiationRoomConfigUid = '#NegotiationRoomConfigUid';
     var startTimeId = '#StartTime';
     var roundNumberId = '#RoundNumber';
+    var sellerOrganizationUid = '#SellerOrganizationUid';
+
+    var initialBuyerOrganizationUid = '#InitialBuyerOrganizationUid';
+    var initialBuyerOrganizationName = '#InitialBuyerOrganizationName';
+    var initialProjectUid = '#InitialProjectUid';
+    var initialProjectName = '#InitialProjectName';
+
+    var initialNegotiationConfigUid = '#InitialNegotiationConfigUid';
+    var initialNegotiationRoomConfigUid = '#InitialNegotiationRoomConfigUid';
+    var initialStartTime = '#InitialStartTime';
+
     var globalVariables = MyRio2cCommon.getGlobalVariables();
 
-    // Date select2 ------------------------------------------------------------------------------
-    var emptyStateSelect2 = function () {
-        $(negotiationConfigId).val('').trigger('change');
+    var buyerOrganizationUidElement;
+    var projectUidElement;
+    var negotiationConfigUidElement;
+    var negotiationRoomConfigUidElement;
+    var startTimeIdElement;
+    var roundNumberIdElement;
+    var sellerOrganizationUidElement;
 
-        $(negotiationConfigId).select2({
+    var initialBuyerOrganizationUidElement;
+    var initialBuyerOrganizationNameElement;
+    var initialProjectUidElement;
+    var initialProjectNameElement;
+
+    var initialNegotiationConfigUidElement;
+    var initialNegotiationRoomConfigUidElement;
+    var initialStartTimeElement;
+
+    // Init elements ------------------------------------------------------------------------------
+    var initElements = function () {
+        buyerOrganizationUidElement = $(buyerOrganizationUid);
+        projectUidElement = $(projectUid);
+        negotiationConfigUidElement = $(negotiationConfigUid);
+        negotiationRoomConfigUidElement = $(negotiationRoomConfigUid);
+        startTimeIdElement = $(startTimeId);
+        roundNumberIdElement = $(roundNumberId);
+        sellerOrganizationUidElement = $(sellerOrganizationUid);
+
+        initialBuyerOrganizationUidElement = $(initialBuyerOrganizationUid);
+        initialBuyerOrganizationNameElement = $(initialBuyerOrganizationName);
+        initialProjectUidElement = $(initialProjectUid);
+        initialProjectNameElement = $(initialProjectName);
+
+        initialNegotiationConfigUidElement = $(initialNegotiationConfigUid);
+        initialNegotiationRoomConfigUidElement = $(initialNegotiationRoomConfigUid);
+        initialStartTimeElement = $(initialStartTime);
+    };
+
+    // Buyer organization select2 ----------------------------------------------------------------
+    var enableBuyerOrganizationChangeEvent = function () {
+        var element = $(buyerOrganizationUid);
+
+        element.not('.change-event-enabled').on('change', function () {
+            AudiovisualMeetingsLogisticsInfoWidget.init([this.value, sellerOrganizationUidElement.val()]);
+        });
+        element.addClass('change-event-enabled');
+
+        element.change();
+    };
+
+    // Date select2 ------------------------------------------------------------------------------
+    var emptyDateSelect2 = function () {
+        negotiationConfigUidElement.val('').trigger('change');
+
+        negotiationConfigUidElement.select2({
             language: globalVariables.userInterfaceLanguage,
             width: '100%',
             placeholder: translations.dateDropdownPlaceholder,
             data: []
         });
 
-        $(negotiationConfigId).empty();
+        negotiationConfigUidElement.empty();
     };
 
-    var enableDateSelect2 = function () {
-        var projectUid = $(projectId).val();
+    var enableDateSelect2 = function (isParentChanged) {
+        if (!MyRio2cCommon.isNullOrEmpty(isParentChanged) && isParentChanged === true) {
+            if (!MyRio2cCommon.isNullOrEmpty(negotiationConfigUidElement.val())) {
+                negotiationConfigUidElement.val('').trigger('change');
+            }
+            else {
+                negotiationConfigUidElement.val('');
+            }
+        }
+
+        var projectUid = projectUidElement.val();
 
         if (MyRio2cCommon.isNullOrEmpty(projectUid)) {
-            emptyStateSelect2();
+            emptyDateSelect2();
         }
         else {
-	        var jsonParameters = new Object();
+            var jsonParameters = new Object();
             jsonParameters.customFilter = 'HasManualTables';
-            jsonParameters.buyerOrganizationUid = $(buyerOrganizationId).val();
+            jsonParameters.buyerOrganizationUid = buyerOrganizationUidElement.val();
 
-	        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/FindAllDates'), jsonParameters, function (data) {
-	            MyRio2cCommon.handleAjaxReturn({
-	                data: data,
-	                // Success
-	                onSuccess: function () {
+            $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/FindAllDates'), jsonParameters, function (data) {
+                MyRio2cCommon.handleAjaxReturn({
+                    data: data,
+                    // Success
+                    onSuccess: function () {
                         if (data.negotiationConfigs.length <= 0) {
-	                        emptyStateSelect2();
-	                    }
+                            emptyDateSelect2();
+                        }
 
-	                    var negotiationConfigsData = new Array();
+                        var negotiationConfigsData = new Array();
 
-	                    // Placeholder
-	                    var negotiationConfigObject = new Object();
-	                    negotiationConfigObject.id = '';
-	                    negotiationConfigObject.text = labels.selectPlaceholder;
-	                    negotiationConfigsData.push(negotiationConfigObject);
+                        // Placeholder
+                        var negotiationConfigObject = new Object();
+                        negotiationConfigObject.id = '';
+                        negotiationConfigObject.text = labels.selectPlaceholder;
+                        negotiationConfigsData.push(negotiationConfigObject);
 
-	                    for (var i in data.negotiationConfigs) {
-	                        if (data.negotiationConfigs.hasOwnProperty(i)) {
-	                            negotiationConfigObject = new Object();
-	                            negotiationConfigObject.id = data.negotiationConfigs[i].Uid;
+                        for (var i in data.negotiationConfigs) {
+                            if (data.negotiationConfigs.hasOwnProperty(i)) {
+                                negotiationConfigObject = new Object();
+                                negotiationConfigObject.id = data.negotiationConfigs[i].Uid;
                                 negotiationConfigObject.text = moment(data.negotiationConfigs[i].StartDate).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L');
-	                            negotiationConfigsData.push(negotiationConfigObject);
-	                        }
-	                    }
+                                negotiationConfigsData.push(negotiationConfigObject);
+                            }
+                        }
 
-	                    $(negotiationConfigId).empty().select2({
+                        negotiationConfigUidElement.empty().select2({
                             language: globalVariables.userInterfaceLanguage,
-	                        width: '100%',
+                            width: '100%',
                             placeholder: translations.dateDropdownPlaceholder,
-	                        triggerChange: true,
-	                        allowClear: true,
+                            triggerChange: true,
+                            allowClear: true,
                             data: negotiationConfigsData
                         });
 
-                        setDateInitialSelection();
-	                },
-	                // Error
-	                onError: function () {
-	                    emptyStateSelect2();
-	                }
-	            });
-	        })
-	        .fail(function () {
-	            emptyStateSelect2();
-	        })
-	        .always(function () {
-	            MyRio2cCommon.unblock();
-            });
+                        var initialNegotiationConfigUidValue = initialNegotiationConfigUidElement.val();
+                        if (!MyRio2cCommon.isNullOrEmpty(initialNegotiationConfigUidValue)) {
+                            negotiationConfigUidElement.val(initialNegotiationConfigUidValue).trigger('change');
+                            initialNegotiationConfigUidElement.val('');
+                        }
+                    },
+                    // Error
+                    onError: function () {
+                        emptyDateSelect2();
+                    }
+                });
+            })
+                .fail(function () {
+                    emptyDateSelect2();
+                })
+                .always(function () {
+                    MyRio2cCommon.unblock();
+                });
         }
     };
 
-    var setDateInitialSelection = function () {
-        //var selectedItem = $('#InitialDate').val();
-        //var element = $(negotiationConfigId);
-        //var existentOption = element.find("option:contains('" + selectedItem + "')");
-
-        //if (existentOption.length) {
-        //    element.val(existentOption.val()).trigger('change');
-        //} else {
-        //    var newOption = new Option(selectedItem, selectedItem, false, true);
-        //    element.append(newOption).trigger('change');
-        //}
-    };
-
     var enableDateChangeEvent = function () {
-	    var element = $(negotiationConfigId);
+        var element = negotiationConfigUidElement;
 
-	    element.not('.change-event-enabled').on('change', function () {
-		    toogleRoomSelect2();
-	    });
-	    element.addClass('change-event-enabled');
+        element.not('.change-event-enabled').on('change', function () {
+            toogleRoomSelect2();
+        });
+        element.addClass('change-event-enabled');
     };
 
     // Room select2 ------------------------------------------------------------------------------
     var toogleRoomSelect2 = function () {
-        var element = $(negotiationRoomConfigId);
+        var element = negotiationRoomConfigUidElement;
 
-        if ($(negotiationConfigId).val() !== '') {
-            enableRoomSelect2();
+        if (!MyRio2cCommon.isNullOrEmpty(negotiationConfigUidElement.val())) {
+            enableRoomSelect2(true);
             element.removeClass('disabled');
             element.prop("disabled", false);
         }
         else {
             element.addClass('disabled');
             element.prop("disabled", true);
-            $(negotiationRoomConfigId).val('').trigger('change');
+            negotiationRoomConfigUidElement.val('').trigger('change');
         }
     };
 
     var emptyRoomSelect2 = function () {
-        $(negotiationRoomConfigId).val('').trigger('change');
+        negotiationRoomConfigUidElement.val('').trigger('change');
 
-        $(negotiationRoomConfigId).select2({
+        negotiationRoomConfigUidElement.select2({
             language: globalVariables.userInterfaceLanguage,
             width: '100%',
             placeholder: translations.roomDropdownPlaceholder,
             data: []
         });
 
-        $(negotiationRoomConfigId).empty();
+        negotiationRoomConfigUidElement.empty();
     };
 
-    var enableRoomSelect2 = function () {
-        var projectUid = $(negotiationConfigId).val();
+    var enableRoomSelect2 = function (isParentChanged) {
+        if (!MyRio2cCommon.isNullOrEmpty(isParentChanged) && isParentChanged === true) {
+            if (!MyRio2cCommon.isNullOrEmpty(negotiationRoomConfigUidElement.val())) {
+                negotiationRoomConfigUidElement.val('').trigger('change');
+            }
+            else {
+                negotiationRoomConfigUidElement.val('');
+            }
+        }
+
+        var projectUid = negotiationConfigUidElement.val();
 
         if (MyRio2cCommon.isNullOrEmpty(projectUid)) {
-	        emptyRoomSelect2();
+            emptyRoomSelect2();
         }
         else {
             var jsonParameters = new Object();
             jsonParameters.customFilter = 'HasManualTables';
-            jsonParameters.negotiationConfigUid = $(negotiationConfigId).val();
-            jsonParameters.buyerOrganizationUid = $(buyerOrganizationId).val();
+            jsonParameters.negotiationConfigUid = negotiationConfigUidElement.val();
+            jsonParameters.buyerOrganizationUid = buyerOrganizationUidElement.val();
 
             $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/FindAllRooms'), jsonParameters, function (data) {
                 MyRio2cCommon.handleAjaxReturn({
@@ -170,7 +240,7 @@ var AudiovisualMeetingsUpdate = function () {
                     // Success
                     onSuccess: function () {
                         if (data.rooms.length <= 0) {
-	                        emptyRoomSelect2();
+                            emptyRoomSelect2();
                         }
 
                         var roomsData = new Array();
@@ -190,7 +260,7 @@ var AudiovisualMeetingsUpdate = function () {
                             }
                         }
 
-                        $(negotiationRoomConfigId).empty().select2({
+                        negotiationRoomConfigUidElement.empty().select2({
                             language: globalVariables.userInterfaceLanguage,
                             width: '100%',
                             placeholder: translations.roomDropdownPlaceholder,
@@ -199,86 +269,85 @@ var AudiovisualMeetingsUpdate = function () {
                             data: roomsData
                         });
 
-                        setRoomInitialSelection();
+                        var initialNegotiationRoomConfigUidValue = initialNegotiationRoomConfigUidElement.val();
+                        if (!MyRio2cCommon.isNullOrEmpty(initialNegotiationRoomConfigUidValue)) {
+                            negotiationRoomConfigUidElement.val(initialNegotiationRoomConfigUidValue).trigger('change');
+                            initialNegotiationRoomConfigUidElement.val('');
+                        }
                     },
                     // Error
                     onError: function () {
-	                    emptyRoomSelect2();
+                        emptyRoomSelect2();
                     }
                 });
             })
-            .fail(function () {
-                emptyRoomSelect2();
-            })
-            .always(function () {
-                MyRio2cCommon.unblock();
-            });
+                .fail(function () {
+                    emptyRoomSelect2();
+                })
+                .always(function () {
+                    MyRio2cCommon.unblock();
+                });
         }
     };
 
-    var setRoomInitialSelection = function () {
-        //var selectedValue = $('#InitialNegotiationRoomConfigUid').val();
-        //var element = $(negotiationRoomConfigId);
-
-        //var existentOption = element.find("option[value='" + selectedValue + "']");
-        //if (existentOption.length) {
-        //    element.val(existentOption.val()).trigger('change');
-        //} else {
-        //    var selectedText = $('#InitialNegotiationRoomConfigName').val();
-        //    var newOption = new Option(selectedText, selectedValue, false, true);
-        //    element.append(newOption).trigger('change');
-        //}
-    };
-
     var enableRoomChangeEvent = function () {
-	    var element = $(negotiationRoomConfigId);
+        var element = negotiationRoomConfigUidElement;
 
-	    element.not('.change-event-enabled').on('change', function () {
-		    toogleStartTimeSelect2();
-	    });
-	    element.addClass('change-event-enabled');
+        element.not('.change-event-enabled').on('change', function () {
+            toogleStartTimeSelect2();
+        });
+        element.addClass('change-event-enabled');
     };
 
     // Start time select2 -------------------------------------------------------------------------
     var toogleStartTimeSelect2 = function () {
-        var element = $(startTimeId);
+        var element = startTimeIdElement;
 
-        if ($(negotiationRoomConfigId).val() !== '') {
-            enableStartTimeSelect2();
+        if (!MyRio2cCommon.isNullOrEmpty(negotiationRoomConfigUidElement.val())) {
+            enableStartTimeSelect2(true);
             element.removeClass('disabled');
             element.prop("disabled", false);
         }
         else {
             element.addClass('disabled');
             element.prop("disabled", true);
-            $(startTimeId).val('').trigger('change');
+            startTimeIdElement.val('').trigger('change');
         }
     };
 
     var emptyStartTimeSelect2 = function () {
-        $(startTimeId).val('').trigger('change');
+        startTimeIdElement.val('').trigger('change');
 
-        $(startTimeId).select2({
+        startTimeIdElement.select2({
             language: globalVariables.userInterfaceLanguage,
             width: '100%',
             placeholder: translations.startTimeDropdownPlaceholder,
             data: []
         });
 
-        $(startTimeId).empty();
+        startTimeIdElement.empty();
     };
 
-    var enableStartTimeSelect2 = function () {
-        var negotiationRoomConfigUid = $(negotiationRoomConfigId).val();
+    var enableStartTimeSelect2 = function (isParentChanged) {
+        if (!MyRio2cCommon.isNullOrEmpty(isParentChanged) && isParentChanged === true) {
+            if (!MyRio2cCommon.isNullOrEmpty(startTimeIdElement.val())) {
+                startTimeIdElement.val('').trigger('change');
+            }
+            else {
+                startTimeIdElement.val('');
+            }
+        }
+
+        var negotiationRoomConfigUid = negotiationRoomConfigUidElement.val();
 
         if (MyRio2cCommon.isNullOrEmpty(negotiationRoomConfigUid)) {
-	        emptyStartTimeSelect2();
+            emptyStartTimeSelect2();
         }
         else {
             var jsonParameters = new Object();
             jsonParameters.customFilter = 'HasManualTables';
             jsonParameters.negotiationRoomConfigUid = negotiationRoomConfigUid;
-            jsonParameters.buyerOrganizationUid = $(buyerOrganizationId).val();
+            jsonParameters.buyerOrganizationUid = buyerOrganizationUidElement.val();
 
             $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/MeetingParameters/FindAllTimes'), jsonParameters, function (data) {
                 MyRio2cCommon.handleAjaxReturn({
@@ -286,7 +355,7 @@ var AudiovisualMeetingsUpdate = function () {
                     // Success
                     onSuccess: function () {
                         if (data.times.length <= 0) {
-	                        emptyStartTimeSelect2();
+                            emptyStartTimeSelect2();
                         }
 
                         var timesData = new Array();
@@ -302,13 +371,13 @@ var AudiovisualMeetingsUpdate = function () {
                                 timesObject = new Object();
                                 timesObject.id = moment(data.times[i].StartTime).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('LTS');
                                 timesObject.text = moment(data.times[i].StartTime).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('LTS')
-												   + ' - ' + moment(data.times[i].EndTime).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('LTS');
+                                    + ' - ' + moment(data.times[i].EndTime).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('LTS');
                                 timesObject.roundNumber = data.times[i].RoundNumber;
                                 timesData.push(timesObject);
                             }
                         }
 
-                        $(startTimeId).empty().select2({
+                        startTimeIdElement.empty().select2({
                             language: globalVariables.userInterfaceLanguage,
                             width: '100%',
                             placeholder: translations.startTimeDropdownPlaceholder,
@@ -316,15 +385,22 @@ var AudiovisualMeetingsUpdate = function () {
                             allowClear: true,
                             data: timesData
                         });
+
+
+                        var initialStartTimeValue = initialStartTimeElement.val();
+                        if (!MyRio2cCommon.isNullOrEmpty(initialStartTimeValue)) {
+                            startTimeIdElement.val(initialStartTimeValue).trigger('change');
+                            initialStartTimeElement.val('');
+                        }
                     },
                     // Error
                     onError: function () {
-	                    emptyStartTimeSelect2();
+                        emptyStartTimeSelect2();
                     }
                 });
             })
                 .fail(function () {
-	                emptyStartTimeSelect2();
+                    emptyStartTimeSelect2();
                 })
                 .always(function () {
                     MyRio2cCommon.unblock();
@@ -333,19 +409,27 @@ var AudiovisualMeetingsUpdate = function () {
     };
 
     var enableStartTimeChangeEvent = function () {
-        var element = $(startTimeId);
+        var element = startTimeIdElement;
 
-	    element.not('.change-event-enabled').on('change', function () {
-            $(roundNumberId).val(element.select2('data')[0].roundNumber || '');
-	    });
-	    element.addClass('change-event-enabled');
+        element.not('.change-event-enabled').on('change', function () {
+
+            var val = '';
+            if (!MyRio2cCommon.isNullOrEmpty(element.select2('data')[0])) {
+                val = element.select2('data')[0].roundNumber;
+            }
+
+            roundNumberIdElement.val(val);
+        });
+        element.addClass('change-event-enabled');
     };
 
     // Enable plugins -----------------------------------------------------------------------------
     var enablePlugins = function () {
+        initElements();
+
         // Select2
         MyRio2cCommon.enableOrganizationSelect2({
-            inputIdOrClass: buyerOrganizationId,
+            inputIdOrClass: buyerOrganizationUid,
             url: '/Players/FindAllByFilters',
             customFilter: 'HasProjectNegotiationNotScheduled',
             placeholder: translations.playerDropdownPlaceholder,
@@ -354,24 +438,23 @@ var AudiovisualMeetingsUpdate = function () {
                 text: $('#InitialBuyerOrganizationName').val()
             }
         });
-
         MyRio2cCommon.enableProjectSelect2({
-            inputIdOrClass: projectId,
+            inputIdOrClass: projectUid,
             url: '/Projects/FindAllByFilters',
             customFilter: 'HasNegotiationNotScheduled',
-            buyerOrganizationId: buyerOrganizationId,
+            buyerOrganizationUid: buyerOrganizationUid,
             placeholder: translations.projectDropdownPlaceholder,
             selectedOption: {
                 id: $('#InitialProjectUid').val(),
                 text: $('#InitialProjectName').val()
             }
         });
-
         enableDateSelect2();
         enableRoomSelect2();
         enableStartTimeSelect2();
 
         // Change events
+        enableBuyerOrganizationChangeEvent();
         enableDateChangeEvent();
         enableRoomChangeEvent();
         enableStartTimeChangeEvent();
@@ -440,7 +523,7 @@ var AudiovisualMeetingsUpdate = function () {
     var submit = function () {
         var message = translations.changeScheduledNegotiationConfirmationMessage;
 
-        bootbox.dialog({
+        var box = bootbox.dialog({
             message: message,
             buttons: {
                 cancel: {
@@ -458,6 +541,8 @@ var AudiovisualMeetingsUpdate = function () {
                 }
             }
         });
+
+        box.modal('show');
     }
 
     return {

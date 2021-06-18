@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Renan Valentim
-// Created          : 05-15-2021
+// Created          : 06-04-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 05-15-2021
+// Last Modified On : 06-04-2021
 // ***********************************************************************
-// <copyright file="UpdateNegotiationCommandHandler.cs" company="Softo">
+// <copyright file="ScheduleManualNegotiationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -27,15 +27,15 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>UpdateNegotiationCommandHandler</summary>
-    public class UpdateNegotiationCommandHandler : NegotiationBaseCommandHandler, IRequestHandler<UpdateNegotiation, AppValidationResult>
+    /// <summary>ScheduleManualNegotiationCommandHandler</summary>
+    public class ScheduleManualNegotiationCommandHandler : NegotiationBaseCommandHandler, IRequestHandler<ScheduleManualNegotiation, AppValidationResult>
     {
         private readonly IOrganizationRepository organizationRepo;
         private readonly IProjectRepository projectRepo;
         private readonly INegotiationConfigRepository negotiationConfigRepo;
         private readonly INegotiationRoomConfigRepository negotiationRoomConfigRepo;
 
-        public UpdateNegotiationCommandHandler(
+        public ScheduleManualNegotiationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             INegotiationRepository negotiationRepository,
@@ -57,7 +57,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(UpdateNegotiation cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(ScheduleManualNegotiation cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
@@ -77,9 +77,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             if (hasNoMoreTablesAvailable)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(
-                    Messages.NoMoreTablesAvailableAtTheRoomAndStartTime, 
-                    cmd.StartTime, 
-                    negotiationRoomConfig.Room.GetRoomNameByLanguageCode(cmd.UserInterfaceLanguage)), 
+                    Messages.NoMoreTablesAvailableAtTheRoomAndStartTime,
+                    cmd.StartTime,
+                    negotiationRoomConfig.Room.GetRoomNameByLanguageCode(cmd.UserInterfaceLanguage)),
                         new string[] { "ToastrError" }));
             }
 
@@ -88,10 +88,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             if (hasPlayerScheduledNegotiationsAtThisTime)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(
-                    Messages.HasAlreadyBusinessRoundScheduled, 
+                    Messages.HasAlreadyBusinessRoundScheduled,
                     Labels.TheM,
                     Labels.Player,
-                    ($"{startDatePreview.ToUserTimeZone().ToStringHourMinute()} - {endDatePreview.ToUserTimeZone().ToShortTimeString()}")), 
+                    ($"{startDatePreview.ToUserTimeZone().ToStringHourMinute()} - {endDatePreview.ToUserTimeZone().ToShortTimeString()}")),
                         new string[] { "ToastrError" }));
             }
 
@@ -99,10 +99,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             if (hasProducerScheduledNegotiationsAtThisTime)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(
-                    Messages.HasAlreadyBusinessRoundScheduled, 
-                    Labels.TheF, 
+                    Messages.HasAlreadyBusinessRoundScheduled,
+                    Labels.TheF,
                     Labels.Producer,
-                    ($"{startDatePreview.ToUserTimeZone().ToStringHourMinute()} - {endDatePreview.ToUserTimeZone().ToShortTimeString()}")), 
+                    ($"{startDatePreview.ToUserTimeZone().ToStringHourMinute()} - {endDatePreview.ToUserTimeZone().ToShortTimeString()}")),
                         new string[] { "ToastrError" }));
             }
 
@@ -114,24 +114,27 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
+            var negotiationUid = Guid.NewGuid();
             var negotiationsInThisRoomAndStartDate = negotiationsInThisRoom.Where(n => n.StartDate.ToUserTimeZone() == startDatePreview).ToList();
-            
-            var negotiation = await this.GetNegotiationByUid(cmd.NegotiationUid);
-            negotiation.Update(
+
+            var negotiation = new Negotiation(
+                cmd.EditionId.Value,
+                negotiationUid,
+                buyerOrganization,
+                project,
                 negotiationConfig,
                 negotiationRoomConfig,
                 negotiationsInThisRoomAndStartDate,
                 cmd.StartTime,
                 cmd.RoundNumber ?? 0,
                 cmd.UserId);
-
             if (!negotiation.IsValid())
             {
                 this.AppValidationResult.Add(negotiation.ValidationResult);
                 return this.AppValidationResult;
             }
 
-            this.NegotiationRepo.Update(negotiation);
+            this.NegotiationRepo.Create(negotiation);
             this.Uow.SaveChanges();
 
             return this.AppValidationResult;

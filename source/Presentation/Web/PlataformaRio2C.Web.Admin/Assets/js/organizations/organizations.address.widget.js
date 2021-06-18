@@ -64,6 +64,10 @@ var OrganizationsAddressWidget = function () {
                 if (typeof (OrganizationsAddressWidget) !== 'undefined') {
                     OrganizationsAddressWidget.init();
                 }
+
+                if (typeof (OrganizationsMainInformationWidget) !== 'undefined') {
+                    OrganizationsMainInformationWidget.init();
+                }
             },
             onError: function (data) {
                 if (MyRio2cCommon.hasProperty(data, 'pages')) {

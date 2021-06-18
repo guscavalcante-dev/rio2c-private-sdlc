@@ -32,6 +32,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     {
         private readonly IEditionRepository editionRepo;
         private readonly ILanguageRepository languageRepo;
+        private readonly IOrganizationTypeRepository organizationTypeRepo;
+        private readonly IHoldingRepository holdingRepo;
 
         /// <summary>Initializes a new instance of the <see cref="UpdateOrganizationMainInformationCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
@@ -44,11 +46,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IUnitOfWork uow,
             IOrganizationRepository organizationRepository,
             IEditionRepository editionRepository,
-            ILanguageRepository languageRepository)
+            ILanguageRepository languageRepository,
+            IOrganizationTypeRepository organizationTypeRepository,
+            IHoldingRepository holdingRepository
+            )
             : base(eventBus, uow, organizationRepository)
         {
             this.editionRepo = editionRepository;
             this.languageRepo = languageRepository;
+            this.organizationTypeRepo = organizationTypeRepository;
+            this.holdingRepo = holdingRepository;
         }
 
         /// <summary>Handles the specified update organization main information.</summary>
@@ -83,19 +90,27 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             // Before update values
             var beforeImageUploadDate = organization.ImageUploadDate;
-
+            var holding = await this.holdingRepo.GetAsync(cmd.HoldingUid ?? Guid.Empty);
+            var organizationType = await this.organizationTypeRepo.GetAsync(cmd.OrganizationType?.Uid ?? Guid.Empty);
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
             var edition = await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty);
 
             organization.UpdateMainInformation(
                 edition,
+                holding,
+                organizationType,
+                cmd.Name,
                 cmd.CompanyName,
                 cmd.TradeName,
                 cmd.Document,
                 cmd.CropperImage?.ImageFile != null,
                 cmd.CropperImage?.IsImageDeleted == true,
+                cmd.IsVirtualMeeting,
+                cmd.IsApiDisplayEnabled,
+                cmd.ApiHighlightPosition,
                 cmd.Descriptions?.Select(d => new OrganizationDescription(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.UserId);
+
             if (!organization.IsValid())
             {
                 this.AppValidationResult.Add(organization.ValidationResult);

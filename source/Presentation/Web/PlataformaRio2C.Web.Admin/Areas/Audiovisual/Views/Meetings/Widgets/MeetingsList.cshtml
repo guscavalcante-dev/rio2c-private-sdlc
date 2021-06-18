@@ -1,0 +1,57 @@
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Constants
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Statics
+@model List<AttendeeCollaboratorDto>
+@{
+    var userInterfaceLanguage = ViewContext.Controller.ViewBag.UserInterfaceLanguage as string;
+}
+<div class="kt-widget4">
+    @if (Model != null && Model.Any(ac => ac.NegotiationDtos != null && ac.NegotiationDtos.Count() > 0))
+    {
+        <table class="table table-sm table-head-bg-brand table-body-scroll table-striped">
+            <thead class="thead-inverse">
+                <tr>
+                    <th class="col-md-3">@Labels.Player</th>
+                    <th class="col-md-3">@Labels.Project</th>
+                    <th class="col-md-3">@Labels.Producer</th>
+                    <th class="text-center">@Labels.StartDate</th>
+                    <th class="text-center">@Labels.EndDate</th>
+                </tr>
+            </thead>
+            <tbody class="rio2c-scroll" style="height: 150px;">
+                @foreach (var attendeeCollaboratorDto in Model.Where(ac => ac.NegotiationDtos != null && ac.NegotiationDtos.Count() > 0))
+                {
+                    foreach (var negotiationDto in attendeeCollaboratorDto.NegotiationDtos)
+                    {
+                        <tr>
+                            <td class="col-md-3">
+                                @(negotiationDto.ProjectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.TradeName)
+                            </td>
+                            <td class="col-md-3">
+                                @(negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.GetTitleDtoByLanguageCode(userInterfaceLanguage)?.ProjectTitle?.Value ?? "-")
+                            </td>
+                            <td class="col-md-3">
+                                @(negotiationDto.ProjectBuyerEvaluationDto.ProjectDto.SellerAttendeeOrganizationDto.Organization.Name)
+                            </td>
+                            <td class="text-center">
+                                @negotiationDto.Negotiation.StartDate.ToUserTimeZone().ToStringHourMinute()
+                            </td>
+                            <td class="text-center">
+                                @negotiationDto.Negotiation.EndDate.ToUserTimeZone().ToStringHourMinute()
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="row mt-3">
+            <div class="col-12 text-center">
+                <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.BusinessRound, Labels.FoundMP)</span>
+            </div>
+        </div>
+    }
+</div>

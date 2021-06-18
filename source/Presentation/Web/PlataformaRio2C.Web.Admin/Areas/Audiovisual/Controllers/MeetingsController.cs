@@ -43,6 +43,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         private readonly INegotiationRepository negotiationRepo;
         private readonly IProjectBuyerEvaluationRepository projectBuyerEvaluationRepo;
         private readonly IRoomRepository roomRepo;
+        private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
 
         /// <summary>Initializes a new instance of the <see cref="MeetingsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -55,12 +56,14 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             IdentityAutenticationService identityController,
             INegotiationRepository negotiationRepository,
             IProjectBuyerEvaluationRepository projectBuyerEvaluationRepository,
-            IRoomRepository roomRepository)
+            IRoomRepository roomRepository,
+            IAttendeeCollaboratorRepository attendeeCollaboratorRepository)
             : base(commandBus, identityController)
         {
             this.negotiationRepo = negotiationRepository;
             this.projectBuyerEvaluationRepo = projectBuyerEvaluationRepository;
             this.roomRepo = roomRepository;
+            this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
         }
 
         #region Generate Agenda
@@ -156,6 +159,31 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
         #endregion
 
+        #region Scheduled
+
+        /// <summary>Scheduleds this instance.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> Scheduled()
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.ScheduledNegotiations, Url.Action("Scheduled", "Meetings", new { Area = "Audiovisual" }))
+            });
+
+            #endregion
+
+            ViewBag.Rooms = (await this.roomRepo.FindAllDtoByEditionIdAsync(this.EditionDto.Id))?.Select(r => new RoomJsonDto
+            {
+                Id = r.Room.Id,
+                Uid = r.Room.Uid,
+                Name = r.GetRoomNameByLanguageCode(this.UserInterfaceLanguage)?.RoomName?.Value
+            })?.ToList();
+
+            return View();
+        }
+
         #region Edition Scheduled Count Widget
 
         /// <summary>Shows the edition scheduled count widget.</summary>
@@ -177,23 +205,41 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
         #endregion
 
-        #region Edition Unscheduled Count Widget
+        #region Scheduled Widget
 
-        /// <summary>Shows the edition unscheduled count widget.</summary>
+        /// <summary>Shows the scheduled data widget.</summary>
+        /// <param name="buyerOrganizationUid">The buyer organization uid.</param>
+        /// <param name="sellerOrganizationUid">The seller organization uid.</param>
+        /// <param name="projectKeywords">The project keywords.</param>
+        /// <param name="date">The date.</param>
+        /// <param name="roomUid">The room uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowEditionUnscheduledCountWidget()
+        public async Task<ActionResult> ShowScheduledDataWidget(Guid? buyerOrganizationUid, Guid? sellerOrganizationUid, string projectKeywords, DateTime? date, Guid? roomUid)
         {
-            var notScheduledCount = await this.projectBuyerEvaluationRepo.CountNegotiationNotScheduledAsync(this.EditionDto.Id, false);
+            var negotiations = await this.negotiationRepo.FindScheduledWidgetDtoAsync(
+                this.EditionDto.Id,
+                buyerOrganizationUid,
+                sellerOrganizationUid,
+                projectKeywords,
+                date,
+                roomUid);
 
-            return Json(new
+            return new JsonResult()
             {
-                status = "success",
-                pages = new List<dynamic>
+                Data = new
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/EditionUnscheduledCountWidget", notScheduledCount), divIdOrClass = "#AudiovisualMeetingsEditionUnscheduledCountWidget" },
-                }
-            }, JsonRequestBehavior.AllowGet);
+                    status = "success",
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Widgets/ScheduledDataWidget", negotiations), divIdOrClass = "#AudiovisualMeetingsScheduledWidget" },
+                    }
+                },
+                //ContentType = contentType,
+                //ContentEncoding = contentEncoding,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                MaxJsonLength = Int32.MaxValue
+            };
         }
 
         #endregion
@@ -291,7 +337,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundM.ToLowerInvariant()));
                 }
-                
+
                 cmd = new UpdateNegotiation(negotiationDto, this.UserInterfaceLanguage);
             }
             catch (DomainException ex)
@@ -378,70 +424,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
         #endregion
 
-        #region Scheduled
-
-        /// <summary>Scheduleds this instance.</summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> Scheduled()
-        {
-            #region Breadcrumb
-
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.ScheduledNegotiations, Url.Action("Scheduled", "Meetings", new { Area = "Audiovisual" }))
-            });
-
-            #endregion
-
-            ViewBag.Rooms = (await this.roomRepo.FindAllDtoByEditionIdAsync(this.EditionDto.Id))?.Select(r => new RoomJsonDto
-            {
-                Id = r.Room.Id,
-                Uid = r.Room.Uid,
-                Name = r.GetRoomNameByLanguageCode(this.UserInterfaceLanguage)?.RoomName?.Value
-            })?.ToList();
-
-            return View();
-        }
-
-        #region Scheduled Widget
-
-        /// <summary>Shows the scheduled data widget.</summary>
-        /// <param name="buyerOrganizationUid">The buyer organization uid.</param>
-        /// <param name="sellerOrganizationUid">The seller organization uid.</param>
-        /// <param name="projectKeywords">The project keywords.</param>
-        /// <param name="date">The date.</param>
-        /// <param name="roomUid">The room uid.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ShowScheduledDataWidget(Guid? buyerOrganizationUid, Guid? sellerOrganizationUid, string projectKeywords, DateTime? date, Guid? roomUid)
-        {
-            var negotiations = await this.negotiationRepo.FindScheduledWidgetDtoAsync(
-                this.EditionDto.Id,
-                buyerOrganizationUid,
-                sellerOrganizationUid,
-                projectKeywords,
-                date,
-                roomUid);
-
-            return new JsonResult()
-            {
-                Data = new
-                {
-                    status = "success",
-                    pages = new List<dynamic>
-                    {
-                        new { page = this.RenderRazorViewToString("Widgets/ScheduledDataWidget", negotiations), divIdOrClass = "#AudiovisualMeetingsScheduledWidget" },
-                    }
-                },
-                //ContentType = contentType,
-                //ContentEncoding = contentEncoding,
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet,
-                MaxJsonLength = Int32.MaxValue
-            };
-        }
-
-        #endregion
-
         #region Delete
 
         /// <summary>Deletes the specified delete negotiation.</summary>
@@ -517,6 +499,27 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             return View();
         }
 
+        #region Edition Unscheduled Count Widget
+
+        /// <summary>Shows the edition unscheduled count widget.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowEditionUnscheduledCountWidget()
+        {
+            var notScheduledCount = await this.projectBuyerEvaluationRepo.CountNegotiationNotScheduledAsync(this.EditionDto.Id, false);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EditionUnscheduledCountWidget", notScheduledCount), divIdOrClass = "#AudiovisualMeetingsEditionUnscheduledCountWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
         #region Unscheduled Widget
 
         /// <summary>Shows the unscheduled widget.</summary>
@@ -544,6 +547,131 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         }
 
         #endregion
+
+        #region Manual Schedule
+
+        [HttpGet]
+        public async Task<ActionResult> ShowManualScheduleModal(Guid? projectBuyerEvaluationUid)
+        {
+            ScheduleManualNegotiation cmd;
+
+            try
+            {
+                var projectBuyerEvaluationDto = await this.projectBuyerEvaluationRepo.FindDtoAsync(projectBuyerEvaluationUid ?? Guid.Empty);
+                if (projectBuyerEvaluationDto == null)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundM.ToLowerInvariant()));
+                }
+
+                cmd = new ScheduleManualNegotiation(projectBuyerEvaluationDto, this.UserInterfaceLanguage);
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/ManualScheduleModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Creates the specified create negotiation.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> ManualSchedule(ScheduleManualNegotiation cmd)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                //BuyerOrganizationUid and ProjectUid get allways null from dropdown selected item, because dropdown is populated via JavaScript and has initialSelection.
+                //These fiels isn't enabled to change, so don't worry with this backend fix!
+                cmd.BuyerOrganizationUid = cmd.InitialBuyerOrganizationUid;
+                cmd.ProjectUid = cmd.InitialProjectUid;
+
+                ScheduleManualNegotiation c;
+                ModelState.Remove(nameof(c.BuyerOrganizationUid));
+                ModelState.Remove(nameof(c.ProjectUid));
+
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("/Areas/Audiovisual/Views/Meetings/Modals/ManualScheduleForm.cshtml", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Negotiation, Labels.CreatedF) });
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Logistic Info Widget
+
+        /// <summary>
+        /// Shows the logistics information widget.
+        /// </summary>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowLogisticsInfoWidget(string organizationsUids)
+        {
+            var attendeeCollaboratorDtos = await this.attendeeCollaboratorRepo.FindPlayerExecutivesLogisticsDtosAsync(organizationsUids?.ToListGuid(','), this.EditionDto.Id);
+            if (attendeeCollaboratorDtos == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Logistics, Labels.FoundMP.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("~/Areas/Audiovisual/Views/Meetings/Widgets/LogisticsInfoWidget.cshtml", attendeeCollaboratorDtos), divIdOrClass = "#AudiovisualMeetingsLogisticsInfoWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
         #endregion
 

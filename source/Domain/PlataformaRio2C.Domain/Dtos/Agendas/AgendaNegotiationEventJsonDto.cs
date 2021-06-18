@@ -23,6 +23,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public string Room { get; set; }
         public int TableNumber { get; set; }
         public int RoundNumber { get; set; }
+        public string VirtualMeetingUrl { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="AgendaNegotiationEventJsonDto"/> class.</summary>
         public AgendaNegotiationEventJsonDto()

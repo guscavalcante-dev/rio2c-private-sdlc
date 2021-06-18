@@ -13,12 +13,16 @@
 // ***********************************************************************
 
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -30,6 +34,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IProjectRepository projectRepo;
         private readonly INegotiationConfigRepository negotiationConfigRepo;
         private readonly INegotiationRoomConfigRepository negotiationRoomConfigRepo;
+        private readonly IConferenceRepository conferenceRepo;
+        private readonly INegotiationRepository negotiationRepo;
+        private readonly ILogisticAirfareRepository logisticAirfareRepo;
+        private readonly ILogisticAccommodationRepository logisticAccommodationRepo;
+        private readonly ILogisticTransferRepository logisticTransferRepo;
 
         public CreateNegotiationCommandHandler(
             IMediator eventBus,
@@ -38,13 +47,22 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IOrganizationRepository organizationRepository,
             IProjectRepository projectRepository,
             INegotiationConfigRepository negotiationConfigRepository,
-            INegotiationRoomConfigRepository negotiationRoomConfigRepository)
+            INegotiationRoomConfigRepository negotiationRoomConfigRepository,
+            IConferenceRepository conferenceRepository,
+            ILogisticAirfareRepository logisticAirfareRepository,
+            ILogisticAccommodationRepository logisticAccommodationRepository,
+            ILogisticTransferRepository logisticTransferRepository)
             : base(eventBus, uow, negotiationRepository)
         {
+            this.negotiationRepo = negotiationRepository;
             this.organizationRepo = organizationRepository;
             this.projectRepo = projectRepository;
             this.negotiationConfigRepo = negotiationConfigRepository;
             this.negotiationRoomConfigRepo = negotiationRoomConfigRepository;
+            this.conferenceRepo = conferenceRepository;
+            this.logisticAirfareRepo = logisticAirfareRepository;
+            this.logisticAccommodationRepo = logisticAccommodationRepository;
+            this.logisticTransferRepo = logisticTransferRepository;
         }
 
         /// <summary>Handles the specified create negotiation.</summary>
@@ -59,16 +77,73 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var project = await this.projectRepo.GetAsync(cmd.ProjectUid ?? Guid.Empty);
             var negotiationConfig = await this.negotiationConfigRepo.GetAsync(cmd.NegotiationConfigUid ?? Guid.Empty);
             var negotiationRoomConfig = await this.negotiationRoomConfigRepo.GetAsync(cmd.NegotiationRoomConfigUid ?? Guid.Empty);
+            var negotiationsInThisRoom = await this.NegotiationRepo.FindManualScheduledNegotiationsByRoomIdAsync(negotiationRoomConfig?.Room?.Id ?? 0);
+
+            var startDatePreview = negotiationConfig.StartDate.Date.JoinDateAndTime(cmd.StartTime, true).ToUtcTimeZone();
+            var endDatePreview = startDatePreview.Add(negotiationConfig.TimeOfEachRound);
+
+            #region Overbooking Validations
+
+            var negotiationsGroupedByRoomAndStartDate = negotiationsInThisRoom.GroupBy(n => n.StartDate.ToUserTimeZone());
+            var hasNoMoreTablesAvailable = negotiationsGroupedByRoomAndStartDate.Any(n => n.Count(w => w.StartDate.ToUserTimeZone() == startDatePreview) >= negotiationRoomConfig.CountManualTables);
+            if (hasNoMoreTablesAvailable)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(
+                    Messages.NoMoreTablesAvailableAtTheRoomAndStartTime,
+                    cmd.StartTime,
+                    negotiationRoomConfig.Room.GetRoomNameByLanguageCode(cmd.UserInterfaceLanguage)),
+                        new string[] { "ToastrError" }));
+            }
+
+            var scheduledNegotiationsAtThisTime = await this.NegotiationRepo.FindAllScheduleDtosAsync(cmd.EditionId.Value, null, startDatePreview, endDatePreview);
+            var hasPlayerScheduledNegotiationsAtThisTime = scheduledNegotiationsAtThisTime.Count(ndto => ndto.ProjectBuyerEvaluationDto.ProjectBuyerEvaluation.BuyerAttendeeOrganization.OrganizationId == buyerOrganization.Id) > 0;
+            if (hasPlayerScheduledNegotiationsAtThisTime)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(
+                    Messages.HasAlreadyBusinessRoundScheduled,
+                    Labels.TheM,
+                    Labels.Player,
+                    ($"{startDatePreview.ToUserTimeZone().ToStringHourMinute()} - {endDatePreview.ToUserTimeZone().ToShortTimeString()}")),
+                        new string[] { "ToastrError" }));
+            }
+
+            var hasProducerScheduledNegotiationsAtThisTime = scheduledNegotiationsAtThisTime.Count(ndto => ndto.ProjectBuyerEvaluationDto.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.OrganizationId == project.SellerAttendeeOrganization.OrganizationId) > 0;
+            if (hasProducerScheduledNegotiationsAtThisTime)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(
+                    Messages.HasAlreadyBusinessRoundScheduled,
+                    Labels.TheF,
+                    Labels.Producer,
+                    ($"{startDatePreview.ToUserTimeZone().ToStringHourMinute()} - {endDatePreview.ToUserTimeZone().ToShortTimeString()}")),
+                        new string[] { "ToastrError" }));
+            }
+
+            #endregion
+
+            //Update command properties to return to form before throws any ValidationError
+            cmd.InitialProjectUid = project.Uid;
+            cmd.InitialProjectName = project.GetTitleByLanguageCode(cmd.UserInterfaceLanguage);
+            cmd.InitialBuyerOrganizationUid = buyerOrganization.Uid;
+            cmd.InitialBuyerOrganizationName = buyerOrganization.CompanyName;
+
+            if (!this.ValidationResult.IsValid)
+            {
+                this.AppValidationResult.Add(this.ValidationResult);
+                return this.AppValidationResult;
+            }
+
+            var negotiationsInThisRoomAndStartDate = negotiationsInThisRoom.Where(n => n.StartDate.ToUserTimeZone() == startDatePreview).ToList();
 
             var negotiationUid = Guid.NewGuid();
             var negotiation = new Negotiation(
                 cmd.EditionId.Value,
                 negotiationUid,
-                buyerOrganization, 
-                project, 
-                negotiationConfig, 
-                negotiationRoomConfig, 
-                cmd.StartTime, 
+                buyerOrganization,
+                project,
+                negotiationConfig,
+                negotiationRoomConfig,
+                negotiationsInThisRoomAndStartDate,
+                cmd.StartTime,
                 cmd.RoundNumber ?? 0,
                 cmd.UserId);
             if (!negotiation.IsValid())

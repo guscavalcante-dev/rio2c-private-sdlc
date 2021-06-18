@@ -27,6 +27,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<AttendeeOrganizationDto> AttendeeOrganizationsDtos { get; set; }
         public IEnumerable<ConferenceDto> ConferenceDtos { get; set; }
         public IEnumerable<ConferenceParticipantDto> ConferenceParticipantDtos { get; set; }
+        public IEnumerable<NegotiationDto> NegotiationDtos { get; set; }
 
         public LogisticDto LogisticDto { get; set; }
 

@@ -2742,4 +2742,8 @@
     <value>Virtual meeting url</value>
     <comment>Virtual meeting url</comment>
   </data>
+  <data name="ScheduleManually" xml:space="preserve">
+    <value>Schedule Manually</value>
+    <comment>Agendar Manualmente</comment>
+  </data>
 </root>
