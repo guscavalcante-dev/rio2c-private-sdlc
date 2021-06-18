@@ -1,36 +1,39 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Rafael Dantas Ruiz
-// Created          : 03-19-2020
+// Author           : Renan Valentim
+// Created          : 06-10-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-19-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 06-10-2021
 // ***********************************************************************
-// <copyright file="logistics.info.widget.js" company="Softo">
+// <copyright file="audiovisual.meetings.logistics.info.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var LogisticsInfoWidget = function () {
-    var widgetElementId = '#LogisticsInfoWidget';
+var AudiovisualMeetingsLogisticsInfoWidget = function () {
+    var widgetElementId = '#AudiovisualMeetingsLogisticsInfoWidget';
     var widgetElement = $(widgetElementId);
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         KTApp.initTooltips();
         MyRio2cCommon.initScroll();
+
+        var element = $(widgetElementId);
+        if (!MyRio2cCommon.isNullOrEmpty(element)) {
+            element.removeClass('d-none');
+        }
     };
 
-    var show = function () {
-        if (widgetElement.length <= 0) {
-            return;
-        }
+    var show = function (organizationUids) {
+        MyRio2cCommon.block({ idOrClass: widgetElementId });
 
         var jsonParameters = new Object();
-        jsonParameters.collaboratorUid = $('#CollaboratorUid').val();
+        jsonParameters.organizationsUids = organizationUids.join(',');;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Logistics/ShowInfoWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Meetings/ShowLogisticsInfoWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -50,9 +53,8 @@ var LogisticsInfoWidget = function () {
     };
 
     return {
-        init: function () {
-            MyRio2cCommon.block({ idOrClass: widgetElementId });
-            show();
+        init: function (organizationUids) {
+            show(organizationUids);
         }
     };
 }();

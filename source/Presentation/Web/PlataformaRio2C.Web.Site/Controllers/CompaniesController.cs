@@ -137,6 +137,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
                 cmd = new UpdateOrganizationMainInformation(
                     mainInformationWidgetDto,
+                    OrganizationType.Player,
+                    null,
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     true,
                     true);

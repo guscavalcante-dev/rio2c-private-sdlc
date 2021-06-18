@@ -79,6 +79,34 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>
+        /// Finds the by organization uid.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="organizationUids">The organization uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeCollaborator> FindByOrganizationUids(this IQueryable<AttendeeCollaborator> query, List<Guid> organizationUids)
+        {
+            query = query.Where(ac => ac.AttendeeOrganizationCollaborators.Any(aoc => organizationUids.Contains(aoc.AttendeeOrganization.Organization.Uid)));
+
+            return query;
+        }
+
+        /// <summary>
+        /// Determines whether this instance has logistics.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeCollaborator> HasLogisticsOrConferenceParticipantsOrScheduledMeetings(this IQueryable<AttendeeCollaborator> query)
+        {
+            query = query.Where(ac => ac.Logistics.Count(l => !l.IsDeleted) > 0 
+                                        || ac.ConferenceParticipants.Count(cp => !cp.IsDeleted && !cp.Conference.IsDeleted) > 0
+                                        || ac.AttendeeOrganizationCollaborators.Any(aoc => aoc.AttendeeOrganization.ProjectBuyerEvaluations.Count(pbe => !aoc.IsDeleted && !pbe.IsDeleted) > 0)
+                                 );
+
+            return query;
+        }
+
         /// <summary>Finds the by user identifier.</summary>
         /// <param name="query">The query.</param>
         /// <param name="userId">The user identifier.</param>
@@ -141,7 +169,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 var innerUserNameWhere = PredicateBuilder.New<AttendeeCollaborator>(true);
                 var innerJobTitleWhere = PredicateBuilder.New<AttendeeCollaborator>(true);
                 var innerOrganizationNameWhere = PredicateBuilder.New<AttendeeCollaborator>(true);
-                
+
 
                 foreach (var keyword in keywords.Split(' '))
                 {
@@ -258,7 +286,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
         }
 
-        /// <summary>Gets the base query.</summary>
+        /// <summary> Gets the base query.</summary>
         /// <param name="readonly">if set to <c>true</c> [readonly].</param>
         /// <returns></returns>
         private IQueryable<AttendeeCollaborator> GetBaseQuery(bool @readonly = false)
@@ -341,7 +369,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     Uid = d.Uid,
                                     EditionId = d.EditionId,
                                     EditionUid = d.Edition.Uid,
-                                    EditionName = d.Edition.Name                                    
+                                    EditionName = d.Edition.Name
                                 })
                             })
                             .FirstOrDefaultAsync();
@@ -583,6 +611,161 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        /// <summary>
+        /// Finds the player executives logistics information widget dto asynchronous.
+        /// </summary>
+        /// <param name="organizationUids">The organization uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<List<AttendeeCollaboratorDto>> FindPlayerExecutivesLogisticsDtosAsync(List<Guid> organizationUids, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .HasLogisticsOrConferenceParticipantsOrScheduledMeetings()
+                                .FindByOrganizationUids(organizationUids)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(ac => new AttendeeCollaboratorDto
+                            {
+                                AttendeeCollaborator = ac,
+                                Collaborator = ac.Collaborator,
+                                AttendeeOrganizationsDtos = ac.AttendeeOrganizationCollaborators
+                                                                .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted && !aoc.AttendeeOrganization.Organization.IsDeleted)
+                                                                .Select(aoc => new AttendeeOrganizationDto
+                                                                {
+                                                                    AttendeeOrganization = aoc.AttendeeOrganization,
+                                                                    Organization = aoc.AttendeeOrganization.Organization
+                                                                })
+                                                                .ToList(),
+                                LogisticDto = ac.Logistics
+                                                        .Where(l => !l.IsDeleted)
+                                                        .Select(l => new LogisticDto
+                                                        {
+                                                            Logistic = l,
+                                                            LogisticAirfareDtos = l.LogisticAirfares.Where(la => !la.IsDeleted).Select(la => new LogisticAirfareDto
+                                                            {
+                                                                LogisticAirfare = la
+                                                            }),
+                                                            LogisticAccommodationDtos = l.LogisticAccommodations.Where(la => !la.IsDeleted).Select(la => new LogisticAccommodationDto
+                                                            {
+                                                                LogisticAccommodation = la,
+                                                                PlaceDto = new PlaceDto
+                                                                {
+                                                                    Place = la.AttendeePlace.Place,
+                                                                    AddressDto = la.AttendeePlace.Place.Address == null || la.AttendeePlace.Place.Address.IsDeleted ? null : new AddressDto
+                                                                    {
+                                                                        Address = la.AttendeePlace.Place.Address,
+                                                                        City = la.AttendeePlace.Place.Address.City,
+                                                                        State = la.AttendeePlace.Place.Address.State,
+                                                                        Country = la.AttendeePlace.Place.Address.Country
+                                                                    }
+                                                                }
+                                                            }),
+                                                            LogisticTransferDtos = l.LogisticTransfers.Where(lt => !lt.IsDeleted).Select(lt => new LogisticTransferDto
+                                                            {
+                                                                LogisticTransfer = lt,
+                                                                FromPlaceDto = new PlaceDto
+                                                                {
+                                                                    Place = lt.FromAttendeePlace.Place,
+                                                                    AddressDto = lt.FromAttendeePlace.Place.Address == null || lt.FromAttendeePlace.Place.Address.IsDeleted ? null : new AddressDto
+                                                                    {
+                                                                        Address = lt.FromAttendeePlace.Place.Address,
+                                                                        City = lt.FromAttendeePlace.Place.Address.City,
+                                                                        State = lt.FromAttendeePlace.Place.Address.State,
+                                                                        Country = lt.FromAttendeePlace.Place.Address.Country
+                                                                    }
+                                                                },
+                                                                ToPlaceDto = new PlaceDto
+                                                                {
+                                                                    Place = lt.ToAttendeePlace.Place,
+                                                                    AddressDto = lt.ToAttendeePlace.Place.Address == null || lt.ToAttendeePlace.Place.Address.IsDeleted ? null : new AddressDto
+                                                                    {
+                                                                        Address = lt.ToAttendeePlace.Place.Address,
+                                                                        City = lt.ToAttendeePlace.Place.Address.City,
+                                                                        State = lt.ToAttendeePlace.Place.Address.State,
+                                                                        Country = lt.ToAttendeePlace.Place.Address.Country
+                                                                    }
+                                                                }
+                                                            })
+                                                        })
+                                                        .FirstOrDefault(),
+                                ConferenceDtos = ac.ConferenceParticipants
+                                                        .Where(cp => !cp.IsDeleted && !cp.Conference.IsDeleted)
+                                                        .Select(cp => cp.Conference)
+                                                        .Distinct()
+                                                        .Select(c => new ConferenceDto
+                                                        {
+                                                            Conference = c,
+                                                            ConferenceTitleDtos = c.ConferenceTitles.Where(ct => !ct.IsDeleted).Select(ct => new ConferenceTitleDto
+                                                            {
+                                                                ConferenceTitle = ct,
+                                                                LanguageDto = new LanguageBaseDto
+                                                                {
+                                                                    Id = ct.Language.Id,
+                                                                    Uid = ct.Language.Uid,
+                                                                    Name = ct.Language.Name,
+                                                                    Code = ct.Language.Code
+                                                                }
+                                                            })
+                                                        })
+                                                        .ToList(),
+                                NegotiationDtos = ac.AttendeeOrganizationCollaborators
+                                                        .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted && !aoc.AttendeeOrganization.Organization.IsDeleted)
+                                                        .Distinct()
+                                                        .SelectMany(aoc => aoc.AttendeeOrganization.ProjectBuyerEvaluations.Distinct()
+                                                                .SelectMany(pbe => pbe.Negotiations
+                                                                    .Where(n => !n.IsDeleted)
+                                                                    .Distinct()
+                                                                    .Select(n => new NegotiationDto
+                                                                    {
+                                                                        Negotiation = n,
+                                                                        ProjectBuyerEvaluationDto = new ProjectBuyerEvaluationDto
+                                                                        {
+                                                                            ProjectBuyerEvaluation = n.ProjectBuyerEvaluation,
+                                                                            BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                                                            {
+                                                                                AttendeeOrganization = n.ProjectBuyerEvaluation.BuyerAttendeeOrganization,
+                                                                                Organization = n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization
+                                                                            },
+                                                                            ProjectDto = new ProjectDto
+                                                                            {
+                                                                                Project = n.ProjectBuyerEvaluation.Project,
+                                                                                SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                                                                {
+                                                                                    AttendeeOrganization = n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization,
+                                                                                    Organization = n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.Organization
+                                                                                },
+                                                                                ProjectTitleDtos = n.ProjectBuyerEvaluation.Project.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                                                                {
+                                                                                    ProjectTitle = t,
+                                                                                    Language = t.Language
+                                                                                }),
+                                                                                ProjectLogLineDtos = n.ProjectBuyerEvaluation.Project.ProjectLogLines.Where(ll => !ll.IsDeleted).Select(ll => new ProjectLogLineDto
+                                                                                {
+                                                                                    ProjectLogLine = ll,
+                                                                                    Language = ll.Language
+                                                                                })
+                                                                            }
+                                                                        },
+                                                                        RoomDto = new RoomDto
+                                                                        {
+                                                                            Room = n.Room,
+                                                                            RoomNameDtos = n.Room.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto
+                                                                            {
+                                                                                RoomName = rn,
+                                                                                LanguageDto = new LanguageDto
+                                                                                {
+                                                                                    Id = rn.Language.Id,
+                                                                                    Uid = rn.Language.Uid,
+                                                                                    Code = rn.Language.Code
+                                                                                }
+                                                                            })
+                                                                        }
+                                                                    })))
+                            })
+                            .ToListAsync();
+        }
+
         #endregion
 
         #region Networks
@@ -635,11 +818,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         public async Task<IPagedList<AttendeeCollaboratorNetworkDto>> FindAllNetworkDtoByEditionIdPagedAsync(
-            int editionId, 
-            string keywords, 
-            Guid? collaboratorRoleUid, 
-            Guid? collaboratorIndustryUid, 
-            int page, 
+            int editionId,
+            string keywords,
+            Guid? collaboratorRoleUid,
+            Guid? collaboratorIndustryUid,
+            int page,
             int pageSize)
         {
             var query = this.GetBaseQuery(true)

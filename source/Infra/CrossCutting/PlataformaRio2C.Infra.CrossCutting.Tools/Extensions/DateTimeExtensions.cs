@@ -123,5 +123,55 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
 
             return dt;
         }
+
+        /// <summary>
+        /// Converts to stringhourminute.
+        /// </summary>
+        /// <param name="dt">The dt.</param>
+        /// <returns></returns>
+        public static string ToStringHourMinute(this DateTimeOffset dt)
+        {
+            return dt.ToString("dd/MM/yyyy hh:mm");
+        }
+
+        /// <summary>
+        /// Converts to stringhourminute.
+        /// </summary>
+        /// <param name="dt">The dt.</param>
+        /// <returns></returns>
+        public static string ToStringHourMinute(this DateTimeOffset? dt)
+        {
+            if (dt == null)
+            {
+                return "";
+            }
+
+            return dt?.ToString("dd/MM/yyyy hh:mm");
+        }
+
+        /// <summary>
+        /// Converts to stringhourminute.
+        /// </summary>
+        /// <param name="dt">The dt.</param>
+        /// <returns></returns>
+        public static string ToStringHourMinute(this DateTime dt)
+        {
+            return dt.ToString("dd/MM/yyyy hh:mm");
+        }
+
+        /// <summary>
+        /// Converts to stringhourminute.
+        /// </summary>
+        /// <param name="dt">The dt.</param>
+        /// <returns></returns>
+        public static string ToStringHourMinute(this DateTime? dt)
+        {
+            if(dt == null)
+            {
+                return "";
+            }
+
+            return dt?.ToString("dd/MM/yyyy hh:mm");
+        }
     }
 }

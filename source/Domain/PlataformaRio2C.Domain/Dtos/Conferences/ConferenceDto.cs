@@ -43,6 +43,11 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns></returns>
         public ConferenceTitleDto GetConferenceTitleDtoByLanguageCode(string languageCode)
         {
+            if (string.IsNullOrEmpty(languageCode))
+            {
+                languageCode = "pt-br";
+            }
+
             return this.ConferenceTitleDtos?.FirstOrDefault(ctd => ctd.LanguageDto.Code == languageCode);
         }
 

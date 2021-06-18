@@ -227,6 +227,16 @@ namespace PlataformaRio2C.Domain.Entities
             return this.FinishDate.HasValue;
         }
 
+        /// <summary>
+        /// Gets the title dto by language code.
+        /// </summary>
+        /// <param name="culture">The culture.</param>
+        /// <returns></returns>
+        public string GetTitleByLanguageCode(string culture)
+        {
+            return this.ProjectTitles?.FirstOrDefault(ptd => ptd.Language.Code?.ToLowerInvariant() == culture?.ToLowerInvariant()).Value;
+        }
+
         #region Buyer Evaluations
 
         /// <summary>Creates the project buyer evaluation.</summary>

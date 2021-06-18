@@ -55,6 +55,18 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [ValidCompanyNumber]
         public string Document { get; set; }
 
+        [Display(Name = "PhoneNumber", ResourceType = typeof(Labels))]
+        [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string PhoneNumber { get; set; }
+
+        public bool IsVirtualMeetingRequired => (this.OrganizationType != null && this.OrganizationType?.Name == Constants.OrganizationType.AudiovisualBuyer);
+        [Display(Name = "AcceptsVirtualMeeting", ResourceType = typeof(Labels))]
+        [RequiredIf(nameof(IsVirtualMeetingRequired), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public bool? IsVirtualMeeting { get; set; }
+
+
+        #region Socials
+
         [Display(Name = "Website", ResourceType = typeof(Labels))]
         [StringLength(300, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Website { get; set; }
@@ -75,14 +87,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(300, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Youtube { get; set; }
 
-        [Display(Name = "PhoneNumber", ResourceType = typeof(Labels))]
-        [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        public string PhoneNumber { get; set; }
-
-        public bool IsVirtualMeetingRequired => (this.OrganizationType != null && this.OrganizationType?.Name == Constants.OrganizationType.AudiovisualBuyer);
-        [Display(Name = "AcceptsVirtualMeeting", ResourceType = typeof(Labels))]
-        [RequiredIf(nameof(IsVirtualMeetingRequired), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public bool? IsVirtualMeeting { get; set; }
+        #endregion
 
         public AddressBaseCommand Address { get; set; }
 

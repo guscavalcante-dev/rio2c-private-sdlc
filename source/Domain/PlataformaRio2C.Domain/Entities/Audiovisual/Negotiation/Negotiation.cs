@@ -16,6 +16,8 @@ using System;
 using System.Linq;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using System.Collections.Generic;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -34,7 +36,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ProjectBuyerEvaluation ProjectBuyerEvaluation { get; private set; }
         public virtual Room Room { get; private set; }
         public virtual User Updater { get; private set; }
-        
+
         /// <summary>Initializes a new instance of the <see cref="Negotiation"/> class for automatic negotiation slots.</summary>
         /// <param name="room">The room.</param>
         /// <param name="startDate">The start date.</param>
@@ -78,10 +80,11 @@ namespace PlataformaRio2C.Domain.Entities
         public Negotiation(
             int editionId,
             Guid negotiationUid,
-            Organization buyerOrganization, 
-            Project project, 
-            NegotiationConfig negotiationConfig, 
-            NegotiationRoomConfig negotiationRoomConfig, 
+            Organization buyerOrganization,
+            Project project,
+            NegotiationConfig negotiationConfig,
+            NegotiationRoomConfig negotiationRoomConfig,
+            List<Negotiation> negotiations,
             string startTime,
             int roundNumber,
             int userId)
@@ -99,22 +102,13 @@ namespace PlataformaRio2C.Domain.Entities
             this.Room = room;
 
             // Dates
-            if (negotiationConfig != null)
-            {
-                this.StartDate = negotiationConfig.StartDate.Date.JoinDateAndTime(startTime, true).ToUtcTimeZone();
-                this.EndDate = this.StartDate.Add(negotiationConfig.TimeOfEachRound);
+            this.GenerateStarAndEndDate(negotiationConfig, startTime);
 
-                // Table Number
-                if (negotiationRoomConfig != null)
-                {
-                    this.TableNumber = negotiationRoomConfig.CountAutomaticTables + (negotiationConfig.GetNegotiationRoomConfigPosition(negotiationRoomConfig.Uid) ?? 0) + 1;
-                }
-            }
+            // Table Number
+            this.GenerateTableNumber(negotiationConfig, negotiationRoomConfig, negotiations);
 
             this.RoundNumber = roundNumber;
-            
             this.IsAutomatic = false;
-
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
@@ -139,6 +133,7 @@ namespace PlataformaRio2C.Domain.Entities
         public void Update(
             NegotiationConfig negotiationConfig,
             NegotiationRoomConfig negotiationRoomConfig,
+            List<Negotiation> roomNegotiations,
             string startTime,
             int roundNumber,
             int userId)
@@ -149,23 +144,57 @@ namespace PlataformaRio2C.Domain.Entities
             this.Room = room;
 
             // Dates
-            if (negotiationConfig != null)
-            {
-                this.StartDate = negotiationConfig.StartDate.Date.JoinDateAndTime(startTime, true).ToUtcTimeZone();
-                this.EndDate = this.StartDate.Add(negotiationConfig.TimeOfEachRound);
+            this.GenerateStarAndEndDate(negotiationConfig, startTime);
 
-                // Table Number
-                if (negotiationRoomConfig != null)
-                {
-                    this.TableNumber = negotiationRoomConfig.CountAutomaticTables + (negotiationConfig.GetNegotiationRoomConfigPosition(negotiationRoomConfig.Uid) ?? 0) + 1;
-                }
-            }
+            // Table Number
+            this.GenerateTableNumber(negotiationConfig, negotiationRoomConfig, roomNegotiations);
 
             this.RoundNumber = roundNumber;
-
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
+        }
+
+        /// <summary>
+        /// Generates the star and end date.
+        /// </summary>
+        /// <param name="negotiationConfig">The negotiation configuration.</param>
+        /// <param name="startTime">The start time.</param>
+        /// <returns></returns>
+        private void GenerateStarAndEndDate(
+            NegotiationConfig negotiationConfig,
+            string startTime)
+        {
+            if (negotiationConfig == null)
+                return;
+
+            this.StartDate = negotiationConfig.StartDate.Date.JoinDateAndTime(startTime, true).ToUtcTimeZone();
+            this.EndDate = this.StartDate.Add(negotiationConfig.TimeOfEachRound);
+        }
+
+        /// <summary>
+        /// Generates the table number.
+        /// </summary>
+        /// <param name="negotiationRoomConfig">The negotiation room configuration.</param>
+        /// <param name="negotiations">The room negotiations.</param>
+        private void GenerateTableNumber(
+            NegotiationConfig negotiationConfig,
+            NegotiationRoomConfig negotiationRoomConfig,
+            List<Negotiation> negotiations)
+        {
+            if (negotiationConfig == null)
+                return;
+            if (negotiationRoomConfig == null)
+                return;
+
+            if (negotiations?.Count > 0)
+            {
+                this.TableNumber = negotiations.Max(n => n.TableNumber) + 1;
+            }
+            else
+            {
+                this.TableNumber = negotiationRoomConfig.CountAutomaticTables + (negotiationConfig.GetNegotiationRoomConfigPosition(negotiationRoomConfig.Uid) ?? 0) + 1;
+            }
         }
 
         /// <summary>Assigns the project buyer evaluation.</summary>

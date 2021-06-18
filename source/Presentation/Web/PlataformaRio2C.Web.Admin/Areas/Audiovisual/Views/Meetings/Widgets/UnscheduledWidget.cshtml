@@ -36,14 +36,14 @@
                                     <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
                                         <i class="la la-ellipsis-h"></i>
                                     </a>
-                                    @*<div class="dropdown-menu dropdown-menu-right">
-                                        <button class="dropdown-item" onclick="AudiovisualMeetingParametersRoomsWidget.showUpdateModal('');">
-                                            <i class="la la-edit"></i>@Labels.Edit
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <button class="dropdown-item" onclick="AudiovisualMeetingsManualSchedule.showModal('@(projectBuyerEvaluationDto.ProjectBuyerEvaluation.Uid)');">
+                                            <i class="la la-calendar"></i>@Labels.ScheduleManually
                                         </button>
-                                        <button class="dropdown-item" onclick="AudiovisualMeetingParametersRoomsWidget.showDeleteModal('');">
+                                        @*<button class="dropdown-item" onclick="AudiovisualMeetingsScheduledDelete.showModal('@(negotiation?.Uid)');">
                                             <i class="la la-remove"></i>@Labels.Remove
-                                        </button>
-                                    </div>*@
+                                        </button>*@
+                                    </div>
                                 </span>
                             </td>
                         </tr>

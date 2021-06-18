@@ -63,7 +63,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="interestRepository">The interest repository.</param>
         /// <param name="fileRepository">The file repository.</param>
         public PlayersController(
-            IMediator commandBus, 
+            IMediator commandBus,
             IdentityAutenticationService identityController,
             IOrganizationRepository organizationRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
@@ -171,13 +171,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundM.ToLowerInvariant()));
                 }
 
-                //if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(mainInformationWidgetDto.AttendeeOrganization.Uid) != true)
-                //{
-                //    throw new DomainException(Texts.ForbiddenErrorMessage);
-                //}
-
                 cmd = new UpdateOrganizationMainInformation(
                     mainInformationWidgetDto,
+                    OrganizationType.Player,
+                    await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     true,
                     true);
@@ -213,6 +210,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
+                    OrganizationType.Player,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -1215,7 +1213,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         }
 
         #endregion
-        
+
         #region Delete
 
         /// <summary>Deletes the specified command.</summary>

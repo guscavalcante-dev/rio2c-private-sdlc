@@ -119,7 +119,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<Negotiation> FindByDateRange(this IQueryable<Negotiation> query, DateTimeOffset startDate, DateTimeOffset endDate)
         {
-            endDate = endDate.AddHours(23).AddMinutes(59).AddSeconds(59);
+            //endDate = endDate.AddHours(23).AddMinutes(59).AddSeconds(59);
 
             query = query.Where(n => (n.StartDate >= startDate && n.StartDate <= endDate)
                                      || (n.EndDate >= startDate && n.EndDate <= endDate));
@@ -177,6 +177,41 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             {
                 query = query.Where(n => n.Room.Uid == roomUid);
             }
+
+            return query;
+        }
+
+        /// <summary>Finds the by room uid.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="roomUid">The room uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<Negotiation> FindByRoomId(this IQueryable<Negotiation> query, int? roomId, bool showAllRooms = false)
+        {
+            query = query.Where(n => showAllRooms || n.Room.Id == roomId);
+            
+            return query;
+        }
+
+        /// <summary>
+        /// Determines whether this instance is manual.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<Negotiation> IsManual(this IQueryable<Negotiation> query)
+        {
+            query = query.Where(n => !n.IsAutomatic);
+
+            return query;
+        }
+
+        /// <summary>
+        /// Determines whether this instance is automatic.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<Negotiation> IsAutomatic(this IQueryable<Negotiation> query)
+        {
+            query = query.Where(n => n.IsAutomatic);
 
             return query;
         }
@@ -348,6 +383,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId);
+
+            return await query.ToListAsync();
+        }
+
+        /// <summary>
+        /// Finds the negotiations by edition identifier asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<List<Negotiation>> FindManualScheduledNegotiationsByRoomIdAsync(int roomId, bool showAllRooms = false)
+        {
+            var query = this.GetBaseQuery()
+                                .IsManual()
+                                .FindByRoomId(roomId, showAllRooms);
 
             return await query.ToListAsync();
         }

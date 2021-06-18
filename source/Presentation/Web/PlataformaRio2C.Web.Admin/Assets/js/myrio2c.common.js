@@ -75,6 +75,17 @@ var MyRio2cCommon = function () {
         };
     };
 
+    var fixModalBackdropZIndex = function () {
+        //Fix for backdrop when show modal over modal (overlap)
+        $(document).on('show.bs.modal', '.modal', function () {
+            var zIndex = 1040 + (10 * $('.modal:visible').length);
+            $(this).css('z-index', zIndex);
+            setTimeout(function () {
+                $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+            }, 0);
+        });
+    }
+
     // Enable change events -----------------------------------------------------------------------
     var enableCheckboxChangeEvent = function (elementId, callback) {
         var element = $('#' + elementId);
@@ -1143,96 +1154,6 @@ var MyRio2cCommon = function () {
         //showAlert();
     };
 
-    //// CKEDITOR -----------------------------------------------------------------------------------
-    //var enableCkEditor = function (options) {
-
-    //    if (!hasProperty(options, 'idOrClass')) {
-    //        return;
-    //    }
-
-    //    if (isNullOrEmpty(window.CKEDITOR)) {
-    //        return;
-    //    }
-
-    //    if (!hasProperty(options, 'maxCharCount')) {
-    //        options.maxCharCount = 8000;
-    //    }
-
-    //    $(options.idOrClass).each(function () {
-    //        var elementName = $(this).attr('name');
-
-    //        CKEDITOR.replace($(this)[0], {
-    //            customConfig: '/Content/js/ckeditor_config.js',
-    //            language: globalVariables.userInterfaceLanguage,
-    //            wordcount: {
-    //                countBytesAsChars: false,
-    //                countLineBreaks: false,
-    //                // Whether or not you want to show the Paragraphs Count
-    //                showParagraphs: false,
-
-    //                // Whether or not you want to show the Word Count
-    //                showWordCount: false,
-
-    //                // Whether or not you want to show the Char Count
-    //                showCharCount: true,
-
-    //                // Whether or not you want to count Spaces as Chars
-    //                countSpacesAsChars: true,
-
-    //                // Whether or not to include Html chars in the Char Count
-    //                countHTML: false,
-
-    //                // Maximum allowed Word Count, -1 is default for unlimited
-    //                maxWordCount: -1,
-
-    //                // Maximum allowed Char Count, -1 is default for unlimited
-    //                maxCharCount: options.maxCharCount,
-
-    //                // Disable hardlimit to allow user to write more than the limit
-    //                hardLimit: false,
-
-    //                // Add filter to add or remove element before counting (see CKEDITOR.htmlParser.filter), Default value : null (no filter)
-    //                filter: new CKEDITOR.htmlParser.filter({
-    //                    elements: {
-    //                        div: function (element) {
-    //                            if (element.attributes.class == 'mediaembed') {
-    //                                return false;
-    //                            }
-    //                        }
-    //                    }
-    //                }),
-
-    //                // Show error when the max length limit is reached
-    //                charCountGreaterThanMaxLengthEvent: function (currentLength, maxLength) {
-    //                    $('[data-valmsg-for="' + elementName + '"]').html('<span for="' + name + '" generated="true" class="">' + labels.propertyBetweenLengths.replace('{0} ', '').replace('{2}', 1).replace('{1}', maxLength) + '</span>');
-    //                    $('[data-valmsg-for="' + elementName + '"]').removeClass('field-validation-valid');
-    //                    $('[data-valmsg-for="' + elementName + '"]').addClass('field-validation-error');
-    //                },
-    //                charCountLessThanMaxLengthEvent: function (currentLength, maxLength) {
-    //                    if (currentLength > 0 && $('[data-valmsg-for="' + elementName + '"]').hasClass('field-validation-error')) {
-    //                        $('[data-valmsg-for="' + elementName + '"]').html('');
-    //                        $('[data-valmsg-for="' + elementName + '"]').addClass('field-validation-valid');
-    //                        $('[data-valmsg-for="' + elementName + '"]').removeClass('field-validation-error');
-    //                    }
-    //                }
-    //            }
-    //        });
-    //    });
-    //};
-
-    //var updateCkEditorElements = function () {
-    //    if (isNullOrEmpty(window.CKEDITOR)) {
-    //        return;
-    //    }
-
-    //    for (var instance in CKEDITOR.instances) {
-    //        if (CKEDITOR.instances.hasOwnProperty(instance)) {
-    //            CKEDITOR.instances[instance].updateElement();
-    //        }
-    //    }
-    //};
-
-    // Ajax Form ----------------------------------------------------------------------------------
     var enableAjaxForm = function (options) {
 
         if (!hasProperty(options, 'idOrClass')) {
@@ -1639,7 +1560,6 @@ var MyRio2cCommon = function () {
             '<div class="select2-result-collaborator__description">' + project.SellerTradeName + '</div>' +
             '<div class="select2-result-collaborator__description">' + project.SellerCompanyName + '</div>';
 
-
         container +=
             '   </div>' +
             '</div>';
@@ -1741,10 +1661,10 @@ var MyRio2cCommon = function () {
                 enableAjaxForbiddenCatch();
                 fixSelect2Modal();
                 enablePrototypes();
-                //fixCkEditorValidation();
                 initScroll();
                 extendGlobalValidations();
                 enableInputMaxlength();
+                fixModalBackdropZIndex();
             });
         },
         getGlobalVariables: function () {
@@ -1834,12 +1754,6 @@ var MyRio2cCommon = function () {
         handleAjaxReturn: function (options) {
             return handleAjaxReturn(options);
         },
-        //enableCkEditor: function (options) {
-        //    enableCkEditor(options);
-        //},
-        //updateCkEditorElements: function () {
-        //    updateCkEditorElements();
-        //},
         enableAjaxForm: function (options) {
             enableAjaxForm(options);
         },
@@ -1866,6 +1780,9 @@ var MyRio2cCommon = function () {
         },
         enableYesNoRadioEvent: function (elementId) {
             enableYesNoRadioEvent(elementId);
+        },
+        fixModalBackdropZIndex: function () {
+            fixModalBackdropZIndex();
         }
     };
 }();

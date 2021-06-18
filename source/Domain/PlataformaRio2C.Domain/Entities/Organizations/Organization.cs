@@ -381,25 +381,44 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeOrganizationInterests(organizationIterests, userId);
         }
 
-        /// <summary>Updates the main information.</summary>
+
+        /// <summary>
+        /// Updates the main information.
+        /// </summary>
         /// <param name="edition">The edition.</param>
+        /// <param name="holding">The holding.</param>
+        /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="name">The name.</param>
         /// <param name="companyName">Name of the company.</param>
         /// <param name="tradeName">Name of the trade.</param>
         /// <param name="document">The document.</param>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
+        /// <param name="isVirtualMeeting">The is virtual meeting.</param>
+        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
         /// <param name="organizationDescriptions">The organization descriptions.</param>
         /// <param name="userId">The user identifier.</param>
         public void UpdateMainInformation(
             Edition edition,
+            Holding holding,
+            OrganizationType organizationType,
+            string name,
             string companyName,
             string tradeName,
             string document,
             bool isImageUploaded,
             bool isImageDeleted,
+            bool? isVirtualMeeting,
+            bool? isApiDisplayEnabled,
+            int? apiHighlightPosition,
             List<OrganizationDescription> organizationDescriptions,
             int userId)
         {
+            this.Holding = holding;
+            this.HoldingId = holding?.Id;
+
+            this.Name = name?.Trim();
             this.CompanyName = companyName?.Trim();
             this.TradeName = tradeName?.Trim();
             this.Document = document?.Trim();
@@ -407,6 +426,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
             this.SynchronizeOrganizationDescriptions(organizationDescriptions, userId);
+
+            this.SynchronizeAttendeeOrganizations(edition, organizationType, isApiDisplayEnabled, apiHighlightPosition, null, false, isVirtualMeeting, userId);  
         }
 
         /// <summary>Updates the social networks.</summary>

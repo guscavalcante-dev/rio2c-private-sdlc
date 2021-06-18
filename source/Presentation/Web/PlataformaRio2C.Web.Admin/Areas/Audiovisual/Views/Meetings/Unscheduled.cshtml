@@ -23,15 +23,28 @@
     <!--end:: Unscheduled Meetings Widget-->
 </div>
 @section Styles {
+    @Styles.Render("~/bundles/css/select2.css")
+    @Styles.Render("~/bundles/css/bootstrap-datepicker.css")
 }
 @section Scripts {
+    @Scripts.Render("~/bundles/js/select2.js")
+    @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/bootstrap-datepicker.js")
     @Scripts.Render("~/bundles/js/chart.js")
     @Scripts.Render("~/bundles/js/audiovisual.meetings.unscheduled.widget.js")
     @Scripts.Render("~/bundles/js/audiovisual.meetings.editionscheduledcount.widget.js")
     @Scripts.Render("~/bundles/js/audiovisual.meetings.editionunscheduledcount.widget.js")
-    <script>
+    @Scripts.Render("~/bundles/js/audiovisual.meetings.unscheduled.manualschedule.js")
+<script>
         // Page translations ----------------------------------------------------------------------
         var translations = {
+            playerDropdownPlaceholder: '@string.Format(Labels.SelectAMEntity, Labels.Player.ToLowerInvariant())...',
+            projectDropdownPlaceholder: '@string.Format(Labels.SelectAMEntity, Labels.Project.ToLowerInvariant())...',
+            producerDropdownPlaceholder: '@string.Format(Labels.SelectAFEntity, Labels.Producer.ToLowerInvariant())...',
+            roomDropdownPlaceholder: '@string.Format(Labels.SelectAFEntity, Labels.Room.ToLowerInvariant())...',
+            dateDropdownPlaceholder: '@string.Format(Labels.SelectAFEntity, Labels.Date.ToLowerInvariant())...',
+            startTimeDropdownPlaceholder: '@Html.Raw(string.Format(Labels.SelectAFEntity, Labels.StartTime.ToLowerInvariant()))...',
+            changeScheduledNegotiationConfirmationMessage: '@Messages.ChangeScheduledNegotiationConfirmationMessage'
         };
 
         // Pagination -----------------------------------------------------------------------------
@@ -40,5 +53,5 @@
             AudiovisualMeetingsEditionUnscheduledCountWidget.init();
             AudiovisualMeetingsUnscheduledWidget.init();
         });
-    </script>
+</script>
 }

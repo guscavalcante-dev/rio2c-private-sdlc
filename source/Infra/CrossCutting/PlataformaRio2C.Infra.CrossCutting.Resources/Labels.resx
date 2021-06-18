@@ -2747,4 +2747,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Link da sala virtual</value>
     <comment>Link da sala virtual</comment>
   </data>
+  <data name="ScheduleManually" xml:space="preserve">
+    <value>Agendar Manualmente</value>
+    <comment>Agendar Manualmente</comment>
+  </data>
 </root>

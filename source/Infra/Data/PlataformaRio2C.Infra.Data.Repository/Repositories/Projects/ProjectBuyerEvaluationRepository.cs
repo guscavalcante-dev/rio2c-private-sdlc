@@ -34,6 +34,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <returns></returns>
+        internal static IQueryable<ProjectBuyerEvaluation> FindById(this IQueryable<ProjectBuyerEvaluation> query, Guid projectBuyerEvaluationId)
+        {
+            query = query.Where(pbe => pbe.Uid == projectBuyerEvaluationId);
+
+            return query;
+        }
+
+        /// <summary>Finds the by edition identifier.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <returns></returns>
         internal static IQueryable<ProjectBuyerEvaluation> FindByEditionId(this IQueryable<ProjectBuyerEvaluation> query, int editionId, bool showAllEditions = false)
         {
             query = query.Where(pbe => (showAllEditions || (!pbe.Project.SellerAttendeeOrganization.IsDeleted
@@ -41,7 +53,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
-
 
         /// <summary>Finds the by project evaluation status uid.</summary>
         /// <param name="query">The query.</param>
@@ -281,6 +292,42 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .IsNegotiationNotScheduled();
 
             return await query.CountAsync();
+        }
+
+        /// <summary>
+        /// Finds the dto asynchronous.
+        /// </summary>
+        /// <param name="projectBuyerEvaluationUid">The project buyer evaluation uid.</param>
+        /// <returns></returns>
+        public async Task<ProjectBuyerEvaluationDto> FindDtoAsync(Guid projectBuyerEvaluationUid)
+        {
+            var query = this.GetBaseQuery()
+                               .FindById(projectBuyerEvaluationUid)
+                               .Select(pbe => new ProjectBuyerEvaluationDto
+                               {
+                                   ProjectBuyerEvaluation = pbe,
+                                   BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                   {
+                                       AttendeeOrganization = pbe.BuyerAttendeeOrganization,
+                                       Organization = pbe.BuyerAttendeeOrganization.Organization
+                                   },
+                                   ProjectDto = new ProjectDto
+                                   {
+                                       Project = pbe.Project,
+                                       SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                       {
+                                           AttendeeOrganization = pbe.Project.SellerAttendeeOrganization,
+                                           Organization = pbe.Project.SellerAttendeeOrganization.Organization
+                                       },
+                                       ProjectTitleDtos = pbe.Project.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                       {
+                                           ProjectTitle = t,
+                                           Language = t.Language
+                                       })
+                                   }
+                               });
+
+            return await query.FirstOrDefaultAsync();
         }
     }
 }

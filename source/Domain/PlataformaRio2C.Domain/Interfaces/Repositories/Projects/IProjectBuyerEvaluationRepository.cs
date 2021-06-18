@@ -22,6 +22,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IProjectBuyerEvaluationRepository</summary>
     public interface IProjectBuyerEvaluationRepository : IRepository<ProjectBuyerEvaluation>
     {
+        Task<ProjectBuyerEvaluationDto> FindDtoAsync(Guid projectBuyerEvaluationUid);
         Task<List<ProjectBuyerEvaluationEmailDto>> FindAllBuyerEmailDtosAsync(int editionId, DateTimeOffset editionProjectEvaluationStartDate, DateTimeOffset editionProjectEvaluationEndDate);
         Task<List<ProjectBuyerEvaluation>> FindAllForGenerateNegotiationsAsync(int editionId);
         Task<List<ProjectBuyerEvaluationDto>> FindUnscheduledWidgetDtoAsync(int editionId);

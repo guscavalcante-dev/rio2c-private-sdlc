@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Renan Valentim
-// Created          : 05-15-2021
+// Created          : 06-04-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 05-15-2021
+// Last Modified On : 06-04-2021
 // ***********************************************************************
-// <copyright file="UpdateNegotiation.cs" company="Softo">
+// <copyright file="ScheduleManualNegotiation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -15,42 +15,37 @@ using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
-using System.Linq;
+using System.ComponentModel.DataAnnotations;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>UpdateNegotiation</summary>
-    public class UpdateNegotiation : NegotiationBaseCommand
+    /// <summary>ScheduleManualNegotiation</summary>
+    public class ScheduleManualNegotiation : NegotiationBaseCommand
     {
-        public Guid NegotiationUid { get; set; }
-        public NegotiationDto NegotiationDto { get; set; }
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateNegotiation"/> class.
+        /// Initializes a new instance of the <see cref="ScheduleManualNegotiation"/> class.
         /// </summary>
-        /// <param name="negotiationDto">The negotiation dto.</param>
+        /// <param name="projectBuyerEvaluationDto">The project buyer evaluation dto.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         /// <exception cref="DomainException"></exception>
-        public UpdateNegotiation(
-            NegotiationDto negotiationDto, 
+        public ScheduleManualNegotiation(
+            ProjectBuyerEvaluationDto projectBuyerEvaluationDto,
             string userInterfaceLanguage)
         {
-            if (negotiationDto == null || negotiationDto.Negotiation == null)
+            if (projectBuyerEvaluationDto == null )
             {
                 throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundM));
             }
 
-            this.NegotiationUid = negotiationDto.Negotiation.Uid;
-            this.NegotiationDto = negotiationDto;
-            this.UpdateBaseProperties(negotiationDto.ProjectBuyerEvaluationDto, userInterfaceLanguage);
+            this.UpdateBaseProperties(projectBuyerEvaluationDto, userInterfaceLanguage);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateNegotiation" /> class.
+        /// Initializes a new instance of the <see cref="ScheduleManualNegotiation"/> class.
         /// </summary>
-        public UpdateNegotiation()
+        /// <param name="negotiationDto">The negotiation.</param>
+        public ScheduleManualNegotiation()
         {
         }
     }

@@ -56,7 +56,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
         /// <param name="fileRepository">The file repository.</param>
         public CollaboratorsController(
-            IMediator commandBus, 
+            IMediator commandBus,
             IdentityAutenticationService identityController,
             ICollaboratorRepository collaboratorRepository,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
@@ -73,8 +73,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             this.collaboratorTypeRepo = collaboratorTypeRepository;
             this.fileRepo = fileRepository;
         }
-
-        #region Collaborators
 
         /// <summary>Indexes the specified search view model.</summary>
         /// <param name="searchViewModel">The search view model.</param>
@@ -95,6 +93,44 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             return View(searchViewModel);
         }
 
-		#endregion
+        /// <summary>Finds all by filters.</summary>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="page">The page.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> FindAllByFilters(string keywords, int? page = 1)
+        {
+            var collaboratorsApiDtos = await this.attendeeCollaboratorRepo.FindAllDropdownApiListDtoPaged(
+                this.EditionDto.Id,
+                keywords,
+                page.Value,
+                10);
+
+            return Json(new
+            {
+                status = "success",
+                HasPreviousPage = collaboratorsApiDtos.HasPreviousPage,
+                HasNextPage = collaboratorsApiDtos.HasNextPage,
+                TotalItemCount = collaboratorsApiDtos.TotalItemCount,
+                PageCount = collaboratorsApiDtos.PageCount,
+                PageNumber = collaboratorsApiDtos.PageNumber,
+                PageSize = collaboratorsApiDtos.PageSize,
+                Collaborators = collaboratorsApiDtos?.Select(c => new CollaboratorsDropdownDto
+                {
+                    Uid = c.Uid,
+                    BadgeName = c.BadgeName?.Trim(),
+                    Name = c.Name?.Trim(),
+                    Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.CollaboratorUid, c.ImageUploadDate, true) : null,
+                    JobTitle = c.GetCollaboratorJobTitleBaseDtoByLanguageCode(this.UserInterfaceLanguage)?.Value?.Trim(),
+                    Companies = c.OrganizationsDtos?.Select(od => new CollaboratorsDropdownOrganizationDto()
+                    {
+                        Uid = od.Uid,
+                        TradeName = od.TradeName,
+                        CompanyName = od.CompanyName,
+                        Picture = od.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, od.Uid, od.ImageUploadDate, true) : null
+                    })?.ToList()
+                })?.ToList()
+            }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
