@@ -4,17 +4,21 @@
 // Created          : 03-08-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-25-2020
+// Last Modified On : 06-19-2021
 // ***********************************************************************
 // <copyright file="ProducersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using DataTables.AspNet.Core;
+using DataTables.AspNet.Mvc5;
 using MediatR;
+using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
@@ -22,6 +26,9 @@ using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Admin.Controllers;
 using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
@@ -51,6 +58,101 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             this.organizationRepo = organizationRepository;
             this.fileRepo = fileRepository;
         }
+
+        #region List
+
+        /// <summary>Indexes the specified search view model.</summary>
+        /// <param name="searchViewModel">The search view model.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Index(ProducerSearchViewModel searchViewModel)
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Producers, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.AudioVisual, null),
+                new BreadcrumbItemHelper(Labels.Producers, null),
+                new BreadcrumbItemHelper(Labels.Companies, Url.Action("Index", "Producers", new { Area = "Audiovisual" }))
+            });
+
+            #endregion
+
+            return View(searchViewModel);
+        }
+
+        #endregion
+
+        #region Total Count Widget
+
+        /// <summary>Shows the total count widget.</summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowTotalCountWidget()
+        {
+            var producersCount = await this.organizationRepo.CountAllByDataTable(OrganizationType.Producer.Uid, true, this.EditionDto.Id);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", producersCount), divIdOrClass = "#ProducersTotalCountWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Edition Count Widget
+
+        /// <summary>Shows the edition count widget.</summary>
+        /// <returns></returns>
+        public async Task<ActionResult> ShowEditionCountWidget()
+        {
+            var producersCount = await this.organizationRepo.CountAllByDataTable(OrganizationType.Producer.Uid, false, this.EditionDto.Id);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", producersCount), divIdOrClass = "#ProducersEditionCountWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region DataTable Widget
+
+        /// <summary>Searches the specified request.</summary>
+        /// <param name="request">The request.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="showAllOrganizations">if set to <c>true</c> [show all organizations].</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllOrganizations)
+        {
+            var producers = await this.organizationRepo.FindAllByDataTable(
+                request.Start / request.Length,
+                request.Length,
+                request.Search?.Value,
+                request.GetSortColumns(),
+                OrganizationType.Producer.Uid,
+                showAllEditions,
+                showAllOrganizations,
+                this.EditionDto.Id);
+
+            var response = DataTablesResponse.Create(request, producers.TotalItemCount, producers.TotalItemCount, producers);
+
+            return Json(new
+            {
+                status = "success",
+                dataTable = response
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
 
         #region Finds
 

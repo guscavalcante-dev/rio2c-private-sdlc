@@ -892,6 +892,9 @@
     <Content Include="Assets\js\places\places.editioncount.widget.js" />
     <Content Include="Assets\js\places\places.totalcount.widget.js" />
     <Content Include="Assets\js\places\places.datatable.widget.js" />
+    <Content Include="Assets\js\audiovisual\producers\audiovisual.producers.datatable.widget.js" />
+    <Content Include="Assets\js\audiovisual\producers\audiovisual.producers.editioncount.widget.js" />
+    <Content Include="Assets\js\audiovisual\producers\audiovisual.producers.totalcount.widget.js" />
     <Content Include="Assets\js\reports\reports.audiovisual.subscriptions.widget.js" />
     <Content Include="Assets\js\rooms\rooms.conferences.widget.js" />
     <Content Include="Assets\js\rooms\rooms.maininformation.widget.js" />
@@ -7615,6 +7618,8 @@
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\LogisticsAirfareList.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\ConferencesList.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\MeetingsList.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Producers\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Producers\Widgets\EditionCountWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -8992,6 +8997,8 @@
     <Content Include="Views\Players\Modals\UpdateSocialNetworksModal.cshtml" />
     <Content Include="Views\Players\Modals\UpdateTargetAudienceForm.cshtml" />
     <Content Include="Views\Players\Modals\UpdateTargetAudienceModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Producers\Index.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Producers\Widgets\DataTableWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

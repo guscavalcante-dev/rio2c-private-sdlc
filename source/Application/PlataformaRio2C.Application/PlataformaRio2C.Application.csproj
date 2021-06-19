@@ -673,6 +673,7 @@
     <Compile Include="ViewModels\Common\Negotiation\GroupDateNegotiationAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Negotiation\NegotiationAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Players\PlayerCompanySearchViewModel.cs" />
+    <Compile Include="ViewModels\Common\Producers\ProducerSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Project\ProjectOptionFilterAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Quiz\AnswerBasicAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Quiz\AnswerDetailAppViewModel.cs" />
@@ -738,18 +739,7 @@
     <Compile Include="ViewModels\Common\ProjectPlayer\ProjectPlayerDetailAppViewModel.cs" />
     <Compile Include="ViewModels\Common\ProjectPlayer\ProjectPlayerItemListAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Project\ProjectDetailAppViewModel.cs" />
-    <Compile Include="ViewModels\Common\Producer\ProducerTargetAudienceAppViewModel.cs" />
-    <Compile Include="ViewModels\Common\Producer\ProducerActivityAppViewModel.cs" />
-    <Compile Include="ViewModels\Common\Producer\ProducerBasicAppViewModel.cs" />
-    <Compile Include="ViewModels\Common\Producer\ProducerCollaboratorDetailAppViewModel.cs" />
-    <Compile Include="ViewModels\Common\Producer\ProducerCollaboratorAppViewModel.cs" />
-    <Compile Include="ViewModels\Common\Producer\ProducerDescriptionAppViewModel.cs" />
-    <Compile Include="ViewModels\Common\Producer\ProducerAppViewModel.cs" />
     <Compile Include="ViewModels\Common\CollaboratorProducer\PreRegistrationAppViewModel.cs" />
-    <Compile Include="ViewModels\Common\Producer\ProducerDetailAppViewModel.cs" />
-    <Compile Include="ViewModels\Common\Producer\ProducerEditAppViewModel.cs" />
-    <Compile Include="ViewModels\Common\Producer\ProducerItemListAppViewModel.cs" />
-    <Compile Include="ViewModels\Common\Producer\ProducerOptionAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Project\ProjectEditAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Project\ProjectOptionAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Project\Properties\ProjectInterestAppViewModel.cs" />
