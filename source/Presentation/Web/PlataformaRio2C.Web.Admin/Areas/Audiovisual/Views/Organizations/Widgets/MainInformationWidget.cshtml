@@ -1,7 +1,11 @@
 ﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
 @using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Entities
 @using PlataformaRio2C.Domain.Statics
 @model AttemdeeOrganizationSiteMainInformationWidgetDto
+@{
+    var isAudiovisualBuyer = ViewBag.OrganizationTypeUid == OrganizationType.Player.Uid;
+}
 <div class="kt-portlet__body">
     <div class="kt-widget kt-widget--user-profile-3">
         <div class="kt-widget__top">
@@ -22,14 +26,12 @@
             <div class="kt-widget__content" style="overflow: hidden;">
                 <div class="kt-widget__head">
                     <span class="kt-widget__username">
-                        @(Model.Organization?.TradeName ?? "-")
+                        @((isAudiovisualBuyer ? Model.Organization?.Name : Model.Organization?.TradeName) ?? "-")
                         @if (Model.AttendeeOrganization.OnboardingFinishDate.HasValue)
                         {
                             <i class="flaticon2-correct"></i>
                         }
                     </span>
-                    @*@if (isCollaborator)
-                        {*@
                     <div class="kt-widget__action">
                         <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="AudiovisualOrganizationsMainInformationWidget.showUpdateModal();">
                             <i class="flaticon2-edit"></i>
@@ -37,9 +39,14 @@
                     </div>
                     @*}*@
                 </div>
+                @if (isAudiovisualBuyer)
+                {
+                    <div class="kt-widget__subhead pt-0">
+                        @(Model.Organization?.TradeName ?? "-")
+                    </div>
+                }
                 <div class="kt-widget__subhead pt-0">
                     @(Model.Organization?.CompanyName ?? "-")
-                    @*@if (isCollaborator && !string.IsNullOrEmpty(Model.Organization?.Document))*@
                     @if (!string.IsNullOrEmpty(Model.Organization?.Document))
                     {
                         @:- @Model.Organization.Document

@@ -26,6 +26,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>UpdateOrganizationAdminMainInformation</summary>
     public class UpdateOrganizationAdminMainInformation : UpdateOrganizationMainInformationBaseCommand
     {
+        public bool IsAudiovisualBuyer => (this.OrganizationType != null && this.OrganizationType?.Name == Constants.OrganizationType.AudiovisualBuyer);
+
         public Guid? OrganizationTypeUid { get; set; }
 
         [Display(Name = "Holding", ResourceType = typeof(Labels))]
@@ -34,11 +36,14 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public Guid? HoldingUid { get; set; }
 
         [Display(Name = "Name", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [RequiredIf(nameof(IsAudiovisualBuyer), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(81, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Name { get; set; }
 
-        public bool IsAudiovisualBuyer => (this.OrganizationType != null && this.OrganizationType?.Name == Constants.OrganizationType.AudiovisualBuyer);
+        [Display(Name = "TradeName", ResourceType = typeof(Labels))]
+        [RequiredIf(nameof(IsAudiovisualBuyer), "False", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [StringLength(100, MinimumLength = 2, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string TradeName { get; set; }
 
         [Display(Name = "AcceptsVirtualMeeting", ResourceType = typeof(Labels))]
         [RequiredIf(nameof(IsAudiovisualBuyer), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -79,6 +84,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
             this.HoldingUid = entity?.Organization?.Holding?.Uid;
             this.Name = entity?.Organization?.Name;
+            this.TradeName = entity?.Organization?.TradeName;
             this.IsVirtualMeeting = entity?.AttendeeOrganization?.IsVirtualMeeting == true;
 
             this.UpdateModelsAndLists(holdingBaseDtos);
@@ -118,6 +124,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             this.OrganizationType = organizationType;
             this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
+
+            if (!this.IsAudiovisualBuyer)
+            {
+                this.Name = TradeName;
+            }
         }
 
         #region Private Methods

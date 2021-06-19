@@ -12,14 +12,20 @@
 // <summary></summary>
 // ***********************************************************************
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>UpdateOrganizationMainInformation</summary>
     public class UpdateOrganizationSiteMainInformation : UpdateOrganizationMainInformationBaseCommand
     {
+        [Display(Name = "TradeName", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [StringLength(100, MinimumLength = 2, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+        public string TradeName { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateOrganizationSiteMainInformation"/> class.
         /// </summary>
@@ -34,6 +40,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             bool isImageRequired)
             : base(entity, languagesDtos, isDescriptionRequired, isImageRequired)
         {
+            this.TradeName = entity?.Organization?.TradeName;
         }
 
         /// <summary>

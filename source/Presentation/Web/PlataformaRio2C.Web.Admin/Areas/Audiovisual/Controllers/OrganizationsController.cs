@@ -40,45 +40,37 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual)]
     public class OrganizationsController : BaseController
     {
-        private readonly IOrganizationRepository organizationRepo;
         private readonly IOrganizationTypeRepository organizationTypeRepo;
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IActivityRepository activityRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
         private readonly IInterestRepository interestRepo;
-        private readonly IFileRepository fileRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OrganizationsController"/> class.
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        /// <param name="organizationRepository">The organization repository.</param>
         /// <param name="organizationTypeRepository">The organization type repository.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="activityRepository">The activity repository.</param>
         /// <param name="targetAudienceRepository">The target audience repository.</param>
         /// <param name="interestRepository">The interest repository.</param>
-        /// <param name="fileRepository">The file repository.</param>
         public OrganizationsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
-            IOrganizationRepository organizationRepository,
             IOrganizationTypeRepository organizationTypeRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IActivityRepository activityRepository,
             ITargetAudienceRepository targetAudienceRepository,
-            IInterestRepository interestRepository,
-            IFileRepository fileRepository)
+            IInterestRepository interestRepository)
             : base(commandBus, identityController)
         {
-            this.organizationRepo = organizationRepository;
             this.organizationTypeRepo = organizationTypeRepository;
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.activityRepo = activityRepository;
             this.targetAudienceRepo = targetAudienceRepository;
             this.interestRepo = interestRepository;
-            this.fileRepo = fileRepository;
         }
 
         #region Main Information Widget
@@ -87,15 +79,18 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// Shows the main information widget.
         /// </summary>
         /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowMainInformationWidget(Guid? organizationUid)
+        public async Task<ActionResult> ShowMainInformationWidget(Guid? organizationUid, Guid? organizationTypeUid)
         {
             var mainInformationWidgetDto = await this.attendeeOrganizationRepo.FindSiteMainInformationWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id);
             if (mainInformationWidgetDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
+
+            ViewBag.OrganizationTypeUid = organizationTypeUid;
 
             return Json(new
             {

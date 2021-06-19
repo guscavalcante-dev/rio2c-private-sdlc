@@ -34,11 +34,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string CompanyName { get; set; }
 
-        [Display(Name = "TradeName", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        [StringLength(100, MinimumLength = 2, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
-        public string TradeName { get; set; }
-
         public bool IsCompanyNumberRequired { get; set; }
         [Display(Name = "CompanyDocument", ResourceType = typeof(Labels))]
         [RequiredIf("IsCompanyNumberRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -66,11 +61,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             this.OrganizationUid = entity.Organization.Uid;
 
-            this.CompanyName = entity.Organization.CompanyName;
-            this.TradeName = entity.Organization.TradeName;
-            this.IsCompanyNumberRequired = entity.Country?.IsCompanyNumberRequired == true;
-            this.Document = entity.Organization.Document;
-            
+            this.CompanyName = entity?.Organization?.CompanyName;
+            this.IsCompanyNumberRequired = entity?.Country?.IsCompanyNumberRequired == true;
+            this.Document = entity?.Organization?.Document;
 
             this.UpdateDescriptions(entity, languagesDtos, isDescriptionRequired);
             this.UpdateCropperImage(entity, isImageRequired);

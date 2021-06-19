@@ -89,7 +89,7 @@
     @if (isAdminFull || isAdminAudiovisual)
     {
         @Scripts.Render("~/bundles/js/holdings.editioncount.js")
-        @Scripts.Render("~/bundles/js/organizations.editioncount.js")
+        @Scripts.Render("~/bundles/js/audiovisual.players.editioncount.js")
         @Scripts.Render("~/bundles/js/collaborators.editioncount.js")
         @Scripts.Render("~/bundles/js/projects.pitching.editioncount.widget.js")
     }
@@ -113,7 +113,7 @@
             {
                 <text>
                     HoldingsEditionCountWidget.init();
-                    OrganizationsEditionCountWidget.init();
+                    AudiovisualPlayersEditionCountWidget.init();
                     CollaboratorsEditionCountWidget.init();
                     ProjectsPitchingEditionCountWidget.init();
                 </text>

@@ -12,6 +12,7 @@
     </select>
 }
 <div class="row">
+    @Html.HiddenFor(m => m.IsAudiovisualBuyer)
     <div class="form-group col-lg-4 text-center">
         @Html.EditorFor(m => m.CropperImage)
     </div>
@@ -20,37 +21,44 @@
         {
             <div class="form-group row">
                 <div class="col-md-12">
-                    @Html.LabelFor(m => m.HoldingUid, new { @class = "control-label" })
-                    @Html.DropDownList("HoldingUid", new SelectList(Model.HoldingBaseDtos, "Uid", "Name", Model.HoldingUid), $"{Labels.Select}...", new { @class = "form-control enable-select2" })
-                    @Html.ValidationMessageFor(m => m.HoldingUid, "", new { @class = "text-danger" })
+                    @Html.LabelFor(m => m.HoldingUid, new {@class = "control-label"})
+                    @Html.DropDownList("HoldingUid", new SelectList(Model.HoldingBaseDtos, "Uid", "Name", Model.HoldingUid), $"{Labels.Select}...", new {@class = "form-control enable-select2"})
+                    @Html.ValidationMessageFor(m => m.HoldingUid, "", new {@class = "text-danger"})
                 </div>
             </div>
         }
         <div class="form-group row">
-            <div class="col-md-6">
-                @Html.LabelFor(m => m.Name, new {@class = "control-label"})
-                @Html.TextBoxFor(m => m.Name, new {@class = "form-control"})
-                @Html.ValidationMessageFor(m => m.Name, "", new {@class = "text-danger"})
-            </div>
+            @if (isPlayer)
+            {
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.Name, new {@class = "control-label"})
+                    @Html.TextBoxFor(m => m.Name, new {@class = "form-control"})
+                    @Html.ValidationMessageFor(m => m.Name, "", new {@class = "text-danger"})
+                </div>
+            }
             <div class="col-md-6">
                 @Html.HiddenFor(m => m.IsCompanyNumberRequired)
-                @Html.LabelFor(m => m.Document, new { @class = "control-label" })
-                @Html.TextBoxFor(m => m.Document, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Document, "", new { @class = "text-danger" })
+                @Html.LabelFor(m => m.Document, new {@class = "control-label"})
+                @Html.TextBoxFor(m => m.Document, new {@class = "form-control"})
+                @Html.ValidationMessageFor(m => m.Document, "", new {@class = "text-danger"})
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-12">
-                @Html.LabelFor(m => m.CompanyName, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
-                @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
+                @Html.LabelFor(m => m.CompanyName, new {@class = "control-label"}) <span class="form-optional-input text-muted">@Labels.Optional</span>
+                @Html.TextBoxFor(m => m.CompanyName, new {@class = "form-control"})
+                @Html.ValidationMessageFor(m => m.CompanyName, "", new {@class = "text-danger"})
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-12">
-                @Html.LabelFor(m => m.TradeName, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
-                @Html.TextBoxFor(m => m.TradeName, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.TradeName, "", new { @class = "text-danger" })
+                @Html.LabelFor(m => m.TradeName, new {@class = "control-label"})
+                @if (isPlayer)
+                {
+                    <span class="form-optional-input text-muted">@Labels.Optional</span>
+                }
+                @Html.TextBoxFor(m => m.TradeName, new {@class = "form-control"})
+                @Html.ValidationMessageFor(m => m.TradeName, "", new {@class = "text-danger"})
             </div>
         </div>
     </div>
@@ -62,7 +70,6 @@
         <div class="kt-section__content">
             <div class="row">
                 <div class="col-sm-6">
-                    @Html.HiddenFor(m => m.IsAudiovisualBuyer)
                     <div class="row">
                         <div class="col-12">
                             @Html.LabelFor(m => m.IsVirtualMeeting, new { @class = "control-label" }) ?

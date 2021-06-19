@@ -34,6 +34,7 @@ var AudiovisualOrganizationsMainInformationWidget = function () {
 
         var jsonParameters = new Object();
         jsonParameters.organizationUid = $('#AggregateId').val();
+        jsonParameters.organizationTypeUid = $('#OrganizationTypeUid').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Organizations/ShowMainInformationWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
