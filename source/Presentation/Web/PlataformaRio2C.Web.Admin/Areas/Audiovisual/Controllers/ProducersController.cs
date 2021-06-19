@@ -11,6 +11,7 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -41,21 +42,27 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
     public class ProducersController : BaseController
     {
         private readonly IOrganizationRepository organizationRepo;
+        private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IFileRepository fileRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="ProducersController"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProducersController"/> class.
+        /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="organizationRepository">The organization repository.</param>
+        /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="fileRepository">The file repository.</param>
         public ProducersController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             IOrganizationRepository organizationRepository,
+            IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IFileRepository fileRepository)
             : base(commandBus, identityController)
         {
             this.organizationRepo = organizationRepository;
+            this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.fileRepo = fileRepository;
         }
 
@@ -71,8 +78,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Producers, new List<BreadcrumbItemHelper> {
                 new BreadcrumbItemHelper(Labels.AudioVisual, null),
-                new BreadcrumbItemHelper(Labels.Producers, null),
-                new BreadcrumbItemHelper(Labels.Companies, Url.Action("Index", "Producers", new { Area = "Audiovisual" }))
+                new BreadcrumbItemHelper(Labels.Producers, Url.Action("Index", "Producers", new { Area = "Audiovisual" }))
             });
 
             #endregion
@@ -150,6 +156,36 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 status = "success",
                 dataTable = response
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Details
+
+        /// <summary>Detailses the specified identifier.</summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> Details(Guid? id)
+        {
+            var attendeeOrganizationDto = await this.attendeeOrganizationRepo.FindSiteDetailstDtoByOrganizationUidAndByEditionIdAsync(id ?? Guid.Empty, this.EditionDto.Id);
+            if (attendeeOrganizationDto == null)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Home", new { Area = "" });
+            }
+
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Producers, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.AudioVisual, null),
+                new BreadcrumbItemHelper(Labels.Producers, Url.Action("Index", "Producers", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(attendeeOrganizationDto.Organization.TradeName, Url.Action("Details", "Producers", new { Area = "Audiovisual", id }))
+            });
+
+            #endregion
+
+            return View("../Organizations/Details", attendeeOrganizationDto);
         }
 
         #endregion

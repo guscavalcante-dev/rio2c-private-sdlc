@@ -1,0 +1,82 @@
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Statics
+@model AttemdeeOrganizationSiteMainInformationWidgetDto
+<div class="kt-portlet__body">
+    <div class="kt-widget kt-widget--user-profile-3">
+        <div class="kt-widget__top">
+            <div style="float: right;">
+                @if (Model.Organization?.HasImage() == true)
+                {
+                    <div class="kt-widget__media">
+                        <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, Model.Organization.Uid, Model.Organization.ImageUploadDate, true)" alt="image">
+                    </div>
+                }
+                else
+                {
+                    <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest" style="width: 110px; height: 110px;">
+                        @(Model.Organization?.GetTradeNameAbbreviation() ?? "-")
+                    </div>
+                }
+            </div>
+            <div class="kt-widget__content" style="overflow: hidden;">
+                <div class="kt-widget__head">
+                    <span class="kt-widget__username">
+                        @(Model.Organization?.TradeName ?? "-")
+                        @if (Model.AttendeeOrganization.OnboardingFinishDate.HasValue)
+                        {
+                            <i class="flaticon2-correct"></i>
+                        }
+                    </span>
+                    @*@if (isCollaborator)
+                        {*@
+                    <div class="kt-widget__action">
+                        <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="AudiovisualOrganizationsMainInformationWidget.showUpdateModal();">
+                            <i class="flaticon2-edit"></i>
+                        </button>
+                    </div>
+                    @*}*@
+                </div>
+                <div class="kt-widget__subhead pt-0">
+                    @(Model.Organization?.CompanyName ?? "-")
+                    @*@if (isCollaborator && !string.IsNullOrEmpty(Model.Organization?.Document))*@
+                    @if (!string.IsNullOrEmpty(Model.Organization?.Document))
+                    {
+                        @:- @Model.Organization.Document
+                    }
+                </div>
+                @if (Model.AttendeeOrganization.IsVirtualMeeting.HasValue)
+                {
+                    var isVirtualMeeting = Model.AttendeeOrganization.IsVirtualMeeting == true;
+                    var tooltipTile = string.Format(Messages.PlayerMeetingPreference, (isVirtualMeeting ? Labels.RemoteF : Labels.Presential).ToLowerInvariant());
+
+                    <div class="kt-widget__subhead pt-0 mt-0">
+                        <span class="kt-badge kt-badge--inline kt-badge--warning mt-2 kt-font-boldest" data-toggle="tooltip" data-placement="right" title="@tooltipTile" style="cursor: pointer;">
+                            @(isVirtualMeeting ? Labels.Remote : Labels.Presential)
+                        </span>
+                    </div>
+                }
+                <div class="kt-widget__subhead">
+                    @{
+                        var location = Model.GetLocation(ViewBag.UserInterfaceLanguage);
+                    }
+                    @if (!string.IsNullOrEmpty(location))
+                    {
+                        <a onclick="return false;"><i class="flaticon-placeholder"></i>@location</a>
+                    }
+                </div>
+                <div class="kt-widget__info" style="display: block;">
+                    @{
+                        var descriptionDto = Model.GetDescriptionDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
+                    }
+                    @if (descriptionDto != null)
+                    {
+                        <div class="kt-widget__desc" style="word-wrap: break-word;">
+                            @Html.Raw(descriptionDto.Value)
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

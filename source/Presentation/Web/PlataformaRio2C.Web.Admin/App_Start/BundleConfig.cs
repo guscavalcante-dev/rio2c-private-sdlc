@@ -363,34 +363,38 @@ namespace PlataformaRio2C.Web.Admin
 
             #region Organizations
 
-            bundles.Add(new ScriptBundle("~/bundles/js/organizations.list.js").Include(
-                "~/Assets/js/organizations/organizations.totalcount.widget.js",
-                "~/Assets/js/organizations/organizations.datatable.widget.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/organizations.editioncount.js").Include(
-                "~/Assets/js/organizations/organizations.editioncount.widget.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/organizations.create.js").Include(
-                "~/Assets/js/organizations/organizations.create.js",
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.organizations.widget.js").Include(
+                "~/Assets/js/audiovisual/organizations/audiovisual.organizations.maininformation.widget.js",
+                "~/Assets/js/audiovisual/organizations/audiovisual.organizations.socialnetworks.widget.js",
+                "~/Assets/js/audiovisual/organizations/audiovisual.organizations.address.widget.js",
+                "~/Assets/js/audiovisual/organizations/audiovisual.organizations.activity.widget.js",
+                "~/Assets/js/audiovisual/organizations/audiovisual.organizations.targetaudience.widget.js",
+                "~/Assets/js/audiovisual/organizations/audiovisual.organizations.interest.widget.js",
+                "~/Assets/js/audiovisual/organizations/audiovisual.organizations.executive.widget.js",
                 "~/Assets/js/myrio2c.companynumber.js",
                 "~/Assets/js/myrio2c.additionalinfo.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/organizations.update.js").Include(
-                "~/Assets/js/organizations/organizations.update.js"));
+            #endregion
 
-            bundles.Add(new ScriptBundle("~/bundles/js/organizations.delete.js").Include(
-                "~/Assets/js/organizations/organizations.delete.js"));
+            #region Players
 
-            bundles.Add(new ScriptBundle("~/bundles/js/organizations.widget.js").Include(
-                "~/Assets/js/organizations/organizations.maininformation.widget.js",
-                "~/Assets/js/organizations/organizations.socialnetworks.widget.js",
-                "~/Assets/js/organizations/organizations.address.widget.js",
-                "~/Assets/js/organizations/organizations.activity.widget.js",
-                "~/Assets/js/organizations/organizations.targetaudience.widget.js",
-                "~/Assets/js/organizations/organizations.interest.widget.js",
-                "~/Assets/js/organizations/organizations.executive.widget.js",
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.players.list.js").Include(
+                "~/Assets/js/audiovisual/players/audiovisual.players.totalcount.widget.js",
+                "~/Assets/js/audiovisual/players/audiovisual.players.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.players.editioncount.js").Include(
+                "~/Assets/js/audiovisual/players/audiovisual.players.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.players.create.js").Include(
+                "~/Assets/js/audiovisual/players/audiovisual.players.create.js",
                 "~/Assets/js/myrio2c.companynumber.js",
                 "~/Assets/js/myrio2c.additionalinfo.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.players.update.js").Include(
+                "~/Assets/js/audiovisual/players/audiovisual.players.update.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.players.delete.js").Include(
+                "~/Assets/audiovisual/js/audiovisual/players/audiovisual.players.delete.js"));
 
             #endregion
 
