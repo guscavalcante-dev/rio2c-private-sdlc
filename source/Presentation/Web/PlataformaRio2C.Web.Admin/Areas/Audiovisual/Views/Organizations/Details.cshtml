@@ -1,13 +1,14 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
-@using Constants = PlataformaRio2C.Domain.Constants;
+@using PlataformaRio2C.Domain.Entities
 @model AttemdeeOrganizationSiteDetailsDto
 @{
     ViewBag.Title = $"{Labels.Company}  {Model.Organization.TradeName}";
-
-    var isAudiovisualCompany = Model.HasAnyType(new[] { Constants.OrganizationType.AudiovisualBuyer, Constants.OrganizationType.AudiovisualSeller });
-    var isAudiovisualBuyerCompany = Model.HasAnyType(new[] { Constants.OrganizationType.AudiovisualBuyer });
+    var isPlayer = ViewBag.OrganizationTypeUid == OrganizationType.Player.Uid;
+    var isProducer = ViewBag.OrganizationTypeUid == OrganizationType.Producer.Uid;
+    var isAudiovisualCompany = isPlayer || isProducer;
 }
 @Html.Hidden("AggregateId", Model.Organization.Uid)
+@Html.Hidden("OrganizationTypeUid", (Guid)ViewBag.OrganizationTypeUid)
 <div class="row">
     <div class="col-md-12">
         <!--begin:Main Information Widget-->
@@ -46,7 +47,7 @@
                 <!--end:Target Audience Widget-->
             </div>
         }
-        @if (isAudiovisualBuyerCompany)
+        @if (isPlayer)
         {
             <!--begin:Interest Widget-->
             <div class="row">

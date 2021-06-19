@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Rafael Dantas Ruiz
-// Created          : 10-10-2019
+// Created          : 06-19-2021
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified On : 06-19-2021
 // ***********************************************************************
-// <copyright file="UpdateOrganizationMainInformationCommandHandler.cs" company="Softo">
+// <copyright file="UpdateOrganizationSiteMainInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -27,21 +27,24 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>UpdateOrganizationMainInformationCommandHandler</summary>
-    public class UpdateOrganizationMainInformationCommandHandler : BaseOrganizationCommandHandler, IRequestHandler<UpdateOrganizationMainInformation, AppValidationResult>
+    /// <summary>UpdateOrganizationSiteMainInformationCommandHandler</summary>
+    public class UpdateOrganizationSiteMainInformationCommandHandler : BaseOrganizationCommandHandler, IRequestHandler<UpdateOrganizationSiteMainInformation, AppValidationResult>
     {
         private readonly IEditionRepository editionRepo;
         private readonly ILanguageRepository languageRepo;
         private readonly IOrganizationTypeRepository organizationTypeRepo;
-        private readonly IHoldingRepository holdingRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateOrganizationMainInformationCommandHandler"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateOrganizationSiteMainInformationCommandHandler"/> class.
+        /// </summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="organizationRepository">The organization repository.</param>
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="languageRepository">The language repository.</param>
-        public UpdateOrganizationMainInformationCommandHandler(
+        /// <param name="organizationTypeRepository">The organization type repository.</param>
+        /// <param name="holdingRepository">The holding repository.</param>
+        public UpdateOrganizationSiteMainInformationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             IOrganizationRepository organizationRepository,
@@ -55,14 +58,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.editionRepo = editionRepository;
             this.languageRepo = languageRepository;
             this.organizationTypeRepo = organizationTypeRepository;
-            this.holdingRepo = holdingRepository;
         }
 
-        /// <summary>Handles the specified update organization main information.</summary>
+        /// <summary>
+        /// Handles the specified update organization site main information.
+        /// </summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(UpdateOrganizationMainInformation cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(UpdateOrganizationSiteMainInformation cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
@@ -90,24 +94,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             // Before update values
             var beforeImageUploadDate = organization.ImageUploadDate;
-            var holding = await this.holdingRepo.GetAsync(cmd.HoldingUid ?? Guid.Empty);
-            var organizationType = await this.organizationTypeRepo.GetAsync(cmd.OrganizationType?.Uid ?? Guid.Empty);
             var languageDtos = await this.languageRepo.FindAllDtosAsync();
             var edition = await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty);
 
-            organization.UpdateMainInformation(
+            organization.UpdateSiteMainInformation(
                 edition,
-                holding,
-                organizationType,
-                cmd.Name,
                 cmd.CompanyName,
                 cmd.TradeName,
                 cmd.Document,
                 cmd.CropperImage?.ImageFile != null,
                 cmd.CropperImage?.IsImageDeleted == true,
-                cmd.IsVirtualMeeting,
-                cmd.IsApiDisplayEnabled,
-                cmd.ApiHighlightPosition,
                 cmd.Descriptions?.Select(d => new OrganizationDescription(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.UserId);
 

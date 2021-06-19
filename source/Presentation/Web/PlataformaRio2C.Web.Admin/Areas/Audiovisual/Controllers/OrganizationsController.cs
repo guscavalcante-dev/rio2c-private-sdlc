@@ -41,6 +41,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
     public class OrganizationsController : BaseController
     {
         private readonly IOrganizationRepository organizationRepo;
+        private readonly IOrganizationTypeRepository organizationTypeRepo;
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IActivityRepository activityRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
@@ -53,6 +54,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="organizationRepository">The organization repository.</param>
+        /// <param name="organizationTypeRepository">The organization type repository.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="activityRepository">The activity repository.</param>
         /// <param name="targetAudienceRepository">The target audience repository.</param>
@@ -62,6 +64,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             IMediator commandBus,
             IdentityAutenticationService identityController,
             IOrganizationRepository organizationRepository,
+            IOrganizationTypeRepository organizationTypeRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IActivityRepository activityRepository,
             ITargetAudienceRepository targetAudienceRepository,
@@ -70,6 +73,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             : base(commandBus, identityController)
         {
             this.organizationRepo = organizationRepository;
+            this.organizationTypeRepo = organizationTypeRepository;
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.activityRepo = activityRepository;
             this.targetAudienceRepo = targetAudienceRepository;
@@ -79,7 +83,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
         #region Main Information Widget
 
-        /// <summary>Shows the main information widget.</summary>
+        /// <summary>
+        /// Shows the main information widget.
+        /// </summary>
         /// <param name="organizationUid">The organization uid.</param>
         /// <returns></returns>
         [HttpGet]
@@ -103,13 +109,16 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
         #region Update
 
-        /// <summary>Shows the update main information modal.</summary>
+        /// <summary>
+        /// Shows the update main information modal.
+        /// </summary>
         /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? organizationUid)
+        public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? organizationUid, Guid? organizationTypeUid)
         {
-            UpdateOrganizationMainInformation cmd;
+            UpdateOrganizationAdminMainInformation cmd;
 
             try
             {
@@ -119,13 +128,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundM.ToLowerInvariant()));
                 }
 
-                cmd = new UpdateOrganizationMainInformation(
+                cmd = new UpdateOrganizationAdminMainInformation(
                     mainInformationWidgetDto,
-                    OrganizationType.Player,
+                    await this.organizationTypeRepo.FindByUidAsync(organizationTypeUid ?? Guid.Empty),
                     await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
-                    true,
-                    true);
+                    false,
+                    false);
             }
             catch (DomainException ex)
             {
@@ -142,11 +151,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        /// <summary>Updates the main information.</summary>
+        /// <summary>
+        /// Updates the main information.
+        /// </summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> UpdateMainInformation(UpdateOrganizationMainInformation cmd)
+        public async Task<ActionResult> UpdateMainInformation(UpdateOrganizationAdminMainInformation cmd)
         {
             var result = new AppValidationResult();
 
@@ -158,7 +169,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    OrganizationType.Player,
+                    await this.organizationTypeRepo.FindByUidAsync(cmd.OrganizationTypeUid ?? Guid.Empty),
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,

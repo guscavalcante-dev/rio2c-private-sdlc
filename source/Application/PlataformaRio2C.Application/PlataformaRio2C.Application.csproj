@@ -291,10 +291,11 @@
     <Compile Include="CQRS\CommandsHandlers\Onboardings\OnboardProducerOrganizationDataCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\UpdateOrganizationAddressCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\UpdateOrganizationActivitiesCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Organizations\UpdateOrganizationSiteMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\UpdateOrganizationInterestsCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\UpdateOrganizationSocialNetworksCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\UpdateOrganizationTargetAudiencesCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Organizations\UpdateOrganizationMainInformationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Organizations\UpdateOrganizationAdminMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\UpdateOrganizationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\CreateOrganizationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Places\UpdatePlaceMainInformationCommandHandler.cs" />
@@ -390,6 +391,8 @@
     <Compile Include="CQRS\Commands\Music\Projects\CreateMusicProject.cs" />
     <Compile Include="CQRS\Commands\Music\Projects\DeleteMusicProject.cs" />
     <Compile Include="CQRS\Commands\Music\Projects\RefuseMusicProjectEvaluation.cs" />
+    <Compile Include="CQRS\Commands\Organizations\BaseCommands\UpdateOrganizationMainInformationBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Organizations\UpdateOrganizationAdminMainInformation.cs" />
     <Compile Include="CQRS\Commands\Organizations\UpdateOrganizationSocialNetworks.cs" />
     <Compile Include="CQRS\Commands\Places\UpdatePlaceMainInformation.cs" />
     <Compile Include="CQRS\Commands\Places\CreatePlace.cs" />
@@ -467,7 +470,7 @@
     <Compile Include="CQRS\Commands\Organizations\UpdateOrganizationTargetAudiences.cs" />
     <Compile Include="CQRS\Commands\Organizations\UpdateOrganizationActivities.cs" />
     <Compile Include="CQRS\Commands\Organizations\UpdateOrganizationAddress.cs" />
-    <Compile Include="CQRS\Commands\Organizations\UpdateOrganizationMainInformation.cs" />
+    <Compile Include="CQRS\Commands\Organizations\UpdateOrganizationSiteMainInformation.cs" />
     <Compile Include="CQRS\Commands\Organizations\UpdateOrganization.cs" />
     <Compile Include="CQRS\Commands\Holdings\BaseCommands\HoldingBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Holdings\DeleteHolding.cs" />

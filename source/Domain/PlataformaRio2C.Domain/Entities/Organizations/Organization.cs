@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 06-19-2021
 // ***********************************************************************
 // <copyright file="Organization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -383,7 +383,7 @@ namespace PlataformaRio2C.Domain.Entities
 
 
         /// <summary>
-        /// Updates the main information.
+        /// Updates the admin main information.
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="holding">The holding.</param>
@@ -399,7 +399,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="apiHighlightPosition">The API highlight position.</param>
         /// <param name="organizationDescriptions">The organization descriptions.</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateMainInformation(
+        public void UpdateAdminMainInformation(
             Edition edition,
             Holding holding,
             OrganizationType organizationType,
@@ -428,6 +428,38 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeOrganizationDescriptions(organizationDescriptions, userId);
 
             this.SynchronizeAttendeeOrganizations(edition, organizationType, isApiDisplayEnabled, apiHighlightPosition, null, false, isVirtualMeeting, userId);  
+        }
+
+        /// <summary>
+        /// Updates the site main information.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="companyName">Name of the company.</param>
+        /// <param name="tradeName">Name of the trade.</param>
+        /// <param name="document">The document.</param>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
+        /// <param name="organizationDescriptions">The organization descriptions.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateSiteMainInformation(
+            Edition edition,
+            string companyName,
+            string tradeName,
+            string document,
+            bool isImageUploaded,
+            bool isImageDeleted,
+            List<OrganizationDescription> organizationDescriptions,
+            int userId)
+        {
+            this.CompanyName = companyName?.Trim();
+            this.TradeName = tradeName?.Trim();
+            this.Document = document?.Trim();
+            this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+            this.SynchronizeOrganizationDescriptions(organizationDescriptions, userId);
+
+            //this.SynchronizeAttendeeOrganizations(edition, null, null, null, null, false, null, userId);
         }
 
         /// <summary>Updates the social networks.</summary>

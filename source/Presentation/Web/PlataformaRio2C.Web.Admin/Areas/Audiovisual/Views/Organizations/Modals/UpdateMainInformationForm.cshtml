@@ -1,6 +1,9 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateOrganizationMainInformation
+﻿@using PlataformaRio2C.Domain.Entities
+@model PlataformaRio2C.Application.CQRS.Commands.UpdateOrganizationAdminMainInformation
 @{
-    var isAudiovisualBuyerCompany = Model.OrganizationType.Uid == PlataformaRio2C.Domain.Entities.OrganizationType.Player.Uid;
+    var isPlayer = Model.OrganizationTypeUid == OrganizationType.Player.Uid;
+    var isProducer = Model.OrganizationTypeUid == OrganizationType.Producer.Uid;
+    var isAudiovisualCompany = isPlayer || isProducer;
 }
 @if (Model.Country != null)
 {
@@ -13,7 +16,7 @@
         @Html.EditorFor(m => m.CropperImage)
     </div>
     <div class="col-lg-8">
-        @if (isAudiovisualBuyerCompany)
+        @if (isPlayer)
         {
             <div class="form-group row">
                 <div class="col-md-12">
@@ -25,7 +28,6 @@
         }
         <div class="form-group row">
             <div class="col-md-6">
-                @isAudiovisualBuyerCompany
                 @Html.LabelFor(m => m.Name, new {@class = "control-label"})
                 @Html.TextBoxFor(m => m.Name, new {@class = "form-control"})
                 @Html.ValidationMessageFor(m => m.Name, "", new {@class = "text-danger"})
@@ -53,14 +55,14 @@
         </div>
     </div>
 </div>
-@if (isAudiovisualBuyerCompany)
+@if (isPlayer)
 {
     <div class="kt-section mt-50 mb-0">
         <h3 class="kt-heading kt-heading--md">@Labels.VirtualMeetingConfiguration</h3>
         <div class="kt-section__content">
             <div class="row">
                 <div class="col-sm-6">
-                    @Html.HiddenFor(m => m.IsVirtualMeetingRequired)
+                    @Html.HiddenFor(m => m.IsAudiovisualBuyer)
                     <div class="row">
                         <div class="col-12">
                             @Html.LabelFor(m => m.IsVirtualMeeting, new { @class = "control-label" }) ?
@@ -92,7 +94,7 @@
         @Html.EditorFor(m => m.Descriptions)
     </div>
 </div>
-@if (isAudiovisualBuyerCompany)
+@if (isPlayer)
 {
     <div class="kt-section">
         <h3 class="kt-heading kt-heading--md">@Labels.ApiConfigurations</h3>

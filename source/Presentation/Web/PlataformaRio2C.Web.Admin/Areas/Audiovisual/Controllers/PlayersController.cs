@@ -201,6 +201,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             #endregion
 
+            ViewBag.OrganizationTypeUid = OrganizationType.Player.Uid;
+
             return View("../Organizations/Details", attendeeOrganizationDto);
         }
 

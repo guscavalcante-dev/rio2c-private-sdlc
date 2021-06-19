@@ -4,7 +4,7 @@
 // Created          : 10-08-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-04-2020
+// Last Modified On : 06-19-2021
 // ***********************************************************************
 // <copyright file="CompaniesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -120,7 +120,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? organizationUid)
         {
-            UpdateOrganizationMainInformation cmd;
+            UpdateOrganizationSiteMainInformation cmd;
 
             try
             {
@@ -135,10 +135,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
 
-                cmd = new UpdateOrganizationMainInformation(
+                cmd = new UpdateOrganizationSiteMainInformation(
                     mainInformationWidgetDto,
-                    OrganizationType.Player,
-                    null,
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     true,
                     true);
@@ -162,7 +160,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> UpdateMainInformation(UpdateOrganizationMainInformation cmd)
+        public async Task<ActionResult> UpdateMainInformation(UpdateOrganizationSiteMainInformation cmd)
         {
             var result = new AppValidationResult();
 
