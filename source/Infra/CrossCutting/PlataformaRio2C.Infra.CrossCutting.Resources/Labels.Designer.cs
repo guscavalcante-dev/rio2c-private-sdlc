@@ -3998,6 +3998,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nome da Produtora.
+        /// </summary>
+        public static string ProducerName {
+            get {
+                return ResourceManager.GetString("ProducerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to QTD Produtora.
         /// </summary>
         public static string ProducerQty {
@@ -4021,6 +4030,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ProducerSingle {
             get {
                 return ResourceManager.GetString("ProducerSingle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Produtoras cadastradas.
+        /// </summary>
+        public static string ProducersRegistered {
+            get {
+                return ResourceManager.GetString("ProducersRegistered", resourceCulture);
             }
         }
         

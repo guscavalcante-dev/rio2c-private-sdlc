@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-25-2020
+// Last Modified On : 06-19-2021
 // ***********************************************************************
 // <copyright file="PlayersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -933,7 +933,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllOrganizations)
         {
-            var holdings = await this.CommandBus.Send(new FindAllOrganizationsBaseDtosAsync(
+            var producers = await this.organizationRepo.FindAllByDataTable(
                 request.Start / request.Length,
                 request.Length,
                 request.Search?.Value,
@@ -941,13 +941,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 OrganizationType.Player.Uid,
                 showAllEditions,
                 showAllOrganizations,
-                this.AdminAccessControlDto.User.Id,
-                this.AdminAccessControlDto.User.Uid,
-                this.EditionDto.Id,
-                this.EditionDto.Uid,
-                this.UserInterfaceLanguage));
+                this.EditionDto.Id);
 
-            var response = DataTablesResponse.Create(request, holdings.TotalItemCount, holdings.TotalItemCount, holdings);
+            var response = DataTablesResponse.Create(request, producers.TotalItemCount, producers.TotalItemCount, producers);
 
             return Json(new
             {
@@ -965,21 +961,14 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowTotalCountWidget()
         {
-            var holdingsCount = await this.CommandBus.Send(new CountAllOrganizationsAsync(
-                OrganizationType.Player.Uid,
-                true,
-                this.AdminAccessControlDto.User.Id,
-                this.AdminAccessControlDto.User.Uid,
-                this.EditionDto.Id,
-                this.EditionDto.Uid,
-                this.UserInterfaceLanguage));
+            var playersCount = await this.organizationRepo.CountAllByDataTable(OrganizationType.Player.Uid, true, this.EditionDto.Id);
 
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", holdingsCount), divIdOrClass = "#PlayersTotalCountWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", playersCount), divIdOrClass = "#PlayersTotalCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -992,21 +981,14 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <returns></returns>
         public async Task<ActionResult> ShowEditionCountWidget()
         {
-            var holdingsCount = await this.CommandBus.Send(new CountAllOrganizationsAsync(
-                OrganizationType.Player.Uid,
-                false,
-                this.AdminAccessControlDto.User.Id,
-                this.AdminAccessControlDto.User.Uid,
-                this.EditionDto.Id,
-                this.EditionDto.Uid,
-                this.UserInterfaceLanguage));
+            var playersCount = await this.organizationRepo.CountAllByDataTable(OrganizationType.Player.Uid, false, this.EditionDto.Id);
 
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", holdingsCount), divIdOrClass = "#PlayersEditionCountWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", playersCount), divIdOrClass = "#PlayersEditionCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }

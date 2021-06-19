@@ -2746,4 +2746,12 @@
     <value>Schedule Manually</value>
     <comment>Agendar Manualmente</comment>
   </data>
+  <data name="ProducerName" xml:space="preserve">
+    <value>Producer Name</value>
+    <comment>Producer Name</comment>
+  </data>
+  <data name="ProducersRegistered" xml:space="preserve">
+    <value>Producers registered</value>
+    <comment>Producers registered</comment>
+  </data>
 </root>

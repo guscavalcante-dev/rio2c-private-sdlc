@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-30-2020
+// Last Modified On : 06-19-2021
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -391,6 +391,17 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/organizations/organizations.executive.widget.js",
                 "~/Assets/js/myrio2c.companynumber.js",
                 "~/Assets/js/myrio2c.additionalinfo.js"));
+
+            #endregion
+
+            #region Producers
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.producers.list.js").Include(
+                "~/Assets/js/audiovisual/producers/audiovisual.producers.totalcount.widget.js",
+                "~/Assets/js/audiovisual/producers/audiovisual.producers.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.producers.editioncount.js").Include(
+                "~/Assets/js/audiovisual/producers/audiovisual.producers.editioncount.widget.js"));
 
             #endregion
 
