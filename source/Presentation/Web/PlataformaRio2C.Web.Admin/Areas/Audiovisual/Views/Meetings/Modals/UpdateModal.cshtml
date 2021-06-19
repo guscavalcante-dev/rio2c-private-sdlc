@@ -12,19 +12,19 @@
                     <div id="form-container">
                         @Html.Partial("Modals/UpdateForm", Model)
                     </div>
+                }
+                <div class="row">
+                    <div class="col-12">
+                        <div id="AudiovisualMeetingsLogisticsInfoWidget" class="kt-portlet kt-portlet--tabs d-none" style="min-height: 180px;"></div>
+                    </div>
+                </div>
+                @if (Model.NegotiationDto != null && Model.NegotiationDto.Negotiation.UpdateDate != Model.NegotiationDto.Negotiation.CreateDate)
+                {
                     <div class="row">
-                        <div class="col-12">
-                            <div id="AudiovisualMeetingsLogisticsInfoWidget" class="kt-portlet kt-portlet--tabs d-none"></div>
+                        <div class="col-sm-12 text-right">
+                            @Labels.LastUpdateOn <b>@Model.NegotiationDto.Negotiation.UpdateDate.ToUserTimeZone().ToShortDateString() @Model.NegotiationDto.Negotiation.UpdateDate.ToUserTimeZone().ToLongTimeString()</b> @Labels.By <b>@Model.NegotiationDto.UpdaterDto.Name</b>.
                         </div>
                     </div>
-                    if (Model.NegotiationDto != null && Model.NegotiationDto.Negotiation.UpdateDate != Model.NegotiationDto.Negotiation.CreateDate)
-                    {
-                        <div class="row">
-                            <div class="col-sm-12 text-right">
-                                @Labels.LastUpdateOn <b>@Model.NegotiationDto.Negotiation.UpdateDate.ToUserTimeZone().ToShortDateString() @Model.NegotiationDto.Negotiation.UpdateDate.ToUserTimeZone().ToLongTimeString()</b> @Labels.By <b>@Model.NegotiationDto.UpdaterDto.Name</b>.
-                            </div>
-                        </div>
-                    }
                 }
             </div>
             <div class="modal-footer">

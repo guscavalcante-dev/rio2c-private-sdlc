@@ -3,12 +3,6 @@
 @using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Domain.Statics
 @model List<AttendeeCollaboratorDto>
-@{
-    var adminAccessControlDto = ViewBag.AdminAccessControlDto as AdminAccessControlDto;
-    var hasChangeDataPermission = adminAccessControlDto?.HasAnyCollaboratorType(new[] { CollaboratorType.AdminAudiovisual, CollaboratorType.AdminLogistic }) == true;
-    var hideActions = (bool?)ViewBag.HideActions ?? false;
-}
-
 <div class="kt-widget4">
     @if (Model != null && Model.Any(ac => ac.LogisticDto?.LogisticAirfareDtos != null && ac.LogisticDto?.LogisticAirfareDtos.Count() > 0))
     {
