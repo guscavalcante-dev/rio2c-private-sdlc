@@ -420,16 +420,8 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/audiovisual/projects/audiovisual.projects.editioncount.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.projects.widget.js").Include(
-                "~/Assets/js/audiovisual/projects/audiovisual.projects.maininformation.widget.js"//,
-                //"~/Assets/js/audiovisual/organizations/audiovisual.organizations.socialnetworks.widget.js",
-                //"~/Assets/js/audiovisual/organizations/audiovisual.organizations.address.widget.js",
-                //"~/Assets/js/audiovisual/organizations/audiovisual.organizations.activity.widget.js",
-                //"~/Assets/js/audiovisual/organizations/audiovisual.organizations.targetaudience.widget.js",
-                //"~/Assets/js/audiovisual/organizations/audiovisual.organizations.interest.widget.js",
-                //"~/Assets/js/audiovisual/organizations/audiovisual.organizations.executive.widget.js",
-                //"~/Assets/js/myrio2c.companynumber.js",
-                //"~/Assets/js/myrio2c.additionalinfo.js"
-                ));
+                "~/Assets/js/audiovisual/projects/audiovisual.projects.maininformation.widget.js",
+                "~/Assets/js/audiovisual/projects/audiovisual.projects.interest.widget.js"));
 
             #endregion
 
