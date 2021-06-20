@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-25-2020
+// Last Modified On : 06-20-2021
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -301,13 +301,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
-        /// <summary>Determines whether the specified is pitching is pitching.</summary>
+        /// <summary>
+        /// Determines whether the specified show pitchings is pitching.
+        /// </summary>
         /// <param name="query">The query.</param>
-        /// <param name="isPitching">if set to <c>true</c> [is pitching].</param>
+        /// <param name="showPitchings">if set to <c>true</c> [show pitchings].</param>
         /// <returns></returns>
-        internal static IQueryable<Project> IsPitching(this IQueryable<Project> query, bool isPitching = true)
+        internal static IQueryable<Project> IsPitching(this IQueryable<Project> query, bool showPitchings = false)
         {
-            if (isPitching)
+            if (showPitchings)
             {
                 query = query.Where(p => p.IsPitching);
             }
@@ -639,20 +641,24 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
-        /// <summary>Finds all pitching base dtos by filters and by page asynchronous.</summary>
+        /// <summary>
+        /// Finds all base dtos by filters and by page asynchronous.
+        /// </summary>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="sortColumns">The sort columns.</param>
         /// <param name="keywords">The keywords.</param>
+        /// <param name="showPitchings">if set to <c>true</c> [show pitchings].</param>
         /// <param name="interestUid">The interest uid.</param>
         /// <param name="languageCode">The language code.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<IPagedList<ProjectBaseDto>> FindAllPitchingBaseDtosByFiltersAndByPageAsync(
+        public async Task<IPagedList<ProjectBaseDto>> FindAllBaseDtosByFiltersAndByPageAsync(
             int page,
             int pageSize,
             List<Tuple<string, string>> sortColumns,
             string keywords,
+            bool showPitchings,
             Guid? interestUid,
             string languageCode,
             int editionId)
@@ -660,7 +666,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId)
                                 .IsFinished()
-                                .IsPitching()
+                                .IsPitching(showPitchings)
                                 .FindByKeywords(keywords)
                                 .FindByInterestUid(interestUid)
                                 .DynamicOrder<Project>(
@@ -681,6 +687,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         Interest = i.Interest,
                                         InterestGroup = i.Interest.InterestGroup
                                     }),
+                                    IsPitching = p.IsPitching,
                                     CreateDate = p.CreateDate,
                                     FinishDate = p.FinishDate
                                 });
@@ -689,15 +696,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                            .ToListPagedAsync(page, pageSize);
         }
 
-        /// <summary>Finds all pitching dtos by filters asynchronous.</summary>
+        /// <summary>
+        /// Finds all dtos by filters asynchronous.
+        /// </summary>
         /// <param name="keywords">The keywords.</param>
+        /// <param name="showPitchings">if set to <c>true</c> [show pitchings].</param>
         /// <param name="interestUid">The interest uid.</param>
         /// <param name="projectUids">The project uids.</param>
         /// <param name="languageCode">The language code.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<List<ProjectDto>> FindAllPitchingDtosByFiltersAsync(
+        public async Task<List<ProjectDto>> FindAllDtosByFiltersAsync(
             string keywords,
+            bool showPitchings,
             Guid? interestUid,
             List<Guid> projectUids,
             string languageCode,
@@ -706,7 +717,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId)
                                 .IsFinished()
-                                .IsPitching()
+                                .IsPitching(showPitchings)
                                 .FindByKeywords(keywords)
                                 .FindByInterestUid(interestUid)
                                 .FindByUids(projectUids)

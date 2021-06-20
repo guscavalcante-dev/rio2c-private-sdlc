@@ -4,7 +4,7 @@
 // Created          : 06-19-2021
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-19-2021
+// Last Modified On : 06-20-2021
 // ***********************************************************************
 // <copyright file="audiovisual.producers.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -112,7 +112,8 @@ var AudiovisualProducersDataTableWidget = function () {
                             html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';
                         }
 
-                        html += '       <td> ' + full.Name + '</td>\
+                        html += '       </td>\
+                                        <td> ' + full.Name + '</td>\
                                     </tr>\
                                 </table>';
 

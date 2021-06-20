@@ -24,17 +24,18 @@ var AudiovisualProjectsDataTableWidget = function () {
         MyRio2cCommon.block();
 
         var jsonParameters = new Object();
-        jsonParameters.selectedProjectsUids = $('#projectpitching-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
+        jsonParameters.selectedProjectsUids = $('#audiovisualprojects-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
         jsonParameters.keyword = $('#Search').val();
+        jsonParameters.showPitchings = $('#ShowPitchings').prop('checked');
         jsonParameters.interestUid = $('#InterestUid').val();
 
-        window.open(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/DownloadPdfs') + '?keyword=' + jsonParameters.keyword + '&interestUid=' + jsonParameters.interestUid + '&selectedProjectsUids=' + jsonParameters.selectedProjectsUids);
+        window.open(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/DownloadPdfs') + '?keyword=' + jsonParameters.keyword + '&showPitchings=' + jsonParameters.showPitchings + '&interestUid=' + jsonParameters.interestUid + '&selectedProjectsUids=' + jsonParameters.selectedProjectsUids);
 
         MyRio2cCommon.unblock();
     };
 
     var showDownloadModal = function () {
-        var selectedProjectsUids = $('#projectpitching-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
+        var selectedProjectsUids = $('#audiovisualprojects-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
         var message = selectedProjectsUids === '' ? translations.confirmDownloadAll :
                                                     translations.confirmDownloadSelected;
 
@@ -141,7 +142,7 @@ var AudiovisualProjectsDataTableWidget = function () {
             ajax: {
                 url: MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/Search'),
                 data: function (d) {
-                    d.showPitchings = $('#ShowPitchings').val();
+                    d.showPitchings = $('#ShowPitchings').prop('checked');
                     d.interestUid = $('#InterestUid').val();
                 },
                 dataFilter: function (data) {
@@ -177,7 +178,23 @@ var AudiovisualProjectsDataTableWidget = function () {
                 $(row).attr('data-id', data.Uid);
             },
             columns: [
-                { data: 'ProjectName' },
+                {
+                    data: 'ProjectName',
+                    render: function (data, type, full, meta) {
+                        var html = '\
+                                <table class="image-side-text text-left">\
+                                    <tr>\
+                                        <td> ' + full.ProjectName + '</td>\
+                                    </tr>\
+                                </table>';
+
+                        if (full.IsPitching) {
+                            html += '<span class="kt-badge kt-badge--inline kt-badge--info mt-2">' + translations.pitching + '</span>';
+                        }
+
+                        return html;
+                    }
+                },
                 {
                     data: 'ProducerName',
                     render: function (data, type, full, meta) {
@@ -193,7 +210,8 @@ var AudiovisualProjectsDataTableWidget = function () {
                             html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';
                         }
 
-                        html += '       <td> ' + full.ProducerName + '</td>\
+                        html += '       </td>\
+                                        <td> ' + full.ProducerName + '</td>\
                                     </tr>\
                                 </table>';
 
@@ -234,7 +252,7 @@ var AudiovisualProjectsDataTableWidget = function () {
                 {
                     targets: [0],
                     width: "25%",
-                    className: "dt-left",
+                    className: "dt-center",
                     orderable: false
                 },
                 {

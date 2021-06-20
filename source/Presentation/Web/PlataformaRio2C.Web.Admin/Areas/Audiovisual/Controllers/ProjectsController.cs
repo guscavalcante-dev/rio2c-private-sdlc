@@ -36,7 +36,6 @@ using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.Report.Models;
 using Constants = PlataformaRio2C.Domain.Constants;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Web.Admin.Controllers;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
@@ -88,9 +87,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             #endregion
 
-            ViewBag.GenreInterests = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.Genre.Uid);
+            searchViewModel.UpdateModelsAndLists(
+                await this.interestRepo.FindAllByInterestGroupUidAsync(InterestGroup.Genre.Uid),
+                this.UserInterfaceLanguage);
 
-            return View();
+            return View(searchViewModel);
         }
 
         /// <summary>
@@ -103,11 +104,12 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> Search(IDataTablesRequest request, bool showPitchings, Guid? interestUid)
         {
-            var projects = await this.projectRepo.FindAllPitchingBaseDtosByFiltersAndByPageAsync(
+            var projects = await this.projectRepo.FindAllBaseDtosByFiltersAndByPageAsync(
                 request.Start / request.Length,
                 request.Length,
                 request.GetSortColumns(),
                 request.Search?.Value,
+                showPitchings,
                 interestUid,
                 this.UserInterfaceLanguage,
                 this.EditionDto.Id);
@@ -115,15 +117,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             foreach (var project in projects)
             {
                 project.Genre = new List<string>();
-                foreach (var item in project.Genres)
+                foreach (var projectInterestDto in project.Genres)
                 {
-                    project.Genre.Add(item.Interest.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, '|'));
+                    project.Genre.Add(projectInterestDto.Interest.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, '|'));
                 }
             }
-
-            ViewBag.GenreInterests = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.Genre.Uid);
-            ViewBag.Page = request.Start / request.Length;
-            ViewBag.PageSize = request.Length;
 
             var response = DataTablesResponse.Create(request, projects.TotalItemCount, projects.TotalItemCount, projects);
 
@@ -138,16 +136,20 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
         #region Download PDFs
 
-        /// <summary>Downloads the PDFS.</summary>
+        /// <summary>
+        /// Downloads the PDFS.
+        /// </summary>
         /// <param name="keyword">The keyword.</param>
+        /// <param name="showPitchings">if set to <c>true</c> [show pitchings].</param>
         /// <param name="interestUid">The interest uid.</param>
         /// <param name="selectedProjectsUids">The selected projects uids.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<FileResult> DownloadPdfs(string keyword, Guid? interestUid, string selectedProjectsUids)
+        public async Task<FileResult> DownloadPdfs(string keyword, bool showPitchings, Guid? interestUid, string selectedProjectsUids)
         {
-            var projectsDtos = await this.projectRepo.FindAllPitchingDtosByFiltersAsync(
+            var projectsDtos = await this.projectRepo.FindAllDtosByFiltersAsync(
                 keyword,
+                showPitchings,
                 interestUid,
                 selectedProjectsUids?.ToListGuid(','),
                 this.UserInterfaceLanguage,

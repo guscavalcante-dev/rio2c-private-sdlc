@@ -1,8 +1,4 @@
-﻿@using PlataformaRio2C.Domain.Dtos
-@model AudiovisualProjectSearchViewModel
-@{
-    var genreInterests = ViewBag.GenreInterests as List<InterestDto>;
-}
+﻿@model AudiovisualProjectSearchViewModel
 <!--begin:: DataTable Widget-->
 <div id="AudiovisualProjectDataTableWidget" class="kt-portlet kt-portlet--mobile">
     <div class="kt-portlet__head kt-portlet__head--lg">
@@ -15,28 +11,16 @@
             </h3>
         </div>
     </div>
-
     <div class="kt-portlet__body">
         <!--begin: SearchForm-->
         <div class="form-group row">
             <div class="col-lg-6">
                 <label>@Labels.Search:</label>
-                @Html.HiddenFor(m => m.Page)
-                @Html.HiddenFor(m => m.PageSize)
                 @Html.TextBoxFor(m => m.Search, new { type = "search", @class = "form-control", autocomplete = "off", placeholder = $"{Labels.Title} {Labels.Or.ToLowerInvariant()} {Labels.Producer.ToLowerInvariant()}" })
             </div>
             <div class="col-lg-3">
                 <label>@Labels.Genre:</label>
-
-                <select name="InterestUid" id="InterestUid" class="form-control enable-datatable-reload enable-select2">
-                    <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Genre.ToLowerInvariant()))...</option>
-                    @foreach (var interestDto in genreInterests)
-                    {
-                        <option value="@interestDto.Interest.Uid" @(interestDto.Interest.Uid == ViewBag.InterestUid ? "selected" : string.Empty)>
-                            @interestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
-                        </option>
-                    }
-                </select>
+                @Html.DropDownListFor(m => m.InterestUid, new SelectList(Model.Interests, "Uid", "Name", Model.InterestUid), $"{string.Format(Labels.SelectAMEntity, Labels.Genre.ToLowerInvariant())}...", new { @class = "form-control enable-datatable-reload enable-select2" })
             </div>
             <div class="col-lg-3">
                 <div class="form-group">
