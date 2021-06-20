@@ -4,7 +4,7 @@
 // Created          : 08-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-06-2020
+// Last Modified On : 06-20-2021
 // ***********************************************************************
 // <copyright file="AttendeeOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -335,6 +335,239 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query.FirstOrDefaultAsync();
         }
 
+        /// <summary>
+        /// Finds the details dto by organization uid and by edition identifier asynchronous.
+        /// </summary>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttemdeeOrganizationSiteDetailsDto> FindDetailsDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByOrganizationUid(organizationUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(ao => new AttemdeeOrganizationSiteDetailsDto
+                            {
+                                AttendeeOrganization = ao,
+                                Organization = ao.Organization,
+                                AttendeeOrganizationTypesDtos = ao.AttendeeOrganizationTypes
+                                                                        .Where(aot => !aot.IsDeleted && !aot.OrganizationType.IsDeleted)
+                                                                        .Select(aot => new AttendeeOrganizationTypeDto
+                                                                        {
+                                                                            AttendeeOrganizationType = aot,
+                                                                            OrganizationType = aot.OrganizationType
+                                                                        })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        #region Common Widgets
+
+        /// <summary>
+        /// Finds the main information widget dto by organization uid and by edition identifier asynchronous.
+        /// </summary>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttemdeeOrganizationSiteMainInformationWidgetDto> FindMainInformationWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByOrganizationUid(organizationUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(ao => new AttemdeeOrganizationSiteMainInformationWidgetDto
+                            {
+                                AttendeeOrganization = ao,
+                                Organization = ao.Organization,
+                                DescriptionsDtos = ao.Organization.OrganizationDescriptions.Where(d => !d.IsDeleted).Select(d => new OrganizationDescriptionDto
+                                {
+                                    Id = d.Id,
+                                    Uid = d.Uid,
+                                    Value = d.Value,
+                                    LanguageDto = new LanguageBaseDto
+                                    {
+                                        Id = d.Language.Id,
+                                        Uid = d.Language.Uid,
+                                        Name = d.Language.Name,
+                                        Code = d.Language.Code
+                                    }
+                                }),
+                                Country = ao.Organization.Address.Country,
+                                State = ao.Organization.Address.State
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the executive widget dto by organization uid and by edition identifier asynchronous.
+        /// </summary>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeOrganizationSiteExecutiveWidgetDto> FindExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByOrganizationUid(organizationUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(ao => new AttendeeOrganizationSiteExecutiveWidgetDto
+                            {
+                                AttendeeOrganization = ao,
+                                AttendeeCollaboratorsDtos = ao.AttendeeOrganizationCollaborators
+                                                                    .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeCollaborator.IsDeleted && !aoc.AttendeeCollaborator.Collaborator.IsDeleted)
+                                                                    .Select(aoc => new AttendeeCollaboratorDto
+                                                                    {
+                                                                        AttendeeCollaborator = aoc.AttendeeCollaborator,
+                                                                        Collaborator = aoc.AttendeeCollaborator.Collaborator,
+                                                                        JobTitlesDtos = aoc.AttendeeCollaborator.Collaborator.JobTitles.Where(jb => !jb.IsDeleted).Select(jb => new CollaboratorJobTitleBaseDto
+                                                                        {
+                                                                            Id = jb.Id,
+                                                                            Uid = jb.Uid,
+                                                                            Value = jb.Value,
+                                                                            LanguageDto = new LanguageBaseDto
+                                                                            {
+                                                                                Id = jb.Language.Id,
+                                                                                Uid = jb.Language.Uid,
+                                                                                Name = jb.Language.Name,
+                                                                                Code = jb.Language.Code
+                                                                            }
+                                                                        })
+                                                                    })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the address widget dto by organization uid and by edition identifier asynchronous.
+        /// </summary>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeOrganizationSiteAddressWidgetDto> FindAddressWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByOrganizationUid(organizationUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(ao => new AttendeeOrganizationSiteAddressWidgetDto
+                            {
+                                AttendeeOrganization = ao,
+                                Organization = ao.Organization,
+                                Address = ao.Organization.Address,
+                                Country = ao.Organization.Address.Country,
+                                State = ao.Organization.Address.State,
+                                City = ao.Organization.Address.City
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the activity widget dto by organization uid and by edition identifier asynchronous.
+        /// </summary>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeOrganizationSiteActivityWidgetDto> FindActivityWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByOrganizationUid(organizationUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(ao => new AttendeeOrganizationSiteActivityWidgetDto
+                            {
+                                AttendeeOrganization = ao,
+                                Organization = ao.Organization,
+                                OrganizationActivitiesDtos = ao.Organization.OrganizationActivities.Where(oa => !oa.IsDeleted).Select(oa => new OrganizationActivityDto
+                                {
+                                    OrganizationActivityId = oa.Id,
+                                    OrganizationActivityUid = oa.Uid,
+                                    OrganizationActivityAdditionalInfo = oa.AdditionalInfo,
+                                    ActivityId = oa.Activity.Id,
+                                    ActivityUid = oa.Activity.Uid,
+                                    ActivityName = oa.Activity.Name,
+                                    ActivityHasAdditionalInfo = oa.Activity.HasAdditionalInfo
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the target audience widget dto by organization uid and by edition identifier asynchronous.
+        /// </summary>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeOrganizationSiteTargetAudienceWidgetDto> FindTargetAudienceWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByOrganizationUid(organizationUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(ao => new AttendeeOrganizationSiteTargetAudienceWidgetDto
+                            {
+                                AttendeeOrganization = ao,
+                                Organization = ao.Organization,
+                                OrganizationTargetAudiencesDtos = ao.Organization.OrganizationTargetAudiences.Where(ota => !ota.IsDeleted).Select(ota => new OrganizationTargetAudienceDto
+                                {
+                                    OrganizationTargetAudienceId = ota.Id,
+                                    OrganizationTargetAudienceUid = ota.Uid,
+                                    TargetAudienceId = ota.TargetAudience.Id,
+                                    TargetAudienceUid = ota.TargetAudience.Uid,
+                                    TargetAudienceName = ota.TargetAudience.Name
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the interest widget dto by organization uid and by edition identifier asynchronous.
+        /// </summary>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeOrganizationSiteInterestWidgetDto> FindInterestWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByOrganizationUid(organizationUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                                .Select(ao => new AttendeeOrganizationSiteInterestWidgetDto
+                                {
+                                    AttendeeOrganization = ao,
+                                    Organization = ao.Organization,
+                                    RestrictionSpecificDtos = ao.Organization.OrganizationRestrictionSpecifics.Where(rs => !rs.IsDeleted).Select(rs => new OrganizationRestrictionSpecificDto
+                                    {
+                                        Id = rs.Id,
+                                        Uid = rs.Uid,
+                                        Value = rs.Value,
+                                        LanguageDto = new LanguageBaseDto
+                                        {
+                                            Id = rs.Language.Id,
+                                            Uid = rs.Language.Uid,
+                                            Name = rs.Language.Name,
+                                            Code = rs.Language.Code
+                                        }
+                                    }),
+                                    OrganizationInterestDtos = ao.Organization.OrganizationInterests.Where(oi => !oi.IsDeleted).Select(oi => new OrganizationInterestDto
+                                    {
+                                        OrganizationInterest = oi,
+                                        Interest = oi.Interest,
+                                        InterestGroup = oi.Interest.InterestGroup
+                                    })
+                                })
+                                .FirstOrDefaultAsync();
+        }
+
+        #endregion
+
         #region Site Project Widgets
 
         /// <summary>Finds all dto by buyer project uid.</summary>
@@ -422,225 +655,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             })
                             .OrderBy(ao => ao.Organization.TradeName)
                             .ToListPagedAsync(page, pageSize);
-        }
-
-        #endregion
-
-        #region Site Widgets
-
-        /// <summary>Finds the site detailst dto by organization uid and by edition identifier asynchronous.</summary>
-        /// <param name="organizationUid">The organization uid.</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <returns></returns>
-        public async Task<AttemdeeOrganizationSiteDetailsDto> FindSiteDetailstDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
-        {
-            var query = this.GetBaseQuery(true)
-                                .FindByOrganizationUid(organizationUid)
-                                .FindByEditionId(editionId, false);
-
-            return await query
-                            .Select(ao => new AttemdeeOrganizationSiteDetailsDto
-                            {
-                                AttendeeOrganization = ao,
-                                Organization = ao.Organization,
-                                AttendeeOrganizationTypesDtos = ao.AttendeeOrganizationTypes
-                                                                        .Where(aot => !aot.IsDeleted && !aot.OrganizationType.IsDeleted)
-                                                                        .Select(aot => new AttendeeOrganizationTypeDto
-                                                                        {
-                                                                            AttendeeOrganizationType = aot,
-                                                                            OrganizationType = aot.OrganizationType
-                                                                        })
-                            })
-                            .FirstOrDefaultAsync();
-        }
-
-        /// <summary>Finds the site main information widget dto by organization uid and by edition identifier asynchronous.</summary>
-        /// <param name="organizationUid">The organization uid.</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <returns></returns>
-        public async Task<AttemdeeOrganizationSiteMainInformationWidgetDto> FindSiteMainInformationWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
-        {
-            var query = this.GetBaseQuery(true)
-                                .FindByOrganizationUid(organizationUid)
-                                .FindByEditionId(editionId, false);
-
-            return await query
-                            .Select(ao => new AttemdeeOrganizationSiteMainInformationWidgetDto
-                            {
-                                AttendeeOrganization = ao,
-                                Organization = ao.Organization,
-                                DescriptionsDtos = ao.Organization.OrganizationDescriptions.Where(d => !d.IsDeleted).Select(d => new OrganizationDescriptionDto
-                                {
-                                    Id = d.Id,
-                                    Uid = d.Uid,
-                                    Value = d.Value,
-                                    LanguageDto = new LanguageBaseDto
-                                    {
-                                        Id = d.Language.Id,
-                                        Uid = d.Language.Uid,
-                                        Name = d.Language.Name,
-                                        Code = d.Language.Code
-                                    }
-                                }),
-                                Country = ao.Organization.Address.Country,
-                                State = ao.Organization.Address.State
-                            })
-                            .FirstOrDefaultAsync();
-        }
-
-        /// <summary>Finds the site executive widget dto by organization uid and by edition identifier asynchronous.</summary>
-        /// <param name="organizationUid">The organization uid.</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <returns></returns>
-        public async Task<AttendeeOrganizationSiteExecutiveWidgetDto> FindSiteExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
-        {
-            var query = this.GetBaseQuery(true)
-                                .FindByOrganizationUid(organizationUid)
-                                .FindByEditionId(editionId, false);
-
-            return await query
-                            .Select(ao => new AttendeeOrganizationSiteExecutiveWidgetDto
-                            {
-                                AttendeeOrganization = ao,
-                                AttendeeCollaboratorsDtos = ao.AttendeeOrganizationCollaborators
-                                                                    .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeCollaborator.IsDeleted && !aoc.AttendeeCollaborator.Collaborator.IsDeleted)
-                                                                    .Select(aoc => new AttendeeCollaboratorDto
-                                                                    {
-                                                                        AttendeeCollaborator = aoc.AttendeeCollaborator,
-                                                                        Collaborator = aoc.AttendeeCollaborator.Collaborator,
-                                                                        JobTitlesDtos = aoc.AttendeeCollaborator.Collaborator.JobTitles.Where(jb => !jb.IsDeleted).Select(jb => new CollaboratorJobTitleBaseDto
-                                                                        {
-                                                                            Id = jb.Id,
-                                                                            Uid = jb.Uid,
-                                                                            Value = jb.Value,
-                                                                            LanguageDto = new LanguageBaseDto
-                                                                            {
-                                                                                Id = jb.Language.Id,
-                                                                                Uid = jb.Language.Uid,
-                                                                                Name = jb.Language.Name,
-                                                                                Code = jb.Language.Code
-                                                                            }
-                                                                        })
-                                                                    })
-                            })
-                            .FirstOrDefaultAsync();
-        }
-
-        /// <summary>Finds the site address widget dto by organization uid asynchronous.</summary>
-        /// <param name="organizationUid">The organization uid.</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <returns></returns>
-        public async Task<AttendeeOrganizationSiteAddressWidgetDto> FindSiteAddressWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
-        {
-            var query = this.GetBaseQuery(true)
-                                .FindByOrganizationUid(organizationUid)
-                                .FindByEditionId(editionId, false);
-
-            return await query
-                            .Select(ao => new AttendeeOrganizationSiteAddressWidgetDto
-                            {
-                                AttendeeOrganization = ao,
-                                Organization = ao.Organization,
-                                Address = ao.Organization.Address,
-                                Country = ao.Organization.Address.Country,
-                                State = ao.Organization.Address.State,
-                                City = ao.Organization.Address.City
-                            })
-                            .FirstOrDefaultAsync();
-        }
-
-        /// <summary>Finds the site a activity widget dto by organization uid asynchronous.</summary>
-        /// <param name="organizationUid">The organization uid.</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <returns></returns>
-        public async Task<AttendeeOrganizationSiteActivityWidgetDto> FindSiteActivityWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
-        {
-            var query = this.GetBaseQuery(true)
-                                .FindByOrganizationUid(organizationUid)
-                                .FindByEditionId(editionId, false);
-
-            return await query
-                            .Select(ao => new AttendeeOrganizationSiteActivityWidgetDto
-                            {
-                                AttendeeOrganization = ao,
-                                Organization = ao.Organization,
-                                OrganizationActivitiesDtos = ao.Organization.OrganizationActivities.Where(oa => !oa.IsDeleted).Select(oa => new OrganizationActivityDto
-                                {
-                                    OrganizationActivityId = oa.Id,
-                                    OrganizationActivityUid = oa.Uid,
-                                    OrganizationActivityAdditionalInfo = oa.AdditionalInfo,
-                                    ActivityId = oa.Activity.Id,
-                                    ActivityUid = oa.Activity.Uid,
-                                    ActivityName = oa.Activity.Name,
-                                    ActivityHasAdditionalInfo = oa.Activity.HasAdditionalInfo
-                                })
-                            })
-                            .FirstOrDefaultAsync();
-        }
-
-        /// <summary>Finds the site target audience widget dto by organization uid asynchronous.</summary>
-        /// <param name="organizationUid">The organization uid.</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <returns></returns>
-        public async Task<AttendeeOrganizationSiteTargetAudienceWidgetDto> FindSiteTargetAudienceWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
-        {
-            var query = this.GetBaseQuery(true)
-                                .FindByOrganizationUid(organizationUid)
-                                .FindByEditionId(editionId, false);
-
-            return await query
-                            .Select(ao => new AttendeeOrganizationSiteTargetAudienceWidgetDto
-                            {
-                                AttendeeOrganization = ao,
-                                Organization = ao.Organization,
-                                OrganizationTargetAudiencesDtos = ao.Organization.OrganizationTargetAudiences.Where(ota => !ota.IsDeleted).Select(ota => new OrganizationTargetAudienceDto
-                                {
-                                    OrganizationTargetAudienceId = ota.Id,
-                                    OrganizationTargetAudienceUid = ota.Uid,
-                                    TargetAudienceId = ota.TargetAudience.Id,
-                                    TargetAudienceUid = ota.TargetAudience.Uid,
-                                    TargetAudienceName = ota.TargetAudience.Name
-                                })
-                            })
-                            .FirstOrDefaultAsync();
-        }
-
-        /// <summary>Finds the site interest widget dto by organization uid asynchronous.</summary>
-        /// <param name="organizationUid">The organization uid.</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <returns></returns>
-        public async Task<AttendeeOrganizationSiteInterestWidgetDto> FindSiteInterestWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
-        {
-            var query = this.GetBaseQuery(true)
-                                .FindByOrganizationUid(organizationUid)
-                                .FindByEditionId(editionId, false);
-
-            return await query
-                                .Select(ao => new AttendeeOrganizationSiteInterestWidgetDto
-                                {
-                                    AttendeeOrganization = ao,
-                                    Organization = ao.Organization,
-                                    RestrictionSpecificDtos = ao.Organization.OrganizationRestrictionSpecifics.Where(rs => !rs.IsDeleted).Select(rs => new OrganizationRestrictionSpecificDto
-                                    {
-                                        Id = rs.Id,
-                                        Uid = rs.Uid,
-                                        Value = rs.Value,
-                                        LanguageDto = new LanguageBaseDto
-                                        {
-                                            Id = rs.Language.Id,
-                                            Uid = rs.Language.Uid,
-                                            Name = rs.Language.Name,
-                                            Code = rs.Language.Code
-                                        }
-                                    }),
-                                    OrganizationInterestDtos = ao.Organization.OrganizationInterests.Where(oi => !oi.IsDeleted).Select(oi => new OrganizationInterestDto
-                                    {
-                                        OrganizationInterest = oi,
-                                        Interest = oi.Interest,
-                                        InterestGroup = oi.Interest.InterestGroup
-                                    })
-                                })
-                                .FirstOrDefaultAsync();
         }
 
         #endregion
