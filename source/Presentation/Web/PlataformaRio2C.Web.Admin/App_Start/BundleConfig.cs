@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-19-2021
+// Last Modified On : 06-20-2021
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -394,7 +394,7 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/audiovisual/players/audiovisual.players.update.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.players.delete.js").Include(
-                "~/Assets/audiovisual/js/audiovisual/players/audiovisual.players.delete.js"));
+                "~/Assets/js/audiovisual/players/audiovisual.players.delete.js"));
 
             #endregion
 

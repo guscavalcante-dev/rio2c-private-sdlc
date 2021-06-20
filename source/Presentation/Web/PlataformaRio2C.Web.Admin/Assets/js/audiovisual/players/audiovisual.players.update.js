@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-19-2021
+// Last Modified On : 06-20-2021
 // ***********************************************************************
 // <copyright file="audiovisual.players.update.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -73,16 +73,16 @@ var AudiovisualPlayersUpdate = function () {
             onSuccess: function (data) {
                 $(modalId).modal('hide');
 
-                if (typeof (OrganizationsDataTableWidget) !== 'undefined') {
-                    OrganizationsDataTableWidget.refreshData();
+                if (typeof (AudiovisualPlayersDataTableWidget) !== 'undefined') {
+                    AudiovisualPlayersDataTableWidget.refreshData();
                 }
 
-                if (typeof (OrganizationsTotalCountWidget) !== 'undefined') {
-                    OrganizationsTotalCountWidget.init();
+                if (typeof (AudiovisualPlayersTotalCountWidget) !== 'undefined') {
+                    AudiovisualPlayersTotalCountWidget.init();
                 }
 
-                if (typeof (OrganizationsEditionCountWidget) !== 'undefined') {
-                    OrganizationsEditionCountWidget.init();
+                if (typeof (AudiovisualPlayersEditionCountWidget) !== 'undefined') {
+                    AudiovisualPlayersEditionCountWidget.init();
                 }
             },
             onError: function (data) {
