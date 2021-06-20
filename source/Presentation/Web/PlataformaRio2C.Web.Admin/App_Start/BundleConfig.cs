@@ -421,7 +421,8 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.projects.widget.js").Include(
                 "~/Assets/js/audiovisual/projects/audiovisual.projects.maininformation.widget.js",
-                "~/Assets/js/audiovisual/projects/audiovisual.projects.interest.widget.js"));
+                "~/Assets/js/audiovisual/projects/audiovisual.projects.interest.widget.js",
+                "~/Assets/js/audiovisual/projects/audiovisual.projects.links.widget.js"));
 
             #endregion
 

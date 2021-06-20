@@ -800,6 +800,7 @@
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.logistics.info.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.maininformation.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.interest.widget.js" />
+    <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.links.widget.js" />
     <Content Include="Assets\js\editions\editions.events.widget.js" />
     <Content Include="Assets\js\editions\editions.create.js" />
     <Content Include="Assets\js\editions\editions.datatable.widget.js" />
@@ -7627,6 +7628,7 @@
     <Content Include="Areas\Audiovisual\Views\Projects\Details.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\InterestWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\LinksWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

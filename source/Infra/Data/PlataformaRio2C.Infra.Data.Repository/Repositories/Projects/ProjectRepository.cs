@@ -775,6 +775,177 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .ToListAsync();
         }
 
+        #region Admin Widgets
+
+        public async Task<ProjectDto> FindAdminDetailsDtoByProjectUidAsync(Guid projectUid)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByUid(projectUid);
+
+            return await query
+                            .Select(p => new ProjectDto
+                            {
+                                Project = p,
+                                ProjectTitleDtos = p.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                {
+                                    ProjectTitle = t,
+                                    Language = t.Language
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        public async Task<ProjectDto> FindAdminMainInformationWidgetDtoByProjectUidAsync(Guid projectUid)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByUid(projectUid);
+
+            return await query
+                            .Select(p => new ProjectDto
+                            {
+                                Project = p,
+                                ProjectType = p.ProjectType,
+                                SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                {
+                                    AttendeeOrganization = p.SellerAttendeeOrganization,
+                                    Organization = p.SellerAttendeeOrganization.Organization,
+                                    Edition = p.SellerAttendeeOrganization.Edition
+                                },
+                                ProjectTitleDtos = p.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                {
+                                    ProjectTitle = t,
+                                    Language = t.Language
+                                }),
+                                ProjectLogLineDtos = p.ProjectLogLines.Where(ll => !ll.IsDeleted).Select(ll => new ProjectLogLineDto
+                                {
+                                    ProjectLogLine = ll,
+                                    Language = ll.Language
+                                }),
+                                ProjectSummaryDtos = p.ProjectSummaries.Where(s => !s.IsDeleted).Select(s => new ProjectSummaryDto
+                                {
+                                    ProjectSummary = s,
+                                    Language = s.Language
+                                }),
+                                ProjectProductionPlanDtos = p.ProjectProductionPlans.Where(pp => !pp.IsDeleted).Select(pp => new ProjectProductionPlanDto
+                                {
+                                    ProjectProductionPlan = pp,
+                                    Language = pp.Language
+                                }),
+                                ProjectAdditionalInformationDtos = p.ProjectAdditionalInformations.Where(aa => !aa.IsDeleted).Select(aa => new ProjectAdditionalInformationDto
+                                {
+                                    ProjectAdditionalInformation = aa,
+                                    Language = aa.Language
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        public async Task<ProjectDto> FindAdminInterestWidgetDtoByProjectUidAsync(Guid projectUid)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByUid(projectUid);
+
+            return await query
+                            .Select(p => new ProjectDto
+                            {
+                                Project = p,
+                                ProjectType = p.ProjectType,
+                                ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted).Select(i => new ProjectInterestDto
+                                {
+                                    ProjectInterest = i,
+                                    Interest = i.Interest,
+                                    InterestGroup = i.Interest.InterestGroup
+                                }),
+                                ProjectTargetAudienceDtos = p.ProjectTargetAudiences.Where(ta => !ta.IsDeleted).Select(ta => new ProjectTargetAudienceDto
+                                {
+                                    TargetAudience = ta.TargetAudience
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        public async Task<ProjectDto> FindAdminLinksWidgetDtoByProjectUidAsync(Guid projectUid)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByUid(projectUid);
+
+            return await query
+                            .Select(p => new ProjectDto
+                            {
+                                Project = p,
+                                ProjectType = p.ProjectType,
+                                ProjectImageLinkDtos = p.ProjectImageLinks.Where(il => !il.IsDeleted).Select(il => new ProjectImageLinkDto
+                                {
+                                    ProjectImageLink = il
+                                }),
+                                ProjectTeaserLinkDtos = p.ProjectTeaserLinks.Where(tl => !tl.IsDeleted).Select(tl => new ProjectTeaserLinkDto
+                                {
+                                    ProjectTeaserLink = tl
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        public async Task<ProjectDto> FindAdminBuyerCompanyWidgetDtoByProjectUidAsync(Guid projectUid)
+        {
+            var query = this.GetBaseQuery(true)
+                                 .FindByUid(projectUid);
+
+            return await query
+                            .Select(p => new ProjectDto
+                            {
+                                Project = p,
+                                ProjectType = p.ProjectType,
+                                ProjectBuyerEvaluationDtos = p.ProjectBuyerEvaluations.Where(be => !be.IsDeleted).Select(be => new ProjectBuyerEvaluationDto
+                                {
+                                    ProjectBuyerEvaluation = be,
+                                    BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                    {
+                                        AttendeeOrganization = be.BuyerAttendeeOrganization,
+                                        Organization = be.BuyerAttendeeOrganization.Organization,
+                                        Edition = be.BuyerAttendeeOrganization.Edition
+                                    },
+                                    ProjectEvaluationStatus = be.ProjectEvaluationStatus,
+                                    ProjectEvaluationRefuseReason = be.ProjectEvaluationRefuseReason
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        public async Task<ProjectDto> FindAdminBuyerEvaluationWidgetDtoByProjectUidAsync(Guid projectUid, Guid attendeeCollaboratorUid)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByUid(projectUid);
+
+            return await query
+                            .Select(p => new ProjectDto
+                            {
+                                Project = p,
+                                ProjectType = p.ProjectType,
+                                ProjectBuyerEvaluationDtos = p.ProjectBuyerEvaluations
+                                                                    .Where(pbe => !pbe.IsDeleted
+                                                                                  && !pbe.BuyerAttendeeOrganization.IsDeleted
+                                                                                  && pbe.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators
+                                                                                          .Any(aoc => !aoc.IsDeleted
+                                                                                                      && aoc.AttendeeCollaborator.Uid == attendeeCollaboratorUid))
+                                .Select(be => new ProjectBuyerEvaluationDto
+                                {
+                                    ProjectBuyerEvaluation = be,
+                                    BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                    {
+                                        AttendeeOrganization = be.BuyerAttendeeOrganization,
+                                        Organization = be.BuyerAttendeeOrganization.Organization,
+                                        Edition = be.BuyerAttendeeOrganization.Edition
+                                    },
+                                    ProjectEvaluationStatus = be.ProjectEvaluationStatus,
+                                    ProjectEvaluationRefuseReason = be.ProjectEvaluationRefuseReason
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        #endregion
+
         #region Site Widgets
 
         /// <summary>Finds the site details dto by project uid asynchronous.</summary>
