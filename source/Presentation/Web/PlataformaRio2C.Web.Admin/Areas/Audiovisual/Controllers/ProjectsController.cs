@@ -703,6 +703,82 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
         #endregion
 
+        #region Buyer Companies Widget
+
+        /// <summary>Shows the buyer company widget.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowBuyerCompanyWidget(Guid? projectUid)
+        {
+            var buyerCompanyWidgetDto = await this.projectRepo.FindAdminBuyerCompanyWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
+            if (buyerCompanyWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/BuyerCompanyWidget", buyerCompanyWidgetDto), divIdOrClass = "#ProjectBuyercompanyWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        //#region Update
+
+        ///// <summary>Shows the update buyer company modal.</summary>
+        ///// <param name="projectUid">The project uid.</param>
+        ///// <returns></returns>
+        //[HttpGet]
+        //public async Task<ActionResult> ShowUpdateBuyerCompanyModal(Guid? projectUid)
+        //{
+        //    ProjectDto buyerCompanyWidgetDto = null;
+
+        //    try
+        //    {
+        //        buyerCompanyWidgetDto = await this.projectRepo.FindSiteBuyerCompanyWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
+        //        if (buyerCompanyWidgetDto == null)
+        //        {
+        //            return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+        //        }
+
+        //        if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(buyerCompanyWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
+        //        {
+        //            throw new DomainException(Texts.ForbiddenErrorMessage);
+        //        }
+
+        //        if (this.EditionDto?.IsProjectSubmitOpen() != true)
+        //        {
+        //            throw new DomainException(Messages.ProjectSubmissionNotOpen);
+        //        }
+
+        //        if (buyerCompanyWidgetDto.Project.IsFinished())
+        //        {
+        //            throw new DomainException(Messages.ProjectIsFinishedCannotBeUpdated);
+        //        }
+        //    }
+        //    catch (DomainException ex)
+        //    {
+        //        return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        pages = new List<dynamic>
+        //        {
+        //            new { page = this.RenderRazorViewToString("Modals/UpdateBuyerCompanyModal", buyerCompanyWidgetDto), divIdOrClass = "#GlobalModalContainer" },
+        //        }
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
+
+        //#endregion
+
+        #endregion
+
         #endregion
 
         #region Finds

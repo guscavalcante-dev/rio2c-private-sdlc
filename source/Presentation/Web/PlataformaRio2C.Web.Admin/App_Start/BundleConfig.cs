@@ -411,7 +411,7 @@ namespace PlataformaRio2C.Web.Admin
 
             #region Projects
 
-            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.projects.widget.js").Include(
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.projects.list.js").Include(
                 "~/Assets/js/audiovisual/projects/audiovisual.projects.datatable.widget.js",
                 "~/Assets/js/audiovisual/projects/audiovisual.projects.totalcount.widget.js",
                 "~/Scripts/jquery.unobtrusive-ajax.js"));
@@ -422,7 +422,8 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.projects.widget.js").Include(
                 "~/Assets/js/audiovisual/projects/audiovisual.projects.maininformation.widget.js",
                 "~/Assets/js/audiovisual/projects/audiovisual.projects.interest.widget.js",
-                "~/Assets/js/audiovisual/projects/audiovisual.projects.links.widget.js"));
+                "~/Assets/js/audiovisual/projects/audiovisual.projects.links.widget.js",
+                "~/Assets/js/audiovisual/projects/audiovisual.projects.buyercompany.widget.js"));
 
             #endregion
 

@@ -912,38 +912,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
-        public async Task<ProjectDto> FindAdminBuyerEvaluationWidgetDtoByProjectUidAsync(Guid projectUid, Guid attendeeCollaboratorUid)
-        {
-            var query = this.GetBaseQuery(true)
-                                .FindByUid(projectUid);
-
-            return await query
-                            .Select(p => new ProjectDto
-                            {
-                                Project = p,
-                                ProjectType = p.ProjectType,
-                                ProjectBuyerEvaluationDtos = p.ProjectBuyerEvaluations
-                                                                    .Where(pbe => !pbe.IsDeleted
-                                                                                  && !pbe.BuyerAttendeeOrganization.IsDeleted
-                                                                                  && pbe.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators
-                                                                                          .Any(aoc => !aoc.IsDeleted
-                                                                                                      && aoc.AttendeeCollaborator.Uid == attendeeCollaboratorUid))
-                                .Select(be => new ProjectBuyerEvaluationDto
-                                {
-                                    ProjectBuyerEvaluation = be,
-                                    BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
-                                    {
-                                        AttendeeOrganization = be.BuyerAttendeeOrganization,
-                                        Organization = be.BuyerAttendeeOrganization.Organization,
-                                        Edition = be.BuyerAttendeeOrganization.Edition
-                                    },
-                                    ProjectEvaluationStatus = be.ProjectEvaluationStatus,
-                                    ProjectEvaluationRefuseReason = be.ProjectEvaluationRefuseReason
-                                })
-                            })
-                            .FirstOrDefaultAsync();
-        }
-
         #endregion
 
         #region Site Widgets

@@ -31,14 +31,13 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<List<ProjectDto>> FindAllDtosByFiltersAsync(string keywords, bool showPitchings, Guid? interestUid, List<Guid> projectUids, string languageCode, int editionId);
         Task<int> CountAllByDataTable(int editionId, bool showAllEditions = false);
 
-        #region Site Widgets
+        #region Admin Widgets
 
         Task<ProjectDto> FindAdminDetailsDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindAdminMainInformationWidgetDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindAdminInterestWidgetDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindAdminLinksWidgetDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindAdminBuyerCompanyWidgetDtoByProjectUidAsync(Guid projectUid);
-        Task<ProjectDto> FindAdminBuyerEvaluationWidgetDtoByProjectUidAsync(Guid projectUid, Guid attendeeCollaboratorUid);
 
         #endregion
 
