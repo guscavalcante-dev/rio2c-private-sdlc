@@ -2754,4 +2754,8 @@
     <value>Producers registered</value>
     <comment>Producers registered</comment>
   </data>
+  <data name="ShowPitchings" xml:space="preserve">
+    <value>Show pitchings</value>
+    <comment>Exibir pitchings</comment>
+  </data>
 </root>

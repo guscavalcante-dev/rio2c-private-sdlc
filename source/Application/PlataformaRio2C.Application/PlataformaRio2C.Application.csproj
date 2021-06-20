@@ -677,6 +677,7 @@
     <Compile Include="ViewModels\Common\Negotiation\NegotiationAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Players\PlayerCompanySearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Producers\ProducerSearchViewModel.cs" />
+    <Compile Include="ViewModels\Common\Projects\AudiovisualProjectSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Project\ProjectOptionFilterAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Quiz\AnswerBasicAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Quiz\AnswerDetailAppViewModel.cs" />

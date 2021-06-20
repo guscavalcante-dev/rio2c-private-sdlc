@@ -5209,6 +5209,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exibir pitchings.
+        /// </summary>
+        public static string ShowPitchings {
+            get {
+                return ResourceManager.GetString("ShowPitchings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exibir transfers.
         /// </summary>
         public static string ShowTransfers {

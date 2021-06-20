@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-25-2020
+// Last Modified On : 06-20-2021
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,14 +30,16 @@ using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.Report.Models;
 using Constants = PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using PlataformaRio2C.Web.Admin.Controllers;
 
-namespace PlataformaRio2C.Web.Admin.Controllers
+namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 {
     /// <summary>ProjectsController</summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
@@ -67,34 +69,39 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             this.fileRepo = fileRepository;
         }
 
-        #region Pitchings
+        #region List
 
-        /// <summary>Pitchingses this instance.</summary>
+        /// <summary>
+        /// Indexes the specified search view model.
+        /// </summary>
+        /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Pitchings()
+        public async Task<ActionResult> Index(AudiovisualProjectSearchViewModel searchViewModel)
         {
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Producers, new List<BreadcrumbItemHelper>{
-                new BreadcrumbItemHelper(Labels.ProjectsForPitching, Url.Action("Pitchings", "Projects", new { Area = "" }))
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Projects, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.AudioVisual, null),
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "Audiovisual" }))
             });
 
             #endregion
 
             ViewBag.GenreInterests = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.Genre.Uid);
-            ViewBag.Page = 1;
-            ViewBag.PageSize = 10;
 
             return View();
         }
 
-        /// <summary>Shows the pitching list widget.</summary>
+        /// <summary>
+        /// Searches the specified request.
+        /// </summary>
         /// <param name="request">The request.</param>
+        /// <param name="showPitchings">if set to <c>true</c> [show pitchings].</param>
         /// <param name="interestUid">The interest uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowPitchingListWidget(IDataTablesRequest request, Guid? interestUid)
+        public async Task<ActionResult> Search(IDataTablesRequest request, bool showPitchings, Guid? interestUid)
         {
             var projects = await this.projectRepo.FindAllPitchingBaseDtosByFiltersAndByPageAsync(
                 request.Start / request.Length,
@@ -104,6 +111,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 interestUid,
                 this.UserInterfaceLanguage,
                 this.EditionDto.Id);
+
             foreach (var project in projects)
             {
                 project.Genre = new List<string>();
@@ -225,7 +233,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", projectsCount), divIdOrClass = "#ProjectsPitchingTotalCountWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", projectsCount), divIdOrClass = "#AudiovisualProjectsTotalCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -244,7 +252,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", projectsCount), divIdOrClass = "#ProjectsPitchingEditionCountWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", projectsCount), divIdOrClass = "#AudiovisualProjectsEditionCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }

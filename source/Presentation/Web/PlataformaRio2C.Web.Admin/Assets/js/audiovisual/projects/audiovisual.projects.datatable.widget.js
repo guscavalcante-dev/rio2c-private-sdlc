@@ -4,18 +4,18 @@
 // Created          : 12-13-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-17-2020
+// Last Modified On : 06-20-2021
 // ***********************************************************************
-// <copyright file="projects.pitching.datatable.widget.js" company="Softo">
+// <copyright file="audiovisual.projects.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var ProjectsPitchingDataTableWidget = function () {
+var AudiovisualProjectsDataTableWidget = function () {
 
-    var widgetElementId = '#ProjectPitchingDataTableWidget';
-    var tableElementId = '#projectpitching-list-table';
+    var widgetElementId = '#AudiovisualProjectDataTableWidget';
+    var tableElementId = '#audiovisualprojects-list-table';
     var projectData;
     var table;
 
@@ -28,7 +28,7 @@ var ProjectsPitchingDataTableWidget = function () {
         jsonParameters.keyword = $('#Search').val();
         jsonParameters.interestUid = $('#InterestUid').val();
 
-        window.open(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/DownloadPdfs') + '?keyword=' + jsonParameters.keyword + '&interestUid=' + jsonParameters.interestUid + '&selectedProjectsUids=' + jsonParameters.selectedProjectsUids);
+        window.open(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/DownloadPdfs') + '?keyword=' + jsonParameters.keyword + '&interestUid=' + jsonParameters.interestUid + '&selectedProjectsUids=' + jsonParameters.selectedProjectsUids);
 
         MyRio2cCommon.unblock();
     };
@@ -139,8 +139,9 @@ var ProjectsPitchingDataTableWidget = function () {
                 sSearch: $('#Search').val()
             },
             ajax: {
-                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/ShowPitchingListWidget'),
+                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/Search'),
                 data: function (d) {
+                    d.showPitchings = $('#ShowPitchings').val();
                     d.interestUid = $('#InterestUid').val();
                 },
                 dataFilter: function (data) {

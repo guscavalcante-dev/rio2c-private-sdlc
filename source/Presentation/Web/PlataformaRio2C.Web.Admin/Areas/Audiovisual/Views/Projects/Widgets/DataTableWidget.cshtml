@@ -1,17 +1,17 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
+@model AudiovisualProjectSearchViewModel
 @{
-    ViewBag.Title = Labels.ProjectsForPitching;
     var genreInterests = ViewBag.GenreInterests as List<InterestDto>;
 }
 <!--begin:: DataTable Widget-->
-<div id="ProjectPitchingDataTableWidget" class="kt-portlet kt-portlet--mobile">
+<div id="AudiovisualProjectDataTableWidget" class="kt-portlet kt-portlet--mobile">
     <div class="kt-portlet__head kt-portlet__head--lg">
         <div class="kt-portlet__head-label">
             <span class="kt-portlet__head-icon">
                 <i class="kt-font-brand flaticon2-line-chart"></i>
             </span>
             <h3 class="kt-portlet__head-title">
-                @Labels.ProjectsForPitching
+                @Labels.Projects
             </h3>
         </div>
     </div>
@@ -21,11 +21,11 @@
         <div class="form-group row">
             <div class="col-lg-6">
                 <label>@Labels.Search:</label>
-                @Html.Hidden("Page", ViewBag.Page as int?)
-                @Html.Hidden("PageSize", ViewBag.PageSize as int?)
-                @Html.TextBox("Search", null, new { @class = "form-control mr-1", autocomplete = "off", type = "search", placeholder = $"{Labels.Title} {Labels.Or.ToLowerInvariant()} {Labels.Producer.ToLowerInvariant()}" })
+                @Html.HiddenFor(m => m.Page)
+                @Html.HiddenFor(m => m.PageSize)
+                @Html.TextBoxFor(m => m.Search, new { type = "search", @class = "form-control", autocomplete = "off", placeholder = $"{Labels.Title} {Labels.Or.ToLowerInvariant()} {Labels.Producer.ToLowerInvariant()}" })
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <label>@Labels.Genre:</label>
 
                 <select name="InterestUid" id="InterestUid" class="form-control enable-datatable-reload enable-select2">
@@ -38,18 +38,29 @@
                     }
                 </select>
             </div>
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <div class="kt-checkbox-list">
+                        <label class="kt-checkbox mt-2">
+                            @Html.CheckBoxFor(m => m.ShowPitchings, new { @class = "enable-datatable-reload" }) @Labels.ShowPitchings
+                            <span></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
         </div>
         <!--end: SearchForm-->
         <!--begin: Datatable -->
-        <table class="table table-striped- table-bordered table-hover table-checkable" id="projectpitching-list-table">
+        <table class="table table-striped- table-bordered table-hover table-checkable" id="audiovisualprojects-list-table">
             <thead>
-            <tr>
-                <th>@Labels.Title</th>
-                <th>@Labels.Producer</th>
-                <th>@Labels.Genre</th>
-                <th class="dt-head-center dt-body-center">@Labels.CreateDate</th>
-                <th class="dt-head-center dt-body-center">@Labels.SendDate</th>
-            </tr>
+                <tr>
+                    <th>@Labels.Title</th>
+                    <th>@Labels.Producer</th>
+                    <th>@Labels.Genre</th>
+                    <th class="dt-head-center dt-body-center">@Labels.CreateDate</th>
+                    <th class="dt-head-center dt-body-center">@Labels.SendDate</th>
+                </tr>
             </thead>
         </table>
         <!--end: Datatable -->

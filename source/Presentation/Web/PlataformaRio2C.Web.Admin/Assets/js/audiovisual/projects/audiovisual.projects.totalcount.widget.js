@@ -3,19 +3,19 @@
 // Author           : William Sergio Almado Junior
 // Created          : 12-13-2019
 //
-// Last Modified By : William Sergio Almado Junior
-// Last Modified On : 12-13-2019
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 06-20-2021
 // ***********************************************************************
-// <copyright file="projects.pitching.editioncount.widget.js" company="Softo">
+// <copyright file="audiovisual.projects.totalcount.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var ProjectsPitchingEditionCountWidget = function () {
+var AudiovisualProjectsTotalCountWidget = function () {
 
-    var widgetElementId = '#ProjectsPitchingEditionCountWidget';
-    var chartElementId = 'ProjectsPitchingEditionCountChart';
+    var widgetElementId = '#AudiovisualProjectsTotalCountWidget';
+    var chartElementId = 'AudiovisualProjectsTotalCountChart';
     var widgetElement = $(widgetElementId);
 
     // Show ---------------------------------------------------------------------------------------
@@ -27,8 +27,8 @@ var ProjectsPitchingEditionCountWidget = function () {
         var ctx = document.getElementById(chartElementId).getContext("2d");
 
         var gradient = ctx.createLinearGradient(0, 0, 0, 240);
-        gradient.addColorStop(0, Chart.helpers.color('#d1f1ec').alpha(1).rgbString());
-        gradient.addColorStop(1, Chart.helpers.color('#d1f1ec').alpha(0.3).rgbString());
+        gradient.addColorStop(0, Chart.helpers.color('#ffefce').alpha(1).rgbString());
+        gradient.addColorStop(1, Chart.helpers.color('#ffefce').alpha(0.3).rgbString());
 
         var config = {
             type: 'line',
@@ -36,7 +36,7 @@ var ProjectsPitchingEditionCountWidget = function () {
                 labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October"],
                 datasets: [{
                     backgroundColor: gradient,
-                    borderColor: KTApp.getStateColor('success'),
+                    borderColor: KTApp.getStateColor('warning'),
                     pointBackgroundColor: Chart.helpers.color('#000000').alpha(0).rgbString(),
                     pointBorderColor: Chart.helpers.color('#000000').alpha(0).rgbString(),
                     pointHoverBackgroundColor: KTApp.getStateColor('danger'),
@@ -116,10 +116,8 @@ var ProjectsPitchingEditionCountWidget = function () {
 
     var show = function () {
         var jsonParameters = new Object();
-        jsonParameters.keyword = $('#Search').val();
-        jsonParameters.interestUid = $('#InterestUid').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Projects/ShowEditionCountWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/ShowTotalCountWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -127,11 +125,13 @@ var ProjectsPitchingEditionCountWidget = function () {
                     enableShowPlugins();
                 },
                 // Error
-                onError: function () {
+                onError: function() {
                 }
             });
         })
         .fail(function () {
+            //showAlert();
+            //MyRio2cCommon.unblock(widgetElementId);
         })
         .always(function() {
             MyRio2cCommon.unblock({ idOrClass: widgetElementId });

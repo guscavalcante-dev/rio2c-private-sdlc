@@ -1,21 +1,21 @@
-﻿@model CollaboratorSearchViewModel
+﻿@model AudiovisualProjectSearchViewModel
 @{
-    ViewBag.Title = Labels.ProjectsForPitching;
+    ViewBag.Title = Labels.Projects;
 }
 <!--begin:: Quick Stats-->
 <div class="row">
     <div class="col-sm-6">
         <!--begin:: Total Count Widget-->
-        <div id="ProjectsPitchingTotalCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <div id="AudiovisualProjectsTotalCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
         <!--end:: Total Count Widget-->
     </div>
     <div class="col-sm-6">
         <!--begin:: Edition Count-->
-        <div id="ProjectsPitchingEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <div id="AudiovisualProjectsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
         <!--end:: Edition Count-->
     </div>
 </div>
-@Html.Partial("Widgets/PitchingDataTablewidget")
+@Html.Partial("Widgets/DataTablewidget")
 @section Styles {
     @Styles.Render("~/bundles/css/select2.css")
     @Styles.Render("~/bundles/css/dataTables.css")
@@ -25,8 +25,8 @@
     @Scripts.Render("~/bundles/js/chart.js")
     @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/select2.js")
-    @Scripts.Render("~/bundles/js/projects.pitching.widget.js")
-    @Scripts.Render("~/bundles/js/projects.pitching.editioncount.widget.js")
+    @Scripts.Render("~/bundles/js/audiovisual.projects.widget.js")
+    @Scripts.Render("~/bundles/js/audiovisual.projects.editioncount.widget.js")
     <script>
         // Page translations ----------------------------------------------------------------------
         var translations = {
@@ -40,9 +40,9 @@
         var initialPageSize = @(ViewBag.PageSize?.ToString() ?? "null");
 
         jQuery(document).ready(function () {
-            ProjectsPitchingDataTableWidget.init();
-            ProjectsPitchingTotalCountWidget.init();
-            ProjectsPitchingEditionCountWidget.init();
+            AudiovisualProjectsDataTableWidget.init();
+            AudiovisualProjectsTotalCountWidget.init();
+            AudiovisualProjectsEditionCountWidget.init();
         });
     </script>
 }

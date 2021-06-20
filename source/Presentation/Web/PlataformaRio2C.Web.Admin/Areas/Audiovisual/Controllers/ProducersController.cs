@@ -86,6 +86,33 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             return View(searchViewModel);
         }
 
+        /// <summary>Searches the specified request.</summary>
+        /// <param name="request">The request.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="showAllOrganizations">if set to <c>true</c> [show all organizations].</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllOrganizations)
+        {
+            var producers = await this.organizationRepo.FindAllByDataTable(
+                request.Start / request.Length,
+                request.Length,
+                request.Search?.Value,
+                request.GetSortColumns(),
+                OrganizationType.Producer.Uid,
+                showAllEditions,
+                showAllOrganizations,
+                this.EditionDto.Id);
+
+            var response = DataTablesResponse.Create(request, producers.TotalItemCount, producers.TotalItemCount, producers);
+
+            return Json(new
+            {
+                status = "success",
+                dataTable = response
+            }, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
         #region Total Count Widget
@@ -124,37 +151,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 {
                     new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", producersCount), divIdOrClass = "#ProducersEditionCountWidget" },
                 }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        #endregion
-
-        #region DataTable Widget
-
-        /// <summary>Searches the specified request.</summary>
-        /// <param name="request">The request.</param>
-        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
-        /// <param name="showAllOrganizations">if set to <c>true</c> [show all organizations].</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllOrganizations)
-        {
-            var producers = await this.organizationRepo.FindAllByDataTable(
-                request.Start / request.Length,
-                request.Length,
-                request.Search?.Value,
-                request.GetSortColumns(),
-                OrganizationType.Producer.Uid,
-                showAllEditions,
-                showAllOrganizations,
-                this.EditionDto.Id);
-
-            var response = DataTablesResponse.Create(request, producers.TotalItemCount, producers.TotalItemCount, producers);
-
-            return Json(new
-            {
-                status = "success",
-                dataTable = response
             }, JsonRequestBehavior.AllowGet);
         }
 

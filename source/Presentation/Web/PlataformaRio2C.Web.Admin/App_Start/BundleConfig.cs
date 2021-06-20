@@ -409,6 +409,18 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            #region Projects
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.projects.widget.js").Include(
+                "~/Assets/js/audiovisual/projects/audiovisual.projects.datatable.widget.js",
+                "~/Assets/js/audiovisual/projects/audiovisual.projects.totalcount.widget.js",
+                "~/Scripts/jquery.unobtrusive-ajax.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.projects.editioncount.widget.js").Include(
+                "~/Assets/js/audiovisual/projects/audiovisual.projects.editioncount.widget.js"));
+
+            #endregion
+
             #region Collaborators - Executives
 
             bundles.Add(new ScriptBundle("~/bundles/js/collaborators.list.js").Include(
@@ -630,18 +642,6 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/presentationformats.delete.js").Include(
                 "~/Assets/js/presentationformats/presentationformats.delete.js"));
-
-            #endregion
-
-            #region Projects
-
-            bundles.Add(new ScriptBundle("~/bundles/js/projects.pitching.widget.js").Include(
-                "~/Assets/js/projects/projects.pitching.datatable.widget.js",
-                "~/Assets/js/projects/projects.pitching.totalcount.widget.js",
-                "~/Scripts/jquery.unobtrusive-ajax.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/projects.pitching.editioncount.widget.js").Include(
-                "~/Assets/js/projects/projects.pitching.editioncount.widget.js"));
 
             #endregion
 

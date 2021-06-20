@@ -66,25 +66,22 @@
                             </div>
                         </li>
                     }
-                    <li class="kt-menu__item  kt-menu__item--submenu @this.IsOpen(menuOpenCssClass, "Index", "Producers", "Audiovisual") @this.IsOpen(menuOpenCssClass, "Index", "CollaboratorProducer", null) @this.IsOpen(menuOpenCssClass, "Pitchings", "Projects", null)" data-ktmenu-submenu-toggle="hover" aria-haspopup="true">
+                    <li class="kt-menu__item  kt-menu__item--submenu @this.IsOpen(menuOpenCssClass, null, "Producers,Projects", "Audiovisual")" data-ktmenu-submenu-toggle="hover" aria-haspopup="true">
                         <a href="#" class="kt-menu__link kt-menu__toggle"><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Producers</span><i class="kt-menu__hor-arrow la la-angle-right"></i><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
                         <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--right">
                             <ul class="kt-menu__subnav">
                                 @if (isAdminFull)
                                 {
-                                    <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "Index", "Producers", "Audiovisual")" aria-haspopup="true">
+                                    <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Producers", "Audiovisual")" aria-haspopup="true">
                                         <a href="@Url.Action("Index", "Producers", new { Area = "Audiovisual" })" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.Companies</span></a>
                                     </li>
                                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "Index", "CollaboratorProducer", null)" aria-haspopup="true">
                                         <a href="#" @*href="@Url.Action("Index", "CollaboratorProducer", new { Area = "" })"*@ class="kt-menu__link "><span class="kt-menu__link-text">@Labels.Executives</span></a>
                                     </li>
-                                    <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "Index", "Project", null)" aria-haspopup="true">
-                                        <a href="#" @*href="@Url.Action("Index", "Project", new { Area = "" })"*@ class="kt-menu__link "><span class="kt-menu__link-text">@Labels.Projects</span></a>
+                                    <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Projects", "Audiovisual")" aria-haspopup="true">
+                                        <a href="@Url.Action("Index", "Projects", new { Area = "Audiovisual" })" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.Projects</span></a>
                                     </li>
                                 }
-                                <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "Pitchings", "Projects", null)" aria-haspopup="true">
-                                    <a href="@Url.Action("Pitchings", "Projects", new { Area = "" })" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.ProjectsForPitching</span></a>
-                                </li>
                             </ul>
                         </div>
                     </li>

@@ -102,10 +102,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             return View(searchViewModel);
         }
 
-        #endregion
-
-        #region DataTable Widget
-
         /// <summary>Searches the specified request.</summary>
         /// <param name="request">The request.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>

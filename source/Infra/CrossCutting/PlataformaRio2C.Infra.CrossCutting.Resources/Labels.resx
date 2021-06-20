@@ -2759,4 +2759,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Produtoras cadastradas</value>
     <comment>Produtoras cadastradas</comment>
   </data>
+  <data name="ShowPitchings" xml:space="preserve">
+    <value>Exibir pitchings</value>
+    <comment>Exibir pitchings</comment>
+  </data>
 </root>
