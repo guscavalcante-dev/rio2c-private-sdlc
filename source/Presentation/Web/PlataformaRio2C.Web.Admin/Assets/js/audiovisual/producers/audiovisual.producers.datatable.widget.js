@@ -228,8 +228,8 @@ var AudiovisualProducersDataTableWidget = function () {
         refreshData: function() {
             refreshData();
         },
-        showDetails: function (editionUid) {
-            showDetails(editionUid);
+        showDetails: function (producerUid) {
+            showDetails(producerUid);
         }
     };
 }();

@@ -1,0 +1,146 @@
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Statics
+@model ProjectDto
+<div class="kt-portlet__body">
+    <div class="kt-widget kt-widget--user-profile-3">
+        <div class="kt-widget__top">
+            <div style="float: right;">
+                <a href="@Url.Action("Details", "Producers", new { Area = "Audiovisual", id = Model.SellerAttendeeOrganizationDto?.Organization?.Uid })" target="_blank">
+                    @if (Model.SellerAttendeeOrganizationDto?.Organization?.HasImage() == true)
+                    {
+                        <div class="kt-widget__media">
+                            <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, Model.SellerAttendeeOrganizationDto.Organization.Uid, Model.SellerAttendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="image">
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest" style="width: 110px; height: 110px;">
+                            @(Model.SellerAttendeeOrganizationDto?.Organization?.GetTradeNameAbbreviation() ?? "-")
+                        </div>
+                    }
+                </a>
+            </div>
+            <div class="kt-widget__content" style="overflow: hidden;">
+                <div class="kt-widget__head">
+                    <span class="kt-widget__username">
+                        @(Model.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value ?? "-")
+                        @*@if (Model.SellerAttendeeOrganizationDto?.AttendeeOrganization.OnboardingFinishDate.HasValue) //Show if approved by any player
+                        {
+                            <i class="flaticon2-correct"></i>
+                        }*@
+                    </span>
+                    <div class="kt-widget__action">
+                        <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="AudiovisualProjectsMainInformationWidget.showUpdateModal();">
+                            <i class="flaticon2-edit"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="kt-widget__subhead pt-0">
+                    @Labels.Producer: <a href="@Url.Action("Details", "Producers", new { Area = "Audiovisual", id = Model.SellerAttendeeOrganizationDto?.Organization?.Uid })" target="_blank">@(Model.SellerAttendeeOrganizationDto?.Organization?.TradeName ?? "-")</a>
+                    @if (!string.IsNullOrEmpty(Model.SellerAttendeeOrganizationDto?.Organization?.Document))
+                    {
+                        @:- @(Model.SellerAttendeeOrganizationDto?.Organization.Document)
+                    }
+                </div>
+                <div class="kt-widget__info" style="display: block;">
+                    @{
+                        var logLineDto = Model.GetLogLineDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
+                    }
+                    @if (logLineDto != null)
+                    {
+                        <div class="kt-widget__desc" style="word-wrap: break-word;">
+                            @(Html.Raw(logLineDto.ProjectLogLine?.Value?.Replace("\n", "<br/>") ?? "-"))
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="kt-widget__bottom">
+            @{
+                var summaryDto = Model.GetSummaryDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
+            }
+            @if (summaryDto != null)
+            {
+                <div class="kt-widget__item w-100">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.Summary</span>
+                        <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Html.Raw(summaryDto.ProjectSummary?.Value?.Replace("\n", "<br/>") ?? "-"))</span></span>
+                    </div>
+                </div>
+            }
+            <div class="kt-widget__item w-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.TotalPlayingTime</span>
+                    <span class="kt-widget__value"><span>@(Model.Project?.TotalPlayingTime ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.NumberOfEpisodes</span>
+                    <span class="kt-widget__value"><span>@(Model.Project?.NumberOfEpisodes?.ToString() ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.EachEpisodePlayingTime</span>
+                    <span class="kt-widget__value"><span>@(Model.Project?.EachEpisodePlayingTime ?? "-")</span></span>
+                </div>
+            </div>
+            @{
+                var productionPlanDto = Model.GetProductionPlanDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
+            }
+            @if (productionPlanDto != null)
+            {
+                <div class="kt-widget__item w-100">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.ProductionPlan</span>
+                        <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Html.Raw(productionPlanDto.ProjectProductionPlan?.Value?.Replace("\n", "<br/>") ?? "-"))</span></span>
+                    </div>
+                </div>
+            }
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.ValuePerEpisode</span>
+                    <span class="kt-widget__value"><span>@(Model.Project?.ValuePerEpisode?.ToString() ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.TotalValueOfProject</span>
+                    <span class="kt-widget__value"><span>@(Model.Project?.TotalValueOfProject?.ToString() ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.ValueAlreadyRaised</span>
+                    <span class="kt-widget__value"><span>@(Model.Project?.ValueAlreadyRaised?.ToString() ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.ValueStillNeeded</span>
+                    <span class="kt-widget__value"><span>@(Model.Project?.ValueStillNeeded?.ToString() ?? "-")</span></span>
+                </div>
+            </div>
+            @{
+                var additionalInformationDto = Model.GetAdditionalInformationDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
+            }
+            @if (additionalInformationDto != null)
+            {
+                <div class="kt-widget__item w-100">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.AdditionalInformation</span>
+                        <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Html.Raw(additionalInformationDto.ProjectAdditionalInformation?.Value?.Replace("\n", "<br/>") ?? "-"))</span></span>
+                    </div>
+                </div>
+            }
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">Pitching</span>
+                    <span class="kt-widget__value"><span>@(Model.Project?.IsPitching == true ? Labels.Yes : Labels.No)</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

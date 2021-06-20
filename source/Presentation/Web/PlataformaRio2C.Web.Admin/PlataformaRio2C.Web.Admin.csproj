@@ -798,6 +798,7 @@
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.scheduled.create.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.report.widget.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.logistics.info.widget.js" />
+    <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.maininformation.widget.js" />
     <Content Include="Assets\js\editions\editions.events.widget.js" />
     <Content Include="Assets\js\editions\editions.create.js" />
     <Content Include="Assets\js\editions\editions.datatable.widget.js" />
@@ -7622,6 +7623,8 @@
     <Content Include="Areas\Audiovisual\Views\Producers\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Producers\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Organizations\Details.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Details.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\MainInformationWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

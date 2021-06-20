@@ -247,6 +247,33 @@ var AudiovisualProjectsDataTableWidget = function () {
                         return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
                     }
                 },
+                {
+                    data: 'Actions',
+                    responsivePriority: -1,
+                    render: function (data, type, full, meta) {
+                        var html = '\
+                                        <span class="dropdown">\
+                                            <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">\
+                                              <i class="la la-ellipsis-h"></i>\
+                                            </a>\
+                                            <div class="dropdown-menu dropdown-menu-right">';
+
+                        html += '<button class="dropdown-item" onclick="AudiovisualProjectsDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
+
+                        //if (full.IsInCurrentEdition && full.IsInOtherEdition) {
+                        //    html += '<button class="dropdown-item" onclick="AudiovisualProducersDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + removeFromEdition + '</button>';
+                        //}
+                        //else {
+                        //    html += '<button class="dropdown-item" onclick="AudiovisualProducersDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+                        //}
+
+                        html += '\
+                                            </div>\
+                                        </span>';
+
+                        return html;
+                    }
+                }
             ],
             columnDefs: [
                 {
@@ -268,6 +295,13 @@ var AudiovisualProjectsDataTableWidget = function () {
                     targets: [3, 4],
                     className: "dt-center"
                 },
+                {
+                    targets: -1,
+                    width: "10%",
+                    orderable: false,
+                    searchable: false,
+                    className: "dt-center"
+                }
             ],
             initComplete: function () {
                 $('button.buttons-collection').attr('data-toggle', 'dropdown');
@@ -295,6 +329,14 @@ var AudiovisualProjectsDataTableWidget = function () {
         table.ajax.reload();
     };
 
+    var showDetails = function (projectUid) {
+        if (MyRio2cCommon.isNullOrEmpty(projectUid)) {
+            return;
+        }
+
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/Details/' + projectUid);
+    };
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
@@ -302,6 +344,9 @@ var AudiovisualProjectsDataTableWidget = function () {
         },
         refreshData: function () {
             refreshData();
+        },
+        showDetails: function (projectUid) {
+            showDetails(projectUid);
         }
     };
 }();

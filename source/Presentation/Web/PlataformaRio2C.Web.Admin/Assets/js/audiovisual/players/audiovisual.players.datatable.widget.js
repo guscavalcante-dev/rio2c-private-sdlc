@@ -238,8 +238,8 @@ var AudiovisualPlayersDataTableWidget = function () {
         refreshData: function() {
             refreshData();
         },
-        showDetails: function (editionUid) {
-            showDetails(editionUid);
+        showDetails: function (playerUid) {
+            showDetails(playerUid);
         }
     };
 }();
