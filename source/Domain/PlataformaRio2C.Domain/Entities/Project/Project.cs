@@ -616,18 +616,24 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Interests
 
-        /// <summary>Updates the project interests.</summary>
+        /// <summary>
+        /// Updates the project interests.
+        /// </summary>
         /// <param name="projectInterests">The project interests.</param>
         /// <param name="userId">The user identifier.</param>
+        /// <param name="isAdmin">if set to <c>true</c> [is admin].</param>
         public void UpdateProjectInterests(
             List<ProjectInterest> projectInterests,
-            int userId)
+            int userId,
+            bool isAdmin)
         {
             this.SynchronizeProjectInterests(projectInterests, userId);
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
             this.UpdateDate = DateTime.UtcNow;
+
+            this.IsAdmin = isAdmin;
         }
 
         /// <summary>Synchronizes the project interests.</summary>
@@ -678,16 +684,24 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Target Audiences
 
-        /// <summary>Updates the project target audiences.</summary>
+        /// <summary>
+        /// Updates the project target audiences.
+        /// </summary>
         /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateProjectTargetAudiences(List<TargetAudience> targetAudiences, int userId)
+        /// <param name="isAdmin">if set to <c>true</c> [is admin].</param>
+        public void UpdateProjectTargetAudiences(
+            List<TargetAudience> targetAudiences, 
+            int userId, 
+            bool isAdmin)
         {
             this.SynchronizeProjectTargetAudiences(targetAudiences, userId);
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
             this.UpdateDate = DateTime.UtcNow;
+
+            this.IsAdmin = isAdmin;
         }
 
         /// <summary>Synchronizes the project target audiences.</summary>

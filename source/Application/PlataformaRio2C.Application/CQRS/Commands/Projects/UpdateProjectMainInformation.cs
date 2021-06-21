@@ -108,29 +108,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
         }
 
-        /// <summary>
-        /// Updates the pre send properties.
-        /// </summary>
-        /// <param name="projectTypeUid">The project type uid.</param>
-        /// <param name="userId">The user identifier.</param>
-        /// <param name="userUid">The user uid.</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <param name="editionUid">The edition uid.</param>
-        /// <param name="userInterfaceLanguage">The user interface language.</param>
-        /// <param name="isAdmin">if set to <c>true</c> [is admin].</param>
-        public void UpdatePreSendProperties(
-            Guid projectTypeUid,
-            int userId,
-            Guid userUid,
-            int? editionId,
-            Guid? editionUid,
-            string userInterfaceLanguage,
-            bool? isAdmin = false)
-        {
-            this.ProjectTypeUid = projectTypeUid;
-            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage, isAdmin);
-        }
-
         #region Private Methods
 
         /// <summary>Updates the titles.</summary>

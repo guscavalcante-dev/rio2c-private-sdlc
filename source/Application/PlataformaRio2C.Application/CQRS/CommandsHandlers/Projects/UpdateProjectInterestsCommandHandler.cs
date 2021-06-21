@@ -4,7 +4,7 @@
 // Created          : 11-11-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified On : 06-21-2021
 // ***********************************************************************
 // <copyright file="UpdateProjectInterestsCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -96,11 +96,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             project.UpdateProjectInterests(
                 projectInterests,
-                cmd.UserId);
+                cmd.UserId,
+                cmd.IsAdmin);
 
             project.UpdateProjectTargetAudiences(
                 cmd.TargetAudiencesUids?.Any() == true ? await this.targetAudienceRepo.FindAllByUidsAsync(cmd.TargetAudiencesUids) : new List<TargetAudience>(),
-                cmd.UserId);
+                cmd.UserId,
+                cmd.IsAdmin);
             if (!project.IsValid())
             {
                 this.AppValidationResult.Add(project.ValidationResult);
