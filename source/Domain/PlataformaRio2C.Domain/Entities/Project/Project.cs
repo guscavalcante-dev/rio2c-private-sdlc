@@ -253,14 +253,18 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Buyer Evaluations
 
-        /// <summary>Creates the project buyer evaluation.</summary>
+        /// <summary>
+        /// Creates the project buyer evaluation.
+        /// </summary>
         /// <param name="buyerAttendeeOrganization">The buyer attendee organization.</param>
         /// <param name="projectEvaluationStatus">The project evaluation status.</param>
         /// <param name="userId">The user identifier.</param>
+        /// <param name="isAdmin">if set to <c>true</c> [is admin].</param>
         public void CreateProjectBuyerEvaluation(
             AttendeeOrganization buyerAttendeeOrganization,
             ProjectEvaluationStatus projectEvaluationStatus,
-            int userId)
+            int userId,
+            bool isAdmin)
         {
             if (this.ProjectBuyerEvaluations == null)
             {
@@ -282,14 +286,20 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.UpdateUserId = userId;
             this.UpdateDate = DateTime.UtcNow;
+
+            this.IsAdmin = isAdmin;
         }
 
-        /// <summary>Deletes the project buyer evaluation.</summary>
+        /// <summary>
+        /// Deletes the project buyer evaluation.
+        /// </summary>
         /// <param name="buyerAttendeeOrganization">The buyer attendee organization.</param>
         /// <param name="userId">The user identifier.</param>
+        /// <param name="isAdmin">if set to <c>true</c> [is admin].</param>
         public void DeleteProjectBuyerEvaluation(
             AttendeeOrganization buyerAttendeeOrganization,
-            int userId)
+            int userId,
+            bool isAdmin)
         {
             var buyerEvaluation = this.GetProjectBuyerEvaluationByAttendeeOrganizationUid(buyerAttendeeOrganization?.Uid ?? Guid.Empty);
             buyerEvaluation?.Delete(userId);
@@ -299,6 +309,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.UpdateUserId = userId;
             this.UpdateDate = DateTime.UtcNow;
+
+            this.IsAdmin = isAdmin;
         }
 
         /// <summary>Updates the project buyer evaluation counts.</summary>

@@ -4,7 +4,7 @@
 // Created          : 11-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified On : 06-21-2021
 // ***********************************************************************
 // <copyright file="CreateProjectBuyerEvaluationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -76,7 +76,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             project.CreateProjectBuyerEvaluation(
                 cmd.AttendeeOrganizationUid.HasValue ? await this.AttendeeOrganizationRepo.GetAsync(ao => ao.Uid == cmd.AttendeeOrganizationUid) : null,
                 await this.projectEvaluationStatusRepo.GetAsync(pes => !pes.IsDeleted && !pes.IsEvaluated),
-                cmd.UserId);
+                cmd.UserId,
+                cmd.IsAdmin);
             if (!project.IsValid())
             {
                 this.AppValidationResult.Add(project.ValidationResult);
