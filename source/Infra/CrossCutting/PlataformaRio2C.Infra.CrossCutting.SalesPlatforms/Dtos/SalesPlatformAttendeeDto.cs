@@ -1,5 +1,5 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Application
+// Assembly         : PlataformaRio2C.Infra.CrossCutting.SalesPlatforms
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-30-2019
 //
@@ -11,10 +11,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
 using System;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
-
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.Models;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Models;
 
@@ -41,7 +39,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
 
         // Profile
         public string FirstName { get; private set; }
-        public string LastMame { get; private set; }
+        public string LastName { get; private set; }
         public string Gender { get; private set; }
         public int? Age { get; private set; }
         public string Name { get; private set; }
@@ -81,7 +79,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
 
             // Profile
             this.FirstName = eventBriteAttendee.Profile.FirstName;
-            this.LastMame = eventBriteAttendee.Profile.LastMame;
+            this.LastName = eventBriteAttendee.Profile.LastMame;
             this.Gender = eventBriteAttendee.Profile.Gender;
             this.Age = eventBriteAttendee.Profile.Age;
             this.Name = eventBriteAttendee.Profile.Name;
@@ -105,43 +103,33 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
         public SalesPlatformAttendeeDto(IntiPayload intiPayload)
         {
             // Event
-            this.EventId = intiPayload.relationships.event_id;
+            this.EventId = intiPayload.Relationships.EventId;
 
             // Order
-            this.OrderId = intiPayload.relationships.order_id;
+            this.OrderId = intiPayload.Relationships.OrderId;
 
             // Attendee
-            this.AttendeeId = intiPayload.relationships.buyer_id; // FIXME
+            this.AttendeeId = intiPayload.Relationships.BuyerId; // FIXME
             this.SalesPlatformUpdateDate = DateTime.Now;
-
             this.SalesPlatformAttendeeStatus = intiPayload.GetSalesPlatformAttendeeStatus();
-            
-            //TODO: CHECK THIS
-            //if(intiPayload.Action == "ticket_sold")
-            //    this.SalesPlatformAttendeeStatus = Dtos.SalesPlatformAttendeeStatus.Attending;
-            //else if(intiPayload.Action == "ticket_canceled")
-            //    this.SalesPlatformAttendeeStatus = Dtos.SalesPlatformAttendeeStatus.Deleted;
-            //else if (intiPayload.Action == "participant_updated")
-            //    this.SalesPlatformAttendeeStatus = Dtos.SalesPlatformAttendeeStatus.Transferred;
-
             this.IsCancelled = false;
             this.IsCheckedIn = false;
-            this.TicketClassId = intiPayload.price_name;
-            this.TicketClassName = intiPayload.price_name;
+            this.TicketClassId = intiPayload.PriceName;
+            this.TicketClassName = intiPayload.PriceName;
 
             // Profile
-            this.FirstName = intiPayload.name.Contains(" ") ? intiPayload.name.Split(Convert.ToChar(" "))[0] : intiPayload.name;
-            this.LastMame = intiPayload.name.Contains(" ") ? intiPayload.name.Split(Convert.ToChar(" "))[1] : ""; 
+            this.FirstName = intiPayload.Name.Contains(" ") ? intiPayload.Name.Split(Convert.ToChar(" "))[0] : intiPayload.Name;
+            this.LastName = intiPayload.Name.Contains(" ") ? intiPayload.Name.Split(Convert.ToChar(" "))[1] : ""; 
             this.Gender = "";
             this.Age = null;
-            this.Name = intiPayload.name;
+            this.Name = intiPayload.Name;
             this.BirthDate = "";
             this.CellPhone = "0";
-            this.Email = intiPayload.email;
+            this.Email = intiPayload.Email;
             this.JobTitle = "_";
             
             // Barcode            
-            this.Barcode = intiPayload.validator_code;
+            this.Barcode = intiPayload.ValidatorCode;
             this.IsBarcodePrinted = false;
             this.IsBarcodeUsed = false;
             this.BarcodeUpdateDate = null;

@@ -46,11 +46,16 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <param name="key">The key.</param>
         /// <returns></returns>
         [HttpPost]
-        [Route("inti/{key?}")]
-        public async Task<IHttpActionResult> Inti(string key)
+        [Route("inti")]
+        //[Route("inti/{key?}")]
+        //public async Task<IHttpActionResult> Inti(string key)
+        public async Task<IHttpActionResult> Inti()
         {
             try
             {
+                //TODO: Inti not sending APIKey as parameter. Check this after!
+                string key = "7A8C7EDC-3084-47D5-AD5A-DF6A128B341C";
+
                 var salesPlatformWebhooRequestUid = Guid.NewGuid();
                 var result = await this.commandBus.Send(new CreateSalesPlatformWebhookRequest(
                     salesPlatformWebhooRequestUid,
@@ -143,12 +148,6 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     Request.Headers.ToString(),
                     Request.Content.ReadAsStringAsync().Result,
                     HttpContext.Current.Request.GetIpAddress()));
-                //if (response.Errors.Any())
-                //{
-                //    return BadRequest(response.Errors);
-                //}
-
-                //return Ok(response.Value);
             }
             catch (DomainException ex)
             {
@@ -171,7 +170,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <summary>Processes the requests.</summary>
         /// <param name="key">The key.</param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpPost]
         [Route("processrequests/{key?}")]
         public async Task<IHttpActionResult> ProcessRequests(string key)
         {

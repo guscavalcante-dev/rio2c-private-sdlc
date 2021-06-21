@@ -69,7 +69,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.SalesPlatformAttendeeDto.AttendeeId,
                 cmd.SalesPlatformAttendeeDto.SalesPlatformUpdateDate,
                 cmd.SalesPlatformAttendeeDto.FirstName,
-                cmd.SalesPlatformAttendeeDto.LastMame,
+                cmd.SalesPlatformAttendeeDto.LastName,
                 cmd.SalesPlatformAttendeeDto.Email,
                 cmd.SalesPlatformAttendeeDto.CellPhone,
                 cmd.SalesPlatformAttendeeDto.JobTitle,

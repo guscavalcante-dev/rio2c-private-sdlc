@@ -1,4 +1,18 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Infra.CrossCutting.SalesPlatforms
+// Author           : Renan Valentim
+// Created          : 06-21-2021
+//
+// Last Modified By : Renan Valentim
+// Last Modified On : 06-21-2021
+// ***********************************************************************
+// <copyright file="IntiSalesPlatformService.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+
+using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using PlataformaRio2C.Domain.Dtos;
@@ -9,10 +23,13 @@ using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Models;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti 
 {
+    /// <summary>
+    /// IntiSalesPlatformService
+    /// </summary>
+    /// <seealso cref="PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ISalesPlatformService" />
     class IntiSalesPlatformService : ISalesPlatformService
     {
-        private string ApiUrl = "https://api.ticketsforfun.byinti.com";
-
+        //private string ApiUrl = "https://api.ticketsforfun.byinti.com";
         private readonly string appKey;
         private readonly SalesPlatformWebhookRequestDto salesPlatformWebhookRequestDto;
 
@@ -32,26 +49,39 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti
                 throw new DomainException("The webhook request is required.");
             }
 
-            var payload = JsonConvert.DeserializeObject<IntiPayload>(salesPlatformWebhookRequestDto.SalesPlatformWebhookRequest.Payload);
+            var payload = this.DeserializePayload(salesPlatformWebhookRequestDto.SalesPlatformWebhookRequest.Payload);
+            if (payload == null)
+            {
+                throw new DomainException("The payload is required.");
+            }
 
-            var listAttendeeDto = new List<SalesPlatformAttendeeDto>();
-            var att = new SalesPlatformAttendeeDto(payload);
-            listAttendeeDto.Add(att);
+            var salesPlatformAttendeeDtos = new List<SalesPlatformAttendeeDto>();
+            salesPlatformAttendeeDtos.Add(new SalesPlatformAttendeeDto(payload));
 
-            //return new Tuple<string, List<SalesPlatformAttendeeDto>>(payload.GetSalesPlatformAttendeeStatus(), listAttendeeDto);
+            return new Tuple<string, List<SalesPlatformAttendeeDto>>(payload.GetSalesPlatformAction(), salesPlatformAttendeeDtos);
 
-            //if (intiSaleOrCancellation.action == "ticket_sold")
+            //switch (payload.Action)
             //{
-               return new Tuple<string, List<SalesPlatformAttendeeDto>>(SalesPlatformAction.OrderPlaced, listAttendeeDto);
-            //}
-            //else if (intiSaleOrCancellation.action == "ticket_canceled")
-            //{                
-            //    return new Tuple<string, List<SalesPlatformAttendeeDto>>(SalesPlatformAction.AttendeeUpdated, listAttendeeDto);
-            //}
-            //else if (intiSaleOrCancellation.action == "participant_updated")
-            //{
-            //    return new Tuple<string, List<SalesPlatformAttendeeDto>>(SalesPlatformAction.AttendeeUpdated, listAttendeeDto);
+            //    // Attendees updates
+            //    case IntiAction.TicketSold:
+            //        return new Tuple<string, List<SalesPlatformAttendeeDto>>(payload.GetSalesPlatformAction(), salesPlatformAttendeeDtos);
+
+            //    // Other Updates
+            //    default:
+            //        throw new DomainException($"Inti action ({payload.Action}) not configured.");
             //}
         }
+
+        #region Private Methods
+
+        /// <summary>Deserializes the payload.</summary>
+        /// <param name="payload">The payload.</param>
+        /// <returns></returns>
+        private IntiPayload DeserializePayload(string payload)
+        {
+            return JsonConvert.DeserializeObject<IntiPayload>(payload);
+        }
+
+        #endregion
     }
 }

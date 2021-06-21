@@ -105,6 +105,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 Tuple<string, List<SalesPlatformAttendeeDto>> salesPlatformResponse;
 
                 #region Get info from api
+
                 var salesPlatformService = this.SalesPlatformServiceFactory.Get(processingRequestDto);
                 salesPlatformResponse = salesPlatformService.ExecuteRequest();
 

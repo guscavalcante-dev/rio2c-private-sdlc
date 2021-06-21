@@ -60,7 +60,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             var salesPlatformWebhookRequest = new SalesPlatformWebhookRequest(
                 cmd.SalesPlatformWebhookRequestUid,
                 salesPlatform,
-                "7A8C7EDC-3084-47D5-AD5A-DF6A128B341C",//"8ed95423-0c36-4dc8-bf86-76aa79882b20", //cmd.WebhookSecurityKey,
+                cmd.WebhookSecurityKey,
                 cmd.Endpoint,
                 cmd.Header,
                 cmd.Payload,
