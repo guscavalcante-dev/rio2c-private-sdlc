@@ -199,14 +199,18 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsAdmin = isAdmin;
         }
 
-        /// <summary>Updates the links.</summary>
+        /// <summary>
+        /// Updates the links.
+        /// </summary>
         /// <param name="imageLink">The image link.</param>
         /// <param name="teaserLink">The teaser link.</param>
         /// <param name="userId">The user identifier.</param>
+        /// <param name="isAdmin">if set to <c>true</c> [is admin].</param>
         public void UpdateLinks(
             string imageLink,
             string teaserLink,
-            int userId)
+            int userId,
+            bool isAdmin)
         {
             this.SynchronizeProjectImageLinks(imageLink, userId);
             this.SynchronizeProjectTeaserLinks(teaserLink, userId);
@@ -214,6 +218,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.UpdateUserId = userId;
             this.UpdateDate = DateTime.UtcNow;
+
+            this.IsAdmin = isAdmin;
         }
 
         /// <summary>Finishes the project.</summary>

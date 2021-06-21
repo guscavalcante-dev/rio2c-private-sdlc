@@ -7640,6 +7640,8 @@
     <Content Include="Areas\Audiovisual\Views\Projects\EditorTemplates\ProjectTitleBaseCommand.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Modals\UpdateInterestModal.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Modals\UpdateInterestForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Modals\UpdateLinksModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Modals\UpdateLinksForm.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

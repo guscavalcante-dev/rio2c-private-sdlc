@@ -465,7 +465,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             try
             {
-                var interestWidgetDto = await this.projectRepo.FindSiteInterestWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
+                var interestWidgetDto = await this.projectRepo.FindAdminInterestWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
                 if (interestWidgetDto == null)
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
@@ -578,115 +578,101 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        //#region Update
+        #region Update
 
-        ///// <summary>Shows the update links modal.</summary>
-        ///// <param name="projectUid">The project uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowUpdateLinksModal(Guid? projectUid)
-        //{
-        //    UpdateProjectLinks cmd;
+        /// <summary>Shows the update links modal.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowUpdateLinksModal(Guid? projectUid)
+        {
+            UpdateProjectLinks cmd;
 
-        //    try
-        //    {
-        //        var linksWidgetDto = await this.projectRepo.FindSiteLinksWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
-        //        if (linksWidgetDto == null)
-        //        {
-        //            throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
-        //        }
+            try
+            {
+                var linksWidgetDto = await this.projectRepo.FindAdminLinksWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
+                if (linksWidgetDto == null)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
+                }
 
-        //        if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(linksWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true)
-        //        {
-        //            throw new DomainException(Texts.ForbiddenErrorMessage);
-        //        }
+                cmd = new UpdateProjectLinks(linksWidgetDto);
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
 
-        //        if (this.EditionDto?.IsProjectSubmitOpen() != true)
-        //        {
-        //            throw new DomainException(Messages.ProjectSubmissionNotOpen);
-        //        }
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/UpdateLinksModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
-        //        if (linksWidgetDto.Project.IsFinished())
-        //        {
-        //            throw new DomainException(Messages.ProjectIsFinishedCannotBeUpdated);
-        //        }
+        /// <summary>Updates the links.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> UpdateLinks(UpdateProjectLinks cmd)
+        {
+            var result = new AppValidationResult();
 
-        //        cmd = new UpdateProjectLinks(linksWidgetDto);
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-        //    }
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Modals/UpdateLinksModal", cmd), divIdOrClass = "#GlobalModalContainer" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+                cmd.UpdatePreSendProperties(
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage,
+                    true);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
 
-        ///// <summary>Updates the links.</summary>
-        ///// <param name="cmd">The command.</param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public async Task<ActionResult> UpdateLinks(UpdateProjectLinks cmd)
-        //{
-        //    var result = new AppValidationResult();
+                //cmd.UpdateModelsAndLists(
+                //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
 
-        //    try
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
+                return Json(new
+                {
+                    status = "error",
+                    message = toastrError?.Message ?? ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/UpdateLinksForm", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
 
-        //        cmd.UpdatePreSendProperties(
-        //            this.UserAccessControlDto.User.Id,
-        //            this.UserAccessControlDto.User.Uid,
-        //            this.EditionDto.Id,
-        //            this.EditionDto.Uid,
-        //            this.UserInterfaceLanguage);
-        //        result = await this.CommandBus.Send(cmd);
-        //        if (!result.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        foreach (var error in result.Errors)
-        //        {
-        //            var target = error.Target ?? "";
-        //            ModelState.AddModelError(target, error.Message);
-        //        }
-        //        var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.UpdatedM) });
+        }
 
-        //        //cmd.UpdateModelsAndLists(
-        //        //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
-
-        //        return Json(new
-        //        {
-        //            status = "error",
-        //            message = toastrError?.Message ?? ex.GetInnerMessage(),
-        //            pages = new List<dynamic>
-        //            {
-        //                new { page = this.RenderRazorViewToString("Modals/UpdateLinksForm", cmd), divIdOrClass = "#form-container" },
-        //            }
-        //        }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-        //    }
-
-        //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.UpdatedM) });
-        //}
-
-        //#endregion
+        #endregion
 
         #endregion
 
