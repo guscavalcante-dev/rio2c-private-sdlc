@@ -4,7 +4,7 @@
 // Created          : 01-24-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-25-2020
+// Last Modified On : 06-21-2021
 // ***********************************************************************
 // <copyright file="audiovisual.meetings.unscheduled.manualschedule.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -444,7 +444,7 @@ var AudiovisualMeetingsManualSchedule = function () {
         });
         MyRio2cCommon.enableProjectSelect2({
             inputIdOrClass: projectUid,
-            url: '/Projects/FindAllByFilters',
+            url: '/Audiovisual/Projects/FindAllByFilters',
             customFilter: 'HasNegotiationNotScheduled',
             buyerOrganizationUid: buyerOrganizationUid,
             placeholder: translations.projectDropdownPlaceholder,
