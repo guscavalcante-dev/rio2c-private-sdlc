@@ -67,11 +67,11 @@
     }
     @if (isAdminFull || isAdminAudiovisual)
     {
-        <!--begin:: Projects for Pitching Edition Count-->
+        <!--begin:: Audiovisual Projects Edition Count-->
         <div class="col-sm-4">
-            <div id="ProjectsPitchingEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+            <div id="AudiovisualProjectsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
         </div>
-        <!--end:: Projects for Pitching Edition Count-->
+        <!--end:: Audiovisual Projects Edition Count-->
     }
     @if (isAdminFull || isCuratorshipMusic)
     {
@@ -89,9 +89,9 @@
     @if (isAdminFull || isAdminAudiovisual)
     {
         @Scripts.Render("~/bundles/js/holdings.editioncount.js")
-        @Scripts.Render("~/bundles/js/organizations.editioncount.js")
+        @Scripts.Render("~/bundles/js/audiovisual.players.editioncount.js")
         @Scripts.Render("~/bundles/js/collaborators.editioncount.js")
-        @Scripts.Render("~/bundles/js/projects.pitching.editioncount.widget.js")
+        @Scripts.Render("~/bundles/js/audiovisual.projects.editioncount.widget.js")
     }
     @if (isAdminFull || isAdminAudiovisual || isCuratorshipAudiovisual)
     {
@@ -113,9 +113,9 @@
             {
                 <text>
                     HoldingsEditionCountWidget.init();
-                    OrganizationsEditionCountWidget.init();
+                    AudiovisualPlayersEditionCountWidget.init();
                     CollaboratorsEditionCountWidget.init();
-                    ProjectsPitchingEditionCountWidget.init();
+                    AudiovisualProjectsEditionCountWidget.init();
                 </text>
             }
             @if (isAdminFull || isAdminAudiovisual || isCuratorshipAudiovisual)

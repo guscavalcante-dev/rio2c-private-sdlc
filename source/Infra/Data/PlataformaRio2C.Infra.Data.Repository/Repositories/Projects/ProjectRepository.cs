@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-25-2020
+// Last Modified On : 06-21-2021
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -301,13 +301,15 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
-        /// <summary>Determines whether the specified is pitching is pitching.</summary>
+        /// <summary>
+        /// Determines whether the specified show pitchings is pitching.
+        /// </summary>
         /// <param name="query">The query.</param>
-        /// <param name="isPitching">if set to <c>true</c> [is pitching].</param>
+        /// <param name="showPitchings">if set to <c>true</c> [show pitchings].</param>
         /// <returns></returns>
-        internal static IQueryable<Project> IsPitching(this IQueryable<Project> query, bool isPitching = true)
+        internal static IQueryable<Project> IsPitching(this IQueryable<Project> query, bool showPitchings = false)
         {
-            if (isPitching)
+            if (showPitchings)
             {
                 query = query.Where(p => p.IsPitching);
             }
@@ -639,20 +641,24 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
-        /// <summary>Finds all pitching base dtos by filters and by page asynchronous.</summary>
+        /// <summary>
+        /// Finds all base dtos by filters and by page asynchronous.
+        /// </summary>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="sortColumns">The sort columns.</param>
         /// <param name="keywords">The keywords.</param>
+        /// <param name="showPitchings">if set to <c>true</c> [show pitchings].</param>
         /// <param name="interestUid">The interest uid.</param>
         /// <param name="languageCode">The language code.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<IPagedList<ProjectBaseDto>> FindAllPitchingBaseDtosByFiltersAndByPageAsync(
+        public async Task<IPagedList<ProjectBaseDto>> FindAllBaseDtosByFiltersAndByPageAsync(
             int page,
             int pageSize,
             List<Tuple<string, string>> sortColumns,
             string keywords,
+            bool showPitchings,
             Guid? interestUid,
             string languageCode,
             int editionId)
@@ -660,7 +666,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId)
                                 .IsFinished()
-                                .IsPitching()
+                                .IsPitching(showPitchings)
                                 .FindByKeywords(keywords)
                                 .FindByInterestUid(interestUid)
                                 .DynamicOrder<Project>(
@@ -681,6 +687,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         Interest = i.Interest,
                                         InterestGroup = i.Interest.InterestGroup
                                     }),
+                                    IsPitching = p.IsPitching,
                                     CreateDate = p.CreateDate,
                                     FinishDate = p.FinishDate
                                 });
@@ -689,15 +696,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                            .ToListPagedAsync(page, pageSize);
         }
 
-        /// <summary>Finds all pitching dtos by filters asynchronous.</summary>
+        /// <summary>
+        /// Finds all dtos by filters asynchronous.
+        /// </summary>
         /// <param name="keywords">The keywords.</param>
+        /// <param name="showPitchings">if set to <c>true</c> [show pitchings].</param>
         /// <param name="interestUid">The interest uid.</param>
         /// <param name="projectUids">The project uids.</param>
         /// <param name="languageCode">The language code.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<List<ProjectDto>> FindAllPitchingDtosByFiltersAsync(
+        public async Task<List<ProjectDto>> FindAllDtosByFiltersAsync(
             string keywords,
+            bool showPitchings,
             Guid? interestUid,
             List<Guid> projectUids,
             string languageCode,
@@ -706,7 +717,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId)
                                 .IsFinished()
-                                .IsPitching()
+                                .IsPitching(showPitchings)
                                 .FindByKeywords(keywords)
                                 .FindByInterestUid(interestUid)
                                 .FindByUids(projectUids)
@@ -764,15 +775,185 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .ToListAsync();
         }
 
-        #region Site Widgets
+        #region Admin Widgets
 
-        /// <summary>Finds the site details dto by project uid asynchronous.</summary>
+        /// <summary>
+        /// Finds the admin details dto by project uid and by edition identifier asynchronous.
+        /// </summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<ProjectDto> FindAdminDetailsDtoByProjectUidAndByEditionIdAsync(Guid projectUid, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByUid(projectUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(p => new ProjectDto
+                            {
+                                Project = p,
+                                ProjectTitleDtos = p.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                {
+                                    ProjectTitle = t,
+                                    Language = t.Language
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the admin main information widget dto by project uid asynchronous.
+        /// </summary>
         /// <param name="projectUid">The project uid.</param>
         /// <returns></returns>
-        public async Task<ProjectDto> FindSiteDetailsDtoByProjectUidAsync(Guid projectUid)
+        public async Task<ProjectDto> FindAdminMainInformationWidgetDtoByProjectUidAsync(Guid projectUid)
         {
             var query = this.GetBaseQuery(true)
                                 .FindByUid(projectUid);
+
+            return await query
+                            .Select(p => new ProjectDto
+                            {
+                                Project = p,
+                                ProjectType = p.ProjectType,
+                                SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                {
+                                    AttendeeOrganization = p.SellerAttendeeOrganization,
+                                    Organization = p.SellerAttendeeOrganization.Organization,
+                                    Edition = p.SellerAttendeeOrganization.Edition
+                                },
+                                ProjectTitleDtos = p.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                {
+                                    ProjectTitle = t,
+                                    Language = t.Language
+                                }),
+                                ProjectLogLineDtos = p.ProjectLogLines.Where(ll => !ll.IsDeleted).Select(ll => new ProjectLogLineDto
+                                {
+                                    ProjectLogLine = ll,
+                                    Language = ll.Language
+                                }),
+                                ProjectSummaryDtos = p.ProjectSummaries.Where(s => !s.IsDeleted).Select(s => new ProjectSummaryDto
+                                {
+                                    ProjectSummary = s,
+                                    Language = s.Language
+                                }),
+                                ProjectProductionPlanDtos = p.ProjectProductionPlans.Where(pp => !pp.IsDeleted).Select(pp => new ProjectProductionPlanDto
+                                {
+                                    ProjectProductionPlan = pp,
+                                    Language = pp.Language
+                                }),
+                                ProjectAdditionalInformationDtos = p.ProjectAdditionalInformations.Where(aa => !aa.IsDeleted).Select(aa => new ProjectAdditionalInformationDto
+                                {
+                                    ProjectAdditionalInformation = aa,
+                                    Language = aa.Language
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the admin interest widget dto by project uid asynchronous.
+        /// </summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        public async Task<ProjectDto> FindAdminInterestWidgetDtoByProjectUidAsync(Guid projectUid)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByUid(projectUid);
+
+            return await query
+                            .Select(p => new ProjectDto
+                            {
+                                Project = p,
+                                ProjectType = p.ProjectType,
+                                ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted).Select(i => new ProjectInterestDto
+                                {
+                                    ProjectInterest = i,
+                                    Interest = i.Interest,
+                                    InterestGroup = i.Interest.InterestGroup
+                                }),
+                                ProjectTargetAudienceDtos = p.ProjectTargetAudiences.Where(ta => !ta.IsDeleted).Select(ta => new ProjectTargetAudienceDto
+                                {
+                                    TargetAudience = ta.TargetAudience
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the admin links widget dto by project uid asynchronous.
+        /// </summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        public async Task<ProjectDto> FindAdminLinksWidgetDtoByProjectUidAsync(Guid projectUid)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByUid(projectUid);
+
+            return await query
+                            .Select(p => new ProjectDto
+                            {
+                                Project = p,
+                                ProjectType = p.ProjectType,
+                                ProjectImageLinkDtos = p.ProjectImageLinks.Where(il => !il.IsDeleted).Select(il => new ProjectImageLinkDto
+                                {
+                                    ProjectImageLink = il
+                                }),
+                                ProjectTeaserLinkDtos = p.ProjectTeaserLinks.Where(tl => !tl.IsDeleted).Select(tl => new ProjectTeaserLinkDto
+                                {
+                                    ProjectTeaserLink = tl
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the admin buyer company widget dto by project uid asynchronous.
+        /// </summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        public async Task<ProjectDto> FindAdminBuyerCompanyWidgetDtoByProjectUidAsync(Guid projectUid)
+        {
+            var query = this.GetBaseQuery(true)
+                                 .FindByUid(projectUid);
+
+            return await query
+                            .Select(p => new ProjectDto
+                            {
+                                Project = p,
+                                ProjectType = p.ProjectType,
+                                ProjectBuyerEvaluationDtos = p.ProjectBuyerEvaluations.Where(be => !be.IsDeleted).Select(be => new ProjectBuyerEvaluationDto
+                                {
+                                    ProjectBuyerEvaluation = be,
+                                    BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                    {
+                                        AttendeeOrganization = be.BuyerAttendeeOrganization,
+                                        Organization = be.BuyerAttendeeOrganization.Organization,
+                                        Edition = be.BuyerAttendeeOrganization.Edition
+                                    },
+                                    ProjectEvaluationStatus = be.ProjectEvaluationStatus,
+                                    ProjectEvaluationRefuseReason = be.ProjectEvaluationRefuseReason
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        #endregion
+
+        #region Site Widgets
+
+        /// <summary>
+        /// Finds the site details dto by project uid asynchronous.
+        /// </summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<ProjectDto> FindSiteDetailsDtoByProjectUidAsync(Guid projectUid, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByUid(projectUid)
+                                .FindByEditionId(editionId, false);
 
             return await query
                             .Select(p => new ProjectDto

@@ -1,0 +1,15 @@
+﻿@model int
+<div class="kt-portlet__body kt-portlet__body--fluid">
+    <div class="kt-widget20">
+        <div class="kt-widget20__content kt-portlet__space-x">
+            <span class="kt-widget20__number kt-font-danger">@Model</span>
+            <span class="kt-widget20__desc">
+                <a href="@Url.Action("Index", "Projects", new { Area = "Audiovisual" })">@Labels.AudiovisualProjects</a> 
+                @Labels.InEditionYear.Replace("{0}", ViewBag.EditionDto.UrlCode.ToString())
+            </span>
+        </div>
+        <div class="kt-widget20__chart" style="height:130px;">
+            <canvas id="AudiovisualProjectsEditionCountChart"></canvas>
+        </div>
+    </div>
+</div>

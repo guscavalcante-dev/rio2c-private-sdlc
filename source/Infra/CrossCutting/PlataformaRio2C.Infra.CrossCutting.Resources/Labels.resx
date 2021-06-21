@@ -2751,4 +2751,16 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Agendar Manualmente</value>
     <comment>Agendar Manualmente</comment>
   </data>
+  <data name="ProducerName" xml:space="preserve">
+    <value>Nome da Produtora</value>
+    <comment>Nome da Produtora</comment>
+  </data>
+  <data name="ProducersRegistered" xml:space="preserve">
+    <value>Produtoras cadastradas</value>
+    <comment>Produtoras cadastradas</comment>
+  </data>
+  <data name="ShowPitchings" xml:space="preserve">
+    <value>Exibir pitchings</value>
+    <comment>Exibir pitchings</comment>
+  </data>
 </root>

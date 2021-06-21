@@ -4,7 +4,7 @@
 // Created          : 11-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-16-2019
+// Last Modified On : 06-21-2021
 // ***********************************************************************
 // <copyright file="UpdateProjectLinksCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,12 +12,10 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
@@ -72,7 +70,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             project.UpdateLinks(cmd.ImageLinks,
                 cmd.TeaserLinks,
-                cmd.UserId);
+                cmd.UserId,
+                cmd.IsAdmin);
             if (!project.IsValid())
             {
                 this.AppValidationResult.Add(project.ValidationResult);

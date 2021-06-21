@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-09-2019
+// Last Modified On : 06-20-2021
 // ***********************************************************************
 // <copyright file="IInterestRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,5 +27,6 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<List<InterestDto>> FindAllDtosByInterestGroupUidAsync(Guid interestGroupUid);
         Task<List<IGrouping<InterestGroup, Interest>>> FindAllGroupedByInterestGroupsAsync();
         Task<List<Interest>> FindAllByUidsAsync(List<Guid> interestsUids);
-    }    
+        Task<List<Interest>> FindAllByInterestGroupUidAsync(Guid interestGroupUid);
+    }
 }

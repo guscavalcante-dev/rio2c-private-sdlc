@@ -3,52 +3,41 @@
 @using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Domain.Statics
 @model List<AttendeeCollaboratorDto>
-@{
-    var adminAccessControlDto = ViewBag.AdminAccessControlDto as AdminAccessControlDto;
-    var hasChangeDataPermission = adminAccessControlDto?.HasAnyCollaboratorType(new[] { CollaboratorType.AdminAudiovisual, CollaboratorType.AdminLogistic }) == true;
-    var hideActions = (bool?)ViewBag.HideActions ?? false;
-}
-<div class="row">
-    <!--begin:Logistic Info Widget-->
-    <div class="col-12">
-        <div class="kt-portlet kt-portlet--tabs mb-0" style="min-height: 250px;">
-            <div class="kt-portlet__head">
-                <div class="kt-portlet__head-label">
-                    <h3 class="kt-portlet__head-title">@(Labels.Agenda)</h3>
-                </div>
-                <div class="kt-portlet__head-toolbar">
-                    <ul class="nav nav-tabs nav-tabs-line nav-tabs-line-right" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#businessround-tab" role="tab">
-                                <i class="la la-calendar-check-o"></i> @Labels.BusinessRound
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#airfare-tab" role="tab">
-                                <i class="la la-plane"></i> @Labels.Airfare
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#conferences-tab" role="tab">
-                                <i class="la la-hotel"></i> @Labels.Conferences
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="kt-portlet__body pt-0 pb-0 pr-3 pl-3">
-                <div class="tab-content">
-                    <div class="tab-pane active" id="businessround-tab" role="tabpanel">
-                        @Html.Partial("~/Areas/Audiovisual/Views/Meetings/Widgets/MeetingsList.cshtml", Model, new ViewDataDictionary() {{ "UserInterfaceLanguage", ViewBag.UserInterfaceLanguage as string }})
-                    </div>
-                    <div class="tab-pane" id="airfare-tab" role="tabpanel">
-                        @Html.Partial("~/Areas/Audiovisual/Views/Meetings/Widgets/LogisticsAirfareList.cshtml", Model, new ViewDataDictionary())
-                    </div>
-                    <div class="tab-pane" id="conferences-tab" role="tabpanel">
-                        @Html.Partial("~/Areas/Audiovisual/Views/Meetings/Widgets/ConferencesList.cshtml", Model, new ViewDataDictionary())
-                    </div>
-                </div>
-            </div>
+
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">@(Labels.Agenda)</h3>
+    </div>
+    <div class="kt-portlet__head-toolbar">
+        <ul class="nav nav-tabs nav-tabs-line nav-tabs-line-right" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#businessround-tab" role="tab">
+                    <i class="la la-calendar-check-o"></i> @Labels.BusinessRound
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#airfare-tab" role="tab">
+                    <i class="la la-plane"></i> @Labels.Airfare
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#conferences-tab" role="tab">
+                    <i class="la la-hotel"></i> @Labels.Conferences
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="kt-portlet__body pt-0 pb-0 pr-3 pl-3">
+    <div class="tab-content">
+        <div class="tab-pane active" id="businessround-tab" role="tabpanel">
+            @Html.Partial("~/Areas/Audiovisual/Views/Meetings/Widgets/MeetingsList.cshtml", Model, new ViewDataDictionary() { { "UserInterfaceLanguage", ViewBag.UserInterfaceLanguage as string } })
+        </div>
+        <div class="tab-pane" id="airfare-tab" role="tabpanel">
+            @Html.Partial("~/Areas/Audiovisual/Views/Meetings/Widgets/LogisticsAirfareList.cshtml", Model, new ViewDataDictionary())
+        </div>
+        <div class="tab-pane" id="conferences-tab" role="tabpanel">
+            @Html.Partial("~/Areas/Audiovisual/Views/Meetings/Widgets/ConferencesList.cshtml", Model, new ViewDataDictionary())
         </div>
     </div>
 </div>

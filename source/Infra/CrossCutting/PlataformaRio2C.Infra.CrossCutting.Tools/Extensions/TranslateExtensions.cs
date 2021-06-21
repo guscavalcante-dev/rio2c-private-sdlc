@@ -4,7 +4,7 @@
 // Created          : 02-12-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-12-2020
+// Last Modified On : 06-20-2021
 // ***********************************************************************
 // <copyright file="TranslateExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -45,6 +45,31 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             }
 
             return splitName[0].Trim();
+        }
+
+        /// <summary>
+        /// Gets the separator translation.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entity">The entity.</param>
+        /// <param name="property">The property.</param>
+        /// <param name="culture">The culture.</param>
+        /// <param name="separator">The separator.</param>
+        /// <returns></returns>
+        public static T GetSeparatorTranslation<T>(this T entity, Expression<Func<T, string>> property, string culture, char separator)
+        {
+            if (!(property.Body is MemberExpression))
+            {
+                throw new ArgumentException("property", "Property isn't a MemberExpression");
+            }
+
+            var member = property.Body as MemberExpression;
+            var type = typeof(T);
+
+            var pInfo = type.GetProperty(member.Member.Name);
+            pInfo?.SetValue(entity, ((string)pInfo.GetValue(entity)).GetSeparatorTranslation(culture, separator));
+
+            return entity;
         }
 
         /// <summary>Gets the separator translation.</summary>

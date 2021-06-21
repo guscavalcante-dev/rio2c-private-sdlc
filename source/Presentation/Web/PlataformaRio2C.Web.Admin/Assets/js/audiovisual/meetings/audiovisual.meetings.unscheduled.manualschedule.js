@@ -514,10 +514,6 @@ var AudiovisualMeetingsManualSchedule = function () {
                 if (typeof (AudiovisualMeetingsEditionUnscheduledCountWidget) !== 'undefined') {
 	                AudiovisualMeetingsEditionUnscheduledCountWidget.init();
                 }
-
-                //if (typeof (AudiovisualMeetingsLogisticsInfoWidget) !== 'undefined') {
-                //    AudiovisualMeetingsLogisticsInfoWidget.init();
-                //}
             },
             onError: function (data) {
                 if (MyRio2cCommon.hasProperty(data, 'pages')) {

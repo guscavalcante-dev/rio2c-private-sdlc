@@ -804,15 +804,15 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     foreach (var negotiationRoomConfigDto in negotiationConfigDto.NegotiationRoomConfigDtos)
                     {
                         // Each automatic table
-                        for (int tableNumber = 1; tableNumber <= negotiationRoomConfigDto.NegotiationRoomConfig.CountManualTables; tableNumber++)
-                        {
+                        //for (int tableNumber = 1; tableNumber <= negotiationRoomConfigDto.NegotiationRoomConfig.CountManualTables; tableNumber++)
+                        //{
                             negotiationTimesSlots.Add(new NegotiationTimeDropdownDto
                             {
                                 StartTime = startDate,
                                 EndTime = startDate.Add(negotiationConfigDto.NegotiationConfig.TimeOfEachRound),
                                 RoundNumber = roundNumber
                             });
-                        }
+                        //}
                     }
                 }
 
@@ -836,15 +836,15 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     foreach (var negotiationRoomConfigDto in negotiationConfigDto.NegotiationRoomConfigDtos)
                     {
                         // Each automatic table
-                        for (int tableNumber = 1; tableNumber <= negotiationRoomConfigDto.NegotiationRoomConfig.CountManualTables; tableNumber++)
-                        {
+                        //for (int tableNumber = 1; tableNumber <= negotiationRoomConfigDto.NegotiationRoomConfig.CountManualTables; tableNumber++)
+                        //{
                             negotiationTimesSlots.Add(new NegotiationTimeDropdownDto
                             {
                                 StartTime = startDate,
                                 EndTime = startDate.Add(negotiationConfigDto.NegotiationConfig.TimeOfEachRound),
                                 RoundNumber = roundNumber
                             });
-                        }
+                        //}
                     }
                 }
 

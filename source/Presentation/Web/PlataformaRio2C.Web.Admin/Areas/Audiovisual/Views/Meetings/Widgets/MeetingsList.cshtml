@@ -7,40 +7,87 @@
     var userInterfaceLanguage = ViewContext.Controller.ViewBag.UserInterfaceLanguage as string;
 }
 <div class="kt-widget4">
-    @if (Model != null && Model.Any(ac => ac.NegotiationDtos != null && ac.NegotiationDtos.Count() > 0))
+    @if (Model != null &&
+        (Model.Any(ac => (ac.BuyerNegotiationDtos != null && ac.BuyerNegotiationDtos.Count() > 0)
+                     || (ac.SellerNegotiationDtos != null && ac.SellerNegotiationDtos.Count() > 0))))
     {
         <table class="table table-sm table-head-bg-brand table-body-scroll table-striped">
             <thead class="thead-inverse">
                 <tr>
-                    <th class="col-md-3">@Labels.Player</th>
+                    <th class="col-md-3">@Labels.Company</th>
                     <th class="col-md-3">@Labels.Project</th>
-                    <th class="col-md-3">@Labels.Producer</th>
+                    @*<th class="col-md-3">@Labels.Producer</th>*@
                     <th class="text-center">@Labels.StartDate</th>
                     <th class="text-center">@Labels.EndDate</th>
                 </tr>
             </thead>
             <tbody class="rio2c-scroll" style="height: 150px;">
-                @foreach (var attendeeCollaboratorDto in Model.Where(ac => ac.NegotiationDtos != null && ac.NegotiationDtos.Count() > 0))
-                {
-                    foreach (var negotiationDto in attendeeCollaboratorDto.NegotiationDtos)
+                @{
+                    var buyerAttendeeCollaboratorDto = Model.FirstOrDefault(ac => ac.BuyerNegotiationDtos != null && ac.BuyerNegotiationDtos.Count() > 0);
+                    if (buyerAttendeeCollaboratorDto != null)
                     {
-                        <tr>
-                            <td class="col-md-3">
-                                @(negotiationDto.ProjectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.TradeName)
-                            </td>
-                            <td class="col-md-3">
-                                @(negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.GetTitleDtoByLanguageCode(userInterfaceLanguage)?.ProjectTitle?.Value ?? "-")
-                            </td>
-                            <td class="col-md-3">
-                                @(negotiationDto.ProjectBuyerEvaluationDto.ProjectDto.SellerAttendeeOrganizationDto.Organization.Name)
-                            </td>
-                            <td class="text-center">
-                                @negotiationDto.Negotiation.StartDate.ToUserTimeZone().ToStringHourMinute()
-                            </td>
-                            <td class="text-center">
-                                @negotiationDto.Negotiation.EndDate.ToUserTimeZone().ToStringHourMinute()
-                            </td>
-                        </tr>
+                        foreach (var negotiationDto in buyerAttendeeCollaboratorDto.BuyerNegotiationDtos)
+                        {
+                            <tr>
+                                <td class="col-md-3">
+                                    @(negotiationDto.ProjectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.TradeName)
+                                    <div class="row col-md-12">
+                                        <span class="kt-badge kt-badge--inline kt-badge--info">
+                                            @(Labels.Player)
+                                        </span>
+                                    </div>
+                                </td>
+                                <td class="col-md-3">
+                                    @(negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.GetTitleDtoByLanguageCode(userInterfaceLanguage)?.ProjectTitle?.Value ?? "-")
+                                </td>
+                                <td class="text-center">
+                                    @negotiationDto.Negotiation.StartDate.ToUserTimeZone().ToStringHourMinute()
+                                </td>
+                                <td class="text-center">
+                                    @negotiationDto.Negotiation.EndDate.ToUserTimeZone().ToStringHourMinute()
+                                </td>
+                            </tr>
+                        }
+                    }
+
+                    var sellerAttendeeCollaboratorDto = Model.FirstOrDefault(ac => ac.SellerNegotiationDtos != null && ac.SellerNegotiationDtos.Count() > 0);
+                    if (sellerAttendeeCollaboratorDto != null)
+                    {
+                        var filteredSellerNegotiationDtos = sellerAttendeeCollaboratorDto.SellerNegotiationDtos;
+
+                        if (buyerAttendeeCollaboratorDto?.BuyerNegotiationDtos != null && buyerAttendeeCollaboratorDto?.BuyerNegotiationDtos.Count() > 0)
+                        {
+                            filteredSellerNegotiationDtos = sellerAttendeeCollaboratorDto.SellerNegotiationDtos.Where(sndto => !buyerAttendeeCollaboratorDto.BuyerNegotiationDtos.Select(bndto => bndto.Negotiation.Id).Contains(sndto.Negotiation.Id));
+                        }
+
+                        foreach (var negotiationDto in filteredSellerNegotiationDtos)
+                        {
+                            <tr>
+                                @*<td class="col-md-3">
+                                        @(negotiationDto.ProjectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.TradeName)
+                                    </td>*@
+                                <td class="col-md-3">
+                                    @(negotiationDto.ProjectBuyerEvaluationDto.ProjectDto.SellerAttendeeOrganizationDto.Organization.Name)
+                                    <div class="row col-md-12">
+                                        <span class="kt-badge kt-badge--inline kt-badge--info">
+                                            @(Labels.Producer)
+                                        </span>
+                                    </div>
+                                </td>
+                                <td class="col-md-3">
+                                    @(negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.GetTitleDtoByLanguageCode(userInterfaceLanguage)?.ProjectTitle?.Value ?? "-")
+                                </td>
+                                @*<td class="col-md-3">
+                                        @(negotiationDto.ProjectBuyerEvaluationDto.ProjectDto.SellerAttendeeOrganizationDto.Organization.Name)
+                                    </td>*@
+                                <td class="text-center">
+                                    @negotiationDto.Negotiation.StartDate.ToUserTimeZone().ToStringHourMinute()
+                                </td>
+                                <td class="text-center">
+                                    @negotiationDto.Negotiation.EndDate.ToUserTimeZone().ToStringHourMinute()
+                                </td>
+                            </tr>
+                        }
                     }
                 }
             </tbody>

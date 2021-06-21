@@ -4,7 +4,7 @@
 // Created          : 12-13-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 06-20-2021
 // ***********************************************************************
 // <copyright file="ProjectBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,6 +28,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public Guid ProducerUid { get; set; }
         public List<string> Genre { get; set; }
         public IEnumerable<ProjectInterestDto> Genres => this.GetAllInterestsByInterestGroupUid(InterestGroup.Genre.Uid);
+        public bool? IsPitching { get; set; }
         public DateTimeOffset CreateDate { get; set; }
         public DateTimeOffset? FinishDate { get; set; }
 

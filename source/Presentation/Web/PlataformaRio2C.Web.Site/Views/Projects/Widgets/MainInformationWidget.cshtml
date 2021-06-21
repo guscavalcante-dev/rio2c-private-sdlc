@@ -33,9 +33,9 @@
                     <span class="kt-widget__username">
                         @(Model.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value ?? "-")
                         @*@if (Model.SellerAttendeeOrganizationDto?.AttendeeOrganization.OnboardingFinishDate.HasValue) //Show if approved by any player
-                        {
-                            <i class="flaticon2-correct"></i>
-                        }*@
+                {
+                    <i class="flaticon2-correct"></i>
+                }*@
                     </span>
                     @if (isCollaborator && isProjectSubmissionOpen && !isProjectFinished)
                     {
@@ -53,6 +53,12 @@
                         @:- @(Model.SellerAttendeeOrganizationDto?.Organization.Document)
                     }
                 </div>
+                @if (isCollaborator && Model.Project?.IsPitching == true)
+                {
+                    <div class="kt-widget__subhead pt-0 mt-0">
+                        <span class="kt-badge kt-badge--inline kt-badge--info">@Labels.Pitching</span>
+                    </div>
+                }
                 <div class="kt-widget__info" style="display: block;">
                     @{
                         var logLineDto = Model.GetLogLineDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
@@ -142,15 +148,6 @@
                     <div class="kt-widget__details">
                         <span class="kt-widget__title">@Labels.AdditionalInformation</span>
                         <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Html.Raw(additionalInformationDto.ProjectAdditionalInformation?.Value?.Replace("\n", "<br/>") ?? "-"))</span></span>
-                    </div>
-                </div>
-            }
-            @if (isCollaborator)
-            {
-                <div class="kt-widget__item w-50">
-                    <div class="kt-widget__details">
-                        <span class="kt-widget__title">Pitching</span>
-                        <span class="kt-widget__value"><span>@(Model.Project?.IsPitching == true ? Labels.Yes : Labels.No)</span></span>
                     </div>
                 </div>
             }

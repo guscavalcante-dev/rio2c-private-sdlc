@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-09-2019
+// Last Modified On : 06-20-2021
 // ***********************************************************************
 // <copyright file="InterestRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -170,6 +170,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByUids(interestsUids);
 
             return await query.ToListAsync();
+        }
+
+        /// <summary>
+        /// Finds all by interest group uid asynchronous.
+        /// </summary>
+        /// <param name="interestGroupUid">The interest group uid.</param>
+        /// <returns></returns>
+        public async Task<List<Interest>> FindAllByInterestGroupUidAsync(Guid interestGroupUid)
+        {
+            var query = this.GetBaseQuery()
+                .FindByInterestGroupUid(interestGroupUid);
+
+            return await query
+                .Order()
+                .ToListAsync();
         }
 
         #region Old

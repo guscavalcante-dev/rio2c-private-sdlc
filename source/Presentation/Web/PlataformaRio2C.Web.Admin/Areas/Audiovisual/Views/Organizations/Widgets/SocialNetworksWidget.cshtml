@@ -1,0 +1,117 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model AttemdeeOrganizationSiteDetailsDto
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+            @Labels.SocialNetworks
+        </h3>
+    </div>
+    @*@if (isCollaborator)
+    {*@
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-actions">
+                <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="AudiovisualOrganizationsSocialNetworksWidget.showUpdateModal();">
+                    <i class="flaticon2-edit"></i>
+                </button>
+            </div>
+        </div>
+    @*}*@
+</div>
+<div class="kt-portlet__body">
+    <div class="row">
+        <div class="col-md-6 mt-20">
+            <h3 class="kt-heading kt-heading--sm mb-0 mt-0">@Labels.Website</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @if (!string.IsNullOrEmpty(Model.Organization?.Website))
+                    {
+                        <a href="@Model.Organization.Website.GetUrlWithProtocol()" class="btn btn-icon btn-circle btn-label-google" target="_blank">
+                            <i class="flaticon2-link"></i>
+                        </a>
+                        <a href="@Model.Organization.Website.GetUrlWithProtocol()" target="_blank">@Model.Organization.Website</a>
+                    }
+                    else
+                    {
+                        @:-
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mt-20">
+            <h3 class="kt-heading kt-heading--sm mb-0 mt-0">LinkedIn</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @if (!string.IsNullOrEmpty(Model.Organization?.Linkedin))
+                    {
+                        <a href="@Model.Organization.Linkedin.GetLinkedinUrl()" class="btn btn-icon btn-circle btn-label-linkedin" target="_blank">
+                            <i class="socicon-linkedin"></i>
+                        </a>
+                        <a href="@Model.Organization.Linkedin.GetLinkedinUrl()" target="_blank">@Model.Organization.Linkedin</a>
+                    }
+                    else
+                    {
+                        @:-
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 mt-20">
+            <h3 class="kt-heading kt-heading--sm mb-0 mt-0">Twitter</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @if (!string.IsNullOrEmpty(Model.Organization?.Twitter))
+                    {
+                        <a href="@Model.Organization.Twitter.GetTwitterUrl()" class="btn btn-icon btn-circle btn-label-twitter" target="_blank">
+                            <i class="socicon-twitter"></i>
+                        </a>
+                        <a href="@Model.Organization.Twitter.GetTwitterUrl()" target="_blank">@Model.Organization.Twitter</a>
+                    }
+                    else
+                    {
+                        @:-
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mt-20">
+            <h3 class="kt-heading kt-heading--sm mb-0 mt-0">Instagram</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @if (!string.IsNullOrEmpty(Model.Organization?.Instagram))
+                    {
+                        <a href="@Model.Organization.Instagram.GetInstagramUrl()" class="btn btn-icon btn-circle btn-label-instagram" target="_blank">
+                            <i class="socicon-instagram"></i>
+                        </a>
+                        <a href="@Model.Organization.Instagram.GetInstagramUrl()" target="_blank">@Model.Organization.Instagram</a>
+                    }
+                    else
+                    {
+                        @:-
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 mt-20">
+            <h3 class="kt-heading kt-heading--sm mb-0 mt-0">Youtube</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @if (!string.IsNullOrEmpty(Model.Organization?.Youtube))
+                    {
+                        <a href="@Model.Organization.Youtube.GetUrlWithProtocol()" class="btn btn-icon btn-circle btn-label-youtube" target="_blank">
+                            <i class="socicon-youtube"></i>
+                        </a>
+                        <a href="@Model.Organization.Youtube.GetUrlWithProtocol()" target="_blank">@Model.Organization.Youtube</a>
+                    }
+                    else
+                    {
+                        @:-
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

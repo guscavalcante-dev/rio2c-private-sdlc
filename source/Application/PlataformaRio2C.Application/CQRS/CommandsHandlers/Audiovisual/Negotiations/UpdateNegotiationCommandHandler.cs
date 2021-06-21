@@ -72,14 +72,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #region Overbooking Validations
 
-            var negotiationsGroupedByRoomAndStartDate = negotiationsInThisRoom.GroupBy(n => n.StartDate.ToUserTimeZone());
-            var hasNoMoreTablesAvailable = negotiationsGroupedByRoomAndStartDate.Any(n => n.Count(w => w.StartDate.ToUserTimeZone() == startDatePreview) >= negotiationRoomConfig.CountManualTables);
+            var negotiationsGroupedByRoomAndStartDate = negotiationsInThisRoom.GroupBy(n => n.StartDate);
+            var hasNoMoreTablesAvailable = negotiationsGroupedByRoomAndStartDate.Any(n => n.Count(w => w.StartDate == startDatePreview) >= negotiationRoomConfig.CountManualTables);
             if (hasNoMoreTablesAvailable)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(
-                    Messages.NoMoreTablesAvailableAtTheRoomAndStartTime, 
-                    cmd.StartTime, 
-                    negotiationRoomConfig.Room.GetRoomNameByLanguageCode(cmd.UserInterfaceLanguage)), 
+                    Messages.NoMoreTablesAvailableAtTheRoomAndStartTime,
+                    cmd.StartTime,
+                    negotiationRoomConfig.Room.GetRoomNameByLanguageCode(cmd.UserInterfaceLanguage)),
                         new string[] { "ToastrError" }));
             }
 
@@ -88,10 +88,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             if (hasPlayerScheduledNegotiationsAtThisTime)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(
-                    Messages.HasAlreadyBusinessRoundScheduled, 
+                    Messages.HasAlreadyBusinessRoundScheduled,
                     Labels.TheM,
                     Labels.Player,
-                    ($"{startDatePreview.ToUserTimeZone().ToStringHourMinute()} - {endDatePreview.ToUserTimeZone().ToShortTimeString()}")), 
+                    ($"{startDatePreview.ToUserTimeZone().ToStringHourMinute()} - {endDatePreview.ToUserTimeZone().ToShortTimeString()}")),
                         new string[] { "ToastrError" }));
             }
 
@@ -99,10 +99,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             if (hasProducerScheduledNegotiationsAtThisTime)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(
-                    Messages.HasAlreadyBusinessRoundScheduled, 
-                    Labels.TheF, 
+                    Messages.HasAlreadyBusinessRoundScheduled,
+                    Labels.TheF,
                     Labels.Producer,
-                    ($"{startDatePreview.ToUserTimeZone().ToStringHourMinute()} - {endDatePreview.ToUserTimeZone().ToShortTimeString()}")), 
+                    ($"{startDatePreview.ToUserTimeZone().ToStringHourMinute()} - {endDatePreview.ToUserTimeZone().ToShortTimeString()}")),
                         new string[] { "ToastrError" }));
             }
 
@@ -114,7 +114,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
-            var negotiationsInThisRoomAndStartDate = negotiationsInThisRoom.Where(n => n.StartDate.ToUserTimeZone() == startDatePreview).ToList();
+            var negotiationsInThisRoomAndStartDate = negotiationsInThisRoom.Where(n => n.StartDate == startDatePreview).ToList();
             
             var negotiation = await this.GetNegotiationByUid(cmd.NegotiationUid);
             negotiation.Update(

@@ -4,7 +4,7 @@
 // Created          : 11-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-18-2019
+// Last Modified On : 06-21-2021
 // ***********************************************************************
 // <copyright file="UpdateProjectMainInformation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -106,25 +106,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Initializes a new instance of the <see cref="UpdateProjectMainInformation"/> class.</summary>
         public UpdateProjectMainInformation()
         {
-        }
-            
-        /// <summary>Updates the pre send properties.</summary>
-        /// <param name="projectTypeUid">The project type uid.</param>
-        /// <param name="userId">The user identifier.</param>
-        /// <param name="userUid">The user uid.</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <param name="editionUid">The edition uid.</param>
-        /// <param name="userInterfaceLanguage">The user interface language.</param>
-        public void UpdatePreSendProperties(
-            Guid projectTypeUid,
-            int userId,
-            Guid userUid,
-            int? editionId,
-            Guid? editionUid,
-            string userInterfaceLanguage)
-        {
-            this.ProjectTypeUid = projectTypeUid;
-            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
         }
 
         #region Private Methods

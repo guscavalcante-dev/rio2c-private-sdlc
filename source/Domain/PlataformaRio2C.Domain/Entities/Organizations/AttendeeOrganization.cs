@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 06-21-2021
 // ***********************************************************************
 // <copyright file="AttendeeOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -86,9 +86,11 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.DeleteOrganizationType(organizationType, userId);
             this.DeleteAttendeeOrganizationCollaborators(userId);
+            this.DeleteSellProjects(userId);
 
             if (this.FindAllAttendeeOrganizationTypesNotDeleted(organizationType)?.Any() != true
-                && this.FindAllAttendeeOrganizationCollaboratorsNotDeleted()?.Any() != true)
+                && this.FindAllAttendeeOrganizationCollaboratorsNotDeleted()?.Any() != true
+                && this.FindAllSellProjectsNotDeleted()?.Any() != true)
             {
                 this.IsDeleted = true;
             }
@@ -97,10 +99,13 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
         }
 
-        /// <summary>Restores the specified organization type.</summary>
+        /// <summary>
+        /// Restores the specified organization type.
+        /// </summary>
         /// <param name="organizationType">Type of the organization.</param>
         /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
         /// <param name="apiHighlightPosition">The API highlight position.</param>
+        /// <param name="isVirtualMeeting">The is virtual meeting.</param>
         /// <param name="userId">The user identifier.</param>
         public void Restore(OrganizationType organizationType, bool? isApiDisplayEnabled, int? apiHighlightPosition, bool? isVirtualMeeting, int userId)
         {
@@ -335,6 +340,30 @@ namespace PlataformaRio2C.Domain.Entities
         public Project GetLastCreatedProject()
         {
             return this.SellProjects?.OrderByDescending(p => p.CreateDate).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Deletes the sell projects.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteSellProjects(int userId)
+        {
+            var sellProjects = this.FindAllSellProjectsNotDeleted();
+            if (sellProjects?.Any() != true)
+            {
+                return;
+            }
+
+            sellProjects.ForEach(sp => sp.Delete(userId, true));
+        }
+
+        /// <summary>
+        /// Finds all sell projects not deleted.
+        /// </summary>
+        /// <returns></returns>
+        private List<Project> FindAllSellProjectsNotDeleted()
+        {
+            return this.SellProjects?.Where(sp => !sp.IsDeleted)?.ToList();
         }
 
         #region Projects Counter

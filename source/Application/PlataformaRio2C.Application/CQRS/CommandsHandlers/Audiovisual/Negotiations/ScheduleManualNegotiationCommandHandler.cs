@@ -72,8 +72,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #region Overbooking Validations
 
-            var negotiationsGroupedByRoomAndStartDate = negotiationsInThisRoom.GroupBy(n => n.StartDate.ToUserTimeZone());
-            var hasNoMoreTablesAvailable = negotiationsGroupedByRoomAndStartDate.Any(n => n.Count(w => w.StartDate.ToUserTimeZone() == startDatePreview) >= negotiationRoomConfig.CountManualTables);
+            var negotiationsGroupedByRoomAndStartDate = negotiationsInThisRoom.GroupBy(n => n.StartDate);
+            var hasNoMoreTablesAvailable = negotiationsGroupedByRoomAndStartDate.Any(n => n.Count(w => w.StartDate == startDatePreview) >= negotiationRoomConfig.CountManualTables);
             if (hasNoMoreTablesAvailable)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(
@@ -115,7 +115,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             var negotiationUid = Guid.NewGuid();
-            var negotiationsInThisRoomAndStartDate = negotiationsInThisRoom.Where(n => n.StartDate.ToUserTimeZone() == startDatePreview).ToList();
+            var negotiationsInThisRoomAndStartDate = negotiationsInThisRoom.Where(n => n.StartDate == startDatePreview).ToList();
 
             var negotiation = new Negotiation(
                 cmd.EditionId.Value,

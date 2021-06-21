@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-28-2020
+// Last Modified On : 06-21-2021
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -165,7 +165,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return RedirectToAction("Index", "Projects", new { Area = "" });
             }
 
-            var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(id ?? Guid.Empty);
+            var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(id ?? Guid.Empty, this.EditionDto.Id);
             if (projectDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
@@ -243,7 +243,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 {
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
-
 
                 if (this.EditionDto?.IsProjectSubmitOpen() != true)
                 {
@@ -1595,7 +1594,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return RedirectToAction("Index", "Projects", new { Area = "" });
             }
 
-            var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(id ?? Guid.Empty);
+            var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(id ?? Guid.Empty, this.EditionDto.Id);
             if (projectDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
@@ -1684,7 +1683,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
 
-                var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(projectUid ?? Guid.Empty);
+                var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(projectUid ?? Guid.Empty, this.EditionDto.Id);
                 if (projectDto == null)
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
@@ -1761,7 +1760,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
 
                 cmd.UpdateModelsAndLists(
-                    await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(cmd.ProjectUid ?? Guid.Empty),
+                    await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(cmd.ProjectUid ?? Guid.Empty, this.EditionDto.Id),
                     this.UserAccessControlDto?.EditionAttendeeOrganizations?.ToList());
 
                 return Json(new
@@ -1807,7 +1806,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
 
-                var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(projectUid ?? Guid.Empty);
+                var projectDto = await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(projectUid ?? Guid.Empty, this.EditionDto.Id);
                 if (projectDto == null)
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
@@ -1885,7 +1884,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
 
                 cmd.UpdateModelsAndLists(
-                    await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(cmd.ProjectUid ?? Guid.Empty),
+                    await this.projectRepo.FindSiteDetailsDtoByProjectUidAsync(cmd.ProjectUid ?? Guid.Empty, this.EditionDto.Id),
                     this.UserAccessControlDto?.EditionAttendeeOrganizations?.ToList(),
                     await this.projectEvaluationRefuseReasonRepo.FindAllByProjectTypeUidAsync(ProjectType.Audiovisual.Uid));
 

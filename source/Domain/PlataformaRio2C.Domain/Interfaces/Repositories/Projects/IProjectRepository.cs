@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-25-2020
+// Last Modified On : 06-21-2021
 // ***********************************************************************
 // <copyright file="IProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,13 +25,25 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IProjectRepository</summary>
     public interface IProjectRepository : IRepository<Project>
     {
-        #region Site Widgets
-
         Task<List<ProjectDto>> FindAllDtosToSellAsync(Guid attendeeOrganizationUid, bool showAll);
         Task<IPagedList<ProjectDto>> FindAllDtosToEvaluateAsync(Guid attendeeCollaboratorUid, string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int page, int pageSize);
-        Task<IPagedList<ProjectBaseDto>> FindAllPitchingBaseDtosByFiltersAndByPageAsync(int page, int pageSize, List<Tuple<string, string>> sortColumns, string keywords, Guid? interestUid, string languageCode, int editionId);
-        Task<List<ProjectDto>> FindAllPitchingDtosByFiltersAsync(string keywords, Guid? interestUid, List<Guid> projectUids, string languageCode, int editionId);
-        Task<ProjectDto> FindSiteDetailsDtoByProjectUidAsync(Guid projectUid);
+        Task<IPagedList<ProjectBaseDto>> FindAllBaseDtosByFiltersAndByPageAsync(int page, int pageSize, List<Tuple<string, string>> sortColumns, string keywords, bool showPitchings, Guid? interestUid, string languageCode, int editionId);
+        Task<List<ProjectDto>> FindAllDtosByFiltersAsync(string keywords, bool showPitchings, Guid? interestUid, List<Guid> projectUids, string languageCode, int editionId);
+        Task<int> CountAllByDataTable(int editionId, bool showAllEditions = false);
+
+        #region Admin Widgets
+
+        Task<ProjectDto> FindAdminDetailsDtoByProjectUidAndByEditionIdAsync(Guid projectUid, int editionId);
+        Task<ProjectDto> FindAdminMainInformationWidgetDtoByProjectUidAsync(Guid projectUid);
+        Task<ProjectDto> FindAdminInterestWidgetDtoByProjectUidAsync(Guid projectUid);
+        Task<ProjectDto> FindAdminLinksWidgetDtoByProjectUidAsync(Guid projectUid);
+        Task<ProjectDto> FindAdminBuyerCompanyWidgetDtoByProjectUidAsync(Guid projectUid);
+
+        #endregion
+
+        #region Site Widgets
+
+        Task<ProjectDto> FindSiteDetailsDtoByProjectUidAsync(Guid projectUid, int editionId);
         Task<ProjectDto> FindSiteMainInformationWidgetDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteInterestWidgetDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteLinksWidgetDtoByProjectUidAsync(Guid projectUid);
@@ -39,10 +51,10 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<ProjectDto> FindSiteDuplicateDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteBuyerEvaluationWidgetDtoByProjectUidAsync(Guid projectUid, Guid attendeeCollaboratorUid);
         Task<ProjectDto> FindDtoToEvaluateAsync(Guid attendeeCollaboratorUid, Guid projectUid);
-        Task<int> CountAllByDataTable(int editionId, bool showAllEditions = false);
         IEnumerable<AudiovisualProjectSubscriptionDto> FindAudiovisualSubscribedProjectsDtosByFilter(string keywords, List<Guid> interestUids, int editionId, bool isPitching, List<Guid> targetAudienceUids, DateTime? startDate, DateTime? endDate, bool showAllEditions = false);
         Task<IPagedList<AudiovisualProjectSubscriptionDto>> FindAudiovisualSubscribedProjectsDtosByFilterAndByPageAsync(string keywords, List<Guid> interestUids, int editionId, bool isPitching, List<Guid> targetAudienceUids, DateTime? startDate, DateTime? endDate, int page, int pageSize, bool showAllEditions = false);
         Task<List<AudiovisualProjectSubscriptionDto>> FindAudiovisualSubscribedProjectsDtosByFilterAsync(string keywords, List<Guid> interestUids, int editionId, bool isPitching, List<Guid> targetAudienceUids, DateTime? startDate, DateTime? endDate, bool showAllEditions = false);
+
         #endregion
 
         #region Dropdown

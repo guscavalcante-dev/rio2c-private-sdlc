@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 06-21-2021
 // ***********************************************************************
 // <copyright file="Project.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -61,6 +61,8 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<ProjectInterest> ProjectInterests { get; private set; }
         public virtual ICollection<ProjectTargetAudience> ProjectTargetAudiences { get; private set; }
         public virtual ICollection<ProjectBuyerEvaluation> ProjectBuyerEvaluations { get; private set; }
+
+        private bool IsAdmin = false;
 
         /// <summary>Initializes a new instance of the <see cref="Project"/> class.</summary>
         /// <param name="projectType">Type of the project.</param>
@@ -140,7 +142,9 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Updates the main information.</summary>
+        /// <summary>
+        /// Updates the main information.
+        /// </summary>
         /// <param name="totalPlayingTime">The total playing time.</param>
         /// <param name="numberOfEpisodes">The number of episodes.</param>
         /// <param name="eachEpisodePlayingTime">The each episode playing time.</param>
@@ -155,6 +159,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="projectProductionPlans">The project production plans.</param>
         /// <param name="projectAdditionalInformations">The project additional informations.</param>
         /// <param name="userId">The user identifier.</param>
+        /// <param name="isAdmin">if set to <c>true</c> [is admin].</param>
         public void UpdateMainInformation(
             string totalPlayingTime,
             int? numberOfEpisodes,
@@ -169,7 +174,8 @@ namespace PlataformaRio2C.Domain.Entities
             List<ProjectSummary> projectSummaries,
             List<ProjectProductionPlan> projectProductionPlans,
             List<ProjectAdditionalInformation> projectAdditionalInformations,
-            int userId)
+            int userId,
+            bool isAdmin)
         {
             this.TotalPlayingTime = totalPlayingTime;
             this.NumberOfEpisodes = numberOfEpisodes;
@@ -189,16 +195,22 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.UpdateUserId = userId;
             this.UpdateDate = DateTime.UtcNow;
+
+            this.IsAdmin = isAdmin;
         }
 
-        /// <summary>Updates the links.</summary>
+        /// <summary>
+        /// Updates the links.
+        /// </summary>
         /// <param name="imageLink">The image link.</param>
         /// <param name="teaserLink">The teaser link.</param>
         /// <param name="userId">The user identifier.</param>
+        /// <param name="isAdmin">if set to <c>true</c> [is admin].</param>
         public void UpdateLinks(
             string imageLink,
             string teaserLink,
-            int userId)
+            int userId,
+            bool isAdmin)
         {
             this.SynchronizeProjectImageLinks(imageLink, userId);
             this.SynchronizeProjectTeaserLinks(teaserLink, userId);
@@ -206,6 +218,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.UpdateUserId = userId;
             this.UpdateDate = DateTime.UtcNow;
+
+            this.IsAdmin = isAdmin;
         }
 
         /// <summary>Finishes the project.</summary>
@@ -234,19 +248,41 @@ namespace PlataformaRio2C.Domain.Entities
         /// <returns></returns>
         public string GetTitleByLanguageCode(string culture)
         {
-            return this.ProjectTitles?.FirstOrDefault(ptd => ptd.Language.Code?.ToLowerInvariant() == culture?.ToLowerInvariant()).Value;
+            return this.ProjectTitles?.FirstOrDefault(ptd => ptd.Language.Code?.ToLowerInvariant() == culture?.ToLowerInvariant())?.Value;
+        }
+
+        /// <summary>
+        /// Deletes the specified user identifier.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="isAdmin">if set to <c>true</c> [is admin].</param>
+        public void Delete(
+            int userId,
+            bool isAdmin)
+        {
+            this.DeleteProjectBuyerEvaluations(userId);
+
+            this.IsDeleted = true;
+            this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.UtcNow;
+
+            this.IsAdmin = isAdmin;
         }
 
         #region Buyer Evaluations
 
-        /// <summary>Creates the project buyer evaluation.</summary>
+        /// <summary>
+        /// Creates the project buyer evaluation.
+        /// </summary>
         /// <param name="buyerAttendeeOrganization">The buyer attendee organization.</param>
         /// <param name="projectEvaluationStatus">The project evaluation status.</param>
         /// <param name="userId">The user identifier.</param>
+        /// <param name="isAdmin">if set to <c>true</c> [is admin].</param>
         public void CreateProjectBuyerEvaluation(
             AttendeeOrganization buyerAttendeeOrganization,
             ProjectEvaluationStatus projectEvaluationStatus,
-            int userId)
+            int userId,
+            bool isAdmin)
         {
             if (this.ProjectBuyerEvaluations == null)
             {
@@ -268,14 +304,20 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.UpdateUserId = userId;
             this.UpdateDate = DateTime.UtcNow;
+
+            this.IsAdmin = isAdmin;
         }
 
-        /// <summary>Deletes the project buyer evaluation.</summary>
+        /// <summary>
+        /// Deletes the project buyer evaluation.
+        /// </summary>
         /// <param name="buyerAttendeeOrganization">The buyer attendee organization.</param>
         /// <param name="userId">The user identifier.</param>
+        /// <param name="isAdmin">if set to <c>true</c> [is admin].</param>
         public void DeleteProjectBuyerEvaluation(
             AttendeeOrganization buyerAttendeeOrganization,
-            int userId)
+            int userId,
+            bool isAdmin)
         {
             var buyerEvaluation = this.GetProjectBuyerEvaluationByAttendeeOrganizationUid(buyerAttendeeOrganization?.Uid ?? Guid.Empty);
             buyerEvaluation?.Delete(userId);
@@ -285,6 +327,25 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.UpdateUserId = userId;
             this.UpdateDate = DateTime.UtcNow;
+
+            this.IsAdmin = isAdmin;
+        }
+
+        /// <summary>
+        /// Deletes the project buyer evaluations.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteProjectBuyerEvaluations(int userId)
+        {
+            var buyerEvaluations = this.FindAllProjectBuyerEvaluationsNotDeleted();
+            if (buyerEvaluations?.Any() != true)
+            {
+                return;
+            }
+
+            buyerEvaluations.ForEach(be => be.Delete(userId));
+
+            this.UpdateProjectBuyerEvaluationCounts();
         }
 
         /// <summary>Updates the project buyer evaluation counts.</summary>
@@ -338,7 +399,16 @@ namespace PlataformaRio2C.Domain.Entities
         /// <returns></returns>
         private ProjectBuyerEvaluation GetProjectBuyerEvaluationByAttendeeOrganizationUid(Guid attendeeOrganizationUid)
         {
-            return this.ProjectBuyerEvaluations?.FirstOrDefault(be => be.BuyerAttendeeOrganization.Uid == attendeeOrganizationUid);
+            return this.ProjectBuyerEvaluations?.FirstOrDefault(pbe => pbe.BuyerAttendeeOrganization.Uid == attendeeOrganizationUid);
+        }
+
+        /// <summary>
+        /// Finds all project buyer evaluations not deleted.
+        /// </summary>
+        /// <returns></returns>
+        private List<ProjectBuyerEvaluation> FindAllProjectBuyerEvaluationsNotDeleted()
+        {
+            return this.ProjectBuyerEvaluations?.Where(pbe => !pbe.IsDeleted)?.ToList();
         }
 
         #endregion
@@ -608,18 +678,24 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Interests
 
-        /// <summary>Updates the project interests.</summary>
+        /// <summary>
+        /// Updates the project interests.
+        /// </summary>
         /// <param name="projectInterests">The project interests.</param>
         /// <param name="userId">The user identifier.</param>
+        /// <param name="isAdmin">if set to <c>true</c> [is admin].</param>
         public void UpdateProjectInterests(
             List<ProjectInterest> projectInterests,
-            int userId)
+            int userId,
+            bool isAdmin)
         {
             this.SynchronizeProjectInterests(projectInterests, userId);
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
             this.UpdateDate = DateTime.UtcNow;
+
+            this.IsAdmin = isAdmin;
         }
 
         /// <summary>Synchronizes the project interests.</summary>
@@ -670,16 +746,24 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Target Audiences
 
-        /// <summary>Updates the project target audiences.</summary>
+        /// <summary>
+        /// Updates the project target audiences.
+        /// </summary>
         /// <param name="targetAudiences">The target audiences.</param>
         /// <param name="userId">The user identifier.</param>
-        public void UpdateProjectTargetAudiences(List<TargetAudience> targetAudiences, int userId)
+        /// <param name="isAdmin">if set to <c>true</c> [is admin].</param>
+        public void UpdateProjectTargetAudiences(
+            List<TargetAudience> targetAudiences, 
+            int userId, 
+            bool isAdmin)
         {
             this.SynchronizeProjectTargetAudiences(targetAudiences, userId);
 
             this.IsDeleted = false;
             this.UpdateUserId = userId;
             this.UpdateDate = DateTime.UtcNow;
+
+            this.IsAdmin = isAdmin;
         }
 
         /// <summary>Synchronizes the project target audiences.</summary>
@@ -870,7 +954,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Validates the is finished.</summary>
         public void ValidateIsFinished()
         {
-            if (this.IsFinished())
+            if (!this.IsAdmin && this.IsFinished())
             {
                 this.ValidationResult.Add(new ValidationError(Messages.ProjectIsFinishedCannotBeUpdated, new string[] { "ToastrError" }));
             }

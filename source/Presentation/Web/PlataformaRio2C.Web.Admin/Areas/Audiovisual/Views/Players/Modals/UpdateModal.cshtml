@@ -1,0 +1,39 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateOrganization
+<div class="modal fade" id="UpdatePlayerModal" role="dialog" aria-labelledby="UpdatePlayerModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    @if (!Model.IsAddingToCurrentEdition)
+                    {
+                        @(Labels.Update + " " + Labels.Player)
+                    }
+                    else
+                    {
+                        @(Labels.NewM + " " + Labels.Player + " " + string.Format(Labels.InEditionYear, ViewBag.EditionDto?.UrlCode))
+                    }
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Update", "Players", new { Area = "Audiovisual" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UpdatePlayerForm" }))
+                {
+                    @Html.HiddenFor(m => m.OrganizationUid)
+                    @Html.HiddenFor(m => m.IsAddingToCurrentEdition)
+                    <div id="form-container">
+                        @Html.Partial("Modals/_Form", Model)
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 text-right">
+                            @Labels.LastUpdateOn <b>@Model.UpdateDate.ToUserTimeZone().ToShortDateString() @Model.UpdateDate.ToUserTimeZone().ToLongTimeString()</b> @Labels.By <b>@Model.UpdaterBaseDto.Name</b>.
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">@Labels.Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="$('#UpdatePlayerForm').submit();">@Labels.Save</button>
+            </div>
+        </div>
+    </div>
+</div>
