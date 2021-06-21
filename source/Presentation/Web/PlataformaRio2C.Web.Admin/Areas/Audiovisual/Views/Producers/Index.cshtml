@@ -28,14 +28,11 @@
     @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/audiovisual.producers.list.js")
     @Scripts.Render("~/bundles/js/audiovisual.producers.editioncount.js")
-    @*@Scripts.Render("~/bundles/js/organizations.delete.js")*@
-    @*@Scripts.Render("~/bundles/js/addresses.form.js")*@
+    @Scripts.Render("~/bundles/js/audiovisual.producers.delete.js")
     <script>
             // Page translations ----------------------------------------------------------------------
             var addToEdition = '@string.Format(Labels.AddToEdition, ViewBag.EditionDto.UrlCode)';
             var removeFromEdition = '@string.Format(Labels.RemoveFromEdition, ViewBag.EditionDto.UrlCode)';
-            var virtual = '@Labels.Virtual';
-            var presential = '@Labels.Presential';
 
             // Pagination -----------------------------------------------------------------------------
             var initialPage = @(Model.Page?.ToString() ?? "null");

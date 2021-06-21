@@ -260,7 +260,7 @@ namespace PlataformaRio2C.Domain.Entities
             int userId,
             bool isAdmin)
         {
-            this.DeleteAllProjectBuyerEvaluations(userId);
+            this.DeleteProjectBuyerEvaluations(userId);
 
             this.IsDeleted = true;
             this.UpdateUserId = userId;
@@ -332,12 +332,12 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>
-        /// Deletes all project buyer evaluations.
+        /// Deletes the project buyer evaluations.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
-        private void DeleteAllProjectBuyerEvaluations(int userId)
+        private void DeleteProjectBuyerEvaluations(int userId)
         {
-            var buyerEvaluations = this.GetAllProjectBuyerEvaluationsNotDeleted();
+            var buyerEvaluations = this.FindAllProjectBuyerEvaluationsNotDeleted();
             if (buyerEvaluations?.Any() != true)
             {
                 return;
@@ -403,10 +403,10 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>
-        /// Gets all project buyer evaluations not deleted.
+        /// Finds all project buyer evaluations not deleted.
         /// </summary>
         /// <returns></returns>
-        private List<ProjectBuyerEvaluation> GetAllProjectBuyerEvaluationsNotDeleted()
+        private List<ProjectBuyerEvaluation> FindAllProjectBuyerEvaluationsNotDeleted()
         {
             return this.ProjectBuyerEvaluations?.Where(pbe => !pbe.IsDeleted)?.ToList();
         }
