@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 06-21-2021
 // ***********************************************************************
 // <copyright file="Project.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -61,6 +61,8 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<ProjectInterest> ProjectInterests { get; private set; }
         public virtual ICollection<ProjectTargetAudience> ProjectTargetAudiences { get; private set; }
         public virtual ICollection<ProjectBuyerEvaluation> ProjectBuyerEvaluations { get; private set; }
+
+        private bool IsAdmin = false;
 
         /// <summary>Initializes a new instance of the <see cref="Project"/> class.</summary>
         /// <param name="projectType">Type of the project.</param>
@@ -140,7 +142,9 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Updates the main information.</summary>
+        /// <summary>
+        /// Updates the main information.
+        /// </summary>
         /// <param name="totalPlayingTime">The total playing time.</param>
         /// <param name="numberOfEpisodes">The number of episodes.</param>
         /// <param name="eachEpisodePlayingTime">The each episode playing time.</param>
@@ -155,6 +159,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="projectProductionPlans">The project production plans.</param>
         /// <param name="projectAdditionalInformations">The project additional informations.</param>
         /// <param name="userId">The user identifier.</param>
+        /// <param name="isAdmin">if set to <c>true</c> [is admin].</param>
         public void UpdateMainInformation(
             string totalPlayingTime,
             int? numberOfEpisodes,
@@ -169,7 +174,8 @@ namespace PlataformaRio2C.Domain.Entities
             List<ProjectSummary> projectSummaries,
             List<ProjectProductionPlan> projectProductionPlans,
             List<ProjectAdditionalInformation> projectAdditionalInformations,
-            int userId)
+            int userId,
+            bool isAdmin)
         {
             this.TotalPlayingTime = totalPlayingTime;
             this.NumberOfEpisodes = numberOfEpisodes;
@@ -189,6 +195,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.UpdateUserId = userId;
             this.UpdateDate = DateTime.UtcNow;
+
+            this.IsAdmin = isAdmin;
         }
 
         /// <summary>Updates the links.</summary>
@@ -870,7 +878,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Validates the is finished.</summary>
         public void ValidateIsFinished()
         {
-            if (this.IsFinished())
+            if (!this.IsAdmin && this.IsFinished())
             {
                 this.ValidationResult.Add(new ValidationError(Messages.ProjectIsFinishedCannotBeUpdated, new string[] { "ToastrError" }));
             }

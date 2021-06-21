@@ -7631,6 +7631,13 @@
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\InterestWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\LinksWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\BuyerCompanyWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Modals\UpdateMainInformationModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Modals\UpdateMainInformationForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\EditorTemplates\ProjectAdditionalInformationBaseCommand.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\EditorTemplates\ProjectLogLineBaseCommand.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\EditorTemplates\ProjectProductionPlanBaseCommand.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\EditorTemplates\ProjectSummaryBaseCommand.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\EditorTemplates\ProjectTitleBaseCommand.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

@@ -4,7 +4,7 @@
 // Created          : 06-20-2021
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-20-2021
+// Last Modified On : 06-21-2021
 // ***********************************************************************
 // <copyright file="audiovisual.projects.links.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -62,8 +62,8 @@ var AudiovisualProjectsLinksWidget = function () {
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (ProjectsLinksWidget) !== 'undefined') {
-                    ProjectsLinksWidget.init();
+                if (typeof (AudiovisualProjectsLinksWidget) !== 'undefined') {
+                    AudiovisualProjectsLinksWidget.init();
                 }
             },
             onError: function (data) {

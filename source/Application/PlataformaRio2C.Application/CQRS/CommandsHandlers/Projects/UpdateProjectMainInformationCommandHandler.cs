@@ -4,7 +4,7 @@
 // Created          : 11-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-17-2019
+// Last Modified On : 06-21-2021
 // ***********************************************************************
 // <copyright file="UpdateProjectMainInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -91,7 +91,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.Summaries?.Select(d => new ProjectSummary(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.ProductPlans?.Select(d => new ProjectProductionPlan(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.AdditionalInformations?.Select(d => new ProjectAdditionalInformation(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
-                cmd.UserId);
+                cmd.UserId,
+                cmd.IsAdmin);
             if (!project.IsValid())
             {
                 this.AppValidationResult.Add(project.ValidationResult);

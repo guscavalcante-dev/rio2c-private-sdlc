@@ -4,7 +4,7 @@
 // Created          : 06-20-2021
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-20-2021
+// Last Modified On : 06-21-2021
 // ***********************************************************************
 // <copyright file="audiovisual.projects.buyercompany.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -58,12 +58,12 @@ var AudiovisualProjectsBuyerCompanyWidget = function () {
 
     // Search -------------------------------------------------------------------------------------
     var search = function () {
-        if (typeof (ProjectsMatchBuyerCompanyWidget) !== 'undefined') {
-            ProjectsMatchBuyerCompanyWidget.init();
+        if (typeof (AudiovisualProjectsMatchBuyerCompanyWidget) !== 'undefined') {
+            AudiovisualProjectsMatchBuyerCompanyWidget.init();
         }
 
-        if (typeof (ProjectsMatchBuyerCompanyWidget) !== 'undefined') {
-            ProjectsAllBuyerCompanyWidget.init();
+        if (typeof (AudiovisualProjectsMatchBuyerCompanyWidget) !== 'undefined') {
+            AudiovisualProjectsAllBuyerCompanyWidget.init();
         }
     };
 
@@ -95,16 +95,16 @@ var AudiovisualProjectsBuyerCompanyWidget = function () {
                     $(updateModalId).modal();
 
                     setTimeout(function () {
-                        if (typeof (ProjectsBuyerCompanySelectedWidget) !== 'undefined') {
-                            ProjectsBuyerCompanySelectedWidget.init();
+                        if (typeof (AudiovisualProjectsBuyerCompanySelectedWidget) !== 'undefined') {
+                            AudiovisualProjectsBuyerCompanySelectedWidget.init();
                         }
 
-                        if (typeof (ProjectsMatchBuyerCompanyWidget) !== 'undefined') {
-                            ProjectsMatchBuyerCompanyWidget.init();
+                        if (typeof (AudiovisualProjectsMatchBuyerCompanyWidget) !== 'undefined') {
+                            AudiovisualProjectsMatchBuyerCompanyWidget.init();
                         }
 
-                        if (typeof (ProjectsAllBuyerCompanyWidget) !== 'undefined') {
-                            ProjectsAllBuyerCompanyWidget.init();
+                        if (typeof (AudiovisualProjectsAllBuyerCompanyWidget) !== 'undefined') {
+                            AudiovisualProjectsAllBuyerCompanyWidget.init();
                         }
                     }, 300);
                 },
@@ -156,12 +156,12 @@ var AudiovisualProjectsBuyerCompanyWidget = function () {
                     enableUpdatePlugins();
                     $(updateModalId).modal();
 
-                    if (typeof (ProjectsBuyerCompanyWidget) !== 'undefined') {
-                        ProjectsBuyerCompanyWidget.init();
+                    if (typeof (AudiovisualProjectsBuyerCompanyWidget) !== 'undefined') {
+                        AudiovisualProjectsBuyerCompanyWidget.init();
                     }
 
-                    if (typeof (ProjectsBuyerCompanySelectedWidget) !== 'undefined') {
-                        ProjectsBuyerCompanySelectedWidget.init();
+                    if (typeof (AudiovisualProjectsBuyerCompanySelectedWidget) !== 'undefined') {
+                        AudiovisualProjectsBuyerCompanySelectedWidget.init();
                     }
                 },
                 // Error
@@ -191,12 +191,12 @@ var AudiovisualProjectsBuyerCompanyWidget = function () {
                     enableUpdatePlugins();
                     $(updateModalId).modal();
 
-                    if (typeof (ProjectsBuyerCompanyWidget) !== 'undefined') {
-                        ProjectsBuyerCompanyWidget.init();
+                    if (typeof (AudiovisualProjectsBuyerCompanyWidget) !== 'undefined') {
+                        AudiovisualProjectsBuyerCompanyWidget.init();
                     }
 
-                    if (typeof (ProjectsBuyerCompanySelectedWidget) !== 'undefined') {
-                        ProjectsBuyerCompanySelectedWidget.init();
+                    if (typeof (AudiovisualProjectsBuyerCompanySelectedWidget) !== 'undefined') {
+                        AudiovisualProjectsBuyerCompanySelectedWidget.init();
                     }
                 },
                 // Error
@@ -225,20 +225,20 @@ var AudiovisualProjectsBuyerCompanyWidget = function () {
                 // Success
                 onSuccess: function () {
                     if (originPage === 'SubmittedDetails') {
-                        if (typeof (ProjectsMainInformationWidget) !== 'undefined') {
-                            ProjectsMainInformationWidget.init();
+                        if (typeof (AudiovisualProjectsMainInformationWidget) !== 'undefined') {
+                            AudiovisualProjectsMainInformationWidget.init();
                         }
 
-                        if (typeof (ProjectsInterestWidget) !== 'undefined') {
-                            ProjectsInterestWidget.init();
+                        if (typeof (AudiovisualProjectsInterestWidget) !== 'undefined') {
+                            AudiovisualProjectsInterestWidget.init();
                         }
 
-                        if (typeof (ProjectsLinksWidget) !== 'undefined') {
-                            ProjectsLinksWidget.init();
+                        if (typeof (AudiovisualProjectsLinksWidget) !== 'undefined') {
+                            AudiovisualProjectsLinksWidget.init();
                         }
 
-                        if (typeof (ProjectsBuyerCompanyWidget) !== 'undefined') {
-                            ProjectsBuyerCompanyWidget.init();
+                        if (typeof (AudiovisualProjectsBuyerCompanyWidget) !== 'undefined') {
+                            AudiovisualProjectsBuyerCompanyWidget.init();
                         }
 
                         var modal = $(updateModalId);
@@ -349,7 +349,7 @@ var AudiovisualProjectsBuyerCompanyWidget = function () {
     };
 }();
 
-var ProjectsBuyerCompanySelectedWidget = function () {
+var AudiovisualProjectsBuyerCompanySelectedWidget = function () {
 
     var widgetElementId = '#ProjectBuyerCompanySelectedWidget';
     var widgetElement;
@@ -365,8 +365,8 @@ var ProjectsBuyerCompanySelectedWidget = function () {
         MyRio2cCommon.enableTooltips();
         MyRio2cCommon.initScroll();
 
-        if (typeof (ProjectsBuyerCompanyWidget) !== 'undefined') {
-            ProjectsBuyerCompanyWidget.toggleSelectButtons();
+        if (typeof (AudiovisualProjectsBuyerCompanyWidget) !== 'undefined') {
+            AudiovisualProjectsBuyerCompanyWidget.toggleSelectButtons();
         }
     };
 
@@ -409,7 +409,7 @@ var ProjectsBuyerCompanySelectedWidget = function () {
     };
 }();
 
-var ProjectsMatchBuyerCompanyWidget = function () {
+var AudiovisualProjectsMatchBuyerCompanyWidget = function () {
 
     var widgetElementId = '#ProjectMatchBuyerCompanyWidget';
     var widgetElement;
@@ -425,8 +425,8 @@ var ProjectsMatchBuyerCompanyWidget = function () {
         MyRio2cCommon.enableTooltips();
         MyRio2cCommon.initScroll();
 
-        if (typeof (ProjectsBuyerCompanyWidget) !== 'undefined') {
-            ProjectsBuyerCompanyWidget.toggleSelectButtons();
+        if (typeof (AudiovisualProjectsBuyerCompanyWidget) !== 'undefined') {
+            AudiovisualProjectsBuyerCompanyWidget.toggleSelectButtons();
         }
     };
 
@@ -495,7 +495,7 @@ var ProjectsMatchBuyerCompanyWidget = function () {
     };
 }();
 
-var ProjectsAllBuyerCompanyWidget = function () {
+var AudiovisualProjectsAllBuyerCompanyWidget = function () {
 
     var widgetElementId = '#ProjectAllBuyerCompanyWidget';
     var widgetElement;
@@ -510,8 +510,8 @@ var ProjectsAllBuyerCompanyWidget = function () {
         KTApp.initTooltips();
         MyRio2cCommon.initScroll();
 
-        if (typeof (ProjectsBuyerCompanyWidget) !== 'undefined') {
-            ProjectsBuyerCompanyWidget.toggleSelectButtons();
+        if (typeof (AudiovisualProjectsBuyerCompanyWidget) !== 'undefined') {
+            AudiovisualProjectsBuyerCompanyWidget.toggleSelectButtons();
         }
     };
 

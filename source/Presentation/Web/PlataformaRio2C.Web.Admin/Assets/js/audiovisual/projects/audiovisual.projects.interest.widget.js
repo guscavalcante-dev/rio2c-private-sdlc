@@ -4,7 +4,7 @@
 // Last Modified On : 06-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-20-2020
+// Last Modified On : 06-21-2021
 // ***********************************************************************
 // <copyright file="audiovisual.projects.interest.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -61,8 +61,8 @@ var AudiovisualProjectsInterestWidget = function () {
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (ProjectsInterestWidget) !== 'undefined') {
-                    ProjectsInterestWidget.init();
+                if (typeof (AudiovisualProjectsInterestWidget) !== 'undefined') {
+                    AudiovisualProjectsInterestWidget.init();
                 }
             },
             onError: function (data) {

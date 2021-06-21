@@ -4,7 +4,7 @@
 // Created          : 03-08-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-20-2021
+// Last Modified On : 06-21-2021
 // ***********************************************************************
 // <copyright file="OrganizationsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -83,10 +83,10 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowMainInformationWidget(Guid? organizationUid, Guid? organizationTypeUid)
         {
-            var mainInformationWidgetDto = await this.attendeeOrganizationRepo.FindMainInformationWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id);
+            var mainInformationWidgetDto = await this.attendeeOrganizationRepo.FindMainInformationWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id, true);
             if (mainInformationWidgetDto == null)
             {
-                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
             ViewBag.OrganizationTypeUid = organizationTypeUid;
@@ -116,10 +116,10 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             try
             {
-                var mainInformationWidgetDto = await this.attendeeOrganizationRepo.FindMainInformationWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id);
+                var mainInformationWidgetDto = await this.attendeeOrganizationRepo.FindMainInformationWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id, true);
                 if (mainInformationWidgetDto == null)
                 {
-                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundM.ToLowerInvariant()));
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundF.ToLowerInvariant()));
                 }
 
                 cmd = new UpdateOrganizationAdminMainInformation(
@@ -217,10 +217,10 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowSocialNetworksWidget(Guid? organizationUid)
         {
-            var socialNetworksWidgetDto = await this.attendeeOrganizationRepo.FindDetailsDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id);
+            var socialNetworksWidgetDto = await this.attendeeOrganizationRepo.FindDetailsDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id, true);
             if (socialNetworksWidgetDto == null)
             {
-                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
             return Json(new
@@ -245,10 +245,10 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             try
             {
-                var socialNetworksWidgetDto = await this.attendeeOrganizationRepo.FindDetailsDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id);
+                var socialNetworksWidgetDto = await this.attendeeOrganizationRepo.FindDetailsDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id, true);
                 if (socialNetworksWidgetDto == null)
                 {
-                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundM.ToLowerInvariant()));
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundF.ToLowerInvariant()));
                 }
 
                 //if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(socialNetworksWidgetDto.AttendeeOrganization.Uid) != true)
@@ -339,7 +339,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowAddressWidget(Guid? organizationUid)
         {
-            var addressWidgetDto = await this.attendeeOrganizationRepo.FindAddressWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id);
+            var addressWidgetDto = await this.attendeeOrganizationRepo.FindAddressWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id, true);
             if (addressWidgetDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Address, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
@@ -372,10 +372,10 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             try
             {
-                var addressWidgetDto = await this.attendeeOrganizationRepo.FindAddressWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id);
+                var addressWidgetDto = await this.attendeeOrganizationRepo.FindAddressWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id, true);
                 if (addressWidgetDto == null)
                 {
-                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundM.ToLowerInvariant()));
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundF.ToLowerInvariant()));
                 }
 
                 //if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(addressWidgetDto.AttendeeOrganization.Uid) != true)
@@ -472,7 +472,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowActivityWidget(Guid? organizationUid)
         {
-            var activityWidgetDto = await this.attendeeOrganizationRepo.FindActivityWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id);
+            var activityWidgetDto = await this.attendeeOrganizationRepo.FindActivityWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id, true);
             if (activityWidgetDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Activity, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
@@ -502,10 +502,10 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             try
             {
-                var activityWidgetDto = await this.attendeeOrganizationRepo.FindActivityWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id);
+                var activityWidgetDto = await this.attendeeOrganizationRepo.FindActivityWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id, true);
                 if (activityWidgetDto == null)
                 {
-                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundM.ToLowerInvariant()));
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundF.ToLowerInvariant()));
                 }
 
                 //if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(activityWidgetDto.AttendeeOrganization.Uid) != true)
@@ -598,7 +598,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowTargetAudienceWidget(Guid? organizationUid)
         {
-            var targetAudienceWidgetDto = await this.attendeeOrganizationRepo.FindTargetAudienceWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id);
+            var targetAudienceWidgetDto = await this.attendeeOrganizationRepo.FindTargetAudienceWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id, true);
             if (targetAudienceWidgetDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.TargetAudience, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
@@ -628,10 +628,10 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             try
             {
-                var targetAudienceWidgetDto = await this.attendeeOrganizationRepo.FindTargetAudienceWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id);
+                var targetAudienceWidgetDto = await this.attendeeOrganizationRepo.FindTargetAudienceWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id, true);
                 if (targetAudienceWidgetDto == null)
                 {
-                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundM.ToLowerInvariant()));
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundF.ToLowerInvariant()));
                 }
 
                 //if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(targetAudienceWidgetDto.AttendeeOrganization.Uid) != true)
@@ -726,7 +726,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowInterestWidget(Guid? organizationUid)
         {
-            var interestWidgetDto = await this.attendeeOrganizationRepo.FindInterestWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id);
+            var interestWidgetDto = await this.attendeeOrganizationRepo.FindInterestWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id, true);
             if (interestWidgetDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Interests, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
@@ -756,10 +756,10 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             try
             {
-                var interestWidgetDto = await this.attendeeOrganizationRepo.FindInterestWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id);
+                var interestWidgetDto = await this.attendeeOrganizationRepo.FindInterestWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id, true);
                 if (interestWidgetDto == null)
                 {
-                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundM.ToLowerInvariant()));
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundF.ToLowerInvariant()));
                 }
 
                 //if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.AttendeeOrganization.Uid) != true)
@@ -856,7 +856,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowExecutiveWidget(Guid? organizationUid)
         {
-            var executiveWidget = await this.attendeeOrganizationRepo.FindExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id);
+            var executiveWidget = await this.attendeeOrganizationRepo.FindExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id, true);
             if (executiveWidget == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-20-2021
+// Last Modified On : 06-21-2021
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -777,10 +777,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         #region Admin Widgets
 
-        public async Task<ProjectDto> FindAdminDetailsDtoByProjectUidAsync(Guid projectUid)
+        /// <summary>
+        /// Finds the admin details dto by project uid and by edition identifier asynchronous.
+        /// </summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<ProjectDto> FindAdminDetailsDtoByProjectUidAndByEditionIdAsync(Guid projectUid, int editionId)
         {
             var query = this.GetBaseQuery(true)
-                                .FindByUid(projectUid);
+                                .FindByUid(projectUid)
+                                .FindByEditionId(editionId, false);
 
             return await query
                             .Select(p => new ProjectDto
@@ -795,6 +802,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        /// <summary>
+        /// Finds the admin main information widget dto by project uid asynchronous.
+        /// </summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
         public async Task<ProjectDto> FindAdminMainInformationWidgetDtoByProjectUidAsync(Guid projectUid)
         {
             var query = this.GetBaseQuery(true)
@@ -840,6 +852,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        /// <summary>
+        /// Finds the admin interest widget dto by project uid asynchronous.
+        /// </summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
         public async Task<ProjectDto> FindAdminInterestWidgetDtoByProjectUidAsync(Guid projectUid)
         {
             var query = this.GetBaseQuery(true)
@@ -864,6 +881,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        /// <summary>
+        /// Finds the admin links widget dto by project uid asynchronous.
+        /// </summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
         public async Task<ProjectDto> FindAdminLinksWidgetDtoByProjectUidAsync(Guid projectUid)
         {
             var query = this.GetBaseQuery(true)
@@ -886,6 +908,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        /// <summary>
+        /// Finds the admin buyer company widget dto by project uid asynchronous.
+        /// </summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
         public async Task<ProjectDto> FindAdminBuyerCompanyWidgetDtoByProjectUidAsync(Guid projectUid)
         {
             var query = this.GetBaseQuery(true)
@@ -916,13 +943,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         #region Site Widgets
 
-        /// <summary>Finds the site details dto by project uid asynchronous.</summary>
+        /// <summary>
+        /// Finds the site details dto by project uid asynchronous.
+        /// </summary>
         /// <param name="projectUid">The project uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<ProjectDto> FindSiteDetailsDtoByProjectUidAsync(Guid projectUid)
+        public async Task<ProjectDto> FindSiteDetailsDtoByProjectUidAsync(Guid projectUid, int editionId)
         {
             var query = this.GetBaseQuery(true)
-                                .FindByUid(projectUid);
+                                .FindByUid(projectUid)
+                                .FindByEditionId(editionId, false);
 
             return await query
                             .Select(p => new ProjectDto

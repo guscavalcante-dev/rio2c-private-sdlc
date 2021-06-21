@@ -4,7 +4,7 @@
 // Created          : 08-16-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-23-2019
+// Last Modified On : 06-21-2021
 // ***********************************************************************
 // <copyright file="BaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,25 +24,31 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public int? EditionId { get; private set; }
         public Guid? EditionUid { get; private set; }
         public string UserInterfaceLanguage { get; private set; }
+        public bool IsAdmin { get; private set; }
 
-        /// <summary>Updates the pre send properties.</summary>
+        /// <summary>
+        /// Updates the pre send properties.
+        /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <param name="userUid">The user uid.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="editionUid">The edition uid.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
+        /// <param name="isAdmin">The is admin.</param>
         public void UpdatePreSendProperties(
             int userId,
             Guid userUid,
             int? editionId,
             Guid? editionUid,
-            string userInterfaceLanguage)
+            string userInterfaceLanguage,
+            bool? isAdmin = false)
         {
             this.UserId = userId;
             this.UserUid = userUid;
             this.EditionId = editionId;
             this.EditionUid = editionUid;
             this.UserInterfaceLanguage = userInterfaceLanguage;
+            this.IsAdmin = isAdmin.Value;
         }
     }
 }

@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-20-2021
+// Last Modified On : 06-21-2021
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -423,7 +423,8 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/audiovisual/projects/audiovisual.projects.maininformation.widget.js",
                 "~/Assets/js/audiovisual/projects/audiovisual.projects.interest.widget.js",
                 "~/Assets/js/audiovisual/projects/audiovisual.projects.links.widget.js",
-                "~/Assets/js/audiovisual/projects/audiovisual.projects.buyercompany.widget.js"));
+                "~/Assets/js/audiovisual/projects/audiovisual.projects.buyercompany.widget.js",
+                "~/Assets/js/myrio2c.additionalinfo.js"));
 
             #endregion
 

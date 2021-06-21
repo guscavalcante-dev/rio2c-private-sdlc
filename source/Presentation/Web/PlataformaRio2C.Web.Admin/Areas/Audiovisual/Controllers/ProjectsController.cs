@@ -4,25 +4,13 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-20-2021
+// Last Modified On : 06-21-2021
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using DataTables.AspNet.Core;
-using DataTables.AspNet.Mvc5;
-using MediatR;
-using PlataformaRio2C.Application.TemplateDocuments;
-using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
-using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
-using PlataformaRio2C.Web.Admin.Filters;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,17 +18,29 @@ using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using DataTables.AspNet.Core;
+using DataTables.AspNet.Mvc5;
+using MediatR;
+using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
+using PlataformaRio2C.Application.TemplateDocuments;
 using PlataformaRio2C.Application.ViewModels;
-using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
-using PlataformaRio2C.Infra.CrossCutting.SystemParameter.Models;
+using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
+using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
+using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Infra.Report.Models;
-using Constants = PlataformaRio2C.Domain.Constants;
 using PlataformaRio2C.Web.Admin.Controllers;
+using PlataformaRio2C.Web.Admin.Filters;
+using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 {
@@ -279,7 +279,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> Details(Guid? id)
         {
-            var projectDto = await this.projectRepo.FindAdminDetailsDtoByProjectUidAsync(id ?? Guid.Empty);
+            var projectDto = await this.projectRepo.FindAdminDetailsDtoByProjectUidAndByEditionIdAsync(id ?? Guid.Empty, this.EditionDto.Id);
             if (projectDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
@@ -323,105 +323,106 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        //#region Update
+        #region Update
 
-        ///// <summary>Shows the update main information modal.</summary>
-        ///// <param name="projectUid">The project uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? projectUid)
-        //{
-        //    UpdateProjectMainInformation cmd;
+        /// <summary>Shows the update main information modal.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? projectUid)
+        {
+            UpdateProjectMainInformation cmd;
 
-        //    try
-        //    {
-        //        var mainInformationWidgetDto = await this.projectRepo.FindSiteMainInformationWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
-        //        if (mainInformationWidgetDto == null)
-        //        {
-        //            throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
-        //        }
+            try
+            {
+                var mainInformationWidgetDto = await this.projectRepo.FindAdminMainInformationWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
+                if (mainInformationWidgetDto == null)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()));
+                }
 
-        //        cmd = new UpdateProjectMainInformation(
-        //            mainInformationWidgetDto,
-        //            await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
-        //            true,
-        //            false,
-        //            false);
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-        //    }
+                cmd = new UpdateProjectMainInformation(
+                    mainInformationWidgetDto,
+                    await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
+                    true,
+                    false,
+                    false);
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
-        ///// <summary>Updates the main information.</summary>
-        ///// <param name="cmd">The command.</param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public async Task<ActionResult> UpdateMainInformation(UpdateProjectMainInformation cmd)
-        //{
-        //    var result = new AppValidationResult();
+        /// <summary>Updates the main information.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> UpdateMainInformation(UpdateProjectMainInformation cmd)
+        {
+            var result = new AppValidationResult();
 
-        //    try
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
 
-        //        cmd.UpdatePreSendProperties(
-        //            this.AdminAccessControlDto.User.Id,
-        //            this.AdminAccessControlDto.User.Uid,
-        //            this.EditionDto.Id,
-        //            this.EditionDto.Uid,
-        //            this.UserInterfaceLanguage);
-        //        result = await this.CommandBus.Send(cmd);
-        //        if (!result.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        foreach (var error in result.Errors)
-        //        {
-        //            var target = error.Target ?? "";
-        //            ModelState.AddModelError(target, error.Message);
-        //        }
-        //        var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
+                cmd.UpdatePreSendProperties(
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage,
+                    true);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+                var toastrError = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError");
 
-        //        //cmd.UpdateModelsAndLists(
-        //        //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
+                //cmd.UpdateModelsAndLists(
+                //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
 
-        //        return Json(new
-        //        {
-        //            status = "error",
-        //            message = toastrError?.Message ?? ex.GetInnerMessage(),
-        //            pages = new List<dynamic>
-        //            {
-        //                new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationForm", cmd), divIdOrClass = "#form-container" },
-        //            }
-        //        }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-        //    }
+                return Json(new
+                {
+                    status = "error",
+                    message = toastrError?.Message ?? ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationForm", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.UpdatedM) });
-        //}
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.UpdatedM) });
+        }
 
-        //#endregion
+        #endregion
 
         #endregion
 

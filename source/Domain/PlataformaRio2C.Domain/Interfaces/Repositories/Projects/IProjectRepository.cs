@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-20-2021
+// Last Modified On : 06-21-2021
 // ***********************************************************************
 // <copyright file="IProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,7 +33,7 @@ namespace PlataformaRio2C.Domain.Interfaces
 
         #region Admin Widgets
 
-        Task<ProjectDto> FindAdminDetailsDtoByProjectUidAsync(Guid projectUid);
+        Task<ProjectDto> FindAdminDetailsDtoByProjectUidAndByEditionIdAsync(Guid projectUid, int editionId);
         Task<ProjectDto> FindAdminMainInformationWidgetDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindAdminInterestWidgetDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindAdminLinksWidgetDtoByProjectUidAsync(Guid projectUid);
@@ -43,7 +43,7 @@ namespace PlataformaRio2C.Domain.Interfaces
 
         #region Site Widgets
 
-        Task<ProjectDto> FindSiteDetailsDtoByProjectUidAsync(Guid projectUid);
+        Task<ProjectDto> FindSiteDetailsDtoByProjectUidAsync(Guid projectUid, int editionId);
         Task<ProjectDto> FindSiteMainInformationWidgetDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteInterestWidgetDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteLinksWidgetDtoByProjectUidAsync(Guid projectUid);

@@ -4,7 +4,7 @@
 // Created          : 08-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-20-2021
+// Last Modified On : 06-21-2021
 // ***********************************************************************
 // <copyright file="AttendeeOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -340,12 +340,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="organizationUid">The organization uid.</param>
         /// <param name="editionId">The edition identifier.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <returns></returns>
-        public async Task<AttemdeeOrganizationSiteDetailsDto> FindDetailsDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
+        public async Task<AttemdeeOrganizationSiteDetailsDto> FindDetailsDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId, bool showAllEditions)
         {
             var query = this.GetBaseQuery(true)
                                 .FindByOrganizationUid(organizationUid)
-                                .FindByEditionId(editionId, false);
+                                .FindByEditionId(editionId, showAllEditions);
 
             return await query
                             .Select(ao => new AttemdeeOrganizationSiteDetailsDto
@@ -370,12 +371,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="organizationUid">The organization uid.</param>
         /// <param name="editionId">The edition identifier.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <returns></returns>
-        public async Task<AttemdeeOrganizationSiteMainInformationWidgetDto> FindMainInformationWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
+        public async Task<AttemdeeOrganizationSiteMainInformationWidgetDto> FindMainInformationWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId, bool showAllEditions)
         {
             var query = this.GetBaseQuery(true)
                                 .FindByOrganizationUid(organizationUid)
-                                .FindByEditionId(editionId, false);
+                                .FindByEditionId(editionId, showAllEditions);
 
             return await query
                             .Select(ao => new AttemdeeOrganizationSiteMainInformationWidgetDto
@@ -406,12 +408,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="organizationUid">The organization uid.</param>
         /// <param name="editionId">The edition identifier.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <returns></returns>
-        public async Task<AttendeeOrganizationSiteExecutiveWidgetDto> FindExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
+        public async Task<AttendeeOrganizationSiteExecutiveWidgetDto> FindExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId, bool showAllEditions)
         {
             var query = this.GetBaseQuery(true)
                                 .FindByOrganizationUid(organizationUid)
-                                .FindByEditionId(editionId, false);
+                                .FindByEditionId(editionId, showAllEditions);
 
             return await query
                             .Select(ao => new AttendeeOrganizationSiteExecutiveWidgetDto
@@ -446,12 +449,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="organizationUid">The organization uid.</param>
         /// <param name="editionId">The edition identifier.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <returns></returns>
-        public async Task<AttendeeOrganizationSiteAddressWidgetDto> FindAddressWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
+        public async Task<AttendeeOrganizationSiteAddressWidgetDto> FindAddressWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId, bool showAllEditions)
         {
             var query = this.GetBaseQuery(true)
                                 .FindByOrganizationUid(organizationUid)
-                                .FindByEditionId(editionId, false);
+                                .FindByEditionId(editionId, showAllEditions);
 
             return await query
                             .Select(ao => new AttendeeOrganizationSiteAddressWidgetDto
@@ -471,12 +475,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="organizationUid">The organization uid.</param>
         /// <param name="editionId">The edition identifier.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <returns></returns>
-        public async Task<AttendeeOrganizationSiteActivityWidgetDto> FindActivityWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
+        public async Task<AttendeeOrganizationSiteActivityWidgetDto> FindActivityWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId, bool showAllEditions)
         {
             var query = this.GetBaseQuery(true)
                                 .FindByOrganizationUid(organizationUid)
-                                .FindByEditionId(editionId, false);
+                                .FindByEditionId(editionId, showAllEditions);
 
             return await query
                             .Select(ao => new AttendeeOrganizationSiteActivityWidgetDto
@@ -502,12 +507,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="organizationUid">The organization uid.</param>
         /// <param name="editionId">The edition identifier.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <returns></returns>
-        public async Task<AttendeeOrganizationSiteTargetAudienceWidgetDto> FindTargetAudienceWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
+        public async Task<AttendeeOrganizationSiteTargetAudienceWidgetDto> FindTargetAudienceWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId, bool showAllEditions)
         {
             var query = this.GetBaseQuery(true)
                                 .FindByOrganizationUid(organizationUid)
-                                .FindByEditionId(editionId, false);
+                                .FindByEditionId(editionId, showAllEditions);
 
             return await query
                             .Select(ao => new AttendeeOrganizationSiteTargetAudienceWidgetDto
@@ -531,12 +537,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="organizationUid">The organization uid.</param>
         /// <param name="editionId">The edition identifier.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <returns></returns>
-        public async Task<AttendeeOrganizationSiteInterestWidgetDto> FindInterestWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
+        public async Task<AttendeeOrganizationSiteInterestWidgetDto> FindInterestWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId, bool showAllEditions)
         {
             var query = this.GetBaseQuery(true)
                                 .FindByOrganizationUid(organizationUid)
-                                .FindByEditionId(editionId, false);
+                                .FindByEditionId(editionId, showAllEditions);
 
             return await query
                                 .Select(ao => new AttendeeOrganizationSiteInterestWidgetDto
