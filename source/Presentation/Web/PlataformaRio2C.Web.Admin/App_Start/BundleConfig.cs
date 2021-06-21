@@ -427,6 +427,9 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/myrio2c.additionalinfo.js",
                 "~/Scripts/jquery.unobtrusive-ajax.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.projects.delete.js").Include(
+                "~/Assets/js/audiovisual/projects/audiovisual.projects.delete.js"));
+
             #endregion
 
             #region Collaborators - Executives

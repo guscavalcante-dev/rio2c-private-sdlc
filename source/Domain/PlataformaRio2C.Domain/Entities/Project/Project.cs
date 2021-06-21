@@ -248,7 +248,25 @@ namespace PlataformaRio2C.Domain.Entities
         /// <returns></returns>
         public string GetTitleByLanguageCode(string culture)
         {
-            return this.ProjectTitles?.FirstOrDefault(ptd => ptd.Language.Code?.ToLowerInvariant() == culture?.ToLowerInvariant()).Value;
+            return this.ProjectTitles?.FirstOrDefault(ptd => ptd.Language.Code?.ToLowerInvariant() == culture?.ToLowerInvariant())?.Value;
+        }
+
+        /// <summary>
+        /// Deletes the specified user identifier.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="isAdmin">if set to <c>true</c> [is admin].</param>
+        public void Delete(
+            int userId,
+            bool isAdmin)
+        {
+            this.DeleteAllProjectBuyerEvaluations(userId);
+
+            this.IsDeleted = true;
+            this.UpdateUserId = userId;
+            this.UpdateDate = DateTime.UtcNow;
+
+            this.IsAdmin = isAdmin;
         }
 
         #region Buyer Evaluations
@@ -313,6 +331,23 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsAdmin = isAdmin;
         }
 
+        /// <summary>
+        /// Deletes all project buyer evaluations.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteAllProjectBuyerEvaluations(int userId)
+        {
+            var buyerEvaluations = this.GetAllProjectBuyerEvaluationsNotDeleted();
+            if (buyerEvaluations?.Any() != true)
+            {
+                return;
+            }
+
+            buyerEvaluations.ForEach(be => be.Delete(userId));
+
+            this.UpdateProjectBuyerEvaluationCounts();
+        }
+
         /// <summary>Updates the project buyer evaluation counts.</summary>
         public void UpdateProjectBuyerEvaluationCounts()
         {
@@ -364,7 +399,16 @@ namespace PlataformaRio2C.Domain.Entities
         /// <returns></returns>
         private ProjectBuyerEvaluation GetProjectBuyerEvaluationByAttendeeOrganizationUid(Guid attendeeOrganizationUid)
         {
-            return this.ProjectBuyerEvaluations?.FirstOrDefault(be => be.BuyerAttendeeOrganization.Uid == attendeeOrganizationUid);
+            return this.ProjectBuyerEvaluations?.FirstOrDefault(pbe => pbe.BuyerAttendeeOrganization.Uid == attendeeOrganizationUid);
+        }
+
+        /// <summary>
+        /// Gets all project buyer evaluations not deleted.
+        /// </summary>
+        /// <returns></returns>
+        private List<ProjectBuyerEvaluation> GetAllProjectBuyerEvaluationsNotDeleted()
+        {
+            return this.ProjectBuyerEvaluations?.Where(pbe => !pbe.IsDeleted)?.ToList();
         }
 
         #endregion

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-07-2020
+// Last Modified On : 06-21-2021
 // ***********************************************************************
 // <copyright file="ProjectBuyerEvaluation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -94,7 +94,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void Delete(int userId)
         {
-            this.SellerUserId = userId;
+            this.DeleteAllProjectBuyerEvaluations(userId);
 
             this.IsDeleted = true;
             this.UpdateUserId = userId;
@@ -148,6 +148,35 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.BuyerEmailSendDate = DateTime.UtcNow;
         }
+
+        #region Negotiations
+
+        /// <summary>
+        /// Deletes all project buyer evaluations.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        private void DeleteAllProjectBuyerEvaluations(int userId)
+        {
+            var negotiations = this.GetAllNegotiationsNotDeleted();
+            if (negotiations?.Any() != true)
+            {
+                return;
+            }
+
+            negotiations.ForEach(n => n.Delete(userId));
+        }
+
+        /// <summary>
+        /// Gets all negotiations not deleted.
+        /// </summary>
+        /// <returns></returns>
+        private List<Negotiation> GetAllNegotiationsNotDeleted()
+        {
+            return this.Negotiations?.Where(n => !n.IsDeleted)?.ToList();
+        }
+
+        #endregion
 
         #region Validations
 

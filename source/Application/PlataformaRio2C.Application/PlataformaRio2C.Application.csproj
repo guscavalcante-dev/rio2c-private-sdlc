@@ -311,6 +311,7 @@
     <Compile Include="CQRS\CommandsHandlers\Projects\UpdateProjectInterestsCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Projects\CreateProjectBuyerEvaluationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Projects\UpdateProjectLinksCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Projects\DeleteProjectCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Projects\UpdateProjectMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Projects\CreateProjectCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\ConferenceParticipantRoles\CreateConferenceParticipantRoleCommandHandler.cs" />
@@ -397,6 +398,7 @@
     <Compile Include="CQRS\Commands\Places\UpdatePlaceMainInformation.cs" />
     <Compile Include="CQRS\Commands\Places\CreatePlace.cs" />
     <Compile Include="CQRS\Commands\Places\DeletePlace.cs" />
+    <Compile Include="CQRS\Commands\Projects\DeleteProject.cs" />
     <Compile Include="CQRS\Commands\Rooms\DeleteRoom.cs" />
     <Compile Include="CQRS\CommandsHandlers\Rooms\RoomBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Rooms\CreateRoomCommandHandler.cs" />

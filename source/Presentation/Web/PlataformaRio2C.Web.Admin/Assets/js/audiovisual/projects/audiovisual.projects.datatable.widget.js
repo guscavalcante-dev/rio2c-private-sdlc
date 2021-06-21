@@ -4,7 +4,7 @@
 // Created          : 12-13-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-20-2021
+// Last Modified On : 06-21-2021
 // ***********************************************************************
 // <copyright file="audiovisual.projects.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -259,13 +259,7 @@ var AudiovisualProjectsDataTableWidget = function () {
                                             <div class="dropdown-menu dropdown-menu-right">';
 
                         html += '<button class="dropdown-item" onclick="AudiovisualProjectsDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
-
-                        //if (full.IsInCurrentEdition && full.IsInOtherEdition) {
-                        //    html += '<button class="dropdown-item" onclick="AudiovisualProducersDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + removeFromEdition + '</button>';
-                        //}
-                        //else {
-                        //    html += '<button class="dropdown-item" onclick="AudiovisualProducersDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
-                        //}
+                        html += '<button class="dropdown-item" onclick="AudiovisualProjectsDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
 
                         html += '\
                                             </div>\

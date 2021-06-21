@@ -798,6 +798,7 @@
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.scheduled.create.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.report.widget.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.logistics.info.widget.js" />
+    <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.delete.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.maininformation.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.interest.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.links.widget.js" />
