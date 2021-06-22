@@ -856,13 +856,19 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
         #region Executive Widget
 
-        /// <summary>Shows the executive widget.</summary>
+        /// <summary>
+        /// Shows the executive widget.
+        /// </summary>
         /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowExecutiveWidget(Guid? organizationUid)
+        public async Task<ActionResult> ShowExecutiveWidget(Guid? organizationUid, Guid? organizationTypeUid)
         {
-            var executiveWidget = await this.attendeeOrganizationRepo.FindExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id, true);
+            var executiveWidget = await this.attendeeOrganizationRepo.FindAdminExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(
+                organizationUid ?? Guid.Empty,
+                organizationTypeUid ?? Guid.Empty,
+                this.EditionDto.Id);
             if (executiveWidget == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);

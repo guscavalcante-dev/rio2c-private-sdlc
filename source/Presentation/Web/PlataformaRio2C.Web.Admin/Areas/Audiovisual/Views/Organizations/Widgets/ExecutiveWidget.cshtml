@@ -1,14 +1,14 @@
 ﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
 @using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Domain.Statics
-@model AttendeeOrganizationSiteExecutiveWidgetDto
+@model AttendeeOrganizationExecutiveWidgetDto
 <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
         <h3 class="kt-portlet__head-title">
             @Labels.Executives
         </h3>
     </div>
-    @*@if (isCollaborator)
+    @*@if (Model.IsInCurrentEdition == true)
     {
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-actions">

@@ -367,47 +367,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         #region Common Widgets
 
         /// <summary>
-        /// Finds the executive widget dto by organization uid and by edition identifier asynchronous.
-        /// </summary>
-        /// <param name="organizationUid">The organization uid.</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
-        /// <returns></returns>
-        public async Task<AttendeeOrganizationSiteExecutiveWidgetDto> FindExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId, bool showAllEditions)
-        {
-            var query = this.GetBaseQuery(true)
-                                .FindByOrganizationUid(organizationUid)
-                                .FindByEditionId(editionId, showAllEditions);
-
-            return await query
-                            .Select(ao => new AttendeeOrganizationSiteExecutiveWidgetDto
-                            {
-                                AttendeeOrganization = ao,
-                                AttendeeCollaboratorsDtos = ao.AttendeeOrganizationCollaborators
-                                                                    .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeCollaborator.IsDeleted && !aoc.AttendeeCollaborator.Collaborator.IsDeleted)
-                                                                    .Select(aoc => new AttendeeCollaboratorDto
-                                                                    {
-                                                                        AttendeeCollaborator = aoc.AttendeeCollaborator,
-                                                                        Collaborator = aoc.AttendeeCollaborator.Collaborator,
-                                                                        JobTitlesDtos = aoc.AttendeeCollaborator.Collaborator.JobTitles.Where(jb => !jb.IsDeleted).Select(jb => new CollaboratorJobTitleBaseDto
-                                                                        {
-                                                                            Id = jb.Id,
-                                                                            Uid = jb.Uid,
-                                                                            Value = jb.Value,
-                                                                            LanguageDto = new LanguageBaseDto
-                                                                            {
-                                                                                Id = jb.Language.Id,
-                                                                                Uid = jb.Language.Uid,
-                                                                                Name = jb.Language.Name,
-                                                                                Code = jb.Language.Code
-                                                                            }
-                                                                        })
-                                                                    })
-                            })
-                            .FirstOrDefaultAsync();
-        }
-
-        /// <summary>
         /// Finds the address widget dto by organization uid and by edition identifier asynchronous.
         /// </summary>
         /// <param name="organizationUid">The organization uid.</param>
@@ -577,8 +536,58 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 Country = ao.Organization.Address.Country,
                                 State = ao.Organization.Address.State
                             })
-                            .OrderByDescending(aomid => (aomid.IsInCurrentEdition))
-                            .ThenByDescending(aomid => aomid.AttendeeOrganization.CreateDate)
+                            .OrderByDescending(aod => aod.IsInCurrentEdition)
+                            .ThenByDescending(aod => aod.AttendeeOrganization.CreateDate)
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the admin executive widget dto by organization uid and by edition identifier asynchronous.
+        /// </summary>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="organizationTypeUid">The organization type uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeOrganizationExecutiveWidgetDto> FindAdminExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, Guid organizationTypeUid, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByOrganizationUid(organizationUid)
+                                .FindByEditionId(editionId, true);
+
+            return await query
+                            .Select(ao => new AttendeeOrganizationExecutiveWidgetDto
+                            {
+                                AttendeeOrganization = ao,
+                                IsInCurrentEdition = ao.AttendeeOrganizationTypes.Any(aot =>
+                                                                                              aot.OrganizationType.Uid == organizationTypeUid
+                                                                                              && aot.AttendeeOrganization.EditionId == editionId
+                                                                                              && !aot.IsDeleted),
+                                AttendeeCollaboratorsDtos = ao.AttendeeOrganizationCollaborators
+                                                                    .Where(aoc => !aoc.IsDeleted
+                                                                                                          && aoc.AttendeeCollaborator.Edition.Id == editionId
+                                                                                                          && !aoc.AttendeeCollaborator.IsDeleted
+                                                                                                          && !aoc.AttendeeCollaborator.Collaborator.IsDeleted)
+                                                                    .Select(aoc => new AttendeeCollaboratorDto
+                                                                    {
+                                                                        AttendeeCollaborator = aoc.AttendeeCollaborator,
+                                                                        Collaborator = aoc.AttendeeCollaborator.Collaborator,
+                                                                        JobTitlesDtos = aoc.AttendeeCollaborator.Collaborator.JobTitles.Where(jb => !jb.IsDeleted).Select(jb => new CollaboratorJobTitleBaseDto
+                                                                        {
+                                                                            Id = jb.Id,
+                                                                            Uid = jb.Uid,
+                                                                            Value = jb.Value,
+                                                                            LanguageDto = new LanguageBaseDto
+                                                                            {
+                                                                                Id = jb.Language.Id,
+                                                                                Uid = jb.Language.Uid,
+                                                                                Name = jb.Language.Name,
+                                                                                Code = jb.Language.Code
+                                                                            }
+                                                                        })
+                                                                    })
+                            })
+                            .OrderByDescending(aod => aod.IsInCurrentEdition)
+                            .ThenByDescending(aod => aod.AttendeeOrganization.CreateDate)
                             .FirstOrDefaultAsync();
         }
 
@@ -618,6 +627,49 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 }),
                                 Country = ao.Organization.Address.Country,
                                 State = ao.Organization.Address.State
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the site executive widget dto by organization uid and by edition identifier asynchronous.
+        /// </summary>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeOrganizationExecutiveWidgetDto> FindSiteExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByOrganizationUid(organizationUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(ao => new AttendeeOrganizationExecutiveWidgetDto
+                            {
+                                AttendeeOrganization = ao,
+                                AttendeeCollaboratorsDtos = ao.AttendeeOrganizationCollaborators
+                                                                    .Where(aoc => !aoc.IsDeleted
+                                                                                                          && aoc.AttendeeCollaborator.Edition.Id == editionId
+                                                                                                          && !aoc.AttendeeCollaborator.IsDeleted
+                                                                                                          && !aoc.AttendeeCollaborator.Collaborator.IsDeleted)
+                                                                    .Select(aoc => new AttendeeCollaboratorDto
+                                                                    {
+                                                                        AttendeeCollaborator = aoc.AttendeeCollaborator,
+                                                                        Collaborator = aoc.AttendeeCollaborator.Collaborator,
+                                                                        JobTitlesDtos = aoc.AttendeeCollaborator.Collaborator.JobTitles.Where(jb => !jb.IsDeleted).Select(jb => new CollaboratorJobTitleBaseDto
+                                                                        {
+                                                                            Id = jb.Id,
+                                                                            Uid = jb.Uid,
+                                                                            Value = jb.Value,
+                                                                            LanguageDto = new LanguageBaseDto
+                                                                            {
+                                                                                Id = jb.Language.Id,
+                                                                                Uid = jb.Language.Uid,
+                                                                                Name = jb.Language.Name,
+                                                                                Code = jb.Language.Code
+                                                                            }
+                                                                        })
+                                                                    })
                             })
                             .FirstOrDefaultAsync();
         }

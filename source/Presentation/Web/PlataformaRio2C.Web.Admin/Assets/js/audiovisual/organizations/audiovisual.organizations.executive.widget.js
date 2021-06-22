@@ -4,7 +4,7 @@
 // Created          : 06-03-2021
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-19-2021
+// Last Modified On : 06-22-2021
 // ***********************************************************************
 // <copyright file="audiovisual.organizations.executive.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,6 +30,7 @@ var AudiovisualOrganizationsExecutiveWidget = function () {
 
         var jsonParameters = new Object();
         jsonParameters.organizationUid = $('#AggregateId').val();
+        jsonParameters.organizationTypeUid = $('#OrganizationTypeUid').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Organizations/ShowExecutiveWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({

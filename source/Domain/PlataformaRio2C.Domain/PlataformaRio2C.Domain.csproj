@@ -125,7 +125,7 @@
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationSiteDetailsDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\MatchAttendeeOrganizationDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationDto.cs" />
-    <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationSiteExecutiveWidgetDto.cs" />
+    <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationExecutiveWidgetDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationSiteInterestWidgetDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationSiteTargetAudienceWidgetDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationSiteActivityWidgetDto.cs" />
