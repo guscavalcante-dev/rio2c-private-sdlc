@@ -32,11 +32,14 @@
                             <i class="flaticon2-correct"></i>
                         }
                     </span>
-                    <div class="kt-widget__action">
-                        <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="AudiovisualOrganizationsMainInformationWidget.showUpdateModal();">
-                            <i class="flaticon2-edit"></i>
-                        </button>
-                    </div>
+                    @if (Model.IsInCurrentEdition == true)
+                    {
+                        <div class="kt-widget__action">
+                            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="AudiovisualOrganizationsMainInformationWidget.showUpdateModal();">
+                                <i class="flaticon2-edit"></i>
+                            </button>
+                        </div>
+                    }
                     @*}*@
                 </div>
                 @if (isAudiovisualBuyer)
@@ -55,7 +58,7 @@
                 @if (Model.AttendeeOrganization.IsVirtualMeeting.HasValue || Model.IsInCurrentEdition == false)
                 {
                     <div class="kt-widget__subhead pt-0 mt-0">
-                        @if (Model.AttendeeOrganization.IsVirtualMeeting.HasValue)
+                        @if (Model.IsInCurrentEdition == true && Model.AttendeeOrganization.IsVirtualMeeting.HasValue)
                         {
                             var isVirtualMeeting = Model.AttendeeOrganization.IsVirtualMeeting == true;
                             var tooltipTile = string.Format(Messages.PlayerMeetingPreference, (isVirtualMeeting ? Labels.RemoteF : Labels.Presential).ToLowerInvariant());

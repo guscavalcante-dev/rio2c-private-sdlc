@@ -578,6 +578,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 State = ao.Organization.Address.State
                             })
                             .OrderByDescending(aomid => (aomid.IsInCurrentEdition))
+                            .ThenByDescending(aomid => aomid.AttendeeOrganization.CreateDate)
                             .FirstOrDefaultAsync();
         }
 
