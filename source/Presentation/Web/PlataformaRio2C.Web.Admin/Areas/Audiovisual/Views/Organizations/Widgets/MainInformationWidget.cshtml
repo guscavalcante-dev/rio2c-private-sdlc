@@ -2,7 +2,7 @@
 @using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Domain.Entities
 @using PlataformaRio2C.Domain.Statics
-@model AttemdeeOrganizationSiteMainInformationWidgetDto
+@model AttendeeOrganizationMainInformationWidgetDto
 @{
     var isAudiovisualBuyer = ViewBag.OrganizationTypeUid == OrganizationType.Player.Uid;
 }
@@ -52,6 +52,10 @@
                         @:- @Model.Organization.Document
                     }
                 </div>
+                @if (Model.IsInCurrentEdition == false)
+                {
+                    <span class="kt-badge kt-badge--inline kt-badge--info">@string.Format(Labels.NotInEdition, ViewBag.EditionDto.Edition.UrlCode)</span>
+                }
                 @if (Model.AttendeeOrganization.IsVirtualMeeting.HasValue)
                 {
                     var isVirtualMeeting = Model.AttendeeOrganization.IsVirtualMeeting == true;

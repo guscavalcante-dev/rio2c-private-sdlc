@@ -4,7 +4,7 @@
 // Created          : 03-08-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-21-2021
+// Last Modified On : 06-22-2021
 // ***********************************************************************
 // <copyright file="OrganizationsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -83,13 +83,16 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowMainInformationWidget(Guid? organizationUid, Guid? organizationTypeUid)
         {
-            var mainInformationWidgetDto = await this.attendeeOrganizationRepo.FindMainInformationWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id, true);
+            var mainInformationWidgetDto = await this.attendeeOrganizationRepo.FindAdminMainInformationWidgetDtoByOrganizationUidAndByEditionIdAsync(
+                organizationUid ?? Guid.Empty,
+                organizationTypeUid ?? Guid.Empty,
+                this.EditionDto.Id);
             if (mainInformationWidgetDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            ViewBag.OrganizationTypeUid = organizationTypeUid;
+            ViewBag.OrganizationTypeUid = organizationTypeUid; // It's the admin page accessed and not the organization type of the current organization
 
             return Json(new
             {
@@ -116,7 +119,10 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             try
             {
-                var mainInformationWidgetDto = await this.attendeeOrganizationRepo.FindMainInformationWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id, true);
+                var mainInformationWidgetDto = await this.attendeeOrganizationRepo.FindAdminMainInformationWidgetDtoByOrganizationUidAndByEditionIdAsync(
+                    organizationUid ?? Guid.Empty,
+                    organizationTypeUid ?? Guid.Empty,
+                    this.EditionDto.Id);
                 if (mainInformationWidgetDto == null)
                 {
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundF.ToLowerInvariant()));

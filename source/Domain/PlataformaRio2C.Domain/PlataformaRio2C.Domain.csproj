@@ -122,7 +122,7 @@
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorTypeDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationTypeDto.cs" />
-    <Compile Include="Dtos\AttendeeOrganizations\AttemdeeOrganizationSiteDetailsDto.cs" />
+    <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationSiteDetailsDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\MatchAttendeeOrganizationDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationSiteExecutiveWidgetDto.cs" />
@@ -208,7 +208,7 @@
     <Compile Include="Dtos\OrganizationDescriptions\OrganizationRestrictionSpecificBaseDto.cs" />
     <Compile Include="Dtos\Organizations\OrganizationDropdownDto.cs" />
     <Compile Include="Dtos\Organizations\OrganizationApiListDto.cs" />
-    <Compile Include="Dtos\AttendeeOrganizations\AttemdeeOrganizationSiteMainInformationWidgetDto.cs" />
+    <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationMainInformationWidgetDto.cs" />
     <Compile Include="Dtos\Organizations\OrganizationInterestDto.cs" />
     <Compile Include="Dtos\Organizations\OrganizationTargetAudienceDto.cs" />
     <Compile Include="Dtos\Organizations\OrganizationActivityDto.cs" />
