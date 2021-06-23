@@ -59,6 +59,10 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SalesPlatformAttendeeDto"/> class.
+        /// </summary>
+        /// <param name="eventBriteAttendee">The event brite attendee.</param>
         public SalesPlatformAttendeeDto(EventbriteAttendee eventBriteAttendee)
         {
             // Event
@@ -109,8 +113,8 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
             this.OrderId = intiPayload.Relationships.OrderId;
 
             // Attendee
-            this.AttendeeId = intiPayload.Relationships.BuyerId; // FIXME
-            this.SalesPlatformUpdateDate = DateTime.Now;
+            this.AttendeeId = intiPayload.ValidatorCode;
+            this.SalesPlatformUpdateDate = intiPayload.Timestamp; //TODO: Está salvando UTC -3 no banco.
             this.SalesPlatformAttendeeStatus = intiPayload.GetSalesPlatformAttendeeStatus();
             this.IsCancelled = false;
             this.IsCheckedIn = false;
@@ -119,20 +123,20 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
 
             // Profile
             this.FirstName = intiPayload.Name.Contains(" ") ? intiPayload.Name.Split(Convert.ToChar(" "))[0] : intiPayload.Name;
-            this.LastName = intiPayload.Name.Contains(" ") ? intiPayload.Name.Split(Convert.ToChar(" "))[1] : ""; 
+            this.LastName = intiPayload.Name.Contains(" ") ? intiPayload.Name.Split(Convert.ToChar(" "))[1] : " "; 
+            this.Name = intiPayload.Name;
+            this.Email = intiPayload.Email;
             this.Gender = "";
             this.Age = null;
-            this.Name = intiPayload.Name;
             this.BirthDate = "";
             this.CellPhone = "0";
-            this.Email = intiPayload.Email;
             this.JobTitle = "_";
             
             // Barcode            
             this.Barcode = intiPayload.ValidatorCode;
             this.IsBarcodePrinted = false;
             this.IsBarcodeUsed = false;
-            this.BarcodeUpdateDate = null;
+            this.BarcodeUpdateDate = intiPayload?.Timestamp; //TODO: Está salvando UTC -3 no banco.
         }
     }
 }

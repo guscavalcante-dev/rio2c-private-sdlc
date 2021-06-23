@@ -14,6 +14,7 @@
 using System;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -245,10 +246,12 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Validates the last names.</summary>
         public void ValidateLastNames()
         {
-            if (this.LastNames?.Trim().Length < LastNamesMinLength || this.LastNames?.Trim().Length > LastNamesMaxLength)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.LastNames, LastNamesMaxLength, LastNamesMinLength), new string[] { "LastNames" }));
-            }
+            //Disabled because some ticket sales platforms accepts only FirstName.
+            //Last name is not required and this validation blocks the User registration by the sales platforms!
+            //if (this.LastNames?.Trim().Length < LastNamesMinLength || this.LastNames?.Trim().Length > LastNamesMaxLength)
+            //{
+            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.LastNames, LastNamesMaxLength, LastNamesMinLength), new string[] { "LastNames" }));
+            //}
         }
 
         /// <summary>Validates the cell phone.</summary>

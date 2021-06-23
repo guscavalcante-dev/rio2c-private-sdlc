@@ -49,6 +49,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.
             {
                 // Attendees updates
                 case EventbriteAction.AttendeeUpdated:
+                case EventbriteAction.OrderPlaced:
+                case EventbriteAction.OrderRefunded:
+                case EventbriteAction.OrderUpdated:
                     return SalesPlatformAction.AttendeeUpdated;
 
                 case EventbriteAction.AttendeeCheckedIn:
@@ -56,16 +59,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.
 
                 case EventbriteAction.AttendeeCheckedOut:
                     return SalesPlatformAction.AttendeeCheckedOut;
-
-                // Orders updates
-                case EventbriteAction.OrderPlaced:
-                    return SalesPlatformAction.OrderPlaced;
-
-                case EventbriteAction.OrderRefunded:
-                    return SalesPlatformAction.OrderRefunded;
-
-                case EventbriteAction.OrderUpdated:
-                    return SalesPlatformAction.OrderUpdated;
 
                 // Other Updates
                 default:

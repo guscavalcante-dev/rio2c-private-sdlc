@@ -284,10 +284,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                             //var status = await this.CommandBus.Send(new CreateCollaboratorWithTickets(), cancellationToken);
                         }
                         // The person is not attending or unpaid the event
-                        else if (salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.NotAttending
-                                 || salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.Unpaid
-                                 || salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.Deleted
-                                 || salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.Transferred)
+                        else if (salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.NotAttending)
                         {
                             // Delete ticket from collaboratorAttendeeId
                             var response1 = await this.CommandBus.Send(new DeleteCollaboratorTicket(
@@ -328,47 +325,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         processingRequestDto.SalesPlatformWebhookRequest.Abort("000000008", errorMessage);
                         this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
                         continue;
-                    }
-                    // Order Placed
-                    else if(salesPlatformResponse.Item1 == SalesPlatformAction.OrderPlaced)
-                    {
-                        // Check if the edition exits                        
-                        var attendeeSalesPlatformDto = attendeeSalesPlatformsDtos?.FirstOrDefault();
-                        if (attendeeSalesPlatformDto == null)
-                        {
-                            var errorMessage = $"Edition not found or not active " +
-                                               $"(SalesPlatformAttendeeId: {salesPlatformAttendeeDto.AttendeeId}; " +
-                                               $"SalesPlatformEventId: {salesPlatformAttendeeDto.EventId}).";
-                            currentValidationResult.Add(new ValidationError("000000003", errorMessage));
-                            continue;
-                        }
-
-                        var collaboratorByAttendeeId = await this.collaboratorRepo.FindBySalesPlatformAttendeeIdAsync(salesPlatformAttendeeDto.AttendeeId);
-
-                        // Check if the ticket type exists
-                        var attendeeSalesPlatformTicketTypeDto = attendeeSalesPlatformDto.AttendeeSalesPlatformTicketTypesDtos.FirstOrDefault();
-                        if (attendeeSalesPlatformTicketTypeDto == null)
-                        {
-                            var errorMessage = $"Ticket class not found or not active " +
-                                               $"(SalesPlatformAttendeeId: {salesPlatformAttendeeDto.AttendeeId}; " +
-                                               $"TicketClassId: {salesPlatformAttendeeDto.TicketClassId}; " +
-                                               $"TicketClassName: {salesPlatformAttendeeDto.TicketClassName}).";
-                            currentValidationResult.Add(new ValidationError("000000004", errorMessage));
-                            continue;
-                        }
-
-                        // Create collaborator ant ticket for new email
-                        var response2 = await this.CommandBus.Send(new CreateCollaboratorTicket(
-                            salesPlatformAttendeeDto,
-                            attendeeSalesPlatformDto.Edition,
-                            collaboratorByAttendeeId?.GetAttendeeCollaboratorByEditionId(attendeeSalesPlatformDto.Edition.Id)?.GetAllAttendeeOrganizations(),
-                            attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType,
-                            attendeeSalesPlatformTicketTypeDto.CollaboratorType,
-                            attendeeSalesPlatformTicketTypeDto.Role), cancellationToken);
-                        foreach (var error in response2?.Errors)
-                        {
-                            currentValidationResult.Add(new ValidationError(error.Message));
-                        }
                     }
                     // Action not mapped
                     else

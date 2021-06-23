@@ -14,6 +14,7 @@
 
 using Newtonsoft.Json;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
+using System;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Models
 {
@@ -29,7 +30,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Mode
         public int Id { get; set; }
 
         [JsonProperty("timestamp")]
-        public string Timestamp { get; set; }
+        public DateTime Timestamp { get; set; }
 
         [JsonProperty("price_name")]
         public string PriceName { get; set; }
@@ -65,10 +66,10 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Mode
         public string BlockName { get; set; }
 
         [JsonProperty("completed_at")]
-        public string CompletedAt { get; set; }
+        public DateTime? CompletedAt { get; set; }
 
         [JsonProperty("canceled_at")]
-        public string CancelledAt { get; set; }
+        public DateTime? CancelledAt { get; set; }
 
         [JsonProperty("extra_values")]
         public IntiSaleOrCancellationExtraValue[] ExtraValues { get; set; }
@@ -88,7 +89,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Mode
             switch (this.Action.ToLowerInvariant())
             {
                 case IntiAction.TicketSold:
-                    return SalesPlatformAction.OrderPlaced;
+                case IntiAction.ParticipantUpdated:
+                case IntiAction.TicketCancelled:
+                    return SalesPlatformAction.AttendeeUpdated;
 
                 // Other Updates
                 default:
@@ -100,25 +103,19 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Mode
         /// <returns></returns>
         public string GetSalesPlatformAttendeeStatus()
         {
-            //TODO: IntiPayload.cs dont have Status property. How to implement?
+            switch (this.Action.ToLowerInvariant())
+            {
+                case IntiAction.TicketSold:
+                case IntiAction.ParticipantUpdated:
+                    return SalesPlatformAttendeeStatus.Attending;
 
-            //switch (this.Status.ToLowerInvariant())
-            //{
-            //    case EventbriteAttendeeStatus.Attending:
-            //        return SalesPlatformAttendeeStatus.Attending;
+                case IntiAction.TicketCancelled:
+                    return SalesPlatformAttendeeStatus.NotAttending;
 
-            //    case EventbriteAttendeeStatus.NotAttending:
-            //        return SalesPlatformAttendeeStatus.NotAttending;
-
-            //    case EventbriteAttendeeStatus.Unpaid:
-            //        return SalesPlatformAttendeeStatus.Unpaid;
-
-            //    // Other Updates
-            //    default:
-            //        return Status;
-            //}
-
-            return "";
+                // Other Updates
+                default:
+                    return this.Action;
+            }
         }
     }
 
