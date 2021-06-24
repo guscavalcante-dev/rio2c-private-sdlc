@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-21-2021
+// Last Modified On : 06-24-2021
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -732,6 +732,21 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.unscheduled.manualschedule.js").Include(
                 "~/Assets/js/audiovisual/meetings/audiovisual.meetings.unscheduled.manualschedule.js",
                 "~/Assets/js/audiovisual/meetings/audiovisual.meetings.logistics.info.widget.js"));
+
+            #endregion
+
+            #region Meetings - Send Email
+
+            #region Producers
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.sendemailtoproducers.list.js").Include(
+                "~/Assets/js/audiovisual/meetings/audiovisual.meetings.sendemailtoproducers.totalcount.widget.js",
+                "~/Assets/js/audiovisual/meetings/audiovisual.meetings.sendemailtoproducers.datatable.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.sendemailtoproducers.editioncount.js").Include(
+                "~/Assets/js/audiovisual/meetings/audiovisual.meetings.sendemailtoproducers.editioncount.widget.js"));
+
+            #endregion
 
             #endregion
 

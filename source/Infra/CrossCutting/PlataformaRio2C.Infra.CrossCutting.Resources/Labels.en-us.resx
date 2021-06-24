@@ -2758,4 +2758,8 @@
     <value>Show pitchings</value>
     <comment>Exibir pitchings</comment>
   </data>
+  <data name="With" xml:space="preserve">
+    <value>With</value>
+    <comment>Com</comment>
+  </data>
 </root>

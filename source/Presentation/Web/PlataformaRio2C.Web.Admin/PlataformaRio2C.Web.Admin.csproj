@@ -798,6 +798,9 @@
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.scheduled.create.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.report.widget.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.logistics.info.widget.js" />
+    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.sendemailtoproducers.datatable.widget.js" />
+    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.sendemailtoproducers.editioncount.widget.js" />
+    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.sendemailtoproducers.totalcount.widget.js" />
     <Content Include="Assets\js\audiovisual\producers\audiovisual.producers.delete.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.delete.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.maininformation.widget.js" />
@@ -7649,6 +7652,10 @@
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\ProjectAllBuyerCompanyWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\ProjectMatchBuyerCompanyWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\BuyerCompanySelectedWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\SendEmailToProducers.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\SendEmailToProducersDataTableWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\SendEmailToProducersEditionCountWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\SendEmailToProducersTotalCountWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

@@ -4,7 +4,7 @@
 // Created          : 03-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-30-2020
+// Last Modified On : 06-24-2021
 // ***********************************************************************
 // <copyright file="MeetingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,10 +18,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using ClosedXML.Excel;
+using DataTables.AspNet.Core;
+using DataTables.AspNet.Mvc5;
 using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
@@ -43,26 +47,33 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         private readonly INegotiationRepository negotiationRepo;
         private readonly IProjectBuyerEvaluationRepository projectBuyerEvaluationRepo;
         private readonly IRoomRepository roomRepo;
+        private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="MeetingsController"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MeetingsController"/> class.
+        /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="negotiationRepository">The negotiation repository.</param>
         /// <param name="projectBuyerEvaluationRepository">The project buyer evaluation repository.</param>
         /// <param name="roomRepository">The room repository.</param>
+        /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
+        /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
         public MeetingsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
             INegotiationRepository negotiationRepository,
             IProjectBuyerEvaluationRepository projectBuyerEvaluationRepository,
             IRoomRepository roomRepository,
+            IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository)
             : base(commandBus, identityController)
         {
             this.negotiationRepo = negotiationRepository;
             this.projectBuyerEvaluationRepo = projectBuyerEvaluationRepository;
             this.roomRepo = roomRepository;
+            this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
         }
 
@@ -652,7 +663,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <summary>
         /// Shows the logistics information widget.
         /// </summary>
-        /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="organizationsUids">The organizations uids.</param>
         /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> ShowLogisticsInfoWidget(string organizationsUids)
@@ -672,6 +683,106 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
             }, JsonRequestBehavior.AllowGet);
         }
+
+        #endregion
+
+        #region Send E-mails to Producers
+
+        #region List
+
+        /// <summary>
+        /// Sends the email to producers.
+        /// </summary>
+        /// <param name="searchViewModel">The search view model.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult SendEmailToProducers(SendEmailToProducersSearchViewModel searchViewModel)
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.AudioVisual, null),
+                new BreadcrumbItemHelper(Labels.OneToOneMeetings, null),
+                new BreadcrumbItemHelper(Labels.SendEmailToProducers, Url.Action("SendEmailToProducers", "Meetings", new { Area = "Audiovisual" }))
+            });
+
+            #endregion
+
+            return View(searchViewModel);
+        }
+
+        /// <summary>
+        /// Sends the email to producers search.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> SendEmailToProducersSearch(IDataTablesRequest request)
+        {
+            var producers = await this.attendeeOrganizationRepo.FindAllByActiveSellerNegotiationsAndByDataTable(
+                request.Start / request.Length,
+                request.Length,
+                request.Search?.Value,
+                request.GetSortColumns(),
+                OrganizationType.Producer.Uid,
+                this.EditionDto.Id,
+                this.AdminAccessControlDto.Language.Id);
+
+            var response = DataTablesResponse.Create(request, producers.TotalItemCount, producers.TotalItemCount, producers);
+
+            return Json(new
+            {
+                status = "success",
+                dataTable = response
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Total Count Widget
+
+        /// <summary>
+        /// Shows the send email to players total count widget.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowSendEmailToProducersTotalCountWidget()
+        {
+            var producers = await this.attendeeOrganizationRepo.CountAllByActiveSellerNegotiationsAndByDataTable(OrganizationType.Producer.Uid, true, this.EditionDto.Id);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/SendEmailToProducersTotalCountWidget", producers), divIdOrClass = "#AudiovisualMeetingsSendEmailToProducersTotalCountWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Edition Count Widget
+
+        /// <summary>
+        /// Shows the send email to players edition count widget.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ActionResult> ShowSendEmailToProducersEditionCountWidget()
+        {
+            var producers = await this.attendeeOrganizationRepo.CountAllByActiveSellerNegotiationsAndByDataTable(OrganizationType.Producer.Uid, false, this.EditionDto.Id);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/SendEmailToProducersEditionCountWidget", producers), divIdOrClass = "#AudiovisualMeetingsSendEmailToProducersEditionCountWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
 
         #endregion
 

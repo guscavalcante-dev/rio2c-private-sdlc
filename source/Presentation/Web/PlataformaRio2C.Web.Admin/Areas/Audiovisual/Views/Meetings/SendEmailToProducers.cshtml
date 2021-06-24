@@ -1,0 +1,59 @@
+﻿@model SendEmailToProducersSearchViewModel
+@{
+    ViewBag.Title = Labels.SendEmailToProducers;
+}
+<!--begin:: Quick Stats-->
+<div class="row">
+    <div class="col-sm-6">
+        <!--begin:: Total Count Widget-->
+        <div id="AudiovisualMeetingsSendEmailToProducersTotalCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <!--end:: Total Count Widget-->
+    </div>
+    <div class="col-sm-6">
+        <!--begin:: Edition Count-->
+        <div id="AudiovisualMeetingsSendEmailToProducersEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <!--end:: Edition Count-->
+    </div>
+</div>
+<!--end:: Quick Stats-->
+@Html.Partial("Widgets/SendEmailToProducersDataTableWidget", Model)
+@section Styles {
+    @Styles.Render("~/bundles/css/dataTables.css")
+    @Styles.Render("~/bundles/css/select2.css")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/dataTables.js")
+    @Scripts.Render("~/bundles/js/chart.js")
+    @Scripts.Render("~/bundles/js/select2.js")
+    @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/audiovisual.meetings.sendemailtoproducers.list.js")
+    @Scripts.Render("~/bundles/js/audiovisual.meetings.sendemailtoproducers.editioncount.js")
+<script>
+        var collaboratorTypeId = '@PlataformaRio2C.Domain.Entities.CollaboratorType.ExecutiveAudiovisual.Id';
+
+        // Page translations ----------------------------------------------------------------------
+        var translations = {
+            sendEmailToProducers: '@(Labels.SendEmailToProducers)',
+            confirmToSendInvitationEmails: '@(Messages.ConfirmToSendInvitationEmails)',
+            virtual: '@(Labels.Virtual)',
+            presential: '@(Labels.Presential)',
+            date: '@(Labels.Date)',
+            room: '@(Labels.Room)',
+            local: '@(Labels.Local)',
+            round: '@(Labels.Round)',
+            project: '@(Labels.Project)',
+            player: '@(Labels.Player)',
+            producer: '@(Labels.Producer)'
+        }
+
+        // Pagination -----------------------------------------------------------------------------
+        var initialPage = @(Model.Page?.ToString() ?? "null");
+        var initialPageSize = @(Model.PageSize?.ToString() ?? "null");
+
+        jQuery(document).ready(function() {
+            AudiovisualMeetingsSendEmailToProducersTotalCountWidget.init();
+            AudiovisualMeetingsSendEmailToProducersEditionCountWidget.init();
+            AudiovisualMeetingsSendEmailToProducersDataTableWidget.init();
+        });
+</script>
+}

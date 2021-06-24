@@ -4,7 +4,7 @@
 // Created          : 08-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-22-2021
+// Last Modified On : 06-24-2021
 // ***********************************************************************
 // <copyright file="AttendeeOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,11 +21,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using LinqKit;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using X.PagedList;
 
 namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 {
-    #region Attendee Organization IQueryable Extensions
+    #region AttendeeOrganization IQueryable Extensions
 
     /// <summary>
     /// AttendeeOrganizationIQueryableExtensions
@@ -87,17 +88,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             if (!string.IsNullOrEmpty(keywords))
             {
-                var predicate = PredicateBuilder.New<AttendeeOrganization>(true);
+                var outerWhere = PredicateBuilder.New<AttendeeOrganization>(false);
+                var innerOrganizationNameWhere = PredicateBuilder.New<AttendeeOrganization>(true);
+                var innerOrganizationDocumentWhere = PredicateBuilder.New<AttendeeOrganization>(true);
 
                 foreach (var keyword in keywords.Split(' '))
                 {
                     if (!string.IsNullOrEmpty(keyword))
                     {
-                        predicate = predicate.And(ao => ao.Organization.TradeName.Contains(keyword));
+                        innerOrganizationNameWhere = innerOrganizationNameWhere.And(ao => ao.Organization.TradeName.Contains(keyword));
+                        innerOrganizationDocumentWhere = innerOrganizationDocumentWhere.And(ao => ao.Organization.Document.Contains(keyword));
                     }
                 }
 
-                query = query.AsExpandable().Where(predicate);
+                outerWhere = outerWhere.Or(innerOrganizationNameWhere);
+                outerWhere = outerWhere.Or(innerOrganizationDocumentWhere);
+                query = query.Where(outerWhere);
             }
 
             return query;
@@ -128,9 +134,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <returns></returns>
-        internal static IQueryable<AttendeeOrganization> FindByOrganizationTypeUid(this IQueryable<AttendeeOrganization> query, int editionId, Guid organizationTypeUid)
+        internal static IQueryable<AttendeeOrganization> FindByOrganizationTypeUid(this IQueryable<AttendeeOrganization> query, int editionId, bool showAllEditions, Guid organizationTypeUid)
         {
-            query = query.Where(ao => ao.EditionId == editionId
+            query = query.Where(ao => (showAllEditions || ao.EditionId == editionId)
                                       && ao.AttendeeOrganizationTypes.Any(aot => aot.OrganizationType.Uid == organizationTypeUid
                                                                                   && !aot.IsDeleted
                                                                                   && !aot.OrganizationType.IsDeleted));
@@ -166,6 +172,36 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>
+        /// Determines whether [has active seller negotiations].
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeOrganization> HasActiveSellerNegotiations(this IQueryable<AttendeeOrganization> query)
+        {
+            query = query.Where(ao => ao.SellProjects.Any(sp => !sp.IsDeleted
+                                                                         && sp.ProjectBuyerEvaluations.Any(pbe => pbe.ProjectEvaluationStatusId == ProjectEvaluationStatus.Accepted.Id
+                                                                                                           && !pbe.IsDeleted
+                                                                                                           && pbe.Negotiations.Any(n => !n.IsDeleted))));
+
+            return query;
+        }
+
+        /// <summary>
+        /// Determines whether [has active buyer negotiations].
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeOrganization> HasActiveBuyerNegotiations(this IQueryable<AttendeeOrganization> query)
+        {
+            query = query.Where(ao => ao.ProjectBuyerEvaluations.Any(pbe => pbe.ProjectEvaluationStatusId == ProjectEvaluationStatus.Accepted.Id
+                                                                                    && !pbe.IsDeleted
+                                                                                    && !pbe.Project.IsDeleted
+                                                                                    && pbe.Negotiations.Any(n => !n.IsDeleted)));
+
+            return query;
+        }
+
         //internal static IQueryable<AttendeeOrganization> FindByBuyerMatchingProjectUid(this IQueryable<AttendeeOrganization> query, Guid projectUid)
         //{
         //    query = query.Where(ao => ao.ProjectBuyerEvaluations.Any(pbe => pbe.Project.Uid == projectUid
@@ -193,6 +229,35 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             query = query.Where(ao => !ao.IsDeleted);
 
             return query;
+        }
+    }
+
+    #endregion
+
+    #region SellerAttendeeOrganizationBaseDto IQueryable Extensions
+
+    /// <summary>
+    /// SellerAttendeeOrganizationBaseDtoIQueryableExtensions
+    /// </summary>
+    internal static class SellerAttendeeOrganizationBaseDtoIQueryableExtensions
+    {
+        /// <summary>
+        /// To the list paged.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        internal static async Task<IPagedList<SellerAttendeeOrganizationBaseDto>> ToListPagedAsync(this IQueryable<SellerAttendeeOrganizationBaseDto> query, int page, int pageSize)
+        {
+            page++;
+
+            // Page the list
+            var pagedList = await query.ToPagedListAsync(page, pageSize);
+            if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
+                pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
+
+            return pagedList;
         }
     }
 
@@ -284,7 +349,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId, showAllEditions)
-                                .FindByOrganizationTypeUid(editionId, organizationTypeUid);
+                                .FindByOrganizationTypeUid(editionId, showAllEditions, organizationTypeUid);
 
             return await query
                             .Select(ao => new AttendeeOrganizationBaseDto
@@ -717,7 +782,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                  .ToList();
 
             var query = this.GetBaseQuery()
-                                .FindByOrganizationTypeUid(editionId, buyerOrganizationType?.Uid ?? Guid.Empty)
+                                .FindByOrganizationTypeUid(editionId, false, buyerOrganizationType?.Uid ?? Guid.Empty)
                                 .FindNotByUid(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid)
                                 .FindByKeywords(searchKeywords)
                                 .FindByInterestUids(matchInterests)
@@ -750,7 +815,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var buyerOrganizationType = projectDto.ProjectType?.OrganizationTypes?.FirstOrDefault(ot => !ot.IsDeleted && !ot.IsSeller);
 
             var query = this.GetBaseQuery()
-                                .FindByOrganizationTypeUid(editionId, buyerOrganizationType?.Uid ?? Guid.Empty)
+                                .FindByOrganizationTypeUid(editionId, false, buyerOrganizationType?.Uid ?? Guid.Empty)
                                 .FindNotByUid(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid)
                                 .FindByKeywords(searchKeywords)
                                 .IsOnboardingFinished();
@@ -763,6 +828,132 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             })
                             .OrderBy(ao => ao.Organization.TradeName)
                             .ToListPagedAsync(page, pageSize);
+        }
+
+        #endregion
+
+        #region Negotiations
+
+        /// <summary>
+        /// Finds all by active seller negotiations and by data table.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <param name="organizationTypeUid">The organization type uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="languageId">The language identifier.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<SellerAttendeeOrganizationBaseDto>> FindAllByActiveSellerNegotiationsAndByDataTable(
+            int page,
+            int pageSize,
+            string keywords,
+            List<Tuple<string, string>> sortColumns,
+            Guid organizationTypeUid,
+            int editionId,
+            int languageId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByKeywords(keywords)
+                                .FindByEditionId(editionId, false)
+                                .FindByOrganizationTypeUid(editionId, false, organizationTypeUid)
+                                .HasActiveSellerNegotiations();
+
+            return await query
+                            .DynamicOrder<AttendeeOrganization>(
+                                sortColumns,
+                                new List<Tuple<string, string>>
+                                {
+                                    //new Tuple<string, string>("HoldingBaseDto.Name", "Holding.Name")
+                                },
+                                new List<string> { "Organization.Name" },
+                                "Organization.Name")
+                            .Select(ao => new SellerAttendeeOrganizationBaseDto
+                            {
+                                Id = ao.Id,
+                                Uid = ao.Uid,
+                                OrganizationBaseDto = new OrganizationBaseDto
+                                {
+                                    Id = ao.Organization.Id,
+                                    Uid = ao.Organization.Uid,
+                                    Name = ao.Organization.Name,
+                                    ImageUploadDate = ao.Organization.ImageUploadDate
+                                },
+                                CreateDate = ao.CreateDate,
+                                UpdateDate = ao.UpdateDate,
+                                SellerNegotiationBaseDtos = ao.SellProjects
+                                                                .SelectMany(sp => sp.ProjectBuyerEvaluations
+                                                                .SelectMany(pbe => pbe.Negotiations
+                                                                .Where(n => !n.IsDeleted && !n.ProjectBuyerEvaluation.IsDeleted && !n.ProjectBuyerEvaluation.Project.IsDeleted)
+                                                                .Select(n => new NegotiationBaseDto
+                                                                {
+                                                                    Id = n.Id,
+                                                                    Uid = n.Uid,
+                                                                    StartDate = n.StartDate,
+                                                                    EndDate = n.EndDate,
+                                                                    TableNumber = n.TableNumber,
+                                                                    RoundNumber = n.RoundNumber,
+                                                                    IsAutomatic = n.IsAutomatic,
+                                                                    ProjectBuyerEvaluationBaseDto = new ProjectBuyerEvaluationBaseDto
+                                                                    {
+                                                                        Id = n.ProjectBuyerEvaluation.Id,
+                                                                        Uid = n.ProjectBuyerEvaluation.Uid,
+                                                                        EvaluationDate = n.ProjectBuyerEvaluation.EvaluationDate,
+                                                                        Reason = n.ProjectBuyerEvaluation.Reason,
+                                                                        ProjectBaseDto = new ProjectBaseDto
+                                                                        {
+                                                                            Id = sp.Id,
+                                                                            Uid = sp.Uid,
+                                                                            ProjectName = sp.ProjectTitles.Where(t => t.LanguageId == languageId).Select(t => t.Value).FirstOrDefault(),
+                                                                            CreateDate = sp.CreateDate,
+                                                                            FinishDate = sp.FinishDate
+                                                                        },
+                                                                        BuyerAttendeeOrganizationBaseDto = new AttendeeOrganizationBaseDto
+                                                                        {
+                                                                            Id = pbe.BuyerAttendeeOrganization.Id,
+                                                                            Uid = pbe.BuyerAttendeeOrganization.Uid,
+                                                                            OrganizationBaseDto = new OrganizationBaseDto
+                                                                            {
+                                                                                Id = pbe.BuyerAttendeeOrganization.Organization.Id,
+                                                                                Uid = pbe.BuyerAttendeeOrganization.Organization.Uid,
+                                                                                Name = pbe.BuyerAttendeeOrganization.Organization.Name,
+                                                                                ImageUploadDate = pbe.BuyerAttendeeOrganization.Organization.ImageUploadDate
+                                                                            },
+                                                                            CreateDate = pbe.BuyerAttendeeOrganization.CreateDate,
+                                                                            UpdateDate = pbe.BuyerAttendeeOrganization.UpdateDate,
+                                                                        }
+                                                                    },
+                                                                    RoomJsonDto = new RoomJsonDto
+                                                                    {
+                                                                        Id = n.Room.Id,
+                                                                        Uid = n.Room.Uid,
+                                                                        Name = n.Room.RoomNames.FirstOrDefault(rn => !rn.IsDeleted && rn.LanguageId == languageId).Value,
+                                                                        IsVirtualMeeting = n.Room.IsVirtualMeeting,
+                                                                        VirtualMeetingUrl = n.Room.VirtualMeetingUrl,
+                                                                        CreateDate = n.Room.CreateDate,
+                                                                        UpdateDate = n.Room.UpdateDate
+                                                                    }
+                                                                })))
+                            })
+                            .ToListPagedAsync(page, pageSize);
+        }
+
+        /// <summary>
+        /// Counts all by active seller negotiations and by data table.
+        /// </summary>
+        /// <param name="organizationTypeUid">The organization type uid.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<int> CountAllByActiveSellerNegotiationsAndByDataTable(Guid organizationTypeUid, bool showAllEditions, int? editionId)
+        {
+            var query = this.GetBaseQuery()
+                            .FindByEditionId(editionId ?? 0, showAllEditions)
+                            .FindByOrganizationTypeUid(editionId ?? 0, showAllEditions, organizationTypeUid)
+                            .HasActiveSellerNegotiations();
+
+            return await query.CountAsync();
         }
 
         #endregion

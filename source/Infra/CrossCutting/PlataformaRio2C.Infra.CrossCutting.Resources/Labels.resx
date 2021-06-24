@@ -2763,4 +2763,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Exibir pitchings</value>
     <comment>Exibir pitchings</comment>
   </data>
+  <data name="With" xml:space="preserve">
+    <value>Com</value>
+    <comment>Com</comment>
+  </data>
 </root>
