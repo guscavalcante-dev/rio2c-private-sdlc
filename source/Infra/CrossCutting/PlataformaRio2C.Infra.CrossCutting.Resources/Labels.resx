@@ -2767,4 +2767,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Com</value>
     <comment>Com</comment>
   </data>
+  <data name="confirmSendEmailAll" xml:space="preserve">
+    <value>Confirma o envio de e-mail para todos os registros de todas as páginas?</value>
+    <comment>Confirma o envio de e-mail para todos os registros de todas as páginas?</comment>
+  </data>
+  <data name="confirmSendEmailSelected" xml:space="preserve">
+    <value>Confirma o envio de e-mail para os registros selecionados?</value>
+    <comment>Confirma o envio de e-mail para os registros selecionados?</comment>
+  </data>
 </root>

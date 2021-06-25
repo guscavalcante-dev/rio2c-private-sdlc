@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-26-2020
+// Last Modified On : 06-25-2021
 // ***********************************************************************
 // <copyright file="SiteMailerService.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -233,6 +233,18 @@ namespace PlataformaRio2C.Web.Site.Services
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
         public MvcMailMessage SendAdminWelcomeEmail(SendAdminWelcomeEmailAsync cmd, Guid sentEmailUid)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Sends the producers negotiation email.
+        /// </summary>
+        /// <param name="cmd">The command.</param>
+        /// <param name="sentEmailUid">The sent email uid.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public MvcMailMessage SendProducersNegotiationEmail(SendProducerNegotiationsEmailAsync cmd, Guid sentEmailUid)
         {
             throw new NotImplementedException();
         }

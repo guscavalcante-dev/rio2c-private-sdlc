@@ -1060,6 +1060,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirma o envio de e-mail para todos os registros de todas as páginas?.
+        /// </summary>
+        public static string confirmSendEmailAll {
+            get {
+                return ResourceManager.GetString("confirmSendEmailAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirma o envio de e-mail para os registros selecionados?.
+        /// </summary>
+        public static string confirmSendEmailSelected {
+            get {
+                return ResourceManager.GetString("confirmSendEmailSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Conectado.
         /// </summary>
         public static string Connected {

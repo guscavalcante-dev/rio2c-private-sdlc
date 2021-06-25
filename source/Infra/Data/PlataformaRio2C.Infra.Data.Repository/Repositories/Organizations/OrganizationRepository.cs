@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-25-2020
+// Last Modified On : 06-25-2021
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -454,6 +454,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 },
                                 UpdaterDto = new UserBaseDto
                                 {
+                                    Id = o.Updater.Id,
                                     Uid = o.Updater.Uid,
                                     Name = o.Updater.Name,
                                     Email =o.Updater.Email 

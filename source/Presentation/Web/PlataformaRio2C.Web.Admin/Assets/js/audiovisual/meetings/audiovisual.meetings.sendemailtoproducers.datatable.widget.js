@@ -4,7 +4,7 @@
 // Created          : 06-24-2021
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-24-2021
+// Last Modified On : 06-25-2021
 // ***********************************************************************
 // <copyright file="audiovisual.meetings.sendemailtoproducers.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,30 +22,34 @@ var AudiovisualMeetingsSendEmailToProducersDataTableWidget = function () {
     var sendEmails = function (sendEmailParameters) {
         MyRio2cCommon.block();
 
-        //var jsonParameters = new Object();
-        //jsonParameters.selectedCollaboratorsUids = $('#audiovisualmeetingssendemailtoProducers-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
-
         $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Meetings/SendProducersEmails'), sendEmailParameters, function (data) {
-                MyRio2cCommon.handleAjaxReturn({
-                    data: data,
-                    // Success
-                    onSuccess: function () {
-                    },
-                    // Error
-                    onError: function () {
-                    }
-                });
-            })
-            .fail(function () {
-            })
-            .always(function () {
-                MyRio2cCommon.unblock();
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function () {
+                },
+                // Error
+                onError: function () {
+                }
             });
+        })
+        .fail(function () {
+        })
+        .always(function () {
+            MyRio2cCommon.unblock();
+        });
     };
 
-    var showSendEmailsModal = function (sendEmailParameters) {
+    var showSendEmailsModal = function () {
+
+        var jsonParameters = new Object();
+        jsonParameters.selectedAttendeeOrganizationsUids = $('#audiovisualmeetingssendemailtoproducers-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
+        jsonParameters.keywords = $('#Search').val();
+
+        var message = jsonParameters.selectedAttendeeOrganizationsUids === '' ? translations.confirmSendEmailAll : translations.confirmSendEmailSelected;
+
         bootbox.dialog({
-            message: confirmToSendInvitationEmails,
+            message: message,
             buttons: {
                 cancel: {
                     label: labels.cancel,
@@ -57,7 +61,7 @@ var AudiovisualMeetingsSendEmailToProducersDataTableWidget = function () {
                     label: labels.send,
                     className: "btn btn-brand btn-elevate",
                     callback: function () {
-                        sendEmails(sendEmailParameters);
+                        sendEmails(jsonParameters);
                     }
                 }
             }
@@ -114,14 +118,7 @@ var AudiovisualMeetingsSendEmailToProducersDataTableWidget = function () {
                             text: translations.sendEmailToProducers,
                             action: function (e, dt, node, config) {
                                 $('.dt-button-background').remove();
-                                var sendEmailParameters = dt.ajax.params();
-                                sendEmailParameters.selectedCollaboratorsUids = $('#audiovisualmeetingssendemailtoproducers-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
-                                ////sendEmailParameters.showAllEditions = $('#ShowAllEditions').prop('checked');
-                                ////sendEmailParameters.showAllExecutives = $('#ShowAllExecutives').prop('checked');
-                                ////sendEmailParameters.showAllParticipants = $('#ShowAllParticipants').prop('checked');
-                                //sendEmailParameters.collaboratorTypeId = collaboratorTypeId;
-
-                                showSendEmailsModal(sendEmailParameters);
+                                showSendEmailsModal();
                             }
                         },
                         {
@@ -199,7 +196,7 @@ var AudiovisualMeetingsSendEmailToProducersDataTableWidget = function () {
                         }
 
                         html += '       </td>\
-                                        <td> ' + row.DisplayName + '</td>\
+                                        <td> ' + row.OrganizationBaseDto.DisplayName + '</td>\
                                     </tr>\
                                 </table>';
 
@@ -219,9 +216,9 @@ var AudiovisualMeetingsSendEmailToProducersDataTableWidget = function () {
                                     <tr>\
                                         <th style="width: 8%;">' + translations.date + '</th>\
                                         <th style="width: 20%;">' + translations.room + '</th>\
-                                        <th style="width: 10%;">' + translations.local + '</th>\
-                                        <th style="width: 18%;">' + translations.round + '</th>\
-                                        <th style="width: 18%;">' + translations.project + '</th>\
+                                        <th style="width: 20%;">' + translations.round + '</th>\
+                                        <th style="width: 6%;">' + translations.table + '</th>\
+                                        <th style="width: 20%;">' + translations.project + '</th>\
                                         <th style="width: 26%;">' + translations.player + '</th>\
                                     </tr>';
 
@@ -233,17 +230,17 @@ var AudiovisualMeetingsSendEmailToProducersDataTableWidget = function () {
                                 html += '\
                                     <tr style="font-size: 10px; border-top: 1px solid #ebedf2;;">\
                                         <td class="text-center">' + moment(r.StartDate).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L') + '</td>\
-                                        <td>' + r.RoomJsonDto.Name + '</td>\
-                                        <td class="text-center">';
+                                        <td class="text-center">' + r.RoomJsonDto.Name;
 
                                 if (!MyRio2cCommon.isNullOrEmpty(r.RoomJsonDto.IsVirtualMeeting)) {
-                                    var virtualOrPresentialText = (r.RoomJsonDto.IsVirtualMeeting=== true) ? translations.virtual : translations.presential;
+                                    var virtualOrPresentialText = (r.RoomJsonDto.IsVirtualMeeting === true) ? translations.virtual : translations.presential;
                                     html += '<span class="kt-badge kt-badge--inline kt-badge--warning kt-font-boldest">' + virtualOrPresentialText + '</span>';
                                 }
 
                                 html += '\
                                         </td>\
                                         <td>' + translations.round + ' ' + r.RoundNumber + ' (' + moment(r.StartDate).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('LT') + ' - ' + moment(r.EndDate).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('LT') + ')</td>\
+                                        <td class="text-center">' + r.TableNumber + '</td>\
                                         <td>' + r.ProjectBuyerEvaluationBaseDto.ProjectBaseDto.ProjectName + '</td>\
                                         <td>';
 
@@ -260,7 +257,7 @@ var AudiovisualMeetingsSendEmailToProducersDataTableWidget = function () {
                                 }
 
                                 html += '           </td>\
-                                                    <td> ' + r.ProjectBuyerEvaluationBaseDto.BuyerAttendeeOrganizationBaseDto.OrganizationBaseDto.Name + '</td>\
+                                                    <td> ' + r.ProjectBuyerEvaluationBaseDto.BuyerAttendeeOrganizationBaseDto.OrganizationBaseDto.DisplayName + '</td>\
                                                 </tr>\
                                             </table>\
                                         </td>\

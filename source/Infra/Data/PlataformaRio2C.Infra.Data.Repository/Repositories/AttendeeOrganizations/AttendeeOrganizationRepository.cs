@@ -4,7 +4,7 @@
 // Created          : 08-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-24-2021
+// Last Modified On : 06-25-2021
 // ***********************************************************************
 // <copyright file="AttendeeOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -878,6 +878,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     Id = ao.Organization.Id,
                                     Uid = ao.Organization.Uid,
                                     Name = ao.Organization.Name,
+                                    TradeName = ao.Organization.TradeName,
                                     ImageUploadDate = ao.Organization.ImageUploadDate
                                 },
                                 CreateDate = ao.CreateDate,
@@ -918,6 +919,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                 Id = pbe.BuyerAttendeeOrganization.Organization.Id,
                                                                                 Uid = pbe.BuyerAttendeeOrganization.Organization.Uid,
                                                                                 Name = pbe.BuyerAttendeeOrganization.Organization.Name,
+                                                                                TradeName = pbe.BuyerAttendeeOrganization.Organization.TradeName,
                                                                                 ImageUploadDate = pbe.BuyerAttendeeOrganization.Organization.ImageUploadDate
                                                                             },
                                                                             CreateDate = pbe.BuyerAttendeeOrganization.CreateDate,
@@ -937,6 +939,129 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                 })))
                             })
                             .ToListPagedAsync(page, pageSize);
+        }
+
+        /// <summary>
+        /// Finds all base dto by active seller negotiations.
+        /// </summary>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="selectedAttendeeOrganizationsUids">The selected attendee organizations uids.</param>
+        /// <param name="organizationTypeUid">The organization type uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="languageId">The language identifier.</param>
+        /// <returns></returns>
+        public async Task<List<SellerAttendeeOrganizationBaseDto>> FindAllBaseDtoByActiveSellerNegotiations(
+            string keywords,
+            List<Guid> selectedAttendeeOrganizationsUids,
+            Guid organizationTypeUid,
+            int editionId,
+            int languageId)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByKeywords(keywords)
+                                .FindByUids(selectedAttendeeOrganizationsUids)
+                                .FindByEditionId(editionId, false)
+                                .FindByOrganizationTypeUid(editionId, false, organizationTypeUid)
+                                .HasActiveSellerNegotiations();
+
+            return await query
+                            .OrderBy(ao => ao.Organization.Name)
+                            .Select(ao => new SellerAttendeeOrganizationBaseDto
+                            {
+                                Id = ao.Id,
+                                Uid = ao.Uid,
+                                OrganizationBaseDto = new OrganizationBaseDto
+                                {
+                                    Id = ao.Organization.Id,
+                                    Uid = ao.Organization.Uid,
+                                    Name = ao.Organization.Name,
+                                    TradeName = ao.Organization.TradeName,
+                                    ImageUploadDate = ao.Organization.ImageUploadDate
+                                },
+                                CreateDate = ao.CreateDate,
+                                UpdateDate = ao.UpdateDate,
+                                AttendeeCollaboratorBaseDtos = ao.AttendeeOrganizationCollaborators
+                                                                    .Where(aoc => !aoc.IsDeleted
+                                                                                                          && !aoc.AttendeeCollaborator.IsDeleted
+                                                                                                          && !aoc.AttendeeCollaborator.Collaborator.IsDeleted
+                                                                                                          && !aoc.AttendeeCollaborator.Collaborator.User.IsDeleted)
+                                                                    .Select(aoc => new AttendeeCollaboratorBaseDto
+                                                                    {
+                                                                        Id = aoc.Id,
+                                                                        Uid = aoc.Uid,
+                                                                        CollaboratorBaseDto = new CollaboratorBaseDto
+                                                                        {
+                                                                            Id = aoc.AttendeeCollaborator.Collaborator.Id,
+                                                                            Uid = aoc.AttendeeCollaborator.Collaborator.Uid,
+                                                                            FirstName = aoc.AttendeeCollaborator.Collaborator.FirstName,
+                                                                            LastNames = aoc.AttendeeCollaborator.Collaborator.LastNames,
+                                                                            Email = aoc.AttendeeCollaborator.Collaborator.User.Email,
+                                                                            UserBaseDto = new UserBaseDto
+                                                                            {
+                                                                                Id = aoc.AttendeeCollaborator.Collaborator.User.Id,
+                                                                                Uid = aoc.AttendeeCollaborator.Collaborator.User.Uid,
+                                                                                Email = aoc.AttendeeCollaborator.Collaborator.User.Email,
+                                                                                UserInterfaceLanguageId = aoc.AttendeeCollaborator.Collaborator.User.UserInterfaceLanguage.Id,
+                                                                                UserInterfaceLanguageCode = aoc.AttendeeCollaborator.Collaborator.User.UserInterfaceLanguage.Code
+                                                                            }
+                                                                        }
+                                                                    }),
+                                SellerNegotiationBaseDtos = ao.SellProjects
+                                                                .SelectMany(sp => sp.ProjectBuyerEvaluations
+                                                                .SelectMany(pbe => pbe.Negotiations
+                                                                .Where(n => !n.IsDeleted && !n.ProjectBuyerEvaluation.IsDeleted && !n.ProjectBuyerEvaluation.Project.IsDeleted)
+                                                                .Select(n => new NegotiationBaseDto
+                                                                {
+                                                                    Id = n.Id,
+                                                                    Uid = n.Uid,
+                                                                    StartDate = n.StartDate,
+                                                                    EndDate = n.EndDate,
+                                                                    TableNumber = n.TableNumber,
+                                                                    RoundNumber = n.RoundNumber,
+                                                                    IsAutomatic = n.IsAutomatic,
+                                                                    ProjectBuyerEvaluationBaseDto = new ProjectBuyerEvaluationBaseDto
+                                                                    {
+                                                                        Id = n.ProjectBuyerEvaluation.Id,
+                                                                        Uid = n.ProjectBuyerEvaluation.Uid,
+                                                                        EvaluationDate = n.ProjectBuyerEvaluation.EvaluationDate,
+                                                                        Reason = n.ProjectBuyerEvaluation.Reason,
+                                                                        ProjectBaseDto = new ProjectBaseDto
+                                                                        {
+                                                                            Id = sp.Id,
+                                                                            Uid = sp.Uid,
+                                                                            ProjectName = sp.ProjectTitles.Where(t => t.LanguageId == languageId).Select(t => t.Value).FirstOrDefault(),
+                                                                            CreateDate = sp.CreateDate,
+                                                                            FinishDate = sp.FinishDate
+                                                                        },
+                                                                        BuyerAttendeeOrganizationBaseDto = new AttendeeOrganizationBaseDto
+                                                                        {
+                                                                            Id = pbe.BuyerAttendeeOrganization.Id,
+                                                                            Uid = pbe.BuyerAttendeeOrganization.Uid,
+                                                                            OrganizationBaseDto = new OrganizationBaseDto
+                                                                            {
+                                                                                Id = pbe.BuyerAttendeeOrganization.Organization.Id,
+                                                                                Uid = pbe.BuyerAttendeeOrganization.Organization.Uid,
+                                                                                Name = pbe.BuyerAttendeeOrganization.Organization.Name,
+                                                                                TradeName = pbe.BuyerAttendeeOrganization.Organization.TradeName,
+                                                                                ImageUploadDate = pbe.BuyerAttendeeOrganization.Organization.ImageUploadDate
+                                                                            },
+                                                                            CreateDate = pbe.BuyerAttendeeOrganization.CreateDate,
+                                                                            UpdateDate = pbe.BuyerAttendeeOrganization.UpdateDate,
+                                                                        }
+                                                                    },
+                                                                    RoomJsonDto = new RoomJsonDto
+                                                                    {
+                                                                        Id = n.Room.Id,
+                                                                        Uid = n.Room.Uid,
+                                                                        Name = n.Room.RoomNames.FirstOrDefault(rn => !rn.IsDeleted && rn.LanguageId == languageId).Value,
+                                                                        IsVirtualMeeting = n.Room.IsVirtualMeeting,
+                                                                        VirtualMeetingUrl = n.Room.VirtualMeetingUrl,
+                                                                        CreateDate = n.Room.CreateDate,
+                                                                        UpdateDate = n.Room.UpdateDate
+                                                                    }
+                                                                })))
+                            })
+                            .ToListAsync();
         }
 
         /// <summary>

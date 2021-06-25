@@ -4,7 +4,7 @@
 // Created          : 03-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-24-2021
+// Last Modified On : 06-25-2021
 // ***********************************************************************
 // <copyright file="MeetingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -780,6 +780,132 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     new { page = this.RenderRazorViewToString("Widgets/SendEmailToProducersEditionCountWidget", producers), divIdOrClass = "#AudiovisualMeetingsSendEmailToProducersEditionCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Send E-mails
+
+        /// <summary>
+        /// Sends the producers emails.
+        /// </summary>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="selectedAttendeeOrganizationsUids">The selected attendee organizations uids.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> SendProducersEmails(string keywords,  string selectedAttendeeOrganizationsUids)
+        {
+            AppValidationResult result = null;
+
+            try
+            {
+                //if (string.IsNullOrEmpty(selectedProjectsUids))
+                //{
+                //    throw new DomainException(Messages.SelectAtLeastOneOption);
+                //}
+
+                var attendeeOrganizationBaseDtos = await this.attendeeOrganizationRepo.FindAllBaseDtoByActiveSellerNegotiations(
+                    keywords, 
+                    selectedAttendeeOrganizationsUids?.ToListGuid(','),
+                    OrganizationType.Producer.Uid,
+                    this.EditionDto.Id,
+                    this.AdminAccessControlDto.Language.Id);
+                if (attendeeOrganizationBaseDtos?.Any() != true)
+                {
+                    throw new DomainException(Messages.SelectAtLeastOneOption);
+                }
+
+                foreach (var attendeeOrganizationBaseDto in attendeeOrganizationBaseDtos)
+                {
+                    foreach (var attendeeCollaboratorBaseDto in attendeeOrganizationBaseDto.AttendeeCollaboratorBaseDtos)
+                    {
+                        var collaboratorLanguageCode = attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.UserInterfaceLanguageCode;
+
+                        try
+                        {
+                            result = await this.CommandBus.Send(new SendProducerNegotiationsEmailAsync(
+                                attendeeOrganizationBaseDto,
+                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Id,
+                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Uid,
+                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.FirstName,
+                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.FullName,
+                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.Email,
+                                this.EditionDto.Edition,
+                                this.AdminAccessControlDto.User.Id,
+                                collaboratorLanguageCode));
+                            if (!result.IsValid)
+                            {
+                                throw new DomainException(Messages.CorrectFormValues);
+                            }
+                        }
+                        catch (DomainException ex)
+                        {
+                            //TODO: Check errors
+                            //var errors = result?.Errors?.Select(e => e.Message)?.Join(", ");
+                        }
+                        catch (Exception ex)
+                        {
+                            Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                        }
+
+                    }
+                }
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage(), }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Email, Labels.Sent.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+
+            //var projectsDtos = await this.projectRepo.FindAllDtosByFiltersAsync(
+            //    keyword,
+            //    showPitchings,
+            //    interestUid,
+            //    selectedProjectsUids?.ToListGuid(','),
+            //    this.UserInterfaceLanguage,
+            //    this.EditionDto.Id);
+
+            //// No projects returned
+            //if (projectsDtos?.Any() != true)
+            //{
+            //    return null;
+            //}
+
+            //// Just one project returned
+            //if (projectsDtos.Count == 1)
+            //{
+            //    var projectDto = projectsDtos.First();
+            //    var pdf = new PlataformaRio2CDocument(new ProjectDocumentTemplate(projectDto));
+
+            //    return File(pdf.GetStream(), "application/pdf", Labels.Project +
+            //                                                    "_" +
+            //                                                    projectDto.Project.Id.ToString("D4") +
+            //                                                    "_" +
+            //                                                    projectDto.GetTitleDtoByLanguageCode(Language.Portuguese.Code).ProjectTitle.Value.RemoveFilenameInvalidChars() +
+            //                                                    ".pdf");
+            //}
+
+            //// Many projects returned
+            //var dictPdf = new Dictionary<string, MemoryStream>();
+
+            //foreach (var projectDto in projectsDtos)
+            //{
+            //    var pdfDocument = new PlataformaRio2CDocument(new ProjectDocumentTemplate(projectDto));
+            //    dictPdf.Add(Labels.Project +
+            //                "_" +
+            //                projectDto.Project.Id.ToString("D4") +
+            //                "_" +
+            //                projectDto.GetTitleDtoByLanguageCode(Language.Portuguese.Code).ProjectTitle.Value.RemoveFilenameInvalidChars() +
+            //                ".pdf", pdfDocument.GetStream());
+            //}
+
+            //return ZipDocuments(dictPdf);
         }
 
         #endregion

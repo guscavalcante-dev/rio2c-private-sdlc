@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-27-2019
+// Last Modified On : 06-25-2021
 // ***********************************************************************
 // <copyright file="HoldingRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -174,6 +174,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 //Creator = h.Creator,
                                 UpdaterDto = new UserBaseDto
                                 {
+                                    Id = h.Updater.Id,
                                     Uid = h.Updater.Uid,
                                     Name = h.Updater.Name,
                                     Email =h.Updater.Email 

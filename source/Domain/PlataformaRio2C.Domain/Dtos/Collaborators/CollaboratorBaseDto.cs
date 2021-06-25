@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 06-25-2021
 // ***********************************************************************
 // <copyright file="CollaboratorBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,7 +17,6 @@ using System.Linq;
 using System.Web.Script.Serialization;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -28,10 +27,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public Guid Uid { get; set; }
 
         public bool? Active { get; set; }
-        public Guid? UserUid { get; set; }
-
-        //[ScriptIgnore]
-        public UserDto User { get; set; }
+        public string UserInterfaceLanguage { get; set; }
 
         public string FullName => this.FirstName + (!string.IsNullOrEmpty(this.LastNames) ? " " + this.LastNames : String.Empty);
         public string FirstName { get; set; }
@@ -55,11 +51,14 @@ namespace PlataformaRio2C.Domain.Dtos
 
         public bool? IsVirtualMeeting => this.EditionAttendeeCollaborator?.AttendeeOrganizationCollaborators?.Any(aoc => aoc.AttendeeOrganization?.IsVirtualMeeting == true);
 
+        public UserBaseDto UserBaseDto { get; set; }
+
         public IEnumerable<AttendeeOrganizationBaseDto> AttendeeOrganizationBasesDtos { get; set; }
         public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }
 
         public Role Role { get; set; }
         public List<AttendeeCollaboratorTypeDto> AttendeeCollaboratorTypeDtos { get; set; }
+
         public string RoleWithCollaboratorTypeNameHtmlString
         {
             get
@@ -83,6 +82,7 @@ namespace PlataformaRio2C.Domain.Dtos
                 return name;
             }
         }
+
         public bool? IsAdminFull
         {
             get
@@ -96,7 +96,6 @@ namespace PlataformaRio2C.Domain.Dtos
             }
         }
 
-        public string UserInterfaceLanguage { get; set; }
         public void Translate()
         {
             if (!string.IsNullOrEmpty(this.UserInterfaceLanguage))

@@ -4,7 +4,7 @@
 // Created          : 08-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-24-2021
+// Last Modified On : 06-25-2021
 // ***********************************************************************
 // <copyright file="IAttendeeOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -62,6 +62,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         #region Negotiations
 
         Task<IPagedList<SellerAttendeeOrganizationBaseDto>> FindAllByActiveSellerNegotiationsAndByDataTable(int page, int pageSize, string keywords, List<Tuple<string, string>> sortColumns, Guid organizationTypeUid, int editionId, int languageId);
+        Task<List<SellerAttendeeOrganizationBaseDto>> FindAllBaseDtoByActiveSellerNegotiations(string keywords, List<Guid> selectedAttendeeOrganizationsUids, Guid organizationTypeUid, int editionId, int languageId);
         Task<int> CountAllByActiveSellerNegotiationsAndByDataTable(Guid organizationTypeUid, bool showAllEditions, int? editionId);
 
         #endregion

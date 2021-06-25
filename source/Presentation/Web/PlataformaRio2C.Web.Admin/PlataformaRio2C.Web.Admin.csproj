@@ -9030,6 +9030,7 @@
     <Content Include="Areas\Audiovisual\Views\Organizations\Modals\UpdateTargetAudienceModal.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Producers\Index.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Producers\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Views\AdminMailerService\ProducersNegotiationsEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

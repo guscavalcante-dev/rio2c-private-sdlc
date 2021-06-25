@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-26-2020
+// Last Modified On : 06-25-2021
 // ***********************************************************************
 // <copyright file="managers.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -200,7 +200,7 @@ var ManagersDataTableWidget = function () {
 
                         html += '<button class="dropdown-item" onclick="ManagersDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
                         html += '<button class="dropdown-item" onclick="ManagersChangePassword.showModal(\'' + full.Uid + '\',\'novasenha\');"><i class="la la-key"></i> ' + changePassword + '</button>';
-                        html += '<button class="dropdown-item" onclick="ManagersDataTableWidget.toogleStatus(\'' + full.UserUid + '\',\'' + !full.Active + '\');"><i class="la la-lock"></i> ' + ((full.Active)?block:unblock) + '</button>';
+                        html += '<button class="dropdown-item" onclick="ManagersDataTableWidget.toogleStatus(\'' + full.UserBaseDto.Uid + '\',\'' + !full.Active + '\');"><i class="la la-lock"></i> ' + ((full.Active)?block:unblock) + '</button>';
 
                         if (full.IsInCurrentEdition && full.IsInOtherEdition) {
                             html += '<button class="dropdown-item" onclick="ManagersDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-minus"></i> ' + removeFromEdition + '</button>';

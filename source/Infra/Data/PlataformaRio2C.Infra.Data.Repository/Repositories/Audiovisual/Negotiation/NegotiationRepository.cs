@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-30-2020
+// Last Modified On : 06-25-2021
 // ***********************************************************************
 // <copyright file="NegotiationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -320,8 +320,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                           }
                                       })
                                   },
-                                  UpdaterDto = new UserBaseDto()
+                                  UpdaterDto = new UserBaseDto
                                   {
+                                      Id = n.Updater.Id,
                                       Uid = n.Updater.Uid,
                                       Name = n.Updater.Name,
                                       Email = n.Updater.Email

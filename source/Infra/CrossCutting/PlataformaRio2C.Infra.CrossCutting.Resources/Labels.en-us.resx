@@ -2762,4 +2762,12 @@
     <value>With</value>
     <comment>Com</comment>
   </data>
+  <data name="confirmSendEmailAll" xml:space="preserve">
+    <value>Confirm to send emails for all records on all pages?</value>
+    <comment>Confirma o envio de e-mail para todos os registros de todas as páginas?</comment>
+  </data>
+  <data name="confirmSendEmailSelected" xml:space="preserve">
+    <value>Confirm to send emails for selected records?</value>
+    <comment>Confirma o envio de e-mail para os registros selecionados?</comment>
+  </data>
 </root>
