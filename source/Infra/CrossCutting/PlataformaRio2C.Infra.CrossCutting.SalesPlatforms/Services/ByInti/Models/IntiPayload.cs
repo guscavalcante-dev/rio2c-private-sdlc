@@ -27,7 +27,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Mode
         public string Type { get; set; }
 
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [JsonProperty("timestamp")]
         public DateTime Timestamp { get; set; }

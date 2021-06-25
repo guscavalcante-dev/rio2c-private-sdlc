@@ -73,17 +73,17 @@
     <Compile Include="Services\ByInti\Models\IntiSearchEvent.cs" />
     <Compile Include="Services\ByInti\Models\IntiSearchListTicket.cs" />
     <Compile Include="Services\ByInti\Models\IntiSearchTicket.cs" />
-    <Compile Include="Services\Eventbrite\Models\EventbriteCsv.cs" />
-    <Compile Include="Services\Eventbrite\Models\EventbriteAttendeeStatus.cs" />
+    <Compile Include="Services\Eventbrite\EventbriteSalesPlatformService.cs" />
     <Compile Include="Services\Eventbrite\Models\EventbriteAction.cs" />
+    <Compile Include="Services\Eventbrite\Models\EventbriteAttendee.cs" />
+    <Compile Include="Services\Eventbrite\Models\EventbriteAttendeeStatus.cs" />
+    <Compile Include="Services\Eventbrite\Models\EventbriteCsv.cs" />
+    <Compile Include="Services\Eventbrite\Models\EventbriteErrors.cs" />
+    <Compile Include="Services\Eventbrite\Models\EventbriteEvent.cs" />
+    <Compile Include="Services\Eventbrite\Models\EventbriteModelWithId.cs" />
     <Compile Include="Services\Eventbrite\Models\EventbriteOrder.cs" />
     <Compile Include="Services\Eventbrite\Models\EventbritePayload.cs" />
-    <Compile Include="Services\Eventbrite\Models\EventbriteErrors.cs" />
-    <Compile Include="Services\Eventbrite\Models\EventbriteAttendee.cs" />
-    <Compile Include="Services\Eventbrite\Models\EventbriteModelWithId.cs" />
-    <Compile Include="Services\Eventbrite\Models\EventbriteEvent.cs" />
     <Compile Include="Services\ISalesPlatformService.cs" />
-    <Compile Include="Services\Eventbrite\EventbriteSalesPlatformService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

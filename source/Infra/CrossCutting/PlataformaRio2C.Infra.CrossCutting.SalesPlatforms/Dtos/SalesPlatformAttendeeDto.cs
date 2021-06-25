@@ -113,8 +113,8 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
             this.OrderId = intiPayload.Relationships.OrderId;
 
             // Attendee
-            this.AttendeeId = intiPayload.ValidatorCode;
-            this.SalesPlatformUpdateDate = intiPayload.Timestamp; //TODO: Está salvando UTC -3 no banco.
+            this.AttendeeId = intiPayload.Id;
+            this.SalesPlatformUpdateDate = intiPayload.Timestamp;
             this.SalesPlatformAttendeeStatus = intiPayload.GetSalesPlatformAttendeeStatus();
             this.IsCancelled = false;
             this.IsCheckedIn = false;
@@ -136,7 +136,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
             this.Barcode = intiPayload.ValidatorCode;
             this.IsBarcodePrinted = false;
             this.IsBarcodeUsed = false;
-            this.BarcodeUpdateDate = intiPayload?.Timestamp; //TODO: Está salvando UTC -3 no banco.
+            this.BarcodeUpdateDate = intiPayload?.Timestamp;
         }
     }
 }
