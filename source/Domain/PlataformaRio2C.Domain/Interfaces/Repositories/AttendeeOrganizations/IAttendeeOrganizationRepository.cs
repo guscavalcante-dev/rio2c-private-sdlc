@@ -4,7 +4,7 @@
 // Created          : 08-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-21-2021
+// Last Modified On : 06-22-2021
 // ***********************************************************************
 // <copyright file="IAttendeeOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,13 +29,25 @@ namespace PlataformaRio2C.Domain.Interfaces
 
         #region Common Widgets
 
-        Task<AttemdeeOrganizationSiteDetailsDto> FindDetailsDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId, bool showAllEditions);
-        Task<AttemdeeOrganizationSiteMainInformationWidgetDto> FindMainInformationWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId, bool showAllEditions);
-        Task<AttendeeOrganizationSiteExecutiveWidgetDto> FindExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId, bool showAllEditions);
+        Task<AttendeeOrganizationSiteDetailsDto> FindDetailsDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId, bool showAllEditions);
         Task<AttendeeOrganizationSiteAddressWidgetDto> FindAddressWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId, bool showAllEditions);
         Task<AttendeeOrganizationSiteActivityWidgetDto> FindActivityWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId, bool showAllEditions);
         Task<AttendeeOrganizationSiteTargetAudienceWidgetDto> FindTargetAudienceWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId, bool showAllEditions);
         Task<AttendeeOrganizationSiteInterestWidgetDto> FindInterestWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId, bool showAllEditions);
+
+        #endregion
+
+        #region Admin Widgets
+
+        Task<AttendeeOrganizationMainInformationWidgetDto> FindAdminMainInformationWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, Guid organizationTypeUid, int editionId);
+        Task<AttendeeOrganizationExecutiveWidgetDto> FindAdminExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, Guid organizationTypeUid, int editionId);
+
+        #endregion
+
+        #region Site Widgets
+
+        Task<AttendeeOrganizationMainInformationWidgetDto> FindSiteMainInformationWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId);
+        Task<AttendeeOrganizationExecutiveWidgetDto> FindSiteExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId);
 
         #endregion
 

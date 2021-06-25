@@ -4,9 +4,9 @@
 // Created          : 10-09-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-15-2019
+// Last Modified On : 06-22-2021
 // ***********************************************************************
-// <copyright file="AttemdeeOrganizationSiteDetailsDto.cs" company="Softo">
+// <copyright file="AttendeeOrganizationSiteDetailsDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -17,15 +17,15 @@ using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
-    /// <summary>AttemdeeOrganizationSiteMainInformationWidgetDto</summary>
-    public class AttemdeeOrganizationSiteDetailsDto
+    /// <summary>AttendeeOrganizationMainInformationWidgetDto</summary>
+    public class AttendeeOrganizationSiteDetailsDto
     {
         public AttendeeOrganization AttendeeOrganization { get; set; }
         public Organization Organization { get; set; }
         public IEnumerable<AttendeeOrganizationTypeDto> AttendeeOrganizationTypesDtos { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="AttemdeeOrganizationSiteDetailsDto"/> class.</summary>
-        public AttemdeeOrganizationSiteDetailsDto()
+        /// <summary>Initializes a new instance of the <see cref="AttendeeOrganizationSiteDetailsDto"/> class.</summary>
+        public AttendeeOrganizationSiteDetailsDto()
         {
         }
 

@@ -2,7 +2,7 @@
 @using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Domain.Entities
 @using PlataformaRio2C.Domain.Statics
-@model AttemdeeOrganizationSiteMainInformationWidgetDto
+@model AttendeeOrganizationMainInformationWidgetDto
 @{
     var isAudiovisualBuyer = ViewBag.OrganizationTypeUid == OrganizationType.Player.Uid;
 }
@@ -32,11 +32,14 @@
                             <i class="flaticon2-correct"></i>
                         }
                     </span>
-                    <div class="kt-widget__action">
-                        <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="AudiovisualOrganizationsMainInformationWidget.showUpdateModal();">
-                            <i class="flaticon2-edit"></i>
-                        </button>
-                    </div>
+                    @if (Model.IsInCurrentEdition == true)
+                    {
+                        <div class="kt-widget__action">
+                            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="AudiovisualOrganizationsMainInformationWidget.showUpdateModal();">
+                                <i class="flaticon2-edit"></i>
+                            </button>
+                        </div>
+                    }
                     @*}*@
                 </div>
                 @if (isAudiovisualBuyer)
@@ -52,15 +55,22 @@
                         @:- @Model.Organization.Document
                     }
                 </div>
-                @if (Model.AttendeeOrganization.IsVirtualMeeting.HasValue)
+                @if (Model.AttendeeOrganization.IsVirtualMeeting.HasValue || Model.IsInCurrentEdition == false)
                 {
-                    var isVirtualMeeting = Model.AttendeeOrganization.IsVirtualMeeting == true;
-                    var tooltipTile = string.Format(Messages.PlayerMeetingPreference, (isVirtualMeeting ? Labels.RemoteF : Labels.Presential).ToLowerInvariant());
-
                     <div class="kt-widget__subhead pt-0 mt-0">
-                        <span class="kt-badge kt-badge--inline kt-badge--warning mt-2 kt-font-boldest" data-toggle="tooltip" data-placement="right" title="@tooltipTile" style="cursor: pointer;">
-                            @(isVirtualMeeting ? Labels.Remote : Labels.Presential)
-                        </span>
+                        @if (Model.IsInCurrentEdition == true && Model.AttendeeOrganization.IsVirtualMeeting.HasValue)
+                        {
+                            var isVirtualMeeting = Model.AttendeeOrganization.IsVirtualMeeting == true;
+                            var tooltipTile = string.Format(Messages.PlayerMeetingPreference, (isVirtualMeeting ? Labels.RemoteF : Labels.Presential).ToLowerInvariant());
+
+                            <span class="kt-badge kt-badge--inline kt-badge--warning kt-font-boldest" data-toggle="tooltip" data-placement="right" title="@tooltipTile" style="cursor: pointer;">
+                                @(isVirtualMeeting ? Labels.Remote : Labels.Presential)
+                            </span>
+                        }
+                        @if (Model.IsInCurrentEdition == false)
+                        {
+                            <span class="kt-badge kt-badge--inline kt-badge--info">@string.Format(Labels.NotInEdition, ViewBag.EditionDto.Edition.UrlCode)</span>
+                        }
                     </div>
                 }
                 <div class="kt-widget__subhead">

@@ -4,7 +4,7 @@
 // Created          : 01-16-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified On : 06-22-2021
 // ***********************************************************************
 // <copyright file="UpdateOrganizationSocialNetworks.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -45,7 +45,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         /// <summary>Initializes a new instance of the <see cref="UpdateOrganizationSocialNetworks"/> class.</summary>
         /// <param name="entity">The entity.</param>
-        public UpdateOrganizationSocialNetworks(AttemdeeOrganizationSiteDetailsDto entity)
+        public UpdateOrganizationSocialNetworks(AttendeeOrganizationSiteDetailsDto entity)
         {
             this.OrganizationUid = entity?.Organization?.Uid ?? Guid.Empty;
             this.Website = entity?.Organization?.Website;

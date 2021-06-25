@@ -4,7 +4,7 @@
 // Created          : 10-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-19-2021
+// Last Modified On : 06-22-2021
 // ***********************************************************************
 // <copyright file="UpdateOrganizationMainInformationBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -54,7 +54,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         public UpdateOrganizationMainInformationBaseCommand(
-            AttemdeeOrganizationSiteMainInformationWidgetDto entity,
+            AttendeeOrganizationMainInformationWidgetDto entity,
             List<LanguageDto> languagesDtos,
             bool isDescriptionRequired,
             bool isImageRequired)
@@ -87,7 +87,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Updates the cropper image.</summary>
         /// <param name="entity">The entity.</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
-        private void UpdateCropperImage(AttemdeeOrganizationSiteMainInformationWidgetDto entity, bool isImageRequired)
+        private void UpdateCropperImage(AttendeeOrganizationMainInformationWidgetDto entity, bool isImageRequired)
         {
             this.CropperImage = new CropperImageBaseCommand(entity.Organization.ImageUploadDate, entity.Organization.Uid, FileRepositoryPathType.OrganizationImage, isImageRequired);
         }
@@ -96,7 +96,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
         /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
-        private void UpdateDescriptions(AttemdeeOrganizationSiteMainInformationWidgetDto entity, List<LanguageDto> languagesDtos, bool isDescriptionRequired)
+        private void UpdateDescriptions(AttendeeOrganizationMainInformationWidgetDto entity, List<LanguageDto> languagesDtos, bool isDescriptionRequired)
         {
             this.Descriptions = new List<OrganizationDescriptionBaseCommand>();
             foreach (var languageDto in languagesDtos)

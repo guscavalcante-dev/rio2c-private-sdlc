@@ -4,7 +4,7 @@
 // Created          : 03-08-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-21-2021
+// Last Modified On : 06-22-2021
 // ***********************************************************************
 // <copyright file="ProducersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -184,7 +184,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             #endregion
 
-            ViewBag.OrganizationTypeUid = OrganizationType.Producer.Uid;
+            ViewBag.OrganizationTypeUid = OrganizationType.Producer.Uid; // It's the admin page accessed and not the organization type of the current organization
 
             return View("../Organizations/Details", attendeeOrganizationDto);
         }
