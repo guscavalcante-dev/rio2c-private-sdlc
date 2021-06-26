@@ -819,7 +819,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 {
                     foreach (var attendeeCollaboratorBaseDto in attendeeOrganizationBaseDto.AttendeeCollaboratorBaseDtos)
                     {
-                        var collaboratorLanguageCode = attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.UserInterfaceLanguageCode;
+                        var collaboratorLanguageCode = attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.UserInterfaceLanguageCode ??  this.UserInterfaceLanguage;
 
                         try
                         {

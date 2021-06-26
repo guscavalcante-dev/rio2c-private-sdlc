@@ -22,7 +22,6 @@ namespace PlataformaRio2C.Domain.Dtos
         public Guid Uid { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
-        public int UserInterfaceLanguageId { get; set; }
         public string UserInterfaceLanguageCode { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="UserBaseDto"/> class.</summary>

@@ -1001,7 +1001,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                 Id = aoc.AttendeeCollaborator.Collaborator.User.Id,
                                                                                 Uid = aoc.AttendeeCollaborator.Collaborator.User.Uid,
                                                                                 Email = aoc.AttendeeCollaborator.Collaborator.User.Email,
-                                                                                UserInterfaceLanguageId = aoc.AttendeeCollaborator.Collaborator.User.UserInterfaceLanguage.Id,
                                                                                 UserInterfaceLanguageCode = aoc.AttendeeCollaborator.Collaborator.User.UserInterfaceLanguage.Code
                                                                             }
                                                                         }

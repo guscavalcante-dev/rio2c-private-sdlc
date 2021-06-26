@@ -52,7 +52,7 @@ namespace PlataformaRio2C.Web.Site.Services
 
             return Populate(x =>
             {
-                x.Subject = this.GetSubject(Texts.ForgotPassword);
+                x.Subject = this.GetSubject(Texts.ForgotPassword, null);
                 x.ViewName = "ForgotPasswordEmail";
                 x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
                 x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
@@ -77,7 +77,7 @@ namespace PlataformaRio2C.Web.Site.Services
 
             return Populate(x =>
             {
-                x.Subject = this.GetSubject(string.Format("Bem-vindo ao {0} | Welcome to {0}", cmd.Edition.Name));
+                x.Subject = this.GetSubject(string.Format("Bem-vindo ao {0} | Welcome to {0}", cmd.Edition.Name), null);
                 x.ViewName = "TicketBuyerWelcomeEmail";
                 x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
                 x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
@@ -105,7 +105,7 @@ namespace PlataformaRio2C.Web.Site.Services
 
             return Populate(x =>
             {
-                x.Subject = this.GetSubject(string.Format(Messages.UserSentYouMessage, senderName));
+                x.Subject = this.GetSubject(string.Format(Messages.UserSentYouMessage, senderName), cmd.Edition?.Name);
                 x.ViewName = "UnreadConversationEmail";
                 x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
                 x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
@@ -130,7 +130,7 @@ namespace PlataformaRio2C.Web.Site.Services
 
             return Populate(x =>
             {
-                x.Subject = this.GetSubject(Messages.ProjectBuyerEvaluationEmailSubject);
+                x.Subject = this.GetSubject(Messages.ProjectBuyerEvaluationEmailSubject, cmd.Edition?.Name);
                 x.ViewName = "ProjectBuyerEvaluationEmail";
                 x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
                 x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
@@ -145,12 +145,17 @@ namespace PlataformaRio2C.Web.Site.Services
 
         #region Private methods
 
-        /// <summary>Gets the subject.</summary>
+        /// <summary>
+        /// Gets the subject.
+        /// </summary>
         /// <param name="subject">The subject.</param>
+        /// <param name="editionName">Name of the edition.</param>
         /// <returns></returns>
-        private string GetSubject(string subject)
+        private string GetSubject(string subject, string editionName)
         {
-            var emailPrefix = (!string.IsNullOrEmpty(this.environment) && this.environment.ToLower() != "prod" ? "[" + this.environment.ToUpper() + "] " : string.Empty) + "MyRio2C | ";
+            var emailPrefix = (!string.IsNullOrEmpty(this.environment) && this.environment.ToLower() != "prod" ? "[" + this.environment.ToUpper() + "] " : string.Empty)
+                                    + "MyRio2C | "
+                                    + (!string.IsNullOrEmpty(editionName) ? editionName + " | " : string.Empty);
 
             return emailPrefix + subject;
         }

@@ -54,7 +54,7 @@ namespace PlataformaRio2C.Web.Admin.Services
 
             return Populate(x =>
             {
-                x.Subject = this.GetSubject(Texts.ForgotPassword);
+                x.Subject = this.GetSubject(Texts.ForgotPassword, null);
                 x.ViewName = "ForgotPasswordEmail";
                 x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
                 x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
@@ -79,7 +79,7 @@ namespace PlataformaRio2C.Web.Admin.Services
 
             return Populate(x =>
             {
-                x.Subject = this.GetSubject(string.Format("Bem-vindo ao {0} | Welcome to {0}", cmd.Edition.Name));
+                x.Subject = this.GetSubject(string.Format("Bem-vindo ao {0} | Welcome to {0}", cmd.Edition.Name), null);
                 //x.Subject = this.GetSubject(string.Format(Labels.WelcomeToEdition, cmd.EditionName));
                 x.ViewName = "PlayerWelcomeEmail";
                 x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
@@ -106,7 +106,7 @@ namespace PlataformaRio2C.Web.Admin.Services
 
             return Populate(x =>
             {
-                x.Subject = this.GetSubject(string.Format("Bem-vindo ao {0} | Welcome to {0}", cmd.Edition.Name));
+                x.Subject = this.GetSubject(string.Format("Bem-vindo ao {0} | Welcome to {0}", cmd.Edition.Name), null);
                 //x.Subject = this.GetSubject(string.Format(Labels.WelcomeToEdition, cmd.EditionName));
                 x.ViewName = "SpeakerWelcomeEmail";
                 x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
@@ -133,7 +133,7 @@ namespace PlataformaRio2C.Web.Admin.Services
 
             return Populate(x =>
             {
-                x.Subject = this.GetSubject(string.Format("Bem-vindo ao {0} | Welcome to {0}", cmd.Edition.Name));
+                x.Subject = this.GetSubject(string.Format("Bem-vindo ao {0} | Welcome to {0}", cmd.Edition.Name), null);
                 //x.Subject = this.GetSubject(string.Format(Labels.WelcomeToEdition, cmd.EditionName));
                 x.ViewName = "MusicCommissionWelcomeEmail";
                 x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
@@ -160,7 +160,7 @@ namespace PlataformaRio2C.Web.Admin.Services
 
             return Populate(x =>
             {
-                x.Subject = this.GetSubject(string.Format("Bem-vindo ao {0} | Welcome to {0}", cmd.Edition.Name));
+                x.Subject = this.GetSubject(string.Format("Bem-vindo ao {0} | Welcome to {0}", cmd.Edition.Name), null);
                 x.ViewName = "AdminWelcomeEmail";
                 x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
                 x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
@@ -188,7 +188,7 @@ namespace PlataformaRio2C.Web.Admin.Services
 
             return Populate(x =>
             {
-                x.Subject = this.GetSubject(string.Format("{0} | Agenda de Rodadas de Negócio | One-to-One Meetings Agenda", cmd.Edition.Name));
+                x.Subject = this.GetSubject("Agenda de Rodadas de Negócio | One-to-One Meetings Agenda", cmd.Edition.Name);
                 x.ViewName = "ProducersNegotiationsEmail";
                 x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
                 x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
@@ -204,12 +204,17 @@ namespace PlataformaRio2C.Web.Admin.Services
 
         #region Private methods
 
-        /// <summary>Gets the subject.</summary>
+        /// <summary>
+        /// Gets the subject.
+        /// </summary>
         /// <param name="subject">The subject.</param>
+        /// <param name="editionName">Name of the edition.</param>
         /// <returns></returns>
-        private string GetSubject(string subject)
+        private string GetSubject(string subject, string editionName)
         {
-            var emailPrefix = (!string.IsNullOrEmpty(this.environment) && this.environment.ToLower() != "prod" ? "[" + this.environment.ToUpper() + "] " : string.Empty) + "MyRio2C | ";
+            var emailPrefix = (!string.IsNullOrEmpty(this.environment) && this.environment.ToLower() != "prod" ? "[" + this.environment.ToUpper() + "] " : string.Empty) 
+                                    + "MyRio2C | "
+                                    + (!string.IsNullOrEmpty(editionName) ? editionName + " | " : string.Empty);
 
             return emailPrefix + subject;
         }
