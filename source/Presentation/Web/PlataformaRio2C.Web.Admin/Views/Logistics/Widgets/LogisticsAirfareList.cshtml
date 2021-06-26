@@ -43,13 +43,13 @@
                                         @logisticAirfareDto.LogisticAirfare.From
                                     </td>
                                     <td class="text-center">
-                                        @logisticAirfareDto.LogisticAirfare.DepartureDate.ToUserTimeZone().ToString("g")
+                                        @logisticAirfareDto.LogisticAirfare.DepartureDate.ToBrazilTimeZone().ToString("g")
                                     </td>
                                     <td>
                                         @logisticAirfareDto.LogisticAirfare.To
                                     </td>
                                     <td class="text-center">
-                                        @logisticAirfareDto.LogisticAirfare.ArrivalDate.ToUserTimeZone().ToString("g")
+                                        @logisticAirfareDto.LogisticAirfare.ArrivalDate.ToBrazilTimeZone().ToString("g")
                                     </td>
                                     <td class="text-center">
                                         @logisticAirfareDto.LogisticAirfare.TicketNumber
@@ -63,10 +63,10 @@
                                     @*<td class="text-center">
                                         </td>*@
                                     <td class="text-center">
-                                        @logisticAirfareDto.LogisticAirfare.CreateDate.ToUserTimeZone().ToString("g")
+                                        @logisticAirfareDto.LogisticAirfare.CreateDate.ToBrazilTimeZone().ToString("g")
                                     </td>
                                     <td class="text-center">
-                                        @logisticAirfareDto.LogisticAirfare.UpdateDate.ToUserTimeZone().ToString("g")
+                                        @logisticAirfareDto.LogisticAirfare.UpdateDate.ToBrazilTimeZone().ToString("g")
                                     </td>
                                     @if (hasChangeDataPermission && !hideActions)
                                     {

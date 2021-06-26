@@ -4,7 +4,7 @@
 // Created          : 01-04-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-16-2020
+// Last Modified On : 06-26-2021
 // ***********************************************************************
 // <copyright file="EditionEvent.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -161,12 +161,12 @@ namespace PlataformaRio2C.Domain.Entities
         {
             if (this.StartDate < this.Edition.StartDate || this.StartDate > this.Edition.EndDate)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.StartDate, this.Edition.EndDate.ToUserTimeZone().ToShortDateString(), this.Edition.StartDate.ToUserTimeZone().ToShortDateString()), new string[] { "StartDate" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.StartDate, this.Edition.EndDate.ToBrazilTimeZone().ToShortDateString(), this.Edition.StartDate.ToBrazilTimeZone().ToShortDateString()), new string[] { "StartDate" }));
             }
 
             if (this.EndDate < this.Edition.StartDate || this.EndDate > this.Edition.EndDate)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.EndDate, this.Edition.EndDate.ToUserTimeZone().ToShortDateString(), this.Edition.StartDate.ToUserTimeZone().ToShortDateString()), new string[] { "EndDate" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.EndDate, this.Edition.EndDate.ToBrazilTimeZone().ToShortDateString(), this.Edition.StartDate.ToBrazilTimeZone().ToShortDateString()), new string[] { "EndDate" }));
             }
 
             if (this.StartDate > this.EndDate)

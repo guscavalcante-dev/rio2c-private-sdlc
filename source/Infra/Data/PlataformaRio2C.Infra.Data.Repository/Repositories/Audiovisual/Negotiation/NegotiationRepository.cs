@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-25-2021
+// Last Modified On : 06-26-2021
 // ***********************************************************************
 // <copyright file="NegotiationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -369,7 +369,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization);
 
             return (await query.ToListAsync())
-                                .GroupBy(n => n.StartDate.ToUserTimeZone().Date)
+                                .GroupBy(n => n.StartDate.ToBrazilTimeZone().Date)
                                 .Select(nd => new NegotiationGroupedByDateDto(nd.Key, nd.ToList()))
                                 .OrderBy(ngd => ngd.Date)
                                 .ToList();
@@ -521,7 +521,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization);
 
             return (await query.ToListAsync())
-                                .GroupBy(n => n.StartDate.ToUserTimeZone().Date)
+                                .GroupBy(n => n.StartDate.ToBrazilTimeZone().Date)
                                 .Select(nd => new NegotiationReportGroupedByDateDto(nd.Key, nd.ToList()))
                                 .OrderBy(ngd => ngd.Date)
                                 .ToList();

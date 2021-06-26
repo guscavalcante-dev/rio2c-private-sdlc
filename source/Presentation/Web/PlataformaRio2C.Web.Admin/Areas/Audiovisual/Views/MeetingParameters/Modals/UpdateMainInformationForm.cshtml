@@ -6,7 +6,7 @@
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.Date, new { @class = "control-label" })
-        @Html.TextBox("Date", Model.Date?.ToShortDateString(), new { @class = "form-control enable-datepicker", data_date_start_date = editionDto?.StartDate.ToUserTimeZone().ToShortDateString(), data_date_end_date = editionDto?.EndDate.ToUserTimeZone().ToShortDateString() })
+        @Html.TextBox("Date", Model.Date?.ToShortDateString(), new { @class = "form-control enable-datepicker", data_date_start_date = editionDto?.StartDate.ToBrazilTimeZone().ToShortDateString(), data_date_end_date = editionDto?.EndDate.ToBrazilTimeZone().ToShortDateString() })
         @Html.ValidationMessageFor(m => m.Date, "", new { @class = "text-danger" })
     </div>
 </div>

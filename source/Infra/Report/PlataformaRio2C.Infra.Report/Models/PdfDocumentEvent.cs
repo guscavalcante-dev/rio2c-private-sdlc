@@ -4,7 +4,7 @@
 // Created          : 12-27-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 06-26-2021
 // ***********************************************************************
 // <copyright file="PDFDocumentEvent.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -95,7 +95,7 @@ namespace PlataformaRio2C.Infra.Report.Models
             writer.DirectContent.SetFontAndSize(basefont, 6);
             writer.DirectContent.ShowTextAligned(
                 PdfContentByte.ALIGN_RIGHT,
-                "Impresso em " + DateTime.UtcNow.ToUserTimeZone().ToString("dd/MM/yyyy HH:mm:ss"),
+                "Impresso em " + DateTime.UtcNow.ToBrazilTimeZone().ToString("dd/MM/yyyy HH:mm:ss"),
                 pageSize.GetRight(40),
                 pageSize.GetBottom(25), 0);
 

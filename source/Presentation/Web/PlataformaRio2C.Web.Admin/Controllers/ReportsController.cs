@@ -4,7 +4,7 @@
 // Created          : 01-13-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 06-26-2021
 // ***********************************************************************
 // <copyright file="ReportsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -273,8 +273,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     firstLine = false;
                 };
                 worksheetAudiovisual.Cells[row, column++].Value = playersSelectedForEvaluation;
-                worksheetAudiovisual.Cells[row, column++].Value = projectDto.Project.CreateDate.ToUserTimeZone().ToShortDateString();
-                worksheetAudiovisual.Cells[row, column++].Value = projectDto.Project.FinishDate?.ToUserTimeZone().ToShortDateString();
+                worksheetAudiovisual.Cells[row, column++].Value = projectDto.Project.CreateDate.ToBrazilTimeZone().ToShortDateString();
+                worksheetAudiovisual.Cells[row, column++].Value = projectDto.Project.FinishDate?.ToBrazilTimeZone().ToShortDateString();
 
                 firstLine = true;
                 var platforms = string.Empty;
@@ -356,7 +356,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 excelFile.SaveAs(stream);
 
                 string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                string fileName = string.Format("{0} - {1}", Labels.AudiovisualSubscriptionProjectReport, DateTime.UtcNow.ToUserTimeZone().ToString("yyyyMMdd_HHmmss")) + ".xlsx";
+                string fileName = string.Format("{0} - {1}", Labels.AudiovisualSubscriptionProjectReport, DateTime.UtcNow.ToBrazilTimeZone().ToString("yyyyMMdd_HHmmss")) + ".xlsx";
 
                 stream.Position = 0;
 

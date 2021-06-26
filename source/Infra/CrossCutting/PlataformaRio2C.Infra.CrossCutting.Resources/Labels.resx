@@ -2775,4 +2775,12 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Confirma o envio de e-mail para os registros selecionados?</value>
     <comment>Confirma o envio de e-mail para os registros selecionados?</comment>
   </data>
+  <data name="Emails" xml:space="preserve">
+    <value>E-mails</value>
+    <comment>E-mails</comment>
+  </data>
+  <data name="SentMP" xml:space="preserve">
+    <value>Enviados</value>
+    <comment>Enviados</comment>
+  </data>
 </root>

@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-16-2020
+// Last Modified On : 06-26-2021
 // ***********************************************************************
 // <copyright file="Conference.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -513,7 +513,7 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.StartDate < this.EditionEvent.StartDate || this.StartDate > this.EditionEvent.EndDate
                 || this.EndDate < this.EditionEvent.StartDate || this.EndDate > this.EditionEvent.EndDate)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.Date, this.EditionEvent.EndDate.ToUserTimeZone().ToShortDateString(), this.EditionEvent.StartDate.ToUserTimeZone().ToShortDateString()), new string[] { "Date" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.Date, this.EditionEvent.EndDate.ToBrazilTimeZone().ToShortDateString(), this.EditionEvent.StartDate.ToBrazilTimeZone().ToShortDateString()), new string[] { "Date" }));
             }
 
             if (this.StartDate > this.EndDate)

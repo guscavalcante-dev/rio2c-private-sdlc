@@ -4,7 +4,7 @@
 // Created          : 03-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-25-2021
+// Last Modified On : 06-26-2021
 // ***********************************************************************
 // <copyright file="MeetingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -799,11 +799,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             try
             {
-                //if (string.IsNullOrEmpty(selectedProjectsUids))
-                //{
-                //    throw new DomainException(Messages.SelectAtLeastOneOption);
-                //}
-
                 var attendeeOrganizationBaseDtos = await this.attendeeOrganizationRepo.FindAllBaseDtoByActiveSellerNegotiations(
                     keywords, 
                     selectedAttendeeOrganizationsUids?.ToListGuid(','),
@@ -819,6 +814,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 {
                     foreach (var attendeeCollaboratorBaseDto in attendeeOrganizationBaseDto.AttendeeCollaboratorBaseDtos)
                     {
+                        // If the collaborator does not have an user interface language, use the user interface language of the current user
                         var collaboratorLanguageCode = attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.UserInterfaceLanguageCode ??  this.UserInterfaceLanguage;
 
                         try
@@ -853,7 +849,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             }
             catch (DomainException ex)
             {
-                return Json(new { status = "error", message = ex.GetInnerMessage(), }, JsonRequestBehavior.AllowGet);
+                return Json(new
+                {
+                    status = "error",
+                    message = result?.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -861,51 +861,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Email, Labels.Sent.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-
-            //var projectsDtos = await this.projectRepo.FindAllDtosByFiltersAsync(
-            //    keyword,
-            //    showPitchings,
-            //    interestUid,
-            //    selectedProjectsUids?.ToListGuid(','),
-            //    this.UserInterfaceLanguage,
-            //    this.EditionDto.Id);
-
-            //// No projects returned
-            //if (projectsDtos?.Any() != true)
-            //{
-            //    return null;
-            //}
-
-            //// Just one project returned
-            //if (projectsDtos.Count == 1)
-            //{
-            //    var projectDto = projectsDtos.First();
-            //    var pdf = new PlataformaRio2CDocument(new ProjectDocumentTemplate(projectDto));
-
-            //    return File(pdf.GetStream(), "application/pdf", Labels.Project +
-            //                                                    "_" +
-            //                                                    projectDto.Project.Id.ToString("D4") +
-            //                                                    "_" +
-            //                                                    projectDto.GetTitleDtoByLanguageCode(Language.Portuguese.Code).ProjectTitle.Value.RemoveFilenameInvalidChars() +
-            //                                                    ".pdf");
-            //}
-
-            //// Many projects returned
-            //var dictPdf = new Dictionary<string, MemoryStream>();
-
-            //foreach (var projectDto in projectsDtos)
-            //{
-            //    var pdfDocument = new PlataformaRio2CDocument(new ProjectDocumentTemplate(projectDto));
-            //    dictPdf.Add(Labels.Project +
-            //                "_" +
-            //                projectDto.Project.Id.ToString("D4") +
-            //                "_" +
-            //                projectDto.GetTitleDtoByLanguageCode(Language.Portuguese.Code).ProjectTitle.Value.RemoveFilenameInvalidChars() +
-            //                ".pdf", pdfDocument.GetStream());
-            //}
-
-            //return ZipDocuments(dictPdf);
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Emails, Labels.SentMP.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion
@@ -1124,7 +1080,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 worksheet.Column(i).AdjustToContents();
             }
 
-            return new ExcelResult(workbook, Labels.CalendarReport + "_" + DateTime.UtcNow.ToUserTimeZone().ToString("yyyyMMdd"));
+            return new ExcelResult(workbook, Labels.CalendarReport + "_" + DateTime.UtcNow.ToBrazilTimeZone().ToString("yyyyMMdd"));
         }
 
         #endregion

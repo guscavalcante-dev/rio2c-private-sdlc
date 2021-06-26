@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-26-2020
+// Last Modified On : 06-26-2021
 // ***********************************************************************
 // <copyright file="collaborators.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -226,7 +226,7 @@ var CollaboratorsDataTableWidget = function () {
                         for (var item in row.AttendeeOrganizationBasesDtos) {
                             if (row.AttendeeOrganizationBasesDtos.hasOwnProperty(item)) {
                                 var r = row.AttendeeOrganizationBasesDtos[item];
-                                html += '<li>' + r.DisplayName + '</li>';
+                                html += '<li>' + r.OrganizationBaseDto.DisplayName + '</li>';
                             }
                         }
 

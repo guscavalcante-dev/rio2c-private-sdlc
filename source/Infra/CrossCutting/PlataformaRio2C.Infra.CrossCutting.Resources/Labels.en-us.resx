@@ -2770,4 +2770,12 @@
     <value>Confirm to send emails for selected records?</value>
     <comment>Confirma o envio de e-mail para os registros selecionados?</comment>
   </data>
+  <data name="Emails" xml:space="preserve">
+    <value>E-mails</value>
+    <comment>E-mails</comment>
+  </data>
+  <data name="SentMP" xml:space="preserve">
+    <value>Sent</value>
+    <comment>Enviados</comment>
+  </data>
 </root>

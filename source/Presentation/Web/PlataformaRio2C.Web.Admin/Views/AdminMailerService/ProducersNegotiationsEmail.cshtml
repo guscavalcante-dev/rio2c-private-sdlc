@@ -1,6 +1,9 @@
 ﻿@using PlataformaRio2C.Domain.Statics
 @using PlataformaRio2c.Infra.Data.FileRepository.Helpers
 @model PlataformaRio2C.Application.CQRS.Commands.SendProducerNegotiationsEmailAsync
+@{
+    var brazilUtc = @DateTimeExtensions.GetBrazilUtc();
+}
 <td valign="top">
     <!-- content -->
     <h1>
@@ -41,15 +44,15 @@
                 <tr>
                     <th>@Labels.Date</th>
                     <th style="width: 45%; text-align: left;">@Labels.OneToOneMeeting</th>
-                    <th style="width: 35%; text-align: left;">@Labels.Project</th>
+                    <th style="width: 35%; text-align: left;">@Labels.Project/@Labels.Player</th>
                 </tr>
                 @foreach (var seleSellerNegotiationBaseDto in Model.SellerAttendeeOrganizationBaseDto.SellerNegotiationBaseDtos.OrderBy(sn => sn.StartDate))
                 {
-                    <tr style="font-size: 10px; border-top: 1px solid #ebedf2;">
-                        <td>@seleSellerNegotiationBaseDto.StartDate.ToString("d")</td>
-                        <td>
+                    <tr style="border-top: 1px solid #ebedf2;">
+                        <td style="font-size: 12px; text-align: center;">@seleSellerNegotiationBaseDto.StartDate.ToBrazilTimeZone().ToString("d")</td>
+                        <td style="font-size: 12px;">
                             @seleSellerNegotiationBaseDto.RoomJsonDto.Name<br />
-                            @Labels.Round @seleSellerNegotiationBaseDto.RoundNumber (@seleSellerNegotiationBaseDto.StartDate.ToString("HH:mm") - @seleSellerNegotiationBaseDto.EndDate.ToString("HH:mm"))<br />
+                            @Labels.Round @seleSellerNegotiationBaseDto.RoundNumber (@seleSellerNegotiationBaseDto.StartDate.ToBrazilTimeZone().ToString("HH:mm") - @seleSellerNegotiationBaseDto.EndDate.ToBrazilTimeZone().ToString("HH:mm") @brazilUtc)<br />
                             Mesa 2<br />
                             <span style="background-color: #ffb822; color: #111111; font-family: sans-serif; font-size: 11px; font-weight: bold; padding: 5px 9px; text-align: center;">
                                 @if (seleSellerNegotiationBaseDto.RoomJsonDto.IsVirtualMeeting)
@@ -62,12 +65,12 @@
                                 }
                             </span>
                         </td>
-                        <td>
+                        <td style="font-size: 12px;">
                             @seleSellerNegotiationBaseDto.ProjectBuyerEvaluationBaseDto.ProjectBaseDto.ProjectName<br />
                             <table>
                                 <tbody>
                                     <tr>
-                                        <td>
+                                        <td style="font-size: 12px;">
                                             @if (seleSellerNegotiationBaseDto.ProjectBuyerEvaluationBaseDto.BuyerAttendeeOrganizationBaseDto.OrganizationBaseDto.HasImage())
                                             {
                                                 <div style="max-width: 35px; max-height: 35px;">
@@ -81,7 +84,7 @@
                                                 </div>
                                             }
                                         </td>
-                                        <td>@seleSellerNegotiationBaseDto.ProjectBuyerEvaluationBaseDto.BuyerAttendeeOrganizationBaseDto.OrganizationBaseDto.DisplayName</td>
+                                        <td style="font-size: 12px;">@seleSellerNegotiationBaseDto.ProjectBuyerEvaluationBaseDto.BuyerAttendeeOrganizationBaseDto.OrganizationBaseDto.DisplayName</td>
                                     </tr>
                                 </tbody>
                             </table>

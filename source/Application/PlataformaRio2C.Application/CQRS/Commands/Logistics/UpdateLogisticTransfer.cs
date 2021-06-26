@@ -4,7 +4,7 @@
 // Created          : 01-27-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-13-2020
+// Last Modified On : 06-26-2021
 // ***********************************************************************
 // <copyright file="UpdateLogisticTransfer.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -52,7 +52,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="date">The date.</param>
         private void UpdateDate(DateTimeOffset? date)
         {
-            var userDate = date?.ToUserTimeZone();
+            var userDate = date?.ToBrazilTimeZone();
             this.Date = userDate?.ToShortDateString() + " " + userDate?.ToString("HH:mm");
         }
 

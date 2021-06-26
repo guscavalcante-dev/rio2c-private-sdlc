@@ -4,7 +4,7 @@
 // Created          : 01-27-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-16-2020
+// Last Modified On : 06-26-2021
 // ***********************************************************************
 // <copyright file="UpdateLogisticAirfare.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -47,10 +47,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="logisticAirfareDto">The logistic airfare dto.</param>
         private void UpdateDate(LogisticAirfareDto logisticAirfareDto)
         {
-            var departureDate = logisticAirfareDto?.LogisticAirfare?.DepartureDate.ToUserTimeZone();
+            var departureDate = logisticAirfareDto?.LogisticAirfare?.DepartureDate.ToBrazilTimeZone();
             this.Departure = departureDate?.ToShortDateString() + " " + departureDate?.ToString("HH:mm");
 
-            var arrivalDate = logisticAirfareDto?.LogisticAirfare?.ArrivalDate.ToUserTimeZone();
+            var arrivalDate = logisticAirfareDto?.LogisticAirfare?.ArrivalDate.ToBrazilTimeZone();
             this.Arrival = arrivalDate?.ToShortDateString() + " " + arrivalDate?.ToString("HH:mm");
         }
 

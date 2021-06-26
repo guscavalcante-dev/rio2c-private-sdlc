@@ -91,7 +91,7 @@
         };
 
         // Variables ------------------------------------------------------------------------------
-        var editionStartDate = '@(editionDto?.Edition?.StartDate.ToUserTimeZone().ToString("yyyy-MM-dd"))';
+        var editionStartDate = '@(editionDto?.Edition?.StartDate.ToBrazilTimeZone().ToString("yyyy-MM-dd"))';
 
         jQuery(document).ready(function () {
             AgendasWidget.init();

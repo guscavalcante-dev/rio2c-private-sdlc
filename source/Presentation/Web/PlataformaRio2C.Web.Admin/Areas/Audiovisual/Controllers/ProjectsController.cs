@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-21-2021
+// Last Modified On : 06-26-2021
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -211,7 +211,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <returns></returns>
         private FileResult ZipDocuments(Dictionary<string, MemoryStream> pdfCollection)
         {
-            string fileNameZip = Labels.Projects + "_" + DateTime.UtcNow.ToUserTimeZone().ToString("yyyyMMdd") + ".zip";
+            string fileNameZip = Labels.Projects + "_" + DateTime.UtcNow.ToBrazilTimeZone().ToString("yyyyMMdd") + ".zip";
             byte[] compressedBytes;
             using (var outStream = new MemoryStream())
             {

@@ -22,7 +22,7 @@
             <div class="row mt-3">
                 <div class="col-12">
                     @{
-                        var startDate = Model.AttendeeCollaborator.OnboardingStartDate?.ToUserTimeZone();
+                        var startDate = Model.AttendeeCollaborator.OnboardingStartDate?.ToBrazilTimeZone();
                     }
                     @if (startDate.HasValue)
                     {
@@ -40,7 +40,7 @@
             <div class="row mt-3">
                 <div class="col-12">
                     @{
-                        var finishDate = Model.AttendeeCollaborator.OnboardingFinishDate?.ToUserTimeZone();
+                        var finishDate = Model.AttendeeCollaborator.OnboardingFinishDate?.ToBrazilTimeZone();
                     }
                     @if (finishDate.HasValue)
                     {
@@ -60,7 +60,7 @@
             <div class="row mt-3">
                 <div class="col-12">
                     @{
-                        var userDate = Model.AttendeeCollaborator.OnboardingUserDate?.ToUserTimeZone();
+                        var userDate = Model.AttendeeCollaborator.OnboardingUserDate?.ToBrazilTimeZone();
                     }
                     @if (userDate.HasValue)
                     {
@@ -78,7 +78,7 @@
             <div class="row mt-3">
                 <div class="col-12">
                     @{
-                        var collaboratorDate = Model.AttendeeCollaborator.OnboardingCollaboratorDate?.ToUserTimeZone();
+                        var collaboratorDate = Model.AttendeeCollaborator.OnboardingCollaboratorDate?.ToBrazilTimeZone();
                     }
                     @if (collaboratorDate.HasValue)
                     {
@@ -98,10 +98,10 @@
             <div class="row mt-3">
                 <div class="col-12">
                     @{
-                        var termsAcceptanceDate = ViewBag.CollaboratorTypeUid == CollaboratorType.ExecutiveAudiovisual.Uid ? Model.AttendeeCollaborator?.PlayerTermsAcceptanceDate?.ToUserTimeZone() :
-                                                  ViewBag.CollaboratorTypeUid == CollaboratorType.Industry.Uid ? Model.AttendeeCollaborator?.ProducerTermsAcceptanceDate?.ToUserTimeZone() :
-                                                  ViewBag.CollaboratorTypeUid == CollaboratorType.Speaker.Uid ? Model.AttendeeCollaborator?.SpeakerTermsAcceptanceDate?.ToUserTimeZone() :
-                                                  Model.AttendeeCollaboratorTypeDto?.AttendeeCollaboratorType?.TermsAcceptanceDate?.ToUserTimeZone();
+                        var termsAcceptanceDate = ViewBag.CollaboratorTypeUid == CollaboratorType.ExecutiveAudiovisual.Uid ? Model.AttendeeCollaborator?.PlayerTermsAcceptanceDate?.ToBrazilTimeZone() :
+                                                  ViewBag.CollaboratorTypeUid == CollaboratorType.Industry.Uid ? Model.AttendeeCollaborator?.ProducerTermsAcceptanceDate?.ToBrazilTimeZone() :
+                                                  ViewBag.CollaboratorTypeUid == CollaboratorType.Speaker.Uid ? Model.AttendeeCollaborator?.SpeakerTermsAcceptanceDate?.ToBrazilTimeZone() :
+                                                  Model.AttendeeCollaboratorTypeDto?.AttendeeCollaboratorType?.TermsAcceptanceDate?.ToBrazilTimeZone();
                     }
                     @if (termsAcceptanceDate.HasValue)
                     {

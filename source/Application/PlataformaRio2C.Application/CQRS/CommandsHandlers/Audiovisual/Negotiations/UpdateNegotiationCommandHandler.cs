@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 05-15-2021
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 05-15-2021
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 06-26-2021
 // ***********************************************************************
 // <copyright file="UpdateNegotiationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -91,7 +91,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     Messages.HasAlreadyBusinessRoundScheduled,
                     Labels.TheM,
                     Labels.Player,
-                    ($"{startDatePreview.ToUserTimeZone().ToStringHourMinute()} - {endDatePreview.ToUserTimeZone().ToShortTimeString()}")),
+                    ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
                         new string[] { "ToastrError" }));
             }
 
@@ -102,7 +102,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     Messages.HasAlreadyBusinessRoundScheduled,
                     Labels.TheF,
                     Labels.Producer,
-                    ($"{startDatePreview.ToUserTimeZone().ToStringHourMinute()} - {endDatePreview.ToUserTimeZone().ToShortTimeString()}")),
+                    ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
                         new string[] { "ToastrError" }));
             }
 

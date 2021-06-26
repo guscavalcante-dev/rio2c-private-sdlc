@@ -4,7 +4,7 @@
 // Created          : 03-08-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-25-2020
+// Last Modified On : 06-26-2021
 // ***********************************************************************
 // <copyright file="CreateNegotiationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -103,7 +103,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     Messages.HasAlreadyBusinessRoundScheduled,
                     Labels.TheM,
                     Labels.Player,
-                    ($"{startDatePreview.ToUserTimeZone().ToStringHourMinute()} - {endDatePreview.ToUserTimeZone().ToShortTimeString()}")),
+                    ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
                         new string[] { "ToastrError" }));
             }
 
@@ -114,7 +114,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     Messages.HasAlreadyBusinessRoundScheduled,
                     Labels.TheF,
                     Labels.Producer,
-                    ($"{startDatePreview.ToUserTimeZone().ToStringHourMinute()} - {endDatePreview.ToUserTimeZone().ToShortTimeString()}")),
+                    ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
                         new string[] { "ToastrError" }));
             }
 

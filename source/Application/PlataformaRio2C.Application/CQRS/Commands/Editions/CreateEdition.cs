@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 03-03-2021
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 03-03-2021
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 06-26-2021
 // ***********************************************************************
 // <copyright file="CreateEdition.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -168,27 +168,27 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.IsActive = editionDto.Edition.IsActive;
             this.AttendeeOrganizationMaxSellProjectsCount = editionDto.Edition.AttendeeOrganizationMaxSellProjectsCount;
             this.ProjectMaxBuyerEvaluationsCount = editionDto.Edition.ProjectMaxBuyerEvaluationsCount;
-            this.StartDate = editionDto.Edition.StartDate.ToUserTimeZone();
-            this.EndDate = editionDto.Edition.EndDate.ToUserTimeZone();
-            this.SellStartDate = editionDto.Edition.SellStartDate.ToUserTimeZone();
-            this.SellEndDate = editionDto.Edition.SellEndDate.ToUserTimeZone();
-            this.ProjectSubmitStartDate = editionDto.Edition.ProjectSubmitStartDate.ToUserTimeZone();
-            this.ProjectSubmitEndDate = editionDto.Edition.ProjectSubmitEndDate.ToUserTimeZone();
-            this.ProjectEvaluationStartDate = editionDto.Edition.ProjectEvaluationStartDate.ToUserTimeZone();
-            this.ProjectEvaluationEndDate = editionDto.Edition.ProjectEvaluationEndDate.ToUserTimeZone();
-            this.OneToOneMeetingsScheduleDate = editionDto.Edition.OneToOneMeetingsScheduleDate.ToUserTimeZone();
-            this.NegotiationStartDate = editionDto.Edition.NegotiationStartDate.ToUserTimeZone();
-            this.NegotiationEndDate = editionDto.Edition.NegotiationEndDate.ToUserTimeZone();
-            this.MusicProjectSubmitStartDate = editionDto.Edition.MusicProjectSubmitStartDate.ToUserTimeZone();
-            this.MusicProjectSubmitEndDate = editionDto.Edition.MusicProjectSubmitEndDate.ToUserTimeZone();
-            this.MusicProjectEvaluationStartDate = editionDto.Edition.MusicProjectEvaluationStartDate.ToUserTimeZone();
-            this.MusicProjectEvaluationEndDate = editionDto.Edition.MusicProjectEvaluationEndDate.ToUserTimeZone();
-            this.InnovationProjectSubmitStartDate = editionDto.Edition.InnovationProjectSubmitStartDate.ToUserTimeZone();
-            this.InnovationProjectSubmitEndDate = editionDto.Edition.InnovationProjectSubmitEndDate.ToUserTimeZone();
-            this.InnovationProjectEvaluationStartDate = editionDto.Edition.InnovationProjectEvaluationStartDate.ToUserTimeZone();
-            this.InnovationProjectEvaluationEndDate = editionDto.Edition.InnovationProjectEvaluationEndDate.ToUserTimeZone();
-            this.AudiovisualNegotiationsCreateStartDate = editionDto.Edition.AudiovisualNegotiationsCreateStartDate.ToUserTimeZone();
-            this.AudiovisualNegotiationsCreateEndDate = editionDto.Edition.AudiovisualNegotiationsCreateEndDate.ToUserTimeZone();
+            this.StartDate = editionDto.Edition.StartDate.ToBrazilTimeZone();
+            this.EndDate = editionDto.Edition.EndDate.ToBrazilTimeZone();
+            this.SellStartDate = editionDto.Edition.SellStartDate.ToBrazilTimeZone();
+            this.SellEndDate = editionDto.Edition.SellEndDate.ToBrazilTimeZone();
+            this.ProjectSubmitStartDate = editionDto.Edition.ProjectSubmitStartDate.ToBrazilTimeZone();
+            this.ProjectSubmitEndDate = editionDto.Edition.ProjectSubmitEndDate.ToBrazilTimeZone();
+            this.ProjectEvaluationStartDate = editionDto.Edition.ProjectEvaluationStartDate.ToBrazilTimeZone();
+            this.ProjectEvaluationEndDate = editionDto.Edition.ProjectEvaluationEndDate.ToBrazilTimeZone();
+            this.OneToOneMeetingsScheduleDate = editionDto.Edition.OneToOneMeetingsScheduleDate.ToBrazilTimeZone();
+            this.NegotiationStartDate = editionDto.Edition.NegotiationStartDate.ToBrazilTimeZone();
+            this.NegotiationEndDate = editionDto.Edition.NegotiationEndDate.ToBrazilTimeZone();
+            this.MusicProjectSubmitStartDate = editionDto.Edition.MusicProjectSubmitStartDate.ToBrazilTimeZone();
+            this.MusicProjectSubmitEndDate = editionDto.Edition.MusicProjectSubmitEndDate.ToBrazilTimeZone();
+            this.MusicProjectEvaluationStartDate = editionDto.Edition.MusicProjectEvaluationStartDate.ToBrazilTimeZone();
+            this.MusicProjectEvaluationEndDate = editionDto.Edition.MusicProjectEvaluationEndDate.ToBrazilTimeZone();
+            this.InnovationProjectSubmitStartDate = editionDto.Edition.InnovationProjectSubmitStartDate.ToBrazilTimeZone();
+            this.InnovationProjectSubmitEndDate = editionDto.Edition.InnovationProjectSubmitEndDate.ToBrazilTimeZone();
+            this.InnovationProjectEvaluationStartDate = editionDto.Edition.InnovationProjectEvaluationStartDate.ToBrazilTimeZone();
+            this.InnovationProjectEvaluationEndDate = editionDto.Edition.InnovationProjectEvaluationEndDate.ToBrazilTimeZone();
+            this.AudiovisualNegotiationsCreateStartDate = editionDto.Edition.AudiovisualNegotiationsCreateStartDate.ToBrazilTimeZone();
+            this.AudiovisualNegotiationsCreateEndDate = editionDto.Edition.AudiovisualNegotiationsCreateEndDate.ToBrazilTimeZone();
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateEdition"/> class.</summary>

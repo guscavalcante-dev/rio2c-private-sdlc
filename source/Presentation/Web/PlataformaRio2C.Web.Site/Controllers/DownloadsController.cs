@@ -4,7 +4,7 @@
 // Created          : 11-18-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 06-26-2021
 // ***********************************************************************
 // <copyright file="DownloadsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -92,7 +92,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 }
             }
 
-            return new ExcelResult(workbook, Labels.ExecutivesListDownload + "_" + DateTime.UtcNow.ToUserTimeZone().ToString("yyyyMMdd"));
+            return new ExcelResult(workbook, Labels.ExecutivesListDownload + "_" + DateTime.UtcNow.ToBrazilTimeZone().ToString("yyyyMMdd"));
         }
 
         #endregion

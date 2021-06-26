@@ -1645,6 +1645,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to E-mails.
+        /// </summary>
+        public static string Emails {
+            get {
+                return ResourceManager.GetString("Emails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configurações de Email.
         /// </summary>
         public static string EmailSettings {
@@ -5115,6 +5124,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Sent {
             get {
                 return ResourceManager.GetString("Sent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enviados.
+        /// </summary>
+        public static string SentMP {
+            get {
+                return ResourceManager.GetString("SentMP", resourceCulture);
             }
         }
         
