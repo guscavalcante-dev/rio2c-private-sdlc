@@ -793,6 +793,9 @@
     <Content Include="Assets\img\logo-rio2c-footer.png" />
     <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
+    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.sendemailtoplayers.datatable.widget.js" />
+    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.sendemailtoplayers.editioncount.widget.js" />
+    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.sendemailtoplayers.totalcount.widget.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.unscheduled.manualschedule.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.scheduled.update.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.scheduled.create.js" />
@@ -7656,6 +7659,10 @@
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\SendEmailToProducersDataTableWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\SendEmailToProducersEditionCountWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\SendEmailToProducersTotalCountWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\SendEmailToPlayers.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\SendEmailToPlayersDataTableWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\SendEmailToPlayersEditionCountWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\SendEmailToPlayersTotalCountWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -9031,6 +9038,7 @@
     <Content Include="Areas\Audiovisual\Views\Producers\Index.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Producers\Widgets\DataTableWidget.cshtml" />
     <Content Include="Views\AdminMailerService\ProducersNegotiationsEmail.cshtml" />
+    <Content Include="Views\AdminMailerService\PlayersNegotiationsEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

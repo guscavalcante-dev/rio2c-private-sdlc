@@ -121,7 +121,7 @@
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorSiteMainInformationWidgetDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorTypeDto.cs" />
-    <Compile Include="Dtos\AttendeeOrganizations\SellerAttendeeOrganizationBaseDto.cs" />
+    <Compile Include="Dtos\AttendeeOrganizations\NegotiationAttendeeOrganizationBaseDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationTypeDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationSiteDetailsDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\MatchAttendeeOrganizationDto.cs" />

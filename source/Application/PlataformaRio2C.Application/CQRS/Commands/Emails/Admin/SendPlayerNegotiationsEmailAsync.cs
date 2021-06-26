@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Rafael Dantas Ruiz
-// Created          : 06-25-2021
+// Created          : 06-26-2021
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 06-26-2021
 // ***********************************************************************
-// <copyright file="SendProducerNegotiationsEmailAsync.cs" company="Softo">
+// <copyright file="SendPlayerNegotiationsEmailAsync.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -18,15 +18,15 @@ using PlataformaRio2C.Domain.Entities;
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
     /// <summary>
-    /// SendProducerNegotiationsEmailAsync
+    /// SendPlayerNegotiationsEmailAsync
     /// </summary>
-    public class SendProducerNegotiationsEmailAsync : EmailBaseCommand
+    public class SendPlayerNegotiationsEmailAsync : EmailBaseCommand
     {
         public NegotiationAttendeeOrganizationBaseDto NegotiationAttendeeOrganizationBaseDto { get; private set; }
         public int UserId { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SendProducerNegotiationsEmailAsync"/> class.
+        /// Initializes a new instance of the <see cref="SendPlayerNegotiationsEmailAsync"/> class.
         /// </summary>
         /// <param name="negotiationAttendeeOrganizationBaseDto">The negotiation attendee organization base dto.</param>
         /// <param name="recipientUserId">The recipient user identifier.</param>
@@ -37,7 +37,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="edition">The edition.</param>
         /// <param name="userId">The user identifier.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
-        public SendProducerNegotiationsEmailAsync(
+        public SendPlayerNegotiationsEmailAsync(
             NegotiationAttendeeOrganizationBaseDto negotiationAttendeeOrganizationBaseDto,
             int recipientUserId, 
             Guid recipientUserUid, 
@@ -53,8 +53,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UserId = userId;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="SendProducerNegotiationsEmailAsync"/> class.</summary>
-        public SendProducerNegotiationsEmailAsync()
+        /// <summary>Initializes a new instance of the <see cref="SendPlayerNegotiationsEmailAsync"/> class.</summary>
+        public SendPlayerNegotiationsEmailAsync()
         {
         }
     }

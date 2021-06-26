@@ -4,9 +4,9 @@
 // Created          : 06-24-2021
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-25-2021
+// Last Modified On : 06-26-2021
 // ***********************************************************************
-// <copyright file="SellerAttendeeOrganizationBaseDto.cs" company="Softo">
+// <copyright file="NegotiationAttendeeOrganizationBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -16,8 +16,8 @@ using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
-    /// <summary>SellerAttendeeOrganizationBaseDto</summary>
-    public class SellerAttendeeOrganizationBaseDto
+    /// <summary>NegotiationAttendeeOrganizationBaseDto</summary>
+    public class NegotiationAttendeeOrganizationBaseDto
     {
         public int Id { get; set; }
         public Guid Uid { get; set; }
@@ -27,22 +27,11 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset UpdateDate { get; set; }
 
         public IEnumerable<AttendeeCollaboratorBaseDto> AttendeeCollaboratorBaseDtos { get; set; }
-        public IEnumerable<NegotiationBaseDto> SellerNegotiationBaseDtos { get; set; }
+        public IEnumerable<NegotiationBaseDto> NegotiationBaseDtos { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="SellerAttendeeOrganizationBaseDto"/> class.</summary>
-        public SellerAttendeeOrganizationBaseDto()
+        /// <summary>Initializes a new instance of the <see cref="NegotiationAttendeeOrganizationBaseDto"/> class.</summary>
+        public NegotiationAttendeeOrganizationBaseDto()
         {
         }
-
-        ///// <summary>Gets the display name.</summary>
-        ///// <value>The display name.</value>
-        //public string DisplayName
-        //{
-        //    get
-        //    {
-        //        var holdingName = OrganizationBaseDto?.HoldingBaseDto?.Name ?? string.Empty;
-        //        return holdingName + (!string.IsNullOrEmpty(holdingName) ? " » " : string.Empty) + OrganizationBaseDto?.Name;
-        //    }
-        //}
     }
 }

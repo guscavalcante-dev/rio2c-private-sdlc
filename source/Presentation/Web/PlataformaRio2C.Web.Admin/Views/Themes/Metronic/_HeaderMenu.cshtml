@@ -107,7 +107,7 @@
                                             <a href="@Url.Action("RegisterNegotiationManual", "ScheduleOneToOneMeetings", new { Area = "" })" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.ScheduleNegotiation</span></a>
                                         </li>*@
                                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "SendEmailToPlayers", "Meetings", "Audiovisual")" aria-haspopup="true">
-                                        <a @*href="@Url.Action("SendEmailToPlayers", "Meetings", new { Area = "Audiovisual" })"*@ class="kt-menu__link "><span class="kt-menu__link-text">@Labels.SendEmailToPlayers</span></a>
+                                        <a href="@Url.Action("SendEmailToPlayers", "Meetings", new { Area = "Audiovisual" })" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.SendEmailToPlayers</span></a>
                                     </li>
                                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "SendEmailToProducers", "Meetings", "Audiovisual")" aria-haspopup="true">
                                         <a href="@Url.Action("SendEmailToProducers", "Meetings", new { Area = "Audiovisual" })" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.SendEmailToProducers</span></a>

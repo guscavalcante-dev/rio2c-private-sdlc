@@ -1,28 +1,28 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Rafael Dantas Ruiz
-// Created          : 06-24-2021
+// Created          : 06-26-2021
 //
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 06-26-2021
 // ***********************************************************************
-// <copyright file="audiovisual.meetings.sendemailtoproducers.datatable.widget.js" company="Softo">
+// <copyright file="audiovisual.meetings.sendemailtoplayers.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var AudiovisualMeetingsSendEmailToProducersDataTableWidget = function () {
+var AudiovisualMeetingsSendEmailToPlayersDataTableWidget = function () {
 
-    var widgetElementId = '#AudiovisualMeetingsSendEmailToProducersDataTableWidget';
-    var tableElementId = '#audiovisualmeetingssendemailtoproducers-list-table';
+    var widgetElementId = '#AudiovisualMeetingsSendEmailToPlayersDataTableWidget';
+    var tableElementId = '#audiovisualmeetingssendemailtoplayers-list-table';
     var table;
 
     // Invitation email ---------------------------------------------------------------------------
     var sendEmails = function (sendEmailParameters) {
         MyRio2cCommon.block();
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Meetings/SendProducersEmails'), sendEmailParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Meetings/SendPlayersEmails'), sendEmailParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -43,7 +43,7 @@ var AudiovisualMeetingsSendEmailToProducersDataTableWidget = function () {
     var showSendEmailsModal = function () {
 
         var jsonParameters = new Object();
-        jsonParameters.selectedAttendeeOrganizationsUids = $('#audiovisualmeetingssendemailtoproducers-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
+        jsonParameters.selectedAttendeeOrganizationsUids = $('#audiovisualmeetingssendemailtoplayers-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
         jsonParameters.keywords = $('#Search').val();
 
         var message = jsonParameters.selectedAttendeeOrganizationsUids === '' ? translations.confirmSendEmailAll : translations.confirmSendEmailSelected;
@@ -115,7 +115,7 @@ var AudiovisualMeetingsSendEmailToProducersDataTableWidget = function () {
                     text: labels.actions,
                     buttons: [
                         {
-                            text: translations.sendEmailToProducers,
+                            text: translations.sendEmailToPlayers,
                             action: function (e, dt, node, config) {
                                 $('.dt-button-background').remove();
                                 showSendEmailsModal();
@@ -142,7 +142,7 @@ var AudiovisualMeetingsSendEmailToProducersDataTableWidget = function () {
                 sSearch: $('#Search').val()
             },
             ajax: {
-                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Meetings/SendEmailToProducersSearch'),
+                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Meetings/SendEmailToPlayersSearch'),
                 data: function (d) {
                     //d.showAllEditions = $('#ShowAllEditions').prop('checked');
                     //d.showAllExecutives = $('#ShowAllExecutives').prop('checked');
@@ -219,7 +219,7 @@ var AudiovisualMeetingsSendEmailToProducersDataTableWidget = function () {
                                         <th style="width: 20%;">' + translations.round + '</th>\
                                         <th style="width: 6%;">' + translations.table + '</th>\
                                         <th style="width: 20%;">' + translations.project + '</th>\
-                                        <th style="width: 26%;">' + translations.player + '</th>\
+                                        <th style="width: 26%;">' + translations.producer + '</th>\
                                     </tr>';
 
                         //loop through all the row details to build output string
@@ -249,15 +249,15 @@ var AudiovisualMeetingsSendEmailToProducersDataTableWidget = function () {
                                                 <tr>\
                                                     <td>';
 
-                                if (!MyRio2cCommon.isNullOrEmpty(r.ProjectBuyerEvaluationBaseDto.BuyerAttendeeOrganizationBaseDto.OrganizationBaseDto.ImageUploadDate)) {
-                                    html += '<img src="' + imageDirectory + r.ProjectBuyerEvaluationBaseDto.BuyerAttendeeOrganizationBaseDto.OrganizationBaseDto.Uid + '_thumbnail.png?v=' + moment(r.ProjectBuyerEvaluationBaseDto.BuyerAttendeeOrganizationBaseDto.OrganizationBaseDto.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
+                                if (!MyRio2cCommon.isNullOrEmpty(r.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.ImageUploadDate)) {
+                                    html += '<img src="' + imageDirectory + r.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.Uid + '_thumbnail.png?v=' + moment(r.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
                                 }
                                 else {
                                     html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';
                                 }
 
                                 html += '           </td>\
-                                                    <td> ' + r.ProjectBuyerEvaluationBaseDto.BuyerAttendeeOrganizationBaseDto.OrganizationBaseDto.DisplayName + '</td>\
+                                                    <td> ' + r.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.DisplayName + '</td>\
                                                 </tr>\
                                             </table>\
                                         </td>\
@@ -311,7 +311,7 @@ var AudiovisualMeetingsSendEmailToProducersDataTableWidget = function () {
     //        return;
     //    }
 
-    //    window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Producers/Details/' + playerUid);
+    //    window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Players/Details/' + playerUid);
     //};
 
     return {

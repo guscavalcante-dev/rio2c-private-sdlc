@@ -4,7 +4,7 @@
 // Created          : 06-24-2021
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-24-2021
+// Last Modified On : 06-26-2021
 // ***********************************************************************
 // <copyright file="ProjectBuyerEvaluationBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,6 +28,7 @@ namespace PlataformaRio2C.Domain.Dtos
 
         public ProjectBaseDto ProjectBaseDto { get; set; }
         public AttendeeOrganizationBaseDto BuyerAttendeeOrganizationBaseDto { get; set; }
+        public AttendeeOrganizationBaseDto SellerAttendeeOrganizationBaseDto { get; set; }
         public ProjectEvaluationStatusBaseDto ProjectEvaluationStatusBaseDtos { get; set; }
         public ProjectEvaluationRefuseReasonBaseDto ProjectEvaluationRefuseReasonBaseDtos { get; set; }
 

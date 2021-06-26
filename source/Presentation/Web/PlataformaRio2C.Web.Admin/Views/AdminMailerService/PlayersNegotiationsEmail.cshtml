@@ -1,6 +1,6 @@
 ﻿@using PlataformaRio2C.Domain.Statics
 @using PlataformaRio2c.Infra.Data.FileRepository.Helpers
-@model PlataformaRio2C.Application.CQRS.Commands.SendProducerNegotiationsEmailAsync
+@model PlataformaRio2C.Application.CQRS.Commands.SendPlayerNegotiationsEmailAsync
 @{
     var brazilUtc = @DateTimeExtensions.GetBrazilUtc();
 }
@@ -71,20 +71,20 @@
                                 <tbody>
                                     <tr>
                                         <td style="font-size: 12px;">
-                                            @if (negotiationBaseDto.ProjectBuyerEvaluationBaseDto.BuyerAttendeeOrganizationBaseDto.OrganizationBaseDto.HasImage())
+                                            @if (negotiationBaseDto.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.HasImage())
                                             {
                                                 <div style="max-width: 35px; max-height: 35px;">
-                                                    <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, negotiationBaseDto.ProjectBuyerEvaluationBaseDto.BuyerAttendeeOrganizationBaseDto.OrganizationBaseDto.Uid, negotiationBaseDto.ProjectBuyerEvaluationBaseDto.BuyerAttendeeOrganizationBaseDto.OrganizationBaseDto.ImageUploadDate, true)" style="max-width: 100%; max-height: 100%;">
+                                                    <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, negotiationBaseDto.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.Uid, negotiationBaseDto.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.ImageUploadDate, true)" style="max-width: 100%; max-height: 100%;">
                                                 </div>
                                             }
                                             else
                                             {
                                                 <div style="background: rgba(85, 120, 235, 0.1); justify-content: center; align-items: center; border-radius: 8px; color: #5578eb; font-weight: 700; padding: 7px 7px;">
-                                                    @(negotiationBaseDto.ProjectBuyerEvaluationBaseDto.BuyerAttendeeOrganizationBaseDto.OrganizationBaseDto.GetTradeNameAbbreviation() ?? "-")
+                                                    @(negotiationBaseDto.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.GetTradeNameAbbreviation() ?? "-")
                                                 </div>
                                             }
                                         </td>
-                                        <td style="font-size: 12px;">@negotiationBaseDto.ProjectBuyerEvaluationBaseDto.BuyerAttendeeOrganizationBaseDto.OrganizationBaseDto.DisplayName</td>
+                                        <td style="font-size: 12px;">@negotiationBaseDto.ProjectBuyerEvaluationBaseDto.SellerAttendeeOrganizationBaseDto.OrganizationBaseDto.DisplayName</td>
                                     </tr>
                                 </tbody>
                             </table>
