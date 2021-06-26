@@ -30,7 +30,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Initializes a new instance of the <see cref="CreateSalesPlatformWebhookRequest"/> class.</summary>
         /// <param name="salesPlatformWebhookRequestUid">The sales platform webhook request uid.</param>
         /// <param name="salesPlatformName">Name of the sales platform.</param>
-        /// <param name="webhooSecurityKey">The webhoo security key.</param>
+        /// <param name="webhookSecurityKey">The webhoo security key.</param>
         /// <param name="endpoint">The endpoint.</param>
         /// <param name="header">The header.</param>
         /// <param name="payload">The payload.</param>
@@ -38,7 +38,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public CreateSalesPlatformWebhookRequest(
             Guid salesPlatformWebhookRequestUid,
             string salesPlatformName,
-            string webhooSecurityKey,
+            string webhookSecurityKey,
             string endpoint,
             string header,
             string payload,
@@ -46,7 +46,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             this.SalesPlatformWebhookRequestUid = salesPlatformWebhookRequestUid;
             this.SalesPlatformName = salesPlatformName;
-            this.WebhookSecurityKey = webhooSecurityKey;
+            this.WebhookSecurityKey = webhookSecurityKey;
             this.Endpoint = endpoint;
             this.Header = header;
             this.Payload = payload;

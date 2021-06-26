@@ -1,5 +1,5 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Application
+// Assembly         : PlataformaRio2C.Infra.CrossCutting.SalesPlatforms
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-30-2019
 //
@@ -11,9 +11,10 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
 using System;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.Models;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Models;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
 {
@@ -38,7 +39,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
 
         // Profile
         public string FirstName { get; private set; }
-        public string LastMame { get; private set; }
+        public string LastName { get; private set; }
         public string Gender { get; private set; }
         public int? Age { get; private set; }
         public string Name { get; private set; }
@@ -58,6 +59,10 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SalesPlatformAttendeeDto"/> class.
+        /// </summary>
+        /// <param name="eventBriteAttendee">The event brite attendee.</param>
         public SalesPlatformAttendeeDto(EventbriteAttendee eventBriteAttendee)
         {
             // Event
@@ -78,7 +83,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
 
             // Profile
             this.FirstName = eventBriteAttendee.Profile.FirstName;
-            this.LastMame = eventBriteAttendee.Profile.LastMame;
+            this.LastName = eventBriteAttendee.Profile.LastMame;
             this.Gender = eventBriteAttendee.Profile.Gender;
             this.Age = eventBriteAttendee.Profile.Age;
             this.Name = eventBriteAttendee.Profile.Name;
@@ -93,6 +98,45 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
             this.IsBarcodePrinted = barcode?.IsPrinted ?? false;
             this.IsBarcodeUsed = barcode?.IsBarcodeUsed() ?? false;
             this.BarcodeUpdateDate = barcode?.Changed;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SalesPlatformAttendeeDto"/> class.
+        /// </summary>
+        /// <param name="intiPayload">The inti payload.</param>
+        public SalesPlatformAttendeeDto(IntiPayload intiPayload)
+        {
+            // Event
+            this.EventId = intiPayload.Relationships.EventId;
+
+            // Order
+            this.OrderId = intiPayload.Relationships.OrderId;
+
+            // Attendee
+            this.AttendeeId = intiPayload.Id;
+            this.SalesPlatformUpdateDate = intiPayload.Timestamp;
+            this.SalesPlatformAttendeeStatus = intiPayload.GetSalesPlatformAttendeeStatus();
+            this.IsCancelled = false;
+            this.IsCheckedIn = false;
+            this.TicketClassId = intiPayload.PriceName;
+            this.TicketClassName = intiPayload.PriceName;
+
+            // Profile
+            this.FirstName = intiPayload.Name.Contains(" ") ? intiPayload.Name.Split(Convert.ToChar(" "))[0] : intiPayload.Name;
+            this.LastName = intiPayload.Name.Contains(" ") ? intiPayload.Name.Split(Convert.ToChar(" "))[1] : " "; 
+            this.Name = intiPayload.Name;
+            this.Email = intiPayload.Email;
+            this.Gender = "";
+            this.Age = null;
+            this.BirthDate = "";
+            this.CellPhone = "0";
+            this.JobTitle = "_";
+            
+            // Barcode            
+            this.Barcode = intiPayload.ValidatorCode;
+            this.IsBarcodePrinted = false;
+            this.IsBarcodeUsed = false;
+            this.BarcodeUpdateDate = intiPayload?.Timestamp;
         }
     }
 }

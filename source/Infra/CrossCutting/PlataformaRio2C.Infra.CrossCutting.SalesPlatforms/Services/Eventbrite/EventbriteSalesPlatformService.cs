@@ -1,5 +1,5 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Domain
+// Assembly         : PlataformaRio2C.Infra.CrossCutting.SalesPlatforms
 // Author           : Rafael Dantas Ruiz
 // Created          : 07-12-2019
 //

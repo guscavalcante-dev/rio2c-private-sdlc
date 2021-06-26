@@ -38,16 +38,94 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             this.commandBus = commandBus;
         }
 
-        #region Ping
+        #region Inti requests
 
-        /// <summary>Pings this instance.</summary>
+        /// <summary>
+        /// Intis the specified key.
+        /// </summary>
+        /// <param name="key">The key.</param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("ping")]
-        public async Task<IHttpActionResult> Ping()
+        [HttpPost]
+        [Route("inti")]
+        //[Route("inti/{key?}")]
+        //public async Task<IHttpActionResult> Inti(string key)
+        public async Task<IHttpActionResult> Inti()
         {
-            return await Json(new { status = "success", message = "Pong" });
+            try
+            {
+                //TODO: Inti not sending APIKey as parameter. Check this after!
+                string key = "7A8C7EDC-3084-47D5-AD5A-DF6A128B341C";
+
+                var salesPlatformWebhooRequestUid = Guid.NewGuid();
+                var result = await this.commandBus.Send(new CreateSalesPlatformWebhookRequest(
+                    salesPlatformWebhooRequestUid,
+                    "Inti",
+                    key,
+                    HttpContext.Current.Request.Url.AbsoluteUri,
+                    Request.Headers.ToString(),
+                    Request.Content.ReadAsStringAsync().Result,
+                    HttpContext.Current.Request.GetIpAddress()));
+            }
+            catch (DomainException ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return await BadRequest(ex.GetInnerMessage());
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return await BadRequest(ex.GetInnerMessage());
+            }
+
+            return await Json(new { status = "success", message = "Inti event saved successfully." });
         }
+
+        ///// <summary>Ticket Sold.</summary>
+        ///// <returns></returns>
+        //[HttpPost]
+        //[Route("inti-ticket-sold")]
+        //public async Task<IHttpActionResult> IntiTicketSold()
+        //{            
+        //    var ctx = HttpContext.Current;
+        //    var json = String.Empty;
+        //    ctx.Request.InputStream.Position = 0;
+        //    using (var inputStream = new StreamReader(ctx.Request.InputStream)){
+        //        json = inputStream.ReadToEnd();
+        //    }
+        //    var dto = new JavaScriptSerializer().Deserialize<IntiPayload>(json);
+
+        //    var headers = Request.Headers.ToString();
+        //    var ip = HttpContext.Current.Request.GetIpAddress();
+        //    var salesPlatformWebhookRequestUid = Guid.NewGuid();
+        //    var result = await this.commandBus.Send(new CreateSalesPlatformWebhookRequest(
+        //        salesPlatformWebhookRequestUid,
+        //        "Inti",
+        //        dto.id.ToString(),
+        //        HttpContext.Current.Request.Url.AbsoluteUri,
+        //        headers,
+        //        json, // Request.Content.ReadAsStringAsync().Result,
+        //        ip)); 
+
+        //    return await Json(new { status = "success", message = "Received ticket sold" });
+        //}
+
+
+        //[HttpPost]
+        //[Route("receive-payload")]
+        //public async Task<IHttpActionResult> receivePayload()
+        //{
+        //    var ctx = HttpContext.Current;
+        //    var json = String.Empty;
+        //    ctx.Request.InputStream.Position = 0;
+        //    using (var inputStream = new StreamReader(ctx.Request.InputStream))
+        //    {
+        //        json = inputStream.ReadToEnd();
+        //    }
+
+        //    var content = json;
+
+        //    return await Json(new { status = "ok" });
+        //}
 
         #endregion
 
@@ -70,12 +148,6 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     Request.Headers.ToString(),
                     Request.Content.ReadAsStringAsync().Result,
                     HttpContext.Current.Request.GetIpAddress()));
-                //if (response.Errors.Any())
-                //{
-                //    return BadRequest(response.Errors);
-                //}
-
-                //return Ok(response.Value);
             }
             catch (DomainException ex)
             {
@@ -98,7 +170,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <summary>Processes the requests.</summary>
         /// <param name="key">The key.</param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpPost]
         [Route("processrequests/{key?}")]
         public async Task<IHttpActionResult> ProcessRequests(string key)
         {

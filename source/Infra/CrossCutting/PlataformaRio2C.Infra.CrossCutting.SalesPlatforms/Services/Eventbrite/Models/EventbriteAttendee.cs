@@ -72,11 +72,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.Eventbrite.
                 case EventbriteAttendeeStatus.Attending:
                     return SalesPlatformAttendeeStatus.Attending;
 
+                case EventbriteAttendeeStatus.Unpaid:
                 case EventbriteAttendeeStatus.NotAttending:
                     return SalesPlatformAttendeeStatus.NotAttending;
-
-                case EventbriteAttendeeStatus.Unpaid:
-                    return SalesPlatformAttendeeStatus.Unpaid;
 
                 // Other Updates
                 default:

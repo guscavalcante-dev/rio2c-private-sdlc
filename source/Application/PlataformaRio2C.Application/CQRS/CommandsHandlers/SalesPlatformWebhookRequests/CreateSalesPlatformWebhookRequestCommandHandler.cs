@@ -53,7 +53,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <returns></returns>
         public async Task<Guid?> Handle(CreateSalesPlatformWebhookRequest cmd, CancellationToken cancellationToken)
         {
-            this.uow.BeginTransaction();
+            this.uow.BeginTransaction();            
 
             var salesPlatform = await this.salesPlatformRepo.FindByNameAsync(cmd.SalesPlatformName);
 
@@ -69,11 +69,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.salesPlatformWebhookRequestRepo.Create(salesPlatformWebhookRequest);
             this.uow.SaveChanges();
 
-            //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);
-
             return cmd.SalesPlatformWebhookRequestUid;
-
-            //return Task.FromResult(propertyId); // use it when the methed is not async
         }
     }
 }

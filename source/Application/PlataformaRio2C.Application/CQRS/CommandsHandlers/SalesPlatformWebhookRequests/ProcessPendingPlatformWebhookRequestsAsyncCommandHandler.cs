@@ -25,6 +25,9 @@ using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System.Web.Script.Serialization;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Models;
+using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -98,15 +101,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             // Loop webhook requests
             foreach (var processingRequestDto in pendingRequestsDtos)
-            {
+            {                                
                 Tuple<string, List<SalesPlatformAttendeeDto>> salesPlatformResponse;
 
                 #region Get info from api
 
+                var salesPlatformService = this.SalesPlatformServiceFactory.Get(processingRequestDto);
+                salesPlatformResponse = salesPlatformService.ExecuteRequest();
+
                 try
-                {
-                    var salesPlatformService = this.SalesPlatformServiceFactory.Get(processingRequestDto);
-                    salesPlatformResponse = salesPlatformService.ExecuteRequest();
+                {      
                     if (salesPlatformResponse?.Item2?.Any() != true)
                     {
                         var errorMessage = $"No attendee returned by api for Uid: {processingRequestDto.Uid}";
@@ -280,10 +284,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                             //var status = await this.CommandBus.Send(new CreateCollaboratorWithTickets(), cancellationToken);
                         }
                         // The person is not attending or unpaid the event
-                        else if (salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.NotAttending
-                                 || salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.Unpaid
-                                 || salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.Deleted
-                                 || salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.Transferred)
+                        else if (salesPlatformAttendeeDto.SalesPlatformAttendeeStatus == SalesPlatformAttendeeStatus.NotAttending)
                         {
                             // Delete ticket from collaboratorAttendeeId
                             var response1 = await this.CommandBus.Send(new DeleteCollaboratorTicket(
@@ -362,10 +363,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             return this.AppValidationResult;
-
-            //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);
-
-            //return Task.FromResult(propertyId); // use it when the methed is not async
         }
     }
 }

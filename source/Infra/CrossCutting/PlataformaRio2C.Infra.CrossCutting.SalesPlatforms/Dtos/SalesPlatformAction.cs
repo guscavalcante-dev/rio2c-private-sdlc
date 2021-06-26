@@ -19,8 +19,5 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
         public const string AttendeeUpdated  = "attendee.updated";
         public const string AttendeeCheckedIn = "barcode.checked_in";
         public const string AttendeeCheckedOut = "barcode.un_checked_in";
-        public const string OrderPlaced = "order.placed";
-        public const string OrderRefunded = "order.refunded";
-        public const string OrderUpdated = "order.updated";
     }
 }

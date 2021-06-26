@@ -18,8 +18,5 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
     {
         public const string Attending  = "attending";
         public const string NotAttending = "Not Attending";
-        public const string Unpaid = "unpaid";
-        public const string Deleted = "Deleted";
-        public const string Transferred = "Transferred";
     }
 }

@@ -1884,10 +1884,12 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Validates the last names.</summary>
         public void ValidateLastNames()
         {
-            if (!string.IsNullOrEmpty(this.LastNames) && this.LastNames?.Trim().Length > LastNamesMaxLength)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.LastNames, LastNamesMaxLength, 1), new string[] { "LastNames" }));
-            }
+            //Disabled because some ticket sales platforms accepts only FirstName.
+            //Last name is not required and this validation blocks the User registration by the sales platforms!
+            //if (!string.IsNullOrEmpty(this.LastNames) && this.LastNames?.Trim().Length > LastNamesMaxLength)
+            //{
+            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.LastNames, LastNamesMaxLength, 1), new string[] { "LastNames" }));
+            //}
         }
 
         /// <summary>Validates the document.</summary>
