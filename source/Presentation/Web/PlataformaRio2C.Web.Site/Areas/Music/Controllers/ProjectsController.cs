@@ -853,7 +853,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             {
                 var cmd = new EvaluateMusicBand(
                     await this.musicBandRepo.FindByIdAsync(musicBandId),
-                    grade.Value);
+                    grade);
 
                 cmd.UpdatePreSendProperties(
                     this.UserAccessControlDto.User.Id,

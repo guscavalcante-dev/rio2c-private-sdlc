@@ -973,7 +973,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             {
                 var cmd = new EvaluateMusicBand(
                     await this.musicBandRepo.FindByIdAsync(musicBandId),
-                    grade.Value);
+                    grade);
 
                 cmd.UpdatePreSendProperties(
                     this.AdminAccessControlDto.User.Id,

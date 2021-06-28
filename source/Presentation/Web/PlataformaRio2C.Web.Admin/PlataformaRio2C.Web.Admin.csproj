@@ -74,8 +74,8 @@
     <Reference Include="AspNetHaack, Version=0.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\AspNetHaack.0.0.1\lib\net40\AspNetHaack.dll</HintPath>
     </Reference>
-    <Reference Include="BouncyCastle.Crypto, Version=1.8.1.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Portable.BouncyCastle.1.8.1.3\lib\net40\BouncyCastle.Crypto.dll</HintPath>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.6.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\..\..\..\packages\BouncyCastle.1.8.6.1\lib\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
     <Reference Include="ClosedXML, Version=0.94.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\ClosedXML.0.94.2\lib\net46\ClosedXML.dll</HintPath>
@@ -125,8 +125,11 @@
     <Reference Include="HtmlRenderer, Version=1.5.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\HtmlRenderer.Core.1.5.0.5\lib\net45\HtmlRenderer.dll</HintPath>
     </Reference>
-    <Reference Include="itextsharp, Version=5.5.9.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\iTextSharp.5.5.9\lib\itextsharp.dll</HintPath>
+    <Reference Include="itextsharp, Version=5.5.13.2, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\iTextSharp.5.5.13.2\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.xmlworker, Version=5.5.13.2, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\itextsharp.xmlworker.5.5.13.2\lib\itextsharp.xmlworker.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
@@ -793,17 +796,11 @@
     <Content Include="Assets\img\logo-rio2c-footer.png" />
     <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
-    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.sendemailtoplayers.datatable.widget.js" />
-    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.sendemailtoplayers.editioncount.widget.js" />
-    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.sendemailtoplayers.totalcount.widget.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.unscheduled.manualschedule.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.scheduled.update.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.scheduled.create.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.report.widget.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.logistics.info.widget.js" />
-    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.sendemailtoproducers.datatable.widget.js" />
-    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.sendemailtoproducers.editioncount.widget.js" />
-    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.sendemailtoproducers.totalcount.widget.js" />
     <Content Include="Assets\js\audiovisual\producers\audiovisual.producers.delete.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.delete.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.maininformation.widget.js" />
@@ -7655,14 +7652,6 @@
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\ProjectAllBuyerCompanyWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\ProjectMatchBuyerCompanyWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\BuyerCompanySelectedWidget.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Meetings\SendEmailToProducers.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\SendEmailToProducersDataTableWidget.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\SendEmailToProducersEditionCountWidget.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\SendEmailToProducersTotalCountWidget.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Meetings\SendEmailToPlayers.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\SendEmailToPlayersDataTableWidget.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\SendEmailToPlayersEditionCountWidget.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\SendEmailToPlayersTotalCountWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -9037,8 +9026,6 @@
     <Content Include="Areas\Audiovisual\Views\Organizations\Modals\UpdateTargetAudienceModal.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Producers\Index.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Producers\Widgets\DataTableWidget.cshtml" />
-    <Content Include="Views\AdminMailerService\ProducersNegotiationsEmail.cshtml" />
-    <Content Include="Views\AdminMailerService\PlayersNegotiationsEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
