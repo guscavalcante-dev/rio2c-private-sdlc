@@ -61,6 +61,9 @@
     <Reference Include="AspNetHaack, Version=0.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\AspNetHaack.0.0.1\lib\net40\AspNetHaack.dll</HintPath>
     </Reference>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.6.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\..\..\..\packages\BouncyCastle.1.8.6.1\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
     <Reference Include="ClosedXML, Version=0.94.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\ClosedXML.0.94.2\lib\net46\ClosedXML.dll</HintPath>
     </Reference>
@@ -93,6 +96,12 @@
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.11.16.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\HtmlAgilityPack.1.11.16\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.2, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\iTextSharp.5.5.13.2\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.xmlworker, Version=5.5.13.2, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\itextsharp.xmlworker.5.5.13.2\lib\itextsharp.xmlworker.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
@@ -790,6 +799,8 @@
     <Content Include="Assets\css\pages\projects\projects.wizard-3.css" />
     <Content Include="Assets\img\bg-2.jpg" />
     <Content Include="Assets\img\bg-3.jpg" />
+    <Content Include="Assets\img\bg-footer-template-document-project.jpg" />
+    <Content Include="Assets\img\bg-template-document-project.jpg" />
     <Content Include="Assets\img\favicon.png" />
     <Content Include="Assets\img\header.jpg" />
     <Content Include="Assets\img\logo-rio2c-footer.png" />
@@ -7780,6 +7791,10 @@
     <ProjectReference Include="..\..\..\Infra\Data\PlataformaRio2C.Infra.Data.Repository\PlataformaRio2C.Infra.Data.Repository.csproj">
       <Project>{CF083D1D-24AD-412F-B28C-648A27D78D7D}</Project>
       <Name>PlataformaRio2C.Infra.Data.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Infra\Report\PlataformaRio2C.Infra.Report\PlataformaRio2C.Infra.Report.csproj">
+      <Project>{D9F58A23-B5EB-4250-83BE-08C8A34A98E6}</Project>
+      <Name>PlataformaRio2C.Infra.Report</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

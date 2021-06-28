@@ -798,6 +798,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Não existem rodadas de negócio agendadas para impressão.
+        /// </summary>
+        public static string HasNoNegotiationsToPrint {
+            get {
+                return ResourceManager.GetString("HasNoNegotiationsToPrint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O holding deve ter um nome..
         /// </summary>
         public static string HoldingMustHaveName {
@@ -1248,7 +1257,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O Player prefere reunião {0} para execução da rodada de negócios.
+        ///   Looks up a localized string similar to O Player prefere reunião {0} para execução das rodadas de negócios.
         /// </summary>
         public static string PlayerMeetingPreference {
             get {

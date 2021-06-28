@@ -968,8 +968,8 @@
     <comment>O período de avaliações acontece de {0} até {1}</comment>
   </data>
   <data name="PlayerMeetingPreference" xml:space="preserve">
-    <value>O Player prefere reunião {0} para execução da rodada de negócios</value>
-    <comment>O Player prefere reunião {0} para execução da rodada de negócios</comment>
+    <value>O Player prefere reunião {0} para execução das rodadas de negócios</value>
+    <comment>O Player prefere reunião {0} para execução das rodadas de negócios</comment>
   </data>
   <data name="ChangeScheduledNegotiationConfirmationMessage" xml:space="preserve">
     <value>Essa alteração pode gerar um conflito com outras rodadas do Player ou da Produtora, deseja continuar?</value>
@@ -982,5 +982,9 @@
   <data name="HasAlreadyBusinessRoundScheduled" xml:space="preserve">
     <value>{0} {1} já possui uma rodada de negócios agendada para {2}</value>
     <comment>{0} {1} já possui uma rodada de negócios agendada para {2}</comment>
+  </data>
+  <data name="HasNoNegotiationsToPrint" xml:space="preserve">
+    <value>Não existem rodadas de negócio agendadas para impressão</value>
+    <comment>Não existem rodadas de negócio agendadas para impressão</comment>
   </data>
 </root>

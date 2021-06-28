@@ -4480,7 +4480,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remoto.
+        ///   Looks up a localized string similar to Virtual.
         /// </summary>
         public static string Remote {
             get {

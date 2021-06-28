@@ -2723,8 +2723,8 @@
     <comment>Presencial</comment>
   </data>
   <data name="Remote" xml:space="preserve">
-    <value>Remote</value>
-    <comment>Remoto</comment>
+    <value>Virtual</value>
+    <comment>Virtual</comment>
   </data>
   <data name="RemoteF" xml:space="preserve">
     <value>Remote</value>

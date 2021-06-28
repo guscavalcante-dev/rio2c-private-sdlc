@@ -2728,8 +2728,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Presencial</comment>
   </data>
   <data name="Remote" xml:space="preserve">
-    <value>Remoto</value>
-    <comment>Remoto</comment>
+    <value>Virtual</value>
+    <comment>Virtual</comment>
   </data>
   <data name="RemoteF" xml:space="preserve">
     <value>Remota</value>
