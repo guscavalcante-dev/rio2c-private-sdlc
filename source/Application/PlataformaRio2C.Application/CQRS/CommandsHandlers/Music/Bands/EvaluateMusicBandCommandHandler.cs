@@ -73,6 +73,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
+            if (!cmd.Grade.HasValue)
+            {
+                this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.Grade, "10", "1"), new string[] { nameof(EvaluateMusicBand.Grade) })));
+                return this.AppValidationResult;
+            }
+
             var editionDto = await editionRepo.FindDtoAsync(cmd.EditionId.Value);
             if (editionDto.IsMusicProjectEvaluationOpen() != true)
             {
@@ -84,7 +90,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             musicBand.Evaluate(
                 editionDto.Edition,
                 await userRepo.FindByIdAsync(cmd.UserId),
-                cmd.Grade);
+                cmd.Grade.Value);
 
             if (!musicBand.IsValid())
             {

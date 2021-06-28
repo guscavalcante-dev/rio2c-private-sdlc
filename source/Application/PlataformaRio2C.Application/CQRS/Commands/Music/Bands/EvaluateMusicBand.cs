@@ -28,13 +28,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = "Grade", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public decimal Grade { get; set; }
+        public decimal? Grade { get; set; }
 
         public MusicBand MusicBand { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="EvaluateMusicBand"/> class.</summary>
         /// <param name="musicBand">The music project dto.</param>
-        public EvaluateMusicBand(MusicBand musicBand, decimal grade)
+        public EvaluateMusicBand(MusicBand musicBand, decimal? grade)
         {
             this.Grade = grade;
             this.UpdateModelsAndLists(musicBand);
