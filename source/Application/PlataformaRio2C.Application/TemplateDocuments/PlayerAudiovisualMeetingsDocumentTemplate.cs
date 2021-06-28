@@ -106,7 +106,7 @@ namespace PlataformaRio2C.Application.TemplateDocuments
             //Add table Rows
             if (this.NegotiationsDtos?.Any() == true)
             {
-                var negotiationsDtosGroupedByDate = this.NegotiationsDtos.GroupBy(ndto => ndto.Negotiation.StartDate.ToUserTimeZone().Date);
+                var negotiationsDtosGroupedByDate = this.NegotiationsDtos.GroupBy(ndto => ndto.Negotiation.StartDate.ToBrazilTimeZone().Date);
                 foreach (var groupedNegotiationDtos in negotiationsDtosGroupedByDate)
                 {
                     table.DefaultCell.Colspan = columnsWidths.Length;
@@ -125,7 +125,7 @@ namespace PlataformaRio2C.Application.TemplateDocuments
                         table.AddCell(phrase);
 
                         this.AddDetailsRow(ref table, Labels.Producer, negotiationDto.ProjectBuyerEvaluationDto?.ProjectDto.SellerAttendeeOrganizationDto.Organization.TradeName);
-                        this.AddDetailsRow(ref table, Labels.Hour, $"{negotiationDto.Negotiation?.StartDate.ToUserTimeZone().ToShortTimeString()} - {negotiationDto.Negotiation?.EndDate.ToUserTimeZone().ToShortTimeString()}");
+                        this.AddDetailsRow(ref table, Labels.Hour, $"{negotiationDto.Negotiation?.StartDate.ToBrazilTimeZone().ToShortTimeString()} - {negotiationDto.Negotiation?.EndDate.ToBrazilTimeZone().ToShortTimeString()}");
                         this.AddDetailsRow(ref table, Labels.Room, negotiationDto.RoomDto?.GetRoomNameByLanguageCode(_languageCode).RoomName.Value);
                         this.AddDetailsRow(ref table, Labels.Table, negotiationDto.Negotiation.TableNumber.ToString());
                     }
