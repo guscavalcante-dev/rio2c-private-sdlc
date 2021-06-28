@@ -46,11 +46,11 @@
                                 <ul class="pl-0 mb-0">
                                     @Html.Raw(string.Format(
                                         Texts.ProducerProjectsDates,
-                                        editionDto?.ProjectSubmitStartDate.ToUserTimeZone().ToShortDateString(), 
-                                        editionDto?.ProjectSubmitEndDate.ToUserTimeZone().ToShortDateString(),
-                                        editionDto?.ProjectEvaluationStartDate.ToUserTimeZone().ToShortDateString(),
-                                        editionDto?.ProjectEvaluationEndDate.ToUserTimeZone().ToShortDateString(),
-                                        editionDto?.OneToOneMeetingsScheduleDate.ToUserTimeZone().ToShortDateString()))
+                                        editionDto?.ProjectSubmitStartDate.ToBrazilTimeZone().ToShortDateString(), 
+                                        editionDto?.ProjectSubmitEndDate.ToBrazilTimeZone().ToShortDateString(),
+                                        editionDto?.ProjectEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(),
+                                        editionDto?.ProjectEvaluationEndDate.ToBrazilTimeZone().ToShortDateString(),
+                                        editionDto?.OneToOneMeetingsScheduleDate.ToBrazilTimeZone().ToShortDateString()))
                                 </ul>
                             </div>
                         </div>
@@ -111,9 +111,9 @@
                                 <ul class="pl-0 mb-0">
                                     @Html.Raw(string.Format(
                                         Texts.PlayerProjectsDates,
-                                        editionDto?.ProjectEvaluationStartDate.ToUserTimeZone().ToShortDateString(),
-                                        editionDto?.ProjectEvaluationEndDate.ToUserTimeZone().ToShortDateString(),
-                                        editionDto?.OneToOneMeetingsScheduleDate.ToUserTimeZone().ToShortDateString()))
+                                        editionDto?.ProjectEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(),
+                                        editionDto?.ProjectEvaluationEndDate.ToBrazilTimeZone().ToShortDateString(),
+                                        editionDto?.OneToOneMeetingsScheduleDate.ToBrazilTimeZone().ToShortDateString()))
                                 </ul>
                             </div>
                         </div>

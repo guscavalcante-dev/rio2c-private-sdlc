@@ -23,10 +23,10 @@
                                             @logisticAccommodationDto.PlaceDto.Place.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
                                         </td>
                                         <td class="text-center">
-                                            @logisticAccommodationDto.LogisticAccommodation.CheckInDate.ToUserTimeZone().ToString("g")
+                                            @logisticAccommodationDto.LogisticAccommodation.CheckInDate.ToBrazilTimeZone().ToString("g")
                                         </td>
                                         <td class="text-center">
-                                            @logisticAccommodationDto.LogisticAccommodation.CheckOutDate.ToUserTimeZone().ToString("g")
+                                            @logisticAccommodationDto.LogisticAccommodation.CheckOutDate.ToBrazilTimeZone().ToString("g")
                                         </td>
                                     </tr>
                                 }

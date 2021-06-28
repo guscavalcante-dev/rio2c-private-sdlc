@@ -20,7 +20,7 @@
             <h3 class="kt-heading kt-heading--sm mb-0">@Labels.Date</h3>
             <div class="row mt-3">
                 <div class="col-12">
-                    @(Model.NegotiationConfig.StartDate.ToUserTimeZone().ToShortDateString())
+                    @(Model.NegotiationConfig.StartDate.ToBrazilTimeZone().ToShortDateString())
                 </div>
             </div>
         </div>
@@ -28,7 +28,7 @@
             <h3 class="kt-heading kt-heading--sm mb-0">@Labels.StartTime</h3>
             <div class="row mt-3">
                 <div class="col-12">
-                    @(Model.NegotiationConfig.StartDate.ToUserTimeZone().ToShortTimeString())
+                    @(Model.NegotiationConfig.StartDate.ToBrazilTimeZone().ToShortTimeString())
                 </div>
             </div>
         </div>
@@ -36,7 +36,7 @@
             <h3 class="kt-heading kt-heading--sm mb-0">@Labels.EndTime</h3>
             <div class="row mt-3">
                 <div class="col-12">
-                    @(Model.NegotiationConfig.EndDate.ToUserTimeZone().ToShortTimeString())
+                    @(Model.NegotiationConfig.EndDate.ToBrazilTimeZone().ToShortTimeString())
                 </div>
             </div>
         </div>

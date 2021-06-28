@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-09-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 04-02-2021
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 06-24-2021
 // ***********************************************************************
 // <copyright file="myrio2c.common.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -73,6 +73,12 @@ var MyRio2cCommon = function () {
 
             return this.filter(unique);
         };
+
+        Array.prototype.sortBy = function (p) {
+            return this.slice(0).sort(function (a, b) {
+                return (a[p] > b[p]) ? 1 : (a[p] < b[p]) ? -1 : 0;
+            });
+        }
     };
 
     var fixModalBackdropZIndex = function () {

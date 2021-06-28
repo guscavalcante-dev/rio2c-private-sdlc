@@ -4,7 +4,7 @@
 // Created          : 03-30-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-30-2020
+// Last Modified On : 06-26-2021
 // ***********************************************************************
 // <copyright file="NegotiationReportGroupedByStartDateDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,8 +33,8 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <param name="negotiations">The negotiations.</param>
         public NegotiationReportGroupedByStartDateDto(DateTimeOffset startDate, DateTimeOffset endDate, List<Negotiation> negotiations)
         {
-            this.StartDate = startDate.ToUserTimeZone();
-            this.EndDate = endDate.ToUserTimeZone();
+            this.StartDate = startDate.ToBrazilTimeZone();
+            this.EndDate = endDate.ToBrazilTimeZone();
             this.Negotiations = negotiations?.OrderBy(n => n.TableNumber)?.ToList();
         }
 

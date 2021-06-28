@@ -68,13 +68,13 @@
             <div class="kt-widget__item">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.CreateDate</span>
-                    <span class="kt-widget__value"><span>@(Model.Place.CreateDate.ToUserTimeZone().ToShortDateString()) @(Model.Place.CreateDate.ToUserTimeZone().ToShortTimeString())</span></span>
+                    <span class="kt-widget__value"><span>@(Model.Place.CreateDate.ToBrazilTimeZone().ToShortDateString()) @(Model.Place.CreateDate.ToBrazilTimeZone().ToShortTimeString())</span></span>
                 </div>
             </div>
             <div class="kt-widget__item">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.UpdateDate</span>
-                    <span class="kt-widget__value"><span>@(Model.Place.UpdateDate.ToUserTimeZone().ToShortDateString()) @(Model.Place.UpdateDate.ToUserTimeZone().ToShortTimeString())</span></span>
+                    <span class="kt-widget__value"><span>@(Model.Place.UpdateDate.ToBrazilTimeZone().ToShortDateString()) @(Model.Place.UpdateDate.ToBrazilTimeZone().ToShortTimeString())</span></span>
                 </div>
             </div>
             <div class="kt-widget__item w-100">

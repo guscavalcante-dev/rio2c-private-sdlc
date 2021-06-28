@@ -4,7 +4,7 @@
 // Created          : 01-08-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-16-2020
+// Last Modified On : 06-26-2021
 // ***********************************************************************
 // <copyright file="ConferencesApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -137,9 +137,9 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                             c.GetConferenceTitleDtoByLanguageCode(defaultLanguage?.Code)?.ConferenceTitle?.Value?.Trim(),
                     Synopsis = c.GetConferenceSynopsisDtoByLanguageCode(requestLanguage?.Code)?.ConferenceSynopsis?.Value?.Trim() ??
                                c.GetConferenceSynopsisDtoByLanguageCode(defaultLanguage?.Code)?.ConferenceSynopsis?.Value?.Trim(),
-                    Date = c.Conference.StartDate.ToUserTimeZone().ToString("yyyy-MM-dd"),
-                    StartTime = c.Conference.StartDate.ToUserTimeZone().ToString("HH:mm"),
-                    EndTime = c.Conference.EndDate.ToUserTimeZone().ToString("HH:mm"),
+                    Date = c.Conference.StartDate.ToBrazilTimeZone().ToString("yyyy-MM-dd"),
+                    StartTime = c.Conference.StartDate.ToBrazilTimeZone().ToString("HH:mm"),
+                    EndTime = c.Conference.EndDate.ToBrazilTimeZone().ToString("HH:mm"),
                     DurationMinutes = (int) ((c.Conference.EndDate - c.Conference.StartDate).TotalMinutes),
                     Room = c.RoomDto != null ? new RoomBaseApiResponse
                     {
@@ -199,15 +199,15 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 {
                     Status = ApiStatus.Success,
                     Error = null,
-                    EditionDates = Enumerable.Range(0, 1 + edition.EndDate.ToUserTimeZone().Subtract(edition.StartDate.ToUserTimeZone()).Days)
-                                             .Select(offset => edition.StartDate.ToUserTimeZone().AddDays(offset).ToString("yyyy-MM-dd"))
+                    EditionDates = Enumerable.Range(0, 1 + edition.EndDate.ToBrazilTimeZone().Subtract(edition.StartDate.ToBrazilTimeZone()).Days)
+                                             .Select(offset => edition.StartDate.ToBrazilTimeZone().AddDays(offset).ToString("yyyy-MM-dd"))
                                              .ToList(),
                     EventsApiResponses = editionEvents?.Select(ee => new EditionEventApiResponse
                     {
                         Uid = ee.Uid,
                         Name = ee.Name.Trim(),
-                        StartDate = ee.StartDate.ToUserTimeZone().ToString("yyyy-MM-dd"),
-                        EndDate = ee.EndDate.ToUserTimeZone().ToString("yyyy-MM-dd"),
+                        StartDate = ee.StartDate.ToBrazilTimeZone().ToString("yyyy-MM-dd"),
+                        EndDate = ee.EndDate.ToBrazilTimeZone().ToString("yyyy-MM-dd"),
                         DurationDays = (int)((ee.EndDate - ee.StartDate).TotalDays) + 1
                     })?.OrderBy(c => c.Name)?.ToList(),
                     RoomsApiResponses = roomDtos?.Select(rd => new ConferencesFilterItemApiResponse

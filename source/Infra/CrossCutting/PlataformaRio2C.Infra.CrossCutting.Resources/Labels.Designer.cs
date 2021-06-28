@@ -1060,6 +1060,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirma o envio de e-mail para todos os registros de todas as páginas?.
+        /// </summary>
+        public static string confirmSendEmailAll {
+            get {
+                return ResourceManager.GetString("confirmSendEmailAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirma o envio de e-mail para os registros selecionados?.
+        /// </summary>
+        public static string confirmSendEmailSelected {
+            get {
+                return ResourceManager.GetString("confirmSendEmailSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Conectado.
         /// </summary>
         public static string Connected {
@@ -1623,6 +1641,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string EmailConfirmed {
             get {
                 return ResourceManager.GetString("EmailConfirmed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E-mails.
+        /// </summary>
+        public static string Emails {
+            get {
+                return ResourceManager.GetString("Emails", resourceCulture);
             }
         }
         
@@ -5101,6 +5128,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enviados.
+        /// </summary>
+        public static string SentMP {
+            get {
+                return ResourceManager.GetString("SentMP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Projetos enviados.
         /// </summary>
         public static string SentProjects {
@@ -6249,6 +6285,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string WhichSpecialNeedsQ {
             get {
                 return ResourceManager.GetString("WhichSpecialNeedsQ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Com.
+        /// </summary>
+        public static string With {
+            get {
+                return ResourceManager.GetString("With", resourceCulture);
             }
         }
         

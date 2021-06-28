@@ -26,7 +26,7 @@
                                             @logisticTransferDto.ToPlaceDto.Place.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
                                         </td>
                                         <td class="text-center">
-                                            @logisticTransferDto.LogisticTransfer.Date.ToUserTimeZone().ToString("g")
+                                            @logisticTransferDto.LogisticTransfer.Date.ToBrazilTimeZone().ToString("g")
                                         </td>
                                     </tr>
                                 }

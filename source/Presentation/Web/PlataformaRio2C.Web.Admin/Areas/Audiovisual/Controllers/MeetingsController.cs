@@ -4,7 +4,7 @@
 // Created          : 03-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-30-2020
+// Last Modified On : 06-26-2021
 // ***********************************************************************
 // <copyright file="MeetingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,10 +18,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using ClosedXML.Excel;
+using DataTables.AspNet.Core;
+using DataTables.AspNet.Mvc5;
 using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
@@ -43,26 +47,33 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         private readonly INegotiationRepository negotiationRepo;
         private readonly IProjectBuyerEvaluationRepository projectBuyerEvaluationRepo;
         private readonly IRoomRepository roomRepo;
+        private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="MeetingsController"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MeetingsController"/> class.
+        /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="negotiationRepository">The negotiation repository.</param>
         /// <param name="projectBuyerEvaluationRepository">The project buyer evaluation repository.</param>
         /// <param name="roomRepository">The room repository.</param>
+        /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
+        /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
         public MeetingsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
             INegotiationRepository negotiationRepository,
             IProjectBuyerEvaluationRepository projectBuyerEvaluationRepository,
             IRoomRepository roomRepository,
+            IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository)
             : base(commandBus, identityController)
         {
             this.negotiationRepo = negotiationRepository;
             this.projectBuyerEvaluationRepo = projectBuyerEvaluationRepository;
             this.roomRepo = roomRepository;
+            this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
         }
 
@@ -652,7 +663,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <summary>
         /// Shows the logistics information widget.
         /// </summary>
-        /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="organizationsUids">The organizations uids.</param>
         /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> ShowLogisticsInfoWidget(string organizationsUids)
@@ -672,6 +683,368 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
             }, JsonRequestBehavior.AllowGet);
         }
+
+        #endregion
+
+        #region Send E-mails to Players
+
+        #region List
+
+        /// <summary>
+        /// Sends the email to players.
+        /// </summary>
+        /// <param name="searchViewModel">The search view model.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult SendEmailToPlayers(SendEmailToPlayersSearchViewModel searchViewModel)
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.AudioVisual, null),
+                new BreadcrumbItemHelper(Labels.OneToOneMeetings, null),
+                new BreadcrumbItemHelper(Labels.SendEmailToPlayers, Url.Action("SendEmailToPlayers", "Meetings", new { Area = "Audiovisual" }))
+            });
+
+            #endregion
+
+            return View(searchViewModel);
+        }
+
+        /// <summary>
+        /// Sends the email to players search.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> SendEmailToPlayersSearch(IDataTablesRequest request)
+        {
+            var producers = await this.attendeeOrganizationRepo.FindAllByActiveBuyerNegotiationsAndByDataTable(
+                request.Start / request.Length,
+                request.Length,
+                request.Search?.Value,
+                request.GetSortColumns(),
+                this.EditionDto.Id,
+                this.AdminAccessControlDto.Language.Id);
+
+            var response = DataTablesResponse.Create(request, producers.TotalItemCount, producers.TotalItemCount, producers);
+
+            return Json(new
+            {
+                status = "success",
+                dataTable = response
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Total Count Widget
+
+        /// <summary>
+        /// Shows the send email to players total count widget.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowSendEmailToPlayersTotalCountWidget()
+        {
+            var producers = await this.attendeeOrganizationRepo.CountAllByActiveBuyerNegotiationsAndByDataTable(true, this.EditionDto.Id);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/SendEmailToPlayersTotalCountWidget", producers), divIdOrClass = "#AudiovisualMeetingsSendEmailToPlayersTotalCountWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Edition Count Widget
+
+        /// <summary>
+        /// Shows the send email to players edition count widget.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ActionResult> ShowSendEmailToPlayersEditionCountWidget()
+        {
+            var producers = await this.attendeeOrganizationRepo.CountAllByActiveBuyerNegotiationsAndByDataTable(false, this.EditionDto.Id);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/SendEmailToPlayersEditionCountWidget", producers), divIdOrClass = "#AudiovisualMeetingsSendEmailToPlayersEditionCountWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Send E-mails
+
+        /// <summary>
+        /// Sends the players emails.
+        /// </summary>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="selectedAttendeeOrganizationsUids">The selected attendee organizations uids.</param>
+        /// <returns></returns>
+        /// <exception cref="DomainException">
+        /// </exception>
+        [HttpPost]
+        public async Task<ActionResult> SendPlayersEmails(string keywords, string selectedAttendeeOrganizationsUids)
+        {
+            AppValidationResult result = null;
+
+            try
+            {
+                var attendeeOrganizationBaseDtos = await this.attendeeOrganizationRepo.FindAllBaseDtoByActiveBuyerNegotiations(
+                    keywords,
+                    selectedAttendeeOrganizationsUids?.ToListGuid(','),
+                    this.EditionDto.Id,
+                    this.AdminAccessControlDto.Language.Id);
+                if (attendeeOrganizationBaseDtos?.Any() != true)
+                {
+                    throw new DomainException(Messages.SelectAtLeastOneOption);
+                }
+
+                foreach (var attendeeOrganizationBaseDto in attendeeOrganizationBaseDtos)
+                {
+                    foreach (var attendeeCollaboratorBaseDto in attendeeOrganizationBaseDto.AttendeeCollaboratorBaseDtos)
+                    {
+                        // If the collaborator does not have an user interface language, use the user interface language of the current user
+                        var collaboratorLanguageCode = attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.UserInterfaceLanguageCode ?? this.UserInterfaceLanguage;
+
+                        try
+                        {
+                            result = await this.CommandBus.Send(new SendPlayerNegotiationsEmailAsync(
+                                attendeeOrganizationBaseDto,
+                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Id,
+                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Uid,
+                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.FirstName,
+                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.FullName,
+                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.Email,
+                                this.EditionDto.Edition,
+                                this.AdminAccessControlDto.User.Id,
+                                collaboratorLanguageCode));
+                            if (!result.IsValid)
+                            {
+                                throw new DomainException(Messages.CorrectFormValues);
+                            }
+                        }
+                        catch (DomainException ex)
+                        {
+                            //TODO: Check errors
+                            //var errors = result?.Errors?.Select(e => e.Message)?.Join(", ");
+                        }
+                        catch (Exception ex)
+                        {
+                            Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                        }
+
+                    }
+                }
+            }
+            catch (DomainException ex)
+            {
+                return Json(new
+                {
+                    status = "error",
+                    message = result?.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Emails, Labels.SentMP.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Send E-mails to Producers
+
+        #region List
+
+        /// <summary>
+        /// Sends the email to producers.
+        /// </summary>
+        /// <param name="searchViewModel">The search view model.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult SendEmailToProducers(SendEmailToProducersSearchViewModel searchViewModel)
+        {
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.AudioVisual, null),
+                new BreadcrumbItemHelper(Labels.OneToOneMeetings, null),
+                new BreadcrumbItemHelper(Labels.SendEmailToProducers, Url.Action("SendEmailToProducers", "Meetings", new { Area = "Audiovisual" }))
+            });
+
+            #endregion
+
+            return View(searchViewModel);
+        }
+
+        /// <summary>
+        /// Sends the email to producers search.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> SendEmailToProducersSearch(IDataTablesRequest request)
+        {
+            var producers = await this.attendeeOrganizationRepo.FindAllByActiveSellerNegotiationsAndByDataTable(
+                request.Start / request.Length,
+                request.Length,
+                request.Search?.Value,
+                request.GetSortColumns(),
+                this.EditionDto.Id,
+                this.AdminAccessControlDto.Language.Id);
+
+            var response = DataTablesResponse.Create(request, producers.TotalItemCount, producers.TotalItemCount, producers);
+
+            return Json(new
+            {
+                status = "success",
+                dataTable = response
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Total Count Widget
+
+        /// <summary>
+        /// Shows the send email to players total count widget.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowSendEmailToProducersTotalCountWidget()
+        {
+            var producers = await this.attendeeOrganizationRepo.CountAllByActiveSellerNegotiationsAndByDataTable(true, this.EditionDto.Id);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/SendEmailToProducersTotalCountWidget", producers), divIdOrClass = "#AudiovisualMeetingsSendEmailToProducersTotalCountWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Edition Count Widget
+
+        /// <summary>
+        /// Shows the send email to players edition count widget.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ActionResult> ShowSendEmailToProducersEditionCountWidget()
+        {
+            var producers = await this.attendeeOrganizationRepo.CountAllByActiveSellerNegotiationsAndByDataTable(false, this.EditionDto.Id);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/SendEmailToProducersEditionCountWidget", producers), divIdOrClass = "#AudiovisualMeetingsSendEmailToProducersEditionCountWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Send E-mails
+
+        /// <summary>
+        /// Sends the producers emails.
+        /// </summary>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="selectedAttendeeOrganizationsUids">The selected attendee organizations uids.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> SendProducersEmails(string keywords,  string selectedAttendeeOrganizationsUids)
+        {
+            AppValidationResult result = null;
+
+            try
+            {
+                var attendeeOrganizationBaseDtos = await this.attendeeOrganizationRepo.FindAllBaseDtoByActiveSellerNegotiations(
+                    keywords, 
+                    selectedAttendeeOrganizationsUids?.ToListGuid(','),
+                    this.EditionDto.Id,
+                    this.AdminAccessControlDto.Language.Id);
+                if (attendeeOrganizationBaseDtos?.Any() != true)
+                {
+                    throw new DomainException(Messages.SelectAtLeastOneOption);
+                }
+
+                foreach (var attendeeOrganizationBaseDto in attendeeOrganizationBaseDtos)
+                {
+                    foreach (var attendeeCollaboratorBaseDto in attendeeOrganizationBaseDto.AttendeeCollaboratorBaseDtos)
+                    {
+                        // If the collaborator does not have an user interface language, use the user interface language of the current user
+                        var collaboratorLanguageCode = attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.UserInterfaceLanguageCode ??  this.UserInterfaceLanguage;
+
+                        try
+                        {
+                            result = await this.CommandBus.Send(new SendProducerNegotiationsEmailAsync(
+                                attendeeOrganizationBaseDto,
+                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Id,
+                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.UserBaseDto.Uid,
+                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.FirstName,
+                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.FullName,
+                                attendeeCollaboratorBaseDto.CollaboratorBaseDto.Email,
+                                this.EditionDto.Edition,
+                                this.AdminAccessControlDto.User.Id,
+                                collaboratorLanguageCode));
+                            if (!result.IsValid)
+                            {
+                                throw new DomainException(Messages.CorrectFormValues);
+                            }
+                        }
+                        catch (DomainException ex)
+                        {
+                            //TODO: Check errors
+                            //var errors = result?.Errors?.Select(e => e.Message)?.Join(", ");
+                        }
+                        catch (Exception ex)
+                        {
+                            Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                        }
+
+                    }
+                }
+            }
+            catch (DomainException ex)
+            {
+                return Json(new
+                {
+                    status = "error",
+                    message = result?.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Emails, Labels.SentMP.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
 
         #endregion
 
@@ -887,7 +1260,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 worksheet.Column(i).AdjustToContents();
             }
 
-            return new ExcelResult(workbook, Labels.CalendarReport + "_" + DateTime.UtcNow.ToUserTimeZone().ToString("yyyyMMdd"));
+            return new ExcelResult(workbook, Labels.CalendarReport + "_" + DateTime.UtcNow.ToBrazilTimeZone().ToString("yyyyMMdd"));
         }
 
         #endregion

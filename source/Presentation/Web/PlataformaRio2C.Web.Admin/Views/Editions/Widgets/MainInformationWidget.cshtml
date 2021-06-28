@@ -26,13 +26,13 @@
             <div class="kt-widget__item">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.StartDate</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.StartDate.ToUserTimeZone().ToShortDateString())</span></span>
+                    <span class="kt-widget__value"><span>@(Model.Edition.StartDate.ToBrazilTimeZone().ToShortDateString())</span></span>
                 </div>
             </div>
             <div class="kt-widget__item">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.EndDate</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.EndDate.ToUserTimeZone().ToShortDateString())</span></span>
+                    <span class="kt-widget__value"><span>@(Model.Edition.EndDate.ToBrazilTimeZone().ToShortDateString())</span></span>
                 </div>
             </div>
             <div class="kt-widget__item">
@@ -52,7 +52,7 @@
             <div class="kt-widget__item">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.OneToOneMeetingsScheduleDate</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.OneToOneMeetingsScheduleDate.ToUserTimeZone().ToShortDateString())</span></span>
+                    <span class="kt-widget__value"><span>@(Model.Edition.OneToOneMeetingsScheduleDate.ToBrazilTimeZone().ToShortDateString())</span></span>
                 </div>
             </div>
             <div class="kt-widget__item">

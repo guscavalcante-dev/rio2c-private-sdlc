@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-25-2020
+// Last Modified On : 06-26-2021
 // ***********************************************************************
 // <copyright file="MusicBand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -235,7 +235,7 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.StartDate < this.Edition.StartDate || this.StartDate > this.Edition.EndDate
                 || this.EndDate < this.Edition.StartDate || this.EndDate > this.Edition.EndDate)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.Date, this.Edition.EndDate.ToUserTimeZone().ToShortDateString(), this.Edition.StartDate.ToUserTimeZone().ToShortDateString()), new string[] { "Date" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.Date, this.Edition.EndDate.ToBrazilTimeZone().ToShortDateString(), this.Edition.StartDate.ToBrazilTimeZone().ToShortDateString()), new string[] { "Date" }));
             }
 
             if (this.StartDate > this.EndDate)

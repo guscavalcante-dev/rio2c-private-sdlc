@@ -231,6 +231,8 @@
     <Compile Include="CQRS\CommandsHandlers\Editions\UpdateEditionMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendAdminWelcomeEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendMusicCommissionWelcomeEmailAsyncCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendPlayerNegotiationsEmailAsyncCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendProducerNegotiationsEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendSpeakerWelcomeEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Common\SendForgotPasswordEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Site\SendProjectBuyerEvaluationEmailAsyncCommandHandler.cs" />
@@ -362,6 +364,8 @@
     <Compile Include="CQRS\Commands\Editions\UpdateEditionDatesInformation.cs" />
     <Compile Include="CQRS\Commands\Editions\UpdateEditionMainInformation.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendAdminWelcomeEmailAsync.cs" />
+    <Compile Include="CQRS\Commands\Emails\Admin\SendPlayerNegotiationsEmailAsync.cs" />
+    <Compile Include="CQRS\Commands\Emails\Admin\SendProducerNegotiationsEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Logistics\UpdateLogisticAccomodation.cs" />
     <Compile Include="CQRS\Commands\Logistics\CreateLogisticAccommodation.cs" />
     <Compile Include="CQRS\Commands\Logistics\UpdateLogisticAirfare.cs" />
@@ -670,6 +674,8 @@
     <Compile Include="ViewModels\Common\Mail\MailCollaboratorEditAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Mail\MailCollaboratorListItemAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Managers\ManagerSearchViewModel.cs" />
+    <Compile Include="ViewModels\Common\Meetings\SendEmailToPlayersSearchViewModel.cs" />
+    <Compile Include="ViewModels\Common\Meetings\SendEmailToProducersSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\MusicalCommission\MusicalCommissionBasicAppViewModel.cs" />
     <Compile Include="ViewModels\Common\MusicalCommission\MusicalCommissionDetailAppViewModel.cs" />
     <Compile Include="ViewModels\Common\MusicalCommission\MusicalCommissionEditAppViewModel.cs" />

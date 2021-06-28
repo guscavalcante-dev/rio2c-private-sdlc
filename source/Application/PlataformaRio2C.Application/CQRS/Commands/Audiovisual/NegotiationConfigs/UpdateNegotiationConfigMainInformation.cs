@@ -4,7 +4,7 @@
 // Created          : 03-05-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-05-2020
+// Last Modified On : 06-26-2021
 // ***********************************************************************
 // <copyright file="UpdateNegotiationConfigMainInformation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -63,9 +63,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="negotiationConfigDto">The negotiation configuration dto.</param>
         public UpdateNegotiationConfigMainInformation(NegotiationConfigDto negotiationConfigDto)
         {
-            this.Date = negotiationConfigDto?.NegotiationConfig?.StartDate.ToUserTimeZone().Date;
-            this.StartTime = negotiationConfigDto?.NegotiationConfig?.StartDate.ToUserTimeZone().ToShortTimeString();
-            this.EndTime = negotiationConfigDto?.NegotiationConfig?.EndDate.ToUserTimeZone().ToShortTimeString();
+            this.Date = negotiationConfigDto?.NegotiationConfig?.StartDate.ToBrazilTimeZone().Date;
+            this.StartTime = negotiationConfigDto?.NegotiationConfig?.StartDate.ToBrazilTimeZone().ToShortTimeString();
+            this.EndTime = negotiationConfigDto?.NegotiationConfig?.EndDate.ToBrazilTimeZone().ToShortTimeString();
             this.RoundFirstTurn = negotiationConfigDto?.NegotiationConfig?.RoundFirstTurn;
             this.RoundSecondTurn = negotiationConfigDto?.NegotiationConfig?.RoundSecondTurn;
             this.TimeIntervalBetweenTurn = negotiationConfigDto?.NegotiationConfig?.TimeIntervalBetweenTurn.ToString(@"hh\:mm");

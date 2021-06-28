@@ -4,7 +4,7 @@
 // Created          : 03-01-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-04-2020
+// Last Modified On : 06-26-2021
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -224,7 +224,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid))
                 {
                     additionalParameters.Add("noRecordsFoundMessage", 
-                        $"{string.Format(Messages.TheEvaluationPeriodRunsFrom, this.EditionDto.MusicProjectEvaluationStartDate.ToUserTimeZone().ToShortDateString(), this.EditionDto.MusicProjectEvaluationEndDate.ToUserTimeZone().ToShortDateString())}.</br>{Messages.TheBandsWillReceiveFinalGradeAtPeriodEnds}");
+                        $"{string.Format(Messages.TheEvaluationPeriodRunsFrom, this.EditionDto.MusicProjectEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(), this.EditionDto.MusicProjectEvaluationEndDate.ToBrazilTimeZone().ToShortDateString())}.</br>{Messages.TheBandsWillReceiveFinalGradeAtPeriodEnds}");
                 }
                 else if (!this.EditionDto.IsMusicProjectEvaluationOpen() && 
                     evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)

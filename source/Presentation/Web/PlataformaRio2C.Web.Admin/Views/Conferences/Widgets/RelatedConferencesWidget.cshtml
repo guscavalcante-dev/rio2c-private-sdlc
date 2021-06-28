@@ -41,10 +41,10 @@
                                     </a>
                                 </td>
                                 <td class="text-center @(startDate.HasValue && endDate.HasValue && (conferenceDto.Conference.StartDate < startDate.Value || conferenceDto.Conference.StartDate > endDate.Value) ? "kt-font-danger" : string.Empty)">
-                                    @(conferenceDto.Conference.StartDate.ToUserTimeZone().ToShortDateString()) @(conferenceDto.Conference.StartDate.ToUserTimeZone().ToShortTimeString())
+                                    @(conferenceDto.Conference.StartDate.ToBrazilTimeZone().ToShortDateString()) @(conferenceDto.Conference.StartDate.ToBrazilTimeZone().ToShortTimeString())
                                 </td>
                                 <td class="text-center @(startDate.HasValue && endDate.HasValue && (conferenceDto.Conference.EndDate < startDate.Value || conferenceDto.Conference.EndDate > endDate.Value) ? "kt-font-danger" : string.Empty)">
-                                    @(conferenceDto.Conference.EndDate.ToUserTimeZone().ToShortDateString()) @(conferenceDto.Conference.EndDate.ToUserTimeZone().ToShortTimeString())
+                                    @(conferenceDto.Conference.EndDate.ToBrazilTimeZone().ToShortDateString()) @(conferenceDto.Conference.EndDate.ToBrazilTimeZone().ToShortTimeString())
                                 </td>
                             </tr>
                         }

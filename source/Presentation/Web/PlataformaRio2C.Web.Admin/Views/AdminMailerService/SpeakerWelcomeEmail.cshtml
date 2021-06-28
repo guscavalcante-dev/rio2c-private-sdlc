@@ -14,12 +14,12 @@
         <span>
             Seja bem-vindo(a) ao <span style="font-weight: 800;">Rio2C</span> - o maior encontro de criatividade e inovação da América Latina. Agradecemos antecipadamente a sua presença
             na <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span> 
-            (dias @Model.Edition.StartDate.ToUserTimeZone().Day a @Model.Edition.EndDate.ToUserTimeZone().Day de @Model.Edition.EndDate.ToUserTimeZone().ToString("MMMM", brCulture), @Model.Edition.EndDate.ToUserTimeZone().Year).
+            (dias @Model.Edition.StartDate.ToBrazilTimeZone().Day a @Model.Edition.EndDate.ToBrazilTimeZone().Day de @Model.Edition.EndDate.ToBrazilTimeZone().ToString("MMMM", brCulture), @Model.Edition.EndDate.ToBrazilTimeZone().Year).
         </span><br />
         <span style="font-style: italic; color: red;">
             Welcome to <span style="font-weight: 800;">Rio2C</span> - Latin America’s leading creativity and innovation event. We would like to thank you in advance for joining us 
             at <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span> 
-            (@Model.Edition.EndDate.ToUserTimeZone().ToString("MMMM", usCulture) @Model.Edition.StartDate.ToUserTimeZone().Day<sup>@Model.Edition.StartDate.ToUserTimeZone().GetDaySuffix()</sup> – @Model.Edition.EndDate.ToUserTimeZone().Day<sup>@Model.Edition.EndDate.ToUserTimeZone().GetDaySuffix()</sup>, @Model.Edition.EndDate.ToUserTimeZone().Year).
+            (@Model.Edition.EndDate.ToBrazilTimeZone().ToString("MMMM", usCulture) @Model.Edition.StartDate.ToBrazilTimeZone().Day<sup>@Model.Edition.StartDate.ToBrazilTimeZone().GetDaySuffix()</sup> – @Model.Edition.EndDate.ToBrazilTimeZone().Day<sup>@Model.Edition.EndDate.ToBrazilTimeZone().GetDaySuffix()</sup>, @Model.Edition.EndDate.ToBrazilTimeZone().Year).
         </span>
     </p>
     <p>

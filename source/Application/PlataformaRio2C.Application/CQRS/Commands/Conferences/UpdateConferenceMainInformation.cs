@@ -4,7 +4,7 @@
 // Created          : 01-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-16-2020
+// Last Modified On : 06-26-2021
 // ***********************************************************************
 // <copyright file="UpdateConferenceMainInformation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -69,9 +69,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string userInterfaceLanguage)
         {
             this.EditionEventUid = conferenceDto?.EditionEvent?.Uid;
-            this.Date = conferenceDto?.Conference?.StartDate.ToUserTimeZone().Date;
-            this.StartTime = conferenceDto?.Conference?.StartDate.ToUserTimeZone().ToShortTimeString();
-            this.EndTime = conferenceDto?.Conference?.EndDate.ToUserTimeZone().ToShortTimeString();
+            this.Date = conferenceDto?.Conference?.StartDate.ToBrazilTimeZone().Date;
+            this.StartTime = conferenceDto?.Conference?.StartDate.ToBrazilTimeZone().ToShortTimeString();
+            this.EndTime = conferenceDto?.Conference?.EndDate.ToBrazilTimeZone().ToShortTimeString();
             this.RoomUid = conferenceDto?.RoomDto?.Room?.Uid;
             this.UpdateTitles(conferenceDto, languagesDtos);
             this.UpdateSynopsis(conferenceDto, languagesDtos);

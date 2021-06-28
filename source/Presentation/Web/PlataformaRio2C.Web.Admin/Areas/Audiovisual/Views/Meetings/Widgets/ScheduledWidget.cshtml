@@ -39,7 +39,7 @@
                     @Html.TextBox("SearchProjectKeywords", null, new { type = "search", @class = "form-control", autocomplete = "off", placeholder = $"{Labels.Project}" })
                 </div>
                 <div class="col-12 col-md-3 mt-2">
-                    @Html.TextBox("SearchDate", null, new { @class = "form-control enable-datepicker", type = "search", data_date_start_date = editionDto?.StartDate.ToUserTimeZone().ToShortDateString(), data_date_end_date = editionDto?.EndDate.ToUserTimeZone().ToShortDateString(), placeholder = Labels.Date })
+                    @Html.TextBox("SearchDate", null, new { @class = "form-control enable-datepicker", type = "search", data_date_start_date = editionDto?.StartDate.ToBrazilTimeZone().ToShortDateString(), data_date_end_date = editionDto?.EndDate.ToBrazilTimeZone().ToShortDateString(), placeholder = Labels.Date })
                 </div>
                 <div class="col-12 col-md-3 mt-2">
                     @Html.DropDownList("SearchRoomUid", new SelectList(ViewBag.Rooms, "Uid", "Name", null), $"{string.Format(Labels.SelectAMEntity, Labels.Room.ToLowerInvariant())}", new { @class = "form-control enable-select2" })

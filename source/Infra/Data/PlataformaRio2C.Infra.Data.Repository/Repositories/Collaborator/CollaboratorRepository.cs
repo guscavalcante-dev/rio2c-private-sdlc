@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-20-2020
+// Last Modified On : 06-26-2021
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -532,6 +532,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         }).FirstOrDefault(),
                                         UpdaterDto = new UserBaseDto
                                         {
+                                            Id = c.Updater.Id,
                                             Uid = c.Updater.Uid,
                                             Name = c.Updater.Name,
                                             Email = c.Updater.Email
@@ -572,6 +573,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                         OrganizationBaseDto = new OrganizationBaseDto
                                                                                                         {
                                                                                                             Name = aoc.AttendeeOrganization.Organization.Name,
+                                                                                                            TradeName = aoc.AttendeeOrganization.Organization.TradeName,
                                                                                                             HoldingBaseDto = aoc.AttendeeOrganization.Organization.Holding == null ? null : new HoldingBaseDto
                                                                                                             {
                                                                                                                 Name = aoc.AttendeeOrganization.Organization.Holding.Name
@@ -662,6 +664,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                 OrganizationBaseDto = new OrganizationBaseDto
                                                                                                 {
                                                                                                     Name = aoc.AttendeeOrganization.Organization.Name,
+                                                                                                    TradeName = aoc.AttendeeOrganization.Organization.TradeName,
                                                                                                     HoldingBaseDto = aoc.AttendeeOrganization.Organization.Holding == null ? null : new HoldingBaseDto
                                                                                                     {
                                                                                                         Name = aoc.AttendeeOrganization.Organization.Holding.Name
@@ -800,18 +803,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .ToListPagedAsync(page, pageSize);
         }
 
-
         /// <summary>
-        /// Finds all amins by data table.
+        /// Finds all admins by data table.
         /// </summary>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="keywords">The keywords.</param>
         /// <param name="sortColumns">The sort columns.</param>
-        /// <param name="collaboratorsUids">The collaborators uids.</param>
-        /// <param name="collaboratorTypeNames">The collaborator type names.</param>
-        /// <param name="rolesNames">The roles names.</param>
-        /// <param name="showHighlights">The show highlights.</param>
+        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
+        /// <param name="roleName">Name of the role.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
         public async Task<IPagedList<CollaboratorBaseDto>> FindAllAdminsByDataTable(
@@ -845,10 +847,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         {
                                             Id = c.Id,
                                             Uid = c.Uid,
-
                                             Active = c.User.Active,
-                                            UserUid = c.User.Uid,
-
+                                            UserBaseDto = new UserBaseDto
+                                            {
+                                                Id = c.User.Id,
+                                                Uid = c.User.Uid
+                                            },
                                             FirstName = c.FirstName,
                                             LastNames = c.LastNames,
                                             Badge = c.Badge,

@@ -4,7 +4,7 @@
 // Created          : 01-27-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-13-2020
+// Last Modified On : 06-26-2021
 // ***********************************************************************
 // <copyright file="UpdateLogisticAccommodation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -51,10 +51,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="checkOutDate">The check out date.</param>
         private void UpdateDates(DateTimeOffset? checkInDate, DateTimeOffset? checkOutDate)
         {
-            var checkIn = checkInDate?.ToUserTimeZone();
+            var checkIn = checkInDate?.ToBrazilTimeZone();
             this.CheckInDate = checkIn?.ToShortDateString() + " " + checkIn?.ToString("HH:mm");
 
-            var checkOut = checkOutDate?.ToUserTimeZone();
+            var checkOut = checkOutDate?.ToBrazilTimeZone();
             this.CheckOutDate = checkOut?.ToShortDateString() + " " + checkOut?.ToString("HH:mm");
         }
 

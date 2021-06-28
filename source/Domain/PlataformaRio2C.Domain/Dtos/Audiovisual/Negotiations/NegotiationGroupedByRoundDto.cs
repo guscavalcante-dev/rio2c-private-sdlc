@@ -4,7 +4,7 @@
 // Created          : 03-07-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2020
+// Last Modified On : 06-26-2021
 // ***********************************************************************
 // <copyright file="NegotiationGroupedByRoundDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,8 +33,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public NegotiationGroupedByRoundDto(int roundNumber, List<Negotiation> negotiations)
         {
             this.RoundNumber = roundNumber;
-            this.StartDate = negotiations?.FirstOrDefault()?.StartDate.ToUserTimeZone();
-            this.EndDate = negotiations?.FirstOrDefault()?.EndDate.ToUserTimeZone();
+            this.StartDate = negotiations?.FirstOrDefault()?.StartDate.ToBrazilTimeZone();
+            this.EndDate = negotiations?.FirstOrDefault()?.EndDate.ToBrazilTimeZone();
             this.Negotiations = negotiations?.OrderBy(n => n.TableNumber)?.ToList();
         }
 

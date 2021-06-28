@@ -4,7 +4,7 @@
 // Created          : 12-13-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-10-2020
+// Last Modified On : 06-26-2021
 // ***********************************************************************
 // <copyright file="DateTimeExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,47 +15,69 @@ using System;
 
 namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
 {
-    /// <summary>DateTimeExtensions</summary>
+    /// <summary>
+    /// DateTimeExtensions
+    /// </summary>
     public static class DateTimeExtensions
     {
-        private const string UserTimeZone = "E. South America Standard Time";
+        private const string BrazilTimeZone = "E. South America Standard Time";
 
-        /// <summary>Converts to usertimezone.</summary>
+        #region Brazil Timezone
+
+        /// <summary>
+        /// Gets the brazil UTC.
+        /// </summary>
+        /// <returns></returns>
+        public static string GetBrazilUtc()
+        {
+            var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(BrazilTimeZone);
+            return $"UTC{userTimeZone.BaseUtcOffset.Hours}";
+        }
+
+        /// <summary>
+        /// Converts to brazil time zone.
+        /// </summary>
         /// <param name="dt">The dt.</param>
         /// <returns></returns>
-        public static DateTime ToUserTimeZone(this DateTimeOffset dt)
+        public static DateTime ToBrazilTimeZone(this DateTimeOffset dt)
         {
-            var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(UserTimeZone);
+            var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(BrazilTimeZone);
             return TimeZoneInfo.ConvertTimeFromUtc(dt.DateTime, userTimeZone);
         }
 
-        /// <summary>Converts to usertimezone.</summary>
+        /// <summary>
+        /// Converts to brazil time zone.
+        /// </summary>
         /// <param name="dt">The dt.</param>
         /// <returns></returns>
-        public static DateTime? ToUserTimeZone(this DateTimeOffset? dt)
+        public static DateTime? ToBrazilTimeZone(this DateTimeOffset? dt)
         {
             if (!dt.HasValue)
                 return null;
 
-            var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(UserTimeZone);
+            var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(BrazilTimeZone);
             return TimeZoneInfo.ConvertTimeFromUtc(dt.Value.DateTime, userTimeZone);
         }
 
-        /// <summary>Converts to usertimezone.</summary>
+        /// <summary>
+        /// Converts to brazil time zone.
+        /// </summary>
         /// <param name="dtUtc">The dt UTC.</param>
         /// <returns></returns>
-        public static DateTime ToUserTimeZone(this DateTime dtUtc)
+        public static DateTime ToBrazilTimeZone(this DateTime dtUtc)
         {
-            var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(UserTimeZone);
+            var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(BrazilTimeZone);
             return TimeZoneInfo.ConvertTimeFromUtc(dtUtc, userTimeZone);
         }
+
+        #endregion
 
         /// <summary>Converts to utctimezone.</summary>
         /// <param name="dt">The dt.</param>
         /// <returns></returns>
         public static DateTimeOffset ToUtcTimeZone(this DateTime dt)
         {
-            var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(UserTimeZone);
+            var userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(BrazilTimeZone);
             return TimeZoneInfo.ConvertTimeToUtc(dt, userTimeZone);
         }
 

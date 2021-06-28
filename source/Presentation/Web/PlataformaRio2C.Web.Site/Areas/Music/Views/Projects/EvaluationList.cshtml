@@ -70,8 +70,8 @@
                     <ul class="pl-0 mb-0">
                         @Html.Raw(string.Format(
                             Texts.PitchingShowCommissionProjectsDates,
-                            editionDto?.MusicProjectEvaluationStartDate.ToUserTimeZone().ToShortDateString(),
-                            editionDto?.MusicProjectEvaluationEndDate.ToUserTimeZone().ToShortDateString()))
+                            editionDto?.MusicProjectEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(),
+                            editionDto?.MusicProjectEvaluationEndDate.ToBrazilTimeZone().ToShortDateString()))
                     </ul>
                 </div>
             </div>

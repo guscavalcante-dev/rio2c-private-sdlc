@@ -31,13 +31,13 @@
                                             @logisticAirfareDto.LogisticAirfare.From
                                         </td>
                                         <td class="text-center">
-                                            @logisticAirfareDto.LogisticAirfare.DepartureDate.ToUserTimeZone().ToString("g")
+                                            @logisticAirfareDto.LogisticAirfare.DepartureDate.ToBrazilTimeZone().ToString("g")
                                         </td>
                                         <td>
                                             @logisticAirfareDto.LogisticAirfare.To
                                         </td>
                                         <td class="text-center">
-                                            @logisticAirfareDto.LogisticAirfare.ArrivalDate.ToUserTimeZone().ToString("g")
+                                            @logisticAirfareDto.LogisticAirfare.ArrivalDate.ToBrazilTimeZone().ToString("g")
                                         </td>
                                         <td class="text-center">
                                             @logisticAirfareDto.LogisticAirfare.TicketNumber
@@ -86,7 +86,7 @@
                         <div class="row">
                             <div class="col-12 text-center">
                                 <a href="@FileHelper.GetFileUrl(FileRepositoryPathType.LogisticAirfareFile, logisticAirfareDto.LogisticAirfare.Uid, logisticAirfareDto.LogisticAirfare.TicketUploadDate)" target="_blank">
-                                    @logisticAirfareDto.LogisticAirfare.From - @logisticAirfareDto.LogisticAirfare.To (@logisticAirfareDto.LogisticAirfare.DepartureDate.ToUserTimeZone().ToString("g"))
+                                    @logisticAirfareDto.LogisticAirfare.From - @logisticAirfareDto.LogisticAirfare.To (@logisticAirfareDto.LogisticAirfare.DepartureDate.ToBrazilTimeZone().ToString("g"))
                                 </a>
                             </div>
                         </div>

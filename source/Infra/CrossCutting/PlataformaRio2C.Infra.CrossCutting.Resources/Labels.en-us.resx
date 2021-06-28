@@ -2758,4 +2758,24 @@
     <value>Show pitchings</value>
     <comment>Exibir pitchings</comment>
   </data>
+  <data name="With" xml:space="preserve">
+    <value>With</value>
+    <comment>Com</comment>
+  </data>
+  <data name="confirmSendEmailAll" xml:space="preserve">
+    <value>Confirm to send emails for all records on all pages?</value>
+    <comment>Confirma o envio de e-mail para todos os registros de todas as páginas?</comment>
+  </data>
+  <data name="confirmSendEmailSelected" xml:space="preserve">
+    <value>Confirm to send emails for selected records?</value>
+    <comment>Confirma o envio de e-mail para os registros selecionados?</comment>
+  </data>
+  <data name="Emails" xml:space="preserve">
+    <value>E-mails</value>
+    <comment>E-mails</comment>
+  </data>
+  <data name="SentMP" xml:space="preserve">
+    <value>Sent</value>
+    <comment>Enviados</comment>
+  </data>
 </root>

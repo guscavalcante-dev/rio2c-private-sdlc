@@ -41,10 +41,10 @@
                                     @(negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.GetTitleDtoByLanguageCode(userInterfaceLanguage)?.ProjectTitle?.Value ?? "-")
                                 </td>
                                 <td class="text-center">
-                                    @negotiationDto.Negotiation.StartDate.ToUserTimeZone().ToStringHourMinute()
+                                    @negotiationDto.Negotiation.StartDate.ToBrazilTimeZone().ToStringHourMinute()
                                 </td>
                                 <td class="text-center">
-                                    @negotiationDto.Negotiation.EndDate.ToUserTimeZone().ToStringHourMinute()
+                                    @negotiationDto.Negotiation.EndDate.ToBrazilTimeZone().ToStringHourMinute()
                                 </td>
                             </tr>
                         }
@@ -81,10 +81,10 @@
                                         @(negotiationDto.ProjectBuyerEvaluationDto.ProjectDto.SellerAttendeeOrganizationDto.Organization.Name)
                                     </td>*@
                                 <td class="text-center">
-                                    @negotiationDto.Negotiation.StartDate.ToUserTimeZone().ToStringHourMinute()
+                                    @negotiationDto.Negotiation.StartDate.ToBrazilTimeZone().ToStringHourMinute()
                                 </td>
                                 <td class="text-center">
-                                    @negotiationDto.Negotiation.EndDate.ToUserTimeZone().ToStringHourMinute()
+                                    @negotiationDto.Negotiation.EndDate.ToBrazilTimeZone().ToStringHourMinute()
                                 </td>
                             </tr>
                         }

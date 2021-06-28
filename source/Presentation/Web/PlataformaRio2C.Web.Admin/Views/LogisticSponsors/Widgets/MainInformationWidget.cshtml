@@ -65,13 +65,13 @@
             <div class="kt-widget__item">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.CreateDate</span>
-                    <span class="kt-widget__value"><span>@(Model.AttendeeLogisticSponsor.CreateDate.ToUserTimeZone().ToShortDateString()) @(Model.AttendeeLogisticSponsor.CreateDate.ToUserTimeZone().ToShortTimeString())</span></span>
+                    <span class="kt-widget__value"><span>@(Model.AttendeeLogisticSponsor.CreateDate.ToBrazilTimeZone().ToShortDateString()) @(Model.AttendeeLogisticSponsor.CreateDate.ToBrazilTimeZone().ToShortTimeString())</span></span>
                 </div>
             </div>
             <div class="kt-widget__item">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.UpdateDate</span>
-                    <span class="kt-widget__value"><span>@(Model.AttendeeLogisticSponsor.UpdateDate.ToUserTimeZone().ToShortDateString()) @(Model.AttendeeLogisticSponsor.UpdateDate.ToUserTimeZone().ToShortTimeString())</span></span>
+                    <span class="kt-widget__value"><span>@(Model.AttendeeLogisticSponsor.UpdateDate.ToBrazilTimeZone().ToShortDateString()) @(Model.AttendeeLogisticSponsor.UpdateDate.ToBrazilTimeZone().ToShortTimeString())</span></span>
                 </div>
             </div>
         </div>

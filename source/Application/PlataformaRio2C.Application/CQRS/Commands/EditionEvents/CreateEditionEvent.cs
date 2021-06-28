@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-16-2020
+// Last Modified On : 06-26-2021
 // ***********************************************************************
 // <copyright file="CreateEditionEvent.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -41,8 +41,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public CreateEditionEvent(EditionEventDto editionEventDto)
         {
             this.Name = editionEventDto?.EditionEvent?.Name;
-            this.StartDate = editionEventDto?.EditionEvent?.StartDate.ToUserTimeZone();
-            this.EndDate = editionEventDto?.EditionEvent?.EndDate.ToUserTimeZone();
+            this.StartDate = editionEventDto?.EditionEvent?.StartDate.ToBrazilTimeZone();
+            this.EndDate = editionEventDto?.EditionEvent?.EndDate.ToBrazilTimeZone();
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateEditionEvent"/> class.</summary>

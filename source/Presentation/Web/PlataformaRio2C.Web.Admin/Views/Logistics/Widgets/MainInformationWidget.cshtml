@@ -89,7 +89,7 @@
             <div class="kt-widget__item">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.RequestDate</span>
-                    <span class="kt-widget__value"><span>@(Model.Logistic?.CreateDate.ToUserTimeZone().ToString("G"))</span></span>
+                    <span class="kt-widget__value"><span>@(Model.Logistic?.CreateDate.ToBrazilTimeZone().ToString("G"))</span></span>
                 </div>
             </div>
             @if (!string.IsNullOrEmpty(Model.Logistic?.AdditionalInfo))
