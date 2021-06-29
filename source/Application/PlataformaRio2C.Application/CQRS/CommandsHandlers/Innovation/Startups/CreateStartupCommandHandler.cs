@@ -181,8 +181,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             //}
 
             //this.MusicBandRepo.Create(musicBand);
-            this.Uow.SaveChanges();
-            this.AppValidationResult.Data = musicBand;
+            //this.Uow.SaveChanges();
+            //this.AppValidationResult.Data = musicBand;
 
             return this.AppValidationResult;
         }

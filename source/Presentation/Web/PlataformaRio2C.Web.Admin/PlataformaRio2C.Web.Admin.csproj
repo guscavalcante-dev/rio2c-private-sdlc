@@ -370,6 +370,7 @@
     <Compile Include="Areas\WebApi\Controllers\DashboardController.cs" />
     <Compile Include="Areas\WebApi\Controllers\CollaboratorProducerController.cs" />
     <Compile Include="Areas\WebApi\Controllers\HoldingController.cs" />
+    <Compile Include="Areas\WebApi\Controllers\LogisticsController.cs" />
     <Compile Include="Areas\WebApi\Controllers\OrganizationsApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\PlayerController.cs" />
     <Compile Include="Areas\WebApi\Controllers\FinancialReportController.cs" />
@@ -7658,6 +7659,14 @@
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\ProjectAllBuyerCompanyWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\ProjectMatchBuyerCompanyWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\BuyerCompanySelectedWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\SendEmailToProducers.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\SendEmailToProducersDataTableWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\SendEmailToProducersEditionCountWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\SendEmailToProducersTotalCountWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\SendEmailToPlayers.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\SendEmailToPlayersDataTableWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\SendEmailToPlayersEditionCountWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\SendEmailToPlayersTotalCountWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -9034,6 +9043,9 @@
     <Content Include="Areas\Audiovisual\Views\Producers\Widgets\DataTableWidget.cshtml" />
     <Content Include="Views\AdminMailerService\PlayersNegotiationsEmail.cshtml" />
     <Content Include="Views\AdminMailerService\ProducersNegotiationsEmail.cshtml" />
+    <Content Include="Views\LogisticSponsors\Widgets\ParticipantsWidget.cshtml" />
+    <Content Include="Views\LogisticSponsors\Widgets\RelatedConferencesWidget.cshtml" />
+    <Content Include="Views\LogisticSponsors\Widgets\TracksAndPresentationFormatsWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
