@@ -173,6 +173,7 @@
     <Compile Include="Dtos\EditionEvents\EditionEventJsonDto.cs" />
     <Compile Include="Dtos\Editions\EditionJsonDto.cs" />
     <Compile Include="Dtos\Emails\EmailRecipientDto.cs" />
+    <Compile Include="Dtos\Innovation\API\StartupApiDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticAccommodationDto.cs" />
     <Compile Include="Dtos\Logistics\AttendeePlaceDropdownDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticDto.cs" />

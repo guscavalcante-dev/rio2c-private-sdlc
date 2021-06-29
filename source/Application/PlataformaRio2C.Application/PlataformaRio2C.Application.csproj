@@ -242,6 +242,8 @@
     <Compile Include="CQRS\CommandsHandlers\Holdings\DeleteHoldingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\UpdateHoldingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\CreateHoldingCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Innovation\Startups\BaseCommandHandlers\StartupBaseCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Innovation\Startups\CreateStartupCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\LogisticSponsors\DeleteLogisticSponsorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\LogisticSponsors\UpdateLogisticSponsorMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\LogisticSponsors\CreateLogisticSponsorCommandHandler.cs" />
@@ -366,6 +368,7 @@
     <Compile Include="CQRS\Commands\Emails\Admin\SendAdminWelcomeEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendPlayerNegotiationsEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendProducerNegotiationsEmailAsync.cs" />
+    <Compile Include="CQRS\Commands\Innovation\Startups\CreateStartup.cs" />
     <Compile Include="CQRS\Commands\Logistics\UpdateLogisticAccomodation.cs" />
     <Compile Include="CQRS\Commands\Logistics\CreateLogisticAccommodation.cs" />
     <Compile Include="CQRS\Commands\Logistics\UpdateLogisticAirfare.cs" />
@@ -852,6 +855,7 @@
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="CQRS\CommandsHandlers\SalesPlatforms\" />
+    <Folder Include="CQRS\Commands\Innovation\Startups\BaseCommands\" />
     <Folder Include="CQRS\Commands\SalesPlatforms\" />
     <Folder Include="CQRS\EventsHandlers\" />
     <Folder Include="CQRS\Events\" />

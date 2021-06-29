@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Site
 // Author           : Renan Valentim
-// Created          : 03-01-2021
+// Created          : 06-28-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-31-2021
+// Last Modified On : 06-28-2021
 // ***********************************************************************
-// <copyright file="MusicBandsApiController.cs" company="Softo">
+// <copyright file="InnovationApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -22,8 +22,6 @@ using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Infra.CrossCutting.SystemParameter;
-using PlataformaRio2C.Infra.CrossCutting.SystemParameter.Context;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
@@ -31,14 +29,12 @@ using System.Configuration;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
-using System.Web.Script.Serialization;
 
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 {
     [System.Web.Http.RoutePrefix("api/v1.0")]
-    public class MusicBandsApiController : BaseApiController
+    public class InnovationApiController : BaseApiController
     {
         private readonly IMediator commandBus;
         private readonly IdentityAutenticationService identityController;
@@ -48,10 +44,10 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         private readonly ITargetAudienceRepository targetAudiencesRepo;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MusicBandsApiController"/> class.
+        /// Initializes a new instance of the <see cref="InnovationApiController"/> class.
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
-        public MusicBandsApiController(
+        public InnovationApiController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
             IEditionRepository editionsRepo,
@@ -67,16 +63,21 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             this.targetAudiencesRepo = targetAudiencesRepo;
         }
 
+
         /// <summary>
-        /// Creates the music band.
+        /// Creates the startup.
         /// </summary>
-        /// <param name="musicBandApiDto">The music band dto.</param>
-        /// <returns></returns>
-        /// <exception cref="DomainException">
-        /// </exception>
+        /// <param name="key">The key.</param>
+        /// <param name="request">The request.</param>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <exception cref="DomainException"></exception>
+        /// <exception cref="DomainException"></exception>
+        /// <exception cref="DomainException"></exception>
+        /// <exception cref="DomainException"></exception>
+        /// <exception cref="DomainException"></exception>
         [HttpPost]
-        [Route("CreateMusicBand/{key?}")]
-        public async Task<IHttpActionResult> CreateMusicBand(string key, HttpRequestMessage request)
+        [Route("CreateStartup/{key?}")]
+        public async Task<IHttpActionResult> CreateStartup(string key, HttpRequestMessage request)
         {
             var validationResult = new AppValidationResult();
 
@@ -84,7 +85,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             {
                 #region Initial Validations
 
-                if (key.ToLowerInvariant() != ConfigurationManager.AppSettings["CreateMusicBandApiKey"].ToLowerInvariant())
+                if (key.ToLowerInvariant() != ConfigurationManager.AppSettings["CreateStartupApiKey"].ToLowerInvariant())
                 {
                     throw new DomainException(Messages.AccessDenied);
                 }
@@ -103,15 +104,15 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
                 #endregion
 
-                string jsonMusicBandApiDto = request.Content.ReadAsStringAsync().Result;
-                var musicBandApiDto = JsonConvert.DeserializeObject<MusicBandApiDto>(jsonMusicBandApiDto);
-                if (!musicBandApiDto.IsValid())
+                string jsonOrganizationApiDto = request.Content.ReadAsStringAsync().Result;
+                var startupApiDto = JsonConvert.DeserializeObject<StartupApiDto>(jsonOrganizationApiDto);
+                if (!startupApiDto.IsValid())
                 {
-                    validationResult.Add(musicBandApiDto.ValidationResult);
+                    validationResult.Add(startupApiDto.ValidationResult);
                     throw new DomainException(Messages.CorrectFormValues);
                 }
 
-                var cmd = new CreateMusicBand(musicBandApiDto);
+                var cmd = new CreateStartup(startupApiDto);
                 cmd.UpdatePreSendProperties(
                     applicationUser.Id,
                     applicationUser.Uid,
