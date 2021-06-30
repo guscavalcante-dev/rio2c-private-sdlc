@@ -135,6 +135,7 @@
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorTicketDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\AttendeeOrganizationBaseDto.cs" />
     <Compile Include="Dtos\AttendeeOrganizations\NegotiationAttendeeOrganizationBaseDto.cs" />
+    <Compile Include="Dtos\Audiovisual\Negotiations\NegotiationBaseDto.cs" />
     <Compile Include="Dtos\Audiovisual\Negotiations\NegotiationReportGroupedByStartDateDto.cs" />
     <Compile Include="Dtos\Audiovisual\Negotiations\NegotiationReportGroupedByRoomDto.cs" />
     <Compile Include="Dtos\Audiovisual\Negotiations\NegotiationReportGroupedByDateDto.cs" />
@@ -215,10 +216,13 @@
     <Compile Include="Dtos\Organizations\OrganizationActivityDto.cs" />
     <Compile Include="Dtos\Places\PlaceDto.cs" />
     <Compile Include="Dtos\Places\PlaceJsonDto.cs" />
+    <Compile Include="Dtos\Projects\ProjectBuyerEvaluationBaseDto.cs" />
     <Compile Include="Dtos\Projects\ProjectDropdownDto.cs" />
     <Compile Include="Dtos\Projects\ProjectBaseDto.cs" />
     <Compile Include="Dtos\Projects\ProjectBuyerEvaluationEmailDto.cs" />
     <Compile Include="Dtos\Projects\ProjectBuyerEvaluationDto.cs" />
+    <Compile Include="Dtos\Projects\ProjectEvaluationRefuseReasonBaseDto.cs" />
+    <Compile Include="Dtos\Projects\ProjectEvaluationStatusBaseDto.cs" />
     <Compile Include="Dtos\Projects\ProjectTeaserLinkDto.cs" />
     <Compile Include="Dtos\Projects\ProjectImageLinkDto.cs" />
     <Compile Include="Dtos\Projects\ProjectTargetAudienceDto.cs" />
