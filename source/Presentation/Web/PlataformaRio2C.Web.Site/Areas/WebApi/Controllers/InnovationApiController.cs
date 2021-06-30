@@ -104,15 +104,14 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
                 #endregion
 
-                string jsonOrganizationApiDto = request.Content.ReadAsStringAsync().Result;
-                var startupApiDto = JsonConvert.DeserializeObject<StartupApiDto>(jsonOrganizationApiDto);
-                if (!startupApiDto.IsValid())
+                var innovationOrganizationApiDto = JsonConvert.DeserializeObject<InnovationOrganizationApiDto>(request.Content.ReadAsStringAsync().Result);
+                if (!innovationOrganizationApiDto.IsValid())
                 {
-                    validationResult.Add(startupApiDto.ValidationResult);
+                    validationResult.Add(innovationOrganizationApiDto.ValidationResult);
                     throw new DomainException(Messages.CorrectFormValues);
                 }
 
-                var cmd = new CreateStartup(startupApiDto);
+                var cmd = new CreateInnovationOrganization(innovationOrganizationApiDto);
                 cmd.UpdatePreSendProperties(
                     applicationUser.Id,
                     applicationUser.Uid,

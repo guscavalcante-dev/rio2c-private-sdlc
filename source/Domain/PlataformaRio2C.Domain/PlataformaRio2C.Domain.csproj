@@ -174,7 +174,8 @@
     <Compile Include="Dtos\EditionEvents\EditionEventJsonDto.cs" />
     <Compile Include="Dtos\Editions\EditionJsonDto.cs" />
     <Compile Include="Dtos\Emails\EmailRecipientDto.cs" />
-    <Compile Include="Dtos\Innovation\API\StartupApiDto.cs" />
+    <Compile Include="Dtos\Innovation\API\InnovationOptionsApiDto.cs" />
+    <Compile Include="Dtos\Innovation\API\InnovationOrganizationApiDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticAccommodationDto.cs" />
     <Compile Include="Dtos\Logistics\AttendeePlaceDropdownDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticDto.cs" />
@@ -298,6 +299,12 @@
     <Compile Include="Entities\Addresses\Country.cs" />
     <Compile Include="Entities\Addresses\State.cs" />
     <Compile Include="Entities\Editions\EditionEvent.cs" />
+    <Compile Include="Entities\Innovation\AttendeeInnovationOrganizationCollaborator.cs" />
+    <Compile Include="Entities\Innovation\InnovationOptionGroup.cs" />
+    <Compile Include="Entities\Innovation\InnovationOption.cs" />
+    <Compile Include="Entities\Innovation\AttendeeInnovationOrganization.cs" />
+    <Compile Include="Entities\Innovation\InnovationOrganizationOption.cs" />
+    <Compile Include="Entities\Innovation\InnovationOrganization.cs" />
     <Compile Include="Entities\Logistics\LogisticTransfer.cs" />
     <Compile Include="Entities\Logistics\LogisticAirfare.cs" />
     <Compile Include="Entities\Logistics\LogisticAccommodation.cs" />
@@ -393,6 +400,12 @@
     <Compile Include="Interfaces\Repositories\Addresses\ICountryRepository.cs" />
     <Compile Include="Interfaces\Repositories\Addresses\IStateRepository.cs" />
     <Compile Include="Interfaces\Repositories\Editions\IEditionEventRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Innovation\IAttendeeInnovationOrganizationCollaboratorRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Innovation\IAttendeeInnovationOrganizationRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Innovation\IInnovationOptionGroupRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Innovation\IInnovationOrganizationOptionRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Innovation\IInnovationOptionRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Innovation\IInnovationOrganizationRepository.cs" />
     <Compile Include="Interfaces\Repositories\Logistics\IAttendeeLogisticSponsorRepository.cs" />
     <Compile Include="Interfaces\Repositories\Logistics\IAttendeePlacesRepository.cs" />
     <Compile Include="Interfaces\Repositories\Logistics\ILogisticAirfareRepository.cs" />

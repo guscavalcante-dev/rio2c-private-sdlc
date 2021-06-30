@@ -6,7 +6,7 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 06-28-2021
 // ***********************************************************************
-// <copyright file="StartupBaseCommandHandler.cs" company="">
+// <copyright file="InnovationOrganizationBaseCommandHandler.cs" company="">
 //     Copyright ©  2017
 // </copyright>
 // <summary></summary>
@@ -20,24 +20,23 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     /// <summary>Class StartupBaseCommandHandler.
     /// Implements the <see cref="PlataformaRio2C.Application.CQRS.CommandsHandlers.BaseCommandHandler"/></summary>
     /// <seealso cref="PlataformaRio2C.Application.CQRS.CommandsHandlers.BaseCommandHandler" />
-    public class StartupBaseCommandHandler : BaseCommandHandler
+    public class InnovationOrganizationBaseCommandHandler : BaseCommandHandler
     {
-        //protected readonly IMusicBandRepository MusicBandRepo;
+        protected readonly IInnovationOrganizationRepository InnovationOrganizationRepository;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StartupBaseCommandHandler"/> class.
+        /// Initializes a new instance of the <see cref="InnovationOrganizationBaseCommandHandler"/> class.
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="musicBandRepository">The music band repository.</param>
-        public StartupBaseCommandHandler(
+        public InnovationOrganizationBaseCommandHandler(
             IMediator commandBus, 
             IUnitOfWork uow,
-            IMusicBandRepository musicBandRepository
-            )
+            IInnovationOrganizationRepository innovationOrganizationRepo)
             : base(commandBus, uow)
         {
-            //this.MusicBandRepo = musicBandRepository;
+            this.InnovationOrganizationRepository = innovationOrganizationRepo;
         }
     }
 }

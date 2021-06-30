@@ -11,27 +11,22 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Domain.Validation;
-using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
     /// <summary>CreateMusicBandCommandHandler</summary>
     public class CreateMusicBandCommandHandler : MusicBandBaseCommandHandler, IRequestHandler<CreateMusicBand, AppValidationResult>
     {
-        private readonly IMusicBandRepository musicBandRepo;
         private readonly IMusicBandTypeRepository musicBandTypeRepo;
         private readonly IEditionRepository editionRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
@@ -60,7 +55,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             )
             : base(commandBus, uow, musicBandRepo)
         {
-            this.musicBandRepo = musicBandRepo;
             this.musicBandTypeRepo = musicBandTypeRepo;
             this.editionRepo = editionRepo;
             this.targetAudienceRepo = targetAudienceRepo;
