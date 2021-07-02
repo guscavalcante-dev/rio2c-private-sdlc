@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-26-2021
+// Last Modified On : 07-02-2021
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -661,18 +661,10 @@ namespace PlataformaRio2C.Web.Admin
 
             #region Reports
 
-            #region Audiovisual
-
-            bundles.Add(new ScriptBundle("~/bundles/js/reports.audiovisual.subscriptions.widget.js").Include(
-                "~/Assets/js/reports/reports.audiovisual.subscriptions.widget.js",
-                "~/Scripts/jquery.unobtrusive-ajax.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/reports.audiovisual.subscriptions.widget.js").Include(
-                "~/Assets/js/reports/reports.audiovisual.subscriptions.widget.js",
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.reports.projectssubmissions.widget.js").Include(
+                "~/Assets/js/audiovisual/reports/audiovisual.reports.projectssubmissions.widget.js",
                 "~/Scripts/jquery.unobtrusive-ajax.js"));
             
-            #endregion
-
             #endregion
 
             #region Meeting Parameters

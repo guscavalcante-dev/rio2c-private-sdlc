@@ -390,7 +390,7 @@
     <Compile Include="Areas\Audiovisual\Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\PresentationFormatsController.cs" />
     <Compile Include="Controllers\ParticipantRolesController.cs" />
-    <Compile Include="Controllers\ReportsController.cs" />
+    <Compile Include="Areas\Audiovisual\Controllers\ReportsController.cs" />
     <Compile Include="Controllers\PillarsController.cs" />
     <Compile Include="Controllers\SalesPlatformsController.cs" />
     <Compile Include="Controllers\CollaboratorsController.cs" />
@@ -912,7 +912,7 @@
     <Content Include="Assets\js\audiovisual\producers\audiovisual.producers.datatable.widget.js" />
     <Content Include="Assets\js\audiovisual\producers\audiovisual.producers.editioncount.widget.js" />
     <Content Include="Assets\js\audiovisual\producers\audiovisual.producers.totalcount.widget.js" />
-    <Content Include="Assets\js\reports\reports.audiovisual.subscriptions.widget.js" />
+    <Content Include="Assets\js\audiovisual\reports\audiovisual.reports.projectssubmissions.widget.js" />
     <Content Include="Assets\js\rooms\rooms.conferences.widget.js" />
     <Content Include="Assets\js\rooms\rooms.maininformation.widget.js" />
     <Content Include="Assets\js\conferences\conferences.tracksandformats.widget.js" />
@@ -8917,8 +8917,8 @@
     <Content Include="Views\ParticipantRoles\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Views\ParticipantRoles\Widgets\RelatedParticipantsWidget.cshtml" />
     <Content Include="Views\Speakers\Widgets\RelatedParticipantsWidget.cshtml" />
-    <Content Include="Views\Reports\Audiovisual\AudiovisualSubscriptions.cshtml" />
-    <Content Include="Views\Reports\Audiovisual\Widgets\AudiovisualSubscriptionsWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Reports\ProjectsSubmissions.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Reports\Widgets\ProjectsSubmissionsWidget.cshtml" />
     <Content Include="Views\Speakers\Modals\UpdateSocialNetworksModal.cshtml" />
     <Content Include="Views\LogisticSponsors\Widgets\DataTableWidget.cshtml" />
     <Content Include="Views\LogisticSponsors\Modals\CreateModal.cshtml" />
@@ -8953,8 +8953,6 @@
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\DataTableWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EditionCountWidget.cshtml" />
-    <Content Include="Views\Reports\Audiovisual\AudiovisualSubscriptions.cshtml" />
-    <Content Include="Views\Reports\Audiovisual\Widgets\AudiovisualSubscriptionsWidget.cshtml" />
     <Content Include="Views\Speakers\Modals\UpdateSocialNetworksModal.cshtml" />
     <Content Include="Views\Shared\Collaborators\Widgets\OnboardingInfoWidget.cshtml" />
     <Content Include="Views\AdminMailerService\MusicCommissionWelcomeEmail.cshtml" />

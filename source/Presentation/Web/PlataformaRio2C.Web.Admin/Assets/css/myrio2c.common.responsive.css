@@ -158,3 +158,16 @@
         width: 100% !important;
     }
 }
+
+
+/*
+    Specific media for edition dropdown
+*/
+@media (max-width: 1155px) and (min-width: 1025px) {
+    #kt_header_menu_wrapper {
+        margin-left: 10px;
+    }
+    .hide-edition-dropdown {
+        display: none;
+    }
+}

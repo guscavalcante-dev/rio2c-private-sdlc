@@ -4,7 +4,7 @@
 // Created          : 01-13-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-26-2021
+// Last Modified On : 07-02-2021
 // ***********************************************************************
 // <copyright file="ReportsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -30,12 +30,15 @@ using OfficeOpenXml.Style;
 using System.Drawing;
 using System.IO;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Web.Admin.Controllers;
 
-namespace PlataformaRio2C.Web.Admin.Controllers
+namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 {
-    /// <summary>ReportsController</summary>
+    /// <summary>
+    /// ReportsController
+    /// </summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CommissionAudiovisual)]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual)]
     public class ReportsController : BaseController
     {
         private readonly IProjectRepository projectRepo;
@@ -61,14 +64,16 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             this.targetAudienceRepo = targetAudienceRepository;
         }
 
-        #region Audiovisual Projects
+        #region Projects Submissions
 
         #region Listing
 
-        /// <summary>Audiovisuals the subscriptions.</summary>
+        /// <summary>
+        /// Projectses the submissions.
+        /// </summary>
         /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
-        public async Task<ActionResult> AudiovisualSubscriptions(ReportsAudiovisualSearchViewModel searchViewModel)
+        public async Task<ActionResult> ProjectsSubmissions(ReportsAudiovisualSearchViewModel searchViewModel)
         {
             #region Breadcrumb
 
@@ -81,16 +86,18 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             ViewBag.GenreInterests = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.Genre.Uid);
             ViewBag.TargetAudience = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id);
 
-            return View("Audiovisual/AudiovisualSubscriptions", searchViewModel);
+            return View(searchViewModel);
         }
 
-        /// <summary>Shows the audiovisual subscriptions widget.</summary>
+        /// <summary>
+        /// Shows the projects submissions widget.
+        /// </summary>
         /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> ShowAudiovisualSubscriptionsWidget(ReportsAudiovisualSearchViewModel searchViewModel)
+        public async Task<ActionResult> ShowProjectsSubmissionsWidget(ReportsAudiovisualSearchViewModel searchViewModel)
         {
-            var audiovisualProjectSubscriptionDtos = await this.projectRepo.FindAudiovisualSubscribedProjectsDtosByFilterAndByPageAsync(
+            var audiovisualProjectSubscriptionDtos = await this.projectRepo.FindAudiovisualProjectSubmissionDtosByFilterAndByPageAsync(
                 searchViewModel.Search,
                 searchViewModel.InterestUids.ToListGuid(','),
                 this.EditionDto.Id,
@@ -117,7 +124,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Audiovisual/Widgets/AudiovisualSubscriptionsWidget", audiovisualProjectSubscriptionDtos), divIdOrClass = "#ReportAudiovisualSubscriptionWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/ProjectsSubmissionsWidget", audiovisualProjectSubscriptionDtos), divIdOrClass = "#AudiovisualReportsProjectsSubmissionsWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
 
@@ -127,7 +134,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #region Export Excel
 
-        /// <summary>Generates the excel document asynchronous.</summary>
+        /// <summary>
+        /// Generates the projects submissions excel asynchronous.
+        /// </summary>
         /// <param name="search">The search.</param>
         /// <param name="interestUids">The interest uids.</param>
         /// <param name="isPitching">if set to <c>true</c> [is pitching].</param>
@@ -136,7 +145,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="endDate">The end date.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> GenerateExcelDocumentAsync(
+        public async Task<ActionResult> GenerateProjectsSubmissionsExcelAsync(
             string search,
             string interestUids,
             bool isPitching,
