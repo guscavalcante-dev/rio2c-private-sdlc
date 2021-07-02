@@ -24,6 +24,7 @@ using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
@@ -77,39 +78,37 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            var innovationOrganizationApiDto = cmd.InnovationOrganizationApiDto;
-
-            innovationOrganizationApiDto.CompanyExperiences = innovationOrganizationApiDto.CompanyExperiences.Select(ta =>
-                                                    new InnovationOptionsApiDto()
+            cmd.CompanyExperiences = cmd.CompanyExperiences.Select(ta =>
+                                                    new InnovationOptionApiDto()
                                                     {
-                                                        Id = ta.Id,
-                                                        InnovationOption = innovationOptionRepository.Get(ta.Id)
+                                                        Uid = ta.Uid,
+                                                        InnovationOption = innovationOptionRepository.Get(ta.Uid)
                                                     }).ToList();
 
-            innovationOrganizationApiDto.ProductsOrServices = innovationOrganizationApiDto.ProductsOrServices.Select(ta =>
-                                                    new InnovationOptionsApiDto()
+            cmd.ProductsOrServices = cmd.ProductsOrServices.Select(ta =>
+                                                    new InnovationOptionApiDto()
                                                     {
-                                                        Id = ta.Id,
-                                                        InnovationOption = innovationOptionRepository.Get(ta.Id)
+                                                        Uid = ta.Uid,
+                                                        InnovationOption = innovationOptionRepository.Get(ta.Uid)
                                                     }).ToList();
 
-            innovationOrganizationApiDto.TechnologyExperiences = innovationOrganizationApiDto.TechnologyExperiences.Select(ta =>
-                                                   new InnovationOptionsApiDto()
-                                                   {
-                                                       Id = ta.Id,
-                                                       InnovationOption = innovationOptionRepository.Get(ta.Id)
-                                                   }).ToList();
+            cmd.TechnologyExperiences = cmd.TechnologyExperiences.Select(ta =>
+                                                    new InnovationOptionApiDto()
+                                                    {
+                                                        Uid = ta.Uid,
+                                                        InnovationOption = innovationOptionRepository.Get(ta.Uid)
+                                                    }).ToList();
 
-            innovationOrganizationApiDto.CompanyObjectives = innovationOrganizationApiDto.CompanyObjectives.Select(ta =>
-                                                   new InnovationOptionsApiDto()
+            cmd.CompanyObjectives = cmd.CompanyObjectives.Select(ta =>
+                                                   new InnovationOptionApiDto()
                                                    {
-                                                       Id = ta.Id,
-                                                       InnovationOption = innovationOptionRepository.Get(ta.Id)
+                                                       Uid = ta.Uid,
+                                                       InnovationOption = innovationOptionRepository.Get(ta.Uid)
                                                    }).ToList();
 
             var edition = await editionRepository.FindByIdAsync(cmd.EditionId ?? 0);
 
-            var collaborator = await collaboratorRepository.FindByEmailAsync(innovationOrganizationApiDto.Email);
+            var collaborator = await collaboratorRepository.FindByEmailAsync(cmd.Email);
             if (collaborator == null)
             {
                 #region Creates new Collaborator and User
@@ -117,15 +116,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 var createCollaboratorCommand = new CreateTinyCollaborator();
 
                 createCollaboratorCommand.UpdateBaseProperties(
-                    innovationOrganizationApiDto.ResponsibleName,
+                    cmd.ResponsibleName,
                     null,
-                    innovationOrganizationApiDto.Email,
-                    innovationOrganizationApiDto.PhoneNumber,
-                    innovationOrganizationApiDto.CellPhone,
-                    innovationOrganizationApiDto.Document);
+                    cmd.Email,
+                    cmd.PhoneNumber,
+                    cmd.CellPhone,
+                    cmd.Document);
 
                 createCollaboratorCommand.UpdatePreSendProperties(
-                    "Music", //"Music" is fixed because in [dbo].[MigrateMusicProjects] procedure, its is fixed too!
+                    CollaboratorType.Innovation.Name,
                     cmd.UserId,
                     cmd.UserUid,
                     edition.Id,
@@ -144,26 +143,25 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             var innovationOrganization = new InnovationOrganization(
-               innovationOrganizationApiDto.Name,
-               innovationOrganizationApiDto.Document,
-               innovationOrganizationApiDto.ServiceName,
-               innovationOrganizationApiDto.FoundersNames,
-               innovationOrganizationApiDto.FoundationDate,
-               innovationOrganizationApiDto.AccumulatedRevenue,
-               innovationOrganizationApiDto.Description,
-               innovationOrganizationApiDto.Curriculum,
-               0, //TODO: WorkDedicationId vem de onde?
-               innovationOrganizationApiDto.BusinessDefinition,
-               innovationOrganizationApiDto.Website,
-               innovationOrganizationApiDto.BusinessFocus,
-               innovationOrganizationApiDto.MarketSize,
-               innovationOrganizationApiDto.BusinessEconomicModel,
-               innovationOrganizationApiDto.BusinessOperationalModel,
-               innovationOrganizationApiDto.BusinessDifferentials,
-               innovationOrganizationApiDto.CompetingCompanies,
-               innovationOrganizationApiDto.BusinessStage,
-               innovationOrganizationApiDto.PresentationUploadDate,
-                cmd.UserId);
+                   cmd.Name,
+                   cmd.Document,
+                   cmd.ServiceName,
+                   cmd.FoundersNames,
+                   cmd.FoundationDate,
+                   cmd.AccumulatedRevenue,
+                   cmd.Description,
+                   cmd.Curriculum,
+                   cmd.WorkDedicationId,
+                   cmd.BusinessDefinition,
+                   cmd.Website,
+                   cmd.BusinessFocus,
+                   cmd.MarketSize,
+                   cmd.BusinessEconomicModel,
+                   cmd.BusinessOperationalModel,
+                   cmd.BusinessDifferentials,
+                   cmd.CompetingCompanies,
+                   cmd.BusinessStage,
+                   cmd.UserId);
 
             if (!innovationOrganization.IsValid())
             {

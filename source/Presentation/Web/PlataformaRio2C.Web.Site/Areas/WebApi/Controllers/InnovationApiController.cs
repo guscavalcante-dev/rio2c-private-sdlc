@@ -38,10 +38,10 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
     {
         private readonly IMediator commandBus;
         private readonly IdentityAutenticationService identityController;
-        private readonly IEditionRepository editionsRepo;
-        private readonly IMusicBandTypeRepository musicBandTypesRepo;
-        private readonly IMusicGenreRepository musicGenresRepo;
-        private readonly ITargetAudienceRepository targetAudiencesRepo;
+        private readonly IEditionRepository editionRepository;
+        private readonly IWorkDedicationRepository workDedicationRepository;
+        private readonly IInnovationOptionRepository innovationOptionRepository;
+        private readonly IInnovationOptionGroupRepository innovationOptionGroupRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InnovationApiController"/> class.
@@ -50,19 +50,18 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         public InnovationApiController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
-            IEditionRepository editionsRepo,
-            IMusicBandTypeRepository musicBandTypesRepo,
-            IMusicGenreRepository musicGenresRepo,
-            ITargetAudienceRepository targetAudiencesRepo)
+            IEditionRepository editionRepo,
+            IWorkDedicationRepository workDedicationRepo,
+            IInnovationOptionRepository innovationOptionRepo,
+            IInnovationOptionGroupRepository innovationOptionGroupRepo)
         {
             this.commandBus = commandBus;
             this.identityController = identityController;
-            this.editionsRepo = editionsRepo;
-            this.musicBandTypesRepo = musicBandTypesRepo;
-            this.musicGenresRepo = musicGenresRepo;
-            this.targetAudiencesRepo = targetAudiencesRepo;
+            this.editionRepository = editionRepo;
+            this.workDedicationRepository = workDedicationRepo;
+            this.innovationOptionRepository = innovationOptionRepo;
+            this.innovationOptionGroupRepository = innovationOptionGroupRepo;
         }
-
 
         /// <summary>
         /// Creates the startup.
@@ -80,6 +79,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         public async Task<IHttpActionResult> CreateStartup(string key, HttpRequestMessage request)
         {
             var validationResult = new AppValidationResult();
+            var payload = new InnovationOrganizationApiDto().GenerateTestJson();
 
             try
             {
@@ -96,7 +96,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     throw new DomainException(Messages.UserNotFound);
                 }
 
-                var currentEdition = await editionsRepo.FindByIsCurrentAsync();
+                var currentEdition = await editionRepository.FindByIsCurrentAsync();
                 if (currentEdition == null)
                 {
                     throw new DomainException(Messages.CurrentEditionNotFound);
@@ -139,33 +139,33 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 return await Json(new { status = ApiStatus.Error, message = Messages.WeFoundAndError });
             }
 
-            return await Json(new { status = ApiStatus.Success, message = string.Format(Messages.EntityActionSuccessfull, Labels.MusicBand, Labels.CreatedF) });
+            return await Json(new { status = ApiStatus.Success, message = string.Format(Messages.EntityActionSuccessfull, Labels.Startup, Labels.CreatedF) });
         }
 
         /// <summary>
-        /// Gets the music band types.
+        /// Gets the work dedications.
         /// </summary>
         /// <param name="key">The key.</param>
-        /// <returns></returns>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         /// <exception cref="DomainException"></exception>
         [HttpGet]
-        [Route("GetMusicBandTypes")]
-        public async Task<IHttpActionResult> GetMusicBandTypes(string key)
+        [Route("GetWorkDedications/{key?}")]
+        public async Task<IHttpActionResult> GetWorkDedications(string key)
         {
             try
             {
-                if (key.ToLowerInvariant() != ConfigurationManager.AppSettings["CreateMusicBandApiKey"].ToLowerInvariant())
+                if (key.ToLowerInvariant() != ConfigurationManager.AppSettings["CreateStartupApiKey"].ToLowerInvariant())
                 {
                     throw new DomainException(Messages.AccessDenied);
                 }
 
-                var musicBandTypes = await this.musicBandTypesRepo.FindAllAsync();
+                var workDedications = await this.workDedicationRepository.FindAllAsync();
 
-                return await Json(new MusicBandTypesApiResponse
+                return await Json(new WorkDedicationsApiResponse
                 {
-                    MusicBandTypes = musicBandTypes.OrderBy(o => o.DisplayOrder).Select(mbt => new MusicBandTypeListApiItem()
+                    WorkDedications = workDedications.Select(mbt => new BaseListItemApiResponse()
                     {
-                        Id = mbt.Id,
+                        Uid = mbt.Uid,
                         Name = mbt.Name
                     })?.ToList(),
                     Status = ApiStatus.Success
@@ -183,30 +183,30 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         }
 
         /// <summary>
-        /// Gets the music genres.
+        /// Gets the innovation option groups.
         /// </summary>
         /// <param name="key">The key.</param>
-        /// <returns></returns>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         /// <exception cref="DomainException"></exception>
         [HttpGet]
-        [Route("GetMusicGenres")]
-        public async Task<IHttpActionResult> GetMusicGenres(string key)
+        [Route("GetInnovationOptionGroups/{key?}")]
+        public async Task<IHttpActionResult> GetInnovationOptionGroups(string key)
         {
             try
             {
-                if (key.ToLowerInvariant() != ConfigurationManager.AppSettings["CreateMusicBandApiKey"].ToLowerInvariant())
+                if (key.ToLowerInvariant() != ConfigurationManager.AppSettings["CreateStartupApiKey"].ToLowerInvariant())
                 {
                     throw new DomainException(Messages.AccessDenied);
                 }
 
-                var musicGenres = await this.musicGenresRepo.FindAllAsync();
+                var innovationOptionGroups = await this.innovationOptionGroupRepository.FindAllAsync();
 
-                return await Json(new MusicGenresApiResponse
+                return await Json(new InnovationOptionGroupsApiResponse
                 {
-                    MusicGenres = musicGenres.OrderBy(o => o.DisplayOrder).Select(mg => new MusicGenreListApiItem()
+                    InnovationOptionGroups = innovationOptionGroups.Select(mbt => new BaseListItemApiResponse()
                     {
-                        Id = mg.Id,
-                        Name = mg.Name
+                        Uid = mbt.Uid,
+                        Name = mbt.Name
                     })?.ToList(),
                     Status = ApiStatus.Success
                 });
@@ -223,31 +223,38 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         }
 
         /// <summary>
-        /// Gets the target audiences.
+        /// Gets the innovation options.
         /// </summary>
         /// <param name="key">The key.</param>
-        /// <returns></returns>
+        /// <param name="innovationOptionGroupUid">The innovation option group uid.</param>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         /// <exception cref="DomainException"></exception>
         [HttpGet]
-        [Route("GetTargetAudiences")]
-        public async Task<IHttpActionResult> GetTargetAudiences(string key)
+        [Route("GetInnovationOptions/{key?}/{innovationOptionGroupUid?}")]
+        public async Task<IHttpActionResult> GetInnovationOptions(string key, Guid? innovationOptionGroupUid)
         {
             try
             {
-                if (key.ToLowerInvariant() != ConfigurationManager.AppSettings["CreateMusicBandApiKey"].ToLowerInvariant())
+                if (key.ToLowerInvariant() != ConfigurationManager.AppSettings["CreateStartupApiKey"].ToLowerInvariant())
                 {
                     throw new DomainException(Messages.AccessDenied);
                 }
 
-                //Using "ProjectType.Inovation" because in "[dbo].[MigrateMusicProjects]" procedure, its fixed too.
-                var targetAudiences = await this.targetAudiencesRepo.FindAllByProjectTypeIdAsync(ProjectType.Inovation.Id);
+                var innovationOptionGroup = await this.innovationOptionGroupRepository.FindByUidAsync(innovationOptionGroupUid ?? Guid.Empty);
 
-                return await Json(new TargetAudiencesApiResponse
+                if (innovationOptionGroup == null)
                 {
-                    TargetAudiences = targetAudiences.OrderBy(o => o.DisplayOrder).Select(ta => new TargetAudienceListApiItem()
+                    //throw NotFiniteNumberException found exception
+                }
+
+                var innovationOptions = await this.innovationOptionRepository.FindAllByGroupUidAsync(innovationOptionGroup.Id);
+
+                return await Json(new InnovationOptionsApiResponse
+                {
+                    InnovationOptions = innovationOptions.Select(mbt => new BaseListItemApiResponse()
                     {
-                        Id = ta.Id,
-                        Name = ta.Name
+                        Uid = mbt.Uid,
+                        Name = mbt.Name
                     })?.ToList(),
                     Status = ApiStatus.Success
                 });
@@ -261,6 +268,6 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 return await Json(new { status = ApiStatus.Error, message = Messages.WeFoundAndError });
             }
-        }
+        }       
     }
 }

@@ -13,6 +13,7 @@
 // ***********************************************************************
 using Newtonsoft.Json;
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
 
@@ -24,101 +25,125 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonIgnore]
         public ValidationResult ValidationResult { get; set; }
 
+        #region Required
+
         [JsonRequired]
-        [JsonProperty(PropertyName = "name", Order = 200)]
+        [JsonProperty("name")]
         public string Name { get; set; }
 
         [JsonRequired]
-        [JsonProperty(PropertyName = "document", Order = 300)]
+        [JsonProperty("document")]
         public string Document { get; set; }
 
         [JsonRequired]
-        [JsonProperty(PropertyName = "serviceName", Order = 400)]
+        [JsonProperty("serviceName")]
         public string ServiceName { get; set; }
 
         [JsonRequired]
-        [JsonProperty(PropertyName = "foundersNames", Order = 500)]
-        public string FoundersNames { get; set; }
+        [JsonProperty("agentName")]
+        public string ResponsibleName { get; set; }
 
         [JsonRequired]
-        [JsonProperty(PropertyName = "agentName", Order = 500)]
-        public string ResponsibleName { get; set; } //TODO: Nome do Representante?
-
-        [JsonRequired]
-        [JsonProperty(PropertyName = "email", Order = 500)]
+        [JsonProperty("email")]
         public string Email { get; set; }
 
         [JsonRequired]
-        [JsonProperty(PropertyName = "phoneNumber", Order = 500)]
+        [JsonProperty("phoneNumber")]
         public string PhoneNumber { get; set; }
 
         [JsonRequired]
-        [JsonProperty(PropertyName = "cellPhone", Order = 500)]
+        [JsonProperty("cellPhone")]
         public string CellPhone { get; set; }
 
         [JsonRequired]
-        [JsonProperty(PropertyName = "foundationDate", Order = 600)]
+        [JsonProperty("foundationDate")]
         public DateTime FoundationDate { get; set; }
 
         [JsonRequired]
-        [JsonProperty(PropertyName = "accumulatedRevenue", Order = 700)]
+        [JsonProperty("accumulatedRevenue")]
         public decimal AccumulatedRevenue { get; set; }
 
         [JsonRequired]
-        [JsonProperty(PropertyName = "description", Order = 800)]
+        [JsonProperty("description")]
         public string Description { get; set; }
 
         [JsonRequired]
-        [JsonProperty(PropertyName = "curriculum", Order = 900)]
+        [JsonProperty("curriculum")]
         public string Curriculum { get; set; }
 
         [JsonRequired]
-        [JsonProperty(PropertyName = "businessDefinition", Order = 900)]
+        [JsonProperty("businessDefinition")]
         public string BusinessDefinition { get; set; }
 
         [JsonRequired]
-        [JsonProperty(PropertyName = "businessFocus", Order = 900)]
+        [JsonProperty("businessFocus")]
         public string BusinessFocus { get; set; }
 
         [JsonRequired]
-        [JsonProperty(PropertyName = "businessDifferentials", Order = 900)]
+        [JsonProperty("businessDifferentials")]
         public string BusinessDifferentials { get; set; }
 
         [JsonRequired]
-        [JsonProperty(PropertyName = "competingCompanies", Order = 900)]
-        public string CompetingCompanies { get; set; }
+        [JsonProperty("workDedication")]
+        public int WorkDedicationId { get; set; }
 
         [JsonRequired]
-        [JsonProperty(PropertyName = "businessStage", Order = 900)]
+        [JsonProperty("businessStage")]
         public string BusinessStage { get; set; }
 
+        [JsonRequired]
+        [JsonProperty("presentationFile")]
+        public string PresentationFile { get; set; }
 
+        [JsonRequired]
+        [JsonProperty("presentationFileName")]
+        public string PresentationFileName { get; set; }
 
-        [JsonProperty(PropertyName = "website", Order = 900)]
+        #endregion
+
+        #region Not required
+
+        [JsonProperty("website")]
         public string Website { get; set; }
 
-        [JsonProperty(PropertyName = "marketSize", Order = 900)]
+        [JsonProperty("marketSize")]
         public string MarketSize { get; set; }
 
-        [JsonProperty(PropertyName = "businessEconomicModel", Order = 900)]
+        [JsonProperty("businessEconomicModel")]
         public string BusinessEconomicModel { get; set; }
 
-        [JsonProperty(PropertyName = "businessOperationalModel", Order = 900)]
+        [JsonProperty("businessOperationalModel")]
         public string BusinessOperationalModel { get; set; }
 
-        [JsonProperty(PropertyName = "presentationUploadDate", Order = 900)]
-        public DateTime PresentationUploadDate { get; set; }
+        #endregion
 
+        #region Lists
 
+        [JsonRequired]
+        [JsonProperty("foundersNames")]
+        public List<string> FoundersNames { get; set; }
 
         [JsonRequired]
-        public List<InnovationOptionsApiDto> CompanyExperiences { get; set; }
+        [JsonProperty("competingCompanies")]
+        public List<string> CompetingCompanies { get; set; }
+
         [JsonRequired]
-        public List<InnovationOptionsApiDto> ProductsOrServices { get; set; }
+        [JsonProperty("companyExperiences")]
+        public List<InnovationOptionApiDto> CompanyExperiences { get; set; }
+
         [JsonRequired]
-        public List<InnovationOptionsApiDto> TechnologyExperiences { get; set; }
+        [JsonProperty("productsOrServices")]
+        public List<InnovationOptionApiDto> ProductsOrServices { get; set; }
+
         [JsonRequired]
-        public List<InnovationOptionsApiDto> CompanyObjectives { get; set; }
+        [JsonProperty("technologyExperiences")]
+        public List<InnovationOptionApiDto> TechnologyExperiences { get; set; }
+
+        [JsonRequired]
+        [JsonProperty("companyObjectives")]
+        public List<InnovationOptionApiDto> CompanyObjectives { get; set; }
+
+        #endregion
 
         /// <summary>Initializes a new instance of the <see cref="InnovationOrganizationApiDto"/> class.</summary>
         public InnovationOrganizationApiDto()
@@ -134,20 +159,25 @@ namespace PlataformaRio2C.Domain.Dtos
         {
             this.ValidationResult = new ValidationResult();
 
-            this.ValidadeResponsible();
+            this.ValidateCompetingCompanies();
 
             return this.ValidationResult.IsValid;
         }
 
         /// <summary>
-        /// Validades the responsible.
+        /// Validates the competing companies.
         /// </summary>
-        /// <returns></returns>
-        private void ValidadeResponsible()
+        private void ValidateCompetingCompanies()
         {
+            if(this.CompetingCompanies.Count > 3)
+            {
+                //this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Edition), new string[] { "EditionId" }));
+            }
         }
 
         #endregion
+
+        #region Payload test
 
         /// <summary>
         /// Generates the test json.
@@ -155,97 +185,86 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns></returns>
         public string GenerateTestJson()
         {
-            //this.MusicBandTypeId = 2;
-            //this.Name = "My definitive band";
-            //this.ImageUrl = "https://png.pngtree.com/element_our/png/20180804/rock-group-music-band-png_52911.jpg";
-            //this.FormationDate = "2021";
-            //this.MainMusicInfluences = "Rock;Metal;Heavy Metal";
-            //this.Facebook = "facebook.com";
-            //this.Instagram = "instagram.com";
-            //this.Twitter = "twitter.com";
-            //this.Youtube = "youtube.com";
+            this.Name = "ACME Toasters LTDA";
+            this.Document = "49.587.570/0001-19";
+            this.ServiceName = "ACME toaster machine 3000";
 
-            //this.MusicProjectApiDto = new MusicProjectApiDto()
-            //{
-            //    VideoUrl = "youtube.com",
-            //    Music1Url = "music1Url.com",
-            //    Music2Url = "music2Url.com",
-            //    Clipping1 = "clipping1.com",
-            //    Clipping2 = "clipping2.com",
-            //    Clipping3 = "clipping3.com",
-            //    Release = "My definitive band has been formed at 2021."
-            //};
+            this.ResponsibleName = "Sylvester Stallone";
+            this.Email = "acmetoasters3000@gmail.com";
+            this.PhoneNumber = "1437319489";
+            this.CellPhone = "14998269754";
+            this.FoundationDate = DateTime.Today;
+            this.AccumulatedRevenue = 7000;
+            this.Description = "My Employee (max 600 chars)";
+            this.Curriculum = "My Curriculum (max 710 chars)";
+            this.BusinessDefinition = "My Business definition";
+            this.BusinessFocus = "My Business focus";
+            this.BusinessDifferentials = "My Business differentials";
+            
+            this.BusinessStage = "Business stage";
+            this.Website = "www.site.com.br";
+            this.MarketSize = "Market size";
+            this.BusinessEconomicModel = "My Business economic model";
+            this.BusinessOperationalModel = "My Business operational model";
 
-            //this.MusicBandResponsibleApiDto = new MusicBandResponsibleApiDto()
-            //{
-            //    Name = "Ozzy Osbourne",
-            //    Document = "56.998.566/0001-09",
-            //    Email = "email@email.com",
-            //    PhoneNumber = "+55 14 99999-9999",
-            //    CellPhone = "+55 11 88888-8888"
-            //};
+            this.PresentationFile = "PresentationFileBase64";
+            this.PresentationFileName = "PresentationFileName.pdf";
+            this.WorkDedicationId = 2; //Integral
 
-            //this.MusicBandMembersApiDtos = new List<MusicBandMemberApiDto>()
-            //{
-            //    new MusicBandMemberApiDto()
-            //    {
-            //        Name = "Glenn Danzig",
-            //        MusicInstrumentName = "Vocal"
-            //    },
-            //    new MusicBandMemberApiDto()
-            //    {
-            //        Name = "Jimmy Hendrix",
-            //        MusicInstrumentName = "Guitarra"
-            //    },
-            //    new MusicBandMemberApiDto()
-            //    {
-            //        Name = "Joey Jordison",
-            //        MusicInstrumentName = "Bateria"
-            //    }
-            //};
+            this.CompetingCompanies = new List<string>()
+            {
+                "Skynet",
+                "SpaceX",
+                "Cambridge Analytica"
+            };
+            this.FoundersNames = new List<string>()
+            {
+                "George Foreman",
+                "Erick Jacquin"
+            };
+            this.CompanyExperiences = new List<InnovationOptionApiDto>()
+            {
+                new InnovationOptionApiDto(){ Uid = new Guid("82167C1D-7CA6-447F-80C7-AE9188ADD436") },
+                new InnovationOptionApiDto(){ Uid = new Guid("29B2CC2F-374D-4F2F-AC00-3513D02EC9C3") },
+                new InnovationOptionApiDto(){ Uid = new Guid("2FD9F6BA-8852-4DD5-A402-DCD2C14923CB") },
+                new InnovationOptionApiDto(){ Uid = new Guid("60079B3B-A5D9-4E59-A964-725339AFBE7F") },
+                new InnovationOptionApiDto(){ Uid = new Guid("4F440536-BAB7-4E43-A3A4-F977ABAFBDA8") },
 
-            //this.MusicBandTeamMembersApiDtos = new List<MusicBandTeamMemberApiDto>()
-            //{
-            //    new MusicBandTeamMemberApiDto()
-            //    {
-            //        Name = "Calango Tour",
-            //        Role = "Motorista"
-            //    },
-            //    new MusicBandTeamMemberApiDto()
-            //    {
-            //        Name = "Fakir Pawlovsky",
-            //        Role = "Intervenção Artística"
-            //    }
-            //};
+            };
+            this.ProductsOrServices = new List<InnovationOptionApiDto>()
+            {
+                new InnovationOptionApiDto(){ Uid = new Guid("702A9B2E-DBCB-4BB0-8405-C5BD72EAF627") },
+                new InnovationOptionApiDto(){ Uid = new Guid("0B1BD552-AD36-4A4D-A55D-D7B07EB6E4E0") },
+                new InnovationOptionApiDto(){ Uid = new Guid("FB997A1A-CBF0-446B-82FF-FF7B5EAA21BF") },
+                new InnovationOptionApiDto(){ Uid = new Guid("1646A4D0-F43A-4633-9730-3F8893A627CE") },
+                new InnovationOptionApiDto(){ Uid = new Guid("A7EEDEF9-88B9-4EF4-A6EA-32EA5DB28598") },
+                new InnovationOptionApiDto(){ Uid = new Guid("B05FDB02-F880-49D0-818D-65BA716EC0B8") },
+                new InnovationOptionApiDto(){ Uid = new Guid("DE7F9C0A-1AA4-4F7D-985D-2D56D229B3B5") },
+            };
+            this.TechnologyExperiences = new List<InnovationOptionApiDto>()
+            {
+                new InnovationOptionApiDto(){ Uid = new Guid("0EE805CD-7E63-47DE-8034-C405DC5E1DA3") },
+                new InnovationOptionApiDto(){ Uid = new Guid("6932AC40-E16D-4858-B550-1B4CD2F9461D") },
+                new InnovationOptionApiDto(){ Uid = new Guid("516E3187-CE60-4541-9F46-AC41F29EA0EB") },
+                new InnovationOptionApiDto(){ Uid = new Guid("9B3EFFFC-B4F9-4E65-B679-69EEE581DCC2") },
+                new InnovationOptionApiDto(){ Uid = new Guid("3663D8A3-DF1D-4A41-A3EF-13CF2602FA9D") },
+                new InnovationOptionApiDto(){ Uid = new Guid("F5B4623D-F4F9-4440-B575-140C273C41D2") },
+            };
+            this.CompanyObjectives = new List<InnovationOptionApiDto>()
+            {
+                new InnovationOptionApiDto(){ Uid = new Guid("9ECEFE6D-EA9A-4DCE-88A0-5B720E02EAE0") },
+                new InnovationOptionApiDto(){ Uid = new Guid("0A0EA283-D9CB-4BCE-87B9-5582C57B6E42") },
+                new InnovationOptionApiDto(){ Uid = new Guid("0D2684E1-4A8A-4088-8547-6AC274EB1EE4") },
+                new InnovationOptionApiDto(){ Uid = new Guid("064371D0-864F-4B79-B709-221F73B0D35D") },
+                new InnovationOptionApiDto(){ Uid = new Guid("38A07682-8BD4-4EDE-8BE2-1593BAD8E0B7") },
+                new InnovationOptionApiDto(){ Uid = new Guid("5F872B5B-DA41-43E6-ABE7-CEF7E6BC0CE6") },
+                new InnovationOptionApiDto(){ Uid = new Guid("1A144DB0-DBF2-4ECC-A4C0-267CEA374FAA") },
+                new InnovationOptionApiDto(){ Uid = new Guid("5F62C762-01C0-4F55-A89D-D1E5690817F6") },
+            };
 
-            //this.ReleasedMusicProjectsApiDtos = new List<ReleasedMusicProjectApiDto>()
-            //{
-            //    new ReleasedMusicProjectApiDto()
-            //    {
-            //        Name = "Só modão vol. 1",
-            //        Year = "2021"
-            //    },
-            //    new ReleasedMusicProjectApiDto()
-            //    {
-            //        Name = "Só modão do heavy metal vol. 666",
-            //        Year = "2021"
-            //    }
-            //};
-
-            //this.MusicGenresApiDtos = new List<MusicGenreApiDto>()
-            //{
-            //    new MusicGenreApiDto() { Id = 19 },
-            //    new MusicGenreApiDto() { Id = 20 }
-            //};
-
-            //this.TargetAudiencesApiDtos = new List<TargetAudienceApiDto>()
-            //{
-            //    new TargetAudienceApiDto() { Id = 6 },
-            //    new TargetAudienceApiDto() { Id = 7 }
-            //};
-
-            //return Newtonsoft.Json.JsonConvert.SerializeObject(this);
-            return "";
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
         }
+
+        #endregion
     }
 }

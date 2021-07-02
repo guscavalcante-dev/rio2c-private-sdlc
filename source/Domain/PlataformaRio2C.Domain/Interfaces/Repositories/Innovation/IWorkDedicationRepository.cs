@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Domain
 // Author           : Renan Valentim
-// Created          : 06-29-2021
+// Created          : 07-01-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 06-29-2021
+// Last Modified On : 07-01-2021
 // ***********************************************************************
-// <copyright file="IInnovationOrganizationRepository.cs" company="Softo">
+// <copyright file="IWorkDedicationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -20,12 +20,13 @@ using X.PagedList;
 
 namespace PlataformaRio2C.Domain.Interfaces
 {
-    /// <summary>IInnovationOrganizationRepository</summary>
-    public interface IInnovationOrganizationRepository : IRepository<InnovationOrganization>
+    /// <summary>IWorkDedicationRepository</summary>
+    public interface IWorkDedicationRepository : IRepository<WorkDedication>
     {
-        Task<InnovationOrganization> FindByIdAsync(int innovationOrganizationId);
-        Task<InnovationOrganization> FindByUidAsync(Guid innovationOrganizationUid);
-        Task<List<InnovationOrganization>> FindAllByIdsAsync(List<int?> innovationOrganizationIds);
-        Task<List<InnovationOrganization>> FindAllByUidsAsync(List<Guid?> innovationOrganizationUids);
+        Task<WorkDedication> FindByIdAsync(int innovationOptionId);
+        Task<WorkDedication> FindByUidAsync(Guid innovationOptionUid);
+        Task<List<WorkDedication>> FindAllAsync();
+        Task<List<WorkDedication>> FindAllByIdsAsync(List<int?> innovationOptionIds);
+        Task<List<WorkDedication>> FindAllByUidsAsync(List<Guid?> innovationOptionUids);
     }
 }

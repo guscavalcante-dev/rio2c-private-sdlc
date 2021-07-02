@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Renan Valentim
-// Created          : 06-29-2021
+// Created          : 07-01-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 06-29-2021
+// Last Modified On : 07-01-2021
 // ***********************************************************************
-// <copyright file="InnovationOptionsApiDto.cs" company="Softo">
+// <copyright file="InnovationOptionGroupApiDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -18,17 +18,18 @@ using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
-    /// <summary>InnovationOptionsApiDto</summary>
-    public class InnovationOptionsApiDto
+    /// <summary>InnovationOptionGroupApiDto</summary>
+    public class InnovationOptionGroupApiDto
     {
         [JsonRequired]
-        public int Id { get; set; }
+        [JsonProperty("Uid")]
+        public Guid Uid { get; set; }
 
         [JsonIgnore]
-        public InnovationOption InnovationOption { get; set; }
+        public InnovationOptionGroup InnovationOptionGroup { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="InnovationOptionsApiDto"/> class.</summary>
-        public InnovationOptionsApiDto()
+        /// <summary>Initializes a new instance of the <see cref="InnovationOptionGroupApiDto"/> class.</summary>
+        public InnovationOptionGroupApiDto()
         {
         }
     }

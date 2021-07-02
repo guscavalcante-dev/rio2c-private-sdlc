@@ -25,5 +25,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     {
         Task<InnovationOrganizationOption> FindByIdAsync(int innovationOrganizationOptionId);
         Task<InnovationOrganizationOption> FindByUidAsync(Guid innovationOrganizationOptionUid);
+        Task<List<InnovationOrganizationOption>> FindAllByIdsAsync(List<int?> innovationOrganizationOptionIds);
+        Task<List<InnovationOrganizationOption>> FindAllByUidsAsync(List<Guid?> innovationOrganizationOptionUids);
     }
 }

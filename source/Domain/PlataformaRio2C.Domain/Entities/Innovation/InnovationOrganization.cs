@@ -95,7 +95,6 @@ namespace PlataformaRio2C.Domain.Entities
             string businessDifferentials,
             string competingCompanies,
             string businessStage,
-            DateTimeOffset? presentationUploadDate,
             int userId)
         {
             this.Name = name;
@@ -116,7 +115,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.BusinessDifferentials = businessDifferentials;
             this.CompetingCompanies = competingCompanies;
             this.BusinessStage = businessStage;
-            this.PresentationUploadDate = presentationUploadDate;
+            this.PresentationUploadDate = null; //TODO: Save "DateTime.Now()" when "InnovationOrganizationApiDto.PresentationFile" has value!
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
@@ -132,7 +131,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <exception cref="NotImplementedException"></exception>
         public override bool IsValid()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         #endregion
