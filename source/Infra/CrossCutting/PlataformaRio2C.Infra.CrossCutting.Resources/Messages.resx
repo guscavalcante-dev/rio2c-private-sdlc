@@ -991,6 +991,10 @@
     <value>Fora do período de avaliação.</value>
     <comment>Fora do período de avaliação.</comment>
   </data>
+  <data name="EvaluationPeriodOpen" xml:space="preserve">
+    <value>Período de avaliação aberto.</value>
+    <comment>Período de avaliação aberto.</comment>
+  </data>
   <data name="NotEvaluated" xml:space="preserve">
     <value>Não avaliado.</value>
     <comment>Não avaliado.</comment>

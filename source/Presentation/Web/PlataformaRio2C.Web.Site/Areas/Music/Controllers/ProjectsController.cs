@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-02-2020
+// Last Modified On : 07-04-2021
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,7 +20,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
@@ -204,6 +203,62 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         #region Evaluation Details
 
         /// <summary>
+        /// Evaluations the details.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="musicGenreUid">The music genre uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<ActionResult> EvaluationDetails(int? id, string searchKeywords = null, Guid? musicGenreUid = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 12)
+        {
+            if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
+            {
+                this.StatusMessageToastr(Messages.OutOfEvaluationPeriod, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Projects", new { Area = "Music" });
+            }
+
+            var musicProjectDto = await this.musicProjectRepo.FindDtoToEvaluateAsync(id ?? 0);
+            if (musicProjectDto == null)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("EvaluationList", "Projects", new { Area = "Music" });
+            }
+
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.PitchingShow, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("EvaluationList", "Projects", new { Area = "Music" })),
+                new BreadcrumbItemHelper(musicProjectDto.AttendeeMusicBandDto?.MusicBand?.Name ?? Labels.Project, Url.Action("EvaluationDetails", "Projects", new { Area = "Music", id }))
+            });
+
+            #endregion
+
+            var allMusicProjectsIds = await this.musicProjectRepo.FindAllMusicProjectsIdsPagedAsync(
+                this.EditionDto.Edition.Id,
+                searchKeywords,
+                musicGenreUid,
+                evaluationStatusUid,
+                page.Value,
+                pageSize.Value);
+            var currentMusicProjectIdIndex = Array.IndexOf(allMusicProjectsIds, id.Value) + 1; //Index start at 0, its a fix to "start at 1"
+
+            ViewBag.SearchKeywords = searchKeywords;
+            ViewBag.MusicGenreUid = musicGenreUid;
+            ViewBag.EvaluationStatusUid = evaluationStatusUid;
+            ViewBag.Page = page;
+            ViewBag.PageSize = pageSize;
+            ViewBag.CurrentMusicProjectIndex = currentMusicProjectIdIndex;
+
+            ViewBag.MusicProjectsTotalCount = await this.musicProjectRepo.CountPagedAsync(this.EditionDto.Edition.Id, searchKeywords, musicGenreUid, evaluationStatusUid, page.Value, pageSize.Value);
+            ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id);
+
+            return View(musicProjectDto);
+        }
+
+        /// <summary>
         /// Previouses the evaluation details.
         /// </summary>
         /// <param name="id">The identifier.</param>
@@ -275,62 +330,6 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                     page, 
                     pageSize
                 });
-        }
-
-        /// <summary>
-        /// Evaluations the details.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <param name="step">
-        /// This parameter is responsible by next and previous pagination in EvaluationDetails.cshtml.
-        /// Pass any value > 0 to step next.
-        /// Pass any value < 0 to step previous.
-        /// Pass 0 to dont execute any step. (default)</param>
-        /// <returns></returns>
-        /// [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
-        public async Task<ActionResult> EvaluationDetails(int? id, string searchKeywords = null, Guid? musicGenreUid = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 12)
-        {
-            if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
-            {
-                return RedirectToAction("Index", "Projects", new { Area = "Music" });
-            }
-
-            var musicProjectDto = await this.musicProjectRepo.FindDtoToEvaluateAsync(id ?? 0);
-            if (musicProjectDto == null)
-            {
-                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("EvaluationList", "Projects", new { Area = "Music" });
-            }
-
-            #region Breadcrumb
-
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.PitchingShow, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("EvaluationList", "Projects", new { Area = "Music" })),
-                new BreadcrumbItemHelper(musicProjectDto.AttendeeMusicBandDto?.MusicBand?.Name ?? Labels.Project, Url.Action("EvaluationDetails", "Projects", new { Area = "Music", id }))
-            });
-
-            #endregion
-
-            var allMusicProjectsIds = await this.musicProjectRepo.FindAllMusicProjectsIdsPagedAsync(
-                this.EditionDto.Edition.Id,
-                searchKeywords,
-                musicGenreUid,
-                evaluationStatusUid,
-                page.Value,
-                pageSize.Value);
-            var currentMusicProjectIdIndex = Array.IndexOf(allMusicProjectsIds, id.Value) + 1; //Index start at 0, its a fix to "start at 1"
-
-            ViewBag.SearchKeywords = searchKeywords;
-            ViewBag.MusicGenreUid = musicGenreUid;
-            ViewBag.EvaluationStatusUid = evaluationStatusUid;
-            ViewBag.Page = page;
-            ViewBag.PageSize = pageSize;
-            ViewBag.CurrentMusicProjectIndex = currentMusicProjectIdIndex;
-
-            ViewBag.MusicProjectsTotalCount = await this.musicProjectRepo.CountPagedAsync(this.EditionDto.Edition.Id, searchKeywords, musicGenreUid, evaluationStatusUid, page.Value, pageSize.Value);
-            ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id);
-
-            return View(musicProjectDto);
         }
 
         #endregion
@@ -840,13 +839,21 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        /// <summary>Accepts the specified project evaluation.</summary>
-        /// <param name="cmd">The command.</param>
+        /// <summary>
+        /// Evaluates the specified music band identifier.
+        /// </summary>
+        /// <param name="musicBandId">The music band identifier.</param>
+        /// <param name="grade">The grade.</param>
         /// <returns></returns>
         [HttpPost]
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
         public async Task<ActionResult> Evaluate(int musicBandId, decimal? grade)
         {
+            if (this.EditionDto?.IsMusicProjectEvaluationOpen() != true)
+            {
+                return Json(new { status = "error", message = Messages.OutOfEvaluationPeriod }, JsonRequestBehavior.AllowGet);
+            }
+
             var result = new AppValidationResult();
 
             try

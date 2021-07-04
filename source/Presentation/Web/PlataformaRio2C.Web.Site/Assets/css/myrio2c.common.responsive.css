@@ -192,3 +192,18 @@
         display: none;
     }
 }
+
+/*
+    Specific media for evaluation at main information widget 
+*/
+@media (min-width: 1226px) {
+    .myrio2c-evaluation-position {
+        flex-direction: row-reverse !important;
+    }
+}
+
+@media (max-width: 1225px) {
+    .myrio2c-evaluation-position {
+        flex-direction: row !important;
+    }
+}

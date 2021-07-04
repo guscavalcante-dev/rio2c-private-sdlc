@@ -753,6 +753,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Período de avaliação aberto..
+        /// </summary>
+        public static string EvaluationPeriodOpen {
+            get {
+                return ResourceManager.GetString("EvaluationPeriodOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Avaliação salva com sucesso!.
         /// </summary>
         public static string EvaluationSavesSuccessfully {
