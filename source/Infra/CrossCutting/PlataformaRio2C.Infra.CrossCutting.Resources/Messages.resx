@@ -987,4 +987,8 @@
     <value>Não existem rodadas de negócio agendadas para impressão</value>
     <comment>Não existem rodadas de negócio agendadas para impressão</comment>
   </data>
+  <data name="OutOfEvaluationPeriod" xml:space="preserve">
+    <value>Fora do período de avaliação.</value>
+    <comment>Fora do período de avaliação.</comment>
+  </data>
 </root>

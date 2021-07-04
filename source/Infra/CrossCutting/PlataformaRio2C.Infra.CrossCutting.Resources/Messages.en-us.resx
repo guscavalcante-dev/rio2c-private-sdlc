@@ -982,4 +982,8 @@
     <value>There are no business rounds scheduled for printing</value>
     <comment>Não existem rodadas de negócio agendadas para impressão</comment>
   </data>
+  <data name="OutOfEvaluationPeriod" xml:space="preserve">
+    <value>Out of the evaluation period.</value>
+    <comment>Fora do período de avaliação.</comment>
+  </data>
 </root>
