@@ -394,15 +394,14 @@ table.dataTable tbody tr.selected {
     MyRio2C Alert Box
 */
 .myrio2c-alert-box-danger {
-    width: 260px;
-    height: 65px;
+    max-width: 260px;
     left: 473px;
     top: 736px;
     background: rgba(253, 57, 122, 0.03);
     border: 1px solid #FD397A;
     box-sizing: border-box;
     border-radius: 4px;
-    padding-top: 20px;
+    padding: 20px 10px;
 }
 .myrio2c-alert-box-danger span {
     font-size: 15px;
@@ -416,6 +415,8 @@ table.dataTable tbody tr.selected {
 */
 .myrio2c-evaluation-grade-box-sm {
     background: #FDFDFE !important;
+    border-radius: 4px;
+    border: 1px solid #EBEDF2 !important;
 }
     .myrio2c-evaluation-grade-box-sm .grade-label {
         font-size: 15px;
@@ -429,6 +430,8 @@ table.dataTable tbody tr.selected {
     background: #FDFDFE !important;
     height: 65px !important;
     padding: 20px !important;
+    border-radius: 4px;
+    border: 1px solid #EBEDF2 !important;
 }
     .myrio2c-evaluation-grade-box-lg .grade-label {
         font-size: 15px;
@@ -440,6 +443,7 @@ table.dataTable tbody tr.selected {
 
 .myrio2c-evaluation-grade-box-form {
     background: #FDFDFE !important;
-    border: 1px solid #EBEDF2;
+    border: 1px solid #EBEDF2 !important;
     min-height: 65px !important;
+    border-radius: 4px;
 }

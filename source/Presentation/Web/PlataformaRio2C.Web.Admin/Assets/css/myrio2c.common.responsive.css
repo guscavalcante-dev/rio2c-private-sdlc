@@ -25,8 +25,6 @@
 }
 
 /* Extra large devices (large desktops, 1200px and up)*/
-@media (min-width: 1200px) {
-}
 
 @media (max-width: 1200px) {
     .kt-footer__top .redes a {
@@ -75,6 +73,10 @@
 /*
     Bootstrap sizes
 */
+
+/* Extra Large (xl) */
+@media (min-width: 1200px) {
+}
 
 /* Large (lg) */
 @media (max-width: 1199px) {
@@ -169,5 +171,20 @@
     }
     .hide-edition-dropdown {
         display: none;
+    }
+}
+
+/*
+    Specific media for evaluation at main information widget 
+*/
+@media (min-width: 863px) {
+    .myrio2c-evaluation-position {
+        flex-direction: row-reverse !important;
+    }
+}
+
+@media (max-width: 862px) {
+    .myrio2c-evaluation-position {
+        flex-direction: row !important;
     }
 }
