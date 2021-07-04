@@ -1,9 +1,6 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @model MusicProjectDto
 @{
-    var editionDto = ViewBag.EditionDto as EditionDto;
-    var evaluationsCount = Model.AttendeeMusicBandDto.AttendeeMusicBandEvaluationsDtos?.Count();
-
     var evaluationDetailsAction = Url.Action("EvaluationDetails", "Projects", new
     {
         Area = "Music",
@@ -18,79 +15,83 @@
 }
 @if (Model != null)
 {
-    <div class="kt-portlet__body">
-        <div class="row">
-            <div class="col-12">
-                <div class="text-center w-100">
-                    @if (Model.AttendeeMusicBandDto?.MusicBand?.HasImage() == true)
-                    {
-                        <img src="@(Model.AttendeeMusicBandDto?.MusicBand.ImageUrl)" class="w-100" alt="" style="height: 125px; border-radius: 4px; object-fit: cover;">
-                    }
-                    else
-                    {
-                        <div class="kt-userpic kt-userpic--lg kt-userpic--brand">
-                            <span style="width: 100%; height: 125px; font-size: 40px;">@(Model.AttendeeMusicBandDto?.MusicBand?.GetNameAbbreviation())</span>
-                        </div>
-                    }
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 mt-3">
-                <span style="font-family: Poppins; font-style: normal; font-weight: 600; font-size: 17px; line-height: 19px; color: #403D50;">@(Model.AttendeeMusicBandDto?.MusicBand?.Name ?? "-")</span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 mt-2">
-                <span style="font-family: Poppins; font-style: normal; font-weight: normal; font-size: 13px; line-height: 19px; color: #898C98;">@(Model.AttendeeMusicBandDto?.MusicBandType?.Name ?? "-")</span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 mt-3">
-                <div style="font-family: Poppins; font-style: normal; font-weight: normal; font-size: 13px; line-height: 19px; color: #403D50; width: 88px; display: inline-block;">@Labels.MusicGenre</div>
-                @if (Model.AttendeeMusicBandDto?.MusicBandGenreDtos?.Any() == true)
-                {
-                    foreach (var musicBandGenreDto in Model.AttendeeMusicBandDto.MusicBandGenreDtos)
-                    {
-                        <span class="kt-badge kt-badge--inline kt-badge--info">
-                            @(musicBandGenreDto.MusicGenre.Name)
-                            @if (musicBandGenreDto.MusicGenre.HasAdditionalInfo && !string.IsNullOrEmpty(musicBandGenreDto.MusicBandGenre.AdditionalInfo))
+    <div class="col-sm-6 col-lg-6 col-xl-4">
+        <div class="kt-portlet kt-portlet--height-fluid" id="project-@Model.MusicProject.Uid">
+            <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="text-center w-100">
+                            @if (Model.AttendeeMusicBandDto?.MusicBand?.HasImage() == true)
                             {
-                                @musicBandGenreDto.MusicBandGenre.AdditionalInfo
+                                <img src="@(Model.AttendeeMusicBandDto?.MusicBand.ImageUrl)" class="w-100" alt="" style="height: 125px; border-radius: 4px; object-fit: cover;">
                             }
-                        </span>
-                    }
-                }
-                else
-                {
-                    @:-
-                }
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 mt-2">
-                <div style="font-family: Poppins; font-style: normal; font-weight: normal; font-size: 13px; line-height: 19px; color: #403D50; width: 88px; display: inline-block;">@Labels.TargetAudience</div>
-                @if (Model.AttendeeMusicBandDto?.MusicBandTargetAudienceDtos?.Any() == true)
-                {
-                    foreach (var musicBandTargetAudienceDto in Model.AttendeeMusicBandDto.MusicBandTargetAudienceDtos)
-                    {
-                        <span class="kt-badge kt-badge--inline kt-badge--primary">@(musicBandTargetAudienceDto.TargetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
-                    }
-                }
-                else
-                {
-                    @:-
-                }
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 mt-4">
-                @Html.Partial("Shared/_Evaluation", Model)
-            </div>
-        </div>
-        <div class="row justify-content-center mt-2">
-            <div class="col-md-12 text-center">
-                <a href="@evaluationDetailsAction" class="btn btn-brand">@Labels.View</a>
+                            else
+                            {
+                                <div class="kt-userpic kt-userpic--lg kt-userpic--brand">
+                                    <span style="width: 100%; height: 125px; font-size: 40px;">@(Model.AttendeeMusicBandDto?.MusicBand?.GetNameAbbreviation())</span>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <span style="font-weight: 600; font-size: 17px; line-height: 19px; color: #403D50;">@(Model.AttendeeMusicBandDto?.MusicBand?.Name ?? "-")</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-2">
+                        <span style="font-weight: normal; font-size: 13px; line-height: 19px; color: #898C98;">@(Model.AttendeeMusicBandDto?.MusicBandType?.Name ?? "-")</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <div style="font-weight: normal; font-size: 13px; line-height: 19px; color: #403D50; width: 88px; display: inline-block;">@Labels.MusicGenre</div>
+                        @if (Model.AttendeeMusicBandDto?.MusicBandGenreDtos?.Any() == true)
+                        {
+                            foreach (var musicBandGenreDto in Model.AttendeeMusicBandDto.MusicBandGenreDtos)
+                            {
+                                <span class="kt-badge kt-badge--inline kt-badge--info">
+                                    @(musicBandGenreDto.MusicGenre.Name)
+                                    @if (musicBandGenreDto.MusicGenre.HasAdditionalInfo && !string.IsNullOrEmpty(musicBandGenreDto.MusicBandGenre.AdditionalInfo))
+                                    {
+                                        @musicBandGenreDto.MusicBandGenre.AdditionalInfo
+                                    }
+                                </span>
+                            }
+                        }
+                        else
+                        {
+                            @:-
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-2">
+                        <div style="font-weight: normal; font-size: 13px; line-height: 19px; color: #403D50; width: 88px; display: inline-block;">@Labels.TargetAudience</div>
+                        @if (Model.AttendeeMusicBandDto?.MusicBandTargetAudienceDtos?.Any() == true)
+                        {
+                            foreach (var musicBandTargetAudienceDto in Model.AttendeeMusicBandDto.MusicBandTargetAudienceDtos)
+                            {
+                                <span class="kt-badge kt-badge--inline kt-badge--primary">@(musicBandTargetAudienceDto.TargetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
+                            }
+                        }
+                        else
+                        {
+                            @:-
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-4">
+                        @Html.Partial("Shared/_Evaluation", Model)
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-2">
+                    <div class="col-md-12 text-center">
+                        <a href="@evaluationDetailsAction" class="btn btn-brand">@Labels.View</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

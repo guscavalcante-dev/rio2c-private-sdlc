@@ -6,7 +6,6 @@
 @{ 
     var editionDto = ViewBag.EditionDto as EditionDto;
 }
-
 @if (Model?.Any() == true)
 {
     <!--begin::List-->
@@ -14,11 +13,7 @@
         @foreach (var musicProjectDto in Model)
         {
             <!--begin::List Item-->
-            <div class="col-sm-6 col-lg-6 col-xl-4">
-                <div class="kt-portlet kt-portlet--height-fluid" id="project-@musicProjectDto.MusicProject.Uid">
-                    @Html.Partial("Widgets/EvaluationListItemWidget", musicProjectDto)
-                </div>
-            </div>
+            @Html.Partial("Widgets/EvaluationListItemWidget", musicProjectDto)
             <!--end::List Item-->
         }
     </div>
