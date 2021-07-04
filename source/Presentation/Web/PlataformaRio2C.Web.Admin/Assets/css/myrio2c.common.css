@@ -414,13 +414,32 @@ table.dataTable tbody tr.selected {
 /*
     MyRio2C Evaluation Grade Box
 */
-.myrio2c-evaluation-grade-box {
+.myrio2c-evaluation-grade-box-sm {
     background: #FDFDFE !important;
 }
-    .myrio2c-evaluation-grade-box .myrio2c-evaluation-grade-box-label {
+    .myrio2c-evaluation-grade-box-sm .grade-label {
         font-size: 15px;
     }
-    .myrio2c-evaluation-grade-box .myrio2c-evaluation-grade-box-grade {
+    .myrio2c-evaluation-grade-box-sm .grade-vote {
         font-weight: bold;
         font-size: 15px;
     }
+
+.myrio2c-evaluation-grade-box-lg {
+    background: #FDFDFE !important;
+    height: 65px !important;
+    padding: 20px !important;
+}
+    .myrio2c-evaluation-grade-box-lg .grade-label {
+        font-size: 15px;
+    }
+    .myrio2c-evaluation-grade-box-lg .grade-vote {
+        font-weight: bold;
+        font-size: 15px;
+    }
+
+.myrio2c-evaluation-grade-box-form {
+    background: #FDFDFE !important;
+    border: 1px solid #EBEDF2;
+    min-height: 65px !important;
+}

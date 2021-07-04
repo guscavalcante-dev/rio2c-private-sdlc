@@ -53,9 +53,9 @@
                 <i class="fa @(icon) mr-1"></i> @status
             </span>
             <div class="form-group mb-2">
-                <div class="myrio2c-evaluation-grade-box form-control">
-                    <span class="myrio2c-evaluation-grade-box-label mr-2">@Labels.Average</span>
-                    <span class="myrio2c-evaluation-grade-box-grade">@(Model.AttendeeMusicBandDto?.AttendeeMusicBand?.Grade?.ToString() ?? "-")</span>
+                <div class="myrio2c-evaluation-grade-box-sm form-control">
+                    <span class="grade-label mr-2">@Labels.Average</span>
+                    <span class="grade-vote">@(Model.AttendeeMusicBandDto?.AttendeeMusicBand?.Grade?.ToString() ?? "-")</span>
                 </div>
             </div>
         </form>
