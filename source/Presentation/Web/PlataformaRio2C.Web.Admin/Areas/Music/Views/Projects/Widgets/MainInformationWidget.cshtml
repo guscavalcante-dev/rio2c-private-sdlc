@@ -103,7 +103,7 @@
                             <div class="form-group mt-2 mb-2 mr-3">
                                 @Html.TextBox("AttendeeMusicBandEvaluationGradeMain", currentEvaluation?.AttendeeMusicBandEvaluation?.Grade, new {@class = "form-control text-center decimal-globalize-mask", placeholder = Labels.Grade, style = "width: 105px;"}) @*, @type = "number", @min = "1", @max = "10", @step = ".10"*@
                             </div>
-                            <button type="button" class="btn btn-success mt-2 mb-2 mr-3" onclick="MusicProjectsMainInformationWidget.submitEvaluationGrade('@Model.MusicProject.AttendeeMusicBand.MusicBandId');MyRio2cCommon.disableFieldEdit({ dataId: 'EvaluationGradeMain' });">@Labels.Evaluate</button>
+                            <button type="button" class="btn btn-success mt-2 mb-2 mr-3" onclick="MusicProjectsMainInformationWidget.submitEvaluationGrade('@Model.MusicProject.AttendeeMusicBand.MusicBandId');">@Labels.Evaluate</button>
                             @if (hasCurrentEvaluation)
                             {
                                 <button type="button" class="btn btn-secondary mt-2 mb-2 mr-3 pl-4" onclick="MyRio2cCommon.disableFieldEdit({ dataId: 'EvaluationGradeMain' })" data-toggle="tooltip" title="@(Labels.Cancel)">
