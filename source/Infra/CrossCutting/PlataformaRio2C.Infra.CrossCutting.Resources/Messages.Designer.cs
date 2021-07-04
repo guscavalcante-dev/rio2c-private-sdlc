@@ -1167,6 +1167,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Não avaliado..
+        /// </summary>
+        public static string NotEvaluated {
+            get {
+                return ResourceManager.GetString("NotEvaluated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rodadas de Negócios não Agendadas.
         /// </summary>
         public static string NotScheduledOneToOneMeetings {

@@ -3,7 +3,7 @@
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
     var adminAccessControlDto = ViewBag.AdminAccessControlDto as AdminAccessControlDto;
-    var currentEvaluation = Model.AttendeeMusicBandDto.GetAttendeeMusicBandEvaluationByUserId(adminAccessControlDto.User.Id);
+    var currentEvaluation = Model.AttendeeMusicBandDto.GetAttendeeMusicBandEvaluationByUserId(adminAccessControlDto?.User?.Id ?? 0);
     var approvedAttendeeMusicBandsIds = ViewBag.ApprovedAttendeeMusicBandsIds as int[];
     var isThisMusicProjectApproved = (approvedAttendeeMusicBandsIds?.Contains(Model.AttendeeMusicBandDto.AttendeeMusicBand.Id) == true);
 }
@@ -78,7 +78,7 @@
                             {
                                 <div class="row">
                                     <div class="col-12">
-                                        <div class="myrio2c-alert-box-danger mx-auto text-center">
+                                        <div class="myrio2c-alert-box danger mx-auto text-center">
                                             <span>@Messages.OutOfEvaluationPeriod</span>
                                         </div>
                                     </div>
@@ -127,7 +127,6 @@
                                     </div>
                                 </form>
                             }
-
                         </div>
                     </div>
                 </div>

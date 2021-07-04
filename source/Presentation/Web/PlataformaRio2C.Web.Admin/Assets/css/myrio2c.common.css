@@ -393,21 +393,37 @@ table.dataTable tbody tr.selected {
 /*
     MyRio2C Alert Box
 */
-.myrio2c-alert-box-danger {
+.myrio2c-alert-box {
     max-width: 260px;
     left: 473px;
     top: 736px;
-    background: rgba(253, 57, 122, 0.03);
-    border: 1px solid #FD397A;
+    background: #FDFDFE;
+    border: 1px solid #e2e5ec;
     box-sizing: border-box;
     border-radius: 4px;
     padding: 20px 10px;
 }
-.myrio2c-alert-box-danger span {
-    font-size: 15px;
-    color: #FD397A;
-    font-weight: 600;
-}
+    .myrio2c-alert-box span {
+        font-size: 15px;
+        color: #495057;
+        font-weight: 600;
+    }
+
+    .myrio2c-alert-box.danger {
+        border: 1px solid #FD397A;
+        background: rgba(253, 57, 122, 0.03);
+    }
+        .myrio2c-alert-box.danger span {
+            color: #FD397A;
+        }
+
+    .myrio2c-alert-box.warning {
+        border: 1px solid #ffb822;
+        background-color: rgba(255, 184, 34, 0.1);
+    }
+        .myrio2c-alert-box.warning span {
+            color: #ffb822;
+        }
 
 
 /*
