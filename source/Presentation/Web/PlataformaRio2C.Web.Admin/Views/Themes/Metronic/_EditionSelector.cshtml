@@ -1,15 +1,19 @@
-﻿<div class="kt-header__topbar-item kt-header__topbar-item--langs" style="margin-right:100px;">
+﻿@{
+    var editionDto = ViewBag.EditionDto;
+    var activeEditions = ViewBag.ActiveEditions;
+}
+<div class="kt-header__topbar-item kt-header__topbar-item--langs" style="margin: 0;">
     <div class="kt-header__topbar-wrapper" data-offset="10px,0px">
-        <div class="kt-header__topbar-icon">
+        <div class="kt-header__topbar-icon"style="width: auto; max-width: none;">
             <div class="dropdown">
                 <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img src="~/Assets/themes/metronic/media/icons/svg/Tools/Calendar.svg" style="margin-right:5px;" />
-                    <span>@(ViewBag.EditionDto.Name)</span>
+                    <span class="hide-edition-dropdown">@(editionDto.Name)</span>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    @foreach (var edition in ViewBag.ActiveEditions)
+                    @foreach (var edition in activeEditions)
                     {
-                        <a href="@Url.Action("SetEdition", "Home", new { Area = "", urlCode = edition.UrlCode, returnUrl = Request.Path })" class="dropdown-item"> @*@(edition.IsCurrent ? "active" : "")*@
+                        <a href="@Url.Action("SetEdition", "Home", new { Area = "", urlCode = edition.UrlCode, returnUrl = Request.Path })" class="dropdown-item @(editionDto.Edition.UrlCode == edition.UrlCode ? "active" : string.Empty)">
                             <span class="kt-nav__link-text">@(edition.Name)</span>
                         </a>
                     }

@@ -27,6 +27,14 @@
     margin-top: 50px !important;
 }
 
+.mt-75 {
+    margin-top: 75px !important;
+}
+
+.mt-85 {
+    margin-top: 85px !important;
+}
+
 .kt-avatar .kt-avatar__holder.wh-200 {
     width: 200px;
     height: 200px;
@@ -379,4 +387,79 @@ table.dataTable tbody tr.selected {
 */
 .minicolors-theme-bootstrap .minicolors-swatch {
     top: 5px !important;
+}
+
+
+/*
+    MyRio2C Alert Box
+*/
+.myrio2c-alert-box {
+    max-width: 260px;
+    left: 473px;
+    top: 736px;
+    background: #FDFDFE;
+    border: 1px solid #e2e5ec;
+    box-sizing: border-box;
+    border-radius: 4px;
+    padding: 20px 10px;
+}
+    .myrio2c-alert-box span {
+        font-size: 15px;
+        color: #495057;
+        font-weight: 600;
+    }
+
+    .myrio2c-alert-box.danger {
+        border: 1px solid #FD397A;
+        background: rgba(253, 57, 122, 0.03);
+    }
+        .myrio2c-alert-box.danger span {
+            color: #FD397A;
+        }
+
+    .myrio2c-alert-box.warning {
+        border: 1px solid #ffb822;
+        background-color: rgba(255, 184, 34, 0.1);
+    }
+        .myrio2c-alert-box.warning span {
+            color: #ffb822;
+        }
+
+
+/*
+    MyRio2C Evaluation Grade Box
+*/
+.myrio2c-evaluation-grade-box-sm {
+    background: #FDFDFE !important;
+    border-radius: 4px;
+    border: 1px solid #EBEDF2 !important;
+}
+    .myrio2c-evaluation-grade-box-sm .grade-label {
+        font-size: 15px;
+    }
+    .myrio2c-evaluation-grade-box-sm .grade-vote {
+        font-weight: bold;
+        font-size: 15px;
+    }
+
+.myrio2c-evaluation-grade-box-lg {
+    background: #FDFDFE !important;
+    height: 65px !important;
+    padding: 20px !important;
+    border-radius: 4px;
+    border: 1px solid #EBEDF2 !important;
+}
+    .myrio2c-evaluation-grade-box-lg .grade-label {
+        font-size: 15px;
+    }
+    .myrio2c-evaluation-grade-box-lg .grade-vote {
+        font-weight: bold;
+        font-size: 15px;
+    }
+
+.myrio2c-evaluation-grade-box-form {
+    background: #FDFDFE !important;
+    border: 1px solid #EBEDF2 !important;
+    min-height: 65px !important;
+    border-radius: 4px;
 }

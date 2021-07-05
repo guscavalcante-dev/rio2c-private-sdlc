@@ -3,10 +3,10 @@
 // Author           : William Sergio Almado Junior
 // Created          : 01-14-2019
 //
-// Last Modified By : Rafael Dantas RUiz
-// Last Modified On : 01-24-2020
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-02-2021
 // ***********************************************************************
-// <copyright file="AudiovisualProjectSubscriptionDto.cs" company="Softo">
+// <copyright file="AudiovisualProjectSubmissionDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -18,8 +18,8 @@ using System.Linq;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
-    /// <summary>AudiovisualProjectSubscriptionDto</summary>
-    public class AudiovisualProjectSubscriptionDto
+    /// <summary>AudiovisualProjectSubmissionDto</summary>
+    public class AudiovisualProjectSubmissionDto
     {
         //public int ProoducerCount { get; set; }
         //public int ProjectPerProducerCount { get; set; }
@@ -38,8 +38,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<ProjectTeaserLinkDto> ProjectTeaserLinkDtos { get; set; }
         public IEnumerable<ProjectBuyerEvaluationDto> ProjectBuyerEvaluationDtos { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="AudiovisualProjectSubscriptionDto"/> class.</summary>
-        public AudiovisualProjectSubscriptionDto()
+        /// <summary>Initializes a new instance of the <see cref="AudiovisualProjectSubmissionDto"/> class.</summary>
+        public AudiovisualProjectSubmissionDto()
         {
         }
 

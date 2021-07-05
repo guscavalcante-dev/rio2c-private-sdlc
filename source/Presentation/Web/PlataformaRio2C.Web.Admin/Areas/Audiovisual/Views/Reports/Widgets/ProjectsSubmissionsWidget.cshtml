@@ -2,7 +2,7 @@
 @using X.PagedList.Mvc
 @using X.PagedList.Mvc.Common
 @using PlataformaRio2C.Domain.Entities
-@model X.PagedList.IPagedList<AudiovisualProjectSubscriptionDto>
+@model X.PagedList.IPagedList<AudiovisualProjectSubmissionDto>
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
     var pageNumber = ViewBag.Page as int? ?? 1;
@@ -188,7 +188,7 @@
                     <div class="kt-pagination kt-pagination--brand justify-content-center justify-content-sm-between">
                         @Html.PagedListPager(
                             Model,
-                            page => Url.Action("ShowAudiovisualSubscriptionsWidget", "Reports", new { Search = ViewBag.SearchKeywords, InterestUid = ViewBag.InterestUid, IsPitching = ViewBag.IsPitching, page, PageSize = ViewBag.PageSize }),
+                            page => Url.Action("ShowProjectsSubmissionsWidget", "Reports", new { Area = "Audiovisual", Search = ViewBag.SearchKeywords, InterestUid = ViewBag.InterestUid, IsPitching = ViewBag.IsPitching, page, PageSize = ViewBag.PageSize }),
                             PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
                                 new PagedListRenderOptions
                                 {
@@ -209,7 +209,7 @@
                                     PageClasses = new string[] { "" },
                                     EllipsesElementClass = ""
                                 }
-                                , new AjaxOptions { HttpMethod = "Post", OnBegin = "ReportsAudiovisualSubscriptionWidget.changePage", OnSuccess = "ReportsAudiovisualSubscriptionWidget.handlePaginationReturn" }))
+                                , new AjaxOptions { HttpMethod = "Post", OnBegin = "AudiovisualReportsProjectsSubmissionsWidget.changePage", OnSuccess = "AudiovisualReportsProjectsSubmissionsWidget.handlePaginationReturn" }))
                         <div class="kt-pagination__toolbar">
                             @Html.DropDownList("PageSizeDropdown", new SelectList(new[] { 1, 5, 10, 15, 30 }, ViewBag.PageSize), null, new { @class = "form-control kt-font-brand", style = "width: 60px;" })
                             @Html.PagedListPager(

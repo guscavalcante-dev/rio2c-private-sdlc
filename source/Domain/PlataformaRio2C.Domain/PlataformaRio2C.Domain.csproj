@@ -244,7 +244,7 @@
     <Compile Include="Dtos\ConferenceParticipantRoles\ConferenceParticipantRoleDto.cs" />
     <Compile Include="Dtos\ConferenceParticipantRoles\ConferenceParticipantRoleJsonDto.cs" />
     <Compile Include="Dtos\ConferenceParticipantRoles\ConferenceParticipantRoleTitleDto.cs" />
-    <Compile Include="Dtos\Reports\AudiovisualProjectSubscriptionDto.cs" />
+    <Compile Include="Dtos\Audiovisual\Reports\AudiovisualProjectSubmissionDto.cs" />
     <Compile Include="Dtos\Rooms\RoomNameDto.cs" />
     <Compile Include="Dtos\Rooms\RoomDto.cs" />
     <Compile Include="Dtos\Rooms\RoomJsonDto.cs" />

@@ -1,63 +1,65 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
-@using PlataformaRio2C.Domain.Entities
 @using System.Linq;
-
 @model MusicProjectDto
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var currentEvaluation = Model.AttendeeMusicBandDto.GetAttendeeMusicBandEvaluationByUserId(userAccessControlDto?.User?.Id ?? 0);
     var approvedAttendeeMusicBandsIds = ViewBag.ApprovedAttendeeMusicBandsIds as int[];
-    var isThisMusicProjectApproved = approvedAttendeeMusicBandsIds.Contains(Model.AttendeeMusicBandDto.AttendeeMusicBand.Id);
+    var isThisMusicProjectApproved = approvedAttendeeMusicBandsIds?.Contains(Model.AttendeeMusicBandDto.AttendeeMusicBand.Id) == true;
 }
-<div class="kt-widget__details w-100">
-    <div class="kt-widget__value text-center">
-
-        @if (editionDto?.IsMusicProjectEvaluationOpen() == true)
-        {
-            <div class="col-md-12 justify-content-center" style="display: flex; align-items: center;">
-                <span class="kt-widget__button">
-                    <label class="btn btn-label-warning btn-sm">
-                        <i class="fa fa-diagnoses mr-1"></i> @Labels.UnderEvaluation
-                    </label>
-                </span>
-            </div>
-        }
-        else
-        {
-            <div class="col-md-12 justify-content-center" style="display: flex; align-items: center;">
-                @{
-                    var color = "warning";
-                    var icon = "fa-diagnoses";
-                    var text = Labels.UnderEvaluation;
-
-                    if (isThisMusicProjectApproved)
-                    {
-                        color = "success";
-                        icon = "fa-thumbs-up";
-                        text = Labels.ProjectAccepted;
-                    }
-                    else
-                    {
-                        color = "danger";
-                        icon = "fa-thumbs-down";
-                        text = Labels.ProjectRefused;
-                    }
-                }
-                <span class="kt-widget__button">
-                    <label class="btn btn-label-@(color) btn-sm m-0">
-                        <i class="fa @(icon) mr-1"></i> @text
-                    </label>
-                </span>
-
-                <div class="card bg-gray ml-3">
-                    <div class="card-body">
-                        <div class="card-text h6">
-                            <span>@Labels.Average</span>
-                            <span><b>@(Model.AttendeeMusicBandDto.AttendeeMusicBand.Grade?.ToString() ?? "-")</b></span>
-                        </div>
-                    </div>
+@if (editionDto?.IsMusicProjectEvaluationOpen() == true)
+{
+    var hasCurrentEvaluation = currentEvaluation != null;
+    if (hasCurrentEvaluation)
+    {
+        <form class="form-inline justify-content-center">
+            <div class="form-group mb-2">
+                <div class="myrio2c-evaluation-grade-box-lg form-control">
+                    <span class="grade-label mr-2">@Labels.Evaluation</span>
+                    <span class="grade-vote">@(currentEvaluation?.AttendeeMusicBandEvaluation?.Grade)</span>
                 </div>
-
             </div>
-        }
-    </div>
-</div>
+        </form>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-12 mb-2">
+                <div class="myrio2c-alert-box warning mx-auto text-center">
+                    <span>@Messages.NotEvaluated</span>
+                </div>
+            </div>
+        </div>
+    }
+}
+else if (editionDto?.IsMusicProjectEvaluationEnded() == true)
+{
+    var icon = "fa-diagnoses";
+    var color = "warning";
+    var status = Labels.UnderEvaluation;
+
+    if (isThisMusicProjectApproved)
+    {
+        icon = "fa-thumbs-up";
+        color = "success";
+        status = Labels.ProjectAccepted;
+    }
+    else
+    {
+        icon = "fa-thumbs-down";
+        color = "danger";
+        status = Labels.ProjectRefused;
+    }
+    <form class="form-inline justify-content-center">
+        <span class="btn btn-label-@(color) mb-2 mr-4">
+            <i class="fa @(icon) mr-1"></i> @status
+        </span>
+        <div class="form-group mb-2">
+            <div class="myrio2c-evaluation-grade-box-sm form-control">
+                <span class="grade-label mr-2">@Labels.Average</span>
+                <span class="grade-vote">@(Model.AttendeeMusicBandDto?.AttendeeMusicBand?.Grade?.ToString() ?? "-")</span>
+            </div>
+        </div>
+    </form>
+}

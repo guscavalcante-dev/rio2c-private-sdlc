@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-28-2020
+// Last Modified On : 07-04-2021
 // ***********************************************************************
 // <copyright file="MusicBand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -56,7 +56,8 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>
         /// Initializes a new instance of the <see cref="MusicBand"/> class.
         /// </summary>
-        /// <param name="musicBandTypeId">The music band type identifier.</param>
+        /// <param name="musicBandType">Type of the music band.</param>
+        /// <param name="edition">The edition.</param>
         /// <param name="name">The name.</param>
         /// <param name="imageUrl">The image URL.</param>
         /// <param name="formationDate">The formation date.</param>
@@ -65,6 +66,13 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="instagram">The instagram.</param>
         /// <param name="twitter">The twitter.</param>
         /// <param name="youtube">The youtube.</param>
+        /// <param name="musicProjectApiDto">The music project API dto.</param>
+        /// <param name="attendeeCollaborator">The attendee collaborator.</param>
+        /// <param name="musicGenreApiDtos">The music genre API dtos.</param>
+        /// <param name="targetAudienceApiDtos">The target audience API dtos.</param>
+        /// <param name="musicBandMemberApiDtos">The music band member API dtos.</param>
+        /// <param name="musicBandTeamMemberApiDtos">The music band team member API dtos.</param>
+        /// <param name="releasedMusicProjectApiDtos">The released music project API dtos.</param>
         /// <param name="userId">The user identifier.</param>
         public MusicBand(
             MusicBandType musicBandType,
@@ -144,7 +152,9 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
         }
 
-        /// <summary>Updates the social networks.</summary>
+        /// <summary>
+        /// Updates the social networks.
+        /// </summary>
         /// <param name="facebook">The facebook.</param>
         /// <param name="twitter">The twitter.</param>
         /// <param name="instagram">The instagram.</param>
@@ -266,12 +276,16 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Evaluation
 
+        /// <summary>
+        /// Evaluates the specified edition.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="evaluatorUser">The evaluator user.</param>
+        /// <param name="grade">The grade.</param>
         public void Evaluate(Edition edition, User evaluatorUser, decimal grade)
         {
             var attendeeMusicBand = this.FindAttendeeMusicBandByEditionId(edition.Id);
-
-            if(attendeeMusicBand != null)
-                attendeeMusicBand.Evaluate(evaluatorUser, grade);
+            attendeeMusicBand?.Evaluate(evaluatorUser, grade);
         }
 
         #endregion

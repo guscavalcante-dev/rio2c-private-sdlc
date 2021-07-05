@@ -19,7 +19,7 @@
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-wrapper">
                 <div class="kt-portlet__head-actions">
-                    <button type="button" class="btn btn-primary" onclick="ReportsAudiovisualSubscriptionWidget.exportToExcel();"><i class="fa"></i>@Labels.ExportToExcel</button>
+                    <button type="button" class="btn btn-primary" onclick="AudiovisualReportsProjectsSubmissionsWidget.exportToExcel();"><i class="fa"></i>@Labels.ExportToExcel</button>
                 </div>
             </div>
         </div>
@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="col-md-1 mt-2">
-                <button type="button" class="btn btn-primary btn-icon" onclick="ReportsAudiovisualSubscriptionWidget.search();"><i class="fa fa-search"></i></button>
+                <button type="button" class="btn btn-primary btn-icon" onclick="AudiovisualReportsProjectsSubmissionsWidget.search();"><i class="fa fa-search"></i></button>
             </div>
         </div>
         <div class="row">
@@ -84,7 +84,7 @@
     <div class="col-md-12">
         <div class="kt-portlet kt-portlet--height-fluid">
             <div class="kt-portlet__body">
-                <div id="ReportAudiovisualSubscriptionWidget"></div>
+                <div id="AudiovisualReportsProjectsSubmissionsWidget"></div>
             </div>
         </div>
     </div>
@@ -97,7 +97,7 @@
     @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/select2.js")
     @Scripts.Render("~/bundles/js/bootstrap-datepicker.js")
-    @Scripts.Render("~/bundles/js/reports.audiovisual.subscriptions.widget.js")
+    @Scripts.Render("~/bundles/js/audiovisual.reports.projectssubmissions.widget.js")
     <script>
          var translations = {
             selectPlaceholder: '@Labels.SelectAMEntity',
@@ -108,7 +108,7 @@
         };
 
         jQuery(document).ready(function () {
-            ReportsAudiovisualSubscriptionWidget.init();
+            AudiovisualReportsProjectsSubmissionsWidget.init();
         });
     </script>
 }

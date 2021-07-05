@@ -12,44 +12,105 @@
     </div>
 </div>
 <div class="kt-portlet__body pt-0">
-    <div class="kt-widget">
-        <div class="kt-widget__bottom">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="kt-widget4">
-                        @if (Model.AttendeeMusicBandDto?.AttendeeMusicBandEvaluationsDtos?.Any() == true)
+    @if (editionDto?.IsMusicProjectEvaluationStarted() != true)
+    {
+        <div class="row mt-75">
+            <div class="col-12">
+                <div class="myrio2c-alert-box danger mx-auto text-center">
+                    <span>@Messages.OutOfEvaluationPeriod</span>
+                </div>
+            </div>
+        </div>
+    }
+    else if (editionDto?.IsMusicProjectEvaluationOpen() == true)
+    {
+        <div class="row mt-75">
+            <div class="col-12">
+                <div class="myrio2c-alert-box warning mx-auto text-center">
+                    <span>@Messages.EvaluationPeriodOpen</span>
+                </div>
+            </div>
+        </div>
+    }
+    else if (Model.AttendeeMusicBandDto?.AttendeeMusicBandEvaluationsDtos?.Any() == true)
+    {
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-sm table-head-bg-brand table-body-scroll">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>@Labels.Name</th>
+                            <th class="text-center">@Labels.Grade</th>
+                        </tr>
+                    </thead>
+                    <tbody class="rio2c-scroll" style="max-height: 150px;">
+                        @foreach (var attendeeMusicBandEvaluation in Model.AttendeeMusicBandDto?.AttendeeMusicBandEvaluationsDtos)
                         {
-                            <div class="col-12">
-                                <table class="table table-sm table-head-bg-brand table-body-scroll">
-                                    <thead class="thead-inverse">
-                                        <tr>
-                                            <th>@Labels.Name</th>
-                                            <th class="text-center">@Labels.Grade</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="rio2c-scroll">
-                                        @foreach (var attendeeMusicBandEvaluation in Model.AttendeeMusicBandDto?.AttendeeMusicBandEvaluationsDtos)
-                                        {
+                            <tr>
+                                <td>@(attendeeMusicBandEvaluation.EvaluatorUser?.Name)</td>
+                                <td class="text-center">@(attendeeMusicBandEvaluation.AttendeeMusicBandEvaluation?.Grade)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row mt-75">
+            <div class="col-12">
+                <div class="myrio2c-alert-box danger mx-auto text-center">
+                    <span>@string.Format(Messages.EntityNotAction, Labels.Evaluations, Labels.FoundFP)</span>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@*<div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">@Labels.Evaluators</h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body pt-0">
+        <div class="kt-widget">
+            <div class="kt-widget__bottom">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="kt-widget4">
+                            @if (Model.AttendeeMusicBandDto?.AttendeeMusicBandEvaluationsDtos?.Any() == true)
+                            {
+                                <div class="col-12">
+                                    <table class="table table-sm table-head-bg-brand table-body-scroll">
+                                        <thead class="thead-inverse">
                                             <tr>
-                                                <td>@(attendeeMusicBandEvaluation.EvaluatorUser?.Name)</td>
-                                                <td class="text-center">@(attendeeMusicBandEvaluation.AttendeeMusicBandEvaluation?.Grade)</td>
+                                                <th>@Labels.Name</th>
+                                                <th class="text-center">@Labels.Grade</th>
                                             </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="row mt-3">
-                                <div class="col-12 text-center">
-                                    <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.Evaluations, Labels.FoundFP)</span>
+                                        </thead>
+                                        <tbody class="rio2c-scroll">
+                                            @foreach (var attendeeMusicBandEvaluation in Model.AttendeeMusicBandDto?.AttendeeMusicBandEvaluationsDtos)
+                                            {
+                                                <tr>
+                                                    <td>@(attendeeMusicBandEvaluation.EvaluatorUser?.Name)</td>
+                                                    <td class="text-center">@(attendeeMusicBandEvaluation.AttendeeMusicBandEvaluation?.Grade)</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
                                 </div>
-                            </div>
-                        }
+                            }
+                            else
+                            {
+                                <div class="row mt-3">
+                                    <div class="col-12 text-center">
+                                        <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.Evaluations, Labels.FoundFP)</span>
+                                    </div>
+                                </div>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </div>*@

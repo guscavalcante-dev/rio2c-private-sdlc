@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-21-2021
+// Last Modified On : 07-02-2021
 // ***********************************************************************
 // <copyright file="ProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1295,19 +1295,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         #endregion
 
-        #region Audivisual Projects Report
+        #region Audivisual Projects Submissions Report
 
-        /// <summary>Finds the audiovisual subscribed project list</summary>
-        /// <param name="keywords"></param>
-        /// <param name="interestUid"></param>
-        /// <param name="editionId"></param>
-        /// <param name="isPitching"></param>
-        /// <param name="targetAudienceUid"></param>
-        /// <param name="startDate"></param>
-        /// <param name="endDate"></param>
-        /// <param name="showAllEditions"></param>
+        /// <summary>
+        /// Finds the audiovisual project submission dtos by filter.
+        /// </summary>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="interestUids">The interest uids.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="isPitching">if set to <c>true</c> [is pitching].</param>
+        /// <param name="targetAudienceUids">The target audience uids.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <returns></returns>
-        public IEnumerable<AudiovisualProjectSubscriptionDto> FindAudiovisualSubscribedProjectsDtosByFilter(string keywords, List<Guid> interestUids, int editionId, bool isPitching, List<Guid> targetAudienceUids, DateTime? startDate, DateTime? endDate, bool showAllEditions = false)
+        public IEnumerable<AudiovisualProjectSubmissionDto> FindAudiovisualProjectSubmissionDtosByFilter(string keywords, List<Guid> interestUids, int editionId, bool isPitching, List<Guid> targetAudienceUids, DateTime? startDate, DateTime? endDate, bool showAllEditions = false)
         {
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords)
@@ -1317,7 +1319,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .IsPitching(isPitching)
                                 .FindByTargetAudienceUids(targetAudienceUids)
                                 .FindByDate(startDate, endDate)
-                                .Select(p => new AudiovisualProjectSubscriptionDto()
+                                .Select(p => new AudiovisualProjectSubmissionDto()
                                 {
                                     Project = p,
                                     SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
@@ -1376,19 +1378,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
-        /// <summary>Finds the audiovisual subscribed project list by page</summary>
-        /// <param name="keywords"></param>
-        /// <param name="interestUids"></param>
-        /// <param name="editionId"></param>
-        /// <param name="isPitching"></param>
-        /// <param name="targetAudienceUids"></param>
-        /// <param name="startDate"></param>
-        /// <param name="endDate"></param>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="showAllEditions"></param>
+        /// <summary>
+        /// Finds the audiovisual project submission dtos by filter and by page asynchronous.
+        /// </summary>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="interestUids">The interest uids.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="isPitching">if set to <c>true</c> [is pitching].</param>
+        /// <param name="targetAudienceUids">The target audience uids.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <returns></returns>
-        public async Task<IPagedList<AudiovisualProjectSubscriptionDto>> FindAudiovisualSubscribedProjectsDtosByFilterAndByPageAsync(
+        public async Task<IPagedList<AudiovisualProjectSubmissionDto>> FindAudiovisualProjectSubmissionDtosByFilterAndByPageAsync(
             string keywords,
             List<Guid> interestUids,
             int editionId, 
@@ -1400,7 +1404,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             int pageSize = 10, 
             bool showAllEditions = false)
         {
-            var query = this.FindAudiovisualSubscribedProjectsDtosByFilter(keywords, interestUids, editionId, isPitching, targetAudienceUids, startDate, endDate, showAllEditions);
+            var query = this.FindAudiovisualProjectSubmissionDtosByFilter(keywords, interestUids, editionId, isPitching, targetAudienceUids, startDate, endDate, showAllEditions);
 
             return await query
                             .OrderBy(p => p.SellerAttendeeOrganizationDto.Organization.TradeName)
@@ -1418,7 +1422,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="endDate"></param>
         /// <param name="showAllEditions"></param>
         /// <returns></returns>
-        public async Task<List<AudiovisualProjectSubscriptionDto>> FindAudiovisualSubscribedProjectsDtosByFilterAsync(
+        public async Task<List<AudiovisualProjectSubmissionDto>> FindAudiovisualSubscribedProjectsDtosByFilterAsync(
             string keywords,
             List<Guid> interestUids, 
             int editionId, 
@@ -1428,7 +1432,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             DateTime? endDate, 
             bool showAllEditions = false)
         {
-            var query = this.FindAudiovisualSubscribedProjectsDtosByFilter(keywords, interestUids, editionId, isPitching, targetAudienceUids, startDate, endDate, showAllEditions);
+            var query = this.FindAudiovisualProjectSubmissionDtosByFilter(keywords, interestUids, editionId, isPitching, targetAudienceUids, startDate, endDate, showAllEditions);
 
             return await query
                             .OrderBy(p => p.SellerAttendeeOrganizationDto.Organization.TradeName)

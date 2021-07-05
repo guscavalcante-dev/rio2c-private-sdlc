@@ -4,17 +4,17 @@
 // Created          : 01-13-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-24-2020
+// Last Modified On : 07-02-2021
 // ***********************************************************************
-// <copyright file="reports.audiovisual.subscription.widget.cs" company="Softo">
+// <copyright file="audiovisual.reports.projectssubmissions.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var ReportsAudiovisualSubscriptionWidget = function () {
+var AudiovisualReportsProjectsSubmissionsWidget = function () {
 
-    var widgetElementId = '#ReportAudiovisualSubscriptionWidget';
+    var widgetElementId = '#AudiovisualReportsProjectsSubmissionsWidget';
     var widgetElement = $(widgetElementId);
 
     // Search Form --------------------------------------------------------------------------------
@@ -49,7 +49,7 @@ var ReportsAudiovisualSubscriptionWidget = function () {
         jsonParameters.StartDate = $('#StartDate').val();
         jsonParameters.EndDate = $('#EndDate').val();
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Reports/ShowAudiovisualSubscriptionsWidget'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Reports/ShowProjectsSubmissionsWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -120,7 +120,7 @@ var ReportsAudiovisualSubscriptionWidget = function () {
         jsonParameters.StartDate = $('#StartDate').val();
         jsonParameters.EndDate = $('#EndDate').val();
 
-        window.open(MyRio2cCommon.getUrlWithCultureAndEdition('/Reports/GenerateExcelDocumentAsync') +
+        window.open(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Reports/GenerateProjectsSubmissionsExcelAsync') +
             '?search=' + jsonParameters.Search +
             '&interestUids=' + jsonParameters.InterestUids +
             '&isPitching=' + jsonParameters.IsPitching +

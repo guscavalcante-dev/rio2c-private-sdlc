@@ -994,5 +994,16 @@
   <data name="EntityMustContainsMaxItemsCount" xml:space="preserve">
     <value>{0} deve conter no máximo {1} itens.</value>
     <comment>{0} deve conter no máximo {1} itens.</comment>
+  <data name="OutOfEvaluationPeriod" xml:space="preserve">
+    <value>Fora do período de avaliação.</value>
+    <comment>Fora do período de avaliação.</comment>
+  </data>
+  <data name="EvaluationPeriodOpen" xml:space="preserve">
+    <value>Período de avaliação aberto.</value>
+    <comment>Período de avaliação aberto.</comment>
+  </data>
+  <data name="NotEvaluated" xml:space="preserve">
+    <value>Não avaliado.</value>
+    <comment>Não avaliado.</comment>
   </data>
 </root>

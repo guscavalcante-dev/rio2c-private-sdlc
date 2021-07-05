@@ -771,6 +771,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Período de avaliação aberto..
+        /// </summary>
+        public static string EvaluationPeriodOpen {
+            get {
+                return ResourceManager.GetString("EvaluationPeriodOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Avaliação salva com sucesso!.
         /// </summary>
         public static string EvaluationSavesSuccessfully {
@@ -1185,6 +1194,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Não avaliado..
+        /// </summary>
+        public static string NotEvaluated {
+            get {
+                return ResourceManager.GetString("NotEvaluated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rodadas de Negócios não Agendadas.
         /// </summary>
         public static string NotScheduledOneToOneMeetings {
@@ -1217,6 +1235,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string NumberIsRequired {
             get {
                 return ResourceManager.GetString("NumberIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fora do período de avaliação..
+        /// </summary>
+        public static string OutOfEvaluationPeriod {
+            get {
+                return ResourceManager.GetString("OutOfEvaluationPeriod", resourceCulture);
             }
         }
         
