@@ -128,6 +128,32 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
+        /// Finds the by identifier.
+        /// </summary>
+        /// <param name="InnovationOptionIds">The innovation option ids.</param>
+        /// <returns>InnovationOption.</returns>
+        public InnovationOption FindById(int InnovationOptionIds)
+        {
+            var query = this.GetBaseQuery()
+                            .FindByIds(new List<int?> { InnovationOptionIds });
+
+            return query.FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Finds the by uid.
+        /// </summary>
+        /// <param name="InnovationOptionUid">The innovation option uid.</param>
+        /// <returns>InnovationOption.</returns>
+        public InnovationOption FindByUid(Guid InnovationOptionUid)
+        {
+            var query = this.GetBaseQuery()
+                            .FindByUids(new List<Guid?> { InnovationOptionUid });
+
+            return query.FirstOrDefault();
+        }
+
+        /// <summary>
         /// find by identifier as an asynchronous operation.
         /// </summary>
         /// <param name="InnovationOptionIds">The innovation organization ids.</param>

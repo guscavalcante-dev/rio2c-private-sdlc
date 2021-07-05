@@ -34,6 +34,32 @@ namespace PlataformaRio2C.Domain.Entities
         public int? EvaluationUserId { get; set; }
         public DateTimeOffset? EvaluationEmailSendDate { get; set; }
 
+        public virtual Edition Edition { get; private set; }
+        public virtual InnovationOrganization InnovationOrganization { get; private set; }
+        public virtual ProjectEvaluationStatus ProjectEvaluationStatus { get; private set; }
+        public virtual ProjectEvaluationRefuseReason ProjectEvaluationRefuseReason { get; private set; }
+
+        public virtual ICollection<AttendeeInnovationOrganizationCollaborator> AttendeeInnovationOrganizationCollaborators { get; private set; }
+
+        /// <summary>Initializes a new instance of the <see cref="AttendeeInnovationOrganization"/> class.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="innovationOrganization">The music band.</param>
+        /// <param name="userId">The user identifier.</param>
+        public AttendeeInnovationOrganization(
+            Edition edition,
+            InnovationOrganization innovationOrganization,
+            int userId)
+        {
+            this.Edition = edition;
+            this.InnovationOrganization = innovationOrganization;
+            this.EditionId = edition.Id;
+            this.InnovationOrganizationId = innovationOrganization.Id;
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AttendeeInnovationOrganization"/> class.
         /// </summary>
@@ -41,6 +67,55 @@ namespace PlataformaRio2C.Domain.Entities
         {
 
         }
+
+        /// <summary>Deletes the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(int userId)
+        {
+            this.DeleteAttendeeInnovationOrganizationCollaborators(userId);
+            if (this.FindAllAttendeeInnovationOrganizationCollaboratorsNotDeleted()?.Any() == true)
+            {
+                return;
+            }
+
+            this.IsDeleted = true;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>Restores the specified user identifier.</summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Restore(int userId)
+        {
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
+        #region Attendee Innovation Organization Collaborators
+
+        /// <summary>
+        /// Deletes the attendee innovation organization collaborators.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteAttendeeInnovationOrganizationCollaborators(int userId)
+        {
+            foreach (var attendeeInnovationOrganizationCollaborator in this.FindAllAttendeeInnovationOrganizationCollaboratorsNotDeleted())
+            {
+                attendeeInnovationOrganizationCollaborator.Delete(userId);
+            }
+        }
+
+        /// <summary>
+        /// Finds all attendee innovation organization collaborators not deleted.
+        /// </summary>
+        /// <returns>List&lt;AttendeeInnovationOrganizationCollaborator&gt;.</returns>
+        private List<AttendeeInnovationOrganizationCollaborator> FindAllAttendeeInnovationOrganizationCollaboratorsNotDeleted()
+        {
+            return this.AttendeeInnovationOrganizationCollaborators?.Where(aoc => !aoc.IsDeleted)?.ToList();
+        }
+
+        #endregion
 
         #region Valitations
 

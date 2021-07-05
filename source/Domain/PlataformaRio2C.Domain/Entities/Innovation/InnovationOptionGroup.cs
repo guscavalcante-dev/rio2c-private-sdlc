@@ -27,8 +27,9 @@ namespace PlataformaRio2C.Domain.Entities
     public class InnovationOptionGroup : Entity
     {
         public string Name { get; set; }
-
         public int DisplayOrder { get; set; }
+        
+        public virtual ICollection<InnovationOption> InnovationOptions { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InnovationOptionGroup"/> class.

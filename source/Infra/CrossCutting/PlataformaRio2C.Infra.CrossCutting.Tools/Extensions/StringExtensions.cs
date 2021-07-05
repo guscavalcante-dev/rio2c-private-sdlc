@@ -3,14 +3,15 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-28-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 05-13-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 07-02-2021
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Infra.CrossCutting.Tools.Statics;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -508,6 +509,78 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             }
 
             return s;
+        }
+
+        #endregion
+
+        #region File
+
+        /// <summary>
+        /// Gets the type of the base64 MIME.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>System.String.</returns>
+        public static string GetBase64MimeType(this string value)
+        {
+            if (String.IsNullOrEmpty(value))
+                return "application/octet-stream";
+
+            var data = value.Substring(0, 5);
+
+            switch (data.ToUpper())
+            {
+                case "IVBOR":
+                case "/9J/4":
+                    return FileMimeType.Png;
+
+                case "AAAAF":
+                    return FileMimeType.Mp4;
+                case "JVBER":
+                    return FileMimeType.Pdf;
+
+                default:
+                    return "unknown";
+            }
+        }
+
+        /// <summary>
+        /// Gets the base64 file extension.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>System.String.</returns>
+        public static string GetBase64FileExtension(this string value)
+        {
+            if (String.IsNullOrEmpty(value))
+                return "";
+
+            var data = value.Substring(0, 5);
+
+            switch (data.ToUpper())
+            {
+                case "IVBOR":
+                case "/9J/4":
+                    return FileType.Png;
+
+                case "AAAAF":
+                    return FileType.Mp4;
+                case "JVBER":
+                    return FileType.Pdf;
+
+                default:
+                    return "Unknown";
+            }
+        }
+
+        /// <summary>
+        /// Determines whether [is base64 string] [the specified s].
+        /// </summary>
+        /// <param name="s">The s.</param>
+        /// <returns><c>true</c> if [is base64 string] [the specified s]; otherwise, <c>false</c>.</returns>
+        public static bool IsBase64String(this string s)
+        {
+            s = s.Trim();
+            return (s.Length % 4 == 0) && Regex.IsMatch(s, @"^[a-zA-Z0-9\+/]*={0,3}$", RegexOptions.None);
+
         }
 
         #endregion

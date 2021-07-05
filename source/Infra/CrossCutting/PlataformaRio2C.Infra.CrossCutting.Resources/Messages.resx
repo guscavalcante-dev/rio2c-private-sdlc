@@ -987,4 +987,12 @@
     <value>Não existem rodadas de negócio agendadas para impressão</value>
     <comment>Não existem rodadas de negócio agendadas para impressão</comment>
   </data>
+  <data name="EntityMustBeBase64" xml:space="preserve">
+    <value>{0} deve ser codificado em Base64</value>
+    <comment>{0} deve ser codificado em Base64</comment>
+  </data>
+  <data name="EntityMustContainsMaxItemsCount" xml:space="preserve">
+    <value>{0} deve conter no máximo {1} itens.</value>
+    <comment>{0} deve conter no máximo {1} itens.</comment>
+  </data>
 </root>

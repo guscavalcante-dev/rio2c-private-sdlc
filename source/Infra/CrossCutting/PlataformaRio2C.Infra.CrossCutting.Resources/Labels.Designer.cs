@@ -6298,6 +6298,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dedicação.
+        /// </summary>
+        public static string WorkDedication {
+            get {
+                return ResourceManager.GetString("WorkDedication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Duração da obra.
         /// </summary>
         public static string WorkDuration {

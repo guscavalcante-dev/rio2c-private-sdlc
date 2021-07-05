@@ -30,6 +30,33 @@ namespace PlataformaRio2C.Domain.Entities
         public int InnovationOptionId { get; private set; }
         public string AdditionalInfo { get; private set; }
 
+        public virtual InnovationOrganization InnovationOrganization { get; private set; }
+        public virtual InnovationOption InnovationOption { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InnovationOrganizationOption"/> class.
+        /// </summary>
+        /// <param name="innovationOrganization">The innovation organization.</param>
+        /// <param name="innovationOption">The innovation option.</param>
+        /// <param name="additionalInfo">The additional information.</param>
+        /// <param name="userId">The user identifier.</param>
+        public InnovationOrganizationOption(
+            InnovationOrganization innovationOrganization,
+            InnovationOption innovationOption, 
+            string additionalInfo,
+            int userId)
+        {
+            this.InnovationOrganization = innovationOrganization;
+            this.InnovationOption = innovationOption;
+            //this.InnovationOrganizationId = innovationOrganization.Id;
+            //this.InnovationOptionId = innovationOption.Id;
+            this.AdditionalInfo = additionalInfo;
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="InnovationOrganizationOption"/> class.
         /// </summary>

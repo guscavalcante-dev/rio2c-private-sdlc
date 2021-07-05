@@ -29,7 +29,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public decimal AccumulatedRevenue { get; private set; }
         public string Description { get; private set; }
         public string Curriculum { get; private set; }
-        public int WorkDedicationId { get; private set; }
+        public Guid WorkDedicationUid { get; private set; }
         public string BusinessDefinition { get; private set; }
         public string Website { get; private set; }
         public string BusinessFocus { get; private set; }
@@ -43,6 +43,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string Email { get; private set; }
         public string PhoneNumber { get; private set; }
         public string CellPhone { get; private set; }
+        public string PresentationFile { get; set; }
+        public string PresentationFileName { get; set; }
 
         public List<InnovationOptionApiDto> CompanyExperiences { get; set; }
         public List<InnovationOptionApiDto> ProductsOrServices { get; set; }
@@ -63,7 +65,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.AccumulatedRevenue = innovationOrganizationApiDto.AccumulatedRevenue;
             this.Description = innovationOrganizationApiDto.Description;
             this.Curriculum = innovationOrganizationApiDto.Curriculum;
-            this.WorkDedicationId = innovationOrganizationApiDto.WorkDedicationId;
+            this.WorkDedicationUid = innovationOrganizationApiDto.WorkDedicationUid;
             this.BusinessDefinition = innovationOrganizationApiDto.BusinessDefinition;
             this.Website = innovationOrganizationApiDto.Website;
             this.BusinessFocus = innovationOrganizationApiDto.BusinessFocus;
@@ -77,6 +79,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Email = innovationOrganizationApiDto.Email;
             this.PhoneNumber = innovationOrganizationApiDto.PhoneNumber;
             this.CellPhone = innovationOrganizationApiDto.CellPhone;
+            this.PresentationFile = innovationOrganizationApiDto.PresentationFile;
+            this.PresentationFileName = innovationOrganizationApiDto.PresentationFileName;
             this.CompanyExperiences = innovationOrganizationApiDto.CompanyExperiences;
             this.ProductsOrServices = innovationOrganizationApiDto.ProductsOrServices;
             this.TechnologyExperiences = innovationOrganizationApiDto.TechnologyExperiences;
@@ -94,7 +98,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="accumulatedRevenue">The accumulated revenue.</param>
         /// <param name="description">The description.</param>
         /// <param name="curriculum">The curriculum.</param>
-        /// <param name="workDedicationId">The work dedication identifier.</param>
+        /// <param name="workDedicationUid">The work dedication identifier.</param>
         /// <param name="businessDefinition">The business definition.</param>
         /// <param name="website">The website.</param>
         /// <param name="businessFocus">The business focus.</param>
@@ -114,7 +118,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             decimal accumulatedRevenue,
             string description,
             string curriculum,
-            int workDedicationId,
+            Guid workDedicationUid,
             string businessDefinition,
             string website,
             string businessFocus,
@@ -128,6 +132,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string email,
             string phoneNumber,
             string cellPhone,
+            string presentationFile,
+            string presentationFileName,
             List<InnovationOptionApiDto> companyExperiences,
             List<InnovationOptionApiDto> productsOrServices,
             List<InnovationOptionApiDto> technologyExperiences,
@@ -141,7 +147,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.AccumulatedRevenue = accumulatedRevenue;
             this.Description = description;
             this.Curriculum = curriculum;
-            this.WorkDedicationId = workDedicationId;
+            this.WorkDedicationUid = workDedicationUid;
             this.BusinessDefinition = businessDefinition;
             this.Website = website;
             this.BusinessFocus = businessFocus;
@@ -155,6 +161,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Email = email;
             this.PhoneNumber = phoneNumber;
             this.CellPhone = cellPhone;
+            this.PresentationFile = presentationFile;
+            this.PresentationFileName = presentationFileName;
             this.CompanyExperiences = companyExperiences;
             this.ProductsOrServices = productsOrServices;
             this.TechnologyExperiences = technologyExperiences;

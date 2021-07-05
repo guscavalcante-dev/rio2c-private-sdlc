@@ -79,7 +79,6 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         public async Task<IHttpActionResult> CreateStartup(string key, HttpRequestMessage request)
         {
             var validationResult = new AppValidationResult();
-            var payload = new InnovationOrganizationApiDto().GenerateTestJson();
 
             try
             {
@@ -241,10 +240,9 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 }
 
                 var innovationOptionGroup = await this.innovationOptionGroupRepository.FindByUidAsync(innovationOptionGroupUid ?? Guid.Empty);
-
                 if (innovationOptionGroup == null)
                 {
-                    //throw NotFiniteNumberException found exception
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = $"Innovation Option Group not found (UID: {innovationOptionGroupUid})." } });
                 }
 
                 var innovationOptions = await this.innovationOptionRepository.FindAllByGroupUidAsync(innovationOptionGroup.Id);

@@ -41,6 +41,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeCollaboratorTicket> AttendeeCollaboratorTickets { get; private set; }
         public virtual ICollection<ConferenceParticipant> ConferenceParticipants { get; private set; }
         public virtual ICollection<AttendeeMusicBandCollaborator> AttendeeMusicBandCollaborators { get; private set; }
+        public virtual ICollection<AttendeeInnovationOrganizationCollaborator> AttendeeInnovationOrganizationCollaborators { get; private set; }
         public virtual ICollection<Logistic> Logistics { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.</summary>
@@ -164,10 +165,11 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Updates the specified edition.</summary>
-        /// <param name="edition">The edition.</param>
+        /// <summary>
+        /// Updates the specified collaborator type.
+        /// </summary>
         /// <param name="collaboratorType">Type of the collaborator.</param>
-        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
+        /// <param name="isApiDisplayEnabled">if set to <c>true</c> [is API display enabled].</param>
         /// <param name="apiHighlightPosition">The API highlight position.</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="shouldDeleteOrganizations">if set to <c>true</c> [should delete organizations].</param>
@@ -866,6 +868,93 @@ namespace PlataformaRio2C.Domain.Entities
         public List<AttendeeMusicBand> GetAllAttendeMusicBands()
         {
             return this.AttendeeMusicBandCollaborators?.Select(ambc => ambc.AttendeeMusicBand)?.ToList();
+        }
+
+        #endregion
+
+        #region Attendee Innovation Organization Collaborators
+
+        /// <summary>Synchronizes the attendee innovation organization collaborators.</summary>
+        /// <param name="attendeeInnovationOrganizations">The attendee innovation organizations.</param>
+        /// <param name="shouldDeleteInnovationOrganizations">if set to <c>true</c> [should delete music bands].</param>
+        /// <param name="userId">The user identifier.</param>
+        public void SynchronizeAttendeeInnovationOrganizationCollaborators(List<AttendeeInnovationOrganization> attendeeInnovationOrganizations, bool shouldDeleteInnovationOrganizations, int userId)
+        {
+            if (this.AttendeeInnovationOrganizationCollaborators == null)
+            {
+                this.AttendeeInnovationOrganizationCollaborators = new List<AttendeeInnovationOrganizationCollaborator>();
+            }
+
+            if (shouldDeleteInnovationOrganizations)
+            {
+                this.DeleteAttendeeInnovationOrganizationCollaborators(attendeeInnovationOrganizations, userId);
+            }
+
+            if (attendeeInnovationOrganizations?.Any() != true)
+            {
+                return;
+            }
+
+            // Create or update
+            foreach (var attendeeInnovationOrganization in attendeeInnovationOrganizations)
+            {
+                var attendeeInnovationOrganizationCollaboratorDb = this.AttendeeInnovationOrganizationCollaborators.FirstOrDefault(aioc => aioc.AttendeeInnovationOrganizationId == attendeeInnovationOrganization.Id);
+                if (attendeeInnovationOrganizationCollaboratorDb != null)
+                {
+                    attendeeInnovationOrganizationCollaboratorDb.Update(userId);
+                }
+                else
+                {
+                    this.CreateAttendeeInnovationOrganizationCollaborator(attendeeInnovationOrganization, userId);
+                }
+            }
+        }
+
+        /// <summary>Deletes the attendee innovation organization collaborator.</summary>
+        /// <param name="InnovationOrganizationUid">The music band uid.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void DeleteAttendeeInnovationOrganizationCollaborator(Guid InnovationOrganizationUid, int userId)
+        {
+            var attendeeInnovationOrganizationCollaborator = this.FindAttendeeInnovationOrganizationCollaboratorByInnovationOrganizationUid(InnovationOrganizationUid);
+            attendeeInnovationOrganizationCollaborator?.Delete(userId);
+        }
+
+        /// <summary>Deletes the attendee innovation organization collaborators.</summary>
+        /// <param name="newAttendeeInnovationOrganizations">The new attendee innovation organizations.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteAttendeeInnovationOrganizationCollaborators(List<AttendeeInnovationOrganization> newAttendeeInnovationOrganizations, int userId)
+        {
+            var attendeeInnovationOrganizationCollaboratorToDelete = this.AttendeeInnovationOrganizationCollaborators
+                .Where(aioc => !aioc.IsDeleted && newAttendeeInnovationOrganizations?.Select(namb => namb.Id)?.Contains(aioc.AttendeeInnovationOrganizationId) == false)
+                .ToList();
+
+            foreach (var attendeeInnovationOrganizationCollaborator in attendeeInnovationOrganizationCollaboratorToDelete)
+            {
+                attendeeInnovationOrganizationCollaborator.Delete(userId);
+            }
+        }
+
+        /// <summary>Creates the attendee innovation organization collaborator.</summary>
+        /// <param name="attendeeInnovationOrganization">The attendee innovation organization.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void CreateAttendeeInnovationOrganizationCollaborator(AttendeeInnovationOrganization attendeeInnovationOrganization, int userId)
+        {
+            this.AttendeeInnovationOrganizationCollaborators.Add(new AttendeeInnovationOrganizationCollaborator(attendeeInnovationOrganization, this, userId));
+        }
+
+        /// <summary>Finds the attendee innovation organization collaborator by music band uid.</summary>
+        /// <param name="InnovationOrganizationUid">The music band uid.</param>
+        /// <returns></returns>
+        private AttendeeInnovationOrganizationCollaborator FindAttendeeInnovationOrganizationCollaboratorByInnovationOrganizationUid(Guid InnovationOrganizationUid)
+        {
+            return this.AttendeeInnovationOrganizationCollaborators?.FirstOrDefault(aioc => aioc.AttendeeInnovationOrganization.InnovationOrganization.Uid == InnovationOrganizationUid);
+        }
+
+        /// <summary>Gets all attende music bands.</summary>
+        /// <returns></returns>
+        public List<AttendeeInnovationOrganization> GetAllAttendeInnovationOrganizations()
+        {
+            return this.AttendeeInnovationOrganizationCollaborators?.Select(aioc => aioc.AttendeeInnovationOrganization)?.ToList();
         }
 
         #endregion

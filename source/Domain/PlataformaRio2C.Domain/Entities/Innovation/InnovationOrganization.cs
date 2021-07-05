@@ -24,7 +24,7 @@ namespace PlataformaRio2C.Domain.Entities
     /// Implements the <see cref="PlataformaRio2C.Domain.Entities.Entity" />
     /// </summary>
     /// <seealso cref="PlataformaRio2C.Domain.Entities.Entity" />
-    public class InnovationOrganization : Entity
+    public class InnovationOrganization : AggregateRoot
     {
         public string Name { get; private set; }
         public string Document { get; private set; }
@@ -46,13 +46,10 @@ namespace PlataformaRio2C.Domain.Entities
         public string BusinessStage { get; private set; }
         public DateTimeOffset? PresentationUploadDate { get; private set; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="InnovationOrganization"/> class.
-        /// </summary>
-        public InnovationOrganization()
-        {
+        public virtual WorkDedication WorkDedication { get; private set; }
 
-        }
+        public virtual ICollection<InnovationOrganizationOption> InnovationOrganizationOptions { get; private set; }
+        public virtual ICollection<AttendeeInnovationOrganization> AttendeeInnovationOrganizations { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InnovationOrganization"/> class.
@@ -77,6 +74,10 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="businessStage">The business stage.</param>
         /// <param name="presentationUploadDate">The presentation upload date.</param>
         public InnovationOrganization(
+            Edition edition,
+            AttendeeCollaborator attendeeCollaborator,
+            WorkDedication workDedication,
+            List<InnovationOption> innovationOptions,
             string name,
             string document,
             string serviceName,
@@ -85,7 +86,6 @@ namespace PlataformaRio2C.Domain.Entities
             decimal accumulatedRevenue,
             string description,
             string curriculum,
-            int workDedicationId,
             string businessDefinition,
             string website,
             string businessFocus,
@@ -95,6 +95,7 @@ namespace PlataformaRio2C.Domain.Entities
             string businessDifferentials,
             string competingCompanies,
             string businessStage,
+            bool isPresentationUploaded,
             int userId)
         {
             this.Name = name;
@@ -105,7 +106,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.AccumulatedRevenue = accumulatedRevenue;
             this.Description = description;
             this.Curriculum = curriculum;
-            this.WorkDedicationId = workDedicationId;
             this.BusinessDefinition = businessDefinition;
             this.Website = website;
             this.BusinessFocus = businessFocus;
@@ -115,11 +115,141 @@ namespace PlataformaRio2C.Domain.Entities
             this.BusinessDifferentials = businessDifferentials;
             this.CompetingCompanies = competingCompanies;
             this.BusinessStage = businessStage;
-            this.PresentationUploadDate = null; //TODO: Save "DateTime.Now()" when "InnovationOrganizationApiDto.PresentationFile" has value!
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
+            
+            this.UpdatePresentationUploadDate(isPresentationUploaded, false);
+            this.SetWorkDedication(workDedication);
+            this.AddInnovationOrganizationOptions(innovationOptions, userId);
+            this.SynchronizeAttendeeInnovationOrganizationsCollaborators(edition, attendeeCollaborator, userId);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InnovationOrganization"/> class.
+        /// </summary>
+        public InnovationOrganization()
+        {
+
+        }
+
+        #region Attendee Innovation Organization
+
+        /// <summary>
+        /// Synchronizes the attendee innovation organizations collaborators.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="attendeeCollaborator">The attendee collaborator.</param>
+        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="musicProjectApiDto">The music project API dto.</param>
+        private void SynchronizeAttendeeInnovationOrganizationsCollaborators(Edition edition, AttendeeCollaborator attendeeCollaborator, int userId)
+        {
+            if (edition == null)
+            {
+                return;
+            }
+
+            if (this.AttendeeInnovationOrganizations == null)
+            {
+                this.AttendeeInnovationOrganizations = new List<AttendeeInnovationOrganization>();
+            }
+
+            var AttendeeInnovationOrganization = this.AttendeeInnovationOrganizations.FirstOrDefault(ao => ao.EditionId == edition.Id);
+            if (AttendeeInnovationOrganization != null)
+            {
+                AttendeeInnovationOrganization.Restore(userId);
+                attendeeCollaborator?.SynchronizeAttendeeInnovationOrganizationCollaborators(new List<AttendeeInnovationOrganization> { AttendeeInnovationOrganization }, false, userId);
+            }
+            else
+            {
+                var newAttendeeInnovationOrganization = new AttendeeInnovationOrganization(edition, this, userId);
+                this.AttendeeInnovationOrganizations.Add(newAttendeeInnovationOrganization);
+                attendeeCollaborator?.SynchronizeAttendeeInnovationOrganizationCollaborators(new List<AttendeeInnovationOrganization> { newAttendeeInnovationOrganization }, false, userId);
+            }
+        }
+
+        /// <summary>Deletes the attendee innovation organization.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteAttendeeInnovationOrganization(Edition edition, int userId)
+        {
+            foreach (var AttendeeInnovationOrganization in this.FindAllAttendeeInnovationOrganizationsNotDeleted(edition))
+            {
+                AttendeeInnovationOrganization?.Delete(userId);
+            }
+        }
+
+        /// <summary>Gets the attendee organization by edition identifier.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        private AttendeeInnovationOrganization FindAttendeeInnovationOrganizationByEditionId(int editionId)
+        {
+            return this.AttendeeInnovationOrganizations?.FirstOrDefault(amb => amb.Edition.Id == editionId);
+        }
+
+        /// <summary>Finds all attendee innovation organizations not deleted.</summary>
+        /// <param name="edition">The edition.</param>
+        /// <returns></returns>
+        private List<AttendeeInnovationOrganization> FindAllAttendeeInnovationOrganizationsNotDeleted(Edition edition)
+        {
+            return this.AttendeeInnovationOrganizations?.Where(amb => (edition == null || amb.EditionId == edition.Id) && !amb.IsDeleted)?.ToList();
+        }
+
+        #endregion
+
+        #region Innovation Organization Options
+
+        /// <summary>
+        /// Adds the innovation organization options.
+        /// </summary>
+        /// <param name="innovationOptions">The innovation options.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void AddInnovationOrganizationOptions(List<InnovationOption> innovationOptions, int userId)
+        {
+            if (this.InnovationOrganizationOptions == null)
+            {
+                this.InnovationOrganizationOptions = new List<InnovationOrganizationOption>();
+            }
+
+            foreach (var innovationOption in innovationOptions)
+            {
+                this.InnovationOrganizationOptions.Add(new InnovationOrganizationOption(this, innovationOption, null, userId));
+            }
+        }
+
+        #endregion
+
+        #region Work Dedication
+
+        /// <summary>
+        /// Adds the work dedication.
+        /// </summary>
+        /// <param name="workDedication">The work dedication.</param>
+        private void SetWorkDedication(WorkDedication workDedication)
+        {
+            this.WorkDedication = workDedication;
+            this.WorkDedicationId = workDedication.Id;
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Updates the presentation upload date.
+        /// </summary>
+        /// <param name="isPresentationUploaded">if set to <c>true</c> [is presentation uploaded].</param>
+        /// <param name="isPresentationDeleted">if set to <c>true</c> [is presentation deleted].</param>
+        private void UpdatePresentationUploadDate(bool isPresentationUploaded, bool isPresentationDeleted)
+        {
+            if (isPresentationUploaded)
+            {
+                this.PresentationUploadDate = DateTime.UtcNow;
+            }
+            else if (isPresentationDeleted)
+            {
+                this.PresentationUploadDate = null;
+            }
         }
 
         #region Valitations

@@ -23,6 +23,8 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IInnovationOptionRepository</summary>
     public interface IInnovationOptionRepository : IRepository<InnovationOption>
     {
+        InnovationOption FindById(int innovationOptionId);
+        InnovationOption FindByUid(Guid innovationOptionUid);
         Task<InnovationOption> FindByIdAsync(int innovationOptionId);
         Task<InnovationOption> FindByUidAsync(Guid innovationOptionUid);
         Task<List<InnovationOption>> FindAllAsync();

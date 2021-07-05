@@ -100,7 +100,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
 
-            this.SynchronizeAttendeeMusicBandsCollaborators(edition, attendeeCollaborator, musicProjectApiDto, true, userId);  
+            this.SynchronizeAttendeeMusicBandsCollaborators(edition, attendeeCollaborator, musicProjectApiDto, userId);  
             this.AddMusicBandGenres(musicGenreApiDtos, userId);
             this.AddMusicBandTargetAudience(targetAudienceApiDtos, userId);
             this.AddMusicBandMembers(musicBandMemberApiDtos, userId);
@@ -209,14 +209,8 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
         /// <param name="userId">The user identifier.</param>
         /// <param name="musicProjectApiDto">The music project API dto.</param>
-        private void SynchronizeAttendeeMusicBandsCollaborators(Edition edition, AttendeeCollaborator attendeeCollaborator, MusicProjectApiDto musicProjectApiDto, bool isAddingToCurrentEdition, int userId)
+        private void SynchronizeAttendeeMusicBandsCollaborators(Edition edition, AttendeeCollaborator attendeeCollaborator, MusicProjectApiDto musicProjectApiDto, int userId)
         {
-            // Synchronize only when is adding to current edition
-            if (!isAddingToCurrentEdition)
-            {
-                return;
-            }
-
             if (this.AttendeeMusicBands == null)
             {
                 this.AttendeeMusicBands = new List<AttendeeMusicBand>();

@@ -16,6 +16,7 @@ using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 using System.Linq;
@@ -123,7 +124,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         musicBandApiDto.MusicBandResponsibleApiDto.Document);
                     
                     createCollaboratorCommand.UpdatePreSendProperties(
-                        "Music", //"Music" is fixed because in [dbo].[MigrateMusicProjects] procedure, its is fixed too!
+                        CollaboratorType.Music.Name, //"Music" is fixed because in [dbo].[MigrateMusicProjects] procedure, its is fixed too!
                         cmd.UserId, 
                         cmd.UserUid, 
                         edition.Id, 
@@ -133,7 +134,17 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     var commandResult = await base.CommandBus.Send(createCollaboratorCommand);
                     if (!commandResult.IsValid)
                     {
-                        throw new DomainException(commandResult.Errors.Select(e => e.Message).FirstOrDefault().ToString());
+                        var currentValidationResult = new ValidationResult();
+                        foreach (var error in commandResult?.Errors)
+                        {
+                            currentValidationResult.Add(new ValidationError(error.Message));
+                        }
+
+                        if (!currentValidationResult.IsValid)
+                        {
+                            this.AppValidationResult.Add(currentValidationResult);
+                            return this.AppValidationResult;
+                        }
                     }
 
                     collaborator = commandResult.Data as Collaborator;

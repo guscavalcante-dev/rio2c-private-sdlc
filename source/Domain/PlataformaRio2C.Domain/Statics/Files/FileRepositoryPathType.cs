@@ -31,5 +31,6 @@ namespace PlataformaRio2C.Domain.Statics
         public static FileRepositoryPathType OrganizationImage = new FileRepositoryPathType(new Guid("77A64959-117B-4FCC-B031-B519C0F65196"));
         public static FileRepositoryPathType UserImage = new FileRepositoryPathType(new Guid("A94034FA-4648-4B27-B3BE-F88F172E475D"));
         public static FileRepositoryPathType LogisticAirfareFile = new FileRepositoryPathType(new Guid("90DD5AB8-1210-4278-96EC-FFB414535CB4"));
+        public static FileRepositoryPathType InnovationOrganizationPresentationFile = new FileRepositoryPathType(new Guid("319ECD0E-9B1B-4563-B98A-C09D59453EF3"));
     }
 }

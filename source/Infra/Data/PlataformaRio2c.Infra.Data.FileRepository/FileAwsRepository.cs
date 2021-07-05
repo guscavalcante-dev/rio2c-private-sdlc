@@ -33,7 +33,8 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
         private readonly string imagesOrganizationsDirectory;
         private readonly string imagesUsersDirectory;
         private readonly string filesLogisticsAirfareDirectory;
-
+        private readonly string filesInnovationOrganizationsDirectory;
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="FileAwsRepository"/> class.
         /// </summary>
@@ -46,6 +47,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
             this.imagesOrganizationsDirectory = ConfigurationManager.AppSettings["AwsImagesOrganizationsDirectory"];
             this.imagesUsersDirectory = ConfigurationManager.AppSettings["AwsImagesUsersDirectory"];
             this.filesLogisticsAirfareDirectory = ConfigurationManager.AppSettings["AwsFilesLogisticsAirfareDirectory"];
+            this.filesInnovationOrganizationsDirectory = ConfigurationManager.AppSettings["AwsFilesInnovationOrganizationsDirectory"];
         }
 
         #region Get Url
@@ -207,6 +209,11 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
             if (fileRepositoryPathType.Uid == FileRepositoryPathType.LogisticAirfareFile.Uid)
             {
                 return string.Format(this.filesLogisticsAirfareDirectory, args);
+            }
+
+            if (fileRepositoryPathType.Uid == FileRepositoryPathType.InnovationOrganizationPresentationFile.Uid)
+            {
+                return string.Format(this.filesInnovationOrganizationsDirectory, args);
             }
 
             return string.Empty;

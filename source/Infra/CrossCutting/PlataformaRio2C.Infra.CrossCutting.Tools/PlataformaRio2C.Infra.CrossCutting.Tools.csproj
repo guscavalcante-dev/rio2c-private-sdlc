@@ -212,6 +212,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Log\LogService.cs" />
     <Compile Include="Attributes\RequiredIfOneNotEmptyAndOtherEmptyAttribute.cs" />
+    <Compile Include="Statics\FileMimeType.cs" />
+    <Compile Include="Statics\FileType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

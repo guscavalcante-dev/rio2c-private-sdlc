@@ -982,4 +982,12 @@
     <value>There are no business rounds scheduled for printing</value>
     <comment>Não existem rodadas de negócio agendadas para impressão</comment>
   </data>
+  <data name="EntityMustBeBase64" xml:space="preserve">
+    <value>{0} must be Base64 encoded.</value>
+    <comment>{0} deve ser codificado em Base64</comment>
+  </data>
+  <data name="EntityMustContainsMaxItemsCount" xml:space="preserve">
+    <value>The {0} must contains max {1} items.</value>
+    <comment>{0} deve conter no máximo {1} itens.</comment>
+  </data>
 </root>

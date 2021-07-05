@@ -25,13 +25,23 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.ToTable("AttendeeInnovationOrganizations");
 
             // Relationships
-            //this.HasRequired(t => t.Edition)
-            //    .WithMany(e => e.AttendeeInnovationOrganizations)
-            //    .HasForeignKey(d => d.EditionId);
+            this.HasRequired(t => t.Edition)
+                .WithMany()
+                .HasForeignKey(d => d.EditionId);
 
-            //this.HasRequired(t => t.Organization)
-            //    .WithMany(e => e.AttendeeInnovationOrganizations)
-            //    .HasForeignKey(d => d.OrganizationId);
+            this.HasRequired(t => t.InnovationOrganization)
+                   .WithMany(io => io.AttendeeInnovationOrganizations)
+                   .HasForeignKey(d => d.InnovationOrganizationId);
+
+            this.HasRequired(t => t.ProjectEvaluationStatus)
+                .WithMany()
+                .HasForeignKey(d => d.ProjectEvaluationStatusId);
+
+            //TODO: How to map this?
+            //this.HasRequired(t => t.ProjectEvaluationRefuseReason)
+            //   .WithMany()
+            //   .HasForeignKey(d => d.ProjectEvaluationRefuseReasonId);
+
         }
     }
 }

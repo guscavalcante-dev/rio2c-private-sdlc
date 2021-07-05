@@ -32,6 +32,8 @@ namespace PlataformaRio2C.Domain.Entities
         public int DisplayOrder { get; private set; }
         public bool HasAdditionalInfo { get; private set; }
 
+        public virtual InnovationOptionGroup InnovationOptionGroup { get; private set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="InnovationOption"/> class.
         /// </summary>

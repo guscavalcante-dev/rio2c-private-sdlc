@@ -619,6 +619,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} deve ser codificado em Base64.
+        /// </summary>
+        public static string EntityMustBeBase64 {
+            get {
+                return ResourceManager.GetString("EntityMustBeBase64", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} deve conter no máximo {1} itens..
+        /// </summary>
+        public static string EntityMustContainsMaxItemsCount {
+            get {
+                return ResourceManager.GetString("EntityMustContainsMaxItemsCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} não {1}..
         /// </summary>
         public static string EntityNotAction {

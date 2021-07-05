@@ -14,6 +14,8 @@
 using Newtonsoft.Json;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Statics;
 using System;
 using System.Collections.Generic;
 
@@ -24,6 +26,13 @@ namespace PlataformaRio2C.Domain.Dtos
     {
         [JsonIgnore]
         public ValidationResult ValidationResult { get; set; }
+
+        [JsonIgnore]
+        private int CurriculumMaxLenght = 710;
+        [JsonIgnore]
+        private int DescriptionMaxLenght = 600;
+        [JsonIgnore]
+        private int CompetingCompaniesMaxCount = 3;
 
         #region Required
 
@@ -84,8 +93,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public string BusinessDifferentials { get; set; }
 
         [JsonRequired]
-        [JsonProperty("workDedication")]
-        public int WorkDedicationId { get; set; }
+        [JsonProperty("workDedicationUid")]
+        public Guid WorkDedicationUid { get; set; }
 
         [JsonRequired]
         [JsonProperty("businessStage")]
@@ -160,6 +169,9 @@ namespace PlataformaRio2C.Domain.Dtos
             this.ValidationResult = new ValidationResult();
 
             this.ValidateCompetingCompanies();
+            this.ValidateCurriculum();
+            this.ValidateDescription();
+            this.ValidatePresentationFile();
 
             return this.ValidationResult.IsValid;
         }
@@ -169,9 +181,47 @@ namespace PlataformaRio2C.Domain.Dtos
         /// </summary>
         private void ValidateCompetingCompanies()
         {
-            if(this.CompetingCompanies.Count > 3)
+            if(this.CompetingCompanies.Count > this.CompetingCompaniesMaxCount)
             {
-                //this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Edition), new string[] { "EditionId" }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityMustContainsMaxItemsCount, nameof(CompetingCompanies), this.CompetingCompaniesMaxCount), new string[] { nameof(CompetingCompanies) }));
+            }
+        }
+
+        /// <summary>
+        /// Validates the curriculum.
+        /// </summary>
+        private void ValidateCurriculum()
+        {
+            if (this.Curriculum.Length > this.CurriculumMaxLenght)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(Curriculum), this.CurriculumMaxLenght, 1), new string[] { nameof(Curriculum) }));
+            }
+        }
+
+        /// <summary>
+        /// Validates the description.
+        /// </summary>
+        private void ValidateDescription()
+        {
+            if (this.Description.Length > this.DescriptionMaxLenght)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(Curriculum), this.DescriptionMaxLenght, 1), new string[] { nameof(Curriculum) }));
+            }
+        }
+
+        /// <summary>
+        /// Validates the presentation file.
+        /// </summary>
+        private void ValidatePresentationFile()
+        {
+            if (!this.PresentationFile.IsBase64String())
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityMustBeBase64, nameof(PresentationFile)), new string[] { nameof(PresentationFile) }));
+            }
+
+            if (this.PresentationFile.GetBase64FileExtension() != FileType.Pdf)
+            {
+                this.ValidationResult.Add(new ValidationError(Messages.FileMustBePdf, new string[] { nameof(PresentationFile) }));
             }
         }
 
@@ -209,7 +259,7 @@ namespace PlataformaRio2C.Domain.Dtos
 
             this.PresentationFile = "PresentationFileBase64";
             this.PresentationFileName = "PresentationFileName.pdf";
-            this.WorkDedicationId = 2; //Integral
+            this.WorkDedicationUid = new Guid("ADA0C122-45EF-41E4-9002-EDB9E9FBDB51"); //Integral
 
             this.CompetingCompanies = new List<string>()
             {

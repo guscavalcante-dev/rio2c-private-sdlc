@@ -2783,4 +2783,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Enviados</value>
     <comment>Enviados</comment>
   </data>
+  <data name="WorkDedication" xml:space="preserve">
+    <value>Dedicação</value>
+    <comment>Dedicação</comment>
+  </data>
 </root>

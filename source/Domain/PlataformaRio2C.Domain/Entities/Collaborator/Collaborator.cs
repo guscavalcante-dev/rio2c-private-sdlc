@@ -300,7 +300,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateUserId = this.UpdateUserId = userId;
         }
 
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Collaborator"/> class.
         /// </summary>

@@ -26,6 +26,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
         private readonly string imagesOrganizationsDirectory;
         private readonly string imagesUsersDirectory;
         private readonly string filesLogisticsAirfareDirectory;
+        private readonly string filesInnovationOrganizationsDirectory;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FileLocalRepository"/> class.
@@ -37,6 +38,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
             this.imagesOrganizationsDirectory = ConfigurationManager.AppSettings["LocalImagesOrganizationsDirectory"];
             this.imagesUsersDirectory = ConfigurationManager.AppSettings["LocalImagesUsersDirectory"];
             this.filesLogisticsAirfareDirectory = ConfigurationManager.AppSettings["LocalFilesLogisticsAirfareDirectory"];
+            this.filesInnovationOrganizationsDirectory = ConfigurationManager.AppSettings["LocalFilesInnovationOrganizationsDirectory"];
         }
 
         #region Get Url
@@ -170,6 +172,11 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
             if (fileRepositoryPathType.Uid == FileRepositoryPathType.LogisticAirfareFile.Uid)
             {
                 return string.Format(this.filesLogisticsAirfareDirectory, args);
+            }
+
+            if (fileRepositoryPathType.Uid == FileRepositoryPathType.InnovationOrganizationPresentationFile.Uid)
+            {
+                return string.Format(this.filesInnovationOrganizationsDirectory, args);
             }
 
             return string.Empty;

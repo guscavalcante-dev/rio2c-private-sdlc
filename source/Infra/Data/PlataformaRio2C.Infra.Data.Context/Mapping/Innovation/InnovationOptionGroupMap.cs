@@ -25,13 +25,6 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.ToTable("InnovationOptionGroups");
 
             // Relationships
-            //this.HasRequired(t => t.Edition)
-            //    .WithMany(e => e.InnovationOptionGroups)
-            //    .HasForeignKey(d => d.EditionId);
-
-            //this.HasRequired(t => t.Organization)
-            //    .WithMany(e => e.InnovationOptionGroups)
-            //    .HasForeignKey(d => d.OrganizationId);
         }
     }
 }
