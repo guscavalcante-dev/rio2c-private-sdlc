@@ -1853,6 +1853,10 @@
     <value>Data de início da avaliação de projeto</value>
     <comment>Data de início da avaliação de projeto</comment>
   </data>
+  <data name="ProjectEvaluationStatus" xml:space="preserve">
+    <value>Status de avaliação do projeto</value>
+    <comment>Status de avaliação do projeto</comment>
+  </data>
   <data name="ProjectId" xml:space="preserve">
     <value>ID do Projeto</value>
     <comment>ID do Projeto</comment>

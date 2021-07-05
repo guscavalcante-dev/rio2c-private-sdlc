@@ -11,6 +11,7 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,10 +44,14 @@ namespace PlataformaRio2C.Domain.Entities
         /// Returns true if ... is valid.
         /// </summary>
         /// <returns><c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
-        /// <exception cref="NotImplementedException"></exception>
         public override bool IsValid()
         {
-            throw new NotImplementedException();
+            if (this.ValidationResult == null)
+            {
+                this.ValidationResult = new ValidationResult();
+            }
+
+            return this.ValidationResult.IsValid;
         }
 
         #endregion

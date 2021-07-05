@@ -42,6 +42,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
         private readonly IWorkDedicationRepository workDedicationRepo;
+        private readonly IProjectEvaluationStatusRepository projectEvaluationStatusRepo;
         private readonly IFileRepository fileRepo;
 
         /// <summary>
@@ -63,6 +64,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             ICollaboratorRepository collaboratorRepository,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
             IWorkDedicationRepository workDedicationRepository,
+            IProjectEvaluationStatusRepository projectEvaluationStatusRepository,
             IFileRepository fileRepository
             )
             : base(commandBus, uow, innovationOrganizationRepository)
@@ -72,6 +74,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.collaboratorRepo = collaboratorRepository;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
             this.workDedicationRepo = workDedicationRepository;
+            this.projectEvaluationStatusRepo = projectEvaluationStatusRepository;
             this.fileRepo = fileRepository;
         }
 
@@ -97,6 +100,19 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             if (edition == null)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Edition, Labels.FoundF), new string[] { "ToastrError" }));
+            }
+
+            var projectEvaluationStatus = await projectEvaluationStatusRepo.GetAsync(ProjectEvaluationStatus.UnderEvaluation.Uid);
+            if (projectEvaluationStatus == null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.ProjectEvaluationStatus, Labels.FoundM), new string[] { "ToastrError" }));
+            }
+
+            //TODO: After implements the "InnovationOrganization.Update()", remove this validation!
+            var existentInnovationOrganization = await InnovationOrganizationRepo.FindByDocumentAsync(cmd.Document);
+            if (existentInnovationOrganization != null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.Startup, Labels.Document, cmd.Document), new string[] { "ToastrError" }));
             }
 
             if (!this.ValidationResult.IsValid)
@@ -188,6 +204,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                    edition,
                    collaborator.GetAttendeeCollaboratorByEditionId(edition.Id),
                    workDedication,
+                   projectEvaluationStatus,
                    innovationOptions,
                    cmd.Name,
                    cmd.Document,
@@ -215,8 +232,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
-            this.InnovationOrganizationRepository.Create(innovationOrganization);
+            this.InnovationOrganizationRepo.Create(innovationOrganization);
             this.Uow.SaveChanges();
+
             this.AppValidationResult.Data = innovationOrganization;
 
             if (!string.IsNullOrEmpty(cmd.PresentationFile))

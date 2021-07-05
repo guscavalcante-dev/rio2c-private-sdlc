@@ -63,6 +63,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>
+        /// Finds the by document.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="document">The document.</param>
+        /// <returns>IQueryable&lt;InnovationOrganization&gt;.</returns>
+        internal static IQueryable<InnovationOrganization> FindByDocument(this IQueryable<InnovationOrganization> query, string document)
+        {
+            query = query.Where(io => io.Document == document);
+
+            return query;
+        }
+
         /// <summary>Determines whether [is not deleted].</summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
@@ -152,5 +165,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query.ToListAsync();
         }
 
+        /// <summary>
+        /// find by document as an asynchronous operation.
+        /// </summary>
+        /// <param name="document">The document.</param>
+        /// <returns>Task&lt;InnovationOrganization&gt;.</returns>
+        public async Task<InnovationOrganization> FindByDocumentAsync(string document)
+        {
+            var query = this.GetBaseQuery()
+                           .FindByDocument(document);
+
+            return await query.FirstOrDefaultAsync();
+        }
     }
 }

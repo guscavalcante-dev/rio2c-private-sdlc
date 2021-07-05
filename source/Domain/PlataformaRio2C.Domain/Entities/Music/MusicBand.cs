@@ -408,7 +408,10 @@ namespace PlataformaRio2C.Domain.Entities
         ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
         public override bool IsValid()
         {
-            this.ValidationResult = new ValidationResult();
+            if (this.ValidationResult == null)
+            {
+                this.ValidationResult = new ValidationResult();
+            }
 
             this.ValidateMusicBandType();
             this.ValidateName();

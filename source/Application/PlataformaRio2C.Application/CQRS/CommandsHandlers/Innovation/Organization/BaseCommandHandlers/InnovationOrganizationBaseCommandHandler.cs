@@ -17,26 +17,28 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>Class StartupBaseCommandHandler.
-    /// Implements the <see cref="PlataformaRio2C.Application.CQRS.CommandsHandlers.BaseCommandHandler"/></summary>
+    /// <summary>
+    /// Class InnovationOrganizationBaseCommandHandler.
+    /// Implements the <see cref="PlataformaRio2C.Application.CQRS.CommandsHandlers.BaseCommandHandler" />
+    /// </summary>
     /// <seealso cref="PlataformaRio2C.Application.CQRS.CommandsHandlers.BaseCommandHandler" />
     public class InnovationOrganizationBaseCommandHandler : BaseCommandHandler
     {
-        protected readonly IInnovationOrganizationRepository InnovationOrganizationRepository;
+        protected readonly IInnovationOrganizationRepository InnovationOrganizationRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InnovationOrganizationBaseCommandHandler"/> class.
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="uow">The uow.</param>
-        /// <param name="musicBandRepository">The music band repository.</param>
+        /// <param name="innovationOrganizationRepo">The innovation organization repo.</param>
         public InnovationOrganizationBaseCommandHandler(
             IMediator commandBus, 
             IUnitOfWork uow,
-            IInnovationOrganizationRepository innovationOrganizationRepo)
+            IInnovationOrganizationRepository innovationOrganizationRepository)
             : base(commandBus, uow)
         {
-            this.InnovationOrganizationRepository = innovationOrganizationRepo;
+            this.InnovationOrganizationRepo = innovationOrganizationRepository;
         }
     }
 }

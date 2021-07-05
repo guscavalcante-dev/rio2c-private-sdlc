@@ -4178,6 +4178,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Status de avaliação do projeto.
+        /// </summary>
+        public static string ProjectEvaluationStatus {
+            get {
+                return ResourceManager.GetString("ProjectEvaluationStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ID do Projeto.
         /// </summary>
         public static string ProjectId {

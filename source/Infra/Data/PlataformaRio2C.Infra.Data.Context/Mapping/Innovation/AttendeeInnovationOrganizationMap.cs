@@ -22,7 +22,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         /// <summary>Initializes a new instance of the <see cref="AttendeeInnovationOrganizationMap"/> class.</summary>
         public AttendeeInnovationOrganizationMap()
         {
-            this.ToTable("AttendeeInnovationOrganizations");
+            this.ToTable("AttendeeInnovationOrganization");
 
             // Relationships
             this.HasRequired(t => t.Edition)

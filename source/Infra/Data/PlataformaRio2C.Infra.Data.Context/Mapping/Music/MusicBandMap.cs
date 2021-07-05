@@ -52,18 +52,6 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.HasRequired(t => t.MusicBandType)
                 .WithMany()
                 .HasForeignKey(d => d.MusicBandTypeId);
-
-            //this.HasOptional(t => t.Address)
-            //    .WithMany(e => e.Organizations)
-            //    .HasForeignKey(d => d.AddressId);
-
-            //this.HasMany(t => t.AttendeeMusicBands)
-            //    .WithRequired(e => e.MusicBand)
-            //    .HasForeignKey(e => e.MusicBandId);
-
-            //this.HasMany(t => t.OrganizationTargetAudiences)
-            //    .WithRequired(e => e.Organization)
-            //    .HasForeignKey(e => e.OrganizationId);
         }
     }
 }
