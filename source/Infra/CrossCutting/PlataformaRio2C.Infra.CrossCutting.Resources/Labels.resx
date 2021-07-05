@@ -117,427 +117,64 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AdditionalInformation" xml:space="preserve">
-    <value>Informação Adicional</value>
-    <comment>Informação Adicional</comment>
+  <data name="Accept" xml:space="preserve">
+    <value>Aceitar</value>
   </data>
-  <data name="Address" xml:space="preserve">
-    <value>Endereço</value>
-    <comment>Endereço</comment>
+  <data name="Accepted" xml:space="preserve">
+    <value>Aceito</value>
   </data>
-  <data name="Alter" xml:space="preserve">
-    <value>Alterar</value>
-    <comment>Alterar</comment>
+  <data name="AcceptProject" xml:space="preserve">
+    <value>Aprovar</value>
+    <comment>Aprovar</comment>
   </data>
-  <data name="BusinessRound" xml:space="preserve">
-    <value>Rodadas de Negócios</value>
-    <comment>Rodadas de Negócios</comment>
+  <data name="AcceptsVirtualMeeting" xml:space="preserve">
+    <value>Aceita reunião virtual</value>
+    <comment>Aceita reunião virtual</comment>
   </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Cancelar</value>
-    <comment>Cancelar</comment>
+  <data name="AccessData" xml:space="preserve">
+    <value>Dados de acesso</value>
+    <comment>Dados de acesso</comment>
   </data>
-  <data name="CellPhone" xml:space="preserve">
-    <value>Celular</value>
-    <comment>Celular</comment>
+  <data name="Accommodation" xml:space="preserve">
+    <value>Hospedagem</value>
+    <comment>Hospedagem</comment>
   </data>
-  <data name="City" xml:space="preserve">
-    <value>Cidade</value>
-    <comment>Cidade</comment>
+  <data name="Accommodations" xml:space="preserve">
+    <value>Hospedagens</value>
+    <comment>Hospedagens</comment>
   </data>
-  <data name="CNPJ" xml:space="preserve">
-    <value>CNPJ</value>
-    <comment>CNPJ</comment>
+  <data name="Accreditation" xml:space="preserve">
+    <value>Credenciamento</value>
+    <comment>Credenciamento</comment>
   </data>
-  <data name="Executives" xml:space="preserve">
-    <value>Executivos</value>
-    <comment>Executivos</comment>
+  <data name="Actions" xml:space="preserve">
+    <value>Ações</value>
+    <comment>Ações</comment>
   </data>
-  <data name="CompanyProfile" xml:space="preserve">
-    <value>Resumo sobre a empresa</value>
-    <comment>Resumo sobre a empresa</comment>
-  </data>
-  <data name="Country" xml:space="preserve">
-    <value>País</value>
-    <comment>País</comment>
-  </data>
-  <data name="Dashboard" xml:space="preserve">
-    <value>Dashboard</value>
-    <comment>Dashboard</comment>
-  </data>
-  <data name="Diary" xml:space="preserve">
-    <value>Agenda</value>
-    <comment>Agenda</comment>
-  </data>
-  <data name="EditProfile" xml:space="preserve">
-    <value>Editar Perfil</value>
-    <comment>Editar Perfil</comment>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>E-mail</value>
-    <comment>E-mail</comment>
-  </data>
-  <data name="EmailConfirmed" xml:space="preserve">
-    <value>E-mail confirmado</value>
-    <comment>E-mail confirmado</comment>
-  </data>
-  <data name="FullName" xml:space="preserve">
-    <value>Nome Completo</value>
-    <comment>Nome Completo</comment>
-  </data>
-  <data name="Holding" xml:space="preserve">
-    <value>Holding</value>
-    <comment>Holding</comment>
-  </data>
-  <data name="Holdings" xml:space="preserve">
-    <value>Holdings</value>
-    <comment>Holdings</comment>
-  </data>
-  <data name="Image" xml:space="preserve">
-    <value>Imagem</value>
-    <comment>Imagem</comment>
-  </data>
-  <data name="ImageSize" xml:space="preserve">
-    <value>&lt;strong&gt;Tamanho mínimo: 100KB&lt;/strong&gt; &lt;br/&gt; &lt;strong&gt;Tamanho máximo: 10MB&lt;/strong&gt;</value>
-    <comment>Tamanho</comment>
-  </data>
-  <data name="Interests" xml:space="preserve">
-    <value>Interesses</value>
-    <comment>Interesses</comment>
-  </data>
-  <data name="JobTitle" xml:space="preserve">
-    <value>Cargo</value>
-    <comment>Cargo</comment>
-  </data>
-  <data name="Conferences" xml:space="preserve">
-    <value>Palestras</value>
-    <comment>Palestras</comment>
-  </data>
-  <data name="LogOut" xml:space="preserve">
-    <value>Sair</value>
-    <comment>Sair</comment>
-  </data>
-  <data name="MiniBio" xml:space="preserve">
-    <value>Mini-biografia</value>
-    <comment>Mini-biografia</comment>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Nome</value>
-    <comment>Nome</comment>
-  </data>
-  <data name="Password" xml:space="preserve">
-    <value>Senha</value>
-    <comment>Senha</comment>
-  </data>
-  <data name="PhoneNumber" xml:space="preserve">
-    <value>Telefone</value>
-    <comment>Telefone</comment>
-  </data>
-  <data name="PhoneNumberConfirmed" xml:space="preserve">
-    <value>Telefone confirmado</value>
-    <comment>Telefone confirmado</comment>
-  </data>
-  <data name="Photo" xml:space="preserve">
-    <value>Foto</value>
-    <comment>Foto</comment>
-  </data>
-  <data name="Player" xml:space="preserve">
-    <value>Player</value>
-    <comment>Player</comment>
-  </data>
-  <data name="Profile" xml:space="preserve">
-    <value>Perfil</value>
-    <comment>Perfil</comment>
-  </data>
-  <data name="Projects" xml:space="preserve">
-    <value>Projetos</value>
-    <comment>Projetos</comment>
-  </data>
-  <data name="Remove" xml:space="preserve">
-    <value>Remover</value>
-    <comment>Remover</comment>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Salvar</value>
-    <comment>Salvar</comment>
-  </data>
-  <data name="SelectImage" xml:space="preserve">
-    <value>Selecionar imagem</value>
-    <comment>Selecionar imagem</comment>
-  </data>
-  <data name="SocialMedia" xml:space="preserve">
-    <value>Redes sociais</value>
-    <comment>Redes sociais</comment>
-  </data>
-  <data name="Soon" xml:space="preserve">
-    <value>Em Breve</value>
-    <comment>Em Breve</comment>
-  </data>
-  <data name="State" xml:space="preserve">
-    <value>Estado</value>
-    <comment>Estado</comment>
-  </data>
-  <data name="TradeName" xml:space="preserve">
-    <value>Nome fantasia</value>
-    <comment>Nome fantasia</comment>
-  </data>
-  <data name="User" xml:space="preserve">
-    <value>Usuário</value>
-    <comment>Usuário</comment>
-  </data>
-  <data name="ViewProfile" xml:space="preserve">
-    <value>Ver Perfil</value>
-    <comment>Ver Perfil</comment>
-  </data>
-  <data name="Warning" xml:space="preserve">
-    <value>ATENÇÃO!</value>
-    <comment>ATENÇÃO!</comment>
-  </data>
-  <data name="Website" xml:space="preserve">
-    <value>Website</value>
-    <comment>Website</comment>
-  </data>
-  <data name="ZipCode" xml:space="preserve">
-    <value>CEP</value>
-    <comment>CEP</comment>
-  </data>
-  <data name="ChangePassword" xml:space="preserve">
-    <value>Trocar Senha</value>
-    <comment>Trocar Senha</comment>
-  </data>
-  <data name="Enter" xml:space="preserve">
-    <value>Entrar</value>
-    <comment>Entrar</comment>
-  </data>
-  <data name="RememberMe" xml:space="preserve">
-    <value>Lembre-me?</value>
-    <comment>Lembre-me?</comment>
-  </data>
-  <data name="Reset" xml:space="preserve">
-    <value>Redefinir</value>
-    <comment>Redefinir</comment>
-  </data>
-  <data name="Return" xml:space="preserve">
-    <value>Retornar</value>
-    <comment>Retornar</comment>
-  </data>
-  <data name="Send" xml:space="preserve">
-    <value>Enviar</value>
-    <comment>Enviar</comment>
-  </data>
-  <data name="Proceed" xml:space="preserve">
-    <value>Prosseguir</value>
-    <comment>Prosseguir</comment>
-  </data>
-  <data name="TermsOfUse" xml:space="preserve">
-    <value>Termo de uso</value>
-    <comment>Termo de uso</comment>
-  </data>
-  <data name="Welcome" xml:space="preserve">
-    <value>Bem-vindo ao Rio2C {0}</value>
-    <comment>Bem-vindo ao Rio2C {0}</comment>
-  </data>
-  <data name="ConfirmPassword" xml:space="preserve">
-    <value>Confirmação de senha</value>
-    <comment>Confirmação de senha</comment>
-  </data>
-  <data name="CurrentPassword" xml:space="preserve">
-    <value>Senha atual</value>
-    <comment>Senha atual</comment>
-  </data>
-  <data name="NewPassword" xml:space="preserve">
-    <value>Nova senha</value>
-    <comment>Nova senha</comment>
-  </data>
-  <data name="Producer" xml:space="preserve">
-    <value>Produtora</value>
-    <comment>Produtora</comment>
-  </data>
-  <data name="Please" xml:space="preserve">
-    <value>Por favor</value>
-    <comment>Por favor</comment>
-  </data>
-  <data name="Players" xml:space="preserve">
-    <value>Players</value>
-    <comment>Players</comment>
-  </data>
-  <data name="CompanyName" xml:space="preserve">
-    <value>Razão social</value>
-  </data>
-  <data name="BadgeName" xml:space="preserve">
-    <value>Nome para credencial</value>
-    <comment>Nome para credencial</comment>
+  <data name="Activities" xml:space="preserve">
+    <value>Atividades</value>
+    <comment>Atividades</comment>
   </data>
   <data name="Activity" xml:space="preserve">
     <value>Atividade</value>
     <comment>Atividade</comment>
   </data>
-  <data name="TargetAudience" xml:space="preserve">
-    <value>Público-Alvo</value>
-    <comment>Público-Alvo</comment>
+  <data name="AdditionalInfo" xml:space="preserve">
+    <value>Informações Adicionais</value>
+    <comment>Informações Adicionais</comment>
   </data>
-  <data name="RestrictionsSpecifics" xml:space="preserve">
-    <value>Restrições e especificidades</value>
-    <comment>Restrições e especificidades</comment>
-  </data>
-  <data name="Executive" xml:space="preserve">
-    <value>Executivo</value>
-    <comment>Executivo</comment>
-  </data>
-  <data name="LogoSize" xml:space="preserve">
-    <value>&lt;strong&gt;Tamanho máximo: 10M&lt;/strong&gt;</value>
-    <comment>Tamanho máximo</comment>
-  </data>
-  <data name="English" xml:space="preserve">
-    <value>Inglês</value>
-  </data>
-  <data name="Portuguese" xml:space="preserve">
-    <value>Português</value>
-  </data>
-  <data name="InfoImagePlayer" xml:space="preserve">
-    <value>Favor enviar uma imagem em formato jpeg, jpg, gif ou png com fundo branco. &lt;br /&gt; Tamanho mínimo 1Kb.</value>
-    <comment>Favor enviar uma imagem em formato jpeg, jpg, gif ou png com fundo branco. &lt;br /&gt; Tamanho mínimo 1Kb.</comment>
-  </data>
-  <data name="ExecutiveCreate" xml:space="preserve">
-    <value>Criar Executivo</value>
-    <comment>Criar Executivo</comment>
-  </data>
-  <data name="ExecutiveEdit" xml:space="preserve">
-    <value>Editar Executivo</value>
-    <comment>Editar Executivo</comment>
-  </data>
-  <data name="RegisterNewExecutive" xml:space="preserve">
-    <value>+ Registrar novo Executivo</value>
-    <comment>Registrar novo Executivo</comment>
-  </data>
-  <data name="EditInterests" xml:space="preserve">
-    <value>Editar Interesses</value>
-    <comment>Editar Interesses</comment>
-  </data>
-  <data name="ViewInterests" xml:space="preserve">
-    <value>Ver Interesses</value>
-    <comment>Ver interesses</comment>
-  </data>
-  <data name="EditPlayer" xml:space="preserve">
-    <value>Editar Player</value>
-    <comment>Editar Player</comment>
-  </data>
-  <data name="ViewPlayer" xml:space="preserve">
-    <value>Ver Player</value>
-    <comment>Ver Player</comment>
-  </data>
-  <data name="Development" xml:space="preserve">
-    <value>Desenvolvimento</value>
-    <comment>Desenvolvimento</comment>
-  </data>
-  <data name="PlatformRio2C" xml:space="preserve">
-    <value>MyRio2C</value>
-    <comment>MyRio2C</comment>
-  </data>
-  <data name="NewProject" xml:space="preserve">
-    <value>Novo Projeto</value>
-    <comment>Novo Projeto</comment>
-  </data>
-  <data name="Menu" xml:space="preserve">
-    <value>Menu</value>
-    <comment>Menu</comment>
-  </data>
-  <data name="AddNewLink" xml:space="preserve">
-    <value>Novo Link</value>
-  </data>
-  <data name="EachEpisodePlayingTime" xml:space="preserve">
-    <value>Minutagem de cada episódio</value>
-    <comment>Minutagem de cada episódio</comment>
-  </data>
-  <data name="LogLines" xml:space="preserve">
-    <value>Logline</value>
-  </data>
-  <data name="No" xml:space="preserve">
-    <value>Não</value>
-  </data>
-  <data name="NumberOfEpisodes" xml:space="preserve">
-    <value>Número de episódios</value>
-    <comment>Número de episódios</comment>
-  </data>
-  <data name="ProductionPlans" xml:space="preserve">
-    <value>Planos de Produção</value>
-  </data>
-  <data name="Summaries" xml:space="preserve">
-    <value>Resumo</value>
-  </data>
-  <data name="Titles" xml:space="preserve">
-    <value>Títulos</value>
-    <comment>Títulos</comment>
-  </data>
-  <data name="TotalValueOfProject" xml:space="preserve">
-    <value>Valor total do projeto (USD)</value>
-  </data>
-  <data name="ValueAlreadyRaised" xml:space="preserve">
-    <value>Valor já captado (USD)</value>
-  </data>
-  <data name="ValuePerEpisode" xml:space="preserve">
-    <value>Valor por episódio (USD)</value>
-  </data>
-  <data name="ValueStillNeeded" xml:space="preserve">
-    <value>Valor a captar (USD)</value>
-  </data>
-  <data name="Yes" xml:space="preserve">
-    <value>Sim</value>
+  <data name="AdditionalInformation" xml:space="preserve">
+    <value>Informação Adicional</value>
+    <comment>Informação Adicional</comment>
   </data>
   <data name="AdditionalInformations" xml:space="preserve">
     <value>Informações Adicionais</value>
   </data>
-  <data name="Important" xml:space="preserve">
-    <value>IMPORTANTE</value>
+  <data name="AddMusicalCommission" xml:space="preserve">
+    <value>Adicionar Comissão Musical</value>
   </data>
-  <data name="ClickHereToLoginIn" xml:space="preserve">
-    <value>Clique aqui para logar.</value>
-  </data>
-  <data name="EditProducer" xml:space="preserve">
-    <value>Editar Perfil Produtora</value>
-  </data>
-  <data name="ViewProducer" xml:space="preserve">
-    <value>Perfil Produtora</value>
-  </data>
-  <data name="PreRegistration" xml:space="preserve">
-    <value>Pré-cadastro</value>
-  </data>
-  <data name="RegistrationConfirmation" xml:space="preserve">
-    <value>&lt;p class="pre-registration-text"&gt;Esta é a página de confirmação de cadastro de produtoras. &lt;br /&gt; &lt;br /&gt;
-                    Informe os dados abaixo para confirmar o pagamento da credencial de acesso e criar seu acesso ao sistema Rio2C.&lt;/p&gt;
-&lt;br /&gt;
-&lt;p class="pre-registration-sympla-text"&gt;&lt;strong&gt;
-Insira os mesmos dados informados para cada credencial adquirida no Sistema de Vendas.&lt;/strong&gt;&lt;/p&gt;
-</value>
-  </data>
-  <data name="WelcomeTitle" xml:space="preserve">
-    <value>Bem-vindo!</value>
-    <comment>Bem-vindo!</comment>
-  </data>
-  <data name="Register" xml:space="preserve">
-    <value>Registrar</value>
-  </data>
-  <data name="NoPlayersSelected" xml:space="preserve">
-    <value>Não há players selecionados</value>
-  </data>
-  <data name="PlayersToEvaluation" xml:space="preserve">
-    <value>Projeto enviado aos players</value>
-    <comment>Projeto enviado aos players</comment>
-  </data>
-  <data name="RegisteredProjects" xml:space="preserve">
-    <value>Projetos Cadastrados</value>
-  </data>
-  <data name="Create" xml:space="preserve">
-    <value>Criar</value>
-  </data>
-  <data name="CreateProject" xml:space="preserve">
-    <value>Criar Projeto</value>
-  </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Editar</value>
-  </data>
-  <data name="EditProject" xml:space="preserve">
-    <value>Editar Projeto</value>
+  <data name="AddNewLink" xml:space="preserve">
+    <value>Novo Link</value>
   </data>
   <data name="AddNewLinkImageTitle" xml:space="preserve">
     <value>Link para imagens ou layout conceituais:</value>
@@ -545,783 +182,13 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="AddNewLinkTeaserTitle" xml:space="preserve">
     <value>Link para Promo / Teaser:</value>
   </data>
-  <data name="NoPlayerWasFound" xml:space="preserve">
-    <value>Nenhum player foi encontrado</value>
-  </data>
-  <data name="PlayersWithSimilarInterests" xml:space="preserve">
-    <value>Players com interesses afins</value>
-  </data>
-  <data name="SearchingForPlayers" xml:space="preserve">
-    <value>Buscando players...</value>
-  </data>
-  <data name="SearchingForPlayersForSelection" xml:space="preserve">
-    <value>Buscando players para seleção...</value>
-  </data>
-  <data name="AllPlayers" xml:space="preserve">
-    <value>Todos os players</value>
-  </data>
-  <data name="LoadingSelectedPlayers" xml:space="preserve">
-    <value>Carregando players selecionados...</value>
-  </data>
-  <data name="SendToPlayers" xml:space="preserve">
-    <value>Finalizar e enviar</value>
-  </data>
-  <data name="NoPlayerSelected" xml:space="preserve">
-    <value>Nenhum player selecionado</value>
-  </data>
-  <data name="PlayersSelectedForEvaluation" xml:space="preserve">
-    <value>Players selecionados para avaliação</value>
-    <comment>Players selecionados para avaliação</comment>
-  </data>
-  <data name="Print" xml:space="preserve">
-    <value>Imprimir</value>
-  </data>
-  <data name="Format" xml:space="preserve">
-    <value>Formato</value>
-  </data>
-  <data name="Genre" xml:space="preserve">
-    <value>Gênero</value>
-  </data>
-  <data name="ImageLinks" xml:space="preserve">
-    <value>Links de imagem</value>
-  </data>
-  <data name="Platforms" xml:space="preserve">
-    <value>Plataformas</value>
-  </data>
-  <data name="ProjectStatus" xml:space="preserve">
-    <value>Status do projeto</value>
-  </data>
-  <data name="Seeking" xml:space="preserve">
-    <value>Está buscando para este projeto</value>
-  </data>
-  <data name="SubGenre" xml:space="preserve">
-    <value>Subgênero</value>
-  </data>
-  <data name="TeaserLinks" xml:space="preserve">
-    <value>Links de teaser</value>
-  </data>
-  <data name="ProjectDetails" xml:space="preserve">
-    <value>Detalhes do Projeto</value>
-  </data>
-  <data name="Genres" xml:space="preserve">
-    <value>Gêneros</value>
-  </data>
-  <data name="Loading" xml:space="preserve">
-    <value>Carregando...</value>
-  </data>
-  <data name="PlayerDidNotDefinedGenre" xml:space="preserve">
-    <value>Player não definiu gênero como interesse.</value>
-  </data>
-  <data name="Back" xml:space="preserve">
-    <value>Voltar</value>
-  </data>
-  <data name="ProjectNotSubmittedToPlayers" xml:space="preserve">
-    <value>Nenhum Player selecionado para avaliação</value>
-    <comment>Nenhum Player selecionado para avaliação</comment>
-  </data>
-  <data name="PlayersSuggested" xml:space="preserve">
-    <value>Players sugeridos</value>
-  </data>
-  <data name="All" xml:space="preserve">
-    <value>Todos</value>
-  </data>
-  <data name="Accepted" xml:space="preserve">
-    <value>Aceito</value>
-  </data>
-  <data name="Rejected" xml:space="preserve">
-    <value>Recusado</value>
-  </data>
-  <data name="Status" xml:space="preserve">
-    <value>Status</value>
-  </data>
-  <data name="Caption" xml:space="preserve">
-    <value>Legenda:</value>
-  </data>
-  <data name="LoadingPlayers" xml:space="preserve">
-    <value>Carregando players...</value>
-  </data>
-  <data name="LoadingProjects" xml:space="preserve">
-    <value>Carregando projetos...</value>
-  </data>
-  <data name="NoProjectWasFound" xml:space="preserve">
-    <value>Nenhum projeto encontrado.</value>
-  </data>
-  <data name="Reason" xml:space="preserve">
-    <value>Motivo</value>
-  </data>
-  <data name="Refused" xml:space="preserve">
-    <value>Recusado</value>
-  </data>
-  <data name="UncheckAll" xml:space="preserve">
-    <value>Desmarcar todos</value>
-  </data>
-  <data name="AcceptProject" xml:space="preserve">
-    <value>Aprovar</value>
-    <comment>Aprovar</comment>
-  </data>
-  <data name="RefuseProject" xml:space="preserve">
-    <value>Reprovar</value>
-    <comment>Reprovar</comment>
-  </data>
-  <data name="EvaluateProject" xml:space="preserve">
-    <value>Avaliar projeto</value>
-  </data>
-  <data name="Accept" xml:space="preserve">
-    <value>Aceitar</value>
-  </data>
-  <data name="Refuse" xml:space="preserve">
-    <value>Recusar</value>
-  </data>
-  <data name="ContentTypeYouAreLookingFor" xml:space="preserve">
-    <value>Tipo de conteúdo que está buscando no Mercado (restrições e especificidades)</value>
-  </data>
-  <data name="MarketLookingFor" xml:space="preserve">
-    <value>Está no mercado buscando</value>
-  </data>
-  <data name="Close" xml:space="preserve">
-    <value>Fechar</value>
-  </data>
-  <data name="Producers" xml:space="preserve">
-    <value>Produtoras</value>
-    <comment>Produtoras</comment>
-  </data>
-  <data name="DeselectAll" xml:space="preserve">
-    <value>Desmarcar todos</value>
-  </data>
-  <data name="SeekProjectsOfThisGenre" xml:space="preserve">
-    <value>Buscam projetos desse gênero</value>
-    <comment>Buscam projetos desse gênero</comment>
-  </data>
-  <data name="SeeMiniBio" xml:space="preserve">
-    <value>Ver mini-biografia</value>
-  </data>
-  <data name="Complete" xml:space="preserve">
-    <value>Completo</value>
-  </data>
-  <data name="Incomplete" xml:space="preserve">
-    <value>Incompleto</value>
-  </data>
-  <data name="NotAccepted" xml:space="preserve">
-    <value>Não aceito</value>
-  </data>
-  <data name="Details" xml:space="preserve">
-    <value>Detalhes</value>
-  </data>
-  <data name="ConferenceSynopsis" xml:space="preserve">
-    <value>Sinopse</value>
-  </data>
-  <data name="Date" xml:space="preserve">
-    <value>Data</value>
-  </data>
-  <data name="Hour" xml:space="preserve">
-    <value>Horário</value>
-  </data>
-  <data name="Lecturer" xml:space="preserve">
-    <value>Palestrante</value>
-  </data>
-  <data name="Local" xml:space="preserve">
-    <value>Local</value>
-  </data>
-  <data name="SelectOrSendPlayer" xml:space="preserve">
-    <value>Selecionar player e/ou enviar</value>
-  </data>
-  <data name="PreRegistrationContact" xml:space="preserve">
-    <value>&lt;p&gt;
-             &lt;strong&gt;Suporte:&lt;/strong&gt; credenciamento@rio2c.com  &lt;br /&gt;
-             &lt;strong&gt;Telefone:&lt;/strong&gt; +55 21 3081-2077 / 3081-2035 / 3081-2092 &lt;br /&gt;
-             &lt;strong&gt;Horário de Atendimento:&lt;/strong&gt; 10h às 19h &lt;br /&gt;
- &lt;/p&gt;</value>
-  </data>
-  <data name="IfAlreadyHaveLogin" xml:space="preserve">
-    <value>Se já tiver login e senha</value>
-  </data>
-  <data name="ClickHere" xml:space="preserve">
-    <value>Clique aqui</value>
-  </data>
-  <data name="ArrivalTime" xml:space="preserve">
-    <value>Hora de Chegada</value>
-  </data>
-  <data name="DepartureTime" xml:space="preserve">
-    <value>Hora de Partida</value>
-  </data>
-  <data name="Synopsis" xml:space="preserve">
-    <value>Ementa</value>
-  </data>
-  <data name="Conference" xml:space="preserve">
-    <value>Palestra</value>
-    <comment>Palestra</comment>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>Título</value>
-    <comment>Título</comment>
-  </data>
-  <data name="ArrivalDate" xml:space="preserve">
-    <value>Data da chegada</value>
-  </data>
-  <data name="DepartureDate" xml:space="preserve">
-    <value>Data da saída</value>
-  </data>
-  <data name="LecturerMemberOneOrMany" xml:space="preserve">
-    <value>Membros do Painel e Ouvintes</value>
-  </data>
-  <data name="LectureDetails" xml:space="preserve">
-    <value>Detalhes da Palestra</value>
-  </data>
-  <data name="EndTime" xml:space="preserve">
-    <value>Hora de término</value>
-  </data>
-  <data name="StartTime" xml:space="preserve">
-    <value>Hora de início</value>
-  </data>
-  <data name="DateHourFormat" xml:space="preserve">
-    <value>&lt;span&gt;{0} das {1} às {2}&lt;/span&gt;</value>
-  </data>
-  <data name="LoadingConferences" xml:space="preserve">
-    <value>Carrengando Palestras...</value>
-  </data>
-  <data name="NoConferenceToDisplay" xml:space="preserve">
-    <value>Não há palestras a serem exibidas.</value>
-  </data>
-  <data name="Message" xml:space="preserve">
-    <value>Mensagem</value>
-  </data>
-  <data name="ProducersSpaceSlash" xml:space="preserve">
-    <value>Produtores / Empresas</value>
-  </data>
-  <data name="LoadingChat" xml:space="preserve">
-    <value>Carregando chat</value>
-  </data>
-  <data name="LoadingMessages" xml:space="preserve">
-    <value>Carregando mensagens</value>
-  </data>
-  <data name="NoUserHasBeenFoundInChat" xml:space="preserve">
-    <value>Nenhum usuário encontrado.</value>
-  </data>
-  <data name="Rio2cChatTitle" xml:space="preserve">
-    <value>Rede Rio2C</value>
-  </data>
-  <data name="Search" xml:space="preserve">
-    <value>Buscar</value>
-  </data>
-  <data name="SelectAnExecutiveInChat" xml:space="preserve">
-    <value>Selecione um executivo para visualizar as mensagens.</value>
-  </data>
-  <data name="ThreeDotsToAnimation" xml:space="preserve">
-    <value>&lt;span&gt;.&lt;/span&gt;&lt;span&gt;.&lt;/span&gt;&lt;span&gt;.&lt;/span&gt;</value>
-  </data>
-  <data name="TypeYourMessage" xml:space="preserve">
-    <value>Digite sua mensagem</value>
-  </data>
-  <data name="Sending" xml:space="preserve">
-    <value>Enviando</value>
-  </data>
-  <data name="Ok" xml:space="preserve">
-    <value>Ok</value>
-  </data>
-  <data name="Oops" xml:space="preserve">
-    <value>Oops!</value>
-  </data>
-  <data name="EnterToSend" xml:space="preserve">
-    <value>Enter para enviar.</value>
-  </data>
-  <data name="DownloadListOfExecutives" xml:space="preserve">
-    <value>Baixar lista de executivos</value>
-  </data>
-  <data name="Evaluation" xml:space="preserve">
-    <value>Avaliação</value>
-  </data>
-  <data name="SeeReason" xml:space="preserve">
-    <value>Ver motivo</value>
-  </data>
-  <data name="SeeReasonForRefusal" xml:space="preserve">
-    <value>Ver motivo da recusa</value>
-  </data>
-  <data name="Room" xml:space="preserve">
-    <value>Sala</value>
-  </data>
-  <data name="Company" xml:space="preserve">
-    <value>Empresa</value>
-  </data>
-  <data name="RoleInTheLecture" xml:space="preserve">
-    <value>Função na Palestra</value>
-  </data>
-  <data name="From" xml:space="preserve">
-    <value>das</value>
-  </data>
-  <data name="To" xml:space="preserve">
-    <value>às</value>
-  </data>
-  <data name="ProducerSingle" xml:space="preserve">
-    <value>Produtora</value>
-  </data>
-  <data name="NoInformations" xml:space="preserve">
-    <value>Não há informações.</value>
-  </data>
-  <data name="ProducerDetails" xml:space="preserve">
-    <value>Detalhes da Produtora</value>
-  </data>
-  <data name="ConferenceDetails" xml:space="preserve">
-    <value>Detalhes da Palestra</value>
-  </data>
-  <data name="NegotiationDetails" xml:space="preserve">
-    <value>Detalhes da Negociação</value>
-    <comment>Detalhes da Negociação</comment>
-  </data>
-  <data name="Project" xml:space="preserve">
-    <value>Projeto</value>
-  </data>
-  <data name="Table" xml:space="preserve">
-    <value>Mesa</value>
-  </data>
-  <data name="PrintSchedules" xml:space="preserve">
-    <value>Imprimir Agenda</value>
-  </data>
-  <data name="Rio2CSchedules" xml:space="preserve">
-    <value>Agenda Rio2C</value>
-  </data>
-  <data name="ReturnedItems" xml:space="preserve">
-    <value>&lt;h4&gt;&lt;strong&gt;{0}&lt;/strong&gt; itens&lt;/h4&gt;</value>
-  </data>
-  <data name="SendDate" xml:space="preserve">
-    <value>Data de Envio</value>
-    <comment>Data de Envio</comment>
-  </data>
-  <data name="CountryCode" xml:space="preserve">
-    <value>Código do País</value>
-  </data>
-  <data name="CountryName" xml:space="preserve">
-    <value>País</value>
-  </data>
-  <data name="Choose" xml:space="preserve">
-    <value>Selecione</value>
-  </data>
-  <data name="ValidateQuiz" xml:space="preserve">
-    <value>Você deve preencher todos os campos ou selecionar uma opção</value>
-  </data>
-  <data name="AddSpeaker" xml:space="preserve">
-    <value>Cadastrar Palestrante</value>
-  </data>
-  <data name="Speaker" xml:space="preserve">
-    <value>Palestrante</value>
-  </data>
-  <data name="EditSpeaker" xml:space="preserve">
-    <value>Alterar Palestrante</value>
-  </data>
-  <data name="AddMusicalCommission" xml:space="preserve">
-    <value>Adicionar Comissão Musical</value>
-  </data>
-  <data name="EditMusicalCommission" xml:space="preserve">
-    <value>Editar Comissão Musical</value>
-  </data>
-  <data name="MusicalCommission" xml:space="preserve">
-    <value>Comissão Musical</value>
-    <comment>Comissão Musical</comment>
-  </data>
-  <data name="DownloadPdfs" xml:space="preserve">
-    <value>Baixar PDF's</value>
-    <comment>Baixar PDF's</comment>
-  </data>
-  <data name="Accreditation" xml:space="preserve">
-    <value>Credenciamento</value>
-    <comment>Credenciamento</comment>
-  </data>
-  <data name="Clipping" xml:space="preserve">
-    <value>Na Mídia</value>
-    <comment>Na Mídia</comment>
-  </data>
-  <data name="Commercial" xml:space="preserve">
-    <value>Comercial</value>
-    <comment>Comercial</comment>
-  </data>
-  <data name="ContactUs" xml:space="preserve">
-    <value>Fale Conosco</value>
-    <comment>Fale Conosco</comment>
-  </data>
-  <data name="Curatorship" xml:space="preserve">
-    <value>Curadoria</value>
-    <comment>Curadoria</comment>
-  </data>
-  <data name="Ethics" xml:space="preserve">
-    <value>Código de Ética</value>
-    <comment>Código de Ética</comment>
-  </data>
-  <data name="Marketing" xml:space="preserve">
-    <value>Marketing</value>
-    <comment>Marketing</comment>
-  </data>
-  <data name="PhotosForPublicity" xml:space="preserve">
-    <value>Fotos Divulgação</value>
-    <comment>Fotos Divulgação</comment>
-  </data>
-  <data name="Press" xml:space="preserve">
-    <value>Imprensa</value>
-    <comment>Imprensa</comment>
-  </data>
-  <data name="PressRelations" xml:space="preserve">
-    <value>Assessoria</value>
-    <comment>Assessoria</comment>
-  </data>
-  <data name="TheEvent" xml:space="preserve">
-    <value>O Evento</value>
-    <comment>O Evento</comment>
-  </data>
-  <data name="And" xml:space="preserve">
-    <value>e</value>
-    <comment>e</comment>
-  </data>
-  <data name="ForgotPassword" xml:space="preserve">
-    <value>Esqueceu a senha</value>
-    <comment>Esqueceu a senha</comment>
-  </data>
-  <data name="SignIn" xml:space="preserve">
-    <value>Entrar</value>
-    <comment>Entrar</comment>
-  </data>
-  <data name="WelcomeSmall" xml:space="preserve">
-    <value>Bem-vindo ao MyRio2C!</value>
-    <comment>Bem-vindo ao MyRio2C!</comment>
-  </data>
-  <data name="DevelopedBy" xml:space="preserve">
-    <value>Desenvolvido por</value>
-  </data>
-  <data name="GoBackToSignIn" xml:space="preserve">
-    <value>Voltar para o login</value>
-    <comment>Voltar para o login</comment>
-  </data>
-  <data name="Hi" xml:space="preserve">
-    <value>Olá</value>
-    <comment>Olá</comment>
-  </data>
-  <data name="MyRio2C" xml:space="preserve">
-    <value>MyRio2C</value>
-    <comment>MyRio2C</comment>
-  </data>
-  <data name="BrowsingMode" xml:space="preserve">
-    <value>Modo de Navegação</value>
-  </data>
-  <data name="PlatformRio2CAdmin" xml:space="preserve">
-    <value>MyRio2C Admin</value>
-    <comment>MyRio2C Admin</comment>
-  </data>
-  <data name="WelcomeSmallAdmin" xml:space="preserve">
-    <value>Bem-vindo ao MyRio2C Admin!</value>
-    <comment>Bem-vindo ao MyRio2C Admin!</comment>
-  </data>
-  <data name="BusinessRoundtable" xml:space="preserve">
-    <value>Rodada de Negócios</value>
-    <comment>Rodada de Negócios</comment>
-  </data>
-  <data name="CalendarReport" xml:space="preserve">
-    <value>Relatório da Agenda</value>
-    <comment>Relatório da Agenda</comment>
-  </data>
-  <data name="Companies" xml:space="preserve">
-    <value>Empresas</value>
-    <comment>Empresas</comment>
-  </data>
-  <data name="GenerateCalendar" xml:space="preserve">
-    <value>Gerar Agenda</value>
-    <comment>Gerar Agenda</comment>
-  </data>
-  <data name="InvitationSending" xml:space="preserve">
-    <value>Envio de Convites</value>
-    <comment>Envio de Convites</comment>
-  </data>
-  <data name="Logistics" xml:space="preserve">
-    <value>Logística</value>
-    <comment>Logística</comment>
-  </data>
-  <data name="Parameters" xml:space="preserve">
-    <value>Parâmetros</value>
-    <comment>Parâmetros</comment>
-  </data>
-  <data name="ProjectsForPitching" xml:space="preserve">
-    <value>Projetos para Pitching</value>
-    <comment>Projetos para Pitching</comment>
-  </data>
-  <data name="Rooms" xml:space="preserve">
-    <value>Salas</value>
-    <comment>Salas</comment>
-  </data>
-  <data name="ScheduleNegotiation" xml:space="preserve">
-    <value>Agendar Negociação</value>
-    <comment>Agendar Negociação</comment>
-  </data>
-  <data name="SendEmailToPlayers" xml:space="preserve">
-    <value>Enviar e-mail para Players</value>
-    <comment>Enviar e-mail para Players</comment>
-  </data>
-  <data name="SendEmailToProducers" xml:space="preserve">
-    <value>Enviar e-mail para Produtoras</value>
-    <comment>Enviar e-mail para Produtoras</comment>
-  </data>
-  <data name="SpeakerFunctions" xml:space="preserve">
-    <value>Funções dos Palestrantes</value>
-    <comment>Funções dos Palestrantes</comment>
-  </data>
-  <data name="Speakers" xml:space="preserve">
-    <value>Palestrantes</value>
-    <comment>Palestrantes</comment>
-  </data>
-  <data name="Speeches" xml:space="preserve">
-    <value>Palestras</value>
-    <comment>Palestras</comment>
-  </data>
-  <data name="UnscheduledNegotiations" xml:space="preserve">
-    <value>Negociações não agendadas</value>
-    <comment>Negociações não agendadas</comment>
-  </data>
-  <data name="ViewCalendar" xml:space="preserve">
-    <value>Visualizar Agenda</value>
-    <comment>Visualizar Agenda</comment>
-  </data>
-  <data name="Actions" xml:space="preserve">
-    <value>Ações</value>
-    <comment>Ações</comment>
-  </data>
-  <data name="CreateDate" xml:space="preserve">
-    <value>Data de Criação</value>
-    <comment>Data de Criação</comment>
-  </data>
-  <data name="HoldingsRegistered" xml:space="preserve">
-    <value>Holdings cadastradas</value>
-    <comment>Holdings cadastradas</comment>
-  </data>
-  <data name="InEditionYear" xml:space="preserve">
-    <value>na Edição {0}</value>
-    <comment>na Edição {0}</comment>
-  </data>
-  <data name="ShowAllEditions" xml:space="preserve">
-    <value>Exibir de todas as edições</value>
-    <comment>Exibir de todas as edições</comment>
-  </data>
-  <data name="NewHolding" xml:space="preserve">
-    <value>Nova Holding</value>
-    <comment>Nova Holding</comment>
-  </data>
-  <data name="Descriptions" xml:space="preserve">
-    <value>Descrições</value>
-    <comment>Descrições</comment>
-  </data>
-  <data name="Optional" xml:space="preserve">
-    <value>opcional</value>
-    <comment>opcional</comment>
-  </data>
-  <data name="ZoomIn" xml:space="preserve">
-    <value>Mais Zoom</value>
-    <comment>Mais Zoom</comment>
-  </data>
-  <data name="ZoomOut" xml:space="preserve">
-    <value>Menos Zoom</value>
-    <comment>Menos Zoom</comment>
-  </data>
-  <data name="Error" xml:space="preserve">
-    <value>Erro</value>
-    <comment>Erro</comment>
-  </data>
-  <data name="Info" xml:space="preserve">
-    <value>Info</value>
-    <comment>Info</comment>
-  </data>
-  <data name="Success" xml:space="preserve">
-    <value>Sucesso</value>
-    <comment>Sucesso</comment>
-  </data>
-  <data name="AHolding" xml:space="preserve">
-    <value>uma holding</value>
-    <comment>uma holding</comment>
-  </data>
-  <data name="By" xml:space="preserve">
-    <value>por</value>
-    <comment>por</comment>
-  </data>
-  <data name="CreatedF" xml:space="preserve">
-    <value>criada</value>
-    <comment>criada</comment>
-  </data>
-  <data name="CreatedM" xml:space="preserve">
-    <value>criado</value>
-    <comment>criado</comment>
-  </data>
-  <data name="DeletedF" xml:space="preserve">
-    <value>excluída</value>
-    <comment>excluída</comment>
-  </data>
-  <data name="DeletedM" xml:space="preserve">
-    <value>excluído</value>
-    <comment>excluído</comment>
-  </data>
-  <data name="Description" xml:space="preserve">
-    <value>Descrição</value>
-    <comment>Descrição</comment>
-  </data>
-  <data name="FoundF" xml:space="preserve">
-    <value>encontrada</value>
-    <comment>encontrada</comment>
-  </data>
-  <data name="FoundM" xml:space="preserve">
-    <value>encontrado</value>
-    <comment>encontrado</comment>
-  </data>
-  <data name="Language" xml:space="preserve">
-    <value>Idioma</value>
-    <comment>Idioma</comment>
-  </data>
-  <data name="LastUpdateOn" xml:space="preserve">
-    <value>Última atualização em</value>
-    <comment>Última atualização em</comment>
-  </data>
-  <data name="TheName" xml:space="preserve">
-    <value>o nome</value>
-    <comment>o nome</comment>
-  </data>
-  <data name="UpdateDate" xml:space="preserve">
-    <value>Data de Edição</value>
-    <comment>Data de Edição</comment>
-  </data>
-  <data name="UpdatedF" xml:space="preserve">
-    <value>editada</value>
-    <comment>editada</comment>
-  </data>
-  <data name="UpdatedM" xml:space="preserve">
-    <value>editado</value>
-    <comment>editado</comment>
-  </data>
-  <data name="AudioVisual" xml:space="preserve">
-    <value>Audiovisual</value>
-    <comment>Audiovisual</comment>
-  </data>
-  <data name="CompanyDocument" xml:space="preserve">
-    <value>CNPJ</value>
-    <comment>CNPJ</comment>
-  </data>
-  <data name="Innovation" xml:space="preserve">
-    <value>Inovação</value>
-    <comment>Inovação</comment>
-  </data>
-  <data name="Investor" xml:space="preserve">
-    <value>Investidor</value>
-    <comment>Investidor</comment>
-  </data>
-  <data name="Music" xml:space="preserve">
-    <value>Música</value>
-    <comment>Música</comment>
-  </data>
-  <data name="MusicBand" xml:space="preserve">
-    <value>Banda</value>
-    <comment>Banda</comment>
-  </data>
-  <data name="NewCompany" xml:space="preserve">
-    <value>Nova Empresa</value>
-    <comment>Nova Empresa</comment>
-  </data>
-  <data name="PlayersRegistered" xml:space="preserve">
-    <value>Players cadastrados</value>
-    <comment>Players cadastrados</comment>
-  </data>
-  <data name="Recorder" xml:space="preserve">
-    <value>Gravadora</value>
-    <comment>Gravadora</comment>
-  </data>
-  <data name="Startup" xml:space="preserve">
-    <value>Startup</value>
-    <comment>Startup</comment>
-  </data>
-  <data name="Select" xml:space="preserve">
-    <value>Selecione</value>
-    <comment>Selecione</comment>
-  </data>
-  <data name="APlayer" xml:space="preserve">
-    <value>um player</value>
-    <comment>um player</comment>
-  </data>
-  <data name="NewF" xml:space="preserve">
-    <value>Nova</value>
-    <comment>Nova</comment>
-  </data>
-  <data name="NewM" xml:space="preserve">
-    <value>Novo</value>
-    <comment>Novo</comment>
-  </data>
-  <data name="Update" xml:space="preserve">
-    <value>Editar</value>
-    <comment>Editar</comment>
-  </data>
-  <data name="AddToEdition" xml:space="preserve">
-    <value>Adicionar em {0}</value>
-    <comment>Adicionar em {0}</comment>
-  </data>
-  <data name="NotInEdition" xml:space="preserve">
-    <value>Fora da edição {0}</value>
-    <comment>Fora da edição {0}</comment>
-  </data>
-  <data name="RemoveFromEdition" xml:space="preserve">
-    <value>Remover de {0}</value>
-    <comment>Remover de {0}</comment>
-  </data>
-  <data name="HoldingName" xml:space="preserve">
-    <value>Nome da Holding</value>
-    <comment>Nome da Holding</comment>
-  </data>
-  <data name="Or" xml:space="preserve">
-    <value>ou</value>
-    <comment>ou</comment>
-  </data>
-  <data name="PlayerName" xml:space="preserve">
-    <value>Nome do Player</value>
-    <comment>Nome do Player</comment>
-  </data>
-  <data name="ShowAllCompanies" xml:space="preserve">
-    <value>Exibir todas as empresas</value>
-    <comment>Exibir todas as empresas</comment>
-  </data>
-  <data name="Investors" xml:space="preserve">
-    <value>Investidores</value>
-    <comment>Investidores</comment>
-  </data>
-  <data name="MusicBands" xml:space="preserve">
-    <value>Bandas</value>
-    <comment>Bandas</comment>
-  </data>
-  <data name="Recorders" xml:space="preserve">
-    <value>Gravadoras</value>
-    <comment>Gravadoras</comment>
-  </data>
-  <data name="Startups" xml:space="preserve">
-    <value>Startups</value>
-    <comment>Startups</comment>
-  </data>
-  <data name="Code" xml:space="preserve">
-    <value>Código</value>
-    <comment>Código</comment>
-  </data>
-  <data name="Number" xml:space="preserve">
-    <value>Número</value>
-    <comment>Número</comment>
-  </data>
-  <data name="AddressComplement" xml:space="preserve">
-    <value>Complemento</value>
-    <comment>Complemento</comment>
-  </data>
-  <data name="Neighborhood" xml:space="preserve">
-    <value>Bairro</value>
-    <comment>Bairro</comment>
-  </data>
-  <data name="StreetName" xml:space="preserve">
-    <value>Logradouro</value>
-    <comment>Logradouro</comment>
-  </data>
-  <data name="Street" xml:space="preserve">
-    <value>Rus</value>
-    <comment>Rua</comment>
-  </data>
-  <data name="TheF" xml:space="preserve">
-    <value>A</value>
-    <comment>A</comment>
-  </data>
-  <data name="TheM" xml:space="preserve">
-    <value>O</value>
-    <comment>O</comment>
+  <data name="AddRequest" xml:space="preserve">
+    <value>Adicionar Solicitação</value>
+    <comment>Adicionar Solicitação</comment>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Endereço</value>
+    <comment>Endereço</comment>
   </data>
   <data name="Address1" xml:space="preserve">
     <value>Endereço</value>
@@ -1331,337 +198,128 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Complemento</value>
     <comment>Complemento</comment>
   </data>
-  <data name="ExecutivesRegistered" xml:space="preserve">
-    <value>Executivos cadastrados</value>
-    <comment>Executivos cadastrados</comment>
-  </data>
-  <data name="LastNames" xml:space="preserve">
-    <value>Sobrenome</value>
-    <comment>Sobrenome</comment>
-  </data>
-  <data name="PlayersExecutives" xml:space="preserve">
-    <value>Executivos dos Players</value>
-    <comment>Executivos dos Players</comment>
-  </data>
-  <data name="ExecutiveName" xml:space="preserve">
-    <value>Nome do Executivo</value>
-    <comment>Nome do Executivo</comment>
-  </data>
-  <data name="ShowAllExecutives" xml:space="preserve">
-    <value>Exibir todos os executivos</value>
-    <comment>Exibir todos os executivos</comment>
-  </data>
-  <data name="WelcomeToEdition" xml:space="preserve">
-    <value>Bem-vindo ao {0}</value>
-    <comment>Bem-vindo ao {0}</comment>
-  </data>
-  <data name="AccessData" xml:space="preserve">
-    <value>Dados de acesso</value>
-    <comment>Dados de acesso</comment>
-  </data>
-  <data name="FirstName" xml:space="preserve">
-    <value>Primeiro nome</value>
-    <comment>Primeiro nome</comment>
-  </data>
-  <data name="NextStep" xml:space="preserve">
-    <value>Próximo passo</value>
-    <comment>Próximo passo</comment>
-  </data>
-  <data name="Steps" xml:space="preserve">
-    <value>Passos</value>
-    <comment>Passos</comment>
-  </data>
-  <data name="Activities" xml:space="preserve">
-    <value>Atividades</value>
-    <comment>Atividades</comment>
-  </data>
-  <data name="CompanyResume" xml:space="preserve">
-    <value>Resumo sobre a empresa</value>
-    <comment>Resumo sobre a empresa</comment>
-  </data>
-  <data name="TargetAudiences" xml:space="preserve">
-    <value>Público-alvo/Faixa-etária</value>
-    <comment>Público-alvo/Faixa-etária</comment>
-  </data>
-  <data name="PlayerInterests" xml:space="preserve">
-    <value>Interesses do Player</value>
-    <comment>Interesses do Player</comment>
-  </data>
-  <data name="Agenda" xml:space="preserve">
-    <value>Agenda</value>
-    <comment>Agenda</comment>
-  </data>
-  <data name="NetworkRio2C" xml:space="preserve">
-    <value>Rede Rio2C</value>
-    <comment>Rede Rio2C</comment>
-  </data>
-  <data name="Program" xml:space="preserve">
-    <value>Programação</value>
-    <comment>Programação</comment>
-  </data>
-  <data name="Talents" xml:space="preserve">
-    <value>Talentos</value>
-    <comment>Talentos</comment>
-  </data>
-  <data name="Dear" xml:space="preserve">
-    <value>Caro(a)</value>
-    <comment>Caro(a)</comment>
-  </data>
-  <data name="CompanyProfiles" xml:space="preserve">
-    <value>Resumos sobre a empresa</value>
-    <comment>Resumos sobre a empresa</comment>
-  </data>
-  <data name="JobTitles" xml:space="preserve">
-    <value>Cargos</value>
-    <comment>Cargos</comment>
-  </data>
-  <data name="MiniBios" xml:space="preserve">
-    <value>Mini-biografias</value>
-    <comment>Mini-biografias</comment>
-  </data>
-  <data name="PersonalInformation" xml:space="preserve">
-    <value>Dados pessoais</value>
-    <comment>Dados pessoais</comment>
-  </data>
-  <data name="PlayerInformation" xml:space="preserve">
-    <value>Dados do Player</value>
-    <comment>Dados do Player</comment>
-  </data>
-  <data name="ComingSoon" xml:space="preserve">
-    <value>Em Breve</value>
-    <comment>Coming Soon</comment>
-  </data>
-  <data name="Ticket" xml:space="preserve">
-    <value>Ingresso</value>
-    <comment>Ticket</comment>
-  </data>
-  <data name="PlayerInfo" xml:space="preserve">
-    <value>Dados do Player</value>
-    <comment>Dados do Player</comment>
-  </data>
-  <data name="OneToOneMeetings" xml:space="preserve">
-    <value>Rodadas de Negócios</value>
-    <comment>Rodadas de Negócios</comment>
-  </data>
-  <data name="FinishDate" xml:space="preserve">
-    <value>Data de conclusão</value>
-    <comment>Data de conclusão</comment>
-  </data>
-  <data name="Onboarding" xml:space="preserve">
-    <value>Onboarding</value>
-    <comment>Onboarding</comment>
-  </data>
-  <data name="StartDate" xml:space="preserve">
-    <value>Data de início</value>
-    <comment>Data de início</comment>
-  </data>
-  <data name="TermsAcceptanceDate" xml:space="preserve">
-    <value>Data de aceite do regulamento</value>
-    <comment>Data de aceite do regulamento</comment>
-  </data>
-  <data name="ShowAllParticipants" xml:space="preserve">
-    <value>Exibir todos os participantes</value>
-    <comment>Exibir todos os participantes</comment>
-  </data>
-  <data name="Export" xml:space="preserve">
-    <value>Exportar</value>
-    <comment>Exportar</comment>
-  </data>
-  <data name="ExportToEventbrite" xml:space="preserve">
-    <value>Exportar para Eventbrite</value>
-    <comment>Exportar para Eventbrite</comment>
-  </data>
-  <data name="SendInvitationEmail" xml:space="preserve">
-    <value>Enviar e-mail de convite</value>
-    <comment>Enviar e-mail de convite</comment>
-  </data>
-  <data name="Sent" xml:space="preserve">
-    <value>Enviado</value>
-    <comment>Enviado</comment>
-  </data>
-  <data name="Dates" xml:space="preserve">
-    <value>Datas</value>
-    <comment>Datas</comment>
-  </data>
-  <data name="OnboardingFinishDate" xml:space="preserve">
-    <value>Data término do onboarding</value>
-    <comment>Data término do onboarding</comment>
-  </data>
-  <data name="OnboardingStartDate" xml:space="preserve">
-    <value>Data início do onboarding</value>
-    <comment>Data início do onboarding</comment>
-  </data>
-  <data name="WelcomeEmailSendDate" xml:space="preserve">
-    <value>Data envio e-mail de boas-vindas</value>
-    <comment>Data envio e-mail de boas-vindas</comment>
-  </data>
-  <data name="DisplayOnSite" xml:space="preserve">
-    <value>Exibir no site</value>
-    <comment>Exibir no site</comment>
-  </data>
-  <data name="DisplayOnSiteEdition" xml:space="preserve">
-    <value>Exbir na edição {0} do site</value>
-    <comment>Exbir na edição {0} do site</comment>
-  </data>
-  <data name="Options" xml:space="preserve">
-    <value>Opções</value>
-    <comment>Opções</comment>
-  </data>
-  <data name="AudiovisualProjects" xml:space="preserve">
-    <value>Projetos de Audiovisual</value>
-    <comment>Projetos de Audiovisual</comment>
-  </data>
-  <data name="EvaluateProjects" xml:space="preserve">
-    <value>Avaliar projetos</value>
-    <comment>Avaliar projetos</comment>
-  </data>
-  <data name="ProjectsEvaluation" xml:space="preserve">
-    <value>Avaliação de projetos</value>
-    <comment>Avaliação de projetos</comment>
-  </data>
-  <data name="SendProject" xml:space="preserve">
-    <value>Enviar projeto</value>
-    <comment>Enviar projeto</comment>
-  </data>
-  <data name="SentProjects" xml:space="preserve">
-    <value>Projetos enviados</value>
-    <comment>Projetos enviados</comment>
-  </data>
-  <data name="Edition" xml:space="preserve">
-    <value>Edição</value>
-    <comment>Edição</comment>
-  </data>
-  <data name="Result" xml:space="preserve">
-    <value>Resultado</value>
-    <comment>Resultado</comment>
-  </data>
-  <data name="Subscription" xml:space="preserve">
-    <value>Inscrição</value>
-    <comment>Inscrição</comment>
-  </data>
-  <data name="Badges" xml:space="preserve">
-    <value>Ingressos</value>
-    <comment>Ingressos</comment>
-  </data>
-  <data name="Complaints" xml:space="preserve">
-    <value>Denúncias</value>
-    <comment>Denúncias</comment>
-  </data>
-  <data name="Experience" xml:space="preserve">
-    <value>Experiência</value>
-    <comment>Experiência</comment>
-  </data>
-  <data name="Market" xml:space="preserve">
-    <value>Mercado</value>
-    <comment>Mercado</comment>
-  </data>
-  <data name="SeeDescription" xml:space="preserve">
-    <value>Ver descrição</value>
-    <comment>Ver descrição</comment>
-  </data>
-  <data name="FoundFP" xml:space="preserve">
-    <value>encontradas</value>
-    <comment>encontradas</comment>
-  </data>
-  <data name="FoundMP" xml:space="preserve">
-    <value>encontrados</value>
-    <comment>encontrados</comment>
-  </data>
-  <data name="Informations" xml:space="preserve">
-    <value>Informações</value>
-    <comment>Informações</comment>
-  </data>
-  <data name="PlayersRegulationPdf" xml:space="preserve">
-    <value>PLAYER_Regulamento Rodadas de Negócio - Rio2C 2020 (PDF)</value>
-    <comment>PLAYER_Regulamento Rodadas de Negócio - Rio2C 2020.pdf</comment>
-  </data>
-  <data name="ProducersRegulationPdf" xml:space="preserve">
-    <value>Regulamento Rodadas de Negócio - Rio2C 2020 (PDF)</value>
-    <comment>Regulamento Rodadas de Negócio - Rio2C 2020.pdf</comment>
-  </data>
-  <data name="Later" xml:space="preserve">
-    <value>Depois</value>
-    <comment>Depois</comment>
-  </data>
-  <data name="Skip" xml:space="preserve">
-    <value>Pular</value>
-    <comment>Pular</comment>
-  </data>
-  <data name="AudiovisualProjectsFormTemplate" xml:space="preserve">
-    <value>Ficha de inscrição Projetos de Audiovisual - MODELO (PDF)</value>
-    <comment>Ficha de inscrição Projetos de Audiovisual - MODELO.pdf</comment>
-  </data>
-  <data name="ChooseNewPassword" xml:space="preserve">
-    <value>Escolha uma nova senha</value>
-    <comment>Escolha uma nova senha</comment>
-  </data>
-  <data name="ResetYourPassword" xml:space="preserve">
-    <value>Redefina sua senha</value>
-    <comment>Redefina sua senha</comment>
-  </data>
-  <data name="ReceivedProjects" xml:space="preserve">
-    <value>Projetos Recebidos</value>
-    <comment>Projetos Recebidos</comment>
-  </data>
-  <data name="CompanyInfo" xml:space="preserve">
-    <value>Informações da Empresa</value>
-    <comment>Informações da Empresa</comment>
-  </data>
-  <data name="ParticipantsTerms" xml:space="preserve">
-    <value>Regulamento de Participantes</value>
-    <comment>Regulamento de Participantes</comment>
-  </data>
-  <data name="ProjectInfo" xml:space="preserve">
-    <value>Informações do Projeto</value>
-    <comment>Informações do Projeto</comment>
-  </data>
-  <data name="ProjectSubmission" xml:space="preserve">
-    <value>Inscrição de Projeto</value>
-    <comment>Inscrição de Projeto</comment>
-  </data>
-  <data name="ForSeries" xml:space="preserve">
-    <value>Se obra seriada</value>
-    <comment>Se obra seriada</comment>
-  </data>
-  <data name="ProjectAdditionalInformations" xml:space="preserve">
-    <value>Informações adicionais sobre o projeto</value>
-    <comment>Informações adicionais sobre o projeto</comment>
-  </data>
-  <data name="Summary" xml:space="preserve">
-    <value>Sinopse</value>
-    <comment>Sinopse</comment>
+  <data name="AddressComplement" xml:space="preserve">
+    <value>Complemento</value>
+    <comment>Complemento</comment>
+  </data>
+  <data name="AddSpeaker" xml:space="preserve">
+    <value>Cadastrar Palestrante</value>
+  </data>
+  <data name="AddToEdition" xml:space="preserve">
+    <value>Adicionar em {0}</value>
+    <comment>Adicionar em {0}</comment>
   </data>
   <data name="AgeGroup" xml:space="preserve">
     <value>Faixa Etária</value>
     <comment>Faixa Etária</comment>
   </data>
-  <data name="LinksForPromoTeaser" xml:space="preserve">
-    <value>Link para Promo/Teaser</value>
-    <comment>Link para Promo/Teaser</comment>
+  <data name="Agenda" xml:space="preserve">
+    <value>Agenda</value>
+    <comment>Agenda</comment>
   </data>
-  <data name="LinksToImageOrConceptualLayout" xml:space="preserve">
-    <value>Link para imagens ou layout conceituais</value>
-    <comment>Link para imagens ou layout conceituais</comment>
+  <data name="AHolding" xml:space="preserve">
+    <value>uma holding</value>
+    <comment>uma holding</comment>
   </data>
-  <data name="ProductionPlan" xml:space="preserve">
-    <value>Plano de Produção - Detalhar seu cronograma e estrutura do projeto</value>
-    <comment>Plano de Produção - Detalhar seu cronograma e estrutura do projeto</comment>
+  <data name="Airfare" xml:space="preserve">
+    <value>Aéreo</value>
+    <comment>Aéreo</comment>
   </data>
-  <data name="ToSelect" xml:space="preserve">
-    <value>Selecionar</value>
-    <comment>Selecionar</comment>
+  <data name="Airfares" xml:space="preserve">
+    <value>Aéreos</value>
+    <comment>Aéreos</comment>
   </data>
-  <data name="Unselect" xml:space="preserve">
-    <value>Deselecionar</value>
-    <comment>Deselecionar</comment>
+  <data name="AirfareTicket" xml:space="preserve">
+    <value>Bilhete</value>
+    <comment>Bilhete</comment>
   </data>
-  <data name="Finish" xml:space="preserve">
-    <value>Concluir</value>
-    <comment>Concluir</comment>
+  <data name="Airport" xml:space="preserve">
+    <value>Aeroporto</value>
+    <comment>Aeroporto</comment>
   </data>
-  <data name="ToConfirm" xml:space="preserve">
-    <value>Confirmar</value>
-    <comment>Confirmar</comment>
+  <data name="AirportTransfer" xml:space="preserve">
+    <value>Transfer Aeroporto</value>
+    <comment>Transfer Aeroporto</comment>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Todos</value>
+  </data>
+  <data name="AllPlayers" xml:space="preserve">
+    <value>Todos os players</value>
+  </data>
+  <data name="AllRegistrationDocuments" xml:space="preserve">
+    <value>CPF / CNPJ / RG / Passaporte</value>
+    <comment>CPF / CNPJ / RG / Passaporte</comment>
+  </data>
+  <data name="Alter" xml:space="preserve">
+    <value>Alterar</value>
+    <comment>Alterar</comment>
+  </data>
+  <data name="And" xml:space="preserve">
+    <value>e</value>
+    <comment>e</comment>
+  </data>
+  <data name="ApiConfigurations" xml:space="preserve">
+    <value>Configurações da API</value>
+    <comment>Configurações da API</comment>
+  </data>
+  <data name="APlayer" xml:space="preserve">
+    <value>um player</value>
+    <comment>um player</comment>
+  </data>
+  <data name="Approve" xml:space="preserve">
+    <value>Aprovar</value>
+    <comment>Aprovar</comment>
+  </data>
+  <data name="Arrival" xml:space="preserve">
+    <value>Chegada</value>
+    <comment>Chegada</comment>
+  </data>
+  <data name="ArrivalDate" xml:space="preserve">
+    <value>Data da chegada</value>
+  </data>
+  <data name="ArrivalTime" xml:space="preserve">
+    <value>Hora de Chegada</value>
+  </data>
+  <data name="At" xml:space="preserve">
+    <value>em</value>
+    <comment>em</comment>
+  </data>
+  <data name="AttendeeOrganizationMaxSellProjectsCount" xml:space="preserve">
+    <value>Quantidade máxima de projetos por produtora</value>
+    <comment>Quantidade máxima de projetos por participante</comment>
+  </data>
+  <data name="AudioVisual" xml:space="preserve">
+    <value>Audiovisual</value>
+    <comment>Audiovisual</comment>
+  </data>
+  <data name="AudiovisualNegotiationsCreateEndDate" xml:space="preserve">
+    <value>Data de término da criação de negociações audiovisuais</value>
+    <comment>Data de término da criação de negociações audiovisuais</comment>
+  </data>
+  <data name="AudiovisualNegotiationsCreateStartDate" xml:space="preserve">
+    <value>Data de início da criação de negociações audiovisuais</value>
+    <comment>Data de início da criação de negociações audiovisuais</comment>
+  </data>
+  <data name="AudiovisualPitchingSessions" xml:space="preserve">
+    <value>Pitching de Audiovisual</value>
+    <comment>Pitching de Audiovisual</comment>
+  </data>
+  <data name="AudiovisualProjects" xml:space="preserve">
+    <value>Projetos de Audiovisual</value>
+    <comment>Projetos de Audiovisual</comment>
+  </data>
+  <data name="AudiovisualProjectsFormTemplate" xml:space="preserve">
+    <value>Ficha de inscrição Projetos de Audiovisual - MODELO (PDF)</value>
+    <comment>Ficha de inscrição Projetos de Audiovisual - MODELO.pdf</comment>
+  </data>
+  <data name="AudiovisualSubscriptionProjectReport" xml:space="preserve">
+    <value>Relatório de Inscrição de Projeto Audiovisual</value>
+    <comment>Relatório de Inscrição de Projeto Audiovisual</comment>
+  </data>
+  <data name="Automatic" xml:space="preserve">
+    <value>Automático</value>
+    <comment>Automático</comment>
   </data>
   <data name="AvailableP" xml:space="preserve">
     <value>Disponíveis</value>
@@ -1671,569 +329,78 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Disponível</value>
     <comment>Disponível</comment>
   </data>
-  <data name="SelectedP" xml:space="preserve">
-    <value>Selecionados</value>
-    <comment>Selecionados</comment>
-  </data>
-  <data name="SelectedS" xml:space="preserve">
-    <value>Selecionado</value>
-    <comment>Selecionado</comment>
-  </data>
-  <data name="At" xml:space="preserve">
-    <value>em</value>
-    <comment>em</comment>
-  </data>
-  <data name="DuplicateEntity" xml:space="preserve">
-    <value>Duplicar {0}</value>
-    <comment>Duplicar {0}</comment>
-  </data>
-  <data name="Rules" xml:space="preserve">
-    <value>Regulamento</value>
-    <comment>Regulamento</comment>
-  </data>
-  <data name="SendProjectsToPlayer" xml:space="preserve">
-    <value>Enviar para Players</value>
-    <comment>Enviar para Players</comment>
-  </data>
-  <data name="SubmitEntity" xml:space="preserve">
-    <value>Inscrever {0}</value>
-    <comment>Inscrever {0}</comment>
-  </data>
-  <data name="View" xml:space="preserve">
-    <value>Visualizar</value>
-    <comment>Visualizar</comment>
-  </data>
-  <data name="Saved" xml:space="preserve">
-    <value>Salvo</value>
-    <comment>Salvo</comment>
-  </data>
-  <data name="Match" xml:space="preserve">
-    <value>Correspondência</value>
-    <comment>Correspondência</comment>
-  </data>
-  <data name="Matches" xml:space="preserve">
-    <value>Correspondências</value>
-    <comment>Correspondências</comment>
-  </data>
-  <data name="TotalPlayingTime" xml:space="preserve">
-    <value>Minutagem</value>
-    <comment>Minutagem</comment>
-  </data>
-  <data name="WorkDuration" xml:space="preserve">
-    <value>Duração da obra</value>
-    <comment>Duração da obra</comment>
-  </data>
-  <data name="Contacts" xml:space="preserve">
-    <value>Contatos</value>
-    <comment>Contatos</comment>
-  </data>
-  <data name="SendMessage" xml:space="preserve">
-    <value>Enviar Mensagem</value>
-    <comment>Enviar Mensagem</comment>
-  </data>
-  <data name="Submit" xml:space="preserve">
-    <value>Inscrever</value>
-    <comment>Inscrever</comment>
-  </data>
-  <data name="Messages" xml:space="preserve">
-    <value>Mensagens</value>
-    <comment>Mensagens</comment>
-  </data>
-  <data name="ExecutivesListDownload" xml:space="preserve">
-    <value>Lista de Executivos - Categoria Industry</value>
-    <comment>Lista de Executivos - Categoria Industry</comment>
-  </data>
-  <data name="RegisterHere" xml:space="preserve">
-    <value>Adquira sua credencial aqui</value>
-    <comment>Adquira sua credencial aqui</comment>
-  </data>
-  <data name="StepByStepForAudiovisualProjectEnrollment" xml:space="preserve">
-    <value>Passo a passo para Inscrição de Projetos Audiovisual (PDF)</value>
-    <comment>Passo a passo para Inscrição de Projetos Audiovisual</comment>
-  </data>
-  <data name="AudiovisualPitchingSessions" xml:space="preserve">
-    <value>Pitching de Audiovisual</value>
-    <comment>Pitching de Audiovisual</comment>
-  </data>
-  <data name="BrandedContentSummit" xml:space="preserve">
-    <value>Summit Marcas</value>
-    <comment>Summit Marcas</comment>
-  </data>
-  <data name="BuyTicket" xml:space="preserve">
-    <value>Comprar Ingresso</value>
-    <comment>Comprar Ingresso</comment>
-  </data>
-  <data name="CodeOfEthics" xml:space="preserve">
-    <value>Código de ética</value>
-    <comment>Código de ética</comment>
-  </data>
-  <data name="Contact" xml:space="preserve">
-    <value>Contato</value>
-    <comment>Contato</comment>
-  </data>
-  <data name="PartnersAndSponsors" xml:space="preserve">
-    <value>Parcerias e Patrocínios</value>
-    <comment>Parcerias e Patrocínios</comment>
-  </data>
-  <data name="PressCenter" xml:space="preserve">
-    <value>Imprensa</value>
-    <comment>Imprensa</comment>
-  </data>
-  <data name="PressOffice" xml:space="preserve">
-    <value>Assessoria</value>
-    <comment>Assessoria</comment>
-  </data>
-  <data name="Rio2cConnections" xml:space="preserve">
-    <value>Rio2C Connections</value>
-    <comment>Rio2C Connections</comment>
-  </data>
-  <data name="You" xml:space="preserve">
-    <value>Você</value>
-    <comment>Você</comment>
-  </data>
-  <data name="Participant" xml:space="preserve">
-    <value>Participante</value>
-    <comment>Participante</comment>
-  </data>
-  <data name="PastReadF" xml:space="preserve">
-    <value>Lida</value>
-    <comment>Lida</comment>
-  </data>
-  <data name="PastReadM" xml:space="preserve">
-    <value>Lido</value>
-    <comment>Lido</comment>
-  </data>
-  <data name="ViewMessages" xml:space="preserve">
-    <value>Ver mensagens</value>
-    <comment>Ver mensagens</comment>
-  </data>
-  <data name="SubscribeList" xml:space="preserve">
-    <value>Lista de Inscrição</value>
-    <comment>Lista de Inscrição</comment>
-  </data>
-  <data name="Connected" xml:space="preserve">
-    <value>Conectado</value>
-    <comment>Conectado</comment>
-  </data>
-  <data name="Connecting" xml:space="preserve">
-    <value>Conectando</value>
-    <comment>Conectando</comment>
-  </data>
-  <data name="Disconnected" xml:space="preserve">
-    <value>Desconectado</value>
-    <comment>Desconectado</comment>
-  </data>
-  <data name="EmailSettings" xml:space="preserve">
-    <value>Configurações de Email</value>
-    <comment>Configurações de Email</comment>
-  </data>
-  <data name="Unsubscribe" xml:space="preserve">
-    <value>Cancelar recebimento</value>
-    <comment>Cancelar recebimento</comment>
-  </data>
-  <data name="ConnectionSlow" xml:space="preserve">
-    <value>Conexão lenta</value>
-    <comment>Conexão lenta</comment>
-  </data>
-  <data name="StartNewConversation" xml:space="preserve">
-    <value>Iniciar nova conversa</value>
-    <comment>Iniciar nova conversa</comment>
-  </data>
-  <data name="ViewMessage" xml:space="preserve">
-    <value>Ver mensagem</value>
-    <comment>Ver mensagem</comment>
-  </data>
-  <data name="Approve" xml:space="preserve">
-    <value>Aprovar</value>
-    <comment>Aprovar</comment>
-  </data>
-  <data name="Evaluations" xml:space="preserve">
-    <value>Avaliações</value>
-    <comment>Avaliações</comment>
-  </data>
-  <data name="SelectAMEntity" xml:space="preserve">
-    <value>Selecione um {0}</value>
-    <comment>Selecione um {0}</comment>
-  </data>
-  <data name="SelectAnMEntity" xml:space="preserve">
-    <value>Selecione um {0}</value>
-    <comment>Selecione um {0}</comment>
-  </data>
-  <data name="ProjectsSubmission" xml:space="preserve">
-    <value>Inscrição de projetos</value>
-    <comment>Inscrição de projetos</comment>
-  </data>
-  <data name="ProjectAccepted" xml:space="preserve">
-    <value>Aprovado</value>
-    <comment>Aprovado</comment>
-  </data>
-  <data name="ProjectRefused" xml:space="preserve">
-    <value>Reprovado</value>
-    <comment>Reprovado</comment>
-  </data>
-  <data name="PendingP" xml:space="preserve">
-    <value>Pendentes</value>
-    <comment>Pendentes</comment>
-  </data>
-  <data name="PendingS" xml:space="preserve">
-    <value>Pendente</value>
-    <comment>Pendente</comment>
-  </data>
-  <data name="Evaluate" xml:space="preserve">
-    <value>Avaliar</value>
-    <comment>Avaliar</comment>
-  </data>
-  <data name="ConfirmDownloadAllProjects" xml:space="preserve">
-    <value>Confirma a geração do PDF para todos os registros de todas as páginas?</value>
-    <comment>Baixar todos os projetos</comment>
-  </data>
-  <data name="ConfirmDownloadSelectedProjects" xml:space="preserve">
-    <value>Confirma a geração do PDF para os registros selecionados?</value>
-    <comment>Baixar projetos selecionados</comment>
-  </data>
-  <data name="Download" xml:space="preserve">
-    <value>Baixar</value>
-    <comment>Baixar</comment>
-  </data>
-  <data name="RegisteredP" xml:space="preserve">
-    <value>Registrados</value>
-    <comment>Registrados</comment>
-  </data>
-  <data name="ShowHighlights" xml:space="preserve">
-    <value>Exibir destaques</value>
-    <comment>Exibir destaques</comment>
-  </data>
-  <data name="Event" xml:space="preserve">
-    <value>Evento</value>
-    <comment>Evento</comment>
-  </data>
-  <data name="Track" xml:space="preserve">
-    <value>Track</value>
-    <comment>Track</comment>
-  </data>
-  <data name="ApiConfigurations" xml:space="preserve">
-    <value>Configurações da API</value>
-    <comment>Configurações da API</comment>
-  </data>
-  <data name="HighlightPosition" xml:space="preserve">
-    <value>Posição no Destaque</value>
-    <comment>Posição no Destaque</comment>
-  </data>
-  <data name="Disabled" xml:space="preserve">
-    <value>Desativado</value>
-    <comment>Desativado</comment>
-  </data>
-  <data name="Enabled" xml:space="preserve">
-    <value>Ativado</value>
-    <comment>Ativado</comment>
-  </data>
-  <data name="EntityHighlights" xml:space="preserve">
-    <value>{0} em destaque</value>
-    <comment>{0} em destaque</comment>
-  </data>
-  <data name="EndDate" xml:space="preserve">
-    <value>Data de término</value>
-    <comment>Data de término</comment>
-  </data>
-  <data name="Participants" xml:space="preserve">
-    <value>Participantes</value>
-    <comment>Participantes</comment>
-  </data>
-  <data name="In" xml:space="preserve">
-    <value>em</value>
-    <comment>em</comment>
-  </data>
-  <data name="Function" xml:space="preserve">
-    <value>Função</value>
-    <comment>Função</comment>
-  </data>
-  <data name="SelectedFP" xml:space="preserve">
-    <value>Selecionadas</value>
-    <comment>Selecionadas</comment>
-  </data>
-  <data name="Tracks" xml:space="preserve">
-    <value>Tracks</value>
-    <comment>Tracks</comment>
-  </data>
-  <data name="Events" xml:space="preserve">
-    <value>Eventos</value>
-    <comment>Eventos</comment>
-  </data>
-  <data name="Names" xml:space="preserve">
-    <value>Nomes</value>
-    <comment>Nomes</comment>
-  </data>
-  <data name="SpeakerRole" xml:space="preserve">
-    <value>Função do Palestrante</value>
-    <comment>Função do Palestrante</comment>
-  </data>
-  <data name="SpeakersRoles" xml:space="preserve">
-    <value>Funções dos Palestrantes</value>
-    <comment>Funções dos Palestrantes</comment>
-  </data>
-  <data name="PresentationFormat" xml:space="preserve">
-    <value>Formato</value>
-    <comment>Formato</comment>
-  </data>
-  <data name="PresentationFormats" xml:space="preserve">
-    <value>Formatos</value>
-    <comment>Formatos</comment>
-  </data>
-  <data name="Color" xml:space="preserve">
-    <value>Cor</value>
-    <comment>Cor</comment>
-  </data>
-  <data name="Reports" xml:space="preserve">
-    <value>Relatórios</value>
-    <comment>Relatórios</comment>
-  </data>
-  <data name="AudiovisualSubscriptionProjectReport" xml:space="preserve">
-    <value>Relatório de Inscrição de Projeto Audiovisual</value>
-    <comment>Relatório de Inscrição de Projeto Audiovisual</comment>
-  </data>
-  <data name="ProjectSubscriptions" xml:space="preserve">
-    <value>Inscrições de Projeto</value>
-    <comment>Inscrições de Projeto</comment>
-  </data>
-  <data name="Pitching" xml:space="preserve">
-    <value>Pitching</value>
-    <comment>Pitching</comment>
-  </data>
-  <data name="ProducerQty" xml:space="preserve">
-    <value>QTD Produtora</value>
-    <comment>QTD Produtora</comment>
-  </data>
-  <data name="ProjectId" xml:space="preserve">
-    <value>ID do Projeto</value>
-    <comment>ID do Projeto</comment>
-  </data>
-  <data name="ProjectsPerProducerQty" xml:space="preserve">
-    <value>QTD Projetos Por Produtora</value>
-    <comment>QTD Projetos Por Produtora</comment>
-  </data>
-  <data name="ExportToExcel" xml:space="preserve">
-    <value>Exportar para Excel</value>
-    <comment>Exportar para Excel</comment>
-  </data>
-  <data name="SocialNetworks" xml:space="preserve">
-    <value>Redes Sociais</value>
-    <comment>Redes Sociais</comment>
-  </data>
-  <data name="Eg" xml:space="preserve">
-    <value>ex</value>
-    <comment>ex</comment>
-  </data>
-  <data name="Is" xml:space="preserve">
-    <value>é</value>
-    <comment>é</comment>
-  </data>
-  <data name="BirthDate" xml:space="preserve">
-    <value>Data de Nascimento</value>
-    <comment>Data de Nascimento</comment>
-  </data>
-  <data name="AdditionalInfo" xml:space="preserve">
-    <value>Informações Adicionais</value>
-    <comment>Informações Adicionais</comment>
-  </data>
-  <data name="Gender" xml:space="preserve">
-    <value>Gênero</value>
-    <comment>Gênero</comment>
-  </data>
-  <data name="HasAnySpecialNeeds" xml:space="preserve">
-    <value>Possui necessidades especiais?</value>
-    <comment>Possui necessidades especiais?</comment>
-  </data>
-  <data name="CollaboratorIndustry" xml:space="preserve">
-    <value>Área de Atuação</value>
-    <comment>Área de Atuação</comment>
-  </data>
-  <data name="Role" xml:space="preserve">
-    <value>Função</value>
-    <comment>Função</comment>
-  </data>
-  <data name="WhichSpecialNeedsQ" xml:space="preserve">
-    <value>Qual?</value>
-    <comment>Qual?</comment>
-  </data>
-  <data name="HaveYouBeenToRio2CBefore" xml:space="preserve">
-    <value>Já esteve em outras edições do Rio2C?</value>
-    <comment>Já esteve em outras edições do Rio2C?</comment>
-  </data>
-  <data name="InWhatEditions" xml:space="preserve">
-    <value>Em que edição?</value>
-    <comment>Em que edição?</comment>
-  </data>
-  <data name="Others" xml:space="preserve">
-    <value>Outros</value>
-    <comment>Outros</comment>
-  </data>
-  <data name="EnterYourIndustry" xml:space="preserve">
-    <value>Informe sua área de atuação</value>
-    <comment>Informe sua área de atuação</comment>
-  </data>
-  <data name="EnterYourRole" xml:space="preserve">
-    <value>Informe sua função</value>
-    <comment>Informe sua função</comment>
-  </data>
-  <data name="Pillar" xml:space="preserve">
-    <value>Pilar</value>
-    <comment>Pilar</comment>
-  </data>
-  <data name="Pillars" xml:space="preserve">
-    <value>Pilares</value>
-    <comment>Pilares</comment>
-  </data>
-  <data name="WhichEditionQ" xml:space="preserve">
-    <value>Em qual edição?</value>
-    <comment>Em qual edição?</comment>
-  </data>
-  <data name="SelectAFEntity" xml:space="preserve">
-    <value>Selecione uma {0}</value>
-    <comment>Selecione uma {0}</comment>
-  </data>
-  <data name="SelectAnFEntity" xml:space="preserve">
-    <value>Selecione uma {0}</value>
-    <comment>Selecione uma {0}</comment>
-  </data>
-  <data name="SelectAll" xml:space="preserve">
-    <value>Selecionar todos</value>
-    <comment>Selecionar todos</comment>
-  </data>
-  <data name="UnselectAll" xml:space="preserve">
-    <value>Deselecionar todos</value>
-    <comment>Deselecionar todos</comment>
-  </data>
-  <data name="Commission" xml:space="preserve">
-    <value>Comissão</value>
-    <comment>Comissão</comment>
-  </data>
-  <data name="Member" xml:space="preserve">
-    <value>Membro</value>
-    <comment>Membro</comment>
-  </data>
-  <data name="Members" xml:space="preserve">
-    <value>Membros</value>
-    <comment>Membros</comment>
-  </data>
-  <data name="TermsAcceptance" xml:space="preserve">
-    <value>Aceite do regulamento</value>
-    <comment>Aceite do regulamento</comment>
-  </data>
-  <data name="End" xml:space="preserve">
-    <value>Término</value>
-    <comment>Término</comment>
-  </data>
-  <data name="Start" xml:space="preserve">
-    <value>Início</value>
-    <comment>Início</comment>
-  </data>
-  <data name="MusicCommission" xml:space="preserve">
-    <value>Comissão de Música</value>
-    <comment>Comissão de Música</comment>
-  </data>
-  <data name="MusicProjects" xml:space="preserve">
-    <value>Projetos de Música</value>
-    <comment>Projetos de Música</comment>
+  <data name="Average" xml:space="preserve">
+    <value>Média</value>
+    <comment>Média</comment>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Voltar</value>
+  </data>
+  <data name="BadgeName" xml:space="preserve">
+    <value>Nome para credencial</value>
+    <comment>Nome para credencial</comment>
+  </data>
+  <data name="Badges" xml:space="preserve">
+    <value>Ingressos</value>
+    <comment>Ingressos</comment>
   </data>
   <data name="BandType" xml:space="preserve">
     <value>Tipo de artista</value>
     <comment>Tipo de artist</comment>
   </data>
-  <data name="DisplayOrder" xml:space="preserve">
-    <value>Ordem de exibição</value>
-    <comment>Ordem de exibição</comment>
+  <data name="BeingProcessed" xml:space="preserve">
+    <value>Sendo executado</value>
+    <comment>Sendo executado</comment>
   </data>
-  <data name="MainMusicInfluences" xml:space="preserve">
-    <value>Principais influências musicais</value>
-    <comment>Principais influências musicais</comment>
+  <data name="BirthDate" xml:space="preserve">
+    <value>Data de Nascimento</value>
+    <comment>Data de Nascimento</comment>
   </data>
-  <data name="Release" xml:space="preserve">
-    <value>Release</value>
-    <comment>Release</comment>
+  <data name="Block" xml:space="preserve">
+    <value>Bloquear</value>
+    <comment>Bloquear</comment>
   </data>
-  <data name="PitchingShow" xml:space="preserve">
-    <value>PitchingShow</value>
-    <comment>PitchingShow</comment>
+  <data name="BrandedContentSummit" xml:space="preserve">
+    <value>Summit Marcas</value>
+    <comment>Summit Marcas</comment>
   </data>
-  <data name="MusicBandFormationYear" xml:space="preserve">
-    <value>Ano de início da banda</value>
-    <comment>Ano de início da banda</comment>
+  <data name="BrowsingMode" xml:space="preserve">
+    <value>Modo de Navegação</value>
   </data>
-  <data name="MusicBandMembers" xml:space="preserve">
-    <value>Integrantes</value>
-    <comment>Integrantes</comment>
+  <data name="BusinessRound" xml:space="preserve">
+    <value>Rodadas de Negócios</value>
+    <comment>Rodadas de Negócios</comment>
   </data>
-  <data name="MusicBandStaff" xml:space="preserve">
-    <value>Equipe</value>
-    <comment>Equipe</comment>
+  <data name="BusinessRoundtable" xml:space="preserve">
+    <value>Rodada de Negócios</value>
+    <comment>Rodada de Negócios</comment>
   </data>
-  <data name="MusicGenre" xml:space="preserve">
-    <value>Estilo musical</value>
-    <comment>Estilo musical</comment>
+  <data name="BuyTicket" xml:space="preserve">
+    <value>Comprar Ingresso</value>
+    <comment>Comprar Ingresso</comment>
   </data>
-  <data name="MusicInstrumentName" xml:space="preserve">
-    <value>Instrumento musical</value>
-    <comment>Instrumento musical</comment>
+  <data name="By" xml:space="preserve">
+    <value>por</value>
+    <comment>por</comment>
   </data>
-  <data name="ParticipantProfile" xml:space="preserve">
-    <value>Tipo de artista</value>
-    <comment>Tipo de artista</comment>
+  <data name="CalendarReport" xml:space="preserve">
+    <value>Relatório da Agenda</value>
+    <comment>Relatório da Agenda</comment>
   </data>
-  <data name="ProjectsReleased" xml:space="preserve">
-    <value>Projetos lançados</value>
-    <comment>Projetos lançados</comment>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancelar</value>
+    <comment>Cancelar</comment>
   </data>
-  <data name="Responsible" xml:space="preserve">
-    <value>Responsável</value>
-    <comment>Responsável</comment>
+  <data name="Caption" xml:space="preserve">
+    <value>Legenda:</value>
   </data>
-  <data name="Year" xml:space="preserve">
-    <value>Ano</value>
-    <comment>Ano</comment>
+  <data name="CellPhone" xml:space="preserve">
+    <value>Celular</value>
+    <comment>Celular</comment>
   </data>
-  <data name="AllRegistrationDocuments" xml:space="preserve">
-    <value>CPF / CNPJ / RG / Passaporte</value>
-    <comment>CPF / CNPJ / RG / Passaporte</comment>
-  </data>
-  <data name="VideoClip" xml:space="preserve">
-    <value>Vídeo clip</value>
-    <comment>Vídeo clip</comment>
-  </data>
-  <data name="VideoClipAndMusics" xml:space="preserve">
-    <value>Vídeo clip e músicas</value>
-    <comment>Vídeo clip e músicas</comment>
-  </data>
-  <data name="Sponsors" xml:space="preserve">
-    <value>Patrocinadores</value>
-    <comment>Patrocinadores</comment>
-  </data>
-  <data name="IsAirfareTicketRequired" xml:space="preserve">
-    <value>Ticket aéreo obrigatório</value>
-    <comment>Ticket aéreo obrigatório</comment>
-  </data>
-  <data name="Sponsor" xml:space="preserve">
-    <value>Patrocinador</value>
-    <comment>Patrocinador</comment>
-  </data>
-  <data name="Request" xml:space="preserve">
-    <value>Solicitação</value>
-    <comment>Solicitação</comment>
-  </data>
-  <data name="Requests" xml:space="preserve">
-    <value>Solicitações</value>
-    <comment>Solicitações</comment>
-  </data>
-  <data name="AddRequest" xml:space="preserve">
-    <value>Adicionar Solicitação</value>
-    <comment>Adicionar Solicitação</comment>
-  </data>
-  <data name="ShowAllSponsors" xml:space="preserve">
-    <value>Exibir todos os patrocinadores</value>
-    <comment>Exibir todos os patrocinadores</comment>
-  </data>
-  <data name="Arrival" xml:space="preserve">
-    <value>Chegada</value>
-    <comment>Chegada</comment>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Trocar Senha</value>
+    <comment>Trocar Senha</comment>
   </data>
   <data name="CheckInDate" xml:space="preserve">
     <value>Data de Check-in</value>
@@ -2243,105 +410,167 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Data de Check-out</value>
     <comment>Data de Check-out</comment>
   </data>
-  <data name="Departure" xml:space="preserve">
-    <value>Saída</value>
-    <comment>Saída</comment>
+  <data name="Choose" xml:space="preserve">
+    <value>Selecione</value>
   </data>
-  <data name="FromPlace" xml:space="preserve">
-    <value>De</value>
-    <comment>De</comment>
+  <data name="ChooseNewPassword" xml:space="preserve">
+    <value>Escolha uma nova senha</value>
+    <comment>Escolha uma nova senha</comment>
   </data>
-  <data name="IsNational" xml:space="preserve">
-    <value>Nacional</value>
-    <comment>Nacional</comment>
+  <data name="City" xml:space="preserve">
+    <value>Cidade</value>
+    <comment>Cidade</comment>
   </data>
-  <data name="TicketNumber" xml:space="preserve">
-    <value>Número do Bilhete</value>
-    <comment>Número do Bilhete</comment>
+  <data name="ClickHere" xml:space="preserve">
+    <value>Clique aqui</value>
   </data>
-  <data name="ToPlace" xml:space="preserve">
-    <value>Para</value>
-    <comment>Para</comment>
+  <data name="ClickHereToEvaluateProject" xml:space="preserve">
+    <value>Clique aqui para avaliar o projeto</value>
+    <comment>Clique aqui para avaliar o projeto</comment>
   </data>
-  <data name="AirfareTicket" xml:space="preserve">
-    <value>Bilhete</value>
-    <comment>Bilhete</comment>
+  <data name="ClickHereToLoginIn" xml:space="preserve">
+    <value>Clique aqui para logar.</value>
   </data>
-  <data name="Accommodation" xml:space="preserve">
-    <value>Hospedagem</value>
-    <comment>Hospedagem</comment>
+  <data name="Clipping" xml:space="preserve">
+    <value>Na Mídia</value>
+    <comment>Na Mídia</comment>
   </data>
-  <data name="Airfare" xml:space="preserve">
-    <value>Aéreo</value>
-    <comment>Aéreo</comment>
+  <data name="Close" xml:space="preserve">
+    <value>Fechar</value>
   </data>
-  <data name="Transport" xml:space="preserve">
-    <value>Transporte</value>
-    <comment>Transporte</comment>
+  <data name="CNPJ" xml:space="preserve">
+    <value>CNPJ</value>
+    <comment>CNPJ</comment>
   </data>
-  <data name="LogisticsTransfer" xml:space="preserve">
-    <value>Transfer</value>
-    <comment>Transfer</comment>
+  <data name="Code" xml:space="preserve">
+    <value>Código</value>
+    <comment>Código</comment>
   </data>
-  <data name="TransferCity" xml:space="preserve">
-    <value>Transfer City</value>
-    <comment>Transfer City</comment>
+  <data name="CodeOfEthics" xml:space="preserve">
+    <value>Código de ética</value>
+    <comment>Código de ética</comment>
   </data>
-  <data name="VehicleAtDisposal" xml:space="preserve">
-    <value>Carro à Disposição</value>
-    <comment>Veículo à Disposição</comment>
+  <data name="CollaboratorIndustry" xml:space="preserve">
+    <value>Área de Atuação</value>
+    <comment>Área de Atuação</comment>
   </data>
-  <data name="AirportTransfer" xml:space="preserve">
-    <value>Transfer Aeroporto</value>
-    <comment>Transfer Aeroporto</comment>
+  <data name="CollaboratorType" xml:space="preserve">
+    <value>Tipo de colaborador</value>
+    <comment>Tipo de colaborador</comment>
   </data>
-  <data name="LogisticsCityTransferHelpText" xml:space="preserve">
-    <value>Residentes do Rio de Janeiro - Somente casos extremamente excepcionais</value>
-    <comment>Residentes do Rio de Janeiro - Somente casos extremamente excepcionais</comment>
+  <data name="Color" xml:space="preserve">
+    <value>Cor</value>
+    <comment>Cor</comment>
   </data>
-  <data name="OnlyKeynotes" xml:space="preserve">
-    <value>Keynotes somente</value>
-    <comment>Keynotes somente</comment>
+  <data name="ComingSoon" xml:space="preserve">
+    <value>Em Breve</value>
+    <comment>Coming Soon</comment>
   </data>
-  <data name="International" xml:space="preserve">
-    <value>Internacional</value>
-    <comment>Internacional</comment>
+  <data name="Commercial" xml:space="preserve">
+    <value>Comercial</value>
+    <comment>Comercial</comment>
   </data>
-  <data name="National" xml:space="preserve">
-    <value>Nacional</value>
-    <comment>Nacional</comment>
+  <data name="Commission" xml:space="preserve">
+    <value>Comissão</value>
+    <comment>Comissão</comment>
   </data>
-  <data name="Place" xml:space="preserve">
-    <value>Local</value>
-    <comment>Local</comment>
+  <data name="Companies" xml:space="preserve">
+    <value>Empresas</value>
+    <comment>Empresas</comment>
   </data>
-  <data name="OneToOneMeetingParameters" xml:space="preserve">
-    <value>Parâmetros de Rodadas de Negócio</value>
-    <comment>Parâmetros de Rodadas de Negócio</comment>
+  <data name="Company" xml:space="preserve">
+    <value>Empresa</value>
   </data>
-  <data name="Parameter" xml:space="preserve">
-    <value>Parâmetro</value>
-    <comment>Parâmetro</comment>
+  <data name="CompanyDocument" xml:space="preserve">
+    <value>CNPJ</value>
+    <comment>CNPJ</comment>
   </data>
-  <data name="RoundFirstTurn" xml:space="preserve">
-    <value>Qtde. de rodadas do 1&lt;sup&gt;o&lt;/sup&gt; turno</value>
-    <comment>Qtde. de rodadas do 1&lt;sup&gt;o&lt;/sup&gt; turno</comment>
+  <data name="CompanyInfo" xml:space="preserve">
+    <value>Informações da Empresa</value>
+    <comment>Informações da Empresa</comment>
   </data>
-  <data name="RoundSecondTurn" xml:space="preserve">
-    <value>Qtde. de rodadas do 2&lt;sup&gt;o&lt;/sup&gt; turno</value>
-    <comment>Qtde. de rodadas do 2&lt;sup&gt;o&lt;/sup&gt; turno</comment>
+  <data name="CompanyName" xml:space="preserve">
+    <value>Razão social</value>
   </data>
-  <data name="TimeIntervalBetweenRound" xml:space="preserve">
-    <value>Tempo de intervalo entre cada rodada</value>
-    <comment>Tempo de intervalo entre cada rodada</comment>
+  <data name="CompanyProfile" xml:space="preserve">
+    <value>Resumo sobre a empresa</value>
+    <comment>Resumo sobre a empresa</comment>
   </data>
-  <data name="TimeIntervalBetweenTurn" xml:space="preserve">
-    <value>Tempo de intervalo entre os turnos</value>
-    <comment>Tempo de intervalo entre os turnos</comment>
+  <data name="CompanyProfiles" xml:space="preserve">
+    <value>Resumos sobre a empresa</value>
+    <comment>Resumos sobre a empresa</comment>
   </data>
-  <data name="TimeOfEachRound" xml:space="preserve">
-    <value>Tempo de cada rodada</value>
-    <comment>Tempo de cada rodada</comment>
+  <data name="CompanyResume" xml:space="preserve">
+    <value>Resumo sobre a empresa</value>
+    <comment>Resumo sobre a empresa</comment>
+  </data>
+  <data name="Complaints" xml:space="preserve">
+    <value>Denúncias</value>
+    <comment>Denúncias</comment>
+  </data>
+  <data name="Complete" xml:space="preserve">
+    <value>Completo</value>
+  </data>
+  <data name="Conference" xml:space="preserve">
+    <value>Palestra</value>
+    <comment>Palestra</comment>
+  </data>
+  <data name="ConferenceDetails" xml:space="preserve">
+    <value>Detalhes da Palestra</value>
+  </data>
+  <data name="Conferences" xml:space="preserve">
+    <value>Palestras</value>
+    <comment>Palestras</comment>
+  </data>
+  <data name="ConferenceSynopsis" xml:space="preserve">
+    <value>Sinopse</value>
+  </data>
+  <data name="ConfirmDownloadAllProjects" xml:space="preserve">
+    <value>Confirma a geração do PDF para todos os registros de todas as páginas?</value>
+    <comment>Baixar todos os projetos</comment>
+  </data>
+  <data name="ConfirmDownloadSelectedProjects" xml:space="preserve">
+    <value>Confirma a geração do PDF para os registros selecionados?</value>
+    <comment>Baixar projetos selecionados</comment>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Confirmação de senha</value>
+    <comment>Confirmação de senha</comment>
+  </data>
+  <data name="confirmSendEmailAll" xml:space="preserve">
+    <value>Confirma o envio de e-mail para todos os registros de todas as páginas?</value>
+    <comment>Confirma o envio de e-mail para todos os registros de todas as páginas?</comment>
+  </data>
+  <data name="confirmSendEmailSelected" xml:space="preserve">
+    <value>Confirma o envio de e-mail para os registros selecionados?</value>
+    <comment>Confirma o envio de e-mail para os registros selecionados?</comment>
+  </data>
+  <data name="Connected" xml:space="preserve">
+    <value>Conectado</value>
+    <comment>Conectado</comment>
+  </data>
+  <data name="Connecting" xml:space="preserve">
+    <value>Conectando</value>
+    <comment>Conectando</comment>
+  </data>
+  <data name="ConnectionSlow" xml:space="preserve">
+    <value>Conexão lenta</value>
+    <comment>Conexão lenta</comment>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Contato</value>
+    <comment>Contato</comment>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>Contatos</value>
+    <comment>Contatos</comment>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>Fale Conosco</value>
+    <comment>Fale Conosco</comment>
+  </data>
+  <data name="ContentTypeYouAreLookingFor" xml:space="preserve">
+    <value>Tipo de conteúdo que está buscando no Mercado (restrições e especificidades)</value>
   </data>
   <data name="CountAutomaticTables" xml:space="preserve">
     <value>Número de mesas automáticas</value>
@@ -2351,6 +580,410 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Número de mesas manuais</value>
     <comment>Número de mesas manuais</comment>
   </data>
+  <data name="Country" xml:space="preserve">
+    <value>País</value>
+    <comment>País</comment>
+  </data>
+  <data name="CountryCode" xml:space="preserve">
+    <value>Código do País</value>
+  </data>
+  <data name="CountryName" xml:space="preserve">
+    <value>País</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Criar</value>
+  </data>
+  <data name="CreateDate" xml:space="preserve">
+    <value>Data de Criação</value>
+    <comment>Data de Criação</comment>
+  </data>
+  <data name="CreatedF" xml:space="preserve">
+    <value>criada</value>
+    <comment>criada</comment>
+  </data>
+  <data name="CreatedM" xml:space="preserve">
+    <value>criado</value>
+    <comment>criado</comment>
+  </data>
+  <data name="CreateProject" xml:space="preserve">
+    <value>Criar Projeto</value>
+  </data>
+  <data name="Curatorship" xml:space="preserve">
+    <value>Curadoria</value>
+    <comment>Curadoria</comment>
+  </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>Senha atual</value>
+    <comment>Senha atual</comment>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="DateHourFormat" xml:space="preserve">
+    <value>&lt;span&gt;{0} das {1} às {2}&lt;/span&gt;</value>
+  </data>
+  <data name="Dates" xml:space="preserve">
+    <value>Datas</value>
+    <comment>Datas</comment>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>Dias</value>
+    <comment>Dias</comment>
+  </data>
+  <data name="Dear" xml:space="preserve">
+    <value>Caro(a)</value>
+    <comment>Caro(a)</comment>
+  </data>
+  <data name="DeletedF" xml:space="preserve">
+    <value>excluída</value>
+    <comment>excluída</comment>
+  </data>
+  <data name="DeletedM" xml:space="preserve">
+    <value>excluído</value>
+    <comment>excluído</comment>
+  </data>
+  <data name="Departure" xml:space="preserve">
+    <value>Saída</value>
+    <comment>Saída</comment>
+  </data>
+  <data name="DepartureDate" xml:space="preserve">
+    <value>Data da saída</value>
+  </data>
+  <data name="DepartureTime" xml:space="preserve">
+    <value>Hora de Partida</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Descrição</value>
+    <comment>Descrição</comment>
+  </data>
+  <data name="Descriptions" xml:space="preserve">
+    <value>Descrições</value>
+    <comment>Descrições</comment>
+  </data>
+  <data name="DeselectAll" xml:space="preserve">
+    <value>Desmarcar todos</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Detalhes</value>
+  </data>
+  <data name="DevelopedBy" xml:space="preserve">
+    <value>Desenvolvido por</value>
+  </data>
+  <data name="Development" xml:space="preserve">
+    <value>Desenvolvimento</value>
+    <comment>Desenvolvimento</comment>
+  </data>
+  <data name="Diary" xml:space="preserve">
+    <value>Agenda</value>
+    <comment>Agenda</comment>
+  </data>
+  <data name="Direction" xml:space="preserve">
+    <value>Direção</value>
+    <comment>Direção</comment>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Desativado</value>
+    <comment>Desativado</comment>
+  </data>
+  <data name="Disconnected" xml:space="preserve">
+    <value>Desconectado</value>
+    <comment>Desconectado</comment>
+  </data>
+  <data name="DisplayedInitialLogisticList" xml:space="preserve">
+    <value>Exibido na lista inicial de logística</value>
+    <comment>Exibido na lista inicial de logística</comment>
+  </data>
+  <data name="DisplayOnSite" xml:space="preserve">
+    <value>Exibir no site</value>
+    <comment>Exibir no site</comment>
+  </data>
+  <data name="DisplayOnSiteEdition" xml:space="preserve">
+    <value>Exbir na edição {0} do site</value>
+    <comment>Exbir na edição {0} do site</comment>
+  </data>
+  <data name="DisplayOrder" xml:space="preserve">
+    <value>Ordem de exibição</value>
+    <comment>Ordem de exibição</comment>
+  </data>
+  <data name="Document" xml:space="preserve">
+    <value>Documento</value>
+    <comment>Documento</comment>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Baixar</value>
+    <comment>Baixar</comment>
+  </data>
+  <data name="DownloadListOfExecutives" xml:space="preserve">
+    <value>Baixar lista de executivos</value>
+  </data>
+  <data name="DownloadPdfs" xml:space="preserve">
+    <value>Baixar PDF's</value>
+    <comment>Baixar PDF's</comment>
+  </data>
+  <data name="DuplicateEntity" xml:space="preserve">
+    <value>Duplicar {0}</value>
+    <comment>Duplicar {0}</comment>
+  </data>
+  <data name="EachEpisodePlayingTime" xml:space="preserve">
+    <value>Minutagem de cada episódio</value>
+    <comment>Minutagem de cada episódio</comment>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="EditInterests" xml:space="preserve">
+    <value>Editar Interesses</value>
+    <comment>Editar Interesses</comment>
+  </data>
+  <data name="Edition" xml:space="preserve">
+    <value>Edição</value>
+    <comment>Edição</comment>
+  </data>
+  <data name="Editions" xml:space="preserve">
+    <value>Edições</value>
+    <comment>Edições</comment>
+  </data>
+  <data name="EditMusicalCommission" xml:space="preserve">
+    <value>Editar Comissão Musical</value>
+  </data>
+  <data name="EditPlayer" xml:space="preserve">
+    <value>Editar Player</value>
+    <comment>Editar Player</comment>
+  </data>
+  <data name="EditProducer" xml:space="preserve">
+    <value>Editar Perfil Produtora</value>
+  </data>
+  <data name="EditProfile" xml:space="preserve">
+    <value>Editar Perfil</value>
+    <comment>Editar Perfil</comment>
+  </data>
+  <data name="EditProject" xml:space="preserve">
+    <value>Editar Projeto</value>
+  </data>
+  <data name="EditSpeaker" xml:space="preserve">
+    <value>Alterar Palestrante</value>
+  </data>
+  <data name="Eg" xml:space="preserve">
+    <value>ex</value>
+    <comment>ex</comment>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-mail</value>
+    <comment>E-mail</comment>
+  </data>
+  <data name="EmailConfirmed" xml:space="preserve">
+    <value>E-mail confirmado</value>
+    <comment>E-mail confirmado</comment>
+  </data>
+  <data name="Emails" xml:space="preserve">
+    <value>E-mails</value>
+    <comment>E-mails</comment>
+  </data>
+  <data name="EmailSettings" xml:space="preserve">
+    <value>Configurações de Email</value>
+    <comment>Configurações de Email</comment>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Ativado</value>
+    <comment>Ativado</comment>
+  </data>
+  <data name="End" xml:space="preserve">
+    <value>Término</value>
+    <comment>Término</comment>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>Data de término</value>
+    <comment>Data de término</comment>
+  </data>
+  <data name="EndTime" xml:space="preserve">
+    <value>Hora de término</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>Inglês</value>
+  </data>
+  <data name="Enter" xml:space="preserve">
+    <value>Entrar</value>
+    <comment>Entrar</comment>
+  </data>
+  <data name="EnterToSend" xml:space="preserve">
+    <value>Enter para enviar.</value>
+  </data>
+  <data name="EnterYourIndustry" xml:space="preserve">
+    <value>Informe sua área de atuação</value>
+    <comment>Informe sua área de atuação</comment>
+  </data>
+  <data name="EnterYourRole" xml:space="preserve">
+    <value>Informe sua função</value>
+    <comment>Informe sua função</comment>
+  </data>
+  <data name="EntityHighlights" xml:space="preserve">
+    <value>{0} em destaque</value>
+    <comment>{0} em destaque</comment>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Erro</value>
+    <comment>Erro</comment>
+  </data>
+  <data name="Ethics" xml:space="preserve">
+    <value>Código de Ética</value>
+    <comment>Código de Ética</comment>
+  </data>
+  <data name="Evaluate" xml:space="preserve">
+    <value>Avaliar</value>
+    <comment>Avaliar</comment>
+  </data>
+  <data name="Evaluated" xml:space="preserve">
+    <value>Avaliado</value>
+    <comment>Avaliado</comment>
+  </data>
+  <data name="EvaluateProject" xml:space="preserve">
+    <value>Avaliar projeto</value>
+  </data>
+  <data name="EvaluateProjects" xml:space="preserve">
+    <value>Avaliar projetos</value>
+    <comment>Avaliar projetos</comment>
+  </data>
+  <data name="Evaluation" xml:space="preserve">
+    <value>Avaliação</value>
+  </data>
+  <data name="Evaluations" xml:space="preserve">
+    <value>Avaliações</value>
+    <comment>Avaliações</comment>
+  </data>
+  <data name="Evaluator" xml:space="preserve">
+    <value>Avaliador</value>
+    <comment>Avaliador</comment>
+  </data>
+  <data name="Evaluators" xml:space="preserve">
+    <value>Avaliadores</value>
+    <comment>Avaliadores</comment>
+  </data>
+  <data name="EvaluatorUser" xml:space="preserve">
+    <value>Usuário da Avaliação</value>
+    <comment>Usuário da Avaliação</comment>
+  </data>
+  <data name="Event" xml:space="preserve">
+    <value>Evento</value>
+    <comment>Evento</comment>
+  </data>
+  <data name="Events" xml:space="preserve">
+    <value>Eventos</value>
+    <comment>Eventos</comment>
+  </data>
+  <data name="Executive" xml:space="preserve">
+    <value>Executivo</value>
+    <comment>Executivo</comment>
+  </data>
+  <data name="ExecutiveCreate" xml:space="preserve">
+    <value>Criar Executivo</value>
+    <comment>Criar Executivo</comment>
+  </data>
+  <data name="ExecutiveEdit" xml:space="preserve">
+    <value>Editar Executivo</value>
+    <comment>Editar Executivo</comment>
+  </data>
+  <data name="ExecutiveName" xml:space="preserve">
+    <value>Nome do Executivo</value>
+    <comment>Nome do Executivo</comment>
+  </data>
+  <data name="Executives" xml:space="preserve">
+    <value>Executivos</value>
+    <comment>Executivos</comment>
+  </data>
+  <data name="ExecutivesListDownload" xml:space="preserve">
+    <value>Lista de Executivos - Categoria Industry</value>
+    <comment>Lista de Executivos - Categoria Industry</comment>
+  </data>
+  <data name="ExecutivesRegistered" xml:space="preserve">
+    <value>Executivos cadastrados</value>
+    <comment>Executivos cadastrados</comment>
+  </data>
+  <data name="Experience" xml:space="preserve">
+    <value>Experiência</value>
+    <comment>Experiência</comment>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Exportar</value>
+    <comment>Exportar</comment>
+  </data>
+  <data name="ExportToEventbrite" xml:space="preserve">
+    <value>Exportar para Eventbrite</value>
+    <comment>Exportar para Eventbrite</comment>
+  </data>
+  <data name="ExportToExcel" xml:space="preserve">
+    <value>Exportar para Excel</value>
+    <comment>Exportar para Excel</comment>
+  </data>
+  <data name="Finish" xml:space="preserve">
+    <value>Concluir</value>
+    <comment>Concluir</comment>
+  </data>
+  <data name="FinishDate" xml:space="preserve">
+    <value>Data de conclusão</value>
+    <comment>Data de conclusão</comment>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>Primeiro nome</value>
+    <comment>Primeiro nome</comment>
+  </data>
+  <data name="Flight" xml:space="preserve">
+    <value>Voo</value>
+    <comment>Voo</comment>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Esqueceu a senha</value>
+    <comment>Esqueceu a senha</comment>
+  </data>
+  <data name="Format" xml:space="preserve">
+    <value>Formato</value>
+  </data>
+  <data name="ForSeries" xml:space="preserve">
+    <value>Se obra seriada</value>
+    <comment>Se obra seriada</comment>
+  </data>
+  <data name="FoundF" xml:space="preserve">
+    <value>encontrada</value>
+    <comment>encontrada</comment>
+  </data>
+  <data name="FoundFP" xml:space="preserve">
+    <value>encontradas</value>
+    <comment>encontradas</comment>
+  </data>
+  <data name="FoundM" xml:space="preserve">
+    <value>encontrado</value>
+    <comment>encontrado</comment>
+  </data>
+  <data name="FoundMP" xml:space="preserve">
+    <value>encontrados</value>
+    <comment>encontrados</comment>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>das</value>
+  </data>
+  <data name="FromPlace" xml:space="preserve">
+    <value>De</value>
+    <comment>De</comment>
+  </data>
+  <data name="FullName" xml:space="preserve">
+    <value>Nome Completo</value>
+    <comment>Nome Completo</comment>
+  </data>
+  <data name="Function" xml:space="preserve">
+    <value>Função</value>
+    <comment>Função</comment>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>Gênero</value>
+    <comment>Gênero</comment>
+  </data>
+  <data name="GenerateCalendar" xml:space="preserve">
+    <value>Gerar Agenda</value>
+    <comment>Gerar Agenda</comment>
+  </data>
   <data name="GeneratedF" xml:space="preserve">
     <value>Gerada</value>
     <comment>Gerada</comment>
@@ -2359,177 +992,102 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Gerado</value>
     <comment>Gerado</comment>
   </data>
-  <data name="RoundNumber" xml:space="preserve">
-    <value>Número do rodada</value>
-    <comment>Número da rodada</comment>
+  <data name="Genre" xml:space="preserve">
+    <value>Gênero</value>
   </data>
-  <data name="TableNumber" xml:space="preserve">
-    <value>Número da mesa</value>
-    <comment>Número da mesa</comment>
+  <data name="Genres" xml:space="preserve">
+    <value>Gêneros</value>
   </data>
-  <data name="RegenerateCalendar" xml:space="preserve">
-    <value>Regerar Agenda</value>
-    <comment>Regerar Agenda</comment>
+  <data name="GoBackToSignIn" xml:space="preserve">
+    <value>Voltar para o login</value>
+    <comment>Voltar para o login</comment>
   </data>
-  <data name="Negotiation" xml:space="preserve">
-    <value>Negociação</value>
-    <comment>Negociação</comment>
+  <data name="Grade" xml:space="preserve">
+    <value>Nota</value>
+    <comment>Nota</comment>
   </data>
-  <data name="ScheduledNegotiations" xml:space="preserve">
-    <value>Negociações agendadas</value>
-    <comment>Negociações agendadas</comment>
+  <data name="HasAnySpecialNeeds" xml:space="preserve">
+    <value>Possui necessidades especiais?</value>
+    <comment>Possui necessidades especiais?</comment>
   </data>
-  <data name="Automatic" xml:space="preserve">
-    <value>Automático</value>
-    <comment>Automático</comment>
+  <data name="HaveYouBeenToRio2CBefore" xml:space="preserve">
+    <value>Já esteve em outras edições do Rio2C?</value>
+    <comment>Já esteve em outras edições do Rio2C?</comment>
   </data>
-  <data name="Manual" xml:space="preserve">
-    <value>Manual</value>
-    <comment>Manual</comment>
+  <data name="Hi" xml:space="preserve">
+    <value>Olá</value>
+    <comment>Olá</comment>
   </data>
-  <data name="RegisteredF" xml:space="preserve">
-    <value>Cadastrada</value>
-    <comment>Cadastrada</comment>
+  <data name="HighlightPosition" xml:space="preserve">
+    <value>Posição no Destaque</value>
+    <comment>Posição no Destaque</comment>
   </data>
-  <data name="RegisteredM" xml:space="preserve">
-    <value>Cadastrado</value>
-    <comment>Cadastrado</comment>
+  <data name="Holding" xml:space="preserve">
+    <value>Holding</value>
+    <comment>Holding</comment>
   </data>
-  <data name="Round" xml:space="preserve">
-    <value>Rodada</value>
-    <comment>Rodada</comment>
+  <data name="HoldingName" xml:space="preserve">
+    <value>Nome da Holding</value>
+    <comment>Nome da Holding</comment>
   </data>
-  <data name="Type" xml:space="preserve">
-    <value>Tipo</value>
-    <comment>Tipo</comment>
+  <data name="Holdings" xml:space="preserve">
+    <value>Holdings</value>
+    <comment>Holdings</comment>
   </data>
-  <data name="Direction" xml:space="preserve">
-    <value>Direção</value>
-    <comment>Direção</comment>
+  <data name="HoldingsRegistered" xml:space="preserve">
+    <value>Holdings cadastradas</value>
+    <comment>Holdings cadastradas</comment>
   </data>
   <data name="Hotel" xml:space="preserve">
     <value>Hotel</value>
     <comment>Hotel</comment>
   </data>
-  <data name="Transfer" xml:space="preserve">
-    <value>Transfer</value>
-    <comment>Transfer</comment>
+  <data name="Hour" xml:space="preserve">
+    <value>Horário</value>
   </data>
-  <data name="RequestDate" xml:space="preserve">
-    <value>Data de solicitação</value>
-    <comment>Data de solicitação</comment>
+  <data name="IfAlreadyHaveLogin" xml:space="preserve">
+    <value>Se já tiver login e senha</value>
   </data>
-  <data name="Requester" xml:space="preserve">
-    <value>Solicitante</value>
-    <comment>Solicitante</comment>
+  <data name="Image" xml:space="preserve">
+    <value>Imagem</value>
+    <comment>Imagem</comment>
   </data>
-  <data name="ReservationCode" xml:space="preserve">
-    <value>Código de reserva</value>
-    <comment>Código de reserva</comment>
+  <data name="ImageLinks" xml:space="preserve">
+    <value>Links de imagem</value>
   </data>
-  <data name="BeingProcessed" xml:space="preserve">
-    <value>Sendo executado</value>
-    <comment>Sendo executado</comment>
+  <data name="ImageSize" xml:space="preserve">
+    <value>&lt;strong&gt;Tamanho mínimo: 100KB&lt;/strong&gt; &lt;br/&gt; &lt;strong&gt;Tamanho máximo: 10MB&lt;/strong&gt;</value>
+    <comment>Tamanho</comment>
   </data>
-  <data name="Places" xml:space="preserve">
-    <value>Locais</value>
-    <comment>Locais</comment>
+  <data name="Important" xml:space="preserve">
+    <value>IMPORTANTE</value>
   </data>
-  <data name="Airport" xml:space="preserve">
-    <value>Aeroporto</value>
-    <comment>Aeroporto</comment>
+  <data name="In" xml:space="preserve">
+    <value>em</value>
+    <comment>em</comment>
   </data>
-  <data name="Main" xml:space="preserve">
-    <value>Principal</value>
-    <comment>Principal</comment>
+  <data name="Incomplete" xml:space="preserve">
+    <value>Incompleto</value>
   </data>
-  <data name="DisplayedInitialLogisticList" xml:space="preserve">
-    <value>Exibido na lista inicial de logística</value>
-    <comment>Exibido na lista inicial de logística</comment>
+  <data name="InEditionYear" xml:space="preserve">
+    <value>na Edição {0}</value>
+    <comment>na Edição {0}</comment>
   </data>
-  <data name="OpenOthersDropdown" xml:space="preserve">
-    <value>Abre dropdown de outros</value>
-    <comment>Abre dropdown de outros</comment>
+  <data name="Info" xml:space="preserve">
+    <value>Info</value>
+    <comment>Info</comment>
   </data>
-  <data name="Accommodations" xml:space="preserve">
-    <value>Hospedagens</value>
-    <comment>Hospedagens</comment>
+  <data name="InfoImagePlayer" xml:space="preserve">
+    <value>Favor enviar uma imagem em formato jpeg, jpg, gif ou png com fundo branco. &lt;br /&gt; Tamanho mínimo 1Kb.</value>
+    <comment>Favor enviar uma imagem em formato jpeg, jpg, gif ou png com fundo branco. &lt;br /&gt; Tamanho mínimo 1Kb.</comment>
   </data>
-  <data name="Airfares" xml:space="preserve">
-    <value>Aéreos</value>
-    <comment>Aéreos</comment>
+  <data name="Informations" xml:space="preserve">
+    <value>Informações</value>
+    <comment>Informações</comment>
   </data>
-  <data name="Transfers" xml:space="preserve">
-    <value>Transfers</value>
-    <comment>Transfers</comment>
-  </data>
-  <data name="Days" xml:space="preserve">
-    <value>Dias</value>
-    <comment>Dias</comment>
-  </data>
-  <data name="Flight" xml:space="preserve">
-    <value>Voo</value>
-    <comment>Voo</comment>
-  </data>
-  <data name="OneToOneMeeting" xml:space="preserve">
-    <value>Rodada de Negócio</value>
-    <comment>Rodada de Negócio</comment>
-  </data>
-  <data name="ShowAccommodations" xml:space="preserve">
-    <value>Exibir hospedagens</value>
-    <comment>Exibir hospedagens</comment>
-  </data>
-  <data name="ShowAllConferences" xml:space="preserve">
-    <value>Exibir todas as palestras</value>
-    <comment>Exibir todas as palestras</comment>
-  </data>
-  <data name="ShowFlights" xml:space="preserve">
-    <value>Exibir voos</value>
-    <comment>Exibir voos</comment>
-  </data>
-  <data name="ShowMyConferences" xml:space="preserve">
-    <value>Exibir minhas palestras</value>
-    <comment>Exibir minhas palestras</comment>
-  </data>
-  <data name="ShowOneToOneMeetings" xml:space="preserve">
-    <value>Exibir rodadas de negócio</value>
-    <comment>Exibir rodadas de negócio</comment>
-  </data>
-  <data name="ShowTransfers" xml:space="preserve">
-    <value>Exibir transfers</value>
-    <comment>Exibir transfers</comment>
-  </data>
-  <data name="ToDest" xml:space="preserve">
-    <value>Para</value>
-    <comment>Para</comment>
-  </data>
-  <data name="When" xml:space="preserve">
-    <value>Quando</value>
-    <comment>Quando</comment>
-  </data>
-  <data name="Editions" xml:space="preserve">
-    <value>Edições</value>
-    <comment>Edições</comment>
-  </data>
-  <data name="UrlCode" xml:space="preserve">
-    <value>Código da URL</value>
-    <comment>Código da URL</comment>
-  </data>
-  <data name="IsCurrent" xml:space="preserve">
-    <value>Atual</value>
-    <comment>Atual</comment>
-  </data>
-  <data name="AttendeeOrganizationMaxSellProjectsCount" xml:space="preserve">
-    <value>Quantidade máxima de projetos por produtora</value>
-    <comment>Quantidade máxima de projetos por participante</comment>
-  </data>
-  <data name="AudiovisualNegotiationsCreateEndDate" xml:space="preserve">
-    <value>Data de término da criação de negociações audiovisuais</value>
-    <comment>Data de término da criação de negociações audiovisuais</comment>
-  </data>
-  <data name="AudiovisualNegotiationsCreateStartDate" xml:space="preserve">
-    <value>Data de início da criação de negociações audiovisuais</value>
-    <comment>Data de início da criação de negociações audiovisuais</comment>
+  <data name="Innovation" xml:space="preserve">
+    <value>Inovação</value>
+    <comment>Inovação</comment>
   </data>
   <data name="InnovationProjectEvaluationEndDate" xml:space="preserve">
     <value>Data de término da avaliação de projeto de inovação</value>
@@ -2547,69 +1105,37 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Data de início de envio de projeto de inovação</value>
     <comment>Data de início de envio de projeto de inovação</comment>
   </data>
+  <data name="Interests" xml:space="preserve">
+    <value>Interesses</value>
+    <comment>Interesses</comment>
+  </data>
+  <data name="International" xml:space="preserve">
+    <value>Internacional</value>
+    <comment>Internacional</comment>
+  </data>
+  <data name="Investor" xml:space="preserve">
+    <value>Investidor</value>
+    <comment>Investidor</comment>
+  </data>
+  <data name="Investors" xml:space="preserve">
+    <value>Investidores</value>
+    <comment>Investidores</comment>
+  </data>
+  <data name="InvitationSending" xml:space="preserve">
+    <value>Envio de Convites</value>
+    <comment>Envio de Convites</comment>
+  </data>
+  <data name="InWhatEditions" xml:space="preserve">
+    <value>Em que edição?</value>
+    <comment>Em que edição?</comment>
+  </data>
+  <data name="Is" xml:space="preserve">
+    <value>é</value>
+    <comment>é</comment>
+  </data>
   <data name="IsActive" xml:space="preserve">
     <value>Ativo</value>
     <comment>Ativo</comment>
-  </data>
-  <data name="MusicProjectEvaluationEndDate" xml:space="preserve">
-    <value>Data de término da avaliação de projeto musical</value>
-    <comment>Data de término da avaliação de projeto musical</comment>
-  </data>
-  <data name="MusicProjectEvaluationStartDate" xml:space="preserve">
-    <value>Data de início da avaliação de projeto musical</value>
-    <comment>Data de início da avaliação de projeto musical</comment>
-  </data>
-  <data name="MusicProjectSubmitEndDate" xml:space="preserve">
-    <value>Data de término de envio de projeto musical</value>
-    <comment>Data de término de envio de projeto musical</comment>
-  </data>
-  <data name="MusicProjectSubmitStartDate" xml:space="preserve">
-    <value>Data de início de envio de projeto musical</value>
-    <comment>Data de início de envio de projeto musical</comment>
-  </data>
-  <data name="NegotiationEndDate" xml:space="preserve">
-    <value>Data de término das negociações</value>
-    <comment>Data de término das negociações</comment>
-  </data>
-  <data name="NegotiationStartDate" xml:space="preserve">
-    <value>Data de início das negociações</value>
-    <comment>Data de início das negociações</comment>
-  </data>
-  <data name="OneToOneMeetingsScheduleDate" xml:space="preserve">
-    <value>Data do agendamento das reuniões particulares</value>
-    <comment>Data do agendamento das reuniões particulares</comment>
-  </data>
-  <data name="ProjectEvaluationEndDate" xml:space="preserve">
-    <value>Data de término da avaliação de projeto</value>
-    <comment>Data de término da avaliação de projeto</comment>
-  </data>
-  <data name="ProjectEvaluationStartDate" xml:space="preserve">
-    <value>Data de início da avaliação de projeto</value>
-    <comment>Data de início da avaliação de projeto</comment>
-  </data>
-  <data name="ProjectMaxBuyerEvaluationsCount" xml:space="preserve">
-    <value>Quantidade máxima de avaliadores por projeto</value>
-    <comment>Quantidade máxima de avaliadores por projeto</comment>
-  </data>
-  <data name="ProjectSubmitEndDate" xml:space="preserve">
-    <value>Data de término de envio de projeto</value>
-    <comment>Data de término de envio de projeto</comment>
-  </data>
-  <data name="ProjectSubmitStartDate" xml:space="preserve">
-    <value>Data de início de envio de projeto</value>
-    <comment>Data de início de envio de projeto</comment>
-  </data>
-  <data name="Quiz" xml:space="preserve">
-    <value>Quiz</value>
-    <comment>Quiz</comment>
-  </data>
-  <data name="SellEndDate" xml:space="preserve">
-    <value>Data de término das vendas</value>
-    <comment>Data de término das vendas</comment>
-  </data>
-  <data name="SellStartDate" xml:space="preserve">
-    <value>Data de início das vendas</value>
-    <comment>Data de início das vendas</comment>
   </data>
   <data name="IsActiveF" xml:space="preserve">
     <value>Ativa</value>
@@ -2619,21 +1145,25 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Ativo</value>
     <comment>Ativo</comment>
   </data>
-  <data name="PastEditions" xml:space="preserve">
-    <value>Edições Passadas</value>
-    <comment>Edições Passadas</comment>
+  <data name="IsAirfareTicketRequired" xml:space="preserve">
+    <value>Ticket aéreo obrigatório</value>
+    <comment>Ticket aéreo obrigatório</comment>
   </data>
-  <data name="MusicBandMember" xml:space="preserve">
-    <value>Integrante</value>
-    <comment>Integrante</comment>
+  <data name="IsCurrent" xml:space="preserve">
+    <value>Atual</value>
+    <comment>Atual</comment>
   </data>
-  <data name="MusicBandTeamMember" xml:space="preserve">
-    <value>Membro da Equipe</value>
-    <comment>Membro da Equipe</comment>
+  <data name="IsNational" xml:space="preserve">
+    <value>Nacional</value>
+    <comment>Nacional</comment>
   </data>
-  <data name="Grade" xml:space="preserve">
-    <value>Nota</value>
-    <comment>Nota</comment>
+  <data name="JobTitle" xml:space="preserve">
+    <value>Cargo</value>
+    <comment>Cargo</comment>
+  </data>
+  <data name="JobTitles" xml:space="preserve">
+    <value>Cargos</value>
+    <comment>Cargos</comment>
   </data>
   <data name="Juror" xml:space="preserve">
     <value>Juror</value>
@@ -2643,57 +1173,93 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Jurors</value>
     <comment>Jurados</comment>
   </data>
-  <data name="Evaluated" xml:space="preserve">
-    <value>Avaliado</value>
-    <comment>Avaliado</comment>
+  <data name="Language" xml:space="preserve">
+    <value>Idioma</value>
+    <comment>Idioma</comment>
   </data>
-  <data name="EvaluatorUser" xml:space="preserve">
-    <value>Usuário da Avaliação</value>
-    <comment>Usuário da Avaliação</comment>
+  <data name="LastNames" xml:space="preserve">
+    <value>Sobrenome</value>
+    <comment>Sobrenome</comment>
   </data>
-  <data name="Evaluator" xml:space="preserve">
-    <value>Avaliador</value>
-    <comment>Avaliador</comment>
+  <data name="LastUpdateOn" xml:space="preserve">
+    <value>Última atualização em</value>
+    <comment>Última atualização em</comment>
   </data>
-  <data name="Evaluators" xml:space="preserve">
-    <value>Avaliadores</value>
-    <comment>Avaliadores</comment>
+  <data name="Later" xml:space="preserve">
+    <value>Depois</value>
+    <comment>Depois</comment>
   </data>
-  <data name="Average" xml:space="preserve">
-    <value>Média</value>
-    <comment>Média</comment>
+  <data name="LectureDetails" xml:space="preserve">
+    <value>Detalhes da Palestra</value>
   </data>
-  <data name="Document" xml:space="preserve">
-    <value>Documento</value>
-    <comment>Documento</comment>
+  <data name="Lecturer" xml:space="preserve">
+    <value>Palestrante</value>
   </data>
-  <data name="ClickHereToEvaluateProject" xml:space="preserve">
-    <value>Clique aqui para avaliar o projeto</value>
-    <comment>Clique aqui para avaliar o projeto</comment>
+  <data name="LecturerMemberOneOrMany" xml:space="preserve">
+    <value>Membros do Painel e Ouvintes</value>
   </data>
-  <data name="UnderEvaluation" xml:space="preserve">
-    <value>Em Avaliação</value>
-    <comment>Em Avaliação</comment>
+  <data name="LinksForPromoTeaser" xml:space="preserve">
+    <value>Link para Promo/Teaser</value>
+    <comment>Link para Promo/Teaser</comment>
   </data>
-  <data name="Vote" xml:space="preserve">
-    <value>Voto</value>
-    <comment>Voto</comment>
+  <data name="LinksToImageOrConceptualLayout" xml:space="preserve">
+    <value>Link para imagens ou layout conceituais</value>
+    <comment>Link para imagens ou layout conceituais</comment>
   </data>
-  <data name="Votes" xml:space="preserve">
-    <value>Votos</value>
-    <comment>Votos</comment>
+  <data name="Loading" xml:space="preserve">
+    <value>Carregando...</value>
   </data>
-  <data name="MusicProjectMaximumApprovedBandsCount" xml:space="preserve">
-    <value>Quantidade máxima de bandas aprovadas</value>
-    <comment>Quantidade máxima de bandas aprovadas</comment>
+  <data name="LoadingChat" xml:space="preserve">
+    <value>Carregando chat</value>
   </data>
-  <data name="MusicProjectMinimumEvaluationsCount" xml:space="preserve">
-    <value>Quantidade mínima de votos para gerar média</value>
-    <comment>Quantidade mínima de votos para gerar média</comment>
+  <data name="LoadingConferences" xml:space="preserve">
+    <value>Carrengando Palestras...</value>
   </data>
-  <data name="Of" xml:space="preserve">
-    <value>de</value>
-    <comment>de</comment>
+  <data name="LoadingMessages" xml:space="preserve">
+    <value>Carregando mensagens</value>
+  </data>
+  <data name="LoadingPlayers" xml:space="preserve">
+    <value>Carregando players...</value>
+  </data>
+  <data name="LoadingProjects" xml:space="preserve">
+    <value>Carregando projetos...</value>
+  </data>
+  <data name="LoadingSelectedPlayers" xml:space="preserve">
+    <value>Carregando players selecionados...</value>
+  </data>
+  <data name="Local" xml:space="preserve">
+    <value>Local</value>
+  </data>
+  <data name="Logistics" xml:space="preserve">
+    <value>Logística</value>
+    <comment>Logística</comment>
+  </data>
+  <data name="LogisticsCityTransferHelpText" xml:space="preserve">
+    <value>Residentes do Rio de Janeiro - Somente casos extremamente excepcionais</value>
+    <comment>Residentes do Rio de Janeiro - Somente casos extremamente excepcionais</comment>
+  </data>
+  <data name="LogisticsTransfer" xml:space="preserve">
+    <value>Transfer</value>
+    <comment>Transfer</comment>
+  </data>
+  <data name="LogLines" xml:space="preserve">
+    <value>Logline</value>
+  </data>
+  <data name="LogoSize" xml:space="preserve">
+    <value>&lt;strong&gt;Tamanho máximo: 10M&lt;/strong&gt;</value>
+    <comment>Tamanho máximo</comment>
+  </data>
+  <data name="LogOut" xml:space="preserve">
+    <value>Sair</value>
+    <comment>Sair</comment>
+  </data>
+  <data name="Main" xml:space="preserve">
+    <value>Principal</value>
+    <comment>Principal</comment>
+  </data>
+  <data name="MainMusicInfluences" xml:space="preserve">
+    <value>Principais influências musicais</value>
+    <comment>Principais influências musicais</comment>
   </data>
   <data name="Management" xml:space="preserve">
     <value>Administração</value>
@@ -2707,25 +1273,726 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Administradores</value>
     <comment>Administradores</comment>
   </data>
-  <data name="Block" xml:space="preserve">
-    <value>Bloquear</value>
-    <comment>Bloquear</comment>
+  <data name="Manual" xml:space="preserve">
+    <value>Manual</value>
+    <comment>Manual</comment>
   </data>
-  <data name="CollaboratorType" xml:space="preserve">
-    <value>Tipo de colaborador</value>
-    <comment>Tipo de colaborador</comment>
+  <data name="Market" xml:space="preserve">
+    <value>Mercado</value>
+    <comment>Mercado</comment>
   </data>
-  <data name="AcceptsVirtualMeeting" xml:space="preserve">
-    <value>Aceita reunião virtual</value>
-    <comment>Aceita reunião virtual</comment>
+  <data name="Marketing" xml:space="preserve">
+    <value>Marketing</value>
+    <comment>Marketing</comment>
   </data>
-  <data name="VirtualMeetingConfiguration" xml:space="preserve">
-    <value>Configuração de reunião virtual</value>
-    <comment>Configuração de reunião virtual</comment>
+  <data name="MarketLookingFor" xml:space="preserve">
+    <value>Está no mercado buscando</value>
+  </data>
+  <data name="Match" xml:space="preserve">
+    <value>Correspondência</value>
+    <comment>Correspondência</comment>
+  </data>
+  <data name="Matches" xml:space="preserve">
+    <value>Correspondências</value>
+    <comment>Correspondências</comment>
+  </data>
+  <data name="Member" xml:space="preserve">
+    <value>Membro</value>
+    <comment>Membro</comment>
+  </data>
+  <data name="Members" xml:space="preserve">
+    <value>Membros</value>
+    <comment>Membros</comment>
+  </data>
+  <data name="Menu" xml:space="preserve">
+    <value>Menu</value>
+    <comment>Menu</comment>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Mensagem</value>
+  </data>
+  <data name="Messages" xml:space="preserve">
+    <value>Mensagens</value>
+    <comment>Mensagens</comment>
+  </data>
+  <data name="MiniBio" xml:space="preserve">
+    <value>Mini-biografia</value>
+    <comment>Mini-biografia</comment>
+  </data>
+  <data name="MiniBios" xml:space="preserve">
+    <value>Mini-biografias</value>
+    <comment>Mini-biografias</comment>
+  </data>
+  <data name="Music" xml:space="preserve">
+    <value>Música</value>
+    <comment>Música</comment>
+  </data>
+  <data name="MusicalCommission" xml:space="preserve">
+    <value>Comissão Musical</value>
+    <comment>Comissão Musical</comment>
+  </data>
+  <data name="MusicBand" xml:space="preserve">
+    <value>Banda</value>
+    <comment>Banda</comment>
+  </data>
+  <data name="MusicBandFormationYear" xml:space="preserve">
+    <value>Ano de início da banda</value>
+    <comment>Ano de início da banda</comment>
+  </data>
+  <data name="MusicBandMember" xml:space="preserve">
+    <value>Integrante</value>
+    <comment>Integrante</comment>
+  </data>
+  <data name="MusicBandMembers" xml:space="preserve">
+    <value>Integrantes</value>
+    <comment>Integrantes</comment>
+  </data>
+  <data name="MusicBands" xml:space="preserve">
+    <value>Bandas</value>
+    <comment>Bandas</comment>
+  </data>
+  <data name="MusicBandStaff" xml:space="preserve">
+    <value>Equipe</value>
+    <comment>Equipe</comment>
+  </data>
+  <data name="MusicBandTeamMember" xml:space="preserve">
+    <value>Membro da Equipe</value>
+    <comment>Membro da Equipe</comment>
+  </data>
+  <data name="MusicCommission" xml:space="preserve">
+    <value>Comissão de Música</value>
+    <comment>Comissão de Música</comment>
+  </data>
+  <data name="MusicGenre" xml:space="preserve">
+    <value>Estilo musical</value>
+    <comment>Estilo musical</comment>
+  </data>
+  <data name="MusicInstrumentName" xml:space="preserve">
+    <value>Instrumento musical</value>
+    <comment>Instrumento musical</comment>
+  </data>
+  <data name="MusicProjectEvaluationEndDate" xml:space="preserve">
+    <value>Data de término da avaliação de projeto musical</value>
+    <comment>Data de término da avaliação de projeto musical</comment>
+  </data>
+  <data name="MusicProjectEvaluationStartDate" xml:space="preserve">
+    <value>Data de início da avaliação de projeto musical</value>
+    <comment>Data de início da avaliação de projeto musical</comment>
+  </data>
+  <data name="MusicProjectMaximumApprovedBandsCount" xml:space="preserve">
+    <value>Quantidade máxima de bandas aprovadas</value>
+    <comment>Quantidade máxima de bandas aprovadas</comment>
+  </data>
+  <data name="MusicProjectMinimumEvaluationsCount" xml:space="preserve">
+    <value>Quantidade mínima de votos para gerar média</value>
+    <comment>Quantidade mínima de votos para gerar média</comment>
+  </data>
+  <data name="MusicProjects" xml:space="preserve">
+    <value>Projetos de Música</value>
+    <comment>Projetos de Música</comment>
+  </data>
+  <data name="MusicProjectSubmitEndDate" xml:space="preserve">
+    <value>Data de término de envio de projeto musical</value>
+    <comment>Data de término de envio de projeto musical</comment>
+  </data>
+  <data name="MusicProjectSubmitStartDate" xml:space="preserve">
+    <value>Data de início de envio de projeto musical</value>
+    <comment>Data de início de envio de projeto musical</comment>
+  </data>
+  <data name="MyRio2C" xml:space="preserve">
+    <value>MyRio2C</value>
+    <comment>MyRio2C</comment>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nome</value>
+    <comment>Nome</comment>
+  </data>
+  <data name="Names" xml:space="preserve">
+    <value>Nomes</value>
+    <comment>Nomes</comment>
+  </data>
+  <data name="National" xml:space="preserve">
+    <value>Nacional</value>
+    <comment>Nacional</comment>
+  </data>
+  <data name="Negotiation" xml:space="preserve">
+    <value>Negociação</value>
+    <comment>Negociação</comment>
+  </data>
+  <data name="NegotiationDetails" xml:space="preserve">
+    <value>Detalhes da Negociação</value>
+    <comment>Detalhes da Negociação</comment>
+  </data>
+  <data name="NegotiationEndDate" xml:space="preserve">
+    <value>Data de término das negociações</value>
+    <comment>Data de término das negociações</comment>
+  </data>
+  <data name="NegotiationStartDate" xml:space="preserve">
+    <value>Data de início das negociações</value>
+    <comment>Data de início das negociações</comment>
+  </data>
+  <data name="Neighborhood" xml:space="preserve">
+    <value>Bairro</value>
+    <comment>Bairro</comment>
+  </data>
+  <data name="NetworkRio2C" xml:space="preserve">
+    <value>Rede Rio2C</value>
+    <comment>Rede Rio2C</comment>
+  </data>
+  <data name="NewCompany" xml:space="preserve">
+    <value>Nova Empresa</value>
+    <comment>Nova Empresa</comment>
+  </data>
+  <data name="NewF" xml:space="preserve">
+    <value>Nova</value>
+    <comment>Nova</comment>
+  </data>
+  <data name="NewHolding" xml:space="preserve">
+    <value>Nova Holding</value>
+    <comment>Nova Holding</comment>
+  </data>
+  <data name="NewM" xml:space="preserve">
+    <value>Novo</value>
+    <comment>Novo</comment>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>Nova senha</value>
+    <comment>Nova senha</comment>
+  </data>
+  <data name="NewProject" xml:space="preserve">
+    <value>Novo Projeto</value>
+    <comment>Novo Projeto</comment>
+  </data>
+  <data name="NextStep" xml:space="preserve">
+    <value>Próximo passo</value>
+    <comment>Próximo passo</comment>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Não</value>
+  </data>
+  <data name="NoConferenceToDisplay" xml:space="preserve">
+    <value>Não há palestras a serem exibidas.</value>
+  </data>
+  <data name="NoInformations" xml:space="preserve">
+    <value>Não há informações.</value>
+  </data>
+  <data name="NoPlayerSelected" xml:space="preserve">
+    <value>Nenhum player selecionado</value>
+  </data>
+  <data name="NoPlayersSelected" xml:space="preserve">
+    <value>Não há players selecionados</value>
+  </data>
+  <data name="NoPlayerWasFound" xml:space="preserve">
+    <value>Nenhum player foi encontrado</value>
+  </data>
+  <data name="NoProjectWasFound" xml:space="preserve">
+    <value>Nenhum projeto encontrado.</value>
+  </data>
+  <data name="NotAccepted" xml:space="preserve">
+    <value>Não aceito</value>
+  </data>
+  <data name="NotInEdition" xml:space="preserve">
+    <value>Fora da edição {0}</value>
+    <comment>Fora da edição {0}</comment>
+  </data>
+  <data name="NoUserHasBeenFoundInChat" xml:space="preserve">
+    <value>Nenhum usuário encontrado.</value>
+  </data>
+  <data name="Number" xml:space="preserve">
+    <value>Número</value>
+    <comment>Número</comment>
+  </data>
+  <data name="NumberOfEpisodes" xml:space="preserve">
+    <value>Número de episódios</value>
+    <comment>Número de episódios</comment>
+  </data>
+  <data name="Of" xml:space="preserve">
+    <value>de</value>
+    <comment>de</comment>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Onboarding" xml:space="preserve">
+    <value>Onboarding</value>
+    <comment>Onboarding</comment>
+  </data>
+  <data name="OnboardingFinishDate" xml:space="preserve">
+    <value>Data término do onboarding</value>
+    <comment>Data término do onboarding</comment>
+  </data>
+  <data name="OnboardingStartDate" xml:space="preserve">
+    <value>Data início do onboarding</value>
+    <comment>Data início do onboarding</comment>
+  </data>
+  <data name="OneToOneMeeting" xml:space="preserve">
+    <value>Rodada de Negócio</value>
+    <comment>Rodada de Negócio</comment>
+  </data>
+  <data name="OneToOneMeetingParameters" xml:space="preserve">
+    <value>Parâmetros de Rodadas de Negócio</value>
+    <comment>Parâmetros de Rodadas de Negócio</comment>
+  </data>
+  <data name="OneToOneMeetings" xml:space="preserve">
+    <value>Rodadas de Negócios</value>
+    <comment>Rodadas de Negócios</comment>
+  </data>
+  <data name="OneToOneMeetingsScheduleDate" xml:space="preserve">
+    <value>Data do agendamento das reuniões particulares</value>
+    <comment>Data do agendamento das reuniões particulares</comment>
+  </data>
+  <data name="OnlyKeynotes" xml:space="preserve">
+    <value>Keynotes somente</value>
+    <comment>Keynotes somente</comment>
+  </data>
+  <data name="Oops" xml:space="preserve">
+    <value>Oops!</value>
+  </data>
+  <data name="OpenOthersDropdown" xml:space="preserve">
+    <value>Abre dropdown de outros</value>
+    <comment>Abre dropdown de outros</comment>
+  </data>
+  <data name="Optional" xml:space="preserve">
+    <value>opcional</value>
+    <comment>opcional</comment>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>Opções</value>
+    <comment>Opções</comment>
+  </data>
+  <data name="Or" xml:space="preserve">
+    <value>ou</value>
+    <comment>ou</comment>
+  </data>
+  <data name="Others" xml:space="preserve">
+    <value>Outros</value>
+    <comment>Outros</comment>
+  </data>
+  <data name="Parameter" xml:space="preserve">
+    <value>Parâmetro</value>
+    <comment>Parâmetro</comment>
+  </data>
+  <data name="Parameters" xml:space="preserve">
+    <value>Parâmetros</value>
+    <comment>Parâmetros</comment>
+  </data>
+  <data name="Participant" xml:space="preserve">
+    <value>Participante</value>
+    <comment>Participante</comment>
+  </data>
+  <data name="ParticipantProfile" xml:space="preserve">
+    <value>Tipo de artista</value>
+    <comment>Tipo de artista</comment>
+  </data>
+  <data name="Participants" xml:space="preserve">
+    <value>Participantes</value>
+    <comment>Participantes</comment>
+  </data>
+  <data name="ParticipantsTerms" xml:space="preserve">
+    <value>Regulamento de Participantes</value>
+    <comment>Regulamento de Participantes</comment>
+  </data>
+  <data name="PartnersAndSponsors" xml:space="preserve">
+    <value>Parcerias e Patrocínios</value>
+    <comment>Parcerias e Patrocínios</comment>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Senha</value>
+    <comment>Senha</comment>
+  </data>
+  <data name="PastEditions" xml:space="preserve">
+    <value>Edições Passadas</value>
+    <comment>Edições Passadas</comment>
+  </data>
+  <data name="PastReadF" xml:space="preserve">
+    <value>Lida</value>
+    <comment>Lida</comment>
+  </data>
+  <data name="PastReadM" xml:space="preserve">
+    <value>Lido</value>
+    <comment>Lido</comment>
+  </data>
+  <data name="PendingP" xml:space="preserve">
+    <value>Pendentes</value>
+    <comment>Pendentes</comment>
+  </data>
+  <data name="PendingS" xml:space="preserve">
+    <value>Pendente</value>
+    <comment>Pendente</comment>
+  </data>
+  <data name="PersonalInformation" xml:space="preserve">
+    <value>Dados pessoais</value>
+    <comment>Dados pessoais</comment>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>Telefone</value>
+    <comment>Telefone</comment>
+  </data>
+  <data name="PhoneNumberConfirmed" xml:space="preserve">
+    <value>Telefone confirmado</value>
+    <comment>Telefone confirmado</comment>
+  </data>
+  <data name="Photo" xml:space="preserve">
+    <value>Foto</value>
+    <comment>Foto</comment>
+  </data>
+  <data name="PhotosForPublicity" xml:space="preserve">
+    <value>Fotos Divulgação</value>
+    <comment>Fotos Divulgação</comment>
+  </data>
+  <data name="Pillar" xml:space="preserve">
+    <value>Pilar</value>
+    <comment>Pilar</comment>
+  </data>
+  <data name="Pillars" xml:space="preserve">
+    <value>Pilares</value>
+    <comment>Pilares</comment>
+  </data>
+  <data name="Pitching" xml:space="preserve">
+    <value>Pitching</value>
+    <comment>Pitching</comment>
+  </data>
+  <data name="PitchingShow" xml:space="preserve">
+    <value>PitchingShow</value>
+    <comment>PitchingShow</comment>
+  </data>
+  <data name="Place" xml:space="preserve">
+    <value>Local</value>
+    <comment>Local</comment>
+  </data>
+  <data name="Places" xml:space="preserve">
+    <value>Locais</value>
+    <comment>Locais</comment>
+  </data>
+  <data name="PlatformRio2C" xml:space="preserve">
+    <value>MyRio2C</value>
+    <comment>MyRio2C</comment>
+  </data>
+  <data name="PlatformRio2CAdmin" xml:space="preserve">
+    <value>MyRio2C Admin</value>
+    <comment>MyRio2C Admin</comment>
+  </data>
+  <data name="Platforms" xml:space="preserve">
+    <value>Plataformas</value>
+  </data>
+  <data name="Player" xml:space="preserve">
+    <value>Player</value>
+    <comment>Player</comment>
+  </data>
+  <data name="PlayerDidNotDefinedGenre" xml:space="preserve">
+    <value>Player não definiu gênero como interesse.</value>
+  </data>
+  <data name="PlayerInfo" xml:space="preserve">
+    <value>Dados do Player</value>
+    <comment>Dados do Player</comment>
+  </data>
+  <data name="PlayerInformation" xml:space="preserve">
+    <value>Dados do Player</value>
+    <comment>Dados do Player</comment>
+  </data>
+  <data name="PlayerInterests" xml:space="preserve">
+    <value>Interesses do Player</value>
+    <comment>Interesses do Player</comment>
+  </data>
+  <data name="PlayerName" xml:space="preserve">
+    <value>Nome do Player</value>
+    <comment>Nome do Player</comment>
+  </data>
+  <data name="Players" xml:space="preserve">
+    <value>Players</value>
+    <comment>Players</comment>
+  </data>
+  <data name="PlayersExecutives" xml:space="preserve">
+    <value>Executivos dos Players</value>
+    <comment>Executivos dos Players</comment>
+  </data>
+  <data name="PlayersRegistered" xml:space="preserve">
+    <value>Players cadastrados</value>
+    <comment>Players cadastrados</comment>
+  </data>
+  <data name="PlayersRegulationPdf" xml:space="preserve">
+    <value>PLAYER_Regulamento Rodadas de Negócio - Rio2C 2020 (PDF)</value>
+    <comment>PLAYER_Regulamento Rodadas de Negócio - Rio2C 2020.pdf</comment>
+  </data>
+  <data name="PlayersSelectedForEvaluation" xml:space="preserve">
+    <value>Players selecionados para avaliação</value>
+    <comment>Players selecionados para avaliação</comment>
+  </data>
+  <data name="PlayersSuggested" xml:space="preserve">
+    <value>Players sugeridos</value>
+  </data>
+  <data name="PlayersToEvaluation" xml:space="preserve">
+    <value>Projeto enviado aos players</value>
+    <comment>Projeto enviado aos players</comment>
+  </data>
+  <data name="PlayersWithSimilarInterests" xml:space="preserve">
+    <value>Players com interesses afins</value>
+  </data>
+  <data name="Please" xml:space="preserve">
+    <value>Por favor</value>
+    <comment>Por favor</comment>
+  </data>
+  <data name="Portuguese" xml:space="preserve">
+    <value>Português</value>
+  </data>
+  <data name="PreRegistration" xml:space="preserve">
+    <value>Pré-cadastro</value>
+  </data>
+  <data name="PreRegistrationContact" xml:space="preserve">
+    <value>&lt;p&gt;
+             &lt;strong&gt;Suporte:&lt;/strong&gt; credenciamento@rio2c.com  &lt;br /&gt;
+             &lt;strong&gt;Telefone:&lt;/strong&gt; +55 21 3081-2077 / 3081-2035 / 3081-2092 &lt;br /&gt;
+             &lt;strong&gt;Horário de Atendimento:&lt;/strong&gt; 10h às 19h &lt;br /&gt;
+ &lt;/p&gt;</value>
+  </data>
+  <data name="PresentationFormat" xml:space="preserve">
+    <value>Formato</value>
+    <comment>Formato</comment>
+  </data>
+  <data name="PresentationFormats" xml:space="preserve">
+    <value>Formatos</value>
+    <comment>Formatos</comment>
   </data>
   <data name="Presential" xml:space="preserve">
     <value>Presencial</value>
     <comment>Presencial</comment>
+  </data>
+  <data name="Press" xml:space="preserve">
+    <value>Imprensa</value>
+    <comment>Imprensa</comment>
+  </data>
+  <data name="PressCenter" xml:space="preserve">
+    <value>Imprensa</value>
+    <comment>Imprensa</comment>
+  </data>
+  <data name="PressOffice" xml:space="preserve">
+    <value>Assessoria</value>
+    <comment>Assessoria</comment>
+  </data>
+  <data name="PressRelations" xml:space="preserve">
+    <value>Assessoria</value>
+    <comment>Assessoria</comment>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>Imprimir</value>
+  </data>
+  <data name="PrintSchedules" xml:space="preserve">
+    <value>Imprimir Agenda</value>
+  </data>
+  <data name="Proceed" xml:space="preserve">
+    <value>Prosseguir</value>
+    <comment>Prosseguir</comment>
+  </data>
+  <data name="Producer" xml:space="preserve">
+    <value>Produtora</value>
+    <comment>Produtora</comment>
+  </data>
+  <data name="ProducerDetails" xml:space="preserve">
+    <value>Detalhes da Produtora</value>
+  </data>
+  <data name="ProducerName" xml:space="preserve">
+    <value>Nome da Produtora</value>
+    <comment>Nome da Produtora</comment>
+  </data>
+  <data name="ProducerQty" xml:space="preserve">
+    <value>QTD Produtora</value>
+    <comment>QTD Produtora</comment>
+  </data>
+  <data name="Producers" xml:space="preserve">
+    <value>Produtoras</value>
+    <comment>Produtoras</comment>
+  </data>
+  <data name="ProducerSingle" xml:space="preserve">
+    <value>Produtora</value>
+  </data>
+  <data name="ProducersRegistered" xml:space="preserve">
+    <value>Produtoras cadastradas</value>
+    <comment>Produtoras cadastradas</comment>
+  </data>
+  <data name="ProducersRegulationPdf" xml:space="preserve">
+    <value>Regulamento Rodadas de Negócio - Rio2C 2020 (PDF)</value>
+    <comment>Regulamento Rodadas de Negócio - Rio2C 2020.pdf</comment>
+  </data>
+  <data name="ProducersSpaceSlash" xml:space="preserve">
+    <value>Produtores / Empresas</value>
+  </data>
+  <data name="ProductionPlan" xml:space="preserve">
+    <value>Plano de Produção - Detalhar seu cronograma e estrutura do projeto</value>
+    <comment>Plano de Produção - Detalhar seu cronograma e estrutura do projeto</comment>
+  </data>
+  <data name="ProductionPlans" xml:space="preserve">
+    <value>Planos de Produção</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Perfil</value>
+    <comment>Perfil</comment>
+  </data>
+  <data name="Program" xml:space="preserve">
+    <value>Programação</value>
+    <comment>Programação</comment>
+  </data>
+  <data name="Project" xml:space="preserve">
+    <value>Projeto</value>
+  </data>
+  <data name="ProjectAccepted" xml:space="preserve">
+    <value>Aprovado</value>
+    <comment>Aprovado</comment>
+  </data>
+  <data name="ProjectAdditionalInformations" xml:space="preserve">
+    <value>Informações adicionais sobre o projeto</value>
+    <comment>Informações adicionais sobre o projeto</comment>
+  </data>
+  <data name="ProjectDetails" xml:space="preserve">
+    <value>Detalhes do Projeto</value>
+  </data>
+  <data name="ProjectEvaluationEndDate" xml:space="preserve">
+    <value>Data de término da avaliação de projeto</value>
+    <comment>Data de término da avaliação de projeto</comment>
+  </data>
+  <data name="ProjectEvaluationStartDate" xml:space="preserve">
+    <value>Data de início da avaliação de projeto</value>
+    <comment>Data de início da avaliação de projeto</comment>
+  </data>
+  <data name="ProjectId" xml:space="preserve">
+    <value>ID do Projeto</value>
+    <comment>ID do Projeto</comment>
+  </data>
+  <data name="ProjectInfo" xml:space="preserve">
+    <value>Informações do Projeto</value>
+    <comment>Informações do Projeto</comment>
+  </data>
+  <data name="ProjectMaxBuyerEvaluationsCount" xml:space="preserve">
+    <value>Quantidade máxima de avaliadores por projeto</value>
+    <comment>Quantidade máxima de avaliadores por projeto</comment>
+  </data>
+  <data name="ProjectNotSubmittedToPlayers" xml:space="preserve">
+    <value>Nenhum Player selecionado para avaliação</value>
+    <comment>Nenhum Player selecionado para avaliação</comment>
+  </data>
+  <data name="ProjectRefused" xml:space="preserve">
+    <value>Reprovado</value>
+    <comment>Reprovado</comment>
+  </data>
+  <data name="Projects" xml:space="preserve">
+    <value>Projetos</value>
+    <comment>Projetos</comment>
+  </data>
+  <data name="ProjectsEvaluation" xml:space="preserve">
+    <value>Avaliação de projetos</value>
+    <comment>Avaliação de projetos</comment>
+  </data>
+  <data name="ProjectsForPitching" xml:space="preserve">
+    <value>Projetos para Pitching</value>
+    <comment>Projetos para Pitching</comment>
+  </data>
+  <data name="ProjectsPerProducerQty" xml:space="preserve">
+    <value>QTD Projetos Por Produtora</value>
+    <comment>QTD Projetos Por Produtora</comment>
+  </data>
+  <data name="ProjectsReleased" xml:space="preserve">
+    <value>Projetos lançados</value>
+    <comment>Projetos lançados</comment>
+  </data>
+  <data name="ProjectsSubmission" xml:space="preserve">
+    <value>Inscrição de projetos</value>
+    <comment>Inscrição de projetos</comment>
+  </data>
+  <data name="ProjectStatus" xml:space="preserve">
+    <value>Status do projeto</value>
+  </data>
+  <data name="ProjectSubmission" xml:space="preserve">
+    <value>Inscrição de Projeto</value>
+    <comment>Inscrição de Projeto</comment>
+  </data>
+  <data name="ProjectSubmitEndDate" xml:space="preserve">
+    <value>Data de término de envio de projeto</value>
+    <comment>Data de término de envio de projeto</comment>
+  </data>
+  <data name="ProjectSubmitStartDate" xml:space="preserve">
+    <value>Data de início de envio de projeto</value>
+    <comment>Data de início de envio de projeto</comment>
+  </data>
+  <data name="ProjectSubscriptions" xml:space="preserve">
+    <value>Inscrições de Projeto</value>
+    <comment>Inscrições de Projeto</comment>
+  </data>
+  <data name="Quiz" xml:space="preserve">
+    <value>Quiz</value>
+    <comment>Quiz</comment>
+  </data>
+  <data name="Reason" xml:space="preserve">
+    <value>Motivo</value>
+  </data>
+  <data name="ReceivedProjects" xml:space="preserve">
+    <value>Projetos Recebidos</value>
+    <comment>Projetos Recebidos</comment>
+  </data>
+  <data name="Recorder" xml:space="preserve">
+    <value>Gravadora</value>
+    <comment>Gravadora</comment>
+  </data>
+  <data name="Recorders" xml:space="preserve">
+    <value>Gravadoras</value>
+    <comment>Gravadoras</comment>
+  </data>
+  <data name="Refuse" xml:space="preserve">
+    <value>Recusar</value>
+  </data>
+  <data name="Refused" xml:space="preserve">
+    <value>Recusado</value>
+  </data>
+  <data name="RefuseProject" xml:space="preserve">
+    <value>Reprovar</value>
+    <comment>Reprovar</comment>
+  </data>
+  <data name="RegenerateCalendar" xml:space="preserve">
+    <value>Regerar Agenda</value>
+    <comment>Regerar Agenda</comment>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Registrar</value>
+  </data>
+  <data name="RegisteredF" xml:space="preserve">
+    <value>Cadastrada</value>
+    <comment>Cadastrada</comment>
+  </data>
+  <data name="RegisteredM" xml:space="preserve">
+    <value>Cadastrado</value>
+    <comment>Cadastrado</comment>
+  </data>
+  <data name="RegisteredP" xml:space="preserve">
+    <value>Registrados</value>
+    <comment>Registrados</comment>
+  </data>
+  <data name="RegisteredProjects" xml:space="preserve">
+    <value>Projetos Cadastrados</value>
+  </data>
+  <data name="RegisterHere" xml:space="preserve">
+    <value>Adquira sua credencial aqui</value>
+    <comment>Adquira sua credencial aqui</comment>
+  </data>
+  <data name="RegisterNewExecutive" xml:space="preserve">
+    <value>+ Registrar novo Executivo</value>
+    <comment>Registrar novo Executivo</comment>
+  </data>
+  <data name="RegistrationConfirmation" xml:space="preserve">
+    <value>&lt;p class="pre-registration-text"&gt;Esta é a página de confirmação de cadastro de produtoras. &lt;br /&gt; &lt;br /&gt;
+                    Informe os dados abaixo para confirmar o pagamento da credencial de acesso e criar seu acesso ao sistema Rio2C.&lt;/p&gt;
+&lt;br /&gt;
+&lt;p class="pre-registration-sympla-text"&gt;&lt;strong&gt;
+Insira os mesmos dados informados para cada credencial adquirida no Sistema de Vendas.&lt;/strong&gt;&lt;/p&gt;
+</value>
+  </data>
+  <data name="Rejected" xml:space="preserve">
+    <value>Recusado</value>
+  </data>
+  <data name="Release" xml:space="preserve">
+    <value>Release</value>
+    <comment>Release</comment>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Lembre-me?</value>
+    <comment>Lembre-me?</comment>
   </data>
   <data name="Remote" xml:space="preserve">
     <value>Virtual</value>
@@ -2735,56 +2002,789 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Remota</value>
     <comment>Remota</comment>
   </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remover</value>
+    <comment>Remover</comment>
+  </data>
+  <data name="RemoveFromEdition" xml:space="preserve">
+    <value>Remover de {0}</value>
+    <comment>Remover de {0}</comment>
+  </data>
+  <data name="Reports" xml:space="preserve">
+    <value>Relatórios</value>
+    <comment>Relatórios</comment>
+  </data>
+  <data name="Request" xml:space="preserve">
+    <value>Solicitação</value>
+    <comment>Solicitação</comment>
+  </data>
+  <data name="RequestDate" xml:space="preserve">
+    <value>Data de solicitação</value>
+    <comment>Data de solicitação</comment>
+  </data>
+  <data name="Requester" xml:space="preserve">
+    <value>Solicitante</value>
+    <comment>Solicitante</comment>
+  </data>
+  <data name="Requests" xml:space="preserve">
+    <value>Solicitações</value>
+    <comment>Solicitações</comment>
+  </data>
+  <data name="ReservationCode" xml:space="preserve">
+    <value>Código de reserva</value>
+    <comment>Código de reserva</comment>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Redefinir</value>
+    <comment>Redefinir</comment>
+  </data>
+  <data name="ResetYourPassword" xml:space="preserve">
+    <value>Redefina sua senha</value>
+    <comment>Redefina sua senha</comment>
+  </data>
+  <data name="Responsible" xml:space="preserve">
+    <value>Responsável</value>
+    <comment>Responsável</comment>
+  </data>
+  <data name="RestrictionsSpecifics" xml:space="preserve">
+    <value>Restrições e especificidades</value>
+    <comment>Restrições e especificidades</comment>
+  </data>
+  <data name="Result" xml:space="preserve">
+    <value>Resultado</value>
+    <comment>Resultado</comment>
+  </data>
+  <data name="Return" xml:space="preserve">
+    <value>Retornar</value>
+    <comment>Retornar</comment>
+  </data>
+  <data name="ReturnedItems" xml:space="preserve">
+    <value>&lt;h4&gt;&lt;strong&gt;{0}&lt;/strong&gt; itens&lt;/h4&gt;</value>
+  </data>
+  <data name="Rio2cChatTitle" xml:space="preserve">
+    <value>Rede Rio2C</value>
+  </data>
+  <data name="Rio2cConnections" xml:space="preserve">
+    <value>Rio2C Connections</value>
+    <comment>Rio2C Connections</comment>
+  </data>
+  <data name="Rio2CSchedules" xml:space="preserve">
+    <value>Agenda Rio2C</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Função</value>
+    <comment>Função</comment>
+  </data>
+  <data name="RoleInTheLecture" xml:space="preserve">
+    <value>Função na Palestra</value>
+  </data>
+  <data name="Room" xml:space="preserve">
+    <value>Sala</value>
+  </data>
+  <data name="Rooms" xml:space="preserve">
+    <value>Salas</value>
+    <comment>Salas</comment>
+  </data>
   <data name="RoomType" xml:space="preserve">
     <value>Tipo de Sala</value>
     <comment>Tipo de Sala</comment>
   </data>
-  <data name="Virtual" xml:space="preserve">
-    <value>Virtual</value>
-    <comment>Virtual</comment>
+  <data name="Round" xml:space="preserve">
+    <value>Rodada</value>
+    <comment>Rodada</comment>
   </data>
-  <data name="VirtualMeetingUrl" xml:space="preserve">
-    <value>Link da sala virtual</value>
-    <comment>Link da sala virtual</comment>
+  <data name="RoundFirstTurn" xml:space="preserve">
+    <value>Qtde. de rodadas do 1&lt;sup&gt;o&lt;/sup&gt; turno</value>
+    <comment>Qtde. de rodadas do 1&lt;sup&gt;o&lt;/sup&gt; turno</comment>
+  </data>
+  <data name="RoundNumber" xml:space="preserve">
+    <value>Número do rodada</value>
+    <comment>Número da rodada</comment>
+  </data>
+  <data name="RoundSecondTurn" xml:space="preserve">
+    <value>Qtde. de rodadas do 2&lt;sup&gt;o&lt;/sup&gt; turno</value>
+    <comment>Qtde. de rodadas do 2&lt;sup&gt;o&lt;/sup&gt; turno</comment>
+  </data>
+  <data name="Rules" xml:space="preserve">
+    <value>Regulamento</value>
+    <comment>Regulamento</comment>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Salvar</value>
+    <comment>Salvar</comment>
+  </data>
+  <data name="Saved" xml:space="preserve">
+    <value>Salvo</value>
+    <comment>Salvo</comment>
+  </data>
+  <data name="ScheduledNegotiations" xml:space="preserve">
+    <value>Negociações agendadas</value>
+    <comment>Negociações agendadas</comment>
   </data>
   <data name="ScheduleManually" xml:space="preserve">
     <value>Agendar Manualmente</value>
     <comment>Agendar Manualmente</comment>
   </data>
-  <data name="ProducerName" xml:space="preserve">
-    <value>Nome da Produtora</value>
-    <comment>Nome da Produtora</comment>
+  <data name="ScheduleNegotiation" xml:space="preserve">
+    <value>Agendar Negociação</value>
+    <comment>Agendar Negociação</comment>
   </data>
-  <data name="ProducersRegistered" xml:space="preserve">
-    <value>Produtoras cadastradas</value>
-    <comment>Produtoras cadastradas</comment>
+  <data name="Search" xml:space="preserve">
+    <value>Buscar</value>
   </data>
-  <data name="ShowPitchings" xml:space="preserve">
-    <value>Exibir pitchings</value>
-    <comment>Exibir pitchings</comment>
+  <data name="SearchingForPlayers" xml:space="preserve">
+    <value>Buscando players...</value>
   </data>
-  <data name="With" xml:space="preserve">
-    <value>Com</value>
-    <comment>Com</comment>
+  <data name="SearchingForPlayersForSelection" xml:space="preserve">
+    <value>Buscando players para seleção...</value>
   </data>
-  <data name="confirmSendEmailAll" xml:space="preserve">
-    <value>Confirma o envio de e-mail para todos os registros de todas as páginas?</value>
-    <comment>Confirma o envio de e-mail para todos os registros de todas as páginas?</comment>
+  <data name="SeeDescription" xml:space="preserve">
+    <value>Ver descrição</value>
+    <comment>Ver descrição</comment>
   </data>
-  <data name="confirmSendEmailSelected" xml:space="preserve">
-    <value>Confirma o envio de e-mail para os registros selecionados?</value>
-    <comment>Confirma o envio de e-mail para os registros selecionados?</comment>
+  <data name="Seeking" xml:space="preserve">
+    <value>Está buscando para este projeto</value>
   </data>
-  <data name="Emails" xml:space="preserve">
-    <value>E-mails</value>
-    <comment>E-mails</comment>
+  <data name="SeekProjectsOfThisGenre" xml:space="preserve">
+    <value>Buscam projetos desse gênero</value>
+    <comment>Buscam projetos desse gênero</comment>
+  </data>
+  <data name="SeeMiniBio" xml:space="preserve">
+    <value>Ver mini-biografia</value>
+  </data>
+  <data name="SeeReason" xml:space="preserve">
+    <value>Ver motivo</value>
+  </data>
+  <data name="SeeReasonForRefusal" xml:space="preserve">
+    <value>Ver motivo da recusa</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Selecione</value>
+    <comment>Selecione</comment>
+  </data>
+  <data name="SelectAFEntity" xml:space="preserve">
+    <value>Selecione uma {0}</value>
+    <comment>Selecione uma {0}</comment>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Selecionar todos</value>
+    <comment>Selecionar todos</comment>
+  </data>
+  <data name="SelectAMEntity" xml:space="preserve">
+    <value>Selecione um {0}</value>
+    <comment>Selecione um {0}</comment>
+  </data>
+  <data name="SelectAnExecutiveInChat" xml:space="preserve">
+    <value>Selecione um executivo para visualizar as mensagens.</value>
+  </data>
+  <data name="SelectAnFEntity" xml:space="preserve">
+    <value>Selecione uma {0}</value>
+    <comment>Selecione uma {0}</comment>
+  </data>
+  <data name="SelectAnMEntity" xml:space="preserve">
+    <value>Selecione um {0}</value>
+    <comment>Selecione um {0}</comment>
+  </data>
+  <data name="SelectedFP" xml:space="preserve">
+    <value>Selecionadas</value>
+    <comment>Selecionadas</comment>
+  </data>
+  <data name="SelectedP" xml:space="preserve">
+    <value>Selecionados</value>
+    <comment>Selecionados</comment>
+  </data>
+  <data name="SelectedS" xml:space="preserve">
+    <value>Selecionado</value>
+    <comment>Selecionado</comment>
+  </data>
+  <data name="SelectImage" xml:space="preserve">
+    <value>Selecionar imagem</value>
+    <comment>Selecionar imagem</comment>
+  </data>
+  <data name="SelectOrSendPlayer" xml:space="preserve">
+    <value>Selecionar player e/ou enviar</value>
+  </data>
+  <data name="SellEndDate" xml:space="preserve">
+    <value>Data de término das vendas</value>
+    <comment>Data de término das vendas</comment>
+  </data>
+  <data name="SellStartDate" xml:space="preserve">
+    <value>Data de início das vendas</value>
+    <comment>Data de início das vendas</comment>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Enviar</value>
+    <comment>Enviar</comment>
+  </data>
+  <data name="SendDate" xml:space="preserve">
+    <value>Data de Envio</value>
+    <comment>Data de Envio</comment>
+  </data>
+  <data name="SendEmailToPlayers" xml:space="preserve">
+    <value>Enviar e-mail para Players</value>
+    <comment>Enviar e-mail para Players</comment>
+  </data>
+  <data name="SendEmailToProducers" xml:space="preserve">
+    <value>Enviar e-mail para Produtoras</value>
+    <comment>Enviar e-mail para Produtoras</comment>
+  </data>
+  <data name="Sending" xml:space="preserve">
+    <value>Enviando</value>
+  </data>
+  <data name="SendInvitationEmail" xml:space="preserve">
+    <value>Enviar e-mail de convite</value>
+    <comment>Enviar e-mail de convite</comment>
+  </data>
+  <data name="SendMessage" xml:space="preserve">
+    <value>Enviar Mensagem</value>
+    <comment>Enviar Mensagem</comment>
+  </data>
+  <data name="SendProject" xml:space="preserve">
+    <value>Enviar projeto</value>
+    <comment>Enviar projeto</comment>
+  </data>
+  <data name="SendProjectsToPlayer" xml:space="preserve">
+    <value>Enviar para Players</value>
+    <comment>Enviar para Players</comment>
+  </data>
+  <data name="SendToPlayers" xml:space="preserve">
+    <value>Finalizar e enviar</value>
+  </data>
+  <data name="Sent" xml:space="preserve">
+    <value>Enviado</value>
+    <comment>Enviado</comment>
   </data>
   <data name="SentMP" xml:space="preserve">
     <value>Enviados</value>
     <comment>Enviados</comment>
   </data>
+  <data name="SentProjects" xml:space="preserve">
+    <value>Projetos enviados</value>
+    <comment>Projetos enviados</comment>
+  </data>
+  <data name="ShowAccommodations" xml:space="preserve">
+    <value>Exibir hospedagens</value>
+    <comment>Exibir hospedagens</comment>
+  </data>
+  <data name="ShowAllCompanies" xml:space="preserve">
+    <value>Exibir todas as empresas</value>
+    <comment>Exibir todas as empresas</comment>
+  </data>
+  <data name="ShowAllConferences" xml:space="preserve">
+    <value>Exibir todas as palestras</value>
+    <comment>Exibir todas as palestras</comment>
+  </data>
+  <data name="ShowAllEditions" xml:space="preserve">
+    <value>Exibir de todas as edições</value>
+    <comment>Exibir de todas as edições</comment>
+  </data>
+  <data name="ShowAllExecutives" xml:space="preserve">
+    <value>Exibir todos os executivos</value>
+    <comment>Exibir todos os executivos</comment>
+  </data>
+  <data name="ShowAllParticipants" xml:space="preserve">
+    <value>Exibir todos os participantes</value>
+    <comment>Exibir todos os participantes</comment>
+  </data>
+  <data name="ShowAllSponsors" xml:space="preserve">
+    <value>Exibir todos os patrocinadores</value>
+    <comment>Exibir todos os patrocinadores</comment>
+  </data>
+  <data name="ShowFlights" xml:space="preserve">
+    <value>Exibir voos</value>
+    <comment>Exibir voos</comment>
+  </data>
+  <data name="ShowHighlights" xml:space="preserve">
+    <value>Exibir destaques</value>
+    <comment>Exibir destaques</comment>
+  </data>
+  <data name="ShowMyConferences" xml:space="preserve">
+    <value>Exibir minhas palestras</value>
+    <comment>Exibir minhas palestras</comment>
+  </data>
+  <data name="ShowOneToOneMeetings" xml:space="preserve">
+    <value>Exibir rodadas de negócio</value>
+    <comment>Exibir rodadas de negócio</comment>
+  </data>
+  <data name="ShowPitchings" xml:space="preserve">
+    <value>Exibir pitchings</value>
+    <comment>Exibir pitchings</comment>
+  </data>
+  <data name="ShowTransfers" xml:space="preserve">
+    <value>Exibir transfers</value>
+    <comment>Exibir transfers</comment>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>Entrar</value>
+    <comment>Entrar</comment>
+  </data>
+  <data name="Skip" xml:space="preserve">
+    <value>Pular</value>
+    <comment>Pular</comment>
+  </data>
+  <data name="SocialMedia" xml:space="preserve">
+    <value>Redes sociais</value>
+    <comment>Redes sociais</comment>
+  </data>
+  <data name="SocialNetworks" xml:space="preserve">
+    <value>Redes Sociais</value>
+    <comment>Redes Sociais</comment>
+  </data>
+  <data name="Soon" xml:space="preserve">
+    <value>Em Breve</value>
+    <comment>Em Breve</comment>
+  </data>
+  <data name="Speaker" xml:space="preserve">
+    <value>Palestrante</value>
+  </data>
+  <data name="SpeakerFunctions" xml:space="preserve">
+    <value>Funções dos Palestrantes</value>
+    <comment>Funções dos Palestrantes</comment>
+  </data>
+  <data name="SpeakerRole" xml:space="preserve">
+    <value>Função do Palestrante</value>
+    <comment>Função do Palestrante</comment>
+  </data>
+  <data name="Speakers" xml:space="preserve">
+    <value>Palestrantes</value>
+    <comment>Palestrantes</comment>
+  </data>
+  <data name="SpeakersRoles" xml:space="preserve">
+    <value>Funções dos Palestrantes</value>
+    <comment>Funções dos Palestrantes</comment>
+  </data>
+  <data name="Speeches" xml:space="preserve">
+    <value>Palestras</value>
+    <comment>Palestras</comment>
+  </data>
+  <data name="Sponsor" xml:space="preserve">
+    <value>Patrocinador</value>
+    <comment>Patrocinador</comment>
+  </data>
+  <data name="Sponsors" xml:space="preserve">
+    <value>Patrocinadores</value>
+    <comment>Patrocinadores</comment>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Início</value>
+    <comment>Início</comment>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Data de início</value>
+    <comment>Data de início</comment>
+  </data>
+  <data name="StartNewConversation" xml:space="preserve">
+    <value>Iniciar nova conversa</value>
+    <comment>Iniciar nova conversa</comment>
+  </data>
+  <data name="StartTime" xml:space="preserve">
+    <value>Hora de início</value>
+  </data>
+  <data name="Startup" xml:space="preserve">
+    <value>Startup</value>
+    <comment>Startup</comment>
+  </data>
+  <data name="Startups" xml:space="preserve">
+    <value>Startups</value>
+    <comment>Startups</comment>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>Estado</value>
+    <comment>Estado</comment>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="StepByStepForAudiovisualProjectEnrollment" xml:space="preserve">
+    <value>Passo a passo para Inscrição de Projetos Audiovisual (PDF)</value>
+    <comment>Passo a passo para Inscrição de Projetos Audiovisual</comment>
+  </data>
+  <data name="Steps" xml:space="preserve">
+    <value>Passos</value>
+    <comment>Passos</comment>
+  </data>
+  <data name="Street" xml:space="preserve">
+    <value>Rus</value>
+    <comment>Rua</comment>
+  </data>
+  <data name="StreetName" xml:space="preserve">
+    <value>Logradouro</value>
+    <comment>Logradouro</comment>
+  </data>
+  <data name="SubGenre" xml:space="preserve">
+    <value>Subgênero</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Inscrever</value>
+    <comment>Inscrever</comment>
+  </data>
+  <data name="SubmitEntity" xml:space="preserve">
+    <value>Inscrever {0}</value>
+    <comment>Inscrever {0}</comment>
+  </data>
+  <data name="SubscribeList" xml:space="preserve">
+    <value>Lista de Inscrição</value>
+    <comment>Lista de Inscrição</comment>
+  </data>
+  <data name="Subscription" xml:space="preserve">
+    <value>Inscrição</value>
+    <comment>Inscrição</comment>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Sucesso</value>
+    <comment>Sucesso</comment>
+  </data>
+  <data name="Summaries" xml:space="preserve">
+    <value>Resumo</value>
+  </data>
+  <data name="Summary" xml:space="preserve">
+    <value>Sinopse</value>
+    <comment>Sinopse</comment>
+  </data>
+  <data name="Synopsis" xml:space="preserve">
+    <value>Ementa</value>
+  </data>
+  <data name="Table" xml:space="preserve">
+    <value>Mesa</value>
+  </data>
+  <data name="TableNumber" xml:space="preserve">
+    <value>Número da mesa</value>
+    <comment>Número da mesa</comment>
+  </data>
+  <data name="Talents" xml:space="preserve">
+    <value>Talentos</value>
+    <comment>Talentos</comment>
+  </data>
+  <data name="TargetAudience" xml:space="preserve">
+    <value>Público-Alvo</value>
+    <comment>Público-Alvo</comment>
+  </data>
+  <data name="TargetAudiences" xml:space="preserve">
+    <value>Público-alvo/Faixa-etária</value>
+    <comment>Público-alvo/Faixa-etária</comment>
+  </data>
+  <data name="TeaserLinks" xml:space="preserve">
+    <value>Links de teaser</value>
+  </data>
+  <data name="TermsAcceptance" xml:space="preserve">
+    <value>Aceite do regulamento</value>
+    <comment>Aceite do regulamento</comment>
+  </data>
+  <data name="TermsAcceptanceDate" xml:space="preserve">
+    <value>Data de aceite do regulamento</value>
+    <comment>Data de aceite do regulamento</comment>
+  </data>
+  <data name="TermsOfUse" xml:space="preserve">
+    <value>Termo de uso</value>
+    <comment>Termo de uso</comment>
+  </data>
+  <data name="TheEvent" xml:space="preserve">
+    <value>O Evento</value>
+    <comment>O Evento</comment>
+  </data>
+  <data name="TheF" xml:space="preserve">
+    <value>A</value>
+    <comment>A</comment>
+  </data>
+  <data name="TheM" xml:space="preserve">
+    <value>O</value>
+    <comment>O</comment>
+  </data>
+  <data name="TheName" xml:space="preserve">
+    <value>o nome</value>
+    <comment>o nome</comment>
+  </data>
+  <data name="ThreeDotsToAnimation" xml:space="preserve">
+    <value>&lt;span&gt;.&lt;/span&gt;&lt;span&gt;.&lt;/span&gt;&lt;span&gt;.&lt;/span&gt;</value>
+  </data>
+  <data name="Ticket" xml:space="preserve">
+    <value>Ingresso</value>
+    <comment>Ticket</comment>
+  </data>
+  <data name="TicketNumber" xml:space="preserve">
+    <value>Número do Bilhete</value>
+    <comment>Número do Bilhete</comment>
+  </data>
+  <data name="TimeIntervalBetweenRound" xml:space="preserve">
+    <value>Tempo de intervalo entre cada rodada</value>
+    <comment>Tempo de intervalo entre cada rodada</comment>
+  </data>
+  <data name="TimeIntervalBetweenTurn" xml:space="preserve">
+    <value>Tempo de intervalo entre os turnos</value>
+    <comment>Tempo de intervalo entre os turnos</comment>
+  </data>
+  <data name="TimeOfEachRound" xml:space="preserve">
+    <value>Tempo de cada rodada</value>
+    <comment>Tempo de cada rodada</comment>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Título</value>
+    <comment>Título</comment>
+  </data>
+  <data name="Titles" xml:space="preserve">
+    <value>Títulos</value>
+    <comment>Títulos</comment>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>às</value>
+  </data>
+  <data name="ToConfirm" xml:space="preserve">
+    <value>Confirmar</value>
+    <comment>Confirmar</comment>
+  </data>
+  <data name="ToDest" xml:space="preserve">
+    <value>Para</value>
+    <comment>Para</comment>
+  </data>
+  <data name="ToPlace" xml:space="preserve">
+    <value>Para</value>
+    <comment>Para</comment>
+  </data>
+  <data name="ToSelect" xml:space="preserve">
+    <value>Selecionar</value>
+    <comment>Selecionar</comment>
+  </data>
+  <data name="TotalPlayingTime" xml:space="preserve">
+    <value>Minutagem</value>
+    <comment>Minutagem</comment>
+  </data>
+  <data name="TotalValueOfProject" xml:space="preserve">
+    <value>Valor total do projeto (USD)</value>
+  </data>
+  <data name="Track" xml:space="preserve">
+    <value>Track</value>
+    <comment>Track</comment>
+  </data>
+  <data name="Tracks" xml:space="preserve">
+    <value>Tracks</value>
+    <comment>Tracks</comment>
+  </data>
+  <data name="TradeName" xml:space="preserve">
+    <value>Nome fantasia</value>
+    <comment>Nome fantasia</comment>
+  </data>
+  <data name="Transfer" xml:space="preserve">
+    <value>Transfer</value>
+    <comment>Transfer</comment>
+  </data>
+  <data name="TransferCity" xml:space="preserve">
+    <value>Transfer City</value>
+    <comment>Transfer City</comment>
+  </data>
+  <data name="Transfers" xml:space="preserve">
+    <value>Transfers</value>
+    <comment>Transfers</comment>
+  </data>
+  <data name="Transport" xml:space="preserve">
+    <value>Transporte</value>
+    <comment>Transporte</comment>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Tipo</value>
+    <comment>Tipo</comment>
+  </data>
+  <data name="TypeYourMessage" xml:space="preserve">
+    <value>Digite sua mensagem</value>
+  </data>
+  <data name="UncheckAll" xml:space="preserve">
+    <value>Desmarcar todos</value>
+  </data>
+  <data name="UnderEvaluation" xml:space="preserve">
+    <value>Em Avaliação</value>
+    <comment>Em Avaliação</comment>
+  </data>
+  <data name="UnscheduledNegotiations" xml:space="preserve">
+    <value>Negociações não agendadas</value>
+    <comment>Negociações não agendadas</comment>
+  </data>
+  <data name="Unselect" xml:space="preserve">
+    <value>Deselecionar</value>
+    <comment>Deselecionar</comment>
+  </data>
+  <data name="UnselectAll" xml:space="preserve">
+    <value>Deselecionar todos</value>
+    <comment>Deselecionar todos</comment>
+  </data>
+  <data name="Unsubscribe" xml:space="preserve">
+    <value>Cancelar recebimento</value>
+    <comment>Cancelar recebimento</comment>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Editar</value>
+    <comment>Editar</comment>
+  </data>
+  <data name="UpdateDate" xml:space="preserve">
+    <value>Data de Edição</value>
+    <comment>Data de Edição</comment>
+  </data>
+  <data name="UpdatedF" xml:space="preserve">
+    <value>editada</value>
+    <comment>editada</comment>
+  </data>
+  <data name="UpdatedM" xml:space="preserve">
+    <value>editado</value>
+    <comment>editado</comment>
+  </data>
+  <data name="UrlCode" xml:space="preserve">
+    <value>Código da URL</value>
+    <comment>Código da URL</comment>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>Usuário</value>
+    <comment>Usuário</comment>
+  </data>
+  <data name="ValidateQuiz" xml:space="preserve">
+    <value>Você deve preencher todos os campos ou selecionar uma opção</value>
+  </data>
+  <data name="ValueAlreadyRaised" xml:space="preserve">
+    <value>Valor já captado (USD)</value>
+  </data>
+  <data name="ValuePerEpisode" xml:space="preserve">
+    <value>Valor por episódio (USD)</value>
+  </data>
+  <data name="ValueStillNeeded" xml:space="preserve">
+    <value>Valor a captar (USD)</value>
+  </data>
+  <data name="VehicleAtDisposal" xml:space="preserve">
+    <value>Carro à Disposição</value>
+    <comment>Veículo à Disposição</comment>
+  </data>
+  <data name="VideoClip" xml:space="preserve">
+    <value>Vídeo clip</value>
+    <comment>Vídeo clip</comment>
+  </data>
+  <data name="VideoClipAndMusics" xml:space="preserve">
+    <value>Vídeo clip e músicas</value>
+    <comment>Vídeo clip e músicas</comment>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>Visualizar</value>
+    <comment>Visualizar</comment>
+  </data>
+  <data name="ViewCalendar" xml:space="preserve">
+    <value>Visualizar Agenda</value>
+    <comment>Visualizar Agenda</comment>
+  </data>
+  <data name="ViewInterests" xml:space="preserve">
+    <value>Ver Interesses</value>
+    <comment>Ver interesses</comment>
+  </data>
+  <data name="ViewMessage" xml:space="preserve">
+    <value>Ver mensagem</value>
+    <comment>Ver mensagem</comment>
+  </data>
+  <data name="ViewMessages" xml:space="preserve">
+    <value>Ver mensagens</value>
+    <comment>Ver mensagens</comment>
+  </data>
+  <data name="ViewPlayer" xml:space="preserve">
+    <value>Ver Player</value>
+    <comment>Ver Player</comment>
+  </data>
+  <data name="ViewProducer" xml:space="preserve">
+    <value>Perfil Produtora</value>
+  </data>
+  <data name="ViewProfile" xml:space="preserve">
+    <value>Ver Perfil</value>
+    <comment>Ver Perfil</comment>
+  </data>
+  <data name="Virtual" xml:space="preserve">
+    <value>Virtual</value>
+    <comment>Virtual</comment>
+  </data>
+  <data name="VirtualMeetingConfiguration" xml:space="preserve">
+    <value>Configuração de reunião virtual</value>
+    <comment>Configuração de reunião virtual</comment>
+  </data>
+  <data name="VirtualMeetingUrl" xml:space="preserve">
+    <value>Link da sala virtual</value>
+    <comment>Link da sala virtual</comment>
+  </data>
+  <data name="Vote" xml:space="preserve">
+    <value>Voto</value>
+    <comment>Voto</comment>
+  </data>
+  <data name="Votes" xml:space="preserve">
+    <value>Votos</value>
+    <comment>Votos</comment>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>ATENÇÃO!</value>
+    <comment>ATENÇÃO!</comment>
+  </data>
+  <data name="Website" xml:space="preserve">
+    <value>Website</value>
+    <comment>Website</comment>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Bem-vindo ao Rio2C {0}</value>
+    <comment>Bem-vindo ao Rio2C {0}</comment>
+  </data>
+  <data name="WelcomeEmailSendDate" xml:space="preserve">
+    <value>Data envio e-mail de boas-vindas</value>
+    <comment>Data envio e-mail de boas-vindas</comment>
+  </data>
+  <data name="WelcomeSmall" xml:space="preserve">
+    <value>Bem-vindo ao MyRio2C!</value>
+    <comment>Bem-vindo ao MyRio2C!</comment>
+  </data>
+  <data name="WelcomeSmallAdmin" xml:space="preserve">
+    <value>Bem-vindo ao MyRio2C Admin!</value>
+    <comment>Bem-vindo ao MyRio2C Admin!</comment>
+  </data>
+  <data name="WelcomeTitle" xml:space="preserve">
+    <value>Bem-vindo!</value>
+    <comment>Bem-vindo!</comment>
+  </data>
+  <data name="WelcomeToEdition" xml:space="preserve">
+    <value>Bem-vindo ao {0}</value>
+    <comment>Bem-vindo ao {0}</comment>
+  </data>
+  <data name="When" xml:space="preserve">
+    <value>Quando</value>
+    <comment>Quando</comment>
+  </data>
+  <data name="WhichEditionQ" xml:space="preserve">
+    <value>Em qual edição?</value>
+    <comment>Em qual edição?</comment>
+  </data>
+  <data name="WhichSpecialNeedsQ" xml:space="preserve">
+    <value>Qual?</value>
+    <comment>Qual?</comment>
+  </data>
+  <data name="With" xml:space="preserve">
+    <value>Com</value>
+    <comment>Com</comment>
+  </data>
   <data name="WorkDedication" xml:space="preserve">
     <value>Dedicação</value>
     <comment>Dedicação</comment>
+  </data>
+  <data name="WorkDuration" xml:space="preserve">
+    <value>Duração da obra</value>
+    <comment>Duração da obra</comment>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Ano</value>
+    <comment>Ano</comment>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Sim</value>
+  </data>
+  <data name="You" xml:space="preserve">
+    <value>Você</value>
+    <comment>Você</comment>
+  </data>
+  <data name="ZipCode" xml:space="preserve">
+    <value>CEP</value>
+    <comment>CEP</comment>
+  </data>
+  <data name="ZoomIn" xml:space="preserve">
+    <value>Mais Zoom</value>
+    <comment>Mais Zoom</comment>
+  </data>
+  <data name="ZoomOut" xml:space="preserve">
+    <value>Menos Zoom</value>
+    <comment>Menos Zoom</comment>
   </data>
 </root>
