@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
+	<!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,140 +59,140 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-    <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexType>
-        <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="assembly">
-            <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="data">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="resheader">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:choice>
-      </xsd:complexType>
-    </xsd:element>
-  </xsd:schema>
-  <resheader name="resmimetype">
-    <value>text/microsoft-resx</value>
-  </resheader>
-  <resheader name="version">
-    <value>2.0</value>
-  </resheader>
-  <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <data name="AccessDenied" xml:space="preserve">
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute name="name" use="required" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="assembly">
+						<xsd:complexType>
+							<xsd:attribute name="alias" type="xsd:string" />
+							<xsd:attribute name="name" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="AccessDenied" xml:space="preserve">
     <value>Acesso negado.</value>
   </data>
-  <data name="AddressIsRequired" xml:space="preserve">
+	<data name="AddressIsRequired" xml:space="preserve">
     <value>Endereço obrigatório.</value>
   </data>
-  <data name="AttentionPossiblePlayersNotSelected" xml:space="preserve">
+	<data name="AttentionPossiblePlayersNotSelected" xml:space="preserve">
     <value>Atenção! Você selecionou somente {0} players de {1} possíveis.</value>
   </data>
-  <data name="BadgeIsRequired" xml:space="preserve">
+	<data name="BadgeIsRequired" xml:space="preserve">
     <value>Nome do crachá obrigatório.</value>
   </data>
-  <data name="CanNotEditASubmittedProjectForPlayerEvaluation" xml:space="preserve">
+	<data name="CanNotEditASubmittedProjectForPlayerEvaluation" xml:space="preserve">
     <value>Não é possível editar um projeto submetido para avaliação de player</value>
   </data>
-  <data name="CityIsInvalid" xml:space="preserve">
+	<data name="CityIsInvalid" xml:space="preserve">
     <value>Cidade inválida.</value>
   </data>
-  <data name="CityIsRequired" xml:space="preserve">
+	<data name="CityIsRequired" xml:space="preserve">
     <value>Cidade obrigatória.</value>
   </data>
-  <data name="ClosedProducerRegistration" xml:space="preserve">
+	<data name="ClosedProducerRegistration" xml:space="preserve">
     <value>Cadastro de produtor encerrado!</value>
   </data>
-  <data name="ClosedSendingToPlayers" xml:space="preserve">
+	<data name="ClosedSendingToPlayers" xml:space="preserve">
     <value>Envio para players encerrado.</value>
   </data>
-  <data name="CollaboratorMustHaveAPlayer" xml:space="preserve">
+	<data name="CollaboratorMustHaveAPlayer" xml:space="preserve">
     <value>Colaborador deve ter pelo menos um player.</value>
   </data>
-  <data name="CollaboratorMustHaveAProducer" xml:space="preserve">
+	<data name="CollaboratorMustHaveAProducer" xml:space="preserve">
     <value>O colaborador deve ter pelo menos uma produtora.</value>
   </data>
-  <data name="CompanyNameIsRequired" xml:space="preserve">
+	<data name="CompanyNameIsRequired" xml:space="preserve">
     <value>Razão Social obrigatório!</value>
   </data>
-  <data name="CompanySummaryInEnglishMandatory" xml:space="preserve">
+	<data name="CompanySummaryInEnglishMandatory" xml:space="preserve">
     <value>Resumo da empresa em inglês é obrigatório.</value>
   </data>
-  <data name="CompanySummaryInPtBrMandatory" xml:space="preserve">
+	<data name="CompanySummaryInPtBrMandatory" xml:space="preserve">
     <value>Resumo da empresa em português é obrigatório.</value>
   </data>
-  <data name="CorrectFormValues" xml:space="preserve">
+	<data name="CorrectFormValues" xml:space="preserve">
     <value>Por favor, corrija os erros do formulário.</value>
     <comment>Por favor, corrija os erros do formulário.</comment>
   </data>
-  <data name="CountryIsInvalid" xml:space="preserve">
+	<data name="CountryIsInvalid" xml:space="preserve">
     <value>País inválido</value>
   </data>
-  <data name="CountryIsRequired" xml:space="preserve">
+	<data name="CountryIsRequired" xml:space="preserve">
     <value>País obrigatório.</value>
   </data>
-  <data name="CurrentlyBrowsingAs" xml:space="preserve">
+	<data name="CurrentlyBrowsingAs" xml:space="preserve">
     <value>Você está navegando como</value>
   </data>
-  <data name="EmailISInvalid" xml:space="preserve">
+	<data name="EmailISInvalid" xml:space="preserve">
     <value>E-mail inválido.</value>
   </data>
-  <data name="ErrorPage" xml:space="preserve">
+	<data name="ErrorPage" xml:space="preserve">
     <value>&lt;h4 class="h4-error-page"&gt;Ocorreu um erro ao acessar essa página.&lt;/h4&gt; 
 &lt;h4 class="h4-error-page"&gt;A equipe Rio2C foi comunicada e atuara para que isso não ocorra novamente. &lt;/h4&gt;
 &lt;h4 class="h4-error-page"&gt;Tente novamente em alguns minutos.&lt;/h4&gt;</value>
   </data>
-  <data name="ErrorProcessingAgenda" xml:space="preserve">
+	<data name="ErrorProcessingAgenda" xml:space="preserve">
     <value>Ocorreu um erro ao processar a agenda.</value>
   </data>
-  <data name="ErrorSavingProject" xml:space="preserve">
+	<data name="ErrorSavingProject" xml:space="preserve">
     <value>Erro ao salvar Projeto! Verifique o preenchimento dos campos!</value>
   </data>
-  <data name="ErrorSendingEmail" xml:space="preserve">
+	<data name="ErrorSendingEmail" xml:space="preserve">
     <value>Ocorreu um erro inesperado ao enviar e-mail.</value>
   </data>
-  <data name="ErrorUnexpectedPageLink" xml:space="preserve">
+	<data name="ErrorUnexpectedPageLink" xml:space="preserve">
     <value>&lt;i class=" icon-circle-arrow-left" style="font-size: 20px"&gt;&lt;/i&gt; Voltar para a página inicial</value>
   </data>
-  <data name="ErrorUnexpectedPageText" xml:space="preserve">
+	<data name="ErrorUnexpectedPageText" xml:space="preserve">
     <value>&lt;h4 class="h4-error-page"&gt;Ocorreu um erro ao acessar essa página.&lt;/h4&gt;
 
                 &lt;h4 class="h4-error-page"&gt;
@@ -201,808 +201,809 @@
 
               </value>
   </data>
-  <data name="ErrorUpdatingPlayerData" xml:space="preserve">
+	<data name="ErrorUpdatingPlayerData" xml:space="preserve">
     <value>Erro ao atualizar dados do Player '{0}'! Verifique o preenchimento dos campos!</value>
   </data>
-  <data name="ErrorUpdatingPlayerInterests" xml:space="preserve">
+	<data name="ErrorUpdatingPlayerInterests" xml:space="preserve">
     <value>Erro ao atualizar intereses do player '{0}'! Verifique o preenchimento dos campos!</value>
   </data>
-  <data name="ErrorUpdatingProducerData" xml:space="preserve">
+	<data name="ErrorUpdatingProducerData" xml:space="preserve">
     <value>Erro ao atualizar dados da Produtora '{0}'! Verifique o preenchimento dos campos!</value>
   </data>
-  <data name="ErrorUpdatingProfileCheckTheFields" xml:space="preserve">
+	<data name="ErrorUpdatingProfileCheckTheFields" xml:space="preserve">
     <value>Erro ao atualizar perfil! Verifique o preenchimento dos campos!</value>
   </data>
-  <data name="ErrorWhileSavingInDataBase" xml:space="preserve">
+	<data name="ErrorWhileSavingInDataBase" xml:space="preserve">
     <value>Ocorreu um erro ao salvar a operação no banco de dados.</value>
   </data>
-  <data name="EvaluationPeriodClosed" xml:space="preserve">
+	<data name="EvaluationPeriodClosed" xml:space="preserve">
     <value>Período de avaliação encerrado!</value>
   </data>
-  <data name="EvaluationSavesSuccessfully" xml:space="preserve">
+	<data name="EvaluationSavesSuccessfully" xml:space="preserve">
     <value>Avaliação salva com sucesso!</value>
   </data>
-  <data name="HoldingMustHaveName" xml:space="preserve">
+	<data name="HoldingMustHaveName" xml:space="preserve">
     <value>O holding deve ter um nome.</value>
   </data>
-  <data name="ImageIsRequired" xml:space="preserve">
+	<data name="ImageIsRequired" xml:space="preserve">
     <value>Imagem obrigatória</value>
   </data>
-  <data name="InsertNewLineUseShiftEnter" xml:space="preserve">
+	<data name="InsertNewLineUseShiftEnter" xml:space="preserve">
     <value>Para inserir uma nova linha use shift+enter.</value>
   </data>
-  <data name="InterestsIncompleteMessage" xml:space="preserve">
+	<data name="InterestsIncompleteMessage" xml:space="preserve">
     <value>Interesses incompleto!</value>
     <comment>Interesses incompleto!</comment>
   </data>
-  <data name="InvalidCode" xml:space="preserve">
+	<data name="InvalidCode" xml:space="preserve">
     <value>Código Inválido.</value>
   </data>
-  <data name="InvalidExtensionPng" xml:space="preserve">
+	<data name="InvalidExtensionPng" xml:space="preserve">
     <value>A logo deve ter a extensão .png ou .jpeg</value>
   </data>
-  <data name="InvalidImage" xml:space="preserve">
+	<data name="InvalidImage" xml:space="preserve">
     <value>A imagem deve estar no formato jpeg, jpg, gif ou png.</value>
     <comment>A imagem deve estar no formato jpeg, jpg, gif ou png.</comment>
   </data>
-  <data name="InvalidImageFormat" xml:space="preserve">
+	<data name="InvalidImageFormat" xml:space="preserve">
     <value>Formato de imagem inválido.</value>
   </data>
-  <data name="InvalidResolution" xml:space="preserve">
+	<data name="InvalidResolution" xml:space="preserve">
     <value>A imagem deve ter entre 1KB e 10MB!</value>
   </data>
-  <data name="InvalidResolutionPlayer" xml:space="preserve">
+	<data name="InvalidResolutionPlayer" xml:space="preserve">
     <value>A imagem deve ter entre 1KB  e 10MB!</value>
   </data>
-  <data name="JobTitleEnIsRequired" xml:space="preserve">
+	<data name="JobTitleEnIsRequired" xml:space="preserve">
     <value>Cargo em inglês obrigatório.</value>
   </data>
-  <data name="JobTitlePtBrIsRequired" xml:space="preserve">
+	<data name="JobTitlePtBrIsRequired" xml:space="preserve">
     <value>Cargo em portugûes obrigatório.</value>
   </data>
-  <data name="LockOutPage" xml:space="preserve">
+	<data name="LockOutPage" xml:space="preserve">
     <value>Esta conta foi bloqueada, tente novamente mais tarde.</value>
     <comment>Esta conta foi bloqueada, tente novamente mais tarde.</comment>
   </data>
-  <data name="LoginByTicket4YouIncorrect" xml:space="preserve">
+	<data name="LoginByTicket4YouIncorrect" xml:space="preserve">
     <value>Esse email não existe, por favor use o mesmo email ao cadastrar na Ticket4You</value>
   </data>
-  <data name="LoginOrPasswordIsIncorrect" xml:space="preserve">
+	<data name="LoginOrPasswordIsIncorrect" xml:space="preserve">
     <value>Login ou Senha incorretos.</value>
   </data>
-  <data name="EntityActionSuccessfull" xml:space="preserve">
+	<data name="EntityActionSuccessfull" xml:space="preserve">
     <value>{0} {1} com sucesso.</value>
     <comment>{0} {1} com sucesso.</comment>
   </data>
-  <data name="MandatoryToSubmitYourProject" xml:space="preserve">
+	<data name="MandatoryToSubmitYourProject" xml:space="preserve">
     <value>&lt;strong&gt;Atenção!&lt;/strong&gt; Para submeter seus projetos é obrigatório o preenchimento do PERFIL e PRODUTORA/EMPRESA.</value>
   </data>
-  <data name="MessageIsTooLong" xml:space="preserve">
+	<data name="MessageIsTooLong" xml:space="preserve">
     <value>A mensagem é longa demais. Tente encurtá-la ou enviá-la em múltiplas partes.</value>
   </data>
-  <data name="MiniBioEnIsRequired" xml:space="preserve">
+	<data name="MiniBioEnIsRequired" xml:space="preserve">
     <value>Mini-biografia em inglês é obrigatória.</value>
   </data>
-  <data name="MiniBioPtBrIsRequired" xml:space="preserve">
+	<data name="MiniBioPtBrIsRequired" xml:space="preserve">
     <value>Mini-biografia em português é obrigatória.</value>
   </data>
-  <data name="MinimumNumberOfCharacters" xml:space="preserve">
+	<data name="MinimumNumberOfCharacters" xml:space="preserve">
     <value>O '{0}' deve ter no mínimo '{2}' caracteres.</value>
   </data>
-  <data name="NameIsRequired" xml:space="preserve">
+	<data name="NameIsRequired" xml:space="preserve">
     <value>Nome obrigatório.</value>
   </data>
-  <data name="NumberIsInvalid" xml:space="preserve">
+	<data name="NumberIsInvalid" xml:space="preserve">
     <value>Número inválido.</value>
   </data>
-  <data name="NumberIsRequired" xml:space="preserve">
+	<data name="NumberIsRequired" xml:space="preserve">
     <value>Número obrigatório.</value>
   </data>
-  <data name="PasswordConfirmationDoesNotMatch" xml:space="preserve">
+	<data name="PasswordConfirmationDoesNotMatch" xml:space="preserve">
     <value>Senha de confirmação incorreta.</value>
     <comment>Senha de confirmação incorreta.</comment>
   </data>
-  <data name="PlayerDataSuccessfullyUpdated" xml:space="preserve">
+	<data name="PlayerDataSuccessfullyUpdated" xml:space="preserve">
     <value>Dados do player '{0}' atualizados com sucesso!</value>
   </data>
-  <data name="PlayerIncompleteMessage" xml:space="preserve">
+	<data name="PlayerIncompleteMessage" xml:space="preserve">
     <value>Player incompleto!</value>
     <comment>Player incompleto!</comment>
   </data>
-  <data name="PlayerInterestsSuccessfullyUpdated" xml:space="preserve">
+	<data name="PlayerInterestsSuccessfullyUpdated" xml:space="preserve">
     <value>Interesses do Player '{0}' atualizados com sucesso!</value>
   </data>
-  <data name="PlayerNotFound" xml:space="preserve">
+	<data name="PlayerNotFound" xml:space="preserve">
     <value>Player não encontrado</value>
   </data>
-  <data name="PleaseClickHereToLogin" xml:space="preserve">
+	<data name="PleaseClickHereToLogin" xml:space="preserve">
     <value>Por favor clique aqui para logar.</value>
   </data>
-  <data name="ProcessingAgenda" xml:space="preserve">
+	<data name="ProcessingAgenda" xml:space="preserve">
     <value>Processando a agenda</value>
   </data>
-  <data name="ProducerMaxProjects" xml:space="preserve">
+	<data name="ProducerMaxProjects" xml:space="preserve">
     <value>A produtora pode ter no máximo {0} projetos salvos.</value>
   </data>
-  <data name="ProductionPlanEnIsRequired" xml:space="preserve">
+	<data name="ProductionPlanEnIsRequired" xml:space="preserve">
     <value>'Planos de Produção' em inglês é obrigatório.</value>
   </data>
-  <data name="ProductionPlanPtBrIsRequired" xml:space="preserve">
+	<data name="ProductionPlanPtBrIsRequired" xml:space="preserve">
     <value>'Planos de Produção' em português é obrigatório.</value>
   </data>
-  <data name="ProfileIncompleteMessage" xml:space="preserve">
+	<data name="ProfileIncompleteMessage" xml:space="preserve">
     <value>Perfil incompleto!</value>
     <comment>Perfil incompleto!</comment>
   </data>
-  <data name="ProfileUpdatedSuccessfully" xml:space="preserve">
+	<data name="ProfileUpdatedSuccessfully" xml:space="preserve">
     <value>Perfil atualizado com sucesso! </value>
   </data>
-  <data name="ProjectLogLineEnIsRequired" xml:space="preserve">
+	<data name="ProjectLogLineEnIsRequired" xml:space="preserve">
     <value>'LogLine' em inglês é obrigatório.</value>
   </data>
-  <data name="ProjectLogLinePtBrIsRequired" xml:space="preserve">
+	<data name="ProjectLogLinePtBrIsRequired" xml:space="preserve">
     <value>'LogLine' em português é obrigatório.</value>
   </data>
-  <data name="ProjectLookingFor" xml:space="preserve">
+	<data name="ProjectLookingFor" xml:space="preserve">
     <value>'Está buscando' é obrigatório.</value>
   </data>
-  <data name="ProjectMustHaveAFormat" xml:space="preserve">
+	<data name="ProjectMustHaveAFormat" xml:space="preserve">
     <value>'Formato' é obrigatório.</value>
   </data>
-  <data name="ProjectMustHaveAGenre" xml:space="preserve">
+	<data name="ProjectMustHaveAGenre" xml:space="preserve">
     <value>'Gênero' é obrigatório.</value>
   </data>
-  <data name="ProjectMustHaveAPlatform" xml:space="preserve">
+	<data name="ProjectMustHaveAPlatform" xml:space="preserve">
     <value>'Plataformas' é obrigatório.</value>
   </data>
-  <data name="ProjectMustHaveASeeking" xml:space="preserve">
+	<data name="ProjectMustHaveASeeking" xml:space="preserve">
     <value>'Está buscando para este projeto' é obrigatório.</value>
   </data>
-  <data name="ProjectMustHaveAStatus" xml:space="preserve">
+	<data name="ProjectMustHaveAStatus" xml:space="preserve">
     <value>'Status do projeto' é obrigatório.</value>
   </data>
-  <data name="ProjectMustHaveASubGenre" xml:space="preserve">
+	<data name="ProjectMustHaveASubGenre" xml:space="preserve">
     <value>'Sub-gênero' é obrigatório.</value>
   </data>
-  <data name="ProjectMustHaveEachEpisodePlayingTime" xml:space="preserve">
+	<data name="ProjectMustHaveEachEpisodePlayingTime" xml:space="preserve">
     <value>'Tempo de cada episódio' é obrigatório.</value>
   </data>
-  <data name="ProjectMustHaveLinksImage" xml:space="preserve">
+	<data name="ProjectMustHaveLinksImage" xml:space="preserve">
     <value>'Link de imagem' é obrigatório.</value>
   </data>
-  <data name="ProjectMustHaveLinksTeaser" xml:space="preserve">
+	<data name="ProjectMustHaveLinksTeaser" xml:space="preserve">
     <value>'Link de teaser' é obrigatório.</value>
   </data>
-  <data name="ProjectMustHaveNumberOfEpisodes" xml:space="preserve">
+	<data name="ProjectMustHaveNumberOfEpisodes" xml:space="preserve">
     <value>'Número de episódios' é obrigatório.</value>
   </data>
-  <data name="ProjectMustHavePitching" xml:space="preserve">
+	<data name="ProjectMustHavePitching" xml:space="preserve">
     <value>'Sessões de Pitching' é obrigatória uma resposta.</value>
   </data>
-  <data name="ProjectMustHaveTarget" xml:space="preserve">
+	<data name="ProjectMustHaveTarget" xml:space="preserve">
     <value>'Público alvo' é obrigatório.</value>
   </data>
-  <data name="ProjectMustHaveTotalValueOfProject" xml:space="preserve">
+	<data name="ProjectMustHaveTotalValueOfProject" xml:space="preserve">
     <value>'Valor total do projeto' é obrigatório.</value>
   </data>
-  <data name="ProjectMustHaveValueAlreadyRaised" xml:space="preserve">
+	<data name="ProjectMustHaveValueAlreadyRaised" xml:space="preserve">
     <value>'Valor já arrecadado' é obrigatório.</value>
   </data>
-  <data name="ProjectMustHaveValuePerEpisode" xml:space="preserve">
+	<data name="ProjectMustHaveValuePerEpisode" xml:space="preserve">
     <value>'Valor por episódio' é obrigatório.</value>
   </data>
-  <data name="ProjectMustHaveValueStillNeeded" xml:space="preserve">
+	<data name="ProjectMustHaveValueStillNeeded" xml:space="preserve">
     <value>'Valor que ainda falta' é obrigatório.</value>
   </data>
-  <data name="ProjectNotFound" xml:space="preserve">
+	<data name="ProjectNotFound" xml:space="preserve">
     <value>Projeto não encontrado.</value>
   </data>
-  <data name="ProjectSuccessfullyCreated" xml:space="preserve">
+	<data name="ProjectSuccessfullyCreated" xml:space="preserve">
     <value>Projeto criado com sucesso!</value>
   </data>
-  <data name="ProjectSuccessfullyDeleted" xml:space="preserve">
+	<data name="ProjectSuccessfullyDeleted" xml:space="preserve">
     <value>Projeto apagado com sucesso!</value>
   </data>
-  <data name="ProjectSuccessfullySubmitted" xml:space="preserve">
+	<data name="ProjectSuccessfullySubmitted" xml:space="preserve">
     <value>Projeto submetido com sucesso!</value>
   </data>
-  <data name="ProjectSuccessfullyUpdated" xml:space="preserve">
+	<data name="ProjectSuccessfullyUpdated" xml:space="preserve">
     <value>Projecto atualizado com sucesso!</value>
   </data>
-  <data name="ProjectSummaryEnIsRequired" xml:space="preserve">
+	<data name="ProjectSummaryEnIsRequired" xml:space="preserve">
     <value>'Resumo' em inglês é obrigatório.</value>
   </data>
-  <data name="ProjectSummaryPtBrIsRequired" xml:space="preserve">
+	<data name="ProjectSummaryPtBrIsRequired" xml:space="preserve">
     <value>'Resumo' em português é obrigatório.</value>
   </data>
-  <data name="ProjectTitleEnIsRequired" xml:space="preserve">
+	<data name="ProjectTitleEnIsRequired" xml:space="preserve">
     <value>'Título' em inglês é obrigatório.</value>
   </data>
-  <data name="ProjectTitlePtBrIsRequired" xml:space="preserve">
+	<data name="ProjectTitlePtBrIsRequired" xml:space="preserve">
     <value>'Título' em português é obrigatório.</value>
   </data>
-  <data name="ReasonIsRequired" xml:space="preserve">
+	<data name="ReasonIsRequired" xml:space="preserve">
     <value>Motivo é obrigatorio.</value>
   </data>
-  <data name="ReasonMaxLength" xml:space="preserve">
+	<data name="ReasonMaxLength" xml:space="preserve">
     <value>O motivo deve ter no máximo {0} caracteres.</value>
   </data>
-  <data name="ReasonMinLength" xml:space="preserve">
+	<data name="ReasonMinLength" xml:space="preserve">
     <value>O motivo deve ter no mínimo {0} caracteres.</value>
   </data>
-  <data name="RegistrationOfClosedProject" xml:space="preserve">
+	<data name="RegistrationOfClosedProject" xml:space="preserve">
     <value>Cadastramento de projeto encerrado!</value>
   </data>
-  <data name="RestrictionsSpecificsInEnglishMandatory" xml:space="preserve">
+	<data name="RestrictionsSpecificsInEnglishMandatory" xml:space="preserve">
     <value>Restrições e especificades em inglês é obrigatório.</value>
   </data>
-  <data name="RestrictionsSpecificsInPtBrMandatory" xml:space="preserve">
+	<data name="RestrictionsSpecificsInPtBrMandatory" xml:space="preserve">
     <value>Restrições e especificades em português é obrigatório.</value>
   </data>
-  <data name="SelectAtLeastOneGroupOption" xml:space="preserve">
+	<data name="SelectAtLeastOneGroupOption" xml:space="preserve">
     <value>Selecione pelo menos uma opção do grupo {0}.</value>
   </data>
-  <data name="SomethingIsWrong" xml:space="preserve">
+	<data name="SomethingIsWrong" xml:space="preserve">
     <value>Algo está incorreto.</value>
   </data>
-  <data name="StateIsInvalid" xml:space="preserve">
+	<data name="StateIsInvalid" xml:space="preserve">
     <value>Estado inválido.</value>
   </data>
-  <data name="StateIsRequired" xml:space="preserve">
+	<data name="StateIsRequired" xml:space="preserve">
     <value>Estado obrigatório.</value>
   </data>
-  <data name="SuccessfulRegistrationMessage" xml:space="preserve">
+	<data name="SuccessfulRegistrationMessage" xml:space="preserve">
     <value>Cadastro finalizado com sucesso!</value>
     <comment>Cadastro finalizado com sucesso!</comment>
   </data>
-  <data name="SuccessfulRegistrationMessageByProducer" xml:space="preserve">
+	<data name="SuccessfulRegistrationMessageByProducer" xml:space="preserve">
     <value>Cadastro de produtora empresa finalizado com sucesso! &lt;a href="{0}"&gt;Clique aqui&lt;/a&gt; para cadastrar seus projetos.</value>
   </data>
-  <data name="SuccessfulRegistrationMessageByProducerAndPlayer" xml:space="preserve">
+	<data name="SuccessfulRegistrationMessageByProducerAndPlayer" xml:space="preserve">
     <value>Cadastro de produtora empresa e de Player finalizado com sucesso! &lt;a href="{0}"&gt;Clique aqui&lt;/a&gt; para cadastrar seus projetos.</value>
   </data>
-  <data name="SwitchTo" xml:space="preserve">
+	<data name="SwitchTo" xml:space="preserve">
     <value>Trocar para</value>
   </data>
-  <data name="TheFieldIsRequired" xml:space="preserve">
+	<data name="TheFieldIsRequired" xml:space="preserve">
     <value>O campo '{0}' é obrigatório.</value>
   </data>
-  <data name="ThereIsalreadyProjectRegisteredWithThisTitle" xml:space="preserve">
+	<data name="ThereIsalreadyProjectRegisteredWithThisTitle" xml:space="preserve">
     <value>Já existe um projeto cadastrado com este título!</value>
   </data>
-  <data name="ThisProjectHasAlreadyBeenSubmittedForTheEvaluationOfPlayers" xml:space="preserve">
+	<data name="ThisProjectHasAlreadyBeenSubmittedForTheEvaluationOfPlayers" xml:space="preserve">
     <value>Este projeto já foi enviado para avaliação de players</value>
   </data>
-  <data name="ToProceedYouMustAcceptTheTerm" xml:space="preserve">
+	<data name="ToProceedYouMustAcceptTheTerm" xml:space="preserve">
     <value>Para prosseguir você deve aceitar o regulamento</value>
     <comment>Para prosseguir você deve aceitar o regulamento</comment>
   </data>
-  <data name="TradeNameIsRequired" xml:space="preserve">
+	<data name="TradeNameIsRequired" xml:space="preserve">
     <value>Nome fantasia obrigatório.</value>
   </data>
-  <data name="UndefinedMessage" xml:space="preserve">
+	<data name="UndefinedMessage" xml:space="preserve">
     <value>Mensagem indefinida.</value>
     <comment>Mensagem indefinida.</comment>
   </data>
-  <data name="UserNotFound" xml:space="preserve">
+	<data name="UserNotFound" xml:space="preserve">
     <value>Usuário não encontrado</value>
   </data>
-  <data name="VatNumberIsInvalid" xml:space="preserve">
+	<data name="VatNumberIsInvalid" xml:space="preserve">
     <value>CNPJ inválido</value>
   </data>
-  <data name="VatNumberIsRequired" xml:space="preserve">
+	<data name="VatNumberIsRequired" xml:space="preserve">
     <value>CNPJ obrigatório.</value>
   </data>
-  <data name="WebSiteIsRequired" xml:space="preserve">
+	<data name="WebSiteIsRequired" xml:space="preserve">
     <value>Website obrigatório.</value>
   </data>
-  <data name="WeFoundAndError" xml:space="preserve">
+	<data name="WeFoundAndError" xml:space="preserve">
     <value>Encontramos um erro ao realizar essa operação. Já estamos trabalhando para resolvê-lo.</value>
     <comment>Encontramos um erro ao realizar essa operação. Já estamos trabalhando para resolvê-lo.</comment>
   </data>
-  <data name="YouCanSelectUpToXPlayers" xml:space="preserve">
+	<data name="YouCanSelectUpToXPlayers" xml:space="preserve">
     <value>Você pode selecionar no máximo {0} players</value>
   </data>
-  <data name="YouCanSendUpToXPlayers" xml:space="preserve">
+	<data name="YouCanSendUpToXPlayers" xml:space="preserve">
     <value>Você pode enviar para no máximo {0} jogadores.</value>
   </data>
-  <data name="YourPasswordHasBeenChangedSuccessfully" xml:space="preserve">
+	<data name="YourPasswordHasBeenChangedSuccessfully" xml:space="preserve">
     <value>Sua senha foi alterada com sucesso!</value>
   </data>
-  <data name="YouWillBeRedirected" xml:space="preserve">
+	<data name="YouWillBeRedirected" xml:space="preserve">
     <value>Você será redirecionado...</value>
     <comment>Você será redirecionado...</comment>
   </data>
-  <data name="ZipCodeIsRequired" xml:space="preserve">
+	<data name="ZipCodeIsRequired" xml:space="preserve">
     <value>Cep obrigatório.</value>
   </data>
-  <data name="ConfirmDelete" xml:space="preserve">
+	<data name="ConfirmDelete" xml:space="preserve">
     <value>Por favor, confirme para excluir.</value>
     <comment>Por favor, confirme para excluir.</comment>
   </data>
-  <data name="EntityExistsWithSameProperty" xml:space="preserve">
+	<data name="EntityExistsWithSameProperty" xml:space="preserve">
     <value>Já existe {0} com {1} '{2}'.</value>
     <comment>Já existe um holding com o nome 'Xpto'.</comment>
   </data>
-  <data name="EntityNotAction" xml:space="preserve">
+	<data name="EntityNotAction" xml:space="preserve">
     <value>{0} não {1}.</value>
     <comment>{0} não {1}.</comment>
   </data>
-  <data name="PropertyBetweenLengths" xml:space="preserve">
+	<data name="PropertyBetweenLengths" xml:space="preserve">
     <value>O campo {0} deve ter entre '{2}' e '{1}' caracteres.</value>
     <comment>O campo {0} deve ter entre '{1}' e '{2}' caracteres.</comment>
   </data>
-  <data name="ConfirmDeleteEdition" xml:space="preserve">
+	<data name="ConfirmDeleteEdition" xml:space="preserve">
     <value>Por favor, confirme para excluir da edição {0}.</value>
     <comment>Por favor, confirme para excluir da edição {0}.</comment>
   </data>
-  <data name="CouldNotCreate" xml:space="preserve">
+	<data name="CouldNotCreate" xml:space="preserve">
     <value>Não foi possível criar {0} {1}.</value>
     <comment>Não foi possível criar {0} {1}.</comment>
   </data>
-  <data name="EmailInputMessage" xml:space="preserve">
+	<data name="EmailInputMessage" xml:space="preserve">
     <value>O email é utilizado para o login do usuário.</value>
     <comment>O email é utilizado para o login do usuário.</comment>
   </data>
-  <data name="EmailSentTo" xml:space="preserve">
+	<data name="EmailSentTo" xml:space="preserve">
     <value>E-mail enviado para {0}.</value>
     <comment>E-mail enviado para {0}.</comment>
   </data>
-  <data name="CompleteYourSignup" xml:space="preserve">
+	<data name="CompleteYourSignup" xml:space="preserve">
     <value>Complete o cadastro da {0}</value>
   </data>
-  <data name="ConfirmAndCompletePersonalInfo" xml:space="preserve">
+	<data name="ConfirmAndCompletePersonalInfo" xml:space="preserve">
     <value>Confirme e complete seus dados pessoais</value>
     <comment>Confirme e complete seus dados pessoais</comment>
   </data>
-  <data name="CompleteYourRegistration" xml:space="preserve">
+	<data name="CompleteYourRegistration" xml:space="preserve">
     <value>Complete seu cadastro</value>
     <comment>Complete seu cadastro</comment>
   </data>
-  <data name="ConfigurePasswordToMyRio2c" xml:space="preserve">
+	<data name="ConfigurePasswordToMyRio2c" xml:space="preserve">
     <value>Informe uma senha de acesso à conta</value>
     <comment>Informe uma senha de acesso à conta</comment>
   </data>
-  <data name="ConfirmAndCompleteYourAccessData" xml:space="preserve">
+	<data name="ConfirmAndCompleteYourAccessData" xml:space="preserve">
     <value>Confirme e complete seus dados de acesso</value>
     <comment>Confirme e complete seus dados de acesso</comment>
   </data>
-  <data name="CompleteYourData" xml:space="preserve">
+	<data name="CompleteYourData" xml:space="preserve">
     <value>Complete seus dados</value>
     <comment>Complete seus dados</comment>
   </data>
-  <data name="DescribeYourMiniBiography" xml:space="preserve">
+	<data name="DescribeYourMiniBiography" xml:space="preserve">
     <value>Descreva sua mini-biografia</value>
     <comment>Descreva sua mini-biografia</comment>
   </data>
-  <data name="InformYourAddress" xml:space="preserve">
+	<data name="InformYourAddress" xml:space="preserve">
     <value>Informe seu endereço</value>
     <comment>Informe seu endereço</comment>
   </data>
-  <data name="CompletePlayerInfo" xml:space="preserve">
+	<data name="CompletePlayerInfo" xml:space="preserve">
     <value>Complete os dados do player {0}</value>
     <comment>Complete os dados do player {0}</comment>
   </data>
-  <data name="CompletePlayerInterestsFor" xml:space="preserve">
+	<data name="CompletePlayerInterestsFor" xml:space="preserve">
     <value>Informe quais as áreas de interesse do player {0}</value>
     <comment>Informe quais as áreas de interesse do player {0}</comment>
   </data>
-  <data name="PlayerInfoFor" xml:space="preserve">
+	<data name="PlayerInfoFor" xml:space="preserve">
     <value>Dados do player {0}</value>
     <comment>Dados do player {0}</comment>
   </data>
-  <data name="WelcomeEmailMessage1" xml:space="preserve">
+	<data name="WelcomeEmailMessage1" xml:space="preserve">
     <value>A sua credencial foi adquirida com sucesso!</value>
     <comment>A sua credencial foi adquirida com sucesso!</comment>
   </data>
-  <data name="WelcomeEmailMessage2" xml:space="preserve">
+	<data name="WelcomeEmailMessage2" xml:space="preserve">
     <value>É necessário acessar a plataforma &lt;b&gt;MyRio2C&lt;/b&gt; para realizar seu registro e de sua empresa nas Rodadas de Negócios. Por gentileza, clique no botão abaixo e utilize o mesmo endereço de e-mail para fazer o acesso.</value>
     <comment>É necessário acessar a plataforma &lt;b&gt;MyRio2C&lt;/b&gt; para realizar seu registro e de sua empresa nas Rodadas de Negócios. Por gentileza, clique no botão abaixo e utilize o mesmo endereço de e-mail para fazer o acesso.</comment>
   </data>
-  <data name="WelcomeEmailMessage3" xml:space="preserve">
+	<data name="WelcomeEmailMessage3" xml:space="preserve">
     <value>Em caso de dúvidas, entre em contato com a nossa equipe em:</value>
     <comment>Em caso de dúvidas, entre em contato com a nossa equipe em:</comment>
   </data>
-  <data name="WelcomeEmailMessage4" xml:space="preserve">
+	<data name="WelcomeEmailMessage4" xml:space="preserve">
     <value>VENHA FAZER PARTE DO RIO2C</value>
     <comment>VENHA FAZER PARTE DO RIO2C</comment>
   </data>
-  <data name="WelcomeEmailMessage5" xml:space="preserve">
+	<data name="WelcomeEmailMessage5" xml:space="preserve">
     <value>Sua oportunidade de viver dias incríveis de aprendizado, negócios, networking e experiências.</value>
     <comment>Sua oportunidade de viver dias incríveis de aprendizado, negócios, networking e experiências.</comment>
   </data>
-  <data name="AcceptTermsAndConditions" xml:space="preserve">
+	<data name="AcceptTermsAndConditions" xml:space="preserve">
     <value>Declaro estar ciente e concordar com as regras e regulamentos acima.</value>
     <comment>Declaro estar ciente e concordar com as regras e regulamentos acima.</comment>
   </data>
-  <data name="PlayerTerms" xml:space="preserve">
+	<data name="PlayerTerms" xml:space="preserve">
     <value>Regulamento de Players</value>
     <comment>Regulamento de Players</comment>
   </data>
-  <data name="DescribeRestrictionSpecifics" xml:space="preserve">
+	<data name="DescribeRestrictionSpecifics" xml:space="preserve">
     <value>Descreve as restrições e/ou especificações sobre o conteúdo desejado.</value>
     <comment>Descreve as restrições e/ou especificações sobre o conteúdo desejado.</comment>
   </data>
-  <data name="PublicEmail" xml:space="preserve">
+	<data name="PublicEmail" xml:space="preserve">
     <value>Gostaria de disponibilizar algum e-mail para contato entre os participantes da categoria Industry na Rede Rio2C? Este e-mail só ficará visível na plataforma MyRio2C.</value>
     <comment>Gostaria de disponibilizar algum e-mail para contato entre os participantes da categoria Industry na Rede Rio2C? Este e-mail só ficará visível na plataforma MyRio2C.</comment>
   </data>
-  <data name="SelectAtLeastOneOption" xml:space="preserve">
+	<data name="SelectAtLeastOneOption" xml:space="preserve">
     <value>Selecione pelo menos uma opção do grupo.</value>
     <comment>Selecione pelo menos uma opção do grupo.</comment>
   </data>
-  <data name="InvalidCompanyNumber" xml:space="preserve">
+	<data name="InvalidCompanyNumber" xml:space="preserve">
     <value>CNPJ inválido.</value>
     <comment>CNPJ inválido.</comment>
   </data>
-  <data name="TextInPortugueseInEnglish" xml:space="preserve">
+	<data name="TextInPortugueseInEnglish" xml:space="preserve">
     <value>texto em português | texto em inglês</value>
     <comment>texto em português | texto em inglês</comment>
   </data>
-  <data name="SelectAnOption" xml:space="preserve">
+	<data name="SelectAnOption" xml:space="preserve">
     <value>Selecione uma opção.</value>
     <comment>Selecione uma opção.</comment>
   </data>
-  <data name="InvalidLoginOrPassword" xml:space="preserve">
+	<data name="InvalidLoginOrPassword" xml:space="preserve">
     <value>Login ou senha incorretos.</value>
     <comment>Login ou senha incorretos.</comment>
   </data>
-  <data name="YouDontHaveAdminProfile" xml:space="preserve">
+	<data name="YouDontHaveAdminProfile" xml:space="preserve">
     <value>Você não tem perfil de administrador.</value>
     <comment>Você não tem perfil de administrador.</comment>
   </data>
-  <data name="ConfirmToSendInvitationEmails" xml:space="preserve">
+	<data name="ConfirmToSendInvitationEmails" xml:space="preserve">
     <value>Confirme para enviar os e-mails de convite</value>
     <comment>Confirme para enviar os e-mails de convite</comment>
   </data>
-  <data name="NoBadgesAvaiable" xml:space="preserve">
+	<data name="NoBadgesAvaiable" xml:space="preserve">
     <value>Nenhum ingresso disponível.</value>
     <comment>Nenhum ingresso disponível.</comment>
   </data>
-  <data name="RestrictionSpecifics" xml:space="preserve">
+	<data name="RestrictionSpecifics" xml:space="preserve">
     <value>Restrições e/ou especificações sobre o conteúdo desejado</value>
     <comment>Restrições e/ou especificações sobre o conteúdo desejado</comment>
   </data>
-  <data name="CompleteCompanyrInfo" xml:space="preserve">
+	<data name="CompleteCompanyrInfo" xml:space="preserve">
     <value>Complete os dados da sua empresa</value>
     <comment>Complete os dados da sua empresa</comment>
   </data>
-  <data name="IfYouWantToSkipStepAndRegisterLater" xml:space="preserve">
+	<data name="IfYouWantToSkipStepAndRegisterLater" xml:space="preserve">
     <value>Se você deseja pular esse passo e registrar sua empresa depois</value>
     <comment>Se você deseja pular esse passo e registrar sua empresa depois</comment>
   </data>
-  <data name="ClickHereToChangePassword" xml:space="preserve">
+	<data name="ClickHereToChangePassword" xml:space="preserve">
     <value>Clique aqui para alterar sua senha</value>
     <comment>Clique aqui para alterar sua senha</comment>
   </data>
-  <data name="ErrorUpdatingPassword" xml:space="preserve">
+	<data name="ErrorUpdatingPassword" xml:space="preserve">
     <value>A senha não pode ser alterada.</value>
     <comment>A senha não pode ser alterada.</comment>
   </data>
-  <data name="AccountLockedOut" xml:space="preserve">
+	<data name="AccountLockedOut" xml:space="preserve">
     <value>Conta bloqueada</value>
     <comment>Conta bloqueada</comment>
   </data>
-  <data name="MaxlengthCounterMessage" xml:space="preserve">
+	<data name="MaxlengthCounterMessage" xml:space="preserve">
     <value>Contagem de caracteres: %charsTyped%/%charsTotal%</value>
     <comment>Contagem de caracteres: %charsTyped%/%charsTotal%</comment>
   </data>
-  <data name="CouldNotSignInTalentsPlatform" xml:space="preserve">
+	<data name="CouldNotSignInTalentsPlatform" xml:space="preserve">
     <value>Não foi possível logar na plataforma de talentos.</value>
     <comment>Não foi possível logar na plataforma de talentos.</comment>
   </data>
-  <data name="RedirectTalentsPlatformNotActive" xml:space="preserve">
+	<data name="RedirectTalentsPlatformNotActive" xml:space="preserve">
     <value>Redirecionamento para a plataforma de talentos não está ativa.</value>
     <comment>Redirecionamento para a plataforma de talentos não está ativa.</comment>
   </data>
-  <data name="ProducerInfo" xml:space="preserve">
+	<data name="ProducerInfo" xml:space="preserve">
     <value>Dados da produtora</value>
     <comment>Dados da produtora</comment>
   </data>
-  <data name="CompleteProjectInfo" xml:space="preserve">
+	<data name="CompleteProjectInfo" xml:space="preserve">
     <value>Complete as informações do projeto</value>
     <comment>Complete as informações do projeto</comment>
   </data>
-  <data name="StepsToProjectSubscription" xml:space="preserve">
+	<data name="StepsToProjectSubscription" xml:space="preserve">
     <value>Passos para inscrição de projeto</value>
     <comment>Passos para inscrição de projeto</comment>
   </data>
-  <data name="AudivisualPichingQuestion" xml:space="preserve">
+	<data name="AudivisualPichingQuestion" xml:space="preserve">
     <value>Deseja participar do processo de seleção para apresentar esse projeto nas sessões de PITCHING AUDIOVISUAL da Rio2C {0}?</value>
     <comment>Deseja participar do processo de seleção para apresentar esse projeto nas sessões de PITCHING AUDIOVISUAL da Rio2C {0}?</comment>
   </data>
-  <data name="FundingPlan" xml:space="preserve">
+	<data name="FundingPlan" xml:space="preserve">
     <value>Plano de financiamento &lt;small&gt;(apenas projetos em desenvolvimento/produção)&lt;/small&gt;</value>
     <comment>Plano de financiamento &lt;small&gt;(apenas projetos em desenvolvimento/produção)&lt;/small&gt;</comment>
   </data>
-  <data name="LinksForDownloadNotAccepted" xml:space="preserve">
+	<data name="LinksForDownloadNotAccepted" xml:space="preserve">
     <value>Não serão aceitos links para download, apenas para sites de compartilhamento de imagem ou vídeo, como YouTube e Vimeo.</value>
     <comment>Não serão aceitos links para download, apenas para sites de compartilhamento de imagem ou vídeo, como YouTube e Vimeo.</comment>
   </data>
-  <data name="ProjectBudget" xml:space="preserve">
+	<data name="ProjectBudget" xml:space="preserve">
     <value>Orçamento do projeto &lt;small&gt;(apenas para projetos em desenvolvimento/produção)&lt;/small&gt;</value>
     <comment>Orçamento do projeto &lt;small&gt;(apenas para projetos em desenvolvimento/produção)&lt;/small&gt;</comment>
   </data>
-  <data name="MaxProjectBuyersGroupsReached" xml:space="preserve">
+	<data name="MaxProjectBuyersGroupsReached" xml:space="preserve">
     <value>Você não pode selecionar um novo {0} para avaliar o projeto pois todos os grupos de {1} {2} já foram utilizados.</value>
     <comment>Você não pode selecionar um novo {0} para avaliar o projeto pois todos os grupos de {1} {2} já foram utilizados.</comment>
   </data>
-  <data name="PaginationMessage" xml:space="preserve">
+	<data name="PaginationMessage" xml:space="preserve">
     <value>Exibindo {0} a {1} de {2}</value>
     <comment>Exibindo {0} a {1} de {2}</comment>
   </data>
-  <data name="ProjectIsFinishedCannotBeUpdated" xml:space="preserve">
+	<data name="ProjectIsFinishedCannotBeUpdated" xml:space="preserve">
     <value>O projeto está concluído e não pode ser alterado.</value>
     <comment>O projeto está concluído e não pode ser alterado.</comment>
   </data>
-  <data name="IsNotPossibleCreateProjectLimit" xml:space="preserve">
+	<data name="IsNotPossibleCreateProjectLimit" xml:space="preserve">
     <value>Não é possível criar o projeto pois essa empresa já atingiu o limite.</value>
     <comment>Não é possível criar o projeto pois essa empresa já atingiu o limite.</comment>
   </data>
-  <data name="IsNotPossibleCreateProjectSameTicket" xml:space="preserve">
+	<data name="IsNotPossibleCreateProjectSameTicket" xml:space="preserve">
     <value>Não é possível criar o projeto pois um mesmo ingresso está sendo utilizado em mais de uma empresa.</value>
     <comment>Não é possível criar o projeto pois um mesmo ingresso está sendo utilizado em mais de uma empresa.</comment>
   </data>
-  <data name="TheProjectMustHaveOnePlayer" xml:space="preserve">
+	<data name="TheProjectMustHaveOnePlayer" xml:space="preserve">
     <value>O projeto deve ter no mínimo 1 {0} para ser concluído.</value>
     <comment>O projeto deve ter no mínimo 1 {0} para ser concluído.</comment>
   </data>
-  <data name="YouReachedProjectsLimit" xml:space="preserve">
+	<data name="YouReachedProjectsLimit" xml:space="preserve">
     <value>Você atingiu o limite de projetos.</value>
     <comment>Você atingiu o limite de projetos.</comment>
   </data>
-  <data name="BuyerEvaluationsAvailableForProject" xml:space="preserve">
+	<data name="BuyerEvaluationsAvailableForProject" xml:space="preserve">
     <value>{0} {1} {2} para esse projeto.</value>
     <comment>{0} {1} {2} para esse projeto.</comment>
   </data>
-  <data name="BuyerEvaluationsSelected" xml:space="preserve">
+	<data name="BuyerEvaluationsSelected" xml:space="preserve">
     <value>{0} {1} {2} de um total de {3}.</value>
     <comment>{0} {1} {2} de um total de {3}.</comment>
   </data>
-  <data name="MaxProjectBuyersEvaluationsReached" xml:space="preserve">
+	<data name="MaxProjectBuyersEvaluationsReached" xml:space="preserve">
     <value>O projeto já atingiu o limite de {0} {1} para avaliação.</value>
     <comment>O projeto já atingiu o limite de {0} {1} para avaliação.</comment>
   </data>
-  <data name="ProjectSubmissionNotOpen" xml:space="preserve">
+	<data name="ProjectSubmissionNotOpen" xml:space="preserve">
     <value>O período de inscrição não está aberto.</value>
     <comment>O período de inscrição não está aberto.</comment>
   </data>
-  <data name="ProjectSavedButNotSentToPlayers" xml:space="preserve">
+	<data name="ProjectSavedButNotSentToPlayers" xml:space="preserve">
     <value>Projeto salvo mas ainda NÃO enviado para Players. Para enviar o projeto para avaliação selecione os Players e clique em Salvar e Enviar.</value>
     <comment>Projeto salvo mas ainda NÃO enviado para Players. Para enviar o projeto para avaliação selecione os Players e clique em Salvar e Enviar.</comment>
   </data>
-  <data name="NoConversationsFound" xml:space="preserve">
+	<data name="NoConversationsFound" xml:space="preserve">
     <value>Nenhuma conversa encontrada.</value>
     <comment>Nenhuma conversa encontrada.</comment>
   </data>
-  <data name="ToAccessMyRio2CPlatform" xml:space="preserve">
+	<data name="ToAccessMyRio2CPlatform" xml:space="preserve">
     <value>Para acessar a plataforma MyRio2C é necessário estar credenciado.</value>
     <comment>Para acessar a plataforma MyRio2C é necessário estar credenciado.</comment>
   </data>
-  <data name="NoneEntityAction" xml:space="preserve">
+	<data name="NoneEntityAction" xml:space="preserve">
     <value>Nenhum {0} {1}.</value>
     <comment>Nenhum {0} {1}.</comment>
   </data>
-  <data name="YouReceivedMessageFrom" xml:space="preserve">
+	<data name="YouReceivedMessageFrom" xml:space="preserve">
     <value>Você recebeu uma mensagem de &lt;b&gt;{0}&lt;/b&gt;.&lt;br /&gt;&lt;br /&gt;Clique aqui para ser direcionado para a sua caixa de mensagens.</value>
     <comment>Você recebeu uma mensagem de &lt;b&gt;{0}&lt;/b&gt;.&lt;br /&gt;&lt;br /&gt;Clique aqui para ser direcionado para a sua caixa de mensagens.</comment>
   </data>
-  <data name="EntityCouldNotBeAction" xml:space="preserve">
+	<data name="EntityCouldNotBeAction" xml:space="preserve">
     <value>{0} não pode ser {1}.</value>
     <comment>{0} não pode ser {1}.</comment>
   </data>
-  <data name="UserSentYouMessage" xml:space="preserve">
+	<data name="UserSentYouMessage" xml:space="preserve">
     <value>{0} enviou uma mensagem</value>
     <comment>{0} enviou uma mensagem</comment>
   </data>
-  <data name="YouHaveNewMessage" xml:space="preserve">
+	<data name="YouHaveNewMessage" xml:space="preserve">
     <value>Você tem &lt;b&gt;{0} nova mensagem&lt;/b&gt;.</value>
     <comment>Você tem &lt;b&gt;{0} nova mensagem&lt;/b&gt;.</comment>
   </data>
-  <data name="YouHaveNewMessages" xml:space="preserve">
+	<data name="YouHaveNewMessages" xml:space="preserve">
     <value>Você tem &lt;b&gt;{0} novas mensagens&lt;/b&gt;.</value>
     <comment>Você tem &lt;b&gt;{0} novas mensagens&lt;/b&gt;.</comment>
   </data>
-  <data name="ClickHereToChangeEmailSettings" xml:space="preserve">
+	<data name="ClickHereToChangeEmailSettings" xml:space="preserve">
     <value>Clique aqui para alterar suas configurações de email</value>
     <comment>Clique aqui para alterar suas configurações de email</comment>
   </data>
-  <data name="ProjectBuyerEvaluationEmailMessage1" xml:space="preserve">
+	<data name="ProjectBuyerEvaluationEmailMessage1" xml:space="preserve">
     <value>Você recebeu um projeto para avaliação.</value>
     <comment>Você recebeu um projeto para avaliação.</comment>
   </data>
-  <data name="ProjectBuyerEvaluationEmailMessage2" xml:space="preserve">
+	<data name="ProjectBuyerEvaluationEmailMessage2" xml:space="preserve">
     <value>Por favor, acesse o MyRio2C para realizar sua seleção até {0}.</value>
     <comment>Por favor, acesse o MyRio2C para realizar sua seleção até {0}.</comment>
   </data>
-  <data name="ProjectBuyerEvaluationEmailMessage3" xml:space="preserve">
+	<data name="ProjectBuyerEvaluationEmailMessage3" xml:space="preserve">
     <value>Obs. Não se esqueça de deixar uma crítica construtiva caso rejeite algum projeto.</value>
     <comment>Obs. Não se esqueça de deixar uma crítica construtiva caso rejeite algum projeto.</comment>
   </data>
-  <data name="ProjectBuyerEvaluationEmailSubject" xml:space="preserve">
+	<data name="ProjectBuyerEvaluationEmailSubject" xml:space="preserve">
     <value>Você tem um novo projeto para avaliação</value>
     <comment>Você tem um novo projeto para avaliação</comment>
   </data>
-  <data name="ToLastPage" xml:space="preserve">
+	<data name="ToLastPage" xml:space="preserve">
     <value>para a página anterior</value>
     <comment>para a página anterior</comment>
   </data>
-  <data name="ToLoginPage" xml:space="preserve">
+	<data name="ToLoginPage" xml:space="preserve">
     <value>para a página de login</value>
     <comment>para a página de login</comment>
   </data>
-  <data name="ImageAuthorizationForm" xml:space="preserve">
+	<data name="ImageAuthorizationForm" xml:space="preserve">
     <value>Autorização do uso de imagem</value>
     <comment>Autorização do uso de imagem</comment>
   </data>
-  <data name="AcceptImageAuthorization" xml:space="preserve">
+	<data name="AcceptImageAuthorization" xml:space="preserve">
     <value>Declaro estar ciente e concordar com o termo acima.</value>
     <comment>Declaro estar ciente e concordar com o termo acima.</comment>
   </data>
-  <data name="NotShowingOnSiteEdition" xml:space="preserve">
+	<data name="NotShowingOnSiteEdition" xml:space="preserve">
     <value>Não exibindo na edição {0} do site</value>
     <comment>Não exibindo na edição {0} do site</comment>
   </data>
-  <data name="ShowingOnSiteEdition" xml:space="preserve">
+	<data name="ShowingOnSiteEdition" xml:space="preserve">
     <value>Exibindo na edição {0} do site</value>
     <comment>Exibindo na edição {0} do site</comment>
   </data>
-  <data name="AttentionHighlightsList" xml:space="preserve">
+	<data name="AttentionHighlightsList" xml:space="preserve">
     <value>Substitui o destaque da lista abaixo.</value>
     <comment>Substitui o destaque da lista abaixo.</comment>
   </data>
-  <data name="DateBetweenDates" xml:space="preserve">
+	<data name="DateBetweenDates" xml:space="preserve">
     <value>A data deve estar entre {1} e {0}.</value>
     <comment>A data deve estar entre {1} e {0}.</comment>
   </data>
-  <data name="PropertyBetweenDates" xml:space="preserve">
+	<data name="PropertyBetweenDates" xml:space="preserve">
     <value>O campo {0} deve ser entre '{2}' e '{1}'.</value>
     <comment>O campo {0} deve ser entre '{2}' e '{1}'.</comment>
   </data>
-  <data name="PropertyGreaterThanProperty" xml:space="preserve">
+	<data name="PropertyGreaterThanProperty" xml:space="preserve">
     <value>O campo {0} deve ser maior que o campo {1}.</value>
     <comment>O campo {0} deve ser maior que o campo {1}.</comment>
   </data>
-  <data name="RelatedEntities" xml:space="preserve">
+	<data name="RelatedEntities" xml:space="preserve">
     <value>{0} Relacionadas</value>
     <comment>{0} Relacionadas</comment>
   </data>
-  <data name="InstagramUser" xml:space="preserve">
+	<data name="InstagramUser" xml:space="preserve">
     <value>O usuário do Instagram.</value>
     <comment>O usuário do Instagram.</comment>
   </data>
-  <data name="LinkedinUser" xml:space="preserve">
+	<data name="LinkedinUser" xml:space="preserve">
     <value>O usuário do LinkedIn.</value>
     <comment>O usuário do LinkedIn.</comment>
   </data>
-  <data name="TwitterUser" xml:space="preserve">
+	<data name="TwitterUser" xml:space="preserve">
     <value>O usuário do Twitter.</value>
     <comment>O usuário do Twitter.</comment>
   </data>
-  <data name="WebsiteUrl" xml:space="preserve">
+	<data name="WebsiteUrl" xml:space="preserve">
     <value>A url do site.</value>
     <comment>A url do site.</comment>
   </data>
-  <data name="YoutubeUrl" xml:space="preserve">
+	<data name="YoutubeUrl" xml:space="preserve">
     <value>A url do YouTube.</value>
     <comment>A url do YouTube.</comment>
   </data>
-  <data name="PropertyGreaterThanValue" xml:space="preserve">
+	<data name="PropertyGreaterThanValue" xml:space="preserve">
     <value>O campo {0} deve ser maior que o {1}.</value>
     <comment>O campo {0} deve ser maior que o {1}.</comment>
   </data>
-  <data name="DoYouReallyWishAcceptObjectEntity" xml:space="preserve">
+	<data name="DoYouReallyWishAcceptObjectEntity" xml:space="preserve">
     <value>Deseja aprovar {0} "&lt;b&gt;{1}&lt;/b&gt;"?</value>
     <comment>Deseja aprovar {0} "&lt;b&gt;{1}&lt;/b&gt;"?</comment>
   </data>
-  <data name="DoYouReallyWishRefuseObjectEntity" xml:space="preserve">
+	<data name="DoYouReallyWishRefuseObjectEntity" xml:space="preserve">
     <value>Deseja reprovar {0} "&lt;b&gt;{1}&lt;/b&gt;"?</value>
     <comment>Deseja reprovar {0} "&lt;b&gt;{1}&lt;/b&gt;"?</comment>
   </data>
-  <data name="CalendarProcessedSuccessfully" xml:space="preserve">
+	<data name="CalendarProcessedSuccessfully" xml:space="preserve">
     <value>Agenda processada com sucesso em &lt;b&gt;{0}&lt;/b&gt;.</value>
     <comment>Agenda processada com sucesso em &lt;b&gt;{0}&lt;/b&gt;.</comment>
   </data>
-  <data name="GenerateCalendarMessage" xml:space="preserve">
+	<data name="GenerateCalendarMessage" xml:space="preserve">
     <value>Deseja gerar a agenda?</value>
     <comment>Deseja gerar a agenda?</comment>
   </data>
-  <data name="CalendarNotProcessed" xml:space="preserve">
+	<data name="CalendarNotProcessed" xml:space="preserve">
     <value>Agenda não processada.</value>
     <comment>Agenda não processada.</comment>
   </data>
-  <data name="NotScheduledOneToOneMeetings" xml:space="preserve">
+	<data name="NotScheduledOneToOneMeetings" xml:space="preserve">
     <value>Rodadas de Negócios não Agendadas</value>
     <comment>Rodadas de Negócios não Agendadas</comment>
   </data>
-  <data name="ScheduledOneToOneMeetings" xml:space="preserve">
+	<data name="ScheduledOneToOneMeetings" xml:space="preserve">
     <value>Rodadas de Negócios Agendadas</value>
     <comment>Rodadas de Negócios Agendadas</comment>
   </data>
-  <data name="EntityIsAlreadyAction" xml:space="preserve">
+	<data name="EntityIsAlreadyAction" xml:space="preserve">
     <value>{0} já está {1}.</value>
     <comment>{0} já está {1}.</comment>
   </data>
-  <data name="PropertyDifferentFromProperty" xml:space="preserve">
+	<data name="PropertyDifferentFromProperty" xml:space="preserve">
     <value>O campo {0} deve ser diferente do campo {1}.</value>
     <comment>O campo {0} deve ser diferente do campo {1}.</comment>
   </data>
-  <data name="CalendarProcessing" xml:space="preserve">
+	<data name="CalendarProcessing" xml:space="preserve">
     <value>Agenda processando desde &lt;b&gt;{0}&lt;/b&gt;.</value>
     <comment>Agenda processando desde &lt;b&gt;{0}&lt;/b&gt;.</comment>
   </data>
-  <data name="FileMustBePdf" xml:space="preserve">
+	<data name="FileMustBePdf" xml:space="preserve">
     <value>O arquivo deve ser do tipo pdf.</value>
     <comment>O arquivo deve ser do tipo pdf.</comment>
   </data>
-  <data name="InvalidPdf" xml:space="preserve">
+	<data name="InvalidPdf" xml:space="preserve">
     <value>O arquivo deve estar no formato pdf.</value>
     <comment>O arquivo deve estar no formato pdf.</comment>
   </data>
-  <data name="CanNotDeleteCurrentEdition" xml:space="preserve">
+	<data name="CanNotDeleteCurrentEdition" xml:space="preserve">
     <value>Esta Edição não pode ser excluída enquanto for a edição atual.</value>
     <comment>Esta Edição não pode ser excluída enquanto for a edição atual.</comment>
   </data>
-  <data name="CanNotDisableCurrentEdition" xml:space="preserve">
+	<data name="CanNotDisableCurrentEdition" xml:space="preserve">
     <value>Esta Edição não pode ser desativada enquanto for a edição atual.</value>
     <comment>Esta Edição não pode ser desativada enquanto for a edição atual.</comment>
   </data>
-  <data name="CanNotUncheckCurrentEdition" xml:space="preserve">
+	<data name="CanNotUncheckCurrentEdition" xml:space="preserve">
     <value>Esta Edição não pode ser desmarcada como atual pois não existe nenhuma outra edição marcada como atual para substituí-la. Configure alguma outra edição como atual e tente novamente.</value>
     <comment>Esta Edição não pode ser desmarcada como atual pois não existe nenhuma outra edição marcada como atual para substituí-la. Configure alguma outra edição como atual e tente novamente.</comment>
   </data>
-  <data name="CurrentEditionNotFound" xml:space="preserve">
+	<data name="CurrentEditionNotFound" xml:space="preserve">
     <value>Nenhuma Edição atual encontrada</value>
     <comment>Nenhuma Edição atual encontrada</comment>
   </data>
-  <data name="MusicBandsNotFoundWithStatus" xml:space="preserve">
+	<data name="MusicBandsNotFoundWithStatus" xml:space="preserve">
     <value>Nenhuma banda com status '{0}' encontrada</value>
     <comment>Nenhuma banda com status '{0}' encontrada</comment>
   </data>
-  <data name="TheBandsWillReceiveFinalGradeAtPeriodEnds" xml:space="preserve">
+	<data name="TheBandsWillReceiveFinalGradeAtPeriodEnds" xml:space="preserve">
     <value>As bandas receberão a nota final e o status de aprovação somente ao final desse período</value>
     <comment>As bandas receberão a nota final e o status de aprovação somente ao final desse período</comment>
   </data>
-  <data name="TheEvaluationPeriodRunsFrom" xml:space="preserve">
+	<data name="TheEvaluationPeriodRunsFrom" xml:space="preserve">
     <value>O período de avaliações acontece de {0} até {1}</value>
     <comment>O período de avaliações acontece de {0} até {1}</comment>
   </data>
-  <data name="PlayerMeetingPreference" xml:space="preserve">
+	<data name="PlayerMeetingPreference" xml:space="preserve">
     <value>O Player prefere reunião {0} para execução das rodadas de negócios</value>
     <comment>O Player prefere reunião {0} para execução das rodadas de negócios</comment>
   </data>
-  <data name="ChangeScheduledNegotiationConfirmationMessage" xml:space="preserve">
+	<data name="ChangeScheduledNegotiationConfirmationMessage" xml:space="preserve">
     <value>Essa alteração pode gerar um conflito com outras rodadas do Player ou da Produtora, deseja continuar?</value>
     <comment>Essa alteração pode gerar um conflito com outras rodadas do Player ou da Produtora, deseja continuar?</comment>
   </data>
-  <data name="NoMoreTablesAvailableAtTheRoomAndStartTime" xml:space="preserve">
+	<data name="NoMoreTablesAvailableAtTheRoomAndStartTime" xml:space="preserve">
     <value>Não há mesas disponíveis com início às '{0}' na sala '{1}' </value>
     <comment>Não há mesas disponíveis com início às '{0}' na sala '{1}'</comment>
   </data>
-  <data name="HasAlreadyBusinessRoundScheduled" xml:space="preserve">
+	<data name="HasAlreadyBusinessRoundScheduled" xml:space="preserve">
     <value>{0} {1} já possui uma rodada de negócios agendada para {2}</value>
     <comment>{0} {1} já possui uma rodada de negócios agendada para {2}</comment>
   </data>
-  <data name="HasNoNegotiationsToPrint" xml:space="preserve">
+	<data name="HasNoNegotiationsToPrint" xml:space="preserve">
     <value>Não existem rodadas de negócio agendadas para impressão</value>
     <comment>Não existem rodadas de negócio agendadas para impressão</comment>
   </data>
-  <data name="EntityMustBeBase64" xml:space="preserve">
+	<data name="EntityMustBeBase64" xml:space="preserve">
     <value>{0} deve ser codificado em Base64</value>
     <comment>{0} deve ser codificado em Base64</comment>
   </data>
-  <data name="EntityMustContainsMaxItemsCount" xml:space="preserve">
+	<data name="EntityMustContainsMaxItemsCount" xml:space="preserve">
     <value>{0} deve conter no máximo {1} itens.</value>
     <comment>{0} deve conter no máximo {1} itens.</comment>
-  <data name="OutOfEvaluationPeriod" xml:space="preserve">
+	  </data>
+	<data name="OutOfEvaluationPeriod" xml:space="preserve">
     <value>Fora do período de avaliação.</value>
     <comment>Fora do período de avaliação.</comment>
   </data>
-  <data name="EvaluationPeriodOpen" xml:space="preserve">
+	<data name="EvaluationPeriodOpen" xml:space="preserve">
     <value>Período de avaliação aberto.</value>
     <comment>Período de avaliação aberto.</comment>
   </data>
-  <data name="NotEvaluated" xml:space="preserve">
+	<data name="NotEvaluated" xml:space="preserve">
     <value>Não avaliado.</value>
     <comment>Não avaliado.</comment>
   </data>
