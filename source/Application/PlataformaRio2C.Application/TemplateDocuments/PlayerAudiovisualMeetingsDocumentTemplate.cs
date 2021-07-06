@@ -33,10 +33,13 @@ namespace PlataformaRio2C.Application.TemplateDocuments
     {
         public List<NegotiationDto> NegotiationsDtos { get; private set; }
         private Font _font;
+        private Font _fontText;
         private Font _fontLabel;
-        private Font _fontChip;
         private string _languageCode;
         private CultureInfo _cultureInfo;
+        private BaseColor _grayBackground;
+        private Font _fontProjectName;
+        private float[] _columnsWidths = new float[] { 5, 5, 30, 30, 30 };
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerAudiovisualMeetingsDocumentTemplate"/> class.
@@ -45,14 +48,20 @@ namespace PlataformaRio2C.Application.TemplateDocuments
         public PlayerAudiovisualMeetingsDocumentTemplate(List<NegotiationDto> negotiationsDtos, string languageCode)
         {
             this.NegotiationsDtos = negotiationsDtos;
-            _font = new Font(BaseFont.CreateFont("Helvetica", BaseFont.WINANSI, true));
-            _font.Color = BaseColor.DARK_GRAY;
+
+            var baseFont = BaseFont.CreateFont("Helvetica", BaseFont.WINANSI, true);
+            var grayBaseColor = new BaseColor(72, 71, 91);
+            var redBaseColor = new BaseColor(244, 0, 105);
+            _grayBackground = new BaseColor(248, 248, 251);
+
+            _font = new Font(baseFont, DefaultFontSize + 3f, Font.BOLD, grayBaseColor);
+
+            _fontLabel = new Font(baseFont, DefaultFontSize + 3f, Font.NORMAL, grayBaseColor);
+            _fontText = new Font(baseFont, DefaultFontSize + 3f, Font.BOLD, grayBaseColor);
+            _fontProjectName = new Font(baseFont, DefaultFontSize + 3f, Font.BOLD, redBaseColor);
 
             ShowDefaultBackground = true;
             ShowDefaultFooter = false;
-
-            _fontLabel = new Font(Font.FontFamily.HELVETICA, DefaultFontSize + 4f, Font.BOLD, BaseColor.DARK_GRAY);
-            _fontChip = new Font(Font.FontFamily.HELVETICA, DefaultFontSize + 4f, Font.NORMAL, BaseColor.DARK_GRAY);
 
             _languageCode = languageCode;
             _cultureInfo = CultureInfo.CreateSpecificCulture(languageCode);
@@ -91,17 +100,15 @@ namespace PlataformaRio2C.Application.TemplateDocuments
         public override void Prepare(PlataformaRio2CDocument document)
         {
             this.GetFirstPageInfo(ref document);
-            document.Add(Chunk.NEXTPAGE);
-            document.Add(Chunk.NEWLINE);
-
-            float[] columnsWidths = new float[] { 5, 5, 30, 30, 30 };
-            var table = new PdfPTable(columnsWidths);
+            document.SetMargins(36, 36, 36, 36);
+            document.NewPage();
+            
+            var table = new PdfPTable(_columnsWidths);
             table.WidthPercentage = 100;
             table.DefaultCell.HorizontalAlignment = Element.ALIGN_LEFT;
-            table.DefaultCell.VerticalAlignment = Element.ALIGN_CENTER;
+            table.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
             table.DefaultCell.Border = 1;
             table.DefaultCell.BorderColor = new BaseColor(System.Drawing.Color.Transparent);
-            table.DefaultCell.FixedHeight = 25;
 
             //Add table Rows
             if (this.NegotiationsDtos?.Any() == true)
@@ -109,25 +116,23 @@ namespace PlataformaRio2C.Application.TemplateDocuments
                 var negotiationsDtosGroupedByDate = this.NegotiationsDtos.GroupBy(ndto => ndto.Negotiation.StartDate.ToBrazilTimeZone().Date);
                 foreach (var groupedNegotiationDtos in negotiationsDtosGroupedByDate)
                 {
-                    table.DefaultCell.Colspan = columnsWidths.Length;
-                    table.DefaultCell.BackgroundColor = BaseColor.GRAY;
-                    table.AddCell(new Phrase(new Chunk($"{_cultureInfo.TextInfo.ToTitleCase(groupedNegotiationDtos.Key.ToString("dddd, dd MMMM yyyy"))}", new Font(_fontLabel) { Color = BaseColor.WHITE })));
+                    table.DefaultCell.Colspan = _columnsWidths.Length;
+                    table.DefaultCell.BackgroundColor = _grayBackground;
+                    
+                    //Add a middle-align cell to the new table
+                    var tableHeader = new PdfPTable(1);
+                    //tableHeader.DefaultCell.FixedHeight = 50;
+                    var tableHeaderCell = new PdfPCell(new Phrase(new Chunk($" {_cultureInfo.TextInfo.ToTitleCase(groupedNegotiationDtos.Key.ToString("dddd, dd MMMM yyyy"))}", new Font(_fontText))));
+                    tableHeaderCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    tableHeaderCell.FixedHeight = 25;
+                    tableHeader.AddCell(tableHeaderCell);
+                    
+                    table.AddCell(tableHeader);
+                    table.DefaultCell.BackgroundColor = null;
 
                     foreach (var negotiationDto in groupedNegotiationDtos)
                     {
-                        this.AddEmptyCells(ref table, 1);
-                        table.DefaultCell.Colspan = columnsWidths.Length - 1;
-                        table.DefaultCell.BackgroundColor = BaseColor.LIGHT_GRAY;
-                        var labelChunk = new Chunk($"• {Labels.Project}: ", _fontLabel);
-                        var textChunk = new Chunk($"{negotiationDto.ProjectBuyerEvaluationDto?.ProjectDto.GetTitleDtoByLanguageCode(_languageCode).ProjectTitle.Value}", _font);
-                        var phrase = new Phrase(labelChunk);
-                        phrase.Add(textChunk);
-                        table.AddCell(phrase);
-
-                        this.AddDetailsRow(ref table, Labels.Producer, negotiationDto.ProjectBuyerEvaluationDto?.ProjectDto.SellerAttendeeOrganizationDto.Organization.TradeName);
-                        this.AddDetailsRow(ref table, Labels.Hour, $"{negotiationDto.Negotiation?.StartDate.ToBrazilTimeZone().ToShortTimeString()} - {negotiationDto.Negotiation?.EndDate.ToBrazilTimeZone().ToShortTimeString()}");
-                        this.AddDetailsRow(ref table, Labels.Room, negotiationDto.RoomDto?.GetRoomNameByLanguageCode(_languageCode).RoomName.Value);
-                        this.AddDetailsRow(ref table, Labels.Table, negotiationDto.Negotiation.TableNumber.ToString());
+                        table.AddCell(GetDetailsRow(negotiationDto, negotiationDto == groupedNegotiationDtos.Last()));
                     }
                 }
             }
@@ -138,39 +143,69 @@ namespace PlataformaRio2C.Application.TemplateDocuments
         #endregion
 
         /// <summary>
+        /// Gets the details row.
+        /// </summary>
+        /// <param name="negotiationDto">The negotiation dto.</param>
+        /// <param name="isLastItem">if set to <c>true</c> [is last item].</param>
+        /// <returns>PdfPTable.</returns>
+        private PdfPTable GetDetailsRow(NegotiationDto negotiationDto, bool isLastItem)
+        {
+            var innerTable = new PdfPTable(_columnsWidths);
+            innerTable.WidthPercentage = 100;
+            innerTable.DefaultCell.HorizontalAlignment = Element.ALIGN_LEFT;
+            innerTable.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            innerTable.DefaultCell.Border = 1;
+            innerTable.DefaultCell.BorderColor = new BaseColor(System.Drawing.Color.Transparent);
+            innerTable.DefaultCell.FixedHeight = 25;
+
+            this.AddEmptyRow(ref innerTable);
+            this.AddDetailsRow(ref innerTable, Labels.Project, negotiationDto.ProjectBuyerEvaluationDto?.ProjectDto.GetTitleDtoByLanguageCode(_languageCode).ProjectTitle.Value.ToUpper(), _fontProjectName);
+            this.AddDetailsRow(ref innerTable, Labels.Producer, negotiationDto.ProjectBuyerEvaluationDto?.ProjectDto.SellerAttendeeOrganizationDto.Organization.TradeName, _fontText);
+            this.AddDetailsRow(ref innerTable, Labels.Hour, $"{negotiationDto.Negotiation?.StartDate.ToBrazilTimeZone().ToShortTimeString()} - {negotiationDto.Negotiation?.EndDate.ToBrazilTimeZone().ToShortTimeString()}", _fontText);
+            this.AddDetailsRow(ref innerTable, Labels.Room, negotiationDto.RoomDto?.GetRoomNameByLanguageCode(_languageCode).RoomName.Value, _fontText);
+            this.AddDetailsRow(ref innerTable, Labels.Table, negotiationDto.Negotiation.TableNumber.ToString(), _fontText);
+            this.AddEmptyRow(ref innerTable);
+
+            if (!isLastItem)
+            {
+                Paragraph p = new Paragraph(new Chunk(new LineSeparator(0.0F, 100.0F, new BaseColor(232, 234, 240), Element.ALIGN_LEFT, 1)));
+                innerTable.AddCell(p);
+            }
+
+            return innerTable;
+        }
+
+        /// <summary>
+        /// Adds the empty row.
+        /// </summary>
+        /// <param name="table">The table.</param>
+        private void AddEmptyRow(ref PdfPTable table) 
+        {
+            var defaultFixedHeight = table.DefaultCell.FixedHeight;
+
+            table.DefaultCell.FixedHeight = 2;
+            table.DefaultCell.Colspan = 5;
+            table.AddCell(" ");
+
+            table.DefaultCell.FixedHeight = defaultFixedHeight;
+        }
+
+        /// <summary>
         /// Adds the row.
         /// </summary>
         /// <param name="table">The table.</param>
         /// <param name="label">The label.</param>
         /// <param name="text">The text.</param>
         /// <returns></returns>
-        private void AddDetailsRow(ref PdfPTable table, string label, string text)
+        private void AddDetailsRow(ref PdfPTable table, string label, string text, Font textFont)
         {
-            this.AddEmptyCells(ref table, 2);
-            table.DefaultCell.Colspan = 3;
+            table.DefaultCell.Colspan = 5;
 
-            table.DefaultCell.BackgroundColor = new BaseColor(System.Drawing.Color.WhiteSmoke);
-            var labelChunk = new Chunk($"• {label}: ", _fontLabel);
-            var textChunk = new Chunk($"{text}", _font);
+            var labelChunk = new Chunk($"   {label}: ", _fontLabel);
+            var textChunk = new Chunk($" {text}", textFont);
             var phrase = new Phrase(labelChunk);
             phrase.Add(textChunk);
             table.AddCell(phrase);
-        }
-
-        /// <summary>
-        /// Adds the empty cells.
-        /// </summary>
-        /// <param name="table">The table.</param>
-        /// <param name="count">The count.</param>
-        private void AddEmptyCells(ref PdfPTable table, int count)
-        {
-            table.DefaultCell.BackgroundColor = null;
-            table.DefaultCell.Colspan = 0;
-
-            for (int i = 0; i < count; i++)
-            {
-                table.AddCell("");
-            }
         }
 
         /// <summary>Gets the first page information.</summary>
