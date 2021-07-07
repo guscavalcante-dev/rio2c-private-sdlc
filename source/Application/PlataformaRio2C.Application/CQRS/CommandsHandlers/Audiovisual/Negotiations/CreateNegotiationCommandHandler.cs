@@ -172,6 +172,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             cmd.InitialProjectName = project.GetTitleByLanguageCode(cmd.UserInterfaceLanguage);
             cmd.InitialBuyerOrganizationUid = buyerOrganization.Uid;
             cmd.InitialBuyerOrganizationName = buyerOrganization.CompanyName;
+            cmd.SellerOrganizationUid = project.SellerAttendeeOrganization.Organization.Uid;
 
             if (!this.ValidationResult.IsValid)
             {

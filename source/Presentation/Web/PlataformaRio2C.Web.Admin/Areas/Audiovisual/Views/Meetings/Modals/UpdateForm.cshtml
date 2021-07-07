@@ -1,10 +1,6 @@
 ﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateNegotiation
 @Html.HiddenFor(m => m.NegotiationUid)
 @Html.HiddenFor(m => m.RoundNumber)
-@{
-    //var sellerOrganizationUid = Model?.ProjectBuyerEvaluationDto?.ProjectBuyerEvaluation?.Project?.SellerAttendeeOrganization?.Organization?.Uid;
-}
-@*@Html.Hidden("SellerOrganizationUid", sellerOrganizationUid)*@
 @Html.HiddenFor(m => m.SellerOrganizationUid)
 
 <div class="row">
