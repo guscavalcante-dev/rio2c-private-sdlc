@@ -186,18 +186,8 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="viewModel">The view model.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<FileResult> PrintAudiovisualMeetingsToPdfAsync(AgendaSearchViewModel viewModel)
+        public async Task<ActionResult> PrintAudiovisualMeetingsToPdfAsync(AgendaSearchViewModel viewModel)
         {
-            if (DateTime.UtcNow < this.EditionDto.OneToOneMeetingsScheduleDate || !viewModel.ShowOneToOneMeetings)
-            {
-                return null;//Json(new { status = "success", events = new List<AgendaBaseEventJsonDto>() }, JsonRequestBehavior.AllowGet);
-            }
-
-            if (!viewModel.StartDate.HasValue || !viewModel.EndDate.HasValue)
-            {
-                return null; //Json(new { status = "error", message = string.Format(Messages.TheFieldIsRequired, Labels.Date) }, JsonRequestBehavior.AllowGet);
-            }
-
             var negotiationsDtos = await this.negotiationRepo.FindAllScheduleDtosAsync(
                 this.EditionDto.Id,
                 this.UserAccessControlDto?.EditionAttendeeCollaborator?.Id ?? 0,
@@ -206,21 +196,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             if(negotiationsDtos.Count == 0)
             {
-                return null;//Json(new { status = "error", message = Messages.HasNoNegotiationsToPrint }, JsonRequestBehavior.AllowGet);
+                return RedirectToAction("NotFound", "Error", new { Area = "" });
             }
 
             var pdf = new PlataformaRio2CDocument(new PlayerAudiovisualMeetingsDocumentTemplate(negotiationsDtos, this.UserInterfaceLanguage));
-
             var playerOrganization = negotiationsDtos.FirstOrDefault().ProjectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization;
             var fileName = $"{Labels.ScheduledNegotiations.RemoveFilenameInvalidChars().Trim()}_{playerOrganization.Name}_{DateTime.Now.ToStringHourMinute()}.pdf".RemoveFilenameInvalidChars();
 
             return File(pdf.GetStream(), "application/pdf", fileName);
-
-            //return Json(new
-            //{
-            //    status = "success",
-            //    //events
-            //}, JsonRequestBehavior.AllowGet);
         }
 
         #endregion
