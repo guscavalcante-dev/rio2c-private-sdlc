@@ -816,11 +816,29 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} {1} possui um voo agendado para {2}.
+        /// </summary>
+        public static string HasAirfareScheduled {
+            get {
+                return ResourceManager.GetString("HasAirfareScheduled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} {1} já possui uma rodada de negócios agendada para {2}.
         /// </summary>
-        public static string HasAlreadyBusinessRoundScheduled {
+        public static string HasBusinessRoundScheduled {
             get {
-                return ResourceManager.GetString("HasAlreadyBusinessRoundScheduled", resourceCulture);
+                return ResourceManager.GetString("HasBusinessRoundScheduled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} {1} possui uma palestra agendada para {2}.
+        /// </summary>
+        public static string HasConferenceScheduled {
+            get {
+                return ResourceManager.GetString("HasConferenceScheduled", resourceCulture);
             }
         }
         

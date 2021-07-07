@@ -668,7 +668,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowLogisticsInfoWidget(string organizationsUids)
         {
-            var attendeeCollaboratorDtos = await this.attendeeCollaboratorRepo.FindPlayerExecutivesLogisticsDtosAsync(organizationsUids?.ToListGuid(','), this.EditionDto.Id);
+            var attendeeCollaboratorDtos = await this.attendeeCollaboratorRepo.FindExecutivesSchedulesByOrganizationsUidsAsync(organizationsUids?.ToListGuid(','), this.EditionDto.Id);
             if (attendeeCollaboratorDtos == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Logistics, Labels.FoundMP.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);

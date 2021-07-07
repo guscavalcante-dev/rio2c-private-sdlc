@@ -597,12 +597,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
-        /// Finds the player executives logistics information widget dto asynchronous.
+        /// find executives logistics dtos by organizations uids as an asynchronous operation.
         /// </summary>
-        /// <param name="organizationUids">The organization uid.</param>
+        /// <param name="organizationUids">The organization uids.</param>
         /// <param name="editionId">The edition identifier.</param>
-        /// <returns></returns>
-        public async Task<List<AttendeeCollaboratorDto>> FindPlayerExecutivesLogisticsDtosAsync(List<Guid> organizationUids, int editionId)
+        /// <returns>Task&lt;List&lt;AttendeeCollaboratorDto&gt;&gt;.</returns>
+        public async Task<List<AttendeeCollaboratorDto>> FindExecutivesSchedulesByOrganizationsUidsAsync(List<Guid> organizationUids, int editionId)
         {
             var query = this.GetBaseQuery(true)
                                 .FindByOrganizationUids(organizationUids)

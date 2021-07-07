@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Entities;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -20,6 +21,7 @@ namespace PlataformaRio2C.Domain.Dtos
     /// </summary>
     public class LogisticAirfareDto
     {
+        public LogisticDto LogisticDto { get; set; }
         public LogisticAirfare LogisticAirfare { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="LogisticAirfareDto"/> class.</summary>

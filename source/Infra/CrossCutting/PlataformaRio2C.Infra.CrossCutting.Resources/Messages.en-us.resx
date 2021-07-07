@@ -425,9 +425,17 @@
     <value>Do you want to generate the calendar?</value>
     <comment>Deseja gerar a agenda?</comment>
   </data>
-  <data name="HasAlreadyBusinessRoundScheduled" xml:space="preserve">
+  <data name="HasAirfareScheduled" xml:space="preserve">
+    <value>{0} {1} possui um voo agendado para {2}</value>
+    <comment>{0} {1} possui um voo agendado para {2}</comment>
+  </data>
+  <data name="HasBusinessRoundScheduled" xml:space="preserve">
     <value>{0} {1} has already a business round scheduled at {2}</value>
     <comment>{0} {1} has already a business round scheduled at {2}</comment>
+  </data>
+  <data name="HasConferenceScheduled" xml:space="preserve">
+    <value>{0} {1} possui uma palestra agendada para {2}</value>
+    <comment>{0} {1} possui uma palestra agendada para {2}</comment>
   </data>
   <data name="HasNoNegotiationsToPrint" xml:space="preserve">
     <value>There are no business rounds scheduled for printing</value>

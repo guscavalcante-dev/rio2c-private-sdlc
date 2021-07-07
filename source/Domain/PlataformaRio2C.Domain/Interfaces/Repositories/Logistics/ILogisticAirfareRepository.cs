@@ -25,6 +25,6 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<List<LogisticAirfareDto>> FindAllDtosAsync(Guid logisticsUid);
         Task<LogisticAirfareDto> FindDtoAsync(Guid logisticAirfareUid);
         Task<List<LogisticAirfare>> FindAllForGenerateNegotiationsAsync(Guid editionUid);
-        Task<List<LogisticAirfareDto>> FindAllScheduleDtosAsync(int editionId, int attendeeCollaboratorId, DateTimeOffset startDate, DateTimeOffset endDate);
+        Task<List<LogisticAirfareDto>> FindAllScheduleDtosAsync(int editionId, int? attendeeCollaboratorId, DateTimeOffset startDate, DateTimeOffset endDate);
     }    
 }

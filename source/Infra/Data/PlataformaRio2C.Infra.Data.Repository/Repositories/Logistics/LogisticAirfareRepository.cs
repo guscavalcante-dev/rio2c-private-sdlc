@@ -52,9 +52,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="query">The query.</param>
         /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
         /// <returns></returns>
-        internal static IQueryable<LogisticAirfare> FindByAttendeeCollaboratorId(this IQueryable<LogisticAirfare> query, int attendeeCollaboratorId)
+        internal static IQueryable<LogisticAirfare> FindByAttendeeCollaboratorId(this IQueryable<LogisticAirfare> query, int? attendeeCollaboratorId)
         {
-            return query.Where(la => la.Logistic.AttendeeCollaboratorId == attendeeCollaboratorId);
+            if (attendeeCollaboratorId.HasValue)
+            {
+                query = query.Where(la => la.Logistic.AttendeeCollaboratorId == attendeeCollaboratorId);
+            }
+
+            return query;
         }
 
         /// <summary>Finds the by edition uid.</summary>
@@ -127,7 +132,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             {
                                 LogisticAirfare = la
                             });
-                
+
             return query
                         .OrderBy(lad => lad.LogisticAirfare.CreateDate)
                         .ToListAsync();
@@ -157,9 +162,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                 .FindByEditionUid(editionUid)
                                 .Include(la => la.Logistic.AttendeeCollaborator.AttendeeOrganizationCollaborators);
-                                //.IncludeFilter(la => la.Logistic)
-                                //.IncludeFilter(la => la.Logistic.AttendeeCollaborator)
-                                //.IncludeFilter(la => la.Logistic.AttendeeCollaborator.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted));
+            //.IncludeFilter(la => la.Logistic)
+            //.IncludeFilter(la => la.Logistic.AttendeeCollaborator)
+            //.IncludeFilter(la => la.Logistic.AttendeeCollaborator.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted));
 
             return await query
                             .OrderBy(la => la.DepartureDate)
@@ -172,14 +177,30 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="startDate">The start date.</param>
         /// <param name="endDate">The end date.</param>
         /// <returns></returns>
-        public Task<List<LogisticAirfareDto>> FindAllScheduleDtosAsync(int editionId, int attendeeCollaboratorId, DateTimeOffset startDate, DateTimeOffset endDate)
+        public Task<List<LogisticAirfareDto>> FindAllScheduleDtosAsync(int editionId, int? attendeeCollaboratorId, DateTimeOffset startDate, DateTimeOffset endDate)
         {
             var query = this.GetBaseQuery()
                                 .FindByAttendeeCollaboratorId(attendeeCollaboratorId)
                                 .FindByDateRange(startDate, endDate)
                                 .Select(la => new LogisticAirfareDto
                                 {
-                                    LogisticAirfare = la
+                                    LogisticAirfare = la,
+                                    LogisticDto = new LogisticDto
+                                    {
+                                        Logistic = la.Logistic,
+                                        AttendeeCollaboratorDto = new AttendeeCollaboratorDto
+                                        {
+                                            AttendeeCollaborator = la.Logistic.AttendeeCollaborator,
+                                            AttendeeOrganizationsDtos = la.Logistic.AttendeeCollaborator.AttendeeOrganizationCollaborators
+                                                                            .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted && !aoc.AttendeeOrganization.Organization.IsDeleted)
+                                                                            .Select(aoc => new AttendeeOrganizationDto
+                                                                            {
+                                                                                AttendeeOrganization = aoc.AttendeeOrganization,
+                                                                                Organization = aoc.AttendeeOrganization.Organization
+                                                                            })
+                                                                            .ToList()
+                                        }
+                                    }
                                 });
 
             return query

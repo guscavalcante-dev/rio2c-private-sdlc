@@ -34,6 +34,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IProjectRepository projectRepo;
         private readonly INegotiationConfigRepository negotiationConfigRepo;
         private readonly INegotiationRoomConfigRepository negotiationRoomConfigRepo;
+        private readonly IConferenceRepository conferenceRepo;
+        private readonly ILogisticAirfareRepository logisticAirfareRepo;
 
         public ScheduleManualNegotiationCommandHandler(
             IMediator eventBus,
@@ -42,13 +44,17 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IOrganizationRepository organizationRepository,
             IProjectRepository projectRepository,
             INegotiationConfigRepository negotiationConfigRepository,
-            INegotiationRoomConfigRepository negotiationRoomConfigRepository)
+            INegotiationRoomConfigRepository negotiationRoomConfigRepository,
+            IConferenceRepository conferenceRepository,
+            ILogisticAirfareRepository logisticsAirfareRepository)
             : base(eventBus, uow, negotiationRepository)
         {
             this.organizationRepo = organizationRepository;
             this.projectRepo = projectRepository;
             this.negotiationConfigRepo = negotiationConfigRepository;
             this.negotiationRoomConfigRepo = negotiationRoomConfigRepository;
+            this.conferenceRepo = conferenceRepository;
+            this.logisticAirfareRepo = logisticsAirfareRepository;
         }
 
         /// <summary>
@@ -72,6 +78,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #region Overbooking Validations
 
+            // Available tables check
             var negotiationsGroupedByRoomAndStartDate = negotiationsInThisRoom.GroupBy(n => n.StartDate);
             var hasNoMoreTablesAvailable = negotiationsGroupedByRoomAndStartDate.Any(n => n.Count(w => w.StartDate == startDatePreview) >= negotiationRoomConfig.CountManualTables);
             if (hasNoMoreTablesAvailable)
@@ -83,23 +90,75 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         new string[] { "ToastrError" }));
             }
 
+            // Negotiations checks
             var scheduledNegotiationsAtThisTime = await this.NegotiationRepo.FindAllScheduleDtosAsync(cmd.EditionId.Value, null, startDatePreview, endDatePreview);
-            var hasPlayerScheduledNegotiationsAtThisTime = scheduledNegotiationsAtThisTime.Count(ndto => ndto.ProjectBuyerEvaluationDto.ProjectBuyerEvaluation.BuyerAttendeeOrganization.OrganizationId == buyerOrganization.Id) > 0;
+
+            var hasPlayerScheduledNegotiationsAtThisTime = scheduledNegotiationsAtThisTime.Count(ndto => ndto.ProjectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.AttendeeOrganization.OrganizationId == buyerOrganization.Id) > 0;
             if (hasPlayerScheduledNegotiationsAtThisTime)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(
-                    Messages.HasAlreadyBusinessRoundScheduled,
+                    Messages.HasBusinessRoundScheduled,
                     Labels.TheM,
                     Labels.Player,
                     ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
                         new string[] { "ToastrError" }));
             }
 
-            var hasProducerScheduledNegotiationsAtThisTime = scheduledNegotiationsAtThisTime.Count(ndto => ndto.ProjectBuyerEvaluationDto.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.OrganizationId == project.SellerAttendeeOrganization.OrganizationId) > 0;
+            var hasProducerScheduledNegotiationsAtThisTime = scheduledNegotiationsAtThisTime.Count(ndto => ndto.ProjectBuyerEvaluationDto.ProjectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.OrganizationId == project.SellerAttendeeOrganization.OrganizationId) > 0;
             if (hasProducerScheduledNegotiationsAtThisTime)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(
-                    Messages.HasAlreadyBusinessRoundScheduled,
+                    Messages.HasBusinessRoundScheduled,
+                    Labels.TheF,
+                    Labels.Producer,
+                    ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
+                        new string[] { "ToastrError" }));
+            }
+
+            // Conferences checks
+            var scheduledConferencesAtThisTime = await this.conferenceRepo.FindAllScheduleDtosAsync(cmd.EditionId.Value, 0, startDatePreview, endDatePreview, true, true);
+
+            var hasPlayerExecutivesScheduledConferencesAtThisTime = scheduledConferencesAtThisTime.Count(cdto => cdto.ConferenceParticipantDtos.Any(cpdto => cpdto.AttendeeCollaboratorDto.AttendeeOrganizationsDtos.Any(aodto => aodto.Organization.Id == buyerOrganization.Id))) > 0;
+            if (hasPlayerExecutivesScheduledConferencesAtThisTime)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(
+                    Messages.HasConferenceScheduled,
+                    Labels.TheF,
+                    Labels.Producer,
+                    ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
+                        new string[] { "ToastrError" }));
+            }
+
+            var hasProducerExecutivesScheduledConferencesAtThisTime = scheduledConferencesAtThisTime.Count(cdto => cdto.ConferenceParticipantDtos.Any(cpdto => cpdto.AttendeeCollaboratorDto.AttendeeOrganizationsDtos.Any(aodto => aodto.Organization.Id == project.SellerAttendeeOrganization.OrganizationId))) > 0;
+            if (hasProducerExecutivesScheduledConferencesAtThisTime)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(
+                    Messages.HasConferenceScheduled,
+                    Labels.TheF,
+                    Labels.Producer,
+                    ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
+                        new string[] { "ToastrError" }));
+            }
+
+            // Airfares checks
+            var scheduledLogisticAirfaresAtThisTime = await this.logisticAirfareRepo.FindAllScheduleDtosAsync(cmd.EditionId.Value, null, startDatePreview, endDatePreview);
+
+            var hasPlayerExecutivesScheduledAirfaresAtThisTime = scheduledLogisticAirfaresAtThisTime.Count(ladto => ladto.LogisticDto.AttendeeCollaboratorDto.AttendeeOrganizationsDtos.Any(aodto => aodto.Organization.Id == buyerOrganization.Id)) > 0;
+            if (hasPlayerExecutivesScheduledAirfaresAtThisTime)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(
+                    Messages.HasAirfareScheduled,
+                    Labels.TheF,
+                    Labels.Producer,
+                    ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
+                        new string[] { "ToastrError" }));
+            }
+
+            var hasProducerExecutivesScheduledAirfaresAtThisTime = scheduledLogisticAirfaresAtThisTime.Count(ladto => ladto.LogisticDto.AttendeeCollaboratorDto.AttendeeOrganizationsDtos.Any(aodto => aodto.Organization.Id == project.SellerAttendeeOrganization.OrganizationId)) > 0;
+            if (hasProducerExecutivesScheduledAirfaresAtThisTime)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(
+                    Messages.HasAirfareScheduled,
                     Labels.TheF,
                     Labels.Producer,
                     ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),

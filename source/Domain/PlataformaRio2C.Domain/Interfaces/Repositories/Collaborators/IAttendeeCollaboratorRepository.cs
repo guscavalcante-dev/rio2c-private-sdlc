@@ -33,7 +33,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<AttendeeCollaboratorDto> FindParticipantsWidgetDtoAsync(Guid collaboratorUid, int editionId);
         Task<AttendeeCollaboratorApiConfigurationWidgetDto> FindApiConfigurationWidgetDtoByCollaboratorUidAndByEditionIdAsync(Guid collaboratorUid, int editionId);
         Task<AttendeeCollaboratorDto> FindLogisticInfoWidgetDtoAsync(Guid collaboratorUid, int editionId);
-        Task<List<AttendeeCollaboratorDto>> FindPlayerExecutivesLogisticsDtosAsync(List<Guid> organizationUid, int editionId);
+        Task<List<AttendeeCollaboratorDto>> FindExecutivesSchedulesByOrganizationsUidsAsync(List<Guid> organizationUid, int editionId);
 
         #endregion
 

@@ -353,7 +353,7 @@
   <data name="EntityMustContainsMaxItemsCount" xml:space="preserve">
     <value>{0} deve conter no máximo {1} itens.</value>
     <comment>{0} deve conter no máximo {1} itens.</comment>
-	  </data>
+  </data>
   <data name="EntityNotAction" xml:space="preserve">
     <value>{0} não {1}.</value>
     <comment>{0} não {1}.</comment>
@@ -425,9 +425,17 @@
     <value>Deseja gerar a agenda?</value>
     <comment>Deseja gerar a agenda?</comment>
   </data>
-  <data name="HasAlreadyBusinessRoundScheduled" xml:space="preserve">
+  <data name="HasAirfareScheduled" xml:space="preserve">
+    <value>{0} {1} possui um voo agendado para {2}</value>
+    <comment>{0} {1} possui um voo agendado para {2}</comment>
+  </data>
+  <data name="HasBusinessRoundScheduled" xml:space="preserve">
     <value>{0} {1} já possui uma rodada de negócios agendada para {2}</value>
     <comment>{0} {1} já possui uma rodada de negócios agendada para {2}</comment>
+  </data>
+  <data name="HasConferenceScheduled" xml:space="preserve">
+    <value>{0} {1} possui uma palestra agendada para {2}</value>
+    <comment>{0} {1} possui uma palestra agendada para {2}</comment>
   </data>
   <data name="HasNoNegotiationsToPrint" xml:space="preserve">
     <value>Não existem rodadas de negócio agendadas para impressão</value>

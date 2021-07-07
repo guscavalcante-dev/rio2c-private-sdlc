@@ -49,6 +49,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string StartTime { get; set; }
 
         public int? RoundNumber { get; set; }
+        public Guid? SellerOrganizationUid { get; set; }
 
         // Properties used to set initial selection at select2.selectedOption
         public Guid? InitialBuyerOrganizationUid { get; set; }
@@ -77,6 +78,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.InitialProjectUid = projectBuyerEvaluationDto?.ProjectDto?.Project?.Uid;
             this.InitialProjectName = projectBuyerEvaluationDto?.ProjectDto?.Project?.ProjectTitles?.FirstOrDefault(pt => pt.Language.Code == userInterfaceLanguage)?.Value;
             this.ProjectUid = this.InitialProjectUid;
+
+            this.SellerOrganizationUid = projectBuyerEvaluationDto?.ProjectDto?.SellerAttendeeOrganizationDto?.Organization?.Uid;
         }
 
         /// <summary>

@@ -303,7 +303,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                       },
                                       ProjectDto = new ProjectDto()
                                       {
-                                          Project = n.ProjectBuyerEvaluation.Project
+                                          Project = n.ProjectBuyerEvaluation.Project,
+                                          SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                          {
+                                              AttendeeOrganization = n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization,
+                                              Organization = n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.Organization
+                                          }
                                       }
                                   },
                                   RoomDto = new RoomDto()
@@ -397,6 +402,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                                 .IsManual()
+                                .FindByRoomId(roomId, showAllRooms);
+
+            return await query.ToListAsync();
+        }
+
+        /// <summary>
+        /// find scheduled negotiations by room identifier as an asynchronous operation.
+        /// </summary>
+        /// <param name="roomId">The room identifier.</param>
+        /// <param name="showAllRooms">if set to <c>true</c> [show all rooms].</param>
+        /// <returns>Task&lt;List&lt;Negotiation&gt;&gt;.</returns>
+        public async Task<List<Negotiation>> FindScheduledNegotiationsByRoomIdAsync(int roomId, bool showAllRooms = false)
+        {
+            var query = this.GetBaseQuery()
                                 .FindByRoomId(roomId, showAllRooms);
 
             return await query.ToListAsync();
