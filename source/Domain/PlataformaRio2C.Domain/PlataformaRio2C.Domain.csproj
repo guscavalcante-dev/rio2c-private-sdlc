@@ -305,6 +305,7 @@
     <Compile Include="Entities\Addresses\Country.cs" />
     <Compile Include="Entities\Addresses\State.cs" />
     <Compile Include="Entities\Editions\EditionEvent.cs" />
+    <Compile Include="Entities\Innovation\AttendeeInnovationOrganizationEvaluation.cs" />
     <Compile Include="Entities\Innovation\AttendeeInnovationOrganizationCollaborator.cs" />
     <Compile Include="Entities\Innovation\InnovationOptionGroup.cs" />
     <Compile Include="Entities\Innovation\InnovationOption.cs" />

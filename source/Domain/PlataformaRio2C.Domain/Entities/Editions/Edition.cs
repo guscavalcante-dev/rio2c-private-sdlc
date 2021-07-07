@@ -55,7 +55,8 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset? AudiovisualNegotiationsCreateEndDate { get; private set; }
         public int MusicProjectMinimumEvaluationsCount { get; private set; }
         public int MusicProjectMaximumApprovedBandsCount { get; private set; }
-
+        public int InnovationProjectMinimumEvaluationsCount { get; private set; }
+        public int InnovationProjectMaximumApprovedCompaniesCount { get; private set; }
         //public virtual Quiz Quiz { get; private set; }
 
         public virtual ICollection<AttendeeOrganization> AttendeeOrganizations { get; private set; }

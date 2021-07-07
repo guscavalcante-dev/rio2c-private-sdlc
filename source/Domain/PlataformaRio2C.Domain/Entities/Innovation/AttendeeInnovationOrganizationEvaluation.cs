@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Domain
 // Author           : Renan Valentim
-// Created          : 06-29-2021
+// Created          : 07-07-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 06-29-2021
+// Last Modified On : 07-07-2021
 // ***********************************************************************
-// <copyright file="AttendeeInnovationOrganization.cs" company="Softo">
+// <copyright file="AttendeeInnovationOrganizationEvaluation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -21,11 +21,11 @@ using System.Threading.Tasks;
 namespace PlataformaRio2C.Domain.Entities
 {
     /// <summary>
-    /// Class AttendeeInnovationOrganization.
+    /// Class AttendeeInnovationOrganizationEvaluation.
     /// Implements the <see cref="PlataformaRio2C.Domain.Entities.Entity" />
     /// </summary>
     /// <seealso cref="PlataformaRio2C.Domain.Entities.Entity" />
-    public class AttendeeInnovationOrganization : Entity
+    public class AttendeeInnovationOrganizationEvaluation : Entity
     {
         public int EditionId { get; set; }
         public int InnovationOrganizationId { get; set; }
@@ -43,7 +43,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="edition">The edition.</param>
         /// <param name="innovationOrganization">The music band.</param>
         /// <param name="userId">The user identifier.</param>
-        public AttendeeInnovationOrganization(
+        public AttendeeInnovationOrganizationEvaluation(
             Edition edition,
             InnovationOrganization innovationOrganization,
             int userId)
@@ -57,9 +57,9 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeeInnovationOrganization"/> class.
+        /// Initializes a new instance of the <see cref="AttendeeInnovationOrganizationEvaluation"/> class.
         /// </summary>
-        public AttendeeInnovationOrganization()
+        public AttendeeInnovationOrganizationEvaluation()
         {
 
         }

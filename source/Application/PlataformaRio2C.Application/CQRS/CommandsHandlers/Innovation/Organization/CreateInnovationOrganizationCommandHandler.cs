@@ -102,12 +102,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Edition, Labels.FoundF), new string[] { "ToastrError" }));
             }
 
-            var projectEvaluationStatus = await projectEvaluationStatusRepo.GetAsync(ProjectEvaluationStatus.UnderEvaluation.Uid);
-            if (projectEvaluationStatus == null)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.ProjectEvaluationStatus, Labels.FoundM), new string[] { "ToastrError" }));
-            }
-
             //TODO: After implements the "InnovationOrganization.Update()", remove this validation!
             var existentInnovationOrganization = await InnovationOrganizationRepo.FindByDocumentAsync(cmd.Document);
             if (existentInnovationOrganization != null)
@@ -204,7 +198,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                    edition,
                    collaborator.GetAttendeeCollaboratorByEditionId(edition.Id),
                    workDedication,
-                   projectEvaluationStatus,
                    innovationOptions,
                    cmd.Name,
                    cmd.Document,

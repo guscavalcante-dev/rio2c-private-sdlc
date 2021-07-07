@@ -22,7 +22,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         /// <summary>Initializes a new instance of the <see cref="AttendeeInnovationOrganizationMap"/> class.</summary>
         public AttendeeInnovationOrganizationMap()
         {
-            this.ToTable("AttendeeInnovationOrganization");
+            this.ToTable("AttendeeInnovationOrganizations");
 
             // Relationships
             this.HasRequired(t => t.Edition)
@@ -32,16 +32,6 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.HasRequired(t => t.InnovationOrganization)
                    .WithMany(io => io.AttendeeInnovationOrganizations)
                    .HasForeignKey(d => d.InnovationOrganizationId);
-
-            this.HasRequired(t => t.ProjectEvaluationStatus)
-                .WithMany()
-                .HasForeignKey(d => d.ProjectEvaluationStatusId);
-
-            //TODO: How to map this?
-            //this.HasRequired(t => t.ProjectEvaluationRefuseReason)
-            //   .WithMany()
-            //   .HasForeignKey(d => d.ProjectEvaluationRefuseReasonId);
-
         }
     }
 }

@@ -4,7 +4,7 @@
 // Created          : 06-29-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 06-29-2021
+// Last Modified On : 07-07-2021
 // ***********************************************************************
 // <copyright file="InnovationOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,11 +21,12 @@ using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Domain.Entities
 {
+
     /// <summary>
-    /// Class InnovationOrganization.
-    /// Implements the <see cref="PlataformaRio2C.Domain.Entities.Entity" />
+    /// Class InnovationOrganizations.
+    /// Implements the <see cref="PlataformaRio2C.Domain.Entities.AggregateRoot" />
     /// </summary>
-    /// <seealso cref="PlataformaRio2C.Domain.Entities.Entity" />
+    /// <seealso cref="PlataformaRio2C.Domain.Entities.AggregateRoot" />
     public class InnovationOrganization : AggregateRoot
     {
         public static readonly int NameMaxLength = 100;
@@ -95,7 +96,6 @@ namespace PlataformaRio2C.Domain.Entities
             Edition edition,
             AttendeeCollaborator attendeeCollaborator,
             WorkDedication workDedication,
-            ProjectEvaluationStatus projectEvaluationStatus,
             List<InnovationOption> innovationOptions,
             string name,
             string document,
@@ -142,7 +142,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdatePresentationUploadDate(isPresentationUploaded, false);
             this.SetWorkDedication(workDedication);
             this.AddInnovationOrganizationOptions(innovationOptions, userId);
-            this.SynchronizeAttendeeInnovationOrganizationsCollaborators(edition, attendeeCollaborator, projectEvaluationStatus, userId);
+            this.SynchronizeAttendeeInnovationOrganizationsCollaborators(edition, attendeeCollaborator, userId);
         }
 
         /// <summary>
@@ -166,7 +166,6 @@ namespace PlataformaRio2C.Domain.Entities
         private void SynchronizeAttendeeInnovationOrganizationsCollaborators(
             Edition edition, 
             AttendeeCollaborator attendeeCollaborator, 
-            ProjectEvaluationStatus projectEvaluationStatus, 
             int userId)
         {
             if (edition == null)
@@ -187,7 +186,7 @@ namespace PlataformaRio2C.Domain.Entities
             }
             else
             {
-                var newAttendeeInnovationOrganization = new AttendeeInnovationOrganization(edition, this, projectEvaluationStatus, userId);
+                var newAttendeeInnovationOrganization = new AttendeeInnovationOrganization(edition, this, userId);
                 this.AttendeeInnovationOrganizations.Add(newAttendeeInnovationOrganization);
                 attendeeCollaborator?.SynchronizeAttendeeInnovationOrganizationCollaborators(new List<AttendeeInnovationOrganization> { newAttendeeInnovationOrganization }, false, userId);
             }
