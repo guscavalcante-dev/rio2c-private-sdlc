@@ -360,6 +360,8 @@
     <Compile Include="Areas\Audiovisual\Controllers\MeetingParametersController.cs" />
     <Compile Include="Areas\Audiovisual\Controllers\OrganizationsController.cs" />
     <Compile Include="Areas\Audiovisual\Controllers\ProducersController.cs" />
+    <Compile Include="Areas\Innovation\Controllers\CommissionsController.cs" />
+    <Compile Include="Areas\Innovation\InnovationAreaRegistration.cs" />
     <Compile Include="Areas\Music\Controllers\CommissionsController.cs" />
     <Compile Include="Areas\Music\Controllers\ProjectsController.cs" />
     <Compile Include="Areas\Music\MusicAreaRegistration.cs" />
@@ -822,6 +824,15 @@
     <Content Include="Assets\js\editions\editions.datesinformation.widget.js" />
     <Content Include="Assets\js\editions\editions.maininformation.widget.js" />
     <Content Include="Assets\js\editions\editions.totalcount.widget.js" />
+    <Content Include="Assets\js\innovation\commissions\innovation.commissions.create.js" />
+    <Content Include="Assets\js\innovation\commissions\innovation.commissions.datatable.widget.js" />
+    <Content Include="Assets\js\innovation\commissions\innovation.commissions.delete.js" />
+    <Content Include="Assets\js\innovation\commissions\innovation.commissions.editioncount.widget.js" />
+    <Content Include="Assets\js\innovation\commissions\innovation.commissions.maininformation.widget.js" />
+    <Content Include="Assets\js\innovation\commissions\innovation.commissions.onboardinginfo.widget.js" />
+    <Content Include="Assets\js\innovation\commissions\innovation.commissions.socialnetworks.widget.js" />
+    <Content Include="Assets\js\innovation\commissions\innovation.commissions.totalcount.widget.js" />
+    <Content Include="Assets\js\innovation\commissions\innovation.commissions.update.js" />
     <Content Include="Assets\js\logisticsponsors\logisticsponsors.editioncount.widget.js" />
     <Content Include="Assets\js\logisticsponsors\logisticsponsors.totalcount.widget.js" />
     <Content Include="Assets\js\logisticsponsors\logisticsponsors.maininformation.widget.js" />
@@ -7667,6 +7678,15 @@
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\SendEmailToPlayersDataTableWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\SendEmailToPlayersEditionCountWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\SendEmailToPlayersTotalCountWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\Commissions\Details.cshtml" />
+    <Content Include="Areas\Innovation\Views\Commissions\Index.cshtml" />
+    <Content Include="Areas\Innovation\Views\Commissions\Modals\CreateModal.cshtml" />
+    <Content Include="Areas\Innovation\Views\Commissions\Modals\UpdateMainInformationModal.cshtml" />
+    <Content Include="Areas\Innovation\Views\Commissions\Modals\UpdateModal.cshtml" />
+    <Content Include="Areas\Innovation\Views\Commissions\Modals\UpdateSocialNetworksModal.cshtml" />
+    <Content Include="Areas\Innovation\Views\Commissions\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\Commissions\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\Commissions\Widgets\TotalCountWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

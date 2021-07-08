@@ -167,6 +167,9 @@
                             </ul>
                         </div>
                     </li>
+                    <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Commissions",  "Innovation")" aria-haspopup="true">
+                        <a href="@Url.Action("Index", "Commissions", new { Area = "Innovation" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Commission</span></a>
+                    </li>
                 </ul>
             </div>
         </li>

@@ -2374,6 +2374,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Comissão de Inovação.
+        /// </summary>
+        public static string InnovationCommission {
+            get {
+                return ResourceManager.GetString("InnovationCommission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data de término da avaliação de projeto de inovação.
         /// </summary>
         public static string InnovationProjectEvaluationEndDate {

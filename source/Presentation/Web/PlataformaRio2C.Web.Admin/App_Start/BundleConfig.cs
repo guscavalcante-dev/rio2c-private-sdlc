@@ -813,6 +813,36 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            #region Innovation Page Bundles
+
+            #region Collaborators - Commissions
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.commissions.list.js").Include(
+                "~/Assets/js/innovation/commissions/innovation.commissions.totalcount.widget.js",
+                "~/Assets/js/innovation/commissions/innovation.commissions.datatable.widget.js",
+                "~/Assets/js/salesplatforms/salesplatforms.export.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.commissions.editioncount.js").Include(
+                "~/Assets/js/innovation/commissions/innovation.commissions.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.commissions.create.js").Include(
+                "~/Assets/js/innovation/commissions/innovation.commissions.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.commissions.details.js").Include(
+                "~/Assets/js/innovation/commissions/innovation.commissions.maininformation.widget.js",
+                "~/Assets/js/innovation/commissions/innovation.commissions.socialnetworks.widget.js",
+                "~/Assets/js/innovation/commissions/innovation.commissions.onboardinginfo.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.commissions.update.js").Include(
+                "~/Assets/js/innovation/commissions/innovation.commissions.update.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.commissions.delete.js").Include(
+                "~/Assets/js/innovation/commissions/innovation.commissions.delete.js"));
+
+            #endregion
+
+            #endregion
+
             #region Logistics - Sponsors
 
             bundles.Add(new ScriptBundle("~/bundles/js/logisticsponsors.list.js").Include(

@@ -1091,6 +1091,10 @@
     <value>Innovation</value>
     <comment>Inovação</comment>
   </data>
+  <data name="InnovationCommission" xml:space="preserve">
+    <value>Innovation Commission</value>
+    <comment>Comissão de Inovação</comment>
+  </data>
   <data name="InnovationProjectEvaluationEndDate" xml:space="preserve">
     <value>Innovation project evaluation end date</value>
     <comment>Data de término da avaliação de projeto de inovação</comment>
