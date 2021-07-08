@@ -43,8 +43,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string Email { get; private set; }
         public string PhoneNumber { get; private set; }
         public string CellPhone { get; private set; }
-        public string PresentationFile { get; set; }
-        public string PresentationFileName { get; set; }
+        public string PresentationFile { get; private set; }
+        public string PresentationFileName { get; private set; }
 
         public List<InnovationOptionApiDto> CompanyExperiences { get; set; }
         public List<InnovationOptionApiDto> ProductsOrServices { get; set; }
@@ -80,7 +80,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.PhoneNumber = innovationOrganizationApiDto.PhoneNumber;
             this.CellPhone = innovationOrganizationApiDto.CellPhone;
             this.PresentationFile = innovationOrganizationApiDto.PresentationFile;
-            this.PresentationFileName = innovationOrganizationApiDto.PresentationFileName;
             this.CompanyExperiences = innovationOrganizationApiDto.CompanyExperiences;
             this.ProductsOrServices = innovationOrganizationApiDto.ProductsOrServices;
             this.TechnologyExperiences = innovationOrganizationApiDto.TechnologyExperiences;

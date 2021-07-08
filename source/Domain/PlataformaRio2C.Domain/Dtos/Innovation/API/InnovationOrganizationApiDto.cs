@@ -104,10 +104,6 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonProperty("presentationFile")]
         public string PresentationFile { get; set; }
 
-        [JsonRequired]
-        [JsonProperty("presentationFileName")]
-        public string PresentationFileName { get; set; }
-
         #endregion
 
         #region Not required
@@ -123,6 +119,13 @@ namespace PlataformaRio2C.Domain.Dtos
 
         [JsonProperty("businessOperationalModel")]
         public string BusinessOperationalModel { get; set; }
+
+        #endregion
+
+        #region Json Ignore
+
+        [JsonIgnore]
+        public string PresentationFileName { get; set; }
 
         #endregion
 

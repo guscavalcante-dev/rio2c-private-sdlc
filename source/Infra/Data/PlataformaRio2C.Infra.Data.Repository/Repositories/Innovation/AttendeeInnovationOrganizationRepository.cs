@@ -37,13 +37,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// Finds the by ids.
         /// </summary>
         /// <param name="query">The query.</param>
-        /// <param name="AttendeeInnovationOrganizationsIds">The innovation organizations ids.</param>
+        /// <param name="attendeeInnovationOrganizationsIds">The innovation organizations ids.</param>
         /// <returns>IQueryable&lt;AttendeeInnovationOrganization&gt;.</returns>
-        internal static IQueryable<AttendeeInnovationOrganization> FindByIds(this IQueryable<AttendeeInnovationOrganization> query, List<int?> AttendeeInnovationOrganizationsIds)
+        internal static IQueryable<AttendeeInnovationOrganization> FindByIds(this IQueryable<AttendeeInnovationOrganization> query, List<int?> attendeeInnovationOrganizationsIds)
         {
-            if (AttendeeInnovationOrganizationsIds?.Any(i => i.HasValue) == true)
+            if (attendeeInnovationOrganizationsIds?.Any(i => i.HasValue) == true)
             {
-                query = query.Where(ao => AttendeeInnovationOrganizationsIds.Contains(ao.Id));
+                query = query.Where(ao => attendeeInnovationOrganizationsIds.Contains(ao.Id));
             }
 
             return query;
@@ -51,13 +51,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         /// <summary>Finds the by uids.</summary>
         /// <param name="query">The query.</param>
-        /// <param name="AttendeeInnovationOrganizationsUids">The attendee organizations uids.</param>
+        /// <param name="attendeeInnovationOrganizationsUids">The attendee organizations uids.</param>
         /// <returns></returns>
-        internal static IQueryable<AttendeeInnovationOrganization> FindByUids(this IQueryable<AttendeeInnovationOrganization> query, List<Guid?> AttendeeInnovationOrganizationsUids)
+        internal static IQueryable<AttendeeInnovationOrganization> FindByUids(this IQueryable<AttendeeInnovationOrganization> query, List<Guid?> attendeeInnovationOrganizationsUids)
         {
-            if (AttendeeInnovationOrganizationsUids?.Any(i => i.HasValue) == true)
+            if (attendeeInnovationOrganizationsUids?.Any(i => i.HasValue) == true)
             {
-                query = query.Where(ao => AttendeeInnovationOrganizationsUids.Contains(ao.Uid));
+                query = query.Where(aio => attendeeInnovationOrganizationsUids.Contains(aio.Uid));
             }
 
             return query;
@@ -68,7 +68,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<AttendeeInnovationOrganization> IsNotDeleted(this IQueryable<AttendeeInnovationOrganization> query)
         {
-            query = query.Where(ao => !ao.IsDeleted);
+            query = query.Where(aio => !aio.IsDeleted);
+
+            return query;
+        }
+
+        /// <summary>
+        /// Finds the by document.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="document">The document.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns>IQueryable&lt;AttendeeInnovationOrganization&gt;.</returns>
+        internal static IQueryable<AttendeeInnovationOrganization> FindByDocument(this IQueryable<AttendeeInnovationOrganization> query, string document, int editionId)
+        {
+            query = query.Where(aio => aio.InnovationOrganization.Document == document 
+                                        && aio.EditionId == editionId);
 
             return query;
         }
@@ -152,5 +167,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query.ToListAsync();
         }
 
+        /// <summary>
+        /// find by document and edition identifier as an asynchronous operation.
+        /// </summary>
+        /// <param name="document">The document.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns>Task&lt;AttendeeInnovationOrganization&gt;.</returns>
+        public async Task<AttendeeInnovationOrganization> FindByDocumentAndEditionIdAsync(string document, int editionId)
+        {
+            var query = this.GetBaseQuery()
+                           .FindByDocument(document, editionId);
+
+            return await query.FirstOrDefaultAsync();
+        }
     }
 }

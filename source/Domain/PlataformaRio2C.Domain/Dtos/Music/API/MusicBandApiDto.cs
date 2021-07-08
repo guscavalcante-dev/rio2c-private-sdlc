@@ -27,7 +27,7 @@ namespace PlataformaRio2C.Domain.Dtos
 
         [JsonRequired]
         [JsonProperty(PropertyName = "musicBandTypeId", Order = 100)]
-        public int MusicBandTypeId { get; set; } //1-Banda/Grupo Musical | 2-Artista Solo
+        public int MusicBandTypeId { get; set; }
 
         [JsonRequired]
         [JsonProperty(PropertyName = "name", Order = 200)]

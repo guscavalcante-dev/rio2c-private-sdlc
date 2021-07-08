@@ -121,16 +121,22 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 validationResult = await this.commandBus.Send(cmd);
                 if (!validationResult.IsValid)
                 {
-                    throw new DomainException(Messages.CorrectFormValues);
+                    throw new DomainException();
                 }
             }
             catch (DomainException ex)
             {
-                return await Json(new { status = ApiStatus.Error, message = ex.GetInnerMessage(), errors = validationResult?.Errors?.Select(e => new { e.Code, e.Message }) });
+                return await Json(new { 
+                    status = ApiStatus.Error, 
+                    message = (ex.InnerException != null ? ex.GetInnerMessage() : ""), 
+                    errors = validationResult?.Errors?.Select(e => new { e.Code, e.Message }) });
             }
             catch (JsonSerializationException ex)
             {
-                return await Json(new { status = ApiStatus.Error, message = ex.GetInnerMessage(), errors = validationResult?.Errors?.Select(e => new { e.Code, e.Message }) });
+                return await Json(new { 
+                    status = ApiStatus.Error, 
+                    message = ex.GetInnerMessage(), 
+                    errors = validationResult?.Errors?.Select(e => new { e.Code, e.Message }) });
             }
             catch (Exception ex)
             {

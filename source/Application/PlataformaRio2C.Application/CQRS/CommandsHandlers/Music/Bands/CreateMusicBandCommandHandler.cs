@@ -17,6 +17,7 @@ using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 using System.Linq;
@@ -76,6 +77,21 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #region Initial validations
 
+            var editionDto = await editionRepo.FindDtoAsync(cmd.EditionId ?? 0);
+            if (editionDto?.Edition == null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Edition, Labels.FoundF), new string[] { "ToastrError" }));
+                this.AppValidationResult.Add(this.ValidationResult);
+                return this.AppValidationResult;
+            }
+
+            if (editionDto.IsMusicProjectSubmitEnded())
+            {
+                this.ValidationResult.Add(new ValidationError(Messages.ProjectSubmitPeriodClosed, new string[] { "ToastrError" }));
+                this.AppValidationResult.Add(this.ValidationResult);
+                return this.AppValidationResult;
+            }
+
             if (!this.ValidationResult.IsValid)
             {
                 this.AppValidationResult.Add(this.ValidationResult);
@@ -84,30 +100,27 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            var musicBandApiDto = cmd.MusicBandApiDto;
-
-            musicBandApiDto.TargetAudiencesApiDtos = musicBandApiDto.TargetAudiencesApiDtos.Select(ta =>
+            cmd.TargetAudiencesApiDtos = cmd.TargetAudiencesApiDtos.Select(ta =>
                                                     new TargetAudienceApiDto()
                                                     {
                                                         Id = ta.Id,
                                                         TargetAudience = targetAudienceRepo.Get(ta.Id)
                                                     }).ToList();
 
-            musicBandApiDto.MusicGenresApiDtos = musicBandApiDto.MusicGenresApiDtos.Select(mg =>
+            cmd.MusicGenresApiDtos = cmd.MusicGenresApiDtos.Select(mg =>
                                                     new MusicGenreApiDto()
                                                     {
                                                         Id = mg.Id,
                                                         MusicGenre = musicGenreRepo.Get(mg.Id)
                                                     }).ToList();
 
-            var musicBandType = await musicBandTypeRepo.FindByIdAsync(musicBandApiDto.MusicBandTypeId);
-            var edition = await editionRepo.FindByIdAsync(cmd.EditionId ?? 0);
+            var musicBandType = await musicBandTypeRepo.FindByIdAsync(cmd.MusicBandTypeId);
 
             Collaborator collaborator = null;
 
-            if (musicBandApiDto.MusicBandResponsibleApiDto != null)
+            if (cmd.MusicBandResponsibleApiDto != null)
             {
-                collaborator = await collaboratorRepo.FindByEmailAsync(musicBandApiDto.MusicBandResponsibleApiDto.Email);
+                collaborator = await collaboratorRepo.FindByEmailAsync(cmd.MusicBandResponsibleApiDto.Email);
 
                 if (collaborator == null)
                 {
@@ -116,19 +129,19 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     var createCollaboratorCommand = new CreateTinyCollaborator();
                     
                     createCollaboratorCommand.UpdateBaseProperties(
-                        musicBandApiDto.MusicBandResponsibleApiDto.Name, 
-                        null, 
-                        musicBandApiDto.MusicBandResponsibleApiDto.Email,
-                        musicBandApiDto.MusicBandResponsibleApiDto.PhoneNumber,
-                        musicBandApiDto.MusicBandResponsibleApiDto.CellPhone,
-                        musicBandApiDto.MusicBandResponsibleApiDto.Document);
+                        cmd.MusicBandResponsibleApiDto.Name, 
+                        null,
+                        cmd.MusicBandResponsibleApiDto.Email,
+                        cmd.MusicBandResponsibleApiDto.PhoneNumber,
+                        cmd.MusicBandResponsibleApiDto.CellPhone,
+                        cmd.MusicBandResponsibleApiDto.Document);
                     
                     createCollaboratorCommand.UpdatePreSendProperties(
                         CollaboratorType.Music.Name, //"Music" is fixed because in [dbo].[MigrateMusicProjects] procedure, its is fixed too!
                         cmd.UserId, 
                         cmd.UserUid, 
-                        edition.Id, 
-                        edition.Uid, 
+                        editionDto.Edition.Id,
+                        editionDto.Edition.Uid, 
                         "");
 
                     var commandResult = await base.CommandBus.Send(createCollaboratorCommand);
@@ -155,22 +168,22 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var musicBand = new MusicBand(
                 musicBandType,
-                edition,
-                musicBandApiDto.Name,
-                musicBandApiDto.ImageUrl,
-                musicBandApiDto.FormationDate,
-                musicBandApiDto.MainMusicInfluences,
-                musicBandApiDto.Facebook,
-                musicBandApiDto.Instagram,
-                musicBandApiDto.Twitter,
-                musicBandApiDto.Youtube,
-                musicBandApiDto.MusicProjectApiDto,
+                editionDto.Edition,
+                cmd.Name,
+                cmd.ImageUrl,
+                cmd.FormationDate,
+                cmd.MainMusicInfluences,
+                cmd.Facebook,
+                cmd.Instagram,
+                cmd.Twitter,
+                cmd.Youtube,
+                cmd.MusicProjectApiDto,
                 collaborator?.AttendeeCollaborators?.FirstOrDefault(),
-                musicBandApiDto.MusicGenresApiDtos,
-                musicBandApiDto.TargetAudiencesApiDtos,
-                musicBandApiDto.MusicBandMembersApiDtos,
-                musicBandApiDto.MusicBandTeamMembersApiDtos,
-                musicBandApiDto.ReleasedMusicProjectsApiDtos,
+                cmd.MusicGenresApiDtos,
+                cmd.TargetAudiencesApiDtos,
+                cmd.MusicBandMembersApiDtos,
+                cmd.MusicBandTeamMembersApiDtos,
+                cmd.ReleasedMusicProjectsApiDtos,
                 cmd.UserId);
 
             if (!musicBand.IsValid())

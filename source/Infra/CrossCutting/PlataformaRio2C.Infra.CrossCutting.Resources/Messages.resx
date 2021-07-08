@@ -756,6 +756,10 @@
     <value>O período de inscrição não está aberto.</value>
     <comment>O período de inscrição não está aberto.</comment>
   </data>
+  <data name="ProjectSubmitPeriodClosed" xml:space="preserve">
+    <value>Período de inscrição de projeto encerrado!</value>
+    <comment>Período de inscrição de projeto encerrado!</comment>
+  </data>
   <data name="ProjectSuccessfullyCreated" xml:space="preserve">
     <value>Projeto criado com sucesso!</value>
   </data>
