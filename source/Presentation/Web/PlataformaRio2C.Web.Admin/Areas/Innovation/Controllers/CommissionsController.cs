@@ -44,6 +44,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
     {
         private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
+        private readonly IInnovationOptionRepository innovationOptionRepo;
 
         /// <summary>Initializes a new instance of the <see cref="CommissionsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -54,11 +55,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             ICollaboratorRepository collaboratorRepository,
-            IAttendeeCollaboratorRepository attendeeCollaboratorRepository)
+            IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
+            IInnovationOptionRepository innovationOptionRepository)
             : base(commandBus, identityController)
         {
             this.collaboratorRepo = collaboratorRepository;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
+            this.innovationOptionRepo = innovationOptionRepository;
         }
 
         #region List
@@ -557,7 +560,22 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowCreateModal()
         {
-            var cmd = new CreateTinyCollaborator();
+            CreateInnovationCollaborator cmd;
+
+            try
+            {
+                var innovationOptions = await this.innovationOptionRepo.FindAllByGroupUidAsync(InnovationOptionGroup.ProductsOrServicesTracks.Uid);
+                if (innovationOptions == null)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Tracks, Labels.FoundF.ToLowerInvariant()));
+                }
+
+                cmd = new CreateInnovationCollaborator(innovationOptions);
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
 
             return Json(new
             {
@@ -567,13 +585,17 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                     new { page = this.RenderRazorViewToString("Modals/CreateModal", cmd), divIdOrClass = "#GlobalModalContainer" },
                 }
             }, JsonRequestBehavior.AllowGet);
+
+
+
+
         }
 
         /// <summary>Creates the specified collaborator.</summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Create(CreateTinyCollaborator cmd)
+        public async Task<ActionResult> Create(CreateInnovationCollaborator cmd)
         {
             var result = new AppValidationResult();
 
@@ -635,13 +657,20 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUpdateModal(Guid? collaboratorUid, bool? isAddingToCurrentEdition)
         {
-            UpdateTinyCollaborator cmd;
+            UpdateInnovationCollaborator cmd;
 
             try
             {
-                cmd = new UpdateTinyCollaborator(
+                var innovationOptions = await this.innovationOptionRepo.FindAllByGroupUidAsync(InnovationOptionGroup.ProductsOrServicesTracks.Uid);
+                if (innovationOptions == null)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Tracks, Labels.FoundF.ToLowerInvariant()));
+                }
+
+                cmd = new UpdateInnovationCollaborator(
                     await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
-                    isAddingToCurrentEdition);
+                    isAddingToCurrentEdition,
+                    innovationOptions);
             }
             catch (DomainException ex)
             {
@@ -662,7 +691,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Update(UpdateTinyCollaborator cmd)
+        public async Task<ActionResult> Update(UpdateInnovationCollaborator cmd)
         {
             var result = new AppValidationResult();
 

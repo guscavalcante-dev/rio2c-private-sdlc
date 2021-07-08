@@ -7687,6 +7687,9 @@
     <Content Include="Areas\Innovation\Views\Commissions\Widgets\DataTableWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Commissions\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Commissions\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\web.config" />
+    <Content Include="Areas\Innovation\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Innovation\Views\Commissions\Modals\Shared\Forms\_InnovationCollaboratorForm.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -9069,6 +9072,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Audiovisual\Data\" />
     <Folder Include="Areas\Audiovisual\Views\Shared\" />
+    <Folder Include="Areas\Innovation\Data\" />
     <Folder Include="Areas\Music\Data\" />
     <Folder Include="Areas\Music\Views\Shared\" />
     <Folder Include="Scripts\ckeditor\images\" />

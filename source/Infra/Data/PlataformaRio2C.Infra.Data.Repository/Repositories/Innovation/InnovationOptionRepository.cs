@@ -43,7 +43,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             if (innovationOptionsIds?.Any(i => i.HasValue) == true)
             {
-                query = query.Where(ao => innovationOptionsIds.Contains(ao.Id));
+                query = query.Where(io => innovationOptionsIds.Contains(io.Id));
             }
 
             return query;
@@ -57,7 +57,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             if (innovationOptionsUids?.Any(i => i.HasValue) == true)
             {
-                query = query.Where(ao => innovationOptionsUids.Contains(ao.Uid));
+                query = query.Where(io => innovationOptionsUids.Contains(io.Uid));
             }
 
             return query;
@@ -67,13 +67,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// Finds the by innovation option group ids.
         /// </summary>
         /// <param name="query">The query.</param>
-        /// <param name="innovationOptionGroupsIds">The innovation option groups ids.</param>
+        /// <param name="innovationOptionGroupsUids">The innovation option groups ids.</param>
         /// <returns>IQueryable&lt;InnovationOption&gt;.</returns>
-        internal static IQueryable<InnovationOption> FindByInnovationOptionGroupIds(this IQueryable<InnovationOption> query, List<int> innovationOptionGroupsIds)
+        internal static IQueryable<InnovationOption> FindByInnovationOptionGroupUids(this IQueryable<InnovationOption> query, List<Guid> innovationOptionGroupsUids)
         {
-            if (innovationOptionGroupsIds?.Any() == true)
+            if (innovationOptionGroupsUids?.Any() == true)
             {
-                query = query.Where(ao => innovationOptionGroupsIds.Contains(ao.InnovationOptionGroupId));
+                query = query.Where(io => innovationOptionGroupsUids.Contains(io.InnovationOptionGroup.Uid));
             }
 
             return query;
@@ -84,7 +84,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<InnovationOption> IsNotDeleted(this IQueryable<InnovationOption> query)
         {
-            query = query.Where(ao => !ao.IsDeleted);
+            query = query.Where(io => !io.IsDeleted);
 
             return query;
         }
@@ -96,7 +96,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns>IQueryable&lt;InnovationOption&gt;.</returns>
         internal static IQueryable<InnovationOption> Order(this IQueryable<InnovationOption> query)
         {
-            query = query.OrderBy(wd => wd.DisplayOrder);
+            query = query.OrderBy(io => io.DisplayOrder);
 
             return query;
         }
@@ -221,12 +221,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>
         /// find all by group uid as an asynchronous operation.
         /// </summary>
-        /// <param name="innovationOptionGroupId">The innovation option group identifier.</param>
+        /// <param name="innovationOptionGroupUid">The innovation option group identifier.</param>
         /// <returns>Task&lt;List&lt;InnovationOption&gt;&gt;.</returns>
-        public async Task<List<InnovationOption>> FindAllByGroupUidAsync(int innovationOptionGroupId)
+        public async Task<List<InnovationOption>> FindAllByGroupUidAsync(Guid innovationOptionGroupUid)
         {
-            var query = this.GetBaseQuery()
-                            .FindByInnovationOptionGroupIds(new List<int>() { innovationOptionGroupId })
+            var query = this.GetBaseQuery(true)
+                            .FindByInnovationOptionGroupUids(new List<Guid>() { innovationOptionGroupUid })
                             .Order();
 
             return await query.ToListAsync();

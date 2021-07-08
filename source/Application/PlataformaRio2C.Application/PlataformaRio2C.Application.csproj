@@ -242,6 +242,8 @@
     <Compile Include="CQRS\CommandsHandlers\Holdings\DeleteHoldingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\UpdateHoldingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\CreateHoldingCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Innovation\Collaborators\CreateInnovationCollaboratorCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Innovation\Collaborators\UpdateInnovationCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Innovation\Organization\BaseCommandHandlers\InnovationOrganizationBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Innovation\Organization\CreateInnovationOrganizationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\LogisticSponsors\DeleteLogisticSponsorCommandHandler.cs" />
@@ -368,7 +370,10 @@
     <Compile Include="CQRS\Commands\Emails\Admin\SendAdminWelcomeEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendPlayerNegotiationsEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendProducerNegotiationsEmailAsync.cs" />
-    <Compile Include="CQRS\Commands\Innovation\Organization\CreateInnovationOrganization.cs" />
+    <Compile Include="CQRS\Commands\Innovation\Collaborators\BaseCommands\InnovationCollaboratorBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Innovation\Collaborators\CreateInnovationCollaborator.cs" />
+    <Compile Include="CQRS\Commands\Innovation\Collaborators\UpdateInnovationCollaborator.cs" />
+    <Compile Include="CQRS\Commands\Innovation\Organizations\CreateInnovationOrganization.cs" />
     <Compile Include="CQRS\Commands\Logistics\UpdateLogisticAccomodation.cs" />
     <Compile Include="CQRS\Commands\Logistics\CreateLogisticAccommodation.cs" />
     <Compile Include="CQRS\Commands\Logistics\UpdateLogisticAirfare.cs" />
@@ -855,8 +860,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="CQRS\CommandsHandlers\Innovation\Collaborators\BaseCommandHandlers\" />
     <Folder Include="CQRS\CommandsHandlers\SalesPlatforms\" />
-    <Folder Include="CQRS\Commands\Innovation\Organization\BaseCommands\" />
+    <Folder Include="CQRS\Commands\Innovation\Organizations\BaseCommands\" />
     <Folder Include="CQRS\Commands\SalesPlatforms\" />
     <Folder Include="CQRS\EventsHandlers\" />
     <Folder Include="CQRS\Events\" />

@@ -1,0 +1,46 @@
+﻿@using System.Globalization
+@model PlataformaRio2C.Application.CQRS.Commands.InnovationCollaboratorBaseCommand
+<div class="row">
+    <div class="form-group col-md-5">
+        @Html.LabelFor(m => m.FirstName, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-7">
+        @Html.LabelFor(m => m.LastNames, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
+        @Html.TextBoxFor(m => m.LastNames, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.LastNames, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-12">
+        @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        <span class="form-text text-muted">@Messages.EmailInputMessage</span>
+        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-12">
+        <div class="kt-section pt-4">
+            <h3 class="kt-section__title mb-0">@Labels.Tracks</h3>
+            @Html.ValidationMessage("InnovationOptionsUids", new { @class = "text-danger" })
+            <div class="kt-section__content mt-3">
+                <div class="kt-checkbox-list">
+                    @foreach (var innovationOption in Model.InnovationOptions)
+                    {
+                        <label class="kt-checkbox">
+                            <input type="checkbox"
+                                   name="InnovationOptionsUids"
+                                   value="@innovationOption.Uid"
+                                   class="require-one"
+                                   data-id="innovationoption-group"
+                                   @if (Model.InnovationOptionsUids?.Contains(innovationOption.Uid) == true) { <text> checked </text> } /> @innovationOption.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')
+                                <span></span>
+                            </label>
+                        }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

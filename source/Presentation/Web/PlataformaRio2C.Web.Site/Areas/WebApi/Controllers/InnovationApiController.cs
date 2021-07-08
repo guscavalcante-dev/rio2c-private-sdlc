@@ -251,7 +251,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = $"Innovation Option Group not found (UID: {innovationOptionGroupUid})." } });
                 }
 
-                var innovationOptions = await this.innovationOptionRepository.FindAllByGroupUidAsync(innovationOptionGroup.Id);
+                var innovationOptions = await this.innovationOptionRepository.FindAllByGroupUidAsync(innovationOptionGroup.Uid);
 
                 return await Json(new InnovationOptionsApiResponse
                 {

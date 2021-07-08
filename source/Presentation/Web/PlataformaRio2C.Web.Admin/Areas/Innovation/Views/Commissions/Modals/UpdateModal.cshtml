@@ -1,4 +1,4 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateTinyCollaborator
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateInnovationCollaborator
 <div class="modal fade" id="UpdateCommissionModal" role="dialog" aria-labelledby="UpdateCommissionModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -21,7 +21,7 @@
                     @Html.HiddenFor(m => m.CollaboratorUid)
                     @Html.HiddenFor(m => m.IsAddingToCurrentEdition)
                     <div id="form-container">
-                        @Html.Partial("/Views/Shared/Collaborators/Forms/_TinyForm.cshtml", Model)
+                        @Html.Partial("Modals/Shared/Forms/_InnovationCollaboratorForm", Model)
                     </div>
                 }
             </div>
