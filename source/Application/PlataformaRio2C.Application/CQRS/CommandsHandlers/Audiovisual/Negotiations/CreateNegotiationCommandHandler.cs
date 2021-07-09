@@ -115,55 +115,59 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         new string[] { "ToastrError" }));
             }
 
-            // Conferences checks
-            var scheduledConferencesAtThisTime = await this.conferenceRepo.FindAllScheduleDtosAsync(cmd.EditionId.Value, 0, startDatePreview, endDatePreview, true, true);
+            #region [DISABLED] This Conferences and Airfares checks are disabled but its working perfectly! (Dont delete, can be used in future!)
 
-            var hasPlayerExecutivesScheduledConferencesAtThisTime = scheduledConferencesAtThisTime.Count(cdto => cdto.ConferenceParticipantDtos.Any(cpdto => cpdto.AttendeeCollaboratorDto.AttendeeOrganizationsDtos.Any(aodto => aodto.Organization.Id == buyerOrganization.Id))) > 0;
-            if (hasPlayerExecutivesScheduledConferencesAtThisTime)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(
-                    Messages.HasConferenceScheduled,
-                    Labels.TheF,
-                    Labels.Producer,
-                    ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
-                        new string[] { "ToastrError" }));
-            }
+            //// Conferences checks
+            //var scheduledConferencesAtThisTime = await this.conferenceRepo.FindAllScheduleDtosAsync(cmd.EditionId.Value, 0, startDatePreview, endDatePreview, true, true);
 
-            var hasProducerExecutivesScheduledConferencesAtThisTime = scheduledConferencesAtThisTime.Count(cdto => cdto.ConferenceParticipantDtos.Any(cpdto => cpdto.AttendeeCollaboratorDto.AttendeeOrganizationsDtos.Any(aodto => aodto.Organization.Id == project.SellerAttendeeOrganization.OrganizationId))) > 0;
-            if (hasProducerExecutivesScheduledConferencesAtThisTime)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(
-                    Messages.HasConferenceScheduled,
-                    Labels.TheF,
-                    Labels.Producer,
-                    ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
-                        new string[] { "ToastrError" }));
-            }
+            //var hasPlayerExecutivesScheduledConferencesAtThisTime = scheduledConferencesAtThisTime.Count(cdto => cdto.ConferenceParticipantDtos.Any(cpdto => cpdto.AttendeeCollaboratorDto.AttendeeOrganizationsDtos.Any(aodto => aodto.Organization.Id == buyerOrganization.Id))) > 0;
+            //if (hasPlayerExecutivesScheduledConferencesAtThisTime)
+            //{
+            //    this.ValidationResult.Add(new ValidationError(string.Format(
+            //        Messages.HasConferenceScheduled,
+            //        Labels.TheF,
+            //        Labels.Producer,
+            //        ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
+            //            new string[] { "ToastrError" }));
+            //}
 
-            // Airfares checks
-            var scheduledLogisticAirfaresAtThisTime = await this.logisticAirfareRepo.FindAllScheduleDtosAsync(cmd.EditionId.Value, null, startDatePreview, endDatePreview);
+            //var hasProducerExecutivesScheduledConferencesAtThisTime = scheduledConferencesAtThisTime.Count(cdto => cdto.ConferenceParticipantDtos.Any(cpdto => cpdto.AttendeeCollaboratorDto.AttendeeOrganizationsDtos.Any(aodto => aodto.Organization.Id == project.SellerAttendeeOrganization.OrganizationId))) > 0;
+            //if (hasProducerExecutivesScheduledConferencesAtThisTime)
+            //{
+            //    this.ValidationResult.Add(new ValidationError(string.Format(
+            //        Messages.HasConferenceScheduled,
+            //        Labels.TheF,
+            //        Labels.Producer,
+            //        ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
+            //            new string[] { "ToastrError" }));
+            //}
 
-            var hasPlayerExecutivesScheduledAirfaresAtThisTime = scheduledLogisticAirfaresAtThisTime.Count(ladto => ladto.LogisticDto.AttendeeCollaboratorDto.AttendeeOrganizationsDtos.Any(aodto => aodto.Organization.Id == buyerOrganization.Id)) > 0;
-            if (hasPlayerExecutivesScheduledAirfaresAtThisTime)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(
-                    Messages.HasAirfareScheduled,
-                    Labels.TheF,
-                    Labels.Producer,
-                    ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
-                        new string[] { "ToastrError" }));
-            }
+            //// Airfares checks
+            //var scheduledLogisticAirfaresAtThisTime = await this.logisticAirfareRepo.FindAllScheduleDtosAsync(cmd.EditionId.Value, null, startDatePreview, endDatePreview);
 
-            var hasProducerExecutivesScheduledAirfaresAtThisTime = scheduledLogisticAirfaresAtThisTime.Count(ladto => ladto.LogisticDto.AttendeeCollaboratorDto.AttendeeOrganizationsDtos.Any(aodto => aodto.Organization.Id == project.SellerAttendeeOrganization.OrganizationId)) > 0;
-            if (hasProducerExecutivesScheduledAirfaresAtThisTime)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(
-                    Messages.HasAirfareScheduled,
-                    Labels.TheF,
-                    Labels.Producer,
-                    ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
-                        new string[] { "ToastrError" }));
-            }
+            //var hasPlayerExecutivesScheduledAirfaresAtThisTime = scheduledLogisticAirfaresAtThisTime.Count(ladto => ladto.LogisticDto.AttendeeCollaboratorDto.AttendeeOrganizationsDtos.Any(aodto => aodto.Organization.Id == buyerOrganization.Id)) > 0;
+            //if (hasPlayerExecutivesScheduledAirfaresAtThisTime)
+            //{
+            //    this.ValidationResult.Add(new ValidationError(string.Format(
+            //        Messages.HasAirfareScheduled,
+            //        Labels.TheF,
+            //        Labels.Producer,
+            //        ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
+            //            new string[] { "ToastrError" }));
+            //}
+
+            //var hasProducerExecutivesScheduledAirfaresAtThisTime = scheduledLogisticAirfaresAtThisTime.Count(ladto => ladto.LogisticDto.AttendeeCollaboratorDto.AttendeeOrganizationsDtos.Any(aodto => aodto.Organization.Id == project.SellerAttendeeOrganization.OrganizationId)) > 0;
+            //if (hasProducerExecutivesScheduledAirfaresAtThisTime)
+            //{
+            //    this.ValidationResult.Add(new ValidationError(string.Format(
+            //        Messages.HasAirfareScheduled,
+            //        Labels.TheF,
+            //        Labels.Producer,
+            //        ($"{startDatePreview.ToBrazilTimeZone().ToStringHourMinute()} - {endDatePreview.ToBrazilTimeZone().ToShortTimeString()}")),
+            //            new string[] { "ToastrError" }));
+            //}
+
+            #endregion
 
             #endregion
 
