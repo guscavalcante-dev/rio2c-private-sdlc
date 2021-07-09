@@ -34,12 +34,16 @@
                     @{
                         var restrictionSpecific = Model.GetRestrictionSpecificDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
                     }
-                    @if (restrictionSpecific != null)
-                    {
-                        <div class="kt-widget__desc">
+                    <div class="kt-widget__desc">
+                        @if (restrictionSpecific != null)
+                        {
                             @Html.Raw(restrictionSpecific.Value)
-                        </div>
-                    }
+                        }
+                        else
+                        {
+                            @:-
+                        }
+                    </div>
                 </div>
             </div>
         </div>

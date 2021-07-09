@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-22-2021
+// Last Modified On : 07-09-2021
 // ***********************************************************************
 // <copyright file="PlayersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -192,7 +192,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Players, new List<BreadcrumbItemHelper> {
                 new BreadcrumbItemHelper(Labels.AudioVisual, null),
                 new BreadcrumbItemHelper(Labels.Players, Url.Action("Index", "Players", new { Area = "Audiovisual" })),
-                new BreadcrumbItemHelper(attendeeOrganizationDto.Organization.TradeName, Url.Action("Details", "Players", new { Area = "Audiovisual", id }))
+                new BreadcrumbItemHelper(attendeeOrganizationDto.Organization.Name, Url.Action("Details", "Players", new { Area = "Audiovisual", id }))
             });
 
             #endregion
@@ -206,7 +206,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
         #region Create
 
-        /// <summary>Shows the create modal.</summary>
+        /// <summary>
+        /// Shows the create modal.
+        /// </summary>
         /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> ShowCreateModal()

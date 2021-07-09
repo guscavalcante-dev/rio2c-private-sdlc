@@ -42,19 +42,26 @@
                     }
                     @*}*@
                 </div>
-                @if (isAudiovisualBuyer)
+                @if (isAudiovisualBuyer && !string.IsNullOrEmpty(Model.Organization?.TradeName))
                 {
                     <div class="kt-widget__subhead pt-0">
-                        @(Model.Organization?.TradeName ?? "-")
+                        @(Model.Organization?.TradeName)
                     </div>
                 }
-                <div class="kt-widget__subhead pt-0">
-                    @(Model.Organization?.CompanyName ?? "-")
-                    @if (!string.IsNullOrEmpty(Model.Organization?.Document))
+            <div class="kt-widget__subhead pt-0">
+                @if (!string.IsNullOrEmpty(Model.Organization?.CompanyName))
+                {
+                    @(Model.Organization?.CompanyName)
+                }
+                @if (!string.IsNullOrEmpty(Model.Organization?.Document))
+                {
+                    if (!string.IsNullOrEmpty(Model.Organization?.CompanyName))
                     {
-                        @:- @Model.Organization.Document
+                        @:-
                     }
-                </div>
+                    @Model.Organization.Document
+                }
+            </div>
                 @if (Model.AttendeeOrganization.IsVirtualMeeting.HasValue || Model.IsInCurrentEdition == false)
                 {
                     <div class="kt-widget__subhead pt-0 mt-0">

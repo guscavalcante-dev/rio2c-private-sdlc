@@ -7667,6 +7667,8 @@
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\SendEmailToPlayersDataTableWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\SendEmailToPlayersEditionCountWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\SendEmailToPlayersTotalCountWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Shared\EditorTemplates\OrganizationActivityBaseCommand.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Shared\EditorTemplates\OrganizationRestrictionSpecificsBaseCommand.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -8819,8 +8821,6 @@
     <Content Include="Views\Shared\EditorTemplates\AttendeeOrganizationBaseCommand.cshtml" />
     <Content Include="Views\AdminMailerService\_AdminEmailLayout.cshtml" />
     <Content Include="Views\AdminMailerService\PlayerWelcomeEmail.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Organizations\EditorTemplates\OrganizationRestrictionSpecificsBaseCommand.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Organizations\EditorTemplates\OrganizationActivityBaseCommand.cshtml" />
     <Content Include="Views\AdminMailerService\ForgotPasswordEmail.cshtml" />
     <Content Include="Views\Account\Modals\UpdatePasswordForm.cshtml" />
     <Content Include="Views\Account\Modals\UpdatePasswordModal.cshtml" />
@@ -9048,7 +9048,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Audiovisual\Data\" />
-    <Folder Include="Areas\Audiovisual\Views\Shared\" />
     <Folder Include="Areas\Music\Data\" />
     <Folder Include="Areas\Music\Views\Shared\" />
     <Folder Include="Scripts\ckeditor\images\" />

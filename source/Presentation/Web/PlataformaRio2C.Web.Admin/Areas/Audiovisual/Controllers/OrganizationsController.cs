@@ -4,7 +4,7 @@
 // Created          : 03-08-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-22-2021
+// Last Modified On : 07-09-2021
 // ***********************************************************************
 // <copyright file="OrganizationsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -132,9 +132,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     mainInformationWidgetDto,
                     await this.organizationTypeRepo.FindByUidAsync(organizationTypeUid ?? Guid.Empty),
                     await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
-                    false,
-                    false);
+                    await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)));
             }
             catch (DomainException ex)
             {
@@ -189,8 +187,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
-                //cmd.UpdateModelsAndLists(
-                //    await this.interestRepo.FindAllGroupedByInterestGroupsAsync());
+                cmd.UpdateModelsAndLists(
+                    await this.CommandBus.Send(new FindAllHoldingsBaseDtosAsync(null, this.UserInterfaceLanguage)));
 
                 return Json(new
                 {
@@ -392,7 +390,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 cmd = new UpdateOrganizationAddress(
                     addressWidgetDto,
                     await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                    true);
+                    false);
             }
             catch (DomainException ex)
             {

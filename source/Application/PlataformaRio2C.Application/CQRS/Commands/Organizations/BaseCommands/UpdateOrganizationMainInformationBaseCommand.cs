@@ -4,7 +4,7 @@
 // Created          : 10-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-22-2021
+// Last Modified On : 07-09-2021
 // ***********************************************************************
 // <copyright file="UpdateOrganizationMainInformationBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,14 +29,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         public Guid OrganizationUid { get; set; }
 
+        public bool IsCompanyNameRequired { get; set; }
+
         [Display(Name = "CompanyName", ResourceType = typeof(Labels))]
-        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [RequiredIf("IsCompanyNameRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(100, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string CompanyName { get; set; }
 
-        public bool IsCompanyNumberRequired { get; set; }
+        public bool IsCompanyDocumentRequired { get; set; }
+
         [Display(Name = "CompanyDocument", ResourceType = typeof(Labels))]
-        [RequiredIf("IsCompanyNumberRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [RequiredIf("IsCompanyDocumentRequired", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [ValidCompanyNumber]
         [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Document { get; set; }
@@ -51,18 +54,23 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
+        /// <param name="isCompanyNameRequired">if set to <c>true</c> [is company name required].</param>
+        /// <param name="isCompanyDocumentRequired">if set to <c>true</c> [is company document required].</param>
         /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         public UpdateOrganizationMainInformationBaseCommand(
             AttendeeOrganizationMainInformationWidgetDto entity,
             List<LanguageDto> languagesDtos,
+            bool isCompanyNameRequired,
+            bool isCompanyDocumentRequired,
             bool isDescriptionRequired,
             bool isImageRequired)
         {
             this.OrganizationUid = entity.Organization.Uid;
 
+            this.IsCompanyNameRequired = isCompanyNameRequired;
             this.CompanyName = entity?.Organization?.CompanyName;
-            this.IsCompanyNumberRequired = entity?.Country?.IsCompanyNumberRequired == true;
+            this.IsCompanyDocumentRequired = isCompanyDocumentRequired && entity?.Country?.IsCompanyNumberRequired == true;
             this.Document = entity?.Organization?.Document;
 
             this.UpdateDescriptions(entity, languagesDtos, isDescriptionRequired);
