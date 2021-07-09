@@ -4,7 +4,7 @@
 // Created          : 02-25-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-04-2020
+// Last Modified On : 07-09-2021
 // ***********************************************************************
 // <copyright file="CommissionsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -72,7 +72,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.MusicCommission, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.MusicCommission, Url.Action("Index", "Commissions", new { Area = "Music" }))
+                new BreadcrumbItemHelper(Labels.Music, null),
+                new BreadcrumbItemHelper(Labels.Commission, Url.Action("Index", "Commissions", new { Area = "Music" }))
             });
 
             #endregion
@@ -135,7 +136,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.MusicCommission, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.MusicCommission, Url.Action("Index", "Commissions", new { Area = "Music" })),
+                new BreadcrumbItemHelper(Labels.Music, null),
+                new BreadcrumbItemHelper(Labels.Commission, Url.Action("Index", "Commissions", new { Area = "Music" })),
                 new BreadcrumbItemHelper(attendeeCollaboratorDto.Collaborator.GetFullName(), Url.Action("Details", "Commissions", new { Area = "Music", id }))
             });
 

@@ -1651,10 +1651,6 @@
     <value>Pitching</value>
     <comment>Pitching</comment>
   </data>
-  <data name="PitchingShow" xml:space="preserve">
-    <value>PitchingShow</value>
-    <comment>PitchingShow</comment>
-  </data>
   <data name="Place" xml:space="preserve">
     <value>Place</value>
     <comment>Local</comment>

@@ -325,6 +325,12 @@ maira@rio2c.com&lt;br/&gt;
   <data name="LinksImageTeaser" xml:space="preserve">
     <value>(Não serão aceitos links para download, só para sites de compartilhamento de imagem ou vídeo, ex: youtube e Vimeo.) </value>
   </data>
+  <data name="MusicCommissionProjectsDates" xml:space="preserve">
+    <value>&lt;li&gt;Projetos disponíveis para avaliação a partir de: {0}&lt;/li&gt;
+&lt;li&gt;Período de avaliação: {0} a {1}&lt;/li&gt;</value>
+    <comment>&lt;li&gt;Projetos disponíveis para avaliação a partir de: {0}&lt;/li&gt;
+&lt;li&gt;Período de avaliação: {0} a {1}&lt;/li&gt;</comment>
+  </data>
   <data name="MyRio2cDescription" xml:space="preserve">
     <value>MyRio2C é a plataforma criada pelo Rio2C para integrar os participantes antes do evento e promover mais um ambiente de negócios para quem vai ao evento.&lt;br/&gt;
 No MyRio2C, os participantes poderão consultar a programação e montar a agenda, mesmo antes do evento, conhecer os demais participantes através da pesquisa de perfis e empresas, ter acesso ao seu e-ticket e se cadastrar no Banco de Talentos.&lt;br/&gt;
@@ -356,12 +362,6 @@ O MyRio2C também é um canal de comunicação do Rio2C com você, trazendo info
   </data>
   <data name="PaymentNotConfirmed" xml:space="preserve">
     <value>Não foi localizada a confirmação de pagamento da sua credencial. Verifique os dados informados e tente novamente.</value>
-  </data>
-  <data name="PitchingShowCommissionProjectsDates" xml:space="preserve">
-    <value>&lt;li&gt;Projetos disponíveis para avaliação a partir de: {0}&lt;/li&gt;
-&lt;li&gt;Período de avaliação: {0} a {1}&lt;/li&gt;</value>
-    <comment>&lt;li&gt;Projetos disponíveis para avaliação a partir de: {0}&lt;/li&gt;
-&lt;li&gt;Período de avaliação: {0} a {1}&lt;/li&gt;</comment>
   </data>
   <data name="PlayerProjectsDates" xml:space="preserve">
     <value>&lt;li&gt;Projetos disponíveis para avaliação a partir de: {0}&lt;/li&gt;

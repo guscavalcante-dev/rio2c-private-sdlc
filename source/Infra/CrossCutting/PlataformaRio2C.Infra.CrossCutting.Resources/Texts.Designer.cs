@@ -320,6 +320,16 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;li&gt;Projetos disponíveis para avaliação a partir de: {0}&lt;/li&gt;
+        ///&lt;li&gt;Período de avaliação: {0} a {1}&lt;/li&gt;.
+        /// </summary>
+        public static string MusicCommissionProjectsDates {
+            get {
+                return ResourceManager.GetString("MusicCommissionProjectsDates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MyRio2C é a plataforma criada pelo Rio2C para integrar os participantes antes do evento e promover mais um ambiente de negócios para quem vai ao evento.&lt;br/&gt;
         ///No MyRio2C, os participantes poderão consultar a programação e montar a agenda, mesmo antes do evento, conhecer os demais participantes através da pesquisa de perfis e empresas, ter acesso ao seu e-ticket e se cadastrar no Banco de Talentos.&lt;br/&gt;
         ///As credenciais Industry e Industry+ tem ainda os benefícios adicionais de inscrever projetos de audiovisu [rest of string was truncated]&quot;;.
@@ -381,16 +391,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string PaymentNotConfirmed {
             get {
                 return ResourceManager.GetString("PaymentNotConfirmed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;li&gt;Projetos disponíveis para avaliação a partir de: {0}&lt;/li&gt;
-        ///&lt;li&gt;Período de avaliação: {0} a {1}&lt;/li&gt;.
-        /// </summary>
-        public static string PitchingShowCommissionProjectsDates {
-            get {
-                return ResourceManager.GetString("PitchingShowCommissionProjectsDates", resourceCulture);
             }
         }
         
