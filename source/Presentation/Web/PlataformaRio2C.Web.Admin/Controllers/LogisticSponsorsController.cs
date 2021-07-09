@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-17-2020
+// Last Modified On : 07-09-2021
 // ***********************************************************************
 // <copyright file="LogisticSponsorsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,9 +35,11 @@ using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
-    /// <summary>LogisticSponsorsController</summary>
+    /// <summary>
+    /// LogisticSponsorsController
+    /// </summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic + "," + Constants.CollaboratorType.CuratorshipAudiovisual)]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminLogistic)]
     public class LogisticSponsorsController : BaseController
     {
         private readonly ILogisticSponsorRepository logisticSponsorRepo;
@@ -65,7 +67,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
         [HttpGet]
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public ActionResult Index(LogisticSponsorSearchViewModel searchViewModel)
         {
             #region Breadcrumb
@@ -160,7 +161,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <summary>Shows the create modal.</summary>
         /// <returns></returns>
         [HttpGet]
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> ShowCreateModal(Guid? logisticSponsorUid)
         {
             var cmd = new CreateLogisticSponsor(
@@ -181,7 +181,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> Create(CreateLogisticSponsor cmd)
         {
             var result = new AppValidationResult();
@@ -292,7 +291,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="logisticSponsorUid">The logistic sponsor uid.</param>
         /// <returns></returns>
         [HttpGet]
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? logisticSponsorUid)
         {
             UpdateLogisticSponsorMainInformation cmd;
@@ -328,7 +326,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> UpdateMainInformation(UpdateLogisticSponsorMainInformation cmd)
         {
             var result = new AppValidationResult();
@@ -391,7 +388,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> Delete(DeleteLogisticSponsor cmd)
         {
             var result = new AppValidationResult();

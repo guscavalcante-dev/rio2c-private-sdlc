@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-23-2019
+// Last Modified On : 07-09-2021
 // ***********************************************************************
 // <copyright file="BaseController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,7 +28,9 @@ using System.Collections.Generic;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
-    /// <summary></summary>
+    /// <summary>
+    /// BaseController
+    /// </summary>
     public class BaseController : Controller
     {
         private ActionResult beginExecuteCoreActionResult;

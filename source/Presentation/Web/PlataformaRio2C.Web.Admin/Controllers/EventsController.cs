@@ -4,7 +4,7 @@
 // Created          : 01-05-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-04-2020
+// Last Modified On : 07-09-2021
 // ***********************************************************************
 // <copyright file="EventsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,14 +29,14 @@ using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
-using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
-    /// <summary>EventsController</summary>
-    [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual)]
+    /// <summary>
+    /// EventsController
+    /// </summary>
+    [AjaxAuthorize(Order = 1, Roles = Constants.Role.Admin)]
     public class EventsController : BaseController
     {
         private readonly IEditionEventRepository editionEventRepo;

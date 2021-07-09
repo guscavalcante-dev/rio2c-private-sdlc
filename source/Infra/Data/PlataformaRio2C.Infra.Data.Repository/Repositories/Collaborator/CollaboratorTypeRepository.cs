@@ -4,7 +4,7 @@
 // Created          : 09-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-26-2019
+// Last Modified On : 07-09-2021
 // ***********************************************************************
 // <copyright file="CollaboratorTypeRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -42,7 +42,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
-        /// <summary>Finds the name of the by.</summary>
+        /// <summary>
+        /// Finds the name of the by.
+        /// </summary>
         /// <param name="query">The query.</param>
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
         /// <returns></returns>
@@ -57,7 +59,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// Finds the by names.
         /// </summary>
         /// <param name="query">The query.</param>
-        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
+        /// <param name="collaboratorTypeNames">The collaborator type names.</param>
         /// <returns></returns>
         internal static IQueryable<CollaboratorType> FindByNames(this IQueryable<CollaboratorType> query, string[] collaboratorTypeNames)
         {
@@ -86,7 +88,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<CollaboratorType> IsAdmin(this IQueryable<CollaboratorType> query)
         {
-            query = query.Where(c => Constants.CollaboratorType.Admins.Contains(c.Name));
+            query = query.Where(ct => Constants.Role.AnyAdminArray.Contains(ct.Role.Name));
 
             return query;
         }

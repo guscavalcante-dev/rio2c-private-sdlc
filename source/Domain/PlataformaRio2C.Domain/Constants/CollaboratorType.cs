@@ -19,15 +19,19 @@ namespace PlataformaRio2C.Domain.Constants
     {
         public const string AdminAudiovisual = "Admin | Audiovisual";
         public const string AdminLogistic = "Admin | Logistic";
-        public const string CuratorshipAudiovisual = "Curatorship | Audiovisual";
-        public const string CuratorshipMusic = "Curatorship | Music";
-        public const string CuratorshipInnovation = "Curatorship | Innovation";
+        public const string AdminMusic = "Admin | Music";
+        public const string AdminInnovation = "Admin | Innovation";
+        public const string AdminEditorial = "Admin | Editorial";
+        public const string AdminConferences = "Admin | Conferences";
+
         public const string ExecutiveAudiovisual = "Executive | Audiovisual";
         public const string ExecutiveMusic = "Executive | Music";
         public const string ExecutiveInnovation = "Executive | Innovation";
+
         public const string CommissionAudiovisual = "Commission | Audiovisual";
         public const string CommissionMusic = "Commission | Music";
         public const string CommissionInnovation = "Commission | Innovation";
+
         public const string Speaker = "Speaker";
         public const string Industry = "Industry";
         public const string Creator = "Creator";
@@ -38,7 +42,7 @@ namespace PlataformaRio2C.Domain.Constants
 
         public static readonly string[] Admins =
         {
-            AdminAudiovisual, AdminLogistic
+            AdminAudiovisual, AdminLogistic, AdminMusic, AdminInnovation, AdminEditorial, AdminConferences
         };
 
         public static readonly string[] TicketBuyers =
@@ -70,17 +74,17 @@ namespace PlataformaRio2C.Domain.Constants
         #region Speakers
 
         // Read
-        public const string SpeakersReadString = AdminAudiovisual + "," + CuratorshipAudiovisual + "," + AdminLogistic;
+        public const string SpeakersReadString = AdminConferences + "," + AdminAudiovisual + "," + AdminLogistic;
         public static readonly string[] SpeakersReadArray =
         {
-            AdminAudiovisual, CuratorshipAudiovisual, AdminLogistic
+            AdminConferences, AdminAudiovisual, AdminLogistic
         };
 
         // Write
-        public const string SpeakersWriteString = AdminAudiovisual + "," + CuratorshipAudiovisual;
+        public const string SpeakersWriteString = AdminConferences;
         public static readonly string[] SpeakersWriteArray =
         {
-            AdminAudiovisual, CuratorshipAudiovisual
+            AdminConferences
         };
 
         #endregion

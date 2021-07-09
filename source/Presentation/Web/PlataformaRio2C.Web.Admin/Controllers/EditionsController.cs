@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 03-03-2021
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 03-03-2021
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-09-2021
 // ***********************************************************************
 // <copyright file="EditionsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,14 +29,12 @@ using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
-using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>EditionsController</summary>
-    [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual)]
+    [AjaxAuthorize(Order = 1, Roles = Constants.Role.Admin)]
     public class EditionsController : BaseController
     {
         private readonly IEditionRepository editionRepo;

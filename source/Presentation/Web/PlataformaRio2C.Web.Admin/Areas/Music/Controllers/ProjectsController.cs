@@ -38,7 +38,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 {
     /// <summary>ProjectsController</summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.CuratorshipMusic)]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminMusic)]
     public class ProjectsController : BaseController
     {
         private readonly IMusicProjectRepository musicProjectRepo;
@@ -246,7 +246,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
         [HttpGet]
         public async Task<ActionResult> ExportEvaluationListWidget(string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 1000)
         {

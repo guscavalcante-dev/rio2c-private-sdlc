@@ -471,7 +471,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="page">The page.</param>
         /// <returns></returns>
         [HttpGet]
-        //[AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual + "," + Constants.CollaboratorType.CommissionAudiovisual)]
         public async Task<ActionResult> FindAllByFilters(string keywords, string customFilter, int? page = 1)
         {
             var collaboratorsApiDtos = await this.organizationRepo.FindAllDropdownApiListDtoPaged(

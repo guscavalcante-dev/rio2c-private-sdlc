@@ -4,11 +4,23 @@
     ViewBag.Title = Labels.Dashboard;
     var adminAccessControlDto = ViewBag.AdminAccessControlDto as AdminAccessControlDto;
     var isAdminFull = adminAccessControlDto?.IsAdmin() == true;
-    var isAdminAudiovisual = adminAccessControlDto?.IsAdminPartial() == true && adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminAudiovisual) == true;
-    var isCuratorshipAudiovisual = adminAccessControlDto?.IsAdminPartial() == true && adminAccessControlDto?.HasCollaboratorType(CollaboratorType.CuratorshipAudiovisual) == true;
-    var isCuratorshipMusic = adminAccessControlDto?.IsAdminPartial() == true && adminAccessControlDto?.HasCollaboratorType(CollaboratorType.CuratorshipMusic) == true;
+    var isAdminAudiovisual = adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminAudiovisual) == true;
+    var isAdminMusic = adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminMusic) == true;
+    var isAdminInnovation = adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminInnovation) == true;
+    var isAdminEditorial = adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminEditorial) == true;
+    var isAdminLogistic = adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminLogistic) == true;
+    var isAdminConferences = adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminConferences) == true;
+
 }
 <div class="row">
+    @if (isAdminFull)
+    {
+        <!--begin:: Events Edition Count-->
+        <div class="col-sm-4">
+            <div id="EventsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        </div>
+        <!--end:: Events Edition Count-->
+    }
     @if (isAdminFull || isAdminAudiovisual)
     {
         <!--begin:: Holdings Edition Count-->
@@ -27,13 +39,8 @@
         </div>
         <!--end:: Players Executives Edition Count-->
     }
-    @if (isAdminFull || isAdminAudiovisual || isCuratorshipAudiovisual)
+    @if (isAdminFull || isAdminConferences)
     {
-        <!--begin:: Events Edition Count-->
-        <div class="col-sm-4">
-            <div id="EventsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-        </div>
-        <!--end:: Events Edition Count-->
         <!--begin:: Conferences Edition Count-->
         <div class="col-sm-4">
             <div id="ConferencesEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
@@ -73,7 +80,7 @@
         </div>
         <!--end:: Audiovisual Projects Edition Count-->
     }
-    @if (isAdminFull || isCuratorshipMusic)
+    @if (isAdminFull || isAdminMusic)
     {
         <!--begin:: Music Projects Edition Count-->
         <div class="col-sm-4">
@@ -86,6 +93,10 @@
 }
 @section Scripts {
     @Scripts.Render("~/bundles/js/chart.js")
+    @if (isAdminFull)
+    {
+        @Scripts.Render("~/bundles/js/events.editioncount.js")
+    }
     @if (isAdminFull || isAdminAudiovisual)
     {
         @Scripts.Render("~/bundles/js/holdings.editioncount.js")
@@ -93,9 +104,8 @@
         @Scripts.Render("~/bundles/js/collaborators.editioncount.js")
         @Scripts.Render("~/bundles/js/audiovisual.projects.editioncount.widget.js")
     }
-    @if (isAdminFull || isAdminAudiovisual || isCuratorshipAudiovisual)
+    @if (isAdminFull || isAdminConferences)
     {
-        @Scripts.Render("~/bundles/js/events.editioncount.js")
         @Scripts.Render("~/bundles/js/conferences.editioncount.js")
         @Scripts.Render("~/bundles/js/speakers.editioncount.js")
         @Scripts.Render("~/bundles/js/rooms.editioncount.js")
@@ -103,12 +113,18 @@
         @Scripts.Render("~/bundles/js/presentationformats.editioncount.js")
         @Scripts.Render("~/bundles/js/conferenceparticipantroles.editioncount.js")
     }
-    @if (isAdminFull || isCuratorshipMusic)
+    @if (isAdminFull || isAdminMusic)
     {
         @Scripts.Render("~/bundles/js/music.projects.editioncount.widget.js")
     }
-    <script>
+<script>
         jQuery(document).ready(function () {
+            @if (isAdminFull)
+            {
+                <text>
+                    EventsEditionCountWidget.init();
+                </text>
+            }
             @if (isAdminFull || isAdminAudiovisual)
             {
                 <text>
@@ -118,10 +134,9 @@
                     AudiovisualProjectsEditionCountWidget.init();
                 </text>
             }
-            @if (isAdminFull || isAdminAudiovisual || isCuratorshipAudiovisual)
+            @if (isAdminFull || isAdminConferences)
             {
                 <text>
-                    EventsEditionCountWidget.init();
                     ConferencesEditionCountWidget.init();
                     SpeakersEditionCountWidget.init();
                     RoomsEditionCountWidget.init();
@@ -130,12 +145,12 @@
                     ConferenceParticipantRolesEditionCountWidget.init();
                 </text>
             }
-            @if (isAdminFull || isCuratorshipMusic)
+            @if (isAdminFull || isAdminMusic)
             {
                 <text>
                     MusicProjectsEditionCountWidget.init();
                 </text>
             }
         });
-    </script>
+</script>
 }

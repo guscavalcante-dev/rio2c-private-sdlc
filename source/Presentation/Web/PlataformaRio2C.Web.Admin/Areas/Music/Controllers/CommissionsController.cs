@@ -39,7 +39,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 {
     /// <summary>CommissionsController</summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.CuratorshipMusic)]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminMusic)]
     public class CommissionsController : BaseController
     {
         private readonly ICollaboratorRepository collaboratorRepo;

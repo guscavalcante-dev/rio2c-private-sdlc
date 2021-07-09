@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-20-2020
+// Last Modified On : 07-09-2021
 // ***********************************************************************
 // <copyright file="LogisticsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -39,7 +39,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     /// LogisticsController
     /// </summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic + "," + Constants.CollaboratorType.CuratorshipAudiovisual)]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminLogistic)]
     public class LogisticsController : BaseController
     {
         private readonly ILogisticRepository logisticRepo;
@@ -420,7 +420,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="logisticsUid">The logistics uid.</param>
         /// <returns></returns>
         [HttpGet]
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> ShowCreateAirfareModal(Guid? logisticsUid)
         {
             var cmd = new CreateLogisticAirfare(logisticsUid ?? Guid.Empty);
@@ -439,7 +438,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> CreateAirfare(CreateLogisticAirfare cmd)
         {
             var result = new AppValidationResult();
@@ -499,7 +497,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="uid">The uid.</param>
         /// <returns></returns>
         [HttpGet]
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> ShowUpdateAirfareModal(Guid? uid)
         {
             UpdateLogisticAirfare cmd;
@@ -533,7 +530,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> UpdateAirfare(UpdateLogisticAirfare cmd)
         {
             var result = new AppValidationResult();
@@ -593,7 +589,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> DeleteLogisticAirfare(DeleteLogisticAirfare cmd)
         {
             var result = new AppValidationResult();
@@ -675,7 +670,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="logisticsUid">The logistics uid.</param>
         /// <returns></returns>
         [HttpGet]
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> ShowCreateAccommodationModal(Guid? logisticsUid)
         {
             var cmd = new CreateLogisticAccommodation(
@@ -696,7 +690,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> CreateAccommodation(CreateLogisticAccommodation cmd)
         {
             var result = new AppValidationResult();
@@ -759,7 +752,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="uid">The uid.</param>
         /// <returns></returns>
         [HttpGet]
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> ShowUpdateAccommodationModal(Guid? uid)
         {
             UpdateLogisticAccommodation cmd;
@@ -799,7 +791,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> UpdateAccommodation(UpdateLogisticAccommodation cmd)
         {
             var result = new AppValidationResult();
@@ -862,7 +853,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> DeleteLogisticAccommodation(DeleteLogisticAccommodation cmd)
         {
             var result = new AppValidationResult();
@@ -944,7 +934,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="logisticsUid">The logistics uid.</param>
         /// <returns></returns>
         [HttpGet]
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> ShowCreateTransferModal(Guid? logisticsUid)
         {
             var cmd = new CreateLogisticTransfer(
@@ -965,7 +954,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> CreateTransfer(CreateLogisticTransfer cmd)
         {
             var result = new AppValidationResult();
@@ -1029,7 +1017,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="uid">The uid.</param>
         /// <returns></returns>
         [HttpGet]
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> ShowUpdateTransferModal(Guid? uid)
         {
             UpdateLogisticTransfer cmd;
@@ -1063,7 +1050,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> UpdateTransfer(UpdateLogisticTransfer cmd)
         {
             var result = new AppValidationResult();
@@ -1123,7 +1109,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
         public async Task<ActionResult> DeleteLogisticTransfer(DeleteLogisticTransfer cmd)
         {
             var result = new AppValidationResult();

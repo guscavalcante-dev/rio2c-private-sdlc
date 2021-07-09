@@ -205,6 +205,14 @@
     <value>Add to {0}</value>
     <comment>Adicionar em {0}</comment>
   </data>
+  <data name="Administrator" xml:space="preserve">
+    <value>Administrator</value>
+    <comment>Administrador</comment>
+  </data>
+  <data name="Administrators" xml:space="preserve">
+    <value>Administrators</value>
+    <comment>Administradores</comment>
+  </data>
   <data name="AgeGroup" xml:space="preserve">
     <value>Age Group</value>
     <comment>Faixa Etária</comment>

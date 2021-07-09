@@ -4,7 +4,7 @@
 // Created          : 03-08-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-22-2021
+// Last Modified On : 07-09-2021
 // ***********************************************************************
 // <copyright file="ProducersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -255,7 +255,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="page">The page.</param>
         /// <returns></returns>
         [HttpGet]
-        //[AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual + "," + Constants.CollaboratorType.CommissionAudiovisual)]
         public async Task<ActionResult> FindAllByFilters(string keywords, string customFilter, int? page = 1)
         {
             var collaboratorsApiDtos = await this.organizationRepo.FindAllDropdownApiListDtoPaged(

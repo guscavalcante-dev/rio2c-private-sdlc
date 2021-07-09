@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-07-2019
+// Last Modified On : 07-09-2021
 // ***********************************************************************
 // <copyright file="DashboardController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,12 +13,16 @@
 // ***********************************************************************
 using System.Web.Mvc;
 using MediatR;
+using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
-    /// <summary>DashboardController</summary>
-    [Authorize(Roles = "Administrator")]
+    /// <summary>
+    /// DashboardController
+    /// </summary>
+    //[Authorize(Roles = "Administrator")]
+    [AjaxAuthorize(Order = 1, Roles = Domain.Constants.Role.AnyAdmin)]
     public class DashboardController : BaseController
     {
         /// <summary>Initializes a new instance of the <see cref="DashboardController"/> class.</summary>

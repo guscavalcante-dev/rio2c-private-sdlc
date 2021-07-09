@@ -4,7 +4,7 @@
 // Created          : 07-02-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-27-2019
+// Last Modified On : 07-09-2021
 // ***********************************************************************
 // <copyright file="ErrorController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,12 +13,14 @@
 // ***********************************************************************
 using System.Web.Mvc;
 using MediatR;
+using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
     /// <summary>ErrorController</summary>
+    [AjaxAuthorize(Order = 1, Roles = Domain.Constants.Role.AnyAdmin)]
     public class ErrorController : BaseController
     {
         /// <summary>Initializes a new instance of the <see cref="ErrorController"/> class.</summary>

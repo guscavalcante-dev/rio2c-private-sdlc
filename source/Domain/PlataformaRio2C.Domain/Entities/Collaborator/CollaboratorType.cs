@@ -29,15 +29,19 @@ namespace PlataformaRio2C.Domain.Entities
 
         public static CollaboratorType AdminAudiovisual = new CollaboratorType(new Guid("3871F510-C081-4B69-9ECC-8889E791B0CC"), "Admin | Audiovisual");
         public static CollaboratorType AdminLogistic = new CollaboratorType(new Guid("2141F9F7-4037-423C-81BF-7ED27520489A"), "Admin | Logistic");
-        public static CollaboratorType CuratorshipAudiovisual = new CollaboratorType(new Guid("4AC5A971-BA73-493B-9749-0F51BB6925B5"), "Curatorship | Audiovisual");
-        public static CollaboratorType CuratorshipMusic = new CollaboratorType(new Guid("495B5126-0A9E-4658-AC42-8BBA55818B6F"), "Curatorship | Music");
-        public static CollaboratorType CuratorshipInnovation = new CollaboratorType(new Guid("CB1A63D2-5862-4B40-8B8A-7F512E5D046D"), "Curatorship | Innovation");
+        public static CollaboratorType AdminMusic = new CollaboratorType(new Guid("A838C20B-DD55-4B9D-AECB-37A7E5320DB0"), "Admin | Music");
+        public static CollaboratorType AdminInnovation = new CollaboratorType(new Guid("ADF9A699-A8BC-4A1D-8971-C0AC7776D335"), "Admin | Innovation");
+        public static CollaboratorType AdminEditorial = new CollaboratorType(new Guid("3CC40A76-5E69-43E0-872E-2DA26C3C1434"), "Admin | Editorial");
+        public static CollaboratorType AdminConferences = new CollaboratorType(new Guid("203D6BFB-3009-4E7E-8BE9-A4F02DA795BB"), "Admin | Conferences");
+
         public static CollaboratorType ExecutiveAudiovisual = new CollaboratorType(new Guid("2D6F0E07-7990-458A-8207-1471DC3D1833"), "Executive | Audiovisual");
         public static CollaboratorType ExecutiveMusic = new CollaboratorType(new Guid("F05C6213-5CDE-46B8-A617-DF339D9903A9"), "Executive | Music");
         public static CollaboratorType ExecutiveInnovation = new CollaboratorType(new Guid("7E4909E0-3DE9-4B55-A678-3C4C277A89DA"), "Executive | Innovation");
+
         public static CollaboratorType ComissionAudiovisual = new CollaboratorType(new Guid("60AAFB26-B483-425F-BFA6-ED0D45F3CBCB"), "Commission | Audiovisual");
         public static CollaboratorType ComissionMusic = new CollaboratorType(new Guid("3633CF67-840F-4061-B480-C075A5E9F5EE"), "Commission | Music");
         public static CollaboratorType ComissionInnovation = new CollaboratorType(new Guid("758A53BB-7C3C-4B6F-967B-C6E613568586"), "Commission | Innovation");
+
         public static CollaboratorType Speaker = new CollaboratorType(new Guid("5DA172D8-8D4A-493B-9EEE-F544805A511F"), "Speaker");
         public static CollaboratorType Industry = new CollaboratorType(new Guid("4B0DD2CA-12AE-4357-BEC4-BA4D3820351D"), "Industry");
         public static CollaboratorType Creator = new CollaboratorType(new Guid("1A3BB310-44D0-4677-9938-394C138FD77C"), "Creator");

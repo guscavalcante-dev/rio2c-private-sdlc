@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-04-2020
+// Last Modified On : 07-09-2021
 // ***********************************************************************
 // <copyright file="TracksController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,9 +34,11 @@ using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
-    /// <summary>TracksController</summary>
+    /// <summary>
+    /// TracksController
+    /// </summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual)]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminConferences)]
     public class TracksController : BaseController
     {
         private readonly ITrackRepository trackRepo;

@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-26-2021
+// Last Modified On : 07-09-2021
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -46,7 +46,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 {
     /// <summary>ProjectsController</summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CommissionAudiovisual)]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual)]
     public class ProjectsController : BaseController
     {
         private readonly IProjectRepository projectRepo;
@@ -994,7 +994,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="page">The page.</param>
         /// <returns></returns>
         [HttpGet]
-        //[AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual + "," + Constants.CollaboratorType.CommissionAudiovisual)]
         public async Task<ActionResult> FindAllByFilters(string keywords, string customFilter = "", Guid? buyerOrganizationUid = null, int? page = 1)
         {
             var projectDtos = await this.projectRepo.FindAllDropdownDtoPaged(

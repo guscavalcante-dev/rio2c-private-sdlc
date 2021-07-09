@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2020
+// Last Modified On : 07-09-2021
 // ***********************************************************************
 // <copyright file="PlayersExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -39,7 +39,9 @@ using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
-    /// <summary>PlayersExecutivesController</summary>
+    /// <summary>
+    /// PlayersExecutivesController
+    /// </summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual)]
     public class PlayersExecutivesController : BaseController
@@ -515,7 +517,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="page">The page.</param>
         /// <returns></returns>
         [HttpGet]
-        //[AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.CuratorshipAudiovisual + "," + Constants.CollaboratorType.CommissionAudiovisual)]
         public async Task<ActionResult> FindAllByFilters(string keywords, bool? filterByProjectsInNegotiation = false, int? page = 1)
         {
             var collaboratorsApiDtos = await this.collaboratorRepo.FindAllDropdownApiListDtoPaged(

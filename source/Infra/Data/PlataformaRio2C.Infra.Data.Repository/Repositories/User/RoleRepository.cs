@@ -1,4 +1,17 @@
-﻿using PlataformaRio2C.Domain.Entities;
+﻿// ***********************************************************************
+// Assembly         : PlataformaRio2C.Web.Admin
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-19-2019
+//
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-09-2021
+// ***********************************************************************
+// <copyright file="AdministratorsController.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.Data.Context;
 using System;
@@ -58,6 +71,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
     #endregion
 
+    /// <summary>
+    /// RoleRepository
+    /// </summary>
     public class RoleRepository : Repository<PlataformaRio2CContext, Role>, IRoleRepository
     {
         /// <summary>
