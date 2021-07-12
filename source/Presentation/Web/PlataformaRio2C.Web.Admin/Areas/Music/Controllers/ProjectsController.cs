@@ -4,7 +4,7 @@
 // Created          : 03-01-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-04-2021
+// Last Modified On : 07-09-2021
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -38,36 +38,35 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 {
     /// <summary>ProjectsController</summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.CuratorshipMusic)]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminMusic)]
     public class ProjectsController : BaseController
     {
         private readonly IMusicProjectRepository musicProjectRepo;
         private readonly IMusicGenreRepository musicGenreRepo;
         private readonly IProjectEvaluationStatusRepository evaluationStatusRepo;
-        private readonly IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo;
         private readonly IMusicBandRepository musicBandRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="ProjectsController"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProjectsController"/> class.
+        /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="musicProjectRepository">The music project repository.</param>
         /// <param name="musicGenreRepository">The music genre repository.</param>
         /// <param name="evaluationStatusRepository">The evaluation status repository.</param>
-        /// <param name="projectEvaluationRefuseReasonRepository">The project evaluation refuse reason repository.</param>
+        /// <param name="musicBandRepository">The music band repository.</param>
         public ProjectsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
             IMusicProjectRepository musicProjectRepository,
             IMusicGenreRepository musicGenreRepository,
             IProjectEvaluationStatusRepository evaluationStatusRepository,
-            IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepository,
             IMusicBandRepository musicBandRepository)
             : base(commandBus, identityController)
         {
             this.musicProjectRepo = musicProjectRepository;
             this.musicGenreRepo = musicGenreRepository;
             this.evaluationStatusRepo = evaluationStatusRepository;
-            this.projectEvaluationRefuseReasonRepo = projectEvaluationRefuseReasonRepository;
             this.musicBandRepo = musicBandRepository;
         }
 
@@ -82,7 +81,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         {
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.PitchingShow, new List<BreadcrumbItemHelper>{
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.MusicProjects, new List<BreadcrumbItemHelper>{
+                new BreadcrumbItemHelper(Labels.Music, null),
                 new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "Music" }))
             });
 
@@ -246,7 +246,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
         [HttpGet]
         public async Task<ActionResult> ExportEvaluationListWidget(string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 1000)
         {
@@ -362,7 +361,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.PitchingShow, new List<BreadcrumbItemHelper> {
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.MusicProjects, new List<BreadcrumbItemHelper>{
+                new BreadcrumbItemHelper(Labels.Music, null),
                 new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "Music" })),
                 new BreadcrumbItemHelper(musicProjectDto.AttendeeMusicBandDto?.MusicBand?.Name ?? Labels.Project, Url.Action("EvaluationDetails", "Projects", new { Area = "Music", id }))
             });

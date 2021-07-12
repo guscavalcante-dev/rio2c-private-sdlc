@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-18-2019
+// Last Modified On : 07-09-2021
 // ***********************************************************************
 // <copyright file="CreateOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,7 +20,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>CreateOrganization</summary>
     public class CreateOrganization : OrganizationBaseCommand
     {
-        /// <summary>Initializes a new instance of the <see cref="CreateOrganization"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateOrganization"/> class.
+        /// </summary>
         /// <param name="organizationType">Type of the organization.</param>
         /// <param name="holdingBaseDtos">The holding base dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
@@ -32,6 +34,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isAddressRequired">if set to <c>true</c> [is address required].</param>
         /// <param name="isRestrictionSpecificRequired">if set to <c>true</c> [is restriction specific required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
+        /// <param name="isVirtualMeetingRequired">if set to <c>true</c> [is virtual meeting required].</param>
         public CreateOrganization(
             OrganizationType organizationType,
             List<HoldingBaseDto> holdingBaseDtos,

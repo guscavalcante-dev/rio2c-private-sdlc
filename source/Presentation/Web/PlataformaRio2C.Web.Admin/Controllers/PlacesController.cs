@@ -4,7 +4,7 @@
 // Created          : 03-16-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-17-2020
+// Last Modified On : 07-09-2021
 // ***********************************************************************
 // <copyright file="PlacesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,9 +34,11 @@ using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
-    /// <summary>PlacesController</summary>
+    /// <summary>
+    /// PlacesController
+    /// </summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual + "," + Constants.CollaboratorType.AdminLogistic)]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminLogistic)]
     public class PlacesController : BaseController
     {
         private readonly IPlaceRepository placeRepo;

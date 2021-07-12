@@ -88,15 +88,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aceita reunião virtual.
-        /// </summary>
-        public static string AcceptsVirtualMeeting {
-            get {
-                return ResourceManager.GetString("AcceptsVirtualMeeting", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Dados de acesso.
         /// </summary>
         public static string AccessData {
@@ -282,6 +273,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string AddToEdition {
             get {
                 return ResourceManager.GetString("AddToEdition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Administrador.
+        /// </summary>
+        public static string Administrator {
+            get {
+                return ResourceManager.GetString("Administrator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Administradores.
+        /// </summary>
+        public static string Administrators {
+            get {
+                return ResourceManager.GetString("Administrators", resourceCulture);
             }
         }
         
@@ -2878,6 +2887,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tipo de Reunião.
+        /// </summary>
+        public static string MeetingType {
+            get {
+                return ResourceManager.GetString("MeetingType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Membro.
         /// </summary>
         public static string Member {
@@ -3427,6 +3445,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Configuração de rodadas de negócio.
+        /// </summary>
+        public static string OneToOneMeetingConfiguration {
+            get {
+                return ResourceManager.GetString("OneToOneMeetingConfiguration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parâmetros de Rodadas de Negócio.
         /// </summary>
         public static string OneToOneMeetingParameters {
@@ -3702,15 +3729,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Pitching {
             get {
                 return ResourceManager.GetString("Pitching", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to PitchingShow.
-        /// </summary>
-        public static string PitchingShow {
-            get {
-                return ResourceManager.GetString("PitchingShow", resourceCulture);
             }
         }
         
@@ -6168,15 +6186,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Virtual {
             get {
                 return ResourceManager.GetString("Virtual", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Configuração de reunião virtual.
-        /// </summary>
-        public static string VirtualMeetingConfiguration {
-            get {
-                return ResourceManager.GetString("VirtualMeetingConfiguration", resourceCulture);
             }
         }
         

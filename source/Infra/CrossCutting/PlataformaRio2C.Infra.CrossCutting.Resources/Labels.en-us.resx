@@ -127,10 +127,6 @@
     <value>Accept</value>
     <comment>Aprovar</comment>
   </data>
-  <data name="AcceptsVirtualMeeting" xml:space="preserve">
-    <value>Accepts virtual meeting</value>
-    <comment>Aceita reunião virtual</comment>
-  </data>
   <data name="AccessData" xml:space="preserve">
     <value>Login information</value>
     <comment>Dados de acesso</comment>
@@ -208,6 +204,14 @@
   <data name="AddToEdition" xml:space="preserve">
     <value>Add to {0}</value>
     <comment>Adicionar em {0}</comment>
+  </data>
+  <data name="Administrator" xml:space="preserve">
+    <value>Administrator</value>
+    <comment>Administrador</comment>
+  </data>
+  <data name="Administrators" xml:space="preserve">
+    <value>Administrators</value>
+    <comment>Administradores</comment>
   </data>
   <data name="AgeGroup" xml:space="preserve">
     <value>Age Group</value>
@@ -1302,6 +1306,10 @@
     <value>Matches</value>
     <comment>Correspondências</comment>
   </data>
+  <data name="MeetingType" xml:space="preserve">
+    <value>Meeting Type</value>
+    <comment>Tipo de Reunião</comment>
+  </data>
   <data name="Member" xml:space="preserve">
     <value>Member</value>
     <comment>Membro</comment>
@@ -1536,6 +1544,10 @@
     <value>One-to-One Meeting</value>
     <comment>Rodada de Negócio</comment>
   </data>
+  <data name="OneToOneMeetingConfiguration" xml:space="preserve">
+    <value>One-to-One meetings configuration</value>
+    <comment>Configuração de rodadas de negócio</comment>
+  </data>
   <data name="OneToOneMeetingParameters" xml:space="preserve">
     <value>One-to-One Meetings Parameters</value>
     <comment>Parâmetros de Rodadas de Negócio</comment>
@@ -1654,10 +1666,6 @@
   <data name="Pitching" xml:space="preserve">
     <value>Pitching</value>
     <comment>Pitching</comment>
-  </data>
-  <data name="PitchingShow" xml:space="preserve">
-    <value>PitchingShow</value>
-    <comment>PitchingShow</comment>
   </data>
   <data name="Place" xml:space="preserve">
     <value>Place</value>
@@ -2695,10 +2703,6 @@
   <data name="Virtual" xml:space="preserve">
     <value>Virtual</value>
     <comment>Virtual</comment>
-  </data>
-  <data name="VirtualMeetingConfiguration" xml:space="preserve">
-    <value>Virtual meeting configuration</value>
-    <comment>Virtual meeting configuration</comment>
   </data>
   <data name="VirtualMeetingUrl" xml:space="preserve">
     <value>Virtual meeting url</value>

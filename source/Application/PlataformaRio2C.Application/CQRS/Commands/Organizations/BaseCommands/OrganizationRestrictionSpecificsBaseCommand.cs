@@ -4,7 +4,7 @@
 // Created          : 09-13-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 10-18-2019
+// Last Modified On : 07-09-2021
 // ***********************************************************************
 // <copyright file="OrganizationRestrictionSpecificsBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,11 +12,9 @@
 // <summary></summary>
 // ***********************************************************************
 using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
 using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {

@@ -127,10 +127,6 @@
     <value>Aprovar</value>
     <comment>Aprovar</comment>
   </data>
-  <data name="AcceptsVirtualMeeting" xml:space="preserve">
-    <value>Aceita reunião virtual</value>
-    <comment>Aceita reunião virtual</comment>
-  </data>
   <data name="AccessData" xml:space="preserve">
     <value>Dados de acesso</value>
     <comment>Dados de acesso</comment>
@@ -208,6 +204,14 @@
   <data name="AddToEdition" xml:space="preserve">
     <value>Adicionar em {0}</value>
     <comment>Adicionar em {0}</comment>
+  </data>
+  <data name="Administrator" xml:space="preserve">
+    <value>Administrador</value>
+    <comment>Administrador</comment>
+  </data>
+  <data name="Administrators" xml:space="preserve">
+    <value>Administradores</value>
+    <comment>Administradores</comment>
   </data>
   <data name="AgeGroup" xml:space="preserve">
     <value>Faixa Etária</value>
@@ -1300,6 +1304,10 @@
     <value>Correspondências</value>
     <comment>Correspondências</comment>
   </data>
+  <data name="MeetingType" xml:space="preserve">
+    <value>Tipo de Reunião</value>
+    <comment>Tipo de Reunião</comment>
+  </data>
   <data name="Member" xml:space="preserve">
     <value>Membro</value>
     <comment>Membro</comment>
@@ -1533,6 +1541,10 @@
     <value>Rodada de Negócio</value>
     <comment>Rodada de Negócio</comment>
   </data>
+  <data name="OneToOneMeetingConfiguration" xml:space="preserve">
+    <value>Configuração de rodadas de negócio</value>
+    <comment>Configuração de rodadas de negócio</comment>
+  </data>
   <data name="OneToOneMeetingParameters" xml:space="preserve">
     <value>Parâmetros de Rodadas de Negócio</value>
     <comment>Parâmetros de Rodadas de Negócio</comment>
@@ -1655,10 +1667,6 @@
   <data name="Pitching" xml:space="preserve">
     <value>Pitching</value>
     <comment>Pitching</comment>
-  </data>
-  <data name="PitchingShow" xml:space="preserve">
-    <value>PitchingShow</value>
-    <comment>PitchingShow</comment>
   </data>
   <data name="Place" xml:space="preserve">
     <value>Local</value>
@@ -2699,10 +2707,6 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="Virtual" xml:space="preserve">
     <value>Virtual</value>
     <comment>Virtual</comment>
-  </data>
-  <data name="VirtualMeetingConfiguration" xml:space="preserve">
-    <value>Configuração de reunião virtual</value>
-    <comment>Configuração de reunião virtual</comment>
   </data>
   <data name="VirtualMeetingUrl" xml:space="preserve">
     <value>Link da sala virtual</value>

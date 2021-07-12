@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified On : 07-09-2021
 // ***********************************************************************
 // <copyright file="UpdateOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,7 +28,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public UserBaseDto UpdaterBaseDto { get; set; }
         public DateTimeOffset UpdateDate { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateOrganization"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateOrganization"/> class.
+        /// </summary>
         /// <param name="entity">The entity.</param>
         /// <param name="organizationType">Type of the organization.</param>
         /// <param name="holdingBaseDtos">The holding base dtos.</param>
@@ -42,6 +44,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isAddressRequired">if set to <c>true</c> [is address required].</param>
         /// <param name="isRestrictionSpecificRequired">if set to <c>true</c> [is restriction specific required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
+        /// <param name="isVirtualMeetingRequired">if set to <c>true</c> [is virtual meeting required].</param>
+        /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException"></exception>
         public UpdateOrganization(
             OrganizationDto entity, 
             OrganizationType organizationType,

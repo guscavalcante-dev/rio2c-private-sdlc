@@ -4,7 +4,7 @@
 // Created          : 10-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-19-2021
+// Last Modified On : 07-09-2021
 // ***********************************************************************
 // <copyright file="UpdateOrganizationAdminMainInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -77,13 +77,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             #region Initial validations
 
             // Check if the trade name already exists
-            var existingOrganizationByName = this.OrganizationRepo.Get(o => o.TradeName == cmd.TradeName 
-                                                                            && o.HoldingId == organization.HoldingId 
-                                                                            && o.Uid != cmd.OrganizationUid
-                                                                            && !o.IsDeleted);
-            if (existingOrganizationByName != null)
+            if (!string.IsNullOrEmpty(cmd.TradeName))
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.APlayer, Labels.TheName, cmd.TradeName), new string[] { "TradeName" }));
+                var existingOrganizationByName = this.OrganizationRepo.Get(o => o.TradeName == cmd.TradeName
+                                                                                && o.HoldingId == organization.HoldingId
+                                                                                && o.Uid != cmd.OrganizationUid
+                                                                                && !o.IsDeleted);
+                if (existingOrganizationByName != null)
+                {
+                    this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.APlayer, Labels.TheName, cmd.TradeName), new string[] { "TradeName" }));
+                }
             }
 
             if (!this.ValidationResult.IsValid)

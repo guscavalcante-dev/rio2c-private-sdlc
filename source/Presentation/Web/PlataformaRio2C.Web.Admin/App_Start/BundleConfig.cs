@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-02-2021
+// Last Modified On : 07-09-2021
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -281,37 +281,36 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
-            #region Management Page Bundles
+            #region Administration Page Bundles
 
-            #region Managers
+            #region Administrator
 
-            bundles.Add(new ScriptBundle("~/bundles/js/managers.list.js").Include(
-                "~/Assets/js/managers/managers.totalcount.widget.js",
-                "~/Assets/js/managers/managers.datatable.widget.js",
+            bundles.Add(new ScriptBundle("~/bundles/js/administrators.list.js").Include(
+                "~/Assets/js/administrators/administrators.totalcount.widget.js",
+                "~/Assets/js/administrators/administrators.datatable.widget.js",
                 "~/Assets/js/salesplatforms/salesplatforms.export.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/managers.editioncount.js").Include(
-                "~/Assets/js/managers/managers.editioncount.widget.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/administrators.editioncount.js").Include(
+                "~/Assets/js/administrators/administrators.editioncount.widget.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/managers.create.js").Include(
-                "~/Assets/js/managers/managers.create.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/administrators.create.js").Include(
+                "~/Assets/js/administrators/administrators.create.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/managers.update.js").Include(
-                "~/Assets/js/managers/managers.update.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/administrators.update.js").Include(
+                "~/Assets/js/administrators/administrators.update.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/managers.delete.js").Include(
-                "~/Assets/js/managers/managers.delete.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/administrators.delete.js").Include(
+                "~/Assets/js/administrators/administrators.delete.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/managers.maininformation.widget.js").Include(
-                "~/Assets/js/managers/managers.maininformation.widget.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/administrators.maininformation.widget.js").Include(
+                "~/Assets/js/administrators/administrators.maininformation.widget.js"));
 
 
-            bundles.Add(new ScriptBundle("~/bundles/js/managers.changepassword.widget.js").Include(
-                "~/Assets/js/managers/managers.changepassword.widget.js"));
+            bundles.Add(new ScriptBundle("~/bundles/js/administrators.changepassword.widget.js").Include(
+                "~/Assets/js/administrators/administrators.changepassword.widget.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/managers.form.js").Include(
-                "~/Assets/js/managers/managers.form.js"));
-
+            bundles.Add(new ScriptBundle("~/bundles/js/administrators.form.js").Include(
+                "~/Assets/js/administrators/administrators.form.js"));
 
             #endregion
 

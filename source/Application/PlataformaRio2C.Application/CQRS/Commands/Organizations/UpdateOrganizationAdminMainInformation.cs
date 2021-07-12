@@ -4,7 +4,7 @@
 // Created          : 06-19-2021
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-22-2021
+// Last Modified On : 07-09-2021
 // ***********************************************************************
 // <copyright file="UpdateOrganizationAdminMainInformation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,6 +19,7 @@ using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
@@ -41,14 +42,15 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string Name { get; set; }
 
         [Display(Name = "TradeName", ResourceType = typeof(Labels))]
-        [RequiredIf(nameof(IsAudiovisualBuyer), "False", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        //[RequiredIf(nameof(IsAudiovisualBuyer), "False", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(100, MinimumLength = 2, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string TradeName { get; set; }
 
-        [Display(Name = "AcceptsVirtualMeeting", ResourceType = typeof(Labels))]
-        [RequiredIf(nameof(IsAudiovisualBuyer), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public bool? IsVirtualMeeting { get; set; }
+        public bool IsVirtualMeetingRequired { get; set; }
 
+        [Display(Name = "MeetingType", ResourceType = typeof(Labels))]
+        [RadioButtonRequiredIf(nameof(IsVirtualMeetingRequired), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public bool? IsVirtualMeeting { get; set; }
 
         public int[] ApiHighlightPositions = new[] { 1, 2, 3, 4, 5 };
 
@@ -68,16 +70,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="organizationType">Type of the organization.</param>
         /// <param name="holdingBaseDtos">The holding base dtos.</param>
         /// <param name="languagesDtos">The languages dtos.</param>
-        /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
-        /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
         public UpdateOrganizationAdminMainInformation(
             AttendeeOrganizationMainInformationWidgetDto entity,
             OrganizationType organizationType,
             List<HoldingBaseDto> holdingBaseDtos,
-            List<LanguageDto> languagesDtos,
-            bool isDescriptionRequired,
-            bool isImageRequired)
-            : base (entity, languagesDtos, isDescriptionRequired, isImageRequired)
+            List<LanguageDto> languagesDtos)
+            : base (entity, languagesDtos, false, false, false, false)
         {
             this.OrganizationTypeUid = organizationType?.Uid;
             this.OrganizationType = organizationType;
@@ -85,7 +83,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.HoldingUid = entity?.Organization?.Holding?.Uid;
             this.Name = entity?.Organization?.Name;
             this.TradeName = entity?.Organization?.TradeName;
-            this.IsVirtualMeeting = entity?.AttendeeOrganization?.IsVirtualMeeting == true;
+            this.IsVirtualMeeting = entity?.AttendeeOrganization?.IsVirtualMeeting;
+            this.IsVirtualMeetingRequired = organizationType?.Uid == OrganizationType.Player.Uid;
 
             this.UpdateModelsAndLists(holdingBaseDtos);
             this.UpdateApiConfigurations(entity, organizationType);

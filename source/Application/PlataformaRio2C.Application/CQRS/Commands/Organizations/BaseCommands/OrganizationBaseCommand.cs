@@ -4,7 +4,7 @@
 // Created          : 08-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified On : 07-09-2021
 // ***********************************************************************
 // <copyright file="OrganizationBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -59,9 +59,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string PhoneNumber { get; set; }
 
-        public bool IsVirtualMeetingRequired => (this.OrganizationType != null && this.OrganizationType?.Name == Constants.OrganizationType.AudiovisualBuyer);
-        [Display(Name = "AcceptsVirtualMeeting", ResourceType = typeof(Labels))]
-        [RequiredIf(nameof(IsVirtualMeetingRequired), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public bool IsVirtualMeetingRequired { get; set; }
+
+        [Display(Name = "MeetingType", ResourceType = typeof(Labels))]
+        [RadioButtonRequiredIf(nameof(IsVirtualMeetingRequired), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public bool? IsVirtualMeeting { get; set; }
 
 
@@ -121,7 +122,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
         }
 
-        /// <summary>Updates the base properties.</summary>
+        /// <summary>
+        /// Updates the base properties.
+        /// </summary>
         /// <param name="entity">The entity.</param>
         /// <param name="organizationType">Type of the organization.</param>
         /// <param name="holdingBaseDtos">The holding base dtos.</param>
@@ -134,6 +137,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isAddressRequired">if set to <c>true</c> [is address required].</param>
         /// <param name="isRestrictionSpecificRequired">if set to <c>true</c> [is restriction specific required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
+        /// <param name="isVirtualMeetingRequired">if set to <c>true</c> [is virtual meeting required].</param>
         public void UpdateBaseProperties(
             OrganizationDto entity,
             OrganizationType organizationType,
@@ -164,7 +168,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.PhoneNumber = entity?.PhoneNumber;
 
             this.OrganizationType = organizationType;
-            this.IsVirtualMeeting = entity?.IsVirtualMeeting == true;
+            this.IsVirtualMeeting = entity?.IsVirtualMeeting;
+            this.IsVirtualMeetingRequired = isVirtualMeetingRequired;
 
             this.UpdateAddress(entity, isAddressRequired);
             this.UpdateDescriptions(entity, languagesDtos, isDescriptionRequired);

@@ -448,6 +448,7 @@
     <Content Include="SqlScripts\Deltas\20191021_225115_0004_RemoveHtmlTagsFromData.sql" />
     <Content Include="SqlScripts\Deltas\20191015_140530_0003_ChangesForTicketBuyersOnboarding.sql" />
     <Content Include="SqlScripts\Deltas\20191009_094500_0002_ChangesForLanguage.sql" />
+    <Content Include="SqlScripts\Deltas\20210709_162400_0036_ChangesForAdminPartialCollaboratorTypes.sql" />
     <Content Include="SqlScripts\Deltas\20210707_165300_0035_ChangesForNegotiations.sql" />
     <Content Include="SqlScripts\Migrations\Music\02_CreateMigrateMusicProjectsTable.sql" />
     <Content Include="SqlScripts\Migrations\Music\03_MigrateMusicProjects.sql" />

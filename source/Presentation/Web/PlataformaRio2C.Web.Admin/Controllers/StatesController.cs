@@ -4,7 +4,7 @@
 // Created          : 08-23-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-27-2019
+// Last Modified On : 07-09-2021
 // ***********************************************************************
 // <copyright file="StatesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,7 +21,9 @@ using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
-    /// <summary>StatesController</summary>
+    /// <summary>
+    /// StatesController
+    /// </summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
     public class StatesController : BaseController
     {

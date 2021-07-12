@@ -4,27 +4,27 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-29-2019
+// Last Modified On : 07-09-2021
 // ***********************************************************************
 // <copyright file="SystemParameterController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Infra.CrossCutting.SystemParameter;
 using PlataformaRio2C.Infra.CrossCutting.SystemParameter.ViewModels;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 using MediatR;
+using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
-    /// <summary>SystemParameterController</summary>
-    [Authorize(Roles = "Administrator")]
-    //[Authorize(Roles = "Administrator", Users = "projeto.rio2c@marlin.com.br")]
+    /// <summary>
+    /// SystemParameterController
+    /// </summary>
+    //[Authorize(Roles = "Administrator")]
+    [AjaxAuthorize(Order = 1, Roles = Domain.Constants.Role.Admin)]
     public class SystemParameterController : BaseController
     {
         //private readonly ISystemParameterAppService _systemParameterAppService;
