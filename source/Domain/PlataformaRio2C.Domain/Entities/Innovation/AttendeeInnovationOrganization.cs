@@ -33,6 +33,15 @@ namespace PlataformaRio2C.Domain.Entities
         public decimal? Grade { get; set; }
         public int EvaluationsCount { get; set; }
         public DateTimeOffset? LastEvaluationDate { get; set; }
+        public decimal AccumulatedRevenue { get; set; }
+        public string MarketSize { get; set; }
+        public string BusinessDefinition { get; set; }
+        public string BusinessFocus { get; set; }
+        public string BusinessEconomicModel { get; set; }
+        public string BusinessDifferentials { get; set; }
+        public string BusinessStage { get; set; }
+        public DateTimeOffset? PresentationUploadDate { get; set; }
+        public string BusinessOperationalModel { get; set; }
 
         public virtual Edition Edition { get; private set; }
         public virtual InnovationOrganization InnovationOrganization { get; private set; }

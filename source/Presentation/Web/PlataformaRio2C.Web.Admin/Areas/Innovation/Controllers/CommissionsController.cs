@@ -39,7 +39,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 {
     /// <summary>CommissionsController</summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.CuratorshipInnovation)]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminInnovation)]
     public class CommissionsController : BaseController
     {
         private readonly ICollaboratorRepository collaboratorRepo;

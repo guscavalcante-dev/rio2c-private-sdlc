@@ -40,8 +40,10 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         private readonly IdentityAutenticationService identityController;
         private readonly IEditionRepository editionRepository;
         private readonly IWorkDedicationRepository workDedicationRepository;
-        private readonly IInnovationOptionRepository innovationOptionRepository;
-        private readonly IInnovationOptionGroupRepository innovationOptionGroupRepository;
+        private readonly IInnovationOrganizationExperienceOptionRepository innovationOrganizationExperienceOptionRepo;
+        private readonly IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepo;
+        private readonly IInnovationOrganizationTechnologyOptionRepository innovationOrganizationTechnologyOptionRepo;
+        private readonly IInnovationOrganizationObjectivesOptionRepository innovationOrganizationObjectivesOptionRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InnovationApiController"/> class.
@@ -52,15 +54,19 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             IdentityAutenticationService identityController,
             IEditionRepository editionRepo,
             IWorkDedicationRepository workDedicationRepo,
-            IInnovationOptionRepository innovationOptionRepo,
-            IInnovationOptionGroupRepository innovationOptionGroupRepo)
+            IInnovationOrganizationExperienceOptionRepository innovationOrganizationExperienceOptionRepository,
+            IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepository,
+            IInnovationOrganizationTechnologyOptionRepository innovationOrganizationTechnologyOptionRepository,
+            IInnovationOrganizationObjectivesOptionRepository innovationOrganizationObjectivesOptionRepository)
         {
             this.commandBus = commandBus;
             this.identityController = identityController;
             this.editionRepository = editionRepo;
             this.workDedicationRepository = workDedicationRepo;
-            this.innovationOptionRepository = innovationOptionRepo;
-            this.innovationOptionGroupRepository = innovationOptionGroupRepo;
+            this.innovationOrganizationExperienceOptionRepo = innovationOrganizationExperienceOptionRepository;
+            this.innovationOrganizationTrackOptionRepo = innovationOrganizationTrackOptionRepository;
+            this.innovationOrganizationTechnologyOptionRepo = innovationOrganizationTechnologyOptionRepository;
+            this.innovationOrganizationObjectivesOptionRepo = innovationOrganizationObjectivesOptionRepository;
         }
 
         /// <summary>
@@ -126,17 +132,21 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             }
             catch (DomainException ex)
             {
-                return await Json(new { 
-                    status = ApiStatus.Error, 
-                    message = (ex.InnerException != null ? ex.GetInnerMessage() : ""), 
-                    errors = validationResult?.Errors?.Select(e => new { e.Code, e.Message }) });
+                return await Json(new
+                {
+                    status = ApiStatus.Error,
+                    message = (ex.InnerException != null ? ex.GetInnerMessage() : ""),
+                    errors = validationResult?.Errors?.Select(e => new { e.Code, e.Message })
+                });
             }
             catch (JsonSerializationException ex)
             {
-                return await Json(new { 
-                    status = ApiStatus.Error, 
-                    message = ex.GetInnerMessage(), 
-                    errors = validationResult?.Errors?.Select(e => new { e.Code, e.Message }) });
+                return await Json(new
+                {
+                    status = ApiStatus.Error,
+                    message = ex.GetInnerMessage(),
+                    errors = validationResult?.Errors?.Select(e => new { e.Code, e.Message })
+                });
             }
             catch (Exception ex)
             {
@@ -146,6 +156,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
             return await Json(new { status = ApiStatus.Success, message = string.Format(Messages.EntityActionSuccessfull, Labels.Startup, Labels.CreatedF) });
         }
+
+        #region Lists
 
         /// <summary>
         /// Gets the work dedications.
@@ -188,14 +200,15 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         }
 
         /// <summary>
-        /// Gets the innovation option groups.
+        /// Gets the innovation options.
         /// </summary>
         /// <param name="key">The key.</param>
+        /// <param name="innovationOptionGroupUid">The innovation option group uid.</param>
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         /// <exception cref="DomainException"></exception>
         [HttpGet]
-        [Route("GetInnovationOptionGroups/{key?}")]
-        public async Task<IHttpActionResult> GetInnovationOptionGroups(string key)
+        [Route("GetInnovationOrganizationExperienceOptions/{key?}")]
+        public async Task<IHttpActionResult> GetInnovationOrganizationExperienceOptions(string key)
         {
             try
             {
@@ -204,11 +217,11 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     throw new DomainException(Messages.AccessDenied);
                 }
 
-                var innovationOptionGroups = await this.innovationOptionGroupRepository.FindAllAsync();
+                var innovationOrganizationExperienceOptions = await this.innovationOrganizationExperienceOptionRepo.FindAllAsync();
 
-                return await Json(new InnovationOptionGroupsApiResponse
+                return await Json(new InnovationOrganizationOptionApiBaseResponse
                 {
-                    InnovationOptionGroups = innovationOptionGroups.Select(mbt => new BaseListItemApiResponse()
+                    InnovationOrganizationOptions = innovationOrganizationExperienceOptions.Select(mbt => new BaseListItemApiResponse()
                     {
                         Uid = mbt.Uid,
                         Name = mbt.Name
@@ -235,8 +248,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         /// <exception cref="DomainException"></exception>
         [HttpGet]
-        [Route("GetInnovationOptions/{key?}/{innovationOptionGroupUid?}")]
-        public async Task<IHttpActionResult> GetInnovationOptions(string key, Guid? innovationOptionGroupUid)
+        [Route("GetInnovationOrganizationTrackOptions/{key?}")]
+        public async Task<IHttpActionResult> GetInnovationOrganizationTrackOptions(string key)
         {
             try
             {
@@ -245,17 +258,11 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     throw new DomainException(Messages.AccessDenied);
                 }
 
-                var innovationOptionGroup = await this.innovationOptionGroupRepository.FindByUidAsync(innovationOptionGroupUid ?? Guid.Empty);
-                if (innovationOptionGroup == null)
-                {
-                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = $"Innovation Option Group not found (UID: {innovationOptionGroupUid})." } });
-                }
+                var innovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllAsync();
 
-                var innovationOptions = await this.innovationOptionRepository.FindAllByGroupUidAsync(innovationOptionGroup.Uid);
-
-                return await Json(new InnovationOptionsApiResponse
+                return await Json(new InnovationOrganizationOptionApiBaseResponse
                 {
-                    InnovationOptions = innovationOptions.Select(mbt => new BaseListItemApiResponse()
+                    InnovationOrganizationOptions = innovationOrganizationTrackOptions.Select(mbt => new BaseListItemApiResponse()
                     {
                         Uid = mbt.Uid,
                         Name = mbt.Name
@@ -272,6 +279,90 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                 return await Json(new { status = ApiStatus.Error, message = Messages.WeFoundAndError });
             }
-        }       
+        }
+
+        /// <summary>
+        /// Gets the innovation options.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="innovationOptionGroupUid">The innovation option group uid.</param>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <exception cref="DomainException"></exception>
+        [HttpGet]
+        [Route("GetInnovationOrganizationTechnologyOptions/{key?}")]
+        public async Task<IHttpActionResult> GetInnovationOrganizationTechnologyOptions(string key)
+        {
+            try
+            {
+                if (key.ToLowerInvariant() != ConfigurationManager.AppSettings["CreateStartupApiKey"].ToLowerInvariant())
+                {
+                    throw new DomainException(Messages.AccessDenied);
+                }
+
+                var innovationOrganizationTechnologyOptions = await this.innovationOrganizationTechnologyOptionRepo.FindAllAsync();
+
+                return await Json(new InnovationOrganizationOptionApiBaseResponse
+                {
+                    InnovationOrganizationOptions = innovationOrganizationTechnologyOptions.Select(mbt => new BaseListItemApiResponse()
+                    {
+                        Uid = mbt.Uid,
+                        Name = mbt.Name
+                    })?.ToList(),
+                    Status = ApiStatus.Success
+                });
+            }
+            catch (DomainException ex)
+            {
+                return await Json(new { status = ApiStatus.Error, message = ex.GetInnerMessage() });
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return await Json(new { status = ApiStatus.Error, message = Messages.WeFoundAndError });
+            }
+        }
+
+        /// <summary>
+        /// Gets the innovation options.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="innovationOptionGroupUid">The innovation option group uid.</param>
+        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
+        /// <exception cref="DomainException"></exception>
+        [HttpGet]
+        [Route("GetInnovationOrganizationObjectivesOptions/{key?}")]
+        public async Task<IHttpActionResult> GetInnovationOrganizationObjectivesOptions(string key)
+        {
+            try
+            {
+                if (key.ToLowerInvariant() != ConfigurationManager.AppSettings["CreateStartupApiKey"].ToLowerInvariant())
+                {
+                    throw new DomainException(Messages.AccessDenied);
+                }
+
+                var innovationOrganizationObjectivesOptions = await this.innovationOrganizationObjectivesOptionRepo.FindAllAsync();
+
+                return await Json(new InnovationOrganizationOptionApiBaseResponse
+                {
+                    InnovationOrganizationOptions = innovationOrganizationObjectivesOptions.Select(mbt => new BaseListItemApiResponse()
+                    {
+                        Uid = mbt.Uid,
+                        Name = mbt.Name
+                    })?.ToList(),
+                    Status = ApiStatus.Success
+                });
+            }
+            catch (DomainException ex)
+            {
+                return await Json(new { status = ApiStatus.Error, message = ex.GetInnerMessage() });
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return await Json(new { status = ApiStatus.Error, message = Messages.WeFoundAndError });
+            }
+        }
+
+        #endregion
     }
 }

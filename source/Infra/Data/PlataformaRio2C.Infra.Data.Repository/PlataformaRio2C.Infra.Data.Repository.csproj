@@ -178,11 +178,13 @@
     <Compile Include="Repositories\Country\CountryRepository.cs" />
     <Compile Include="Repositories\Country\StateRepository.cs" />
     <Compile Include="Repositories\Innovation\AttendeeInnovationOrganizationCollaborator.cs" />
+    <Compile Include="Repositories\Innovation\InnovationOrganizationObjectivesOptionRepository.cs" />
+    <Compile Include="Repositories\Innovation\InnovationOrganizationTechnologyOptionRepository.cs" />
+    <Compile Include="Repositories\Innovation\InnovationOrganizationTrackOptionRepository.cs" />
+    <Compile Include="Repositories\Innovation\InnovationOrganizationExperienceOptionRepository.cs" />
     <Compile Include="Repositories\Innovation\WorkDedicationRepository.cs" />
     <Compile Include="Repositories\Innovation\AttendeeInnovationOrganizationRepository.cs" />
     <Compile Include="Repositories\Innovation\InnovationOrganizationOptionRepository.cs" />
-    <Compile Include="Repositories\Innovation\InnovationOptionRepository.cs" />
-    <Compile Include="Repositories\Innovation\InnovationOptionGroupRepository.cs" />
     <Compile Include="Repositories\Innovation\InnovationOrganizationRepository.cs" />
     <Compile Include="Repositories\Logistics\AttendeeLogisticSponsorsRepository.cs" />
     <Compile Include="Repositories\Logistics\PlaceRepository.cs" />

@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Site
 // Author           : Renan Valentim
-// Created          : 07-01-2021
+// Created          : 07-13-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-01-2021
+// Last Modified On : 07-13-2021
 // ***********************************************************************
-// <copyright file="InnovationOptionsApiResponse.cs" company="Softo">
+// <copyright file="InnovationOrganizationOptionApiBaseResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -17,10 +17,10 @@ using Newtonsoft.Json;
 
 namespace PlataformaRio2C.Domain.ApiModels
 {
-    /// <summary>InnovationOptionsApiResponse</summary>
-    public class InnovationOptionsApiResponse : ApiBaseResponse
+    /// <summary>InnovationOrganizationOptionApiBaseResponse</summary>
+    public class InnovationOrganizationOptionApiBaseResponse : ApiBaseResponse
     {
-        [JsonProperty("InnovationOptions")]
-        public List<BaseListItemApiResponse> InnovationOptions { get; set; }
+        [JsonProperty("InnovationOrganizationOptions")]
+        public List<BaseListItemApiResponse> InnovationOrganizationOptions { get; set; }
     }
 }
