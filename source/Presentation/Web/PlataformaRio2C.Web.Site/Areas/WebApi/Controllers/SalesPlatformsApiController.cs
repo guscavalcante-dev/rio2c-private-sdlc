@@ -4,7 +4,7 @@
 // Created          : 07-10-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-12-2019
+// Last Modified On : 07-13-2021
 // ***********************************************************************
 // <copyright file="SalesPlatformsApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -41,9 +41,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         #region Inti requests
 
         /// <summary>
-        /// Intis the specified key.
+        /// Intis this instance.
         /// </summary>
-        /// <param name="key">The key.</param>
         /// <returns></returns>
         [HttpPost]
         [Route("inti")]
@@ -170,7 +169,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <summary>Processes the requests.</summary>
         /// <param name="key">The key.</param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         [Route("processrequests/{key?}")]
         public async Task<IHttpActionResult> ProcessRequests(string key)
         {
