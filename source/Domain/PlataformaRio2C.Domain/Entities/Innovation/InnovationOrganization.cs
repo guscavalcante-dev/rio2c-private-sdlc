@@ -53,86 +53,60 @@ namespace PlataformaRio2C.Domain.Entities
         public string Website { get; set; }
         public DateTimeOffset? ImageUploadDate { get; set; }
 
-
-        public virtual WorkDedication WorkDedication { get; private set; }
-
-        public virtual ICollection<InnovationOrganizationOption> InnovationOrganizationOptions { get; private set; }
         public virtual ICollection<AttendeeInnovationOrganization> AttendeeInnovationOrganizations { get; private set; }
 
-        ///// <summary>
-        ///// Initializes a new instance of the <see cref="InnovationOrganization"/> class.
-        ///// </summary>
-        ///// <param name="name">The name.</param>
-        ///// <param name="document">The document.</param>
-        ///// <param name="serviceName">Name of the service.</param>
-        ///// <param name="foundersNames">The founders names.</param>
-        ///// <param name="foundationDate">The foundation date.</param>
-        ///// <param name="accumulatedRevenue">The accumulated revenue.</param>
-        ///// <param name="description">The description.</param>
-        ///// <param name="curriculum">The curriculum.</param>
-        ///// <param name="workDedicationId">The work dedication identifier.</param>
-        ///// <param name="businessDefinition">The business definition.</param>
-        ///// <param name="website">The website.</param>
-        ///// <param name="businessFocus">The business focus.</param>
-        ///// <param name="marketSize">Size of the market.</param>
-        ///// <param name="businessEconomicModel">The business economic model.</param>
-        ///// <param name="businessOperationalModel">The business operational model.</param>
-        ///// <param name="businessDifferentials">The business differentials.</param>
-        ///// <param name="competingCompanies">The competing companies.</param>
-        ///// <param name="businessStage">The business stage.</param>
-        ///// <param name="presentationUploadDate">The presentation upload date.</param>
-        //public InnovationOrganization(
-        //    Edition edition,
-        //    AttendeeCollaborator attendeeCollaborator,
-        //    WorkDedication workDedication,
-        //    List<InnovationOption> innovationOptions,
-        //    string name,
-        //    string document,
-        //    string serviceName,
-        //    string foundersNames,
-        //    DateTime foundationDate,
-        //    decimal accumulatedRevenue,
-        //    string description,
-        //    string curriculum,
-        //    string businessDefinition,
-        //    string website,
-        //    string businessFocus,
-        //    string marketSize,
-        //    string businessEconomicModel,
-        //    string businessOperationalModel,
-        //    string businessDifferentials,
-        //    string competingCompanies,
-        //    string businessStage,
-        //    bool isPresentationUploaded,
-        //    int userId)
-        //{
-        //    this.Name = name;
-        //    this.Document = document;
-        //    this.ServiceName = serviceName;
-        //    this.FoundersNames = foundersNames;
-        //    this.FoundationDate = foundationDate;
-        //    this.AccumulatedRevenue = accumulatedRevenue;
-        //    this.Description = description;
-        //    this.Curriculum = curriculum;
-        //    this.BusinessDefinition = businessDefinition;
-        //    this.Website = website;
-        //    this.BusinessFocus = businessFocus;
-        //    this.MarketSize = marketSize;
-        //    this.BusinessEconomicModel = businessEconomicModel;
-        //    this.BusinessOperationalModel = businessOperationalModel;
-        //    this.BusinessDifferentials = businessDifferentials;
-        //    this.CompetingCompanies = competingCompanies;
-        //    this.BusinessStage = businessStage;
+        public InnovationOrganization(
+            Edition edition,
+            AttendeeCollaborator attendeeCollaborator,
+            WorkDedication workDedication,
+            List<InnovationOption> innovationOptions,
+            string name,
+            string document,
+            string serviceName,
+            string foundersNames,
+            DateTime foundationDate,
+            decimal accumulatedRevenue,
+            string description,
+            string curriculum,
+            string businessDefinition,
+            string website,
+            string businessFocus,
+            string marketSize,
+            string businessEconomicModel,
+            string businessOperationalModel,
+            string businessDifferentials,
+            string competingCompanies,
+            string businessStage,
+            bool isPresentationUploaded,
+            int userId)
+        {
+            this.Name = name;
+            this.Document = document;
+            this.ServiceName = serviceName;
+            this.FoundersNames = foundersNames;
+            this.FoundationDate = foundationDate;
+            this.AccumulatedRevenue = accumulatedRevenue;
+            this.Description = description;
+            this.Curriculum = curriculum;
+            this.BusinessDefinition = businessDefinition;
+            this.Website = website;
+            this.BusinessFocus = businessFocus;
+            this.MarketSize = marketSize;
+            this.BusinessEconomicModel = businessEconomicModel;
+            this.BusinessOperationalModel = businessOperationalModel;
+            this.BusinessDifferentials = businessDifferentials;
+            this.CompetingCompanies = competingCompanies;
+            this.BusinessStage = businessStage;
 
-        //    this.IsDeleted = false;
-        //    this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-        //    this.CreateUserId = this.UpdateUserId = userId;
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
 
-        //    this.UpdatePresentationUploadDate(isPresentationUploaded, false);
-        //    this.SetWorkDedication(workDedication);
-        //    this.AddInnovationOrganizationOptions(innovationOptions, userId);
-        //    this.SynchronizeAttendeeInnovationOrganizationsCollaborators(edition, attendeeCollaborator, userId);
-        //}
+            this.UpdatePresentationUploadDate(isPresentationUploaded, false);
+            this.SetWorkDedication(workDedication);
+            this.AddInnovationOrganizationOptions(innovationOptions, userId);
+            this.SynchronizeAttendeeInnovationOrganizationsCollaborators(edition, attendeeCollaborator, userId);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InnovationOrganization"/> class.
@@ -142,7 +116,29 @@ namespace PlataformaRio2C.Domain.Entities
 
         }
 
-        #region Attendee Innovation Organization
+        #region Innovation Organization Options (Disabled)
+
+        /// <summary>
+        /// Adds the innovation organization options.
+        /// </summary>
+        /// <param name="innovationOptions">The innovation options.</param>
+        /// <param name="userId">The user identifier.</param>
+        //private void AddInnovationOrganizationOptions(List<InnovationOption> innovationOptions, int userId)
+        //{
+        //    if (this.InnovationOrganizationOptions == null)
+        //    {
+        //        this.InnovationOrganizationOptions = new List<InnovationOrganizationOption>();
+        //    }
+
+        //    foreach (var innovationOption in innovationOptions)
+        //    {
+        //        this.InnovationOrganizationOptions.Add(new InnovationOrganizationOption(this, innovationOption, null, userId));
+        //    }
+        //}
+
+        #endregion
+
+        #region Attendee Innovation Organization Collaborators
 
         /// <summary>
         /// Synchronizes the attendee innovation organizations collaborators.
@@ -153,8 +149,8 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         /// <param name="musicProjectApiDto">The music project API dto.</param>
         private void SynchronizeAttendeeInnovationOrganizationsCollaborators(
-            Edition edition, 
-            AttendeeCollaborator attendeeCollaborator, 
+            Edition edition,
+            AttendeeCollaborator attendeeCollaborator,
             int userId)
         {
             if (edition == null)
@@ -210,25 +206,31 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #region Innovation Organization Options
+        #region Attendee Innovation Organization
 
-        /// <summary>
-        /// Adds the innovation organization options.
-        /// </summary>
-        /// <param name="innovationOptions">The innovation options.</param>
-        /// <param name="userId">The user identifier.</param>
-        private void AddInnovationOrganizationOptions(List<InnovationOption> innovationOptions, int userId)
-        {
-            if (this.InnovationOrganizationOptions == null)
-            {
-                this.InnovationOrganizationOptions = new List<InnovationOrganizationOption>();
-            }
+        #endregion
 
-            foreach (var innovationOption in innovationOptions)
-            {
-                this.InnovationOrganizationOptions.Add(new InnovationOrganizationOption(this, innovationOption, null, userId));
-            }
-        }
+        #region Attendee Innovation Organization Competitor
+
+        #endregion
+
+        #region Attendee Innovation Organization Experience
+
+        #endregion
+
+        #region Attendee Innovation Organization Founder
+
+        #endregion
+
+        #region Attendee Innovation Organization Pitching Objective
+
+        #endregion
+
+        #region Attendee Innovation Organization Technology
+
+        #endregion
+
+        #region Attendee Innovation Organization Track
 
         #endregion
 

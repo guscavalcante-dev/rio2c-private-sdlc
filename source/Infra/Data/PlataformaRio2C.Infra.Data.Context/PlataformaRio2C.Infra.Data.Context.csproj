@@ -116,7 +116,6 @@
     <Compile Include="Mapping\Innovation\InnovationOrganizationExperienceOptionMap.cs" />
     <Compile Include="Mapping\Innovation\InnovationOrganizationTechnologyOptionMap.cs" />
     <Compile Include="Mapping\Innovation\WorkDedicationMap.cs" />
-    <Compile Include="Mapping\Innovation\InnovationOrganizationOptionMap.cs" />
     <Compile Include="Mapping\Innovation\InnovationOrganizationMap.cs" />
     <Compile Include="Mapping\Logistics\LogisticAccommodationMap.cs" />
     <Compile Include="Mapping\Logistics\LogisticTransferMap.cs" />

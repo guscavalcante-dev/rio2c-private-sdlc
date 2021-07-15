@@ -20,7 +20,7 @@ namespace PlataformaRio2C.Domain.ApiModels
     /// <summary>InnovationOrganizationOptionApiBaseResponse</summary>
     public class InnovationOrganizationOptionApiBaseResponse : ApiBaseResponse
     {
-        [JsonProperty("InnovationOrganizationOptions")]
-        public List<BaseListItemApiResponse> InnovationOrganizationOptions { get; set; }
+        [JsonProperty("options")]
+        public List<BaseListItemApiResponse> BaseListItemApiResponses { get; set; }
     }
 }

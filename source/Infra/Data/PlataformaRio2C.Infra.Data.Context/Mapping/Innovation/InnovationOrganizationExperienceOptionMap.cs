@@ -17,7 +17,7 @@ using System.Data.Entity.ModelConfiguration;
 namespace PlataformaRio2C.Infra.Data.Context.Mapping
 {
     /// <summary>InnovationOrganizationExperienceOptionMap</summary>
-    public class InnovationOrganizationExperienceOptionMap : EntityTypeConfiguration<InnovationOptionGroup>
+    public class InnovationOrganizationExperienceOptionMap : EntityTypeConfiguration<InnovationOrganizationExperienceOption>
     {
         /// <summary>Initializes a new instance of the <see cref="InnovationOrganizationExperienceOptionMap"/> class.</summary>
         public InnovationOrganizationExperienceOptionMap()

@@ -80,7 +80,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <exception cref="DomainException"></exception>
         /// <exception cref="DomainException"></exception>
         /// <exception cref="DomainException"></exception>
-        [HttpPost]
+        [HttpGet]
         [Route("CreateStartup/{key?}")]
         public async Task<IHttpActionResult> CreateStartup(string key, HttpRequestMessage request)
         {
@@ -221,7 +221,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
                 return await Json(new InnovationOrganizationOptionApiBaseResponse
                 {
-                    InnovationOrganizationOptions = innovationOrganizationExperienceOptions.Select(mbt => new BaseListItemApiResponse()
+                    BaseListItemApiResponses = innovationOrganizationExperienceOptions.Select(mbt => new BaseListItemApiResponse()
                     {
                         Uid = mbt.Uid,
                         Name = mbt.Name
@@ -262,7 +262,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
                 return await Json(new InnovationOrganizationOptionApiBaseResponse
                 {
-                    InnovationOrganizationOptions = innovationOrganizationTrackOptions.Select(mbt => new BaseListItemApiResponse()
+                    BaseListItemApiResponses = innovationOrganizationTrackOptions.Select(mbt => new BaseListItemApiResponse()
                     {
                         Uid = mbt.Uid,
                         Name = mbt.Name
@@ -303,7 +303,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
                 return await Json(new InnovationOrganizationOptionApiBaseResponse
                 {
-                    InnovationOrganizationOptions = innovationOrganizationTechnologyOptions.Select(mbt => new BaseListItemApiResponse()
+                    BaseListItemApiResponses = innovationOrganizationTechnologyOptions.Select(mbt => new BaseListItemApiResponse()
                     {
                         Uid = mbt.Uid,
                         Name = mbt.Name
@@ -344,7 +344,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
                 return await Json(new InnovationOrganizationOptionApiBaseResponse
                 {
-                    InnovationOrganizationOptions = innovationOrganizationObjectivesOptions.Select(mbt => new BaseListItemApiResponse()
+                    BaseListItemApiResponses = innovationOrganizationObjectivesOptions.Select(mbt => new BaseListItemApiResponse()
                     {
                         Uid = mbt.Uid,
                         Name = mbt.Name

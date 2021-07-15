@@ -38,11 +38,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     public class CreateInnovationOrganizationCommandHandler : InnovationOrganizationBaseCommandHandler, IRequestHandler<CreateInnovationOrganization, AppValidationResult>
     {
         private readonly IEditionRepository editionRepo;
-        private readonly IInnovationOptionRepository innovationOptionRepo;
         private readonly IAttendeeInnovationOrganizationRepository attendeeInnovationOrganizationRepo;
         private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IWorkDedicationRepository workDedicationRepo;
         private readonly IFileRepository fileRepo;
+        private readonly IInnovationOrganizationExperienceOptionRepository innovationOrganizationExperienceOptionRepo;
+        private readonly IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepo;
+        private readonly IInnovationOrganizationTechnologyOptionRepository innovationOrganizationTechnologyOptionRepo;
+        private readonly IInnovationOrganizationObjectivesOptionRepository innovationOrganizationObjectivesOptionRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateInnovationOrganizationCommandHandler" /> class.
@@ -59,20 +62,26 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IUnitOfWork uow,
             IInnovationOrganizationRepository innovationOrganizationRepository,
             IAttendeeInnovationOrganizationRepository attendeeInnovationOrganizationRepository,
-            IInnovationOptionRepository innovationOptionRepository,
             IEditionRepository editionRepository,
             ICollaboratorRepository collaboratorRepository,
             IWorkDedicationRepository workDedicationRepository,
-            IFileRepository fileRepository
+            IFileRepository fileRepository,
+            IInnovationOrganizationExperienceOptionRepository innovationOrganizationExperienceOptionRepository,
+            IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepository,
+            IInnovationOrganizationTechnologyOptionRepository innovationOrganizationTechnologyOptionRepository,
+            IInnovationOrganizationObjectivesOptionRepository innovationOrganizationObjectivesOptionRepository
             )
             : base(commandBus, uow, innovationOrganizationRepository)
         {
             this.attendeeInnovationOrganizationRepo = attendeeInnovationOrganizationRepository;
             this.editionRepo = editionRepository;
-            this.innovationOptionRepo = innovationOptionRepository;
             this.collaboratorRepo = collaboratorRepository;
             this.workDedicationRepo = workDedicationRepository;
             this.fileRepo = fileRepository;
+            this.innovationOrganizationExperienceOptionRepo = innovationOrganizationExperienceOptionRepository;
+            this.innovationOrganizationTrackOptionRepo = innovationOrganizationTrackOptionRepository;
+            this.innovationOrganizationTechnologyOptionRepo = innovationOrganizationTechnologyOptionRepository;
+            this.innovationOrganizationObjectivesOptionRepo = innovationOrganizationObjectivesOptionRepository;
         }
 
         /// <summary>
@@ -86,7 +95,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.Uow.BeginTransaction();
 
             #region Initial validations
-            
+
             var editionDto = await editionRepo.FindDtoAsync(cmd.EditionId ?? 0);
             if (editionDto?.Edition == null)
             {
@@ -102,11 +111,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
-            var workDedication = await workDedicationRepo.FindByUidAsync(cmd.WorkDedicationUid);
-            if (workDedication == null)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.WorkDedication, Labels.FoundF), new string[] { "ToastrError" }));
-            }
+            //var workDedication = await workDedicationRepo.FindByUidAsync(cmd.WorkDedicationUid);
+            //if (workDedication == null)
+            //{
+            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.WorkDedication, Labels.FoundF), new string[] { "ToastrError" }));
+            //}
 
             var existentAttendeeInnovationOrganization = await attendeeInnovationOrganizationRepo.FindByDocumentAndEditionIdAsync(cmd.Document, cmd.EditionId.Value);
             if (existentAttendeeInnovationOrganization != null)
@@ -122,38 +131,37 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            cmd.CompanyExperiences = cmd.CompanyExperiences.Select(ta =>
-                                                    new InnovationOptionApiDto()
-                                                    {
-                                                        Uid = ta.Uid,
-                                                        InnovationOption = innovationOptionRepo.Get(ta.Uid)
-                                                    }).ToList();
+            cmd.InnovationOrganizationExperienceOptionApiDtos = cmd.InnovationOrganizationExperienceOptionApiDtos.Select(ta =>
+                                                                    new InnovationOrganizationExperienceOptionApiDto()
+                                                                    {
+                                                                        Uid = ta.Uid,
+                                                                        AdditionalInfo = ta.AdditionalInfo,
+                                                                        InnovationOrganizationExperienceOption = this.innovationOrganizationExperienceOptionRepo.FindByUid(ta.Uid)
+                                                                    }).ToList();
 
-            cmd.ProductsOrServices = cmd.ProductsOrServices.Select(ta =>
-                                                    new InnovationOptionApiDto()
-                                                    {
-                                                        Uid = ta.Uid,
-                                                        InnovationOption = innovationOptionRepo.Get(ta.Uid)
-                                                    }).ToList();
+            cmd.InnovationOrganizationTrackOptionApiDtos = cmd.InnovationOrganizationTrackOptionApiDtos.Select(ta =>
+                                                                new InnovationOrganizationTrackOptionApiDto()
+                                                                {
+                                                                    Uid = ta.Uid,
+                                                                    AdditionalInfo = ta.AdditionalInfo,
+                                                                    InnovationOrganizationTrackOption = this.innovationOrganizationTrackOptionRepo.FindByUid(ta.Uid)
+                                                                }).ToList();
 
-            cmd.TechnologyExperiences = cmd.TechnologyExperiences.Select(ta =>
-                                                    new InnovationOptionApiDto()
-                                                    {
-                                                        Uid = ta.Uid,
-                                                        InnovationOption = innovationOptionRepo.Get(ta.Uid)
-                                                    }).ToList();
+            cmd.InnovationOrganizationObjectivesOptionApiDtos = cmd.InnovationOrganizationObjectivesOptionApiDtos.Select(ta =>
+                                                                   new InnovationOrganizationObjectivesOptionApiDto()
+                                                                   {
+                                                                       Uid = ta.Uid,
+                                                                       AdditionalInfo = ta.AdditionalInfo,
+                                                                       InnovationOrganizationObjectivesOption = this.innovationOrganizationObjectivesOptionRepo.FindByUid(ta.Uid)
+                                                                   }).ToList();
 
-            cmd.CompanyObjectives = cmd.CompanyObjectives.Select(ta =>
-                                                   new InnovationOptionApiDto()
-                                                   {
-                                                       Uid = ta.Uid,
-                                                       InnovationOption = innovationOptionRepo.Get(ta.Uid)
-                                                   }).ToList();
-
-            var innovationOptions = cmd.CompanyExperiences.Select(iodto => iodto.InnovationOption)
-                                                            .Concat(cmd.ProductsOrServices.Select(iodto => iodto.InnovationOption))
-                                                            .Concat(cmd.TechnologyExperiences.Select(iodto => iodto.InnovationOption))
-                                                            .Concat(cmd.CompanyObjectives.Select(iodto => iodto.InnovationOption)).ToList();
+            cmd.InnovationOrganizationTechnologyOptionApiDtos = cmd.InnovationOrganizationTechnologyOptionApiDtos.Select(ta =>
+                                                                    new InnovationOrganizationTechnologyOptionApiDto()
+                                                                    {
+                                                                        Uid = ta.Uid,
+                                                                        AdditionalInfo = ta.AdditionalInfo,
+                                                                        InnovationOrganizationTechnologyOption = this.innovationOrganizationTechnologyOptionRepo.FindByUid(ta.Uid)
+                                                                    }).ToList();
 
             var collaborator = await collaboratorRepo.FindByEmailAsync(cmd.Email);
             if (collaborator == null)
@@ -224,26 +232,26 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                    !string.IsNullOrEmpty(cmd.PresentationFile),
                    cmd.UserId);
 
-            if (!innovationOrganization.IsValid())
-            {
-                this.AppValidationResult.Add(innovationOrganization.ValidationResult);
-                return this.AppValidationResult;
-            }
+            //if (!innovationOrganization.IsValid())
+            //{
+            //    this.AppValidationResult.Add(innovationOrganization.ValidationResult);
+            //    return this.AppValidationResult;
+            //}
 
-            this.InnovationOrganizationRepo.Create(innovationOrganization);
-            this.Uow.SaveChanges();
+            //this.InnovationOrganizationRepo.Create(innovationOrganization);
+            //this.Uow.SaveChanges();
 
-            this.AppValidationResult.Data = innovationOrganization;
+            //this.AppValidationResult.Data = innovationOrganization;
 
-            if (!string.IsNullOrEmpty(cmd.PresentationFile))
-            {
-                var fileBytes = Convert.FromBase64String(cmd.PresentationFile);
-                this.fileRepo.Upload(
-                    new MemoryStream(fileBytes),
-                    FileMimeType.Pdf,
-                    innovationOrganization.Uid + FileType.Pdf,
-                    FileRepositoryPathType.InnovationOrganizationPresentationFile);
-            }
+            //if (!string.IsNullOrEmpty(cmd.PresentationFile))
+            //{
+            //    var fileBytes = Convert.FromBase64String(cmd.PresentationFile);
+            //    this.fileRepo.Upload(
+            //        new MemoryStream(fileBytes),
+            //        FileMimeType.Pdf,
+            //        innovationOrganization.Uid + FileType.Pdf,
+            //        FileRepositoryPathType.InnovationOrganizationPresentationFile);
+            //}
 
             return this.AppValidationResult;
         }

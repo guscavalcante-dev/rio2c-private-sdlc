@@ -30,7 +30,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IUserRepository userRepo;
         private readonly IEditionRepository editionRepo;
         private readonly ICollaboratorTypeRepository collaboratorTypeRepo;
-        private readonly IInnovationOptionRepository innovationOptionRepo;
 
         /// <summary>Initializes a new instance of the <see cref="CreateInnovationCollaboratorCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
@@ -45,14 +44,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             ICollaboratorRepository collaboratorRepository,
             IUserRepository userRepository,
             IEditionRepository editionRepository,
-            ICollaboratorTypeRepository collaboratorTypeRepository,
-            IInnovationOptionRepository innovationOptionRepository)
+            ICollaboratorTypeRepository collaboratorTypeRepository)
             : base(eventBus, uow, collaboratorRepository)
         {
             this.userRepo = userRepository;
             this.editionRepo = editionRepository;
             this.collaboratorTypeRepo = collaboratorTypeRepository;
-            this.innovationOptionRepo = innovationOptionRepository;
         }
 
         /// <summary>Handles the specified create tiny collaborator.</summary>
@@ -85,7 +82,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             if (user == null)
             {
                 //TODO: Ainda não temos uma tabela para salvar esses InnovationOptions selecionados.
-                var innovationOptions = await innovationOptionRepo.FindAllByUidsAsync(cmd.InnovationOptionsUids);
+                //var innovationOptions = await innovationOptionRepo.FindAllByUidsAsync(cmd.InnovationOptionsUids);
 
                 var collaborator = new Collaborator(
                     await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),

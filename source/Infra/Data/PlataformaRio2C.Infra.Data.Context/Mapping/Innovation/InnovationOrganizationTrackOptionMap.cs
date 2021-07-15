@@ -17,7 +17,7 @@ using System.Data.Entity.ModelConfiguration;
 namespace PlataformaRio2C.Infra.Data.Context.Mapping
 {
     /// <summary>InnovationOrganizationTrackOptionMap</summary>
-    public class InnovationOrganizationTrackOptionMap : EntityTypeConfiguration<InnovationOptionGroup>
+    public class InnovationOrganizationTrackOptionMap : EntityTypeConfiguration<InnovationOrganizationTrackOption>
     {
         /// <summary>Initializes a new instance of the <see cref="InnovationOrganizationTrackOptionMap"/> class.</summary>
         public InnovationOrganizationTrackOptionMap()

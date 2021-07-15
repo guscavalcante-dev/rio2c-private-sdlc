@@ -169,11 +169,12 @@ namespace PlataformaRio2C.Infra.Data.Context
 
             // Innovation
             modelBuilder.Configurations.Add(new InnovationOrganizationMap());
-            modelBuilder.Configurations.Add(new InnovationOrganizationOptionMap());
-            modelBuilder.Configurations.Add(new InnovationOptionMap());
-            modelBuilder.Configurations.Add(new InnovationOptionGroupMap());
             modelBuilder.Configurations.Add(new AttendeeInnovationOrganizationMap());
             modelBuilder.Configurations.Add(new AttendeeInnovationOrganizationCollaboratorMap());
+            modelBuilder.Configurations.Add(new InnovationOrganizationExperienceOptionMap());
+            modelBuilder.Configurations.Add(new InnovationOrganizationObjectivesOptionMap());
+            modelBuilder.Configurations.Add(new InnovationOrganizationTechnologyOptionMap());
+            modelBuilder.Configurations.Add(new InnovationOrganizationTrackOptionMap());
             modelBuilder.Configurations.Add(new WorkDedicationMap());
 
             // TODO: Old mapping that must be reviewed

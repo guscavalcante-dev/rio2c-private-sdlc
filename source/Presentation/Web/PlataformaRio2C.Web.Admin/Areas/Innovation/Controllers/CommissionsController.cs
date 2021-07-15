@@ -44,7 +44,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
     {
         private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
-        private readonly IInnovationOptionRepository innovationOptionRepo;
 
         /// <summary>Initializes a new instance of the <see cref="CommissionsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -55,13 +54,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             ICollaboratorRepository collaboratorRepository,
-            IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
-            IInnovationOptionRepository innovationOptionRepository)
+            IAttendeeCollaboratorRepository attendeeCollaboratorRepository)
             : base(commandBus, identityController)
         {
             this.collaboratorRepo = collaboratorRepository;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
-            this.innovationOptionRepo = innovationOptionRepository;
         }
 
         #region List
@@ -564,13 +561,14 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
             try
             {
-                var innovationOptions = await this.innovationOptionRepo.FindAllByGroupUidAsync(InnovationOptionGroup.ProductsOrServicesTracks.Uid);
-                if (innovationOptions == null)
-                {
-                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Tracks, Labels.FoundF.ToLowerInvariant()));
-                }
+                //var innovationOptions = await this.innovationOptionRepo.FindAllByGroupUidAsync(InnovationOptionGroup.ProductsOrServicesTracks.Uid);
+                //if (innovationOptions == null)
+                //{
+                //    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Tracks, Labels.FoundF.ToLowerInvariant()));
+                //}
 
-                cmd = new CreateInnovationCollaborator(innovationOptions);
+                //cmd = new CreateInnovationCollaborator(innovationOptions);
+                cmd = new CreateInnovationCollaborator();
             }
             catch (DomainException ex)
             {
@@ -661,16 +659,16 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
             try
             {
-                var innovationOptions = await this.innovationOptionRepo.FindAllByGroupUidAsync(InnovationOptionGroup.ProductsOrServicesTracks.Uid);
-                if (innovationOptions == null)
-                {
-                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Tracks, Labels.FoundF.ToLowerInvariant()));
-                }
+                //var innovationOptions = await this.innovationOptionRepo.FindAllByGroupUidAsync(InnovationOptionGroup.ProductsOrServicesTracks.Uid);
+                //if (innovationOptions == null)
+                //{
+                //    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Tracks, Labels.FoundF.ToLowerInvariant()));
+                //}
 
                 cmd = new UpdateInnovationCollaborator(
                     await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
                     isAddingToCurrentEdition,
-                    innovationOptions);
+                    null);//innovationOptions);
             }
             catch (DomainException ex)
             {
