@@ -44,6 +44,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
     {
         private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
+        private readonly IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepo;
 
         /// <summary>Initializes a new instance of the <see cref="CommissionsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -54,11 +55,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             ICollaboratorRepository collaboratorRepository,
-            IAttendeeCollaboratorRepository attendeeCollaboratorRepository)
+            IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
+            IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepository)
             : base(commandBus, identityController)
         {
             this.collaboratorRepo = collaboratorRepository;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
+            this.innovationOrganizationTrackOptionRepo = innovationOrganizationTrackOptionRepository;
         }
 
         #region List
@@ -561,14 +564,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
             try
             {
-                //var innovationOptions = await this.innovationOptionRepo.FindAllByGroupUidAsync(InnovationOptionGroup.ProductsOrServicesTracks.Uid);
-                //if (innovationOptions == null)
-                //{
-                //    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Tracks, Labels.FoundF.ToLowerInvariant()));
-                //}
+                var innovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllAsync();
+                if (innovationOrganizationTrackOptions == null)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Tracks, Labels.FoundF.ToLowerInvariant()));
+                }
 
-                //cmd = new CreateInnovationCollaborator(innovationOptions);
-                cmd = new CreateInnovationCollaborator();
+                cmd = new CreateInnovationCollaborator(innovationOrganizationTrackOptions);
             }
             catch (DomainException ex)
             {

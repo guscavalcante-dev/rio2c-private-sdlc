@@ -39,6 +39,42 @@ namespace PlataformaRio2C.Domain.Entities
 
         }
 
+        /// <summary>
+        /// Gets the name.
+        /// </summary>
+        /// <returns></returns>
+        public string GetName()
+        {
+            //TODO: Separate "Name" and "Description" in distinc columns to fix this!
+            string[] nameAndDescription = this.Name.Split(':');
+            if(nameAndDescription.Length > 0)
+            {
+                return nameAndDescription[0];
+            }
+            else
+            {
+                return "-";
+            }
+        }
+
+        /// <summary>
+        /// Gets the description.
+        /// </summary>
+        /// <returns></returns>
+        public string GetDescription()
+        {
+            //TODO: Separate "Name" and "Description" in distinc columns to fix this!
+            string[] nameAndDescription = this.Name.Split(':');
+            if (nameAndDescription.Length > 0)
+            {
+                return nameAndDescription[1];
+            }
+            else
+            {
+                return "-";
+            }
+        }
+
         #region Valitations
 
         /// <summary>

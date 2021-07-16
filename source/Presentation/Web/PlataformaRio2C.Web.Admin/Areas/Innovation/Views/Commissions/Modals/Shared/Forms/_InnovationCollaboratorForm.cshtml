@@ -27,17 +27,21 @@
             @Html.ValidationMessage("InnovationOptionsUids", new { @class = "text-danger" })
             <div class="kt-section__content mt-3">
                 <div class="kt-checkbox-list">
-                    @foreach (var innovationOption in Model.InnovationOptions)
+                    @foreach (var innovationOrganizationTrackOption in Model.InnovationOrganizationTrackOptions)
                     {
-                        <label class="kt-checkbox">
-                            <input type="checkbox"
-                                   name="InnovationOptionsUids"
-                                   value="@innovationOption.Uid"
-                                   class="require-one"
-                                   data-id="innovationoption-group"
-                                   @if (Model.InnovationOptionsUids?.Contains(innovationOption.Uid) == true) { <text> checked </text> } /> @innovationOption.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')
-                                <span></span>
-                            </label>
+                    <label class="kt-checkbox">
+                        <input type="checkbox"
+                               name="innovationOrganizationTrackOptionsUids"
+                               value="@innovationOrganizationTrackOption.Uid"
+                               class="require-one"
+                               data-id="innovationOrganizationTrackOption-group"
+                               @if (Model.InnovationOrganizationTrackOptionsUids?.Contains(innovationOrganizationTrackOption.Uid) == true) { <text> checked </text> } />
+                        <div>
+                            <span>@innovationOrganizationTrackOption.GetName().GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')</span>
+                            <span class="form-text text-muted">(@innovationOrganizationTrackOption.GetDescription().GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|'))</span>
+                        </div>
+                        <span></span>
+                    </label>
                         }
                 </div>
             </div>

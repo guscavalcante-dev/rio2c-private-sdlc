@@ -25,7 +25,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         [Display(Name = nameof(Labels.Tracks), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneOption")]
-        public List<Guid?> InnovationOptionsUids { get; set; }
+        public List<Guid?> InnovationOrganizationTrackOptionsUids { get; set; }
 
         public List<InnovationOrganizationTrackOption> InnovationOrganizationTrackOptions { get; private set; }
 
