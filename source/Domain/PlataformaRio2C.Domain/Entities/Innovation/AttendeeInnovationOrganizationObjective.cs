@@ -6,7 +6,7 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 07-12-2021
 // ***********************************************************************
-// <copyright file="AttendeeInnovationOrganizationTrack.cs" company="Softo">
+// <copyright file="AttendeeInnovationOrganizationObjective.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -21,38 +21,35 @@ using System.Threading.Tasks;
 namespace PlataformaRio2C.Domain.Entities
 {
     /// <summary>
-    /// Class AttendeeInnovationOrganizationTrack.
+    /// Class AttendeeInnovationOrganizationObjective.
     /// Implements the <see cref="PlataformaRio2C.Domain.Entities.Entity" />
     /// </summary>
     /// <seealso cref="PlataformaRio2C.Domain.Entities.Entity" />
-    public class AttendeeInnovationOrganizationTrack : Entity
+    public class AttendeeInnovationOrganizationObjective : Entity
     {
-        public int AttendeeInnovationOrganizationId { get; set; }
-        public int InnovationOrganizationTrackOptionId { get; set; }
+        public int AttendeeInnovationOrganiaztionId { get; set; }
+        public int InnovationOrganizationObjectiveOptionId { get; set; }
         public string AdditionalInfo { get; set; }
 
         public virtual AttendeeInnovationOrganization AttendeeInnovationOrganization { get; private set; }
-        public virtual InnovationOrganizationTrackOption InnovationOrganizationTrackOption { get; private set; }
+        public virtual InnovationOrganizationObjectivesOption InnovationOrganizationObjectivesOption { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeeInnovationOrganizationTrack"/> class.
+        /// Initializes a new instance of the <see cref="AttendeeInnovationOrganizationObjective"/> class.
         /// </summary>
         /// <param name="attendeeInnovationOrganization">The attendee innovation organization.</param>
-        /// <param name="innovationOrganizationTrackOption">The innovation organization track option.</param>
+        /// <param name="innovationOrganizationObjectivesOption">The innovation organization objectives option.</param>
         /// <param name="additionalInfo">The additional information.</param>
         /// <param name="userId">The user identifier.</param>
-        public AttendeeInnovationOrganizationTrack(
+        public AttendeeInnovationOrganizationObjective(
             AttendeeInnovationOrganization attendeeInnovationOrganization,
-            InnovationOrganizationTrackOption innovationOrganizationTrackOption,
+            InnovationOrganizationObjectivesOption innovationOrganizationObjectivesOption,
             string additionalInfo,
             int userId)
         {
             this.AttendeeInnovationOrganization = attendeeInnovationOrganization;
-            this.InnovationOrganizationTrackOption = innovationOrganizationTrackOption;
+            this.InnovationOrganizationObjectivesOption = innovationOrganizationObjectivesOption;
             this.AdditionalInfo = additionalInfo;
-
-            this.AttendeeInnovationOrganizationId = attendeeInnovationOrganization?.Id ?? 0;
-            this.InnovationOrganizationTrackOptionId = innovationOrganizationTrackOption?.Id ?? 0;
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
@@ -60,9 +57,9 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeeInnovationOrganizationTrack"/> class.
+        /// Initializes a new instance of the <see cref="AttendeeInnovationOrganizationObjective"/> class.
         /// </summary>
-        public AttendeeInnovationOrganizationTrack()
+        public AttendeeInnovationOrganizationObjective()
         {
 
         }

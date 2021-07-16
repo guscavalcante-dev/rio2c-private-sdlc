@@ -16,6 +16,7 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using PlataformaRio2C.Domain.Dtos;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -45,67 +46,127 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int CompetingCompaniesMaxLength = 300;
         public static readonly int BusinessStageMaxLength = 300;
 
-        public string Name { get; set; }
-        public string Document { get; set; }
-        public string ServiceName { get; set; }
-        public DateTime FoundationDate { get; set; }
-        public string Description { get; set; }
-        public string Website { get; set; }
-        public DateTimeOffset? ImageUploadDate { get; set; }
+        public string Name { get; private set; }
+        public string Document { get; private set; }
+        public string ServiceName { get; private set; }
+        public DateTime FoundationDate { get; private set; }
+        public string Description { get; private set; }
+        public string Website { get; private set; }
+        public DateTimeOffset? ImageUploadDate { get; private set; }
 
         public virtual ICollection<AttendeeInnovationOrganization> AttendeeInnovationOrganizations { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InnovationOrganization"/> class.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="attendeeCollaborator">The attendee collaborator.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="document">The document.</param>
+        /// <param name="serviceName">Name of the service.</param>
+        /// <param name="foundationDate">The foundation date.</param>
+        /// <param name="description">The description.</param>
+        /// <param name="website">The website.</param>
+        /// <param name="accumulatedRevenue">The accumulated revenue.</param>
+        /// <param name="businessDefinition">The business definition.</param>
+        /// <param name="businessFocus">The business focus.</param>
+        /// <param name="marketSize">Size of the market.</param>
+        /// <param name="businessEconomicModel">The business economic model.</param>
+        /// <param name="businessOperationalModel">The business operational model.</param>
+        /// <param name="businessDifferentials">The business differentials.</param>
+        /// <param name="businessStage">The business stage.</param>
+        /// <param name="isPresentationUploaded">if set to <c>true</c> [is presentation uploaded].</param>
+        /// <param name="innovationOrganizationExperienceOptions">The innovation organization experience options.</param>
+        /// <param name="innovationOrganizationObjectivesOptions">The innovation organization objectives options.</param>
+        /// <param name="innovationOrganizationTechnologyOptions">The innovation organization technology options.</param>
+        /// <param name="innovationOrganizationTrackOptions">The innovation organization track options.</param>
+        /// <param name="attendeeInnovationOrganizationFounderApiDtos">The attendee innovation organization founder API dtos.</param>
+        /// <param name="attendeeInnovationOrganizationCompetitorApiDtos">The attendee innovation organization competitor API dtos.</param>
+        /// <param name="userId">The user identifier.</param>
         public InnovationOrganization(
             Edition edition,
             AttendeeCollaborator attendeeCollaborator,
-            WorkDedication workDedication,
-            List<InnovationOption> innovationOptions,
             string name,
             string document,
             string serviceName,
-            string foundersNames,
             DateTime foundationDate,
-            decimal accumulatedRevenue,
             string description,
-            string curriculum,
-            string businessDefinition,
             string website,
+            decimal accumulatedRevenue,
+            string businessDefinition,
             string businessFocus,
             string marketSize,
             string businessEconomicModel,
             string businessOperationalModel,
             string businessDifferentials,
-            string competingCompanies,
             string businessStage,
             bool isPresentationUploaded,
+            List<AttendeeInnovationOrganizationFounderApiDto> attendeeInnovationOrganizationFounderApiDtos,
+            List<AttendeeInnovationOrganizationCompetitorApiDto> attendeeInnovationOrganizationCompetitorApiDtos,
+            List<InnovationOrganizationExperienceOptionApiDto> innovationOrganizationExperienceOptionApiDtos,
+            List<InnovationOrganizationObjectivesOptionApiDto> innovationOrganizationObjectivesOptionApiDtos,
+            List<InnovationOrganizationTechnologyOptionApiDto> innovationOrganizationTechnologyOptionApiDtos,
+            List<InnovationOrganizationTrackOptionApiDto> innovationOrganizationTrackOptionApiDtos,
             int userId)
         {
             this.Name = name;
             this.Document = document;
             this.ServiceName = serviceName;
-            this.FoundersNames = foundersNames;
             this.FoundationDate = foundationDate;
-            this.AccumulatedRevenue = accumulatedRevenue;
             this.Description = description;
-            this.Curriculum = curriculum;
-            this.BusinessDefinition = businessDefinition;
             this.Website = website;
-            this.BusinessFocus = businessFocus;
-            this.MarketSize = marketSize;
-            this.BusinessEconomicModel = businessEconomicModel;
-            this.BusinessOperationalModel = businessOperationalModel;
-            this.BusinessDifferentials = businessDifferentials;
-            this.CompetingCompanies = competingCompanies;
-            this.BusinessStage = businessStage;
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId = userId;
 
-            this.UpdatePresentationUploadDate(isPresentationUploaded, false);
-            this.SetWorkDedication(workDedication);
-            this.AddInnovationOrganizationOptions(innovationOptions, userId);
-            this.SynchronizeAttendeeInnovationOrganizationsCollaborators(edition, attendeeCollaborator, userId);
+            this.SynchronizeAttendeeInnovationOrganizations(
+                edition,
+                accumulatedRevenue,
+                marketSize,
+                businessDefinition,
+                businessFocus,
+                businessEconomicModel,
+                businessDifferentials,
+                businessStage,
+                isPresentationUploaded,
+                businessOperationalModel,
+                userId);
+
+            this.SynchronizeAttendeeInnovationOrganizationCollaborators(
+                edition,
+                attendeeCollaborator,
+                userId);
+
+            this.SynchronizeAttendeeInnovationOrganizationFounders(
+                edition,
+                attendeeInnovationOrganizationFounderApiDtos,
+                userId);
+
+            this.SynchronizeAttendeeInnovationOrganizationCompetitors(
+                edition,
+                attendeeInnovationOrganizationCompetitorApiDtos,
+                userId);
+
+            this.SynchronizeAttendeeInnovationOrganizationExperiences(
+                edition,
+                innovationOrganizationExperienceOptionApiDtos,
+                userId);
+
+            this.SynchronizeAttendeeInnovationOrganizationObjectives(
+                edition,
+                innovationOrganizationObjectivesOptionApiDtos,
+                userId);
+
+            this.SynchronizeAttendeeInnovationOrganizationTechnologies(
+                edition,
+                innovationOrganizationTechnologyOptionApiDtos,
+                userId);
+
+            this.SynchronizeAttendeeInnovationOrganizationTracks(
+                edition,
+                innovationOrganizationTrackOptionApiDtos,
+                userId);
         }
 
         /// <summary>
@@ -116,41 +177,33 @@ namespace PlataformaRio2C.Domain.Entities
 
         }
 
-        #region Innovation Organization Options (Disabled)
+        #region Attendee Innovation Organization
 
         /// <summary>
-        /// Adds the innovation organization options.
-        /// </summary>
-        /// <param name="innovationOptions">The innovation options.</param>
-        /// <param name="userId">The user identifier.</param>
-        //private void AddInnovationOrganizationOptions(List<InnovationOption> innovationOptions, int userId)
-        //{
-        //    if (this.InnovationOrganizationOptions == null)
-        //    {
-        //        this.InnovationOrganizationOptions = new List<InnovationOrganizationOption>();
-        //    }
-
-        //    foreach (var innovationOption in innovationOptions)
-        //    {
-        //        this.InnovationOrganizationOptions.Add(new InnovationOrganizationOption(this, innovationOption, null, userId));
-        //    }
-        //}
-
-        #endregion
-
-        #region Attendee Innovation Organization Collaborators
-
-        /// <summary>
-        /// Synchronizes the attendee innovation organizations collaborators.
+        /// Synchronizes the attendee innovation organizations.
         /// </summary>
         /// <param name="edition">The edition.</param>
-        /// <param name="attendeeCollaborator">The attendee collaborator.</param>
-        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
+        /// <param name="accumulatedRevenue">The accumulated revenue.</param>
+        /// <param name="marketSize">Size of the market.</param>
+        /// <param name="businessDefinition">The business definition.</param>
+        /// <param name="businessFocus">The business focus.</param>
+        /// <param name="businessEconomicModel">The business economic model.</param>
+        /// <param name="businessDifferentials">The business differentials.</param>
+        /// <param name="businessStage">The business stage.</param>
+        /// <param name="isPresentationUploaded">if set to <c>true</c> [is presentation uploaded].</param>
+        /// <param name="businessOperationalModel">The business operational model.</param>
         /// <param name="userId">The user identifier.</param>
-        /// <param name="musicProjectApiDto">The music project API dto.</param>
-        private void SynchronizeAttendeeInnovationOrganizationsCollaborators(
+        private void SynchronizeAttendeeInnovationOrganizations(
             Edition edition,
-            AttendeeCollaborator attendeeCollaborator,
+            decimal accumulatedRevenue,
+            string marketSize,
+            string businessDefinition,
+            string businessFocus,
+            string businessEconomicModel,
+            string businessDifferentials,
+            string businessStage,
+            bool isPresentationUploaded,
+            string businessOperationalModel,
             int userId)
         {
             if (edition == null)
@@ -163,107 +216,235 @@ namespace PlataformaRio2C.Domain.Entities
                 this.AttendeeInnovationOrganizations = new List<AttendeeInnovationOrganization>();
             }
 
-            var AttendeeInnovationOrganization = this.AttendeeInnovationOrganizations.FirstOrDefault(ao => ao.EditionId == edition.Id);
-            if (AttendeeInnovationOrganization != null)
+            var attendeeInnovationOrganization = this.AttendeeInnovationOrganizations.FirstOrDefault(ao => ao.EditionId == edition.Id);
+            if (attendeeInnovationOrganization != null)
             {
-                AttendeeInnovationOrganization.Restore(userId);
-                attendeeCollaborator?.SynchronizeAttendeeInnovationOrganizationCollaborators(new List<AttendeeInnovationOrganization> { AttendeeInnovationOrganization }, false, userId);
+                attendeeInnovationOrganization.Restore(userId);
             }
             else
             {
-                var newAttendeeInnovationOrganization = new AttendeeInnovationOrganization(edition, this, userId);
-                this.AttendeeInnovationOrganizations.Add(newAttendeeInnovationOrganization);
-                attendeeCollaborator?.SynchronizeAttendeeInnovationOrganizationCollaborators(new List<AttendeeInnovationOrganization> { newAttendeeInnovationOrganization }, false, userId);
+                this.AttendeeInnovationOrganizations.Add(
+                    new AttendeeInnovationOrganization(
+                    edition,
+                    this,
+                    accumulatedRevenue,
+                    marketSize,
+                    businessDefinition,
+                    businessFocus,
+                    businessEconomicModel,
+                    businessDifferentials,
+                    businessStage,
+                    isPresentationUploaded,
+                    businessOperationalModel,
+                    userId));
             }
         }
 
-        /// <summary>Deletes the attendee innovation organization.</summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="userId">The user identifier.</param>
-        private void DeleteAttendeeInnovationOrganization(Edition edition, int userId)
-        {
-            foreach (var AttendeeInnovationOrganization in this.FindAllAttendeeInnovationOrganizationsNotDeleted(edition))
-            {
-                AttendeeInnovationOrganization?.Delete(userId);
-            }
-        }
-
-        /// <summary>Gets the attendee organization by edition identifier.</summary>
+        /// <summary>
+        /// Gets the attendee innovation organization by edition identifier.
+        /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        private AttendeeInnovationOrganization FindAttendeeInnovationOrganizationByEditionId(int editionId)
+        public AttendeeInnovationOrganization GetAttendeeInnovationOrganizationByEditionId(int editionId)
         {
-            return this.AttendeeInnovationOrganizations?.FirstOrDefault(amb => amb.Edition.Id == editionId);
+            return this.AttendeeInnovationOrganizations?.FirstOrDefault(aio => aio.Edition.Id == editionId);
         }
 
-        /// <summary>Finds all attendee innovation organizations not deleted.</summary>
+        #endregion
+
+        #region Attendee Innovation Organization Collaborators
+
+        /// <summary>
+        /// Synchronizes the attendee innovation organization collaborators.
+        /// </summary>
         /// <param name="edition">The edition.</param>
-        /// <returns></returns>
-        private List<AttendeeInnovationOrganization> FindAllAttendeeInnovationOrganizationsNotDeleted(Edition edition)
+        /// <param name="attendeeCollaborator">The attendee collaborator.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeAttendeeInnovationOrganizationCollaborators(
+            Edition edition,
+            AttendeeCollaborator attendeeCollaborator,
+            int userId)
         {
-            return this.AttendeeInnovationOrganizations?.Where(amb => (edition == null || amb.EditionId == edition.Id) && !amb.IsDeleted)?.ToList();
+            var attendeeInnovationOrganization = this.GetAttendeeInnovationOrganizationByEditionId(edition?.Id ?? 0);
+
+            attendeeInnovationOrganization?.SynchronizeAttendeeInnovationOrganizationColaborators(
+                     attendeeCollaborator,
+                     userId);
         }
-
-        #endregion
-
-        #region Attendee Innovation Organization
-
-        #endregion
-
-        #region Attendee Innovation Organization Competitor
-
-        #endregion
-
-        #region Attendee Innovation Organization Experience
 
         #endregion
 
         #region Attendee Innovation Organization Founder
 
+        /// <summary>
+        /// Synchronizes the attendee innovation organization founders.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="innovationOrganizationFounderOptionApiDtos">The innovation organization founder option API dtos.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeAttendeeInnovationOrganizationFounders(
+            Edition edition,
+            List<AttendeeInnovationOrganizationFounderApiDto> innovationOrganizationFounderOptionApiDtos,
+            int userId)
+        {
+            var attendeeInnovationOrganization = this.GetAttendeeInnovationOrganizationByEditionId(edition?.Id ?? 0);
+
+            foreach (var innovationOrganizationFounderOptionApiDto in innovationOrganizationFounderOptionApiDtos)
+            {
+                attendeeInnovationOrganization?.SynchronizeAttendeeInnovationOrganizationFounders(
+                    innovationOrganizationFounderOptionApiDto.WorkDedication,
+                    innovationOrganizationFounderOptionApiDto.FullName,
+                    innovationOrganizationFounderOptionApiDto.Curriculum,
+                    userId);
+            }
+
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
         #endregion
 
-        #region Attendee Innovation Organization Pitching Objective
+        #region Attendee Innovation Organization Competitor
+
+        /// <summary>
+        /// Synchronizes the attendee innovation organization competitors.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeAttendeeInnovationOrganizationCompetitors(
+        Edition edition,
+        List<AttendeeInnovationOrganizationCompetitorApiDto> attendeeInnovationOrganizationCompetitorApiDtos,
+        int userId)
+        {
+            var attendeeInnovationOrganization = this.GetAttendeeInnovationOrganizationByEditionId(edition?.Id ?? 0);
+
+            foreach (var attendeeInnovationOrganizationCompetitorApiDto in attendeeInnovationOrganizationCompetitorApiDtos)
+            {
+                attendeeInnovationOrganization?.SynchronizeAttendeeInnovationOrganizationCompetitors(attendeeInnovationOrganizationCompetitorApiDto.Name, userId);
+            }
+
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
+        #endregion
+
+        #region Attendee Innovation Organization Experience
+
+        /// <summary>
+        /// Synchronizes the attendee innovation organization experiences.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="innovationOrganizationExperienceOptionApiDtos">The innovation organization experience option API dtos.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeAttendeeInnovationOrganizationExperiences(
+            Edition edition,
+            List<InnovationOrganizationExperienceOptionApiDto> innovationOrganizationExperienceOptionApiDtos,
+            int userId)
+        {
+            var attendeeInnovationOrganization = this.GetAttendeeInnovationOrganizationByEditionId(edition?.Id ?? 0);
+
+            foreach (var innovationOrganizationExperienceOptionApiDto in innovationOrganizationExperienceOptionApiDtos)
+            {
+                attendeeInnovationOrganization?.SynchronizeAttendeeInnovationOrganizationExperiences(
+                    innovationOrganizationExperienceOptionApiDto.InnovationOrganizationExperienceOption,
+                    innovationOrganizationExperienceOptionApiDto.AdditionalInfo,
+                    userId);
+            }
+
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
+        #endregion
+
+        #region Attendee Innovation Organization Objective
+
+        /// <summary>
+        /// Synchronizes the attendee innovation organization experiences.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="innovationOrganizationObjectivesOptionApiDtos">The innovation organization objectives option API dtos.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeAttendeeInnovationOrganizationObjectives(
+            Edition edition,
+            List<InnovationOrganizationObjectivesOptionApiDto> innovationOrganizationObjectivesOptionApiDtos,
+            int userId)
+        {
+            var attendeeInnovationOrganization = this.GetAttendeeInnovationOrganizationByEditionId(edition?.Id ?? 0);
+
+            foreach (var innovationOrganizationObjectivesOptionApiDto in innovationOrganizationObjectivesOptionApiDtos)
+            {
+                attendeeInnovationOrganization?.SynchronizeAttendeeInnovationOrganizationObjectives(
+                    innovationOrganizationObjectivesOptionApiDto.InnovationOrganizationObjectivesOption,
+                    innovationOrganizationObjectivesOptionApiDto.AdditionalInfo,
+                    userId);
+            }
+
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
 
         #endregion
 
         #region Attendee Innovation Organization Technology
 
+        /// <summary>
+        /// Synchronizes the attendee innovation organization technologies.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="innovationOrganizationTechnologyOptionApiDtos">The innovation organization technology option API dtos.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeAttendeeInnovationOrganizationTechnologies(
+            Edition edition,
+            List<InnovationOrganizationTechnologyOptionApiDto> innovationOrganizationTechnologyOptionApiDtos,
+            int userId)
+        {
+            var attendeeInnovationOrganization = this.GetAttendeeInnovationOrganizationByEditionId(edition?.Id ?? 0);
+
+            foreach (var innovationOrganizationTechnologyOptionApiDto in innovationOrganizationTechnologyOptionApiDtos)
+            {
+                attendeeInnovationOrganization?.SynchronizeAttendeeInnovationOrganizationTechnologies(
+                    innovationOrganizationTechnologyOptionApiDto.InnovationOrganizationTechnologyOption,
+                    innovationOrganizationTechnologyOptionApiDto.AdditionalInfo,
+                    userId);
+            }
+
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
         #endregion
 
         #region Attendee Innovation Organization Track
 
-        #endregion
-
-        #region Work Dedication
-
         /// <summary>
-        /// Adds the work dedication.
+        /// Synchronizes the attendee innovation organization tracks.
         /// </summary>
-        /// <param name="workDedication">The work dedication.</param>
-        private void SetWorkDedication(WorkDedication workDedication)
+        /// <param name="edition">The edition.</param>
+        /// <param name="innovationOrganizationTrackOptionApiDtos">The innovation organization track option API dtos.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeAttendeeInnovationOrganizationTracks(
+            Edition edition,
+            List<InnovationOrganizationTrackOptionApiDto> innovationOrganizationTrackOptionApiDtos,
+            int userId)
         {
-            //this.WorkDedication = workDedication;
-            //this.WorkDedicationId = workDedication.Id;
+            var attendeeInnovationOrganization = this.GetAttendeeInnovationOrganizationByEditionId(edition?.Id ?? 0);
+
+            foreach (var innovationOrganizationTrackOptionApiDto in innovationOrganizationTrackOptionApiDtos)
+            {
+                attendeeInnovationOrganization?.SynchronizeAttendeeInnovationOrganizationTracks(
+                    innovationOrganizationTrackOptionApiDto.InnovationOrganizationTrackOption,
+                    innovationOrganizationTrackOptionApiDto.AdditionalInfo,
+                    userId);
+            }
+
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
         }
 
         #endregion
-
-        /// <summary>
-        /// Updates the presentation upload date.
-        /// </summary>
-        /// <param name="isPresentationUploaded">if set to <c>true</c> [is presentation uploaded].</param>
-        /// <param name="isPresentationDeleted">if set to <c>true</c> [is presentation deleted].</param>
-        private void UpdatePresentationUploadDate(bool isPresentationUploaded, bool isPresentationDeleted)
-        {
-            //if (isPresentationUploaded)
-            //{
-            //    this.PresentationUploadDate = DateTime.UtcNow;
-            //}
-            //else if (isPresentationDeleted)
-            //{
-            //    this.PresentationUploadDate = null;
-            //}
-        }
 
         #region Valitations
 

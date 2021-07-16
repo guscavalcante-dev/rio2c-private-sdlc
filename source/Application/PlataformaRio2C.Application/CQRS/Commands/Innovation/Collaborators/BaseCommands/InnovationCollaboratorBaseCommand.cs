@@ -27,7 +27,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneOption")]
         public List<Guid?> InnovationOptionsUids { get; set; }
 
-        public List<InnovationOption> InnovationOptions { get; private set; }
+        public List<InnovationOrganizationTrackOption> InnovationOrganizationTrackOptions { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="InnovationCollaboratorBaseCommand"/> class.</summary>
         public InnovationCollaboratorBaseCommand()
@@ -37,10 +37,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>
         /// Updates the models and lists.
         /// </summary>
-        /// <param name="innovationOptions">The innovation options.</param>
-        public void UpdateBaseModelsAndLists(List<InnovationOption> innovationOptions)
+        /// <param name="innovationOrganizationTrackOptions">The innovation organization track options.</param>
+        public void UpdateBaseModelsAndLists(List<InnovationOrganizationTrackOption> innovationOrganizationTrackOptions)
         {
-            this.InnovationOptions = innovationOptions;
+            this.InnovationOrganizationTrackOptions = innovationOrganizationTrackOptions;
         }
     }
 }

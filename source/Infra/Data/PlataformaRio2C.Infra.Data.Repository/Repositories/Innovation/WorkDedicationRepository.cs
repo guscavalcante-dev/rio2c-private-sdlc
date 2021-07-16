@@ -37,13 +37,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// Finds the by ids.
         /// </summary>
         /// <param name="query">The query.</param>
-        /// <param name="WorkDedicationsIds">The innovation organizations ids.</param>
+        /// <param name="workDedicationsIds">The innovation organizations ids.</param>
         /// <returns>IQueryable&lt;WorkDedication&gt;.</returns>
-        internal static IQueryable<WorkDedication> FindByIds(this IQueryable<WorkDedication> query, List<int?> WorkDedicationsIds)
+        internal static IQueryable<WorkDedication> FindByIds(this IQueryable<WorkDedication> query, List<int?> workDedicationsIds)
         {
-            if (WorkDedicationsIds?.Any(i => i.HasValue) == true)
+            if (workDedicationsIds?.Any(i => i.HasValue) == true)
             {
-                query = query.Where(ao => WorkDedicationsIds.Contains(ao.Id));
+                query = query.Where(ao => workDedicationsIds.Contains(ao.Id));
             }
 
             return query;
@@ -51,13 +51,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         /// <summary>Finds the by uids.</summary>
         /// <param name="query">The query.</param>
-        /// <param name="WorkDedicationsUids">The attendee organizations uids.</param>
+        /// <param name="workDedicationsUids">The attendee organizations uids.</param>
         /// <returns></returns>
-        internal static IQueryable<WorkDedication> FindByUids(this IQueryable<WorkDedication> query, List<Guid?> WorkDedicationsUids)
+        internal static IQueryable<WorkDedication> FindByUids(this IQueryable<WorkDedication> query, List<Guid?> workDedicationsUids)
         {
-            if (WorkDedicationsUids?.Any(i => i.HasValue) == true)
+            if (workDedicationsUids?.Any(i => i.HasValue) == true)
             {
-                query = query.Where(ao => WorkDedicationsUids.Contains(ao.Uid));
+                query = query.Where(ao => workDedicationsUids.Contains(ao.Uid));
             }
 
             return query;
@@ -112,14 +112,40 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
-        /// find by identifier as an asynchronous operation.
+        /// Finds the by identifier.
         /// </summary>
-        /// <param name="WorkDedicationIds">The innovation organization ids.</param>
-        /// <returns>Task&lt;List&lt;WorkDedication&gt;&gt;.</returns>
-        public async Task<WorkDedication> FindByIdAsync(int WorkDedicationIds)
+        /// <param name="workDedicationId">The work dedication identifier.</param>
+        /// <returns></returns>
+        public WorkDedication FindById(int workDedicationId)
         {
             var query = this.GetBaseQuery()
-                            .FindByIds(new List<int?> { WorkDedicationIds });
+                            .FindByIds(new List<int?> { workDedicationId });
+
+            return query.FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Finds the by uid.
+        /// </summary>
+        /// <param name="workDedicationUid">The work dedication uid.</param>
+        /// <returns></returns>
+        public WorkDedication FindByUid(Guid workDedicationUid)
+        {
+            var query = this.GetBaseQuery()
+                            .FindByUids(new List<Guid?> { workDedicationUid });
+
+            return query.FirstOrDefault();
+        }
+
+        /// <summary>
+        /// find by identifier as an asynchronous operation.
+        /// </summary>
+        /// <param name="workDedicationIds">The innovation organization ids.</param>
+        /// <returns>Task&lt;List&lt;WorkDedication&gt;&gt;.</returns>
+        public async Task<WorkDedication> FindByIdAsync(int workDedicationIds)
+        {
+            var query = this.GetBaseQuery()
+                            .FindByIds(new List<int?> { workDedicationIds });
 
             return await query.FirstOrDefaultAsync();
         }
@@ -127,13 +153,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>
         /// Finds the by uid asynchronous.
         /// </summary>
-        /// <param name="WorkDedicationUid">The innovation organization uid.</param>
+        /// <param name="workDedicationUid">The innovation organization uid.</param>
         /// <returns>Task&lt;WorkDedication&gt;.</returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<WorkDedication> FindByUidAsync(Guid WorkDedicationUid)
+        public async Task<WorkDedication> FindByUidAsync(Guid workDedicationUid)
         {
             var query = this.GetBaseQuery()
-                            .FindByUids(new List<Guid?> { WorkDedicationUid });
+                            .FindByUids(new List<Guid?> { workDedicationUid });
 
             return await query.FirstOrDefaultAsync();
         }
@@ -141,12 +167,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>
         /// find by ids as an asynchronous operation.
         /// </summary>
-        /// <param name="WorkDedicationIds">The innovation organization ids.</param>
+        /// <param name="workDedicationIds">The innovation organization ids.</param>
         /// <returns>Task&lt;List&lt;WorkDedication&gt;&gt;.</returns>
-        public async Task<List<WorkDedication>> FindAllByIdsAsync(List<int?> WorkDedicationIds)
+        public async Task<List<WorkDedication>> FindAllByIdsAsync(List<int?> workDedicationIds)
         {
             var query = this.GetBaseQuery()
-                            .FindByIds(WorkDedicationIds);
+                            .FindByIds(workDedicationIds);
 
             return await query.ToListAsync();
         }
@@ -154,12 +180,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>
         /// find by ids as an asynchronous operation.
         /// </summary>
-        /// <param name="WorkDedicationUids">The innovation organization ids.</param>
+        /// <param name="workDedicationUids">The innovation organization ids.</param>
         /// <returns>Task&lt;List&lt;WorkDedication&gt;&gt;.</returns>
-        public async Task<List<WorkDedication>> FindAllByUidsAsync(List<Guid?> WorkDedicationUids)
+        public async Task<List<WorkDedication>> FindAllByUidsAsync(List<Guid?> workDedicationUids)
         {
             var query = this.GetBaseQuery()
-                            .FindByUids(WorkDedicationUids);
+                            .FindByUids(workDedicationUids);
 
             return await query.ToListAsync();
         }

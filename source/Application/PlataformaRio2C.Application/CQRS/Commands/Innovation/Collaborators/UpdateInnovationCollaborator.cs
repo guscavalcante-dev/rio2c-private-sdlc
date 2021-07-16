@@ -37,7 +37,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public UpdateInnovationCollaborator(
             CollaboratorDto entity, 
             bool? isAddingToCurrentEdition,
-            List<InnovationOption> innovationOptions)
+            List<InnovationOrganizationTrackOption> innovationOrganizationTrackOptions)
         {
             if (entity == null)
             {
@@ -48,7 +48,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.IsAddingToCurrentEdition = isAddingToCurrentEdition ?? false;
 
             this.UpdateBaseProperties(entity);
-            this.UpdateBaseModelsAndLists(innovationOptions);
+            this.UpdateBaseModelsAndLists(innovationOrganizationTrackOptions);
         }
 
         /// <summary>

@@ -25,9 +25,6 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonProperty("name")]
         public string Name { get; set; }
 
-        [JsonIgnore]
-        public AttendeeInnovationOrganizationCompetitor AttendeeInnovationOrganizationCompetitor { get; set; }
-
         /// <summary>Initializes a new instance of the <see cref="AttendeeInnovationOrganizationCompetitorApiDto"/> class.</summary>
         public AttendeeInnovationOrganizationCompetitorApiDto()
         {

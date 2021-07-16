@@ -31,6 +31,31 @@ namespace PlataformaRio2C.Domain.Entities
         public int InnovationOrganizationExperienceOptionId { get; set; }
         public string AdditionalInfo { get; set; }
 
+        public virtual AttendeeInnovationOrganization AttendeeInnovationOrganization { get; private set; }
+        public virtual InnovationOrganizationExperienceOption InnovationOrganizationExperienceOption { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttendeeInnovationOrganizationExperience"/> class.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganization">The attendee innovation organization.</param>
+        /// <param name="innovationOrganizationExperienceOption">The innovation organization experience option.</param>
+        /// <param name="additionalInfo">The additional information.</param>
+        /// <param name="userId">The user identifier.</param>
+        public AttendeeInnovationOrganizationExperience(
+            AttendeeInnovationOrganization attendeeInnovationOrganization,
+            InnovationOrganizationExperienceOption innovationOrganizationExperienceOption, 
+            string additionalInfo,
+            int userId)
+        {
+            this.AttendeeInnovationOrganization = attendeeInnovationOrganization;
+            this.InnovationOrganizationExperienceOption = innovationOrganizationExperienceOption;
+            this.AdditionalInfo = additionalInfo;
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AttendeeInnovationOrganizationExperience"/> class.
         /// </summary>

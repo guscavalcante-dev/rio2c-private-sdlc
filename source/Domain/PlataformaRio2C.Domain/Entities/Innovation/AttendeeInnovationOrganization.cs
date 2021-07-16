@@ -27,30 +27,89 @@ namespace PlataformaRio2C.Domain.Entities
     /// <seealso cref="PlataformaRio2C.Domain.Entities.Entity" />
     public class AttendeeInnovationOrganization : Entity
     {
-        public int EditionId { get; set; }
-        public int InnovationOrganizationId { get; set; }
-        public DateTimeOffset? EvaluationEmailSendDate { get; set; }
-        public decimal? Grade { get; set; }
-        public int EvaluationsCount { get; set; }
-        public DateTimeOffset? LastEvaluationDate { get; set; }
-        public decimal AccumulatedRevenue { get; set; }
-        public string MarketSize { get; set; }
-        public string BusinessDefinition { get; set; }
-        public string BusinessFocus { get; set; }
-        public string BusinessEconomicModel { get; set; }
-        public string BusinessDifferentials { get; set; }
-        public string BusinessStage { get; set; }
-        public DateTimeOffset? PresentationUploadDate { get; set; }
-        public string BusinessOperationalModel { get; set; }
+        public int EditionId { get; private set; }
+        public int InnovationOrganizationId { get; private set; }
+        public DateTimeOffset? EvaluationEmailSendDate { get; private set; }
+        public decimal? Grade { get; private set; }
+        public int EvaluationsCount { get; private set; }
+        public DateTimeOffset? LastEvaluationDate { get; private set; }
+        public decimal AccumulatedRevenue { get; private set; }
+        public string MarketSize { get; private set; }
+        public string BusinessDefinition { get; private set; }
+        public string BusinessFocus { get; private set; }
+        public string BusinessEconomicModel { get; private set; }
+        public string BusinessDifferentials { get; private set; }
+        public string BusinessStage { get; private set; }
+        public DateTimeOffset? PresentationUploadDate { get; private set; }
+        public string BusinessOperationalModel { get; private set; }
 
         public virtual Edition Edition { get; private set; }
         public virtual InnovationOrganization InnovationOrganization { get; private set; }
 
         public virtual ICollection<AttendeeInnovationOrganizationCollaborator> AttendeeInnovationOrganizationCollaborators { get; private set; }
+        public virtual ICollection<AttendeeInnovationOrganizationCompetitor> AttendeeInnovationOrganizationCompetitors { get; private set; }
+        public virtual ICollection<AttendeeInnovationOrganizationFounder> AttendeeInnovationOrganizationFounders { get; private set; }
+        public virtual ICollection<AttendeeInnovationOrganizationExperience> AttendeeInnovationOrganizationExperiences { get; private set; }
+        public virtual ICollection<AttendeeInnovationOrganizationObjective> AttendeeInnovationOrganizationObjectives { get; private set; }
+        public virtual ICollection<AttendeeInnovationOrganizationTechnology> AttendeeInnovationOrganizationTechnologies { get; private set; }
+        public virtual ICollection<AttendeeInnovationOrganizationTrack> AttendeeInnovationOrganizationTracks { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="AttendeeInnovationOrganization"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttendeeInnovationOrganization"/> class.
+        /// </summary>
         /// <param name="edition">The edition.</param>
-        /// <param name="innovationOrganization">The music band.</param>
+        /// <param name="innovationOrganization">The innovation organization.</param>
+        /// <param name="evaluationEmailSendDate">The evaluation email send date.</param>
+        /// <param name="grade">The grade.</param>
+        /// <param name="evaluationsCount">The evaluations count.</param>
+        /// <param name="lastEvaluationDate">The last evaluation date.</param>
+        /// <param name="accumulatedRevenue">The accumulated revenue.</param>
+        /// <param name="marketSize">Size of the market.</param>
+        /// <param name="businessDefinition">The business definition.</param>
+        /// <param name="businessFocus">The business focus.</param>
+        /// <param name="businessEconomicModel">The business economic model.</param>
+        /// <param name="businessDifferentials">The business differentials.</param>
+        /// <param name="businessStage">The business stage.</param>
+        /// <param name="presentationUploadDate">The presentation upload date.</param>
+        /// <param name="businessOperationalModel">The business operational model.</param>
+        /// <param name="userId">The user identifier.</param>
+        public AttendeeInnovationOrganization(
+            Edition edition,
+            InnovationOrganization innovationOrganization,
+            decimal accumulatedRevenue,
+            string marketSize,
+            string businessDefinition,
+            string businessFocus,
+            string businessEconomicModel,
+            string businessDifferentials,
+            string businessStage,
+            bool isPresentationUploaded,
+            string businessOperationalModel,
+            int userId)
+        {
+            this.Edition = edition;
+            this.InnovationOrganization = innovationOrganization;
+            this.AccumulatedRevenue = accumulatedRevenue;
+            this.MarketSize = marketSize;
+            this.BusinessDefinition = businessDefinition;
+            this.BusinessFocus = businessFocus;
+            this.BusinessEconomicModel = businessEconomicModel;
+            this.BusinessDifferentials = businessDifferentials;
+            this.BusinessStage = businessStage;
+            this.BusinessOperationalModel = businessOperationalModel;
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+
+            this.UpdatePresentationUploadDate(isPresentationUploaded, false);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttendeeInnovationOrganization"/> class.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="innovationOrganization">The innovation organization.</param>
         /// <param name="userId">The user identifier.</param>
         public AttendeeInnovationOrganization(
             Edition edition,
@@ -97,7 +156,42 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
         }
 
+        /// <summary>
+        /// Updates the presentation upload date.
+        /// </summary>
+        /// <param name="isPresentationUploaded">if set to <c>true</c> [is presentation uploaded].</param>
+        /// <param name="isPresentationDeleted">if set to <c>true</c> [is presentation deleted].</param>
+        private void UpdatePresentationUploadDate(bool isPresentationUploaded, bool isPresentationDeleted)
+        {
+            if (isPresentationUploaded)
+            {
+                this.PresentationUploadDate = DateTime.UtcNow;
+            }
+            else if (isPresentationDeleted)
+            {
+                this.PresentationUploadDate = null;
+            }
+        }
+
         #region Attendee Innovation Organization Collaborators
+
+        /// <summary>
+        /// Synchronizes the attendee innovation organization colaborators.
+        /// </summary>
+        /// <param name="attendeeCollaborator">The attendee collaborator.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void SynchronizeAttendeeInnovationOrganizationColaborators(AttendeeCollaborator attendeeCollaborator, int userId)
+        {
+            if (this.AttendeeInnovationOrganizationCollaborators== null)
+            {
+                this.AttendeeInnovationOrganizationCollaborators = new List<AttendeeInnovationOrganizationCollaborator>();
+            }
+
+            this.AttendeeInnovationOrganizationCollaborators.Add(new AttendeeInnovationOrganizationCollaborator(this, attendeeCollaborator, userId));
+
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
 
         /// <summary>
         /// Deletes the attendee innovation organization collaborators.
@@ -118,6 +212,172 @@ namespace PlataformaRio2C.Domain.Entities
         private List<AttendeeInnovationOrganizationCollaborator> FindAllAttendeeInnovationOrganizationCollaboratorsNotDeleted()
         {
             return this.AttendeeInnovationOrganizationCollaborators?.Where(aoc => !aoc.IsDeleted)?.ToList();
+        }
+
+        #endregion
+
+        #region Attendee Innovation Organization Founder
+
+        /// <summary>
+        /// Synchronizes the attendee innovation organization founders.
+        /// </summary>
+        /// <param name="workDedication">The work dedication.</param>
+        /// <param name="fullName">The full name.</param>
+        /// <param name="curriculum">The curriculum.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void SynchronizeAttendeeInnovationOrganizationFounders(WorkDedication workDedication, string fullName, string curriculum, int userId)
+        {
+            if (this.AttendeeInnovationOrganizationFounders == null)
+            {
+                this.AttendeeInnovationOrganizationFounders = new List<AttendeeInnovationOrganizationFounder>();
+            }
+
+            this.AttendeeInnovationOrganizationFounders.Add(new AttendeeInnovationOrganizationFounder(this, workDedication, fullName, curriculum, userId));
+
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
+        #endregion
+
+        #region Attendee Innovation Organization Competitor
+
+        /// <summary>
+        /// Synchronizes the attendee innovation organization competitors.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void SynchronizeAttendeeInnovationOrganizationCompetitors(string name, int userId)
+        {
+            if (this.AttendeeInnovationOrganizationCompetitors == null)
+            {
+                this.AttendeeInnovationOrganizationCompetitors = new List<AttendeeInnovationOrganizationCompetitor>();
+            }
+
+            this.AttendeeInnovationOrganizationCompetitors.Add(new AttendeeInnovationOrganizationCompetitor(this, name, userId));
+
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
+        #endregion
+
+        #region Attendee Innovation Organization Experience
+
+        /// <summary>
+        /// Synchronizes the attendee innovation organization experiences.
+        /// </summary>
+        /// <param name="innovationOrganizationExperienceOption">The innovation organization experience option.</param>
+        /// <param name="additionalInfo">The additional information.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void SynchronizeAttendeeInnovationOrganizationExperiences(
+            InnovationOrganizationExperienceOption innovationOrganizationExperienceOption, 
+            string additionalInfo,
+            int userId)
+        {
+            if (this.AttendeeInnovationOrganizationExperiences == null)
+            {
+                this.AttendeeInnovationOrganizationExperiences = new List<AttendeeInnovationOrganizationExperience>();
+            }
+
+            this.AttendeeInnovationOrganizationExperiences.Add(new AttendeeInnovationOrganizationExperience(
+                this, 
+                innovationOrganizationExperienceOption, 
+                additionalInfo, 
+                userId));
+
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
+        #endregion
+
+        #region Attendee Innovation Organization Objective
+
+        /// <summary>
+        /// Synchronizes the attendee innovation organization objectives.
+        /// </summary>
+        /// <param name="innovationOrganizationObjectivesOption">The innovation organization objectives option.</param>
+        /// <param name="additionalInfo">The additional information.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void SynchronizeAttendeeInnovationOrganizationObjectives(
+            InnovationOrganizationObjectivesOption innovationOrganizationObjectivesOption,
+            string additionalInfo,
+            int userId)
+        {
+            if (this.AttendeeInnovationOrganizationObjectives == null)
+            {
+                this.AttendeeInnovationOrganizationObjectives = new List<AttendeeInnovationOrganizationObjective>();
+            }
+
+            this.AttendeeInnovationOrganizationObjectives.Add(new AttendeeInnovationOrganizationObjective(
+                this,
+                innovationOrganizationObjectivesOption,
+                additionalInfo,
+                userId));
+
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
+        #endregion
+
+        #region Attendee Innovation Organization Technology
+
+        /// <summary>
+        /// Synchronizes the attendee innovation organization technologies.
+        /// </summary>
+        /// <param name="innovationOrganizationTechnologyOption">The innovation organization technology option.</param>
+        /// <param name="additionalInfo">The additional information.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void SynchronizeAttendeeInnovationOrganizationTechnologies(
+            InnovationOrganizationTechnologyOption innovationOrganizationTechnologyOption,
+            string additionalInfo,
+            int userId)
+        {
+            if (this.AttendeeInnovationOrganizationTechnologies == null)
+            {
+                this.AttendeeInnovationOrganizationTechnologies = new List<AttendeeInnovationOrganizationTechnology>();
+            }
+
+            this.AttendeeInnovationOrganizationTechnologies.Add(new AttendeeInnovationOrganizationTechnology(
+                this,
+                innovationOrganizationTechnologyOption,
+                additionalInfo,
+                userId));
+
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
+        #endregion
+
+        #region Attendee Innovation Organization Track
+
+        /// <summary>
+        /// Synchronizes the attendee innovation organization tracks.
+        /// </summary>
+        /// <param name="innovationOrganizationTrackOption">The innovation organization track option.</param>
+        /// <param name="additionalInfo">The additional information.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void SynchronizeAttendeeInnovationOrganizationTracks(
+            InnovationOrganizationTrackOption innovationOrganizationTrackOption,
+            string additionalInfo,
+            int userId)
+        {
+            if (this.AttendeeInnovationOrganizationTracks == null)
+            {
+                this.AttendeeInnovationOrganizationTracks = new List<AttendeeInnovationOrganizationTrack>();
+            }
+
+            this.AttendeeInnovationOrganizationTracks.Add(new AttendeeInnovationOrganizationTrack(
+                this,
+                innovationOrganizationTrackOption,
+                additionalInfo,
+                userId));
+
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
         }
 
         #endregion

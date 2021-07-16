@@ -711,7 +711,7 @@ BEGIN TRY
 
 
 		ALTER TABLE "AttendeeInnovationOrganizationExperiences"
-			ADD CONSTRAINT "FK_InnovationOrganizationExperienceOptions_AttendeeInnovationOrganizationExperiences_InnovationOrganizationExperienceOptionId" FOREIGN KEY ("InnovationOrganizationExperienceOptionId") REFERENCES "InnovationOrganizationExperienceOptions"("Id")
+			ADD CONSTRAINT "FK_InnovationOrganizationExperienceOptions_AttendeeInnovationOrganizationExperiences_InnovationOrganizationExperienceOptionId" FOREIGN KEY ("InnovationOrganizationExperienceOptionId") REFERENCES "dbo"."InnovationOrganizationExperienceOptions"("Id")
 		;
 
 
@@ -777,7 +777,7 @@ BEGIN TRY
 
 
 		ALTER TABLE "AttendeeInnovationOrganizationTracks"
-			ADD CONSTRAINT "FK_InnovationOrganizationTrackOptions_AttendeeInnovationOrganizationTracks_InnovationOrganizationTrackOptionId" FOREIGN KEY ("InnovationOrganizationTrackOptionId") REFERENCES "InnovationOrganizationTrackOptions"("Id")
+			ADD CONSTRAINT "FK_InnovationOrganizationTrackOptions_AttendeeInnovationOrganizationTracks_InnovationOrganizationTrackOptionId" FOREIGN KEY ("InnovationOrganizationTrackOptionId") REFERENCES "dbo"."InnovationOrganizationTrackOptions"("Id")
 		;
 
 

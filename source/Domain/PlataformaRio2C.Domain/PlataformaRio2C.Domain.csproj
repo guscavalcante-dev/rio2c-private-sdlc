@@ -91,7 +91,6 @@
     <Compile Include="ApiModels\Conferences\Responses\ConferencesApiResponse.cs" />
     <Compile Include="ApiModels\EditionEvents\Responses\EditionEventApiResponse.cs" />
     <Compile Include="ApiModels\Innovation\Responses\BaseListItemApiResponse.cs" />
-    <Compile Include="ApiModels\Innovation\Responses\InnovationOptionGroupsApiResponse.cs" />
     <Compile Include="ApiModels\Innovation\Responses\ApiBaseResponses\InnovationOrganizationOptionApiBaseResponse.cs" />
     <Compile Include="ApiModels\Innovation\Responses\WorkDedicationsApiResponse.cs" />
     <Compile Include="ApiModels\LanguageValueApiResponse.cs" />
@@ -186,8 +185,6 @@
     <Compile Include="Dtos\Innovation\API\InnovationOrganizationObjectivesOptionApiDto.cs" />
     <Compile Include="Dtos\Innovation\API\InnovationOrganizationExperienceOptionApiDto.cs" />
     <Compile Include="Dtos\Innovation\API\WorkDedicationApiDto.cs" />
-    <Compile Include="Dtos\Innovation\API\InnovationOptionGroupApiDto.cs" />
-    <Compile Include="Dtos\Innovation\API\InnovationOptionApiDto.cs" />
     <Compile Include="Dtos\Innovation\API\InnovationOrganizationApiDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticAccommodationDto.cs" />
     <Compile Include="Dtos\Logistics\AttendeePlaceDropdownDto.cs" />
@@ -311,7 +308,7 @@
     <Compile Include="Entities\Addresses\Country.cs" />
     <Compile Include="Entities\Addresses\State.cs" />
     <Compile Include="Entities\Editions\EditionEvent.cs" />
-    <Compile Include="Entities\Innovation\AttendeeInnovationOrganizationPitchingObjective.cs" />
+    <Compile Include="Entities\Innovation\AttendeeInnovationOrganizationObjective.cs" />
     <Compile Include="Entities\Innovation\AttendeeCollaboratorInnovationOrganizationTrack.cs" />
     <Compile Include="Entities\Innovation\InnovationOrganizationObjectivesOption.cs" />
     <Compile Include="Entities\Innovation\AttendeeInnovationOrganizationTechnology.cs" />
@@ -324,8 +321,6 @@
     <Compile Include="Entities\Innovation\InnovationOrganizationExperienceOption.cs" />
     <Compile Include="Entities\Innovation\AttendeeInnovationOrganizationExperience.cs" />
     <Compile Include="Entities\Innovation\AttendeeInnovationOrganizationFounder.cs" />
-    <Compile Include="Entities\Innovation\InnovationOptionGroup.cs" />
-    <Compile Include="Entities\Innovation\InnovationOption.cs" />
     <Compile Include="Entities\Innovation\AttendeeInnovationOrganization.cs" />
     <Compile Include="Entities\Innovation\WorkDedication.cs" />
     <Compile Include="Entities\Innovation\InnovationOrganization.cs" />

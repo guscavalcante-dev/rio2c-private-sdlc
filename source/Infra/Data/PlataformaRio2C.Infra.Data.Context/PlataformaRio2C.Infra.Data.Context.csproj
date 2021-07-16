@@ -109,6 +109,12 @@
     <Compile Include="Mapping\Addresses\CountryMap.cs" />
     <Compile Include="Mapping\Addresses\StateMap.cs" />
     <Compile Include="Mapping\Editions\EditionEventMap.cs" />
+    <Compile Include="Mapping\Innovation\AttendeeInnovationOrganizationTrackMap.cs" />
+    <Compile Include="Mapping\Innovation\AttendeeInnovationOrganizationTechnologyMap.cs" />
+    <Compile Include="Mapping\Innovation\AttendeeInnovationOrganizationObjectiveMap.cs" />
+    <Compile Include="Mapping\Innovation\AttendeeInnovationOrganizationExperienceMap.cs" />
+    <Compile Include="Mapping\Innovation\AttendeeInnovationOrganizationFounderMap.cs" />
+    <Compile Include="Mapping\Innovation\AttendeeInnovationOrganizationCompetitorMap.cs" />
     <Compile Include="Mapping\Innovation\AttendeeInnovationOrganizationMap.cs" />
     <Compile Include="Mapping\Innovation\AttendeeInnovationOrganizationCollaboratorMap.cs" />
     <Compile Include="Mapping\Innovation\InnovationOrganizationObjectivesOptionMap.cs" />

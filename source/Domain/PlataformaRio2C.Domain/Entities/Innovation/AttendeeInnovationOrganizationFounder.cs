@@ -35,6 +35,33 @@ namespace PlataformaRio2C.Domain.Entities
 
         public int WorkDedicationId { get; set; }
 
+        public virtual AttendeeInnovationOrganization AttendeeInnovationOrganization { get; private set; }
+        public virtual WorkDedication WorkDedication { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttendeeInnovationOrganizationFounder"/> class.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganization">The attendee innovation organization.</param>
+        /// <param name="workDedication">The work dedication.</param>
+        /// <param name="fullname">The fullname.</param>
+        /// <param name="curriculum">The curriculum.</param>
+        public AttendeeInnovationOrganizationFounder(
+            AttendeeInnovationOrganization attendeeInnovationOrganization,
+            WorkDedication workDedication,
+            string fullname,
+            string curriculum,
+            int userId)
+        {
+            this.AttendeeInnovationOrganization = attendeeInnovationOrganization;
+            this.WorkDedication = workDedication;
+            this.Fullname = fullname;
+            this.Curriculum = curriculum;
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AttendeeInnovationOrganizationFounder"/> class.
         /// </summary>

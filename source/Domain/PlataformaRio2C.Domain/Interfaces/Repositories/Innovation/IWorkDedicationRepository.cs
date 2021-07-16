@@ -23,10 +23,12 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IWorkDedicationRepository</summary>
     public interface IWorkDedicationRepository : IRepository<WorkDedication>
     {
-        Task<WorkDedication> FindByIdAsync(int innovationOptionId);
-        Task<WorkDedication> FindByUidAsync(Guid innovationOptionUid);
+        WorkDedication FindById(int workDedicationId);
+        WorkDedication FindByUid(Guid workDedicationUid);
+        Task<WorkDedication> FindByIdAsync(int workDedicationId);
+        Task<WorkDedication> FindByUidAsync(Guid workDedicationUid);
         Task<List<WorkDedication>> FindAllAsync();
-        Task<List<WorkDedication>> FindAllByIdsAsync(List<int?> innovationOptionIds);
-        Task<List<WorkDedication>> FindAllByUidsAsync(List<Guid?> innovationOptionUids);
+        Task<List<WorkDedication>> FindAllByIdsAsync(List<int?> workDedicationIds);
+        Task<List<WorkDedication>> FindAllByUidsAsync(List<Guid?> workDedicationUids);
     }
 }

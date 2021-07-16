@@ -290,11 +290,11 @@ namespace PlataformaRio2C.Domain.Dtos
 
             this.InnovationOrganizationExperienceOptionApiDtos = new List<InnovationOrganizationExperienceOptionApiDto>()
             {
-                new InnovationOrganizationExperienceOptionApiDto() { Uid = new Guid("4F440536-BAB7-4E43-A3A4-F977ABAFBDA8"), AdditionalInfo = "" },
-                new InnovationOrganizationExperienceOptionApiDto() { Uid = new Guid("29B2CC2F-374D-4F2F-AC00-3513D02EC9C3"), AdditionalInfo = "" },
                 new InnovationOrganizationExperienceOptionApiDto() { Uid = new Guid("82167C1D-7CA6-447F-80C7-AE9188ADD436"), AdditionalInfo = "" },
+                new InnovationOrganizationExperienceOptionApiDto() { Uid = new Guid("29B2CC2F-374D-4F2F-AC00-3513D02EC9C3"), AdditionalInfo = "" },
                 new InnovationOrganizationExperienceOptionApiDto() { Uid = new Guid("2FD9F6BA-8852-4DD5-A402-DCD2C14923CB"), AdditionalInfo = "" },
                 new InnovationOrganizationExperienceOptionApiDto() { Uid = new Guid("60079B3B-A5D9-4E59-A964-725339AFBE7F"), AdditionalInfo = "" },
+                new InnovationOrganizationExperienceOptionApiDto() { Uid = new Guid("4F440536-BAB7-4E43-A3A4-F977ABAFBDA8"), AdditionalInfo = "" },
             };
 
             this.InnovationOrganizationTrackOptionApiDtos = new List<InnovationOrganizationTrackOptionApiDto>()
@@ -305,9 +305,7 @@ namespace PlataformaRio2C.Domain.Dtos
                 new InnovationOrganizationTrackOptionApiDto(){ Uid = new Guid("1646A4D0-F43A-4633-9730-3F8893A627CE"), AdditionalInfo = ""},
                 new InnovationOrganizationTrackOptionApiDto(){ Uid = new Guid("A7EEDEF9-88B9-4EF4-A6EA-32EA5DB28598"), AdditionalInfo = ""},
                 new InnovationOrganizationTrackOptionApiDto(){ Uid = new Guid("B05FDB02-F880-49D0-818D-65BA716EC0B8"), AdditionalInfo = ""},
-                new InnovationOrganizationTrackOptionApiDto(){ Uid = new Guid("DE7F9C0A-1AA4-4F7D-985D-2D56D229B3B5"), AdditionalInfo = ""},
             };
-
 
             this.InnovationOrganizationTechnologyOptionApiDtos = new List<InnovationOrganizationTechnologyOptionApiDto>()
             {

@@ -27,9 +27,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// Initializes a new instance of the <see cref="CreateInnovationCollaborator"/> class.
         /// </summary>
         /// <param name="innovationOptions">The innovation options.</param>
-        public CreateInnovationCollaborator(List<InnovationOption> innovationOptions)
+        public CreateInnovationCollaborator(List<InnovationOrganizationTrackOption> innovationOrganizationTrackOptions)
         {
-            this.UpdateBaseModelsAndLists(innovationOptions);
+            this.UpdateBaseModelsAndLists(innovationOrganizationTrackOptions);
         }
 
         /// <summary>

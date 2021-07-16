@@ -44,6 +44,9 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonIgnore]
         public AttendeeInnovationOrganizationFounder AttendeeInnovationOrganizationFounder { get; set; }
 
+        [JsonIgnore]
+        public WorkDedication WorkDedication { get; set; }
+
         /// <summary>Initializes a new instance of the <see cref="AttendeeInnovationOrganizationFounderApiDto"/> class.</summary>
         public AttendeeInnovationOrganizationFounderApiDto()
         {
