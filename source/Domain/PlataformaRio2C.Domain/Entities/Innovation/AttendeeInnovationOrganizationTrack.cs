@@ -62,6 +62,26 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>
         /// Initializes a new instance of the <see cref="AttendeeInnovationOrganizationTrack"/> class.
         /// </summary>
+        /// <param name="innovationOrganizationTrackOption">The innovation organization track option.</param>
+        /// <param name="additionalInfo">The additional information.</param>
+        /// <param name="userId">The user identifier.</param>
+        public AttendeeInnovationOrganizationTrack(
+            InnovationOrganizationTrackOption innovationOrganizationTrackOption,
+            string additionalInfo,
+            int userId)
+        {
+            this.InnovationOrganizationTrackOption = innovationOrganizationTrackOption;
+            this.InnovationOrganizationTrackOptionId = innovationOrganizationTrackOption?.Id ?? 0;
+            this.AdditionalInfo = additionalInfo?.Trim();
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttendeeInnovationOrganizationTrack"/> class.
+        /// </summary>
         public AttendeeInnovationOrganizationTrack()
         {
 

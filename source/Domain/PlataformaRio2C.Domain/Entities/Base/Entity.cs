@@ -38,5 +38,38 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.Uid = uid;
         }
+
+        ///// <summary>
+        ///// Creates the specified user identifier.
+        ///// </summary>
+        ///// <param name="userId">The user identifier.</param>
+        //public virtual void Create(int userId)
+        //{
+        //    this.IsDeleted = false;
+        //    this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+        //    this.CreateUserId = this.UpdateUserId = userId;
+        //}
+
+        ///// <summary>
+        ///// Updates the specified user identifier.
+        ///// </summary>
+        ///// <param name="userId">The user identifier.</param>
+        //public virtual void Update(int userId)
+        //{
+        //    this.IsDeleted = false;
+        //    this.UpdateDate = DateTime.UtcNow;
+        //    this.UpdateUserId = userId;
+        //}
+
+        ///// <summary>
+        ///// Deletes the specified user identifier.
+        ///// </summary>
+        ///// <param name="userId">The user identifier.</param>
+        //public virtual void Delete(int userId)
+        //{
+        //    this.IsDeleted = true;
+        //    this.UpdateDate = DateTime.UtcNow;
+        //    this.UpdateUserId = userId;
+        //}
     }
 }

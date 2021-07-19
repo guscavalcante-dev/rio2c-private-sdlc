@@ -417,6 +417,36 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        /// <summary>Finds the onboarding information widget dto asynchronous.</summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="collaboratorTypeUid">The collaborator type uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeCollaboratorTracksWidgetDto> FindTracksWidgetDtoAsync(Guid collaboratorUid, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByCollaboratorUid(collaboratorUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(ac => new AttendeeCollaboratorTracksWidgetDto
+                            {
+                                AttendeeCollaboratorDto = new AttendeeCollaboratorDto
+                                {
+                                    AttendeeCollaborator = ac,
+                                    Collaborator = ac.Collaborator
+                                },
+                                AttendeeCollaboratorInnovationOrganizationTrackDtos = ac.AttendeeCollaboratorInnovationOrganizationTracks
+                                                                                        .Where(aciot => !aciot.IsDeleted)
+                                                                                        .Select(aciot => new AttendeeCollaboratorInnovationOrganizationTrackDto
+                                                                                        {
+                                                                                            AttendeeCollaborator = aciot.AttendeeCollaborator,
+                                                                                            InnovationOrganizationTrackOption = aciot.InnovationOrganizationTrackOption
+                                                                                        }).ToList()
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
         /// <summary>Finds the API configuration widget dto by collaborator uid and by edition identifier asynchronous.</summary>
         /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <param name="editionId">The edition identifier.</param>
@@ -698,54 +728,54 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                             .SelectMany(aoc => aoc.AttendeeOrganization.ProjectBuyerEvaluations.Where(pbe => !pbe.IsDeleted && !pbe.Project.IsDeleted && pbe.ProjectEvaluationStatus.Uid == ProjectEvaluationStatus.Accepted.Uid)
                                                                 .SelectMany(pbe => pbe.Negotiations.Where(n => !n.IsDeleted)
                                                                     .Select(n => new NegotiationDto
-                                                                {
-                                                                    Negotiation = n,
-                                                                    ProjectBuyerEvaluationDto = new ProjectBuyerEvaluationDto
                                                                     {
-                                                                        ProjectBuyerEvaluation = n.ProjectBuyerEvaluation,
-                                                                        BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                                                        Negotiation = n,
+                                                                        ProjectBuyerEvaluationDto = new ProjectBuyerEvaluationDto
                                                                         {
-                                                                            AttendeeOrganization = n.ProjectBuyerEvaluation.BuyerAttendeeOrganization,
-                                                                            Organization = n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization
-                                                                        },
-                                                                        ProjectDto = new ProjectDto
-                                                                        {
-                                                                            Project = n.ProjectBuyerEvaluation.Project,
-                                                                            SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                                                            ProjectBuyerEvaluation = n.ProjectBuyerEvaluation,
+                                                                            BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
                                                                             {
-                                                                                AttendeeOrganization = n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization,
-                                                                                Organization = n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.Organization
+                                                                                AttendeeOrganization = n.ProjectBuyerEvaluation.BuyerAttendeeOrganization,
+                                                                                Organization = n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization
                                                                             },
-                                                                            ProjectTitleDtos = n.ProjectBuyerEvaluation.Project.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                                                            ProjectDto = new ProjectDto
                                                                             {
-                                                                                ProjectTitle = t,
-                                                                                Language = t.Language
-                                                                            }),
-                                                                            ProjectLogLineDtos = n.ProjectBuyerEvaluation.Project.ProjectLogLines.Where(ll => !ll.IsDeleted).Select(ll => new ProjectLogLineDto
+                                                                                Project = n.ProjectBuyerEvaluation.Project,
+                                                                                SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                                                                {
+                                                                                    AttendeeOrganization = n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization,
+                                                                                    Organization = n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.Organization
+                                                                                },
+                                                                                ProjectTitleDtos = n.ProjectBuyerEvaluation.Project.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                                                                {
+                                                                                    ProjectTitle = t,
+                                                                                    Language = t.Language
+                                                                                }),
+                                                                                ProjectLogLineDtos = n.ProjectBuyerEvaluation.Project.ProjectLogLines.Where(ll => !ll.IsDeleted).Select(ll => new ProjectLogLineDto
+                                                                                {
+                                                                                    ProjectLogLine = ll,
+                                                                                    Language = ll.Language
+                                                                                })
+                                                                            }
+                                                                        },
+                                                                        RoomDto = new RoomDto
+                                                                        {
+                                                                            Room = n.Room,
+                                                                            RoomNameDtos = n.Room.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto
                                                                             {
-                                                                                ProjectLogLine = ll,
-                                                                                Language = ll.Language
+                                                                                RoomName = rn,
+                                                                                LanguageDto = new LanguageDto
+                                                                                {
+                                                                                    Id = rn.Language.Id,
+                                                                                    Uid = rn.Language.Uid,
+                                                                                    Code = rn.Language.Code
+                                                                                }
                                                                             })
                                                                         }
-                                                                    },
-                                                                    RoomDto = new RoomDto
-                                                                    {
-                                                                        Room = n.Room,
-                                                                        RoomNameDtos = n.Room.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto
-                                                                        {
-                                                                            RoomName = rn,
-                                                                            LanguageDto = new LanguageDto
-                                                                            {
-                                                                                Id = rn.Language.Id,
-                                                                                Uid = rn.Language.Uid,
-                                                                                Code = rn.Language.Code
-                                                                            }
-                                                                        })
-                                                                    }
-                                                                })))
+                                                                    })))
                                                                     .OrderBy(ndto => ndto.Negotiation.StartDate),
                                 SellerNegotiationDtos = ac.AttendeeOrganizationCollaborators
-                                                                .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted&& !aoc.AttendeeOrganization.Organization.IsDeleted)
+                                                                .Where(aoc => !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted && !aoc.AttendeeOrganization.Organization.IsDeleted)
                                                                 .SelectMany(aoc => aoc.AttendeeOrganization.SellProjects
                                                                     .SelectMany(sp => sp.ProjectBuyerEvaluations.Where(pbe => !pbe.IsDeleted && !pbe.Project.IsDeleted && pbe.ProjectEvaluationStatus.Uid == ProjectEvaluationStatus.Accepted.Uid)
                                                                         .SelectMany(pbe => pbe.Negotiations.Where(n => !n.IsDeleted)

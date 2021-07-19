@@ -12,7 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 
-var CollaboratorsOnboardingInfoWidget = function () {
+var InnovationCommissionsOnboardingInfoWidget = function () {
 
     var widgetElementId = '#InnovationCommissionOnboardingInfoWidget';
     var widgetElement = $(widgetElementId);

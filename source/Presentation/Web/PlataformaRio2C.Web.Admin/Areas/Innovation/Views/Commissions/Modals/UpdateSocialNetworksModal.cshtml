@@ -1,4 +1,4 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateCollaboratorSocialNetworks
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateInnovationCollaboratorSocialNetworks
 <div class="modal fade" id="UpdateSocialNetworksModal" role="dialog" aria-labelledby="UpdateSocialNetworksModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -9,11 +9,11 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("UpdateSocialNetworks", "Commissions", new { Area = "" }, FormMethod.Post, new { id = "UpdateSocialNetworksForm" }))
+                @using (Html.BeginForm("UpdateSocialNetworks", "Commissions", new { Area = "Innovation" }, FormMethod.Post, new { id = "UpdateSocialNetworksForm" }))
                 {
                     @Html.HiddenFor(m => m.CollaboratorUid)
                     <div id="form-container">
-                        @Html.Partial("/Views/Shared/Collaborators/Forms/_SocialNetworksForm.cshtml", Model)
+                        @Html.Partial("Modals/UpdateSocialNetworksForm", Model)
                     </div>
                 }
             </div>

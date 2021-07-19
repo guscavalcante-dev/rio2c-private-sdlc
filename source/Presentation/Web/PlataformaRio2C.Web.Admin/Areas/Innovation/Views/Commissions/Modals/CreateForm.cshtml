@@ -1,5 +1,5 @@
 ﻿@using System.Globalization
-@model PlataformaRio2C.Application.CQRS.Commands.InnovationCollaboratorBaseCommand
+@model PlataformaRio2C.Application.CQRS.Commands.CreateInnovationCollaborator
 <div class="row">
     <div class="form-group col-md-5">
         @Html.LabelFor(m => m.FirstName, new { @class = "control-label" })
@@ -24,25 +24,10 @@
     <div class="form-group col-md-12">
         <div class="kt-section pt-4">
             <h3 class="kt-section__title mb-0">@Labels.Tracks</h3>
-            @Html.ValidationMessage("InnovationOptionsUids", new { @class = "text-danger" })
+            @Html.ValidationMessage("AttendeeInnovationOrganizationTracks", new { @class = "text-danger" })
             <div class="kt-section__content mt-3">
                 <div class="kt-checkbox-list">
-                    @foreach (var innovationOrganizationTrackOption in Model.InnovationOrganizationTrackOptions)
-                    {
-                    <label class="kt-checkbox">
-                        <input type="checkbox"
-                               name="innovationOrganizationTrackOptionsUids"
-                               value="@innovationOrganizationTrackOption.Uid"
-                               class="require-one"
-                               data-id="innovationOrganizationTrackOption-group"
-                               @if (Model.InnovationOrganizationTrackOptionsUids?.Contains(innovationOrganizationTrackOption.Uid) == true) { <text> checked </text> } />
-                        <div>
-                            <span>@innovationOrganizationTrackOption.GetName().GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')</span>
-                            <span class="form-text text-muted">(@innovationOrganizationTrackOption.GetDescription().GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|'))</span>
-                        </div>
-                        <span></span>
-                    </label>
-                        }
+                    @Html.EditorFor(m => m.AttendeeInnovationOrganizationTracks)
                 </div>
             </div>
         </div>

@@ -12,7 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 
-var CollaboratorsMainInformationWidget = function () {
+var InnovationCommissionsMainInformationWidget = function () {
 
     var widgetElementId = '#InnovationCommissionMainInformationWidget';
     var widgetElement = $(widgetElementId);
@@ -59,8 +59,8 @@ var CollaboratorsMainInformationWidget = function () {
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (CollaboratorsMainInformationWidget) !== 'undefined') {
-	                CollaboratorsMainInformationWidget.init();
+                if (typeof (InnovationCommissionsMainInformationWidget) !== 'undefined') {
+                    InnovationCommissionsMainInformationWidget.init();
                 }
             },
             onError: function (data) {

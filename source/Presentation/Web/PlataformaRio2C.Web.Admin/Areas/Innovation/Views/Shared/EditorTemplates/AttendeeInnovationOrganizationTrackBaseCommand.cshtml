@@ -1,0 +1,29 @@
+﻿@using System.Globalization
+@model PlataformaRio2C.Application.CQRS.Commands.AttendeeInnovationOrganizationTrackBaseCommand
+<div data-id="@Model.InnovationOrganizationTrackOptionUid">
+    @Html.HiddenFor(m => m.InnovationOrganizationTrackOptionUid)
+    @Html.HiddenFor(m => m.InnovationOrganizationTrackOptionName)
+    @Html.HiddenFor(m => m.InnovationOrganizationTrackOptionHasAdditionalInfo)
+    <label class="kt-checkbox" style="margin-bottom: 5px;">
+        @if (!Model.InnovationOrganizationTrackOptionHasAdditionalInfo)
+        {
+            @Html.CheckBoxFor(m => m.IsChecked, new { @class = "require-one", data_id = "activity-group" })
+        }
+        else
+        {
+            @Html.CheckBoxFor(m => m.IsChecked, new { @class = "require-one toggle-additional-info", data_id = "activity-group", data_toggle_id = Model.InnovationOrganizationTrackOptionUid })
+        }
+        <div>
+            <span>@Model.GetName().GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')</span>
+            <span class="form-text text-muted">(@Model.GetDescription().GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|'))</span>
+        </div>
+        <span></span>
+    </label>
+    @if (Model.InnovationOrganizationTrackOptionHasAdditionalInfo)
+    {
+        <div class="additional-info @(!Model.IsChecked ? "d-none" : string.Empty)">
+            @Html.TextBoxFor(m => m.AdditionalInfo, (Model.IsChecked ? (object)new { @class = "form-control" } : (object)new { @class = "form-control additional-info-textbox", disabled = "" }))
+            <span class="form-text text-muted">@Messages.TextInPortugueseInEnglish</span>
+        </div>
+    }
+</div>

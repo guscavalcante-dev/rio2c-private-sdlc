@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
-// Author           : Rafael Dantas Ruiz
-// Created          : 12-12-2019
+// Author           : Renan Valentim
+// Created          : 07-19-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-12-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 07-19-2021
 // ***********************************************************************
 // <copyright file="CreateInnovationCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,7 +29,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="innovationOptions">The innovation options.</param>
         public CreateInnovationCollaborator(List<InnovationOrganizationTrackOption> innovationOrganizationTrackOptions)
         {
-            this.UpdateBaseModelsAndLists(innovationOrganizationTrackOptions);
+            this.UpdateBaseProperties(null, innovationOrganizationTrackOptions);
         }
 
         /// <summary>

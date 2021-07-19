@@ -177,6 +177,7 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new AttendeeInnovationOrganizationObjectiveMap());
             modelBuilder.Configurations.Add(new AttendeeInnovationOrganizationTechnologyMap());
             modelBuilder.Configurations.Add(new AttendeeInnovationOrganizationTrackMap());
+            modelBuilder.Configurations.Add(new AttendeeCollaboratorInnovationOrganizationTrackMap());
             modelBuilder.Configurations.Add(new InnovationOrganizationExperienceOptionMap());
             modelBuilder.Configurations.Add(new InnovationOrganizationObjectivesOptionMap());
             modelBuilder.Configurations.Add(new InnovationOrganizationTechnologyOptionMap());

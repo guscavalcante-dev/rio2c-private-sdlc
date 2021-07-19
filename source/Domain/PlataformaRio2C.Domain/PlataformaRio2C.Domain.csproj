@@ -117,6 +117,7 @@
     <Compile Include="Dtos\Agendas\AgendaConferenceEventJsonDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorListDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorNetworkDto.cs" />
+    <Compile Include="Dtos\Innovation\AttendeeCollaboratorTracksWidgetDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorSiteDetailsDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorSiteCompanyWidgetDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorApiConfigurationWidgetDto.cs" />
@@ -186,6 +187,9 @@
     <Compile Include="Dtos\Innovation\API\InnovationOrganizationExperienceOptionApiDto.cs" />
     <Compile Include="Dtos\Innovation\API\WorkDedicationApiDto.cs" />
     <Compile Include="Dtos\Innovation\API\InnovationOrganizationApiDto.cs" />
+    <Compile Include="Dtos\Innovation\AttendeeCollaboratorInnovationOrganizationTrackDto.cs" />
+    <Compile Include="Dtos\Innovation\InnovationCollaboratorDto.cs" />
+    <Compile Include="Dtos\Innovation\AttendeeInnovationOrganizationTrackDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticAccommodationDto.cs" />
     <Compile Include="Dtos\Logistics\AttendeePlaceDropdownDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticDto.cs" />

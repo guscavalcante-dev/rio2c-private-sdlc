@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Renan Valentim
-// Created          : 07-08-2021
+// Created          : 07-19-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-08-2021
+// Last Modified On : 07-19-2021
 // ***********************************************************************
-// <copyright file="InnovationCollaboratorBaseCommand.cs" company="Softo">
+// <copyright file="UpdateInnovationCollaboratorTracks.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -21,17 +21,47 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>InnovationCollaboratorBaseCommand</summary>
-    public class InnovationCollaboratorBaseCommand : CollaboratorBaseCommand
+    /// <summary>UpdateInnovationCollaboratorTracks</summary>
+    public class UpdateInnovationCollaboratorTracks : BaseCommand
     {
+        public Guid CollaboratorUid { get; set; }
+
         [Display(Name = "Tracks", ResourceType = typeof(Labels))]
         public List<AttendeeInnovationOrganizationTrackBaseCommand> AttendeeInnovationOrganizationTracks { get; set; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="InnovationCollaboratorBaseCommand" /> class.
-        /// </summary>
-        public InnovationCollaboratorBaseCommand()
+        /// <summary>Initializes a new instance of the <see cref="UpdateInnovationCollaboratorTracks"/> class.</summary>
+        public UpdateInnovationCollaboratorTracks()
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateInnovationCollaboratorTracks"/> class.
+        /// </summary>
+        /// <param name="attendeeCollaboratorTracksWidgetDto">The attendee collaborator tracks widget dto.</param>
+        /// <param name="innovationOrganizationTrackOptions">The innovation organization track options.</param>
+        public UpdateInnovationCollaboratorTracks(
+            AttendeeCollaboratorTracksWidgetDto attendeeCollaboratorTracksWidgetDto, 
+            List<InnovationOrganizationTrackOption> innovationOrganizationTrackOptions)
+        {
+            this.CollaboratorUid = attendeeCollaboratorTracksWidgetDto.AttendeeCollaboratorDto.Collaborator.Uid;
+            this.UpdateBaseProperties(attendeeCollaboratorTracksWidgetDto, innovationOrganizationTrackOptions);
+        }
+
+        /// <summary>Updates the pre send properties.</summary>
+        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="userUid">The user uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="editionUid">The edition uid.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public void UpdatePreSendProperties(
+            int userId,
+            Guid userUid,
+            int? editionId,
+            Guid? editionUid,
+            string userInterfaceLanguage)
+        {
+            base.UpdatePreSendProperties(userId, userUid, editionId, editionUid, userInterfaceLanguage);
         }
 
         /// <summary>
@@ -39,7 +69,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// </summary>
         /// <param name="innovationOrganizationTrackOptions">The innovation organization track options.</param>
         public void UpdateBaseProperties(
-            AttendeeCollaboratorTracksWidgetDto entity, 
+            AttendeeCollaboratorTracksWidgetDto entity,
             List<InnovationOrganizationTrackOption> innovationOrganizationTrackOptions)
         {
             this.UpdateInnovationOrganizationTrackOptions(entity, innovationOrganizationTrackOptions);
@@ -61,7 +91,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="entity">The entity.</param>
         /// <param name="innovationOrganizationTrackOptions">The innovation organization track options.</param>
         private void UpdateInnovationOrganizationTrackOptions(
-            AttendeeCollaboratorTracksWidgetDto entity, 
+            AttendeeCollaboratorTracksWidgetDto entity,
             List<InnovationOrganizationTrackOption> innovationOrganizationTrackOptions)
         {
             this.AttendeeInnovationOrganizationTracks = new List<AttendeeInnovationOrganizationTrackBaseCommand>();

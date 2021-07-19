@@ -1,24 +1,24 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Renan Valentim
-// Created          : 07-08-2021
+// Created          : 07-17-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-08-2021
+// Last Modified On : 07-17-2021
 // ***********************************************************************
-// <copyright file="innovation.commissions.socialnetworks.widget.js" company="Softo">
+// <copyright file="innovation.commissions.tracks.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var InnovationCommissionsSocialNetworksWidget = function () {
+var InnovationCommissionsTracksWidget = function () {
 
-    var widgetElementId = '#InnovationCommissionSocialNetworksWidget';
+    var widgetElementId = '#InnovationCommissionTracksInfoWidget';
     var widgetElement = $(widgetElementId);
 
-    var updateModalId = '#UpdateSocialNetworksModal';
-    var updateFormId = '#UpdateSocialNetworksForm';
+    var updateModalId = '#UpdateTracksModal';
+    var updateFormId = '#UpdateTracksForm';
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
@@ -33,7 +33,7 @@ var InnovationCommissionsSocialNetworksWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.collaboratorUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Commissions/ShowSocialNetworksWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Commissions/ShowTracksWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -59,8 +59,8 @@ var InnovationCommissionsSocialNetworksWidget = function () {
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (InnovationCommissionsSocialNetworksWidget) !== 'undefined') {
-                    InnovationCommissionsSocialNetworksWidget.init();
+                if (typeof (InnovationCommissionsTracksWidget) !== 'undefined') {
+                    InnovationCommissionsTracksWidget.init();
                 }
             },
             onError: function (data) {
@@ -84,7 +84,7 @@ var InnovationCommissionsSocialNetworksWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.collaboratorUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Commissions/ShowUpdateSocialNetworksModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Commissions/ShowUpdateTracksModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -97,11 +97,11 @@ var InnovationCommissionsSocialNetworksWidget = function () {
                 }
             });
         })
-        .fail(function () {
-        })
-        .always(function () {
-            MyRio2cCommon.unblock();
-        });
+            .fail(function () {
+            })
+            .always(function () {
+                MyRio2cCommon.unblock();
+            });
     };
 
     return {

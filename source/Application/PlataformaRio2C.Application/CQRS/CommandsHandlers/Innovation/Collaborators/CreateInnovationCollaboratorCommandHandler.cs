@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
-// Author           : Rafael Dantas Ruiz
-// Created          : 12-12-2019
+// Author           : Renan Valentim
+// Created          : 07-19-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 07-19-2021
 // ***********************************************************************
 // <copyright file="CreateInnovationCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -30,6 +31,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IUserRepository userRepo;
         private readonly IEditionRepository editionRepo;
         private readonly ICollaboratorTypeRepository collaboratorTypeRepo;
+        private readonly IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepo;
 
         /// <summary>Initializes a new instance of the <see cref="CreateInnovationCollaboratorCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
@@ -44,12 +46,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             ICollaboratorRepository collaboratorRepository,
             IUserRepository userRepository,
             IEditionRepository editionRepository,
-            ICollaboratorTypeRepository collaboratorTypeRepository)
+            ICollaboratorTypeRepository collaboratorTypeRepository,
+            IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepository)
             : base(eventBus, uow, collaboratorRepository)
         {
             this.userRepo = userRepository;
             this.editionRepo = editionRepository;
             this.collaboratorTypeRepo = collaboratorTypeRepository;
+            this.innovationOrganizationTrackOptionRepo = innovationOrganizationTrackOptionRepository;
         }
 
         /// <summary>Handles the specified create tiny collaborator.</summary>
@@ -81,8 +85,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             // Create if the user was not found in database
             if (user == null)
             {
-                //TODO: Ainda não temos uma tabela para salvar esses InnovationOptions selecionados.
-                //var innovationOptions = await innovationOptionRepo.FindAllByUidsAsync(cmd.InnovationOptionsUids);
+                var innovationOrganizationTrackOptions = await innovationOrganizationTrackOptionRepo.FindAllAsync();//FindAllByUidsAsync(cmd.InnovationOrganizationTrackOptionsUids);
 
                 var collaborator = new Collaborator(
                     await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
@@ -93,6 +96,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.PhoneNumber,
                     cmd.CellPhone,
                     cmd.Document,
+                    cmd.AttendeeInnovationOrganizationTracks?.Where(oa => oa.IsChecked)?.Select(aiot => new AttendeeInnovationOrganizationTrack(innovationOrganizationTrackOptions?.FirstOrDefault(ioto => ioto.Uid == aiot.InnovationOrganizationTrackOptionUid), aiot.AdditionalInfo, cmd.UserId))?.ToList(),
                     cmd.UserId);
                 if (!collaborator.IsValid())
                 {
@@ -106,7 +110,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
             else
             {
-                var updateCmd = new UpdateInnovationCollaborator
+                var updateCmd = new UpdateCollaborator
                 {
                     CollaboratorUid = user.Collaborator.Uid,
                     IsAddingToCurrentEdition = true,
@@ -120,10 +124,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             return this.AppValidationResult;
-
-            //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);
-
-            //return Task.FromResult(propertyId); // use it when the methed is not async
         }
     }
 }

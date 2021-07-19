@@ -30,12 +30,56 @@ namespace PlataformaRio2C.Domain.Entities
         public int AttendeeCollaboratorId { get; set; }
         public int InnovationOrganizationTrackOptionId { get; set; }
 
+        public virtual AttendeeCollaborator AttendeeCollaborator { get; private set; }
+        public virtual InnovationOrganizationTrackOption InnovationOrganizationTrackOption { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttendeeCollaboratorInnovationOrganizationTrack"/> class.
+        /// </summary>
+        /// <param name="attendeeCollaborator">The attendee collaborator.</param>
+        /// <param name="innovationOrganizationTrackOption">The innovation organization track option.</param>
+        /// <param name="userId">The user identifier.</param>
+        public AttendeeCollaboratorInnovationOrganizationTrack(
+            AttendeeCollaborator attendeeCollaborator,
+            InnovationOrganizationTrackOption innovationOrganizationTrackOption,
+            int userId)
+        {
+            this.AttendeeCollaborator = attendeeCollaborator;
+            this.InnovationOrganizationTrackOption = innovationOrganizationTrackOption;
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AttendeeCollaboratorInnovationOrganizationTrack"/> class.
         /// </summary>
         public AttendeeCollaboratorInnovationOrganizationTrack()
         {
 
+        }
+
+        /// <summary>
+        /// Updates the specified user identifier.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(int userId)
+        {
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>
+        /// Deletes the specified user identifier.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        public void Delete(int userId)
+        {
+            this.IsDeleted = true;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
         }
 
         #region Valitations

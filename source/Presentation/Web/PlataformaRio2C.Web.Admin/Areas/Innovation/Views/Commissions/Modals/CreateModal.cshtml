@@ -10,7 +10,7 @@
                 @using (Html.BeginForm("Create", "Commissions", new { Area = "Innovation" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "CreateCommissionForm" }))
                 {
                     <div id="form-container">
-                        @Html.Partial("Modals/Shared/Forms/_InnovationCollaboratorForm", Model)
+                        @Html.Partial("Modals/CreateForm", Model)
                     </div>
                 }
             </div>

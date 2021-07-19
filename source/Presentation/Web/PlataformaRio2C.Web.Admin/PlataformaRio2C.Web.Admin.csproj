@@ -829,6 +829,7 @@
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.delete.js" />
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.editioncount.widget.js" />
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.maininformation.widget.js" />
+    <Content Include="Assets\js\innovation\commissions\innovation.commissions.tracks.widget.js" />
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.onboardinginfo.widget.js" />
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.socialnetworks.widget.js" />
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.totalcount.widget.js" />
@@ -7682,16 +7683,24 @@
     <Content Include="Areas\Innovation\Views\Commissions\Index.cshtml" />
     <Content Include="Areas\Innovation\Views\Commissions\Modals\CreateModal.cshtml" />
     <Content Include="Areas\Innovation\Views\Commissions\Modals\UpdateMainInformationModal.cshtml" />
-    <Content Include="Areas\Innovation\Views\Commissions\Modals\UpdateModal.cshtml" />
     <Content Include="Areas\Innovation\Views\Commissions\Modals\UpdateSocialNetworksModal.cshtml" />
     <Content Include="Areas\Innovation\Views\Commissions\Widgets\DataTableWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Commissions\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Commissions\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\web.config" />
     <Content Include="Areas\Innovation\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Innovation\Views\Commissions\Modals\Shared\Forms\_InnovationCollaboratorForm.cshtml" />
+    <Content Include="Areas\Innovation\Views\Commissions\Modals\CreateForm.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Shared\EditorTemplates\OrganizationActivityBaseCommand.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Shared\EditorTemplates\OrganizationRestrictionSpecificsBaseCommand.cshtml" />
+    <Content Include="Areas\Innovation\Views\Shared\EditorTemplates\AttendeeInnovationOrganizationTrackBaseCommand.cshtml" />
+    <Content Include="Areas\Innovation\Views\Commissions\Widgets\MainInformationWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\Commissions\Widgets\SocialNetworksWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Commissions\Widgets\SocialNetworksWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Commissions\Widgets\MainInformationWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\Commissions\Modals\UpdateMainInformationForm.cshtml" />
+    <Content Include="Areas\Innovation\Views\Commissions\Modals\UpdateSocialNetworksForm.cshtml" />
+    <Content Include="Areas\Innovation\Views\Commissions\Modals\UpdateTracksModal.cshtml" />
+    <Content Include="Areas\Innovation\Views\Commissions\Modals\UpdateTracksForm.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -9067,11 +9076,11 @@
     <Content Include="Views\LogisticSponsors\Widgets\ParticipantsWidget.cshtml" />
     <Content Include="Views\LogisticSponsors\Widgets\RelatedConferencesWidget.cshtml" />
     <Content Include="Views\LogisticSponsors\Widgets\TracksAndPresentationFormatsWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\Commissions\Widgets\TracksWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Audiovisual\Data\" />
-    <Folder Include="Areas\Audiovisual\Views\Shared\" />
     <Folder Include="Areas\Innovation\Data\" />
     <Folder Include="Areas\Music\Data\" />
     <Folder Include="Areas\Music\Views\Shared\" />

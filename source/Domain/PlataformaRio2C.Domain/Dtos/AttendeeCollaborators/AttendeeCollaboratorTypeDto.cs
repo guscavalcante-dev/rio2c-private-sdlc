@@ -25,8 +25,6 @@ namespace PlataformaRio2C.Domain.Dtos
         public int? ApiHighlightPosition { get; private set; }
         public DateTimeOffset? TermsAcceptanceDate { get; private set; }
 
-
-
         public AttendeeCollaboratorType AttendeeCollaboratorType { get; set; }
         public CollaboratorType CollaboratorType { get; set; }
 

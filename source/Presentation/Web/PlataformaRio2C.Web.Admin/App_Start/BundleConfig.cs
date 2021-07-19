@@ -830,7 +830,8 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/innovation.commissions.details.js").Include(
                 "~/Assets/js/innovation/commissions/innovation.commissions.maininformation.widget.js",
                 "~/Assets/js/innovation/commissions/innovation.commissions.socialnetworks.widget.js",
-                "~/Assets/js/innovation/commissions/innovation.commissions.onboardinginfo.widget.js"));
+                "~/Assets/js/innovation/commissions/innovation.commissions.onboardinginfo.widget.js",
+                "~/Assets/js/innovation/commissions/innovation.commissions.tracks.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/innovation.commissions.update.js").Include(
                 "~/Assets/js/innovation/commissions/innovation.commissions.update.js"));

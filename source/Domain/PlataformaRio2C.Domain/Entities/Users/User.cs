@@ -157,6 +157,11 @@ namespace PlataformaRio2C.Domain.Entities
                 this.Roles = new List<Role>();
             }
 
+            if(roles == null)
+            {
+                roles = new List<Role>();
+            }
+
             roles = roles.Where(r => r != null).ToList();
 
             this.DeleteRoles(roles);
