@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Dtos;
+using System;
 using System.Collections.Generic;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
@@ -19,7 +20,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>CreateMusicBand</summary>
     public class CreateMusicBand : BaseCommand
     {
-        public int MusicBandTypeId { get; private set; }
+        public Guid MusicBandTypeUid { get; private set; }
         public string Name { get; private set; }
         public string ImageUrl { get; private set; }
         public string FormationDate { get; private set; }
@@ -39,7 +40,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateMusicBand"/> class.
         /// </summary>
-        /// <param name="musicBandTypeId">The music band type identifier.</param>
+        /// <param name="musicBandTypeUid">The music band type identifier.</param>
         /// <param name="name">The name.</param>
         /// <param name="imageUrl">The image URL.</param>
         /// <param name="formationDate">The formation date.</param>
@@ -56,7 +57,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="musicGenresApiDtos">The music genres API dtos.</param>
         /// <param name="targetAudiencesApiDtos">The target audiences API dtos.</param>
         public CreateMusicBand(
-            int musicBandTypeId,
+            Guid musicBandTypeUid,
             string name,
             string imageUrl,
             string formationDate,
@@ -73,7 +74,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<MusicGenreApiDto> musicGenresApiDtos,
             List<TargetAudienceApiDto> targetAudiencesApiDtos)
         {
-            this.MusicBandTypeId = musicBandTypeId;
+            this.MusicBandTypeUid = musicBandTypeUid;
             this.Name = name;
             this.ImageUrl = imageUrl;
             this.FormationDate = formationDate;
@@ -94,7 +95,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>Initializes a new instance of the <see cref="CreateMusicBand"/> class.</summary>
         public CreateMusicBand(MusicBandApiDto musicBandApiDto)
         {
-            this.MusicBandTypeId = musicBandApiDto.MusicBandTypeId;
+            this.MusicBandTypeUid = musicBandApiDto.MusicBandTypeUid;
             this.Name = musicBandApiDto.Name;
             this.ImageUrl = musicBandApiDto.ImageUrl;
             this.FormationDate = musicBandApiDto.FormationDate;

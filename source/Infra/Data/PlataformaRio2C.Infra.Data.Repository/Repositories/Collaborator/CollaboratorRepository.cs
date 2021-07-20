@@ -356,6 +356,24 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>
+        /// Finds the by innovation organization track options uids.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="innovationOrganizationTrackUids">The attendee innovation organization track uids.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> FindByInnovationOrganizationTrackOptionsUids(this IQueryable<Collaborator> query, List<Guid?> innovationOrganizationTrackUids)
+        {
+            if (innovationOrganizationTrackUids?.Any(aiotUid => aiotUid != null) == true)
+            {
+                query = query.Where(c => innovationOrganizationTrackUids.Any(iotUid =>
+                    c.AttendeeCollaborators.Any(ac => 
+                        ac.AttendeeCollaboratorInnovationOrganizationTracks.Any(aciot => aciot.InnovationOrganizationTrackOption.Uid == iotUid && !aciot.IsDeleted))));
+            }
+
+            return query;
+        }
     }
 
     #endregion
@@ -1012,181 +1030,99 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             #endregion
         }
 
-        ///// <summary>
-        ///// Finds all admins by data table and collaborator types.
-        ///// </summary>
-        ///// <param name="page">The page.</param>
-        ///// <param name="pageSize">Size of the page.</param>
-        ///// <param name="keywords">The keywords.</param>
-        ///// <param name="sortColumns">The sort columns.</param>
-        ///// <param name="collaboratorTypeName">Name of the collaborator type.</param>
-        ///// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
-        ///// <param name="showHighlights">The show highlights.</param>
-        ///// <param name="editionId">The edition identifier.</param>
-        ///// <returns></returns>
-        ///// <exception cref="NotImplementedException"></exception>
-        //public async Task<IPagedList<CollaboratorBaseDto>> FindAllAdminsByDataTableAndCollaboratorTypes(
-        //    int page,
-        //    int pageSize,
-        //    string keywords,
-        //    List<Tuple<string, string>> sortColumns,
-        //    string collaboratorTypeName,
-        //    string roleName,
-        //    bool showAllEditions,
-        //    bool? showHighlights,
-        //    int? editionId)
-        //{
-        //    this.SetProxyEnabled(false);
+        /// <summary>
+        /// Finds all innovation commissions by data table.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <param name="collaboratorsUids">The collaborators uids.</param>
+        /// <param name="collaboratorTypeNames">The collaborator type names.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="showAllExecutives">if set to <c>true</c> [show all executives].</param>
+        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <param name="showHighlights">The show highlights.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="innovationOrganizationOptionsUids">The innovation organization options uids.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<IPagedList<CollaboratorBaseDto>> FindAllInnovationCommissionsByDataTable(
+            int page,
+            int pageSize,
+            string keywords,
+            List<Tuple<string, string>> sortColumns,
+            List<Guid> collaboratorsUids,
+            string[] collaboratorTypeNames,
+            bool showAllEditions,
+            bool showAllExecutives,
+            bool showAllParticipants,
+            bool? showHighlights,
+            int? editionId,
+            List<Guid?> innovationOrganizationTrackOptionsUids)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByKeywords(keywords, editionId)
+                                .FindByUids(collaboratorsUids)
+                                .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeNames, showAllEditions, showAllExecutives, showAllParticipants, editionId)
+                                .FindByInnovationOrganizationTrackOptionsUids(innovationOrganizationTrackOptionsUids)
+                                .FindByHighlights(collaboratorTypeNames, showHighlights);
 
-        //    var query = this.GetBaseQuery(true)
-        //                        .FindByKeywords(keywords, editionId)
-        //                        .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeName, showAllEditions, editionId)
-        //                        .FindByHighlights(new string[] { collaboratorTypeName }, showHighlights);
+            return await query
+                            .DynamicOrder<Collaborator>(
+                                sortColumns,
+                                new List<Tuple<string, string>>
+                                {
+                                    new Tuple<string, string>("FullName", "User.Name"),
+                                    new Tuple<string, string>("Email", "User.Email"),
+                                },
+                                new List<string> { "User.Name", "User.Email", "CreateDate", "UpdateDate" },
+                                "User.Name")
+                            .Select(c => new CollaboratorBaseDto
+                            {
+                                Id = c.Id,
+                                Uid = c.Uid,
+                                FirstName = c.FirstName,
+                                LastNames = c.LastNames,
+                                Badge = c.Badge,
+                                Email = c.User.Email,
+                                PhoneNumber = c.PhoneNumber,
+                                CellPhone = c.CellPhone,
+                                PublicEmail = c.PublicEmail,
+                                ImageUploadDate = c.ImageUploadDate,
+                                CreateDate = c.CreateDate,
+                                UpdateDate = c.UpdateDate,
+                                EditionAttendeeCollaborator = editionId.HasValue ? c.AttendeeCollaborators.FirstOrDefault(ac => ac.EditionId == editionId
+                                                                                                                                && !ac.Edition.IsDeleted
+                                                                                                                                && !ac.IsDeleted
+                                                                                                                                && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
+                                                                                                                                                                           && collaboratorTypeNames.Contains(act.CollaboratorType.Name))) :
+                                                                                   null,
+                                IsInOtherEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId
+                                                                                                           && !ac.IsDeleted),
+                                AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
+                                                                    .Where(at => !at.IsDeleted && at.EditionId == editionId)
+                                                                    .SelectMany(at => at.AttendeeOrganizationCollaborators
+                                                                                            .Where(aoc => !aoc.IsDeleted)
+                                                                                            .Select(aoc => new AttendeeOrganizationBaseDto
+                                                                                            {
+                                                                                                Uid = aoc.AttendeeOrganization.Uid,
+                                                                                                OrganizationBaseDto = new OrganizationBaseDto
+                                                                                                {
+                                                                                                    Name = aoc.AttendeeOrganization.Organization.Name,
+                                                                                                    TradeName = aoc.AttendeeOrganization.Organization.TradeName,
+                                                                                                    HoldingBaseDto = aoc.AttendeeOrganization.Organization.Holding == null ? null : new HoldingBaseDto
+                                                                                                    {
+                                                                                                        Name = aoc.AttendeeOrganization.Organization.Holding.Name
+                                                                                                    },
+                                                                                                    IsVirtualMeeting = aoc.AttendeeOrganization.IsVirtualMeeting
+                                                                                                }
+                                                                                            })),
 
-        //    var collaborators = await query
-        //                    .DynamicOrder<Collaborator>(
-        //                        sortColumns,
-        //                        new List<Tuple<string, string>>
-        //                        {
-        //                            new Tuple<string, string>("FullName", "User.Name"),
-        //                            new Tuple<string, string>("Email", "User.Email"),
-        //                        },
-        //                        new List<string> { "User.Name", "User.Email", "CreateDate", "UpdateDate" },
-        //                        "User.Name")
-        //                    .Select(c => new CollaboratorBaseDto
-        //                    {
-        //                        Id = c.Id,
-        //                        Uid = c.Uid,
-
-        //                        Active = c.User.Active,
-        //                        UserUid = c.User.Uid,
-
-        //                        FirstName = c.FirstName,
-        //                        LastNames = c.LastNames,
-        //                        Badge = c.Badge,
-        //                        Email = c.User.Email,
-        //                        PhoneNumber = c.PhoneNumber,
-        //                        CellPhone = c.CellPhone,
-        //                        PublicEmail = c.PublicEmail,
-        //                        ImageUploadDate = c.ImageUploadDate,
-        //                        CreateDate = c.CreateDate,
-        //                        UpdateDate = c.UpdateDate,
-
-        //                        IsInOtherEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId
-        //                                                                                                   && !ac.IsDeleted),
-
-        //                        EditionAttendeeCollaborator = editionId.HasValue ? c.AttendeeCollaborators.FirstOrDefault(ac => ac.EditionId == editionId
-        //                                                                                                                        && !ac.Edition.IsDeleted
-        //                                                                                                                        && !ac.IsDeleted
-        //                                                                                                                        && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
-        //                                                                                                                                                                   && act.CollaboratorType.Name == collaboratorTypeName)) :
-        //                                                                           null,
-        //                        Role = c.User.Roles.FirstOrDefault(r => r.Name == roleName),
-        //                        AttendeeCollaboratorTypeDtos = c.AttendeeCollaborators
-        //                                                            .FirstOrDefault(ac => !ac.IsDeleted && ac.EditionId == editionId)
-        //                                                                .AttendeeCollaboratorTypes
-        //                                                                    .Where(act => !act.IsDeleted
-        //                                                                                    && !act.CollaboratorType.IsDeleted
-        //                                                                                    && act.CollaboratorType.Name == collaboratorTypeName)
-        //                                                                    .Select(act => new AttendeeCollaboratorTypeDto()
-        //                                                                    {
-        //                                                                        AttendeeCollaboratorType = act,
-        //                                                                        CollaboratorType = act.CollaboratorType
-        //                                                                    })
-        //                                                                .ToList()
-        //                    })
-        //                    .ToListPagedAsync(page, pageSize);
-
-        //    this.SetProxyEnabled(true);
-
-        //    return collaborators;
-        //}
-
-        ///// <summary>
-        ///// Finds all admins by data table and roles.
-        ///// </summary>
-        ///// <param name="page">The page.</param>
-        ///// <param name="pageSize">Size of the page.</param>
-        ///// <param name="keywords">The keywords.</param>
-        ///// <param name="sortColumns">The sort columns.</param>
-        ///// <param name="roleName">Name of the role.</param>
-        ///// <param name="showHighlights">The show highlights.</param>
-        ///// <param name="editionId">The edition identifier.</param>
-        ///// <returns></returns>
-        ///// <exception cref="NotImplementedException"></exception>
-        //public async Task<IPagedList<CollaboratorBaseDto>> FindAllAdminsByDataTableAndRoles(
-        //    int page,
-        //    int pageSize,
-        //    string keywords,
-        //    List<Tuple<string, string>> sortColumns,
-        //    string collaboratorTypeName,
-        //    string roleName,
-        //    int? editionId)
-        //{
-        //    this.SetProxyEnabled(false);
-
-        //    var query = this.GetBaseQuery(true)
-        //                        .FindByKeywords(keywords, editionId)
-        //                        .FindAdminByRoleName(roleName);
-
-        //    var collaborators = await query
-        //                    .DynamicOrder<Collaborator>(
-        //                        sortColumns,
-        //                        new List<Tuple<string, string>>
-        //                        {
-        //                            new Tuple<string, string>("FullName", "User.Name"),
-        //                            new Tuple<string, string>("Email", "User.Email"),
-        //                        },
-        //                        new List<string> { "User.Name", "User.Email", "CreateDate", "UpdateDate" },
-        //                        "User.Name")
-        //                    .Select(c => new CollaboratorBaseDto
-        //                    {
-        //                        Id = c.Id,
-        //                        Uid = c.Uid,
-
-        //                        Active = c.User.Active,
-        //                        UserUid = c.User.Uid,
-
-        //                        FirstName = c.FirstName,
-        //                        LastNames = c.LastNames,
-        //                        Badge = c.Badge,
-        //                        Email = c.User.Email,
-        //                        PhoneNumber = c.PhoneNumber,
-        //                        CellPhone = c.CellPhone,
-        //                        PublicEmail = c.PublicEmail,
-        //                        ImageUploadDate = c.ImageUploadDate,
-        //                        CreateDate = c.CreateDate,
-        //                        UpdateDate = c.UpdateDate,
-
-        //                        IsInOtherEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId
-        //                                                                                                   && !ac.IsDeleted),
-
-        //                        EditionAttendeeCollaborator = editionId.HasValue ? c.AttendeeCollaborators.FirstOrDefault(ac => ac.EditionId == editionId
-        //                                                                                                                        && !ac.Edition.IsDeleted
-        //                                                                                                                        && !ac.IsDeleted
-        //                                                                                                                        && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
-        //                                                                                                                                                                   && act.CollaboratorType.Name == collaboratorTypeName)) :
-        //                                                                           null,
-        //                        Role = c.User.Roles.FirstOrDefault(r => r.Name == roleName),
-        //                        AttendeeCollaboratorTypeDtos = c.AttendeeCollaborators
-        //                                                            .FirstOrDefault(ac => !ac.IsDeleted && ac.EditionId == editionId)
-        //                                                                .AttendeeCollaboratorTypes
-        //                                                                    .Where(act => !act.IsDeleted
-        //                                                                                    && !act.CollaboratorType.IsDeleted
-        //                                                                                    && act.CollaboratorType.Name == collaboratorTypeName)
-        //                                                                    .Select(act => new AttendeeCollaboratorTypeDto()
-        //                                                                    {
-        //                                                                        AttendeeCollaboratorType = act,
-        //                                                                        CollaboratorType = act.CollaboratorType
-        //                                                                    })
-        //                                                                .ToList()
-        //                    })
-        //                    .ToListPagedAsync(page, pageSize);
-
-        //    this.SetProxyEnabled(true);
-
-        //    return collaborators;
-        //}
+                                JobTitle = c.JobTitles.FirstOrDefault(jb => !jb.IsDeleted && jb.CollaboratorId == c.Id).Value
+                            })
+                            .ToListPagedAsync(page, pageSize);
+        }
 
         #region Api
 

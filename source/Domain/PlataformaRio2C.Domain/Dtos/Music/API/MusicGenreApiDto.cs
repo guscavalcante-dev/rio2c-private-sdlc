@@ -22,7 +22,8 @@ namespace PlataformaRio2C.Domain.Dtos
     public class MusicGenreApiDto
     {
         [JsonRequired]
-        public int Id { get; set; }
+        [JsonProperty("uid")]
+        public Guid Uid { get; set; }
 
         [JsonIgnore]
         public MusicGenre MusicGenre { get; set; }

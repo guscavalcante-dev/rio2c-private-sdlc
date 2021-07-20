@@ -38,8 +38,9 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
     {
         private readonly IMediator commandBus;
         private readonly IdentityAutenticationService identityController;
-        private readonly IEditionRepository editionRepository;
-        private readonly IWorkDedicationRepository workDedicationRepository;
+        private readonly IEditionRepository editionRepo;
+        private readonly ILanguageRepository languageRepo;
+        private readonly IWorkDedicationRepository workDedicationRepo;
         private readonly IInnovationOrganizationExperienceOptionRepository innovationOrganizationExperienceOptionRepo;
         private readonly IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepo;
         private readonly IInnovationOrganizationTechnologyOptionRepository innovationOrganizationTechnologyOptionRepo;
@@ -52,8 +53,9 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         public InnovationApiController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
-            IEditionRepository editionRepo,
-            IWorkDedicationRepository workDedicationRepo,
+            IEditionRepository editionRepository,
+            ILanguageRepository languageRepository,
+            IWorkDedicationRepository workDedicationRepository,
             IInnovationOrganizationExperienceOptionRepository innovationOrganizationExperienceOptionRepository,
             IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepository,
             IInnovationOrganizationTechnologyOptionRepository innovationOrganizationTechnologyOptionRepository,
@@ -61,8 +63,9 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         {
             this.commandBus = commandBus;
             this.identityController = identityController;
-            this.editionRepository = editionRepo;
-            this.workDedicationRepository = workDedicationRepo;
+            this.editionRepo = editionRepository;
+            this.languageRepo = languageRepository;
+            this.workDedicationRepo = workDedicationRepository;
             this.innovationOrganizationExperienceOptionRepo = innovationOrganizationExperienceOptionRepository;
             this.innovationOrganizationTrackOptionRepo = innovationOrganizationTrackOptionRepository;
             this.innovationOrganizationTechnologyOptionRepo = innovationOrganizationTechnologyOptionRepository;
@@ -101,7 +104,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     throw new DomainException(Messages.UserNotFound);
                 }
 
-                var currentEdition = await editionRepository.FindByIsCurrentAsync();
+                var currentEdition = await editionRepo.FindByIsCurrentAsync();
                 if (currentEdition == null)
                 {
                     throw new DomainException(Messages.CurrentEditionNotFound);
@@ -166,24 +169,42 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         /// <exception cref="DomainException"></exception>
         [HttpGet]
-        [Route("GetWorkDedications/{key?}")]
-        public async Task<IHttpActionResult> GetWorkDedications(string key)
+        [Route("GetWorkDedications")]
+        public async Task<IHttpActionResult> GetWorkDedications([FromUri] WorkDedicationsApiRequest request)
         {
             try
             {
-                if (key.ToLowerInvariant() != ConfigurationManager.AppSettings["CreateStartupApiKey"].ToLowerInvariant())
+                var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
+                if (editions?.Any() == false)
                 {
-                    throw new DomainException(Messages.AccessDenied);
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." } });
                 }
 
-                var workDedications = await this.workDedicationRepository.FindAllAsync();
+                // Get edition from request otherwise get current
+                var edition = request?.Edition.HasValue == true ? editions?.FirstOrDefault(e => e.UrlCode == request.Edition) :
+                                                                  editions?.FirstOrDefault(e => e.IsCurrent);
+                if (edition == null)
+                {
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." } });
+                }
+
+                // Get language from request otherwise get default
+                var languages = await this.languageRepo.FindAllDtosAsync();
+                var requestLanguage = languages?.FirstOrDefault(l => l.Code == request?.Culture);
+                var defaultLanguage = languages?.FirstOrDefault(l => l.IsDefault);
+                if (requestLanguage == null && defaultLanguage == null)
+                {
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "No active languages found." } });
+                }
+
+                var workDedications = await this.workDedicationRepo.FindAllAsync();
 
                 return await Json(new WorkDedicationsApiResponse
                 {
-                    WorkDedications = workDedications.Select(mbt => new BaseListItemApiResponse()
+                    WorkDedications = workDedications.Select(wd => new ApiListItemBaseResponse()
                     {
-                        Uid = mbt.Uid,
-                        Name = mbt.Name
+                        Uid = wd.Uid,
+                        Name = wd.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
                     })?.ToList(),
                     Status = ApiStatus.Success
                 });
@@ -207,24 +228,42 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         /// <exception cref="DomainException"></exception>
         [HttpGet]
-        [Route("GetInnovationOrganizationExperienceOptions/{key?}")]
-        public async Task<IHttpActionResult> GetInnovationOrganizationExperienceOptions(string key)
+        [Route("GetOrganizationExperiences")]
+        public async Task<IHttpActionResult> GetInnovationOrganizationExperienceOptions([FromUri] InnovationOrganizationExperienceOptionsApiRequest request)
         {
             try
             {
-                if (key.ToLowerInvariant() != ConfigurationManager.AppSettings["CreateStartupApiKey"].ToLowerInvariant())
+                var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
+                if (editions?.Any() == false)
                 {
-                    throw new DomainException(Messages.AccessDenied);
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." } });
+                }
+
+                // Get edition from request otherwise get current
+                var edition = request?.Edition.HasValue == true ? editions?.FirstOrDefault(e => e.UrlCode == request.Edition) :
+                                                                  editions?.FirstOrDefault(e => e.IsCurrent);
+                if (edition == null)
+                {
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." } });
+                }
+
+                // Get language from request otherwise get default
+                var languages = await this.languageRepo.FindAllDtosAsync();
+                var requestLanguage = languages?.FirstOrDefault(l => l.Code == request?.Culture);
+                var defaultLanguage = languages?.FirstOrDefault(l => l.IsDefault);
+                if (requestLanguage == null && defaultLanguage == null)
+                {
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "No active languages found." } });
                 }
 
                 var innovationOrganizationExperienceOptions = await this.innovationOrganizationExperienceOptionRepo.FindAllAsync();
 
-                return await Json(new InnovationOrganizationOptionApiBaseResponse
+                return await Json(new InnovationOrganizationExperienceOptionsApiResponse
                 {
-                    BaseListItemApiResponses = innovationOrganizationExperienceOptions.Select(mbt => new BaseListItemApiResponse()
+                    InnovationOrganizationExperienceOptions = innovationOrganizationExperienceOptions.Select(ioeo => new ApiListItemBaseResponse()
                     {
-                        Uid = mbt.Uid,
-                        Name = mbt.Name
+                        Uid = ioeo.Uid,
+                        Name = ioeo.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
                     })?.ToList(),
                     Status = ApiStatus.Success
                 });
@@ -248,24 +287,42 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         /// <exception cref="DomainException"></exception>
         [HttpGet]
-        [Route("GetInnovationOrganizationTrackOptions/{key?}")]
-        public async Task<IHttpActionResult> GetInnovationOrganizationTrackOptions(string key)
+        [Route("GetOrganizationTracks")]
+        public async Task<IHttpActionResult> GetInnovationOrganizationTrackOptions([FromUri] InnovationOrganizationTrackOptionsApiRequest request)
         {
             try
             {
-                if (key.ToLowerInvariant() != ConfigurationManager.AppSettings["CreateStartupApiKey"].ToLowerInvariant())
+                var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
+                if (editions?.Any() == false)
                 {
-                    throw new DomainException(Messages.AccessDenied);
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." } });
+                }
+
+                // Get edition from request otherwise get current
+                var edition = request?.Edition.HasValue == true ? editions?.FirstOrDefault(e => e.UrlCode == request.Edition) :
+                                                                  editions?.FirstOrDefault(e => e.IsCurrent);
+                if (edition == null)
+                {
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." } });
+                }
+
+                // Get language from request otherwise get default
+                var languages = await this.languageRepo.FindAllDtosAsync();
+                var requestLanguage = languages?.FirstOrDefault(l => l.Code == request?.Culture);
+                var defaultLanguage = languages?.FirstOrDefault(l => l.IsDefault);
+                if (requestLanguage == null && defaultLanguage == null)
+                {
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "No active languages found." } });
                 }
 
                 var innovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllAsync();
 
-                return await Json(new InnovationOrganizationOptionApiBaseResponse
+                return await Json(new InnovationOrganizationTrackOptionsApiResponse
                 {
-                    BaseListItemApiResponses = innovationOrganizationTrackOptions.Select(mbt => new BaseListItemApiResponse()
+                    InnovationOrganizationTrackOptions = innovationOrganizationTrackOptions.Select(ioto => new ApiListItemBaseResponse()
                     {
-                        Uid = mbt.Uid,
-                        Name = mbt.Name
+                        Uid = ioto.Uid,
+                        Name = ioto.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
                     })?.ToList(),
                     Status = ApiStatus.Success
                 });
@@ -289,24 +346,42 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         /// <exception cref="DomainException"></exception>
         [HttpGet]
-        [Route("GetInnovationOrganizationTechnologyOptions/{key?}")]
-        public async Task<IHttpActionResult> GetInnovationOrganizationTechnologyOptions(string key)
+        [Route("GetOrganizationTechnologies")]
+        public async Task<IHttpActionResult> GetInnovationOrganizationTechnologyOptions([FromUri] InnovationOrganizationTechnologyOptionsApiRequest request)
         {
             try
             {
-                if (key.ToLowerInvariant() != ConfigurationManager.AppSettings["CreateStartupApiKey"].ToLowerInvariant())
+                var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
+                if (editions?.Any() == false)
                 {
-                    throw new DomainException(Messages.AccessDenied);
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." } });
+                }
+
+                // Get edition from request otherwise get current
+                var edition = request?.Edition.HasValue == true ? editions?.FirstOrDefault(e => e.UrlCode == request.Edition) :
+                                                                  editions?.FirstOrDefault(e => e.IsCurrent);
+                if (edition == null)
+                {
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." } });
+                }
+
+                // Get language from request otherwise get default
+                var languages = await this.languageRepo.FindAllDtosAsync();
+                var requestLanguage = languages?.FirstOrDefault(l => l.Code == request?.Culture);
+                var defaultLanguage = languages?.FirstOrDefault(l => l.IsDefault);
+                if (requestLanguage == null && defaultLanguage == null)
+                {
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "No active languages found." } });
                 }
 
                 var innovationOrganizationTechnologyOptions = await this.innovationOrganizationTechnologyOptionRepo.FindAllAsync();
 
-                return await Json(new InnovationOrganizationOptionApiBaseResponse
+                return await Json(new InnovationOrganizationTechnologyOptionsApiResponse
                 {
-                    BaseListItemApiResponses = innovationOrganizationTechnologyOptions.Select(mbt => new BaseListItemApiResponse()
+                    InnovationOrganizationTechnologyOptions = innovationOrganizationTechnologyOptions.Select(ioto => new ApiListItemBaseResponse()
                     {
-                        Uid = mbt.Uid,
-                        Name = mbt.Name
+                        Uid = ioto.Uid,
+                        Name = ioto.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
                     })?.ToList(),
                     Status = ApiStatus.Success
                 });
@@ -330,24 +405,42 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
         /// <exception cref="DomainException"></exception>
         [HttpGet]
-        [Route("GetInnovationOrganizationObjectivesOptions/{key?}")]
-        public async Task<IHttpActionResult> GetInnovationOrganizationObjectivesOptions(string key)
+        [Route("GetOrganizationObjectives")]
+        public async Task<IHttpActionResult> GetInnovationOrganizationObjectivesOptions([FromUri] InnovationOrganizationObjectivesOptionsApiRequest request)
         {
             try
             {
-                if (key.ToLowerInvariant() != ConfigurationManager.AppSettings["CreateStartupApiKey"].ToLowerInvariant())
+                var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
+                if (editions?.Any() == false)
                 {
-                    throw new DomainException(Messages.AccessDenied);
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." } });
+                }
+
+                // Get edition from request otherwise get current
+                var edition = request?.Edition.HasValue == true ? editions?.FirstOrDefault(e => e.UrlCode == request.Edition) :
+                                                                  editions?.FirstOrDefault(e => e.IsCurrent);
+                if (edition == null)
+                {
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." } });
+                }
+
+                // Get language from request otherwise get default
+                var languages = await this.languageRepo.FindAllDtosAsync();
+                var requestLanguage = languages?.FirstOrDefault(l => l.Code == request?.Culture);
+                var defaultLanguage = languages?.FirstOrDefault(l => l.IsDefault);
+                if (requestLanguage == null && defaultLanguage == null)
+                {
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "No active languages found." } });
                 }
 
                 var innovationOrganizationObjectivesOptions = await this.innovationOrganizationObjectivesOptionRepo.FindAllAsync();
 
-                return await Json(new InnovationOrganizationOptionApiBaseResponse
+                return await Json(new InnovationOrganizationObjectivesOptionsApiResponse
                 {
-                    BaseListItemApiResponses = innovationOrganizationObjectivesOptions.Select(mbt => new BaseListItemApiResponse()
+                    InnovationOrganizationObjectivesOptions = innovationOrganizationObjectivesOptions.Select(iooo => new ApiListItemBaseResponse()
                     {
-                        Uid = mbt.Uid,
-                        Name = mbt.Name
+                        Uid = iooo.Uid,
+                        Name = iooo.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
                     })?.ToList(),
                     Status = ApiStatus.Success
                 });

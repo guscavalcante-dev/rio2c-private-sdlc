@@ -24,11 +24,15 @@
     <div class="kt-portlet__body">
         <!--begin: SearchForm-->
         <div class="form-group row">
-            <div class="col-lg-5">
+            <div class="col-lg-3">
                 <label>@Labels.Search:</label>
                 @Html.TextBoxFor(m => m.Search, new { type = "search", @class = "form-control", autocomplete = "off", placeholder = $"{Labels.Name.ToLowerInvariant()}, {Labels.Email.ToLowerInvariant()} {Labels.Or.ToLowerInvariant()} {Labels.Company.ToLowerInvariant()}" })
             </div>
-            <div class="col-lg-7">
+            <div class="col-lg-3">
+                <label>@Labels.Track:</label>
+                @Html.DropDownListFor(m => m.InnovationOrganizationTrackOptionUid, new SelectList(Model.InnovationOrganizationTrackOptions, "Uid", "Name", Model.InnovationOrganizationTrackOptionUid), $"{string.Format(Labels.SelectAFEntity, Labels.Track.ToLowerInvariant())}...", new { @class = "form-control enable-datatable-reload enable-select2" })
+            </div>
+            <div class="col-lg-6">
                 <div class="form-group">
                     <label>&nbsp;</label>
                     <div class="kt-checkbox-inline">

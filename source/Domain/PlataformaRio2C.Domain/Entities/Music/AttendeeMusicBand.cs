@@ -43,7 +43,13 @@ namespace PlataformaRio2C.Domain.Entities
         public AttendeeMusicBand(
             Edition edition,
             MusicBand musicBand,
-            MusicProjectApiDto musicProjectApiDto,
+            string videoUrl,
+            string music1Url,
+            string music2Url,
+            string release,
+            string clipping1,
+            string clipping2,
+            string clipping3,
             int userId)
         {
             this.Edition = edition;
@@ -52,13 +58,13 @@ namespace PlataformaRio2C.Domain.Entities
             this.MusicBandId = musicBand.Id;
 
             this.CreateProject(
-                musicProjectApiDto.VideoUrl,
-                musicProjectApiDto.Music1Url,
-                musicProjectApiDto.Music2Url,
-                musicProjectApiDto.Release,
-                musicProjectApiDto.Clipping1,
-                musicProjectApiDto.Clipping2,
-                musicProjectApiDto.Clipping3,
+                videoUrl,
+                music1Url,
+                music2Url,
+                release,
+                clipping1,
+                clipping2,
+                clipping3,
                 false,
                 userId);
 

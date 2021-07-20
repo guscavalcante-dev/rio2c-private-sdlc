@@ -22,7 +22,8 @@ namespace PlataformaRio2C.Domain.Dtos
     public class TargetAudienceApiDto
     {
         [JsonRequired]
-        public int Id { get; set; }
+        [JsonProperty("uid")]
+        public Guid Uid { get; set; }
 
         [JsonIgnore]
         public TargetAudience TargetAudience { get; set; }

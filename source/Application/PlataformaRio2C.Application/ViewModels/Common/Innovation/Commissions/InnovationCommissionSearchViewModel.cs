@@ -11,8 +11,13 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace PlataformaRio2C.Application.ViewModels
 {
@@ -28,12 +33,29 @@ namespace PlataformaRio2C.Application.ViewModels
         [Display(Name = "ShowAllParticipants", ResourceType = typeof(Labels))]
         public bool ShowAllParticipants { get; set; }
 
+        [Display(Name = "Track", ResourceType = typeof(Labels))]
+        public Guid? InnovationOrganizationTrackOptionUid { get; set; }
+
+
+        [Display(Name = "Tracks", ResourceType = typeof(Labels))]
+        public IEnumerable<InnovationOrganizationTrackOption> InnovationOrganizationTrackOptions { get; private set; }
+
         public int? Page { get; set; }
         public int? PageSize { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="InnovationCommissionSearchViewModel"/> class.</summary>
         public InnovationCommissionSearchViewModel()
         {
+        }
+
+        /// <summary>
+        /// Updates the models and lists.
+        /// </summary>
+        /// <param name="innovationOrganizationTrackOptions">The innovation organization track options.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public void UpdateModelsAndLists(List<InnovationOrganizationTrackOption> innovationOrganizationTrackOptions, string userInterfaceLanguage)
+        {
+            this.InnovationOrganizationTrackOptions = innovationOrganizationTrackOptions.GetSeparatorTranslation(i => i.Name, userInterfaceLanguage, '|')?.OrderBy(i => i.DisplayOrder)?.ToList();
         }
     }
 }

@@ -42,7 +42,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
     {
         private readonly IMediator commandBus;
         private readonly IdentityAutenticationService identityController;
-        private readonly IEditionRepository editionsRepo;
+        private readonly IEditionRepository editionRepo;
+        private readonly ILanguageRepository languageRepo;
         private readonly IMusicBandTypeRepository musicBandTypesRepo;
         private readonly IMusicGenreRepository musicGenresRepo;
         private readonly ITargetAudienceRepository targetAudiencesRepo;
@@ -54,17 +55,19 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         public MusicBandsApiController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
-            IEditionRepository editionsRepo,
-            IMusicBandTypeRepository musicBandTypesRepo,
-            IMusicGenreRepository musicGenresRepo,
-            ITargetAudienceRepository targetAudiencesRepo)
+            IEditionRepository editionRepository,
+            ILanguageRepository languageRepository,
+            IMusicBandTypeRepository musicBandTypesRepository,
+            IMusicGenreRepository musicGenresRepository,
+            ITargetAudienceRepository targetAudiencesRepository)
         {
             this.commandBus = commandBus;
             this.identityController = identityController;
-            this.editionsRepo = editionsRepo;
-            this.musicBandTypesRepo = musicBandTypesRepo;
-            this.musicGenresRepo = musicGenresRepo;
-            this.targetAudiencesRepo = targetAudiencesRepo;
+            this.editionRepo = editionRepository;
+            this.languageRepo = languageRepository;
+            this.musicBandTypesRepo = musicBandTypesRepository;
+            this.musicGenresRepo = musicGenresRepository;
+            this.targetAudiencesRepo = targetAudiencesRepository;
         }
 
         /// <summary>
@@ -74,7 +77,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <returns></returns>
         /// <exception cref="DomainException">
         /// </exception>
-        [HttpPost]
+        [HttpGet]
         [Route("CreateMusicBand/{key?}")]
         public async Task<IHttpActionResult> CreateMusicBand(string key, HttpRequestMessage request)
         {
@@ -95,7 +98,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     throw new DomainException(Messages.UserNotFound);
                 }
 
-                var currentEdition = await editionsRepo.FindByIsCurrentAsync();
+                var currentEdition = await editionRepo.FindByIsCurrentAsync();
                 if (currentEdition == null)
                 {
                     throw new DomainException(Messages.CurrentEditionNotFound);
@@ -150,23 +153,41 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <exception cref="DomainException"></exception>
         [HttpGet]
         [Route("GetMusicBandTypes")]
-        public async Task<IHttpActionResult> GetMusicBandTypes(string key)
+        public async Task<IHttpActionResult> GetMusicBandTypes([FromUri] MusicBandTypesApiRequest request)
         {
             try
             {
-                if (key.ToLowerInvariant() != ConfigurationManager.AppSettings["CreateMusicBandApiKey"].ToLowerInvariant())
+                var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
+                if (editions?.Any() == false)
                 {
-                    throw new DomainException(Messages.AccessDenied);
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." } });
+                }
+
+                // Get edition from request otherwise get current
+                var edition = request?.Edition.HasValue == true ? editions?.FirstOrDefault(e => e.UrlCode == request.Edition) :
+                                                                  editions?.FirstOrDefault(e => e.IsCurrent);
+                if (edition == null)
+                {
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." } });
+                }
+
+                // Get language from request otherwise get default
+                var languages = await this.languageRepo.FindAllDtosAsync();
+                var requestLanguage = languages?.FirstOrDefault(l => l.Code == request?.Culture);
+                var defaultLanguage = languages?.FirstOrDefault(l => l.IsDefault);
+                if (requestLanguage == null && defaultLanguage == null)
+                {
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "No active languages found." } });
                 }
 
                 var musicBandTypes = await this.musicBandTypesRepo.FindAllAsync();
 
                 return await Json(new MusicBandTypesApiResponse
                 {
-                    MusicBandTypes = musicBandTypes.OrderBy(o => o.DisplayOrder).Select(mbt => new MusicBandTypeListApiItem()
+                    MusicBandTypes = musicBandTypes.OrderBy(o => o.DisplayOrder).Select(mbt => new ApiListItemBaseResponse()
                     {
-                        Id = mbt.Id,
-                        Name = mbt.Name
+                        Uid = mbt.Uid,
+                        Name = mbt.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
                     })?.ToList(),
                     Status = ApiStatus.Success
                 });
@@ -190,23 +211,41 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <exception cref="DomainException"></exception>
         [HttpGet]
         [Route("GetMusicGenres")]
-        public async Task<IHttpActionResult> GetMusicGenres(string key)
+        public async Task<IHttpActionResult> GetMusicGenres([FromUri] MusicGenresApiRequest request)
         {
             try
             {
-                if (key.ToLowerInvariant() != ConfigurationManager.AppSettings["CreateMusicBandApiKey"].ToLowerInvariant())
+                var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
+                if (editions?.Any() == false)
                 {
-                    throw new DomainException(Messages.AccessDenied);
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." } });
+                }
+
+                // Get edition from request otherwise get current
+                var edition = request?.Edition.HasValue == true ? editions?.FirstOrDefault(e => e.UrlCode == request.Edition) :
+                                                                  editions?.FirstOrDefault(e => e.IsCurrent);
+                if (edition == null)
+                {
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." } });
+                }
+
+                // Get language from request otherwise get default
+                var languages = await this.languageRepo.FindAllDtosAsync();
+                var requestLanguage = languages?.FirstOrDefault(l => l.Code == request?.Culture);
+                var defaultLanguage = languages?.FirstOrDefault(l => l.IsDefault);
+                if (requestLanguage == null && defaultLanguage == null)
+                {
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "No active languages found." } });
                 }
 
                 var musicGenres = await this.musicGenresRepo.FindAllAsync();
 
                 return await Json(new MusicGenresApiResponse
                 {
-                    MusicGenres = musicGenres.OrderBy(o => o.DisplayOrder).Select(mg => new MusicGenreListApiItem()
+                    MusicGenres = musicGenres.OrderBy(o => o.DisplayOrder).Select(mg => new ApiListItemBaseResponse()
                     {
-                        Id = mg.Id,
-                        Name = mg.Name
+                        Uid = mg.Uid,
+                        Name = mg.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
                     })?.ToList(),
                     Status = ApiStatus.Success
                 });
@@ -230,13 +269,31 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <exception cref="DomainException"></exception>
         [HttpGet]
         [Route("GetTargetAudiences")]
-        public async Task<IHttpActionResult> GetTargetAudiences(string key)
+        public async Task<IHttpActionResult> GetTargetAudiences([FromUri] TargetAudiencesApiRequest request)
         {
             try
             {
-                if (key.ToLowerInvariant() != ConfigurationManager.AppSettings["CreateMusicBandApiKey"].ToLowerInvariant())
+                var editions = await this.editionRepo.FindAllByIsActiveAsync(false);
+                if (editions?.Any() == false)
                 {
-                    throw new DomainException(Messages.AccessDenied);
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "No active editions found." } });
+                }
+
+                // Get edition from request otherwise get current
+                var edition = request?.Edition.HasValue == true ? editions?.FirstOrDefault(e => e.UrlCode == request.Edition) :
+                                                                  editions?.FirstOrDefault(e => e.IsCurrent);
+                if (edition == null)
+                {
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00002", Message = "No editions found." } });
+                }
+
+                // Get language from request otherwise get default
+                var languages = await this.languageRepo.FindAllDtosAsync();
+                var requestLanguage = languages?.FirstOrDefault(l => l.Code == request?.Culture);
+                var defaultLanguage = languages?.FirstOrDefault(l => l.IsDefault);
+                if (requestLanguage == null && defaultLanguage == null)
+                {
+                    return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00003", Message = "No active languages found." } });
                 }
 
                 //Using "ProjectType.Inovation" because in "[dbo].[MigrateMusicProjects]" procedure, its fixed too.
@@ -244,10 +301,10 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
                 return await Json(new TargetAudiencesApiResponse
                 {
-                    TargetAudiences = targetAudiences.OrderBy(o => o.DisplayOrder).Select(ta => new TargetAudienceListApiItem()
+                    TargetAudiences = targetAudiences.OrderBy(o => o.DisplayOrder).Select(ta => new ApiListItemBaseResponse()
                     {
-                        Id = ta.Id,
-                        Name = ta.Name
+                        Uid = ta.Uid,
+                        Name = ta.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
                     })?.ToList(),
                     Status = ApiStatus.Success
                 });

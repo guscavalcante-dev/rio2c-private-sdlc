@@ -828,10 +828,7 @@
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.datatable.widget.js" />
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.delete.js" />
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.editioncount.widget.js" />
-    <Content Include="Assets\js\innovation\commissions\innovation.commissions.maininformation.widget.js" />
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.tracks.widget.js" />
-    <Content Include="Assets\js\innovation\commissions\innovation.commissions.onboardinginfo.widget.js" />
-    <Content Include="Assets\js\innovation\commissions\innovation.commissions.socialnetworks.widget.js" />
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.totalcount.widget.js" />
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.update.js" />
     <Content Include="Assets\js\logisticsponsors\logisticsponsors.editioncount.widget.js" />

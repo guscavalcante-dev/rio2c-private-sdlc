@@ -70,7 +70,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Index(InnovationCommissionSearchViewModel searchViewModel)
+        public async Task<ActionResult> Index(InnovationCommissionSearchViewModel searchViewModel)
         {
             #region Breadcrumb
 
@@ -79,6 +79,10 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             });
 
             #endregion
+
+            searchViewModel.UpdateModelsAndLists(
+                await this.innovationOrganizationTrackOptionRepo.FindAllAsync(),
+                this.UserInterfaceLanguage);
 
             return View(searchViewModel);
         }
@@ -91,9 +95,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllParticipants)
+        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllParticipants, Guid? innovationOrganizationTrackOptionUid)
         {
-            var members = await this.collaboratorRepo.FindAllByDataTable(
+            var members = await this.collaboratorRepo.FindAllInnovationCommissionsByDataTable(
                 request.Start / request.Length,
                 request.Length,
                 request.Search?.Value,
@@ -104,7 +108,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                 false,
                 showAllParticipants,
                 null,
-                this.EditionDto?.Id
+                this.EditionDto?.Id,
+                new List<Guid?>() { innovationOrganizationTrackOptionUid }
             );
 
             var response = DataTablesResponse.Create(request, members.TotalItemCount, members.TotalItemCount, members);
@@ -147,6 +152,123 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             return View(attendeeCollaboratorDto);
         }
 
+        #region Tracks Widget
+
+        [HttpGet]
+        public async Task<ActionResult> ShowTracksWidget(Guid? collaboratorUid)
+        {
+            var tracksWidgetDto = await this.attendeeCollaboratorRepo.FindTracksWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
+            if (tracksWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            ViewBag.InnovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllAsync();
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/TracksWidget", tracksWidgetDto), divIdOrClass = "#InnovationCommissionTracksInfoWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #region Update
+
+        [HttpGet]
+        public async Task<ActionResult> ShowUpdateTracksModal(Guid? collaboratorUid)
+        {
+            UpdateInnovationCollaboratorTracks cmd;
+
+            try
+            {
+                var attendeeCollaboratorTracksWidgetDto = await this.attendeeCollaboratorRepo.FindTracksWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
+                if (attendeeCollaboratorTracksWidgetDto == null)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()));
+                }
+
+                cmd = new UpdateInnovationCollaboratorTracks(
+                    attendeeCollaboratorTracksWidgetDto, 
+                    await this.innovationOrganizationTrackOptionRepo.FindAllAsync());
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/UpdateTracksModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Updates the social networks.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> UpdateTracks(UpdateInnovationCollaboratorTracks cmd)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Forms/_SocialNetworksForm.cshtml", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Member, Labels.UpdatedM) });
+        }
+
+        #endregion
+
+        #endregion
+
+
+        //TODO: Remove these above widgets from here! Get it all from a CollaboratorsController or something!
         #region Main Information Widget
 
         /// <summary>Shows the main information widget.</summary>
@@ -404,121 +526,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
         #endregion
 
-        #region Tracks Widget
-
-        [HttpGet]
-        public async Task<ActionResult> ShowTracksWidget(Guid? collaboratorUid)
-        {
-            var tracksWidgetDto = await this.attendeeCollaboratorRepo.FindTracksWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
-            if (tracksWidgetDto == null)
-            {
-                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-            }
-
-            ViewBag.InnovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllAsync();
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Widgets/TracksWidget", tracksWidgetDto), divIdOrClass = "#InnovationCommissionTracksInfoWidget" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        #region Update
-
-        [HttpGet]
-        public async Task<ActionResult> ShowUpdateTracksModal(Guid? collaboratorUid)
-        {
-            UpdateInnovationCollaboratorTracks cmd;
-
-            try
-            {
-                var attendeeCollaboratorTracksWidgetDto = await this.attendeeCollaboratorRepo.FindTracksWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
-                if (attendeeCollaboratorTracksWidgetDto == null)
-                {
-                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()));
-                }
-
-                cmd = new UpdateInnovationCollaboratorTracks(
-                    attendeeCollaboratorTracksWidgetDto, 
-                    await this.innovationOrganizationTrackOptionRepo.FindAllAsync());
-            }
-            catch (DomainException ex)
-            {
-                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Modals/UpdateTracksModal", cmd), divIdOrClass = "#GlobalModalContainer" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>Updates the social networks.</summary>
-        /// <param name="cmd">The command.</param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> UpdateTracks(UpdateInnovationCollaboratorTracks cmd)
-        {
-            var result = new AppValidationResult();
-
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-
-                cmd.UpdatePreSendProperties(
-                    this.AdminAccessControlDto.User.Id,
-                    this.AdminAccessControlDto.User.Uid,
-                    this.EditionDto.Id,
-                    this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
-                result = await this.CommandBus.Send(cmd);
-                if (!result.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-            }
-            catch (DomainException ex)
-            {
-                foreach (var error in result.Errors)
-                {
-                    var target = error.Target ?? "";
-                    ModelState.AddModelError(target, error.Message);
-                }
-
-                return Json(new
-                {
-                    status = "error",
-                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
-                    pages = new List<dynamic>
-                    {
-                        new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Forms/_SocialNetworksForm.cshtml", cmd), divIdOrClass = "#form-container" },
-                    }
-                }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Member, Labels.UpdatedM) });
-        }
-
-        #endregion
-
-        #endregion
-
         #region Onboarding Info Widget
 
         /// <summary>Shows the onboarding information widget.</summary>
@@ -548,6 +555,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         }
 
         #endregion
+
 
         #endregion
 

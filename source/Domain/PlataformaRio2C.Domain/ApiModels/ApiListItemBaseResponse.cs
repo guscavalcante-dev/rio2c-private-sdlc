@@ -1,26 +1,28 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Site
 // Author           : Renan Valentim
-// Created          : 03-27-2021
+// Created          : 07-01-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-27-2021
+// Last Modified On : 07-01-2021
 // ***********************************************************************
-// <copyright file="TargetAudiencesApiResponse.cs" company="Softo">
+// <copyright file="ApiListItemBaseResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
 using Newtonsoft.Json;
+using System;
 
 namespace PlataformaRio2C.Domain.ApiModels
 {
-    /// <summary>TargetAudiencesApiResponse</summary>
-    public class TargetAudiencesApiResponse : ApiBaseResponse
+    /// <summary>ApiListItemBaseResponse</summary>
+    public class ApiListItemBaseResponse
     {
-        [JsonProperty("targetAudiences")]
-        public List<ApiListItemBaseResponse> TargetAudiences { get; set; }
+        [JsonProperty("uid", Order = 100)]
+        public Guid Uid { get; set; }
+
+        [JsonProperty("name", Order = 200)]
+        public string Name { get; set; }
     }
 }

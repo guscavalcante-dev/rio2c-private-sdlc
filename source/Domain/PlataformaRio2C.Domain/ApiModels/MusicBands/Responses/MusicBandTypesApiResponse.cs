@@ -21,16 +21,6 @@ namespace PlataformaRio2C.Domain.ApiModels
     public class MusicBandTypesApiResponse : ApiBaseResponse
     {
         [JsonProperty("musicBandTypes")]
-        public List<MusicBandTypeListApiItem> MusicBandTypes { get; set; }
-    }
-
-    /// <summary>MusicBandTypeListApiItem</summary>
-    public class MusicBandTypeListApiItem
-    {
-        [JsonProperty("id", Order = 100)]
-        public int Id { get; set; }
-
-        [JsonProperty("name", Order = 200)]
-        public string Name { get; set; }
+        public List<ApiListItemBaseResponse> MusicBandTypes { get; set; }
     }
 }

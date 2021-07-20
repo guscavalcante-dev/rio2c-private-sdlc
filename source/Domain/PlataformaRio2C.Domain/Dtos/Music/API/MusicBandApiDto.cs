@@ -14,6 +14,7 @@
 using Newtonsoft.Json;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,61 +27,61 @@ namespace PlataformaRio2C.Domain.Dtos
         public ValidationResult ValidationResult { get; set; }
 
         [JsonRequired]
-        [JsonProperty(PropertyName = "musicBandTypeId", Order = 100)]
-        public int MusicBandTypeId { get; set; }
+        [JsonProperty("musicBandTypeUid", Order = 100)]
+        public Guid MusicBandTypeUid { get; set; }
 
         [JsonRequired]
-        [JsonProperty(PropertyName = "name", Order = 200)]
+        [JsonProperty("name", Order = 200)]
         public string Name { get; set; }
 
         [JsonRequired]
-        [JsonProperty(PropertyName = "imageUrl", Order = 300)]
+        [JsonProperty("imageUrl", Order = 300)]
         public string ImageUrl { get; set; }
 
         [JsonRequired]
-        [JsonProperty(PropertyName = "formationDate", Order = 400)]
+        [JsonProperty("formationDate", Order = 400)]
         public string FormationDate { get; set; }
 
         [JsonRequired]
-        [JsonProperty(PropertyName = "mainMusicInfluences", Order = 500)]
+        [JsonProperty("mainMusicInfluences", Order = 500)]
         public string MainMusicInfluences { get; set; }
 
-        [JsonProperty(PropertyName = "facebook", Order = 600)]
+        [JsonProperty("facebook", Order = 600)]
         public string Facebook { get; set; }
 
-        [JsonProperty(PropertyName = "instagram", Order = 700)]
+        [JsonProperty("instagram", Order = 700)]
         public string Instagram { get; set; }
 
-        [JsonProperty(PropertyName = "twitter", Order = 800)]
+        [JsonProperty("twitter", Order = 800)]
         public string Twitter { get; set; }
    
-        [JsonProperty(PropertyName = "youtube", Order = 900)]
+        [JsonProperty("youtube", Order = 900)]
         public string Youtube { get; set; }
 
         [JsonRequired]
-        [JsonProperty(PropertyName = "musicProject", Order = 1000)]
+        [JsonProperty("musicProject", Order = 1000)]
         public MusicProjectApiDto MusicProjectApiDto { get; set; }
 
         [JsonRequired]
-        [JsonProperty(PropertyName = "musicBandResponsible", Order = 1100)]
+        [JsonProperty("musicBandResponsible", Order = 1100)]
         public MusicBandResponsibleApiDto MusicBandResponsibleApiDto { get; set; }
 
         [JsonRequired]
-        [JsonProperty(PropertyName = "musicBandMembers", Order = 1200)]
+        [JsonProperty("musicBandMembers", Order = 1200)]
         public List<MusicBandMemberApiDto> MusicBandMembersApiDtos { get; set; }
 
-        [JsonProperty(PropertyName = "musicBandTeamMembers", Order = 1300)]
+        [JsonProperty("musicBandTeamMembers", Order = 1300)]
         public List<MusicBandTeamMemberApiDto> MusicBandTeamMembersApiDtos { get; set; }
 
-        [JsonProperty(PropertyName = "releasedMusicProjects", Order = 1400)]
+        [JsonProperty("releasedMusicProjects", Order = 1400)]
         public List<ReleasedMusicProjectApiDto> ReleasedMusicProjectsApiDtos { get; set; }
 
         [JsonRequired]
-        [JsonProperty(PropertyName = "musicGenres", Order = 1500)]
+        [JsonProperty("musicGenres", Order = 1500)]
         public List<MusicGenreApiDto> MusicGenresApiDtos { get; set; }
 
         [JsonRequired]
-        [JsonProperty(PropertyName = "targetAudiences", Order = 1600)]
+        [JsonProperty("targetAudiences", Order = 1600)]
         public List<TargetAudienceApiDto> TargetAudiencesApiDtos { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="MusicBandApiDto"/> class.</summary>
@@ -118,7 +119,7 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <returns></returns>
         public string GenerateTestJson()
         {
-            this.MusicBandTypeId = 2;
+            this.MusicBandTypeUid = new Guid("DD8D2040-52D2-427B-962B-026B7B1C4604");
             this.Name = "My definitive band";
             this.ImageUrl = "https://png.pngtree.com/element_our/png/20180804/rock-group-music-band-png_52911.jpg";
             this.FormationDate = "2021";
@@ -197,14 +198,14 @@ namespace PlataformaRio2C.Domain.Dtos
 
             this.MusicGenresApiDtos = new List<MusicGenreApiDto>()
             {
-                new MusicGenreApiDto() { Id = 19 },
-                new MusicGenreApiDto() { Id = 20 }
+                new MusicGenreApiDto() { Uid = new Guid("CAFC1D28-7477-4AB3-99F8-FDBD4281CB41") },
+                new MusicGenreApiDto() { Uid = new Guid("58569CEF-2FB6-49F7-8A74-FC5BEAB28527") }
             };
 
             this.TargetAudiencesApiDtos = new List<TargetAudienceApiDto>()
             {
-                new TargetAudienceApiDto() { Id = 6 },
-                new TargetAudienceApiDto() { Id = 7 }
+                new TargetAudienceApiDto() { Uid = new Guid("F69DF4BE-3994-451B-BDAC-E019E17F1668") },
+                new TargetAudienceApiDto() { Uid = new Guid("D7DD48CD-4781-44AF-BEF8-E0C67DEB11CF") }
             };
 
             return Newtonsoft.Json.JsonConvert.SerializeObject(this);

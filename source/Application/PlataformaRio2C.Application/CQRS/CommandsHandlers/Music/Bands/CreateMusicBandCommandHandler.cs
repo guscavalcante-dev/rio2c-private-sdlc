@@ -103,18 +103,18 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             cmd.TargetAudiencesApiDtos = cmd.TargetAudiencesApiDtos.Select(ta =>
                                                     new TargetAudienceApiDto()
                                                     {
-                                                        Id = ta.Id,
-                                                        TargetAudience = targetAudienceRepo.Get(ta.Id)
+                                                        Uid = ta.Uid,
+                                                        TargetAudience = targetAudienceRepo.Get(ta.Uid)
                                                     }).ToList();
 
             cmd.MusicGenresApiDtos = cmd.MusicGenresApiDtos.Select(mg =>
                                                     new MusicGenreApiDto()
                                                     {
-                                                        Id = mg.Id,
-                                                        MusicGenre = musicGenreRepo.Get(mg.Id)
+                                                        Uid = mg.Uid,
+                                                        MusicGenre = musicGenreRepo.Get(mg.Uid)
                                                     }).ToList();
 
-            var musicBandType = await musicBandTypeRepo.FindByIdAsync(cmd.MusicBandTypeId);
+            var musicBandType = musicBandTypeRepo.Get(cmd.MusicBandTypeUid);
 
             Collaborator collaborator = null;
 

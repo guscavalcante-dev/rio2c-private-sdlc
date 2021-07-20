@@ -21,6 +21,6 @@ namespace PlataformaRio2C.Domain.ApiModels
     public class WorkDedicationsApiResponse : ApiBaseResponse
     {
         [JsonProperty("workDedications")]
-        public List<BaseListItemApiResponse> WorkDedications { get; set; }
+        public List<ApiListItemBaseResponse> WorkDedications { get; set; }
     }
 }

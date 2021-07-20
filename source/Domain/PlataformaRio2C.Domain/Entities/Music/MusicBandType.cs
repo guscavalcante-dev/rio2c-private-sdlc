@@ -14,6 +14,7 @@
 using System;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -66,6 +67,14 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = true;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
+        }
+
+        /// <summary>Gets the name translation.</summary>
+        /// <param name="languageCode">The language code.</param>
+        /// <returns></returns>
+        public string GetNameTranslation(string languageCode)
+        {
+            return this.Name?.GetSeparatorTranslation(languageCode, Language.Separator);
         }
 
         #region Validations

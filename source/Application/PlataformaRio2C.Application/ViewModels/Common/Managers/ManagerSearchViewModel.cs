@@ -30,11 +30,9 @@ namespace PlataformaRio2C.Application.ViewModels
 
         [Display(Name = "Roles", ResourceType = typeof(Labels))]
         public IEnumerable<Role> Roles { get; private set; }
-        //public string[] Roles { get; set; }
 
         [Display(Name = "CollaboratorTypes", ResourceType = typeof(Labels))]
         public IEnumerable<CollaboratorType> CollaboratorTypes { get; private set; }
-        //public string[] CollaboratorTypes { get; set; }
 
         public int? Page { get; set; }
         public int? PageSize { get; set; }
@@ -42,8 +40,6 @@ namespace PlataformaRio2C.Application.ViewModels
         /// <summary>Initializes a new instance of the <see cref="ManagerSearchViewModel"/> class.</summary>
         public ManagerSearchViewModel()
         {
-            //this.CollaboratorTypes = CollaboratorType.Admins;
-            //this.Roles = Role.AnyAdminArray;
         }
 
         /// <summary>

@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,6 +74,22 @@ namespace PlataformaRio2C.Domain.Entities
             {
                 return "-";
             }
+        }
+
+        /// <summary>Gets the name translation.</summary>
+        /// <param name="languageCode">The language code.</param>
+        /// <returns></returns>
+        public string GetNameTranslation(string languageCode)
+        {
+            return this.GetName()?.GetSeparatorTranslation(languageCode, Language.Separator);
+        }
+
+        /// <summary>Gets the description translation.</summary>
+        /// <param name="languageCode">The language code.</param>
+        /// <returns></returns>
+        public string GetDesctiptionTranslation(string languageCode)
+        {
+            return this.GetDescription()?.GetSeparatorTranslation(languageCode, Language.Separator);
         }
 
         #region Valitations

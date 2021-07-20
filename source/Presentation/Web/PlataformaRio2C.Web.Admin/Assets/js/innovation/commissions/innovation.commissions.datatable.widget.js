@@ -67,9 +67,14 @@ var InnovationCommissionsDataTableWidget = function () {
     };
 
     // Init datatable -----------------------------------------------------------------------------
-    var initiListTable = function () {
+    var enableFormPlugins = function () {
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: '.enable-select2' });
+    };
 
+    var initiListTable = function () {
         var tableElement = $(tableElementId);
+
+        enableFormPlugins();
 
         // Disable datatable alert
         $.fn.dataTable.ext.errMode = 'none';
@@ -157,6 +162,7 @@ var InnovationCommissionsDataTableWidget = function () {
                 data: function (d) {
                     d.showAllEditions = $('#ShowAllEditions').prop('checked');
                     d.showAllParticipants = $('#ShowAllParticipants').prop('checked');
+                    d.innovationOrganizationTrackOptionUid = $('#InnovationOrganizationTrackOptionUid').val();
                 },
                 dataFilter: function (data) {
                     var jsonReturned = jQuery.parseJSON(data);
@@ -328,6 +334,11 @@ var InnovationCommissionsDataTableWidget = function () {
             if (e.keyCode === 13) {
                 table.search($(this).val()).draw();
             }
+        });
+
+
+        $('#InnovationOrganizationTrackOptionUid').on('change', function (e) {
+            table.ajax.reload();
         });
 
         $('.enable-datatable-reload').click(function (e) {

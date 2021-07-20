@@ -242,9 +242,9 @@ namespace PlataformaRio2C.Domain.Entities
                 userId);
             this.UpdateUser(email);
         }
-
+        
         /// <summary>
-        /// Initializes a new instance of the <see cref="Collaborator"/> class.
+        /// Initializes a new instance of the <see cref="Collaborator"/> class for Innovation Commission.
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
