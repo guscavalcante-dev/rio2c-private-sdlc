@@ -71,6 +71,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns>IQueryable&lt;InnovationOrganization&gt;.</returns>
         internal static IQueryable<InnovationOrganization> FindByDocument(this IQueryable<InnovationOrganization> query, string document)
         {
+            document = document.RemoveNonNumeric();
+
             query = query.Where(io => io.Document == document);
 
             return query;

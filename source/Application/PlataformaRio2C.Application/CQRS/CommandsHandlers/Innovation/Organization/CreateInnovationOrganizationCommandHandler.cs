@@ -46,6 +46,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepo;
         private readonly IInnovationOrganizationTechnologyOptionRepository innovationOrganizationTechnologyOptionRepo;
         private readonly IInnovationOrganizationObjectivesOptionRepository innovationOrganizationObjectivesOptionRepo;
+        private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateInnovationOrganizationCommandHandler" /> class.
@@ -69,7 +70,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IInnovationOrganizationExperienceOptionRepository innovationOrganizationExperienceOptionRepository,
             IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepository,
             IInnovationOrganizationTechnologyOptionRepository innovationOrganizationTechnologyOptionRepository,
-            IInnovationOrganizationObjectivesOptionRepository innovationOrganizationObjectivesOptionRepository
+            IInnovationOrganizationObjectivesOptionRepository innovationOrganizationObjectivesOptionRepository,
+            IAttendeeCollaboratorRepository attendeeCollaboratorRepository
             )
             : base(commandBus, uow, innovationOrganizationRepository)
         {
@@ -82,6 +84,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.innovationOrganizationTrackOptionRepo = innovationOrganizationTrackOptionRepository;
             this.innovationOrganizationTechnologyOptionRepo = innovationOrganizationTechnologyOptionRepository;
             this.innovationOrganizationObjectivesOptionRepo = innovationOrganizationObjectivesOptionRepository;
+            this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
         }
 
         /// <summary>
@@ -110,12 +113,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 this.AppValidationResult.Add(this.ValidationResult);
                 return this.AppValidationResult;
             }
-
-            //var workDedication = await workDedicationRepo.FindByUidAsync(cmd.WorkDedicationUid);
-            //if (workDedication == null)
-            //{
-            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.WorkDedication, Labels.FoundF), new string[] { "ToastrError" }));
-            //}
 
             var existentAttendeeInnovationOrganization = await attendeeInnovationOrganizationRepo.FindByDocumentAndEditionIdAsync(cmd.Document, cmd.EditionId.Value);
             if (existentAttendeeInnovationOrganization != null)
@@ -171,9 +168,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                                                        WorkDedication = this.workDedicationRepo.FindByUid(ta.WorkDedicationUid)   
                                                                     }).ToList();
 
-
-            var collaborator = await collaboratorRepo.FindByEmailAsync(cmd.Email);
-            if (collaborator == null)
+            var collaboratorDto = await collaboratorRepo.FindByEmailAsync(cmd.Email, editionDto.Id);
+            if (collaboratorDto == null)
             {
                 #region Creates new Collaborator and User
 
@@ -211,56 +207,157 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     }
                 }
 
-                collaborator = commandResult.Data as Collaborator;
+                collaboratorDto = commandResult.Data as CollaboratorDto;
+
+                #endregion
+            }
+            else
+            {
+                #region Updates Collaborator and User
+
+                var updateCollaboratorCommand = new UpdateTinyCollaborator(collaboratorDto, true);
+
+                updateCollaboratorCommand.UpdateBaseProperties(
+                    cmd.ResponsibleName,
+                    null,
+                    cmd.Email,
+                    cmd.PhoneNumber,
+                    cmd.CellPhone,
+                    cmd.Document);
+
+                updateCollaboratorCommand.UpdatePreSendProperties(
+                    CollaboratorType.Innovation.Name,
+                    cmd.UserId,
+                    cmd.UserUid,
+                    editionDto.Id,
+                    editionDto.Uid,
+                    "");
+
+                var commandResult = await base.CommandBus.Send(updateCollaboratorCommand);
+                if (!commandResult.IsValid)
+                {
+                    var currentValidationResult = new ValidationResult();
+                    foreach (var error in commandResult?.Errors)
+                    {
+                        currentValidationResult.Add(new ValidationError(error.Message));
+                    }
+
+                    if (!currentValidationResult.IsValid)
+                    {
+                        this.AppValidationResult.Add(currentValidationResult);
+                        return this.AppValidationResult;
+                    }
+                }
+
+                collaboratorDto = await collaboratorRepo.FindByEmailAsync(cmd.Email, editionDto.Id);
 
                 #endregion
             }
 
-            var innovationOrganization = new InnovationOrganization(
-                   editionDto.Edition,
-                   collaborator.GetAttendeeCollaboratorByEditionId(editionDto.Id),
-                   cmd.Name,
-                   cmd.Document,
-                   cmd.ServiceName,
-                   cmd.FoundationDate,
-                   cmd.Description,
-                   cmd.Website,
-                   cmd.AccumulatedRevenue,
-                   cmd.BusinessDefinition,
-                   cmd.BusinessFocus,
-                   cmd.MarketSize,
-                   cmd.BusinessEconomicModel,
-                   cmd.BusinessOperationalModel,
-                   cmd.BusinessDifferentials,
-                   cmd.BusinessStage,
-                   !string.IsNullOrEmpty(cmd.PresentationFile),
-                   cmd.AttendeeInnovationOrganizationFounderApiDtos,
-                   cmd.AttendeeInnovationOrganizationCompetitorApiDtos,
-                   cmd.InnovationOrganizationExperienceOptionApiDtos,
-                   cmd.InnovationOrganizationObjectivesOptionApiDtos,
-                   cmd.InnovationOrganizationTechnologyOptionApiDtos,
-                   cmd.InnovationOrganizationTrackOptionApiDtos,
-                   cmd.UserId);
-
-            if (!innovationOrganization.IsValid())
+            var innovationOrganization = await this.InnovationOrganizationRepo.FindByDocumentAsync(cmd.Document);
+            if (innovationOrganization == null)
             {
-                this.AppValidationResult.Add(innovationOrganization.ValidationResult);
-                return this.AppValidationResult;
+                #region Creates new Innovation Organization
+
+                var newInnovationOrganization = new InnovationOrganization(
+                       editionDto.Edition,
+                       collaboratorDto.EditionAttendeeCollaborator,
+                       cmd.Name,
+                       cmd.Document,
+                       cmd.ServiceName,
+                       cmd.FoundationDate,
+                       cmd.Description,
+                       cmd.Website,
+                       cmd.AccumulatedRevenue,
+                       cmd.BusinessDefinition,
+                       cmd.BusinessFocus,
+                       cmd.MarketSize,
+                       cmd.BusinessEconomicModel,
+                       cmd.BusinessOperationalModel,
+                       cmd.BusinessDifferentials,
+                       cmd.BusinessStage,
+                       !string.IsNullOrEmpty(cmd.PresentationFile),
+                       cmd.AttendeeInnovationOrganizationFounderApiDtos,
+                       cmd.AttendeeInnovationOrganizationCompetitorApiDtos,
+                       cmd.InnovationOrganizationExperienceOptionApiDtos,
+                       cmd.InnovationOrganizationObjectivesOptionApiDtos,
+                       cmd.InnovationOrganizationTechnologyOptionApiDtos,
+                       cmd.InnovationOrganizationTrackOptionApiDtos,
+                       cmd.UserId);
+
+                if (!newInnovationOrganization.IsValid())
+                {
+                    this.AppValidationResult.Add(newInnovationOrganization.ValidationResult);
+                    return this.AppValidationResult;
+                }
+
+                this.InnovationOrganizationRepo.Create(newInnovationOrganization);
+                this.Uow.SaveChanges();
+                this.AppValidationResult.Data = newInnovationOrganization;
+
+                if (!string.IsNullOrEmpty(cmd.PresentationFile))
+                {
+                    var fileBytes = Convert.FromBase64String(cmd.PresentationFile);
+                    this.fileRepo.Upload(
+                        new MemoryStream(fileBytes),
+                        FileMimeType.Pdf,
+                        newInnovationOrganization.Uid + FileType.Pdf,
+                        FileRepositoryPathType.InnovationOrganizationPresentationFile);
+                }
+
+                #endregion
             }
-
-            this.InnovationOrganizationRepo.Create(innovationOrganization);
-            this.Uow.SaveChanges();
-
-            this.AppValidationResult.Data = innovationOrganization;
-
-            if (!string.IsNullOrEmpty(cmd.PresentationFile))
+            else
             {
-                var fileBytes = Convert.FromBase64String(cmd.PresentationFile);
-                this.fileRepo.Upload(
-                    new MemoryStream(fileBytes),
-                    FileMimeType.Pdf,
-                    innovationOrganization.Uid + FileType.Pdf,
-                    FileRepositoryPathType.InnovationOrganizationPresentationFile);
+                #region Updates Innovation Organization
+
+                innovationOrganization.Update(
+                    editionDto.Edition,
+                       collaboratorDto.EditionAttendeeCollaborator,
+                       cmd.Name,
+                       cmd.Document,
+                       cmd.ServiceName,
+                       cmd.FoundationDate,
+                       cmd.Description,
+                       cmd.Website,
+                       cmd.AccumulatedRevenue,
+                       cmd.BusinessDefinition,
+                       cmd.BusinessFocus,
+                       cmd.MarketSize,
+                       cmd.BusinessEconomicModel,
+                       cmd.BusinessOperationalModel,
+                       cmd.BusinessDifferentials,
+                       cmd.BusinessStage,
+                       !string.IsNullOrEmpty(cmd.PresentationFile),
+                       cmd.AttendeeInnovationOrganizationFounderApiDtos,
+                       cmd.AttendeeInnovationOrganizationCompetitorApiDtos,
+                       cmd.InnovationOrganizationExperienceOptionApiDtos,
+                       cmd.InnovationOrganizationObjectivesOptionApiDtos,
+                       cmd.InnovationOrganizationTechnologyOptionApiDtos,
+                       cmd.InnovationOrganizationTrackOptionApiDtos,
+                       cmd.UserId);
+
+                if (!innovationOrganization.IsValid())
+                {
+                    this.AppValidationResult.Add(innovationOrganization.ValidationResult);
+                    return this.AppValidationResult;
+                }
+
+                this.InnovationOrganizationRepo.Update(innovationOrganization);
+                this.Uow.SaveChanges();
+                this.AppValidationResult.Data = innovationOrganization;
+
+                if (!string.IsNullOrEmpty(cmd.PresentationFile))
+                {
+                    var fileBytes = Convert.FromBase64String(cmd.PresentationFile);
+                    this.fileRepo.Upload(
+                        new MemoryStream(fileBytes),
+                        FileMimeType.Pdf,
+                        innovationOrganization.Uid + FileType.Pdf,
+                        FileRepositoryPathType.InnovationOrganizationPresentationFile);
+                }
+
+                #endregion
             }
 
             return this.AppValidationResult;

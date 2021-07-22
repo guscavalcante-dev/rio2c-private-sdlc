@@ -319,10 +319,11 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
                 return await Json(new InnovationOrganizationTrackOptionsApiResponse
                 {
-                    InnovationOrganizationTrackOptions = innovationOrganizationTrackOptions.Select(ioto => new ApiListItemBaseResponse()
+                    InnovationOrganizationTrackOptions = innovationOrganizationTrackOptions.Select(ioto => new InnovationOrganizationTrackOptionsListItemApiResponse()
                     {
                         Uid = ioto.Uid,
-                        Name = ioto.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
+                        Name = ioto.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code),
+                        Description = ioto.GetDesctiptionTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
                     })?.ToList(),
                     Status = ApiStatus.Success
                 });

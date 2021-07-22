@@ -1,5 +1,6 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Domain.Entities;
+@using System.Globalization
 @model AttendeeCollaboratorTracksWidgetDto
 @{
     var trackOptions = ViewBag.InnovationOrganizationTrackOptions as List<InnovationOrganizationTrackOption>;
@@ -39,7 +40,7 @@
                         </div>
                     }
                     <div class="kt-widget4__info">
-                        <span class="kt-widget4__title">@trackOption.GetName()</span>
+                        <span class="kt-widget4__title">@trackOption.GetNameTranslation(CultureInfo.CurrentCulture.ToString())</span>
                     </div>
                 </div>
             }

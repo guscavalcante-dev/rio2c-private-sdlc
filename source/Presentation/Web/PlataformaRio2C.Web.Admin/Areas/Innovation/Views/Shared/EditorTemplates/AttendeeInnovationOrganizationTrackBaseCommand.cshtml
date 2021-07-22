@@ -3,6 +3,7 @@
 <div data-id="@Model.InnovationOrganizationTrackOptionUid">
     @Html.HiddenFor(m => m.InnovationOrganizationTrackOptionUid)
     @Html.HiddenFor(m => m.InnovationOrganizationTrackOptionName)
+    @Html.HiddenFor(m => m.InnovationOrganizationTrackOptionDescription)
     @Html.HiddenFor(m => m.InnovationOrganizationTrackOptionHasAdditionalInfo)
     <label class="kt-checkbox" style="margin-bottom: 5px;">
         @if (!Model.InnovationOrganizationTrackOptionHasAdditionalInfo)
@@ -14,8 +15,8 @@
             @Html.CheckBoxFor(m => m.IsChecked, new { @class = "require-one toggle-additional-info", data_id = "activity-group", data_toggle_id = Model.InnovationOrganizationTrackOptionUid })
         }
         <div>
-            <span>@Model.GetName().GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')</span>
-            <span class="form-text text-muted">(@Model.GetDescription().GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|'))</span>
+            <span>@Model.InnovationOrganizationTrackOptionName.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')</span>
+            <span class="form-text text-muted">(@Model.InnovationOrganizationTrackOptionDescription.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|'))</span>
         </div>
         <span></span>
     </label>

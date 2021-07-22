@@ -25,6 +25,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     public class InnovationCollaboratorBaseCommand : CollaboratorBaseCommand
     {
         [Display(Name = "Tracks", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneOption")]
         public List<AttendeeInnovationOrganizationTrackBaseCommand> AttendeeInnovationOrganizationTracks { get; set; }
 
         /// <summary>

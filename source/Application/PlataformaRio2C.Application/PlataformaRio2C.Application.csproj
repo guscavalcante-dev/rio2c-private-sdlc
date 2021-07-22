@@ -378,6 +378,7 @@
     <Compile Include="CQRS\Commands\Innovation\Collaborators\UpdateInnovationCollaboratorSocialNetworks.cs" />
     <Compile Include="CQRS\Commands\Innovation\Organizations\BaseCommands\AttendeeInnovationOrganizationTrackBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Innovation\Collaborators\CreateInnovationCollaborator.cs" />
+    <Compile Include="CQRS\Commands\Innovation\Organizations\UpdateInnovationOrganization.cs" />
     <Compile Include="CQRS\Commands\Innovation\Organizations\CreateInnovationOrganization.cs" />
     <Compile Include="CQRS\Commands\Logistics\UpdateLogisticAccomodation.cs" />
     <Compile Include="CQRS\Commands\Logistics\CreateLogisticAccommodation.cs" />

@@ -182,7 +182,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void SynchronizeAttendeeInnovationOrganizationColaborators(AttendeeCollaborator attendeeCollaborator, int userId)
         {
-            if (this.AttendeeInnovationOrganizationCollaborators== null)
+            if (this.AttendeeInnovationOrganizationCollaborators == null)
             {
                 this.AttendeeInnovationOrganizationCollaborators = new List<AttendeeInnovationOrganizationCollaborator>();
             }

@@ -726,12 +726,82 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="email">The email.</param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<Collaborator> FindByEmailAsync(string email)
+        public async Task<CollaboratorDto> FindByEmailAsync(string email, int? editionId)
         {
             var query = this.GetBaseQuery()
                                .FindByEmail(email);
 
-            return await query.FirstOrDefaultAsync();
+            return await query.Select(c => new CollaboratorDto
+            {
+                Id = c.Id,
+                Uid = c.Uid,
+                FirstName = c.FirstName,
+                LastNames = c.LastNames,
+                Badge = c.Badge,
+                Email = c.User.Email,
+                PhoneNumber = c.PhoneNumber,
+                CellPhone = c.CellPhone,
+                PublicEmail = c.PublicEmail,
+                BirthDate = c.BirthDate,
+                Gender = c.Gender,
+                Industry = c.Industry,
+                CollaboratorRole = c.Role,
+                CollaboratorGenderAdditionalInfo = c.CollaboratorGenderAdditionalInfo,
+                CollaboratorIndustryAdditionalInfo = c.CollaboratorIndustryAdditionalInfo,
+                CollaboratorRoleAdditionalInfo = c.CollaboratorRoleAdditionalInfo,
+                HasAnySpecialNeeds = c.HasAnySpecialNeeds,
+                SpecialNeedsDescription = c.SpecialNeedsDescription,
+                EditionsUids = c.EditionParticipantions.Where(p => !p.IsDeleted).Select(p => p.Edition.Uid).ToList(),
+                ImageUploadDate = c.ImageUploadDate,
+                Website = c.Website,
+                Linkedin = c.Linkedin,
+                Twitter = c.Twitter,
+                Instagram = c.Instagram,
+                Youtube = c.Youtube,
+                CreateDate = c.CreateDate,
+                CreateUserId = c.CreateUserId,
+                UpdateDate = c.UpdateDate,
+                UpdateUserId = c.UpdateUserId,
+                Role = c.User.Roles.FirstOrDefault(),
+                UpdaterDto = new UserBaseDto
+                {
+                    Id = c.Updater.Id,
+                    Uid = c.Updater.Uid,
+                    Name = c.Updater.Name,
+                    Email = c.Updater.Email
+                },
+                JobTitlesDtos = c.JobTitles.Select(d => new CollaboratorJobTitleBaseDto
+                {
+                    Id = d.Id,
+                    Uid = d.Uid,
+                    Value = d.Value,
+                    LanguageDto = new LanguageBaseDto
+                    {
+                        Id = d.Language.Id,
+                        Uid = d.Language.Uid,
+                        Name = d.Language.Name,
+                        Code = d.Language.Code
+                    }
+                }),
+                MiniBiosDtos = c.MiniBios.Select(d => new CollaboratorMiniBioBaseDto
+                {
+                    Id = d.Id,
+                    Uid = d.Uid,
+                    Value = d.Value,
+                    LanguageDto = new LanguageBaseDto
+                    {
+                        Id = d.Language.Id,
+                        Uid = d.Language.Uid,
+                        Name = d.Language.Name,
+                        Code = d.Language.Code
+                    }
+                }),
+                EditionAttendeeCollaborator = editionId.HasValue ? c.AttendeeCollaborators.FirstOrDefault(ac => ac.EditionId == editionId
+                                                                                                                                && !ac.Edition.IsDeleted
+                                                                                                                                && !ac.IsDeleted
+                                                                                                                                && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted)) :
+                                                                                   null,
+            }).FirstOrDefaultAsync();
         }
 
         /// <summary>Finds all logistics by datatable.</summary>

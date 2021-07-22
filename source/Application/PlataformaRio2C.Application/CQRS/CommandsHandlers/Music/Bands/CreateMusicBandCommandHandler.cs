@@ -116,13 +116,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var musicBandType = musicBandTypeRepo.Get(cmd.MusicBandTypeUid);
 
-            Collaborator collaborator = null;
+            CollaboratorDto collaboratorDto = null;
 
             if (cmd.MusicBandResponsibleApiDto != null)
             {
-                collaborator = await collaboratorRepo.FindByEmailAsync(cmd.MusicBandResponsibleApiDto.Email);
+                collaboratorDto = await collaboratorRepo.FindByEmailAsync(cmd.MusicBandResponsibleApiDto.Email, editionDto.Id);
 
-                if (collaborator == null)
+                if (collaboratorDto == null)
                 {
                     #region Creates new Collaborator and User
 
@@ -160,7 +160,49 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                         }
                     }
 
-                    collaborator = commandResult.Data as Collaborator;
+                    collaboratorDto = commandResult.Data as CollaboratorDto;
+
+                    #endregion
+                }
+                else
+                {
+                    #region Updates Collaborator and User
+
+                    var updateCollaboratorCommand = new UpdateTinyCollaborator(collaboratorDto, true);
+
+                    updateCollaboratorCommand.UpdateBaseProperties(
+                        cmd.MusicBandResponsibleApiDto.Name,
+                        null,
+                        cmd.MusicBandResponsibleApiDto.Email,
+                        cmd.MusicBandResponsibleApiDto.PhoneNumber,
+                        cmd.MusicBandResponsibleApiDto.CellPhone,
+                        cmd.MusicBandResponsibleApiDto.Document);
+
+                    updateCollaboratorCommand.UpdatePreSendProperties(
+                        CollaboratorType.Music.Name,
+                        cmd.UserId,
+                        cmd.UserUid,
+                        editionDto.Id,
+                        editionDto.Uid,
+                        "");
+
+                    var commandResult = await base.CommandBus.Send(updateCollaboratorCommand);
+                    if (!commandResult.IsValid)
+                    {
+                        var currentValidationResult = new ValidationResult();
+                        foreach (var error in commandResult?.Errors)
+                        {
+                            currentValidationResult.Add(new ValidationError(error.Message));
+                        }
+
+                        if (!currentValidationResult.IsValid)
+                        {
+                            this.AppValidationResult.Add(currentValidationResult);
+                            return this.AppValidationResult;
+                        }
+                    }
+
+                    collaboratorDto = await collaboratorRepo.FindByEmailAsync(cmd.MusicBandResponsibleApiDto.Email, editionDto.Id);
 
                     #endregion
                 }
@@ -178,7 +220,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.Twitter,
                 cmd.Youtube,
                 cmd.MusicProjectApiDto,
-                collaborator?.AttendeeCollaborators?.FirstOrDefault(),
+                collaboratorDto?.EditionAttendeeCollaborator,
                 cmd.MusicGenresApiDtos,
                 cmd.TargetAudiencesApiDtos,
                 cmd.MusicBandMembersApiDtos,

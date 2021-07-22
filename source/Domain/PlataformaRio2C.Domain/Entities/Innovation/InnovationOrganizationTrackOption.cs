@@ -29,6 +29,7 @@ namespace PlataformaRio2C.Domain.Entities
     public class InnovationOrganizationTrackOption : Entity
     {
         public string Name { get; set; }
+        public string Description { get; set; }
         public int DisplayOrder { get; set; }
         public bool HasAdditionalInfo { get; set; }
 
@@ -40,48 +41,12 @@ namespace PlataformaRio2C.Domain.Entities
 
         }
 
-        /// <summary>
-        /// Gets the name.
-        /// </summary>
-        /// <returns></returns>
-        public string GetName()
-        {
-            //TODO: Separate "Name" and "Description" in distinc columns to fix this!
-            string[] nameAndDescription = this.Name.Split(':');
-            if(nameAndDescription.Length > 0)
-            {
-                return nameAndDescription[0];
-            }
-            else
-            {
-                return "-";
-            }
-        }
-
-        /// <summary>
-        /// Gets the description.
-        /// </summary>
-        /// <returns></returns>
-        public string GetDescription()
-        {
-            //TODO: Separate "Name" and "Description" in distinc columns to fix this!
-            string[] nameAndDescription = this.Name.Split(':');
-            if (nameAndDescription.Length > 0)
-            {
-                return nameAndDescription[1];
-            }
-            else
-            {
-                return "-";
-            }
-        }
-
         /// <summary>Gets the name translation.</summary>
         /// <param name="languageCode">The language code.</param>
         /// <returns></returns>
         public string GetNameTranslation(string languageCode)
         {
-            return this.GetName()?.GetSeparatorTranslation(languageCode, Language.Separator);
+            return this.Name.GetSeparatorTranslation(languageCode, Language.Separator);
         }
 
         /// <summary>Gets the description translation.</summary>
@@ -89,7 +54,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <returns></returns>
         public string GetDesctiptionTranslation(string languageCode)
         {
-            return this.GetDescription()?.GetSeparatorTranslation(languageCode, Language.Separator);
+            return this.Description.GetSeparatorTranslation(languageCode, Language.Separator);
         }
 
         #region Valitations

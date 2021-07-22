@@ -75,6 +75,7 @@ var InnovationCommissionsTracksWidget = function () {
 
     var enableUpdatePlugins = function () {
         enableAjaxForm();
+        MyRio2cCommon.enableAtLeastOnCheckboxByNameValidation(updateFormId);
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
 

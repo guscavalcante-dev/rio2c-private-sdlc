@@ -83,10 +83,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.AppValidationResult.Data = collaborator;
 
             return this.AppValidationResult;
-
-            //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);
-
-            //return Task.FromResult(propertyId); // use it when the methed is not async
         }
     }
 }

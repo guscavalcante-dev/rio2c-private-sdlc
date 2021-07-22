@@ -106,8 +106,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
                 #endregion
 
-                string jsonMusicBandApiDto = request.Content.ReadAsStringAsync().Result;
-                var musicBandApiDto = JsonConvert.DeserializeObject<MusicBandApiDto>(jsonMusicBandApiDto);
+                var musicBandApiDto = JsonConvert.DeserializeObject<MusicBandApiDto>(request.Content.ReadAsStringAsync().Result);
                 if (!musicBandApiDto.IsValid())
                 {
                     validationResult.Add(musicBandApiDto.ValidationResult);

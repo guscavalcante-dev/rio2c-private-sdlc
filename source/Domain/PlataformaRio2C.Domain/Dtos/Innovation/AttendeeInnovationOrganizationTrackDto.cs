@@ -25,6 +25,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public int InnovationOrganizationTrackOptionId { get; set; }
         public Guid InnovationOrganizationTrackOptionUid { get; set; }
         public string InnovationOrganizationTrackOptionName { get; set; }
+        public string InnovationOrganizationTrackOptionDescription { get; set; }
         public bool InnovationOrganizationTrackOptionHasAdditionalInfo { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeInnovationOrganizationTrackDto"/> class.</summary>

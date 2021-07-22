@@ -82,6 +82,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns>IQueryable&lt;AttendeeInnovationOrganization&gt;.</returns>
         internal static IQueryable<AttendeeInnovationOrganization> FindByDocument(this IQueryable<AttendeeInnovationOrganization> query, string document, int editionId)
         {
+            document = document.RemoveNonNumeric();
+
             query = query.Where(aio => aio.InnovationOrganization.Document == document 
                                         && aio.EditionId == editionId);
 

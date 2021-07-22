@@ -96,6 +96,7 @@
     <Compile Include="ApiModels\Innovation\Requests\InnovationOrganizationTechnologyOptionsApiRequest.cs" />
     <Compile Include="ApiModels\Innovation\Requests\WorkDedicationsApiRequest.cs" />
     <Compile Include="ApiModels\ApiListItemBaseResponse.cs" />
+    <Compile Include="ApiModels\Innovation\Responses\InnovationOrganizationTrackOptionsListItemApiResponse.cs" />
     <Compile Include="ApiModels\Innovation\Responses\InnovationOrganizationTrackOptionsApiResponse.cs" />
     <Compile Include="ApiModels\Innovation\Responses\InnovationOrganizationTechnologyOptionsApiResponse.cs" />
     <Compile Include="ApiModels\Innovation\Responses\InnovationOrganizationObjectivesOptionsApiResponse.cs" />

@@ -25,8 +25,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     public class UpdateInnovationCollaboratorTracks : BaseCommand
     {
         public Guid CollaboratorUid { get; set; }
-
+       
         [Display(Name = "Tracks", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneOption")]
         public List<AttendeeInnovationOrganizationTrackBaseCommand> AttendeeInnovationOrganizationTracks { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateInnovationCollaboratorTracks"/> class.</summary>

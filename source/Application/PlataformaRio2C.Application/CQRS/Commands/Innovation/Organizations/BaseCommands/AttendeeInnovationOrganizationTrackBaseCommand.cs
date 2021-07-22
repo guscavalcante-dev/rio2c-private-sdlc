@@ -24,6 +24,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         public Guid InnovationOrganizationTrackOptionUid { get; set; }
         public string InnovationOrganizationTrackOptionName { get; set; }
+        public string InnovationOrganizationTrackOptionDescription { get; set; }
         public bool InnovationOrganizationTrackOptionHasAdditionalInfo { get; set; }
         public bool IsChecked { get; set; }
 
@@ -31,13 +32,14 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string AdditionalInfo { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeeInnovationOrganizationTrackBaseCommand"/> class.
+        /// Initializes a new instance of the <see cref="AttendeeInnovationOrganizationTrackBaseCommand" /> class.
         /// </summary>
         /// <param name="entity">The entity.</param>
         public AttendeeInnovationOrganizationTrackBaseCommand(AttendeeInnovationOrganizationTrackDto entity)
         {
             this.InnovationOrganizationTrackOptionUid = entity.InnovationOrganizationTrackOptionUid;
             this.InnovationOrganizationTrackOptionName = entity.InnovationOrganizationTrackOptionName;
+            this.InnovationOrganizationTrackOptionDescription = entity.InnovationOrganizationTrackOptionDescription;
             this.InnovationOrganizationTrackOptionHasAdditionalInfo = entity.InnovationOrganizationTrackOptionHasAdditionalInfo;
             this.AdditionalInfo = entity.AttendeeInnovationOrganizationTrackAdditionalInfo;
             this.IsChecked = true;
@@ -51,19 +53,21 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             this.InnovationOrganizationTrackOptionUid = entity.InnovationOrganizationTrackOption.Uid;
             this.InnovationOrganizationTrackOptionName = entity.InnovationOrganizationTrackOption.Name;
+            this.InnovationOrganizationTrackOptionDescription = entity.InnovationOrganizationTrackOption.Description;
             this.InnovationOrganizationTrackOptionHasAdditionalInfo = entity.InnovationOrganizationTrackOption.HasAdditionalInfo;
             this.AdditionalInfo = "";
             this.IsChecked = true;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeeInnovationOrganizationTrackBaseCommand"/> class.
+        /// Initializes a new instance of the <see cref="AttendeeInnovationOrganizationTrackBaseCommand" /> class.
         /// </summary>
         /// <param name="innovationOrganizationTrackOption">The activity.</param>
         public AttendeeInnovationOrganizationTrackBaseCommand(InnovationOrganizationTrackOption innovationOrganizationTrackOption)
         {
             this.InnovationOrganizationTrackOptionUid = innovationOrganizationTrackOption.Uid;
             this.InnovationOrganizationTrackOptionName = innovationOrganizationTrackOption.Name;
+            this.InnovationOrganizationTrackOptionDescription = innovationOrganizationTrackOption.Description;
             this.InnovationOrganizationTrackOptionHasAdditionalInfo = innovationOrganizationTrackOption.HasAdditionalInfo;
             this.IsChecked = false;
         }
@@ -73,42 +77,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// </summary>
         public AttendeeInnovationOrganizationTrackBaseCommand()
         {
-        }
-
-        /// <summary>
-        /// Gets the name.
-        /// </summary>
-        /// <returns></returns>
-        public string GetName()
-        {
-            //TODO: Separate "Name" and "Description" in distinc columns to fix this!
-            string[] nameAndDescription = this.InnovationOrganizationTrackOptionName.Split(':');
-            if (nameAndDescription.Length > 0)
-            {
-                return nameAndDescription[0];
-            }
-            else
-            {
-                return "-";
-            }
-        }
-
-        /// <summary>
-        /// Gets the description.
-        /// </summary>
-        /// <returns></returns>
-        public string GetDescription()
-        {
-            //TODO: Separate "Name" and "Description" in distinc columns to fix this!
-            string[] nameAndDescription = this.InnovationOrganizationTrackOptionName.Split(':');
-            if (nameAndDescription.Length > 0)
-            {
-                return nameAndDescription[1];
-            }
-            else
-            {
-                return "-";
-            }
         }
     }
 }

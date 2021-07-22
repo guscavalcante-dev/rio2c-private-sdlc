@@ -108,6 +108,16 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
             return sbReturn.ToString();
         }
 
+        /// <summary>
+        /// Removes the non numeric.
+        /// </summary>
+        /// <param name="text">The text.</param>
+        /// <returns></returns>
+        public static string RemoveNonNumeric(this string text)
+        {
+            return Regex.Replace(text, @"[^0-9]+", "");
+        }
+
         /// <summary>Uppercases the first.</summary>
         /// <param name="s">The s.</param>
         /// <returns></returns>

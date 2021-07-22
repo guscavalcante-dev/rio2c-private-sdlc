@@ -25,6 +25,7 @@ var InnovationCommissionsCreate = function () {
     // Enable plugins -----------------------------------------------------------------------------
     var enablePlugins = function () {
         enableAjaxForm();
+        MyRio2cCommon.enableAtLeastOnCheckboxByNameValidation(formId);
         enableFormValidation();
     };
 

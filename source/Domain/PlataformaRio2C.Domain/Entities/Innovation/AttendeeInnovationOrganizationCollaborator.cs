@@ -43,13 +43,11 @@ namespace PlataformaRio2C.Domain.Entities
             int userId)
         {
             this.AttendeeInnovationOrganization = attendeeInnovationOrganization;
-            this.AttendeeCollaborator = attendeeCollaborator;
             this.AttendeeInnovationOrganizationId = attendeeInnovationOrganization.Id;
-            this.AttendeeCollaboratorId = attendeeCollaborator.Id;
+            this.AttendeeCollaborator = attendeeCollaborator;
+            this.AttendeeCollaboratorId = attendeeCollaborator?.Id ?? 0;
 
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
+            base.SetCreateDate(userId);
         }
 
         /// <summary>

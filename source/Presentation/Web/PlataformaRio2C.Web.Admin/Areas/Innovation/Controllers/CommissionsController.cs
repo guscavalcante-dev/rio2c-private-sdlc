@@ -250,7 +250,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                     message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Forms/_SocialNetworksForm.cshtml", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("Modals/UpdateTracksForm", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -266,7 +266,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         #endregion
 
         #endregion
-
 
         //TODO: Remove these above widgets from here! Get it all from a CollaboratorsController or something!
         #region Main Information Widget
@@ -556,7 +555,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
         #endregion
 
-
         #endregion
 
         #region Send Invitation Emails
@@ -747,7 +745,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                     message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Forms/_TinyForm.cshtml", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("Modals/CreateForm", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
