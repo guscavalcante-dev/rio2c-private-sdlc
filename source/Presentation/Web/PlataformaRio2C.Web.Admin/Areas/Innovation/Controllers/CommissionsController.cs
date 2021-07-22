@@ -267,7 +267,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
         #endregion
 
-        //TODO: Remove these above widgets from here! Get it all from a CollaboratorsController or something!
+        //TODO: Remove these above widgets from here! Move it all to a CollaboratorsController or something!
         #region Main Information Widget
 
         /// <summary>Shows the main information widget.</summary>
