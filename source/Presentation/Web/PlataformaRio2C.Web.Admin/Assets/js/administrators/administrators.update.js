@@ -4,7 +4,7 @@
 // Created          : 04-20-2021
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified On : 07-22-2021
 // ***********************************************************************
 // <copyright file="administrators.update.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -16,6 +16,13 @@ var AdministratorsUpdate = function () {
 
     var modalId = '#UpdateAdministratorModal';
     var formId = '#UpdateAdministratorForm';
+
+    // Enable role dropdown change event ----------------------------------------------------------
+    var enableRoleDropdownChangeEvent = function () {
+        $('#RoleName').on('change', function() {
+            $('#CollaboratorTypeNames').val('[]').trigger('change');
+        });
+    }
 
     // Enable form validation ---------------------------------------------------------------------
     var enableFormValidation = function () {
@@ -31,6 +38,7 @@ var AdministratorsUpdate = function () {
         MyRio2cCropper.init({ formIdOrClass: formId });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
         MyRio2cCommon.enableDropdownChangeEvent("RoleName", "Role");
+        enableRoleDropdownChangeEvent();
         enableAjaxForm();
         enableFormValidation();
     };

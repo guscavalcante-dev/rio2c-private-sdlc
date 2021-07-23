@@ -4,7 +4,7 @@
 // Created          : 04-20-2021
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified On : 07-22-2021
 // ***********************************************************************
 // <copyright file="administrators.maininformation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -38,10 +38,10 @@ var AdministratorsMainInformationWidget = function () {
                 }
             });
         })
-            .fail(function () {
-            })
-            .always(function () {                
-            });
+        .fail(function () {
+        })
+        .always(function () {                
+        });
     };
 
     return {

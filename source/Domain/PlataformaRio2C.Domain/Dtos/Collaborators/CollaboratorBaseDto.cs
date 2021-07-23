@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-25-2021
+// Last Modified On : 07-22-2021
 // ***********************************************************************
 // <copyright file="CollaboratorBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -55,7 +55,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<AttendeeOrganizationBaseDto> AttendeeOrganizationBasesDtos { get; set; }
         public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }
 
-        public Role Role { get; set; }
+        public ICollection<Role> Roles { get; set; }
         public List<AttendeeCollaboratorTypeDto> AttendeeCollaboratorTypeDtos { get; set; }
 
         public string RoleWithCollaboratorTypeNameHtmlString
@@ -63,43 +63,50 @@ namespace PlataformaRio2C.Domain.Dtos
             get
             {
                 this.Translate();
-                var roleDescription = this.Role?.Description;
+
+                var adminFullDescription = this.Roles?.FirstOrDefault(r => r.Name == Constants.Role.Admin)?.Description;
+
                 var collaboratorTypesDescriptions = this.AttendeeCollaboratorTypeDtos?
                                                             .Select(act => act.CollaboratorType?.Description)?
                                                             .ToArray()?
                                                             .ToString("<br/>");
-                string name = "";
+                var name = string.Empty;
+
+                if (!string.IsNullOrEmpty(adminFullDescription))
+                {
+                    name += adminFullDescription + "<br/>";
+                }
                 if (!string.IsNullOrEmpty(collaboratorTypesDescriptions))
                 {
-                    name = collaboratorTypesDescriptions;
-                }
-                else if (!string.IsNullOrEmpty(roleDescription))
-                {
-                    name = roleDescription;
+                    name += collaboratorTypesDescriptions;
                 }
 
                 return name;
             }
         }
 
-        public bool? IsAdminFull
+        /// <summary>
+        /// Gets a value indicating whether this instance is admin full.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is admin full; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsAdminFull
         {
             get
             {
-                if (this.Role == null)
-                    return null;
-                else if (this.Role.Name == Constants.Role.Admin)
-                    return true;
-                else
-                    return false;
+                return this.Roles?.Any(r => r.Name == Constants.Role.Admin) ?? false;
             }
         }
 
+        /// <summary>
+        /// Translates this instance.
+        /// </summary>
         public void Translate()
         {
             if (!string.IsNullOrEmpty(this.UserInterfaceLanguage))
             {
-                this.Role?.Translate(this.UserInterfaceLanguage);
+                this.Roles?.ToList()?.ForEach(r => r.Translate(this.UserInterfaceLanguage));
                 this.AttendeeCollaboratorTypeDtos?.ForEach(act => act.CollaboratorType?.Translate(this.UserInterfaceLanguage));
             }
         }

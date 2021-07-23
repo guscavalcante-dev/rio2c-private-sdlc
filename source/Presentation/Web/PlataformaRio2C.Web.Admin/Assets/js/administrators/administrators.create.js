@@ -4,7 +4,7 @@
 // Created          : 04-20-2021
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified On : 07-22-2021
 // ***********************************************************************
 // <copyright file="administrators.create.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,6 +22,13 @@ var AdministratorsCreate = function () {
         MyRio2cCommon.enableFormValidation({ formIdOrClass: formId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
 
+    // Enable role dropdown change event ----------------------------------------------------------
+    var enableRoleDropdownChangeEvent = function () {
+        $('#RoleName').on('change', function () {
+            $('#CollaboratorTypeNames').val('[]').trigger('change');
+        });
+    }
+
     // Enable plugins -----------------------------------------------------------------------------
     var enablePlugins = function () {
         if (typeof (MyRio2cPublicEmail) !== 'undefined') {
@@ -31,6 +38,7 @@ var AdministratorsCreate = function () {
         MyRio2cCropper.init({ formIdOrClass: formId });
         MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
         MyRio2cCommon.enableDropdownChangeEvent("RoleName", "Role");
+        enableRoleDropdownChangeEvent();
         enableAjaxForm();
         enableFormValidation();
     };

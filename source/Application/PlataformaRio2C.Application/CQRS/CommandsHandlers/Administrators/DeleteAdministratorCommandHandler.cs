@@ -4,7 +4,7 @@
 // Created          : 04-24-2021
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified On : 07-22-2021
 // ***********************************************************************
 // <copyright file="DeleteAdministratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -72,9 +72,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             // Before update values
             var beforeImageUploadDate = collaborator.ImageUploadDate;
 
-            collaborator.Delete(
+            collaborator.DeleteAdministrator(
                 edition,
-                cmd.IsDeletingFromCurrentEdition,
                 cmd.UserId);
             if (!collaborator.IsValid())
             {

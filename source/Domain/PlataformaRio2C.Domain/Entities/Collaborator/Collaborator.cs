@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-29-2020
+// Last Modified On : 07-22-2021
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -14,6 +14,7 @@
 using PlataformaRio2C.Domain.Validation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
@@ -288,104 +289,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// Initializes a new instance of the <see cref="Collaborator"/> class.
         /// </summary>
         /// <param name="edition">The edition.</param>
-        /// <param name="collaboratorTypes">The collaborator types.</param>
-        /// <param name="firstName">The first name.</param>
-        /// <param name="lastNames">The last names.</param>
-        /// <param name="email">The email.</param>
-        /// <param name="passwordHash">The password hash.</param>
-        /// <param name="userId">The user identifier.</param>
-        public Collaborator(
-            Edition edition,
-            List<CollaboratorType> collaboratorTypes,
-            string firstName,
-            string lastNames,
-            string email,
-            string passwordHash,
-            int userId)
-        {
-            this.FirstName = firstName?.Trim();
-            this.LastNames = lastNames?.Trim();
-            this.PublicEmail = email?.Trim();
-            this.SynchronizeAttendeeCollaborators(edition, collaboratorTypes, null, null, null, true, userId);
-            this.UpdateUser(email, passwordHash);
-
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Collaborator"/> class.
-        /// </summary>
-        /// <param name="firstName">The first name.</param>
-        /// <param name="lastNames">The last names.</param>
-        /// <param name="email">The email.</param>
-        /// <param name="passwordHash">The password hash.</param>
-        /// <param name="roles">The roles.</param>
-        /// <param name="userId">The user identifier.</param>
-        public Collaborator(
-            string firstName,
-            string lastNames,
-            string email,
-            string passwordHash,
-            List<Role> roles,
-            int userId)
-        {
-            this.FirstName = firstName?.Trim();
-            this.LastNames = lastNames?.Trim();
-            this.PublicEmail = email?.Trim();
-            this.UpdateUser(email, passwordHash, roles);
-
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Collaborator"/> class.
-        /// </summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="collaboratorTypes">The collaborator types.</param>
-        /// <param name="roles">The roles.</param>
-        /// <param name="firstName">The first name.</param>
-        /// <param name="lastNames">The last names.</param>
-        /// <param name="email">The email.</param>
-        /// <param name="passwordHash">The password hash.</param>
-        /// <param name="userId">The user identifier.</param>
-        public Collaborator(
-            Edition edition,
-            List<CollaboratorType> collaboratorTypes,
-            List<Role> roles,
-            string firstName,
-            string lastNames,
-            string email,
-            string passwordHash,
-            int userId)
-        {
-            this.FirstName = firstName?.Trim();
-            this.LastNames = lastNames?.Trim();
-            this.UpdatePublicEmail(false, email);
-
-            if (roles.Select(r => r.Name).Contains(Constants.Role.AdminPartial))
-            {
-                this.SynchronizeAttendeeCollaborators(edition, collaboratorTypes, null, null, null, true, userId);
-                this.UpdateUser(email, passwordHash);
-            }
-            else if (roles.Select(r => r.Name).Contains(Constants.Role.Admin))
-            {
-                this.UpdateUser(email, passwordHash, roles);
-                this.DeleteAttendeeCollaborators(edition, userId);
-            }
-
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Collaborator"/> class.
-        /// </summary>
-        /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastNames">The last names.</param>
@@ -547,45 +450,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeMiniBios(miniBios, userId);
             this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, null, attendeeOrganizations, isAddingToCurrentEdition, userId);
             this.UpdateUser(email);
-        }
-
-        /// <summary>
-        /// Updates the specified edition.
-        /// </summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="collaboratorTypes">The collaborator types.</param>
-        /// <param name="firstName">The first name.</param>
-        /// <param name="lastNames">The last names.</param>
-        /// <param name="email">The email.</param>
-        /// <param name="passwordHash">The password hash.</param>
-        /// <param name="userId">The user identifier.</param>
-        public void Update(
-            Edition edition,
-            List<CollaboratorType> collaboratorTypes,
-            List<Role> roles,
-            string firstName,
-            string lastNames,
-            string email,
-            int userId)
-        {
-            this.FirstName = firstName?.Trim();
-            this.LastNames = lastNames?.Trim();
-            this.UpdatePublicEmail(false, email);
-
-            if (roles.Select(r => r.Name).Contains(Constants.Role.AdminPartial))
-            {
-                this.SynchronizeAttendeeCollaborators(edition, collaboratorTypes, null, null, null, true, userId);
-                this.UpdateUser(email);
-            }
-            else if (roles.Select(r => r.Name).Contains(Constants.Role.Admin))
-            {
-                this.UpdateUser(email, roles);
-                this.DeleteAttendeeCollaborators(edition, userId);
-            }
-
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
         }
 
         /// <summary>Updates the admin main information.</summary>
@@ -890,44 +754,18 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void Delete(Edition edition, CollaboratorType collaboratorType, int userId)
         {
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
             this.DeleteAttendeeCollaborators(edition, collaboratorType, userId);
+            this.DeleteUser();
 
-            if (this.FindAllAttendeeCollaboratorsNotDeleted(edition)?.Any() == false)
+            // Delete only if the collaborator has no attendee collaborators in any edition and is not admin
+            if (this.FindAllAttendeeCollaboratorsNotDeleted()?.Any() == false && this.User.Roles?.Any(r => r.Name == Constants.Role.Admin) == false)
             {
                 this.IsDeleted = true;
                 this.UpdateImageUploadDate(false, true);
-                this.Deleteuser();
             }
-        }
 
-        /// <summary>
-        /// Deletes the specified edition.
-        /// </summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="userId">The user identifier.</param>
-        public void Delete(Edition edition, bool isDeletingFromCurrentEdition, int userId)
-        {
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
-            this.DeleteAttendeeCollaborators(edition, userId);
-
-            if (isDeletingFromCurrentEdition)
-            {
-                if (this.FindAllAttendeeCollaboratorsNotDeleted()?.Any() == false)
-                {
-                    this.IsDeleted = true;
-                    this.UpdateImageUploadDate(false, true);
-                    this.Deleteuser();
-                }
-            }
-            else
-            {
-                this.IsDeleted = true;
-                this.UpdateImageUploadDate(false, true);
-                this.Deleteuser();
-            }
         }
 
         /// <summary>Updates the image upload date.</summary>
@@ -981,6 +819,181 @@ namespace PlataformaRio2C.Domain.Entities
             return this.ImageUploadDate.HasValue;
         }
 
+        #region Administrators
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Collaborator"/> class.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorTypes">The collaborator types.</param>
+        /// <param name="role">The role.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="passwordHash">The password hash.</param>
+        /// <param name="userId">The user identifier.</param>
+        public Collaborator(
+            Edition edition,
+            List<CollaboratorType> collaboratorTypes,
+            Role role,
+            string firstName,
+            string lastNames,
+            string email,
+            string passwordHash,
+            int userId)
+        {
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.SynchronizeAdministratorAttendeeCollaborators(edition, collaboratorTypes, role, userId);
+            this.UpdateAdministratorUser(email, passwordHash, role);
+
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+        }
+
+        /// <summary>
+        /// Updates the administrator.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorTypes">The collaborator types.</param>
+        /// <param name="role">The role.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateAdministrator(
+            Edition edition,
+            List<CollaboratorType> collaboratorTypes,
+            Role role,
+            string firstName,
+            string lastNames,
+            string email,
+            int userId)
+        {
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.SynchronizeAdministratorAttendeeCollaborators(edition, collaboratorTypes, role, userId);
+            this.UpdateAdministratorUser(email, null, role);
+
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>
+        /// Deletes the administrator.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void DeleteAdministrator(Edition edition, int userId)
+        {
+            this.DeleteAdministratorAttendeeCollaborators(edition, userId);
+            this.DeleteAdministratorUser();
+
+            if (this.FindAllAttendeeCollaboratorsNotDeleted()?.Any() == false && this.User.Roles?.Any(r => r.Name == Constants.Role.Admin) == false)
+            {
+                this.IsDeleted = true;
+                this.UpdateImageUploadDate(false, true);
+                this.DeleteUser();
+            }
+
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
+        /// <summary>
+        /// Synchronizes the administrator attendee collaborators.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorTypes">The collaborator types.</param>
+        /// <param name="role">The role.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeAdministratorAttendeeCollaborators(
+            Edition edition,
+            List<CollaboratorType> collaboratorTypes,
+            Role role,
+            int userId)
+        {
+            if (this.AttendeeCollaborators == null)
+            {
+                this.AttendeeCollaborators = new List<AttendeeCollaborator>();
+            }
+
+            if (edition == null)
+            {
+                return;
+            }
+
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
+
+            // Clear collaborator types if is admin full
+            collaboratorTypes = role.Name == Constants.Role.Admin ? new List<CollaboratorType>() : collaboratorTypes;
+
+            if (attendeeCollaborator != null)
+            {
+                attendeeCollaborator.UpdateAdministrator(collaboratorTypes, userId);
+            }
+            // Create attendee collaborator only if is admin partial
+            else if (role.Name == Constants.Role.AdminPartial)
+            {
+                this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, collaboratorTypes, this, userId));
+            }
+        }
+
+        /// <summary>
+        /// Updates the administrator user.
+        /// </summary>
+        /// <param name="email">The email.</param>
+        /// <param name="passwordHash">The password hash.</param>
+        /// <param name="role">The role.</param>
+        public void UpdateAdministratorUser(string email, string passwordHash, Role role)
+        {
+            var roles = this.FindAllRolesByAttendeeCollaboratorTypes();
+
+            if (role?.Name == Constants.Role.Admin)
+            {
+                roles = roles.Union(new Collection<Role> { role })?.ToList();
+            }
+
+            if (this.User != null)
+            {
+                this.User.Update(this.GetFullName(), email, roles, true);
+            }
+            else
+            {
+                this.User = new User(this.GetFullName(), email, roles, true);
+            }
+
+            if (!string.IsNullOrEmpty(passwordHash))
+            {
+                this.OnboardUser(passwordHash);
+            }
+        }
+
+        /// <summary>
+        /// Deletes the administrator attendee collaborators.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteAdministratorAttendeeCollaborators(Edition edition, int userId)
+        {
+            foreach (var attendeeCollaborator in this.FindAllAttendeeCollaboratorsNotDeleted(edition))
+            {
+                attendeeCollaborator?.DeleteAdministrator(userId);
+            }
+        }
+
+        /// <summary>
+        /// Deletes the administrator user.
+        /// </summary>
+        private void DeleteAdministratorUser()
+        {
+            this.User?.Delete(new List<Role>(), true);
+        }
+
+        #endregion
+
         #region Users
 
         /// <summary>
@@ -992,51 +1005,14 @@ namespace PlataformaRio2C.Domain.Entities
         {
             if (this.User != null)
             {
-                this.User.Update(this.GetFullName(), email, this.FindAllRolesByAttendeeCollaboratorTypes());
+                this.User.Update(this.GetFullName(), email, this.FindAllRolesByAttendeeCollaboratorTypes(), false);
             }
             else
             {
-                this.User = new User(this.GetFullName(), email, this.FindAllRolesByAttendeeCollaboratorTypes());
+                this.User = new User(this.GetFullName(), email, this.FindAllRolesByAttendeeCollaboratorTypes(), false);
             }
 
             this.OnboardUser(passwordHash);
-        }
-
-        /// <summary>
-        /// Updates the user.
-        /// </summary>
-        /// <param name="email">The email.</param>
-        /// <param name="passwordHash">The password hash.</param>
-        /// <param name="roles">The roles.</param>
-        public void UpdateUser(string email, string passwordHash, List<Role> roles)
-        {
-            if (this.User != null)
-            {
-                this.User.Update(this.GetFullName(), email, roles);
-            }
-            else
-            {
-                this.User = new User(this.GetFullName(), email, roles);
-            }
-
-            this.OnboardUser(passwordHash);
-        }
-
-        /// <summary>
-        /// Updates the user.
-        /// </summary>
-        /// <param name="email">The email.</param>
-        /// <param name="roles">The roles.</param>
-        public void UpdateUser(string email, List<Role> roles)
-        {
-            if (this.User != null)
-            {
-                this.User.Update(this.GetFullName(), email, roles);
-            }
-            else
-            {
-                this.User = new User(this.GetFullName(), email, roles);
-            }
         }
 
         /// <summary>Updates the user.</summary>
@@ -1045,18 +1021,20 @@ namespace PlataformaRio2C.Domain.Entities
         {
             if (this.User != null)
             {
-                this.User.Update(this.GetFullName(), email, this.FindAllRolesByAttendeeCollaboratorTypes());
+                this.User.Update(this.GetFullName(), email, this.FindAllRolesByAttendeeCollaboratorTypes(), false);
             }
             else
             {
-                this.User = new User(this.GetFullName(), email, this.FindAllRolesByAttendeeCollaboratorTypes());
+                this.User = new User(this.GetFullName(), email, this.FindAllRolesByAttendeeCollaboratorTypes(), false);
             }
         }
 
-        /// <summary>Deleteusers the specified user identifier.</summary>
-        private void Deleteuser()
+        /// <summary>
+        /// Deletes the user.
+        /// </summary>
+        private void DeleteUser()
         {
-            this.User?.Delete(this.FindAllRolesByAttendeeCollaboratorTypes());
+            this.User?.Delete(this.FindAllRolesByAttendeeCollaboratorTypes(), false);
         }
 
         /// <summary>Called when [user].</summary>
@@ -1479,52 +1457,6 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        /// <summary>
-        /// Synchronizes the attendee collaborators.
-        /// </summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="collaboratorTypes">The collaborator types.</param>
-        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
-        /// <param name="apiHighlightPosition">The API highlight position.</param>
-        /// <param name="attendeeOrganizations">The attendee organizations.</param>
-        /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
-        /// <param name="userId">The user identifier.</param>
-        private void SynchronizeAttendeeCollaborators(
-            Edition edition,
-            List<CollaboratorType> collaboratorTypes,
-            bool? isApiDisplayEnabled,
-            int? apiHighlightPosition,
-            List<AttendeeOrganization> attendeeOrganizations,
-            bool isAddingToCurrentEdition,
-            int userId)
-        {
-            // Synchronize only when is adding to current edition
-            if (!isAddingToCurrentEdition)
-            {
-                return;
-            }
-
-            if (this.AttendeeCollaborators == null)
-            {
-                this.AttendeeCollaborators = new List<AttendeeCollaborator>();
-            }
-
-            if (edition == null)
-            {
-                return;
-            }
-
-            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
-            if (attendeeCollaborator != null)
-            {
-                attendeeCollaborator.Update(collaboratorTypes, isApiDisplayEnabled, apiHighlightPosition, attendeeOrganizations, true, true, userId);
-            }
-            else
-            {
-                this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, collaboratorTypes, isApiDisplayEnabled, apiHighlightPosition, attendeeOrganizations, this, true, true, userId));
-            }
-        }
-
         /// <summary>Deletes the attendee collaborators.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
@@ -1534,23 +1466,6 @@ namespace PlataformaRio2C.Domain.Entities
             foreach (var attendeeCollaborator in this.FindAllAttendeeCollaboratorsNotDeleted(edition))
             {
                 attendeeCollaborator?.Delete(collaboratorType, userId);
-            }
-        }
-
-        /// <summary>
-        /// Deletes the attendee collaborators.
-        /// </summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="collaboratorTypes">The collaborator types.</param>
-        /// <param name="userId">The user identifier.</param>
-        private void DeleteAttendeeCollaborators(Edition edition, int userId)
-        {
-            if (AttendeeCollaborators != null)
-            {
-                foreach (var attendeeCollaborator in this.FindAllAttendeeCollaboratorsNotDeleted(edition))
-                {
-                    attendeeCollaborator?.Delete( userId);
-                }
             }
         }
 

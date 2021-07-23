@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-16-2020
+// Last Modified On : 07-22-2021
 // ***********************************************************************
 // <copyright file="User.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,7 +33,6 @@ namespace PlataformaRio2C.Domain.Entities
         public static User BatchProcessUser = new User(new Guid("d08cbb7c-6197-4b8a-b91b-40bbb38bdd2d"), "Batch Process", "batchprocess@rio2c.com");
 
         #endregion
-
         public string Name { get; set; }
         public bool Active { get; set; }
         public string UserName { get; set; }
@@ -61,13 +60,15 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<Message> RecipientMessages { get; set; }
         public virtual ICollection<Negotiation> UpdatedNegotiations { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="User"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="User"/> class.
+        /// </summary>
         /// <param name="fullName">The full name.</param>
         /// <param name="email">The email.</param>
         /// <param name="roles">The roles.</param>
-        public User(string fullName, string email, List<Role> roles)
+        /// <param name="isAdminUpdate">if set to <c>true</c> [is admin update].</param>
+        public User(string fullName, string email, List<Role> roles, bool isAdminUpdate)
         {
-            this.Active = true;
             this.Name = fullName?.Trim();
             this.UserName = this.Email = email?.Trim();
             this.EmailConfirmed = false;
@@ -76,22 +77,11 @@ namespace PlataformaRio2C.Domain.Entities
             this.TwoFactorEnabled = false;
             this.LockoutEnabled = true;
             this.AccessFailedCount = 0;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.SynchronizeRoles(roles);
-        }
+            this.Active = true;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="User"/> class.
-        /// </summary>
-        /// <param name="userUid">The user uid.</param>
-        /// <param name="name">The name.</param>
-        /// <param name="email">The email.</param>
-        public User(Guid userUid, string name, string email, bool active = true)
-        {
-            this.Active = active;
-            this.Uid = userUid;
-            this.Name = name;
-            this.Email = email;
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.SynchronizeRoles(roles, isAdminUpdate);
         }
 
         /// <summary>Initializes a new instance of the <see cref="User"/> class.</summary>
@@ -99,31 +89,48 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Updates the specified full name.</summary>
+        /// <summary>
+        /// Updates the specified full name.
+        /// </summary>
         /// <param name="fullName">The full name.</param>
         /// <param name="email">The email.</param>
         /// <param name="roles">The roles.</param>
-        public void Update(string fullName, string email, List<Role> roles)
+        /// <param name="isAdminUpdate">if set to <c>true</c> [is admin update].</param>
+        public void Update(string fullName, string email, List<Role> roles, bool isAdminUpdate)
         {
             this.Name = fullName?.Trim();
             this.UserName = this.Email = email?.Trim();
+            this.SynchronizeRoles(roles, isAdminUpdate);
+
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
-            this.SynchronizeRoles(roles);
         }
 
+        /// <summary>
+        /// Updates the status.
+        /// </summary>
+        /// <param name="active">if set to <c>true</c> [active].</param>
         public void UpdateStatus(bool active)
         {
             this.Active = active;
             this.UpdateDate = DateTime.UtcNow;
         }
 
-        /// <summary>Deletes this instance.</summary>
-        public void Delete(List<Role> roles)
+        /// <summary>
+        /// Deletes the specified roles.
+        /// </summary>
+        /// <param name="roles">The roles.</param>
+        /// <param name="isAdminUpdate">if set to <c>true</c> [is admin update].</param>
+        public void Delete(List<Role> roles, bool isAdminUpdate)
         {
-            this.IsDeleted = true;
+            this.SynchronizeRoles(roles, isAdminUpdate);
+
+            if (this.FindAllNotDeletedRoles()?.Any() != true)
+            {
+                this.IsDeleted = true;
+            }
+
             this.UpdateDate = DateTime.UtcNow;
-            this.SynchronizeRoles(roles);
         }
 
         /// <summary>Called when [access data].</summary>
@@ -132,9 +139,10 @@ namespace PlataformaRio2C.Domain.Entities
         public void OnboardAccessData(string fullName, string passwordHash)
         {
             this.Name = fullName?.Trim();
+            this.PasswordHash = passwordHash;
+
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
-            this.PasswordHash = passwordHash;
         }
 
         /// <summary>Updates the interface language.</summary>
@@ -143,28 +151,30 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.UserInterfaceLanguageId = language?.Id;
             this.UserInterfaceLanguage = language;
+
             this.UpdateDate = DateTime.UtcNow;
         }
 
         #region Roles
 
-        /// <summary>Synchronizes the roles.</summary>
+        /// <summary>
+        /// Synchronizes the roles.
+        /// </summary>
         /// <param name="roles">The roles.</param>
-        private void SynchronizeRoles(List<Role> roles)
+        /// <param name="isAdminUpdate">if set to <c>true</c> [is admin update].</param>
+        private void SynchronizeRoles(List<Role> roles, bool isAdminUpdate)
         {
             if (this.Roles == null)
             {
                 this.Roles = new List<Role>();
             }
 
-            if(roles == null)
+            if (roles == null)
             {
                 roles = new List<Role>();
             }
 
-            roles = roles.Where(r => r != null).ToList();
-
-            this.DeleteRoles(roles);
+            this.DeleteRoles(roles, isAdminUpdate);
 
             if (roles?.Any() != true)
             {
@@ -182,11 +192,28 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        /// <summary>Deletes the roles.</summary>
+        /// <summary>
+        /// Deletes the roles.
+        /// </summary>
         /// <param name="newRoles">The new roles.</param>
-        private void DeleteRoles(List<Role> newRoles)
+        /// <param name="isAdminUpdate">if set to <c>true</c> [is admin update].</param>
+        private void DeleteRoles(List<Role> newRoles, bool isAdminUpdate)
         {
-            var rolesToDelete = this.Roles.Where(db => newRoles?.Select(r => r.Id)?.Contains(db.Id) == false).ToList();
+            List<Role> rolesToDelete;
+
+            if (isAdminUpdate)
+            {
+                rolesToDelete = this.Roles.Where(db => newRoles?.Select(r => r.Id)?.Contains(db.Id) == false 
+                                                       && Constants.Role.AnyAdminArray.Contains(db.Name))
+                                          .ToList();
+            }
+            else
+            {
+                rolesToDelete = this.Roles.Where(db => newRoles?.Select(r => r.Id)?.Contains(db.Id) == false
+                                                       && Constants.Role.AnyAdminArray.Contains(db.Name) == false)
+                                          .ToList();
+            }
+
             foreach (var roleToDelete in rolesToDelete)
             {
                 this.Roles.Remove(roleToDelete);
@@ -198,6 +225,17 @@ namespace PlataformaRio2C.Domain.Entities
         private void CreateRole(Role role)
         {
             this.Roles.Add(role);
+
+            this.UpdateDate = DateTime.UtcNow;
+        }
+
+        /// <summary>
+        /// Finds all not deleted roles.
+        /// </summary>
+        /// <returns></returns>
+        private List<Role> FindAllNotDeletedRoles()
+        {
+            return this.Roles?.ToList();
         }
 
         #endregion
@@ -265,34 +303,21 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #region Old
+        #region Private Methods
 
-        public User(string email)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="User"/> class for User Configuration (Batch Processs).
+        /// </summary>
+        /// <param name="userUid">The user uid.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="active">if set to <c>true</c> [active].</param>
+        private User(Guid userUid, string name, string email, bool active = true)
         {
-            SetActive(true);
-            SetEmail(email);            
-        }      
-
-
-        public void SetEmail(string value)
-        {
-            Email = value;
-            SetUserName(value);
-        }
-
-        public void SetName(string value)
-        {
-            Name = value;
-        }
-
-        public void SetUserName(string value)
-        {
-            UserName = value;
-        }
-
-        public void SetActive(bool value)
-        {
-            Active = value;
+            this.Active = active;
+            this.Uid = userUid;
+            this.Name = name;
+            this.Email = email;
         }
 
         #endregion

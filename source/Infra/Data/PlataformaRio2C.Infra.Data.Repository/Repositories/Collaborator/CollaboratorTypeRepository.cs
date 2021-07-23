@@ -4,7 +4,7 @@
 // Created          : 09-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified On : 07-22-2021
 // ***********************************************************************
 // <copyright file="CollaboratorTypeRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -13,7 +13,6 @@
 // ***********************************************************************
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context;
 using System;
 using System.Collections.Generic;
@@ -63,10 +62,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<CollaboratorType> FindByNames(this IQueryable<CollaboratorType> query, string[] collaboratorTypeNames)
         {
-            if (collaboratorTypeNames.HasValue())
+            if (collaboratorTypeNames == null)
             {
-                query = query.Where(ct => collaboratorTypeNames.Contains(ct.Name));
+                collaboratorTypeNames = new string[] {};
             }
+
+            query = query.Where(ct => collaboratorTypeNames.Contains(ct.Name));
 
             return query;
         }
@@ -132,12 +133,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
-        /// <summary>
-        /// Finds the by names asynchronous.
-        /// </summary>
-        /// <param name="collaboratorTypeNames">The collaborator type names.</param>
-        /// <returns></returns>
-        public async Task<List<CollaboratorType>> FindByNamesAsync(string[] collaboratorTypeNames)
+        public async Task<List<CollaboratorType>> FindAllByNamesAsync(string[] collaboratorTypeNames)
         {
             var query = this.GetBaseQuery()
                                 .FindByNames(collaboratorTypeNames);

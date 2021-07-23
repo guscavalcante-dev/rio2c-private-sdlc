@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Web.Admin
+// Assembly         : PlataformaRio2C.Infra.Data.Repository
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified On : 07-22-2021
 // ***********************************************************************
 // <copyright file="AdministratorsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -100,6 +100,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
+        /// Finds the by name asynchronous.
+        /// </summary>
+        /// <param name="roleName">Name of the role.</param>
+        /// <returns></returns>
+        public async Task<Role> FindByNameAsync(string roleName)
+        {
+            var query = this.GetBaseQuery()
+                            .FindByName(roleName);
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
         /// Finds all admin roles asynchronous.
         /// </summary>
         /// <returns></returns>
@@ -123,20 +137,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                            .IsAdmin();
 
             return query.ToList();
-        }
-
-        /// <summary>
-        /// Finds the by name asynchronous.
-        /// </summary>
-        /// <param name="roleName">Name of the role.</param>
-        /// <returns></returns>
-        public async Task<List<Role>> FindByNameAsync(string roleName)
-        {
-            var query = this.GetBaseQuery()
-                           .FindByName(roleName);
-
-            return await query
-                            .ToListAsync();
         }
     }
 }

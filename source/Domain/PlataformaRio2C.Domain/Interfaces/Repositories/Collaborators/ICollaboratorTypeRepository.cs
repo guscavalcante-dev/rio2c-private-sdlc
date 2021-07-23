@@ -4,7 +4,7 @@
 // Created          : 09-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-26-2019
+// Last Modified On : 07-22-2021
 // ***********************************************************************
 // <copyright file="ICollaboratorTypeRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,7 +21,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface ICollaboratorTypeRepository : IRepository<CollaboratorType>
     {
         Task<CollaboratorType> FindByNameAsync(string collaboratorTypeName);
-        Task<List<CollaboratorType>> FindByNamesAsync(string[] collaboratorTypeNames);
+        Task<List<CollaboratorType>> FindAllByNamesAsync(string[] collaboratorTypeNames);
         Task<List<CollaboratorType>> FindAllAdminsAsync();
         List<CollaboratorType> FindAllAdmins();
     }    

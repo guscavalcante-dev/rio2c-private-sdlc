@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified On : 07-22-2021
 // ***********************************************************************
 // <copyright file="CreateAdministratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -86,19 +86,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            var edition = await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty);
-            var collaboratorTypes = await this.collaboratorTypeRepo.FindByNamesAsync(cmd.CollaboratorTypeNames);
-            var role = await this.roleRepo.FindByNameAsync(cmd.RoleName);
-
             var collaborator = new Collaborator(
-                                    edition,
-                                    collaboratorTypes,
-                                    role,
-                                    cmd.FirstName,
-                                    cmd.LastNames,
-                                    cmd.Email,
-                                    cmd.PasswordHash,
-                                    cmd.UserId);
+                await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
+                await this.collaboratorTypeRepo.FindAllByNamesAsync(cmd.CollaboratorTypeNames),
+                await this.roleRepo.FindByNameAsync(cmd.RoleName),
+                cmd.FirstName,
+                cmd.LastNames,
+                cmd.Email,
+                cmd.PasswordHash,
+                cmd.UserId);
 
             if (!collaborator.IsValid())
             {

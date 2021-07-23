@@ -4,7 +4,7 @@
 // Created          : 04-24-2021
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified On : 07-22-2021
 // ***********************************************************************
 // <copyright file="AdministratorBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -201,7 +201,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Youtube = entity?.Youtube;
             this.EditionsUids = entity?.EditionsUids;
             this.HaveYouBeenToRio2CBefore = entity?.EditionsUids?.Any();
-            this.RoleName = entity?.Role?.Name;
+            this.RoleName = entity?.Roles?.FirstOrDefault(r => Constants.Role.AnyAdminArray.Contains(r.Name))?.Name;
             this.CollaboratorTypeNames = entity?.AttendeeCollaboratorTypeDtos?.Select(s => s.CollaboratorType.Name)?.ToArray();
 
             this.UpdateDropdownProperties(roles, collaboratorTypes, userInterfaceLanguage);

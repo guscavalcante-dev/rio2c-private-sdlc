@@ -4,7 +4,7 @@
 // Created          : 04-24-2021
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified On : 07-22-2021
 // ***********************************************************************
 // <copyright file="UpdateAdministratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -86,14 +86,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            var edition = await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty);
-            var collaboratorTypes = await this.collaboratorTypeRepo.FindByNamesAsync(cmd.CollaboratorTypeNames);
-            var roles = await this.roleRepo.FindByNameAsync(cmd.RoleName);
-
-            collaborator.Update(
-                edition,
-                collaboratorTypes,
-                roles,
+            collaborator.UpdateAdministrator(
+                await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
+                await this.collaboratorTypeRepo.FindAllByNamesAsync(cmd.CollaboratorTypeNames),
+                await this.roleRepo.FindByNameAsync(cmd.RoleName),
                 cmd.FirstName,
                 cmd.LastNames,
                 cmd.Email,
