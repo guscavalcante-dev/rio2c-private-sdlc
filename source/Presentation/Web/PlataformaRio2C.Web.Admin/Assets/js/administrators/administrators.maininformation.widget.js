@@ -46,10 +46,7 @@ var AdministratorsMainInformationWidget = function () {
 
     return {
         init: function () {
-            //MyRio2cCommon.block({ idOrClass: widgetElementId });
-            show();
-        },
-        show: function () {
+            MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
         }
     };
