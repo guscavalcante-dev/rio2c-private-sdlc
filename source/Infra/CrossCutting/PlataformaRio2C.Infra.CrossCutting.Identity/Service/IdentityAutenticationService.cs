@@ -143,7 +143,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Identity.Service
             // Coletando Claims externos (se houver)
             ClaimsIdentity ext = await manager.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
 
-            manager.SignOut(DefaultAuthenticationTypes.ExternalCookie, DefaultAuthenticationTypes.TwoFactorCookie, DefaultAuthenticationTypes.ApplicationCookie);
+            this.SignOut(manager);
             manager.SignIn
             (
                 new AuthenticationProperties { IsPersistent = isPersistent },
@@ -213,6 +213,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Identity.Service
         }
 
         #endregion
+
+        /// <summary>
+        /// Represents an event that is raised when the sign-out operation is complete.
+        /// </summary>
+        /// <param name="manager">The manager.</param>
+        public void SignOut(IAuthenticationManager manager)
+        {
+            manager.SignOut(DefaultAuthenticationTypes.ExternalCookie, DefaultAuthenticationTypes.TwoFactorCookie, DefaultAuthenticationTypes.ApplicationCookie);
+        }
 
         #region Emails
 

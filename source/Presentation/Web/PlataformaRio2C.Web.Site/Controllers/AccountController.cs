@@ -57,7 +57,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <param name="userRepository">The user repository.</param>
         /// <param name="subscribeListRepository">The subscribe list repository.</param>
         public AccountController(
-            IMediator commandBus, 
+            IMediator commandBus,
             IdentityAutenticationService identityController,
             IUserRepository userRepository,
             ISubscribeListRepository subscribeListRepository)
@@ -120,13 +120,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             if (!ModelState.IsValid)
             {
+                this.SignOut();
                 return View(model);
             }
 
-            //var md5Password = CryptoHelper.ToMD5(model.Password);
             var user = AsyncHelpers.RunSync<ApplicationUser>(() => _identityController.FindByEmailAsync(model.Email));
             if (user == null)
             {
+                this.SignOut();
                 ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
                 return View(model);
             }
@@ -135,114 +136,74 @@ namespace PlataformaRio2C.Web.Site.Controllers
             switch (result)
             {
                 case IdentitySignInStatus.Success:
+                    {
+                        if (user.IsDeleted || !user.Active)
+                        {
+                            this.SignOut();
+                            ModelState.AddModelError("", Messages.AccessDenied);
+                            return View(model);
+                        }
 
-                    if (user.IsDeleted || !user.Active)
-                    {
-                        ModelState.AddModelError("", Messages.AccessDenied);
-                        return View(model);
-                    }
+                        // Check if user has any role
+                        var userRoles = await this._identityController.FindAllRolesByUserIdAsync(user.Id);
+                        if (userRoles?.Any() != true)
+                        {
+                            this.SignOut();
+                            ModelState.AddModelError("", Messages.AccessDenied);
+                            return View(model);
+                        }
 
-                    // Check if user has any role
-                    var userRoles = await this._identityController.FindAllRolesByUserIdAsync(user.Id);
-                    if (userRoles?.Any() != true)
-                    {
-                        ModelState.AddModelError("", Messages.AccessDenied);
-                        return View(model);
-                    }
-
-                    var userLanguage = await this.CommandBus.Send(new FindUserLanguageDto(user.Id));
-                    if (userLanguage != null)
-                    {
-                        var cookie = ApplicationCookieControl.SetCookie(userLanguage.Language.Code, Response.Cookies[Constants.CookieName.MyRio2CCookie], Constants.CookieName.MyRio2CCookie);
-                        Response.Cookies.Add(cookie);
-                    }
-                    else
-                    {
-                        await this.CommandBus.Send(new UpdateUserInterfaceLanguage(
-                            user.Uid,
-                            ViewBag.UserInterfaceLanguage));
-                    }
-
-                    if (!string.IsNullOrEmpty(returnUrl?.Replace("/", string.Empty)))
-                    {
+                        var userLanguage = await this.CommandBus.Send(new FindUserLanguageDto(user.Id));
                         if (userLanguage != null)
                         {
-                            if (CultureHelper.Cultures?.Any() == true)
+                            var cookie = ApplicationCookieControl.SetCookie(userLanguage.Language.Code, Response.Cookies[Constants.CookieName.MyRio2CCookie], Constants.CookieName.MyRio2CCookie);
+                            Response.Cookies.Add(cookie);
+                        }
+                        else
+                        {
+                            await this.CommandBus.Send(new UpdateUserInterfaceLanguage(
+                                user.Uid,
+                                ViewBag.UserInterfaceLanguage));
+                        }
+
+                        if (!string.IsNullOrEmpty(returnUrl?.Replace("/", string.Empty)))
+                        {
+                            if (userLanguage != null)
                             {
-                                foreach (var configuredCulture in CultureHelper.Cultures)
+                                if (CultureHelper.Cultures?.Any() == true)
                                 {
-                                    returnUrl = Regex.Replace(returnUrl, configuredCulture, userLanguage.Language.Code, RegexOptions.IgnoreCase);
+                                    foreach (var configuredCulture in CultureHelper.Cultures)
+                                    {
+                                        returnUrl = Regex.Replace(returnUrl, configuredCulture, userLanguage.Language.Code, RegexOptions.IgnoreCase);
+                                    }
+                                }
+
+                                if (returnUrl.IndexOf(userLanguage.Language.Code, StringComparison.OrdinalIgnoreCase) < 0)
+                                {
+                                    returnUrl = "/" + userLanguage.Language.Code + returnUrl;
                                 }
                             }
 
-                            if (returnUrl.IndexOf(userLanguage.Language.Code, StringComparison.OrdinalIgnoreCase) < 0)
-                            {
-                                returnUrl = "/" + userLanguage.Language.Code + returnUrl;
-                            }
+                            return Redirect(returnUrl);
                         }
 
-                        return Redirect(returnUrl);
+                        if (userLanguage != null)
+                        {
+                            return RedirectToAction("Index", "Home", new { culture = userLanguage?.Language?.Code });
+                        }
+
+                        return RedirectToAction("Index", "Home");
                     }
-
-                    if (userLanguage != null)
-                    {
-                        return RedirectToAction("Index", "Home", new { culture = userLanguage?.Language?.Code });
-                    }
-
-                    return RedirectToAction("Index", "Home");
-
-                    //transforma a senha digitada em md5
-                    //byte[] encodedPassword = new UTF8Encoding().GetBytes(model.Password);
-                    //byte[] bytePassword = ((HashAlgorithm)CryptoConfig.CreateFromName("MD5")).ComputeHash(encodedPassword);
-                    //var md5Password = CreateMD5(model.Password);
-
-                    ////busca o email no JSON da ticket4you
-                    //Ticket4youController userByTicket = new Ticket4youController();
-
-                    //if (userByTicket.SearchOne(model.Email) == null)
-                    //{
-                    //    ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
-                    //    //ModelState.AddModelError("", Messages.LoginByTicket4YouIncorrect);
-                    //    return View(model);
-
-                    //}
-                    //else if (userByTicket.UserTicket.senha != md5Password)
-                    //{
-                    //    ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
-                    //    //ModelState.AddModelError("", Messages.LoginByTicket4YouIncorrect);
-                    //    return View(model);
-                    //}
-                    ////else if (userByTicket.UserTicket.status_pedido != "Aprovado")
-                    ////{
-                    ////    //CRIAR TEXTO DE PAGAMANTO NÃO APROVADO
-                    ////    ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
-                    ////    //ModelState.AddModelError("", Messages.LoginByTicket4YouIncorrect);
-                    ////    return View(model);
-                    ////}
-                    //else
-                    //{
-
-                    //if (!await _identityController.IsInRoleAsync(user.Id, Domain.Statics.Role.User.Name) &&
-                    //    !await _identityController.IsInRoleAsync(user.Id, Domain.Statics.Role.Admin.Name))
-                    //{
-                    //    this.StatusMessage(Messages.AccessDenied, StatusMessageType.Danger);
-                    //    return RedirectToAction("LogOff");
-                    //}
-
-                    //returnUrl = returnUrl ?? "/";
-                    //return RedirectToLocal(returnUrl);
-                    // return RedirectToAction("Index", "Quiz");
-
                 case IdentitySignInStatus.LockedOut:
-                    return View("Lockout");
-
-                //case IdentitySignInStatus.RequiresVerification:
-                //    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-
+                    {
+                        return View("Lockout");
+                    }
                 case IdentitySignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
-                    return View(model);
+                    {
+                        ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
+                        return View(model);
+                    }
             }
             //}
         }
@@ -256,7 +217,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpPost]
         public ActionResult LogOff()
         {
-            this.authenticationManager.SignOut();
+            this.SignOut();
             return RedirectToAction("Index", "Account");
         }
 
@@ -288,6 +249,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             var user = await _identityController.FindByEmailAsync(model.Email);
             if (user == null || !user.Active || user.IsDeleted)
             {
+                this.SignOut();
                 ModelState.AddModelError("Email", Messages.UserNotFound);
                 return View(model);
             }
@@ -355,6 +317,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             var user = await _identityController.FindByEmailAsync(model.Email);
             if (user == null || !user.Active || user.IsDeleted)
             {
+                this.SignOut();
                 ModelState.AddModelError("Email", Messages.UserNotFound);
                 return View(model);
             }
@@ -394,12 +357,12 @@ namespace PlataformaRio2C.Web.Site.Controllers
         //        var user = await _identityController.FindByNameAsync(User.Identity.Name);
         //        if (user == null)
         //        {
-        //            this.authenticationManager.SignOut();
+        //            this.authenticationManager.SignOutCustom();
         //            return View("UserNotFound");
         //        }
         //        else if (!user.Active)
         //        {
-        //            this.authenticationManager.SignOut();
+        //            this.authenticationManager.SignOutCustom();
         //            return View("DisabledUser");
         //        }
         //        else
@@ -505,7 +468,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         {
             try
             {
-                this.authenticationManager.SignOut();
+                this.SignOut();
 
                 if (string.IsNullOrEmpty(email) || !uid.HasValue || string.IsNullOrEmpty(token))
                 {
@@ -667,73 +630,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
         #endregion
 
-        //// GET: /Account/SendCode
-        //[AllowAnonymous]
-        //public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
-        //{
-        //    var userId = await _identityController.GetVerifiedUserIdAsync();
-        //    if (userId <= 0)
-        //    {
-        //        return View("Error");
-        //    }
-        //    var userFactors = await _identityController.GetValidTwoFactorProvidersAsync(userId);
-
-        //    if (!await _identityController.SendTwoFactorCodeAsync(userFactors[0]))
-        //    {
-        //        return View("Error");
-        //    }
-
-        //    return RedirectToAction("VerifyCode", new { Provider = userFactors[0], ReturnUrl = returnUrl, RememberMe = rememberMe });
-        //}
-
-        //[AllowAnonymous]
-        //public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
-        //{
-        //    // Require that the user has already logged in via username/password or external login
-        //    if (!await _identityController.HasBeenVerifiedAsync())
-        //    {
-        //        return View("Error");
-        //    }
-
-        //    return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
-        //}
-
-        //// POST: /Account/VerifyCode
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> VerifyCode(VerifyCodeViewModel model)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(model);
-        //    }
-
-        //    var result = await _identityController.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
-        //    switch (result)
-        //    {
-        //        case IdentitySignInStatus.Success:
-        //            return RedirectToLocal(model.ReturnUrl);
-        //        case IdentitySignInStatus.LockedOut:
-        //            return View("Lockout");
-        //        case IdentitySignInStatus.Failure:
-        //        default:
-        //            ModelState.AddModelError("", Messages.InvalidCode);
-        //            return View(model);
-        //    }
-        //}
-
-        //[AllowAnonymous]
-        //public async Task<ActionResult> ConfirmEmail(int userId, string code)
-        //{
-        //    if (userId <= 0 || code == null || await _identityController.FindByIdAsync(userId) == null)
-        //    {
-        //        return View("Error");
-        //    }
-        //    var result = await _identityController.ConfirmEmailAsync(userId, code);
-        //    return View(result.Succeeded ? "ConfirmEmail" : "Error");
-        //}
-
         #region Auxiliary Private Methods
 
         /// <summary>Redirects to local.</summary>
@@ -776,6 +672,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
         {
             ModelState.AddModelError("", Texts.UserNotFound);
             return View(model);
+        }
+
+        /// <summary>
+        /// Represents an event that is raised when the sign-out operation is complete.
+        /// </summary>
+        private void SignOut()
+        {
+            this._identityController.SignOut(this.authenticationManager);
         }
 
         #endregion

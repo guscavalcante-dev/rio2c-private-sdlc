@@ -92,12 +92,14 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
+                this.SignOut();
                 return View(model);
             }
 
             var user = AsyncHelpers.RunSync<ApplicationUser>(() => _identityController.FindByEmailAsync(model.Email));
             if (user == null)
             {
+                this.SignOut();
                 ModelState.AddModelError("", Messages.InvalidLoginOrPassword);
                 return View(model);
             }
@@ -106,103 +108,78 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             switch (result)
             {
                 case IdentitySignInStatus.Success:
+                    {
+                        if (user.IsDeleted || !user.Active)
+                        {
+                            ModelState.AddModelError("", Messages.AccessDenied);
+                            return View(model);
+                        }
 
-                    if (user.IsDeleted || !user.Active)
-                    {
-                        ModelState.AddModelError("", Messages.AccessDenied);
-                        return View(model);
-                    }
+                        // Check if user has admin roles
+                        var userRoles = await this._identityController.FindAllRolesByUserIdAsync(user.Id);
+                        if (userRoles?.Any(role => Constants.Role.AnyAdminArray.Contains(role)) != true)
+                        {
+                            this.SignOut();
+                            ModelState.AddModelError("", Messages.YouDontHaveAdminProfile);
+                            return View(model);
+                        }
 
-                    // Check if user has admin roles
-                    var userRoles = await this._identityController.FindAllRolesByUserIdAsync(user.Id);
-                    if (userRoles?.Any(role => Constants.Role.AnyAdminArray.Contains(role)) != true)
-                    {
-                        ModelState.AddModelError("", Messages.YouDontHaveAdminProfile);
-                        return View(model);
-                    }
-
-                    var userLanguage = await this.CommandBus.Send(new FindUserLanguageDto(user.Id));
-                    if (userLanguage != null)
-                    {
-                        var cookie = ApplicationCookieControl.SetCookie(userLanguage.Language.Code, Response.Cookies[Constants.CookieName.MyRio2CAdminCookie], Constants.CookieName.MyRio2CAdminCookie);
-                        Response.Cookies.Add(cookie);
-                    }
-                    else
-                    {
-                        await this.CommandBus.Send(new UpdateUserInterfaceLanguage(
-                            user.Uid,
-                            ViewBag.UserInterfaceLanguage));
-                    }
-
-                    if (!string.IsNullOrEmpty(returnUrl?.Replace("/", string.Empty)))
-                    {
+                        var userLanguage = await this.CommandBus.Send(new FindUserLanguageDto(user.Id));
                         if (userLanguage != null)
                         {
-                            if (CultureHelper.Cultures?.Any() == true)
+                            var cookie = ApplicationCookieControl.SetCookie(userLanguage.Language.Code, Response.Cookies[Constants.CookieName.MyRio2CAdminCookie], Constants.CookieName.MyRio2CAdminCookie);
+                            Response.Cookies.Add(cookie);
+                        }
+                        else
+                        {
+                            await this.CommandBus.Send(new UpdateUserInterfaceLanguage(
+                                user.Uid,
+                                ViewBag.UserInterfaceLanguage));
+                        }
+
+                        if (!string.IsNullOrEmpty(returnUrl?.Replace("/", string.Empty)))
+                        {
+                            if (userLanguage != null)
                             {
-                                foreach (var configuredCulture in CultureHelper.Cultures)
+                                if (CultureHelper.Cultures?.Any() == true)
                                 {
-                                    returnUrl = Regex.Replace(returnUrl, configuredCulture, userLanguage.Language.Code, RegexOptions.IgnoreCase);
+                                    foreach (var configuredCulture in CultureHelper.Cultures)
+                                    {
+                                        returnUrl = Regex.Replace(returnUrl, configuredCulture, userLanguage.Language.Code, RegexOptions.IgnoreCase);
+                                    }
+                                }
+
+                                if (returnUrl.IndexOf(userLanguage.Language.Code, StringComparison.OrdinalIgnoreCase) < 0)
+                                {
+                                    returnUrl = "/" + userLanguage.Language.Code + returnUrl;
                                 }
                             }
 
-                            if (returnUrl.IndexOf(userLanguage.Language.Code, StringComparison.OrdinalIgnoreCase) < 0)
-                            {
-                                returnUrl = "/" + userLanguage.Language.Code + returnUrl;
-                            }
+                            return Redirect(returnUrl);
                         }
 
-                        return Redirect(returnUrl);
+                        if (userLanguage != null)
+                        {
+                            return RedirectToAction("Index", "Home", new { culture = userLanguage?.Language?.Code });
+                        }
+
+                        return RedirectToAction("Index", "Home");
                     }
-
-                    if (userLanguage != null)
-                    {
-                        return RedirectToAction("Index", "Home", new { culture = userLanguage?.Language?.Code });
-                    }
-
-                    return RedirectToAction("Index", "Home");
-
-                    //var identity = (ClaimsIdentity)User.Identity;
-
-                    //IEnumerable<Claim> claims = identity.Claims;
-
-                    //if (await _apiSymplaAppService.ConfirmUserAllowedFinancialReport(user.Email))
-                    //{
-                    //    await _identityController.AddClaim(user.Id, new System.Security.Claims.Claim("FinancialReport", "true"));
-                    //}
-                    //else
-                    //{
-                    //    await _identityController.RemoveClaim(user.Id, "FinancialReport");
-                    //}
-
-                    //if (user.Claims.Count != 0)
-                    //{
-                    //    foreach (var item in user.Claims)
-                    //    {
-                    //        if (item.ClaimType.ToString() == "ProjectPitching")
-                    //        {
-                    //            return RedirectToAction("ProjectPitching", "Project");
-                    //        }
-
-                    //        if (item.ClaimType.ToString() == "Logistics")
-                    //        {
-                    //            return RedirectToAction("Index", "Logistics");
-                    //        }
-                    //    }
-                    //}
-
-                    // return RedirectToAction("Index", "Home");
-
                 case IdentitySignInStatus.LockedOut:
-                    return View("Lockout");
-
+                    {
+                        return View("Lockout");
+                    }
                 case IdentitySignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-
+                    {
+                        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    }
                 case IdentitySignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", Messages.InvalidLoginOrPassword);
-                    return View(model);
+                    {
+                        this.SignOut();
+                        ModelState.AddModelError("", Messages.InvalidLoginOrPassword);
+                        return View(model);
+                    }
             }
         }
 
@@ -215,7 +192,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [Authorize]
         public ActionResult LogOff()
         {
-            authenticationManager.SignOut();
+            this.SignOut();
             return RedirectToAction("Index", "Account");
         }
 
@@ -247,6 +224,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             var user = await _identityController.FindByEmailAsync(model.Email);
             if (user == null || !user.Active || user.IsDeleted)
             {
+                this.SignOut();
                 ModelState.AddModelError("Email", Messages.UserNotFound);
                 return View(model);
             }
@@ -255,6 +233,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             var userRoles = await this._identityController.FindAllRolesByUserIdAsync(user.Id);
             if (userRoles?.Any(role => Constants.Role.AnyAdminArray.Contains(role)) != true)
             {
+                this.SignOut();
                 ModelState.AddModelError("", Messages.UserNotFound);
                 return View(model);
             }
@@ -322,6 +301,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             var user = await _identityController.FindByEmailAsync(model.Email);
             if (user == null || !user.Active || user.IsDeleted)
             {
+                this.SignOut();
                 ModelState.AddModelError("Email", Messages.UserNotFound);
                 return View(model);
             }
@@ -330,6 +310,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             var userRoles = await this._identityController.FindAllRolesByUserIdAsync(user.Id);
             if (userRoles?.Any(role => Constants.Role.AnyAdminArray.Contains(role)) != true)
             {
+                this.SignOut();
                 ModelState.AddModelError("", Messages.UserNotFound);
                 return View(model);
             }
@@ -358,34 +339,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         {
             return View();
         }
-
-        ///// <summary>Resets the password authenticated.</summary>
-        ///// <returns></returns>
-        //[Authorize]
-        //public async Task<ActionResult> ResetPasswordAuthenticated()
-        //{
-        //    if (User.Identity.IsAuthenticated)
-        //    {
-        //        var user = await _identityController.FindByNameAsync(User.Identity.Name);
-        //        if (user == null)
-        //        {
-        //            this.authenticationManager.SignOut();
-        //            return View("UserNotFound");
-        //        }
-        //        else if (!user.Active)
-        //        {
-        //            this.authenticationManager.SignOut();
-        //            return View("DisabledUser");
-        //        }
-        //        else
-        //        {
-        //            var code = await _identityController.GeneratePasswordResetTokenAsync(user.Id);
-        //            return View(new ResetPasswordViewModel { Code = code, Email = user.Email });
-        //        }
-        //    }
-
-        //    return RedirectToAction("Index", "Account");
-        //}
 
         #endregion
 
@@ -520,6 +473,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     return View("Lockout");
                 case IdentitySignInStatus.Failure:
                 default:
+                    this.SignOut();
                     ModelState.AddModelError("", "Código Inválido.");
                     return View(model);
             }
@@ -559,6 +513,14 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             {
                 ModelState.AddModelError("", error);
             }
+        }
+
+        /// <summary>
+        /// Represents an event that is raised when the sign-out operation is complete.
+        /// </summary>
+        private void SignOut()
+        {
+            this._identityController.SignOut(this.authenticationManager);
         }
 
         #endregion

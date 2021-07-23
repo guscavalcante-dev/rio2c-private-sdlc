@@ -112,7 +112,12 @@ namespace PlataformaRio2C.Web.Site.Controllers
                                                                             .Select(eac => eac.EditionId)
                                                                             .Contains(e.Id)
                                                                             ).ToList();
-
+            }
+            else if(userAccessControlDto == null && (userAccessControlDto?.IsAdmin() == null || !userAccessControlDto?.IsAdmin() == true))
+            {
+                //Clear the ActiveEditions only when is not admin.
+                //Without this validation, "ViewBag.ActiveEditions" will always contains all Editions.
+                ViewBag.ActiveEditions = new List<EditionDto>();
             }
 
             base.OnActionExecuting(filterContext);
