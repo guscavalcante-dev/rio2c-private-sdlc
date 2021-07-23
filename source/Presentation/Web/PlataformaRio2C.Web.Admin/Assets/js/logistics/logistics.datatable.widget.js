@@ -4,7 +4,7 @@
 // Created          : 01-20-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-20-2020
+// Last Modified On : 07-23-2021
 // ***********************************************************************
 // <copyright file="logisticsponsors.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -207,6 +207,7 @@ var LogisticsDataTableWidget = function () {
             columnDefs: [
                 {
                     targets: [0],
+                    className: "dt-center",
                     width: '25%'
 
 	            },

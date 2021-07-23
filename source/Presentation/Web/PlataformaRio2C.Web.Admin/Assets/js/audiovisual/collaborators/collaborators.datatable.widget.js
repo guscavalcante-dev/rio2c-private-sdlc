@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-26-2021
+// Last Modified On : 07-23-2021
 // ***********************************************************************
 // <copyright file="collaborators.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -124,7 +124,6 @@ var CollaboratorsDataTableWidget = function () {
                             var eventbriteCsvExport = dt.ajax.params();
                             eventbriteCsvExport.selectedCollaboratorsUids = $('#playersexecutives-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
                             eventbriteCsvExport.showAllEditions = $('#ShowAllEditions').prop('checked');
-                            eventbriteCsvExport.showAllExecutives = $('#ShowAllExecutives').prop('checked');
                             eventbriteCsvExport.showAllParticipants = $('#ShowAllParticipants').prop('checked');
                             eventbriteCsvExport.collaboratorTypeName = collaboratorTypeName;
 
@@ -155,7 +154,6 @@ var CollaboratorsDataTableWidget = function () {
                 url: MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/Search'),
                 data: function (d) {
                     d.showAllEditions = $('#ShowAllEditions').prop('checked');
-                    d.showAllExecutives = $('#ShowAllExecutives').prop('checked');
                     d.showAllParticipants = $('#ShowAllParticipants').prop('checked');
                 },
                 dataFilter: function (data) {

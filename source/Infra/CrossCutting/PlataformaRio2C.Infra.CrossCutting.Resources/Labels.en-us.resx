@@ -2289,10 +2289,6 @@
     <value>Show from all editions</value>
     <comment>Exibir de todas as edições</comment>
   </data>
-  <data name="ShowAllExecutives" xml:space="preserve">
-    <value>Show all executives</value>
-    <comment>Exibir todos os executivos</comment>
-  </data>
   <data name="ShowAllParticipants" xml:space="preserve">
     <value>Show all participants</value>
     <comment>Exibir todos os participantes</comment>

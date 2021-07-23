@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-18-2020
+// Last Modified On : 07-23-2021
 // ***********************************************************************
 // <copyright file="SpeakersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -107,7 +107,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 new List<Guid>(),
                 new string[] { Constants.CollaboratorType.Speaker },
                 showAllEditions,
-                false,
                 showAllParticipants,
                 showHighlights,
                 this.EditionDto?.Id

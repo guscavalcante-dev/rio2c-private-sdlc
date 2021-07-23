@@ -4,7 +4,7 @@
 // Created          : 02-25-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified On : 07-23-2021
 // ***********************************************************************
 // <copyright file="CommissionsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -99,7 +99,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 new List<Guid>(),
                 new string[] { Constants.CollaboratorType.CommissionMusic },
                 showAllEditions,
-                false,
                 showAllParticipants,
                 null,
                 this.EditionDto?.Id

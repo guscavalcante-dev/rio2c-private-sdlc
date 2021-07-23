@@ -4,7 +4,7 @@
 // Created          : 08-29-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-20-2019
+// Last Modified On : 07-23-2021
 // ***********************************************************************
 // <copyright file="CollaboratorSearchViewModel.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -24,9 +24,6 @@ namespace PlataformaRio2C.Application.ViewModels
 
         [Display(Name = "ShowAllEditions", ResourceType = typeof(Labels))]
         public bool ShowAllEditions { get; set; }
-
-        [Display(Name = "ShowAllExecutives", ResourceType = typeof(Labels))]
-        public bool ShowAllExecutives { get; set; }
 
         [Display(Name = "ShowAllParticipants", ResourceType = typeof(Labels))]
         public bool ShowAllParticipants { get; set; }

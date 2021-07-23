@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified On : 07-23-2021
 // ***********************************************************************
 // <copyright file="PlayersExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -94,12 +94,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <summary>Searches the specified request.</summary>
         /// <param name="request">The request.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
-        /// <param name="showAllExecutives">if set to <c>true</c> [show all executives].</param>
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
         /// <param name="showHighlights">The show highlights.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllExecutives, bool showAllParticipants, bool? showHighlights)
+        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllParticipants, bool? showHighlights)
         {
             var playersExecutives = await this.collaboratorRepo.FindAllByDataTable(
                 request.Start / request.Length,
@@ -109,7 +108,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 new List<Guid>(),
                 new string[] { Constants.CollaboratorType.ExecutiveAudiovisual },
                 showAllEditions,
-                showAllExecutives,
                 showAllParticipants,
                 showHighlights,
                 this.EditionDto?.Id

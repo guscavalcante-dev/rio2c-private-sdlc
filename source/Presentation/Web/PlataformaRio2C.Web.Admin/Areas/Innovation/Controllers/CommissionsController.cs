@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 07-08-2021
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 07-08-2021
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-23-2021
 // ***********************************************************************
 // <copyright file="CommissionsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -89,10 +89,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
         #region DataTable Widget
 
-        /// <summary>Searches the specified request.</summary>
+        /// <summary>
+        /// Searches the specified request.
+        /// </summary>
         /// <param name="request">The request.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <param name="innovationOrganizationTrackOptionUid">The innovation organization track option uid.</param>
         /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllParticipants, Guid? innovationOrganizationTrackOptionUid)
@@ -105,7 +108,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                 new List<Guid>(),
                 new string[] { Constants.CollaboratorType.CommissionInnovation },
                 showAllEditions,
-                false,
                 showAllParticipants,
                 null,
                 this.EditionDto?.Id,

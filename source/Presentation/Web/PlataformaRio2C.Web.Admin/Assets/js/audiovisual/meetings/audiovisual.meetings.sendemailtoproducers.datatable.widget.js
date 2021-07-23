@@ -4,7 +4,7 @@
 // Created          : 06-24-2021
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-26-2021
+// Last Modified On : 07-23-2021
 // ***********************************************************************
 // <copyright file="audiovisual.meetings.sendemailtoproducers.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -145,7 +145,6 @@ var AudiovisualMeetingsSendEmailToProducersDataTableWidget = function () {
                 url: MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Meetings/SendEmailToProducersSearch'),
                 data: function (d) {
                     //d.showAllEditions = $('#ShowAllEditions').prop('checked');
-                    //d.showAllExecutives = $('#ShowAllExecutives').prop('checked');
                     //d.showAllParticipants = $('#ShowAllParticipants').prop('checked');
                 },
                 dataFilter: function (data) {

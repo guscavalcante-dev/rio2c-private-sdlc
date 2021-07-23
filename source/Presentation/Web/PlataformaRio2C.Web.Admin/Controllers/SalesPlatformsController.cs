@@ -4,7 +4,7 @@
 // Created          : 02-26-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified On : 07-23-2021
 // ***********************************************************************
 // <copyright file="SalesPlatformsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -106,7 +106,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     selectedCollaboratorsUids?.ToListGuid(','),
                     new string[] { collaboratorTypeName },
                     showAllEditions,
-                    false,
                     showAllParticipants,
                     showHighlights,
                     this.EditionDto?.Id

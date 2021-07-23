@@ -2294,10 +2294,6 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Exibir de todas as edições</value>
     <comment>Exibir de todas as edições</comment>
   </data>
-  <data name="ShowAllExecutives" xml:space="preserve">
-    <value>Exibir todos os executivos</value>
-    <comment>Exibir todos os executivos</comment>
-  </data>
   <data name="ShowAllParticipants" xml:space="preserve">
     <value>Exibir todos os participantes</value>
     <comment>Exibir todos os participantes</comment>

@@ -5218,15 +5218,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exibir todos os executivos.
-        /// </summary>
-        public static string ShowAllExecutives {
-            get {
-                return ResourceManager.GetString("ShowAllExecutives", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Exibir todos os participantes.
         /// </summary>
         public static string ShowAllParticipants {
