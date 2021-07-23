@@ -4,7 +4,7 @@
 // Created          : 04-24-2021
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified On : 07-23-2021
 // ***********************************************************************
 // <copyright file="AdministratorsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -76,7 +76,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="searchViewModel">The search view model.</param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Index(ManagerSearchViewModel searchViewModel)
+        public ActionResult Index(AdministratorSearchViewModel searchViewModel)
         {
             #region Breadcrumb
 
@@ -86,8 +86,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             #endregion
 
-            searchViewModel.UpdateCollaboratorTypes(this.collaboratorTypeRepo.FindAllAdmins(), this.UserInterfaceLanguage);
-            searchViewModel.UpdateRoles(this.roleRepo.FindAllAdminRoles(), this.UserInterfaceLanguage);
+            searchViewModel.UpdateDropdownProperties(
+                this.roleRepo.FindAllAdminRoles(),
+                this.collaboratorTypeRepo.FindAllAdmins(),
+                this.UserInterfaceLanguage);
+
             return View(searchViewModel);
         }
 

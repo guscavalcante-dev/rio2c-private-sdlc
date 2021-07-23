@@ -1,9 +1,10 @@
 ﻿@using System.Linq
 @using PlataformaRio2C.Domain.Dtos
 @model CollaboratorDto
-
+@{
+    Model.Translate();
+}
 <div class="kt-portlet__body">
-
     <div class="kt-widget kt-widget--user-profile-3">
         <div class="kt-widget__top">
             <div style="float: right;">
@@ -79,5 +80,4 @@
             </div>
         </div>
     </div>
-    <br /><br /><br /><br /><br />
 </div>

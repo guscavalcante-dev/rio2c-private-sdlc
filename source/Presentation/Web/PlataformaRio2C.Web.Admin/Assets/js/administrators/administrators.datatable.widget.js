@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-22-2021
+// Last Modified On : 07-23-2021
 // ***********************************************************************
 // <copyright file="administrators.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -169,22 +169,22 @@ var AdministratorsDataTableWidget = function () {
                     data: 'Email'
                 },
                 {
-                    data: 'RoleWithCollaboratorTypeNameHtmlString',
-                    //render: function (data, type, row, meta) {
-                    //    var html = '<ul class="m-0 pl-4">';
+                    data: 'TranslatedCollaboratorTypes',
+                    render: function (data, type, row, meta) {
+                        var html = '<ul class="m-0 pl-4">';
 
-                    //    //loop through all the row details to build output string
-                    //    for (var item in row.AttendeeCollaboratorTypeDtos) {
-                    //        if (row.AttendeeCollaboratorTypeDtos.hasOwnProperty(item)) {
-                    //            var r = row.AttendeeCollaboratorTypeDtos[item];
-                    //            html += '<li>' + r.CollaboratorType.Description + '</li>';
-                    //        }
-                    //    }
+                        //loop through all the row details to build output string
+                        for (var item in row.TranslatedCollaboratorTypes) {
+                            if (row.TranslatedCollaboratorTypes.hasOwnProperty(item)) {
+                                var r = row.TranslatedCollaboratorTypes[item];
+                                html += '<li>' + r + '</li>';
+                            }
+                        }
 
-                    //    html += '</ul>';
+                        html += '</ul>';
 
-                    //    return html;
-                    //}
+                        return html;
+                    }
                 },
                 {
                     data: 'CreateDate',

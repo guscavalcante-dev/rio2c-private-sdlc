@@ -688,7 +688,7 @@
     <Compile Include="ViewModels\Common\Mail\MailCollaboratorAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Mail\MailCollaboratorEditAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Mail\MailCollaboratorListItemAppViewModel.cs" />
-    <Compile Include="ViewModels\Common\Managers\ManagerSearchViewModel.cs" />
+    <Compile Include="ViewModels\Common\Administrators\AdministratorSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Meetings\SendEmailToPlayersSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Meetings\SendEmailToProducersSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\MusicalCommission\MusicalCommissionBasicAppViewModel.cs" />

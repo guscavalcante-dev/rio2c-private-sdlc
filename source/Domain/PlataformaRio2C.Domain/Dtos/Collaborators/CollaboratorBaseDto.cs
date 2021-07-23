@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-22-2021
+// Last Modified On : 07-23-2021
 // ***********************************************************************
 // <copyright file="CollaboratorBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -55,33 +55,36 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<AttendeeOrganizationBaseDto> AttendeeOrganizationBasesDtos { get; set; }
         public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }
 
-        public ICollection<Role> Roles { get; set; }
-        public List<AttendeeCollaboratorTypeDto> AttendeeCollaboratorTypeDtos { get; set; }
+        public IEnumerable<Role> Roles { get; set; }
+        public IEnumerable<AttendeeCollaboratorTypeDto> AttendeeCollaboratorTypeDtos { get; set; }
 
-        public string RoleWithCollaboratorTypeNameHtmlString
+        public List<string> TranslatedCollaboratorTypes
         {
             get
             {
                 this.Translate();
 
-                var adminFullDescription = this.Roles?.FirstOrDefault(r => r.Name == Constants.Role.Admin)?.Description;
+                var collaboratorTypes = new List<string>();
 
-                var collaboratorTypesDescriptions = this.AttendeeCollaboratorTypeDtos?
-                                                            .Select(act => act.CollaboratorType?.Description)?
-                                                            .ToArray()?
-                                                            .ToString("<br/>");
-                var name = string.Empty;
-
+                // Check if the collaborator has admin full role
+                var adminFullDescription = this.Roles?
+                    .FirstOrDefault(r => r.Name == Constants.Role.Admin)?.Description;
                 if (!string.IsNullOrEmpty(adminFullDescription))
                 {
-                    name += adminFullDescription + "<br/>";
-                }
-                if (!string.IsNullOrEmpty(collaboratorTypesDescriptions))
-                {
-                    name += collaboratorTypesDescriptions;
+                    collaboratorTypes.Add(adminFullDescription);
                 }
 
-                return name;
+                // Check if the collaborator has other roles
+                var collaboratorTypesDescriptions = this.AttendeeCollaboratorTypeDtos?
+                    .Select(act => act.CollaboratorType?.Description)?
+                    .OrderBy(ctd => ctd)
+                    .ToList();
+                if (collaboratorTypesDescriptions?.Any() == true)
+                {
+                    collaboratorTypes.AddRange(collaboratorTypesDescriptions);
+                }
+
+                return collaboratorTypes;
             }
         }
 
@@ -104,11 +107,20 @@ namespace PlataformaRio2C.Domain.Dtos
         /// </summary>
         public void Translate()
         {
-            if (!string.IsNullOrEmpty(this.UserInterfaceLanguage))
+            if (string.IsNullOrEmpty(this.UserInterfaceLanguage))
             {
-                this.Roles?.ToList()?.ForEach(r => r.Translate(this.UserInterfaceLanguage));
-                this.AttendeeCollaboratorTypeDtos?.ForEach(act => act.CollaboratorType?.Translate(this.UserInterfaceLanguage));
+                return;
             }
+
+            this.Roles?
+                .ToList()?
+                .ForEach(r => r.GetSeparatorTranslation(rt => rt.Description, this.UserInterfaceLanguage, '|'));
+            this.Roles = this.Roles?.OrderBy(r => r.Description);
+
+            this.AttendeeCollaboratorTypeDtos?
+                                .ToList()?
+                                .ForEach(act => act.CollaboratorType?.GetSeparatorTranslation(ct => ct.Description, this.UserInterfaceLanguage, '|'));
+            this.AttendeeCollaboratorTypeDtos = this.AttendeeCollaboratorTypeDtos?.OrderBy(act => act.CollaboratorType.Description);
         }
 
         #region Json ignored properties 

@@ -4,7 +4,7 @@
 // Created          : 04-24-2021
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-22-2021
+// Last Modified On : 07-23-2021
 // ***********************************************************************
 // <copyright file="AdministratorBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,6 +19,7 @@ using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
@@ -266,8 +267,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <returns></returns>
         private void UpdateRoles(List<Role> roles, string userInterfaceLanguage)
         {
-            roles.ForEach(g => g.Translate(userInterfaceLanguage));
-            this.Roles = roles;
+            this.Roles = roles?
+                            .GetSeparatorTranslation(r => r.Description, userInterfaceLanguage, '|')?
+                            .OrderBy(r => r.Description);
         }
 
         /// <summary>
@@ -277,8 +279,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         private void UpdateCollaboratorTypes(List<CollaboratorType> collaboratorTypes, string userInterfaceLanguage)
         {
-            collaboratorTypes.ForEach(ct => ct.Translate(userInterfaceLanguage));
-            this.CollaboratorTypes = collaboratorTypes.OrderBy(ct => ct.Description);
+            this.CollaboratorTypes = collaboratorTypes?
+                            .GetSeparatorTranslation(ct => ct.Description, userInterfaceLanguage, '|')?
+                            .OrderBy(ct => ct.Description);
         }
 
         #endregion

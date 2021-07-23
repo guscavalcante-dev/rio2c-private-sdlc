@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-22-2021
+// Last Modified On : 07-23-2021
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -610,8 +610,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     })
                                     .FirstOrDefaultAsync();
 
-            collaboratorDto.Translate();
-
             return collaboratorDto;
         }
 
@@ -982,7 +980,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                 AttendeeCollaboratorType = act,
                                                                                                 CollaboratorType = act.CollaboratorType
                                                                                             })
-                                                                                    .ToList()
                                         })
                                         .ToListPagedAsync(page, pageSize);
 

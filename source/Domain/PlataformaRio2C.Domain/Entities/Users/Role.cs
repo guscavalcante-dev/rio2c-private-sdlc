@@ -3,16 +3,14 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 04-30-2021
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-23-2021
 // ***********************************************************************
 // <copyright file="Role.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using System.Linq;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -39,14 +37,6 @@ namespace PlataformaRio2C.Domain.Entities
         public Role()
         {
 
-        }
-
-        /// <summary>
-        /// Translates this instance.
-        /// </summary>
-        public void Translate(string userInterfaceLanguage)
-        {
-            this.Description = this.Description?.GetSeparatorTranslation(userInterfaceLanguage, '|');
         }
 
         #region Validations

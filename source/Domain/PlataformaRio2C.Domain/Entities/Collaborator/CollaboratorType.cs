@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-26-2019
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 04-30-2021
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 07-23-2021
 // ***********************************************************************
 // <copyright file="TicketType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -15,7 +15,6 @@ using System;
 using System.Collections.Generic;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -100,14 +99,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         public CollaboratorType()
         {
-        }
-
-        /// <summary>
-        /// Translates this instance.
-        /// </summary>
-        public void Translate(string userInterfaceLanguage)
-        {
-            this.Description = this.Description?.GetSeparatorTranslation(userInterfaceLanguage, '|');
         }
 
         #region Validations

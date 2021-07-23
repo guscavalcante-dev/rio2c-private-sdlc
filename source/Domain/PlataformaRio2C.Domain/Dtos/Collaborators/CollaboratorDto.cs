@@ -4,22 +4,22 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified On : 07-23-2021
 // ***********************************************************************
-// <copyright file="OrganizationDto.cs" company="Softo">
+// <copyright file="CollaboratorDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Entities;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
-    /// <summary>CollaboratorDto</summary>
+    /// <summary>
+    /// CollaboratorDto
+    /// </summary>
     public class CollaboratorDto : CollaboratorBaseDto
     {
         public string Website { get; set; }
@@ -55,11 +55,11 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }
         public IEnumerable<CollaboratorMiniBioBaseDto> MiniBiosDtos { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="CollaboratorDto"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CollaboratorDto"/> class.
+        /// </summary>
         public CollaboratorDto()
         {
         }
-
-        
     }
 }
