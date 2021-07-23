@@ -4,35 +4,26 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-11-2020
+// Last Modified On : 07-23-2021
 // ***********************************************************************
 // <copyright file="CollaboratorsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using DataTables.AspNet.Core;
-using DataTables.AspNet.Mvc5;
 using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository;
-using PlataformaRio2C.Application;
-using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using Constants = PlataformaRio2C.Domain.Constants;
 
@@ -43,14 +34,12 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     [RoutePrefix("{culture}/{edition}")]
     public class CollaboratorsController : BaseController
     {
-        private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
-        private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
-        private readonly IRoleRepository roleRepo;
-        private readonly ICollaboratorTypeRepository collaboratorTypeRepo;
         private readonly IFileRepository fileRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="CollaboratorsController"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CollaboratorsController"/> class.
+        /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
@@ -58,19 +47,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         public CollaboratorsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
-            ICollaboratorRepository collaboratorRepository,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
-            IAttendeeOrganizationRepository attendeeOrganizationRepository,
-            IRoleRepository roleRepository,
-            ICollaboratorTypeRepository collaboratorTypeRepository,
             IFileRepository fileRepository)
             : base(commandBus, identityController)
         {
-            this.collaboratorRepo = collaboratorRepository;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
-            this.attendeeOrganizationRepo = attendeeOrganizationRepository;
-            this.roleRepo = roleRepository;
-            this.collaboratorTypeRepo = collaboratorTypeRepository;
             this.fileRepo = fileRepository;
         }
 

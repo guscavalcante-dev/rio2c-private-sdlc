@@ -101,22 +101,24 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// </summary>
         /// <param name="request">The request.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="roleName">Name of the role.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, string collaboratorType = "", string roleName = "")
+        public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllParticipants, string collaboratorType = "", string roleName = "")
         {
             var admins = await this.collaboratorRepo.FindAllAdminsByDataTable(
-                                    request.Start / request.Length,
-                                    request.Length,
-                                    request.Search?.Value,
-                                    request.GetSortColumns(),
-                                    collaboratorType,
-                                    roleName,
-                                    showAllEditions,
-                                    this.UserInterfaceLanguage,
-                                    this.EditionDto?.Id);
+                request.Start / request.Length,
+                request.Length,
+                request.Search?.Value,
+                request.GetSortColumns(),
+                collaboratorType,
+                roleName,
+                showAllEditions,
+                showAllParticipants,
+                this.UserInterfaceLanguage,
+                this.EditionDto?.Id);
 
             var response = DataTablesResponse.Create(request, admins.TotalItemCount, admins.TotalItemCount, admins);
 

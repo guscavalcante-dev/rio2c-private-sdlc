@@ -31,6 +31,9 @@ namespace PlataformaRio2C.Application.ViewModels
         [Display(Name = "ShowAllEditions", ResourceType = typeof(Labels))]
         public bool ShowAllEditions { get; set; }
 
+        [Display(Name = "ShowAllParticipants", ResourceType = typeof(Labels))]
+        public bool ShowAllParticipants { get; set; }
+
         [Display(Name = "Roles", ResourceType = typeof(Labels))]
         public IEnumerable<Role> Roles { get; private set; }
 

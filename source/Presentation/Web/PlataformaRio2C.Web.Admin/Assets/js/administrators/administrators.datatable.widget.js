@@ -95,6 +95,7 @@ var AdministratorsDataTableWidget = function () {
                 url: MyRio2cCommon.getUrlWithCultureAndEdition('/Administrators/Search'),
                 data: function (d) {
                     d.showAllEditions = $('#ShowAllEditions').prop('checked');
+                    d.showAllParticipants = $('#ShowAllParticipants').prop('checked');
                     d.collaboratorType = $('#CollaboratorType').val();
                     d.roleName = $('#Role').val();
                 },
