@@ -266,6 +266,18 @@ namespace PlataformaRio2C.Web.Site.Services
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Sends the innovation commission welcome email.
+        /// </summary>
+        /// <param name="cmd">The command.</param>
+        /// <param name="sentEmailUid">The sent email uid.</param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public MvcMailMessage SendInnovationCommissionWelcomeEmail(SendInnovationCommissionWelcomeEmailAsync cmd, Guid sentEmailUid)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

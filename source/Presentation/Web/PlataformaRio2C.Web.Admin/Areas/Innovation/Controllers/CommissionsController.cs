@@ -3,7 +3,7 @@
 // Author           : Renan Valentim
 // Created          : 07-08-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
+// Last Modified By : Renan Valentim
 // Last Modified On : 07-23-2021
 // ***********************************************************************
 // <copyright file="CommissionsController.cs" company="Softo">
@@ -567,67 +567,67 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         [HttpPost]
         public async Task<ActionResult> SendInvitationEmails(string selectedCollaboratorsUids)
         {
-            //try
-            //{
-            //    if (string.IsNullOrEmpty(selectedCollaboratorsUids))
-            //    {
-            //        throw new DomainException(Messages.SelectAtLeastOneOption);
-            //    }
+            try
+            {
+                if (string.IsNullOrEmpty(selectedCollaboratorsUids))
+                {
+                    throw new DomainException(Messages.SelectAtLeastOneOption);
+                }
 
-            //    var collaboratorsUids = selectedCollaboratorsUids?.ToListGuid(',');
-            //    if (!collaboratorsUids.Any())
-            //    {
-            //        throw new DomainException(Messages.SelectAtLeastOneOption);
-            //    }
+                var collaboratorsUids = selectedCollaboratorsUids?.ToListGuid(',');
+                if (!collaboratorsUids.Any())
+                {
+                    throw new DomainException(Messages.SelectAtLeastOneOption);
+                }
 
-            //    var collaboratorsDtos = await this.collaboratorRepo.FindAllCollaboratorsByCollaboratorsUids(this.EditionDto.Id, collaboratorsUids);
-            //    if (collaboratorsDtos?.Any() != true)
-            //    {
-            //        throw new DomainException(Messages.SelectAtLeastOneOption);
-            //    }
+                var collaboratorsDtos = await this.collaboratorRepo.FindAllCollaboratorsByCollaboratorsUids(this.EditionDto.Id, collaboratorsUids);
+                if (collaboratorsDtos?.Any() != true)
+                {
+                    throw new DomainException(Messages.SelectAtLeastOneOption);
+                }
 
-            //    foreach (var collaboratorDto in collaboratorsDtos)
-            //    {
-            //        var collaboratorLanguageCode = collaboratorDto.Language?.Code ?? this.UserInterfaceLanguage;
+                foreach (var collaboratorDto in collaboratorsDtos)
+                {
+                    var collaboratorLanguageCode = collaboratorDto.Language?.Code ?? this.UserInterfaceLanguage;
 
-            //        try
-            //        {
-            //            var result = await this.CommandBus.Send(new SendInnovationCommissionWelcomeEmailAsync(
-            //                collaboratorDto.Collaborator.Uid,
-            //                collaboratorDto.User.SecurityStamp,
-            //                collaboratorDto.User.Id,
-            //                collaboratorDto.User.Uid,
-            //                collaboratorDto.GetFirstName(),
-            //                collaboratorDto.GetFullName(collaboratorLanguageCode),
-            //                collaboratorDto.User.Email,
-            //                this.EditionDto.Edition,
-            //                this.AdminAccessControlDto.User.Id,
-            //                collaboratorLanguageCode));
-            //            if (!result.IsValid)
-            //            {
-            //                throw new DomainException(Messages.CorrectFormValues);
-            //            }
-            //        }
-            //        catch (DomainException ex)
-            //        {
-            //            //TODO: Check errors
-            //            //var errors = result?.Errors?.Select(e => e.Message)?.Join(", ");
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-            //        }
-            //    }
-            //}
-            //catch (DomainException ex)
-            //{
-            //    return Json(new { status = "error", message = ex.GetInnerMessage(), }, JsonRequestBehavior.AllowGet);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-            //    return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-            //}
+                    try
+                    {
+                        var result = await this.CommandBus.Send(new SendInnovationCommissionWelcomeEmailAsync(
+                            collaboratorDto.Collaborator.Uid,
+                            collaboratorDto.User.SecurityStamp,
+                            collaboratorDto.User.Id,
+                            collaboratorDto.User.Uid,
+                            collaboratorDto.GetFirstName(),
+                            collaboratorDto.GetFullName(collaboratorLanguageCode),
+                            collaboratorDto.User.Email,
+                            this.EditionDto.Edition,
+                            this.AdminAccessControlDto.User.Id,
+                            collaboratorLanguageCode));
+                        if (!result.IsValid)
+                        {
+                            throw new DomainException(Messages.CorrectFormValues);
+                        }
+                    }
+                    catch (DomainException ex)
+                    {
+                        //TODO: Check errors
+                        //var errors = result?.Errors?.Select(e => e.Message)?.Join(", ");
+                    }
+                    catch (Exception ex)
+                    {
+                        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                    }
+                }
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage(), }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
 
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Email.ToLowerInvariant(), Labels.Sent.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
         }

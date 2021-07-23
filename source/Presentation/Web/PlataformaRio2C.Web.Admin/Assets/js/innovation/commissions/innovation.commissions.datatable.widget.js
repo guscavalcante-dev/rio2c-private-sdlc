@@ -124,19 +124,19 @@ var InnovationCommissionsDataTableWidget = function () {
                             showSendInvitationEmailsModal();
                         }
                     },
-                    {
-                        text: exportToEventbrite,
-                        action: function (e, dt, node, config) {
-                            $('.dt-button-background').remove();
-                            eventbriteCsvExport = dt.ajax.params();
-                            eventbriteCsvExport.selectedCollaboratorsUids = $('#innovation-commissions-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
-                            eventbriteCsvExport.showAllEditions = $('#ShowAllEditions').prop('checked');
-                            eventbriteCsvExport.showAllParticipants = $('#ShowAllParticipants').prop('checked');
-                            eventbriteCsvExport.collaboratorTypeName = collaboratorTypeName;
+                    //{
+                    //    text: exportToEventbrite,
+                    //    action: function (e, dt, node, config) {
+                    //        $('.dt-button-background').remove();
+                    //        eventbriteCsvExport = dt.ajax.params();
+                    //        eventbriteCsvExport.selectedCollaboratorsUids = $('#innovation-commissions-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
+                    //        eventbriteCsvExport.showAllEditions = $('#ShowAllEditions').prop('checked');
+                    //        eventbriteCsvExport.showAllParticipants = $('#ShowAllParticipants').prop('checked');
+                    //        eventbriteCsvExport.collaboratorTypeName = collaboratorTypeName;
 
-                            SalesPlatformsExport.showExportEventbriteCsvModal(eventbriteCsvExport);
-                        }
-                    },
+                    //        SalesPlatformsExport.showExportEventbriteCsvModal(eventbriteCsvExport);
+                    //    }
+                    //},
                     {
                         text: labels.selectAll,
                         action: function (e, dt, node, config) {
