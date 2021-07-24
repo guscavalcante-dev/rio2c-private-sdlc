@@ -1,0 +1,63 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model MusicProjectDto
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+    var approvedAttendeeMusicBandsIds = ViewBag.ApprovedAttendeeMusicBandsIds as int[];
+    var isThisMusicProjectApproved = approvedAttendeeMusicBandsIds?.Contains(Model.AttendeeMusicBandDto.AttendeeMusicBand.Id) == true;
+}
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">@Labels.Evaluation</h3>
+    </div>
+</div>
+<div class="kt-portlet__body pt-0">
+    @if (editionDto?.IsMusicProjectEvaluationOpen() == true)
+    {
+        <form class="form-inline justify-content-center mt-85">
+            <div class="form-group mb-2 mr-3">
+                @Html.TextBox("AttendeeMusicBandEvaluationGrade", Model.AttendeeMusicBandDto?.AttendeeMusicBandEvaluationDto?.AttendeeMusicBandEvaluation?.Grade, new { @class = "form-control text-center decimal-globalize-mask", placeholder = Labels.Grade, style = "width: 105px;" }) @*, @type = "number", @min = "1", @max = "10", @step = ".10"*@
+            </div>
+            <button type="button" class="btn btn-success mb-2" onclick="MusicProjectsEvaluationWidget.submitEvaluationGrade('@Model.MusicProject.AttendeeMusicBand.MusicBandId');">@Labels.Evaluate</button>
+        </form>
+    }
+    else if (editionDto?.IsMusicProjectEvaluationStarted() != true)
+    {
+        <div class="row mt-75">
+            <div class="col-12">
+                <div class="myrio2c-alert-box danger mx-auto text-center">
+                    <span>@Messages.OutOfEvaluationPeriod</span>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        var icon = "fa-diagnoses";
+        var color = "warning";
+        var status = Labels.UnderEvaluation;
+
+        if (isThisMusicProjectApproved)
+        {
+            icon = "fa-thumbs-up";
+            color = "success";
+            status = Labels.ProjectAccepted;
+        }
+        else
+        {
+            icon = "fa-thumbs-down";
+            color = "danger";
+            status = Labels.ProjectRefused;
+        }
+        <form class="form-inline justify-content-center mt-85">
+            <span class="btn btn-label-@(color) mb-2 mr-4">
+                <i class="fa @(icon) mr-1"></i> @status
+            </span>
+            <div class="form-group mb-2">
+                <div class="myrio2c-evaluation-grade-box-sm form-control">
+                    <span class="grade-label mr-2">@Labels.Average</span>
+                    <span class="grade-vote">@(Model.AttendeeMusicBandDto?.AttendeeMusicBand?.Grade?.ToString() ?? "-")</span>
+                </div>
+            </div>
+        </form>
+    }
+</div>

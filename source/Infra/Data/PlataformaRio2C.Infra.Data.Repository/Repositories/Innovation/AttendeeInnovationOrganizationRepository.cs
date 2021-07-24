@@ -89,6 +89,93 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>
+        /// Finds the by edition identifier.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeInnovationOrganization> FindByEditionId(this IQueryable<AttendeeInnovationOrganization> query, int editionId, bool showAllEditions = false)
+        {
+            query = query.Where(aio => (showAllEditions || aio.EditionId == editionId));
+
+            return query;
+        }
+
+        /// <summary>Finds the by keywords.</summary>
+        /// <param name="query">The query.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeInnovationOrganization> FindByKeywords(this IQueryable<AttendeeInnovationOrganization> query, string keywords)
+        {
+            if (!string.IsNullOrEmpty(keywords))
+            {
+                var outerWhere = PredicateBuilder.New<AttendeeInnovationOrganization>(false);
+                var innerInnovationOrganizationNameWhere = PredicateBuilder.New<AttendeeInnovationOrganization>(true);
+                var innerInnovationOrganizationServiceNameWhere = PredicateBuilder.New<AttendeeInnovationOrganization>(true);
+
+                foreach (var keyword in keywords.Split(' '))
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        innerInnovationOrganizationNameWhere = innerInnovationOrganizationNameWhere.Or(aio => aio.InnovationOrganization.Name.Contains(keyword));
+                        innerInnovationOrganizationServiceNameWhere = innerInnovationOrganizationServiceNameWhere.Or(aio => aio.InnovationOrganization.ServiceName.Contains(keyword));
+                    }
+                }
+
+                outerWhere = outerWhere.Or(innerInnovationOrganizationNameWhere);
+                outerWhere = outerWhere.Or(innerInnovationOrganizationServiceNameWhere);
+                query = query.Where(outerWhere);
+            }
+
+            return query;
+        }
+
+        /// <summary>
+        /// Finds the by innovation organization track option uid.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="innovationOrganizationTrackOptionUids">The innovation organization track option uids.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeInnovationOrganization> FindByInnovationOrganizationTrackOptionUids(this IQueryable<AttendeeInnovationOrganization> query, List<Guid?> innovationOrganizationTrackOptionUids)
+        {
+            if (innovationOrganizationTrackOptionUids?.Any(i => i.HasValue) == true)
+            {
+                query = query.Where(aio => innovationOrganizationTrackOptionUids.Any(iotUid =>
+                                                    aio.AttendeeInnovationOrganizationTracks.Any(aiot => 
+                                                        !aiot.IsDeleted &&
+                                                        !aiot.InnovationOrganizationTrackOption.IsDeleted &&
+                                                         aiot.InnovationOrganizationTrackOption.Uid == iotUid)));
+            }
+
+            return query;
+        }
+
+        /// <summary>
+        /// Finds the by is evaluated.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeInnovationOrganization> FindByIsEvaluated(this IQueryable<AttendeeInnovationOrganization> query)
+        {
+            query = query.Where(aio => aio.Grade != null);
+
+            return query;
+        }
+
+        /// <summary>
+        /// Orders the specified query.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeInnovationOrganization> Order(this IQueryable<AttendeeInnovationOrganization> query)
+        {
+            query = query.OrderBy(mp => mp.CreateDate);
+
+            return query;
+        }
     }
 
     #endregion
@@ -96,12 +183,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     /// <summary>AttendeeInnovationOrganizationRepository</summary>
     public class AttendeeInnovationOrganizationRepository : Repository<PlataformaRio2CContext, AttendeeInnovationOrganization>, IAttendeeInnovationOrganizationRepository
     {
+        private readonly IEditionRepository editioRepo;
+
         /// <summary>Initializes a new instance of the <see cref="AttendeeOrganizationRepository"/> class.</summary>
         /// <param name="context">The context.</param>
-        public AttendeeInnovationOrganizationRepository(PlataformaRio2CContext context)
+        public AttendeeInnovationOrganizationRepository(
+            PlataformaRio2CContext context,
+            IEditionRepository editionRepository
+            )
             : base(context)
         {
+            this.editioRepo = editionRepository;
         }
+
+        #region Private Methods
 
         /// <summary>Gets the base query.</summary>
         /// <param name="readonly">if set to <c>true</c> [readonly].</param>
@@ -115,6 +210,65 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         ? consult.AsNoTracking()
                         : consult;
         }
+
+
+        private async Task<List<AttendeeInnovationOrganization>> FindAllAttendeeInnovationOrganizationsAsync(int editionId, string searchKeywords, Guid? innovationOrganizationTrackOptionUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId)
+                                .FindByKeywords(searchKeywords)
+                                .FindByInnovationOrganizationTrackOptionUids(new List<Guid?> { innovationOrganizationTrackOptionUid });
+
+            return await query
+                            .Order()
+                            .ToListAsync();
+        }
+
+        /// <summary>
+        /// Finds all json dtos asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="innovationOrganizationTrackOptionUid">The innovation organization track option uid.</param>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <returns></returns>
+        private async Task<List<AttendeeInnovationOrganizationJsonDto>> FindAllJsonDtosAsync(int editionId, string searchKeywords, Guid? innovationOrganizationTrackOptionUid, List<Tuple<string, string>> sortColumns)
+        {
+            var query = this.GetBaseQuery()
+                               .FindByEditionId(editionId, false)
+                               .FindByKeywords(searchKeywords)
+                               .FindByInnovationOrganizationTrackOptionUids(new List<Guid?> { innovationOrganizationTrackOptionUid })
+                               .DynamicOrder<AttendeeInnovationOrganization>(
+                                   sortColumns,
+                                   null,
+                                   new List<string> { "CreateDate", "UpdateDate" }, 
+                                   "CreateDate")
+                               .Select(aio => new AttendeeInnovationOrganizationJsonDto
+                               {
+                                   AttendeeInnovationOrganizationId = aio.Id,
+                                   AttendeeInnovationOrganizationUid = aio.Uid,
+                                   
+                                   InnovationOrganizationName = aio.InnovationOrganization.Name,
+                                   InnovationOrganizationServiceName = aio.InnovationOrganization.ServiceName,
+                                   //InnovationOrganizationImageUrl = aio.InnovationOrganization.ImageUrl,
+                                   Grade = aio.Grade,
+                                   EvaluationsCount = aio.EvaluationsCount,
+                                   InnovationOrganizationTracksNames = aio.AttendeeInnovationOrganizationTracks
+                                                                            .Where(aiot => !aio.IsDeleted && 
+                                                                                            !aiot.IsDeleted && 
+                                                                                            !aiot.InnovationOrganizationTrackOption.IsDeleted)
+                                                                            .OrderBy(aiot => aiot.InnovationOrganizationTrackOption.DisplayOrder)
+                                                                            .Select(aiot => aiot.InnovationOrganizationTrackOption.Name).ToList(),
+
+                                   CreateDate = aio.CreateDate,
+                                   UpdateDate = aio.UpdateDate
+                               });
+
+            return await query
+                            .ToListAsync();
+        }
+
+        #endregion
 
         /// <summary>
         /// find by identifier as an asynchronous operation.
@@ -181,6 +335,154 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                            .FindByDocument(document, editionId);
 
             return await query.FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds all json dtos paged asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="innovationOrganizationTrackOptionUid">The innovation organization track option uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<AttendeeInnovationOrganizationJsonDto>> FindAllJsonDtosPagedAsync(int editionId, string searchKeywords, Guid? innovationOrganizationTrackOptionUid, Guid? evaluationStatusUid, int page, int pageSize, List<Tuple<string, string>> sortColumns)
+        {
+            var attendeeInnovaitonOrganizationJsonDtos = await this.FindAllJsonDtosAsync(editionId, searchKeywords, innovationOrganizationTrackOptionUid, sortColumns);
+            var editionDto = await this.editioRepo.FindDtoAsync(editionId);
+            var approvedMusicBandsIds = await this.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(editionId);
+
+            IEnumerable<AttendeeInnovationOrganizationJsonDto> attendeeInnovaitonOrganizationJsonDtosResult = attendeeInnovaitonOrganizationJsonDtos;
+            if (editionDto.IsInnovationProjectEvaluationOpen())
+            {
+                #region Evaluation is Open
+
+                if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
+                {
+                    attendeeInnovaitonOrganizationJsonDtosResult = new List<AttendeeInnovationOrganizationJsonDto>(); //Returns a empty list
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
+                {
+                    attendeeInnovaitonOrganizationJsonDtosResult = new List<AttendeeInnovationOrganizationJsonDto>(); //Returns a empty list
+                }
+
+                #endregion
+            }
+            else
+            {
+                #region Evaluation is Closed
+
+                if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
+                {
+                    attendeeInnovaitonOrganizationJsonDtosResult = attendeeInnovaitonOrganizationJsonDtos.Where(w => approvedMusicBandsIds.Contains(w.AttendeeInnovationOrganizationId));
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
+                {
+                    attendeeInnovaitonOrganizationJsonDtosResult = attendeeInnovaitonOrganizationJsonDtos.Where(w => !approvedMusicBandsIds.Contains(w.AttendeeInnovationOrganizationId));
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
+                {
+                    attendeeInnovaitonOrganizationJsonDtosResult = new List<AttendeeInnovationOrganizationJsonDto>();
+                }
+
+                #endregion
+            }
+
+            return await attendeeInnovaitonOrganizationJsonDtosResult
+                            .ToPagedListAsync(page, pageSize);
+        }
+
+        /// <summary>
+        /// Finds all approved attendee innovation organizations ids asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<int[]> FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(int editionId)
+        {
+            var edition = await this.editioRepo.FindByIdAsync(editionId);
+
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId)
+                                .FindByIsEvaluated();
+
+            return await query
+                            .OrderByDescending(aio => aio.Grade)
+                            .Take(edition.InnovationProjectMaximumApprovedCompaniesCount)
+                            .Select(aio => aio.Id)
+                            .ToArrayAsync();
+        }
+
+        /// <summary>Counts the asynchronous.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <returns></returns>
+        public async Task<int> CountAsync(int editionId, bool showAllEditions = false)
+
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId, showAllEditions);
+
+            return await query.CountAsync();
+        }
+
+        /// <summary>
+        /// Counts the paged asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="musicGenreUid">The music genre uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<int> CountPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize)
+        {
+            var attendeeInnovationOrganizations = await this.FindAllAttendeeInnovationOrganizationsAsync(editionId, searchKeywords, musicGenreUid);
+            var editionDto = await this.editioRepo.FindDtoAsync(editionId);
+            var approvedAttendeeInnovationOrganizationsIds = await this.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(editionId);
+
+            IEnumerable<AttendeeInnovationOrganization> attendeeInnovationOrganizationsResult = attendeeInnovationOrganizations;
+            if (editionDto.IsMusicProjectEvaluationOpen())
+            {
+                #region Evaluation is Open
+
+                if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
+                {
+                    attendeeInnovationOrganizationsResult = new List<AttendeeInnovationOrganization>(); //Returns a empty list
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
+                {
+                    attendeeInnovationOrganizationsResult = new List<AttendeeInnovationOrganization>(); //Returns a empty list
+                }
+
+                #endregion
+            }
+            else
+            {
+                #region Evaluation is Closed
+
+                if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
+                {
+                    attendeeInnovationOrganizationsResult = attendeeInnovationOrganizations.Where(aio => approvedAttendeeInnovationOrganizationsIds.Contains(aio.Id));
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
+                {
+                    attendeeInnovationOrganizationsResult = attendeeInnovationOrganizations.Where(aio => !approvedAttendeeInnovationOrganizationsIds.Contains(aio.Id));
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
+                {
+                    attendeeInnovationOrganizationsResult = new List<AttendeeInnovationOrganization>();
+                }
+
+                #endregion
+            }
+
+            var attendeeInnovationOrganizationsPagedList = await attendeeInnovationOrganizationsResult
+                                                 .ToPagedListAsync(page, pageSize);
+
+            return attendeeInnovationOrganizationsPagedList.Count;
         }
     }
 }

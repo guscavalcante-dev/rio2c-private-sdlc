@@ -202,6 +202,7 @@
     <Compile Include="Dtos\Innovation\AttendeeCollaboratorInnovationOrganizationTrackDto.cs" />
     <Compile Include="Dtos\Innovation\InnovationCollaboratorDto.cs" />
     <Compile Include="Dtos\Innovation\AttendeeInnovationOrganizationTrackDto.cs" />
+    <Compile Include="Dtos\Innovation\AttendeeInnovationOrganizationJsonDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticAccommodationDto.cs" />
     <Compile Include="Dtos\Logistics\AttendeePlaceDropdownDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticDto.cs" />

@@ -23,10 +23,14 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IAttendeeInnovationOrganizationRepository</summary>
     public interface IAttendeeInnovationOrganizationRepository : IRepository<AttendeeInnovationOrganization>
     {
+        Task<IPagedList<AttendeeInnovationOrganizationJsonDto>> FindAllJsonDtosPagedAsync(int editionId, string searchKeywords, Guid? innovationOrganizationTrackOptionUid, Guid? evaluationStatusUid, int page, int pageSize, List<Tuple<string, string>> sortColumns);
         Task<AttendeeInnovationOrganization> FindByIdAsync(int attendeeInnovationOrganizationId);
         Task<AttendeeInnovationOrganization> FindByUidAsync(Guid attendeeInnovationOrganizationUid);
         Task<List<AttendeeInnovationOrganization>> FindAllByIdsAsync(List<int?> attendeeInnovationOrganizationIds);
         Task<List<AttendeeInnovationOrganization>> FindAllByUidsAsync(List<Guid?> attendeeInnovationOrganizationUids);
         Task<AttendeeInnovationOrganization> FindByDocumentAndEditionIdAsync(string document, int editionId);
+        Task<int[]> FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(int editionId);
+        Task<int> CountAsync(int editionId, bool showAllEditions = false);
+        Task<int> CountPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize);
     }
 }

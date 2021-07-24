@@ -1105,6 +1105,10 @@
     <value>Data de início da avaliação de projeto de inovação</value>
     <comment>Data de início da avaliação de projeto de inovação</comment>
   </data>
+  <data name="InnovationProjects" xml:space="preserve">
+    <value>Projetos de Inovação</value>
+    <comment>Projetos de Inovação</comment>
+  </data>
   <data name="InnovationProjectSubmitEndDate" xml:space="preserve">
     <value>Data de término de envio de projeto de inovação</value>
     <comment>Data de término de envio de projeto de inovação</comment>
@@ -1835,6 +1839,14 @@
   <data name="ProductionPlans" xml:space="preserve">
     <value>Planos de Produção</value>
   </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>Nome do produto</value>
+    <comment>Nome do produto</comment>
+  </data>
+  <data name="ProductOrServiceName" xml:space="preserve">
+    <value>Nome do produto/serviço</value>
+    <comment>Nome do produto/serviço</comment>
+  </data>
   <data name="Profile" xml:space="preserve">
     <value>Perfil</value>
     <comment>Perfil</comment>
@@ -2025,6 +2037,14 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="RemoveFromEdition" xml:space="preserve">
     <value>Remover de {0}</value>
     <comment>Remover de {0}</comment>
+  </data>
+  <data name="ReportByEvaluator" xml:space="preserve">
+    <value>Relatório por Jurado</value>
+    <comment>Relatório por Jurado</comment>
+  </data>
+  <data name="ReportByProject" xml:space="preserve">
+    <value>Relatório por Projeto</value>
+    <comment>Relatório por Projeto</comment>
   </data>
   <data name="Reports" xml:space="preserve">
     <value>Relatórios</value>

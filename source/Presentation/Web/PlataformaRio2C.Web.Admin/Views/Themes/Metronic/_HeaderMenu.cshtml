@@ -146,7 +146,7 @@
     }
     @if (isAdminFull || isAdminInnovation)
     {
-        <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel @this.IsOpen(menuOpenCssClass, null, "Investors,Commissions", "Innovation")" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
+        <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel @this.IsOpen(menuOpenCssClass, null, "Investors,Commissions,Projects", "Innovation")" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
             <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">@Labels.Innovation</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
             <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
                 <ul class="kt-menu__subnav">
@@ -178,6 +178,9 @@
                     </li>
                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Commissions",  "Innovation")" aria-haspopup="true">
                         <a href="@Url.Action("Index", "Commissions", new { Area = "Innovation" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Commission</span></a>
+                    </li>
+                    <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Projects",  "Innovation")" aria-haspopup="true">
+                        <a href="@Url.Action("Index", "Projects", new { Area = "Innovation" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Projects</span></a>
                     </li>
                 </ul>
             </div>

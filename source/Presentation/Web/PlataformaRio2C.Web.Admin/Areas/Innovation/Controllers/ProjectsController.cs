@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Rafael Dantas Ruiz
-// Created          : 03-01-2020
+// Author           : Renan Valentim
+// Created          : 07-24-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 07-24-2021
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -34,66 +34,60 @@ using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 using System.Text;
 
-namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
+namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 {
     /// <summary>ProjectsController</summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminMusic)]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminInnovation)]
     public class ProjectsController : BaseController
     {
         private readonly IMusicProjectRepository musicProjectRepo;
-        private readonly IMusicGenreRepository musicGenreRepo;
         private readonly IProjectEvaluationStatusRepository evaluationStatusRepo;
-        private readonly IMusicBandRepository musicBandRepo;
+        private readonly IAttendeeInnovationOrganizationRepository attendeeInnovationOrganizationRepo;
+        private readonly IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepo;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ProjectsController"/> class.
-        /// </summary>
-        /// <param name="commandBus">The command bus.</param>
-        /// <param name="identityController">The identity controller.</param>
-        /// <param name="musicProjectRepository">The music project repository.</param>
-        /// <param name="musicGenreRepository">The music genre repository.</param>
-        /// <param name="evaluationStatusRepository">The evaluation status repository.</param>
-        /// <param name="musicBandRepository">The music band repository.</param>
         public ProjectsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
             IMusicProjectRepository musicProjectRepository,
-            IMusicGenreRepository musicGenreRepository,
             IProjectEvaluationStatusRepository evaluationStatusRepository,
-            IMusicBandRepository musicBandRepository)
+            IAttendeeInnovationOrganizationRepository attendeeInnovationOrganizationRepository,
+            IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepository
+            )
             : base(commandBus, identityController)
         {
             this.musicProjectRepo = musicProjectRepository;
-            this.musicGenreRepo = musicGenreRepository;
             this.evaluationStatusRepo = evaluationStatusRepository;
-            this.musicBandRepo = musicBandRepository;
+            this.attendeeInnovationOrganizationRepo = attendeeInnovationOrganizationRepository;
+            this.innovationOrganizationTrackOptionRepo = innovationOrganizationTrackOptionRepository;
         }
 
         #region List
 
-        /// <summary>Indexes the specified search keywords.</summary>
-        /// <param name="musicGenreUid">The music genre uid.</param>
+        /// <summary>
+        /// Indexes the specified innovation organization track uid.
+        /// </summary>
+        /// <param name="innovationOrganizationTrackUid">The innovation organization track uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Index(Guid? musicGenreUid, Guid? evaluationStatusUid)
+        public async Task<ActionResult> Index(Guid? innovationOrganizationTrackUid, Guid? evaluationStatusUid)
         {
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.MusicProjects, new List<BreadcrumbItemHelper>{
-                new BreadcrumbItemHelper(Labels.Music, null),
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "Music" }))
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.InnovationProjects, new List<BreadcrumbItemHelper>{
+                new BreadcrumbItemHelper(Labels.Innovation, null),
+                new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "Innovation" }))
             });
 
             #endregion
 
-            ViewBag.MusicGenreUid = musicGenreUid;
+            ViewBag.InnovationOrganizationTrackUid = innovationOrganizationTrackUid;
             ViewBag.EvaluationStatusUid = evaluationStatusUid;
             ViewBag.Page = 1;
             ViewBag.PageSize = 10;
 
-            ViewBag.MusicGenres = (await this.musicGenreRepo.FindAllAsync()).GetSeparatorTranslation(m => m.Name, this.UserInterfaceLanguage, '|');
+            ViewBag.InnovationOrganizationTrackOptions = (await this.innovationOrganizationTrackOptionRepo.FindAllAsync()).GetSeparatorTranslation(m => m.Name, this.UserInterfaceLanguage, '|');
             ViewBag.ProjectEvaluationStatuses = (await this.evaluationStatusRepo.FindAllAsync()).GetSeparatorTranslation(m => m.Name, this.UserInterfaceLanguage, '|');
 
             return View();
@@ -101,40 +95,40 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
         /// <summary>Shows the list widget.</summary>
         /// <param name="request">The request.</param>
-        /// <param name="musicGenreUid">The music genre uid.</param>
+        /// <param name="innovationOrganizationTrackUid">The music genre uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowListWidget(IDataTablesRequest request, Guid? musicGenreUid, Guid? evaluationStatusUid)
+        public async Task<ActionResult> ShowListWidget(IDataTablesRequest request, Guid? innovationOrganizationTrackUid, Guid? evaluationStatusUid)
         {
             int page = request.Start / request.Length;
             int pageSize = request.Length;
             page++; //Necessary because DataTable is zero index based.
 
-            var musicProjectJsonDtos = await this.musicProjectRepo.FindAllJsonDtosPagedAsync(
+            var attendeeInnovationOrganizationJsonDtos = await this.attendeeInnovationOrganizationRepo.FindAllJsonDtosPagedAsync(
                 this.EditionDto.Id,
                 request.Search?.Value,
-                musicGenreUid,
+                innovationOrganizationTrackUid,
                 evaluationStatusUid,
                 page,
                 pageSize,
                 request.GetSortColumns());
 
-            var approvedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Id);
+            var approvedAttendeeInnovationOrganizationIds = await this.attendeeInnovationOrganizationRepo.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(this.EditionDto.Id);
 
             StringBuilder sb = new StringBuilder();
-            foreach (var musicProjectJsonDto in musicProjectJsonDtos)
+            foreach (var attendeeInnovationOrganizationJsonDto in attendeeInnovationOrganizationJsonDtos)
             {
                 #region Evaluation Column
 
                 var icon = "fa-diagnoses";
                 var color = "warning";
                 var text = Labels.UnderEvaluation;
-                bool isMusicProjectEvaluationClosed = !this.EditionDto.IsMusicProjectEvaluationOpen();
+                bool isInnovationProjectEvaluationClosed = !this.EditionDto.IsInnovationProjectEvaluationOpen();
 
-                if (isMusicProjectEvaluationClosed)
+                if (isInnovationProjectEvaluationClosed)
                 {
-                    if (approvedAttendeeMusicBandsIds.Contains(musicProjectJsonDto.AttendeeMusicBandId))
+                    if (approvedAttendeeInnovationOrganizationIds.Contains(attendeeInnovationOrganizationJsonDto.AttendeeInnovationOrganizationId))
                     {
                         icon = "fa-thumbs-up";
                         color = "success";
@@ -157,20 +151,21 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 sb.Append($"                        <i class=\"fa {icon}\"></i>");
                 sb.Append($"                    </label>");
                 sb.Append($"                </span>");
-                if (isMusicProjectEvaluationClosed)
+                if (isInnovationProjectEvaluationClosed)
                 {
                     sb.Append($"            <span class=\"margin-left: 5px;\">");
-                    sb.Append($"                <b>{musicProjectJsonDto.Grade?.ToString() ?? "-"}</b>");
+                    sb.Append($"                <b>{attendeeInnovationOrganizationJsonDto.Grade?.ToString() ?? "-"}</b>");
                     sb.Append($"            </span>");
+                    sb.Append("<br/>");
                 }
                 sb.Append($"                <span class=\"margin-left: 5px;\">");
-                sb.Append($"                    ({musicProjectJsonDto.EvaluationsCount} {(musicProjectJsonDto.EvaluationsCount == 1 ? Labels.Vote : Labels.Votes)})");
+                sb.Append($"                    ({attendeeInnovationOrganizationJsonDto.EvaluationsCount} {(attendeeInnovationOrganizationJsonDto.EvaluationsCount == 1 ? Labels.Vote : Labels.Votes)})");
                 sb.Append($"                </span>");
                 sb.Append($"            </div>");
                 sb.Append($"        </td>");
                 sb.Append($"    </tr>");
                 sb.Append($"</table>");
-                musicProjectJsonDto.EvaluationHtmlString = sb.ToString();
+                attendeeInnovationOrganizationJsonDto.EvaluationHtmlString = sb.ToString();
                 sb.Clear();
 
                 #endregion
@@ -182,60 +177,45 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 sb.Append($"         <i class=\"la la-ellipsis-h\"></i>");
                 sb.Append($"     </a>");
                 sb.Append($"     <div class=\"dropdown-menu dropdown-menu-right\">");
-                sb.Append($"        <button class=\"dropdown-item\" onclick=\"MusicProjectsDataTableWidget.showDetails({musicProjectJsonDto.MusicProjectId}, '', '{musicGenreUid}', '{evaluationStatusUid}', '{page}', '{pageSize}');\">");
+                sb.Append($"        <button class=\"dropdown-item\" onclick=\"AttendeeInnovationOrganizationsDataTableWidget.showDetails({attendeeInnovationOrganizationJsonDto.AttendeeInnovationOrganizationId}, '', '{innovationOrganizationTrackUid}', '{evaluationStatusUid}', '{page}', '{pageSize}');\">");
                 sb.Append($"            <i class=\"la la-eye\"></i> {@Labels.View}");
                 sb.Append($"        </button>");
-                sb.Append($"        <button class=\"dropdown-item\" onclick=\"MusicProjectsDelete.showModal({musicProjectJsonDto.MusicProjectId});\">");
+                sb.Append($"        <button class=\"dropdown-item\" onclick=\"AttendeeInnovationOrganizationsDelete.showModal({attendeeInnovationOrganizationJsonDto.AttendeeInnovationOrganizationId});\">");
                 sb.Append($"            <i class=\"la la-remove\"></i> {Labels.Remove}");
                 sb.Append($"        </button>");
                 sb.Append($"    </div>");
                 sb.Append($"</span>");
-                musicProjectJsonDto.MenuActionsHtmlString = sb.ToString();
+                attendeeInnovationOrganizationJsonDto.MenuActionsHtmlString = sb.ToString();
                 sb.Clear();
 
                 #endregion
 
-                #region Translate MusicBandTypeName
+                #region Translate InnovationOrganizationTracksNames
 
-                musicProjectJsonDto.MusicBandTypeName = musicProjectJsonDto.MusicBandTypeName.GetSeparatorTranslation(this.UserInterfaceLanguage, '|');
-
-                #endregion
-
-                #region Translate MusicTargetAudiencesNames
-
-                for (int i = 0; i < musicProjectJsonDto.MusicTargetAudiencesNames.Count(); i++)
+                for (int i = 0; i < attendeeInnovationOrganizationJsonDto.InnovationOrganizationTracksNames.Count(); i++)
                 {
-                    musicProjectJsonDto.MusicTargetAudiencesNames[i] = musicProjectJsonDto.MusicTargetAudiencesNames[i].GetSeparatorTranslation(this.UserInterfaceLanguage, '|');
-                }
-
-                #endregion
-
-                #region Translate MusicGenreNames
-
-                for (int i = 0; i < musicProjectJsonDto.MusicGenreNames.Count(); i++)
-                {
-                    musicProjectJsonDto.MusicGenreNames[i] = musicProjectJsonDto.MusicGenreNames[i].GetSeparatorTranslation(this.UserInterfaceLanguage, '|');
+                    attendeeInnovationOrganizationJsonDto.InnovationOrganizationTracksNames[i] = attendeeInnovationOrganizationJsonDto.InnovationOrganizationTracksNames[i].GetSeparatorTranslation(this.UserInterfaceLanguage, '|');
                 }
 
                 #endregion
             }
 
-            ViewBag.MusicGenreUid = musicGenreUid;
+            ViewBag.InnovationOrganizationTrackUid = innovationOrganizationTrackUid;
             ViewBag.EvaluationStatusUid = evaluationStatusUid;
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
 
             IDictionary<string, object> additionalParameters = new Dictionary<string, object>();
-            if (musicProjectJsonDtos.TotalItemCount <= 0)
+            if (attendeeInnovationOrganizationJsonDtos.TotalItemCount <= 0)
             {
-                if (this.EditionDto.IsMusicProjectEvaluationOpen() && (
+                if (this.EditionDto.IsInnovationProjectEvaluationOpen() && (
                     evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid ||
                     evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid))
                 {
                     additionalParameters.Add("noRecordsFoundMessage", 
-                        $"{string.Format(Messages.TheEvaluationPeriodRunsFrom, this.EditionDto.MusicProjectEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(), this.EditionDto.MusicProjectEvaluationEndDate.ToBrazilTimeZone().ToShortDateString())}.</br>{Messages.TheProjectsWillReceiveFinalGradeAtPeriodEnds}");
+                        $"{string.Format(Messages.TheEvaluationPeriodRunsFrom, this.EditionDto.InnovationProjectEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(), this.EditionDto.InnovationProjectEvaluationEndDate.ToBrazilTimeZone().ToShortDateString())}.</br>{Messages.TheProjectsWillReceiveFinalGradeAtPeriodEnds}");
                 }
-                else if (!this.EditionDto.IsMusicProjectEvaluationOpen() && 
+                else if (!this.EditionDto.IsInnovationProjectEvaluationOpen() && 
                     evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
                 {
                     additionalParameters.Add("noRecordsFoundMessage", 
@@ -243,7 +223,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 }
             }
 
-            var response = DataTablesResponse.Create(request, musicProjectJsonDtos.TotalItemCount, musicProjectJsonDtos.TotalItemCount, musicProjectJsonDtos, additionalParameters);
+            var response = DataTablesResponse.Create(request, attendeeInnovationOrganizationJsonDtos.TotalItemCount, attendeeInnovationOrganizationJsonDtos.TotalItemCount, attendeeInnovationOrganizationJsonDtos, additionalParameters);
 
             return Json(new
             {
@@ -254,13 +234,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
         /// <summary>Export to Excel the evaluation list widget.</summary>
         /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="musicGenreUid">The music genre uid.</param>
+        /// <param name="innovationOrganizationTrackUid">The music genre uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ExportEvaluationListWidget(string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 1000)
+        public async Task<ActionResult> ExportEvaluationListWidget(string searchKeywords, Guid? innovationOrganizationTrackUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 1000)
         {
             StringBuilder data = new StringBuilder();
             bool ptBR = this.UserInterfaceLanguage == "pt-br";                        
@@ -269,31 +249,31 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             else
                 data.AppendLine("Music Band; Participant profile; Musical style; Target Audience; Create Date; Qty. Evaluation; Status;");
 
-            var musicProjectJsonDtos = await this.musicProjectRepo.FindAllJsonDtosPagedAsync(this.EditionDto.Id, searchKeywords, musicGenreUid, evaluationStatusUid, 1, 10000, new List<Tuple<string, string>>());
-            var approvedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Id);
+            var attendeeInnovationOrganizationJsonDtos = await this.attendeeInnovationOrganizationRepo.FindAllJsonDtosPagedAsync(this.EditionDto.Id, searchKeywords, innovationOrganizationTrackUid, evaluationStatusUid, 1, 10000, new List<Tuple<string, string>>());
+            var approvedAttendeeInnovationOrganizationIds = await this.attendeeInnovationOrganizationRepo.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(this.EditionDto.Id);
 
-            foreach (var item in musicProjectJsonDtos)
+            foreach (var item in attendeeInnovationOrganizationJsonDtos)
             {
-                var audiences = string.Join(",", item.MusicTargetAudiencesNames);
-                var genre = string.Join("|", item.MusicGenreNames);
-                var createDate = ptBR ? item.CreateDate.ToString("dd/MM/yy"): item.CreateDate.ToString("MM/dd/yy");
-                var status = ptBR ?
-                    approvedAttendeeMusicBandsIds.Contains(item.AttendeeMusicBandId)?"Aprovado":"Reprovado":
-                    approvedAttendeeMusicBandsIds.Contains(item.AttendeeMusicBandId)?"Accepted":"Refused";
+                //var audiences = string.Join(",", item.MusicTargetAudiencesNames);
+                //var genre = string.Join("|", item.MusicGenreNames);
+                //var createDate = ptBR ? item.CreateDate.ToString("dd/MM/yy"): item.CreateDate.ToString("MM/dd/yy");
+                //var status = ptBR ?
+                //    approvedAttendeeInnovationOrganizationIds.Contains(item.AttendeeInnovationOrganizationId)?"Aprovado":"Reprovado":
+                //    approvedAttendeeInnovationOrganizationIds.Contains(item.AttendeeInnovationOrganizationId) ?"Accepted":"Refused";
 
-                data.AppendLine(item.MusicBandName + ";" +
-                                item.MusicBandTypeName + ";" +
-                                audiences + ";" +
-                                genre + ";" +
-                                createDate + ";" +
-                                item.EvaluationsCount + ";" +
-                                status);
+                //data.AppendLine(item.MusicBandName + ";" +
+                //                item.MusicBandTypeName + ";" +
+                //                audiences + ";" +
+                //                genre + ";" +
+                //                createDate + ";" +
+                //                item.EvaluationsCount + ";" +
+                //                status);
             }
 
             var dtFileName = ptBR ? DateTime.Now.ToString("yyMMddHHmmss") : DateTime.Now.ToString("yyddMMHHmmss");
             return Json(new
             {
-                fileName = "MusicProjects_"+ dtFileName + ".csv",
+                fileName = "InnovationProjects_"+ dtFileName + ".csv",
                 fileContent = data.ToString()
             }, JsonRequestBehavior.AllowGet);
         }
@@ -307,14 +287,14 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowTotalCountWidget()
         {
-            var projectsCount = await this.musicProjectRepo.CountAsync(this.EditionDto.Id, true);
+            var projectsCount = await this.attendeeInnovationOrganizationRepo.CountAsync(this.EditionDto.Id, true);
 
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", projectsCount), divIdOrClass = "#MusicProjectsTotalCountWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/TotalCountWidget", projectsCount), divIdOrClass = "#InnovationProjectsTotalCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -327,13 +307,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <returns></returns>
         public async Task<ActionResult> ShowEditionCountWidget()
         {
-            var projectsCount = await this.musicProjectRepo.CountAsync(this.EditionDto.Id);
+            var projectsCount = await this.attendeeInnovationOrganizationRepo.CountAsync(this.EditionDto.Id);
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", projectsCount), divIdOrClass = "#MusicProjectsEditionCountWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", projectsCount), divIdOrClass = "#InnovationProjectsEditionCountWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -989,17 +969,17 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
             try
             {
-                var cmd = new EvaluateMusicBand(
-                    await this.musicBandRepo.FindByIdAsync(musicBandId),
-                    grade);
+                //var cmd = new EvaluateMusicBand(
+                //    await this.musicBandRepo.FindByIdAsync(musicBandId),
+                //    grade);
 
-                cmd.UpdatePreSendProperties(
-                    this.AdminAccessControlDto.User.Id,
-                    this.AdminAccessControlDto.User.Uid,
-                    this.EditionDto.Id,
-                    this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
-                result = await this.CommandBus.Send(cmd);
+                //cmd.UpdatePreSendProperties(
+                //    this.AdminAccessControlDto.User.Id,
+                //    this.AdminAccessControlDto.User.Uid,
+                //    this.EditionDto.Id,
+                //    this.EditionDto.Uid,
+                //    this.UserInterfaceLanguage);
+                //result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
                 {
                     throw new DomainException(Messages.CorrectFormValues);

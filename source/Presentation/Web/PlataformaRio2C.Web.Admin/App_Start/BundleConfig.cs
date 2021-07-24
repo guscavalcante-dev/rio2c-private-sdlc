@@ -841,6 +841,34 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            #region Projects
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.projects.list.widget.js").Include(
+                "~/Assets/js/innovation/projects/innovation.projects.datatable.widget.js",
+                "~/Assets/js/innovation/projects/innovation.projects.totalcount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.projects.editioncount.widget.js").Include(
+                "~/Assets/js/innovation/projects/innovation.projects.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.projects.widget.js").Include(
+                "~/Assets/js/innovation/projects/innovation.projects.maininformation.widget.js",
+                "~/Assets/js/innovation/projects/innovation.projects.members.widget.js",
+                "~/Assets/js/innovation/projects/innovation.projects.teammembers.widget.js",
+                "~/Assets/js/innovation/projects/innovation.projects.releasedprojects.widget.js",
+                "~/Assets/js/innovation/projects/innovation.projects.evaluators.widget.js",
+                "~/Assets/js/innovation/projects/innovation.projects.responsible.widget.js",
+                "~/Assets/js/innovation/projects/innovation.projects.clipping.widget.js",
+                "~/Assets/js/innovation/projects/innovation.projects.videoandinnovation.widget.js",
+                "~/Assets/js/innovation/projects/innovation.projects.socialnetworks.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.projects.evaluation.widget.js").Include(
+                "~/Assets/js/innovation/projects/innovation.projects.evaluation.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.projects.delete.js").Include(
+                "~/Assets/js/innovation/projects/innovation.projects.delete.js"));
+
+            #endregion
+
             #endregion
 
             #region Logistics - Sponsors

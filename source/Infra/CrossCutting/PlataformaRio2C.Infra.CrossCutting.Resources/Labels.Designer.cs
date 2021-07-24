@@ -2410,6 +2410,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Projetos de Inovação.
+        /// </summary>
+        public static string InnovationProjects {
+            get {
+                return ResourceManager.GetString("InnovationProjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data de término de envio de projeto de inovação.
         /// </summary>
         public static string InnovationProjectSubmitEndDate {
@@ -4133,6 +4142,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nome do produto.
+        /// </summary>
+        public static string ProductName {
+            get {
+                return ResourceManager.GetString("ProductName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nome do produto/serviço.
+        /// </summary>
+        public static string ProductOrServiceName {
+            get {
+                return ResourceManager.GetString("ProductOrServiceName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Perfil.
         /// </summary>
         public static string Profile {
@@ -4575,6 +4602,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string RemoveFromEdition {
             get {
                 return ResourceManager.GetString("RemoveFromEdition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Relatório por Jurado.
+        /// </summary>
+        public static string ReportByEvaluator {
+            get {
+                return ResourceManager.GetString("ReportByEvaluator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Relatório por Projeto.
+        /// </summary>
+        public static string ReportByProject {
+            get {
+                return ResourceManager.GetString("ReportByProject", resourceCulture);
             }
         }
         

@@ -1,0 +1,143 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model MusicProjectDto
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+    ViewBag.Title = $"{Labels.Music} {Model.AttendeeMusicBandDto?.MusicBand?.Name}";
+    var totalMusicProjectsCount = ViewBag.MusicProjectsTotalCount as int?;
+    var currentMusicProjectIndex = ViewBag.CurrentMusicProjectIndex as int?;
+
+    var previousStepEvent = Url.Action("PreviousEvaluationDetails", "Projects", new
+    {
+        Area = "Music",
+        id = Model.MusicProject.Id,
+        searchKeywords = ViewBag.SearchKeywords,
+        musicGenreUid = ViewBag.MusicGenreUid,
+        evaluationStatusUid = ViewBag.EvaluationStatusUid,
+        Page = ViewBag.Page,
+        pageSize = ViewBag.PageSize
+    });
+
+    var nextStepEvent = Url.Action("NextEvaluationDetails", "Projects", new
+    {
+        Area = "Music",
+        id = Model.MusicProject.Id,
+        searchKeywords = ViewBag.SearchKeywords,
+        musicGenreUid = ViewBag.MusicGenreUid,
+        evaluationStatusUid = ViewBag.EvaluationStatusUid,
+        Page = ViewBag.Page,
+        pageSize = ViewBag.PageSize
+    });
+}
+@Html.Hidden("AggregateId", Model.MusicProject.Uid)
+
+<div class="row">
+    <div class="col-md-12 d-flex justify-content-end pb-3 pr-4">
+        <div class="row d-flex font-weight-bold text-white" style="align-items: center;">
+            <div class="mr-3">
+                <span>@currentMusicProjectIndex @Labels.Of @totalMusicProjectsCount @Labels.Projects</span>
+            </div>
+            <button class="btn btn-outline-secondary mr-2" onclick="location.href='@previousStepEvent'">
+                <span class="font-weight-bold text-white"><</span>
+            </button>
+            <button class="btn btn-outline-secondary" onclick="location.href='@nextStepEvent'">
+                <span class="font-weight-bold text-white">></span>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <!--begin:Main Information Widget-->
+            <div class="col-12">
+                <div id="ProjectMainInformationWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+            <!--end:Main Information Widget-->
+        </div>
+        <div class="row">
+            <!--begin:Members Widget-->
+            <div class="col-md-6">
+                <div id="ProjectMembersWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+            <!--end:Members Widget-->
+            <!--begin:Team Members Widget-->
+            <div class="col-md-6">
+                <div id="ProjectTeamMembersWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+            <!--end:Team Members Widget-->
+        </div>
+        <div class="row">
+            <!--begin:Released Projects Widget-->
+            <div class="col-md-6">
+                <div id="ReleasedProjectsWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+            <!--end:Released Projects Widget-->
+            <!--begin:Responsible Widget-->
+            <div class="col-md-6">
+                <div id="ProjectResponsibleWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+            <!--end:Responsible Widget-->
+        </div>
+        <div class="row">
+            <!--begin:Video and Music Widget-->
+            <div class="col-12">
+                <div id="ProjectVideoAndMusicWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+            <!--end:Video and Music Widget-->
+        </div>
+        <div class="row">
+            <!--begin:Clipping Widget-->
+            <div class="col-12">
+                <div id="ProjectClippingWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+            <!--end:Clipping Widget-->
+        </div>
+        <div class="row">
+            <!--begin:Social Networks Widget-->
+            <div class="col-12">
+                <div id="ProjectSocialNetworksWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+            <!--end:Social Networks Widget-->
+        </div>
+        <div class="row">
+            <!--begin:Evaluation Widget-->
+            <div class="col-md-6">
+                <div id="ProjectEvaluationWidget" class="kt-portlet" style="min-height: 296px;"></div>
+            </div>
+            <!--end:Evaluation Widget-->
+            <!--begin:Project Evaluators Widget-->
+            <div class="col-md-6">
+                <div id="ProjectEvaluatorsWidget" class="kt-portlet" style="min-height: 296px;"></div>
+            </div>
+            <!--end:Project Evaluators Widget-->
+        </div>
+    </div>
+</div>
+@section Styles {
+    @Styles.Render("~/bundles/css/select2.css")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/select2.js")
+    @Scripts.Render("~/bundles/js/inputmask.js")
+    @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/music.projects.widget.js")
+    @Scripts.Render("~/bundles/js/music.projects.evaluation.widget.js")
+    <script>
+        // Page translations ----------------------------------------------------------------------
+        var translations = {
+        };
+
+        jQuery(document).ready(function () {
+            MusicProjectsMainInformationWidget.init();
+            MusicProjectsMembersWidget.init();
+            MusicProjectsTeamMembersWidget.init();
+            MusicProjectsReleasedWidget.init();
+            MusicProjectResponsibleWidget.init();
+            MusicProjectsVideoAndMusicWidget.init();
+            MusicProjectsClippingWidget.init();
+            MusicProjectsSocialNetworksWidget.init();
+            MusicProjectsEvaluationWidget.init();
+            MusicProjectsEvaluatorsWidget.init();
+        });
+    </script>
+}

@@ -1107,6 +1107,10 @@
     <value>Innovation project evaluation start date</value>
     <comment>Data de início da avaliação de projeto de inovação</comment>
   </data>
+  <data name="InnovationProjects" xml:space="preserve">
+    <value>Innovation Projects</value>
+    <comment>Projetos de Inovação</comment>
+  </data>
   <data name="InnovationProjectSubmitEndDate" xml:space="preserve">
     <value>Innovation project submission end date</value>
     <comment>Data de término de envio de projeto de inovação</comment>
@@ -1834,6 +1838,14 @@
   <data name="ProductionPlans" xml:space="preserve">
     <value>Production Plans</value>
   </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>Product name</value>
+    <comment>Nome do produto</comment>
+  </data>
+  <data name="ProductOrServiceName" xml:space="preserve">
+    <value>Product/Service name</value>
+    <comment>Nome do produto/serviço</comment>
+  </data>
   <data name="Profile" xml:space="preserve">
     <value>Profile</value>
     <comment>Perfil</comment>
@@ -2020,6 +2032,14 @@
   <data name="RemoveFromEdition" xml:space="preserve">
     <value>Remove from {0}</value>
     <comment>Remover de {0}</comment>
+  </data>
+  <data name="ReportByEvaluator" xml:space="preserve">
+    <value>Report by Evaluator</value>
+    <comment>Relatório por jurado</comment>
+  </data>
+  <data name="ReportByProject" xml:space="preserve">
+    <value>Report by Project</value>
+    <comment>Relatório por projeto</comment>
   </data>
   <data name="Reports" xml:space="preserve">
     <value>Reports</value>

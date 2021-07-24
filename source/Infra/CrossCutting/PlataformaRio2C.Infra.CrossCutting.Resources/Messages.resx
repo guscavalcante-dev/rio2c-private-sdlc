@@ -560,10 +560,6 @@
   <data name="MinimumNumberOfCharacters" xml:space="preserve">
     <value>O '{0}' deve ter no mínimo '{2}' caracteres.</value>
   </data>
-  <data name="MusicBandsNotFoundWithStatus" xml:space="preserve">
-    <value>Nenhuma banda com status '{0}' encontrada</value>
-    <comment>Nenhuma banda com status '{0}' encontrada</comment>
-  </data>
   <data name="NameIsRequired" xml:space="preserve">
     <value>Nome obrigatório.</value>
   </data>
@@ -752,6 +748,10 @@
     <value>Projeto salvo mas ainda NÃO enviado para Players. Para enviar o projeto para avaliação selecione os Players e clique em Salvar e Enviar.</value>
     <comment>Projeto salvo mas ainda NÃO enviado para Players. Para enviar o projeto para avaliação selecione os Players e clique em Salvar e Enviar.</comment>
   </data>
+  <data name="ProjectsNotFoundWithStatus" xml:space="preserve">
+    <value>Nenhum projeto com status '{0}' encontrado</value>
+    <comment>Nenhum projeto com status '{0}' encontrado</comment>
+  </data>
   <data name="ProjectSubmissionNotOpen" xml:space="preserve">
     <value>O período de inscrição não está aberto.</value>
     <comment>O período de inscrição não está aberto.</comment>
@@ -887,10 +887,6 @@
     <value>texto em português | texto em inglês</value>
     <comment>texto em português | texto em inglês</comment>
   </data>
-  <data name="TheBandsWillReceiveFinalGradeAtPeriodEnds" xml:space="preserve">
-    <value>As bandas receberão a nota final e o status de aprovação somente ao final desse período</value>
-    <comment>As bandas receberão a nota final e o status de aprovação somente ao final desse período</comment>
-  </data>
   <data name="TheEvaluationPeriodRunsFrom" xml:space="preserve">
     <value>O período de avaliações acontece de {0} até {1}</value>
     <comment>O período de avaliações acontece de {0} até {1}</comment>
@@ -901,6 +897,10 @@
   <data name="TheProjectMustHaveOnePlayer" xml:space="preserve">
     <value>O projeto deve ter no mínimo 1 {0} para ser concluído.</value>
     <comment>O projeto deve ter no mínimo 1 {0} para ser concluído.</comment>
+  </data>
+  <data name="TheProjectsWillReceiveFinalGradeAtPeriodEnds" xml:space="preserve">
+    <value>Os projetos receberão a nota final e o status de aprovação somente ao final desse período</value>
+    <comment>Os projetos receberão a nota final e o status de aprovação somente ao final desse período</comment>
   </data>
   <data name="ThereIsalreadyProjectRegisteredWithThisTitle" xml:space="preserve">
     <value>Já existe um projeto cadastrado com este título!</value>

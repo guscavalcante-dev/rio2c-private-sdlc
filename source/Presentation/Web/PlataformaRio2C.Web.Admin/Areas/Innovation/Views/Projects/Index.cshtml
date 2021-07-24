@@ -1,0 +1,50 @@
+﻿@model CollaboratorSearchViewModel
+@{
+    ViewBag.Title = Labels.ProjectsForPitching;
+}
+<!--begin:: Quick Stats-->
+<div class="row">
+    <!--begin:: Total Count Widget-->
+    <div class="col-sm-6">
+        <div id="InnovationProjectsTotalCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+    </div>
+    <!--end:: Total Count Widget-->
+    <!--begin:: Edition Count-->
+    <div class="col-sm-6">
+        <div id="InnovationProjectsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+    </div>
+    <!--end:: Edition Count-->
+</div>
+@Html.Partial("Widgets/DataTableWidget")
+@section Styles {
+    @Styles.Render("~/bundles/css/select2.css")
+    @Styles.Render("~/bundles/css/dataTables.css")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/dataTables.js")
+    @Scripts.Render("~/bundles/js/chart.js")
+    @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/select2.js")
+    @Scripts.Render("~/bundles/js/innovation.projects.list.widget.js")
+    @Scripts.Render("~/bundles/js/innovation.projects.editioncount.widget.js")
+    @Scripts.Render("~/bundles/js/innovation.projects.delete.js")
+<script>
+        // Page translations ----------------------------------------------------------------------
+        var translations = {
+        };
+
+        // Pagination -----------------------------------------------------------------------------
+        var initialPage = @(ViewBag.Page?.ToString() ?? "null");
+        var initialPageSize = @(ViewBag.PageSize?.ToString() ?? "null");
+        var searchKeywords = '@ViewBag.SearchKeywords';
+        var innovationOrganizationTracUid = '@ViewBag.InnovationOrganizationTrackUid';
+        var evaluationStatusUid = '@ViewBag.EvaluationStatusUid';
+
+        jQuery(document).ready(function () {
+           InnovationProjectsDataTableWidget.init();
+           InnovationProjectsTotalCountWidget.init();
+           InnovationProjectsEditionCountWidget.init();
+        });
+</script>
+
+}
