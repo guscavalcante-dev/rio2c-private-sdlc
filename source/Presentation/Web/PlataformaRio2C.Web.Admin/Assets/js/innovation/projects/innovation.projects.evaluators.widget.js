@@ -29,7 +29,7 @@ var InnovationProjectsEvaluatorsWidget = function () {
         }
 
         var jsonParameters = new Object();
-        jsonParameters.projectUid = $('#AggregateId').val();
+        jsonParameters.attendeeInnovationOrganizationUid = $('#AggregateId').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Projects/ShowEvaluatorsWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({

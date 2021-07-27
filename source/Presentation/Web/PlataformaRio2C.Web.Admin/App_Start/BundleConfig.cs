@@ -852,14 +852,12 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/innovation.projects.widget.js").Include(
                 "~/Assets/js/innovation/projects/innovation.projects.maininformation.widget.js",
-                "~/Assets/js/innovation/projects/innovation.projects.members.widget.js",
-                "~/Assets/js/innovation/projects/innovation.projects.teammembers.widget.js",
-                "~/Assets/js/innovation/projects/innovation.projects.releasedprojects.widget.js",
-                "~/Assets/js/innovation/projects/innovation.projects.evaluators.widget.js",
-                "~/Assets/js/innovation/projects/innovation.projects.responsible.widget.js",
-                "~/Assets/js/innovation/projects/innovation.projects.clipping.widget.js",
-                "~/Assets/js/innovation/projects/innovation.projects.videoandinnovation.widget.js",
-                "~/Assets/js/innovation/projects/innovation.projects.socialnetworks.widget.js"));
+                "~/Assets/js/innovation/projects/innovation.projects.tracks.widget.js",
+                "~/Assets/js/innovation/projects/innovation.projects.objectives.widget.js",
+                "~/Assets/js/innovation/projects/innovation.projects.experiences.widget.js",
+                "~/Assets/js/innovation/projects/innovation.projects.technologies.widget.js",
+
+                "~/Assets/js/innovation/projects/innovation.projects.evaluators.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/innovation.projects.evaluation.widget.js").Include(
                 "~/Assets/js/innovation/projects/innovation.projects.evaluation.widget.js"));

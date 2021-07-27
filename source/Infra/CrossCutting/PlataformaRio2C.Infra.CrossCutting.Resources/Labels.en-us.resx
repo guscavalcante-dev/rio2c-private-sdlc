@@ -143,6 +143,10 @@
     <value>Accreditation</value>
     <comment>Credenciamento</comment>
   </data>
+  <data name="AccumulatedRevenueForLast3Months" xml:space="preserve">
+    <value>Accumulated revenue for last 3 months</value>
+    <comment>Receita acumulada nos últimos 3 meses</comment>
+  </data>
   <data name="Actions" xml:space="preserve">
     <value>Actions</value>
     <comment>Ações</comment>
@@ -908,6 +912,14 @@
     <value>Experience</value>
     <comment>Experiência</comment>
   </data>
+  <data name="Experiences" xml:space="preserve">
+    <value>Experiences</value>
+    <comment>Experiências</comment>
+  </data>
+  <data name="ExperiencesThatCompanyHasParticipatedIn" xml:space="preserve">
+    <value>Experiences that the company has participated in</value>
+    <comment>Experiências que a empresa ja participou</comment>
+  </data>
   <data name="Export" xml:space="preserve">
     <value>Export</value>
     <comment>Exportar</comment>
@@ -950,6 +962,10 @@
   <data name="ForSeries" xml:space="preserve">
     <value>For series</value>
     <comment>Se obra seriada</comment>
+  </data>
+  <data name="FoundationDate" xml:space="preserve">
+    <value>Foundation date</value>
+    <comment>Data de fundação</comment>
   </data>
   <data name="FoundF" xml:space="preserve">
     <value>found</value>
@@ -1178,14 +1194,6 @@
   <data name="JobTitles" xml:space="preserve">
     <value>Job titles</value>
     <comment>Cargos</comment>
-  </data>
-  <data name="Juror" xml:space="preserve">
-    <value>Juror</value>
-    <comment>Jurado</comment>
-  </data>
-  <data name="Jurors" xml:space="preserve">
-    <value>Jurors</value>
-    <comment>Jurados</comment>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Language</value>
@@ -1671,6 +1679,10 @@
     <value>Pitching</value>
     <comment>Pitching</comment>
   </data>
+  <data name="PitchingParticipationObjective" xml:space="preserve">
+    <value>Pitching participation objective</value>
+    <comment>Objetivo de participação do Pitching</comment>
+  </data>
   <data name="Place" xml:space="preserve">
     <value>Place</value>
     <comment>Local</comment>
@@ -1842,9 +1854,17 @@
     <value>Product name</value>
     <comment>Nome do produto</comment>
   </data>
+  <data name="ProductOrService" xml:space="preserve">
+    <value>Product or Service</value>
+    <comment>Produto ou Serviço</comment>
+  </data>
   <data name="ProductOrServiceName" xml:space="preserve">
     <value>Product/Service name</value>
     <comment>Nome do produto/serviço</comment>
+  </data>
+  <data name="ProductsOrServices" xml:space="preserve">
+    <value>Products or Services</value>
+    <comment>Produtos ou Serviços</comment>
   </data>
   <data name="Profile" xml:space="preserve">
     <value>Profile</value>
@@ -2656,6 +2676,10 @@
   <data name="UrlCode" xml:space="preserve">
     <value>URL Code</value>
     <comment>Código da URL</comment>
+  </data>
+  <data name="UsedTechnologies" xml:space="preserve">
+    <value>Used Technologies</value>
+    <comment>Tecnologias Utilizadas</comment>
   </data>
   <data name="User" xml:space="preserve">
     <value>User</value>

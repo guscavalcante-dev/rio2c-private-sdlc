@@ -394,7 +394,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                .FindByEditionId(editionId, false)
                                .FindByKeywords(searchKeywords)
                                .FindByMusicGenreUid(musicGenreUid)
-                               //.FindByProjectEvaluationStatus(evaluationStatusUid)
                                .DynamicOrder<MusicProject>(
                                    sortColumns,
                                    null,
@@ -440,7 +439,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<MusicProjectDto>> FindAllMusicProjectDtosPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize)
+        public async Task<IPagedList<MusicProjectDto>> FindAllDtosPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize)
         {
             var musicProjectsDtos = await this.FindAllMusicProjectDtosAsync(editionId, searchKeywords, musicGenreUid);
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
@@ -497,7 +496,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="sortColumns">The sort columns.</param>
         /// <returns></returns>
-        public async Task<IPagedList<MusicProjectJsonDto>> FindAllJsonDtosPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize, List<Tuple<string, string>> sortColumns)
+        public async Task<IPagedList<MusicProjectJsonDto>> FindAllJsonDtosPagedAsync(
+            int editionId, 
+            string searchKeywords, 
+            Guid? musicGenreUid, 
+            Guid? evaluationStatusUid, 
+            int page, 
+            int pageSize, 
+            List<Tuple<string, string>> sortColumns)
         {
             var musicProjectJsonDtos = await this.FindAllJsonDtosAsync(editionId, searchKeywords, musicGenreUid, sortColumns);
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
@@ -827,36 +833,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         AttendeeMusicBand = mp.AttendeeMusicBand,
                                         MusicBand = mp.AttendeeMusicBand.MusicBand,
                                     }
-                                });
-
-            return await query
-                            .FirstOrDefaultAsync();
-        }
-
-        /// <summary>Finds the evaluation widget dto asynchronous.</summary>
-        /// <param name="musicProjectUid">The music project uid.</param>
-        /// <returns></returns>
-        public async Task<MusicProjectDto> FindEvaluationWidgetDtoAsync(Guid musicProjectUid)
-        {
-            var query = this.GetBaseQuery()
-                                .FindByUid(musicProjectUid)
-                                .Select(mp => new MusicProjectDto
-                                {
-                                    MusicProject = mp,
-                                    AttendeeMusicBandDto = new MusicBandDto()
-                                    {
-                                        AttendeeMusicBand = mp.AttendeeMusicBand,
-                                        MusicBand = mp.AttendeeMusicBand.MusicBand
-                                    }
-                                    //MusicProjectEvaluationDto = new MusicProjectEvaluationDto
-                                    //{
-                                    //    EvaluationCollaboratorUser = mp.EvaluationUser,
-                                    //    EvaluationCollaborator = mp.EvaluationUser.Collaborator,
-                                    //    ProjectEvaluationStatus = mp.ProjectEvaluationStatus,
-                                    //    ProjectEvaluationRefuseReason = mp.ProjectEvaluationRefuseReason,
-                                    //    Reason = mp.Reason,
-                                    //    EvaluationDate = mp.EvaluationDate
-                                    //}
                                 });
 
             return await query

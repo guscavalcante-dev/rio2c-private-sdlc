@@ -6,25 +6,24 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 07-17-2021
 // ***********************************************************************
-// <copyright file="AttendeeInnovationOrganizationTrackDto.cs" company="Softo">
+// <copyright file="AttendeeInnovationOrganizationObjectiveDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Entities;
 using System;
-using System.Linq;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
-    /// <summary>AttendeeInnovationOrganizationTrackDto</summary>
-    public class AttendeeInnovationOrganizationTrackDto
+    /// <summary>AttendeeInnovationOrganizationObjectiveDto</summary>
+    public class AttendeeInnovationOrganizationObjectiveDto
     {
-        public InnovationOrganizationTrackOption InnovationOrganizationTrackOption { get; set; }
-        public AttendeeInnovationOrganizationTrack AttendeeInnovationOrganizationTrack { get; set; }
+        public InnovationOrganizationObjectivesOption InnovationOrganizationObjectivesOption { get; set; }
+        public AttendeeInnovationOrganizationObjective AttendeeInnovationOrganizationObjective { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="AttendeeInnovationOrganizationTrackDto"/> class.</summary>
-        public AttendeeInnovationOrganizationTrackDto()
+        /// <summary>Initializes a new instance of the <see cref="AttendeeInnovationOrganizationObjectiveDto"/> class.</summary>
+        public AttendeeInnovationOrganizationObjectiveDto()
         {
         }
     }

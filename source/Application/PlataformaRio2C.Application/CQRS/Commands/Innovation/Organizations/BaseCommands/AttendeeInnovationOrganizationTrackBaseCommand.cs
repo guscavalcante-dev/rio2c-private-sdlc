@@ -37,11 +37,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="entity">The entity.</param>
         public AttendeeInnovationOrganizationTrackBaseCommand(AttendeeInnovationOrganizationTrackDto entity)
         {
-            this.InnovationOrganizationTrackOptionUid = entity.InnovationOrganizationTrackOptionUid;
-            this.InnovationOrganizationTrackOptionName = entity.InnovationOrganizationTrackOptionName;
-            this.InnovationOrganizationTrackOptionDescription = entity.InnovationOrganizationTrackOptionDescription;
-            this.InnovationOrganizationTrackOptionHasAdditionalInfo = entity.InnovationOrganizationTrackOptionHasAdditionalInfo;
-            this.AdditionalInfo = entity.AttendeeInnovationOrganizationTrackAdditionalInfo;
+            this.InnovationOrganizationTrackOptionUid = entity.InnovationOrganizationTrackOption.Uid;
+            this.InnovationOrganizationTrackOptionName = entity.InnovationOrganizationTrackOption.Name;
+            this.InnovationOrganizationTrackOptionDescription = entity.InnovationOrganizationTrackOption.Description;
+            this.InnovationOrganizationTrackOptionHasAdditionalInfo = entity.InnovationOrganizationTrackOption.HasAdditionalInfo;
+
+            this.AdditionalInfo = entity.AttendeeInnovationOrganizationTrack.AdditionalInfo;
             this.IsChecked = true;
         }
 
@@ -55,6 +56,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.InnovationOrganizationTrackOptionName = entity.InnovationOrganizationTrackOption.Name;
             this.InnovationOrganizationTrackOptionDescription = entity.InnovationOrganizationTrackOption.Description;
             this.InnovationOrganizationTrackOptionHasAdditionalInfo = entity.InnovationOrganizationTrackOption.HasAdditionalInfo;
+
             this.AdditionalInfo = "";
             this.IsChecked = true;
         }
@@ -69,6 +71,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.InnovationOrganizationTrackOptionName = innovationOrganizationTrackOption.Name;
             this.InnovationOrganizationTrackOptionDescription = innovationOrganizationTrackOption.Description;
             this.InnovationOrganizationTrackOptionHasAdditionalInfo = innovationOrganizationTrackOption.HasAdditionalInfo;
+
             this.IsChecked = false;
         }
 

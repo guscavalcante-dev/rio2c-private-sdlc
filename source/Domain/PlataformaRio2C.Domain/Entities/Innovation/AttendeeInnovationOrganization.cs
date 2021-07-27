@@ -53,6 +53,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeInnovationOrganizationObjective> AttendeeInnovationOrganizationObjectives { get; private set; }
         public virtual ICollection<AttendeeInnovationOrganizationTechnology> AttendeeInnovationOrganizationTechnologies { get; private set; }
         public virtual ICollection<AttendeeInnovationOrganizationTrack> AttendeeInnovationOrganizationTracks { get; private set; }
+        public virtual ICollection<AttendeeInnovationOrganizationEvaluation> AttendeeInnovationOrganizationEvaluations { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttendeeInnovationOrganization"/> class.
@@ -134,26 +135,17 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Deletes the specified user identifier.</summary>
         /// <param name="userId">The user identifier.</param>
-        public void Delete(int userId)
+        public new void Delete(int userId)
         {
             this.DeleteAttendeeInnovationOrganizationCollaborators(userId);
-            if (this.FindAllAttendeeInnovationOrganizationCollaboratorsNotDeleted()?.Any() == true)
-            {
-                return;
-            }
+            this.DeleteAttendeeInnovationOrganizationFounders(userId);
+            this.DeleteAttendeeInnovationOrganizationCompetitors(userId);
+            this.DeleteAttendeeInnovationOrganizationExperiences(userId);
+            this.DeleteAttendeeInnovationOrganizationObjectives(userId);
+            this.DeleteAttendeeInnovationOrganizationTechnologies(userId);
+            this.DeleteAttendeeInnovationOrganizationTracks(userId);
 
-            this.IsDeleted = true;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
-        }
-
-        /// <summary>Restores the specified user identifier.</summary>
-        /// <param name="userId">The user identifier.</param>
-        public void Restore(int userId)
-        {
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            base.Delete(userId);
         }
 
         /// <summary>
@@ -238,6 +230,28 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
         }
 
+        /// <summary>
+        /// Deletes the attendee innovation organization founders.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteAttendeeInnovationOrganizationFounders(int userId)
+        {
+            foreach (var attendeeInnovationOrganizationCollaborator in this.FindAllAttendeeInnovationOrganizationFoundersNotDeleted())
+            {
+                attendeeInnovationOrganizationCollaborator.Delete(userId);
+            }
+        }
+
+        /// <summary>
+        /// Finds all attendee innovation organization founders not deleted.
+        /// </summary>
+        /// <returns></returns>
+        private List<AttendeeInnovationOrganizationFounder> FindAllAttendeeInnovationOrganizationFoundersNotDeleted()
+        {
+            return this.AttendeeInnovationOrganizationFounders?.Where(aoc => !aoc.IsDeleted)?.ToList();
+        }
+
+
         #endregion
 
         #region Attendee Innovation Organization Competitor
@@ -258,6 +272,27 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
+        }
+
+        /// <summary>
+        /// Deletes the attendee innovation organization competitors.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteAttendeeInnovationOrganizationCompetitors(int userId)
+        {
+            foreach (var attendeeInnovationOrganizationCompetitor in this.FindAllAttendeeInnovationOrganizationCompetitorsNotDeleted())
+            {
+                attendeeInnovationOrganizationCompetitor.Delete(userId);
+            }
+        }
+
+        /// <summary>
+        /// Finds all attendee innovation organization competitors not deleted.
+        /// </summary>
+        /// <returns></returns>
+        private List<AttendeeInnovationOrganizationCompetitor> FindAllAttendeeInnovationOrganizationCompetitorsNotDeleted()
+        {
+            return this.AttendeeInnovationOrganizationCompetitors?.Where(aoc => !aoc.IsDeleted)?.ToList();
         }
 
         #endregion
@@ -290,6 +325,27 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
         }
 
+        /// <summary>
+        /// Deletes the attendee innovation organization experiences.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteAttendeeInnovationOrganizationExperiences(int userId)
+        {
+            foreach (var attendeeInnovationOrganizationExperience in this.FindAllAttendeeInnovationOrganizationExperiencesNotDeleted())
+            {
+                attendeeInnovationOrganizationExperience.Delete(userId);
+            }
+        }
+
+        /// <summary>
+        /// Finds all attendee innovation organization experiences not deleted.
+        /// </summary>
+        /// <returns></returns>
+        private List<AttendeeInnovationOrganizationExperience> FindAllAttendeeInnovationOrganizationExperiencesNotDeleted()
+        {
+            return this.AttendeeInnovationOrganizationExperiences?.Where(aoc => !aoc.IsDeleted)?.ToList();
+        }
+
         #endregion
 
         #region Attendee Innovation Organization Objective
@@ -318,6 +374,27 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
+        }
+
+        /// <summary>
+        /// Deletes the attendee innovation organization objectives.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteAttendeeInnovationOrganizationObjectives(int userId)
+        {
+            foreach (var attendeeInnovationOrganizationObjective in this.FindAllAttendeeInnovationOrganizationObjectivesNotDeleted())
+            {
+                attendeeInnovationOrganizationObjective.Delete(userId);
+            }
+        }
+
+        /// <summary>
+        /// Finds all attendee innovation organization objectives not deleted.
+        /// </summary>
+        /// <returns></returns>
+        private List<AttendeeInnovationOrganizationObjective> FindAllAttendeeInnovationOrganizationObjectivesNotDeleted()
+        {
+            return this.AttendeeInnovationOrganizationObjectives?.Where(aoc => !aoc.IsDeleted)?.ToList();
         }
 
         #endregion
@@ -350,6 +427,27 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
         }
 
+        /// <summary>
+        /// Deletes the attendee innovation organization technologies.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteAttendeeInnovationOrganizationTechnologies(int userId)
+        {
+            foreach (var attendeeInnovationOrganizationTechnology in this.FindAllAttendeeInnovationOrganizationTechnologiesNotDeleted())
+            {
+                attendeeInnovationOrganizationTechnology.Delete(userId);
+            }
+        }
+
+        /// <summary>
+        /// Finds all attendee innovation organization technologies not deleted.
+        /// </summary>
+        /// <returns></returns>
+        private List<AttendeeInnovationOrganizationTechnology> FindAllAttendeeInnovationOrganizationTechnologiesNotDeleted()
+        {
+            return this.AttendeeInnovationOrganizationTechnologies?.Where(aoc => !aoc.IsDeleted)?.ToList();
+        }
+
         #endregion
 
         #region Attendee Innovation Organization Track
@@ -378,6 +476,27 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
+        }
+
+        /// <summary>
+        /// Deletes the attendee innovation organization tracks.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteAttendeeInnovationOrganizationTracks(int userId)
+        {
+            foreach (var attendeeInnovationOrganizationTrack in this.FindAllAttendeeInnovationOrganizationTracksNotDeleted())
+            {
+                attendeeInnovationOrganizationTrack.Delete(userId);
+            }
+        }
+
+        /// <summary>
+        /// Finds all attendee innovation organization tracks not deleted.
+        /// </summary>
+        /// <returns></returns>
+        private List<AttendeeInnovationOrganizationTrack> FindAllAttendeeInnovationOrganizationTracksNotDeleted()
+        {
+            return this.AttendeeInnovationOrganizationTracks?.Where(aoc => !aoc.IsDeleted)?.ToList();
         }
 
         #endregion

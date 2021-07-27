@@ -1,23 +1,23 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Domain.Entities;
 @using System.Globalization
-@model AttendeeCollaboratorTracksWidgetDto
+@model AttendeeInnovationOrganizationDto
 @{
     var trackOptions = ViewBag.InnovationOrganizationTrackOptions as List<InnovationOrganizationTrackOption>;
 }
 <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
         <h3 class="kt-portlet__head-title">
-            @Labels.Tracks
+            @Labels.ProductsOrServices
         </h3>
     </div>
-    <div class="kt-portlet__head-toolbar">
+    @*<div class="kt-portlet__head-toolbar">
         <div class="kt-portlet__head-actions">
-            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="InnovationCommissionsTracksWidget.showUpdateModal();">
+            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="InnovationProjectsTracksWidget.showUpdateModal();">
                 <i class="flaticon2-edit"></i>
             </button>
         </div>
-    </div>
+    </div>*@
 </div>
 <div class="kt-portlet__body">
     @if (trackOptions?.Any() == true)
@@ -25,9 +25,9 @@
         <div class="kt-widget4">
             @foreach (var trackOption in trackOptions.OrderBy(a => a.DisplayOrder))
             {
-                var attendeeCollaboratorInnovationOrganizationTrackDto = Model.GetAttendeeCollaboratorInnovationOrganizationTrackDtoByTrackOptionUid(trackOption.Uid);
+                var attendeeInnovationOrganizationTrackDto = Model.GetAttendeeInnovationOrganizationTrackByTrackOptionUid(trackOption.Uid);
                 <div class="kt-widget4__item pt-2 pb-2">
-                    @if (attendeeCollaboratorInnovationOrganizationTrackDto != null)
+                    @if (attendeeInnovationOrganizationTrackDto != null)
                     {
                         <div class="kt-widget4__pic kt-font-success">
                             <i class="la la-check"></i>

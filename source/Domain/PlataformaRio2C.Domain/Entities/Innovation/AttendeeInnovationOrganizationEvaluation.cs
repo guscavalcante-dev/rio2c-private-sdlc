@@ -27,33 +27,31 @@ namespace PlataformaRio2C.Domain.Entities
     /// <seealso cref="PlataformaRio2C.Domain.Entities.Entity" />
     public class AttendeeInnovationOrganizationEvaluation : Entity
     {
-        public int EditionId { get; set; }
-        public int InnovationOrganizationId { get; set; }
-        public DateTimeOffset? EvaluationEmailSendDate { get; set; }
+        public int AttendeeInnovationOrganizationId { get; set; }
+        public int EvaluatorUserId { get; set; }
         public decimal? Grade { get; set; }
-        public int EvaluationsCount { get; set; }
-        public DateTimeOffset? LastEvaluationDate { get; set; }
 
-        public virtual Edition Edition { get; private set; }
-        public virtual InnovationOrganization InnovationOrganization { get; private set; }
+        public virtual AttendeeInnovationOrganization AttendeeInnovationOrganization { get; private set; }
+        public virtual User EvaluatorUser { get; private set; }
 
-        public virtual ICollection<AttendeeInnovationOrganizationCollaborator> AttendeeInnovationOrganizationCollaborators { get; private set; }
-
-        /// <summary>Initializes a new instance of the <see cref="AttendeeInnovationOrganization"/> class.</summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="innovationOrganization">The music band.</param>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttendeeInnovationOrganizationEvaluation"/> class.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganization">The attendee innovation organization.</param>
+        /// <param name="evaluatorUser">The evaluator user.</param>
+        /// <param name="grade">The grade.</param>
         /// <param name="userId">The user identifier.</param>
         public AttendeeInnovationOrganizationEvaluation(
-            Edition edition,
-            InnovationOrganization innovationOrganization,
+            AttendeeInnovationOrganization attendeeInnovationOrganization,
+            User evaluatorUser,
+            decimal grade,
             int userId)
         {
-            this.Edition = edition;
-            this.InnovationOrganization = innovationOrganization;
+            this.AttendeeInnovationOrganization = attendeeInnovationOrganization;
+            this.EvaluatorUser = evaluatorUser;
+            this.Grade = grade;
 
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
+            base.SetCreateDate(userId);
         }
 
         /// <summary>
@@ -63,55 +61,6 @@ namespace PlataformaRio2C.Domain.Entities
         {
 
         }
-
-        /// <summary>Deletes the specified user identifier.</summary>
-        /// <param name="userId">The user identifier.</param>
-        public void Delete(int userId)
-        {
-            this.DeleteAttendeeInnovationOrganizationCollaborators(userId);
-            if (this.FindAllAttendeeInnovationOrganizationCollaboratorsNotDeleted()?.Any() == true)
-            {
-                return;
-            }
-
-            this.IsDeleted = true;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
-        }
-
-        /// <summary>Restores the specified user identifier.</summary>
-        /// <param name="userId">The user identifier.</param>
-        public void Restore(int userId)
-        {
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
-        }
-
-        #region Attendee Innovation Organization Collaborators
-
-        /// <summary>
-        /// Deletes the attendee innovation organization collaborators.
-        /// </summary>
-        /// <param name="userId">The user identifier.</param>
-        private void DeleteAttendeeInnovationOrganizationCollaborators(int userId)
-        {
-            foreach (var attendeeInnovationOrganizationCollaborator in this.FindAllAttendeeInnovationOrganizationCollaboratorsNotDeleted())
-            {
-                attendeeInnovationOrganizationCollaborator.Delete(userId);
-            }
-        }
-
-        /// <summary>
-        /// Finds all attendee innovation organization collaborators not deleted.
-        /// </summary>
-        /// <returns>List&lt;AttendeeInnovationOrganizationCollaborator&gt;.</returns>
-        private List<AttendeeInnovationOrganizationCollaborator> FindAllAttendeeInnovationOrganizationCollaboratorsNotDeleted()
-        {
-            return this.AttendeeInnovationOrganizationCollaborators?.Where(aoc => !aoc.IsDeleted)?.ToList();
-        }
-
-        #endregion
 
         #region Valitations
 

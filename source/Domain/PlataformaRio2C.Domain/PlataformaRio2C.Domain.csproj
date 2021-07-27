@@ -200,9 +200,16 @@
     <Compile Include="Dtos\Innovation\API\WorkDedicationApiDto.cs" />
     <Compile Include="Dtos\Innovation\API\InnovationOrganizationApiDto.cs" />
     <Compile Include="Dtos\Innovation\AttendeeCollaboratorInnovationOrganizationTrackDto.cs" />
-    <Compile Include="Dtos\Innovation\InnovationCollaboratorDto.cs" />
+    <Compile Include="Dtos\Innovation\AttendeeInnovationOrganizationEvaluationDto.cs" />
+    <Compile Include="Dtos\Innovation\AttendeeInnovationOrganizationFounderDto.cs" />
+    <Compile Include="Dtos\Innovation\AttendeeInnovationOrganizationCompetitorDto.cs" />
+    <Compile Include="Dtos\Innovation\AttendeeInnovationOrganizationTechnologyDto.cs" />
+    <Compile Include="Dtos\Innovation\AttendeeInnovationOrganizationExperienceDto.cs" />
+    <Compile Include="Dtos\Innovation\AttendeeInnovationOrganizationObjectiveDto.cs" />
+    <Compile Include="Dtos\Innovation\AttendeeInnovationOrganizationCollaboratorDto.cs" />
     <Compile Include="Dtos\Innovation\AttendeeInnovationOrganizationTrackDto.cs" />
     <Compile Include="Dtos\Innovation\AttendeeInnovationOrganizationJsonDto.cs" />
+    <Compile Include="Dtos\Innovation\AttendeeInnovationOrganizationDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticAccommodationDto.cs" />
     <Compile Include="Dtos\Logistics\AttendeePlaceDropdownDto.cs" />
     <Compile Include="Dtos\Logistics\LogisticDto.cs" />

@@ -15,11 +15,11 @@
 var InnovationProjectsDelete = function () {
 
     // Delete -------------------------------------------------------------------------------------
-    var executeDelete = function (innovationProjectUid) {
+    var executeDelete = function (attendeeInnovationOrganizationUid) {
         MyRio2cCommon.block();
 
         var jsonParameters = new Object();
-        jsonParameters.innovationProjectUid = innovationProjectUid;
+        jsonParameters.attendeeInnovationOrganizationUid = attendeeInnovationOrganizationUid;
 
         $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Projects/Delete'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -50,7 +50,7 @@ var InnovationProjectsDelete = function () {
         });
     };
 
-    var showModal = function (innovationProjectUid) {
+    var showModal = function (attendeeInnovationOrganizationUid) {
         var message = labels.deleteConfirmationMessage;
 
         bootbox.dialog({
@@ -66,7 +66,7 @@ var InnovationProjectsDelete = function () {
                     label: labels.remove,
                     className: "btn btn-danger",
                     callback: function () {
-                        executeDelete(innovationProjectUid);
+                        executeDelete(attendeeInnovationOrganizationUid);
                     }
                 }
             }
@@ -74,8 +74,8 @@ var InnovationProjectsDelete = function () {
     };
 
     return {
-        showModal: function (innovationProjectUid) {
-            showModal(innovationProjectUid);
+        showModal: function (attendeeInnovationOrganizationUid) {
+            showModal(attendeeInnovationOrganizationUid);
         }
     };
 }();

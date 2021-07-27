@@ -6,7 +6,7 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 06-28-2021
 // ***********************************************************************
-// <copyright file="InnovationOrganizationBaseCommandHandler.cs" company="">
+// <copyright file="AttendeeInnovationOrganizationBaseCommandHandler.cs" company="">
 //     Copyright ©  2017
 // </copyright>
 // <summary></summary>
@@ -23,42 +23,42 @@ using System.Threading.Tasks;
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
     /// <summary>
-    /// Class InnovationOrganizationBaseCommandHandler.
+    /// Class AttendeeInnovationOrganizationBaseCommandHandler.
     /// Implements the <see cref="PlataformaRio2C.Application.CQRS.CommandsHandlers.BaseCommandHandler" />
     /// </summary>
     /// <seealso cref="PlataformaRio2C.Application.CQRS.CommandsHandlers.BaseCommandHandler" />
-    public class InnovationOrganizationBaseCommandHandler : BaseCommandHandler
+    public class AttendeeInnovationOrganizationBaseCommandHandler : BaseCommandHandler
     {
-        protected readonly IInnovationOrganizationRepository InnovationOrganizationRepo;
+        protected readonly IAttendeeInnovationOrganizationRepository AttendeeInnovationOrganizationRepo;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InnovationOrganizationBaseCommandHandler"/> class.
+        /// Initializes a new instance of the <see cref="AttendeeInnovationOrganizationBaseCommandHandler"/> class.
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="uow">The uow.</param>
-        /// <param name="innovationOrganizationRepo">The innovation organization repo.</param>
-        public InnovationOrganizationBaseCommandHandler(
+        /// <param name="AttendeeInnovationOrganizationRepo">The innovation organization repo.</param>
+        public AttendeeInnovationOrganizationBaseCommandHandler(
             IMediator commandBus, 
             IUnitOfWork uow,
-            IInnovationOrganizationRepository innovationOrganizationRepository)
+            IAttendeeInnovationOrganizationRepository AttendeeInnovationOrganizationRepository)
             : base(commandBus, uow)
         {
-            this.InnovationOrganizationRepo = innovationOrganizationRepository;
+            this.AttendeeInnovationOrganizationRepo = AttendeeInnovationOrganizationRepository;
         }
 
         /// <summary>Gets the music project by uid.</summary>
-        /// <param name="innovationOrganization">The project uid.</param>
+        /// <param name="attendeeInnovationOrganizationUid">The project uid.</param>
         /// <returns></returns>
-        public async Task<InnovationOrganization> GetInnovationOrganizationByUid(Guid innovationOrganization)
+        public async Task<AttendeeInnovationOrganization> GetAttendeeInnovationOrganizationByUid(Guid attendeeInnovationOrganizationUid)
         {
-            var InnovationOrganization = await this.InnovationOrganizationRepo.GetAsync(innovationOrganization);
-            if (InnovationOrganization == null || InnovationOrganization.IsDeleted)
+            var attendeeInnovationOrganization = await this.AttendeeInnovationOrganizationRepo.GetAsync(attendeeInnovationOrganizationUid);
+            if (attendeeInnovationOrganization == null || attendeeInnovationOrganization.IsDeleted)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Startup, Labels.FoundM), new string[] { "ToastrError" }));
                 return null;
             }
 
-            return InnovationOrganization;
+            return attendeeInnovationOrganization;
         }
     }
 }

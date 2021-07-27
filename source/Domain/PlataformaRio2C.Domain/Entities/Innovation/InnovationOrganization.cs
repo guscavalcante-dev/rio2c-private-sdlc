@@ -50,6 +50,7 @@ namespace PlataformaRio2C.Domain.Entities
         public string Name { get; private set; }
         public string Document { get; private set; }
         public string ServiceName { get; private set; }
+        //public string ImageUrl { get; private set; }
         public DateTime FoundationDate { get; private set; }
         public string Description { get; private set; }
         public string Website { get; private set; }
@@ -287,6 +288,33 @@ namespace PlataformaRio2C.Domain.Entities
                 userId);
         }
 
+        /// <summary>Determines whether this instance has image.</summary>
+        /// <returns>
+        ///   <c>true</c> if this instance has image; otherwise, <c>false</c>.</returns>
+        public bool HasImage()
+        {
+            //TODO: Implements ImageUrl in database!
+            //return !string.IsNullOrEmpty(this.ImageUrl);
+            return false;
+        }
+
+        /// <summary>Gets the name abbreviation.</summary>
+        /// <returns></returns>
+        public string GetNameAbbreviation()
+        {
+            return this.Name?.GetTwoLetterCode();
+        }
+
+        /// <summary>
+        /// Deletes the specified user identifier.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        public new void Delete(int userId)
+        {
+            this.DeleteAttendeeInnovationOrganizations(userId);
+            base.Delete(userId);
+        }
+
         #region Attendee Innovation Organization
 
         /// <summary>
@@ -358,6 +386,25 @@ namespace PlataformaRio2C.Domain.Entities
         public AttendeeInnovationOrganization GetAttendeeInnovationOrganizationByEditionId(int editionId)
         {
             return this.AttendeeInnovationOrganizations?.FirstOrDefault(aio => aio.Edition.Id == editionId);
+        }
+
+        /// <summary>
+        /// Deletes the attendee innovation organizations.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        private void DeleteAttendeeInnovationOrganizations(int userId)
+        {
+            if(this.AttendeeInnovationOrganizations == null)
+            {
+                return;
+            }
+
+            var attendeeInnovationOrganizationsToDelete = this.AttendeeInnovationOrganizations.Where(aio => !aio.IsDeleted).ToList();
+            foreach (var attendeeInnovationOrganization in attendeeInnovationOrganizationsToDelete)
+            {
+                attendeeInnovationOrganization.Delete(userId);
+            }
         }
 
         #endregion

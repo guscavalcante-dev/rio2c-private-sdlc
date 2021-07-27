@@ -143,6 +143,10 @@
     <value>Credenciamento</value>
     <comment>Credenciamento</comment>
   </data>
+  <data name="AccumulatedRevenueForLast3Months" xml:space="preserve">
+    <value>Receita acumulada nos últimos 3 meses</value>
+    <comment>Receita acumulada nos últimos 3 meses</comment>
+  </data>
   <data name="Actions" xml:space="preserve">
     <value>Ações</value>
     <comment>Ações</comment>
@@ -910,6 +914,14 @@
     <value>Experiência</value>
     <comment>Experiência</comment>
   </data>
+  <data name="Experiences" xml:space="preserve">
+    <value>Experiências</value>
+    <comment>Experiências</comment>
+  </data>
+  <data name="ExperiencesThatCompanyHasParticipatedIn" xml:space="preserve">
+    <value>Experiências que a empresa já participou</value>
+    <comment>Experiências que a empresa já participou</comment>
+  </data>
   <data name="Export" xml:space="preserve">
     <value>Exportar</value>
     <comment>Exportar</comment>
@@ -948,6 +960,10 @@
   <data name="ForSeries" xml:space="preserve">
     <value>Se obra seriada</value>
     <comment>Se obra seriada</comment>
+  </data>
+  <data name="FoundationDate" xml:space="preserve">
+    <value>Data de fundação</value>
+    <comment>Data de fundação</comment>
   </data>
   <data name="FoundF" xml:space="preserve">
     <value>encontrada</value>
@@ -1176,14 +1192,6 @@
   <data name="JobTitles" xml:space="preserve">
     <value>Cargos</value>
     <comment>Cargos</comment>
-  </data>
-  <data name="Juror" xml:space="preserve">
-    <value>Juror</value>
-    <comment>Jurado</comment>
-  </data>
-  <data name="Jurors" xml:space="preserve">
-    <value>Jurors</value>
-    <comment>Jurados</comment>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Idioma</value>
@@ -1672,6 +1680,10 @@
     <value>Pitching</value>
     <comment>Pitching</comment>
   </data>
+  <data name="PitchingParticipationObjective" xml:space="preserve">
+    <value>Objetivo em participar do Pitching</value>
+    <comment>Objetivo em participar do Pitching</comment>
+  </data>
   <data name="Place" xml:space="preserve">
     <value>Local</value>
     <comment>Local</comment>
@@ -1843,9 +1855,17 @@
     <value>Nome do produto</value>
     <comment>Nome do produto</comment>
   </data>
+  <data name="ProductOrService" xml:space="preserve">
+    <value>Produto ou Serviço</value>
+    <comment>Produto ou Serviço</comment>
+  </data>
   <data name="ProductOrServiceName" xml:space="preserve">
     <value>Nome do produto/serviço</value>
     <comment>Nome do produto/serviço</comment>
+  </data>
+  <data name="ProductsOrServices" xml:space="preserve">
+    <value>Produtos ou Serviços</value>
+    <comment>Produtos ou Serviços</comment>
   </data>
   <data name="Profile" xml:space="preserve">
     <value>Perfil</value>
@@ -2660,6 +2680,10 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="UrlCode" xml:space="preserve">
     <value>Código da URL</value>
     <comment>Código da URL</comment>
+  </data>
+  <data name="UsedTechnologies" xml:space="preserve">
+    <value>Tecnologias Utilizadas</value>
+    <comment>Tecnologias Utilizadas</comment>
   </data>
   <data name="User" xml:space="preserve">
     <value>Usuário</value>

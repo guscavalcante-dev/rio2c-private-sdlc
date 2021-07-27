@@ -23,7 +23,7 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IMusicProjectRepository</summary>
     public interface IMusicProjectRepository : IRepository<MusicProject>
     {
-        Task<IPagedList<MusicProjectDto>> FindAllMusicProjectDtosPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize);
+        Task<IPagedList<MusicProjectDto>> FindAllDtosPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize);
         Task<IPagedList<MusicProjectJsonDto>> FindAllJsonDtosPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize, List<Tuple<string, string>> sortColumns);
         Task<MusicProjectDto> FindDtoToEvaluateAsync(Guid musicProjectUid);
         Task<MusicProjectDto> FindDtoToEvaluateAsync(int musicProjectId);
@@ -35,7 +35,6 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<MusicProjectDto> FindClippingWidgetDtoAsync(Guid musicProjectUid);
         Task<MusicProjectDto> FindVideoAndMusicWidgetDtoAsync(Guid musicProjectUid);
         Task<MusicProjectDto> FindSocialNetworksWidgetDtoAsync(Guid musicProjectUid);
-        Task<MusicProjectDto> FindEvaluationWidgetDtoAsync(Guid musicProjectUid);
         Task<MusicProjectDto> FindEvaluationGradeWidgetDtoAsync(Guid musicProjectUid, int userId);
         Task<MusicProjectDto> FindEvaluatorsWidgetDtoAsync(Guid musicProjectUid);
         Task<List<MusicProjectDto>> FindAllApprovedAttendeeMusicBandsAsync(int editionId);

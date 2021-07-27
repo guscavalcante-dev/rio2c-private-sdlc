@@ -144,7 +144,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
 
-            var projects = await this.musicProjectRepo.FindAllMusicProjectDtosPagedAsync(
+            var projects = await this.musicProjectRepo.FindAllDtosPagedAsync(
                 this.EditionDto.Id,
                 searchKeywords,
                 musicGenreUid,

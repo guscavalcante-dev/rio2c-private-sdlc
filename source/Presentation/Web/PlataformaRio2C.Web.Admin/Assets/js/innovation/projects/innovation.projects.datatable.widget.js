@@ -251,14 +251,14 @@ var InnovationProjectsDataTableWidget = function () {
     };
 
     // Details ------------------------------------------------------------------------------------
-    var showDetails = function (innovationProjectUid, searchKeywords, innovationGenreUid, evaluationStatusUid, page, pageSize) {
-	    if (MyRio2cCommon.isNullOrEmpty(innovationProjectUid)) {
+    var showDetails = function (attendeeInnovationOrganizationId, searchKeywords, innovationOrganizationTrackUid, evaluationStatusUid, page, pageSize) {
+        if (MyRio2cCommon.isNullOrEmpty(attendeeInnovationOrganizationId)) {
 		    return;
 	    }
 
-        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Projects/EvaluationDetails/' + innovationProjectUid
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Projects/EvaluationDetails/' + attendeeInnovationOrganizationId
             + '?searchKeywords=' + searchKeywords
-            + '&innovationGenreUid=' + innovationGenreUid
+            + '&innovationOrganizationTrackUid=' + innovationOrganizationTrackUid
             + '&evaluationStatusUid=' + evaluationStatusUid
             + '&page=' + page
             + '&pageSize=' + pageSize
@@ -268,6 +268,8 @@ var InnovationProjectsDataTableWidget = function () {
     // Export -------------------------------------------------------------------------------------
     var exportExcel = function (url) {
         var jsonParameters = new Object();
+
+
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition(url), jsonParameters, function (resp) {
 
             var hiddenElement = document.createElement('a');
@@ -290,8 +292,8 @@ var InnovationProjectsDataTableWidget = function () {
         refreshData: function () {
             refreshData();
         },
-        showDetails: function (innovationProjectUid, searchKeywords, innovationGenreUid, evaluationStatusUid, page, pageSize) {
-            showDetails(innovationProjectUid, searchKeywords, innovationGenreUid, evaluationStatusUid, page, pageSize);
+        showDetails: function (attendeeInnovationOrganizationId, searchKeywords, innovationOrganizationTrackUid, evaluationStatusUid, page, pageSize) {
+            showDetails(attendeeInnovationOrganizationId, searchKeywords, innovationOrganizationTrackUid, evaluationStatusUid, page, pageSize);
         },
         exportExcelReportByProject: function () {
             exportExcel('/Innovation/Projects/ExportEvaluationListWidget');

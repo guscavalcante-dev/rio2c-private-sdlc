@@ -43,7 +43,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             if (attendeeInnovationOrganizationsIds?.Any(i => i.HasValue) == true)
             {
-                query = query.Where(ao => attendeeInnovationOrganizationsIds.Contains(ao.Id));
+                query = query.Where(aio => attendeeInnovationOrganizationsIds.Contains(aio.Id));
             }
 
             return query;
@@ -84,7 +84,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             document = document.RemoveNonNumeric();
 
-            query = query.Where(aio => aio.InnovationOrganization.Document == document 
+            query = query.Where(aio => aio.InnovationOrganization.Document == document
                                         && aio.EditionId == editionId);
 
             return query;
@@ -144,7 +144,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             if (innovationOrganizationTrackOptionUids?.Any(i => i.HasValue) == true)
             {
                 query = query.Where(aio => innovationOrganizationTrackOptionUids.Any(iotUid =>
-                                                    aio.AttendeeInnovationOrganizationTracks.Any(aiot => 
+                                                    aio.AttendeeInnovationOrganizationTracks.Any(aiot =>
                                                         !aiot.IsDeleted &&
                                                         !aiot.InnovationOrganizationTrackOption.IsDeleted &&
                                                          aiot.InnovationOrganizationTrackOption.Uid == iotUid)));
@@ -173,6 +173,45 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static IQueryable<AttendeeInnovationOrganization> Order(this IQueryable<AttendeeInnovationOrganization> query)
         {
             query = query.OrderBy(mp => mp.CreateDate);
+
+            return query;
+        }
+    }
+
+    #endregion
+
+    #region AttendeeInnovationOrganizationDto IQueryable Extensions
+
+    /// <summary>
+    /// AttendeeInnovationOrganizationDtoIQueryableExtensions
+    /// </summary>
+    internal static class AttendeeInnovationOrganizationDtoIQueryableExtensions
+    {
+        /// <summary>
+        /// To the list paged.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        internal static async Task<IPagedList<AttendeeInnovationOrganizationDto>> ToListPagedAsync(this IQueryable<AttendeeInnovationOrganizationDto> query, int page, int pageSize)
+        {
+            // Page the list
+            var pagedList = await query.ToPagedListAsync(page, pageSize);
+            if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
+                pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
+
+            return pagedList;
+        }
+
+        /// <summary>
+        /// Orders the specified query.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeInnovationOrganizationDto> Order(this IQueryable<AttendeeInnovationOrganizationDto> query)
+        {
+            query = query.OrderBy(aioDto => aioDto.AttendeeInnovationOrganization.CreateDate);
 
             return query;
         }
@@ -211,13 +250,83 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
-
+        /// <summary>
+        /// Finds all attendee innovation organizations asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="innovationOrganizationTrackOptionUid">The innovation organization track option uid.</param>
+        /// <returns></returns>
         private async Task<List<AttendeeInnovationOrganization>> FindAllAttendeeInnovationOrganizationsAsync(int editionId, string searchKeywords, Guid? innovationOrganizationTrackOptionUid)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId)
                                 .FindByKeywords(searchKeywords)
                                 .FindByInnovationOrganizationTrackOptionUids(new List<Guid?> { innovationOrganizationTrackOptionUid });
+
+            return await query
+                            .Order()
+                            .ToListAsync();
+        }
+
+        /// <summary>
+        /// Finds all attendee innovation organization dtos asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="innovationOrganizationTrackOptionUid">The innovation organization track option uid.</param>
+        /// <returns></returns>
+        private async Task<List<AttendeeInnovationOrganizationDto>> FindAllAttendeeInnovationOrganizationDtosAsync(int editionId, string searchKeywords, Guid? innovationOrganizationTrackOptionUid)
+        {
+            var query = this.GetBaseQuery()
+                               .FindByEditionId(editionId)
+                               .FindByKeywords(searchKeywords)
+                               .FindByInnovationOrganizationTrackOptionUids(new List<Guid?> { innovationOrganizationTrackOptionUid })
+                               .Select(aio => new AttendeeInnovationOrganizationDto
+                               {
+                                   AttendeeInnovationOrganization = aio,
+                                   InnovationOrganization = aio.InnovationOrganization,
+                                   AttendeeInnovationOrganizationCollaboratorDtos = aio.AttendeeInnovationOrganizationCollaborators.Select(aioc =>
+                                                                                       new AttendeeInnovationOrganizationCollaboratorDto
+                                                                                       {
+                                                                                           AttendeeCollaborator = aioc.AttendeeCollaborator,
+                                                                                           Collaborator = aioc.AttendeeCollaborator.Collaborator
+                                                                                       }),
+                                   attendeeInnovationOrganizationCompetitorDtos = aio.AttendeeInnovationOrganizationCompetitors.Select(aioc =>
+                                                                                       new AttendeeInnovationOrganizationCompetitorDto
+                                                                                       {
+                                                                                           AttendeeInnovationOrganizationCompetitor = aioc
+                                                                                       }),
+                                   AttendeeInnovationOrganizationFounderDtos = aio.AttendeeInnovationOrganizationFounders.Select(aiof =>
+                                                                                       new AttendeeInnovationOrganizationFounderDto
+                                                                                       {
+                                                                                           AttendeeInnovationOrganizationFounder = aiof
+                                                                                       }),
+                                   AttendeeInnovationOrganizationExperienceDtos = aio.AttendeeInnovationOrganizationExperiences.Select(aioe =>
+                                                                                       new AttendeeInnovationOrganizationExperienceDto
+                                                                                       {
+                                                                                           AttendeeInnovationOrganizationExperience = aioe,
+                                                                                           InnovationOrganizationExperienceOption = aioe.InnovationOrganizationExperienceOption
+                                                                                       }),
+                                   AttendeeInnovationOrganizationObjectiveDtos = aio.AttendeeInnovationOrganizationObjectives.Select(aioo =>
+                                                                                       new AttendeeInnovationOrganizationObjectiveDto
+                                                                                       {
+                                                                                           AttendeeInnovationOrganizationObjective = aioo,
+                                                                                           InnovationOrganizationObjectivesOption = aioo.InnovationOrganizationObjectivesOption
+                                                                                       }),
+                                   AttendeeInnovationOrganizationTechnologyDtos = aio.AttendeeInnovationOrganizationTechnologies.Select(aiot =>
+                                                                                       new AttendeeInnovationOrganizationTechnologyDto
+                                                                                       {
+                                                                                           AttendeeInnovationOrganizationTechnology = aiot,
+                                                                                           InnovationOrganizationTechnologyOption = aiot.InnovationOrganizationTechnologyOption
+                                                                                       }),
+                                   AttendeeInnovationOrganizationTrackDtos = aio.AttendeeInnovationOrganizationTracks.Select(aiot =>
+                                                                                       new AttendeeInnovationOrganizationTrackDto
+                                                                                       {
+                                                                                           AttendeeInnovationOrganizationTrack = aiot,
+                                                                                           InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption
+                                                                                       })
+                               });
 
             return await query
                             .Order()
@@ -241,21 +350,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                .DynamicOrder<AttendeeInnovationOrganization>(
                                    sortColumns,
                                    null,
-                                   new List<string> { "CreateDate", "UpdateDate" }, 
+                                   new List<string> { "CreateDate", "UpdateDate" },
                                    "CreateDate")
                                .Select(aio => new AttendeeInnovationOrganizationJsonDto
                                {
                                    AttendeeInnovationOrganizationId = aio.Id,
                                    AttendeeInnovationOrganizationUid = aio.Uid,
-                                   
+
                                    InnovationOrganizationName = aio.InnovationOrganization.Name,
                                    InnovationOrganizationServiceName = aio.InnovationOrganization.ServiceName,
                                    //InnovationOrganizationImageUrl = aio.InnovationOrganization.ImageUrl,
                                    Grade = aio.Grade,
                                    EvaluationsCount = aio.EvaluationsCount,
                                    InnovationOrganizationTracksNames = aio.AttendeeInnovationOrganizationTracks
-                                                                            .Where(aiot => !aio.IsDeleted && 
-                                                                                            !aiot.IsDeleted && 
+                                                                            .Where(aiot => !aio.IsDeleted &&
+                                                                                            !aiot.IsDeleted &&
                                                                                             !aiot.InnovationOrganizationTrackOption.IsDeleted)
                                                                             .OrderBy(aiot => aiot.InnovationOrganizationTrackOption.DisplayOrder)
                                                                             .Select(aiot => aiot.InnovationOrganizationTrackOption.Name).ToList(),
@@ -271,70 +380,60 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         #endregion
 
         /// <summary>
-        /// find by identifier as an asynchronous operation.
+        /// Finds all music project dtos paged asynchronous.
         /// </summary>
-        /// <param name="AttendeeInnovationOrganizationIds">The innovation organization ids.</param>
-        /// <returns>Task&lt;List&lt;AttendeeInnovationOrganization&gt;&gt;.</returns>
-        public async Task<AttendeeInnovationOrganization> FindByIdAsync(int AttendeeInnovationOrganizationIds)
-        {
-            var query = this.GetBaseQuery()
-                            .FindByIds(new List<int?> { AttendeeInnovationOrganizationIds });
-
-            return await query.FirstOrDefaultAsync();
-        }
-
-        /// <summary>
-        /// Finds the by uid asynchronous.
-        /// </summary>
-        /// <param name="AttendeeInnovationOrganizationUid">The innovation organization uid.</param>
-        /// <returns>Task&lt;AttendeeInnovationOrganization&gt;.</returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public async Task<AttendeeInnovationOrganization> FindByUidAsync(Guid AttendeeInnovationOrganizationUid)
-        {
-            var query = this.GetBaseQuery()
-                            .FindByUids(new List<Guid?> { AttendeeInnovationOrganizationUid });
-
-            return await query.FirstOrDefaultAsync();
-        }
-
-        /// <summary>
-        /// find by ids as an asynchronous operation.
-        /// </summary>
-        /// <param name="AttendeeInnovationOrganizationIds">The innovation organization ids.</param>
-        /// <returns>Task&lt;List&lt;AttendeeInnovationOrganization&gt;&gt;.</returns>
-        public async Task<List<AttendeeInnovationOrganization>> FindAllByIdsAsync(List<int?> AttendeeInnovationOrganizationIds)
-        {
-            var query = this.GetBaseQuery()
-                            .FindByIds(AttendeeInnovationOrganizationIds);
-
-            return await query.ToListAsync();
-        }
-
-        /// <summary>
-        /// find by ids as an asynchronous operation.
-        /// </summary>
-        /// <param name="AttendeeInnovationOrganizationUids">The innovation organization ids.</param>
-        /// <returns>Task&lt;List&lt;AttendeeInnovationOrganization&gt;&gt;.</returns>
-        public async Task<List<AttendeeInnovationOrganization>> FindAllByUidsAsync(List<Guid?> AttendeeInnovationOrganizationUids)
-        {
-            var query = this.GetBaseQuery()
-                            .FindByUids(AttendeeInnovationOrganizationUids);
-
-            return await query.ToListAsync();
-        }
-
-        /// <summary>
-        /// find by document and edition identifier as an asynchronous operation.
-        /// </summary>
-        /// <param name="document">The document.</param>
         /// <param name="editionId">The edition identifier.</param>
-        /// <returns>Task&lt;AttendeeInnovationOrganization&gt;.</returns>
-        public async Task<AttendeeInnovationOrganization> FindByDocumentAndEditionIdAsync(string document, int editionId)
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="innovationOrganizationTrackOptionUid">The innovation organization track option uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<IPagedList<AttendeeInnovationOrganizationDto>> FindAllDtosPagedAsync(int editionId, string searchKeywords, Guid? innovationOrganizationTrackOptionUid, Guid? evaluationStatusUid, int page, int pageSize)
         {
-            var query = this.GetBaseQuery()
-                           .FindByDocument(document, editionId);
+            var attendeeInnovationOrganizationsDtos = await this.FindAllAttendeeInnovationOrganizationDtosAsync(editionId, searchKeywords, innovationOrganizationTrackOptionUid);
+            var editionDto = await this.editioRepo.FindDtoAsync(editionId);
+            var approvedAttendeeInnovationOrganizationsIds = await this.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(editionId);
 
-            return await query.FirstOrDefaultAsync();
+            IEnumerable<AttendeeInnovationOrganizationDto> attendeeInnovationOrganizationDtosResult = attendeeInnovationOrganizationsDtos;
+            if (editionDto.IsInnovationProjectEvaluationOpen())
+            {
+                #region Evaluation is Open
+
+                if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
+                {
+                    attendeeInnovationOrganizationDtosResult = new List<AttendeeInnovationOrganizationDto>(); //Returns a empty list
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
+                {
+                    attendeeInnovationOrganizationDtosResult = new List<AttendeeInnovationOrganizationDto>(); //Returns a empty list
+                }
+
+                #endregion
+            }
+            else
+            {
+                #region Evaluation is Closed
+
+                if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
+                {
+                    attendeeInnovationOrganizationDtosResult = attendeeInnovationOrganizationsDtos.Where(aioDto => approvedAttendeeInnovationOrganizationsIds.Contains(aioDto.AttendeeInnovationOrganization.Id));
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
+                {
+                    attendeeInnovationOrganizationDtosResult = attendeeInnovationOrganizationsDtos.Where(aioDto => !approvedAttendeeInnovationOrganizationsIds.Contains(aioDto.AttendeeInnovationOrganization.Id));
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
+                {
+                    attendeeInnovationOrganizationDtosResult = new List<AttendeeInnovationOrganizationDto>();
+                }
+
+                #endregion
+            }
+
+            return await attendeeInnovationOrganizationDtosResult
+                            .ToPagedListAsync(page, pageSize);
         }
 
         /// <summary>
@@ -348,7 +447,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="pageSize">Size of the page.</param>
         /// <param name="sortColumns">The sort columns.</param>
         /// <returns></returns>
-        public async Task<IPagedList<AttendeeInnovationOrganizationJsonDto>> FindAllJsonDtosPagedAsync(int editionId, string searchKeywords, Guid? innovationOrganizationTrackOptionUid, Guid? evaluationStatusUid, int page, int pageSize, List<Tuple<string, string>> sortColumns)
+        public async Task<IPagedList<AttendeeInnovationOrganizationJsonDto>> FindAllJsonDtosPagedAsync(
+            int editionId,
+            string searchKeywords,
+            Guid? innovationOrganizationTrackOptionUid,
+            Guid? evaluationStatusUid,
+            int page,
+            int pageSize,
+            List<Tuple<string, string>> sortColumns)
         {
             var attendeeInnovaitonOrganizationJsonDtos = await this.FindAllJsonDtosAsync(editionId, searchKeywords, innovationOrganizationTrackOptionUid, sortColumns);
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
@@ -395,6 +501,73 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
+        /// find by identifier as an asynchronous operation.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganizationIds">The innovation organization ids.</param>
+        /// <returns>Task&lt;List&lt;AttendeeInnovationOrganization&gt;&gt;.</returns>
+        public async Task<AttendeeInnovationOrganization> FindByIdAsync(int attendeeInnovationOrganizationIds)
+        {
+            var query = this.GetBaseQuery()
+                            .FindByIds(new List<int?> { attendeeInnovationOrganizationIds });
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the by uid asynchronous.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganizationUid">The innovation organization uid.</param>
+        /// <returns>Task&lt;AttendeeInnovationOrganization&gt;.</returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<AttendeeInnovationOrganization> FindByUidAsync(Guid attendeeInnovationOrganizationUid)
+        {
+            var query = this.GetBaseQuery()
+                            .FindByUids(new List<Guid?> { attendeeInnovationOrganizationUid });
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// find by ids as an asynchronous operation.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganizationIds">The innovation organization ids.</param>
+        /// <returns>Task&lt;List&lt;AttendeeInnovationOrganization&gt;&gt;.</returns>
+        public async Task<List<AttendeeInnovationOrganization>> FindAllByIdsAsync(List<int?> attendeeInnovationOrganizationIds)
+        {
+            var query = this.GetBaseQuery()
+                            .FindByIds(attendeeInnovationOrganizationIds);
+
+            return await query.ToListAsync();
+        }
+
+        /// <summary>
+        /// find by ids as an asynchronous operation.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganizationUids">The innovation organization ids.</param>
+        /// <returns>Task&lt;List&lt;AttendeeInnovationOrganization&gt;&gt;.</returns>
+        public async Task<List<AttendeeInnovationOrganization>> FindAllByUidsAsync(List<Guid?> attendeeInnovationOrganizationUids)
+        {
+            var query = this.GetBaseQuery()
+                            .FindByUids(attendeeInnovationOrganizationUids);
+
+            return await query.ToListAsync();
+        }
+
+        /// <summary>
+        /// find by document and edition identifier as an asynchronous operation.
+        /// </summary>
+        /// <param name="document">The document.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns>Task&lt;AttendeeInnovationOrganization&gt;.</returns>
+        public async Task<AttendeeInnovationOrganization> FindByDocumentAndEditionIdAsync(string document, int editionId)
+        {
+            var query = this.GetBaseQuery()
+                           .FindByDocument(document, editionId);
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+        /// <summary>
         /// Finds all approved attendee innovation organizations ids asynchronous.
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
@@ -412,6 +585,67 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Take(edition.InnovationProjectMaximumApprovedCompaniesCount)
                             .Select(aio => aio.Id)
                             .ToArrayAsync();
+        }
+
+        /// <summary>
+        /// Finds all innovation organizations ids paged asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="innovationOrganizationTrackOptionUid">The innovation organization track option uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<int[]> FindAllInnovationOrganizationsIdsPagedAsync(int editionId, string searchKeywords, Guid? innovationOrganizationTrackOptionUid, Guid? evaluationStatusUid, int page, int pageSize)
+        {
+            var attendeeInnovationOrganizations = await this.FindAllAttendeeInnovationOrganizationsAsync(editionId, searchKeywords, innovationOrganizationTrackOptionUid);
+            var editionDto = await this.editioRepo.FindDtoAsync(editionId);
+            var approvedAttendeeInnovationOrganizationsIds = await this.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(editionId);
+
+            IEnumerable<AttendeeInnovationOrganization> attendeeInnovationOrganizationResult = attendeeInnovationOrganizations;
+            if (editionDto.IsInnovationProjectEvaluationOpen())
+            {
+                #region Evaluation is Open
+
+                if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
+                {
+                    attendeeInnovationOrganizationResult = new List<AttendeeInnovationOrganization>(); //Returns a empty list
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
+                {
+                    attendeeInnovationOrganizationResult = new List<AttendeeInnovationOrganization>(); //Returns a empty list
+                }
+
+                #endregion
+            }
+            else
+            {
+                #region Evaluation is Closed
+
+                if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
+                {
+                    attendeeInnovationOrganizationResult = attendeeInnovationOrganizations.Where(aio => approvedAttendeeInnovationOrganizationsIds.Contains(aio.Id));
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
+                {
+                    attendeeInnovationOrganizationResult = attendeeInnovationOrganizations.Where(aio => !approvedAttendeeInnovationOrganizationsIds.Contains(aio.Id));
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
+                {
+                    attendeeInnovationOrganizationResult = new List<AttendeeInnovationOrganization>();
+                }
+
+                #endregion
+            }
+
+            var attendeeInnovationOrganizationsPagedList = await attendeeInnovationOrganizationResult
+                                                 .ToPagedListAsync(page, pageSize);
+
+            return attendeeInnovationOrganizationsPagedList
+                            .Select(aio => aio.Id)
+                            .OrderBy(aioId => aioId)
+                            .ToArray();
         }
 
         /// <summary>Counts the asynchronous.</summary>
@@ -444,7 +678,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var approvedAttendeeInnovationOrganizationsIds = await this.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(editionId);
 
             IEnumerable<AttendeeInnovationOrganization> attendeeInnovationOrganizationsResult = attendeeInnovationOrganizations;
-            if (editionDto.IsMusicProjectEvaluationOpen())
+            if (editionDto.IsInnovationProjectEvaluationOpen())
             {
                 #region Evaluation is Open
 
@@ -483,6 +717,329 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                  .ToPagedListAsync(page, pageSize);
 
             return attendeeInnovationOrganizationsPagedList.Count;
+        }
+
+        /// <summary>
+        /// Finds the dto to evaluate asynchronous.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganizationId">The attendee innovation organization identifier.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<AttendeeInnovationOrganizationDto> FindDtoToEvaluateAsync(int attendeeInnovationOrganizationId)
+        {
+            var query = this.GetBaseQuery()
+                               .FindByIds(new List<int?> { attendeeInnovationOrganizationId })
+                               .Select(aio => new AttendeeInnovationOrganizationDto
+                               {
+                                   AttendeeInnovationOrganization = aio,
+                                   InnovationOrganization = aio.InnovationOrganization,
+                                   AttendeeInnovationOrganizationCollaboratorDtos = aio.AttendeeInnovationOrganizationCollaborators.Select(aioc =>
+                                                                                       new AttendeeInnovationOrganizationCollaboratorDto
+                                                                                       {
+                                                                                           AttendeeCollaborator = aioc.AttendeeCollaborator,
+                                                                                           Collaborator = aioc.AttendeeCollaborator.Collaborator
+                                                                                       }),
+                                   attendeeInnovationOrganizationCompetitorDtos = aio.AttendeeInnovationOrganizationCompetitors.Select(aioc =>
+                                                                                       new AttendeeInnovationOrganizationCompetitorDto
+                                                                                       {
+                                                                                           AttendeeInnovationOrganizationCompetitor = aioc
+                                                                                       }),
+                                   AttendeeInnovationOrganizationFounderDtos = aio.AttendeeInnovationOrganizationFounders.Select(aiof =>
+                                                                                       new AttendeeInnovationOrganizationFounderDto
+                                                                                       {
+                                                                                           AttendeeInnovationOrganizationFounder = aiof
+                                                                                       }),
+                                   AttendeeInnovationOrganizationExperienceDtos = aio.AttendeeInnovationOrganizationExperiences.Select(aioe =>
+                                                                                       new AttendeeInnovationOrganizationExperienceDto
+                                                                                       {
+                                                                                           AttendeeInnovationOrganizationExperience = aioe,
+                                                                                           InnovationOrganizationExperienceOption = aioe.InnovationOrganizationExperienceOption
+                                                                                       }),
+                                   AttendeeInnovationOrganizationObjectiveDtos = aio.AttendeeInnovationOrganizationObjectives.Select(aioo =>
+                                                                                       new AttendeeInnovationOrganizationObjectiveDto
+                                                                                       {
+                                                                                           AttendeeInnovationOrganizationObjective = aioo,
+                                                                                           InnovationOrganizationObjectivesOption = aioo.InnovationOrganizationObjectivesOption
+                                                                                       }),
+                                   AttendeeInnovationOrganizationTechnologyDtos = aio.AttendeeInnovationOrganizationTechnologies.Select(aiot =>
+                                                                                       new AttendeeInnovationOrganizationTechnologyDto
+                                                                                       {
+                                                                                           AttendeeInnovationOrganizationTechnology = aiot,
+                                                                                           InnovationOrganizationTechnologyOption = aiot.InnovationOrganizationTechnologyOption
+                                                                                       }),
+                                   AttendeeInnovationOrganizationTrackDtos = aio.AttendeeInnovationOrganizationTracks.Select(aiot =>
+                                                                                       new AttendeeInnovationOrganizationTrackDto
+                                                                                       {
+                                                                                           AttendeeInnovationOrganizationTrack = aiot,
+                                                                                           InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption
+                                                                                       })
+                               });
+
+            return await query
+                           .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the dto to evaluate asynchronous.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganizationUid">The attendee innovation organization uid.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<AttendeeInnovationOrganizationDto> FindDtoToEvaluateAsync(Guid attendeeInnovationOrganizationUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByUids(new List<Guid?> { attendeeInnovationOrganizationUid })
+                                .Select(aio => new AttendeeInnovationOrganizationDto
+                                {
+                                    AttendeeInnovationOrganization = aio,
+                                    InnovationOrganization = aio.InnovationOrganization,
+                                    AttendeeInnovationOrganizationCollaboratorDtos = aio.AttendeeInnovationOrganizationCollaborators.Select(aioc =>
+                                                                                        new AttendeeInnovationOrganizationCollaboratorDto
+                                                                                        {
+                                                                                            AttendeeCollaborator = aioc.AttendeeCollaborator,
+                                                                                            Collaborator = aioc.AttendeeCollaborator.Collaborator
+                                                                                        }),
+                                    attendeeInnovationOrganizationCompetitorDtos = aio.AttendeeInnovationOrganizationCompetitors.Select(aioc =>
+                                                                                        new AttendeeInnovationOrganizationCompetitorDto
+                                                                                        {
+                                                                                            AttendeeInnovationOrganizationCompetitor = aioc
+                                                                                        }),
+                                    AttendeeInnovationOrganizationFounderDtos = aio.AttendeeInnovationOrganizationFounders.Select(aiof =>
+                                                                                        new AttendeeInnovationOrganizationFounderDto
+                                                                                        {
+                                                                                            AttendeeInnovationOrganizationFounder = aiof
+                                                                                        }),
+                                    AttendeeInnovationOrganizationExperienceDtos = aio.AttendeeInnovationOrganizationExperiences.Select(aioe =>
+                                                                                        new AttendeeInnovationOrganizationExperienceDto
+                                                                                        {
+                                                                                            AttendeeInnovationOrganizationExperience = aioe,
+                                                                                            InnovationOrganizationExperienceOption = aioe.InnovationOrganizationExperienceOption
+                                                                                        }),
+                                    AttendeeInnovationOrganizationObjectiveDtos = aio.AttendeeInnovationOrganizationObjectives.Select(aioo =>
+                                                                                        new AttendeeInnovationOrganizationObjectiveDto
+                                                                                        {
+                                                                                            AttendeeInnovationOrganizationObjective = aioo,
+                                                                                            InnovationOrganizationObjectivesOption = aioo.InnovationOrganizationObjectivesOption
+                                                                                        }),
+                                    AttendeeInnovationOrganizationTechnologyDtos = aio.AttendeeInnovationOrganizationTechnologies.Select(aiot =>
+                                                                                        new AttendeeInnovationOrganizationTechnologyDto
+                                                                                        {
+                                                                                            AttendeeInnovationOrganizationTechnology = aiot,
+                                                                                            InnovationOrganizationTechnologyOption = aiot.InnovationOrganizationTechnologyOption
+                                                                                        }),
+                                    AttendeeInnovationOrganizationTrackDtos = aio.AttendeeInnovationOrganizationTracks.Select(aiot =>
+                                                                                        new AttendeeInnovationOrganizationTrackDto
+                                                                                        {
+                                                                                            AttendeeInnovationOrganizationTrack = aiot,
+                                                                                            InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption
+                                                                                        })
+                                });
+
+            return await query
+                           .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the main information widget dto asynchronous.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganizationUid">The attendee innovation organization uid.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<AttendeeInnovationOrganizationDto> FindMainInformationWidgetDtoAsync(Guid attendeeInnovationOrganizationUid)
+        {
+            var query = this.GetBaseQuery()
+                               .FindByUids(new List<Guid?> { attendeeInnovationOrganizationUid })
+                               .Select(aio => new AttendeeInnovationOrganizationDto
+                               {
+                                   AttendeeInnovationOrganization = aio,
+                                   InnovationOrganization = aio.InnovationOrganization
+                               });
+
+            return await query
+                           .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the tracks widget dto asynchronous.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganizationUid">The attendee innovation organization uid.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<AttendeeInnovationOrganizationDto> FindTracksWidgetDtoAsync(Guid attendeeInnovationOrganizationUid)
+        {
+            var query = this.GetBaseQuery()
+                              .FindByUids(new List<Guid?> { attendeeInnovationOrganizationUid })
+                              .Select(aio => new AttendeeInnovationOrganizationDto
+                              {
+                                  AttendeeInnovationOrganization = aio,
+                                  InnovationOrganization = aio.InnovationOrganization,
+                                  AttendeeInnovationOrganizationTrackDtos = aio.AttendeeInnovationOrganizationTracks.Select(aiot =>
+                                                                                      new AttendeeInnovationOrganizationTrackDto
+                                                                                      {
+                                                                                          AttendeeInnovationOrganizationTrack = aiot,
+                                                                                          InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption
+                                                                                      })
+                              });
+
+
+            return await query
+                           .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the objectives widget dto asynchronous.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganizationUid">The attendee innovation organization uid.</param>
+        /// <returns></returns>
+        public async Task<AttendeeInnovationOrganizationDto> FindObjectivesWidgetDtoAsync(Guid attendeeInnovationOrganizationUid)
+        {
+            var query = this.GetBaseQuery()
+                             .FindByUids(new List<Guid?> { attendeeInnovationOrganizationUid })
+                             .Select(aio => new AttendeeInnovationOrganizationDto
+                             {
+                                 AttendeeInnovationOrganization = aio,
+                                 InnovationOrganization = aio.InnovationOrganization,
+                                 AttendeeInnovationOrganizationObjectiveDtos = aio.AttendeeInnovationOrganizationObjectives.Select(aioo =>
+                                                                                         new AttendeeInnovationOrganizationObjectiveDto
+                                                                                         {
+                                                                                             AttendeeInnovationOrganizationObjective = aioo,
+                                                                                             InnovationOrganizationObjectivesOption = aioo.InnovationOrganizationObjectivesOption
+                                                                                         })
+                             });
+
+
+            return await query
+                           .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the experiences widget dto asynchronous.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganizationUid">The attendee innovation organization uid.</param>
+        /// <returns></returns>
+        public async Task<AttendeeInnovationOrganizationDto> FindExperiencesWidgetDtoAsync(Guid attendeeInnovationOrganizationUid)
+        {
+            var query = this.GetBaseQuery()
+                             .FindByUids(new List<Guid?> { attendeeInnovationOrganizationUid })
+                             .Select(aio => new AttendeeInnovationOrganizationDto
+                             {
+                                 AttendeeInnovationOrganization = aio,
+                                 InnovationOrganization = aio.InnovationOrganization,
+                                 AttendeeInnovationOrganizationExperienceDtos = aio.AttendeeInnovationOrganizationExperiences.Select(aioe =>
+                                                                                        new AttendeeInnovationOrganizationExperienceDto
+                                                                                        {
+                                                                                            AttendeeInnovationOrganizationExperience = aioe,
+                                                                                            InnovationOrganizationExperienceOption = aioe.InnovationOrganizationExperienceOption
+                                                                                        }),
+                             });
+
+
+            return await query
+                           .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the technologies widget dto asynchronous.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganizationUid">The attendee innovation organization uid.</param>
+        /// <returns></returns>
+        public async Task<AttendeeInnovationOrganizationDto> FindTechnologiesWidgetDtoAsync(Guid attendeeInnovationOrganizationUid)
+        {
+            var query = this.GetBaseQuery()
+                            .FindByUids(new List<Guid?> { attendeeInnovationOrganizationUid })
+                            .Select(aio => new AttendeeInnovationOrganizationDto
+                            {
+                                AttendeeInnovationOrganization = aio,
+                                InnovationOrganization = aio.InnovationOrganization,
+                                AttendeeInnovationOrganizationTechnologyDtos = aio.AttendeeInnovationOrganizationTechnologies.Select(aiot =>
+                                                                                        new AttendeeInnovationOrganizationTechnologyDto
+                                                                                        {
+                                                                                            AttendeeInnovationOrganizationTechnology = aiot,
+                                                                                            InnovationOrganizationTechnologyOption = aiot.InnovationOrganizationTechnologyOption
+                                                                                        }),
+                            });
+
+
+            return await query
+                           .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the evaluation grade widget dto asynchronous.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganizationUid">The attendee innovation organization uid.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeInnovationOrganizationDto> FindEvaluationGradeWidgetDtoAsync(Guid attendeeInnovationOrganizationUid, int userId)
+        {
+            var query = this.GetBaseQuery()
+                              .FindByUids(new List<Guid?> { attendeeInnovationOrganizationUid })
+                              .Select(aio => new AttendeeInnovationOrganizationDto
+                              {
+                                  AttendeeInnovationOrganization = aio,
+                                  InnovationOrganization = aio.InnovationOrganization,
+                                  AttendeeInnovationOrganizationEvaluationDtos = aio.AttendeeInnovationOrganizationEvaluations
+                                                                                      .Where(aioe => !aioe.IsDeleted)
+                                                                                      .Select(aioe => new AttendeeInnovationOrganizationEvaluationDto
+                                                                                      {
+                                                                                          AttendeeInnovationOrganizationEvaluation = aioe,
+                                                                                          EvaluatorUser = aioe.EvaluatorUser
+                                                                                      }).ToList(),
+
+                                  //Current AttendeeInnovationOrganizationEvaluation by user Id
+                                  AttendeeInnovationOrganizationEvaluationDto = aio.AttendeeInnovationOrganizationEvaluations
+                                                                                   .Where(aioe => !aioe.IsDeleted && aioe.EvaluatorUserId == userId)
+                                                                                   .Select(aioe => new AttendeeInnovationOrganizationEvaluationDto
+                                                                                   {
+                                                                                       AttendeeInnovationOrganizationEvaluation = aioe,
+                                                                                       EvaluatorUser = aioe.EvaluatorUser
+                                                                                   }).FirstOrDefault()
+                              });
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the evaluators widget dto asynchronous.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganizationUid">The attendee innovation organization uid.</param>
+        /// <returns></returns>
+        public async Task<AttendeeInnovationOrganizationDto> FindEvaluatorsWidgetDtoAsync(Guid attendeeInnovationOrganizationUid)
+        {
+            var query = this.GetBaseQuery()
+                              .FindByUids(new List<Guid?> { attendeeInnovationOrganizationUid })
+                              .Select(aio => new AttendeeInnovationOrganizationDto
+                              {
+                                  AttendeeInnovationOrganization = aio,
+                                  InnovationOrganization = aio.InnovationOrganization,
+                                  AttendeeInnovationOrganizationEvaluationDtos = aio.AttendeeInnovationOrganizationEvaluations.Select(aioe =>
+                                                                                          new AttendeeInnovationOrganizationEvaluationDto
+                                                                                          {
+                                                                                              AttendeeInnovationOrganizationEvaluation = aioe,
+                                                                                              AttendeeInnovationOrganization = aioe.AttendeeInnovationOrganization,
+                                                                                              EvaluatorUser = aioe.EvaluatorUser
+                                                                                          })
+                              });
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds all approved attendee music bands asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public Task<List<AttendeeInnovationOrganizationDto>> FindAllApprovedAttendeeMusicBandsAsync(int editionId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int[]> FindAllMusicProjectsIdsAsync(int editionId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

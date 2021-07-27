@@ -32,7 +32,7 @@ var InnovationProjectsMainInformationWidget = function () {
         }
 
         var jsonParameters = new Object();
-        jsonParameters.projectUid = $('#AggregateId').val();
+        jsonParameters.attendeeInnovationOrganizationUid = $('#AggregateId').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Projects/ShowMainInformationWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({

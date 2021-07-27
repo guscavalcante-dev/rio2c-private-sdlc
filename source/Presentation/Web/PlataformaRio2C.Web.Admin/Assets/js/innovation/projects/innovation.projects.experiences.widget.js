@@ -6,19 +6,19 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 07-24-2021
 // ***********************************************************************
-// <copyright file="innovation.projects.releasedprojects.widget.js" company="Softo">
+// <copyright file="innovation.projects.experiences.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var InnovationProjectsReleasedWidget = function () {
+var InnovationProjectsExperiencesWidget = function () {
 
-    var widgetElementId = '#ReleasedProjectsWidget';
+    var widgetElementId = '#ProjectExperiencesWidget';
     var widgetElement = $(widgetElementId);
 
-    var updateModalId = '#UpdateReleasedProjectsModal';
-    var updateFormId = '#UpdateReleasedProjectsForm';
+    var updateModalId = '#UpdateProjectExperiencesModal';
+    var updateFormId = '#UpdateProjectExperiencesForm';
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
@@ -32,9 +32,9 @@ var InnovationProjectsReleasedWidget = function () {
         }
 
         var jsonParameters = new Object();
-        jsonParameters.projectUid = $('#AggregateId').val();
+        jsonParameters.attendeeInnovationOrganizationUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Projects/ShowReleasedProjectsWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Projects/ShowExperiencesWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

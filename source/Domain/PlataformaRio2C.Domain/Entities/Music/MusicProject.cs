@@ -39,12 +39,6 @@ namespace PlataformaRio2C.Domain.Entities
         public string Clipping1 { get; private set; }
         public string Clipping2 { get; private set; }
         public string Clipping3 { get; private set; }
-        //public int ProjectEvaluationStatusId { get; private set; }
-        //public int? ProjectEvaluationRefuseReasonId { get; private set; }
-        //public string Reason { get; private set; }
-        //public int? EvaluationUserId { get; private set; }
-        //public DateTimeOffset? EvaluationDate { get; private set; }
-        //public DateTimeOffset? EvaluationEmailSendDate { get; private set; }
 
         public virtual AttendeeMusicBand AttendeeMusicBand { get; private set; }
         //public virtual ProjectEvaluationStatus ProjectEvaluationStatus { get; private set; }

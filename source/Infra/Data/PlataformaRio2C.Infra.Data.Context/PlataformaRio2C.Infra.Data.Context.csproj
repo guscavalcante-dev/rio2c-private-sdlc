@@ -110,6 +110,7 @@
     <Compile Include="Mapping\Addresses\StateMap.cs" />
     <Compile Include="Mapping\Editions\EditionEventMap.cs" />
     <Compile Include="Mapping\Innovation\AttendeeCollaboratorInnovationOrganizationTrackMap.cs" />
+    <Compile Include="Mapping\Innovation\AttendeeInnovationOrganizationEvaluationMap.cs" />
     <Compile Include="Mapping\Innovation\AttendeeInnovationOrganizationTrackMap.cs" />
     <Compile Include="Mapping\Innovation\AttendeeInnovationOrganizationTechnologyMap.cs" />
     <Compile Include="Mapping\Innovation\AttendeeInnovationOrganizationObjectiveMap.cs" />

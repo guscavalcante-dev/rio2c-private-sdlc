@@ -40,9 +40,8 @@ var InnovationProjectsEvaluationWidget = function () {
         }
 
         var jsonParameters = new Object();
-        jsonParameters.projectUid = $('#AggregateId').val();
+        jsonParameters.attendeeInnovationOrganizationUid = $('#AggregateId').val();
 
-        //$.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Projects/ShowEvaluationWidget'), jsonParameters, function (data) {
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Projects/ShowEvaluationGradeWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
@@ -68,7 +67,7 @@ var InnovationProjectsEvaluationWidget = function () {
     var submitEvaluationGrade = function (innovationBandId) {
         var jsonParameters = new Object();
         jsonParameters.innovationBandId = innovationBandId;
-        jsonParameters.grade = $('#AttendeeInnovationBandEvaluationGrade').val();
+        jsonParameters.grade = $('#AttendeeInnovationOrganizationEvaluationGrade').val();
 
         $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Projects/Evaluate'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({

@@ -124,6 +124,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Receita acumulada nos últimos 3 meses.
+        /// </summary>
+        public static string AccumulatedRevenueForLast3Months {
+            get {
+                return ResourceManager.GetString("AccumulatedRevenueForLast3Months", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ações.
         /// </summary>
         public static string Actions {
@@ -1951,6 +1960,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Experiências.
+        /// </summary>
+        public static string Experiences {
+            get {
+                return ResourceManager.GetString("Experiences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Experiências que a empresa já participou.
+        /// </summary>
+        public static string ExperiencesThatCompanyHasParticipatedIn {
+            get {
+                return ResourceManager.GetString("ExperiencesThatCompanyHasParticipatedIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exportar.
         /// </summary>
         public static string Export {
@@ -2037,6 +2064,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ForSeries {
             get {
                 return ResourceManager.GetString("ForSeries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de fundação.
+        /// </summary>
+        public static string FoundationDate {
+            get {
+                return ResourceManager.GetString("FoundationDate", resourceCulture);
             }
         }
         
@@ -2568,24 +2604,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string JobTitles {
             get {
                 return ResourceManager.GetString("JobTitles", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Juror.
-        /// </summary>
-        public static string Juror {
-            get {
-                return ResourceManager.GetString("Juror", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Jurors.
-        /// </summary>
-        public static string Jurors {
-            get {
-                return ResourceManager.GetString("Jurors", resourceCulture);
             }
         }
         
@@ -3742,6 +3760,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Objetivo em participar do Pitching.
+        /// </summary>
+        public static string PitchingParticipationObjective {
+            get {
+                return ResourceManager.GetString("PitchingParticipationObjective", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Local.
         /// </summary>
         public static string Place {
@@ -4151,11 +4178,29 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Produto ou Serviço.
+        /// </summary>
+        public static string ProductOrService {
+            get {
+                return ResourceManager.GetString("ProductOrService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nome do produto/serviço.
         /// </summary>
         public static string ProductOrServiceName {
             get {
                 return ResourceManager.GetString("ProductOrServiceName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Produtos ou Serviços.
+        /// </summary>
+        public static string ProductsOrServices {
+            get {
+                return ResourceManager.GetString("ProductsOrServices", resourceCulture);
             }
         }
         
@@ -6069,6 +6114,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string UrlCode {
             get {
                 return ResourceManager.GetString("UrlCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tecnologias Utilizadas.
+        /// </summary>
+        public static string UsedTechnologies {
+            get {
+                return ResourceManager.GetString("UsedTechnologies", resourceCulture);
             }
         }
         
