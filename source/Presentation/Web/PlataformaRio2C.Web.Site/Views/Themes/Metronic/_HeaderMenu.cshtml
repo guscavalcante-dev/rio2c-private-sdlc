@@ -6,17 +6,12 @@
     var menuOpenCssClass = "kt-menu__item--open";
 }
 <ul class="kt-menu__nav">
-    @*d-lg-none*@
     <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "Index", "Home", null)" aria-haspopup="true">
         <a href="@Url.Action("Index", "Home", new { Area = "" })" class="kt-menu__link">
             <span class="kt-menu__link-text">@Labels.Dashboard</span>
         </a>
     </li>
-    @if (userAccessControlDto?.HasAnyCollaboratorType(new[]
-    {
-        Constants.CollaboratorType.ExecutiveAudiovisual,
-        Constants.CollaboratorType.Industry
-        }) == true)
+    @if (userAccessControlDto?.HasAnyCollaboratorType(new[] { Constants.CollaboratorType.ExecutiveAudiovisual, Constants.CollaboratorType.Industry }) == true)
     {
         var projectsUrl = Url.Action("Index", "Projects", new { Area = "" });
         var isOpenCondition = this.IsOpen(menuOpenCssClass, "SubmittedList", "Projects", null);
@@ -42,11 +37,7 @@
             </a>
         </li>
     }
-    @if (userAccessControlDto?.HasAnyCollaboratorType(new[]
-    {
-        Constants.CollaboratorType.CommissionMusic,
-        Constants.CollaboratorType.Music
-        }) == true)
+    @if (userAccessControlDto?.HasAnyCollaboratorType(new[] { Constants.CollaboratorType.CommissionMusic, Constants.CollaboratorType.Music }) == true)
     {
         var projectsUrl = Url.Action("Index", "Projects", new { Area = "" });
         if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.CommissionMusic) == true)
@@ -63,15 +54,32 @@
             </a>
         </li>
     }
-    <li class="kt-menu__item" aria-haspopup="true">
-        <a class="kt-menu__link" @*href="@Url.Action("Talents", "Home", new { Area = "" })" target="_blank"*@ href="#" onclick="return false;" data-toggle="kt-tooltip" title="" data-placement="bottom" data-original-title="@Labels.ComingSoon...">
+    @if (userAccessControlDto?.HasAnyCollaboratorType(new[] { Constants.CollaboratorType.CommissionInnovation, Constants.CollaboratorType.Innovation }) == true)
+    {
+        var projectsUrl = Url.Action("Index", "Projects", new { Area = "" });
+        if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.CommissionInnovation) == true)
+        {
+            projectsUrl = Url.Action("EvaluationList", "Projects", new { Area = "Innovation" });
+            if (editionDto?.IsInnovationProjectEvaluationStarted() != true)
+            {
+                projectsUrl = Url.Action("Index", "Projects", new { Area = "Innovation" });
+            }
+        }
+        <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "Projects", "Innovation")" aria-haspopup="true">
+            <a class="kt-menu__link" href="@projectsUrl">
+                <span class="kt-menu__link-text">@Labels.Innovation</span>
+            </a>
+        </li>
+    }
+    @*<li class="kt-menu__item" aria-haspopup="true">
+        <a class="kt-menu__link" href="#" onclick="return false;" data-toggle="kt-tooltip" title="" data-placement="bottom" data-original-title="@Labels.ComingSoon...">
             <span class="kt-menu__link-text">@Labels.Talents</span>
         </a>
-    </li>
-    <li class="kt-menu__separator"></li>
+    </li>*@
+    @*<li class="kt-menu__separator"></li>
     <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "Index", "Tickets", null)" aria-haspopup="true">
         <a class="kt-menu__link" href="#" onclick="return false;" data-toggle="kt-tooltip" title="" data-placement="bottom" data-original-title="@Labels.ComingSoon...">
             <span class="kt-menu__link-text">@Labels.Badges</span>
         </a>
-    </li>
+    </li>*@
 </ul>
