@@ -1203,7 +1203,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Não avaliado..
+        ///   Looks up a localized string similar to Não avaliado.
         /// </summary>
         public static string NotEvaluated {
             get {

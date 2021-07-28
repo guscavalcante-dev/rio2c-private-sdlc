@@ -18,7 +18,7 @@
     {
         <form class="form-inline justify-content-center mt-85">
             <div class="form-group mb-2 mr-3">
-                @Html.TextBox("AttendeeInnovationOrganizationEvaluationGrade", Model.AttendeeInnovationOrganization?.Grade, new { @class = "form-control text-center decimal-globalize-mask", placeholder = Labels.Grade, style = "width: 105px;" }) @*, @type = "number", @min = "1", @max = "10", @step = ".10"*@
+                @Html.TextBox("AttendeeInnovationOrganizationEvaluationGrade", Model.AttendeeInnovationOrganizationEvaluationDto?.AttendeeInnovationOrganizationEvaluation?.Grade, new { @class = "form-control text-center decimal-globalize-mask", placeholder = Labels.Grade, style = "width: 105px;" }) @*, @type = "number", @min = "1", @max = "10", @step = ".10"*@
             </div>
             <button type="button" class="btn btn-success mb-2" onclick="InnovationProjectsEvaluationWidget.submitEvaluationGrade('@Model.InnovationOrganization.Id');">@Labels.Evaluate</button>
         </form>
@@ -63,58 +63,4 @@
             </div>
         </form>
     }
-</div>
-    @*<div class="kt-widget">
-        <div class="kt-widget__bottom">
-            <div class="kt-widget__item">
-                <div class="col-md-12 m-0 p-0">
-                    @if (editionDto?.IsInnovationProjectEvaluationOpen() == true)
-                    {
-                        <div class="col-md-12 d-flex justify-content-between">
-                            @Html.TextBox("AttendeeInnovationOrganizationEvaluationGrade", Model.AttendeeInnovationOrganizationDto?.AttendeeInnovationOrganizationEvaluationDto?.AttendeeInnovationOrganizationEvaluation?.Grade, new { @class = "form-control text-center decimal-globalize-mask" })
-                            <button type="button" class="btn btn-success ml-2" onclick="InnovationProjectsEvaluationWidget.submitEvaluationGrade('@Model.InnovationProject.AttendeeInnovationOrganization.InnovationOrganizationId');">
-                                @Labels.Evaluate
-                            </button>
-                        </div>
-                    }
-                    else /*if (currentEvaluation != null)*/
-                    {
-                        <div class="row col-md-12 justify-content-center">
-                            @{
-                                var icon = "fa-diagnoses";
-                                var color = "warning";
-                                var text = Labels.UnderEvaluation;
-
-                                if (isThisInnovationProjectApproved)
-                                {
-                                    icon = "fa-thumbs-up";
-                                    color = "success";
-                                    text = Labels.ProjectAccepted;
-                                }
-                                else
-                                {
-                                    icon = "fa-thumbs-down";
-                                    color = "danger";
-                                    text = Labels.ProjectRefused;
-                                }
-                            }
-                            <div class="row col-md-12 d-flex justify-content-center align-items-center">
-                                <span class="kt-widget__button">
-                                    <label class="btn btn-label-@(color) btn-sm m-0">
-                                        <i class="fa @(icon) mr-1"></i> @text
-                                    </label>
-                                </span>
-                                <div class="card bg-gray" style="margin-left:5px;">
-                                    <div class="card-body">
-                                        <span>@Labels.Average</span>
-                                        <span><b>@(Model.AttendeeInnovationOrganizationDto?.AttendeeInnovationOrganization?.Grade?.ToString() ?? "-")</b></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>*@
 </div>

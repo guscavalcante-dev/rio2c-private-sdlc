@@ -64,9 +64,9 @@ var InnovationProjectsEvaluationWidget = function () {
     };
 
     // Evaluation Grade ---------------------------------------------------------------------------
-    var submitEvaluationGrade = function (innovationBandId) {
+    var submitEvaluationGrade = function (innovationOrganizationId) {
         var jsonParameters = new Object();
-        jsonParameters.innovationBandId = innovationBandId;
+        jsonParameters.innovationOrganizationId = innovationOrganizationId;
         jsonParameters.grade = $('#AttendeeInnovationOrganizationEvaluationGrade').val();
 
         $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Projects/Evaluate'), jsonParameters, function (data) {
@@ -246,8 +246,8 @@ var InnovationProjectsEvaluationWidget = function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
         },
-        submitEvaluationGrade: function (innovationBandId) {
-            submitEvaluationGrade(innovationBandId);
+        submitEvaluationGrade: function (innovationOrganizationId) {
+            submitEvaluationGrade(innovationOrganizationId);
         },
         //showAcceptModal: function (projectUid) {
         //    showAcceptModal(projectUid);

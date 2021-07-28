@@ -39,6 +39,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.CommissionInnovation)]
     public class ProjectsController : BaseController
     {
+        private readonly IInnovationOrganizationRepository innovationOrganizationRepo;
         private readonly IAttendeeInnovationOrganizationRepository attendeeInnovationOrganizationRepo;
         private readonly IProjectEvaluationStatusRepository evaluationStatusRepo;
         private readonly IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepo;
@@ -62,6 +63,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
         public ProjectsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
+            IInnovationOrganizationRepository innovationOrganizationRepository,
             IAttendeeInnovationOrganizationRepository attendeeInnovationOrganizationRepository,
             IProjectEvaluationStatusRepository evaluationStatusRepository,
             IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepository,
@@ -72,6 +74,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
             )
             : base(commandBus, identityController)
         {
+            this.innovationOrganizationRepo = innovationOrganizationRepository;
             this.attendeeInnovationOrganizationRepo = attendeeInnovationOrganizationRepository;
             this.evaluationStatusRepo = evaluationStatusRepository;
             this.innovationOrganizationTrackOptionRepo = innovationOrganizationTrackOptionRepository;
@@ -117,8 +120,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionInnovation)]
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionInnovation)]
         public async Task<ActionResult> EvaluationList(string searchKeywords, Guid? innovationOrganizationTrackOptionUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 12)
         {
             if (this.EditionDto?.IsInnovationProjectEvaluationStarted() != true)
@@ -179,8 +182,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionInnovation)]
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionInnovation)]
         public async Task<ActionResult> ShowEvaluationListWidget(string searchKeywords, Guid? innovationOrganizationTrackOptionUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 12)
         {
             if (this.EditionDto?.IsInnovationProjectEvaluationStarted() != true)
@@ -241,8 +244,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
         /// </summary>
         /// <param name="projectUid">The project uid.</param>
         /// <returns></returns>
-        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionInnovation)]
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionInnovation)]
         public async Task<ActionResult> ShowEvaluationListItemWidget(Guid? projectUid)
         {
             if (this.EditionDto?.IsInnovationProjectEvaluationStarted() != true)
@@ -422,6 +425,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
         /// <param name="attendeeInnovationOrganizationUid">The attendee innovation organization uid.</param>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionInnovation)]
         public async Task<ActionResult> ShowMainInformationWidget(Guid? attendeeInnovationOrganizationUid)
         {
             var mainInformationWidgetDto = await this.attendeeInnovationOrganizationRepo.FindMainInformationWidgetDtoAsync(attendeeInnovationOrganizationUid ?? Guid.Empty);
@@ -463,6 +467,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
         /// <param name="attendeeInnovationOrganizationUid">The attendee innovation organization uid.</param>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionInnovation)]
         public async Task<ActionResult> ShowTracksWidget(Guid? attendeeInnovationOrganizationUid)
         {
             var tracksWidgetDto = await this.attendeeInnovationOrganizationRepo.FindTracksWidgetDtoAsync(attendeeInnovationOrganizationUid ?? Guid.Empty);
@@ -506,6 +511,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
         /// <param name="attendeeInnovationOrganizationUid">The attendee innovation organization uid.</param>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionInnovation)]
         public async Task<ActionResult> ShowObjectivesWidget(Guid? attendeeInnovationOrganizationUid)
         {
             var objectivesWidgetDto = await this.attendeeInnovationOrganizationRepo.FindObjectivesWidgetDtoAsync(attendeeInnovationOrganizationUid ?? Guid.Empty);
@@ -549,6 +555,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
         /// <param name="attendeeInnovationOrganizationUid">The attendee innovation organization uid.</param>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionInnovation)]
         public async Task<ActionResult> ShowTechnologiesWidget(Guid? attendeeInnovationOrganizationUid)
         {
             var technologiesWidgetDto = await this.attendeeInnovationOrganizationRepo.FindTechnologiesWidgetDtoAsync(attendeeInnovationOrganizationUid ?? Guid.Empty);
@@ -592,6 +599,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
         /// <param name="attendeeInnovationOrganizationUid">The attendee innovation organization uid.</param>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionInnovation)]
         public async Task<ActionResult> ShowExperiencesWidget(Guid? attendeeInnovationOrganizationUid)
         {
             var experiencesWidgetDto = await this.attendeeInnovationOrganizationRepo.FindExperiencesWidgetDtoAsync(attendeeInnovationOrganizationUid ?? Guid.Empty);
@@ -635,6 +643,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
         /// <param name="projectUid">The project uid.</param>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionInnovation)]
         public async Task<ActionResult> ShowEvaluationGradeWidget(Guid? attendeeInnovationOrganizationUid)
         {
             if (this.EditionDto?.IsInnovationProjectEvaluationStarted() != true)
@@ -674,15 +683,15 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
         }
 
         /// <summary>
-        /// Evaluates the specified music band identifier.
+        /// Evaluates the specified innovation organization identifier.
         /// </summary>
-        /// <param name="musicBandId">The music band identifier.</param>
+        /// <param name="innovationOrganizationId">The innovation organization identifier.</param>
         /// <param name="grade">The grade.</param>
         /// <returns></returns>
         /// <exception cref="DomainException"></exception>
         [HttpPost]
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionInnovation)]
-        public async Task<ActionResult> Evaluate(int musicBandId, decimal? grade)
+        public async Task<ActionResult> Evaluate(int innovationOrganizationId, decimal? grade)
         {
             if (this.EditionDto?.IsInnovationProjectEvaluationOpen() != true)
             {
@@ -693,17 +702,17 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
 
             try
             {
-                //var cmd = new EvaluateMusicBand(
-                //    await this.musicBandRepo.FindByIdAsync(musicBandId),
-                //    grade);
+                var cmd = new EvaluateInnovationOrganization(
+                    await this.innovationOrganizationRepo.FindByIdAsync(innovationOrganizationId),
+                    grade);
 
-                //cmd.UpdatePreSendProperties(
-                //    this.UserAccessControlDto.User.Id,
-                //    this.UserAccessControlDto.User.Uid,
-                //    this.EditionDto.Id,
-                //    this.EditionDto.Uid,
-                //    this.UserInterfaceLanguage);
-                //result = await this.CommandBus.Send(cmd);
+                cmd.UpdatePreSendProperties(
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
                 {
                     throw new DomainException(Messages.CorrectFormValues);
@@ -728,7 +737,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
             {
                 status = "success",
                 //projectUid = cmd.InnovationBandId,
-                message = string.Format(Messages.EntityActionSuccessfull, Labels.MusicBand, Labels.Evaluated.ToLowerInvariant())
+                message = string.Format(Messages.EntityActionSuccessfull, Labels.Startup, Labels.Evaluated.ToLowerInvariant())
             });
         }
 
@@ -737,6 +746,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
         #region Evaluators Widget
 
         [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionInnovation)]
         public async Task<ActionResult> ShowEvaluatorsWidget(Guid? attendeeInnovationOrganizationUid)
         {
             if (this.EditionDto?.IsInnovationProjectEvaluationStarted() != true)

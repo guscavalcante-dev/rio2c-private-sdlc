@@ -165,6 +165,90 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
+        #region Evaluation
+
+        /// <summary>
+        /// Evaluates the specified evaluation user.
+        /// </summary>
+        /// <param name="evaluatorUser">The evaluation user.</param>
+        /// <param name="grade">The grade.</param>
+        public void Evaluate(User evaluatorUser, decimal grade)
+        {
+            if (this.AttendeeInnovationOrganizationEvaluations == null)
+                this.AttendeeInnovationOrganizationEvaluations = new List<AttendeeInnovationOrganizationEvaluation>();
+
+            var existentAttendeeInnovationOrganizationEvaluation = this.GetAttendeeInnovationOrganizationEvaluationByEvaluatorId(evaluatorUser.Id);
+            if (existentAttendeeInnovationOrganizationEvaluation != null)
+            {
+                existentAttendeeInnovationOrganizationEvaluation.Update(grade, evaluatorUser.Id);
+            }
+            else
+            {
+                this.AttendeeInnovationOrganizationEvaluations.Add(new AttendeeInnovationOrganizationEvaluation(
+                    this,
+                    evaluatorUser,
+                    grade,
+                    evaluatorUser.Id));
+            }
+
+            this.Grade = this.GetAverageEvaluation(this.Edition);
+            this.EvaluationsCount = this.AttendeeInnovationOrganizationEvaluations?.Count ?? 0;
+            this.LastEvaluationDate = DateTime.UtcNow;
+        }
+
+        /// <summary>
+        /// Recalculates the grade.
+        /// </summary>
+        public void RecalculateGrade(Edition edition)
+        {
+            this.Grade = this.GetAverageEvaluation(edition);
+        }
+
+        /// <summary>
+        /// Gets the average evaluation.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <returns></returns>
+        private decimal? GetAverageEvaluation(Edition edition)
+        {
+            if (this.AttendeeInnovationOrganizationEvaluations?.Any() != true)
+            {
+                return null;
+            }
+
+            // Can only generate the 'AverageEvaluation' when the 'AttendeeInnovationOrganizationEvaluations' count 
+            // is greater or equal than minimum necessary evaluations quantity
+            if (this.GetAttendeeInnovationOrganizationEvaluationTotalCount() >= edition.InnovationProjectMinimumEvaluationsCount)
+            {
+                return this.AttendeeInnovationOrganizationEvaluations.Sum(e => e.Grade) / this.AttendeeInnovationOrganizationEvaluations.Count;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the attendee innovation organization evaluation by evaluator identifier.
+        /// </summary>
+        /// <param name="evaluatorUserId">The evaluator user identifier.</param>
+        /// <returns></returns>
+        private AttendeeInnovationOrganizationEvaluation GetAttendeeInnovationOrganizationEvaluationByEvaluatorId(int evaluatorUserId)
+        {
+            return this.AttendeeInnovationOrganizationEvaluations.FirstOrDefault(ambe =>
+                ambe.AttendeeInnovationOrganization.EditionId == this.EditionId &&
+                ambe.EvaluatorUserId == evaluatorUserId);
+        }
+
+        /// <summary>
+        /// Gets the attendee innovation organization evaluation total count.
+        /// </summary>
+        /// <returns></returns>
+        private int GetAttendeeInnovationOrganizationEvaluationTotalCount()
+        {
+            return this.AttendeeInnovationOrganizationEvaluations.Count(ambe => ambe.AttendeeInnovationOrganization.EditionId == this.EditionId);
+        }
+
+        #endregion
+
         #region Attendee Innovation Organization Collaborators
 
         /// <summary>

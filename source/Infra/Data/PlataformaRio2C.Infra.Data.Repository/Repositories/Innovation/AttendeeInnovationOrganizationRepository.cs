@@ -861,7 +861,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                      {
                                                                                          AttendeeInnovationOrganizationTrack = aiot,
                                                                                          InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption
-                                                                                     })
+                                                                                     }),
+                                   AttendeeInnovationOrganizationEvaluationDtos = aio.AttendeeInnovationOrganizationEvaluations
+                                                                                      .Where(aioe => !aioe.IsDeleted)
+                                                                                      .Select(aioe => new AttendeeInnovationOrganizationEvaluationDto
+                                                                                      {
+                                                                                          AttendeeInnovationOrganizationEvaluation = aioe,
+                                                                                          EvaluatorUser = aioe.EvaluatorUser
+                                                                                      }).ToList()
                                });
 
             return await query
@@ -1018,7 +1025,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                           AttendeeInnovationOrganizationEvaluation = aioe,
                                                                                           EvaluatorUser = aioe.EvaluatorUser
                                                                                       }).ToList(),
-
                                   //Current AttendeeInnovationOrganizationEvaluation by user Id
                                   AttendeeInnovationOrganizationEvaluationDto = aio.AttendeeInnovationOrganizationEvaluations
                                                                                    .Where(aioe => !aioe.IsDeleted && aioe.EvaluatorUserId == userId)

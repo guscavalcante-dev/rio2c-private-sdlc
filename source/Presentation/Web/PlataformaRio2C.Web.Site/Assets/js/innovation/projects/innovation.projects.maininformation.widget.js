@@ -59,7 +59,7 @@ var InnovationProjectsMainInformationWidget = function () {
     var submitEvaluationGrade = function (innovationOrganizationId) {
         var jsonParameters = new Object();
         jsonParameters.innovationOrganizationId = innovationOrganizationId;
-        jsonParameters.grade = $('#AttendeeInnovationOrganizationEvaluationGrade').val();
+        jsonParameters.grade = $('#AttendeeInnovationOrganizationEvaluationGradeMain').val();
 
         $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Projects/Evaluate'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({

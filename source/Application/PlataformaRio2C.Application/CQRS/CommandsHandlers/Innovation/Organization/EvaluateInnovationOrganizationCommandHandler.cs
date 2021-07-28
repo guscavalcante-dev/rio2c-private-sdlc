@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Renan Valentim
-// Created          : 03-31-2021
+// Created          : 07-28-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-31-2021
+// Last Modified On : 07-28-2021
 // ***********************************************************************
-// <copyright file="EvaluateMusicBandCommandHandler.cs" company="Softo">
+// <copyright file="EvaluateInnovationOrganizationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -23,31 +23,31 @@ using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>EvaluateMusicBandCommandHandler</summary>
-    public class EvaluateMusicBandCommandHandler : MusicBandBaseCommandHandler, IRequestHandler<EvaluateMusicBand, AppValidationResult>
+    /// <summary>EvaluateInnovationOrganizationCommandHandler</summary>
+    public class EvaluateInnovationOrganizationCommandHandler : InnovationOrganizationBaseCommandHandler, IRequestHandler<EvaluateInnovationOrganization, AppValidationResult>
     {
-        private readonly IMusicBandRepository musicBandRepo;
+        private readonly IInnovationOrganizationRepository innovationOrganizationRepo;
         private readonly IEditionRepository editionRepo;
         private readonly IUserRepository userRepo;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EvaluateMusicBandCommandHandler"/> class.
+        /// Initializes a new instance of the <see cref="EvaluateInnovationOrganizationCommandHandler"/> class.
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="uow">The uow.</param>
-        /// <param name="musicBandRepo">The music band repo.</param>
+        /// <param name="innovationOrganizationRepo">The music band repo.</param>
         /// <param name="editionRepo">The edition repo.</param>
         /// <param name="userRepo">The user repo.</param>
-        public EvaluateMusicBandCommandHandler(
+        public EvaluateInnovationOrganizationCommandHandler(
             IMediator commandBus,
             IUnitOfWork uow,
-            IMusicBandRepository musicBandRepo,
+            IInnovationOrganizationRepository innovationOrganizationRepo,
             IEditionRepository editionRepo,
             IUserRepository userRepo
             )
-            : base(commandBus, uow, musicBandRepo)
+            : base(commandBus, uow, innovationOrganizationRepo)
         {
-            this.musicBandRepo = musicBandRepo;
+            this.innovationOrganizationRepo = innovationOrganizationRepo;
             this.editionRepo = editionRepo;
             this.userRepo = userRepo;
         }
@@ -59,7 +59,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
         /// <exception cref="TargetAudienceApiDto"></exception>
-        public async Task<AppValidationResult> Handle(EvaluateMusicBand cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(EvaluateInnovationOrganization cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
@@ -75,32 +75,32 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             if (!cmd.Grade.HasValue)
             {
-                this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.Grade, "10", "1"), new string[] { nameof(EvaluateMusicBand.Grade) })));
+                this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.Grade, "10", "0"), new string[] { nameof(EvaluateInnovationOrganization.Grade) })));
                 return this.AppValidationResult;
             }
 
             var editionDto = await editionRepo.FindDtoAsync(cmd.EditionId.Value);
-            if (editionDto.IsMusicProjectEvaluationOpen() != true)
+            if (editionDto.IsInnovationProjectEvaluationOpen() != true)
             {
                 this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(Texts.ForbiddenErrorMessage, new string[] { "ToastrError" })));
                 return this.AppValidationResult;
             }
 
-            var musicBand = await musicBandRepo.FindByIdAsync(cmd.MusicBandId.Value);
-            musicBand.Evaluate(
+            var innovationOrganization = await innovationOrganizationRepo.FindByIdAsync(cmd.InnovationOrganizationId.Value);
+            innovationOrganization.Evaluate(
                 editionDto.Edition,
                 await userRepo.FindByIdAsync(cmd.UserId),
                 cmd.Grade.Value);
 
-            if (!musicBand.IsValid())
+            if (!innovationOrganization.IsValid())
             {
-                this.AppValidationResult.Add(musicBand.ValidationResult);
+                this.AppValidationResult.Add(innovationOrganization.ValidationResult);
                 return this.AppValidationResult;
             }
 
-            this.MusicBandRepo.Update(musicBand);
+            this.InnovationOrganizationRepo.Update(innovationOrganization);
             this.Uow.SaveChanges();
-            this.AppValidationResult.Data = musicBand;
+            this.AppValidationResult.Data = innovationOrganization;
 
             return this.AppValidationResult;
         }

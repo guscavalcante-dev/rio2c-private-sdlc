@@ -34,8 +34,8 @@
                         @(Model.InnovationOrganization?.Name ?? "-")
                     </span>
                 </div>
-                <div class="kt-widget__info">
-                    <div class="kt-widget__desc pl-0 col-md-6">
+                <div class="kt-widget__info col-md-12 mr-0 pr-0 pl-0">
+                    <div class="kt-widget__desc pl-0 col-md-4">
                         <div class="kt-widget__desc">
                             <div class="kt-widget__subhead pt-0">
                                 @(Model.InnovationOrganization?.Document ?? "-")
@@ -61,22 +61,8 @@
                                 @:-
                             }
                         </div>
-                        @*<div class="kt-widget__subhead pt-1 pb-0">
-            @Labels.TargetAudience:
-            @if (Model.AttendeeInnovationOrganizationDto?.InnovationBandTargetAudienceDtos?.Any() == true)
-            {
-                foreach (var musicBandTargetAudienceDto in Model.AttendeeInnovationOrganizationDto.InnovationBandTargetAudienceDtos)
-                {
-                    <span class="kt-badge kt-badge--inline kt-badge--primary">@(musicBandTargetAudienceDto.TargetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
-                }
-            }
-            else
-            {
-                @:-
-            }
-        </div>*@
                     </div>
-                    <div class="kt-widget__progress myrio2c-evaluation-position col-md-6">
+                    <div class="kt-widget__progress myrio2c-evaluation-position col-md-8 pr-0">
                         <div class="kt-widget__text" data-id="EvaluationGradeMain">
                             @if (editionDto?.IsInnovationProjectEvaluationStarted() != true)
                             {

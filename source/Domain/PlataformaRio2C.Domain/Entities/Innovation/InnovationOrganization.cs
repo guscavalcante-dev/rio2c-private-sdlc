@@ -315,6 +315,22 @@ namespace PlataformaRio2C.Domain.Entities
             base.Delete(userId);
         }
 
+        #region Evaluation
+
+        /// <summary>
+        /// Evaluates the specified edition.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="evaluatorUser">The evaluator user.</param>
+        /// <param name="grade">The grade.</param>
+        public void Evaluate(Edition edition, User evaluatorUser, decimal grade)
+        {
+            var attendeeInnovationOrganization = this.GetAttendeeInnovationOrganizationByEditionId(edition.Id);
+            attendeeInnovationOrganization?.Evaluate(evaluatorUser, grade);
+        }
+
+        #endregion
+
         #region Attendee Innovation Organization
 
         /// <summary>

@@ -580,8 +580,8 @@
     <comment>Nenhum {0} {1}.</comment>
   </data>
   <data name="NotEvaluated" xml:space="preserve">
-    <value>Não avaliado.</value>
-    <comment>Não avaliado.</comment>
+    <value>Não avaliado</value>
+    <comment>Não avaliado</comment>
   </data>
   <data name="NotScheduledOneToOneMeetings" xml:space="preserve">
     <value>Rodadas de Negócios não Agendadas</value>

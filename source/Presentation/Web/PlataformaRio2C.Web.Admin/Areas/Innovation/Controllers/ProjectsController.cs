@@ -41,6 +41,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminInnovation)]
     public class ProjectsController : BaseController
     {
+        private readonly IInnovationOrganizationRepository innovationOrganizationRepo;
         private readonly IProjectEvaluationStatusRepository evaluationStatusRepo;
         private readonly IAttendeeInnovationOrganizationRepository attendeeInnovationOrganizationRepo;
         private readonly IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepo;
@@ -63,6 +64,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         public ProjectsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
+            IInnovationOrganizationRepository innovationOrganizationRepository,
             IProjectEvaluationStatusRepository evaluationStatusRepository,
             IAttendeeInnovationOrganizationRepository attendeeInnovationOrganizationRepository,
             IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepository,
@@ -72,6 +74,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             )
             : base(commandBus, identityController)
         {
+            this.innovationOrganizationRepo = innovationOrganizationRepository;
             this.evaluationStatusRepo = evaluationStatusRepository;
             this.attendeeInnovationOrganizationRepo = attendeeInnovationOrganizationRepository;
             this.innovationOrganizationTrackOptionRepo = innovationOrganizationTrackOptionRepository;
@@ -684,9 +687,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         /// <param name="grade">The grade.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Evaluate(int musicBandId, decimal? grade)
+        public async Task<ActionResult> Evaluate(int innovationOrganizationId, decimal? grade)
         {
-            if (this.EditionDto?.IsMusicProjectEvaluationOpen() != true)
+            if (this.EditionDto?.IsInnovationProjectEvaluationOpen() != true)
             {
                 return Json(new { status = "error", message = Messages.EvaluationPeriodClosed }, JsonRequestBehavior.AllowGet);
             }
@@ -695,17 +698,17 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
             try
             {
-                //var cmd = new EvaluateMusicBand(
-                //    await this.musicBandRepo.FindByIdAsync(musicBandId),
-                //    grade);
+                var cmd = new EvaluateInnovationOrganization(
+                    await this.innovationOrganizationRepo.FindByIdAsync(innovationOrganizationId),
+                    grade);
 
-                //cmd.UpdatePreSendProperties(
-                //    this.AdminAccessControlDto.User.Id,
-                //    this.AdminAccessControlDto.User.Uid,
-                //    this.EditionDto.Id,
-                //    this.EditionDto.Uid,
-                //    this.UserInterfaceLanguage);
-                //result = await this.CommandBus.Send(cmd);
+                cmd.UpdatePreSendProperties(
+                  this.AdminAccessControlDto.User.Id,
+                  this.AdminAccessControlDto.User.Uid,
+                  this.EditionDto.Id,
+                  this.EditionDto.Uid,
+                  this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
                 if (!result.IsValid)
                 {
                     throw new DomainException(Messages.CorrectFormValues);
@@ -730,7 +733,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             {
                 status = "success",
                 //projectUid = cmd.MusicBandId,
-                message = string.Format(Messages.EntityActionSuccessfull, Labels.MusicBand, Labels.Evaluated.ToLowerInvariant())
+                message = string.Format(Messages.EntityActionSuccessfull, Labels.Startup, Labels.Evaluated.ToLowerInvariant())
             });
         }
 

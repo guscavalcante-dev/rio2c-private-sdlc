@@ -62,6 +62,17 @@ namespace PlataformaRio2C.Domain.Entities
 
         }
 
+        /// <summary>
+        /// Updates the specified grade.
+        /// </summary>
+        /// <param name="grade">The grade.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(decimal grade, int userId)
+        {
+            this.Grade = grade;
+            base.SetUpdateDate(userId);
+        }
+
         #region Valitations
 
         /// <summary>
