@@ -295,7 +295,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                            AttendeeCollaborator = aioc.AttendeeCollaborator,
                                                                                            Collaborator = aioc.AttendeeCollaborator.Collaborator
                                                                                        }),
-                                   attendeeInnovationOrganizationCompetitorDtos = aio.AttendeeInnovationOrganizationCompetitors.Select(aioc =>
+                                   AttendeeInnovationOrganizationCompetitorDtos = aio.AttendeeInnovationOrganizationCompetitors.Select(aioc =>
                                                                                        new AttendeeInnovationOrganizationCompetitorDto
                                                                                        {
                                                                                            AttendeeInnovationOrganizationCompetitor = aioc
@@ -742,7 +742,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                            AttendeeCollaborator = aioc.AttendeeCollaborator,
                                                                                            Collaborator = aioc.AttendeeCollaborator.Collaborator
                                                                                        }),
-                                   attendeeInnovationOrganizationCompetitorDtos = aio.AttendeeInnovationOrganizationCompetitors.Select(aioc =>
+                                   AttendeeInnovationOrganizationCompetitorDtos = aio.AttendeeInnovationOrganizationCompetitors.Select(aioc =>
                                                                                        new AttendeeInnovationOrganizationCompetitorDto
                                                                                        {
                                                                                            AttendeeInnovationOrganizationCompetitor = aioc
@@ -802,7 +802,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                             AttendeeCollaborator = aioc.AttendeeCollaborator,
                                                                                             Collaborator = aioc.AttendeeCollaborator.Collaborator
                                                                                         }),
-                                    attendeeInnovationOrganizationCompetitorDtos = aio.AttendeeInnovationOrganizationCompetitors.Select(aioc =>
+                                    AttendeeInnovationOrganizationCompetitorDtos = aio.AttendeeInnovationOrganizationCompetitors.Select(aioc =>
                                                                                         new AttendeeInnovationOrganizationCompetitorDto
                                                                                         {
                                                                                             AttendeeInnovationOrganizationCompetitor = aioc
@@ -908,6 +908,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                              {
                                  AttendeeInnovationOrganization = aio,
                                  InnovationOrganization = aio.InnovationOrganization,
+                                 AttendeeInnovationOrganizationTrackDtos = aio.AttendeeInnovationOrganizationTracks.Select(aiot =>
+                                                                                     new AttendeeInnovationOrganizationTrackDto
+                                                                                     {
+                                                                                         AttendeeInnovationOrganizationTrack = aiot,
+                                                                                         InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption
+                                                                                     }),
                                  AttendeeInnovationOrganizationObjectiveDtos = aio.AttendeeInnovationOrganizationObjectives.Select(aioo =>
                                                                                          new AttendeeInnovationOrganizationObjectiveDto
                                                                                          {
@@ -934,6 +940,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                              {
                                  AttendeeInnovationOrganization = aio,
                                  InnovationOrganization = aio.InnovationOrganization,
+                                 AttendeeInnovationOrganizationTrackDtos = aio.AttendeeInnovationOrganizationTracks.Select(aiot =>
+                                                                                     new AttendeeInnovationOrganizationTrackDto
+                                                                                     {
+                                                                                         AttendeeInnovationOrganizationTrack = aiot,
+                                                                                         InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption
+                                                                                     }),
                                  AttendeeInnovationOrganizationExperienceDtos = aio.AttendeeInnovationOrganizationExperiences.Select(aioe =>
                                                                                         new AttendeeInnovationOrganizationExperienceDto
                                                                                         {
@@ -960,6 +972,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             {
                                 AttendeeInnovationOrganization = aio,
                                 InnovationOrganization = aio.InnovationOrganization,
+                                AttendeeInnovationOrganizationTrackDtos = aio.AttendeeInnovationOrganizationTracks.Select(aiot =>
+                                                                                     new AttendeeInnovationOrganizationTrackDto
+                                                                                     {
+                                                                                         AttendeeInnovationOrganizationTrack = aiot,
+                                                                                         InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption
+                                                                                     }),
                                 AttendeeInnovationOrganizationTechnologyDtos = aio.AttendeeInnovationOrganizationTechnologies.Select(aiot =>
                                                                                         new AttendeeInnovationOrganizationTechnologyDto
                                                                                         {
@@ -987,6 +1005,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                               {
                                   AttendeeInnovationOrganization = aio,
                                   InnovationOrganization = aio.InnovationOrganization,
+                                  AttendeeInnovationOrganizationTrackDtos = aio.AttendeeInnovationOrganizationTracks.Select(aiot =>
+                                                                                     new AttendeeInnovationOrganizationTrackDto
+                                                                                     {
+                                                                                         AttendeeInnovationOrganizationTrack = aiot,
+                                                                                         InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption
+                                                                                     }),
                                   AttendeeInnovationOrganizationEvaluationDtos = aio.AttendeeInnovationOrganizationEvaluations
                                                                                       .Where(aioe => !aioe.IsDeleted)
                                                                                       .Select(aioe => new AttendeeInnovationOrganizationEvaluationDto
@@ -1022,6 +1046,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                               {
                                   AttendeeInnovationOrganization = aio,
                                   InnovationOrganization = aio.InnovationOrganization,
+                                  AttendeeInnovationOrganizationTrackDtos = aio.AttendeeInnovationOrganizationTracks.Select(aiot =>
+                                                                                     new AttendeeInnovationOrganizationTrackDto
+                                                                                     {
+                                                                                         AttendeeInnovationOrganizationTrack = aiot,
+                                                                                         InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption
+                                                                                     }),
                                   AttendeeInnovationOrganizationEvaluationDtos = aio.AttendeeInnovationOrganizationEvaluations.Select(aioe =>
                                                                                           new AttendeeInnovationOrganizationEvaluationDto
                                                                                           {
@@ -1033,22 +1063,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return await query
                             .FirstOrDefaultAsync();
-        }
-
-        /// <summary>
-        /// Finds all approved attendee music bands asynchronous.
-        /// </summary>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public Task<List<AttendeeInnovationOrganizationDto>> FindAllApprovedAttendeeMusicBandsAsync(int editionId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<int[]> FindAllMusicProjectsIdsAsync(int editionId)
-        {
-            throw new NotImplementedException();
         }
     }
 }

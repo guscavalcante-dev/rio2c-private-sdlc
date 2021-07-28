@@ -27,7 +27,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public AttendeeInnovationOrganizationEvaluationDto AttendeeInnovationOrganizationEvaluationDto { get; set; }
 
         public IEnumerable<AttendeeInnovationOrganizationFounderDto> AttendeeInnovationOrganizationFounderDtos { get; set; }
-        public IEnumerable<AttendeeInnovationOrganizationCompetitorDto> attendeeInnovationOrganizationCompetitorDtos { get; set; }
+        public IEnumerable<AttendeeInnovationOrganizationCompetitorDto> AttendeeInnovationOrganizationCompetitorDtos { get; set; }
         public IEnumerable<AttendeeInnovationOrganizationCollaboratorDto> AttendeeInnovationOrganizationCollaboratorDtos { get; set; }
         public IEnumerable<AttendeeInnovationOrganizationTrackDto> AttendeeInnovationOrganizationTrackDtos { get; set; }
         public IEnumerable<AttendeeInnovationOrganizationExperienceDto> AttendeeInnovationOrganizationExperienceDtos { get; set; }

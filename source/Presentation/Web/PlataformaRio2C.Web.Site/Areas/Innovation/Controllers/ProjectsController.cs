@@ -430,6 +430,19 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Startup, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
+            #region AttendeeCollaborator and AttendeeInnovationOrganization Tracks validation
+
+            var attendeeCollaboratorInnovationOrganizationTrackOptionsUids = await this.GetAttendeeCollaboratorInnovationOrganizationTrackOptionsUids();
+
+            if (mainInformationWidgetDto == null ||
+                mainInformationWidgetDto.AttendeeInnovationOrganizationTrackDtos.Any(aiotDto => attendeeCollaboratorInnovationOrganizationTrackOptionsUids.Contains(aiotDto.InnovationOrganizationTrackOption.Uid)) == false)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("EvaluationList", "Projects", new { Area = "Innovation" });
+            }
+
+            #endregion
+
             return Json(new
             {
                 status = "success",
@@ -457,6 +470,19 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Startup, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
+
+            #region AttendeeCollaborator and AttendeeInnovationOrganization Tracks validation
+
+            var attendeeCollaboratorInnovationOrganizationTrackOptionsUids = await this.GetAttendeeCollaboratorInnovationOrganizationTrackOptionsUids();
+
+            if (tracksWidgetDto == null ||
+                tracksWidgetDto.AttendeeInnovationOrganizationTrackDtos.Any(aiotDto => attendeeCollaboratorInnovationOrganizationTrackOptionsUids.Contains(aiotDto.InnovationOrganizationTrackOption.Uid)) == false)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("EvaluationList", "Projects", new { Area = "Innovation" });
+            }
+
+            #endregion
 
             ViewBag.InnovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllAsync();
 
@@ -488,6 +514,19 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Startup, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
+            #region AttendeeCollaborator and AttendeeInnovationOrganization Tracks validation
+
+            var attendeeCollaboratorInnovationOrganizationTrackOptionsUids = await this.GetAttendeeCollaboratorInnovationOrganizationTrackOptionsUids();
+
+            if (objectivesWidgetDto == null ||
+                objectivesWidgetDto.AttendeeInnovationOrganizationTrackDtos.Any(aiotDto => attendeeCollaboratorInnovationOrganizationTrackOptionsUids.Contains(aiotDto.InnovationOrganizationTrackOption.Uid)) == false)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("EvaluationList", "Projects", new { Area = "Innovation" });
+            }
+
+            #endregion
+
             ViewBag.InnovationOrganizationObjectivesOptions = await this.innovationOrganizationObjectivesOptionRepo.FindAllAsync();
 
             return Json(new
@@ -518,6 +557,19 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Startup, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
+            #region AttendeeCollaborator and AttendeeInnovationOrganization Tracks validation
+
+            var attendeeCollaboratorInnovationOrganizationTrackOptionsUids = await this.GetAttendeeCollaboratorInnovationOrganizationTrackOptionsUids();
+
+            if (technologiesWidgetDto == null ||
+                technologiesWidgetDto.AttendeeInnovationOrganizationTrackDtos.Any(aiotDto => attendeeCollaboratorInnovationOrganizationTrackOptionsUids.Contains(aiotDto.InnovationOrganizationTrackOption.Uid)) == false)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("EvaluationList", "Projects", new { Area = "Innovation" });
+            }
+
+            #endregion
+
             ViewBag.InnovationOrganizationTechnologiesOptions = await this.innovationOrganizationTechnologyOptionRepo.FindAllAsync();
 
             return Json(new
@@ -547,6 +599,19 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Startup, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
+
+            #region AttendeeCollaborator and AttendeeInnovationOrganization Tracks validation
+
+            var attendeeCollaboratorInnovationOrganizationTrackOptionsUids = await this.GetAttendeeCollaboratorInnovationOrganizationTrackOptionsUids();
+
+            if (experiencesWidgetDto == null ||
+                experiencesWidgetDto.AttendeeInnovationOrganizationTrackDtos.Any(aiotDto => attendeeCollaboratorInnovationOrganizationTrackOptionsUids.Contains(aiotDto.InnovationOrganizationTrackOption.Uid)) == false)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("EvaluationList", "Projects", new { Area = "Innovation" });
+            }
+
+            #endregion
 
             ViewBag.InnovationOrganizationExperiencesOptions = await this.innovationOrganizationExperienceOptionRepo.FindAllAsync();
 
@@ -582,6 +647,19 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
+
+            #region AttendeeCollaborator and AttendeeInnovationOrganization Tracks validation
+
+            var attendeeCollaboratorInnovationOrganizationTrackOptionsUids = await this.GetAttendeeCollaboratorInnovationOrganizationTrackOptionsUids();
+
+            if (evaluationDto == null ||
+                evaluationDto.AttendeeInnovationOrganizationTrackDtos.Any(aiotDto => attendeeCollaboratorInnovationOrganizationTrackOptionsUids.Contains(aiotDto.InnovationOrganizationTrackOption.Uid)) == false)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("EvaluationList", "Projects", new { Area = "Innovation" });
+            }
+
+            #endregion
 
             ViewBag.ApprovedAttendeeInnovationOrganizationsIds = await this.attendeeInnovationOrganizationRepo.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(this.EditionDto.Edition.Id);
 
@@ -671,6 +749,19 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
+
+            #region AttendeeCollaborator and AttendeeInnovationOrganization Tracks validation
+
+            var attendeeCollaboratorInnovationOrganizationTrackOptionsUids = await this.GetAttendeeCollaboratorInnovationOrganizationTrackOptionsUids();
+
+            if (evaluationDto == null ||
+                evaluationDto.AttendeeInnovationOrganizationTrackDtos.Any(aiotDto => attendeeCollaboratorInnovationOrganizationTrackOptionsUids.Contains(aiotDto.InnovationOrganizationTrackOption.Uid)) == false)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("EvaluationList", "Projects", new { Area = "Innovation" });
+            }
+
+            #endregion
 
             return Json(new
             {

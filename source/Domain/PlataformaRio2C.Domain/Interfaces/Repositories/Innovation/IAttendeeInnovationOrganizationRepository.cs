@@ -33,15 +33,13 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<AttendeeInnovationOrganizationDto> FindExperiencesWidgetDtoAsync(Guid attendeeInnovationOrganizationUid);
         Task<AttendeeInnovationOrganizationDto> FindTechnologiesWidgetDtoAsync(Guid attendeeInnovationOrganizationUid);
         Task<AttendeeInnovationOrganizationDto> FindEvaluationGradeWidgetDtoAsync(Guid attendeeInnovationOrganizationUid, int userId);
-        Task<AttendeeInnovationOrganizationDto> FindEvaluatorsWidgetDtoAsync(Guid attendeeInnovationOrganizationUid);   
+        Task<AttendeeInnovationOrganizationDto> FindEvaluatorsWidgetDtoAsync(Guid attendeeInnovationOrganizationUid);
         Task<AttendeeInnovationOrganization> FindByIdAsync(int attendeeInnovationOrganizationId);
         Task<AttendeeInnovationOrganization> FindByUidAsync(Guid attendeeInnovationOrganizationUid);
         Task<List<AttendeeInnovationOrganization>> FindAllByIdsAsync(List<int?> attendeeInnovationOrganizationIds);
         Task<List<AttendeeInnovationOrganization>> FindAllByUidsAsync(List<Guid?> attendeeInnovationOrganizationUids);
         Task<AttendeeInnovationOrganization> FindByDocumentAndEditionIdAsync(string document, int editionId);
-        Task<List<AttendeeInnovationOrganizationDto>> FindAllApprovedAttendeeMusicBandsAsync(int editionId);
         Task<int[]> FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(int editionId);
-        Task<int[]> FindAllMusicProjectsIdsAsync(int editionId);
         Task<int[]> FindAllInnovationOrganizationsIdsPagedAsync(int editionId, string searchKeywords, List<Guid?> innovationOrganizationTrackOptionUids, Guid? evaluationStatusUid, int page, int pageSize);
         Task<int> CountAsync(int editionId, bool showAllEditions = false);
         Task<int> CountPagedAsync(int editionId, string searchKeywords, List<Guid?> innovationOrganizationTrackOptionUids, Guid? evaluationStatusUid, int page, int pageSize);
