@@ -40,7 +40,6 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
         private readonly IMusicProjectRepository musicProjectRepo;
         private readonly IMusicGenreRepository musicGenreRepo;
         private readonly IProjectEvaluationStatusRepository evaluationStatusRepo;
-        private readonly IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepo;
         private readonly IMusicBandRepository musicBandRepo;
 
         /// <summary>Initializes a new instance of the <see cref="ProjectsController"/> class.</summary>
@@ -56,7 +55,6 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             IMusicProjectRepository musicProjectRepository,
             IMusicGenreRepository musicGenreRepository,
             IProjectEvaluationStatusRepository evaluationStatusRepository,
-            IProjectEvaluationRefuseReasonRepository projectEvaluationRefuseReasonRepository,
             IMusicBandRepository musicBandRepository
             )
             : base(commandBus, identityController)
@@ -64,11 +62,10 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
             this.musicProjectRepo = musicProjectRepository;
             this.musicGenreRepo = musicGenreRepository;
             this.evaluationStatusRepo = evaluationStatusRepository;
-            this.projectEvaluationRefuseReasonRepo = projectEvaluationRefuseReasonRepository;
             this.musicBandRepo = musicBandRepository;
         }
 
-        #region Schedule
+        #region Evaluation List
 
         /// <summary>Indexes this instance.</summary>
         /// <returns></returns>
@@ -85,12 +82,6 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
             return View();
         }
-
-        #endregion
-
-        #region Music Commission
-
-        #region Evaluation List
 
         /// <summary>Evaluations the list.</summary>
         /// <param name="searchKeywords">The search keywords.</param>
@@ -200,7 +191,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
         #endregion
 
-        #region Evaluation Details
+        #region Details
 
         /// <summary>
         /// Evaluations the details.
@@ -924,8 +915,6 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
                 }
             }, JsonRequestBehavior.AllowGet);
         }
-
-        #endregion
 
         #endregion
     }

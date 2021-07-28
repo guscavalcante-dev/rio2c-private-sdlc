@@ -26,7 +26,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
 
             // Relationships
             this.HasRequired(t => t.InnovationOrganizationTrackOption)
-                .WithMany()
+                .WithMany(ioto => ioto.AttendeeCollaboratorInnovationOrganizationTracks)
                 .HasForeignKey(d => d.InnovationOrganizationTrackOptionId);
 
             this.HasRequired(t => t.AttendeeCollaborator)

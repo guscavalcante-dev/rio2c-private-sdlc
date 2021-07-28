@@ -414,6 +414,29 @@ namespace PlataformaRio2C.Web.Site
 
             #endregion
 
+            #region Innovation Page Bundles
+
+            #region Projects
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.projects.widget.js").Include(
+                "~/Assets/js/innovation/projects/innovation.projects.maininformation.widget.js",
+                "~/Assets/js/innovation/projects/innovation.projects.tracks.widget.js",
+                "~/Assets/js/innovation/projects/innovation.projects.objectives.widget.js",
+                "~/Assets/js/innovation/projects/innovation.projects.experiences.widget.js",
+                "~/Assets/js/innovation/projects/innovation.projects.technologies.widget.js",
+                "~/Assets/js/innovation/projects/innovation.projects.evaluators.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.projects.evaluation.list.widget.js").Include(
+                "~/Assets/js/innovation/projects/innovation.projects.evaluation.list.widget.js",
+                "~/Scripts/jquery.unobtrusive-ajax.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.projects.evaluation.widget.js").Include(
+                "~/Assets/js/innovation/projects/innovation.projects.evaluation.widget.js"));
+
+            #endregion
+
+            #endregion
+
             #region Scripts
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(

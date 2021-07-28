@@ -37,7 +37,7 @@
                 <div class="kt-widget__info">
                     <div class="kt-widget__desc">
                         <div class="kt-widget__subhead pt-0">
-                            @(Model.AttendeeMusicBandDto?.MusicBandType?.Name ?? "-")
+                            @(Model.AttendeeMusicBandDto?.MusicBandType?.Name?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|') ?? "-")
                         </div>
                         <div class="kt-widget__subhead pt-1 pb-0">
                             @Labels.MusicGenre:
@@ -46,7 +46,7 @@
                                 foreach (var musicBandGenreDto in Model.AttendeeMusicBandDto.MusicBandGenreDtos)
                                 {
                                     <span class="kt-badge kt-badge--inline kt-badge--info">
-                                        @(musicBandGenreDto.MusicGenre.Name)
+                                        @(musicBandGenreDto.MusicGenre.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
                                         @if (musicBandGenreDto.MusicGenre.HasAdditionalInfo && !string.IsNullOrEmpty(musicBandGenreDto.MusicBandGenre.AdditionalInfo))
                                         {
                                             @musicBandGenreDto.MusicBandGenre.AdditionalInfo

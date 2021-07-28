@@ -23,8 +23,6 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         public InnovationOrganizationTrackOptionMap()
         {
             this.ToTable("InnovationOrganizationTrackOptions");
-
-            // Relationships
         }
     }
 }

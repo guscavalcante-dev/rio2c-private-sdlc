@@ -37,13 +37,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// Finds the by ids.
         /// </summary>
         /// <param name="query">The query.</param>
-        /// <param name="InnovationOrganizationTrackOptionsIds">The innovation organizations ids.</param>
+        /// <param name="innovationOrganizationTrackOptionsIds">The innovation organizations ids.</param>
         /// <returns>IQueryable&lt;InnovationOrganizationTrackOption&gt;.</returns>
-        internal static IQueryable<InnovationOrganizationTrackOption> FindByIds(this IQueryable<InnovationOrganizationTrackOption> query, List<int?> InnovationOrganizationTrackOptionsIds)
+        internal static IQueryable<InnovationOrganizationTrackOption> FindByIds(this IQueryable<InnovationOrganizationTrackOption> query, List<int?> innovationOrganizationTrackOptionsIds)
         {
-            if (InnovationOrganizationTrackOptionsIds?.Any(i => i.HasValue) == true)
+            if (innovationOrganizationTrackOptionsIds?.Any(i => i.HasValue) == true)
             {
-                query = query.Where(io => InnovationOrganizationTrackOptionsIds.Contains(io.Id));
+                query = query.Where(ioto => innovationOrganizationTrackOptionsIds.Contains(ioto.Id));
             }
 
             return query;
@@ -51,13 +51,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
         /// <summary>Finds the by uids.</summary>
         /// <param name="query">The query.</param>
-        /// <param name="InnovationOrganizationTrackOptionsUids">The attendee organizations uids.</param>
+        /// <param name="innovationOrganizationTrackOptionsUids">The attendee organizations uids.</param>
         /// <returns></returns>
-        internal static IQueryable<InnovationOrganizationTrackOption> FindByUids(this IQueryable<InnovationOrganizationTrackOption> query, List<Guid?> InnovationOrganizationTrackOptionsUids)
+        internal static IQueryable<InnovationOrganizationTrackOption> FindByUids(this IQueryable<InnovationOrganizationTrackOption> query, List<Guid?> innovationOrganizationTrackOptionsUids)
         {
-            if (InnovationOrganizationTrackOptionsUids?.Any(i => i.HasValue) == true)
+            if (innovationOrganizationTrackOptionsUids?.Any(i => i.HasValue) == true)
             {
-                query = query.Where(io => InnovationOrganizationTrackOptionsUids.Contains(io.Uid));
+                query = query.Where(ioto => innovationOrganizationTrackOptionsUids.Contains(ioto.Uid));
             }
 
             return query;
@@ -68,7 +68,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<InnovationOrganizationTrackOption> IsNotDeleted(this IQueryable<InnovationOrganizationTrackOption> query)
         {
-            query = query.Where(io => !io.IsDeleted);
+            query = query.Where(ioto => !ioto.IsDeleted);
 
             return query;
         }
@@ -80,7 +80,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns>IQueryable&lt;InnovationOrganizationTrackOption&gt;.</returns>
         internal static IQueryable<InnovationOrganizationTrackOption> Order(this IQueryable<InnovationOrganizationTrackOption> query)
         {
-            query = query.OrderBy(io => io.DisplayOrder);
+            query = query.OrderBy(ioto => ioto.DisplayOrder);
+
+            return query;
+        }
+
+        /// <summary>
+        /// Finds the by attendee collaborator identifier.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<InnovationOrganizationTrackOption> FindByAttendeeCollaboratorId(this IQueryable<InnovationOrganizationTrackOption> query, int attendeeCollaboratorId)
+        {
+            query = query.Where(ioto => ioto.AttendeeCollaboratorInnovationOrganizationTracks
+                                                .Where(aciot => !aciot.IsDeleted)
+                                                .Any(aciot => aciot.AttendeeCollaboratorId == attendeeCollaboratorId));
 
             return query;
         }
@@ -172,7 +187,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<List<InnovationOrganizationTrackOption>> FindAllByIdsAsync(List<int?> InnovationOrganizationTrackOptionIds)
         {
             var query = this.GetBaseQuery()
-                            .FindByIds(InnovationOrganizationTrackOptionIds);
+                            .FindByIds(InnovationOrganizationTrackOptionIds)
+                            .Order();
 
             return await query.ToListAsync();
         }
@@ -185,7 +201,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<List<InnovationOrganizationTrackOption>> FindAllByUidsAsync(List<Guid?> InnovationOrganizationTrackOptionUids)
         {
             var query = this.GetBaseQuery()
-                            .FindByUids(InnovationOrganizationTrackOptionUids);
+                            .FindByUids(InnovationOrganizationTrackOptionUids)
+                            .Order();
 
             return await query.ToListAsync();
         }
@@ -197,6 +214,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<List<InnovationOrganizationTrackOption>> FindAllAsync()
         {
             var query = this.GetBaseQuery()
+                            .Order();
+
+            return await query.ToListAsync();
+        }
+
+        /// <summary>
+        /// Finds all by attendee collaborator identifier asynchronous.
+        /// </summary>
+        /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
+        /// <returns></returns>
+        public async Task<List<InnovationOrganizationTrackOption>> FindAllByAttendeeCollaboratorIdAsync(int attendeeCollaboratorId)
+        {
+            var query = this.GetBaseQuery()
+                            .FindByAttendeeCollaboratorId(attendeeCollaboratorId)
                             .Order();
 
             return await query.ToListAsync();

@@ -7714,9 +7714,6 @@
     <Content Include="Areas\Innovation\Views\Commissions\Modals\UpdateTracksForm.cshtml" />
     <Content Include="Areas\Innovation\Views\Projects\EvaluationDetails.cshtml" />
     <Content Include="Areas\Innovation\Views\Projects\Index.cshtml" />
-    <Content Include="Areas\Innovation\Views\Projects\Shared\_ClippingItem.cshtml" />
-    <Content Include="Areas\Innovation\Views\Projects\Shared\_MusicItem.cshtml" />
-    <Content Include="Areas\Innovation\Views\Projects\Shared\_VideoItem.cshtml" />
     <Content Include="Areas\Innovation\Views\Projects\Widgets\DataTableWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Projects\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Projects\Widgets\EvaluationGradeWidget.cshtml" />
@@ -9110,6 +9107,7 @@
     <Folder Include="Areas\Audiovisual\Data\" />
     <Folder Include="Areas\Innovation\Data\" />
     <Folder Include="Areas\Innovation\Views\Projects\Modals\" />
+    <Folder Include="Areas\Innovation\Views\Projects\Shared\" />
     <Folder Include="Areas\Music\Data\" />
     <Folder Include="Areas\Music\Views\Shared\" />
     <Folder Include="Scripts\ckeditor\images\" />

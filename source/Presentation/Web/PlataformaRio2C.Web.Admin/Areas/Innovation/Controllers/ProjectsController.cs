@@ -41,7 +41,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminInnovation)]
     public class ProjectsController : BaseController
     {
-        private readonly IMusicProjectRepository musicProjectRepo;
         private readonly IProjectEvaluationStatusRepository evaluationStatusRepo;
         private readonly IAttendeeInnovationOrganizationRepository attendeeInnovationOrganizationRepo;
         private readonly IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepo;
@@ -49,10 +48,21 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         private readonly IInnovationOrganizationTechnologyOptionRepository innovationOrganizationTechnologyOptionRepo;
         private readonly IInnovationOrganizationExperienceOptionRepository innovationOrganizationExperienceOptionRepo;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProjectsController"/> class.
+        /// </summary>
+        /// <param name="commandBus">The command bus.</param>
+        /// <param name="identityController">The identity controller.</param>
+        /// <param name="evaluationStatusRepository">The evaluation status repository.</param>
+        /// <param name="attendeeInnovationOrganizationRepository">The attendee innovation organization repository.</param>
+        /// <param name="innovationOrganizationTrackOptionRepository">The innovation organization track option repository.</param>
+        /// <param name="innovationOrganizationObjectivesOptionRepository">The innovation organization objectives option repository.</param>
+        /// <param name="innovationOrganizationTechnologyOptionRepository">The innovation organization technology option repository.</param>
+        /// <param name="innovationOrganizationExperienceOptionRepository">The innovation organization experience option repository.</param>
+        /// <param name="userRepository">The user repository.</param>
         public ProjectsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
-            IMusicProjectRepository musicProjectRepository,
             IProjectEvaluationStatusRepository evaluationStatusRepository,
             IAttendeeInnovationOrganizationRepository attendeeInnovationOrganizationRepository,
             IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepository,
@@ -62,7 +72,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             )
             : base(commandBus, identityController)
         {
-            this.musicProjectRepo = musicProjectRepository;
             this.evaluationStatusRepo = evaluationStatusRepository;
             this.attendeeInnovationOrganizationRepo = attendeeInnovationOrganizationRepository;
             this.innovationOrganizationTrackOptionRepo = innovationOrganizationTrackOptionRepository;
@@ -117,7 +126,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             var attendeeInnovationOrganizationJsonDtos = await this.attendeeInnovationOrganizationRepo.FindAllJsonDtosPagedAsync(
                 this.EditionDto.Id,
                 request.Search?.Value,
-                innovationOrganizationTrackUid,
+                new List<Guid?> { innovationOrganizationTrackUid },
                 evaluationStatusUid,
                 page,
                 pageSize,
@@ -254,7 +263,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             StringBuilder data = new StringBuilder();
             data.AppendLine($"{Labels.Startup}; {Labels.Project}; {Labels.ProductsOrServices}; {Labels.Status}; {Labels.Votes}; {Labels.Average}");
 
-            var attendeeInnovationOrganizationJsonDtos = await this.attendeeInnovationOrganizationRepo.FindAllJsonDtosPagedAsync(this.EditionDto.Id, searchKeywords, innovationOrganizationTrackUid, evaluationStatusUid, 1, 10000, new List<Tuple<string, string>>());
+            var attendeeInnovationOrganizationJsonDtos = await this.attendeeInnovationOrganizationRepo.FindAllJsonDtosPagedAsync(this.EditionDto.Id, searchKeywords, new List<Guid?> { innovationOrganizationTrackUid }, evaluationStatusUid, 1, 10000, new List<Tuple<string, string>>());
             var approvedAttendeeInnovationOrganizationIds = await this.attendeeInnovationOrganizationRepo.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(this.EditionDto.Id);
 
             foreach (var attendeeInnovationOrganizationJsonDto in attendeeInnovationOrganizationJsonDtos)
@@ -287,7 +296,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             StringBuilder data = new StringBuilder();
             data.AppendLine($"{Labels.Startup}; {Labels.Project}; {Labels.Evaluation}; {Labels.Evaluator};");
 
-            var attendeeInnovationOrganizationJsonDtos = await this.attendeeInnovationOrganizationRepo.FindAllJsonDtosPagedAsync(this.EditionDto.Id, searchKeywords, innovationOrganizationTrackUid, evaluationStatusUid, 1, 1000, new List<Tuple<string, string>>());
+            var attendeeInnovationOrganizationJsonDtos = await this.attendeeInnovationOrganizationRepo.FindAllJsonDtosPagedAsync(this.EditionDto.Id, searchKeywords, new List<Guid?> { innovationOrganizationTrackUid }, evaluationStatusUid, 1, 1000, new List<Tuple<string, string>>());
             foreach (var attendeeInnovationOrganizationJsonDto in attendeeInnovationOrganizationJsonDtos)
             {
                 var attendeeInnovationEvaluationDto = await this.attendeeInnovationOrganizationRepo.FindEvaluatorsWidgetDtoAsync(attendeeInnovationOrganizationJsonDto.AttendeeInnovationOrganizationUid);
@@ -391,7 +400,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             var allInnovationProjectsIds = await this.attendeeInnovationOrganizationRepo.FindAllInnovationOrganizationsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
                 searchKeywords,
-                innovationOrganizationTrackUid,
+                new List<Guid?> { innovationOrganizationTrackUid },
                 evaluationStatusUid,
                 page.Value,
                 pageSize.Value);
@@ -404,7 +413,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             ViewBag.PageSize = pageSize;
             ViewBag.CurrentInnovationProjectIndex = currentInnovationProjectIdIndex;
 
-            ViewBag.InnovationProjectsTotalCount = await this.attendeeInnovationOrganizationRepo.CountPagedAsync(this.EditionDto.Edition.Id, searchKeywords, innovationOrganizationTrackUid, evaluationStatusUid, page.Value, pageSize.Value);
+            ViewBag.InnovationProjectsTotalCount = await this.attendeeInnovationOrganizationRepo.CountPagedAsync(this.EditionDto.Edition.Id, searchKeywords, new List<Guid?> { innovationOrganizationTrackUid }, evaluationStatusUid, page.Value, pageSize.Value);
             ViewBag.ApprovedAttendeeInnovationOrganizationsIds = await this.attendeeInnovationOrganizationRepo.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(this.EditionDto.Edition.Id);
 
             return View(attendeeInnovationOrganizationDto);
@@ -426,7 +435,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             var allInnovationProjectsIds = await this.attendeeInnovationOrganizationRepo.FindAllInnovationOrganizationsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
                 searchKeywords,
-                innovationOrganizationTrackUid,
+                new List<Guid?> { innovationOrganizationTrackUid },
                 evaluationStatusUid,
                 page.Value,
                 pageSize.Value);
@@ -466,7 +475,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             var allInnovationProjectsIds = await this.attendeeInnovationOrganizationRepo.FindAllInnovationOrganizationsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
                 searchKeywords,
-                innovationOrganizationTrackUid,
+                new List<Guid?> { innovationOrganizationTrackUid },
                 evaluationStatusUid,
                 page.Value,
                 pageSize.Value);

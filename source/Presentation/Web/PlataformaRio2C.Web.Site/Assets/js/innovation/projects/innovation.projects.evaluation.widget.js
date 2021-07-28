@@ -1,18 +1,18 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Site
-// Author           : Rafael Dantas Ruiz
-// Created          : 02-28-2020
+// Author           : Renan Valentim
+// Created          : 07-28-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-29-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 07-28-2021
 // ***********************************************************************
-// <copyright file="music.projects.evaluation.widget.js" company="Softo">
+// <copyright file="innovation.projects.evaluation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var MusicProjectsEvaluationWidget = function () {
+var InnovationProjectsEvaluationWidget = function () {
 
     var widgetElementId = '#ProjectEvaluationWidget';
     var widgetElement;
@@ -40,10 +40,9 @@ var MusicProjectsEvaluationWidget = function () {
         }
 
         var jsonParameters = new Object();
-        jsonParameters.projectUid = $('#AggregateId').val();
+        jsonParameters.attendeeInnovationOrganizationUid = $('#AggregateId').val();
 
-        //$.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/ShowEvaluationWidget'), jsonParameters, function (data) {
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/ShowEvaluationGradeWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Projects/ShowEvaluationGradeWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -65,12 +64,12 @@ var MusicProjectsEvaluationWidget = function () {
     };
 
     // Evaluation Grade ---------------------------------------------------------------------------
-    var submitEvaluationGrade = function (musicBandId) {
+    var submitEvaluationGrade = function (innovationOrganizationId) {
         var jsonParameters = new Object();
-        jsonParameters.musicBandId = musicBandId;
-        jsonParameters.grade = $('#AttendeeMusicBandEvaluationGrade').val();
+        jsonParameters.innovationOrganizationId = innovationOrganizationId;
+        jsonParameters.grade = $('#AttendeeInnovationOrganizationEvaluationGrade').val();
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/Evaluate'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Projects/Evaluate'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -85,9 +84,9 @@ var MusicProjectsEvaluationWidget = function () {
             })
             .always(function () {
                 MyRio2cCommon.unblock();
-                MusicProjectsEvaluationWidget.init();
-                MusicProjectsEvaluatorsWidget.init();
-                MusicProjectsMainInformationWidget.init();
+                InnovationProjectsEvaluationWidget.init();
+                InnovationProjectsEvaluatorsWidget.init();
+                InnovationProjectsMainInformationWidget.init();
             });
     };
 
@@ -97,8 +96,8 @@ var MusicProjectsEvaluationWidget = function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
         },
-        submitEvaluationGrade: function (musicBandId) {
-            submitEvaluationGrade(musicBandId);
+        submitEvaluationGrade: function (innovationOrganizationId) {
+            submitEvaluationGrade(innovationOrganizationId);
         }
     };
 }();
