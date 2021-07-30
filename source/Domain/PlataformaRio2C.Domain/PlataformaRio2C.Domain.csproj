@@ -443,7 +443,6 @@
     <Compile Include="Interfaces\Repositories\Addresses\ICountryRepository.cs" />
     <Compile Include="Interfaces\Repositories\Addresses\IStateRepository.cs" />
     <Compile Include="Interfaces\Repositories\Editions\IEditionEventRepository.cs" />
-    <Compile Include="Interfaces\Repositories\Innovation\IAttendeeInnovationOrganizationCollaboratorRepository.cs" />
     <Compile Include="Interfaces\Repositories\Innovation\IAttendeeInnovationOrganizationRepository.cs" />
     <Compile Include="Interfaces\Repositories\Innovation\IInnovationOrganizationObjectivesOptionRepository.cs" />
     <Compile Include="Interfaces\Repositories\Innovation\IInnovationOrganizationTechnologyOptionRepository.cs" />

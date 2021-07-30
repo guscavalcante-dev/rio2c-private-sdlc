@@ -827,10 +827,12 @@
     <Content Include="Assets\js\executives\executives.socialnetworks.widget.js" />
     <Content Include="Assets\js\executives\executives.maininformation.widget.js" />
     <Content Include="Assets\js\executives\executives.logisticinfo.widget.js" />
+    <Content Include="Assets\js\innovation\projects\innovation.projects.businessinformation.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.evaluation.list.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.evaluation.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.evaluators.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.experiences.widget.js" />
+    <Content Include="Assets\js\innovation\projects\innovation.projects.founders.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.maininformation.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.objectives.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.technologies.widget.js" />
@@ -6866,6 +6868,8 @@
     <Content Include="Areas\Innovation\Views\Projects\Widgets\ObjectivesWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Projects\Widgets\TechnologiesWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Projects\Widgets\TracksWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\Projects\Widgets\FoundersWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\Projects\Widgets\BusinessInformationWidget.cshtml" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />

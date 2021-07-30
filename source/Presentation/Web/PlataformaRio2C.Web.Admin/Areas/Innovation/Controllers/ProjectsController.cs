@@ -532,6 +532,34 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
         #endregion
 
+        #region Business Information Widget
+
+        /// <summary>
+        /// Shows the main information widget.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganizationUid">The attendee innovation organization uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowBusinessInformationWidget(Guid? attendeeInnovationOrganizationUid)
+        {
+            var mainInformationWidgetDto = await this.attendeeInnovationOrganizationRepo.FindBusinessInformationWidgetDtoAsync(attendeeInnovationOrganizationUid ?? Guid.Empty);
+            if (mainInformationWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Startup, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/BusinessInformationWidget", mainInformationWidgetDto), divIdOrClass = "#ProjectBusinessInformationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
         #region Tracks Widget
 
         /// <summary>
@@ -761,6 +789,34 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                 pages = new List<dynamic>
                 {
                     new { page = this.RenderRazorViewToString("Widgets/EvaluatorsWidget", evaluationDto), divIdOrClass = "#ProjectEvaluatorsWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Founders Widget
+
+        /// <summary>
+        /// Shows the evaluators widget.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganizationUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowFoundersWidget(Guid? attendeeInnovationOrganizationUid)
+        {
+            var attendeeInnovationOrganizationDto = await this.attendeeInnovationOrganizationRepo.FindFoundersWidgetDtoAsync(attendeeInnovationOrganizationUid ?? Guid.Empty);
+            if (attendeeInnovationOrganizationDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Startup, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/FoundersWidget", attendeeInnovationOrganizationDto), divIdOrClass = "#ProjectsFoundersWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }

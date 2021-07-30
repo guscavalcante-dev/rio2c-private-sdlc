@@ -12,17 +12,17 @@
         </h3>
     </div>
     @*<div class="kt-portlet__head-toolbar">
-        <div class="kt-portlet__head-actions">
-            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="InnovationProjectsTracksWidget.showUpdateModal();">
-                <i class="flaticon2-edit"></i>
-            </button>
-        </div>
-    </div>*@
+            <div class="kt-portlet__head-actions">
+                <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="InnovationProjectsTracksWidget.showUpdateModal();">
+                    <i class="flaticon2-edit"></i>
+                </button>
+            </div>
+        </div>*@
 </div>
 <div class="kt-portlet__body">
     @if (trackOptions?.Any() == true)
     {
-        <div class="kt-widget4">
+        <div class="kt-widget4 rio2c-scroll" style="max-height: 240px; ">
             @foreach (var trackOption in trackOptions.OrderBy(a => a.DisplayOrder))
             {
                 var attendeeInnovationOrganizationTrackDto = Model.GetAttendeeInnovationOrganizationTrackByTrackOptionUid(trackOption.Uid);
@@ -40,7 +40,7 @@
                         </div>
                     }
                     <div class="kt-widget4__info">
-                        <span class="kt-widget4__title">@trackOption.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
+                        <span class="kt-widget4__title">@trackOption.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')</span>
                     </div>
                 </div>
             }

@@ -12,17 +12,17 @@
         </h3>
     </div>
     @*<div class="kt-portlet__head-toolbar">
-        <div class="kt-portlet__head-actions">
-            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="InnovationProjectsTechnologiesWidget.showUpdateModal();">
-                <i class="flaticon2-edit"></i>
-            </button>
-        </div>
-    </div>*@
+            <div class="kt-portlet__head-actions">
+                <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="InnovationProjectsTechnologiesWidget.showUpdateModal();">
+                    <i class="flaticon2-edit"></i>
+                </button>
+            </div>
+        </div>*@
 </div>
 <div class="kt-portlet__body">
     @if (technologyOptions?.Any() == true)
     {
-        <div class="kt-widget4">
+        <div class="kt-widget4 rio2c-scroll" style="max-height: 220px;">
             @foreach (var technologyOption in technologyOptions.OrderBy(a => a.DisplayOrder))
             {
                 var attendeeInnovationOrganizationTechnologyDto = Model.GetAttendeeInnovationOrganizationTechnologyByTechnologyOptionUid(technologyOption.Uid);

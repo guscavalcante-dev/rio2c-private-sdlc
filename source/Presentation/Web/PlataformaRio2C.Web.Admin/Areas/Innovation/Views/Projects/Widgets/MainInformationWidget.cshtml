@@ -6,6 +6,7 @@
     var currentEvaluation = Model.GetAttendeeInnovationOrganizationEvaluationByUserId(adminAccessControlDto?.User?.Id ?? 0);
     var approvedAttendeeInnovationOrganizationsIds = ViewBag.ApprovedAttendeeInnovationOrganizationsIds as int[];
     var isThisInnovationProjectApproved = (approvedAttendeeInnovationOrganizationsIds?.Contains(Model.AttendeeInnovationOrganization.Id) == true);
+    var collaboratorDto = Model.GetAttendeeInnovationOrganizationCollaboratorByEditionId(editionDto.Id);
 }
 <div class="kt-portlet__body">
     <div class="kt-widget kt-widget--user-profile-3">
@@ -32,14 +33,36 @@
                         @(Model.InnovationOrganization?.Name ?? "-")
                     </span>
                 </div>
-                <div class="kt-widget__info">
-                    <div class="kt-widget__desc">
-                        <div class="kt-widget__subhead pt-0">
-                            @(Model.InnovationOrganization?.Document ?? "-")
+                <div class="kt-widget__info col-md-12 mr-0 pr-0 pl-0">
+                    <div class="kt-widget__desc pl-0 col-md-6">
+                        <div class="kt-widget__desc">
+                            <div class="kt-widget__subhead pt-0">
+                                @(Model.InnovationOrganization?.Document ?? "-")
+                            </div>
+                        </div>
+                        <div class="kt-widget__subhead pb-0">
+                            @Labels.Tracks:
+                            @if (Model.AttendeeInnovationOrganizationTrackDtos?.Any() == true)
+                            {
+                                foreach (var attendeeInnovationOrganizationTrackDto in Model.AttendeeInnovationOrganizationTrackDtos)
+                                {
+                                    <span class="kt-badge kt-badge--inline kt-badge--info">
+                                        @(attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOption.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                        @if (attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOption.HasAdditionalInfo && !string.IsNullOrEmpty(attendeeInnovationOrganizationTrackDto.AttendeeInnovationOrganizationTrack.AdditionalInfo))
+                                        {
+                                            @attendeeInnovationOrganizationTrackDto.AttendeeInnovationOrganizationTrack.AdditionalInfo
+                                        }
+                                    </span>
+                                }
+                            }
+                            else
+                            {
+                                @:-
+                            }
                         </div>
                     </div>
-                    <div class="kt-widget__progress myrio2c-evaluation-position">
-                        <div class="kt-widget__text" data-id="EvaluationGradeMain">
+                    <div class="kt-widget__desc myrio2c-evaluation-position col-md-6 pr-0">
+                        <div class="kt-widget__text pull-right" data-id="EvaluationGradeMain">
                             @if (editionDto?.IsInnovationProjectEvaluationStarted() != true)
                             {
                                 <div class="row">
@@ -75,7 +98,7 @@
                                         <button type="button" class="btn btn-success mt-2 mb-2 mr-3" onclick="InnovationProjectsMainInformationWidget.submitEvaluationGrade('@Model.InnovationOrganization.Id');">@Labels.Evaluate</button>
                                         @if (hasCurrentEvaluation)
                                         {
-                                            <button type="button" class="btn btn-secondary mt-2 mb-2 mr-3 pl-4" onclick="MyRio2cCommon.disableFieldEdit({ dataId: 'EvaluationGradeMain' })" data-toggle="tooltip" title="@(Labels.Cancel)">
+                                            <button type="button" class="btn btn-secondary mt-2 mb-2 mr-2 pl-4" onclick="MyRio2cCommon.disableFieldEdit({ dataId: 'EvaluationGradeMain' })" data-toggle="tooltip" title="@(Labels.Cancel)">
                                                 <i class="fa fa-times"></i>
                                             </button>
                                         }
@@ -107,6 +130,31 @@
             </div>
             <div class="kt-widget__item w-25 w-xs-100">
                 <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.AgentName</span>
+                    <span class="kt-widget__value"><span class="text-break">@(collaboratorDto?.Collaborator?.GetFullName() ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-25 w-xs-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.Email</span>
+                    <span class="kt-widget__value"><span class="text-break">@(collaboratorDto?.Collaborator?.PublicEmail ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-25 w-xs-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.PhoneNumber</span>
+                    <span class="kt-widget__value"><span class="text-break">@(collaboratorDto?.Collaborator?.PhoneNumber ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-25 w-xs-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.CellPhone</span>
+                    <span class="kt-widget__value"><span class="text-break">@(collaboratorDto?.Collaborator?.CellPhone ?? "-")</span></span>
+                </div>
+            </div>
+
+            <div class="kt-widget__item w-25 w-xs-100">
+                <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.FoundationDate</span>
                     <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Model.InnovationOrganization?.FoundationDate.ToShortDateString() ?? "-")</span></span>
                 </div>
@@ -122,6 +170,12 @@
                     <span class="kt-widget__title">@Labels.AccumulatedRevenueForLast3Months</span>
                     <span class="kt-widget__value"><span class="text-break">@(Model.AttendeeInnovationOrganization?.AccumulatedRevenue ?? 0)</span></span>
                 </div>
+            </div>
+            <div class="kt-widget__item w-25 w-xs-100">
+                @*<div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.AccumulatedRevenueForLast3Months</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.AttendeeInnovationOrganization?.AccumulatedRevenue ?? 0)</span></span>
+                </div>*@
             </div>
         </div>
     </div>

@@ -225,6 +225,10 @@
     <value>Agenda</value>
     <comment>Agenda</comment>
   </data>
+  <data name="AgentName" xml:space="preserve">
+    <value>Nome do Representante</value>
+    <comment>Nome do Representante</comment>
+  </data>
   <data name="AHolding" xml:space="preserve">
     <value>uma holding</value>
     <comment>uma holding</comment>
@@ -375,6 +379,34 @@
   <data name="BrowsingMode" xml:space="preserve">
     <value>Modo de Navegação</value>
   </data>
+  <data name="BusinessDefinition" xml:space="preserve">
+    <value>Definição do negócio</value>
+    <comment>Definição do negócio</comment>
+  </data>
+  <data name="BusinessDifferentials" xml:space="preserve">
+    <value>Diferenciais</value>
+    <comment>Diferenciais</comment>
+  </data>
+  <data name="BusinessEconomicModel" xml:space="preserve">
+    <value>Modelo Econômico</value>
+    <comment>Modelo econômico</comment>
+  </data>
+  <data name="BusinessFocus" xml:space="preserve">
+    <value>Foco Principal</value>
+    <comment>Foco principal</comment>
+  </data>
+  <data name="BusinessImpact" xml:space="preserve">
+    <value>Impacto do negócio</value>
+    <comment>Impacto do negócio</comment>
+  </data>
+  <data name="BusinessInformation" xml:space="preserve">
+    <value>Informações do Negócio</value>
+    <comment>Informações do Negócio</comment>
+  </data>
+  <data name="BusinessOperationalModel" xml:space="preserve">
+    <value>Modelo Operacional</value>
+    <comment>Modelo operacional</comment>
+  </data>
   <data name="BusinessRound" xml:space="preserve">
     <value>Rodadas de Negócios</value>
     <comment>Rodadas de Negócios</comment>
@@ -382,6 +414,10 @@
   <data name="BusinessRoundtable" xml:space="preserve">
     <value>Rodada de Negócios</value>
     <comment>Rodada de Negócios</comment>
+  </data>
+  <data name="BusinessStage" xml:space="preserve">
+    <value>Estágio no qual o negócio se encontra</value>
+    <comment>Estágio no qual o negócio se encontra</comment>
   </data>
   <data name="BuyTicket" xml:space="preserve">
     <value>Comprar Ingresso</value>
@@ -512,6 +548,10 @@
     <value>Resumo sobre a empresa</value>
     <comment>Resumo sobre a empresa</comment>
   </data>
+  <data name="Competitors" xml:space="preserve">
+    <value>Concorrentes</value>
+    <comment>Concorrentes</comment>
+  </data>
   <data name="Complaints" xml:space="preserve">
     <value>Denúncias</value>
     <comment>Denúncias</comment>
@@ -624,6 +664,10 @@
     <value>Senha atual</value>
     <comment>Senha atual</comment>
   </data>
+  <data name="Curriculum" xml:space="preserve">
+    <value>Curriculum</value>
+    <comment>Curriculum</comment>
+  </data>
   <data name="Dashboard" xml:space="preserve">
     <value>Dashboard</value>
     <comment>Dashboard</comment>
@@ -645,6 +689,10 @@
   <data name="Dear" xml:space="preserve">
     <value>Caro(a)</value>
     <comment>Caro(a)</comment>
+  </data>
+  <data name="Dedication" xml:space="preserve">
+    <value>Dedicação</value>
+    <comment>Dedicação</comment>
   </data>
   <data name="DeletedF" xml:space="preserve">
     <value>excluída</value>
@@ -964,6 +1012,10 @@
   <data name="FoundationDate" xml:space="preserve">
     <value>Data de fundação</value>
     <comment>Data de fundação</comment>
+  </data>
+  <data name="Founders" xml:space="preserve">
+    <value>Fundadores</value>
+    <comment>Fundadores</comment>
   </data>
   <data name="FoundF" xml:space="preserve">
     <value>encontrada</value>
@@ -1680,9 +1732,9 @@
     <value>Pitching</value>
     <comment>Pitching</comment>
   </data>
-  <data name="PitchingParticipationObjective" xml:space="preserve">
-    <value>Objetivo em participar do Pitching</value>
-    <comment>Objetivo em participar do Pitching</comment>
+  <data name="PitchingParticipationObjectives" xml:space="preserve">
+    <value>Objetivos em participar do Pitching</value>
+    <comment>Objetivos em participar do Pitching</comment>
   </data>
   <data name="Place" xml:space="preserve">
     <value>Local</value>
@@ -2682,8 +2734,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Código da URL</comment>
   </data>
   <data name="UsedTechnologies" xml:space="preserve">
-    <value>Tecnologias Utilizadas</value>
-    <comment>Tecnologias Utilizadas</comment>
+    <value>Tecnologias usadas</value>
+    <comment>Tecnologias usadas</comment>
   </data>
   <data name="User" xml:space="preserve">
     <value>Usuário</value>

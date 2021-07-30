@@ -28,12 +28,14 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<AttendeeInnovationOrganizationDto> FindDtoToEvaluateAsync(Guid attendeeInnovationOrganizationUid);
         Task<AttendeeInnovationOrganizationDto> FindDtoToEvaluateAsync(int attendeeInnovationOrganizationId);
         Task<AttendeeInnovationOrganizationDto> FindMainInformationWidgetDtoAsync(Guid attendeeInnovationOrganizationUid);
+        Task<AttendeeInnovationOrganizationDto> FindBusinessInformationWidgetDtoAsync(Guid attendeeInnovationOrganizationUid);
         Task<AttendeeInnovationOrganizationDto> FindTracksWidgetDtoAsync(Guid attendeeInnovationOrganizationUid);
         Task<AttendeeInnovationOrganizationDto> FindObjectivesWidgetDtoAsync(Guid attendeeInnovationOrganizationUid);
         Task<AttendeeInnovationOrganizationDto> FindExperiencesWidgetDtoAsync(Guid attendeeInnovationOrganizationUid);
         Task<AttendeeInnovationOrganizationDto> FindTechnologiesWidgetDtoAsync(Guid attendeeInnovationOrganizationUid);
         Task<AttendeeInnovationOrganizationDto> FindEvaluationGradeWidgetDtoAsync(Guid attendeeInnovationOrganizationUid, int userId);
         Task<AttendeeInnovationOrganizationDto> FindEvaluatorsWidgetDtoAsync(Guid attendeeInnovationOrganizationUid);
+        Task<AttendeeInnovationOrganizationDto> FindFoundersWidgetDtoAsync(Guid attendeeInnovationOrganizationUid);
         Task<AttendeeInnovationOrganization> FindByIdAsync(int attendeeInnovationOrganizationId);
         Task<AttendeeInnovationOrganization> FindByUidAsync(Guid attendeeInnovationOrganizationUid);
         Task<List<AttendeeInnovationOrganization>> FindAllByIdsAsync(List<int?> attendeeInnovationOrganizationIds);

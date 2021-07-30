@@ -23,7 +23,6 @@ namespace PlataformaRio2C.Domain.Dtos
     {
         public InnovationOrganization InnovationOrganization { get; set; }
         public AttendeeInnovationOrganization AttendeeInnovationOrganization { get; set; }
-        public AttendeeInnovationOrganizationCollaboratorDto AttendeeInnovationOrganizationCollaboratorDto { get; set; }
         public AttendeeInnovationOrganizationEvaluationDto AttendeeInnovationOrganizationEvaluationDto { get; set; }
 
         public IEnumerable<AttendeeInnovationOrganizationFounderDto> AttendeeInnovationOrganizationFounderDtos { get; set; }
@@ -92,6 +91,25 @@ namespace PlataformaRio2C.Domain.Dtos
         {
             return this.AttendeeInnovationOrganizationExperienceDtos?.FirstOrDefault(aiotDto => aiotDto.InnovationOrganizationExperienceOption.Uid == experienceOptionUid);
         }
+
+        /// <summary>
+        /// Gets the attendee innovation organization evaluation by user identifier.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public AttendeeInnovationOrganizationCollaboratorDto GetAttendeeInnovationOrganizationCollaboratorByEditionId(int? editionId)
+        {
+            if (!editionId.HasValue)
+                return null;
+
+            if (this.AttendeeInnovationOrganizationCollaboratorDtos == null)
+            {
+                this.AttendeeInnovationOrganizationCollaboratorDtos = new List<AttendeeInnovationOrganizationCollaboratorDto>();
+            }
+
+            return this.AttendeeInnovationOrganizationCollaboratorDtos.FirstOrDefault(w => w.AttendeeCollaborator.EditionId == editionId);
+        }
+
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeInnovationOrganizationDto"/> class.</summary>
         public AttendeeInnovationOrganizationDto()

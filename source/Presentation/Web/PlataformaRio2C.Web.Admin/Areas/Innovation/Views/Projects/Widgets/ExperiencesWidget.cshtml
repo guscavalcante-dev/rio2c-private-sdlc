@@ -22,7 +22,7 @@
 <div class="kt-portlet__body">
     @if (experienceOptions?.Any() == true)
     {
-        <div class="kt-widget4">
+        <div class="kt-widget4 rio2c-scroll" style="max-height: 220px;">
             @foreach (var experienceOption in experienceOptions.OrderBy(a => a.DisplayOrder))
             {
                 var attendeeInnovationOrganizationExperienceDto = Model.GetAttendeeInnovationOrganizationExperienceByExperienceOptionUid(experienceOption.Uid);

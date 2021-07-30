@@ -289,7 +289,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                {
                                    AttendeeInnovationOrganization = aio,
                                    InnovationOrganization = aio.InnovationOrganization,
-                                   AttendeeInnovationOrganizationCollaboratorDtos = aio.AttendeeInnovationOrganizationCollaborators.Select(aioc =>
+                                   AttendeeInnovationOrganizationCollaboratorDtos = aio.AttendeeInnovationOrganizationCollaborators
+                                                                                       .Where(aioc => !aioc.IsDeleted)
+                                                                                       .Select(aioc =>
                                                                                        new AttendeeInnovationOrganizationCollaboratorDto
                                                                                        {
                                                                                            AttendeeCollaborator = aioc.AttendeeCollaborator,
@@ -736,7 +738,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                {
                                    AttendeeInnovationOrganization = aio,
                                    InnovationOrganization = aio.InnovationOrganization,
-                                   AttendeeInnovationOrganizationCollaboratorDtos = aio.AttendeeInnovationOrganizationCollaborators.Select(aioc =>
+                                   AttendeeInnovationOrganizationCollaboratorDtos = aio.AttendeeInnovationOrganizationCollaborators
+                                                                                       .Where(aioc => !aioc.IsDeleted)
+                                                                                       .Select(aioc =>
                                                                                        new AttendeeInnovationOrganizationCollaboratorDto
                                                                                        {
                                                                                            AttendeeCollaborator = aioc.AttendeeCollaborator,
@@ -796,7 +800,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 {
                                     AttendeeInnovationOrganization = aio,
                                     InnovationOrganization = aio.InnovationOrganization,
-                                    AttendeeInnovationOrganizationCollaboratorDtos = aio.AttendeeInnovationOrganizationCollaborators.Select(aioc =>
+                                    AttendeeInnovationOrganizationCollaboratorDtos = aio.AttendeeInnovationOrganizationCollaborators
+                                                                                        .Where(aioc => !aioc.IsDeleted)
+                                                                                        .Select(aioc =>
                                                                                         new AttendeeInnovationOrganizationCollaboratorDto
                                                                                         {
                                                                                             AttendeeCollaborator = aioc.AttendeeCollaborator,
@@ -856,6 +862,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                {
                                    AttendeeInnovationOrganization = aio,
                                    InnovationOrganization = aio.InnovationOrganization,
+                                   AttendeeInnovationOrganizationCollaboratorDtos = aio.AttendeeInnovationOrganizationCollaborators
+                                                                                   .Where(aioc => !aioc.IsDeleted)
+                                                                                   .Select(aioc => new AttendeeInnovationOrganizationCollaboratorDto
+                                                                                   {
+                                                                                      AttendeeCollaborator = aioc.AttendeeCollaborator,
+                                                                                      Collaborator = aioc.AttendeeCollaborator.Collaborator,
+                                                                                   }).ToList(),
                                    AttendeeInnovationOrganizationTrackDtos = aio.AttendeeInnovationOrganizationTracks.Select(aiot =>
                                                                                      new AttendeeInnovationOrganizationTrackDto
                                                                                      {
@@ -869,6 +882,31 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                           AttendeeInnovationOrganizationEvaluation = aioe,
                                                                                           EvaluatorUser = aioe.EvaluatorUser
                                                                                       }).ToList()
+                               });
+
+            return await query
+                           .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the business information widget dto asynchronous.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganizationUid">The attendee innovation organization uid.</param>
+        /// <returns></returns>
+        public async Task<AttendeeInnovationOrganizationDto> FindBusinessInformationWidgetDtoAsync(Guid attendeeInnovationOrganizationUid)
+        {
+            var query = this.GetBaseQuery()
+                               .FindByUids(new List<Guid?> { attendeeInnovationOrganizationUid })
+                               .Select(aio => new AttendeeInnovationOrganizationDto
+                               {
+                                   AttendeeInnovationOrganization = aio,
+                                   InnovationOrganization = aio.InnovationOrganization,
+                                   AttendeeInnovationOrganizationCompetitorDtos = aio.AttendeeInnovationOrganizationCompetitors.Select(aiot =>
+                                                                                     new AttendeeInnovationOrganizationCompetitorDto
+                                                                                     {
+                                                                                         AttendeeInnovationOrganization = aio,
+                                                                                         AttendeeInnovationOrganizationCompetitor = aiot
+                                                                                     })
                                });
 
             return await query
@@ -1066,6 +1104,30 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                               EvaluatorUser = aioe.EvaluatorUser
                                                                                           })
                               });
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the founders widget dto asynchronous.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganizationUid">The attendee innovation organization uid.</param>
+        /// <returns></returns>
+        public async Task<AttendeeInnovationOrganizationDto> FindFoundersWidgetDtoAsync(Guid attendeeInnovationOrganizationUid)
+        {
+            var query = this.GetBaseQuery()
+                             .FindByUids(new List<Guid?> { attendeeInnovationOrganizationUid })
+                             .Select(aio => new AttendeeInnovationOrganizationDto
+                             {
+                                 AttendeeInnovationOrganization = aio,
+                                 InnovationOrganization = aio.InnovationOrganization,
+                                 AttendeeInnovationOrganizationFounderDtos = aio.AttendeeInnovationOrganizationFounders.Select(aiof => new AttendeeInnovationOrganizationFounderDto
+                                 {
+                                     AttendeeInnovationOrganization = aio,
+                                     AttendeeInnovationOrganizationFounder = aiof
+                                 })
+                             });
 
             return await query
                             .FirstOrDefaultAsync();

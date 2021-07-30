@@ -225,6 +225,10 @@
     <value>Agenda</value>
     <comment>Agenda</comment>
   </data>
+  <data name="AgentName" xml:space="preserve">
+    <value>Agent Name</value>
+    <comment>Nome do Representante</comment>
+  </data>
   <data name="AHolding" xml:space="preserve">
     <value>a holding</value>
     <comment>uma holding</comment>
@@ -376,6 +380,34 @@
   <data name="BrowsingMode" xml:space="preserve">
     <value>Browsing Mode</value>
   </data>
+  <data name="BusinessDefinition" xml:space="preserve">
+    <value>Business Definition</value>
+    <comment>Definição do negócio</comment>
+  </data>
+  <data name="BusinessDifferentials" xml:space="preserve">
+    <value>Differentials</value>
+    <comment>Diferenciais</comment>
+  </data>
+  <data name="BusinessEconomicModel" xml:space="preserve">
+    <value>Economic Model</value>
+    <comment>Modelo econômico</comment>
+  </data>
+  <data name="BusinessFocus" xml:space="preserve">
+    <value>Business Focus</value>
+    <comment>Foco principal</comment>
+  </data>
+  <data name="BusinessImpact" xml:space="preserve">
+    <value>Business Impact</value>
+    <comment>Impacto do negócio</comment>
+  </data>
+  <data name="BusinessInformation" xml:space="preserve">
+    <value>Business Information</value>
+    <comment>Informações do Negócio</comment>
+  </data>
+  <data name="BusinessOperationalModel" xml:space="preserve">
+    <value>Operational Model</value>
+    <comment>Modelo operacional</comment>
+  </data>
   <data name="BusinessRound" xml:space="preserve">
     <value>One-to-one-meetings</value>
     <comment>Rodadas de Negócios</comment>
@@ -383,6 +415,10 @@
   <data name="BusinessRoundtable" xml:space="preserve">
     <value>Business Roundtable</value>
     <comment>Rodada de Negócios</comment>
+  </data>
+  <data name="BusinessStage" xml:space="preserve">
+    <value>Business Stage</value>
+    <comment>Estágio no qual o negócio se encontra</comment>
   </data>
   <data name="BuyTicket" xml:space="preserve">
     <value>Buy Ticket</value>
@@ -513,6 +549,10 @@
     <value>Company resume</value>
     <comment>Resumo sobre a empresa</comment>
   </data>
+  <data name="Competitors" xml:space="preserve">
+    <value>Competitors</value>
+    <comment>Concorrentes</comment>
+  </data>
   <data name="Complaints" xml:space="preserve">
     <value>Complaints</value>
     <comment>Denúncias</comment>
@@ -623,6 +663,10 @@
     <value>Current password</value>
     <comment>Senha atual</comment>
   </data>
+  <data name="Curriculum" xml:space="preserve">
+    <value>Curriculum</value>
+    <comment>Curriculum</comment>
+  </data>
   <data name="Dashboard" xml:space="preserve">
     <value>Dashboard</value>
     <comment>Dashboard</comment>
@@ -644,6 +688,10 @@
   <data name="Dear" xml:space="preserve">
     <value>Dear</value>
     <comment>Caro(a)</comment>
+  </data>
+  <data name="Dedication" xml:space="preserve">
+    <value>Dedication</value>
+    <comment>Dedicação</comment>
   </data>
   <data name="DeletedF" xml:space="preserve">
     <value>deleted</value>
@@ -966,6 +1014,10 @@
   <data name="FoundationDate" xml:space="preserve">
     <value>Foundation date</value>
     <comment>Data de fundação</comment>
+  </data>
+  <data name="Founders" xml:space="preserve">
+    <value>Founders</value>
+    <comment>Fundadores</comment>
   </data>
   <data name="FoundF" xml:space="preserve">
     <value>found</value>
@@ -1679,9 +1731,9 @@
     <value>Pitching</value>
     <comment>Pitching</comment>
   </data>
-  <data name="PitchingParticipationObjective" xml:space="preserve">
-    <value>Pitching participation objective</value>
-    <comment>Objetivo de participação do Pitching</comment>
+  <data name="PitchingParticipationObjectives" xml:space="preserve">
+    <value>Pitching participation objectives</value>
+    <comment>Objetivos em participar do Pitching</comment>
   </data>
   <data name="Place" xml:space="preserve">
     <value>Place</value>
@@ -2678,8 +2730,8 @@
     <comment>Código da URL</comment>
   </data>
   <data name="UsedTechnologies" xml:space="preserve">
-    <value>Used Technologies</value>
-    <comment>Tecnologias Utilizadas</comment>
+    <value>Used technologies</value>
+    <comment>Tecnologias usadas</comment>
   </data>
   <data name="User" xml:space="preserve">
     <value>User</value>

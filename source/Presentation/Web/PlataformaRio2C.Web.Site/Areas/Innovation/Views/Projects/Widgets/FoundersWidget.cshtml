@@ -1,0 +1,42 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model AttendeeInnovationOrganizationDto
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+}
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">@Labels.Founders</h3>
+    </div>
+</div>
+<div class="kt-portlet__body pt-0">
+    @if (Model.AttendeeInnovationOrganizationFounderDtos?.Any() == true)
+    {
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-sm table-head-bg-brand table-body-scroll">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>@Labels.Name</th>
+                            <th>@Labels.Curriculum</th>
+                            <th class="text-center">@Labels.Dedication</th>
+                        </tr>
+                    </thead>
+                    <tbody class="rio2c-scroll" style="max-height: 150px;">
+                        @foreach (var attendeeInnovationOrganizationFounderDto in Model.AttendeeInnovationOrganizationFounderDtos)
+                        {
+                        <tr>
+                            <td>@(attendeeInnovationOrganizationFounderDto?.AttendeeInnovationOrganizationFounder.Fullname ?? "-")</td>
+                            <td>@(attendeeInnovationOrganizationFounderDto?.AttendeeInnovationOrganizationFounder?.Curriculum ?? "-")</td>
+                            <td class="text-center">@(attendeeInnovationOrganizationFounderDto?.AttendeeInnovationOrganizationFounder?.WorkDedication?.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|') ?? "-")</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.Founders, Labels.FoundM)</span>
+    }
+</div>

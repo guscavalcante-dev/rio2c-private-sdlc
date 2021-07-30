@@ -8,7 +8,7 @@
 <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
         <h3 class="kt-portlet__head-title">
-            @Labels.PitchingParticipationObjective
+            @Labels.PitchingParticipationObjectives
         </h3>
     </div>
     @*<div class="kt-portlet__head-toolbar">
@@ -22,7 +22,7 @@
 <div class="kt-portlet__body">
     @if (objectiveOptions?.Any() == true)
     {
-        <div class="kt-widget4">
+        <div class="kt-widget4 rio2c-scroll" style="max-height: 220px;">
             @foreach (var objectiveOption in objectiveOptions.OrderBy(a => a.DisplayOrder))
             {
                 var attendeeInnovationOrganizationTrackDto = Model.GetAttendeeInnovationOrganizationObjectiveByObjectiveOptionUid(objectiveOption.Uid);

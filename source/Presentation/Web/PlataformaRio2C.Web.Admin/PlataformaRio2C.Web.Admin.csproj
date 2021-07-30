@@ -839,7 +839,9 @@
     <Content Include="Assets\js\innovation\projects\innovation.projects.delete.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.editioncount.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.evaluation.widget.js" />
+    <Content Include="Assets\js\innovation\projects\innovation.projects.founders.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.evaluators.widget.js" />
+    <Content Include="Assets\js\innovation\projects\innovation.projects.businessinformation.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.technologies.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.maininformation.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.objectives.widget.js" />
@@ -7724,6 +7726,8 @@
     <Content Include="Areas\Innovation\Views\Projects\Widgets\ObjectivesWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Projects\Widgets\ExperiencesWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Projects\Widgets\TechnologiesWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\Projects\Widgets\FoundersWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\Projects\Widgets\BusinessInformationWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
