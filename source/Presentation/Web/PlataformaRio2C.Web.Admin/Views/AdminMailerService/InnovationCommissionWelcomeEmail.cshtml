@@ -7,18 +7,136 @@
 <td valign="top">
     <!-- content -->
     <h1>
+        <span>Prezado @Model.RecipientFirstName,</span><br />
+        <span style="font-style: italic; color: red;">Dear @Model.RecipientFirstName,</span>
+    </h1>
+    <p>
+        <span>
+            Gostaríamos de convidá-lo e contar com a sua presença para fazer parte da banca de investidores do
+            <span style="font-weight: 800;">Pitching de Startup do Rio2C @Model.Edition.UrlCode.</span>
+        </span>
+        <br />
+    </p>
+    <p>
+        <span>
+            <span style="font-weight: 800;">Rio2C</span> é o maior evento de criatividade e inovação da América Latina, desenhado para inspirar, informar e conectar pessoas, desenvolver negócios e qualificar talentos.
+            Na última edição, o pilar de Inovação do Rio2C 2019 recebeu no palco <span style="font-weight: 800;">profissionais</span> de ponta <span style="font-weight: 800;">brasileiros e internacionais</span> para explorar temas importantes, tais como:
+            <span style="font-weight: 800;">AI, IoT, robótica, neurociência, fintech, biotech, energias renováveis, healthtech, smartcities, mídias imersivas e blockchain</span>, entre muitos outros, debatendo visões, estratégias e desafios do nosso mundo em rápida evolução.
+        </span><br />
+    </p>
+    <p>
+        <span>
+            Acreditamos que sua atuação será de grande interesse para o público do <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span> e gostaríamos de convidar você para fazer parte da comissão de investidores que formarão a
+            <span style="font-weight: 800;">Banca do Pitching de Startups @Model.Edition.UrlCode</span>.
+        </span><br />
+    </p>
+    <p>
+        <span>As apresentações dos projetos acontecerão em 3 etapas:</span>
+        <br />
+    </p>
+    <p>
+        <span style="font-weight: 800;">1ª etapa - seleção</span>
+        <br />
+        <span>Serão apresentados 3 projetos por track, e a Banca escolherá o melhor de cada track, selecionando os 7 melhores projetos</span>
+        <br />
+    </p>
+    <!--Dates with tracks - 1ª etapa - begin-->
+    <ul style="padding-left: 0;">
+        <li>
+            <span style="font-weight: 800;">06/05/2020</span>
+            <ul style="padding-left: 0;">
+                <li>
+                    <span>Manhã – tracks <span style="font-weight: 800;">Arte Midia e Entretenimento | Educação e Qualificação Profissional |Transformação das Empresas e Empregos</span></span>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <span style="font-weight: 800; padding-left: 0;">07/05/2020</span>
+            <ul style="padding-left: 0;">
+                <li>
+                    <span>Manhã – tracks <span style="font-weight: 800;">Energia para transformar | Cidades e Sociedades do Futuro</span></span>
+                </li>
+                <li>
+                    <span>Tarde – tracks <span style="font-weight: 800;">Saúde, Alimentação e Bem estar | Novo Consumo e Tendências</span></span>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <!--Dates with tracks - 1ª etapa - end-->
+    <span style="font-weight: 800;">2ª etapa - semifinal</span>
+    <br />
+    <span>Será apresentado 1 projetos por track com a votação do público e escolha da Banca serão selecionados 3 finalistas.</span>
+    <br />
+    <!--Dates with tracks - 2ª etapa - begin-->
+    <ul style="padding-left: 0;">
+        <li>
+            <span style="font-weight: 800; padding-left: 0;">08/05/2020</span>  - todos os tracks na parte da manhã
+        </li>
+    </ul>
+    <!--Dates with tracks - 2ª etapa - end-->
+    <p>
+        <!--Dates with tracks - 3ª etapa - begin-->
+        <span style="font-weight: 800;">3ª etapa - final (horário e sala a confirmar)</span>
+        <!--Dates with tracks - 3ª etapa - end-->
+    </p>
+    <p>
+        <span>Será uma honra contar com a sua participação na <span style="font-weight: 800;">Banca do Pitching de Startups @Model.Edition.UrlCode do Rio2C </span> em <span style="text-decoration: underline;">uma das etapas</span> (1ª, 2ª etapas) e estar junto com outros criadores, empreendedores, investidores, inovadores, produtores e executivos.</span>
+        <br />
+    </p>
+    <p>
+        <span>Ficamos na expectativa da sua confirmação e permanecemos à disposição para quaisquer informações adicionais.</span>
+        <br />
+    </p>
+    <p>
+        <span>Atenciosamente,</span>
+        <br />
+        <br />
+    </p>
+    <table width="100%">
+        <tbody>
+            <tr>
+                <td>
+                    <span style="font-weight: 800;">Susana Campos</span><br />
+                    <span>Head do Mercado</span>
+                </td>
+                <td colspan="2">
+                    <span style="font-weight: 800;">Luiza Rodrigues</span><br />
+                    <span>Coord. Mercado de Inovação</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span style="font-weight: 800;">Bernardo Zamijovsky</span><br />
+                    <span>Curador de Inovação</span>
+                </td>
+                <td>
+                    <span style="font-weight: 800;">Carla Esmeralda</span><br />
+                    <span>Curadora Geral</span>
+                </td>
+                <td>
+                    <span style="font-weight: 800;">Rafael Lazarini</span><br />
+                    <span>Fundador do Rio2C</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</td>
+
+
+@*<td valign="top">
+    <h1>
         <span>Olá @Model.RecipientFirstName,</span><br />
         <span style="font-style: italic; color: red;">Dear @Model.RecipientFirstName,</span>
     </h1>
     <p>
         <span>
             Seja bem-vindo(a) ao <span style="font-weight: 800;">Rio2C</span> - o maior encontro de criatividade e inovação da América Latina. Agradecemos antecipadamente a sua presença
-            na <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span> 
+            na <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span>
             (dias @Model.Edition.StartDate.ToBrazilTimeZone().Day a @Model.Edition.EndDate.ToBrazilTimeZone().Day de @Model.Edition.EndDate.ToBrazilTimeZone().ToString("MMMM", brCulture), @Model.Edition.EndDate.ToBrazilTimeZone().Year).
         </span><br />
         <span style="font-style: italic; color: red;">
-            Welcome to <span style="font-weight: 800;">Rio2C</span> - Latin America’s leading creativity and innovation event. We would like to thank you in advance for joining us 
-            at <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span> 
+            Welcome to <span style="font-weight: 800;">Rio2C</span> - Latin America’s leading creativity and innovation event. We would like to thank you in advance for joining us
+            at <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span>
             (@Model.Edition.EndDate.ToBrazilTimeZone().ToString("MMMM", usCulture) @Model.Edition.StartDate.ToBrazilTimeZone().Day<sup>@Model.Edition.StartDate.ToBrazilTimeZone().GetDaySuffix()</sup> – @Model.Edition.EndDate.ToBrazilTimeZone().Day<sup>@Model.Edition.EndDate.ToBrazilTimeZone().GetDaySuffix()</sup>, @Model.Edition.EndDate.ToBrazilTimeZone().Year).
         </span>
     </p>
@@ -29,22 +147,22 @@
             dentre outras funcionalidades.
         </span><br />
         <span style="font-style: italic; color: red;">
-            For our @Model.Edition.UrlCode edition, we created the <span style="font-weight: 800;">MyRio2C</span> platform, which will concentrate all the key information about your participation in our event, such as: 
+            For our @Model.Edition.UrlCode edition, we created the <span style="font-weight: 800;">MyRio2C</span> platform, which will concentrate all the key information about your participation in our event, such as:
             your schedule, your profile, the official event program, the RIO2C network for you to be able to reach out to other guests directly, accreditation, amongst other functions.
         </span>
     </p>
-    @*<p>
-        <span>
-            É essencial que você cadastre seu perfil na plataforma <span style="font-weight: 800;">MyRio2C</span> e mantenha-o totalmente atualizado, pois as informações cadastradas nela
-            (<span style="font-weight: 800;">como foto em alta definição e minibio</span>) serão usadas para divulgar sua participação no nosso site oficial e redes sociais, 
-            bem como para emissão de sua credencial.
-        </span><br />
-        <span style="font-style: italic; color: red;">
-            It is essential that you register your profile on the <span style="font-weight: 800;">MyRio2C</span> website and keep it up to date, as the information you
-            provide (<span style="font-weight: 800;">such as a high-resolution photo of yourself and your mini bio</span>) will be used to promote your participation on our website and social media, and in
-            due course, will be used to create your <span style="font-weight: bold;">Rio2C</span> badge for accessing the event venue.
-        </span>
-    </p>*@
+    <p>
+            <span>
+                É essencial que você cadastre seu perfil na plataforma <span style="font-weight: 800;">MyRio2C</span> e mantenha-o totalmente atualizado, pois as informações cadastradas nela
+                (<span style="font-weight: 800;">como foto em alta definição e minibio</span>) serão usadas para divulgar sua participação no nosso site oficial e redes sociais,
+                bem como para emissão de sua credencial.
+            </span><br />
+            <span style="font-style: italic; color: red;">
+                It is essential that you register your profile on the <span style="font-weight: 800;">MyRio2C</span> website and keep it up to date, as the information you
+                provide (<span style="font-weight: 800;">such as a high-resolution photo of yourself and your mini bio</span>) will be used to promote your participation on our website and social media, and in
+                due course, will be used to create your <span style="font-weight: bold;">Rio2C</span> badge for accessing the event venue.
+            </span>
+        </p>
     <p>
         <span>
             Convidamos você para acessar a plataforma <span style="font-weight: 800;">MyRio2C</span> agora e cadastrar seu perfil para o <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span>.
@@ -62,7 +180,8 @@
         </span>
     </p>
     <div style="margin-top: 25px; margin-bottom: 25px;">
-        <!--Button:begin-->
+
+        Button:begin
         <table cellpadding="0" cellspacing="0" border="0" width="100%">
             <tr>
                 <td align="center">
@@ -76,40 +195,40 @@
                 </td>
             </tr>
         </table>
-        <!--Button:end-->
-    </div>
-    <p>
-        <span>
-            Em caso de dúvidas, favor entre em contato com a nossa equipe usando o assunto “<span style="font-weight: bold;">MyRio2C</span>” através do email: curadoria@rio2c.com.
-        </span><br />
-        <span style="font-style: italic; color: red;">
-            For any queries, please get in touch with our team using the subject “<span style="font-weight: bold;">MyRio2C</span>” via the email: curadoria@rio2c.com.
-        </span>
-    </p>
-    <p>
-        <span>
-            Desde já agradecemos sua cooperação.
-        </span><br />
-        <span style="font-style: italic; color: red;">
-            We thank you for your cooperation.
-        </span>
-    </p>
-    <p>
-        <span>
-            Seja bem-vindo ao <span style="font-weight: bold;">MyRio2C</span>!
-        </span><br />
-        <span style="font-style: italic; color: red;">
-            Welcome to <span style="font-weight: bold;">MyRio2C</span>!
-        </span>
-    </p>
-    <p>
-        <span>
-            Curadoria Rio2C
-        </span><br />
-        <span style="font-style: italic; color: red;">
-            Rio2C Curatorship
-        </span>
-    </p>
-</td>
+        Button:end
+        </div>
+            <p>
+                <span>
+                    Em caso de dúvidas, favor entre em contato com a nossa equipe usando o assunto “<span style="font-weight: bold;">MyRio2C</span>” através do email: curadoria@rio2c.com.
+                </span><br />
+                <span style="font-style: italic; color: red;">
+                    For any queries, please get in touch with our team using the subject “<span style="font-weight: bold;">MyRio2C</span>” via the email: curadoria@rio2c.com.
+                </span>
+            </p>
+            <p>
+                <span>
+                    Desde já agradecemos sua cooperação.
+                </span><br />
+                <span style="font-style: italic; color: red;">
+                    We thank you for your cooperation.
+                </span>
+            </p>
+            <p>
+                <span>
+                    Seja bem-vindo ao <span style="font-weight: bold;">MyRio2C</span>!
+                </span><br />
+                <span style="font-style: italic; color: red;">
+                    Welcome to <span style="font-weight: bold;">MyRio2C</span>!
+                </span>
+            </p>
+            <p>
+                <span>
+                    Curadoria Rio2C
+                </span><br />
+                <span style="font-style: italic; color: red;">
+                    Rio2C Curatorship
+                </span>
+            </p>
+        </td>*@
 @section Styles {
 }
