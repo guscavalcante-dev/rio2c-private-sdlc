@@ -4097,6 +4097,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Arquivo de Apresentação.
+        /// </summary>
+        public static string PresentationFile {
+            get {
+                return ResourceManager.GetString("PresentationFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Formato.
         /// </summary>
         public static string PresentationFormat {

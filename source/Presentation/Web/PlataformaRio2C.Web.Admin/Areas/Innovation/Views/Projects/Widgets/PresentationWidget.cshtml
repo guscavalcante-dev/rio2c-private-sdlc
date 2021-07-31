@@ -1,0 +1,38 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Statics
+@model AttendeeInnovationOrganizationDto
+@{
+    var fileUrl = FileHelper.GetFileUrl(FileRepositoryPathType.InnovationOrganizationPresentationFile, Model.InnovationOrganization.Uid, Model.AttendeeInnovationOrganization.PresentationUploadDate);
+}
+
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">@Labels.Pitching</h3>
+    </div>
+</div>
+<div class="kt-portlet__body">
+    <div class="kt-widget">
+        <div class="kt-widget__bottom">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="kt-widget4">
+                        <h3 class="kt-heading kt-heading--sm mb-0 mt-0 text-center">@Labels.PresentationFile</h3>
+                        <div class="row mt-3 justify-content-center">
+                            <div class="col-sm-8 col-md-8 col-lg-6">
+                                <div class="embed-responsive embed-responsive-16by9 d-flex">
+                                    @Html.Raw(fileUrl.ConvertPdfToEmbed())
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-12 text-center">
+                                <span><a href="@fileUrl" target="_blank"><small class="text-break">@fileUrl</small></a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

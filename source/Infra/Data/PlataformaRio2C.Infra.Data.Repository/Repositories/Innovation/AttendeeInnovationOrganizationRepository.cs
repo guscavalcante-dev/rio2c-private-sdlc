@@ -1132,5 +1132,24 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query
                             .FirstOrDefaultAsync();
         }
+
+        /// <summary>
+        /// Finds the clipping widget dto asynchronous.
+        /// </summary>
+        /// <param name="attendeeInnovationOrganizationUid">The attendee innovation organization uid.</param>
+        /// <returns></returns>
+        public async Task<AttendeeInnovationOrganizationDto> FindPresentationWidgetDtoAsync(Guid attendeeInnovationOrganizationUid)
+        {
+            var query = this.GetBaseQuery()
+                             .FindByUids(new List<Guid?> { attendeeInnovationOrganizationUid })
+                             .Select(aio => new AttendeeInnovationOrganizationDto
+                             {
+                                 AttendeeInnovationOrganization = aio,
+                                 InnovationOrganization = aio.InnovationOrganization
+                             });
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
     }
 }

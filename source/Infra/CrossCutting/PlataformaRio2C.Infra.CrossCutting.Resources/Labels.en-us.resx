@@ -1824,6 +1824,10 @@
              &lt;strong&gt;Customer Service Hours:&lt;/strong&gt; 10h às 19h &lt;br /&gt;
  &lt;/p&gt;</value>
   </data>
+  <data name="PresentationFile" xml:space="preserve">
+    <value>Presentation File</value>
+    <comment>Arquivo de Apresentação</comment>
+  </data>
   <data name="PresentationFormat" xml:space="preserve">
     <value>Presentation Format</value>
     <comment>Formato</comment>

@@ -44,7 +44,7 @@
                                 foreach (var musicBandGenreDto in Model.AttendeeMusicBandDto.MusicBandGenreDtos)
                                 {
                                     <span class="kt-badge kt-badge--inline kt-badge--info">
-                                        @(musicBandGenreDto.MusicGenre.Name)
+                                        @(musicBandGenreDto.MusicGenre.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
                                         @if (musicBandGenreDto.MusicGenre.HasAdditionalInfo && !string.IsNullOrEmpty(musicBandGenreDto.MusicBandGenre.AdditionalInfo))
                                         {
                                             @musicBandGenreDto.MusicBandGenre.AdditionalInfo

@@ -1825,6 +1825,10 @@
              &lt;strong&gt;Horário de Atendimento:&lt;/strong&gt; 10h às 19h &lt;br /&gt;
  &lt;/p&gt;</value>
   </data>
+  <data name="PresentationFile" xml:space="preserve">
+    <value>Arquivo de Apresentação</value>
+    <comment>Arquivo de Apresentação</comment>
+  </data>
   <data name="PresentationFormat" xml:space="preserve">
     <value>Formato</value>
     <comment>Formato</comment>

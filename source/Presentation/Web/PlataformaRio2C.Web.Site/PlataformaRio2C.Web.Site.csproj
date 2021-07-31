@@ -835,6 +835,7 @@
     <Content Include="Assets\js\innovation\projects\innovation.projects.founders.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.maininformation.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.objectives.widget.js" />
+    <Content Include="Assets\js\innovation\projects\innovation.projects.presentation.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.technologies.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.tracks.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.evaluators.widget.js" />
@@ -6870,6 +6871,7 @@
     <Content Include="Areas\Innovation\Views\Projects\Widgets\TracksWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Projects\Widgets\FoundersWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Projects\Widgets\BusinessInformationWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\Projects\Widgets\PresentationWidget.cshtml" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />

@@ -36,6 +36,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<AttendeeInnovationOrganizationDto> FindEvaluationGradeWidgetDtoAsync(Guid attendeeInnovationOrganizationUid, int userId);
         Task<AttendeeInnovationOrganizationDto> FindEvaluatorsWidgetDtoAsync(Guid attendeeInnovationOrganizationUid);
         Task<AttendeeInnovationOrganizationDto> FindFoundersWidgetDtoAsync(Guid attendeeInnovationOrganizationUid);
+        Task<AttendeeInnovationOrganizationDto> FindPresentationWidgetDtoAsync(Guid attendeeInnovationOrganizationUid);
         Task<AttendeeInnovationOrganization> FindByIdAsync(int attendeeInnovationOrganizationId);
         Task<AttendeeInnovationOrganization> FindByUidAsync(Guid attendeeInnovationOrganizationUid);
         Task<List<AttendeeInnovationOrganization>> FindAllByIdsAsync(List<int?> attendeeInnovationOrganizationIds);

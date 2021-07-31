@@ -848,6 +848,7 @@
     <Content Include="Assets\js\innovation\projects\innovation.projects.totalcount.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.experiences.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.tracks.widget.js" />
+    <Content Include="Assets\js\innovation\projects\innovation.projects.presentation.widget.js" />
     <Content Include="Assets\js\logisticsponsors\logisticsponsors.editioncount.widget.js" />
     <Content Include="Assets\js\logisticsponsors\logisticsponsors.totalcount.widget.js" />
     <Content Include="Assets\js\logisticsponsors\logisticsponsors.maininformation.widget.js" />
@@ -7728,6 +7729,7 @@
     <Content Include="Areas\Innovation\Views\Projects\Widgets\TechnologiesWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Projects\Widgets\FoundersWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Projects\Widgets\BusinessInformationWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\Projects\Widgets\PresentationWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
