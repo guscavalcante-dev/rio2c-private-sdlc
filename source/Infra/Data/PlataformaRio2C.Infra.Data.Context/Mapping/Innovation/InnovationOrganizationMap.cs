@@ -25,54 +25,19 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.ToTable("InnovationOrganizations");
 
             this.Property(t => t.Name)
-               .HasMaxLength(InnovationOrganization.NameMaxLength);
+               .HasMaxLength(InnovationOrganization.NameMaxLenght);
 
             this.Property(t => t.Document)
-               .HasMaxLength(InnovationOrganization.DocumentMaxLength);
+               .HasMaxLength(InnovationOrganization.DocumentMaxLenght);
 
             this.Property(t => t.ServiceName)
-               .HasMaxLength(InnovationOrganization.ServiceNameMaxLength);
-
-            //this.Property(t => t.FoundersNames)
-            //   .HasMaxLength(InnovationOrganization.FoundersNamesMaxLength);
+               .HasMaxLength(InnovationOrganization.ServiceNameMaxLenght);
 
             this.Property(t => t.Description)
-               .HasMaxLength(InnovationOrganization.DescriptionMaxLength);
-
-            //this.Property(t => t.Curriculum)
-            //   .HasMaxLength(InnovationOrganization.CurriculumMaxLength);
-
-            //this.Property(t => t.BusinessDefinition)
-            //   .HasMaxLength(InnovationOrganization.BusinessDefinitionMaxLength);
+               .HasMaxLength(InnovationOrganization.DescriptionMaxLenght);
 
             this.Property(t => t.Website)
-               .HasMaxLength(InnovationOrganization.WebsiteMaxLength);
-
-            //this.Property(t => t.BusinessFocus)
-            //   .HasMaxLength(InnovationOrganization.BusinessFocusMaxLength);
-
-            //this.Property(t => t.MarketSize)
-            //   .HasMaxLength(InnovationOrganization.MarketSizeMaxLength);
-
-            //this.Property(t => t.BusinessEconomicModel)
-            //   .HasMaxLength(InnovationOrganization.BusinessEconomicModelMaxLength);
-
-            //this.Property(t => t.BusinessOperationalModel)
-            //   .HasMaxLength(InnovationOrganization.BusinessOperationalModelMaxLength);
-
-            //this.Property(t => t.BusinessDifferentials)
-            //   .HasMaxLength(InnovationOrganization.BusinessDifferentialsMaxLength);
-
-            //this.Property(t => t.CompetingCompanies)
-            //   .HasMaxLength(InnovationOrganization.CompetingCompaniesMaxLength);
-
-            //this.Property(t => t.BusinessStage)
-            //   .HasMaxLength(InnovationOrganization.BusinessStageMaxLength);
-
-            // Relationships
-            //this.HasRequired(t => t.WorkDedication)
-            //    .WithMany()
-            //    .HasForeignKey(d => d.WorkDedicationId);
+               .HasMaxLength(InnovationOrganization.WebsiteMaxLenght);
         }
     }
 }

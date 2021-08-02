@@ -29,12 +29,7 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonIgnore]
         public ValidationResult ValidationResult { get; set; }
 
-        [JsonIgnore]
-        private int DescriptionMaxLenght = 600;
-        [JsonIgnore]
-        private int CompetingCompaniesMaxCount = 3;
-
-        #region Identification
+        #region Required
 
         [JsonRequired]
         [JsonProperty("name")]
@@ -160,41 +155,18 @@ namespace PlataformaRio2C.Domain.Dtos
 
         #region Validations
 
-        /// <summary>Returns true if ... is valid.</summary>
+        /// <summary>
+        /// Returns true if ... is valid.
+        /// </summary>
         /// <returns>
-        ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
+        ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsValid()
         {
             this.ValidationResult = new ValidationResult();
-
-            this.ValidateCompetingCompanies();
-            this.ValidateDescription();
             this.ValidatePresentationFile();
-            this.ValidateAttendeeInnovationOrganizationFounderApiDtos();
 
             return this.ValidationResult.IsValid;
-        }
-
-        /// <summary>
-        /// Validates the competing companies.
-        /// </summary>
-        private void ValidateCompetingCompanies()
-        {
-            if (this.AttendeeInnovationOrganizationCompetitorApiDtos.Count > this.CompetingCompaniesMaxCount)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityMustContainsMaxItemsCount, "competingCompanies", this.CompetingCompaniesMaxCount), new string[] { "competingCompanies" }));
-            }
-        }
-
-        /// <summary>
-        /// Validates the description.
-        /// </summary>
-        private void ValidateDescription()
-        {
-            if (this.Description.Length > this.DescriptionMaxLenght)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(Description), this.DescriptionMaxLenght, 1), new string[] { nameof(Description) }));
-            }
         }
 
         /// <summary>
@@ -210,17 +182,6 @@ namespace PlataformaRio2C.Domain.Dtos
             if (this.PresentationFile.GetBase64FileExtension() != FileType.Pdf)
             {
                 this.ValidationResult.Add(new ValidationError(Messages.FileMustBePdf, new string[] { nameof(PresentationFile) }));
-            }
-        }
-
-        /// <summary>
-        /// Validates the attendee innovation organization founder API dtos.
-        /// </summary>
-        private void ValidateAttendeeInnovationOrganizationFounderApiDtos()
-        {
-            foreach (var attendeeInnovationOrganizationFounderApiDto in this.AttendeeInnovationOrganizationFounderApiDtos.Where(aiof => !aiof.IsValid()))
-            {
-                this.ValidationResult.Add(attendeeInnovationOrganizationFounderApiDto.ValidationResult);
             }
         }
 
@@ -316,7 +277,7 @@ namespace PlataformaRio2C.Domain.Dtos
                 new InnovationOrganizationTechnologyOptionApiDto() { Uid = new Guid("516E3187-CE60-4541-9F46-AC41F29EA0EB"), AdditionalInfo = ""},
                 new InnovationOrganizationTechnologyOptionApiDto() { Uid = new Guid("9B3EFFFC-B4F9-4E65-B679-69EEE581DCC2"), AdditionalInfo = ""},
                 new InnovationOrganizationTechnologyOptionApiDto() { Uid = new Guid("3663D8A3-DF1D-4A41-A3EF-13CF2602FA9D"), AdditionalInfo = ""},
-                new InnovationOrganizationTechnologyOptionApiDto() { Uid = new Guid("F5B4623D-F4F9-4440-B575-140C273C41D2"), AdditionalInfo = ""},
+                new InnovationOrganizationTechnologyOptionApiDto() { Uid = new Guid("F5B4623D-F4F9-4440-B575-140C273C41D2"), AdditionalInfo = "Microsserviços & CloudPlatform"},
             };
 
             this.InnovationOrganizationObjectivesOptionApiDtos = new List<InnovationOrganizationObjectivesOptionApiDto>()
@@ -328,7 +289,7 @@ namespace PlataformaRio2C.Domain.Dtos
                 new InnovationOrganizationObjectivesOptionApiDto() { Uid = new Guid("38A07682-8BD4-4EDE-8BE2-1593BAD8E0B7"), AdditionalInfo = ""},
                 new InnovationOrganizationObjectivesOptionApiDto() { Uid = new Guid("5F872B5B-DA41-43E6-ABE7-CEF7E6BC0CE6"), AdditionalInfo = ""},
                 new InnovationOrganizationObjectivesOptionApiDto() { Uid = new Guid("1A144DB0-DBF2-4ECC-A4C0-267CEA374FAA"), AdditionalInfo = ""},
-                new InnovationOrganizationObjectivesOptionApiDto() { Uid = new Guid("5F62C762-01C0-4F55-A89D-D1E5690817F6"), AdditionalInfo = ""},
+                new InnovationOrganizationObjectivesOptionApiDto() { Uid = new Guid("5F62C762-01C0-4F55-A89D-D1E5690817F6"), AdditionalInfo = "Captação de contatos"},
             };
 
             return Newtonsoft.Json.JsonConvert.SerializeObject(this);

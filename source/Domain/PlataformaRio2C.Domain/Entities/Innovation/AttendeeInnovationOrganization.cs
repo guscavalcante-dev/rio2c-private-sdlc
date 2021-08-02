@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,15 @@ namespace PlataformaRio2C.Domain.Entities
     /// <seealso cref="PlataformaRio2C.Domain.Entities.Entity" />
     public class AttendeeInnovationOrganization : Entity
     {
+        public static readonly int MarketSizeMaxLenght = 300;
+        public static readonly int BusinessDefinitionMaxLenght = 300;
+        public static readonly int BusinessFocusMaxLenght = 300;
+        public static readonly int BusinessEconomicModelMaxLenght = 300;
+        public static readonly int BusinessDifferentialsMaxLenght = 300;
+        public static readonly int BusinessStageMaxLenght = 300;
+        public static readonly int BusinessOperationalModelMaxLenght = 300;
+        public static readonly int CompetitorsMaxCount = 3;
+
         public int EditionId { get; private set; }
         public int InnovationOrganizationId { get; private set; }
         public DateTimeOffset? EvaluationEmailSendDate { get; private set; }
@@ -598,7 +608,121 @@ namespace PlataformaRio2C.Domain.Entities
                 this.ValidationResult = new ValidationResult();
             }
 
+            this.ValidateMarketSize();
+            this.ValidateBusinessDefinition();
+            this.ValidateBusinessFocus();
+            this.ValidateBusinessDifferentials();
+            this.ValidateBusinessEconomicModel();
+            this.ValidateBusinessOperationalModel();
+            this.ValidateBusinessStage();
+            this.ValidateAttendeeInnovationOrganizationFounders();
+            this.ValidateAttendeeInnovationOrganizationCompetitors();
+
             return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>
+        /// Validates the size of the market.
+        /// </summary>
+        private void ValidateMarketSize()
+        {
+            if (this.MarketSize.Length > MarketSizeMaxLenght)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(MarketSize), MarketSizeMaxLenght, 1), new string[] { nameof(MarketSize) }));
+            }
+        }
+
+        /// <summary>
+        /// Validates the business definition.
+        /// </summary>
+        private void ValidateBusinessDefinition()
+        {
+            if (this.BusinessDefinition.Length > BusinessDefinitionMaxLenght)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(BusinessDefinition), BusinessDefinitionMaxLenght, 1), new string[] { nameof(BusinessDefinition) }));
+            }
+        }
+
+        /// <summary>
+        /// Validates the business focus.
+        /// </summary>
+        private void ValidateBusinessFocus()
+        {
+            if (this.BusinessFocus.Length > BusinessFocusMaxLenght)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(BusinessFocus), BusinessFocusMaxLenght, 1), new string[] { nameof(BusinessFocus) }));
+            }
+        }
+
+        /// <summary>
+        /// Validates the business differentials.
+        /// </summary>
+        private void ValidateBusinessDifferentials()
+        {
+            if (this.BusinessDifferentials.Length > BusinessDifferentialsMaxLenght)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(BusinessDifferentials), BusinessDifferentialsMaxLenght, 1), new string[] { nameof(BusinessDifferentials) }));
+            }
+        }
+
+        /// <summary>
+        /// Validates the business economic model.
+        /// </summary>
+        private void ValidateBusinessEconomicModel()
+        {
+            if (this.BusinessEconomicModel.Length > BusinessEconomicModelMaxLenght)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(BusinessEconomicModel), BusinessEconomicModelMaxLenght, 1), new string[] { nameof(BusinessEconomicModel) }));
+            }
+        }
+
+        /// <summary>
+        /// Validates the business operational model.
+        /// </summary>
+        private void ValidateBusinessOperationalModel()
+        {
+            if (this.BusinessOperationalModel.Length > BusinessOperationalModelMaxLenght)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(BusinessOperationalModel), BusinessOperationalModelMaxLenght, 1), new string[] { nameof(BusinessOperationalModel) }));
+            }
+        }
+
+        /// <summary>
+        /// Validates the business stage.
+        /// </summary>
+        private void ValidateBusinessStage()
+        {
+            if (this.BusinessStage.Length > BusinessStageMaxLenght)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(BusinessStage), BusinessStageMaxLenght, 1), new string[] { nameof(BusinessStage) }));
+            }
+        }
+
+        /// <summary>
+        /// Validates the attendee innovation organization founders.
+        /// </summary>
+        private void ValidateAttendeeInnovationOrganizationFounders()
+        {
+            foreach (var attendeeInnovationOrganizationFounder in this.AttendeeInnovationOrganizationFounders.Where(aiof => !aiof.IsValid()))
+            {
+                this.ValidationResult.Add(attendeeInnovationOrganizationFounder.ValidationResult);
+            }
+        }
+
+        /// <summary>
+        /// Validates the attendee innovation organization competitors.
+        /// </summary>
+        private void ValidateAttendeeInnovationOrganizationCompetitors()
+        {
+            if (this.AttendeeInnovationOrganizationCompetitors.Count > CompetitorsMaxCount)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityMustContainsMaxItemsCount, "Competitors", CompetitorsMaxCount), new string[] { "Competitors" }));
+            }
+
+            foreach (var attendeeInnovationOrganizationCompetitorApiDto in this.AttendeeInnovationOrganizationCompetitors.Where(aiof => !aiof.IsValid()))
+            {
+                this.ValidationResult.Add(attendeeInnovationOrganizationCompetitorApiDto.ValidationResult);
+            }
         }
 
         #endregion

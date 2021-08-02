@@ -113,6 +113,12 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 #endregion
 
                 var innovationOrganizationApiDto = JsonConvert.DeserializeObject<InnovationOrganizationApiDto>(request.Content.ReadAsStringAsync().Result);
+
+                if (innovationOrganizationApiDto == null)
+                {
+                    throw new DomainException(Messages.IncorrectJsonStructure);
+                }
+
                 if (!innovationOrganizationApiDto.IsValid())
                 {
                     validationResult.Add(innovationOrganizationApiDto.ValidationResult);
@@ -138,7 +144,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 return await Json(new
                 {
                     status = ApiStatus.Error,
-                    message = (ex.InnerException != null ? ex.GetInnerMessage() : ""),
+                    message = $"{ex.Message}{(ex.InnerException != null ? " - " + ex.GetInnerMessage() : "")}",
                     errors = validationResult?.Errors?.Select(e => new { e.Code, e.Message })
                 });
             }

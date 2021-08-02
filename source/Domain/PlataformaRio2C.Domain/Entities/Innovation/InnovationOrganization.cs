@@ -23,29 +23,18 @@ using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Domain.Entities
 {
-
     /// <summary>
     /// Class InnovationOrganizations.
     /// Implements the <see cref="PlataformaRio2C.Domain.Entities.AggregateRoot" />
     /// </summary>
     /// <seealso cref="PlataformaRio2C.Domain.Entities.AggregateRoot" />
-    public class InnovationOrganization : AggregateRoot
+    public class InnovationOrganization : Entity
     {
-        public static readonly int NameMaxLength = 100;
-        public static readonly int DocumentMaxLength = 50;
-        public static readonly int ServiceNameMaxLength = 150;
-        public static readonly int FoundersNamesMaxLength = 1000;
-        public static readonly int DescriptionMaxLength = 600;
-        public static readonly int CurriculumMaxLength = 600;
-        public static readonly int BusinessDefinitionMaxLength = 300;
-        public static readonly int WebsiteMaxLength = 150;
-        public static readonly int BusinessFocusMaxLength = 300;
-        public static readonly int MarketSizeMaxLength = 300;
-        public static readonly int BusinessEconomicModelMaxLength = 300;
-        public static readonly int BusinessOperationalModelMaxLength = 300;
-        public static readonly int BusinessDifferentialsMaxLength = 300;
-        public static readonly int CompetingCompaniesMaxLength = 300;
-        public static readonly int BusinessStageMaxLength = 300;
+        public static readonly int NameMaxLenght = 300;
+        public static readonly int DocumentMaxLenght = 50;
+        public static readonly int ServiceNameMaxLenght = 300;
+        public static readonly int DescriptionMaxLenght = 600;
+        public static readonly int WebsiteMaxLenght = 300;
 
         public string Name { get; private set; }
         public string Document { get; private set; }
@@ -619,228 +608,90 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
-        #region Valitations
+        #region Validations
 
-        /// <summary>
-        /// Returns true if ... is valid.
-        /// </summary>
-        /// <returns><c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <summary>Returns true if ... is valid.</summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
         public override bool IsValid()
         {
-            if (this.ValidationResult == null)
-            {
-                this.ValidationResult = new ValidationResult();
-            }
+            this.ValidationResult = new ValidationResult();
 
-            //this.ValidateName();
-            //this.ValidateDocument();
-            //this.ValidateServiceName();
-            //this.ValidateFoundersNames();
-            //this.ValidateDescription();
-            //this.ValidateCurriculum();
-            //this.ValidateBusinessDefinition();
-            //this.ValidateWebsite();
-            //this.ValidateBusinessFocus();
-            //this.ValidateMarketSize();
-            //this.ValidateBusinessEconomicModel();
-            //this.ValidateBusinessOperationalModel();
-            //this.ValidateBusinessDifferentials();
-            //this.ValidateCompetingCompanies();
-            //this.ValidateBusinessStage();
+            this.ValidateDescription();
+            this.ValidateName();
+            this.ValidateDocument();
+            this.ValidateServiceName();
+            this.ValidateWebsite();
+            this.ValidateAttendeeInnovationOrganizations();
 
             return this.ValidationResult.IsValid;
         }
 
-        ///// <summary>
-        ///// Validates the name.
-        ///// </summary>
-        //private void ValidateName()
-        //{
-        //    if (string.IsNullOrEmpty(this.Name?.Trim()))
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.Name), new string[] { nameof(Name) }));
-        //    }
+        /// <summary>
+        /// Validates the description.
+        /// </summary>
+        private void ValidateDescription()
+        {
+            if (this.Description.Length > DescriptionMaxLenght)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(Description), DescriptionMaxLenght, 1), new string[] { nameof(Description) }));
+            }
+        }
 
-        //    if (this.Name?.Length > NameMaxLength)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, NameMaxLength, 1), new string[] { nameof(Name) }));
-        //    }
-        //}
+        /// <summary>
+        /// Validates the name.
+        /// </summary>
+        private void ValidateName()
+        {
+            if (this.Name.Length > NameMaxLenght)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(Name), NameMaxLenght, 1), new string[] { nameof(Name) }));
+            }
+        }
 
-        ///// <summary>
-        ///// Validates the document.
-        ///// </summary>
-        //private void ValidateDocument()
-        //{
-        //    if (this.Document?.Length > DocumentMaxLength)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, DocumentMaxLength, 1), new string[] { nameof(Document) }));
-        //    }
-        //}
+        /// <summary>
+        /// Validates the document.
+        /// </summary>
+        private void ValidateDocument()
+        {
+            if (this.Document.Length > DocumentMaxLenght)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(Document), DocumentMaxLenght, 1), new string[] { nameof(Document) }));
+            }
+        }
 
-        ///// <summary>
-        ///// Validates the name of the service.
-        ///// </summary>
-        //private void ValidateServiceName()
-        //{
-        //    if (string.IsNullOrEmpty(this.ServiceName?.Trim()))
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, "ServiceName"), new string[] { nameof(ServiceName) }));
-        //    }
+        /// <summary>
+        /// Validates the name of the service.
+        /// </summary>
+        private void ValidateServiceName()
+        {
+            if (this.ServiceName.Length > ServiceNameMaxLenght)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(ServiceName), ServiceNameMaxLenght, 1), new string[] { nameof(ServiceName) }));
+            }
+        }
 
-        //    if (this.ServiceName?.Length > ServiceNameMaxLength)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "ServiceName", ServiceNameMaxLength, 1), new string[] { nameof(ServiceName) }));
-        //    }
-        //}
+        /// <summary>
+        /// Validates the website.
+        /// </summary>
+        private void ValidateWebsite()
+        {
+            if (this.Website.Length > WebsiteMaxLenght)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(Website), WebsiteMaxLenght, 1), new string[] { nameof(Website) }));
+            }
+        }
 
-        ///// <summary>
-        ///// Validates the names of the founders.
-        ///// </summary>
-        //private void ValidateFoundersNames()
-        //{
-        //    if (string.IsNullOrEmpty(this.FoundersNames?.Trim()))
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, "FoundersNames"), new string[] { nameof(FoundersNames) }));
-        //    }
-
-        //    if (this.FoundersNames?.Length > FoundersNamesMaxLength)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "FoundersNames", FoundersNamesMaxLength, 1), new string[] { nameof(FoundersNames) }));
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Validates the description.
-        ///// </summary>
-        //private void ValidateDescription()
-        //{
-        //    if (string.IsNullOrEmpty(this.Description?.Trim()))
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, "Description"), new string[] { nameof(Description) }));
-        //    }
-
-        //    if (this.Description?.Length > DescriptionMaxLength)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "Description", DescriptionMaxLength, 1), new string[] { nameof(Description) }));
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Validates the curriculum.
-        ///// </summary>
-        //private void ValidateCurriculum()
-        //{
-        //    if (string.IsNullOrEmpty(this.Curriculum?.Trim()))
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, "Curriculum"), new string[] { nameof(Curriculum) }));
-        //    }
-
-        //    if (this.Curriculum?.Length > CurriculumMaxLength)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "Curriculum", CurriculumMaxLength, 1), new string[] { nameof(Curriculum) }));
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Validates the business definition.
-        ///// </summary>
-        //private void ValidateBusinessDefinition()
-        //{
-        //    if (this.BusinessDefinition?.Length > BusinessDefinitionMaxLength)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "BusinessDefinition", BusinessDefinitionMaxLength, 1), new string[] { nameof(BusinessDefinition) }));
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Validates the website.
-        ///// </summary>
-        //private void ValidateWebsite()
-        //{
-        //    if (this.Website?.Length > WebsiteMaxLength)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "Website", WebsiteMaxLength, 1), new string[] { nameof(Website) }));
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Validates the business focus.
-        ///// </summary>
-        //private void ValidateBusinessFocus()
-        //{
-        //    if (this.BusinessFocus?.Length > BusinessFocusMaxLength)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "BusinessFocus", BusinessFocusMaxLength, 1), new string[] { nameof(BusinessFocus) }));
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Validates the size of the market.
-        ///// </summary>
-        //private void ValidateMarketSize()
-        //{
-        //    if (this.MarketSize?.Length > MarketSizeMaxLength)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "MarketSize", MarketSizeMaxLength, 1), new string[] { nameof(MarketSize) }));
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Validates the business economic model.
-        ///// </summary>
-        //private void ValidateBusinessEconomicModel()
-        //{
-        //    if (this.BusinessEconomicModel?.Length > BusinessEconomicModelMaxLength)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "BusinessEconomicModel", BusinessEconomicModelMaxLength, 1), new string[] { nameof(BusinessEconomicModel) }));
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Validates the business operational model.
-        ///// </summary>
-        //private void ValidateBusinessOperationalModel()
-        //{
-        //    if (this.BusinessOperationalModel?.Length > BusinessOperationalModelMaxLength)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "BusinessOperationalModel", BusinessOperationalModelMaxLength, 1), new string[] { nameof(BusinessOperationalModel) }));
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Validates the business differentials.
-        ///// </summary>
-        //private void ValidateBusinessDifferentials()
-        //{
-        //    if (this.BusinessDifferentials?.Length > BusinessDifferentialsMaxLength)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "BusinessDifferentials", BusinessDifferentialsMaxLength, 1), new string[] { nameof(BusinessDifferentials) }));
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Validates the competing companies.
-        ///// </summary>
-        //private void ValidateCompetingCompanies()
-        //{
-        //    if (this.CompetingCompanies?.Length > CompetingCompaniesMaxLength)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "CompetingCompanies", CompetingCompaniesMaxLength, 1), new string[] { nameof(CompetingCompanies) }));
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Validates the business stage.
-        ///// </summary>
-        //private void ValidateBusinessStage()
-        //{
-        //    if (this.BusinessStage?.Length > BusinessStageMaxLength)
-        //    {
-        //        this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "BusinessStage", BusinessStageMaxLength, 1), new string[] { nameof(BusinessStage) }));
-        //    }
-        //}
+        /// <summary>
+        /// Validates the attendee innovation organizations.
+        /// </summary>
+        private void ValidateAttendeeInnovationOrganizations()
+        {
+            foreach (var attendeeInnovationOrganization in this.AttendeeInnovationOrganizations.Where(aiof => !aiof.IsValid()))
+            {
+                this.ValidationResult.Add(attendeeInnovationOrganization.ValidationResult);
+            }
+        }
 
         #endregion
     }

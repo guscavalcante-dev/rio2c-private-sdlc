@@ -23,12 +23,6 @@ namespace PlataformaRio2C.Domain.Dtos
     /// <summary>AttendeeInnovationOrganizationFounderApiDto</summary>
     public class AttendeeInnovationOrganizationFounderApiDto
     {
-        [JsonIgnore]
-        public ValidationResult ValidationResult { get; set; }
-
-        [JsonIgnore]
-        private int CurriculumMaxLenght = 710;
-
         [JsonRequired]
         [JsonProperty("fullName")]
         public string FullName { get; set; }
@@ -50,29 +44,6 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <summary>Initializes a new instance of the <see cref="AttendeeInnovationOrganizationFounderApiDto"/> class.</summary>
         public AttendeeInnovationOrganizationFounderApiDto()
         {
-        }
-
-        /// <summary>Returns true if ... is valid.</summary>
-        /// <returns>
-        ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
-        public bool IsValid()
-        {
-            this.ValidationResult = new ValidationResult();
-
-            this.ValidateCurriculum();
-
-            return this.ValidationResult.IsValid;
-        }
-
-        /// <summary>
-        /// Validates the curriculum.
-        /// </summary>
-        private void ValidateCurriculum()
-        {
-            if (this.Curriculum.Length > this.CurriculumMaxLenght)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(Curriculum), this.CurriculumMaxLenght, 1), new string[] { nameof(Curriculum) }));
-            }
         }
     }
 }

@@ -163,9 +163,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             cmd.AttendeeInnovationOrganizationFounderApiDtos = cmd.AttendeeInnovationOrganizationFounderApiDtos.Select(ta =>
                                                                     new AttendeeInnovationOrganizationFounderApiDto()
                                                                     {
-                                                                       Curriculum = ta.Curriculum,
-                                                                       FullName = ta.FullName,
-                                                                       WorkDedication = this.workDedicationRepo.FindByUid(ta.WorkDedicationUid)   
+                                                                        Curriculum = ta.Curriculum,
+                                                                        FullName = ta.FullName,
+                                                                        WorkDedication = this.workDedicationRepo.FindByUid(ta.WorkDedicationUid)
                                                                     }).ToList();
 
             var collaboratorDto = await collaboratorRepo.FindByEmailAsync(cmd.Email, editionDto.Id);
@@ -174,7 +174,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 #region Creates new Collaborator and User
 
                 var createCollaboratorCommand = new CreateTinyCollaborator();
-
                 createCollaboratorCommand.UpdateBaseProperties(
                     cmd.ResponsibleName,
                     null,
@@ -207,8 +206,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     }
                 }
 
-                collaboratorDto = commandResult.Data as CollaboratorDto;
-
                 #endregion
             }
             else
@@ -216,7 +213,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 #region Updates Collaborator and User
 
                 var updateCollaboratorCommand = new UpdateTinyCollaborator(collaboratorDto, true);
-
                 updateCollaboratorCommand.UpdateBaseProperties(
                     cmd.ResponsibleName,
                     null,
@@ -249,17 +245,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     }
                 }
 
-                collaboratorDto = await collaboratorRepo.FindByEmailAsync(cmd.Email, editionDto.Id);
-
                 #endregion
             }
+            collaboratorDto = await collaboratorRepo.FindByEmailAsync(cmd.Email, editionDto.Id);
 
             var innovationOrganization = await this.InnovationOrganizationRepo.FindByDocumentAsync(cmd.Document);
             if (innovationOrganization == null)
             {
                 #region Creates new Innovation Organization
 
-                var newInnovationOrganization = new InnovationOrganization(
+                innovationOrganization = new InnovationOrganization(
                        editionDto.Edition,
                        collaboratorDto.EditionAttendeeCollaborator,
                        cmd.Name,
@@ -285,25 +280,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                        cmd.InnovationOrganizationTrackOptionApiDtos,
                        cmd.UserId);
 
-                if (!newInnovationOrganization.IsValid())
-                {
-                    this.AppValidationResult.Add(newInnovationOrganization.ValidationResult);
-                    return this.AppValidationResult;
-                }
-
-                this.InnovationOrganizationRepo.Create(newInnovationOrganization);
-                this.Uow.SaveChanges();
-                this.AppValidationResult.Data = newInnovationOrganization;
-
-                if (!string.IsNullOrEmpty(cmd.PresentationFile))
-                {
-                    var fileBytes = Convert.FromBase64String(cmd.PresentationFile);
-                    this.fileRepo.Upload(
-                        new MemoryStream(fileBytes),
-                        FileMimeType.Pdf,
-                        newInnovationOrganization.Uid + FileType.Pdf,
-                        FileRepositoryPathType.InnovationOrganizationPresentationFile);
-                }
+                this.InnovationOrganizationRepo.Create(innovationOrganization);
 
                 #endregion
             }
@@ -312,7 +289,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 #region Updates Innovation Organization
 
                 innovationOrganization.Update(
-                    editionDto.Edition,
+                       editionDto.Edition,
                        collaboratorDto.EditionAttendeeCollaborator,
                        cmd.Name,
                        cmd.Document,
@@ -337,27 +314,41 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                        cmd.InnovationOrganizationTrackOptionApiDtos,
                        cmd.UserId);
 
-                if (!innovationOrganization.IsValid())
-                {
-                    this.AppValidationResult.Add(innovationOrganization.ValidationResult);
-                    return this.AppValidationResult;
-                }
-
                 this.InnovationOrganizationRepo.Update(innovationOrganization);
-                this.Uow.SaveChanges();
-                this.AppValidationResult.Data = innovationOrganization;
-
-                if (!string.IsNullOrEmpty(cmd.PresentationFile))
-                {
-                    var fileBytes = Convert.FromBase64String(cmd.PresentationFile);
-                    this.fileRepo.Upload(
-                        new MemoryStream(fileBytes),
-                        FileMimeType.Pdf,
-                        innovationOrganization.Uid + FileType.Pdf,
-                        FileRepositoryPathType.InnovationOrganizationPresentationFile);
-                }
 
                 #endregion
+            }
+
+            if (!innovationOrganization.IsValid())
+            {
+                this.AppValidationResult.Add(innovationOrganization.ValidationResult);
+                return this.AppValidationResult;
+            }
+            
+            var result = this.Uow.SaveChanges();
+
+            if (!result.Success)
+            {
+                foreach (var validationResult in result.ValidationResults)
+                {
+                    this.ValidationResult.Add(validationResult.ErrorMessage);
+                    
+                }
+
+                this.AppValidationResult.Add(this.ValidationResult);
+                return this.AppValidationResult;
+            }
+
+            this.AppValidationResult.Data = innovationOrganization;
+
+            if (!string.IsNullOrEmpty(cmd.PresentationFile))
+            {
+                var fileBytes = Convert.FromBase64String(cmd.PresentationFile);
+                this.fileRepo.Upload(
+                    new MemoryStream(fileBytes),
+                    FileMimeType.Pdf,
+                    innovationOrganization.Uid + FileType.Pdf,
+                    FileRepositoryPathType.InnovationOrganizationPresentationFile);
             }
 
             return this.AppValidationResult;

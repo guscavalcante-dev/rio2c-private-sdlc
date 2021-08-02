@@ -888,6 +888,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Incorrect JSON structure..
+        /// </summary>
+        public static string IncorrectJsonStructure {
+            get {
+                return ResourceManager.GetString("IncorrectJsonStructure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Informe seu endereço.
         /// </summary>
         public static string InformYourAddress {

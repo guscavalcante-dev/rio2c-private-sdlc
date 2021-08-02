@@ -455,6 +455,10 @@
   <data name="ImageIsRequired" xml:space="preserve">
     <value>Imagem obrigatória</value>
   </data>
+  <data name="IncorrectJsonStructure" xml:space="preserve">
+    <value>Incorrect JSON structure.</value>
+    <comment>Estrutura JSON incorreta.</comment>
+  </data>
   <data name="InformYourAddress" xml:space="preserve">
     <value>Informe seu endereço</value>
     <comment>Informe seu endereço</comment>

@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,12 +28,12 @@ namespace PlataformaRio2C.Domain.Entities
     /// <seealso cref="PlataformaRio2C.Domain.Entities.Entity" />
     public class AttendeeInnovationOrganizationFounder : Entity
     {
+        public static readonly int FullNameMaxLenght = 200;
+        public static readonly int CurriculumMaxLenght = 710;
+
         public int AttendeeInnovationOrganizationId { get; set; }
-
         public string Fullname { get; set; }
-
         public string Curriculum { get; set; }
-
         public int WorkDedicationId { get; set; }
 
         public virtual AttendeeInnovationOrganization AttendeeInnovationOrganization { get; private set; }
@@ -83,7 +84,32 @@ namespace PlataformaRio2C.Domain.Entities
                 this.ValidationResult = new ValidationResult();
             }
 
+            this.ValidateFullname();
+            this.ValidateCurriculum();
+
             return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>
+        /// Validates the curriculum.
+        /// </summary>
+        private void ValidateCurriculum()
+        {
+            if (this.Curriculum.Length > CurriculumMaxLenght)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(Curriculum), CurriculumMaxLenght, 1), new string[] { nameof(Curriculum) }));
+            }
+        }
+
+        /// <summary>
+        /// Validates the fullname.
+        /// </summary>
+        private void ValidateFullname()
+        {
+            if (this.Fullname.Length > FullNameMaxLenght)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(Fullname), FullNameMaxLenght, 1), new string[] { nameof(Fullname) }));
+            }
         }
 
         #endregion

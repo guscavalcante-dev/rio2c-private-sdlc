@@ -13,6 +13,8 @@
 // ***********************************************************************
 using Newtonsoft.Json;
 using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
 

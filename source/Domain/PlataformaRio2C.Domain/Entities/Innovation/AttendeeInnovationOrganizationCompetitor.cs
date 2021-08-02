@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,8 @@ namespace PlataformaRio2C.Domain.Entities
     /// <seealso cref="PlataformaRio2C.Domain.Entities.Entity" />
     public class AttendeeInnovationOrganizationCompetitor : Entity
     {
+        public static readonly int NameMaxLenght = 300;
+
         public int AttendeeInnovationOrganizationId { get; set; }
         public string Name { get; set; }
 
@@ -72,7 +75,20 @@ namespace PlataformaRio2C.Domain.Entities
                 this.ValidationResult = new ValidationResult();
             }
 
+            this.ValidateName();
+
             return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>
+        /// Validates the curriculum.
+        /// </summary>
+        private void ValidateName()
+        {
+            if (this.Name.Length > NameMaxLenght)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(Name), NameMaxLenght, 1), new string[] { nameof(Name) }));
+            }
         }
 
         #endregion

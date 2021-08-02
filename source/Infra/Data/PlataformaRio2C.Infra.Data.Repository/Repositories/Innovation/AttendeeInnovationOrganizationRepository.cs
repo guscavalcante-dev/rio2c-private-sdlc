@@ -68,7 +68,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<AttendeeInnovationOrganization> IsNotDeleted(this IQueryable<AttendeeInnovationOrganization> query)
         {
-            query = query.Where(aio => !aio.IsDeleted);
+            query = query.Where(aio => !aio.InnovationOrganization.IsDeleted && !aio.IsDeleted);
 
             return query;
         }
@@ -901,6 +901,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                {
                                    AttendeeInnovationOrganization = aio,
                                    InnovationOrganization = aio.InnovationOrganization,
+                                   AttendeeInnovationOrganizationTrackDtos = aio.AttendeeInnovationOrganizationTracks.Select(aiot =>
+                                                                                       new AttendeeInnovationOrganizationTrackDto
+                                                                                       {
+                                                                                           AttendeeInnovationOrganizationTrack = aiot,
+                                                                                           InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption
+                                                                                       }),
                                    AttendeeInnovationOrganizationCompetitorDtos = aio.AttendeeInnovationOrganizationCompetitors.Select(aiot =>
                                                                                      new AttendeeInnovationOrganizationCompetitorDto
                                                                                      {
@@ -1122,6 +1128,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                              {
                                  AttendeeInnovationOrganization = aio,
                                  InnovationOrganization = aio.InnovationOrganization,
+                                 AttendeeInnovationOrganizationTrackDtos = aio.AttendeeInnovationOrganizationTracks.Select(aiot =>
+                                                                                       new AttendeeInnovationOrganizationTrackDto
+                                                                                       {
+                                                                                           AttendeeInnovationOrganizationTrack = aiot,
+                                                                                           InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption
+                                                                                       }),
                                  AttendeeInnovationOrganizationFounderDtos = aio.AttendeeInnovationOrganizationFounders.Select(aiof => new AttendeeInnovationOrganizationFounderDto
                                  {
                                      AttendeeInnovationOrganization = aio,
@@ -1145,7 +1157,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                              .Select(aio => new AttendeeInnovationOrganizationDto
                              {
                                  AttendeeInnovationOrganization = aio,
-                                 InnovationOrganization = aio.InnovationOrganization
+                                 InnovationOrganization = aio.InnovationOrganization,
+                                 AttendeeInnovationOrganizationTrackDtos = aio.AttendeeInnovationOrganizationTracks.Select(aiot =>
+                                                                                       new AttendeeInnovationOrganizationTrackDto
+                                                                                       {
+                                                                                           AttendeeInnovationOrganizationTrack = aiot,
+                                                                                           InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption
+                                                                                       })
                              });
 
             return await query
