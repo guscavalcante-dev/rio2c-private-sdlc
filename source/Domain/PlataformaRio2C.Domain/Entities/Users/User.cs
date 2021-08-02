@@ -59,6 +59,8 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<UserUnsubscribedList> UserUnsubscribedLists { get; set; }
         public virtual ICollection<Message> RecipientMessages { get; set; }
         public virtual ICollection<Negotiation> UpdatedNegotiations { get; set; }
+        public virtual ICollection<AttendeeInnovationOrganizationEvaluation> AttendeeInnovationOrganizationEvaluations { get; set; }
+        public virtual ICollection<AttendeeMusicBandEvaluation> AttendeeMusicBandEvaluations { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="User"/> class.

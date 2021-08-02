@@ -30,7 +30,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 .HasForeignKey(d => d.AttendeeInnovationOrganizationId);
 
             this.HasRequired(t => t.EvaluatorUser)
-                .WithMany()
+                .WithMany(u => u.AttendeeInnovationOrganizationEvaluations)
                 .HasForeignKey(d => d.EvaluatorUserId);
         }
     }

@@ -447,6 +447,40 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        /// <summary>
+        /// Finds the evaluations widget dto asynchronous.
+        /// </summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeCollaboratorInnovationEvaluationsWidgetDto> FindInnovationEvaluationsWidgetDtoAsync(Guid collaboratorUid, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByCollaboratorUid(collaboratorUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(ac => new AttendeeCollaboratorInnovationEvaluationsWidgetDto
+                            {
+                                AttendeeCollaboratorDto = new AttendeeCollaboratorDto
+                                {
+                                    AttendeeCollaborator = ac,
+                                    Collaborator = ac.Collaborator
+                                },
+                                AttendeeInnovationOrganizationEvaluationDtos = ac.Collaborator.User.AttendeeInnovationOrganizationEvaluations
+                                                                                        .Where(aioe => !aioe.IsDeleted)
+                                                                                        .OrderBy(aioe => aioe.CreateDate)
+                                                                                        .Select(aioe => new AttendeeInnovationOrganizationEvaluationDto
+                                                                                        {
+                                                                                            AttendeeInnovationOrganizationEvaluation = aioe,
+                                                                                            AttendeeInnovationOrganization = aioe.AttendeeInnovationOrganization,
+                                                                                            InnovationOrganization = aioe.AttendeeInnovationOrganization.InnovationOrganization,
+                                                                                            EvaluatorUser = aioe.EvaluatorUser
+                                                                                        }).ToList()
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
         /// <summary>Finds the API configuration widget dto by collaborator uid and by edition identifier asynchronous.</summary>
         /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <param name="editionId">The edition identifier.</param>

@@ -129,6 +129,7 @@
     <Compile Include="Dtos\Agendas\AgendaConferenceEventJsonDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorListDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorNetworkDto.cs" />
+    <Compile Include="Dtos\Innovation\AttendeeCollaboratorInnovationEvaluationsWidgetDto.cs" />
     <Compile Include="Dtos\Innovation\AttendeeCollaboratorTracksWidgetDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorSiteDetailsDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorSiteCompanyWidgetDto.cs" />

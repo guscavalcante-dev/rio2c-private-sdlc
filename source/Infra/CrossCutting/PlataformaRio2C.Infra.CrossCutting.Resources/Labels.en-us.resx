@@ -904,6 +904,10 @@
   <data name="Evaluation" xml:space="preserve">
     <value>Evaluation</value>
   </data>
+  <data name="EvaluationDate" xml:space="preserve">
+    <value>Evaluation Date</value>
+    <comment>Data da Avaliação</comment>
+  </data>
   <data name="Evaluations" xml:space="preserve">
     <value>Evaluations</value>
     <comment>Avaliações</comment>

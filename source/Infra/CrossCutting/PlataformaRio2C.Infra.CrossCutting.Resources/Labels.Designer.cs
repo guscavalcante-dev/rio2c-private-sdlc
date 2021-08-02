@@ -1942,6 +1942,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data da Avaliação.
+        /// </summary>
+        public static string EvaluationDate {
+            get {
+                return ResourceManager.GetString("EvaluationDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Avaliações.
         /// </summary>
         public static string Evaluations {

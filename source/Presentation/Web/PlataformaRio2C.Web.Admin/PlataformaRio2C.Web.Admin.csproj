@@ -832,6 +832,7 @@
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.maininformation.widget.js" />
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.onboardinginfo.widget.js" />
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.socialnetworks.widget.js" />
+    <Content Include="Assets\js\innovation\commissions\innovation.commissions.evaluations.widget.js" />
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.tracks.widget.js" />
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.totalcount.widget.js" />
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.update.js" />
@@ -7730,6 +7731,7 @@
     <Content Include="Areas\Innovation\Views\Projects\Widgets\FoundersWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Projects\Widgets\BusinessInformationWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Projects\Widgets\PresentationWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\Commissions\Widgets\EvaluationsWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

@@ -154,6 +154,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             return View(attendeeCollaboratorDto);
         }
 
+        #endregion
+
         #region Tracks Widget
 
         [HttpGet]
@@ -193,7 +195,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                 }
 
                 cmd = new UpdateInnovationCollaboratorTracks(
-                    attendeeCollaboratorTracksWidgetDto, 
+                    attendeeCollaboratorTracksWidgetDto,
                     await this.innovationOrganizationTrackOptionRepo.FindAllAsync());
             }
             catch (DomainException ex)
@@ -266,6 +268,29 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         }
 
         #endregion
+
+        #endregion
+
+        #region Evaluations Widget
+
+        [HttpGet]
+        public async Task<ActionResult> ShowEvaluationsWidget(Guid? collaboratorUid)
+        {
+            var innovationEvaluationsWidgetDto = await this.attendeeCollaboratorRepo.FindInnovationEvaluationsWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
+            if (innovationEvaluationsWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EvaluationsWidget", innovationEvaluationsWidgetDto), divIdOrClass = "#InnovationCommissionEvaluationsWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
         #endregion
 
@@ -557,7 +582,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
         #endregion
 
-        #endregion
 
         #region Send Invitation Emails
 

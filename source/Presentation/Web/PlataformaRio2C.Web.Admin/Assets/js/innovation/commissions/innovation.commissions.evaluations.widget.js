@@ -6,19 +6,19 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 07-17-2021
 // ***********************************************************************
-// <copyright file="innovation.commissions.tracks.widget.js" company="Softo">
+// <copyright file="innovation.commissions.evaluations.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var InnovationCommissionsTracksWidget = function () {
+var InnovationCommissionsEvaluationsWidget = function () {
 
-    var widgetElementId = '#InnovationCommissionTracksInfoWidget';
+    var widgetElementId = '#InnovationCommissionEvaluationsWidget';
     var widgetElement = $(widgetElementId);
 
-    var updateModalId = '#UpdateTracksModal';
-    var updateFormId = '#UpdateTracksForm';
+    var updateModalId = '#UpdateEvaluationsModal';
+    var updateFormId = '#UpdateEvaluationsForm';
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
@@ -34,7 +34,7 @@ var InnovationCommissionsTracksWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.collaboratorUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Commissions/ShowTracksWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Commissions/ShowEvaluationsWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -60,8 +60,8 @@ var InnovationCommissionsTracksWidget = function () {
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (InnovationCommissionsTracksWidget) !== 'undefined') {
-                    InnovationCommissionsTracksWidget.init();
+                if (typeof (InnovationCommissionsEvaluationsWidget) !== 'undefined') {
+                    InnovationCommissionsEvaluationsWidget.init();
                 }
             },
             onError: function (data) {
@@ -80,39 +80,10 @@ var InnovationCommissionsTracksWidget = function () {
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
 
-    var showUpdateModal = function () {
-        MyRio2cCommon.block({ isModal: true });
-
-        var jsonParameters = new Object();
-        jsonParameters.collaboratorUid = $('#AggregateId').val();
-
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Commissions/ShowUpdateTracksModal'), jsonParameters, function (data) {
-            MyRio2cCommon.handleAjaxReturn({
-                data: data,
-                // Success
-                onSuccess: function () {
-                    enableUpdatePlugins();
-                    $(updateModalId).modal();
-                },
-                // Error
-                onError: function () {
-                }
-            });
-        })
-            .fail(function () {
-            })
-            .always(function () {
-                MyRio2cCommon.unblock();
-            });
-    };
-
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
-        },
-        showUpdateModal: function () {
-            showUpdateModal();
         }
     };
 }();

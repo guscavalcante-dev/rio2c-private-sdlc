@@ -19,6 +19,7 @@ namespace PlataformaRio2C.Domain.Dtos
     /// <summary>AttendeeInnovationOrganizationEvaluationDto</summary>
     public class AttendeeInnovationOrganizationEvaluationDto
     {
+        public InnovationOrganization InnovationOrganization { get; set; }
         public AttendeeInnovationOrganization AttendeeInnovationOrganization { get; set; }
         public AttendeeInnovationOrganizationEvaluation AttendeeInnovationOrganizationEvaluation { get; set; }
         public User EvaluatorUser { get; set; }

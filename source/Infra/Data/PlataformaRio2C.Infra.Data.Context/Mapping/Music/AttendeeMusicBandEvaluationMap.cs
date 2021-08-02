@@ -30,7 +30,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 .HasForeignKey(d => d.AttendeeMusicBandId);
 
             this.HasRequired(t => t.EvaluatorUser)
-                .WithMany()
+                .WithMany(u => u.AttendeeMusicBandEvaluations)
                 .HasForeignKey(d => d.EvaluatorUserId);
         }
     }

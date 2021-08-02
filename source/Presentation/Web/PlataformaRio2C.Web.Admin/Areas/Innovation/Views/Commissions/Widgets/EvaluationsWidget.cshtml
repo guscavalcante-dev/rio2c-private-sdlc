@@ -1,0 +1,60 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model AttendeeCollaboratorInnovationEvaluationsWidgetDto
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+}
+
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+            @Labels.Evaluations
+        </h3>
+    </div>
+</div>
+<div class="kt-portlet__body pt-0">
+    @if (Model?.AttendeeInnovationOrganizationEvaluationDtos?.Any() == true)
+    {
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-sm table-head-bg-brand table-body-scroll">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>@Labels.Startup</th>
+                            <th class="text-center">@Labels.Grade</th>
+                            <th class="text-center">@Labels.EvaluationDate</th>
+                            <th class="text-center">@Labels.Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="rio2c-scroll" style="max-height: 150px;">
+                        @foreach (var attendeeInnovationOrganizationEvaluationDto in Model.AttendeeInnovationOrganizationEvaluationDtos.OrderBy(aioeDto => aioeDto.AttendeeInnovationOrganizationEvaluation.CreateDate))
+                        {
+                            <tr>
+                                <td>@(attendeeInnovationOrganizationEvaluationDto.InnovationOrganization.Name)</td>
+                                <td class="text-center">@(attendeeInnovationOrganizationEvaluationDto.AttendeeInnovationOrganizationEvaluation.Grade)</td>
+                                <td class="text-center">@(attendeeInnovationOrganizationEvaluationDto.AttendeeInnovationOrganizationEvaluation.CreateDate.ToBrazilTimeZone().ToShortDateString())</td>
+                                @if (editionDto.IsInnovationProjectEvaluationOpen())
+                                {
+                                    <td class="text-center">@Labels.UnderEvaluation</td>
+                                }
+                                else
+                                {
+                                    <td class="text-center">@(attendeeInnovationOrganizationEvaluationDto.AttendeeInnovationOrganization.Grade)</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row mt-75">
+            <div class="col-12">
+                <div class="myrio2c-alert-box danger mx-auto text-center">
+                    <span>@string.Format(Messages.EntityNotAction, Labels.Evaluations, Labels.FoundFP)</span>
+                </div>
+            </div>
+        </div>
+    }
+</div>
