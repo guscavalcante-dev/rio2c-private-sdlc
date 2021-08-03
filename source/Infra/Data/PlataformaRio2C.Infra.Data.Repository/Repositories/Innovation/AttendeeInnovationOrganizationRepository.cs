@@ -327,7 +327,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                        {
                                                                                            AttendeeInnovationOrganizationTrack = aiot,
                                                                                            InnovationOrganizationTrackOption = aiot.InnovationOrganizationTrackOption
-                                                                                       })
+                                                                                       }),
+                                   AttendeeInnovationOrganizationEvaluationDtos = aio.AttendeeInnovationOrganizationEvaluations
+                                                                                      .Where(aioe => !aioe.IsDeleted)
+                                                                                      .Select(aioe => new AttendeeInnovationOrganizationEvaluationDto
+                                                                                      {
+                                                                                          AttendeeInnovationOrganizationEvaluation = aioe,
+                                                                                          EvaluatorUser = aioe.EvaluatorUser
+                                                                                      }).ToList()
                                });
 
             return await query
