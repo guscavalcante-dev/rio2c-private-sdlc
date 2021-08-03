@@ -141,17 +141,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<AttendeeInnovationOrganization> FindByInnovationOrganizationTrackOptionUids(this IQueryable<AttendeeInnovationOrganization> query, List<Guid?> innovationOrganizationTrackOptionUids)
         {
-            if (innovationOrganizationTrackOptionUids?.Any(i => i.HasValue) == true)
-            {
-                query = query.Where(aio => innovationOrganizationTrackOptionUids
-                                                .Any(iotUid =>
-                                                    aio.AttendeeInnovationOrganizationTracks
-                                                        .Any(aiot =>
-                                                                !aio.IsDeleted &&
-                                                                !aiot.IsDeleted &&
-                                                                !aiot.InnovationOrganizationTrackOption.IsDeleted &&
-                                                                 aiot.InnovationOrganizationTrackOption.Uid == iotUid)));
-            }
+            query = query.Where(aio => innovationOrganizationTrackOptionUids
+                                            .Any(iotUid =>
+                                                aio.AttendeeInnovationOrganizationTracks
+                                                    .Any(aiot =>
+                                                            !aio.IsDeleted &&
+                                                            !aiot.IsDeleted &&
+                                                            !aiot.InnovationOrganizationTrackOption.IsDeleted &&
+                                                             aiot.InnovationOrganizationTrackOption.Uid == iotUid)));
 
             return query;
         }
@@ -866,8 +863,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                    .Where(aioc => !aioc.IsDeleted)
                                                                                    .Select(aioc => new AttendeeInnovationOrganizationCollaboratorDto
                                                                                    {
-                                                                                      AttendeeCollaborator = aioc.AttendeeCollaborator,
-                                                                                      Collaborator = aioc.AttendeeCollaborator.Collaborator,
+                                                                                       AttendeeCollaborator = aioc.AttendeeCollaborator,
+                                                                                       Collaborator = aioc.AttendeeCollaborator.Collaborator,
                                                                                    }).ToList(),
                                    AttendeeInnovationOrganizationTrackDtos = aio.AttendeeInnovationOrganizationTracks.Select(aiot =>
                                                                                      new AttendeeInnovationOrganizationTrackDto
