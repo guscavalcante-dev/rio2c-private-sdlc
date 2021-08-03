@@ -44,6 +44,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
     {
         private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
+        private readonly IMusicProjectRepository musicProjectRepo;
 
         /// <summary>Initializes a new instance of the <see cref="CommissionsController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -54,11 +55,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             ICollaboratorRepository collaboratorRepository,
-            IAttendeeCollaboratorRepository attendeeCollaboratorRepository)
+            IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
+            IMusicProjectRepository musicProjectRepository)
             : base(commandBus, identityController)
         {
             this.collaboratorRepo = collaboratorRepository;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
+            this.musicProjectRepo = musicProjectRepository;
         }
 
         #region List
@@ -427,6 +430,31 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 pages = new List<dynamic>
                 {
                     new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Widgets/OnboardingInfoWidget.cshtml", onboardingInfoWidgetDto), divIdOrClass = "#MusicCommissionOnboardingInfoWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Evaluations Widget
+
+        [HttpGet]
+        public async Task<ActionResult> ShowEvaluationsWidget(Guid? collaboratorUid)
+        {
+            var attendeeCollaboratorMusicBandEvaluationsWidgetDto = await this.attendeeCollaboratorRepo.FindMusicBandsEvaluationsWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
+            if (attendeeCollaboratorMusicBandEvaluationsWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            ViewBag.ApprovedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Edition.Id);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EvaluationsWidget", attendeeCollaboratorMusicBandEvaluationsWidgetDto), divIdOrClass = "#MusicCommissionEvaluationsWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }

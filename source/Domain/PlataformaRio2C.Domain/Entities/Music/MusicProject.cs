@@ -149,11 +149,11 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Synchronizes the attendee music band collaborators.</summary>
         /// <param name="attendeeMusicBands">The attendee music bands.</param>
-        /// <param name="shouldDeleteMusicBand">if set to <c>true</c> [should delete music bands].</param>
+        /// <param name="shouldDeleteAttendeeMusicBand">if set to <c>true</c> [should delete music bands].</param>
         /// <param name="userId">The user identifier.</param>
-        public void SynchronizeAttendeeMusicBandProject(AttendeeMusicBand attendeeMusicBand, bool shouldDeleteMusicBand, int userId)
+        public void SynchronizeAttendeeMusicBandProject(AttendeeMusicBand attendeeMusicBand, bool shouldDeleteAttendeeMusicBand, int userId)
         {
-            if (shouldDeleteMusicBand)
+            if (shouldDeleteAttendeeMusicBand)
             {
                 this.DeleteAttendeeMusicBand(userId);
             }

@@ -134,7 +134,7 @@ namespace PlataformaRio2C.Domain.Entities
             }
 
             this.Grade = this.GetAverageEvaluation(this.Edition);
-            this.EvaluationsCount = this.AttendeeMusicBandEvaluations?.Count ?? 0;
+            this.EvaluationsCount = this.GetAttendeeMusicBandEvaluationTotalCount();
             this.LastEvaluationDate = DateTime.UtcNow;
         }
 
@@ -153,7 +153,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <returns></returns>
         private decimal? GetAverageEvaluation(Edition edition)
         {
-            if (this.AttendeeMusicBandEvaluations?.Any() != true)
+            if (this.FindAllAttendeeMusicBandEvaluationsNotDeleted()?.Any() != true)
             {
                 return null;
             }
@@ -162,7 +162,7 @@ namespace PlataformaRio2C.Domain.Entities
             // is greater or equal than minimum necessary evaluations quantity
             if (this.GetAttendeeMusicBandEvaluationTotalCount() >= edition.MusicProjectMinimumEvaluationsCount)
             {
-                return this.AttendeeMusicBandEvaluations.Sum(e => e.Grade) / this.AttendeeMusicBandEvaluations.Count;
+                return this.FindAllAttendeeMusicBandEvaluationsNotDeleted().Sum(e => e.Grade) / this.FindAllAttendeeMusicBandEvaluationsNotDeleted().Count;
             }
 
             return null;
@@ -175,7 +175,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <returns></returns>
         private AttendeeMusicBandEvaluation GetAttendeeMusicBandEvaluationByEvaluatorId(int evaluatorUserId)
         {
-            return this.AttendeeMusicBandEvaluations.FirstOrDefault(ambe =>
+            return this.FindAllAttendeeMusicBandEvaluationsNotDeleted().FirstOrDefault(ambe =>
                 ambe.AttendeeMusicBand.EditionId == this.EditionId &&
                 ambe.EvaluatorUserId == evaluatorUserId);
         }
@@ -186,7 +186,18 @@ namespace PlataformaRio2C.Domain.Entities
         /// <returns></returns>
         private int GetAttendeeMusicBandEvaluationTotalCount()
         {
-            return this.AttendeeMusicBandEvaluations.Count(ambe => ambe.AttendeeMusicBand.EditionId == this.EditionId);
+            return this.FindAllAttendeeMusicBandEvaluationsNotDeleted()
+                .Count(ambe => ambe.AttendeeMusicBand.EditionId == this.EditionId);
+        }
+
+        /// <summary>
+        /// Gets the not deleted attendee music band evaluations.
+        /// OBS.: Allways use this method to calc Average and others! Evaluations calcs cannot consider deleted Evaluations!
+        /// </summary>
+        /// <returns></returns>
+        private List<AttendeeMusicBandEvaluation> FindAllAttendeeMusicBandEvaluationsNotDeleted()
+        {
+            return this.AttendeeMusicBandEvaluations?.Where(aoc => !aoc.IsDeleted)?.ToList();
         }
 
         #endregion
@@ -274,49 +285,6 @@ namespace PlataformaRio2C.Domain.Entities
             return this.MusicProjects?.Where(mp => !mp.IsDeleted)?.ToList();
         }
 
-        #region Projects Counter
-
-        ///// <summary>Updates the projects count.</summary>
-        //public void UpdateProjectsCount()
-        //{
-        //    this.SellProjectsCount = this.RecountProjects();
-        //}
-
-        ///// <summary>Counts the projects.</summary>
-        ///// <returns></returns>
-        //public int RecountProjects()
-        //{
-        //    return this.SellProjects?.Count(p => !p.IsDeleted) ?? 0;
-        //}
-
-        ///// <summary>Determines whether [has projects available].</summary>
-        ///// <returns>
-        /////   <c>true</c> if [has projects available]; otherwise, <c>false</c>.</returns>
-        //public bool HasProjectsAvailable()
-        //{
-        //    return this.SellProjectsCount < this.GetMaxSellProjectsCount();
-        //}
-
-        #endregion
-
-        #region Edition Limits
-
-        ///// <summary>Gets the maximum sell projects count.</summary>
-        ///// <returns></returns>
-        //public int GetMaxSellProjectsCount()
-        //{
-        //    return this.Edition?.AttendeeOrganizationMaxSellProjectsCount ?? 0;
-        //}
-
-        ///// <summary>Gets the project maximum buyer evaluations count.</summary>
-        ///// <returns></returns>
-        //public int GetProjectMaxBuyerEvaluationsCount()
-        //{
-        //    return this.Edition?.ProjectMaxBuyerEvaluationsCount ?? 0;
-        //}
-
-        #endregion
-
         #endregion
 
         #region Validations
@@ -338,12 +306,12 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         public void ValidateAttendeeMusicBandEvaluations()
         {
-            if (this.AttendeeMusicBandEvaluations?.Any() != true)
+            if (this.FindAllAttendeeMusicBandEvaluationsNotDeleted()?.Any() != true)
             {
                 return;
             }
 
-            foreach (var attendeeMusicBandEvaluation in this.AttendeeMusicBandEvaluations?.Where(d => !d.IsValid())?.ToList())
+            foreach (var attendeeMusicBandEvaluation in this.FindAllAttendeeMusicBandEvaluationsNotDeleted()?.Where(d => !d.IsValid())?.ToList())
             {
                 this.ValidationResult.Add(attendeeMusicBandEvaluation.ValidationResult);
             }

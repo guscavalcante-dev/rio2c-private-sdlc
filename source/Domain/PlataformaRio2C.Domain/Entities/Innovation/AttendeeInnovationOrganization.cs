@@ -202,7 +202,7 @@ namespace PlataformaRio2C.Domain.Entities
             }
 
             this.Grade = this.GetAverageEvaluation(this.Edition);
-            this.EvaluationsCount = this.AttendeeInnovationOrganizationEvaluations?.Count ?? 0;
+            this.EvaluationsCount = this.GetAttendeeInnovationOrganizationEvaluationTotalCount();
             this.LastEvaluationDate = DateTime.UtcNow;
         }
 
@@ -221,7 +221,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <returns></returns>
         private decimal? GetAverageEvaluation(Edition edition)
         {
-            if (this.AttendeeInnovationOrganizationEvaluations?.Any() != true)
+            if (this.FindAllAttendeeInnovationOrganizationEvaluationsNotDeleted()?.Any() != true)
             {
                 return null;
             }
@@ -230,7 +230,7 @@ namespace PlataformaRio2C.Domain.Entities
             // is greater or equal than minimum necessary evaluations quantity
             if (this.GetAttendeeInnovationOrganizationEvaluationTotalCount() >= edition.InnovationProjectMinimumEvaluationsCount)
             {
-                return this.AttendeeInnovationOrganizationEvaluations.Sum(e => e.Grade) / this.AttendeeInnovationOrganizationEvaluations.Count;
+                return this.FindAllAttendeeInnovationOrganizationEvaluationsNotDeleted().Sum(e => e.Grade) / this.FindAllAttendeeInnovationOrganizationEvaluationsNotDeleted().Count;
             }
 
             return null;
@@ -243,7 +243,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <returns></returns>
         private AttendeeInnovationOrganizationEvaluation GetAttendeeInnovationOrganizationEvaluationByEvaluatorId(int evaluatorUserId)
         {
-            return this.AttendeeInnovationOrganizationEvaluations.FirstOrDefault(ambe =>
+            return this.FindAllAttendeeInnovationOrganizationEvaluationsNotDeleted().FirstOrDefault(ambe =>
                 ambe.AttendeeInnovationOrganization.EditionId == this.EditionId &&
                 ambe.EvaluatorUserId == evaluatorUserId);
         }
@@ -254,7 +254,18 @@ namespace PlataformaRio2C.Domain.Entities
         /// <returns></returns>
         private int GetAttendeeInnovationOrganizationEvaluationTotalCount()
         {
-            return this.AttendeeInnovationOrganizationEvaluations.Count(ambe => ambe.AttendeeInnovationOrganization.EditionId == this.EditionId);
+            return this.FindAllAttendeeInnovationOrganizationEvaluationsNotDeleted()
+                .Count(aioe => aioe.AttendeeInnovationOrganization.EditionId == this.EditionId);
+        }
+
+        /// <summary>
+        /// Gets the not deleted attendee innovation organization evaluations.
+        /// OBS.: Allways use this method to calc Average and others! Evaluations calcs cannot consider deleted Evaluations!
+        /// </summary>
+        /// <returns></returns>
+        private List<AttendeeInnovationOrganizationEvaluation> FindAllAttendeeInnovationOrganizationEvaluationsNotDeleted()
+        {
+            return this.AttendeeInnovationOrganizationEvaluations?.Where(aoc => !aoc.IsDeleted)?.ToList();
         }
 
         #endregion
@@ -617,6 +628,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateBusinessStage();
             this.ValidateAttendeeInnovationOrganizationFounders();
             this.ValidateAttendeeInnovationOrganizationCompetitors();
+            this.ValidateAttendeeInnovationOrganizationEvaluations();
 
             return this.ValidationResult.IsValid;
         }
@@ -703,7 +715,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         private void ValidateAttendeeInnovationOrganizationFounders()
         {
-            foreach (var attendeeInnovationOrganizationFounder in this.AttendeeInnovationOrganizationFounders.Where(aiof => !aiof.IsValid()))
+            foreach (var attendeeInnovationOrganizationFounder in this.FindAllAttendeeInnovationOrganizationFoundersNotDeleted()?.Where(aiof => !aiof.IsValid()))
             {
                 this.ValidationResult.Add(attendeeInnovationOrganizationFounder.ValidationResult);
             }
@@ -714,14 +726,30 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         private void ValidateAttendeeInnovationOrganizationCompetitors()
         {
-            if (this.AttendeeInnovationOrganizationCompetitors.Count > CompetitorsMaxCount)
+            if (this.FindAllAttendeeInnovationOrganizationCompetitorsNotDeleted()?.Count > CompetitorsMaxCount)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityMustContainsMaxItemsCount, "Competitors", CompetitorsMaxCount), new string[] { "Competitors" }));
             }
 
-            foreach (var attendeeInnovationOrganizationCompetitorApiDto in this.AttendeeInnovationOrganizationCompetitors.Where(aiof => !aiof.IsValid()))
+            foreach (var attendeeInnovationOrganizationCompetitorApiDto in this.FindAllAttendeeInnovationOrganizationCompetitorsNotDeleted()?.Where(aiof => !aiof.IsValid()))
             {
                 this.ValidationResult.Add(attendeeInnovationOrganizationCompetitorApiDto.ValidationResult);
+            }
+        }
+
+        /// <summary>
+        /// Validates the attendee music band evaluations.
+        /// </summary>
+        public void ValidateAttendeeInnovationOrganizationEvaluations()
+        {
+            if (this.FindAllAttendeeInnovationOrganizationEvaluationsNotDeleted()?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var attendeeInnovationOrganizationEvaluation in this.FindAllAttendeeInnovationOrganizationEvaluationsNotDeleted()?.Where(d => !d.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(attendeeInnovationOrganizationEvaluation.ValidationResult);
             }
         }
 

@@ -481,6 +481,40 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        /// <summary>
+        /// Finds the music bands evaluations widget dto asynchronous.
+        /// </summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeCollaboratorMusicBandEvaluationsWidgetDto> FindMusicBandsEvaluationsWidgetDtoAsync(Guid collaboratorUid, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByCollaboratorUid(collaboratorUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(ac => new AttendeeCollaboratorMusicBandEvaluationsWidgetDto
+                            {
+                                AttendeeCollaboratorDto = new AttendeeCollaboratorDto
+                                {
+                                    AttendeeCollaborator = ac,
+                                    Collaborator = ac.Collaborator
+                                },
+                                AttendeeMusicBandEvaluationDtos = ac.Collaborator.User.AttendeeMusicBandEvaluations
+                                                                                        .Where(ambe => !ambe.IsDeleted)
+                                                                                        .OrderBy(ambe => ambe.CreateDate)
+                                                                                        .Select(ambe => new AttendeeMusicBandEvaluationDto
+                                                                                        {
+                                                                                            AttendeeMusicBandEvaluation = ambe,
+                                                                                            AttendeeMusicBand = ambe.AttendeeMusicBand,
+                                                                                            MusicBand = ambe.AttendeeMusicBand.MusicBand,
+                                                                                            EvaluatorUser = ambe.EvaluatorUser
+                                                                                        }).ToList()
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
         /// <summary>Finds the API configuration widget dto by collaborator uid and by edition identifier asynchronous.</summary>
         /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <param name="editionId">The edition identifier.</param>

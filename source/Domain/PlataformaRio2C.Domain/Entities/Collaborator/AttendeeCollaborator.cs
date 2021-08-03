@@ -908,16 +908,16 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Synchronizes the attendee music band collaborators.</summary>
         /// <param name="attendeeMusicBands">The attendee music bands.</param>
-        /// <param name="shouldDeleteMusicBands">if set to <c>true</c> [should delete music bands].</param>
+        /// <param name="shouldDeleteAttendeeMusicBandCollaborators">if set to <c>true</c> [should delete music bands].</param>
         /// <param name="userId">The user identifier.</param>
-        public void SynchronizeAttendeeMusicBandCollaborators(List<AttendeeMusicBand> attendeeMusicBands, bool shouldDeleteMusicBands, int userId)
+        public void SynchronizeAttendeeMusicBandCollaborators(List<AttendeeMusicBand> attendeeMusicBands, bool shouldDeleteAttendeeMusicBandCollaborators, int userId)
         {
             if (this.AttendeeMusicBandCollaborators == null)
             {
                 this.AttendeeMusicBandCollaborators = new List<AttendeeMusicBandCollaborator>();
             }
 
-            if (shouldDeleteMusicBands)
+            if (shouldDeleteAttendeeMusicBandCollaborators)
             {
                 this.DeleteAttendeeMusicBandCollaborators(attendeeMusicBands, userId);
             }
@@ -994,11 +994,11 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Synchronizes the attendee innovation organization collaborators.</summary>
         /// <param name="attendeeInnovationOrganizations">The attendee innovation organizations.</param>
-        /// <param name="shouldDeleteInnovationOrganizations">if set to <c>true</c> [should delete music bands].</param>
+        /// <param name="shouldDeleteAttendeeInnovationOrganizationCollaborators">if set to <c>true</c> [should delete music bands].</param>
         /// <param name="userId">The user identifier.</param>
         public void SynchronizeAttendeeInnovationOrganizationCollaborators(
             List<AttendeeInnovationOrganization> attendeeInnovationOrganizations, 
-            bool shouldDeleteInnovationOrganizations, 
+            bool shouldDeleteAttendeeInnovationOrganizationCollaborators, 
             int userId)
         {
             if (this.AttendeeInnovationOrganizationCollaborators == null)
@@ -1006,7 +1006,7 @@ namespace PlataformaRio2C.Domain.Entities
                 this.AttendeeInnovationOrganizationCollaborators = new List<AttendeeInnovationOrganizationCollaborator>();
             }
 
-            if (shouldDeleteInnovationOrganizations)
+            if (shouldDeleteAttendeeInnovationOrganizationCollaborators)
             {
                 this.DeleteAttendeeInnovationOrganizationCollaborators(attendeeInnovationOrganizations, userId);
             }
@@ -1140,16 +1140,13 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         private void DeleteAttendeeInnovationOrganizationEvaluations(int userId)
         {
-            //TODO: [RIO2CMY-130] Quando um membro da comissão seja excluído da edição, todas as notas já atribuídas por ele deverão ser excluídas (se o período de votação ainda estiver aberto)
-            // Ainda não foi implementado porque tem que importar a classe AttendeeInnovationOrganizationEvaluation, criar repositório, criar mapeamento, e daí sim pegar as avaliações para excluir usando "EvaluatorUserId"
-            //if (this.AttendeeCollaboratorInnovationOrganizationTracks?.Any() != true)
-            //{
-            //    return
-            //}
-            //foreach (var conferenceParticipant in this.ConferenceParticipants.Where(c => !c.IsDeleted))
-            //{
-            //    conferenceParticipant.Delete(userId);
-            //}
+            if (this.Collaborator?.User?.AttendeeInnovationOrganizationEvaluations?.Any() == true)
+            {
+                foreach (var attendeeInnovationOrganizationEvaluation in this.Collaborator.User.AttendeeInnovationOrganizationEvaluations.Where(c => !c.IsDeleted))
+                {
+                    attendeeInnovationOrganizationEvaluation.Delete(userId);
+                }
+            }
         }
 
         #endregion

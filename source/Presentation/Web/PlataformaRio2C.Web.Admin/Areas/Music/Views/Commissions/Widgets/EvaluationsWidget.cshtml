@@ -1,9 +1,9 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
-@model AttendeeCollaboratorInnovationEvaluationsWidgetDto
+@model AttendeeCollaboratorMusicBandEvaluationsWidgetDto
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
-    var approvedAttendeeInnovationOrganizationIds = ViewBag.ApprovedAttendeeInnovationOrganizationsIds as int[];
-    bool isInnovationProjectEvaluationClosed = !editionDto.IsInnovationProjectEvaluationOpen();
+    var approvedAttendeeMusicBandsIds = ViewBag.ApprovedAttendeeMusicBandsIds as int[];
+    bool isMusicProjectEvaluationClosed = !editionDto.IsMusicProjectEvaluationOpen();
 }
 
 <div class="kt-portlet__head">
@@ -14,7 +14,7 @@
     </div>
 </div>
 <div class="kt-portlet__body pt-0">
-    @if (Model?.AttendeeInnovationOrganizationEvaluationDtos?.Any() == true)
+    @if (Model?.AttendeeMusicBandEvaluationDtos?.Any() == true)
     {
         <table class="table table-sm table-head-bg-brand table-body-scroll">
             <thead class="thead-inverse">
@@ -26,20 +26,20 @@
                 </tr>
             </thead>
             <tbody class="rio2c-scroll" style="max-height:230px;">
-                @foreach (var attendeeInnovationOrganizationEvaluationDto in Model.AttendeeInnovationOrganizationEvaluationDtos.OrderBy(aioeDto => aioeDto.AttendeeInnovationOrganizationEvaluation.CreateDate))
+                @foreach (var attendeeMusicBandEvaluationDto in Model.AttendeeMusicBandEvaluationDtos.OrderBy(ambeDto => ambeDto.AttendeeMusicBandEvaluation.CreateDate))
                 {
                     <tr>
-                        <td class="align-middle">@(attendeeInnovationOrganizationEvaluationDto.InnovationOrganization.Name)</td>
-                        <td class="text-center align-middle">@(attendeeInnovationOrganizationEvaluationDto.AttendeeInnovationOrganizationEvaluation.Grade)</td>
-                        <td class="text-center align-middle">@(attendeeInnovationOrganizationEvaluationDto.AttendeeInnovationOrganizationEvaluation.CreateDate.ToBrazilTimeZone().ToShortDateString())</td>
+                        <td class="align-middle">@(attendeeMusicBandEvaluationDto.MusicBand.Name)</td>
+                        <td class="text-center align-middle">@(attendeeMusicBandEvaluationDto.AttendeeMusicBand.Grade)</td>
+                        <td class="text-center align-middle">@(attendeeMusicBandEvaluationDto.AttendeeMusicBand.CreateDate.ToBrazilTimeZone().ToShortDateString())</td>
                         <td class="align-middle pb-0 mb-0">
                             @{
                                 var icon = "fa-diagnoses";
                                 var color = "warning";
                                 var text = Labels.UnderEvaluation;
-                                if (isInnovationProjectEvaluationClosed)
+                                if (isMusicProjectEvaluationClosed)
                                 {
-                                    if (approvedAttendeeInnovationOrganizationIds.Contains(attendeeInnovationOrganizationEvaluationDto.AttendeeInnovationOrganization.Id))
+                                    if (approvedAttendeeMusicBandsIds.Contains(attendeeMusicBandEvaluationDto.AttendeeMusicBand.Id))
                                     {
                                         icon = "fa-thumbs-up";
                                         color = "success";
@@ -58,18 +58,18 @@
                                             <i class="fa @icon"></i>
                                             <span>
                                                 @text
-                                                @if (isInnovationProjectEvaluationClosed)
+                                                @if (isMusicProjectEvaluationClosed)
                                                 {
-                                                    <b>@("(" + (attendeeInnovationOrganizationEvaluationDto.AttendeeInnovationOrganization.Grade?.ToString() ?? "-") + ")")</b>
+                                                    <b>@("(" + (attendeeMusicBandEvaluationDto.AttendeeMusicBand.Grade?.ToString() ?? "-") + ")")</b>
                                                 }
                                             </span>
                                         </label>
                                     </span>
 
                                 </div>}
-                        </td>
-                    </tr>
-                }
+                            </td>
+                        </tr>
+                    }
             </tbody>
         </table>
     }

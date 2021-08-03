@@ -772,7 +772,9 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/music.commissions.details.js").Include(
                 "~/Assets/js/music/commissions/music.commissions.maininformation.widget.js",
                 "~/Assets/js/music/commissions/music.commissions.socialnetworks.widget.js",
-                "~/Assets/js/music/commissions/music.commissions.onboardinginfo.widget.js"));
+                "~/Assets/js/music/commissions/music.commissions.onboardinginfo.widget.js",
+                "~/Assets/js/music/commissions/music.commissions.evaluations.widget.js"
+                ));
 
             bundles.Add(new ScriptBundle("~/bundles/js/music.commissions.update.js").Include(
                 "~/Assets/js/music/commissions/music.commissions.update.js"));

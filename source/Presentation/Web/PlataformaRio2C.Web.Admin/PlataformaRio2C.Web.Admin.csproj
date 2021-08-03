@@ -909,6 +909,7 @@
     <Content Include="Assets\js\administrators\administrators.editioncount.widget.js" />
     <Content Include="Assets\js\administrators\administrators.totalcount.widget.js" />
     <Content Include="Assets\js\administrators\administrators.update.js" />
+    <Content Include="Assets\js\music\commissions\music.commissions.evaluations.widget.js" />
     <Content Include="Assets\js\music\commissions\music.commissions.onboardinginfo.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.clipping.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.datatable.widget.js" />
@@ -7732,6 +7733,8 @@
     <Content Include="Areas\Innovation\Views\Projects\Widgets\BusinessInformationWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Projects\Widgets\PresentationWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Commissions\Widgets\EvaluationsWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Commissions\Widgets\EvaluationsWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\Commissions\Modals\UpdateModal.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

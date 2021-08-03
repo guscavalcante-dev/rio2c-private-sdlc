@@ -18,6 +18,8 @@ namespace PlataformaRio2C.Domain.Dtos
     /// <summary>AttendeeMusicBandEvaluationDto</summary>
     public class AttendeeMusicBandEvaluationDto
     {
+        public MusicBand MusicBand { get; set; }
+        public AttendeeMusicBand AttendeeMusicBand { get; set; }
         public AttendeeMusicBandEvaluation AttendeeMusicBandEvaluation { get; set; }
         public User EvaluatorUser { get; set; }
 
