@@ -17,7 +17,7 @@
             <div class="form-group mb-2">
                 <div class="myrio2c-evaluation-grade-box-lg form-control">
                     <span class="grade-label mr-2">@Labels.Evaluation</span>
-                    <span class="grade-vote">@(currentEvaluation?.AttendeeInnovationOrganization?.Grade)</span>
+                    <span class="grade-vote">@(currentEvaluation?.AttendeeInnovationOrganizationEvaluation?.Grade ?? 0)</span>
                 </div>
             </div>
         </form>

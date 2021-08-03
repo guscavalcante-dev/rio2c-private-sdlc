@@ -177,7 +177,6 @@ namespace PlataformaRio2C.Web.Admin.Services
             });
         }
 
-
         /// <summary>Sends the admin welcome email.</summary>
         /// <param name="cmd">The command.</param>
         /// <param name="sentEmailUid">The sent email uid.</param>
