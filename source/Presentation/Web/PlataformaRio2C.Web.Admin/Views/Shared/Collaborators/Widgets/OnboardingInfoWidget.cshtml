@@ -94,6 +94,24 @@
     </div>
     <div class="row">
         <div class="col-md-6 mt-20">
+            <h3 class="kt-heading kt-heading--sm mb-0 mt-0">@Labels.WelcomeEmail</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @{
+                        var welcomeEmailDate = Model.AttendeeCollaborator.WelcomeEmailSendDate?.ToBrazilTimeZone();
+                    }
+                    @if (welcomeEmailDate.HasValue)
+                    {
+                        @(welcomeEmailDate?.ToShortDateString() + " " + welcomeEmailDate?.ToShortTimeString())
+                    }
+                    else
+                    {
+                        @:-
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mt-20">
             <h3 class="kt-heading kt-heading--sm mb-0 mt-0">@Labels.TermsAcceptance</h3>
             <div class="row mt-3">
                 <div class="col-12">

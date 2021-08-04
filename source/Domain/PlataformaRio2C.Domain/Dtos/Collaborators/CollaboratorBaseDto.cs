@@ -44,9 +44,10 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset? ImageUploadDate { get; set; }
         public DateTimeOffset CreateDate { get; set; }
         public DateTimeOffset UpdateDate { get; set; }
-        public DateTimeOffset? CurrentEditionOnboardingFinishDate => EditionAttendeeCollaborator?.OnboardingFinishDate;
-        public DateTimeOffset? SpeakerCurrentEditionOnboardingFinishDate => EditionAttendeeCollaborator?.SpeakerTermsAcceptanceDate;
-        public bool IsInCurrentEdition => EditionAttendeeCollaborator != null;
+        public DateTimeOffset? WelcomeEmailSentDate => this.EditionAttendeeCollaborator?.WelcomeEmailSendDate;
+        public DateTimeOffset? CurrentEditionOnboardingFinishDate => this.EditionAttendeeCollaborator?.OnboardingFinishDate;
+        public DateTimeOffset? SpeakerCurrentEditionOnboardingFinishDate => this.EditionAttendeeCollaborator?.SpeakerTermsAcceptanceDate;
+        public bool IsInCurrentEdition => this.EditionAttendeeCollaborator != null;
         public bool IsInOtherEdition { get; set; }
         //public bool? IsVirtualMeeting => this.EditionAttendeeCollaborator?.AttendeeOrganizationCollaborators?.Any(aoc => aoc.AttendeeOrganization?.IsVirtualMeeting == true);
 

@@ -155,6 +155,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     throw new DomainException(Messages.SelectAtLeastOneOption);
                 }
 
+                List<string> errors = new List<string>();
                 foreach (var collaboratorDto in collaboratorsDtos)
                 {
                     var collaboratorLanguageCode = collaboratorDto.Language?.Code ?? this.UserInterfaceLanguage;
@@ -179,13 +180,18 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     }
                     catch (DomainException ex)
                     {
-                        //TODO: Check errors
-                        //var errors = result?.Errors?.Select(e => e.Message)?.Join(", ");
+                        //Cannot stop sending email when exception occurs.
+                        errors.AddRange(result.Errors.Select(e => e.Message));
                     }
                     catch (Exception ex)
                     {
                         Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                     }
+                }
+
+                if (errors.Any())
+                {
+                    throw new DomainException(string.Format(Messages.OneOrMoreEmailsNotSend, Labels.WelcomeEmail));
                 }
             }
             catch (DomainException ex)

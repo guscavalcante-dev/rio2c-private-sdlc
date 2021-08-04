@@ -2832,6 +2832,10 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Bem-vindo ao Rio2C {0}</value>
     <comment>Bem-vindo ao Rio2C {0}</comment>
   </data>
+  <data name="WelcomeEmail" xml:space="preserve">
+    <value>Email de Convite</value>
+    <comment>Email de Convite</comment>
+  </data>
   <data name="WelcomeEmailSendDate" xml:space="preserve">
     <value>Data envio e-mail de boas-vindas</value>
     <comment>Data envio e-mail de boas-vindas</comment>

@@ -52,7 +52,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
         public CommissionsController(
-            IMediator commandBus, 
+            IMediator commandBus,
             IdentityAutenticationService identityController,
             ICollaboratorRepository collaboratorRepository,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
@@ -471,6 +471,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpPost]
         public async Task<ActionResult> SendInvitationEmails(string selectedCollaboratorsUids)
         {
+            AppValidationResult result = null;
+
             try
             {
                 if (string.IsNullOrEmpty(selectedCollaboratorsUids))
@@ -490,13 +492,14 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     throw new DomainException(Messages.SelectAtLeastOneOption);
                 }
 
+                List<string> errors = new List<string>();
                 foreach (var collaboratorDto in collaboratorsDtos)
                 {
                     var collaboratorLanguageCode = collaboratorDto.Language?.Code ?? this.UserInterfaceLanguage;
 
                     try
                     {
-                        var result = await this.CommandBus.Send(new SendMusicCommissionWelcomeEmailAsync(
+                        result = await this.CommandBus.Send(new SendMusicCommissionWelcomeEmailAsync(
                             collaboratorDto.Collaborator.Uid,
                             collaboratorDto.User.SecurityStamp,
                             collaboratorDto.User.Id,
@@ -514,13 +517,18 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     }
                     catch (DomainException ex)
                     {
-                        //TODO: Check errors
-                        //var errors = result?.Errors?.Select(e => e.Message)?.Join(", ");
+                        //Cannot stop sending email when exception occurs.
+                        errors.AddRange(result.Errors.Select(e => e.Message));
                     }
                     catch (Exception ex)
                     {
                         Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                     }
+                }
+
+                if (errors.Any())
+                {
+                    throw new DomainException(string.Format(Messages.OneOrMoreEmailsNotSend, Labels.WelcomeEmail));
                 }
             }
             catch (DomainException ex)

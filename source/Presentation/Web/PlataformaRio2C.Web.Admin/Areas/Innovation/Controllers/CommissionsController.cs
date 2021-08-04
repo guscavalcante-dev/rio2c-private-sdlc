@@ -587,7 +587,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
         #endregion
 
-
         #region Send Invitation Emails
 
         /// <summary>Sends the invitation emails.</summary>
@@ -596,6 +595,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         [HttpPost]
         public async Task<ActionResult> SendInvitationEmails(string selectedCollaboratorsUids)
         {
+            AppValidationResult result = null;
+
             try
             {
                 if (string.IsNullOrEmpty(selectedCollaboratorsUids))
@@ -615,13 +616,14 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                     throw new DomainException(Messages.SelectAtLeastOneOption);
                 }
 
+                List<string> errors = new List<string>();
                 foreach (var collaboratorDto in collaboratorsDtos)
                 {
                     var collaboratorLanguageCode = collaboratorDto.Language?.Code ?? this.UserInterfaceLanguage;
 
                     try
                     {
-                        var result = await this.CommandBus.Send(new SendInnovationCommissionWelcomeEmailAsync(
+                        result = await this.CommandBus.Send(new SendInnovationCommissionWelcomeEmailAsync(
                             collaboratorDto.Collaborator.Uid,
                             collaboratorDto.User.SecurityStamp,
                             collaboratorDto.User.Id,
@@ -637,15 +639,20 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                             throw new DomainException(Messages.CorrectFormValues);
                         }
                     }
-                    catch (DomainException ex)
+                    catch (DomainException)
                     {
-                        //TODO: Check errors
-                        //var errors = result?.Errors?.Select(e => e.Message)?.Join(", ");
+                        //Cannot stop sending email when exception occurs.
+                        errors.AddRange(result.Errors.Select(e => e.Message));
                     }
                     catch (Exception ex)
                     {
                         Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                     }
+                }
+
+                if (errors.Any())
+                {
+                    throw new DomainException(string.Format(Messages.OneOrMoreEmailsNotSend, Labels.WelcomeEmail));
                 }
             }
             catch (DomainException ex)

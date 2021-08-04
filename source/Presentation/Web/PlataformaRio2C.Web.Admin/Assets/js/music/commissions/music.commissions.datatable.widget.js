@@ -42,6 +42,10 @@ var MusicCommissionsDataTableWidget = function () {
         })
         .always(function () {
             MyRio2cCommon.unblock();
+
+            if (typeof (MusicCommissionsDataTableWidget) !== 'undefined') {
+                MusicCommissionsDataTableWidget.refreshData();
+            }
         });
     };
 
@@ -244,9 +248,13 @@ var MusicCommissionsDataTableWidget = function () {
                     }
                 },
                 {
-                    data: 'UpdateDate',
+                    data: 'WelcomeEmailSentDate',
                     render: function (data) {
-                        return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                        if (data !== null) {
+                            return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                        }
+
+                        return '';
                     }
                 },
                 {

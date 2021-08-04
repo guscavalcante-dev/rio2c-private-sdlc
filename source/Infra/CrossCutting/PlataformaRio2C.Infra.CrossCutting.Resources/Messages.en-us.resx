@@ -601,6 +601,10 @@
   <data name="NumberIsRequired" xml:space="preserve">
     <value>Number required.</value>
   </data>
+  <data name="OneOrMoreEmailsNotSend" xml:space="preserve">
+    <value>One or more emails were not sent, please check the “{0}” field to identify the ones that were not sent</value>
+    <comment>Um ou mais e-mails não foram enviados, por favor verifique o campo “{0}” para identificar os que não foram enviados</comment>
+  </data>
   <data name="OutOfEvaluationPeriod" xml:space="preserve">
     <value>Out of the evaluation period.</value>
     <comment>Fora do período de avaliação.</comment>

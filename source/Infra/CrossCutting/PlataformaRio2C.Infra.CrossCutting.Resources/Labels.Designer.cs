@@ -6469,6 +6469,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email de Convite.
+        /// </summary>
+        public static string WelcomeEmail {
+            get {
+                return ResourceManager.GetString("WelcomeEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data envio e-mail de boas-vindas.
         /// </summary>
         public static string WelcomeEmailSendDate {

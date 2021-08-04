@@ -1257,6 +1257,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Um ou mais e-mails não foram enviados, por favor verifique o campo “{0}” para identificar os que não foram enviados.
+        /// </summary>
+        public static string OneOrMoreEmailsNotSend {
+            get {
+                return ResourceManager.GetString("OneOrMoreEmailsNotSend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fora do período de avaliação..
         /// </summary>
         public static string OutOfEvaluationPeriod {

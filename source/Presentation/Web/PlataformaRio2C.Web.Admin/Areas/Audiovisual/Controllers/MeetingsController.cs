@@ -810,6 +810,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     throw new DomainException(Messages.SelectAtLeastOneOption);
                 }
 
+                List<string> errors = new List<string>();
                 foreach (var attendeeOrganizationBaseDto in attendeeOrganizationBaseDtos)
                 {
                     foreach (var attendeeCollaboratorBaseDto in attendeeOrganizationBaseDto.AttendeeCollaboratorBaseDtos)
@@ -834,16 +835,20 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                                 throw new DomainException(Messages.CorrectFormValues);
                             }
                         }
-                        catch (DomainException ex)
+                        catch (DomainException)
                         {
-                            //TODO: Check errors
-                            //var errors = result?.Errors?.Select(e => e.Message)?.Join(", ");
+                            //Cannot stop sending email when exception occurs.
+                            errors.AddRange(result.Errors.Select(e => e.Message));
                         }
                         catch (Exception ex)
                         {
                             Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                         }
+                    }
 
+                    if (errors.Any())
+                    {
+                        throw new DomainException(string.Format(Messages.OneOrMoreEmailsNotSend, Labels.WelcomeEmail));
                     }
                 }
             }
@@ -990,6 +995,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     throw new DomainException(Messages.SelectAtLeastOneOption);
                 }
 
+                List<string> errors = new List<string>();
                 foreach (var attendeeOrganizationBaseDto in attendeeOrganizationBaseDtos)
                 {
                     foreach (var attendeeCollaboratorBaseDto in attendeeOrganizationBaseDto.AttendeeCollaboratorBaseDtos)
@@ -1016,14 +1022,18 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                         }
                         catch (DomainException ex)
                         {
-                            //TODO: Check errors
-                            //var errors = result?.Errors?.Select(e => e.Message)?.Join(", ");
+                            //Cannot stop sending email when exception occurs.
+                            errors.AddRange(result.Errors.Select(e => e.Message));
                         }
                         catch (Exception ex)
                         {
                             Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
                         }
+                    }
 
+                    if (errors.Any())
+                    {
+                        throw new DomainException(string.Format(Messages.OneOrMoreEmailsNotSend, Labels.WelcomeEmail));
                     }
                 }
             }

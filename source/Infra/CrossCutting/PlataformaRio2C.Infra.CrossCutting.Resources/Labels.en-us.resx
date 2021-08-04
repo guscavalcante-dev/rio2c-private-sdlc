@@ -2828,6 +2828,10 @@
     <value>Welcome to Rio2C {0}</value>
     <comment>Bem-vindo ao Rio2C {0}</comment>
   </data>
+  <data name="WelcomeEmail" xml:space="preserve">
+    <value>Welcome Email</value>
+    <comment>Email de Convite</comment>
+  </data>
   <data name="WelcomeEmailSendDate" xml:space="preserve">
     <value>Welcome email send date</value>
     <comment>Data envio e-mail de boas-vindas</comment>

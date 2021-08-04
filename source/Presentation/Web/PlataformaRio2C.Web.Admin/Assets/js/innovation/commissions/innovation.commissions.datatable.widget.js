@@ -42,6 +42,10 @@ var InnovationCommissionsDataTableWidget = function () {
         })
         .always(function () {
             MyRio2cCommon.unblock();
+
+            if (typeof (InnovationCommissionsDataTableWidget) !== 'undefined') {
+                InnovationCommissionsDataTableWidget.refreshData();
+            }
         });
     };
 
@@ -250,9 +254,13 @@ var InnovationCommissionsDataTableWidget = function () {
                     }
                 },
                 {
-                    data: 'UpdateDate',
+                    data: 'WelcomeEmailSentDate',
                     render: function (data) {
-                        return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                        if (data !== null) {
+                            return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
+                        }
+
+                        return '';
                     }
                 },
                 {
@@ -335,7 +343,6 @@ var InnovationCommissionsDataTableWidget = function () {
                 table.search($(this).val()).draw();
             }
         });
-
 
         $('#InnovationOrganizationTrackOptionUid').on('change', function (e) {
             table.ajax.reload();
