@@ -88,6 +88,14 @@
         </div>
         <!--end:: Music Projects Edition Count-->
     }
+    @if (isAdminFull || isAdminAudiovisual)
+    {
+        <!--begin:: Audiovisual Projects Gauge Edition Count-->
+        <div class="col-sm-4">
+            <div id="AudiovisualProjectsEditionCountGaugeWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        </div>
+        <!--end:: Audiovisual Projects Gauge Edition Count-->
+    }
 </div>
 @section Styles {
 }
@@ -104,6 +112,7 @@
         @Scripts.Render("~/bundles/js/audiovisual.players.editioncount.js")
         @Scripts.Render("~/bundles/js/collaborators.editioncount.js")
         @Scripts.Render("~/bundles/js/audiovisual.projects.editioncount.widget.js")
+        @Scripts.Render("~/bundles/js/audiovisual.projects.editioncount.gauge.widget.js")
     }
     @if (isAdminFull || isAdminConferences)
     {
@@ -118,7 +127,7 @@
     {
         @Scripts.Render("~/bundles/js/music.projects.editioncount.widget.js")
     }
-<script>
+    <script>
         jQuery(document).ready(function () {
             @if (isAdminFull)
             {
@@ -133,6 +142,7 @@
                     AudiovisualPlayersEditionCountWidget.init();
                     CollaboratorsEditionCountWidget.init();
                     AudiovisualProjectsEditionCountWidget.init();
+                    AudiovisualProjectsEditionCountGaugeWidget.init();
                 </text>
             }
             @if (isAdminFull || isAdminConferences)
@@ -153,5 +163,5 @@
                 </text>
             }
         });
-</script>
+    </script>
 }

@@ -430,6 +430,9 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.projects.editioncount.widget.js").Include(
                 "~/Assets/js/audiovisual/projects/audiovisual.projects.editioncount.widget.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.projects.editioncount.gauge.widget.js").Include(
+                "~/Assets/js/audiovisual/projects/audiovisual.projects.editioncount.gauge.widget.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.projects.widget.js").Include(
                 "~/Assets/js/audiovisual/projects/audiovisual.projects.maininformation.widget.js",
                 "~/Assets/js/audiovisual/projects/audiovisual.projects.interest.widget.js",

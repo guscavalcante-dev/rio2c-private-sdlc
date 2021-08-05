@@ -813,6 +813,7 @@
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.logistics.info.widget.js" />
     <Content Include="Assets\js\audiovisual\producers\audiovisual.producers.delete.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.delete.js" />
+    <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.editioncount.gauge.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.maininformation.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.interest.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.links.widget.js" />
@@ -8260,6 +8261,7 @@
     <Content Include="Areas\Innovation\Views\Commissions\Widgets\EvaluationsWidget.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Widgets\EvaluationsWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Commissions\Modals\UpdateModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EditionCountGaugeWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
