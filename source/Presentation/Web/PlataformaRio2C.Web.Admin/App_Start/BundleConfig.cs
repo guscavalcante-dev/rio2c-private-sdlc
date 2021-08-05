@@ -272,6 +272,15 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            #region AmCharts
+
+            bundles.Add(new ScriptBundle("~/bundles/js/amcharts.js").Include(
+                "~/Assets/components/amcharts4/core.js",
+                "~/Assets/components/amcharts4/charts.js",
+                "~/Assets/components/amcharts4/themes/animated.js"));
+
+            #endregion
+
             #endregion
 
             #region Common Page Bundles
