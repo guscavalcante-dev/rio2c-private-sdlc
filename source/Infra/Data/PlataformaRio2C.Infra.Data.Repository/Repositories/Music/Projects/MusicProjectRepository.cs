@@ -1110,5 +1110,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return musicProjectsPagedList.Count;
         }
+
+        public async Task<MusicProjectEditionCountGaugeWidgetJsonDto> FindMusicProjectsEditionCountGaugeWidgetDtoAsync(int editionId)
+        {
+            //var query = this.GetBaseQuery()
+            //                    .FindByEditionId(editionId, false)
+            //                    .Select(mp => new MusicProjectEditionCountGaugeWidgetJsonDto
+            //                    {
+            //                        MusicBandGenreName = mp.AttendeeMusicBand.MusicBand.MusicBandGenres.
+            //                    });
+
+            return null;
+        }
     }
 }

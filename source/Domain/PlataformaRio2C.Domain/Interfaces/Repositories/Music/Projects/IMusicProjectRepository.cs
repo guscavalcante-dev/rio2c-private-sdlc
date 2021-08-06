@@ -37,6 +37,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<MusicProjectDto> FindSocialNetworksWidgetDtoAsync(Guid musicProjectUid);
         Task<MusicProjectDto> FindEvaluationGradeWidgetDtoAsync(Guid musicProjectUid, int userId);
         Task<MusicProjectDto> FindEvaluatorsWidgetDtoAsync(Guid musicProjectUid);
+        Task<MusicProjectEditionCountGaugeWidgetJsonDto> FindMusicProjectsEditionCountGaugeWidgetDtoAsync(int editionId);
         Task<List<MusicProjectDto>> FindAllApprovedAttendeeMusicBandsAsync(int editionId);
         Task<int[]> FindAllApprovedAttendeeMusicBandsIdsAsync(int editionId);
         Task<int[]> FindAllMusicProjectsIdsAsync(int editionId);

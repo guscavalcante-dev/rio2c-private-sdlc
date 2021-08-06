@@ -382,6 +382,25 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
         #endregion
 
+        #region Edition Count Gauge Widget
+
+        /// <summary>Shows the edition count gauge widget.</summary>
+        /// <returns></returns>
+        public async Task<ActionResult> ShowEditionCountGaugeWidget()
+        {
+            var projectsCount = await this.musicProjectRepo.CountAsync(this.EditionDto.Id);
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EditionCountGaugeWidget", projectsCount), divIdOrClass = "#MusicProjectsEditionCountGaugeWidget" },
+                },
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
         #region Details
 
         /// <summary>

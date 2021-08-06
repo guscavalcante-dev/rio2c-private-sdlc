@@ -25,7 +25,6 @@ var AudiovisualProjectsEditionCountGaugeWidget = function () {
         }
 
         am4core.ready(function () {
-
             // Themes begin
             am4core.useTheme(am4themes_animated);
             // Themes end
@@ -36,6 +35,7 @@ var AudiovisualProjectsEditionCountGaugeWidget = function () {
             // create chart
             var chart = am4core.create(chartElementId, am4charts.GaugeChart);
             chart.innerRadius = am4core.percent(82);
+            chart.paddingTop = 0;
 
             /**
              * Normal axis
@@ -95,7 +95,7 @@ var AudiovisualProjectsEditionCountGaugeWidget = function () {
             label.text = "50%";
 
             /**
-             * Hand
+             * Hand (Speedometer pointer)
              */
             var hand = chart.hands.push(new am4charts.ClockHand());
             hand.axis = axis2;

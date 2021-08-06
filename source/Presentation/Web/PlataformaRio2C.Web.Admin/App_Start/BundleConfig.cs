@@ -808,6 +808,9 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/music.projects.editioncount.widget.js").Include(
                 "~/Assets/js/music/projects/music.projects.editioncount.widget.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/music.projects.editioncount.gauge.widget.js").Include(
+                "~/Assets/js/music/projects/music.projects.editioncount.gauge.widget.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/js/music.projects.widget.js").Include(
                 "~/Assets/js/music/projects/music.projects.maininformation.widget.js",
                 "~/Assets/js/music/projects/music.projects.members.widget.js",

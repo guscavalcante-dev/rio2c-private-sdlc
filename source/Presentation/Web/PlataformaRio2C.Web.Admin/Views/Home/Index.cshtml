@@ -87,19 +87,24 @@
             <div id="MusicProjectsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
         </div>
         <!--end:: Music Projects Edition Count-->
+        <!--begin:: Music Projects Gauge Edition Count-->
+        <div class="col-sm-4">
+            <div id="MusicProjectsEditionCountGaugeWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
+        </div>
+        <!--end:: Music Projects Gauge Edition Count-->
     }
     @if (isAdminFull || isAdminAudiovisual)
     {
         <!--begin:: Audiovisual Projects Gauge Edition Count-->
         <div class="col-sm-4">
-            <div id="AudiovisualProjectsEditionCountGaugeWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+            <div id="AudiovisualProjectsEditionCountGaugeWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
         </div>
         <!--end:: Audiovisual Projects Gauge Edition Count-->
-        <!--begin:: Audiovisual Projects Gauge Edition Count-->
+        <!--begin:: Audiovisual Meetings Gauge Edition Count-->
         <div class="col-sm-4">
-            <div id="AudiovisualMeetingsEditionScheduledCountGaugeWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+            <div id="AudiovisualMeetingsEditionScheduledCountGaugeWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
         </div>
-        <!--end:: Audiovisual Projects Gauge Edition Count-->
+        <!--end:: Audiovisual Meetings Gauge Edition Count-->
     }
 </div>
 @section Styles {
@@ -132,6 +137,7 @@
     @if (isAdminFull || isAdminMusic)
     {
         @Scripts.Render("~/bundles/js/music.projects.editioncount.widget.js")
+        @Scripts.Render("~/bundles/js/music.projects.editioncount.gauge.widget.js")
     }
     <script>
         jQuery(document).ready(function () {
@@ -167,6 +173,7 @@
             {
                 <text>
                     MusicProjectsEditionCountWidget.init();
+                    MusicProjectsEditionCountGaugeWidget.init();
                 </text>
             }
         });

@@ -102,6 +102,7 @@ var AudiovisualMeetingsEditionScheduledCountGaugeWidget = function () {
             chart.hiddenState.properties.opacity = 0;
             chart.fontSize = 11;
             chart.resizable = true;
+            chart.paddingTop = 0;
 
             /**
              * Normal axis
@@ -119,7 +120,6 @@ var AudiovisualMeetingsEditionScheduledCountGaugeWidget = function () {
             axis.renderer.ticks.template.length = 5;
             axis.renderer.grid.template.disabled = true;
             axis.renderer.labels.template.radius = 35;
-            //axis.renderer.labels.template.fontSize = "0.9em";
 
             /**
              * Axis for ranges
@@ -145,8 +145,7 @@ var AudiovisualMeetingsEditionScheduledCountGaugeWidget = function () {
                 range.value = grading.lowScore > chartMin ? grading.lowScore : chartMin;
                 range.endValue = grading.highScore < chartMax ? grading.highScore : chartMax;
                 range.axisFill.fillOpacity = 0.8;
-                range.axisFill.fill = am4core.color(grading.color);
-                
+                range.axisFill.fill = am4core.color(grading.color);          
                 range.axisFill.zIndex = -1;
                 range.grid.strokeOpacity = 0;
                 range.stroke = am4core.color(grading.color).lighten(-0.1);
@@ -173,29 +172,11 @@ var AudiovisualMeetingsEditionScheduledCountGaugeWidget = function () {
             label.horizontalCenter = "middle";
             label.verticalCenter = "bottom";
             label.text = "50%";
-            //label.isMeasured = false;
-            //label.fontSize = "6em";
-            //label.x = am4core.percent(50);
-            //label.paddingBottom = 15;
-            //label.horizontalCenter = "middle";
-            //label.verticalCenter = "bottom";
-            //label.text = data.score.toFixed();
             label.fill = am4core.color(matchingGrade.color);
 
-            /**
-             * Label 2
-             */
-            //var label2 = chart.radarContainer.createChild(am4core.Label);
-            //label2.isMeasured = false;
-            //label2.fontSize = "2em";
-            //label2.horizontalCenter = "middle";
-            //label2.verticalCenter = "bottom";
-            //label2.text = matchingGrade.title.toUpperCase();
-            //label2.fill = am4core.color(matchingGrade.color);
-
 
             /**
-             * Hand
+             * Hand (Speedometer pointer)
              */
             var hand = chart.hands.push(new am4charts.ClockHand());
             hand.axis = axis2;
@@ -209,24 +190,8 @@ var AudiovisualMeetingsEditionScheduledCountGaugeWidget = function () {
             hand.events.on("propertychanged", function () {
                 label.text = axis2.positionToValue(hand.currentPosition).toFixed(); //Pass tofixed(1) to enable decimal cases
                 axis2.invalidate();
-                //label.text = axis2.positionToValue(hand.currentPosition).toFixed();
-                //var value2 = axis.positionToValue(hand.currentPosition);
-                //var matchingGrade = lookUpGrade(axis.positionToValue(hand.currentPosition), data.gradingData);
-
-                //if (!MyRio2cCommon.isNullOrEmpty(matchingGrade)) {
-                //    label2.text = "";//matchingGrade.title.toUpperCase();
-                //    label2.fill = am4core.color(matchingGrade.color);
-                //    label2.stroke = am4core.color(matchingGrade.color);
-                //    label.fill = am4core.color(matchingGrade.color);
-                //}
             })
 
-            //hand.events.on("propertychanged", function (ev) {
-            //    label.text = axis2.positionToValue(hand.currentPosition).toFixed(); //Pass tofixed(1) to enable decimal cases
-            //    axis2.invalidate();
-            //});
-
-            //hand.showValue(chartData, 0, am4core.ease.cubicOut);
             var animation = new am4core.Animation(hand, {
                 property: "value",
                 to: chartData
@@ -234,111 +199,6 @@ var AudiovisualMeetingsEditionScheduledCountGaugeWidget = function () {
 
             animation.start();
         });
-
-
-        //am4core.ready(function () {
-
-        //    // Themes begin
-        //    am4core.useTheme(am4themes_animated);
-        //    // Themes end
-
-        //    // create chart
-        //    var chart = am4core.create(chartElementId, am4charts.GaugeChart);
-        //    chart.innerRadius = am4core.percent(82);
-
-        //    //chart.numberFormatter.numberFormat = "#";
-
-        //    /**
-        //     * Normal axis
-        //     */
-        //    var axis = chart.xAxes.push(new am4charts.ValueAxis());
-        //    axis.min = 200;
-        //    axis.max = 2000;
-        //    axis.strictMinMax = true;
-        //    axis.renderer.radius = am4core.percent(80);
-        //    axis.renderer.inside = true;
-        //    axis.renderer.line.strokeOpacity = 1;
-        //    axis.renderer.ticks.template.disabled = false
-        //    axis.renderer.ticks.template.strokeOpacity = 1;
-        //    axis.renderer.ticks.template.length = 10;
-        //    axis.renderer.grid.template.disabled = true;
-        //    axis.renderer.labels.template.radius = 40;
-        //    axis.renderer.labels.template.adapter.add("text", function (text) {
-        //        //return text + "%";
-        //        return text;
-        //    })
-
-        //    /**
-        //     * Axis for ranges
-        //     */
-        //    var colorSet = new am4core.ColorSet();
-
-        //    var axis2 = chart.xAxes.push(new am4charts.ValueAxis());
-        //    axis2.min = 200;
-        //    axis2.max = 2000;
-        //    axis2.strictMinMax = true;
-        //    axis2.renderer.labels.template.disabled = true;
-        //    axis2.renderer.ticks.template.disabled = true;
-        //    axis2.renderer.grid.template.disabled = true;
-
-        //    var range0 = axis2.axisRanges.create();
-        //    range0.value = 200;
-        //    range0.endValue = 1100;
-        //    range0.axisFill.fillOpacity = 1;
-        //    range0.axisFill.fill = colorSet.getIndex(0);
-
-        //    var range1 = axis2.axisRanges.create();
-        //    range1.value = 1100;
-        //    range1.endValue = 2000;
-        //    range1.axisFill.fillOpacity = 1;
-        //    range1.axisFill.fill = colorSet.getIndex(2);
-
-        //    /**
-        //     * Label
-        //     */
-        //    var label = chart.radarContainer.createChild(am4core.Label);
-        //    label.isMeasured = false;
-        //    label.fontSize = 45;
-        //    label.x = am4core.percent(50);
-        //    label.y = am4core.percent(100);
-        //    label.horizontalCenter = "middle";
-        //    label.verticalCenter = "bottom";
-        //    label.text = "50%";
-
-        //    /**
-        //     * Hand
-        //     */
-        //    var hand = chart.hands.push(new am4charts.ClockHand());
-        //    hand.axis = axis2;
-        //    hand.innerRadius = am4core.percent(50);
-        //    hand.startWidth = 5;
-        //    hand.pin.disabled = true;
-        //    hand.value = 200;
-
-        //    hand.events.on("propertychanged", function (ev) {
-        //        range0.endValue = ev.target.value;
-        //        range1.value = ev.target.value;
-        //        label.text = axis2.positionToValue(hand.currentPosition).toFixed(); //Pass tofixed(1) to enable decimal cases
-        //        axis2.invalidate();
-        //    });
-
-
-        //    //var value = Math.round(Math.random() * 100);
-        //    var animation = new am4core.Animation(hand, {
-        //        property: "value",
-        //        to: data
-        //    }, 2000, am4core.ease.cubicOut);
-
-        //    animation.start();
-
-        //    //setInterval(function () {
-        //    //    var value = Math.round(Math.random() * 100);
-        //    //    var animation = new am4core.Animation(hand, {
-        //    //        property: "value",
-        //    //        to: value
-        //    //    }, 1000, am4core.ease.cubicOut).start();
-        //    //}, 2000);
-        //});
     };
 
     var enableShowPlugins = function (data) {
