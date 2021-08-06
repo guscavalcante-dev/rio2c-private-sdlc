@@ -20,7 +20,7 @@ var AudiovisualProjectsEditionCountGaugeWidget = function () {
 
     // Show ---------------------------------------------------------------------------------------
     var initChart = function (data) {
-        if ($('#' + widgetElementId).length === 0) {
+        if ($('#' + chartElementId).length === 0) {
             return;
         }
 
@@ -31,8 +31,10 @@ var AudiovisualProjectsEditionCountGaugeWidget = function () {
             // Themes end
 
             // create chart
-            var chart = am4core.create(widgetElementId, am4charts.GaugeChart);
+            var chart = am4core.create(chartElementId, am4charts.GaugeChart);
             chart.innerRadius = am4core.percent(82);
+
+            //chart.numberFormatter.numberFormat = "#";
 
             /**
              * Normal axis
@@ -60,22 +62,22 @@ var AudiovisualProjectsEditionCountGaugeWidget = function () {
             var colorSet = new am4core.ColorSet();
 
             var axis2 = chart.xAxes.push(new am4charts.ValueAxis());
-            axis2.min = 0;
-            axis2.max = 100;
+            axis2.min = 200;
+            axis2.max = 2000;
             axis2.strictMinMax = true;
             axis2.renderer.labels.template.disabled = true;
             axis2.renderer.ticks.template.disabled = true;
             axis2.renderer.grid.template.disabled = true;
 
             var range0 = axis2.axisRanges.create();
-            range0.value = 0;
-            range0.endValue = 50;
+            range0.value = 200;
+            range0.endValue = 1100;
             range0.axisFill.fillOpacity = 1;
             range0.axisFill.fill = colorSet.getIndex(0);
 
             var range1 = axis2.axisRanges.create();
-            range1.value = 50;
-            range1.endValue = 100;
+            range1.value = 1100;
+            range1.endValue = 2000;
             range1.axisFill.fillOpacity = 1;
             range1.axisFill.fill = colorSet.getIndex(2);
 
@@ -96,10 +98,10 @@ var AudiovisualProjectsEditionCountGaugeWidget = function () {
              */
             var hand = chart.hands.push(new am4charts.ClockHand());
             hand.axis = axis2;
-            hand.innerRadius = am4core.percent(20);
-            hand.startWidth = 10;
+            hand.innerRadius = am4core.percent(50);
+            hand.startWidth = 5;
             hand.pin.disabled = true;
-            hand.value = 50;
+            hand.value = 200;
 
             hand.events.on("propertychanged", function (ev) {
                 range0.endValue = ev.target.value;
@@ -108,13 +110,22 @@ var AudiovisualProjectsEditionCountGaugeWidget = function () {
                 axis2.invalidate();
             });
 
-            setInterval(function () {
-                var value = Math.round(Math.random() * 100);
-                var animation = new am4core.Animation(hand, {
-                    property: "value",
-                    to: value
-                }, 1000, am4core.ease.cubicOut).start();
-            }, 2000);
+
+            //var value = Math.round(Math.random() * 100);
+            var animation = new am4core.Animation(hand, {
+                property: "value",
+                to: data
+            }, 2000, am4core.ease.cubicOut);
+
+            animation.start();
+
+            //setInterval(function () {
+            //    var value = Math.round(Math.random() * 100);
+            //    var animation = new am4core.Animation(hand, {
+            //        property: "value",
+            //        to: value
+            //    }, 1000, am4core.ease.cubicOut).start();
+            //}, 2000);
         });
     };
 
@@ -139,11 +150,11 @@ var AudiovisualProjectsEditionCountGaugeWidget = function () {
                 }
             });
         })
-        .fail(function () {
-        })
-        .always(function() {
-            MyRio2cCommon.unblock({ idOrClass: widgetElementId });
-        });
+            .fail(function () {
+            })
+            .always(function () {
+                MyRio2cCommon.unblock({ idOrClass: widgetElementId });
+            });
     };
 
     return {
