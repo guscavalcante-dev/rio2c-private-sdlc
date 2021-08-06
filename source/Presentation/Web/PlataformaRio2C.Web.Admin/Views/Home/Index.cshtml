@@ -95,6 +95,11 @@
             <div id="AudiovisualProjectsEditionCountGaugeWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
         </div>
         <!--end:: Audiovisual Projects Gauge Edition Count-->
+        <!--begin:: Audiovisual Projects Gauge Edition Count-->
+        <div class="col-sm-4">
+            <div id="AudiovisualMeetingsEditionScheduledCountGaugeWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        </div>
+        <!--end:: Audiovisual Projects Gauge Edition Count-->
     }
 </div>
 @section Styles {
@@ -113,6 +118,7 @@
         @Scripts.Render("~/bundles/js/collaborators.editioncount.js")
         @Scripts.Render("~/bundles/js/audiovisual.projects.editioncount.widget.js")
         @Scripts.Render("~/bundles/js/audiovisual.projects.editioncount.gauge.widget.js")
+        @Scripts.Render("~/bundles/js/audiovisual.meetings.editionscheduledcount.gauge.widget.js")
     }
     @if (isAdminFull || isAdminConferences)
     {
@@ -143,6 +149,7 @@
                     CollaboratorsEditionCountWidget.init();
                     AudiovisualProjectsEditionCountWidget.init();
                     AudiovisualProjectsEditionCountGaugeWidget.init();
+                    AudiovisualMeetingsEditionScheduledCountGaugeWidget.init();
                 </text>
             }
             @if (isAdminFull || isAdminConferences)

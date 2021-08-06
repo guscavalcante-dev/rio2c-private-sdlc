@@ -800,6 +800,7 @@
     <Content Include="Assets\img\logo-rio2c-footer.png" />
     <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
+    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.editionscheduledcount.gauge.widget.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.sendemailtoplayers.datatable.widget.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.sendemailtoplayers.editioncount.widget.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.sendemailtoplayers.totalcount.widget.js" />
@@ -8262,6 +8263,7 @@
     <Content Include="Areas\Music\Views\Commissions\Widgets\EvaluationsWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Commissions\Modals\UpdateModal.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EditionCountGaugeWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\EditionScheduledCountGaugeWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

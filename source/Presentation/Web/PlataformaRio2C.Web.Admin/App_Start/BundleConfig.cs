@@ -707,6 +707,9 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.editionunscheduledcount.widget.js").Include(
                 "~/Assets/js/audiovisual/meetings/audiovisual.meetings.editionunscheduledcount.widget.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.editionscheduledcount.gauge.widget.js").Include(
+                "~/Assets/js/audiovisual/meetings/audiovisual.meetings.editionscheduledcount.gauge.widget.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.generate.widget.js").Include(
                 "~/Assets/js/audiovisual/meetings/audiovisual.meetings.status.widget.js"));
 

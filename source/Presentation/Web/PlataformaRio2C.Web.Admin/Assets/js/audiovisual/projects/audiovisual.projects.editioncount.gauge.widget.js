@@ -30,18 +30,19 @@ var AudiovisualProjectsEditionCountGaugeWidget = function () {
             am4core.useTheme(am4themes_animated);
             // Themes end
 
+            var chartMin = 200;
+            var chartMax = 2000;
+
             // create chart
             var chart = am4core.create(chartElementId, am4charts.GaugeChart);
             chart.innerRadius = am4core.percent(82);
-
-            //chart.numberFormatter.numberFormat = "#";
 
             /**
              * Normal axis
              */
             var axis = chart.xAxes.push(new am4charts.ValueAxis());
-            axis.min = 200;
-            axis.max = 2000;
+            axis.min = chartMin;
+            axis.max = chartMax;
             axis.strictMinMax = true;
             axis.renderer.radius = am4core.percent(80);
             axis.renderer.inside = true;
@@ -50,27 +51,27 @@ var AudiovisualProjectsEditionCountGaugeWidget = function () {
             axis.renderer.ticks.template.strokeOpacity = 1;
             axis.renderer.ticks.template.length = 10;
             axis.renderer.grid.template.disabled = true;
-            axis.renderer.labels.template.radius = 40;
+            axis.renderer.labels.template.radius = 45;
             axis.renderer.labels.template.adapter.add("text", function (text) {
                 //return text + "%";
-                return text;
+                return text
             })
-
+            
             /**
              * Axis for ranges
              */
             var colorSet = new am4core.ColorSet();
 
             var axis2 = chart.xAxes.push(new am4charts.ValueAxis());
-            axis2.min = 200;
-            axis2.max = 2000;
+            axis2.min = chartMin;
+            axis2.max = chartMax;
             axis2.strictMinMax = true;
             axis2.renderer.labels.template.disabled = true;
             axis2.renderer.ticks.template.disabled = true;
             axis2.renderer.grid.template.disabled = true;
-
+            
             var range0 = axis2.axisRanges.create();
-            range0.value = 200;
+            range0.value = chartMin;
             range0.endValue = 1100;
             range0.axisFill.fillOpacity = 1;
             range0.axisFill.fill = colorSet.getIndex(0);
@@ -80,7 +81,7 @@ var AudiovisualProjectsEditionCountGaugeWidget = function () {
             range1.endValue = 2000;
             range1.axisFill.fillOpacity = 1;
             range1.axisFill.fill = colorSet.getIndex(2);
-
+            
             /**
              * Label
              */
@@ -101,31 +102,21 @@ var AudiovisualProjectsEditionCountGaugeWidget = function () {
             hand.innerRadius = am4core.percent(50);
             hand.startWidth = 5;
             hand.pin.disabled = true;
-            hand.value = 200;
+            hand.value = chartMin;
 
             hand.events.on("propertychanged", function (ev) {
+                label.text = axis2.positionToValue(hand.currentPosition).toFixed(); //Pass tofixed(1) to enable decimal cases
                 range0.endValue = ev.target.value;
                 range1.value = ev.target.value;
-                label.text = axis2.positionToValue(hand.currentPosition).toFixed(1);
                 axis2.invalidate();
             });
 
-
-            //var value = Math.round(Math.random() * 100);
             var animation = new am4core.Animation(hand, {
                 property: "value",
                 to: data
             }, 2000, am4core.ease.cubicOut);
 
             animation.start();
-
-            //setInterval(function () {
-            //    var value = Math.round(Math.random() * 100);
-            //    var animation = new am4core.Animation(hand, {
-            //        property: "value",
-            //        to: value
-            //    }, 1000, am4core.ease.cubicOut).start();
-            //}, 2000);
         });
     };
 

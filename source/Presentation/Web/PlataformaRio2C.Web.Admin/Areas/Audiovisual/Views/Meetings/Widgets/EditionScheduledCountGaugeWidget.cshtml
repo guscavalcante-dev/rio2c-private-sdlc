@@ -1,0 +1,15 @@
+﻿@model int
+<div class="kt-portlet__body kt-portlet__body--fluid">
+    <div class="kt-widget20">
+        <div class="kt-widget20__content kt-portlet__space-x p-0 m-0">
+            <span class="kt-widget20__desc font-weight-bold">
+                <a class="font-weight-bold" href="@Url.Action("Scheduled", "Meetings", new { Area = "Audiovisual" })">
+                @Messages.ScheduledOneToOneMeetings.ToUpper() @Labels.InEditionYear.Replace("{0}", ViewBag.EditionDto.UrlCode.ToString()).ToUpper()
+                </a>
+            </span>
+        </div>
+        <div class="kt-widget20__chart">
+            <div id="AudiovisualMeetingsEditionScheduledCountGaugeChart" style="height:250px;"></div>
+        </div>
+    </div>
+</div>
