@@ -33,6 +33,7 @@ using PlataformaRio2C.Web.Admin.Controllers;
 using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 using System.Text;
+using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 {
@@ -232,13 +233,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid ||
                     evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid))
                 {
-                    additionalParameters.Add("noRecordsFoundMessage", 
+                    additionalParameters.Add("noRecordsFoundMessage",
                         $"{string.Format(Messages.TheEvaluationPeriodRunsFrom, this.EditionDto.MusicProjectEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(), this.EditionDto.MusicProjectEvaluationEndDate.ToBrazilTimeZone().ToShortDateString())}.</br>{Messages.TheProjectsWillReceiveFinalGradeAtPeriodEnds}");
                 }
-                else if (!this.EditionDto.IsMusicProjectEvaluationOpen() && 
+                else if (!this.EditionDto.IsMusicProjectEvaluationOpen() &&
                     evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
                 {
-                    additionalParameters.Add("noRecordsFoundMessage", 
+                    additionalParameters.Add("noRecordsFoundMessage",
                         $"{Messages.EvaluationPeriodClosed}<br/>{string.Format(Messages.ProjectsNotFoundWithStatus, Labels.UnderEvaluation)}");
                 }
             }
@@ -250,7 +251,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 status = "success",
                 dataTable = response
             }, JsonRequestBehavior.AllowGet);
-        }              
+        }
 
         /// <summary>Export to Excel the evaluation list widget.</summary>
         /// <param name="searchKeywords">The search keywords.</param>
@@ -263,8 +264,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         public async Task<ActionResult> ExportEvaluationListWidget(string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 1000)
         {
             StringBuilder data = new StringBuilder();
-            bool ptBR = this.UserInterfaceLanguage == "pt-br";                        
-            if(ptBR)
+            bool ptBR = this.UserInterfaceLanguage == "pt-br";
+            if (ptBR)
                 data.AppendLine("Banda; Tipo de artista; Estilo musical; Público-Alvo; Data de Criação; Qtd. Votos; Status;");
             else
                 data.AppendLine("Music Band; Participant profile; Musical style; Target Audience; Create Date; Qty. Evaluation; Status;");
@@ -276,10 +277,10 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             {
                 var audiences = string.Join(",", item.MusicTargetAudiencesNames);
                 var genre = string.Join("|", item.MusicGenreNames);
-                var createDate = ptBR ? item.CreateDate.ToString("dd/MM/yy"): item.CreateDate.ToString("MM/dd/yy");
+                var createDate = ptBR ? item.CreateDate.ToString("dd/MM/yy") : item.CreateDate.ToString("MM/dd/yy");
                 var status = ptBR ?
-                    approvedAttendeeMusicBandsIds.Contains(item.AttendeeMusicBandId)?"Aprovado":"Reprovado":
-                    approvedAttendeeMusicBandsIds.Contains(item.AttendeeMusicBandId)?"Accepted":"Refused";
+                    approvedAttendeeMusicBandsIds.Contains(item.AttendeeMusicBandId) ? "Aprovado" : "Reprovado" :
+                    approvedAttendeeMusicBandsIds.Contains(item.AttendeeMusicBandId) ? "Accepted" : "Refused";
 
                 data.AppendLine(item.MusicBandName + ";" +
                                 item.MusicBandTypeName + ";" +
@@ -293,7 +294,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             var dtFileName = ptBR ? DateTime.Now.ToString("yyMMddHHmmss") : DateTime.Now.ToString("yyddMMHHmmss");
             return Json(new
             {
-                fileName = "MusicProjects_"+ dtFileName + ".csv",
+                fileName = "MusicProjects_" + dtFileName + ".csv",
                 fileContent = data.ToString()
             }, JsonRequestBehavior.AllowGet);
         }
@@ -388,14 +389,25 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <returns></returns>
         public async Task<ActionResult> ShowEditionCountGaugeWidget()
         {
+            var musicBandGroupedByGenreDtos = await this.musicProjectRepo.FindEditionCountGaugeWidgetDto(this.EditionDto.Id);
             var projectsCount = await this.musicProjectRepo.CountAsync(this.EditionDto.Id);
+
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/EditionCountGaugeWidget", projectsCount), divIdOrClass = "#MusicProjectsEditionCountGaugeWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/EditionCountGaugeWidget", musicBandGroupedByGenreDtos), divIdOrClass = "#MusicProjectsEditionCountGaugeWidget" },
                 },
+                musicBandGroupedByGenreDtos = musicBandGroupedByGenreDtos.Select(i => new MusicBandGroupedByGenreDto
+                {
+                    MusicBandsTotalCount = i.MusicBandsTotalCount,
+                    MusicGenreName = i.MusicGenreName.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                }),
+                musicBandsTotalCount = projectsCount
+
+
+
             }, JsonRequestBehavior.AllowGet);
         }
 

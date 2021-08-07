@@ -6,24 +6,30 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 08-06-2021
 // ***********************************************************************
-// <copyright file="MusicProjectEditionCountGaugeWidgetJsonDto.cs" company="Softo">
+// <copyright file="MusicBandGroupedByGenreDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using PlataformaRio2C.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
-    /// <summary>MusicProjectEditionCountGaugeWidgetJsonDto</summary>
-    public class MusicProjectEditionCountGaugeWidgetJsonDto
+    /// <summary>MusicBandGroupedByGenreDto</summary>
+    public class MusicBandGroupedByGenreDto
     {
-        public string MusicBandGenreName { get; set; }
-        public int MusicBandGenreCount { get; set; }
+        public string MusicGenreName { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="MusicProjectEditionCountGaugeWidgetJsonDto"/> class.</summary>
-        public MusicProjectEditionCountGaugeWidgetJsonDto()
+        /// <summary>
+        /// Total of Music Bands with this Music Genre in current Edition
+        /// </summary>
+        public int MusicBandsTotalCount { get; set; }
+
+        /// <summary>Initializes a new instance of the <see cref="MusicBandGroupedByGenreDto"/> class.</summary>
+        public MusicBandGroupedByGenreDto()
         {
         }
     }

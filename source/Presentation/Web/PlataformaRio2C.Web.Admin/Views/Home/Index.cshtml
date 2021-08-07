@@ -88,7 +88,7 @@
         </div>
         <!--end:: Music Projects Edition Count-->
         <!--begin:: Music Projects Gauge Edition Count-->
-        <div class="col-sm-4">
+        <div class="col-md-4">
             <div id="MusicProjectsEditionCountGaugeWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
         </div>
         <!--end:: Music Projects Gauge Edition Count-->
@@ -140,6 +140,8 @@
         @Scripts.Render("~/bundles/js/music.projects.editioncount.gauge.widget.js")
     }
     <script>
+        var musicProjects = '@Labels.MusicProjects.RemoveAccents()';
+
         jQuery(document).ready(function () {
             @if (isAdminFull)
             {
