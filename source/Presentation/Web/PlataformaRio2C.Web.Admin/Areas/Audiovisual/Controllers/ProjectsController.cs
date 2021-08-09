@@ -275,6 +275,25 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
         #endregion
 
+        #region Edition Count Widget
+
+        /// <summary>Shows the edition count widget.</summary>
+        /// <returns></returns>
+        public async Task<ActionResult> ShowEditionCountOdometerWidget()
+        {
+            var projectsCount = await this.projectRepo.CountAllByDataTable(this.EditionDto.Id);
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EditionCountOdometerWidget", projectsCount), divIdOrClass = "#AudiovisualPlayersEditionCountOdometerWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
         #region Details
 
         /// <summary>Detailses the specified identifier.</summary>

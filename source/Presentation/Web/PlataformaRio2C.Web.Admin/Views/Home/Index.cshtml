@@ -79,6 +79,20 @@
             <div id="AudiovisualProjectsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
         </div>
         <!--end:: Audiovisual Projects Edition Count-->
+
+        <!--begin:: Audiovisual Player Edition Count Odometer-->
+        <div class="col-sm-4">
+            <div id="AudiovisualPlayersEditionCountOdometerWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;">
+
+            </div>
+        </div>
+
+        @*<div class="col-sm-4">
+            <div class="odometer" style="min-height: 230px;">
+
+            </div>
+        </div>*@
+        <!--end:: Audiovisual Player Edition Count-->
     }
     @if (isAdminFull || isAdminMusic)
     {
@@ -90,10 +104,12 @@
     }
 </div>
 @section Styles {
+    @Styles.Render("~/bundles/css/odometer.css")
 }
 @section Scripts {
     @Scripts.Render("~/bundles/js/chart.js")
-    @Scripts.Render("~/bundles/js/amcharts.js");
+    @Scripts.Render("~/bundles/js/amcharts.js")
+    @Scripts.Render("~/bundles/js/odometer.js")
     @if (isAdminFull)
     {
         @Scripts.Render("~/bundles/js/events.editioncount.js")
@@ -104,6 +120,8 @@
         @Scripts.Render("~/bundles/js/audiovisual.players.editioncount.js")
         @Scripts.Render("~/bundles/js/collaborators.editioncount.js")
         @Scripts.Render("~/bundles/js/audiovisual.projects.editioncount.widget.js")
+        @Scripts.Render("~/bundles/js/audiovisual.players.editioncountodometer.widget.js")
+
     }
     @if (isAdminFull || isAdminConferences)
     {
@@ -118,8 +136,11 @@
     {
         @Scripts.Render("~/bundles/js/music.projects.editioncount.widget.js")
     }
-<script>
+    <script>
         jQuery(document).ready(function () {
+
+            $(".odometer").html(300);
+
             @if (isAdminFull)
             {
                 <text>
@@ -133,6 +154,7 @@
                     AudiovisualPlayersEditionCountWidget.init();
                     CollaboratorsEditionCountWidget.init();
                     AudiovisualProjectsEditionCountWidget.init();
+                    AudiovisualPlayersEditionCountOdometerWidget.init();
                 </text>
             }
             @if (isAdminFull || isAdminConferences)
@@ -153,5 +175,5 @@
                 </text>
             }
         });
-</script>
+    </script>
 }

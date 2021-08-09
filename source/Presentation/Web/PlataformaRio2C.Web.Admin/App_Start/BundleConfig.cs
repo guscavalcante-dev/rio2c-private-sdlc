@@ -281,6 +281,16 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            #region Odometer
+
+            bundles.Add(new ScriptBundle("~/bundles/js/odometer.js").Include(
+                "~/Assets/components/odometer/odometer.js"));
+
+            bundles.Add(new StyleBundle("~/bundles/css/odometer.css")
+                .Include("~/Assets/components/odometer/themes/odometer-theme-car.css"));
+
+            #endregion
+
             #endregion
 
             #region Common Page Bundles
@@ -392,6 +402,9 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.players.editioncount.js").Include(
                 "~/Assets/js/audiovisual/players/audiovisual.players.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.players.editioncountodometer.widget.js").Include(
+                "~/Assets/js/audiovisual/players/audiovisual.players.editioncountodometer.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.players.create.js").Include(
                 "~/Assets/js/audiovisual/players/audiovisual.players.create.js",
