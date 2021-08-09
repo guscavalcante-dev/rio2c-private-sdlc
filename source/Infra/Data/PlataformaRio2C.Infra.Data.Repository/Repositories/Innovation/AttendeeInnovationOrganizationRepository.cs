@@ -1189,5 +1189,27 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query
                             .FirstOrDefaultAsync();
         }
+
+        /// <summary>
+        /// Finds the edition count chart widget dto.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<List<InnovationOrganizationGroupedByTrackDto>> FindEditionCountChartWidgetDto(int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .IsNotDeleted()
+                                .FindByEditionId(editionId, false);
+
+            return await query.SelectMany(aio => aio.AttendeeInnovationOrganizationTracks)
+                                    .GroupBy(aiot => aiot.InnovationOrganizationTrackOption.Name)
+                                    .Select(innovationOrganizationTracksGroupedByTrackName => new InnovationOrganizationGroupedByTrackDto
+                                    {
+                                        TrackName = innovationOrganizationTracksGroupedByTrackName.Key,
+                                        InnovationProjectsTotalCount = innovationOrganizationTracksGroupedByTrackName.Count()
+                                    })
+                                    .OrderByDescending(iog => iog.InnovationProjectsTotalCount)
+                                    .ToListAsync();
+        }
     }
 }

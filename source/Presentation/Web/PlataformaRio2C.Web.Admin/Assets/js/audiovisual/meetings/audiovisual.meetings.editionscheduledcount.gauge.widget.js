@@ -120,6 +120,7 @@ var AudiovisualMeetingsEditionScheduledCountGaugeWidget = function () {
             axis.renderer.ticks.template.length = 5;
             axis.renderer.grid.template.disabled = true;
             axis.renderer.labels.template.radius = 35;
+            axis.renderer.minGridDistance = 100; //Change the space between labels (range)
 
             /**
              * Axis for ranges
@@ -174,7 +175,6 @@ var AudiovisualMeetingsEditionScheduledCountGaugeWidget = function () {
             label.text = "50%";
             label.fill = am4core.color(matchingGrade.color);
 
-
             /**
              * Hand (Speedometer pointer)
              */
@@ -207,8 +207,6 @@ var AudiovisualMeetingsEditionScheduledCountGaugeWidget = function () {
 
     var show = function () {
         var jsonParameters = new Object();
-        jsonParameters.keyword = $('#Search').val();
-        jsonParameters.interestUid = $('#InterestUid').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Meetings/ShowEditionScheduledCountGaugeWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({

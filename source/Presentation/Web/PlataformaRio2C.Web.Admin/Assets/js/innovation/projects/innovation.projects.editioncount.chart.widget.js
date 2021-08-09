@@ -1,25 +1,25 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Renan Valentim
-// Created          : 08-06-2021
+// Created          : 08-07-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-06-2021
+// Last Modified On : 08-07-2021
 // ***********************************************************************
-// <copyright file="music.projects.editioncount.gauge.widget.js" company="Softo">
+// <copyright file="innovation.projects.editioncount.chart.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var MusicProjectsEditionCountGaugeWidget = function () {
+var InnovationProjectsEditionCountChartWidget = function () {
 
-    var widgetElementId = '#MusicProjectsEditionCountGaugeWidget';
-    var chartElementId = 'MusicProjectsEditionCountGaugeChart';
+    var widgetElementId = '#InnovationProjectsEditionCountChartWidget';
+    var chartElementId = 'InnovationProjectsEditionCountChart';
     var widgetElement = $(widgetElementId);
 
     // Show ---------------------------------------------------------------------------------------
-    var initChart = function (data, musicBandsTotalCount) {
+    var initChart = function (data, innovationProjectsTotalCount) {
         if ($('#' + chartElementId).length === 0) {
             return;
         }
@@ -42,25 +42,25 @@ var MusicProjectsEditionCountGaugeWidget = function () {
             label.horizontalCenter = "middle";
             label.verticalCenter = "bottom";
             label.fontSize = 30;
-            label.text = musicBandsTotalCount;
+            label.text = innovationProjectsTotalCount;
 
             var label2 = chart.seriesContainer.createChild(am4core.Label);
             label2.isMeasured = false;
             label2.horizontalCenter = "middle";
             label2.verticalCenter = "top";
             label2.fontSize = 15;
-            label2.text = musicProjects;
+            label2.text = innovationProjects;
             label2.wrap = true;
             label2.maxWidth = 120;
             label2.textAlign = "middle";
 
             // Add and configure Series
             var pieSeries = chart.series.push(new am4charts.PieSeries());
-            pieSeries.dataFields.value = "MusicBandsTotalCount";
-            pieSeries.dataFields.category = "MusicGenreName";
+            pieSeries.dataFields.value = "InnovationProjectsTotalCount";
+            pieSeries.dataFields.category = "TrackName";
             pieSeries.alignLabels = false;
             pieSeries.labels.template.horizontalCenter = "middle";
-            pieSeries.labels.template.verticalCenter = "bottom";
+            pieSeries.labels.template.verticalCenter = "middle";
             //pieSeries.labels.template.fontSize = 10;
 
             // Hide label with values less than minimun configured
@@ -68,7 +68,7 @@ var MusicProjectsEditionCountGaugeWidget = function () {
             pieSeries.ticks.template.events.on("visibilitychanged", hideSmall);
             pieSeries.labels.template.events.on("ready", hideSmall);
             pieSeries.labels.template.events.on("visibilitychanged", hideSmall);
-            pieSeries.labels.template.maxWidth = 130;
+            pieSeries.labels.template.maxWidth = 150;
             pieSeries.labels.template.wrap = true;
             function hideSmall(ev) {
                 if (ev.target.dataItem && (ev.target.dataItem.values.value.percent < 2)) {
@@ -81,8 +81,8 @@ var MusicProjectsEditionCountGaugeWidget = function () {
         });
     };
 
-    var enableShowPlugins = function (data, musicBandsTotalCount) {
-        initChart(data, musicBandsTotalCount);
+    var enableShowPlugins = function (data, innovationProjectsTotalCount) {
+        initChart(data, innovationProjectsTotalCount);
     };
 
     var show = function () {
@@ -90,12 +90,12 @@ var MusicProjectsEditionCountGaugeWidget = function () {
         //jsonParameters.keyword = $('#Search').val();
         //jsonParameters.interestUid = $('#InterestUid').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/ShowEditionCountGaugeWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Projects/ShowEditionCountChartWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
                 onSuccess: function () {
-                    enableShowPlugins(data.musicBandGroupedByGenreDtos, data.musicBandsTotalCount);
+                    enableShowPlugins(data.innovationProjectsGroupedByTrackDtos, data.innovationProjectsTotalCount);
                 },
                 // Error
                 onError: function () {

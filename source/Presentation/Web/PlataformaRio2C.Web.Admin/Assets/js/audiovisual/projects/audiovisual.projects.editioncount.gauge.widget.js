@@ -14,7 +14,7 @@
 
 var AudiovisualProjectsEditionCountGaugeWidget = function () {
 
-    var widgetElementId = 'AudiovisualProjectsEditionCountGaugeWidget';
+    var widgetElementId = '#AudiovisualProjectsEditionCountGaugeWidget';
     var chartElementId = 'AudiovisualProjectsEditionCountGaugeChart';
     var widgetElement = $(widgetElementId);
 
@@ -52,6 +52,7 @@ var AudiovisualProjectsEditionCountGaugeWidget = function () {
             axis.renderer.ticks.template.length = 10;
             axis.renderer.grid.template.disabled = true;
             axis.renderer.labels.template.radius = 45;
+            axis.renderer.minGridDistance = 100; //Change the space between labels (range)
             axis.renderer.labels.template.adapter.add("text", function (text) {
                 //return text + "%";
                 return text
@@ -126,8 +127,8 @@ var AudiovisualProjectsEditionCountGaugeWidget = function () {
 
     var show = function () {
         var jsonParameters = new Object();
-        jsonParameters.keyword = $('#Search').val();
-        jsonParameters.interestUid = $('#InterestUid').val();
+        //jsonParameters.keyword = $('#Search').val();
+        //jsonParameters.interestUid = $('#InterestUid').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/ShowEditionCountGaugeWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({

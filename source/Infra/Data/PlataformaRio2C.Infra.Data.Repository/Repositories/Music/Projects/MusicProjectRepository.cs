@@ -1124,7 +1124,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         MusicGenreName = musicBandGenresGroupedByMusicGenreName.Key,
                                         MusicBandsTotalCount = musicBandGenresGroupedByMusicGenreName.Count()
                                     })
-                                    .OrderByDescending(x => x.MusicBandsTotalCount)
+                                    .OrderByDescending(mbg => mbg.MusicBandsTotalCount)
                                     .ToListAsync();
         }
     }
