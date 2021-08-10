@@ -30,9 +30,7 @@ var AudiovisualPlayersEditionCountOdometerWidget = function () {
     };
     var show = function () {
         var jsonParameters = new Object();
-        jsonParameters.keyword = $('#Search').val();
-        jsonParameters.interestUid = $('#InterestUid').val();
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/ShowEditionCountOdometerWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Players/ShowEditionCountOdometerWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
