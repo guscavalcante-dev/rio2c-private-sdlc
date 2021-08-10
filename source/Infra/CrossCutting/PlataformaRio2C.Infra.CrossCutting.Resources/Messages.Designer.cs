@@ -1986,6 +1986,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Legendas não são exibidas para valores abaixo de {0}.
+        /// </summary>
+        public static string SubtitlesAreNotDisplayedForValuesBelow {
+            get {
+                return ResourceManager.GetString("SubtitlesAreNotDisplayedForValuesBelow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cadastro finalizado com sucesso!.
         /// </summary>
         public static string SuccessfulRegistrationMessage {

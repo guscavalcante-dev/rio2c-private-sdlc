@@ -876,6 +876,10 @@
     <value>Steps to project subscription</value>
     <comment>Passos para inscrição de projeto</comment>
   </data>
+  <data name="SubtitlesAreNotDisplayedForValuesBelow" xml:space="preserve">
+    <value>Subtitles are not displayed for values below {0}</value>
+    <comment>Legendas não são exibidas para valores abaixo de {0}</comment>
+  </data>
   <data name="SuccessfulRegistrationMessage" xml:space="preserve">
     <value>Successful registration!</value>
     <comment>Cadastro finalizado com sucesso!</comment>

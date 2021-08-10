@@ -878,6 +878,10 @@
     <value>Passos para inscrição de projeto</value>
     <comment>Passos para inscrição de projeto</comment>
   </data>
+  <data name="SubtitlesAreNotDisplayedForValuesBelow" xml:space="preserve">
+    <value>Legendas não são exibidas para valores abaixo de {0}</value>
+    <comment>Legendas não são exibidas para valores abaixo de {0}</comment>
+  </data>
   <data name="SuccessfulRegistrationMessage" xml:space="preserve">
     <value>Cadastro finalizado com sucesso!</value>
     <comment>Cadastro finalizado com sucesso!</comment>

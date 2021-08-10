@@ -46,5 +46,6 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<int[]> FindAllInnovationOrganizationsIdsPagedAsync(int editionId, string searchKeywords, List<Guid?> innovationOrganizationTrackOptionUids, Guid? evaluationStatusUid, int page, int pageSize);
         Task<int> CountAsync(int editionId, bool showAllEditions = false);
         Task<int> CountPagedAsync(int editionId, string searchKeywords, List<Guid?> innovationOrganizationTrackOptionUids, Guid? evaluationStatusUid, int page, int pageSize);
+        Task<List<InnovationOrganizationGroupedByTrackDto>> FindEditionCountPieWidgetDto(int editionId);
     }
 }

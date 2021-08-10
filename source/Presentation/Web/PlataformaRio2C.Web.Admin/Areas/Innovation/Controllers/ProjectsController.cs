@@ -33,6 +33,7 @@ using PlataformaRio2C.Web.Admin.Controllers;
 using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
 using System.Text;
+using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 {
@@ -358,6 +359,33 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                 {
                     new { page = this.RenderRazorViewToString("Widgets/EditionCountWidget", projectsCount), divIdOrClass = "#InnovationProjectsEditionCountWidget" },
                 }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Edition Count Pie Widget
+
+        /// <summary>Shows the edition count pie widget.</summary>
+        /// <returns></returns>
+        public async Task<ActionResult> ShowEditionCountPieWidget()
+        {
+            var innovationOrganizationGroupedByTrackDtos = await this.attendeeInnovationOrganizationRepo.FindEditionCountPieWidgetDto(this.EditionDto.Id);
+            var projectsCount = await this.attendeeInnovationOrganizationRepo.CountAsync(this.EditionDto.Id);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EditionCountPieWidget", innovationOrganizationGroupedByTrackDtos), divIdOrClass = "#InnovationProjectsEditionCountPieWidget" },
+                },
+                innovationProjectsGroupedByTrackDtos = innovationOrganizationGroupedByTrackDtos.Select(i => new InnovationOrganizationGroupedByTrackDto
+                {
+                    InnovationProjectsTotalCount = i.InnovationProjectsTotalCount,
+                    TrackName = i.TrackName.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                }),
+                innovationProjectsTotalCount = projectsCount
             }, JsonRequestBehavior.AllowGet);
         }
 

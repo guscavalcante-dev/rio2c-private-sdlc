@@ -277,7 +277,9 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/amcharts.js").Include(
                 "~/Assets/components/amcharts4/core.js",
                 "~/Assets/components/amcharts4/charts.js",
-                "~/Assets/components/amcharts4/themes/animated.js"));
+                "~/Assets/components/amcharts4/themes/animated.js",
+                "~/Assets/components/amcharts4/lang/pt_BR.js",
+                "~/Assets/components/amcharts4/lang/en_US.js"));
 
             #endregion
 
@@ -442,6 +444,9 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.projects.editioncount.widget.js").Include(
                 "~/Assets/js/audiovisual/projects/audiovisual.projects.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.projects.editioncount.gauge.widget.js").Include(
+                "~/Assets/js/audiovisual/projects/audiovisual.projects.editioncount.gauge.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.projects.widget.js").Include(
                 "~/Assets/js/audiovisual/projects/audiovisual.projects.maininformation.widget.js",
@@ -717,6 +722,9 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.editionunscheduledcount.widget.js").Include(
                 "~/Assets/js/audiovisual/meetings/audiovisual.meetings.editionunscheduledcount.widget.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.editionscheduledcount.gauge.widget.js").Include(
+                "~/Assets/js/audiovisual/meetings/audiovisual.meetings.editionscheduledcount.gauge.widget.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.generate.widget.js").Include(
                 "~/Assets/js/audiovisual/meetings/audiovisual.meetings.status.widget.js"));
 
@@ -815,6 +823,9 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/music.projects.editioncount.widget.js").Include(
                 "~/Assets/js/music/projects/music.projects.editioncount.widget.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/music.projects.editioncount.pie.widget.js").Include(
+                "~/Assets/js/music/projects/music.projects.editioncount.pie.widget.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/js/music.projects.widget.js").Include(
                 "~/Assets/js/music/projects/music.projects.maininformation.widget.js",
                 "~/Assets/js/music/projects/music.projects.members.widget.js",
@@ -875,6 +886,9 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/innovation.projects.editioncount.widget.js").Include(
                 "~/Assets/js/innovation/projects/innovation.projects.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/innovation.projects.editioncount.pie.widget.js").Include(
+                "~/Assets/js/innovation/projects/innovation.projects.editioncount.pie.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/innovation.projects.widget.js").Include(
                 "~/Assets/js/innovation/projects/innovation.projects.maininformation.widget.js",

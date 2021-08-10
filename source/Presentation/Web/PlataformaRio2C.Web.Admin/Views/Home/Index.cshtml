@@ -1,4 +1,4 @@
-﻿@using PlataformaRio2C.Domain.Constants
+@using PlataformaRio2C.Domain.Constants
 @using PlataformaRio2C.Domain.Dtos
 @{
     ViewBag.Title = Labels.Dashboard;
@@ -10,98 +10,36 @@
     var isAdminEditorial = adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminEditorial) == true;
     var isAdminLogistic = adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminLogistic) == true;
     var isAdminConferences = adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminConferences) == true;
-
 }
 <div class="row">
-    @if (isAdminFull)
+    @if (isAdminFull || isAdminMusic)
     {
-        <!--begin:: Events Edition Count-->
-        <div class="col-sm-4">
-            <div id="EventsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <div class="col-md-6">
+            <div id="MusicProjectsEditionCountPieWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
         </div>
-        <!--end:: Events Edition Count-->
+    }
+    @if (isAdminFull || isAdminInnovation)
+    {
+        <div class="col-md-6">
+            <div id="InnovationProjectsEditionCountPieWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
+        </div>
     }
     @if (isAdminFull || isAdminAudiovisual)
     {
-        <!--begin:: Holdings Edition Count-->
-        <div class="col-sm-4">
-            <div id="HoldingsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <div class="col-md-6">
+            <div id="AudiovisualProjectsEditionCountGaugeWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
         </div>
-        <!--end:: Holdings Edition Count-->
-        <!--begin:: Players Edition Count-->
-        <div class="col-sm-4">
-            <div id="PlayersEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <div class="col-md-6">
+            <div id="AudiovisualPlayersEditionCountOdometerWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
         </div>
-        <!--end:: Players Edition Count-->
-        <!--begin:: Players Executives Edition Count-->
-        <div class="col-sm-4">
-            <div id="PlayersExecutivesEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-        </div>
-        <!--end:: Players Executives Edition Count-->
-    }
-    @if (isAdminFull || isAdminConferences)
-    {
-        <!--begin:: Conferences Edition Count-->
-        <div class="col-sm-4">
-            <div id="ConferencesEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-        </div>
-        <!--end:: Conferences Edition Count-->
-        <!--begin:: Speakers Edition Count-->
-        <div class="col-sm-4">
-            <div id="SpeakersEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-        </div>
-        <!--end:: Speakers Edition Count-->
-        <!--begin:: Rooms Edition Count-->
-        <div class="col-sm-4">
-            <div id="RoomsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-        </div>
-        <!--end:: Rooms Edition Count-->
-        <!--begin:: Tracks Edition Count-->
-        <div class="col-sm-4">
-            <div id="TracksEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-        </div>
-        <!--end:: Tracks Edition Count-->
-        <!--begin:: Presentation Formats Edition Count-->
-        <div class="col-sm-4">
-            <div id="PresentationFormatsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-        </div>
-        <!--end:: Presentation Formats Edition Count-->
-        <!--begin:: Conference Participant Roles Edition Count-->
-        <div class="col-sm-4">
-            <div id="ConferenceParticipantRolesEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-        </div>
-        <!--end:: Conference Participant Roles Edition Count-->
-    }
-    @if (isAdminFull || isAdminAudiovisual)
-    {
-        <!--begin:: Audiovisual Projects Edition Count-->
-        <div class="col-sm-4">
-            <div id="AudiovisualProjectsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-        </div>
-        <!--end:: Audiovisual Projects Edition Count-->
-
-        <!--begin:: Audiovisual Player Edition Count Odometer-->
-        <div class="col-sm-4">
-            <div id="AudiovisualPlayersEditionCountOdometerWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;">
-
-            </div>
-        </div>
-
-        @*<div class="col-sm-4">
-            <div class="odometer" style="min-height: 230px;">
-
-            </div>
-        </div>*@
-        <!--end:: Audiovisual Player Edition Count-->
     }
     @if (isAdminFull || isAdminMusic)
     {
-        <!--begin:: Music Projects Edition Count-->
-        <div class="col-sm-4">
-            <div id="MusicProjectsEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <div class="col-md-6">
+            <div id="AudiovisualMeetingsEditionScheduledCountGaugeWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
         </div>
-        <!--end:: Music Projects Edition Count-->
     }
+
 </div>
 @section Styles {
     @Styles.Render("~/bundles/css/odometer.css")
@@ -116,62 +54,51 @@
     }
     @if (isAdminFull || isAdminAudiovisual)
     {
-        @Scripts.Render("~/bundles/js/holdings.editioncount.js")
-        @Scripts.Render("~/bundles/js/audiovisual.players.editioncount.js")
-        @Scripts.Render("~/bundles/js/collaborators.editioncount.js")
-        @Scripts.Render("~/bundles/js/audiovisual.projects.editioncount.widget.js")
         @Scripts.Render("~/bundles/js/audiovisual.players.editioncountodometer.widget.js")
-
+        @Scripts.Render("~/bundles/js/audiovisual.projects.editioncount.gauge.widget.js")
+        @Scripts.Render("~/bundles/js/audiovisual.meetings.editionscheduledcount.gauge.widget.js")
     }
     @if (isAdminFull || isAdminConferences)
     {
-        @Scripts.Render("~/bundles/js/conferences.editioncount.js")
-        @Scripts.Render("~/bundles/js/speakers.editioncount.js")
-        @Scripts.Render("~/bundles/js/rooms.editioncount.js")
-        @Scripts.Render("~/bundles/js/tracks.editioncount.js")
-        @Scripts.Render("~/bundles/js/presentationformats.editioncount.js")
-        @Scripts.Render("~/bundles/js/conferenceparticipantroles.editioncount.js")
     }
     @if (isAdminFull || isAdminMusic)
     {
-        @Scripts.Render("~/bundles/js/music.projects.editioncount.widget.js")
+        @Scripts.Render("~/bundles/js/music.projects.editioncount.pie.widget.js")
+    }
+    @if (isAdminFull || isAdminInnovation)
+    {
+        @Scripts.Render("~/bundles/js/innovation.projects.editioncount.pie.widget.js")
     }
     <script>
         jQuery(document).ready(function () {
-
-            $(".odometer").html(300);
-
             @if (isAdminFull)
             {
                 <text>
-                    EventsEditionCountWidget.init();
                 </text>
             }
             @if (isAdminFull || isAdminAudiovisual)
             {
                 <text>
-                    HoldingsEditionCountWidget.init();
-                    AudiovisualPlayersEditionCountWidget.init();
-                    CollaboratorsEditionCountWidget.init();
-                    AudiovisualProjectsEditionCountWidget.init();
                     AudiovisualPlayersEditionCountOdometerWidget.init();
+                    AudiovisualProjectsEditionCountGaugeWidget.init();
+                    AudiovisualMeetingsEditionScheduledCountGaugeWidget.init();
                 </text>
             }
             @if (isAdminFull || isAdminConferences)
             {
                 <text>
-                    ConferencesEditionCountWidget.init();
-                    SpeakersEditionCountWidget.init();
-                    RoomsEditionCountWidget.init();
-                    TracksEditionCountWidget.init();
-                    PresentationFormatsEditionCountWidget.init();
-                    ConferenceParticipantRolesEditionCountWidget.init();
                 </text>
             }
             @if (isAdminFull || isAdminMusic)
             {
                 <text>
-                    MusicProjectsEditionCountWidget.init();
+                    MusicProjectsEditionCountPieWidget.init();
+                </text>
+            }
+            @if (isAdminFull || isAdminInnovation)
+            {
+                <text>
+                    InnovationProjectsEditionCountPieWidget.init();
                 </text>
             }
         });

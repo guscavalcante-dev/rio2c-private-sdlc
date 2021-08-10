@@ -375,7 +375,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query
                             .Order()
                             .ToListAsync();
-                            //.ToListPagedAsync(page, pageSize);
+            //.ToListPagedAsync(page, pageSize);
         }
 
         /// <summary>
@@ -426,7 +426,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return await query
                             .ToListAsync();
-                           //.ToListPagedAsync(page, pageSize);
+            //.ToListPagedAsync(page, pageSize);
         }
 
         #endregion
@@ -497,12 +497,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="sortColumns">The sort columns.</param>
         /// <returns></returns>
         public async Task<IPagedList<MusicProjectJsonDto>> FindAllJsonDtosPagedAsync(
-            int editionId, 
-            string searchKeywords, 
-            Guid? musicGenreUid, 
-            Guid? evaluationStatusUid, 
-            int page, 
-            int pageSize, 
+            int editionId,
+            string searchKeywords,
+            Guid? musicGenreUid,
+            Guid? evaluationStatusUid,
+            int page,
+            int pageSize,
             List<Tuple<string, string>> sortColumns)
         {
             var musicProjectJsonDtos = await this.FindAllJsonDtosAsync(editionId, searchKeywords, musicGenreUid, sortColumns);
@@ -1109,6 +1109,23 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                  .ToPagedListAsync(page, pageSize);
 
             return musicProjectsPagedList.Count;
+        }
+
+        public async Task<List<MusicBandGroupedByGenreDto>> FindEditionCountPieWidgetDto(int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                .IsNotDeleted()
+                                .FindByEditionId(editionId, false);
+
+            return await query.SelectMany(mp => mp.AttendeeMusicBand.MusicBand.MusicBandGenres)
+                                    .GroupBy(mbg => mbg.MusicGenre.Name)
+                                    .Select(musicBandGenresGroupedByMusicGenreName => new MusicBandGroupedByGenreDto 
+                                    { 
+                                        MusicGenreName = musicBandGenresGroupedByMusicGenreName.Key,
+                                        MusicBandsTotalCount = musicBandGenresGroupedByMusicGenreName.Count()
+                                    })
+                                    .OrderByDescending(mbg => mbg.MusicBandsTotalCount)
+                                    .ToListAsync();
         }
     }
 }

@@ -216,6 +216,30 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
         #endregion
 
+        #region Edition Scheduled Count Gauge Widget
+
+        /// <summary>
+        /// Shows the edition scheduled count gauge widget.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowEditionScheduledCountGaugeWidget()
+        {
+            var scheduledCount = await this.projectBuyerEvaluationRepo.CountNegotiationScheduledAsync(this.EditionDto.Id, false);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EditionScheduledCountGaugeWidget", scheduledCount), divIdOrClass = "#AudiovisualMeetingsEditionScheduledCountGaugeWidget" },
+                },
+                chartData = scheduledCount
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
         #region Scheduled Widget
 
         /// <summary>Shows the scheduled data widget.</summary>
