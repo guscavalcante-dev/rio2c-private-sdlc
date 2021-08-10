@@ -1195,7 +1195,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<List<InnovationOrganizationGroupedByTrackDto>> FindEditionCountChartWidgetDto(int editionId)
+        public async Task<List<InnovationOrganizationGroupedByTrackDto>> FindEditionCountPieWidgetDto(int editionId)
         {
             var query = this.GetBaseQuery()
                                 .IsNotDeleted()

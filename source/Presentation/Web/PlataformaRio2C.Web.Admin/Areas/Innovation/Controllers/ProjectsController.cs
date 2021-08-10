@@ -364,13 +364,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
 
         #endregion
 
-        #region Edition Count Chart Widget
+        #region Edition Count Pie Widget
 
-        /// <summary>Shows the edition count chart widget.</summary>
+        /// <summary>Shows the edition count pie widget.</summary>
         /// <returns></returns>
-        public async Task<ActionResult> ShowEditionCountChartWidget()
+        public async Task<ActionResult> ShowEditionCountPieWidget()
         {
-            var innovationOrganizationGroupedByTrackDtos = await this.attendeeInnovationOrganizationRepo.FindEditionCountChartWidgetDto(this.EditionDto.Id);
+            var innovationOrganizationGroupedByTrackDtos = await this.attendeeInnovationOrganizationRepo.FindEditionCountPieWidgetDto(this.EditionDto.Id);
             var projectsCount = await this.attendeeInnovationOrganizationRepo.CountAsync(this.EditionDto.Id);
 
             return Json(new
@@ -378,7 +378,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/EditionCountChartWidget", innovationOrganizationGroupedByTrackDtos), divIdOrClass = "#InnovationProjectsEditionCountChartWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/EditionCountPieWidget", innovationOrganizationGroupedByTrackDtos), divIdOrClass = "#InnovationProjectsEditionCountPieWidget" },
                 },
                 innovationProjectsGroupedByTrackDtos = innovationOrganizationGroupedByTrackDtos.Select(i => new InnovationOrganizationGroupedByTrackDto
                 {

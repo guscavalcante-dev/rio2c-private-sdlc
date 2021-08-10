@@ -383,13 +383,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
         #endregion
 
-        #region Edition Count Gauge Widget
+        #region Edition Count Pie Widget
 
-        /// <summary>Shows the edition count gauge widget.</summary>
+        /// <summary>Shows the edition count pie widget.</summary>
         /// <returns></returns>
-        public async Task<ActionResult> ShowEditionCountGaugeWidget()
+        public async Task<ActionResult> ShowEditionCountPieWidget()
         {
-            var musicBandGroupedByGenreDtos = await this.musicProjectRepo.FindEditionCountGaugeWidgetDto(this.EditionDto.Id);
+            var musicBandGroupedByGenreDtos = await this.musicProjectRepo.FindEditionCountPieWidgetDto(this.EditionDto.Id);
             var projectsCount = await this.musicProjectRepo.CountAsync(this.EditionDto.Id);
 
             return Json(new
@@ -397,7 +397,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/EditionCountGaugeWidget", musicBandGroupedByGenreDtos), divIdOrClass = "#MusicProjectsEditionCountGaugeWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/EditionCountPieWidget", musicBandGroupedByGenreDtos), divIdOrClass = "#MusicProjectsEditionCountPieWidget" },
                 },
                 musicBandGroupedByGenreDtos = musicBandGroupedByGenreDtos.Select(i => new MusicBandGroupedByGenreDto
                 {
@@ -405,9 +405,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     MusicGenreName = i.MusicGenreName.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
                 }),
                 musicBandsTotalCount = projectsCount
-
-
-
             }, JsonRequestBehavior.AllowGet);
         }
 

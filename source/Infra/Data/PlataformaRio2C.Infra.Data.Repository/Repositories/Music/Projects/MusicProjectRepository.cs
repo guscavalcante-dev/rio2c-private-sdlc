@@ -1111,7 +1111,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return musicProjectsPagedList.Count;
         }
 
-        public async Task<List<MusicBandGroupedByGenreDto>> FindEditionCountGaugeWidgetDto(int editionId)
+        public async Task<List<MusicBandGroupedByGenreDto>> FindEditionCountPieWidgetDto(int editionId)
         {
             var query = this.GetBaseQuery()
                                 .IsNotDeleted()

@@ -1,0 +1,18 @@
+﻿@using PlataformaRio2C.Domain.Dtos;
+@model List<InnovationOrganizationGroupedByTrackDto>
+
+<div class="kt-portlet__head kt-portlet__space-x">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+            <a class="kt-label-font-color-2" href="@Url.Action("Index", "Projects", new { Area = "Innovation" })">
+                @Labels.InnovationProjects @Labels.By @Labels.Track @Labels.InEditionYear.Replace("{0}", ViewBag.EditionDto.UrlCode.ToString())
+            </a>
+        </h3>
+    </div>
+</div>
+<div class="kt-portlet__body">
+    <div id="InnovationProjectsEditionCountPieChart" style="height:350px"></div>
+</div>
+<script>
+    var innovationProjects = '@Labels.InnovationProjects';
+</script>

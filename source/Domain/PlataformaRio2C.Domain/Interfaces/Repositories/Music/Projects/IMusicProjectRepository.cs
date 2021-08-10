@@ -43,6 +43,6 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<int[]> FindAllMusicProjectsIdsPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize);
         Task<int> CountAsync(int editionId, bool showAllEditions = false);
         Task<int> CountPagedAsync(int editionId, string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int page, int pageSize);
-        Task<List<MusicBandGroupedByGenreDto>> FindEditionCountGaugeWidgetDto(int editionId);
+        Task<List<MusicBandGroupedByGenreDto>> FindEditionCountPieWidgetDto(int editionId);
     }
 }

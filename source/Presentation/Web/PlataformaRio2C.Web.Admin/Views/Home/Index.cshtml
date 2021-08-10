@@ -1,4 +1,4 @@
-﻿@using PlataformaRio2C.Domain.Constants
+@using PlataformaRio2C.Domain.Constants
 @using PlataformaRio2C.Domain.Dtos
 @{
     ViewBag.Title = Labels.Dashboard;
@@ -17,13 +17,13 @@
     @if (isAdminFull || isAdminMusic)
     {
         <div class="col-md-6">
-            <div id="MusicProjectsEditionCountGaugeWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
+            <div id="MusicProjectsEditionCountPieWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
         </div>
     }
     @if (isAdminFull || isAdminInnovation)
     {
         <div class="col-md-6">
-            <div id="InnovationProjectsEditionCountChartWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
+            <div id="InnovationProjectsEditionCountPieWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
         </div>
     }
     @if (isAdminFull || isAdminAudiovisual)
@@ -67,32 +67,22 @@
     @if (isAdminFull || isAdminMusic)
     {
         @Scripts.Render("~/bundles/js/music.projects.editioncount.widget.js")
-        @Scripts.Render("~/bundles/js/music.projects.editioncount.gauge.widget.js")
+        @Scripts.Render("~/bundles/js/music.projects.editioncount.pie.widget.js")
     }
-
     @if (isAdminFull || isAdminInnovation)
     {
-        @Scripts.Render("~/bundles/js/innovation.projects.editioncount.chart.widget.js")
+        @Scripts.Render("~/bundles/js/innovation.projects.editioncount.pie.widget.js")
     }
-
 <script>
-        var musicProjects = '@Labels.MusicProjects.RemoveAccents()';
-        var innovationProjects = '@Labels.InnovationProjects.RemoveAccents()';
-
         jQuery(document).ready(function () {
             @if (isAdminFull)
             {
                 <text>
-                    //EventsEditionCountWidget.init();
                 </text>
             }
             @if (isAdminFull || isAdminAudiovisual)
             {
                 <text>
-                    //HoldingsEditionCountWidget.init();
-                    //AudiovisualPlayersEditionCountWidget.init();
-                    //CollaboratorsEditionCountWidget.init();
-                   // AudiovisualProjectsEditionCountWidget.init();
                     AudiovisualProjectsEditionCountGaugeWidget.init();
                     AudiovisualMeetingsEditionScheduledCountGaugeWidget.init();
                 </text>
@@ -100,25 +90,18 @@
             @if (isAdminFull || isAdminConferences)
             {
                 <text>
-                    //ConferencesEditionCountWidget.init();
-                    //SpeakersEditionCountWidget.init();
-                    //RoomsEditionCountWidget.init();
-                    //TracksEditionCountWidget.init();
-                    //PresentationFormatsEditionCountWidget.init();
-                    //ConferenceParticipantRolesEditionCountWidget.init();
                 </text>
             }
             @if (isAdminFull || isAdminMusic)
             {
                 <text>
-                    //MusicProjectsEditionCountWidget.init();
-                    MusicProjectsEditionCountGaugeWidget.init();
+                    MusicProjectsEditionCountPieWidget.init();
                 </text>
             }
             @if (isAdminFull || isAdminInnovation)
             {
                 <text>
-                    InnovationProjectsEditionCountChartWidget.init();
+                    InnovationProjectsEditionCountPieWidget.init();
                 </text>
             }
             });

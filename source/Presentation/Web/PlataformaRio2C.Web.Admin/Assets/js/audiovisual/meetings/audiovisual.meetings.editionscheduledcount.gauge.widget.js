@@ -25,13 +25,11 @@ var AudiovisualMeetingsEditionScheduledCountGaugeWidget = function () {
         }
 
         am4core.ready(function () {
-            // Themes begin
             am4core.useTheme(am4themes_animated);
-            // Themes end
 
+            var totalCountLabelId = "TotalCountLabel";
             var chartMin = 200;
             var chartMax = 2000;
-
             var data = {
                 score: chartData,
                 gradingData: [
@@ -99,10 +97,36 @@ var AudiovisualMeetingsEditionScheduledCountGaugeWidget = function () {
             // create chart
             var chart = am4core.create(chartElementId, am4charts.GaugeChart);
             chart.innerRadius = am4core.percent(80);
+            chart.paddingTop = 0;
             chart.hiddenState.properties.opacity = 0;
             chart.fontSize = 11;
-            chart.resizable = true;
-            chart.paddingTop = 0;
+            chart.responsive.enabled = true;
+            chart.responsive.rules.push({
+                relevant: function (target) {
+                    if (target.pixelWidth <= 600) {
+                        return true;
+                    }
+                    return false;
+                },
+                state: function (target, stateId) {
+                    // Labels States
+                    if (target instanceof am4core.Label) {
+                        if (!MyRio2cCommon.isNullOrEmpty(target.text)) {
+
+                            // TotalCountLabel
+                            if (target.id == totalCountLabelId) {
+
+                                var state = target.states.create(stateId);
+                                state.properties.fontSize = "1.5em";
+                                state.properties.fontWeight = "bold";
+                                return state;
+                            }
+                        }
+                    }
+
+                    return null;
+                }
+            });
 
             /**
              * Normal axis
@@ -113,14 +137,17 @@ var AudiovisualMeetingsEditionScheduledCountGaugeWidget = function () {
             axis.strictMinMax = true;
             axis.renderer.radius = am4core.percent(80);
             axis.renderer.inside = true;
-            axis.renderer.line.strokeOpacity = 0.1;
+            axis.renderer.line.strokeOpacity = 0.5;
             axis.renderer.ticks.template.disabled = false;
-            axis.renderer.ticks.template.strokeOpacity = 1;
+            axis.renderer.ticks.template.strokeOpacity = 0.5;
             axis.renderer.ticks.template.strokeWidth = 0.5;
             axis.renderer.ticks.template.length = 5;
             axis.renderer.grid.template.disabled = true;
-            axis.renderer.labels.template.radius = 35;
             axis.renderer.minGridDistance = 100; //Change the space between labels (range)
+            axis.renderer.labels.template.radius = 40;
+            axis.renderer.labels.template.adapter.add("text", function (text) {
+                return text
+            })
 
             /**
              * Axis for ranges
@@ -146,7 +173,7 @@ var AudiovisualMeetingsEditionScheduledCountGaugeWidget = function () {
                 range.value = grading.lowScore > chartMin ? grading.lowScore : chartMin;
                 range.endValue = grading.highScore < chartMax ? grading.highScore : chartMax;
                 range.axisFill.fillOpacity = 0.8;
-                range.axisFill.fill = am4core.color(grading.color);          
+                range.axisFill.fill = am4core.color(grading.color);
                 range.axisFill.zIndex = -1;
                 range.grid.strokeOpacity = 0;
                 range.stroke = am4core.color(grading.color).lighten(-0.1);
@@ -157,7 +184,7 @@ var AudiovisualMeetingsEditionScheduledCountGaugeWidget = function () {
                 range.label.inside = true;
                 range.label.radius = am4core.percent(10);
                 range.label.paddingBottom = -5; // ~half font size
-                range.label.fontSize = "0.9em";
+                //range.label.fontSize = "0.9em";
             }
 
             var matchingGrade = lookUpGrade(data.score, data.gradingData);
@@ -167,37 +194,41 @@ var AudiovisualMeetingsEditionScheduledCountGaugeWidget = function () {
              */
             var label = chart.radarContainer.createChild(am4core.Label);
             label.isMeasured = false;
-            label.fontSize = 45;
+            label.fontSize = "4em";
             label.x = am4core.percent(50);
             label.y = am4core.percent(100);
             label.horizontalCenter = "middle";
             label.verticalCenter = "bottom";
-            label.text = "50%";
+            label.text = "0";
             label.fill = am4core.color(matchingGrade.color);
+            label.id = totalCountLabelId;
 
-            /**
-             * Hand (Speedometer pointer)
-             */
-            var hand = chart.hands.push(new am4charts.ClockHand());
-            hand.axis = axis2;
-            hand.innerRadius = am4core.percent(55);
-            hand.startWidth = 8;
-            hand.pin.disabled = true;
-            hand.value = chartMin;
-            hand.fill = am4core.color("#444");
-            hand.stroke = am4core.color("#000");
+            //Only trigger animation when the chartData is greather than charMinValue. Otherwise, visual bug occurs.
+            if (chartData > chartMin) {
+                /**
+                 * Hand (Speedometer pointer)
+                 */
+                var hand = chart.hands.push(new am4charts.ClockHand());
+                hand.axis = axis2;
+                hand.innerRadius = am4core.percent(55);
+                hand.startWidth = 5;
+                hand.pin.disabled = true;
+                hand.value = chartMin;
+                hand.fill = am4core.color("#444");
+                hand.stroke = am4core.color("#000");
 
-            hand.events.on("propertychanged", function () {
-                label.text = axis2.positionToValue(hand.currentPosition).toFixed(); //Pass tofixed(1) to enable decimal cases
-                axis2.invalidate();
-            })
+                hand.events.on("propertychanged", function () {
+                    label.text = axis2.positionToValue(hand.currentPosition).toFixed(); //Pass tofixed(1) to enable decimal cases
+                    axis2.invalidate();
+                })
 
-            var animation = new am4core.Animation(hand, {
-                property: "value",
-                to: chartData
-            }, 2000, am4core.ease.cubicOut);
+                var animation = new am4core.Animation(hand, {
+                    property: "value",
+                    to: chartData
+                }, 2000, am4core.ease.cubicOut);
 
-            animation.start();
+                animation.start();
+            }
         });
     };
 

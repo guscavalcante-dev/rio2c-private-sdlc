@@ -6,16 +6,16 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 08-07-2021
 // ***********************************************************************
-// <copyright file="innovation.projects.editioncount.chart.widget.js" company="Softo">
+// <copyright file="innovation.projects.editioncount.pie.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var InnovationProjectsEditionCountChartWidget = function () {
+var InnovationProjectsEditionCountPieWidget = function () {
 
-    var widgetElementId = '#InnovationProjectsEditionCountChartWidget';
-    var chartElementId = 'InnovationProjectsEditionCountChart';
+    var widgetElementId = '#InnovationProjectsEditionCountPieWidget';
+    var chartElementId = 'InnovationProjectsEditionCountPieChart';
     var widgetElement = $(widgetElementId);
 
     // Show ---------------------------------------------------------------------------------------
@@ -27,7 +27,6 @@ var InnovationProjectsEditionCountChartWidget = function () {
         am4core.ready(function () {
             am4core.useTheme(am4themes_animated);
 
-            // Create chart instance
             var chart = am4core.create(chartElementId, am4charts.PieChart);
             //chart.radius = am4core.percent(70);
             chart.innerRadius = am4core.percent(50);
@@ -35,6 +34,29 @@ var InnovationProjectsEditionCountChartWidget = function () {
             chart.paddingLeft = 5;
             chart.paddingRight = 5;
             chart.paddingBottom = 20;
+            chart.responsive.enabled = true;
+            chart.responsive.rules.push({
+                relevant: function (target) {
+                    if (target.pixelWidth <= 600) {
+                        return true;
+                    }
+                    return false;
+                },
+                state: function (target, stateId) {
+                    if (target instanceof am4charts.PieSeries) {
+                        var state = target.states.create(stateId);
+
+                        var labelState = target.labels.template.states.create(stateId);
+                        labelState.properties.disabled = true;
+
+                        var tickState = target.ticks.template.states.create(stateId);
+                        tickState.properties.disabled = true;
+                        return state;
+                    }
+
+                    return null;
+                }
+            });
 
             // Add labels         
             var label = chart.seriesContainer.createChild(am4core.Label);
@@ -42,14 +64,14 @@ var InnovationProjectsEditionCountChartWidget = function () {
             label.horizontalCenter = "middle";
             label.verticalCenter = "bottom";
             label.fontSize = 30;
-            label.text = innovationProjectsTotalCount;
+            label.html = innovationProjectsTotalCount;
 
             var label2 = chart.seriesContainer.createChild(am4core.Label);
             label2.isMeasured = false;
             label2.horizontalCenter = "middle";
             label2.verticalCenter = "top";
             label2.fontSize = 15;
-            label2.text = innovationProjects;
+            label2.html = innovationProjects;
             label2.wrap = true;
             label2.maxWidth = 120;
             label2.textAlign = "middle";
@@ -87,10 +109,7 @@ var InnovationProjectsEditionCountChartWidget = function () {
 
     var show = function () {
         var jsonParameters = new Object();
-        //jsonParameters.keyword = $('#Search').val();
-        //jsonParameters.interestUid = $('#InterestUid').val();
-
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Projects/ShowEditionCountChartWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Projects/ShowEditionCountPieWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
