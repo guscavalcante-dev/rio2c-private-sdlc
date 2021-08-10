@@ -275,7 +275,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
         #endregion
 
-		#region Edition Count Odometer Widget
+        #region Edition Count Odometer Widget
 
         /// <summary>Shows the edition count widget.</summary>
         /// <returns></returns>
@@ -295,7 +295,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
         #endregion
 
-         #region Edition Count Gauge Widget
+        #region Edition Count Gauge Widget
 
         /// <summary>
         /// Shows the edition count gauge widget.

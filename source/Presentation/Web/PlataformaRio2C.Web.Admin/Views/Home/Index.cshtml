@@ -29,9 +29,6 @@
         <div class="col-md-6">
             <div id="AudiovisualProjectsEditionCountGaugeWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
         </div>
-        <div class="col-md-6">
-            <div id="AudiovisualPlayersEditionCountOdometerWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
-        </div>
     }
     @if (isAdminFull || isAdminMusic)
     {
@@ -39,7 +36,12 @@
             <div id="AudiovisualMeetingsEditionScheduledCountGaugeWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
         </div>
     }
-
+    @if (isAdminFull || isAdminAudiovisual)
+    {
+        <div class="col-md-6">
+            <div id="AudiovisualPlayersEditionCountOdometerWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
+        </div>
+    }
 </div>
 @section Styles {
     @Styles.Render("~/bundles/css/odometer.css")

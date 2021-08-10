@@ -1,8 +1,13 @@
 ﻿@model int
-<div class="kt-portlet__body kt-portlet__body--fluid">
-    <div class="kt-widget20">
-        <div class="kt-widget20__chart" style="height:130px;">
-            <div class="odometer" id="AudiovisualProjectsEditionCountOdometerChart"></div>
-        </div>
+<div class="kt-portlet__head kt-portlet__space-x">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+            <a class="kt-label-font-color-2" href="@Url.Action("Index", "Projects", new { Area = "Audiovisual" })">
+                @Labels.Players @Labels.InEditionYear.Replace("{0}", ViewBag.EditionDto.UrlCode.ToString())
+            </a>
+        </h3>
     </div>
+</div>
+<div class="kt-portlet__body" style="position: relative; margin: 0 auto; padding: 7%;">
+    <div class="odometer" id="AudiovisualProjectsEditionCountOdometerChart" style="font-size: 51px;"></div>
 </div>

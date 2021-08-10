@@ -11,44 +11,33 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
 var AudiovisualPlayersEditionCountOdometerWidget = function () {
-
     var widgetElementId = '#AudiovisualPlayersEditionCountOdometerWidget';
     var chartElementId = '.odometer';
     var widgetElement = $(widgetElementId);
-
     // Show ---------------------------------------------------------------------------------------
-    var initChart = function () {
-
+    var initChart = function (odometerCount) {
         var el = document.querySelector(chartElementId);
-
         od = new Odometer({
             el: el,
             format: '',
             theme: 'car'
         });
-
-        $(chartElementId).html(300);
-
+        $(chartElementId).html(odometerCount);
     };
-
-    var enableShowPlugins = function (data) {
-        initChart();
-        console.log(data);
+    var enableShowPlugins = function (odometerCount) {
+        initChart(odometerCount);
     };
-
     var show = function () {
         var jsonParameters = new Object();
         jsonParameters.keyword = $('#Search').val();
         jsonParameters.interestUid = $('#InterestUid').val();
-
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/ShowEditionCountOdometerWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
                 onSuccess: function () {
-                    enableShowPlugins(data);
+                    enableShowPlugins(data.odometerCount);
                 },
                 // Error
                 onError: function () {
@@ -61,7 +50,6 @@ var AudiovisualPlayersEditionCountOdometerWidget = function () {
                 MyRio2cCommon.unblock({ idOrClass: widgetElementId });
             });
     };
-
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
