@@ -433,6 +433,9 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.producers.delete.js").Include(
                 "~/Assets/js/audiovisual/producers/audiovisual.producers.delete.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.producers.editioncountodometer.widget.js").Include(
+                "~/Assets/js/audiovisual/producers/audiovisual.producers.editioncountodometer.widget.js"));
+
             #endregion
 
             #region Projects

@@ -41,6 +41,10 @@
         <div class="col-md-6">
             <div id="AudiovisualPlayersEditionCountOdometerWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
         </div>
+
+        <div class="col-md-6">
+            <div id="AudiovisualProducersEditionCountOdometerWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
+        </div>
     }
 </div>
 @section Styles {
@@ -56,9 +60,10 @@
     }
     @if (isAdminFull || isAdminAudiovisual)
     {
-        @Scripts.Render("~/bundles/js/audiovisual.players.editioncountodometer.widget.js")
         @Scripts.Render("~/bundles/js/audiovisual.projects.editioncount.gauge.widget.js")
         @Scripts.Render("~/bundles/js/audiovisual.meetings.editionscheduledcount.gauge.widget.js")
+        @Scripts.Render("~/bundles/js/audiovisual.players.editioncountodometer.widget.js")
+        @Scripts.Render("~/bundles/js/audiovisual.producers.editioncountodometer.widget.js")
     }
     @if (isAdminFull || isAdminConferences)
     {
@@ -81,9 +86,10 @@
             @if (isAdminFull || isAdminAudiovisual)
             {
                 <text>
-                    AudiovisualPlayersEditionCountOdometerWidget.init();
                     AudiovisualProjectsEditionCountGaugeWidget.init();
                     AudiovisualMeetingsEditionScheduledCountGaugeWidget.init();
+                    AudiovisualPlayersEditionCountOdometerWidget.init();
+                    AudiovisualProducersEditionCountOdometerWidget.init();
                 </text>
             }
             @if (isAdminFull || isAdminConferences)
