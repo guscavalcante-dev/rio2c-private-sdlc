@@ -20,6 +20,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository;
+using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
@@ -269,9 +270,11 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                        cmd.MarketSize,
                        cmd.BusinessEconomicModel,
                        cmd.BusinessOperationalModel,
+                       cmd.VideoUrl,
                        cmd.BusinessDifferentials,
                        cmd.BusinessStage,
                        !string.IsNullOrEmpty(cmd.PresentationFile),
+                       !string.IsNullOrEmpty(cmd.ImageFile),
                        cmd.AttendeeInnovationOrganizationFounderApiDtos,
                        cmd.AttendeeInnovationOrganizationCompetitorApiDtos,
                        cmd.InnovationOrganizationExperienceOptionApiDtos,
@@ -303,9 +306,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                        cmd.MarketSize,
                        cmd.BusinessEconomicModel,
                        cmd.BusinessOperationalModel,
+                       cmd.VideoUrl,
                        cmd.BusinessDifferentials,
                        cmd.BusinessStage,
                        !string.IsNullOrEmpty(cmd.PresentationFile),
+                       !string.IsNullOrEmpty(cmd.ImageFile), //TODO: cmd.CropperImage?.ImageFile != null
+                       string.IsNullOrEmpty(cmd.ImageFile),  //TODO: cmd.CropperImage?.IsImageDeleted == true
                        cmd.AttendeeInnovationOrganizationFounderApiDtos,
                        cmd.AttendeeInnovationOrganizationCompetitorApiDtos,
                        cmd.InnovationOrganizationExperienceOptionApiDtos,
@@ -332,7 +338,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 foreach (var validationResult in result.ValidationResults)
                 {
                     this.ValidationResult.Add(validationResult.ErrorMessage);
-                    
                 }
 
                 this.AppValidationResult.Add(this.ValidationResult);
@@ -341,14 +346,37 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             this.AppValidationResult.Data = innovationOrganization;
 
+            //Uploads the Presentation File
             if (!string.IsNullOrEmpty(cmd.PresentationFile))
             {
                 var fileBytes = Convert.FromBase64String(cmd.PresentationFile);
                 this.fileRepo.Upload(
                     new MemoryStream(fileBytes),
                     FileMimeType.Pdf,
-                    innovationOrganization.Uid + FileType.Pdf,
+                    innovationOrganization.GetAttendeeInnovationOrganizationByEditionId(editionDto.Edition.Id).Uid + FileType.Pdf,
                     FileRepositoryPathType.InnovationOrganizationPresentationFile);
+            }
+
+            //Uploads the Image
+            if (!string.IsNullOrEmpty(cmd.ImageFile))
+            {
+
+                var fileBytes = Convert.FromBase64String(cmd.ImageFile);
+                this.fileRepo.Upload(
+                    new MemoryStream(fileBytes),
+                    FileMimeType.Png,
+                    innovationOrganization.GetAttendeeInnovationOrganizationByEditionId(editionDto.Edition.Id).Uid + FileType.Pdf,
+                    FileRepositoryPathType.OrganizationImage);
+
+                //TODO: Should be used ImageHelper instead of fileRepo!
+                //ImageHelper.UploadOriginalAndCroppedImages(
+                //   innovationOrganization.Uid,
+                //   cmd.ImageFile,
+                //   200,//cmd.CropperImage.DataX,
+                //   200,//cmd.CropperImage.DataY,
+                //   200,//cmd.CropperImage.DataWidth,
+                //   200,//cmd.CropperImage.DataHeight,
+                //   FileRepositoryPathType.OrganizationImage);
             }
 
             return this.AppValidationResult;

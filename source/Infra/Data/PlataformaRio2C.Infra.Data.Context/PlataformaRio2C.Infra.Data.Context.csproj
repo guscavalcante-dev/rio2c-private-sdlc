@@ -461,6 +461,7 @@
     <Content Include="SqlScripts\Deltas\20210713_213000_0038_ChangesForIntiSalesPlatform.sql" />
     <Content Include="SqlScripts\Deltas\20210709_162400_0036_ChangesForAdminPartialCollaboratorTypes.sql" />
     <Content Include="SqlScripts\Deltas\20210707_165300_0035_ChangesForInnovation.sql" />
+    <Content Include="SqlScripts\Deltas\20210811_103400_0040_ChangesForInnovation.sql" />
     <Content Include="SqlScripts\Deltas\20210721_143900_0039_ChangesForInnovation.sql" />
     <Content Include="SqlScripts\Migrations\Music\02_CreateMigrateMusicProjectsTable.sql" />
     <Content Include="SqlScripts\Migrations\Music\03_MigrateMusicProjects.sql" />

@@ -413,9 +413,9 @@
   <data name="EvaluationSavesSuccessfully" xml:space="preserve">
     <value>Avaliação salva com sucesso!</value>
   </data>
-  <data name="FileMustBePdf" xml:space="preserve">
-    <value>O arquivo deve ser do tipo pdf.</value>
-    <comment>O arquivo deve ser do tipo pdf.</comment>
+  <data name="FileTypeMustBe" xml:space="preserve">
+    <value>O arquivo deve ser do tipo {0}.</value>
+    <comment>O arquivo deve ser do tipo {0}.</comment>
   </data>
   <data name="FundingPlan" xml:space="preserve">
     <value>Plano de financiamento &lt;small&gt;(apenas projetos em desenvolvimento/produção)&lt;/small&gt;</value>

@@ -125,7 +125,36 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     throw new DomainException(Messages.CorrectFormValues);
                 }
 
-                var cmd = new CreateInnovationOrganization(innovationOrganizationApiDto);
+                var cmd = new CreateInnovationOrganization(
+                    innovationOrganizationApiDto.Name,
+                    innovationOrganizationApiDto.Document,
+                    innovationOrganizationApiDto.ServiceName,
+                    innovationOrganizationApiDto.FoundationDate,
+                    innovationOrganizationApiDto.AccumulatedRevenue,
+                    innovationOrganizationApiDto.Description,
+                    innovationOrganizationApiDto.BusinessDefinition,
+                    innovationOrganizationApiDto.Website,
+                    innovationOrganizationApiDto.BusinessFocus,
+                    innovationOrganizationApiDto.MarketSize,
+                    innovationOrganizationApiDto.BusinessEconomicModel,
+                    innovationOrganizationApiDto.BusinessOperationalModel,
+                    innovationOrganizationApiDto.ImageFile,
+                    innovationOrganizationApiDto.VideoUrl,
+                    innovationOrganizationApiDto.BusinessDifferentials,
+                    innovationOrganizationApiDto.BusinessStage,
+                    innovationOrganizationApiDto.ResponsibleName,
+                    innovationOrganizationApiDto.Email,
+                    innovationOrganizationApiDto.PhoneNumber,
+                    innovationOrganizationApiDto.CellPhone,
+                    innovationOrganizationApiDto.PresentationFile,
+                    innovationOrganizationApiDto.PresentationFileName,
+                    innovationOrganizationApiDto.AttendeeInnovationOrganizationFounderApiDtos,
+                    innovationOrganizationApiDto.AttendeeInnovationOrganizationCompetitorApiDtos,
+                    innovationOrganizationApiDto.InnovationOrganizationExperienceOptionApiDtos,
+                    innovationOrganizationApiDto.InnovationOrganizationTrackOptionApiDtos,
+                    innovationOrganizationApiDto.InnovationOrganizationObjectivesOptionApiDtos,
+                    innovationOrganizationApiDto.InnovationOrganizationTechnologyOptionApiDtos);
+
                 cmd.UpdatePreSendProperties(
                     applicationUser.Id,
                     applicationUser.Uid,

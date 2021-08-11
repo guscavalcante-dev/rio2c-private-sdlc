@@ -19,6 +19,8 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Statics
     public class FileType
     {
         public static string Pdf = ".pdf";
+        public static string Ppt = ".ppt";
+        public static string Pptx = ".pptx";
         public static string Png = ".png";
         public static string Mp4 = ".mp4";
     }

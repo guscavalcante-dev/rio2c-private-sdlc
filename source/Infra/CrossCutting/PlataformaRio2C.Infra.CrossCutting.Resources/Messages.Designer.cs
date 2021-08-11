@@ -789,11 +789,11 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O arquivo deve ser do tipo pdf..
+        ///   Looks up a localized string similar to O arquivo deve ser do tipo {0}..
         /// </summary>
-        public static string FileMustBePdf {
+        public static string FileTypeMustBe {
             get {
-                return ResourceManager.GetString("FileMustBePdf", resourceCulture);
+                return ResourceManager.GetString("FileTypeMustBe", resourceCulture);
             }
         }
         

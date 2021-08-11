@@ -33,6 +33,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string MarketSize { get; private set; }
         public string BusinessEconomicModel { get; private set; }
         public string BusinessOperationalModel { get; private set; }
+        public string ImageFile { get; private set; }
+        public string VideoUrl { get; private set; }
         public string BusinessDifferentials { get; private set; }
         public string BusinessStage { get; private set; }
         public string ResponsibleName { get; private set; }
@@ -48,40 +50,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<InnovationOrganizationTrackOptionApiDto> InnovationOrganizationTrackOptionApiDtos { get; set; }
         public List<InnovationOrganizationObjectivesOptionApiDto> InnovationOrganizationObjectivesOptionApiDtos { get; set; }
         public List<InnovationOrganizationTechnologyOptionApiDto> InnovationOrganizationTechnologyOptionApiDtos { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CreateInnovationOrganization"/> class.
-        /// </summary>
-        /// <param name="innovationOrganizationApiDto">The innovation organization API dto.</param>
-        public CreateInnovationOrganization(InnovationOrganizationApiDto innovationOrganizationApiDto)
-        {
-            this.Name = innovationOrganizationApiDto.Name;
-            this.Document = innovationOrganizationApiDto.Document;
-            this.ServiceName = innovationOrganizationApiDto.ServiceName;
-            this.FoundationDate = innovationOrganizationApiDto.FoundationDate;
-            this.AccumulatedRevenue = innovationOrganizationApiDto.AccumulatedRevenue;
-            this.Description = innovationOrganizationApiDto.Description;
-            this.BusinessDefinition = innovationOrganizationApiDto.BusinessDefinition;
-            this.Website = innovationOrganizationApiDto.Website;
-            this.BusinessFocus = innovationOrganizationApiDto.BusinessFocus;
-            this.MarketSize = innovationOrganizationApiDto.MarketSize;
-            this.BusinessEconomicModel = innovationOrganizationApiDto.BusinessEconomicModel;
-            this.BusinessOperationalModel = innovationOrganizationApiDto.BusinessOperationalModel;
-            this.BusinessDifferentials = innovationOrganizationApiDto.BusinessDifferentials;
-            this.BusinessStage = innovationOrganizationApiDto.BusinessStage;
-            this.ResponsibleName = innovationOrganizationApiDto.ResponsibleName;
-            this.Email = innovationOrganizationApiDto.Email;
-            this.PhoneNumber = innovationOrganizationApiDto.PhoneNumber;
-            this.CellPhone = innovationOrganizationApiDto.CellPhone;
-            this.PresentationFile = innovationOrganizationApiDto.PresentationFile;
-
-            this.AttendeeInnovationOrganizationFounderApiDtos = innovationOrganizationApiDto.AttendeeInnovationOrganizationFounderApiDtos;
-            this.AttendeeInnovationOrganizationCompetitorApiDtos = innovationOrganizationApiDto.AttendeeInnovationOrganizationCompetitorApiDtos;
-            this.InnovationOrganizationExperienceOptionApiDtos = innovationOrganizationApiDto.InnovationOrganizationExperienceOptionApiDtos;
-            this.InnovationOrganizationTrackOptionApiDtos = innovationOrganizationApiDto.InnovationOrganizationTrackOptionApiDtos;
-            this.InnovationOrganizationObjectivesOptionApiDtos = innovationOrganizationApiDto.InnovationOrganizationObjectivesOptionApiDtos;
-            this.InnovationOrganizationTechnologyOptionApiDtos = innovationOrganizationApiDto.InnovationOrganizationTechnologyOptionApiDtos;
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateInnovationOrganization"/> class.
@@ -124,6 +92,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string marketSize,
             string businessEconomicModel,
             string businessOperationalModel,
+            string imageFile,
+            string videoUrl,
             string businessDifferentials,
             string businessStage,
             string responsibleName,
@@ -151,6 +121,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.MarketSize = marketSize;
             this.BusinessEconomicModel = businessEconomicModel;
             this.BusinessOperationalModel = businessOperationalModel;
+            this.ImageFile = imageFile;
+            this.VideoUrl = videoUrl;
             this.BusinessDifferentials = businessDifferentials;
             this.BusinessStage = businessStage;
             this.ResponsibleName = responsibleName;
@@ -159,6 +131,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.CellPhone = cellPhone;
             this.PresentationFile = presentationFile;
             this.PresentationFileName = presentationFileName;
+
             this.AttendeeInnovationOrganizationFounderApiDtos = attendeeInnovationOrganizationFounderApiDtos;
             this.AttendeeInnovationOrganizationCompetitorApiDtos = attendeeInnovationOrganizationCompetitorApiDtos;
             this.InnovationOrganizationExperienceOptionApiDtos = innovationOrganizationExperienceOptionApiDtos;

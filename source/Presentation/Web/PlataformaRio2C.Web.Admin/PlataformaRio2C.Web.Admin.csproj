@@ -819,6 +819,7 @@
     <Content Include="Assets\img\logo-rio2c-footer.png" />
     <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
+    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.editionscheduledcount.gauge.widget.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.sendemailtoplayers.datatable.widget.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.sendemailtoplayers.editioncount.widget.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.sendemailtoplayers.totalcount.widget.js" />
@@ -833,6 +834,7 @@
     <Content Include="Assets\js\audiovisual\players\audiovisual.players.editioncountodometer.widget.js" />
     <Content Include="Assets\js\audiovisual\producers\audiovisual.producers.delete.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.delete.js" />
+    <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.editioncount.gauge.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.maininformation.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.interest.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.links.widget.js" />
@@ -858,6 +860,7 @@
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.update.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.datatable.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.delete.js" />
+    <Content Include="Assets\js\innovation\projects\innovation.projects.editioncount.pie.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.editioncount.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.evaluation.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.founders.widget.js" />
@@ -933,6 +936,7 @@
     <Content Include="Assets\js\music\commissions\music.commissions.onboardinginfo.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.clipping.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.datatable.widget.js" />
+    <Content Include="Assets\js\music\projects\music.projects.editioncount.pie.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.editioncount.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.evaluation.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.evaluators.widget.js" />
@@ -8300,6 +8304,10 @@
     <Content Include="Assets\components\odometer\sass\odometer-theme-train-station.sass" />
     <Content Include="Assets\components\odometer\sass\_mixins.sass" />
     <Content Include="Areas\Audiovisual\Views\Players\Widgets\EditionCountOdometerWidget.cshtml" />
+    <Content Include="Areas\Music\Views\Projects\Widgets\EditionCountPieWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\Projects\Widgets\EditionCountPieWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\EditionScheduledCountGaugeWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EditionCountGaugeWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
