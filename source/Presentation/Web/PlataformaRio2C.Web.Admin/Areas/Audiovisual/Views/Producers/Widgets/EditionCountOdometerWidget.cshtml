@@ -2,8 +2,8 @@
 <div class="kt-portlet__head kt-portlet__space-x">
     <div class="kt-portlet__head-label">
         <h3 class="kt-portlet__head-title">
-            <a class="kt-label-font-color-2" href="@Url.Action("Index", "Players", new { Area = "Audiovisual" })">
-                @Labels.Players @Labels.InEditionYear.Replace("{0}", ViewBag.EditionDto.UrlCode.ToString())
+            <a class="kt-label-font-color-2" href="@Url.Action("Index", "Procucers", new { Area = "Audiovisual" })">
+                @Labels.Producers @Labels.InEditionYear.Replace("{0}", ViewBag.EditionDto.UrlCode.ToString())
             </a>
         </h3>
     </div>
@@ -12,5 +12,5 @@
     </div>
 </div>
 <div class="kt-portlet__body" style="position: relative; margin: 0 auto; padding: 7%;">
-    <div class="odometer odometer_audiovisualplayerseditioncountodometerchart" id="AudiovisualPlayersEditionCountOdometerChart" style="font-size: 51px;"></div>
+    <div class="odometer odometer_audiovisualproducerseditioncountodometerchart" id="AudiovisualProducersEditionCountOdometerChart" style="font-size: 51px;"></div>
 </div>

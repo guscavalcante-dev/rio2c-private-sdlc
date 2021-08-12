@@ -6,14 +6,14 @@
 // Last Modified By : Carlos Pereira
 // Last Modified On : 08-05-2021
 // ***********************************************************************
-// <copyright file="audiovisual.players.editioncountodometer.widget.js" company="Softo">
+// <copyright file="audiovisual.producers.editioncountodometer.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-var AudiovisualPlayersEditionCountOdometerWidget = function () {
-    var widgetElementId = '#AudiovisualPlayersEditionCountOdometerWidget';
-    var chartElementId = '.odometer_audiovisualplayerseditioncountodometerchart';
+var AudiovisualProducersEditionCountOdometerWidget = function () {
+    var widgetElementId = '#AudiovisualProducersEditionCountOdometerWidget';
+    var chartElementId = '.odometer_audiovisualproducerseditioncountodometerchart';
     var widgetElement = $(widgetElementId);
     // Show ---------------------------------------------------------------------------------------
     var initChart = function (odometerCount) {
@@ -30,7 +30,7 @@ var AudiovisualPlayersEditionCountOdometerWidget = function () {
     };
     var show = function () {
         var jsonParameters = new Object();
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Players/ShowEditionCountOdometerWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Producers/ShowEditionCountOdometerWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

@@ -832,6 +832,7 @@
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.report.widget.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.logistics.info.widget.js" />
     <Content Include="Assets\js\audiovisual\players\audiovisual.players.editioncountodometer.widget.js" />
+    <Content Include="Assets\js\audiovisual\producers\audiovisual.producers.editioncountodometer.widget.js" />
     <Content Include="Assets\js\audiovisual\producers\audiovisual.producers.delete.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.delete.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.editioncount.gauge.widget.js" />
@@ -8304,8 +8305,10 @@
     <Content Include="Assets\components\odometer\sass\odometer-theme-train-station.sass" />
     <Content Include="Assets\components\odometer\sass\_mixins.sass" />
     <Content Include="Areas\Audiovisual\Views\Players\Widgets\EditionCountOdometerWidget.cshtml" />
+
     <Content Include="Areas\Music\Views\Projects\Widgets\EditionCountPieWidget.cshtml" />
-    <Content Include="Areas\Innovation\Views\Projects\Widgets\EditionCountPieWidget.cshtml" />
+	<Content Include="Areas\Audiovisual\Views\Producers\Widgets\EditionCountOdometerWidget.cshtml" />
+	<Content Include="Areas\Innovation\Views\Projects\Widgets\EditionCountPieWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\EditionScheduledCountGaugeWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EditionCountGaugeWidget.cshtml" />
     <None Include="compilerconfig.json" />
