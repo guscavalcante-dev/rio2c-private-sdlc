@@ -165,10 +165,10 @@ table.dataTable tbody tr.selected {
     background-color: #eeeeee !important;
 }
 
-    .dataTables_wrapper .dataTable .selected th, .dataTables_wrapper .dataTable .selected td {
-        background-color: #e1e3e8 !important;
-        color: #595d6e !important;
-    }
+.dataTables_wrapper .dataTable .selected th, .dataTables_wrapper .dataTable .selected td {
+    background-color: #e1e3e8 !important;
+    color: #595d6e !important;
+}
 
 
 /*
@@ -246,7 +246,6 @@ table.dataTable tbody tr.selected {
 /*
     Media
 */
-
 .kt-userpic.my-userpic--43 img {
     width: 43px;
     height: 43px;
@@ -295,6 +294,7 @@ table.dataTable tbody tr.selected {
 .datepicker tbody tr > td span.disabled {
     color: #dedede !important;
 }
+
 .datepicker tbody tr > td.disabled {
     color: #dedede !important;
 }
@@ -330,11 +330,11 @@ table.dataTable tbody tr.selected {
     margin-right: 10px
 }
 
-    .select2-result-collaborator__avatar img {
-        width: 100%;
-        height: auto;
-        border-radius: 2px
-    }
+.select2-result-collaborator__avatar img {
+    width: 100%;
+    height: auto;
+    border-radius: 2px
+}
 
 .select2-result-collaborator__meta {
     margin-left: 70px
@@ -363,9 +363,10 @@ table.dataTable tbody tr.selected {
     font-weight: 400;
     margin-top: 0.25rem;
 }
-    .kt-widget20 .kt-widget20__content .kt-widget20__desc a:hover {
-        color: #505361;
-    }
+
+.kt-widget20 .kt-widget20__content .kt-widget20__desc a:hover {
+    color: #505361;
+}
 
 
 /*
@@ -375,11 +376,12 @@ table.dataTable tbody tr.selected {
     display: block;
     overflow-y: scroll;
 }
-    .table-body-scroll thead, .table-body-scroll tbody tr {
-        display: table;
-        width: 100%;
-        table-layout: fixed;
-    }
+
+.table-body-scroll thead, .table-body-scroll tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
 
 
 /*
@@ -403,27 +405,30 @@ table.dataTable tbody tr.selected {
     border-radius: 4px;
     padding: 20px 10px;
 }
-    .myrio2c-alert-box span {
-        font-size: 15px;
-        color: #495057;
-        font-weight: 600;
-    }
 
-    .myrio2c-alert-box.danger {
-        border: 1px solid #FD397A;
-        background: rgba(253, 57, 122, 0.03);
-    }
-        .myrio2c-alert-box.danger span {
-            color: #FD397A;
-        }
+.myrio2c-alert-box span {
+    font-size: 15px;
+    color: #495057;
+    font-weight: 600;
+}
 
-    .myrio2c-alert-box.warning {
-        border: 1px solid #ffb822;
-        background-color: rgba(255, 184, 34, 0.1);
-    }
-        .myrio2c-alert-box.warning span {
-            color: #ffb822;
-        }
+.myrio2c-alert-box.danger {
+    border: 1px solid #FD397A;
+    background: rgba(253, 57, 122, 0.03);
+}
+
+.myrio2c-alert-box.danger span {
+    color: #FD397A;
+}
+
+.myrio2c-alert-box.warning {
+    border: 1px solid #ffb822;
+    background-color: rgba(255, 184, 34, 0.1);
+}
+
+.myrio2c-alert-box.warning span {
+    color: #ffb822;
+}
 
 
 /*
@@ -434,9 +439,11 @@ table.dataTable tbody tr.selected {
     border-radius: 4px;
     border: 1px solid #EBEDF2 !important;
 }
+
     .myrio2c-evaluation-grade-box-sm .grade-label {
         font-size: 15px;
     }
+
     .myrio2c-evaluation-grade-box-sm .grade-vote {
         font-weight: bold;
         font-size: 15px;
@@ -449,9 +456,11 @@ table.dataTable tbody tr.selected {
     border-radius: 4px;
     border: 1px solid #EBEDF2 !important;
 }
+
     .myrio2c-evaluation-grade-box-lg .grade-label {
         font-size: 15px;
     }
+
     .myrio2c-evaluation-grade-box-lg .grade-vote {
         font-weight: bold;
         font-size: 15px;
@@ -462,4 +471,33 @@ table.dataTable tbody tr.selected {
     border: 1px solid #EBEDF2 !important;
     min-height: 65px !important;
     border-radius: 4px;
+}
+
+
+/*
+    Odometer 
+*/
+.odometer-gradient {
+    font-family: Poppins !important;
+    font-style: normal !important;
+    font-weight: 600 !important;
+    font-size: 48px !important;
+    line-height: 72px !important;
+    letter-spacing: 0.1em !important;
+    color: #FFFFFF !important;
+}
+
+.odometer-theme-car {
+    background: linear-gradient(90deg, #DD5A38 0%, #D93272 100%) !important;
+}
+
+.odometer-digit, .odometer-digit-spacer {
+    -webkit-box-shadow: none !important;
+    background: none !important;
+    font-style: normal !important;
+    font-weight: 600 !important;
+    font-size: 48px !important;
+    line-height: 72px !important;
+    letter-spacing: 0.1em !important;
+    color: #FFFFFF !important;
 }

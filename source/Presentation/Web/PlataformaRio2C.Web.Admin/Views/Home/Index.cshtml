@@ -12,38 +12,43 @@
     var isAdminConferences = adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminConferences) == true;
 }
 <div class="row">
+    @if (isAdminFull || isAdminAudiovisual)
+    {
+        <div class="kt-container pl-3 pr-3 mb-0">
+            <h3 class="kt-subheader__title text-white mb-0">@Labels.AudioVisual</h3>
+            <div class="kt-separator kt-separator--border kt-separator--border w-100 mt-2"></div>
+        </div>
+        <div class="col-md-6">
+            <div id="AudiovisualMeetingsEditionScheduledCountGaugeWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
+        </div>
+        <div class="col-md-6">
+            <div id="AudiovisualProjectsEditionCountGaugeWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
+        </div>
+        <div class="col-md-6">
+            <div id="AudiovisualPlayersEditionCountOdometerWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
+        </div>
+        <div class="col-md-6">
+            <div id="AudiovisualProducersEditionCountOdometerWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
+        </div>
+    }
     @if (isAdminFull || isAdminMusic)
     {
+        <div class="kt-container pl-3 pr-3 mb-0 mt-30">
+            <h3 class="kt-subheader__title text-black-50 mb-0">@Labels.Music</h3>
+            <div class="kt-separator kt-separator--border kt-separator--border w-100 mt-2"></div>
+        </div>
         <div class="col-md-6">
             <div id="MusicProjectsEditionCountPieWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
         </div>
     }
     @if (isAdminFull || isAdminInnovation)
     {
+        <div class="kt-container pl-3 pr-3 mb-0 mt-30">
+            <h3 class="kt-subheader__title text-black-50 mb-0">@Labels.Innovation</h3>
+            <div class="kt-separator kt-separator--border kt-separator--border w-100 mt-2"></div>
+        </div>
         <div class="col-md-6">
             <div id="InnovationProjectsEditionCountPieWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
-        </div>
-    }
-    @if (isAdminFull || isAdminAudiovisual)
-    {
-        <div class="col-md-6">
-            <div id="AudiovisualProjectsEditionCountGaugeWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
-        </div>
-    }
-    @if (isAdminFull || isAdminMusic)
-    {
-        <div class="col-md-6">
-            <div id="AudiovisualMeetingsEditionScheduledCountGaugeWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
-        </div>
-    }
-    @if (isAdminFull || isAdminAudiovisual)
-    {
-        <div class="col-md-6">
-            <div id="AudiovisualPlayersEditionCountOdometerWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
-        </div>
-
-        <div class="col-md-6">
-            <div id="AudiovisualProducersEditionCountOdometerWidget" class="kt-portlet kt-portlet--fit" style="min-height: 230px;"></div>
         </div>
     }
 </div>

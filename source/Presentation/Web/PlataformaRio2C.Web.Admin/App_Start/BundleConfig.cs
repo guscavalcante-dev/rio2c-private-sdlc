@@ -1117,7 +1117,6 @@ namespace PlataformaRio2C.Web.Admin
                       "~/Content/css/font-awesome.css",
                       "~/Content/css/darkroom.css",
                       "~/Content/css/style.css",
-                      "~/Content/css/personalized_components.css",
                       "~/Content/css/style-responsive.css"));
 
             #endregion
