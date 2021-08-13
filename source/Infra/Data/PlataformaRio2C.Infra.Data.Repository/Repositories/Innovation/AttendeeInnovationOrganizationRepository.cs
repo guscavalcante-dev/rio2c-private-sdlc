@@ -365,9 +365,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                {
                                    AttendeeInnovationOrganizationId = aio.Id,
                                    AttendeeInnovationOrganizationUid = aio.Uid,
+                                   InnovationOrganizationId = aio.InnovationOrganization.Id,
+                                   InnovationOrganizationUid = aio.InnovationOrganization.Uid,
                                    InnovationOrganizationName = aio.InnovationOrganization.Name,
                                    InnovationOrganizationServiceName = aio.InnovationOrganization.ServiceName,
-                                   //InnovationOrganizationImageUrl = aio.InnovationOrganization.ImageUrl,
+                                   ImageUploadDate = aio.InnovationOrganization.ImageUploadDate,
                                    Grade = aio.Grade,
                                    EvaluationsCount = aio.EvaluationsCount,
                                    InnovationOrganizationTracksNames = aio.AttendeeInnovationOrganizationTracks

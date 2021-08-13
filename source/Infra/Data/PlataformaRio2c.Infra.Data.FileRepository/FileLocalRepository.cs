@@ -15,6 +15,7 @@ using System;
 using System.Configuration;
 using System.IO;
 using PlataformaRio2C.Domain.Statics;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Statics;
 
 namespace PlataformaRio2c.Infra.Data.FileRepository
 {
@@ -66,14 +67,19 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
         /// <param name="uploadDate">The upload date.</param>
         /// <param name="additionalFileInfo">The additional file information.</param>
         /// <returns></returns>
-        public string GetFileUrl(FileRepositoryPathType fileRepositoryPathType, Guid? objectUid, DateTimeOffset? uploadDate, string additionalFileInfo = null)
+        public string GetFileUrl(FileRepositoryPathType fileRepositoryPathType, Guid? objectUid, DateTimeOffset? uploadDate, string additionalFileInfo = null, string fileExtension = null)
         {
             if (!uploadDate.HasValue || !objectUid.HasValue)
             {
                 return string.Empty;
             }
 
-            return this.GetUrl(fileRepositoryPathType, objectUid.Value) + $"{additionalFileInfo}.png" + $"?v={uploadDate.Value.ToString("yyyyMMddHHmmss")}";
+            if(string.IsNullOrEmpty(fileExtension))
+            {
+                fileExtension = FileType.Pdf;
+            }
+
+            return this.GetUrl(fileRepositoryPathType, objectUid.Value) + $"{additionalFileInfo}{fileExtension}" + $"?v={uploadDate.Value.ToString("yyyyMMddHHmmss")}";
         }
 
         /// <summary>Gets the URL.</summary>

@@ -1,4 +1,7 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Entities
+@using PlataformaRio2C.Domain.Statics
 @using Constants = PlataformaRio2C.Domain.Constants;
 @model AttendeeInnovationOrganizationDto
 @{
@@ -17,9 +20,9 @@
                 <a href="@Url.Action("EvaluationDetails", "Projects", new {Area = "Innovation", id = Model.AttendeeInnovationOrganization?.Uid})" target="_blank">
                     @if (Model.InnovationOrganization?.HasImage() == true)
                     {
-                        @*<div class="kt-widget__media">
-                            <img src="@(Model.InnovationOrganization.ImageUrl)" alt="image">
-                        </div>*@
+                        <div class="kt-widget__media">
+                            <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, Model.InnovationOrganization.Uid, Model.InnovationOrganization.ImageUploadDate, true)" alt="image">
+                        </div>
                     }
                     else
                     {
@@ -175,9 +178,9 @@
             </div>
             <div class="kt-widget__item w-25 w-xs-100">
                 @*<div class="kt-widget__details">
-                <span class="kt-widget__title">@Labels.AccumulatedRevenueForLast3Months</span>
-                <span class="kt-widget__value"><span class="text-break">@(Model.AttendeeInnovationOrganization?.AccumulatedRevenue ?? 0)</span></span>
-            </div>*@
+                        <span class="kt-widget__title">@Labels.AccumulatedRevenueForLast3Months</span>
+                        <span class="kt-widget__value"><span class="text-break">@(Model.AttendeeInnovationOrganization?.AccumulatedRevenue ?? 0)</span></span>
+                    </div>*@
             </div>
         </div>
     </div>

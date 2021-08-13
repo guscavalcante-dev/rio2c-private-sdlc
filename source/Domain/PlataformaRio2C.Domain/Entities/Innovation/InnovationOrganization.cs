@@ -95,6 +95,7 @@ namespace PlataformaRio2C.Domain.Entities
             string businessStage,
             bool isPresentationUploaded,
             bool isImageUploaded,
+            string presentationFileExtension,
             List<AttendeeInnovationOrganizationFounderApiDto> attendeeInnovationOrganizationFounderApiDtos,
             List<AttendeeInnovationOrganizationCompetitorApiDto> attendeeInnovationOrganizationCompetitorApiDtos,
             List<InnovationOrganizationExperienceOptionApiDto> innovationOrganizationExperienceOptionApiDtos,
@@ -125,6 +126,7 @@ namespace PlataformaRio2C.Domain.Entities
                 isPresentationUploaded,
                 businessOperationalModel,
                 videoUrl,
+                presentationFileExtension,
                 userId);
 
             this.SynchronizeAttendeeInnovationOrganizationCollaborators(
@@ -222,6 +224,7 @@ namespace PlataformaRio2C.Domain.Entities
             bool isPresentationUploaded,
             bool isImageUploaded,
             bool isImageDeleted,
+            string presentationFileExtension,
             List<AttendeeInnovationOrganizationFounderApiDto> attendeeInnovationOrganizationFounderApiDtos,
             List<AttendeeInnovationOrganizationCompetitorApiDto> attendeeInnovationOrganizationCompetitorApiDtos,
             List<InnovationOrganizationExperienceOptionApiDto> innovationOrganizationExperienceOptionApiDtos,
@@ -252,6 +255,7 @@ namespace PlataformaRio2C.Domain.Entities
                 isPresentationUploaded,
                 businessOperationalModel,
                 videoUrl,
+                presentationFileExtension,
                 userId);
 
             this.SynchronizeAttendeeInnovationOrganizationCollaborators(
@@ -375,6 +379,7 @@ namespace PlataformaRio2C.Domain.Entities
             bool isPresentationUploaded,
             string businessOperationalModel,
             string videoUrl,
+            string presentationFileExtension,
             int userId)
         {
             if (edition == null)
@@ -408,6 +413,7 @@ namespace PlataformaRio2C.Domain.Entities
                     isPresentationUploaded,
                     businessOperationalModel,
                     videoUrl,
+                    presentationFileExtension,
                     userId));
             }
         }

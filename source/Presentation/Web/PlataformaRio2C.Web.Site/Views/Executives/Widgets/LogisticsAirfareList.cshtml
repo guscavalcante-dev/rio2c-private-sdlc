@@ -79,7 +79,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="embed-responsive embed-responsive-16by9 d-flex">
-                                    @Html.Raw(FileHelper.GetFileUrl(FileRepositoryPathType.LogisticAirfareFile, logisticAirfareDto.LogisticAirfare.Uid, logisticAirfareDto.LogisticAirfare.TicketUploadDate).ConvertPdfToEmbed())
+                                    @Html.Raw(FileHelper.GetFileUrl(FileRepositoryPathType.LogisticAirfareFile, logisticAirfareDto.LogisticAirfare.Uid, logisticAirfareDto.LogisticAirfare.TicketUploadDate).ConvertFileToEmbed())
                                 </div>
                             </div>
                         </div>

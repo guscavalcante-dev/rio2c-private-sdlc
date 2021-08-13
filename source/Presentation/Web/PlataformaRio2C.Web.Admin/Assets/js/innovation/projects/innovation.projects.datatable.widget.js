@@ -128,8 +128,8 @@ var InnovationProjectsDataTableWidget = function () {
                                     <tr>\
                                         <td>';
                         
-                        if (!MyRio2cCommon.isNullOrEmpty(row.InnovationOrganizationImageUrl)) {
-                            html += '<img src="' + row.InnovationOrganizationImageUrl + '" /> ';
+                        if (!MyRio2cCommon.isNullOrEmpty(row.ImageUploadDate)) {
+                            html += '<img src="' + imageDirectory + row.InnovationOrganizationUid + '_thumbnail.png?v=' + moment(row.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
                         }
                         else {
                             html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';

@@ -54,6 +54,7 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset? PresentationUploadDate { get; private set; }
         public string BusinessOperationalModel { get; private set; }
         public string VideoUrl { get; private set; }
+        public string PresentationFileExtension { get; private set; }
 
         public virtual Edition Edition { get; private set; }
         public virtual InnovationOrganization InnovationOrganization { get; private set; }
@@ -96,6 +97,7 @@ namespace PlataformaRio2C.Domain.Entities
             bool isPresentationUploaded,
             string businessOperationalModel,
             string videoUrl,
+            string presentationFileExtension,
             int userId)
         {
             this.Edition = edition;
@@ -109,6 +111,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.BusinessStage = businessStage;
             this.BusinessOperationalModel = businessOperationalModel;
             this.VideoUrl = videoUrl;
+            this.PresentationFileExtension = presentationFileExtension;
 
             this.SetCreateDate(userId);
             this.UpdatePresentationUploadDate(isPresentationUploaded, false);

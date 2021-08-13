@@ -71,7 +71,7 @@
         {
         <div id="file-preview-container">
             <div class="embed-responsive embed-responsive-16by9 d-flex">
-                @Html.Raw(FileHelper.GetFileUrl(FileRepositoryPathType.LogisticAirfareFile, Model.LogisticAirfareUid, Model.TicketUploadDate).ConvertPdfToEmbed())
+                @Html.Raw(FileHelper.GetFileUrl(FileRepositoryPathType.LogisticAirfareFile, Model.LogisticAirfareUid, Model.TicketUploadDate).ConvertFileToEmbed())
             </div>
             <div class="row">
                 <div class="col-md-12 text-center mt-2">

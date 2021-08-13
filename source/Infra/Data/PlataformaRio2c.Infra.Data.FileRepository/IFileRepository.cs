@@ -21,7 +21,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
     public interface IFileRepository
     {
         string GetImageUrl(FileRepositoryPathType fileRepositoryPathType, Guid? imageUid, DateTimeOffset? imageUploadDate, bool isThumbnail, string additionalFileInfo = null);
-        string GetFileUrl(FileRepositoryPathType fileRepositoryPathType, Guid? objectUid, DateTimeOffset? uploadDate, string additionalFileInfo = null);
+        string GetFileUrl(FileRepositoryPathType fileRepositoryPathType, Guid? objectUid, DateTimeOffset? uploadDate, string additionalFileInfo = null, string fileExtension = null);
         string GetUrl(FileRepositoryPathType fileRepositoryPathType, Guid fileUid);
         void Upload(Stream inputStream, string contentType, string fileName, FileRepositoryPathType fileRepositoryPathType, params object[] args);
         void DeleteImages(Guid imageUid, FileRepositoryPathType fileRepositoryPathType, params object[] args);

@@ -6,6 +6,9 @@ BEGIN TRY
 	BEGIN TRANSACTION
 		ALTER TABLE "dbo"."AttendeeInnovationOrganizations"
 		ADD VideoUrl  varchar(300)  NULL
+
+		ALTER TABLE "dbo"."AttendeeInnovationOrganizations"
+		ADD PresentationFileExtension  varchar(10)  NULL
 	-- Commands End
 	COMMIT TRAN -- Transaction Success!
 END TRY

@@ -22,6 +22,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Statics
         public static string Ppt = ".ppt";
         public static string Pptx = ".pptx";
         public static string Png = ".png";
+        public static string Jpg = ".jpg";
+        public static string Jpeg = ".jpeg";
+        public static string Gif = ".gif";
         public static string Mp4 = ".mp4";
     }
 }

@@ -275,6 +275,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                        cmd.BusinessStage,
                        !string.IsNullOrEmpty(cmd.PresentationFile),
                        !string.IsNullOrEmpty(cmd.ImageFile),
+                       cmd.PresentationFile?.GetBase64FileExtension(),
                        cmd.AttendeeInnovationOrganizationFounderApiDtos,
                        cmd.AttendeeInnovationOrganizationCompetitorApiDtos,
                        cmd.InnovationOrganizationExperienceOptionApiDtos,
@@ -310,8 +311,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                        cmd.BusinessDifferentials,
                        cmd.BusinessStage,
                        !string.IsNullOrEmpty(cmd.PresentationFile),
-                       !string.IsNullOrEmpty(cmd.ImageFile), //TODO: cmd.CropperImage?.ImageFile != null
-                       string.IsNullOrEmpty(cmd.ImageFile),  //TODO: cmd.CropperImage?.IsImageDeleted == true
+                       !string.IsNullOrEmpty(cmd.ImageFile), 
+                       string.IsNullOrEmpty(cmd.ImageFile),
+                       cmd.PresentationFile?.GetBase64FileExtension(),
                        cmd.AttendeeInnovationOrganizationFounderApiDtos,
                        cmd.AttendeeInnovationOrganizationCompetitorApiDtos,
                        cmd.InnovationOrganizationExperienceOptionApiDtos,
@@ -330,7 +332,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 this.AppValidationResult.Add(innovationOrganization.ValidationResult);
                 return this.AppValidationResult;
             }
-            
+
             var result = this.Uow.SaveChanges();
 
             if (!result.Success)
@@ -352,31 +354,18 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 var fileBytes = Convert.FromBase64String(cmd.PresentationFile);
                 this.fileRepo.Upload(
                     new MemoryStream(fileBytes),
-                    FileMimeType.Pdf,
-                    innovationOrganization.GetAttendeeInnovationOrganizationByEditionId(editionDto.Edition.Id).Uid + FileType.Pdf,
+                    cmd.PresentationFile.GetBase64FileMimeType(),
+                    innovationOrganization.GetAttendeeInnovationOrganizationByEditionId(editionDto.Edition.Id).Uid + cmd.PresentationFile.GetBase64FileExtension(),
                     FileRepositoryPathType.InnovationOrganizationPresentationFile);
             }
 
             //Uploads the Image
             if (!string.IsNullOrEmpty(cmd.ImageFile))
             {
-
-                var fileBytes = Convert.FromBase64String(cmd.ImageFile);
-                this.fileRepo.Upload(
-                    new MemoryStream(fileBytes),
-                    FileMimeType.Png,
-                    innovationOrganization.GetAttendeeInnovationOrganizationByEditionId(editionDto.Edition.Id).Uid + FileType.Pdf,
-                    FileRepositoryPathType.OrganizationImage);
-
-                //TODO: Should be used ImageHelper instead of fileRepo!
-                //ImageHelper.UploadOriginalAndCroppedImages(
-                //   innovationOrganization.Uid,
-                //   cmd.ImageFile,
-                //   200,//cmd.CropperImage.DataX,
-                //   200,//cmd.CropperImage.DataY,
-                //   200,//cmd.CropperImage.DataWidth,
-                //   200,//cmd.CropperImage.DataHeight,
-                //   FileRepositoryPathType.OrganizationImage);
+                ImageHelper.UploadOriginalAndThumbnailImages(
+                   innovationOrganization.Uid,
+                   cmd.ImageFile,
+                   FileRepositoryPathType.OrganizationImage);
             }
 
             return this.AppValidationResult;

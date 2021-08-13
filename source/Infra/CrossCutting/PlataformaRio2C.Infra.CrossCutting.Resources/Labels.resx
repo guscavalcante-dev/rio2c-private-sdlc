@@ -1841,6 +1841,10 @@
     <value>Formatos</value>
     <comment>Formatos</comment>
   </data>
+  <data name="PresentationVideo" xml:space="preserve">
+    <value>Vídeo de Apresentação</value>
+    <comment>Vídeo de Apresentação</comment>
+  </data>
   <data name="Presential" xml:space="preserve">
     <value>Presencial</value>
     <comment>Presencial</comment>

@@ -21,13 +21,11 @@ namespace PlataformaRio2C.Domain.Dtos
     {
         public int AttendeeInnovationOrganizationId { get; set; }
         public Guid AttendeeInnovationOrganizationUid { get; set; }
-
+        public int InnovationOrganizationId { get; set; }
+        public Guid InnovationOrganizationUid { get; set; }
         public string InnovationOrganizationName { get; set; }
         public string InnovationOrganizationServiceName { get; set; }
-
-        //TODO: Pedir no endpoint de cadastro de CreateStartup? Não estava especificado naquele documento .doc!
-        public string InnovationOrganizationImageUrl { get; set; }
-
+        public DateTimeOffset? ImageUploadDate { get; set; }
         public decimal? Grade { get; set; }
         public int EvaluationsCount { get; set; }
         public string EvaluationHtmlString { get; set; }
