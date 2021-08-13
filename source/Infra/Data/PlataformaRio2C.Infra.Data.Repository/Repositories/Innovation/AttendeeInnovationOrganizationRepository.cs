@@ -141,7 +141,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<AttendeeInnovationOrganization> FindByInnovationOrganizationTrackOptionUids(this IQueryable<AttendeeInnovationOrganization> query, List<Guid?> innovationOrganizationTrackOptionUids)
         {
-            query = query.Where(aio => innovationOrganizationTrackOptionUids
+
+            if (innovationOrganizationTrackOptionUids[0].HasValue)
+            {
+                query = query.Where(aio => innovationOrganizationTrackOptionUids
                                             .Any(iotUid =>
                                                 aio.AttendeeInnovationOrganizationTracks
                                                     .Any(aiot =>
@@ -149,6 +152,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                             !aiot.IsDeleted &&
                                                             !aiot.InnovationOrganizationTrackOption.IsDeleted &&
                                                              aiot.InnovationOrganizationTrackOption.Uid == iotUid)));
+            }
 
             return query;
         }
