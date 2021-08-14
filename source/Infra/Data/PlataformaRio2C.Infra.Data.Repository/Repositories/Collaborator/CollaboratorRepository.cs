@@ -356,6 +356,24 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>
+        /// Finds the by interests uids.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="interestsUids">The interests uids.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> FindByInterestsUids(this IQueryable<Collaborator> query, List<Guid?> interestsUids)
+        {
+            if (interestsUids?.Any(iUid => iUid != null) == true)
+            {
+                //query = query.Where(c => interestsUids.Any(iUid =>
+                //    c.AttendeeCollaborators.Any(ac =>
+                //        ac.AttendeeCollaboratorInterests.Any(aci => aci.Interest.Uid == iUid && !aci.IsDeleted))));
+            }
+
+            return query;
+        }
     }
 
     #endregion
@@ -1171,6 +1189,96 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                 }
                                                                                             })),
 
+                                JobTitle = c.JobTitles.FirstOrDefault(jb => !jb.IsDeleted && jb.CollaboratorId == c.Id).Value
+                            })
+                            .ToListPagedAsync(page, pageSize);
+        }
+
+        /// <summary>
+        /// Finds all audiovisual commissions by data table.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <param name="collaboratorsUids">The collaborators uids.</param>
+        /// <param name="collaboratorTypeNames">The collaborator type names.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
+        /// <param name="showHighlights">The show highlights.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="interestsUids">The interests uids.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<CollaboratorBaseDto>> FindAllAudiovisualCommissionsByDataTable(
+            int page,
+            int pageSize,
+            string keywords,
+            List<Tuple<string, string>> sortColumns,
+            List<Guid> collaboratorsUids,
+            string[] collaboratorTypeNames,
+            bool showAllEditions,
+            bool showAllParticipants,
+            bool? showHighlights,
+            int? editionId,
+            List<Guid?> interestsUids)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByKeywords(keywords, editionId)
+                                .FindByUids(collaboratorsUids)
+                                .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeNames, showAllEditions, showAllParticipants, editionId)
+                                .FindByInterestsUids(interestsUids)
+                                .FindByHighlights(collaboratorTypeNames, showHighlights);
+
+            return await query
+                            .DynamicOrder<Collaborator>(
+                                sortColumns,
+                                new List<Tuple<string, string>>
+                                {
+                                    new Tuple<string, string>("FullName", "User.Name"),
+                                    new Tuple<string, string>("Email", "User.Email"),
+                                },
+                                new List<string> { "User.Name", "User.Email", "CreateDate", "UpdateDate" },
+                                "User.Name")
+                            .Select(c => new CollaboratorBaseDto
+                            {
+                                Id = c.Id,
+                                Uid = c.Uid,
+                                FirstName = c.FirstName,
+                                LastNames = c.LastNames,
+                                Badge = c.Badge,
+                                Email = c.User.Email,
+                                PhoneNumber = c.PhoneNumber,
+                                CellPhone = c.CellPhone,
+                                PublicEmail = c.PublicEmail,
+                                ImageUploadDate = c.ImageUploadDate,
+                                CreateDate = c.CreateDate,
+                                UpdateDate = c.UpdateDate,
+                                EditionAttendeeCollaborator = editionId.HasValue ? c.AttendeeCollaborators.FirstOrDefault(ac => ac.EditionId == editionId
+                                                                                                                                && !ac.Edition.IsDeleted
+                                                                                                                                && !ac.IsDeleted
+                                                                                                                                && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
+                                                                                                                                                                           && collaboratorTypeNames.Contains(act.CollaboratorType.Name))) :
+                                                                                   null,
+                                IsInOtherEdition = editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId
+                                                                                                           && !ac.IsDeleted),
+                                AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
+                                                                    .Where(at => !at.IsDeleted && at.EditionId == editionId)
+                                                                    .SelectMany(at => at.AttendeeOrganizationCollaborators
+                                                                                            .Where(aoc => !aoc.IsDeleted)
+                                                                                            .Select(aoc => new AttendeeOrganizationBaseDto
+                                                                                            {
+                                                                                                Uid = aoc.AttendeeOrganization.Uid,
+                                                                                                OrganizationBaseDto = new OrganizationBaseDto
+                                                                                                {
+                                                                                                    Name = aoc.AttendeeOrganization.Organization.Name,
+                                                                                                    TradeName = aoc.AttendeeOrganization.Organization.TradeName,
+                                                                                                    HoldingBaseDto = aoc.AttendeeOrganization.Organization.Holding == null ? null : new HoldingBaseDto
+                                                                                                    {
+                                                                                                        Name = aoc.AttendeeOrganization.Organization.Holding.Name
+                                                                                                    },
+                                                                                                    IsVirtualMeeting = aoc.AttendeeOrganization.IsVirtualMeeting
+                                                                                                }
+                                                                                            })),
                                 JobTitle = c.JobTitles.FirstOrDefault(jb => !jb.IsDeleted && jb.CollaboratorId == c.Id).Value
                             })
                             .ToListPagedAsync(page, pageSize);

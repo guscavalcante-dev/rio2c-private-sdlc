@@ -511,6 +511,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Comissão de Audiovisual.
+        /// </summary>
+        public static string AudiovisualCommission {
+            get {
+                return ResourceManager.GetString("AudiovisualCommission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data de término da criação de negociações audiovisuais.
         /// </summary>
         public static string AudiovisualNegotiationsCreateEndDate {
@@ -2595,6 +2604,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string InnovationProjectSubmitStartDate {
             get {
                 return ResourceManager.GetString("InnovationProjectSubmitStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interesse.
+        /// </summary>
+        public static string Interest {
+            get {
+                return ResourceManager.GetString("Interest", resourceCulture);
             }
         }
         

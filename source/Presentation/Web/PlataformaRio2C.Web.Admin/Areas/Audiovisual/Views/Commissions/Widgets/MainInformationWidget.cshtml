@@ -1,0 +1,192 @@
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Statics
+@model AttendeeCollaboratorSiteMainInformationWidgetDto
+<div class="kt-portlet__body">
+    <div class="kt-widget kt-widget--user-profile-3">
+        <div class="kt-widget__top">
+            <div style="float: right;">
+                @if (Model.Collaborator?.HasImage() == true)
+                {
+                    <div class="kt-widget__media">
+                        <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.UserImage, Model.Collaborator.Uid, Model.Collaborator.ImageUploadDate, true)" alt="image">
+                    </div>
+                }
+                else
+                {
+                    <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest" style="width: 110px; height: 110px;">
+                        @(Model.Collaborator?.GetDisplayNameAbbreviation() ?? "-")
+                    </div>
+                }
+            </div>
+            <div class="kt-widget__content" style="overflow: hidden;">
+                <div class="kt-widget__head">
+                    <span class="kt-widget__username">
+                        @(Model.Collaborator?.GetDisplayName() ?? "-")
+                        @if (Model.AttendeeCollaborator?.OnboardingFinishDate != null)
+                        {
+                            <i class="flaticon2-correct"></i>
+                        }
+                    </span>
+                    <div class="kt-widget__action">
+                        <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="InnovationCommissionsMainInformationWidget.showUpdateModal();">
+                            <i class="flaticon2-edit"></i>
+                        </button>
+                    </div>
+                </div>
+                @{
+                    var jobTitleDto = Model.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
+                }
+                @if (jobTitleDto != null)
+                {
+                    <div class="kt-widget__subhead pt-0">
+                        @jobTitleDto.Value
+                    </div>
+                }
+                <div class="kt-widget__info" style="display: block;">
+                    @{
+                        var miniBioDto = Model.GetMiniBioDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
+                    }
+                    @if (miniBioDto != null)
+                    {
+                        <div class="kt-widget__desc" style="word-wrap: break-word;">
+                            @Html.Raw(miniBioDto.Value)
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="kt-widget__bottom">
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.FullName</span>
+                    <span class="kt-widget__value"><span>@(Model.Collaborator?.GetFullName() ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.CellPhone</span>
+                    <span class="kt-widget__value"><span>@(Model.Collaborator?.CellPhone ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.PhoneNumber</span>
+                    <span class="kt-widget__value"><span>@(Model.Collaborator?.PhoneNumber ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.Email (Login)</span>
+                    <span class="kt-widget__value"><span>@(Model.User?.Email ?? "-")</span></span>
+                </div>
+            </div>
+
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.BirthDate</span>
+                    <span class="kt-widget__value"><span>@(Model.Collaborator?.BirthDate?.ToShortDateString() ?? "-")</span></span>
+                </div>
+            </div>
+            @if (Model.Collaborator?.Industry?.HasAdditionalInfo == true)
+            {
+                <div class="kt-widget__item">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.CollaboratorIndustry / @Labels.Others</span>
+                        <span class="kt-widget__value"><span>@(Model.Collaborator?.CollaboratorIndustryAdditionalInfo ?? "-")</span></span>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="kt-widget__item">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.CollaboratorIndustry</span>
+                        <span class="kt-widget__value"><span>@(Model.Collaborator?.Industry?.Name?.GetSeparatorTranslation(Culture, '|') ?? "-")</span></span>
+                    </div>
+                </div>
+            }
+
+            @if (Model.Collaborator?.Role?.HasAdditionalInfo == true)
+            {
+                <div class="kt-widget__item">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.Role / @Labels.Others</span>
+                        <span class="kt-widget__value"><span>@(Model.Collaborator?.CollaboratorRoleAdditionalInfo ?? "-")</span></span>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="kt-widget__item">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.Role</span>
+                        <span class="kt-widget__value"><span>@(Model.Collaborator?.Role?.Name.GetSeparatorTranslation(Culture, '|') ?? "-")</span></span>
+                    </div>
+                </div>
+            }
+
+            @if (Model.Collaborator?.Gender?.HasAdditionalInfo == true)
+            {
+                <div class="kt-widget__item">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.Gender / @Labels.Others</span>
+                        <span class="kt-widget__value"><span>@(Model.Collaborator?.CollaboratorGenderAdditionalInfo ?? "-")</span></span>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="kt-widget__item">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.Gender</span>
+                        <span class="kt-widget__value"><span>@(Model.Collaborator?.Gender?.Name.GetSeparatorTranslation(Culture, '|') ?? "-")</span></span>
+                    </div>
+                </div>
+            }
+
+            @if (Model.Collaborator?.HasAnySpecialNeeds == true)
+            {
+                <div class="kt-widget__item">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.HasAnySpecialNeeds</span>
+                        <span class="kt-widget__value"><span>@(Model.Collaborator?.SpecialNeedsDescription ?? "-")</span></span>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="kt-widget__item">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.HasAnySpecialNeeds</span>
+                        <span class="kt-widget__value"><span>@Labels.No</span></span>
+                    </div>
+                </div>
+            }
+
+            @if (Model.EditionParticipationDtos?.Any() == true)
+            {
+                <div class="kt-widget__item">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.HaveYouBeenToRio2CBefore</span>
+                        @foreach (var edition in Model.EditionParticipationDtos)
+                        {
+                            <span class="kt-badge  kt-badge--info kt-badge--inline">
+                                @edition.EditionName
+                            </span>
+                        }
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="kt-widget__item">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.HaveYouBeenToRio2CBefore</span>
+                        <span class="kt-widget__value"><span>@Labels.No</span></span>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
