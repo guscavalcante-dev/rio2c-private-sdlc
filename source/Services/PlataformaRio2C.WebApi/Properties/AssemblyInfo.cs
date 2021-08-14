@@ -34,11 +34,3 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-
-[assembly: Log]
-[assembly: Log(AttributeExclude = true, AttributeTargetMembers = "regex:ctor*", AttributePriority = 100)]
-[assembly: Log(AttributeExclude = true, AttributeTargetMembers = "regex:get_.*|set_.*", AttributePriority = 101)]
-[assembly: Log(AttributeExclude = true, AttributeTargetMembers = "regex:<>n__*", AttributePriority = 102)]
-[assembly: Log(AttributeExclude = true, AttributeTargetMembers = "regex:Apply*", AttributePriority = 103)]
-
-

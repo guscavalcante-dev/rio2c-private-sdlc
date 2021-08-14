@@ -35,7 +35,3 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-
-[assembly: Log]
-[assembly: Log(AttributeExclude = true, AttributeTargetMembers = "regex:ctor*", AttributePriority = 100)]
-[assembly: Log(AttributeExclude = true, AttributeTargetMembers = "regex:get_.*|set_.*", AttributePriority = 101)]
