@@ -311,6 +311,7 @@
     <Compile Include="Dtos\Tracks\TrackDto.cs" />
     <Compile Include="Dtos\Tracks\TrackJsonDto.cs" />
     <Compile Include="Entities\Addresses\Address.cs" />
+    <Compile Include="Entities\Audiovisual\AttendeeCollaboratorInterest.cs" />
     <Compile Include="Entities\Base\AggregateRoot.cs" />
     <Compile Include="Entities\Collaborator\AttendeeCollaborator.cs" />
     <Compile Include="Entities\Collaborator\AttendeeCollaboratorType.cs" />

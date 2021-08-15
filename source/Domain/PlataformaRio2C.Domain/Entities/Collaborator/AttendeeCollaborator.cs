@@ -44,6 +44,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeInnovationOrganizationCollaborator> AttendeeInnovationOrganizationCollaborators { get; private set; }
         public virtual ICollection<Logistic> Logistics { get; private set; }
         public virtual ICollection<AttendeeCollaboratorInnovationOrganizationTrack> AttendeeCollaboratorInnovationOrganizationTracks { get; private set; }
+        public virtual ICollection<AttendeeCollaboratorInterest> AttendeeCollaboratorInterests { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.
@@ -76,6 +77,39 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeAttendeeCollaboratorType(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
             this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
             this.SynchronizeAttendeeCollaboratorInnovationOrganizationTracks(attendeeInnovationOrganizationTracks, userId);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="attendeeCollaboratorInterests">The innovation organization track options.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
+        /// <param name="attendeeOrganizations">The attendee organizations.</param>
+        /// <param name="collaborator">The collaborator.</param>
+        /// <param name="shouldDeleteOrganizations">if set to <c>true</c> [should delete organizations].</param>
+        /// <param name="userId">The user identifier.</param>
+        public AttendeeCollaborator(
+            Edition edition,
+            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
+            CollaboratorType collaboratorType,
+            bool? isApiDisplayEnabled,
+            int? apiHighlightPosition,
+            List<AttendeeOrganization> attendeeOrganizations,
+            Collaborator collaborator,
+            bool shouldDeleteOrganizations,
+            int userId)
+        {
+            this.Edition = edition;
+            this.Collaborator = collaborator;
+            this.IsDeleted = false;
+            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
+            this.CreateUserId = this.UpdateUserId = userId;
+            this.SynchronizeAttendeeCollaboratorType(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
+            this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
+            this.SynchronizeAttendeeCollaboratorInterests(attendeeCollaboratorInterests, userId);
         }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeCollaborator"/> class.</summary>
@@ -224,6 +258,33 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeAttendeeCollaboratorType(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
             this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
             this.SynchronizeAttendeeCollaboratorInnovationOrganizationTracks(attendeeInnovationOrganizationTracks, userId);
+        }
+
+        /// <summary>
+        /// Updates the specified attendee innovation organization tracks.
+        /// </summary>
+        /// <param name="attendeeCollaboratorInterests">The attendee innovation organization tracks.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="attendeeOrganizations">The attendee organizations.</param>
+        /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
+        /// <param name="shouldDeleteOrganizations">if set to <c>true</c> [should delete organizations].</param>
+        /// <param name="userId">The user identifier.</param>
+        public void Update(
+            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
+            CollaboratorType collaboratorType,
+            List<AttendeeOrganization> attendeeOrganizations,
+            bool? isApiDisplayEnabled,
+            int? apiHighlightPosition,
+            bool shouldDeleteOrganizations,
+            int userId)
+        {
+            this.IsDeleted = false;
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+            this.SynchronizeAttendeeCollaboratorType(collaboratorType, isApiDisplayEnabled, apiHighlightPosition, userId);
+            this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
+            this.SynchronizeAttendeeCollaboratorInterests(attendeeCollaboratorInterests, userId);
         }
 
         /// <summary>
@@ -1123,12 +1184,70 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         /// <param name="newAttendeeInnovationOrganizationTracks">The new attendee innovation organization tracks.</param>
         /// <param name="userId">The user identifier.</param>
-        private void DeleteAttendeeCollaboratorInnovationOrganizationTracks(List<AttendeeInnovationOrganizationTrack> newAttendeeInnovationOrganizationTracks, int userId)
+        private void DeleteAttendeeCollaboratorInnovationOrganizationTracks(
+            List<AttendeeInnovationOrganizationTrack> newAttendeeInnovationOrganizationTracks, 
+            int userId)
         {
             var attendeeCollaboratorInnovationOrganizationTracksToDelete = this.AttendeeCollaboratorInnovationOrganizationTracks.Where(db => newAttendeeInnovationOrganizationTracks?.Select(ioto => ioto.InnovationOrganizationTrackOption.Uid)?.Contains(db.InnovationOrganizationTrackOption.Uid) == false && !db.IsDeleted).ToList();
             foreach (var attendeeCollaboratorInnovationOrganizationTrack in attendeeCollaboratorInnovationOrganizationTracksToDelete)
             {
                 attendeeCollaboratorInnovationOrganizationTrack.Delete(userId);
+            }
+        }
+
+        #endregion
+
+        #region Attendee Collaborator Interests
+
+        /// <summary>
+        /// Synchronizes the attendee collaborator interests.
+        /// </summary>
+        /// <param name="attendeeCollaboratorInterests">The attendee collaborator interests.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void SynchronizeAttendeeCollaboratorInterests(
+           List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
+           int userId)
+        {
+            if (this.AttendeeCollaboratorInterests == null)
+            {
+                this.AttendeeCollaboratorInterests = new List<AttendeeCollaboratorInterest>();
+            }
+
+            this.DeleteAttendeeCollaboratorInterests(attendeeCollaboratorInterests, userId);
+
+            if (attendeeCollaboratorInterests?.Any() != true)
+            {
+                return;
+            }
+
+            // Create or update
+            foreach (var attendeeCollaboratorInterest in attendeeCollaboratorInterests)
+            {
+                var attendeeCollaboratorInterestDb = this.AttendeeCollaboratorInterests.FirstOrDefault(aci => aci.Interest.Uid == attendeeCollaboratorInterest.Interest.Uid);
+                if (attendeeCollaboratorInterestDb != null)
+                {
+                    attendeeCollaboratorInterestDb.Update(userId);
+                }
+                else
+                {
+                    this.AttendeeCollaboratorInterests.Add(new AttendeeCollaboratorInterest(this, attendeeCollaboratorInterest.Interest, userId));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deletes the attendee collaborator interests.
+        /// </summary>
+        /// <param name="newAttendeeCollaboratorInterests">The new attendee collaborator interests.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteAttendeeCollaboratorInterests(
+            List<AttendeeCollaboratorInterest> newAttendeeCollaboratorInterests, 
+            int userId)
+        {
+            var attendeeCollaboratorInterestsToDelete = this.AttendeeCollaboratorInterests.Where(db => newAttendeeCollaboratorInterests?.Select(aci => aci.Interest.Uid)?.Contains(db.Interest.Uid) == false && !db.IsDeleted).ToList();
+            foreach (var attendeeCollaboratorInterests in attendeeCollaboratorInterestsToDelete)
+            {
+                attendeeCollaboratorInterests.Delete(userId);
             }
         }
 
