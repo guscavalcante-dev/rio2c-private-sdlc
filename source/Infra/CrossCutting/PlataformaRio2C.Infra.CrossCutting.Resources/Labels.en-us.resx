@@ -381,8 +381,8 @@
     <value>Browsing Mode</value>
   </data>
   <data name="BusinessDefinition" xml:space="preserve">
-    <value>Business Definition</value>
-    <comment>Definição do negócio</comment>
+    <value>What the business is about (Area, sub-area, themes)</value>
+    <comment>Definição sobre o que se trata o negócio (Área, sub-área e temas)</comment>
   </data>
   <data name="BusinessDifferentials" xml:space="preserve">
     <value>Differentials</value>

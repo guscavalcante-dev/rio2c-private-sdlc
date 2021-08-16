@@ -682,7 +682,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Definição do negócio.
+        ///   Looks up a localized string similar to Definição sobre o que se trata o negócio (Área, sub-área e temas).
         /// </summary>
         public static string BusinessDefinition {
             get {
