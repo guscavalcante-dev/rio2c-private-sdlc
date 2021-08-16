@@ -9795,7 +9795,6 @@
     <Content Include="Views\Speakers\Widgets\RelatedParticipantsWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Reports\ProjectsSubmissions.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Reports\Widgets\ProjectsSubmissionsWidget.cshtml" />
-    <Content Include="Views\Speakers\Modals\UpdateSocialNetworksModal.cshtml" />
     <Content Include="Views\LogisticSponsors\Widgets\DataTableWidget.cshtml" />
     <Content Include="Views\LogisticSponsors\Modals\CreateModal.cshtml" />
     <Content Include="Views\LogisticSponsors\Modals\CreateForm.cshtml" />
@@ -9923,6 +9922,8 @@
     <Content Include="Areas\Innovation\Views\Commissions\Widgets\TracksWidget.cshtml" />
     <Content Include="Views\AdminMailerService\InnovationCommissionWelcomeEmail.cshtml" />
     <Content Include="Views\AdminMailerService\AudiovisualCommissionWelcomeEmail.cshtml" />
+    <Content Include="Views\Shared\Collaborators\Modal\UpdateMainInformationModal.cshtml" />
+    <Content Include="Views\Shared\Collaborators\Modal\UpdateSocialNetworksModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
