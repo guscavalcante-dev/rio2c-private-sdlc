@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.props" Condition="Exists('..\..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" />
-  <Import Project="..\..\..\..\packages\PostSharp.6.2.8\build\PostSharp.props" Condition="Exists('..\..\..\..\packages\PostSharp.6.2.8\build\PostSharp.props')" />
   <Import Project="..\..\..\..\packages\Microsoft.Net.Compilers.3.1.1\build\Microsoft.Net.Compilers.props" Condition="Exists('..\..\..\..\packages\Microsoft.Net.Compilers.3.1.1\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\..\..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\..\..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -28,7 +27,6 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <DontImportPostSharp>True</DontImportPostSharp>
     <TargetFrameworkProfile />
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -131,9 +129,8 @@
     <Reference Include="itextsharp.xmlworker, Version=5.5.13.2, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\itextsharp.xmlworker.5.5.13.2\lib\itextsharp.xmlworker.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="log4net, Version=2.0.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\log4net.2.0.12\lib\net45\log4net.dll</HintPath>
     </Reference>
     <Reference Include="MediatR, Version=7.0.0.0, Culture=neutral, PublicKeyToken=bb9a41a5e8aaa7e2, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\MediatR.7.0.0\lib\net461\MediatR.dll</HintPath>
@@ -214,11 +211,8 @@
     <Reference Include="Mvc.Mailer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\MvcMailer.4.5\lib\45\Mvc.Mailer.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="PostSharp, Version=6.2.8.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\PostSharp.Redist.6.2.8\lib\net45\PostSharp.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="SimpleInjector, Version=4.6.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
@@ -234,12 +228,19 @@
       <HintPath>..\..\..\..\packages\SimpleInjector.Integration.WebApi.4.6.0\lib\net45\SimpleInjector.Integration.WebApi.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\System.Diagnostics.DiagnosticSource.4.5.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.IO.Compression.dll</HintPath>
+    </Reference>
     <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\System.IO.FileSystem.Primitives.4.0.1\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
       <Private>True</Private>
@@ -249,13 +250,23 @@
       <HintPath>..\..\..\..\packages\System.IO.Packaging.4.0.0\lib\net46\System.IO.Packaging.dll</HintPath>
     </Reference>
     <Reference Include="System.Management" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Security" />
-    <Reference Include="System.Text.Encodings.Web, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\System.Text.Encodings.Web.4.5.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
+    <Reference Include="System.Text.Encodings.Web, Version=5.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\System.Text.Encodings.Web.5.0.1\lib\net461\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -793,17 +804,8 @@
     <Content Include="Assets\components\jquery.autocomplete\dist\license.txt" />
     <Content Include="Assets\components\jquery.autocomplete\license.txt" />
     <Content Include="Assets\components\moment-timezone\moment-timezone-with-data.js" />
-    <Content Include="Assets\components\odometer\.gitignore" />
-    <Content Include="Assets\components\odometer\docs\images\odometer.gif" />
-    <Content Include="Assets\components\odometer\docs\welcome\index.html" />
-    <Content Include="Assets\components\odometer\docs\welcome\landing-page.css" />
-    <Content Include="Assets\components\odometer\docs\welcome\landing-page.js" />
-    <Content Include="Assets\components\odometer\docs\welcome\onepage-scroll.css" />
-    <Content Include="Assets\components\odometer\docs\welcome\onepage-scroll.js" />
     <Content Include="Assets\components\odometer\odometer.js" />
     <Content Include="Assets\components\odometer\odometer.min.js" />
-    <Content Include="Assets\components\odometer\test\demo.html" />
-    <Content Include="Assets\components\odometer\test\performance.html" />
     <Content Include="Assets\components\odometer\themes\odometer-theme-digital.css" />
     <Content Include="Assets\components\odometer\themes\odometer-theme-car.css" />
     <Content Include="Assets\components\odometer\themes\odometer-theme-default.css" />
@@ -8285,25 +8287,6 @@
     <Content Include="Areas\Innovation\Views\Commissions\Widgets\EvaluationsWidget.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Widgets\EvaluationsWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Commissions\Modals\UpdateModal.cshtml" />
-    <Content Include="Assets\components\odometer\.hsdoc" />
-    <Content Include="Assets\components\odometer\bower.json" />
-    <Content Include="Assets\components\odometer\config.rb" />
-    <Content Include="Assets\components\odometer\docs\api\themes.md" />
-    <Content Include="Assets\components\odometer\docs\intro.md" />
-    <Content Include="Assets\components\odometer\docs\welcome\landing-page.coffee" />
-    <Content Include="Assets\components\odometer\Gruntfile.coffee" />
-    <Content Include="Assets\components\odometer\LICENSE" />
-    <Content Include="Assets\components\odometer\odometer.coffee" />
-    <Content Include="Assets\components\odometer\package.json" />
-    <Content Include="Assets\components\odometer\README.md" />
-    <Content Include="Assets\components\odometer\sass\odometer-theme-car.sass" />
-    <Content Include="Assets\components\odometer\sass\odometer-theme-default.sass" />
-    <Content Include="Assets\components\odometer\sass\odometer-theme-digital.sass" />
-    <Content Include="Assets\components\odometer\sass\odometer-theme-minimal.sass" />
-    <Content Include="Assets\components\odometer\sass\odometer-theme-plaza.sass" />
-    <Content Include="Assets\components\odometer\sass\odometer-theme-slot-machine.sass" />
-    <Content Include="Assets\components\odometer\sass\odometer-theme-train-station.sass" />
-    <Content Include="Assets\components\odometer\sass\_mixins.sass" />
     <Content Include="Areas\Audiovisual\Views\Players\Widgets\EditionCountOdometerWidget.cshtml" />
 
     <Content Include="Areas\Music\Views\Projects\Widgets\EditionCountPieWidget.cshtml" />
@@ -8388,7 +8371,6 @@
     <Content Include="Content\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\css\site-print.less" />
     <Content Include="Content\js\Rio2CAdmin\OneToOneMeetings\OneToOneMeetingsConfig.controller.js" />
-    <Content Include="postsharp.config" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-reboot.min.css.map" />
@@ -10029,11 +10011,6 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Import Project="..\..\..\..\packages\PostSharp.4.3.37\tools\PostSharp.targets" Condition="Exists('..\..\..\..\packages\PostSharp.4.3.37\tools\PostSharp.targets')" />
-  <Target Name="EnsurePostSharpImported" BeforeTargets="BeforeBuild" Condition="'$(PostSharp30Imported)' == ''">
-    <Error Condition="!Exists('..\..\..\..\packages\PostSharp.4.3.37\tools\PostSharp.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://www.postsharp.net/links/nuget-restore." />
-    <Error Condition="Exists('..\..\..\..\packages\PostSharp.4.3.37\tools\PostSharp.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://www.postsharp.net/links/nuget-restore." />
-  </Target>
   <Target Name="CopyRoslynFiles" AfterTargets="AfterBuild" Condition="!$(Disable_CopyWebApplication) And '$(OutDir)' != '$(OutputPath)'">
     <ItemGroup>
       <RoslynFiles Include="$(CscToolPath)\*" />
@@ -10047,8 +10024,6 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\..\..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
     <Error Condition="!Exists('..\..\..\..\packages\Microsoft.Net.Compilers.3.1.1\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\Microsoft.Net.Compilers.3.1.1\build\Microsoft.Net.Compilers.props'))" />
-    <Error Condition="!Exists('..\..\..\..\packages\PostSharp.6.2.8\build\PostSharp.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\PostSharp.6.2.8\build\PostSharp.props'))" />
-    <Error Condition="!Exists('..\..\..\..\packages\PostSharp.6.2.8\build\PostSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\PostSharp.6.2.8\build\PostSharp.targets'))" />
     <Error Condition="!Exists('..\..\..\..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.10.0\build\Microsoft.ApplicationInsights.DependencyCollector.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.10.0\build\Microsoft.ApplicationInsights.DependencyCollector.targets'))" />
     <Error Condition="!Exists('..\..\..\..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.10.0\build\Microsoft.ApplicationInsights.PerfCounterCollector.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.10.0\build\Microsoft.ApplicationInsights.PerfCounterCollector.targets'))" />
     <Error Condition="!Exists('..\..\..\..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.10.0\build\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.10.0\build\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.targets'))" />
@@ -10057,7 +10032,6 @@
     <Error Condition="!Exists('..\..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.props'))" />
     <Error Condition="!Exists('..\..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\EntityFramework.6.4.0\build\EntityFramework.targets'))" />
   </Target>
-  <Import Project="..\..\..\..\packages\PostSharp.6.2.8\build\PostSharp.targets" Condition="Exists('..\..\..\..\packages\PostSharp.6.2.8\build\PostSharp.targets')" />
   <Import Project="..\..\..\..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.10.0\build\Microsoft.ApplicationInsights.DependencyCollector.targets" Condition="Exists('..\..\..\..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.10.0\build\Microsoft.ApplicationInsights.DependencyCollector.targets')" />
   <Import Project="..\..\..\..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.10.0\build\Microsoft.ApplicationInsights.PerfCounterCollector.targets" Condition="Exists('..\..\..\..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.10.0\build\Microsoft.ApplicationInsights.PerfCounterCollector.targets')" />
   <Import Project="..\..\..\..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.10.0\build\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.targets" Condition="Exists('..\..\..\..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.10.0\build\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.targets')" />
