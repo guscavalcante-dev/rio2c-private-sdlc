@@ -141,8 +141,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<AttendeeInnovationOrganization> FindByInnovationOrganizationTrackOptionUids(this IQueryable<AttendeeInnovationOrganization> query, List<Guid?> innovationOrganizationTrackOptionUids)
         {
-
-            if (innovationOrganizationTrackOptionUids[0].HasValue)
+            if (innovationOrganizationTrackOptionUids?.Any(i => i.HasValue) == true)
             {
                 query = query.Where(aio => innovationOrganizationTrackOptionUids
                                             .Any(iotUid =>
