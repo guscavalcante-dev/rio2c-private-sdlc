@@ -233,6 +233,7 @@
     <Compile Include="CQRS\CommandsHandlers\Editions\UpdateEditionDatesInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Editions\UpdateEditionMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendAdminWelcomeEmailAsyncCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendAudiovisualCommissionWelcomeEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendInnovationCommissionWelcomeEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendMusicCommissionWelcomeEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendPlayerNegotiationsEmailAsyncCommandHandler.cs" />
@@ -382,6 +383,7 @@
     <Compile Include="CQRS\Commands\Editions\UpdateEditionDatesInformation.cs" />
     <Compile Include="CQRS\Commands\Editions\UpdateEditionMainInformation.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendAdminWelcomeEmailAsync.cs" />
+    <Compile Include="CQRS\Commands\Emails\Admin\SendAudiovisualCommissionWelcomeEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendInnovationCommissionWelcomeEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendPlayerNegotiationsEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendProducerNegotiationsEmailAsync.cs" />

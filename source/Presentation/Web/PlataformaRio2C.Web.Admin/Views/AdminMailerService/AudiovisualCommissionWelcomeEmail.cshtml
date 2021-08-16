@@ -1,5 +1,5 @@
 ﻿@using System.Globalization
-@model PlataformaRio2C.Application.CQRS.Commands.SendMusicCommissionWelcomeEmailAsync
+@model PlataformaRio2C.Application.CQRS.Commands.SendAudiovisualCommissionWelcomeEmailAsync
 @{
     var brCulture = new CultureInfo("pt-BR");
     var usCulture = new CultureInfo("en-US");
@@ -13,12 +13,12 @@
     <p>
         <span>
             Seja bem-vindo(a) ao <span style="font-weight: 800;">Rio2C</span> - o maior encontro de criatividade e inovação da América Latina. Agradecemos antecipadamente a sua presença
-            na <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span> 
+            na <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span>
             (dias @Model.Edition.StartDate.ToBrazilTimeZone().Day a @Model.Edition.EndDate.ToBrazilTimeZone().Day de @Model.Edition.EndDate.ToBrazilTimeZone().ToString("MMMM", brCulture), @Model.Edition.EndDate.ToBrazilTimeZone().Year).
         </span><br />
         <span style="font-style: italic; color: red;">
-            Welcome to <span style="font-weight: 800;">Rio2C</span> - Latin America’s leading creativity and innovation event. We would like to thank you in advance for joining us 
-            at <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span> 
+            Welcome to <span style="font-weight: 800;">Rio2C</span> - Latin America’s leading creativity and innovation event. We would like to thank you in advance for joining us
+            at <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span>
             (@Model.Edition.EndDate.ToBrazilTimeZone().ToString("MMMM", usCulture) @Model.Edition.StartDate.ToBrazilTimeZone().Day<sup>@Model.Edition.StartDate.ToBrazilTimeZone().GetDaySuffix()</sup> – @Model.Edition.EndDate.ToBrazilTimeZone().Day<sup>@Model.Edition.EndDate.ToBrazilTimeZone().GetDaySuffix()</sup>, @Model.Edition.EndDate.ToBrazilTimeZone().Year).
         </span>
     </p>
@@ -29,7 +29,7 @@
             dentre outras funcionalidades.
         </span><br />
         <span style="font-style: italic; color: red;">
-            For our @Model.Edition.UrlCode edition, we created the <span style="font-weight: 800;">MyRio2C</span> platform, which will concentrate all the key information about your participation in our event, such as: 
+            For our @Model.Edition.UrlCode edition, we created the <span style="font-weight: 800;">MyRio2C</span> platform, which will concentrate all the key information about your participation in our event, such as:
             your schedule, your profile, the official event program, the RIO2C network for you to be able to reach out to other guests directly, accreditation, amongst other functions.
         </span>
     </p>
