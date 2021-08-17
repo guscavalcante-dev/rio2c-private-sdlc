@@ -19,6 +19,8 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Statics
     public class FileMimeType
     {
         public static string Pdf = "application/pdf";
+        public static string Ppt = "application/vnd.ms-powerpoint";
+        public static string Pptx = "application/vnd.openxmlformats-officedocument.presentationml.presentation";
         public static string Png = "image/png";
         public static string Mp4 = "video/mp4";
     }

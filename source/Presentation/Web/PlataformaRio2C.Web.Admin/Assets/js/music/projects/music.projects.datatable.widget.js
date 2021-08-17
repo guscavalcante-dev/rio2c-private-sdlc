@@ -134,6 +134,14 @@ var MusicProjectsDataTableWidget = function () {
                         else {
                             html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';
                         }
+                        //TODO: Enable this to get image from AWS! Today image's going from database and not AWS. Refactor this!
+                        //if (!MyRio2cCommon.isNullOrEmpty(full.ImageUploadDate)) {
+                        //    html += '<img src="' + imageDirectory + full.Uid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
+                        //}
+                        //else {
+                        //    html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';
+                        //}
+
 
                         html += '       <td> ' + data + '</td>\
                                     </tr>\

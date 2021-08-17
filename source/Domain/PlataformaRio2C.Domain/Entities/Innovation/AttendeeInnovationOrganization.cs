@@ -35,6 +35,7 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int BusinessDifferentialsMaxLenght = 300;
         public static readonly int BusinessStageMaxLenght = 300;
         public static readonly int BusinessOperationalModelMaxLenght = 300;
+        public static readonly int VideoUrlMaxLenght = 300;
         public static readonly int CompetitorsMaxCount = 3;
 
         public int EditionId { get; private set; }
@@ -52,6 +53,8 @@ namespace PlataformaRio2C.Domain.Entities
         public string BusinessStage { get; private set; }
         public DateTimeOffset? PresentationUploadDate { get; private set; }
         public string BusinessOperationalModel { get; private set; }
+        public string VideoUrl { get; private set; }
+        public string PresentationFileExtension { get; private set; }
 
         public virtual Edition Edition { get; private set; }
         public virtual InnovationOrganization InnovationOrganization { get; private set; }
@@ -66,14 +69,10 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeInnovationOrganizationEvaluation> AttendeeInnovationOrganizationEvaluations { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeeInnovationOrganization"/> class.
+        /// Initializes a new instance of the <see cref="AttendeeInnovationOrganization" /> class.
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="innovationOrganization">The innovation organization.</param>
-        /// <param name="evaluationEmailSendDate">The evaluation email send date.</param>
-        /// <param name="grade">The grade.</param>
-        /// <param name="evaluationsCount">The evaluations count.</param>
-        /// <param name="lastEvaluationDate">The last evaluation date.</param>
         /// <param name="accumulatedRevenue">The accumulated revenue.</param>
         /// <param name="marketSize">Size of the market.</param>
         /// <param name="businessDefinition">The business definition.</param>
@@ -81,8 +80,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="businessEconomicModel">The business economic model.</param>
         /// <param name="businessDifferentials">The business differentials.</param>
         /// <param name="businessStage">The business stage.</param>
-        /// <param name="presentationUploadDate">The presentation upload date.</param>
+        /// <param name="isPresentationUploaded">if set to <c>true</c> [is presentation uploaded].</param>
         /// <param name="businessOperationalModel">The business operational model.</param>
+        /// <param name="videoUrl">The video URL.</param>
         /// <param name="userId">The user identifier.</param>
         public AttendeeInnovationOrganization(
             Edition edition,
@@ -96,6 +96,8 @@ namespace PlataformaRio2C.Domain.Entities
             string businessStage,
             bool isPresentationUploaded,
             string businessOperationalModel,
+            string videoUrl,
+            string presentationFileExtension,
             int userId)
         {
             this.Edition = edition;
@@ -108,11 +110,10 @@ namespace PlataformaRio2C.Domain.Entities
             this.BusinessDifferentials = businessDifferentials;
             this.BusinessStage = businessStage;
             this.BusinessOperationalModel = businessOperationalModel;
+            this.VideoUrl = videoUrl;
+            this.PresentationFileExtension = presentationFileExtension;
 
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
-
+            this.SetCreateDate(userId);
             this.UpdatePresentationUploadDate(isPresentationUploaded, false);
         }
 
@@ -625,6 +626,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateBusinessDifferentials();
             this.ValidateBusinessEconomicModel();
             this.ValidateBusinessOperationalModel();
+            this.ValidateVideoUrl();
             this.ValidateBusinessStage();
             this.ValidateAttendeeInnovationOrganizationFounders();
             this.ValidateAttendeeInnovationOrganizationCompetitors();
@@ -696,6 +698,17 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.BusinessOperationalModel.Length > BusinessOperationalModelMaxLenght)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(BusinessOperationalModel), BusinessOperationalModelMaxLenght, 1), new string[] { nameof(BusinessOperationalModel) }));
+            }
+        }
+
+        /// <summary>
+        /// Validates the video URL.
+        /// </summary>
+        private void ValidateVideoUrl()
+        {
+            if (this.VideoUrl.Length > VideoUrlMaxLenght)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(VideoUrl), VideoUrlMaxLenght, 1), new string[] { nameof(VideoUrl) }));
             }
         }
 

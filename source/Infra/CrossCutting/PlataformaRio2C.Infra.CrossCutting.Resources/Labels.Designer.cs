@@ -691,7 +691,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Definição do negócio.
+        ///   Looks up a localized string similar to Definição sobre o que se trata o negócio (Área, sub-área e temas).
         /// </summary>
         public static string BusinessDefinition {
             get {
@@ -4147,6 +4147,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string PresentationFormats {
             get {
                 return ResourceManager.GetString("PresentationFormats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vídeo de Apresentação.
+        /// </summary>
+        public static string PresentationVideo {
+            get {
+                return ResourceManager.GetString("PresentationVideo", resourceCulture);
             }
         }
         

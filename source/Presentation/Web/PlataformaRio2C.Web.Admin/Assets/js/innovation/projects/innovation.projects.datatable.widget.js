@@ -127,13 +127,20 @@ var InnovationProjectsDataTableWidget = function () {
                                 <table class="image-side-text text-left">\
                                     <tr>\
                                         <td>';
-
-                        if (!MyRio2cCommon.isNullOrEmpty(row.InnovationOrganizationImageUrl)) {
-                            html += '<img src="' + row.InnovationOrganizationImageUrl + '" /> ';
+                        
+                        if (!MyRio2cCommon.isNullOrEmpty(row.ImageUploadDate)) {
+                            html += '<img src="' + imageDirectory + row.InnovationOrganizationUid + '_thumbnail.png?v=' + moment(row.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
                         }
                         else {
                             html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';
                         }
+                        //TODO: Enable this to get image from AWS!
+                        //if (!MyRio2cCommon.isNullOrEmpty(full.ImageUploadDate)) {
+                        //    html += '<img src="' + imageDirectory + full.Uid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
+                        //}
+                        //else {
+                        //    html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';
+                        //}
 
                         html += '       <td> ' + data + '</td>\
                                     </tr>\

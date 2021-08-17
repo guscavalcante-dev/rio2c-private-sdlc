@@ -498,25 +498,63 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
 
         #region Pdf
 
-        /// <summary>Determines whether this instance is PDF.</summary>
+
+        /// <summary>
+        /// Determines whether this instance is PDF.
+        /// </summary>
         /// <param name="s">The s.</param>
         /// <returns>
-        ///   <c>true</c> if the specified s is PDF; otherwise, <c>false</c>.</returns>
+        ///   <c>true</c> if the specified s is PDF; otherwise, <c>false</c>.
+        /// </returns>
         public static bool IsPdf(this string s)
         {
             return !string.IsNullOrEmpty(s)
-                   && (s.ToLowerInvariant().Contains(".pdf"));
+                   && (s.ToLowerInvariant().Contains(FileType.Pdf));
+        }
+
+        /// <summary>
+        /// Determines whether this instance is PPT.
+        /// </summary>
+        /// <param name="s">The s.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified s is PPT; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsPpt(this string s)
+        {
+            return !string.IsNullOrEmpty(s)
+                   && (s.ToLowerInvariant().Contains(FileType.Ppt));
+        }
+
+        /// <summary>
+        /// Determines whether this instance is PPTX.
+        /// </summary>
+        /// <param name="s">The s.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified s is PPTX; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsPptx(this string s)
+        {
+            return !string.IsNullOrEmpty(s)
+                   && (s.ToLowerInvariant().Contains(FileType.Pptx));
         }
 
         /// <summary>Converts the PDF to embed.</summary>
         /// <param name="s">The s.</param>
         /// <returns></returns>
-        public static string ConvertPdfToEmbed(this string s)
+        public static string ConvertFileToEmbed(this string s)
         {
-            if (IsPdf(s))
+            if (IsPdf(s) || IsPpt(s) || IsPptx(s))
             {
-                return $"<embed src='https://drive.google.com/viewerng/viewer?embedded=true&url={s}' type='application/pdf'>";
+                return $"<embed src='https://drive.google.com/viewerng/viewer?embedded=true&url={s}' type='{FileMimeType.Pdf}'>";
             }
+            //else if (IsPpt(s))
+            //{
+            //    return $"<embed src='https://drive.google.com/viewerng/viewer?embedded=true&url={s}' type='{FileMimeType.Ppt}'>";
+            //}
+            //else if (IsPptx(s))
+            //{
+            //    return $"<embed src='https://drive.google.com/viewerng/viewer?embedded=true&url={s}' type='{FileMimeType.Pptx}'>";
+            //}
 
             return s;
         }
@@ -570,12 +608,44 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
                 case "IVBOR":
                 case "/9J/4":
                     return FileType.Png;
-
                 case "AAAAF":
                     return FileType.Mp4;
                 case "JVBER":
                     return FileType.Pdf;
+                case "0M8R4":
+                    return FileType.Ppt;
+                case "UESDB":
+                    return FileType.Pptx;
+                default:
+                    return "Unknown";
+            }
+        }
 
+        /// <summary>
+        /// Gets the type of the base64 file MIME.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public static string GetBase64FileMimeType(this string value)
+        {
+            if (String.IsNullOrEmpty(value))
+                return "";
+
+            var data = value.Substring(0, 5);
+
+            switch (data.ToUpper())
+            {
+                case "IVBOR":
+                case "/9J/4":
+                    return FileMimeType.Png;
+                case "AAAAF":
+                    return FileMimeType.Mp4;
+                case "JVBER":
+                    return FileMimeType.Pdf;
+                case "0M8R4":
+                    return FileMimeType.Ppt;
+                case "UESDB":
+                    return FileMimeType.Pptx;
                 default:
                     return "Unknown";
             }

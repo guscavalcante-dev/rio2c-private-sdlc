@@ -20,6 +20,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository;
+using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
@@ -269,9 +270,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                        cmd.MarketSize,
                        cmd.BusinessEconomicModel,
                        cmd.BusinessOperationalModel,
+                       cmd.VideoUrl,
                        cmd.BusinessDifferentials,
                        cmd.BusinessStage,
                        !string.IsNullOrEmpty(cmd.PresentationFile),
+                       !string.IsNullOrEmpty(cmd.ImageFile),
+                       cmd.PresentationFile?.GetBase64FileExtension(),
                        cmd.AttendeeInnovationOrganizationFounderApiDtos,
                        cmd.AttendeeInnovationOrganizationCompetitorApiDtos,
                        cmd.InnovationOrganizationExperienceOptionApiDtos,
@@ -303,9 +307,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                        cmd.MarketSize,
                        cmd.BusinessEconomicModel,
                        cmd.BusinessOperationalModel,
+                       cmd.VideoUrl,
                        cmd.BusinessDifferentials,
                        cmd.BusinessStage,
                        !string.IsNullOrEmpty(cmd.PresentationFile),
+                       !string.IsNullOrEmpty(cmd.ImageFile), 
+                       string.IsNullOrEmpty(cmd.ImageFile),
+                       cmd.PresentationFile?.GetBase64FileExtension(),
                        cmd.AttendeeInnovationOrganizationFounderApiDtos,
                        cmd.AttendeeInnovationOrganizationCompetitorApiDtos,
                        cmd.InnovationOrganizationExperienceOptionApiDtos,
@@ -324,7 +332,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 this.AppValidationResult.Add(innovationOrganization.ValidationResult);
                 return this.AppValidationResult;
             }
-            
+
             var result = this.Uow.SaveChanges();
 
             if (!result.Success)
@@ -332,7 +340,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 foreach (var validationResult in result.ValidationResults)
                 {
                     this.ValidationResult.Add(validationResult.ErrorMessage);
-                    
                 }
 
                 this.AppValidationResult.Add(this.ValidationResult);
@@ -341,14 +348,24 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             this.AppValidationResult.Data = innovationOrganization;
 
+            //Uploads the Presentation File
             if (!string.IsNullOrEmpty(cmd.PresentationFile))
             {
                 var fileBytes = Convert.FromBase64String(cmd.PresentationFile);
                 this.fileRepo.Upload(
                     new MemoryStream(fileBytes),
-                    FileMimeType.Pdf,
-                    innovationOrganization.Uid + FileType.Pdf,
+                    cmd.PresentationFile.GetBase64FileMimeType(),
+                    innovationOrganization.GetAttendeeInnovationOrganizationByEditionId(editionDto.Edition.Id).Uid + cmd.PresentationFile.GetBase64FileExtension(),
                     FileRepositoryPathType.InnovationOrganizationPresentationFile);
+            }
+
+            //Uploads the Image
+            if (!string.IsNullOrEmpty(cmd.ImageFile))
+            {
+                ImageHelper.UploadOriginalAndThumbnailImages(
+                   innovationOrganization.Uid,
+                   cmd.ImageFile,
+                   FileRepositoryPathType.OrganizationImage);
             }
 
             return this.AppValidationResult;

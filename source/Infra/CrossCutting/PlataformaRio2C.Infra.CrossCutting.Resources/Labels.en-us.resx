@@ -385,8 +385,8 @@
     <value>Browsing Mode</value>
   </data>
   <data name="BusinessDefinition" xml:space="preserve">
-    <value>Business Definition</value>
-    <comment>Definição do negócio</comment>
+    <value>What the business is about (Area, sub-area, themes)</value>
+    <comment>Definição sobre o que se trata o negócio (Área, sub-área e temas)</comment>
   </data>
   <data name="BusinessDifferentials" xml:space="preserve">
     <value>Differentials</value>
@@ -1847,6 +1847,10 @@
   <data name="PresentationFormats" xml:space="preserve">
     <value>Presentation Formats</value>
     <comment>Formatos</comment>
+  </data>
+  <data name="PresentationVideo" xml:space="preserve">
+    <value>Presentation Video</value>
+    <comment>Vídeo de Apresentação</comment>
   </data>
   <data name="Presential" xml:space="preserve">
     <value>Presential</value>

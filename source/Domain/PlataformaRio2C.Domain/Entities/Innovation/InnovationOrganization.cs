@@ -39,7 +39,6 @@ namespace PlataformaRio2C.Domain.Entities
         public string Name { get; private set; }
         public string Document { get; private set; }
         public string ServiceName { get; private set; }
-        //public string ImageUrl { get; private set; }
         public DateTime FoundationDate { get; private set; }
         public string Description { get; private set; }
         public string Website { get; private set; }
@@ -48,7 +47,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeInnovationOrganization> AttendeeInnovationOrganizations { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InnovationOrganization"/> class.
+        /// Initializes a new instance of the <see cref="InnovationOrganization" /> class.
         /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
@@ -64,15 +63,17 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="marketSize">Size of the market.</param>
         /// <param name="businessEconomicModel">The business economic model.</param>
         /// <param name="businessOperationalModel">The business operational model.</param>
+        /// <param name="videoUrl">The video URL.</param>
         /// <param name="businessDifferentials">The business differentials.</param>
         /// <param name="businessStage">The business stage.</param>
         /// <param name="isPresentationUploaded">if set to <c>true</c> [is presentation uploaded].</param>
-        /// <param name="innovationOrganizationExperienceOptions">The innovation organization experience options.</param>
-        /// <param name="innovationOrganizationObjectivesOptions">The innovation organization objectives options.</param>
-        /// <param name="innovationOrganizationTechnologyOptions">The innovation organization technology options.</param>
-        /// <param name="innovationOrganizationTrackOptions">The innovation organization track options.</param>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="attendeeInnovationOrganizationFounderApiDtos">The attendee innovation organization founder API dtos.</param>
         /// <param name="attendeeInnovationOrganizationCompetitorApiDtos">The attendee innovation organization competitor API dtos.</param>
+        /// <param name="innovationOrganizationExperienceOptionApiDtos">The innovation organization experience option API dtos.</param>
+        /// <param name="innovationOrganizationObjectivesOptionApiDtos">The innovation organization objectives option API dtos.</param>
+        /// <param name="innovationOrganizationTechnologyOptionApiDtos">The innovation organization technology option API dtos.</param>
+        /// <param name="innovationOrganizationTrackOptionApiDtos">The innovation organization track option API dtos.</param>
         /// <param name="userId">The user identifier.</param>
         public InnovationOrganization(
             Edition edition,
@@ -89,9 +90,12 @@ namespace PlataformaRio2C.Domain.Entities
             string marketSize,
             string businessEconomicModel,
             string businessOperationalModel,
+            string videoUrl,
             string businessDifferentials,
             string businessStage,
             bool isPresentationUploaded,
+            bool isImageUploaded,
+            string presentationFileExtension,
             List<AttendeeInnovationOrganizationFounderApiDto> attendeeInnovationOrganizationFounderApiDtos,
             List<AttendeeInnovationOrganizationCompetitorApiDto> attendeeInnovationOrganizationCompetitorApiDtos,
             List<InnovationOrganizationExperienceOptionApiDto> innovationOrganizationExperienceOptionApiDtos,
@@ -107,6 +111,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Description = description;
             this.Website = website;
 
+            this.UpdateImageUploadDate(isImageUploaded, false);
             base.SetCreateDate(userId);
 
             this.SynchronizeAttendeeInnovationOrganizations(
@@ -120,6 +125,8 @@ namespace PlataformaRio2C.Domain.Entities
                 businessStage,
                 isPresentationUploaded,
                 businessOperationalModel,
+                videoUrl,
+                presentationFileExtension,
                 userId);
 
             this.SynchronizeAttendeeInnovationOrganizationCollaborators(
@@ -183,9 +190,12 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="marketSize">Size of the market.</param>
         /// <param name="businessEconomicModel">The business economic model.</param>
         /// <param name="businessOperationalModel">The business operational model.</param>
+        /// <param name="videoUrl">The video URL.</param>
         /// <param name="businessDifferentials">The business differentials.</param>
         /// <param name="businessStage">The business stage.</param>
         /// <param name="isPresentationUploaded">if set to <c>true</c> [is presentation uploaded].</param>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
         /// <param name="attendeeInnovationOrganizationFounderApiDtos">The attendee innovation organization founder API dtos.</param>
         /// <param name="attendeeInnovationOrganizationCompetitorApiDtos">The attendee innovation organization competitor API dtos.</param>
         /// <param name="innovationOrganizationExperienceOptionApiDtos">The innovation organization experience option API dtos.</param>
@@ -208,9 +218,13 @@ namespace PlataformaRio2C.Domain.Entities
             string marketSize,
             string businessEconomicModel,
             string businessOperationalModel,
+            string videoUrl,
             string businessDifferentials,
             string businessStage,
             bool isPresentationUploaded,
+            bool isImageUploaded,
+            bool isImageDeleted,
+            string presentationFileExtension,
             List<AttendeeInnovationOrganizationFounderApiDto> attendeeInnovationOrganizationFounderApiDtos,
             List<AttendeeInnovationOrganizationCompetitorApiDto> attendeeInnovationOrganizationCompetitorApiDtos,
             List<InnovationOrganizationExperienceOptionApiDto> innovationOrganizationExperienceOptionApiDtos,
@@ -226,6 +240,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Description = description;
             this.Website = website;
 
+            this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             base.SetUpdateDate(userId);
 
             this.SynchronizeAttendeeInnovationOrganizations(
@@ -239,6 +254,8 @@ namespace PlataformaRio2C.Domain.Entities
                 businessStage,
                 isPresentationUploaded,
                 businessOperationalModel,
+                videoUrl,
+                presentationFileExtension,
                 userId);
 
             this.SynchronizeAttendeeInnovationOrganizationCollaborators(
@@ -282,9 +299,7 @@ namespace PlataformaRio2C.Domain.Entities
         ///   <c>true</c> if this instance has image; otherwise, <c>false</c>.</returns>
         public bool HasImage()
         {
-            //TODO: Implements ImageUrl in database!
-            //return !string.IsNullOrEmpty(this.ImageUrl);
-            return false;
+            return this.ImageUploadDate.HasValue;
         }
 
         /// <summary>Gets the name abbreviation.</summary>
@@ -302,6 +317,21 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.DeleteAttendeeInnovationOrganizations(userId);
             base.Delete(userId);
+        }
+
+        /// <summary>Updates the image upload date.</summary>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
+        private void UpdateImageUploadDate(bool isImageUploaded, bool isImageDeleted)
+        {
+            if (isImageUploaded)
+            {
+                this.ImageUploadDate = DateTime.UtcNow;
+            }
+            else if (isImageDeleted)
+            {
+                this.ImageUploadDate = null;
+            }
         }
 
         #region Evaluation
@@ -335,6 +365,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="businessStage">The business stage.</param>
         /// <param name="isPresentationUploaded">if set to <c>true</c> [is presentation uploaded].</param>
         /// <param name="businessOperationalModel">The business operational model.</param>
+        /// <param name="videoUrl">The video URL.</param>
         /// <param name="userId">The user identifier.</param>
         private void SynchronizeAttendeeInnovationOrganizations(
             Edition edition,
@@ -347,6 +378,8 @@ namespace PlataformaRio2C.Domain.Entities
             string businessStage,
             bool isPresentationUploaded,
             string businessOperationalModel,
+            string videoUrl,
+            string presentationFileExtension,
             int userId)
         {
             if (edition == null)
@@ -379,6 +412,8 @@ namespace PlataformaRio2C.Domain.Entities
                     businessStage,
                     isPresentationUploaded,
                     businessOperationalModel,
+                    videoUrl,
+                    presentationFileExtension,
                     userId));
             }
         }

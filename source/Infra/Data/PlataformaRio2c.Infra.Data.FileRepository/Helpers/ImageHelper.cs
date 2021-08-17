@@ -22,6 +22,7 @@ using System.Web;
 using System.Web.Helpers;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
 {
@@ -73,6 +74,48 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
 
             // Thumbnail imagem 500x500
             var croppedImage500 = CropImage(imageBytes, dataX, dataY, dataWidth, dataHeight, true, 500, 500);
+            UploadLogo(fileUid, croppedImage500.GetBytes(), fileRepositoryPathType, false, "_500x500");
+        }
+
+        /// <summary>
+        /// Uploads the original and cropped images.
+        /// </summary>
+        /// <param name="fileUid">The file uid.</param>
+        /// <param name="base64Image">The base64 image.</param>
+        /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
+        /// <exception cref="DomainException">
+        /// [[[The image format must be jpeg, jpg, gif or png.]]]
+        /// or
+        /// The file was not uploaded.
+        /// </exception>
+        public static void UploadOriginalAndThumbnailImages(Guid fileUid, string base64Image, FileRepositoryPathType fileRepositoryPathType)
+        {
+            if (AllowedImageFormats.All(aif => aif != base64Image.GetBase64FileExtension().Replace(".", "")))
+            {
+                throw new DomainException("[[[The image format must be jpeg, jpg, gif or png.]]]");
+            }
+
+            byte[] imageBytes = null;
+
+            // The file was uploaded
+            if (!string.IsNullOrEmpty(base64Image))
+            {
+                imageBytes = Convert.FromBase64String(base64Image);
+            }
+            else
+            {
+                throw new DomainException("The file was not uploaded.");
+            }
+
+            // Original image
+            UploadLogo(fileUid, imageBytes, fileRepositoryPathType, true);
+
+            // Thumbnail image 200x200
+            var croppedImage200 = BasicCrop(imageBytes, 200, 200);
+            UploadLogo(fileUid, croppedImage200.GetBytes(), fileRepositoryPathType, false);
+
+            // Thumbnail imagem 500x500
+            var croppedImage500 = BasicCrop(imageBytes, 500, 500);
             UploadLogo(fileUid, croppedImage500.GetBytes(), fileRepositoryPathType, false, "_500x500");
         }
 

@@ -1,4 +1,6 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Statics
 @model AttendeeInnovationOrganizationDto
 @{
     var evaluationDetailsAction = Url.Action("EvaluationDetails", "Projects", new
@@ -23,7 +25,7 @@
                         <div class="text-center w-100">
                             @if (Model.InnovationOrganization?.HasImage() == true)
                             {
-                                @*<img src="@(Model.InnovationOrganization.ImageUrl)" class="w-100" alt="" style="height: 125px; border-radius: 4px; object-fit: cover;">*@
+                                <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, Model.InnovationOrganization.Uid, Model.InnovationOrganization.ImageUploadDate, false)" class="w-100" alt="" style="height: 125px; border-radius: 4px; object-fit: cover;">
                             }
                             else
                             {
@@ -67,21 +69,21 @@
                     </div>
                 </div>
                 @*<div class="row">
-                    <div class="col-12 mt-2">
-                        <div style="font-weight: normal; font-size: 13px; line-height: 19px; color: #403D50; width: 88px; display: inline-block;">@Labels.TargetAudience</div>
-                        @if (Model.AttendeeInnovationBandDto?.InnovationBandTargetAudienceDtos?.Any() == true)
-                        {
-                            foreach (var musicBandTargetAudienceDto in Model.AttendeeInnovationBandDto.InnovationBandTargetAudienceDtos)
+                        <div class="col-12 mt-2">
+                            <div style="font-weight: normal; font-size: 13px; line-height: 19px; color: #403D50; width: 88px; display: inline-block;">@Labels.TargetAudience</div>
+                            @if (Model.AttendeeInnovationBandDto?.InnovationBandTargetAudienceDtos?.Any() == true)
                             {
-                                <span class="kt-badge kt-badge--inline kt-badge--primary">@(musicBandTargetAudienceDto.TargetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
+                                foreach (var musicBandTargetAudienceDto in Model.AttendeeInnovationBandDto.InnovationBandTargetAudienceDtos)
+                                {
+                                    <span class="kt-badge kt-badge--inline kt-badge--primary">@(musicBandTargetAudienceDto.TargetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
+                                }
                             }
-                        }
-                        else
-                        {
-                            @:-
-                        }
-                    </div>
-                </div>*@
+                            else
+                            {
+                                @:-
+                            }
+                        </div>
+                    </div>*@
                 <div class="row">
                     <div class="col-12 mt-4">
                         @Html.Partial("Shared/_Evaluation", Model)

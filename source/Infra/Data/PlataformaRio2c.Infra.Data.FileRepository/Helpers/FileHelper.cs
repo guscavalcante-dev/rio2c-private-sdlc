@@ -24,10 +24,10 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
         /// <param name="objectUid">The object uid.</param>
         /// <param name="uploadDate">The upload date.</param>
         /// <returns></returns>
-        public static string GetFileUrl(FileRepositoryPathType fileRepositoryPathType, Guid objectUid, DateTimeOffset? uploadDate)
+        public static string GetFileUrl(FileRepositoryPathType fileRepositoryPathType, Guid objectUid, DateTimeOffset? uploadDate, string fileExtension = null)
         {
             var fileRepo = new FileRepositoryFactory().Get();
-            return fileRepo.GetFileUrl(fileRepositoryPathType, objectUid, uploadDate);
+            return fileRepo.GetFileUrl(fileRepositoryPathType, objectUid, uploadDate, fileExtension: fileExtension);
         }
     }
 }

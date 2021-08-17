@@ -1,5 +1,4 @@
 ﻿using PlataformaRio2C.Infra.CrossCutting.Tools.Model;
-using PostSharp;
 using System;
 using System.Collections.Generic;
 using System.Data;
