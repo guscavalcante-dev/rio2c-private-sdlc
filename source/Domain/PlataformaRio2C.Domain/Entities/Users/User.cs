@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-22-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 08-17-2021
 // ***********************************************************************
 // <copyright file="User.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -61,6 +61,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<Negotiation> UpdatedNegotiations { get; set; }
         public virtual ICollection<AttendeeInnovationOrganizationEvaluation> AttendeeInnovationOrganizationEvaluations { get; set; }
         public virtual ICollection<AttendeeMusicBandEvaluation> AttendeeMusicBandEvaluations { get; set; }
+        public virtual ICollection<CommissionEvaluation> CommissionEvaluations { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="User"/> class.

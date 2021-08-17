@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Domain
 // Author           : Renan Valentim
-// Created          : 07-12-2021
+// Created          : 08-17-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-12-2021
+// Last Modified On : 08-17-2021
 // ***********************************************************************
-// <copyright file="AttendeeCollaboratorInterest.cs" company="Softo">
+// <copyright file="CommissionAttendeeCollaboratorInterest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -25,7 +25,7 @@ namespace PlataformaRio2C.Domain.Entities
     /// Implements the <see cref="PlataformaRio2C.Domain.Entities.Entity" />
     /// </summary>
     /// <seealso cref="PlataformaRio2C.Domain.Entities.Entity" />
-    public class AttendeeCollaboratorInterest : Entity
+    public class CommissionAttendeeCollaboratorInterest : Entity
     {
         public int AttendeeCollaboratorId { get; set; }
         public int InterestId { get; set; }
@@ -34,12 +34,12 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual Interest Interest { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeeCollaboratorInterest"/> class.
+        /// Initializes a new instance of the <see cref="CommissionAttendeeCollaboratorInterest"/> class.
         /// </summary>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
         /// <param name="interest">The interest.</param>
         /// <param name="userId">The user identifier.</param>
-        public AttendeeCollaboratorInterest(
+        public CommissionAttendeeCollaboratorInterest(
             AttendeeCollaborator attendeeCollaborator,
             Interest interest,
             int userId)
@@ -56,12 +56,12 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeeCollaboratorInterest"/> class.
+        /// Initializes a new instance of the <see cref="CommissionAttendeeCollaboratorInterest"/> class.
         /// </summary>
         /// <param name="interest">The interest.</param>
         /// <param name="additionalInfo">The additional information.</param>
         /// <param name="userId">The user identifier.</param>
-        public AttendeeCollaboratorInterest(
+        public CommissionAttendeeCollaboratorInterest(
             Interest interest,
             string additionalInfo,
             int userId)
@@ -75,9 +75,9 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeeCollaboratorInterest"/> class.
+        /// Initializes a new instance of the <see cref="CommissionAttendeeCollaboratorInterest"/> class.
         /// </summary>
-        public AttendeeCollaboratorInterest()
+        public CommissionAttendeeCollaboratorInterest()
         {
         }
 

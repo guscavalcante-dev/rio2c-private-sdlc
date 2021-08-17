@@ -317,7 +317,7 @@ namespace PlataformaRio2C.Domain.Entities
             string phoneNumber,
             string cellPhone,
             string document,
-            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
+            List<CommissionAttendeeCollaboratorInterest> commissionAttendeeCollaboratorInterests,
             int userId)
         {
             //this.Uid = uid;
@@ -335,7 +335,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             //TODO: Refactor this!
             //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
-            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, attendeeCollaboratorInterests, null, null, true, userId);
+            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, commissionAttendeeCollaboratorInterests, null, null, true, userId);
             this.UpdateUser(email);
         }
 
@@ -1483,7 +1483,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="attendeeOrganizations">The attendee organizations.</param>
-        /// <param name="attendeeCollaboratorInterests">The attendee innovation organization tracks.</param>
+        /// <param name="commissionAttendeeCollaboratorInterests">The commission attendee collaborator interests.</param>
         /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
         /// <param name="apiHighlightPosition">The API highlight position.</param>
         /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
@@ -1492,7 +1492,7 @@ namespace PlataformaRio2C.Domain.Entities
             Edition edition,
             CollaboratorType collaboratorType,
             List<AttendeeOrganization> attendeeOrganizations,
-            List<AttendeeCollaboratorInterest> attendeeCollaboratorInterests,
+            List<CommissionAttendeeCollaboratorInterest> commissionAttendeeCollaboratorInterests,
             bool? isApiDisplayEnabled,
             int? apiHighlightPosition,
             bool isAddingToCurrentEdition,
@@ -1517,11 +1517,11 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition.Id);
             if (attendeeCollaborator != null)
             {
-                attendeeCollaborator.Update(attendeeCollaboratorInterests, collaboratorType, attendeeOrganizations, isApiDisplayEnabled, apiHighlightPosition, true, userId);
+                attendeeCollaborator.Update(commissionAttendeeCollaboratorInterests, collaboratorType, attendeeOrganizations, isApiDisplayEnabled, apiHighlightPosition, true, userId);
             }
             else
             {
-                this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, attendeeCollaboratorInterests, collaboratorType, isApiDisplayEnabled, apiHighlightPosition, attendeeOrganizations, this, true, userId));
+                this.AttendeeCollaborators.Add(new AttendeeCollaborator(edition, commissionAttendeeCollaboratorInterests, collaboratorType, isApiDisplayEnabled, apiHighlightPosition, attendeeOrganizations, this, true, userId));
             }
         }
 

@@ -350,6 +350,7 @@
     <Compile Include="CQRS\CommandsHandlers\Tracks\DeleteTrackCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Tracks\TrackBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationConfigs\UpdateNegotiationConfigMainInformationCommandHandler.cs" />
+    <Compile Include="CQRS\Commands\Audiovisual\Collaborators\BaseCommands\ProjectInterestBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\Collaborators\BaseCommands\AudiovisualCollaboratorBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\Collaborators\CreateAudiovisualCollaborator.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\Collaborators\UpdateAudiovisualCollaboratorAdminMainInformation.cs" />

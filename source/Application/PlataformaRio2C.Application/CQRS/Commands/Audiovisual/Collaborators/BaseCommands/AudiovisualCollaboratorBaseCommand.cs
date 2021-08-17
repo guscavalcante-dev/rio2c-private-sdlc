@@ -26,9 +26,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         //TODO: Essa lista tem que ser AttendeeCollaboratorInterestBaseCommand
         [Display(Name = "Interests", ResourceType = typeof(Labels))]
-        //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneOption")]
-        public List<dynamic> AttendeeCollaboratorInterests { get; set; }
-        //public List<AttendeeCollaboratorInterestBaseCommand> AttendeeCollaboratorInterests { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneOption")]
+        public List<ProjectInterestBaseCommand> ProjectInterests { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AudiovisualCollaboratorBaseCommand" /> class.
@@ -40,7 +39,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>
         /// Updates the models and lists.
         /// </summary>
-        /// <param name="innovationOrganizationTrackOptions">The innovation organization track options.</param>
+        /// <param name="entity">The entity.</param>
+        /// <param name="interests">The interests.</param>
         public void UpdateBaseProperties(
             AttendeeCollaboratorTracksWidgetDto entity, 
             List<Interest> interests)
@@ -67,13 +67,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             AttendeeCollaboratorTracksWidgetDto entity, 
             List<Interest> interests)
         {
-            //this.AttendeeCollaboratorInterests = new List<AttendeeCollaboratorInterestBaseCommand>();
-            //foreach (var interest in interests)
-            //{
-            //    var attendeeCollaboratorAudiovisualOrganizationTrackDto = entity?.AttendeeCollaboratorAudiovisualOrganizationTrackDtos?.FirstOrDefault(aot => aot.AudiovisualOrganizationTrackOption.Uid == interest.Uid);
-            //    this.AttendeeCollaboratorInterests.Add(attendeeCollaboratorAudiovisualOrganizationTrackDto != null ? new AttendeeAudiovisualOrganizationTrackBaseCommand(attendeeCollaboratorAudiovisualOrganizationTrackDto) :
-            //                                                                                                new AttendeeAudiovisualOrganizationTrackBaseCommand(interest));
-            //}
+            this.ProjectInterests = new List<ProjectInterestBaseCommand>();
+            foreach (var interest in interests)
+            {
+                //var attendeeCollaboratorAudiovisualOrganizationTrackDto = entity?.AttendeeCollaboratorAudiovisualOrganizationTrackDtos?.FirstOrDefault(aot => aot.AudiovisualOrganizationTrackOption.Uid == interest.Uid);
+                //this.AttendeeCollaboratorInterests.Add(attendeeCollaboratorAudiovisualOrganizationTrackDto != null ? new AttendeeAudiovisualOrganizationTrackBaseCommand(attendeeCollaboratorAudiovisualOrganizationTrackDto) :
+                //                                                                                            new AttendeeAudiovisualOrganizationTrackBaseCommand(interest));
+            }
         }
     }
 }
