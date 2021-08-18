@@ -365,11 +365,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<Collaborator> FindByInterestsUids(this IQueryable<Collaborator> query, List<Guid?> interestsUids)
         {
-            if (interestsUids?.Any(iUid => iUid != null) == true)
+            if (interestsUids?.Any(iUid => iUid.HasValue) == true)
             {
-                //query = query.Where(c => interestsUids.Any(iUid =>
-                //    c.AttendeeCollaborators.Any(ac =>
-                //        ac.AttendeeCollaboratorInterests.Any(aci => aci.Interest.Uid == iUid && !aci.IsDeleted))));
+                query = query.Where(c => interestsUids.Any(iUid =>
+                    c.AttendeeCollaborators.Any(ac =>
+                        ac.CommissionAttendeeCollaboratorInterests.Any(caci => caci.Interest.Uid == iUid && !caci.IsDeleted))));
             }
 
             return query;

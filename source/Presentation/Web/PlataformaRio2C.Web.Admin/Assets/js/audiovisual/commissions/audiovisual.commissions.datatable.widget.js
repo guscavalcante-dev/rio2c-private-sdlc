@@ -153,7 +153,7 @@ var AudiovisualCommissionsDataTableWidget = function () {
                 data: function (d) {
                     d.showAllEditions = $('#ShowAllEditions').prop('checked');
                     d.showAllParticipants = $('#ShowAllParticipants').prop('checked');
-                    d.audiovisualOrganizationTrackOptionUid = $('#AudiovisualOrganizationTrackOptionUid').val();
+                    d.interestUid = $('#InterestUid').val();
                 },
                 dataFilter: function (data) {
                     var jsonReturned = jQuery.parseJSON(data);
@@ -331,7 +331,7 @@ var AudiovisualCommissionsDataTableWidget = function () {
             }
         });
 
-        $('#AudiovisualOrganizationTrackOptionUid').on('change', function (e) {
+        $('#InterestUid').on('change', function (e) {
             table.ajax.reload();
         });
 
