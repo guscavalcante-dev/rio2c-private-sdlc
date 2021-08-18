@@ -36,7 +36,12 @@ namespace PlataformaRio2C.Application.ViewModels
         [Display(Name = "Interest", ResourceType = typeof(Labels))]
         public Guid? InterestUid { get; set; }
 
-
+        /// <summary>
+        /// A list of "Interests" filtered by "InterestGroupd = Genre"
+        /// </summary>
+        /// <value>
+        /// The interests.
+        /// </value>
         [Display(Name = "Interests", ResourceType = typeof(Labels))]
         public IEnumerable<Interest> Interests { get; private set; }
 

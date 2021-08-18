@@ -1821,6 +1821,19 @@ namespace PlataformaRio2C.Domain.Entities
 
         #endregion
 
+        #region Commission Attendee Collaborator Interests
+
+        public void UpdateCommissionAttendeeCollaboratorInterests(
+            Edition edition,
+            List<CommissionAttendeeCollaboratorInterest> commissionAttendeeCollaboratorInterests,
+            int userId)
+        {
+            var attendeeCollaborator = this.GetAttendeeCollaboratorByEditionId(edition?.Id ?? 0);
+            attendeeCollaborator?.SynchronizeCommissionAttendeeCollaboratorInterests(commissionAttendeeCollaboratorInterests, userId);
+        }
+
+        #endregion
+
         #endregion
 
         #region Onboarding

@@ -29,8 +29,8 @@
                 @Html.TextBoxFor(m => m.Search, new { type = "search", @class = "form-control", autocomplete = "off", placeholder = $"{Labels.Name.ToLowerInvariant()}, {Labels.Email.ToLowerInvariant()} {Labels.Or.ToLowerInvariant()} {Labels.Company.ToLowerInvariant()}" })
             </div>
             <div class="col-lg-3">
-                <label>@Labels.Interest:</label>
-                @Html.DropDownListFor(m => m.InterestUid, new SelectList(Model.Interests, "Uid", "Name", Model.InterestUid), $"{string.Format(Labels.SelectAMEntity, Labels.Interest.ToLowerInvariant())}...", new { @class = "form-control enable-datatable-reload enable-select2" })
+                <label>@Labels.Genre:</label>
+                @Html.DropDownListFor(m => m.InterestUid, new SelectList(Model.Interests, "Uid", "Name", Model.InterestUid), $"{string.Format(Labels.SelectAMEntity, Labels.Genre.ToLowerInvariant())}...", new { @class = "form-control enable-datatable-reload enable-select2" })
             </div>
             <div class="col-lg-6">
                 <div class="form-group">

@@ -86,7 +86,20 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             // Create if the user was not found in database
             if (user == null)
             {
-                var interests = await this.interestRepo.FindAllByInterestGroupUidAsync(InterestGroup.Genre.Uid);
+                var interestsDtos = await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.Genre.Uid);
+
+                // Interests
+                var commissionAttendeeCollaboratorInterests = new List<CommissionAttendeeCollaboratorInterest>();
+                if (cmd.Interests?.Any() == true)
+                {
+                    foreach (var interestBaseCommands in cmd.Interests)
+                    {
+                        foreach (var interestBaseCommand in interestBaseCommands?.Where(ibc => ibc.IsChecked)?.ToList())
+                        {
+                            commissionAttendeeCollaboratorInterests.Add(new CommissionAttendeeCollaboratorInterest(interestsDtos?.FirstOrDefault(id => id.Interest.Uid == interestBaseCommand.InterestUid)?.Interest, interestBaseCommand.AdditionalInfo, cmd.UserId));
+                        }
+                    }
+                }
 
                 var collaborator = new Collaborator(
                     await this.editionRepo.GetAsync(cmd.EditionUid ?? Guid.Empty),
@@ -97,7 +110,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.PhoneNumber,
                     cmd.CellPhone,
                     cmd.Document,
-                    new List<CommissionAttendeeCollaboratorInterest>(),//cmd.AttendeeCollaboratorInterests?.Where(oa => oa.IsChecked)?.Select(aiot => new AttendeeCollaboratorInterest(interests?.FirstOrDefault(aci => aci.Uid == aiot.AudiovisualOrganizationTrackOptionUid), cmd.UserId))?.ToList(),
+                    commissionAttendeeCollaboratorInterests,
                     cmd.UserId);
                 if (!collaborator.IsValid())
                 {

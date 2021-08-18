@@ -69,9 +69,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.Interest = interest;
             this.InterestId = interest?.Id ?? 0;
 
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
+            base.SetCreateDate(userId);
         }
 
         /// <summary>

@@ -30,11 +30,11 @@ namespace PlataformaRio2C.Domain.Dtos
         }
 
         /// <summary>
-        /// Gets the attendee collaborator innovation organization track dto by track option uid.
+        /// Gets the commission attendee collaborator interest dto by interest uid.
         /// </summary>
         /// <param name="interestUid">The interest uid.</param>
         /// <returns></returns>
-        public CommissionAttendeeCollaboratorInterestDto GetAttendeeCollaboratorInnovationOrganizationTrackDtoByTrackOptionUid(Guid interestUid)
+        public CommissionAttendeeCollaboratorInterestDto GetCommissionAttendeeCollaboratorInterestDtoByInterestUid(Guid interestUid)
         {
             return this.CommissionAttendeeCollaboratorInterestDtos?.FirstOrDefault(caci => caci.Interest.Uid == interestUid);
         }

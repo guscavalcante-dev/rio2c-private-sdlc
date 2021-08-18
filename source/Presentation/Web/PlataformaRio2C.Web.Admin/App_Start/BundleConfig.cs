@@ -802,7 +802,7 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/audiovisual/commissions/audiovisual.commissions.maininformation.widget.js",
                 "~/Assets/js/audiovisual/commissions/audiovisual.commissions.socialnetworks.widget.js",
                 "~/Assets/js/audiovisual/commissions/audiovisual.commissions.onboardinginfo.widget.js",
-                //"~/Assets/js/audiovisual/commissions/audiovisual.commissions.tracks.widget.js",
+                "~/Assets/js/audiovisual/commissions/audiovisual.commissions.interests.widget.js",
                 "~/Assets/js/audiovisual/commissions/audiovisual.commissions.evaluations.widget.js"
                 ));
 

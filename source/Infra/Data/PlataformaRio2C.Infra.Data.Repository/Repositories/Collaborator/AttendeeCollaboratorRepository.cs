@@ -417,9 +417,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
-        /// <summary>Finds the onboarding information widget dto asynchronous.</summary>
+        /// <summary>
+        /// Finds the tracks widget dto asynchronous.
+        /// </summary>
         /// <param name="collaboratorUid">The collaborator uid.</param>
-        /// <param name="collaboratorTypeUid">The collaborator type uid.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
         public async Task<AttendeeCollaboratorTracksWidgetDto> FindTracksWidgetDtoAsync(Guid collaboratorUid, int editionId)
@@ -442,6 +443,38 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                         {
                                                                                             AttendeeCollaborator = aciot.AttendeeCollaborator,
                                                                                             InnovationOrganizationTrackOption = aciot.InnovationOrganizationTrackOption
+                                                                                        }).ToList()
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the interests widget dto asynchronous.
+        /// </summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<CommissionAttendeeCollaboratorInterestsWidgetDto> FindInterestsWidgetDtoAsync(Guid collaboratorUid, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByCollaboratorUid(collaboratorUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(ac => new CommissionAttendeeCollaboratorInterestsWidgetDto
+                            {
+                                AttendeeCollaboratorDto = new AttendeeCollaboratorDto
+                                {
+                                    AttendeeCollaborator = ac,
+                                    Collaborator = ac.Collaborator
+                                },
+                                CommissionAttendeeCollaboratorInterestDtos = ac.CommissionAttendeeCollaboratorInterests
+                                                                                        .Where(caci => !caci.IsDeleted)
+                                                                                        .Select(caci => new CommissionAttendeeCollaboratorInterestDto
+                                                                                        {
+                                                                                            CommissionAttendeeCollaboratorInterest = caci,
+                                                                                            Interest = caci.Interest,
+                                                                                            InterestGroup = caci.Interest.InterestGroup
                                                                                         }).ToList()
                             })
                             .FirstOrDefaultAsync();

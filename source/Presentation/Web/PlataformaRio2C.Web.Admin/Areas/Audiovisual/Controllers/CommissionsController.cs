@@ -34,6 +34,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Admin.Controllers;
 using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
+using PlataformaRio2C.Domain.Dtos;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 {
@@ -157,118 +158,118 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
         #endregion
 
-        #region Interests Widget (TODO)
+        #region Interests Widget
 
-        //[HttpGet]
-        //public async Task<ActionResult> ShowTracksWidget(Guid? collaboratorUid)
-        //{
-        //    var tracksWidgetDto = await this.attendeeCollaboratorRepo.FindTracksWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
-        //    if (tracksWidgetDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
+        [HttpGet]
+        public async Task<ActionResult> ShowInterestsWidget(Guid? collaboratorUid)
+        {
+            var interestsWidgetDto = await this.attendeeCollaboratorRepo.FindInterestsWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
+            if (interestsWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    ViewBag.InnovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllAsync();
+            ViewBag.InterestsDtos = await this.GetInterestsFromGenreInterestGroupAsync();
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Widgets/TracksWidget", tracksWidgetDto), divIdOrClass = "#InnovationCommissionTracksInfoWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/InterestsWidget", interestsWidgetDto), divIdOrClass = "#AudiovisualCommissionInterestsWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
-        //#region Update
+        #region Update
 
-        //[HttpGet]
-        //public async Task<ActionResult> ShowUpdateTracksModal(Guid? collaboratorUid)
-        //{
-        //    UpdateInnovationCollaboratorTracks cmd;
+        [HttpGet]
+        public async Task<ActionResult> ShowUpdateInterestsModal(Guid? collaboratorUid)
+        {
+            UpdateAudiovisualCollaboratorInterests cmd;
 
-        //    try
-        //    {
-        //        var attendeeCollaboratorTracksWidgetDto = await this.attendeeCollaboratorRepo.FindTracksWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
-        //        if (attendeeCollaboratorTracksWidgetDto == null)
-        //        {
-        //            throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()));
-        //        }
+            try
+            {
+                var commissionAttendeeCollaboratorInterestsWidgetDto = await this.attendeeCollaboratorRepo.FindInterestsWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
+                if (commissionAttendeeCollaboratorInterestsWidgetDto == null)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()));
+                }
 
-        //        cmd = new UpdateInnovationCollaboratorTracks(
-        //            attendeeCollaboratorTracksWidgetDto,
-        //            await this.innovationOrganizationTrackOptionRepo.FindAllAsync());
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-        //    }
+                cmd = new UpdateAudiovisualCollaboratorInterests(
+                    commissionAttendeeCollaboratorInterestsWidgetDto,
+                    await this.GetInterestsFromGenreInterestGroupAsync());
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Modals/UpdateTracksModal", cmd), divIdOrClass = "#GlobalModalContainer" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/UpdateInterestsModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
-        ///// <summary>Updates the social networks.</summary>
-        ///// <param name="cmd">The command.</param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public async Task<ActionResult> UpdateTracks(UpdateInnovationCollaboratorTracks cmd)
-        //{
-        //    var result = new AppValidationResult();
+        /// <summary>Updates the social networks.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> UpdateInterests(UpdateAudiovisualCollaboratorInterests cmd)
+        {
+            var result = new AppValidationResult();
 
-        //    try
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
 
-        //        cmd.UpdatePreSendProperties(
-        //            this.AdminAccessControlDto.User.Id,
-        //            this.AdminAccessControlDto.User.Uid,
-        //            this.EditionDto.Id,
-        //            this.EditionDto.Uid,
-        //            this.UserInterfaceLanguage);
-        //        result = await this.CommandBus.Send(cmd);
-        //        if (!result.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        foreach (var error in result.Errors)
-        //        {
-        //            var target = error.Target ?? "";
-        //            ModelState.AddModelError(target, error.Message);
-        //        }
+                cmd.UpdatePreSendProperties(
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
 
-        //        return Json(new
-        //        {
-        //            status = "error",
-        //            message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
-        //            pages = new List<dynamic>
-        //            {
-        //                new { page = this.RenderRazorViewToString("Modals/UpdateTracksForm", cmd), divIdOrClass = "#form-container" },
-        //            }
-        //        }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-        //    }
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/UpdateInterestsForm", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Member, Labels.UpdatedM) });
-        //}
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Genres, Labels.UpdatedM) });
+        }
 
-        //#endregion
+        #endregion
 
         #endregion
 
@@ -720,7 +721,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             try
             {
-                cmd = new CreateAudiovisualCollaborator(await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.Genre.Uid));
+                cmd = new CreateAudiovisualCollaborator(await this.GetInterestsFromGenreInterestGroupAsync());
             }
             catch (DomainException ex)
             {
@@ -773,7 +774,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
-                cmd.UpdateDropdownProperties(await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.Genre.Uid));
+                cmd.UpdateDropdownProperties(await this.GetInterestsFromGenreInterestGroupAsync());
 
                 return Json(new
                 {
@@ -937,6 +938,19 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             }
 
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Member, Labels.DeletedM) });
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Gets the interests from genre interest group asynchronous.
+        /// </summary>
+        /// <returns></returns>
+        private async Task<List<InterestDto>> GetInterestsFromGenreInterestGroupAsync()
+        {
+            return await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.Genre.Uid);
         }
 
         #endregion

@@ -831,7 +831,7 @@
     <Content Include="Assets\js\audiovisual\commissions\audiovisual.commissions.onboardinginfo.widget.js" />
     <Content Include="Assets\js\audiovisual\commissions\audiovisual.commissions.socialnetworks.widget.js" />
     <Content Include="Assets\js\audiovisual\commissions\audiovisual.commissions.totalcount.widget.js" />
-    <Content Include="Assets\js\audiovisual\commissions\audiovisual.commissions.tracks.widget.js" />
+    <Content Include="Assets\js\audiovisual\commissions\audiovisual.commissions.interests.widget.js" />
     <Content Include="Assets\js\audiovisual\commissions\audiovisual.commissions.update.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.editionscheduledcount.gauge.widget.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.sendemailtoplayers.datatable.widget.js" />
@@ -8309,15 +8309,15 @@
     <Content Include="Areas\Audiovisual\Views\Commissions\Modals\UpdateModal.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Commissions\Modals\UpdateSocialNetworksForm.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Commissions\Modals\UpdateSocialNetworksModal.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Commissions\Modals\UpdateTracksForm.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Commissions\Modals\UpdateTracksModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Commissions\Modals\UpdateInterestsForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Commissions\Modals\UpdateInterestsModal.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\DataTableWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\EvaluationsWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\SocialNetworksWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\TotalCountWidget.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\TracksWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\InterestsWidget.cshtml" />
     <Content Include="Areas\Music\Views\Projects\Widgets\EditionCountPieWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Producers\Widgets\EditionCountOdometerWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Projects\Widgets\EditionCountPieWidget.cshtml" />
