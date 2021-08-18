@@ -37,6 +37,26 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [RequiredIf("IsChecked", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public string AdditionalInfo { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InterestBaseCommand"/> class.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        public InterestBaseCommand(CommissionAttendeeCollaboratorInterestDto entity)
+        {
+            this.InterestGroupUid = entity.InterestGroup.Uid;
+            this.InterestGroupName = entity.InterestGroup.Name;
+            this.InterestGroupDisplayOrder = entity.InterestGroup.DisplayOrder;
+
+            this.InterestUid = entity.Interest.Uid;
+            this.InterestName = entity.Interest.Name;
+            this.InterestDisplayOrder = entity.Interest.DisplayOrder;
+            this.InterestHasAdditionalInfo = entity.Interest.HasAdditionalInfo;
+
+            //TODO: Create CommissionAttendeeCollaboratorInterest.AdditionalInfo field at database and put here.
+            this.AdditionalInfo = "";//entity.CommissionAttendeeCollaboratorInterest.AdditionalInfo;
+            this.IsChecked = true;
+        }
+
         /// <summary>Initializes a new instance of the <see cref="InterestBaseCommand"/> class.</summary>
         /// <param name="entity">The entity.</param>
         public InterestBaseCommand(OrganizationInterestDto entity)

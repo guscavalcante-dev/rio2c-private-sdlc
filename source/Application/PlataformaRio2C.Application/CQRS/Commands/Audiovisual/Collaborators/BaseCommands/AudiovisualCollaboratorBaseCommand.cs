@@ -27,7 +27,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         //TODO: Essa lista tem que ser AttendeeCollaboratorInterestBaseCommand
         [Display(Name = "Interests", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneOption")]
-        public List<ProjectInterestBaseCommand> ProjectInterests { get; set; }
+        public InterestBaseCommand[][] Interests { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AudiovisualCollaboratorBaseCommand" /> class.
@@ -37,42 +37,56 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         }
 
         /// <summary>
-        /// Updates the models and lists.
+        /// Updates the base properties.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        /// <param name="interests">The interests.</param>
+        /// <param name="interestsDtos">The interests.</param>
         public void UpdateBaseProperties(
-            AttendeeCollaboratorTracksWidgetDto entity, 
-            List<Interest> interests)
+            CommissionAttendeeCollaboratorInterestsWidgetDto entity,
+            List<InterestDto> interestsDtos)
         {
-            this.UpdateAudiovisualInterests(entity, interests);
+            this.UpdateInterests(entity, interestsDtos);
         }
 
         /// <summary>
         /// Updates the dropdown properties.
         /// </summary>
-        /// <param name="interests">The innovation organization track options.</param>
+        /// <param name="interestsDtos">The interests.</param>
         public void UpdateDropdownProperties(
-            List<Interest> interests)
+            List<InterestDto> interestsDtos)
         {
-            this.UpdateAudiovisualInterests(null, interests);
+            this.UpdateInterests(null, interestsDtos);
         }
 
         /// <summary>
-        /// Updates the innovation organization track options.
+        /// Updates the audiovisual interests.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        /// <param name="interests">The innovation organization track options.</param>
-        private void UpdateAudiovisualInterests(
-            AttendeeCollaboratorTracksWidgetDto entity, 
-            List<Interest> interests)
+        /// <param name="interests">The interests.</param>
+        private void UpdateInterests(
+            CommissionAttendeeCollaboratorInterestsWidgetDto entity,
+            List<InterestDto> interestsDtos)
         {
-            this.ProjectInterests = new List<ProjectInterestBaseCommand>();
-            foreach (var interest in interests)
+            var interestsBaseCommands = new List<InterestBaseCommand>();
+            foreach (var interestDto in interestsDtos)
             {
-                //var attendeeCollaboratorAudiovisualOrganizationTrackDto = entity?.AttendeeCollaboratorAudiovisualOrganizationTrackDtos?.FirstOrDefault(aot => aot.AudiovisualOrganizationTrackOption.Uid == interest.Uid);
-                //this.AttendeeCollaboratorInterests.Add(attendeeCollaboratorAudiovisualOrganizationTrackDto != null ? new AttendeeAudiovisualOrganizationTrackBaseCommand(attendeeCollaboratorAudiovisualOrganizationTrackDto) :
-                //                                                                                            new AttendeeAudiovisualOrganizationTrackBaseCommand(interest));
+                var commissionAttendeeCollaboratorInterestDto = entity?.CommissionAttendeeCollaboratorInterestDtos?.FirstOrDefault(oad => oad.Interest.Uid == interestDto.Interest.Uid);
+                interestsBaseCommands.Add(commissionAttendeeCollaboratorInterestDto != null ? new InterestBaseCommand(commissionAttendeeCollaboratorInterestDto) :
+                    new InterestBaseCommand(interestDto));
+            }
+
+            var groupedInterestsDtos = interestsBaseCommands?
+                .GroupBy(i => new { i.InterestGroupUid, i.InterestGroupName, i.InterestGroupDisplayOrder })?
+                .OrderBy(g => g.Key.InterestGroupDisplayOrder)?
+                .ToList();
+
+            if (groupedInterestsDtos?.Any() == true)
+            {
+                this.Interests = new InterestBaseCommand[groupedInterestsDtos.Count][];
+                for (int i = 0; i < groupedInterestsDtos.Count; i++)
+                {
+                    this.Interests[i] = groupedInterestsDtos[i].ToArray();
+                }
             }
         }
     }

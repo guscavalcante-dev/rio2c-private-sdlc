@@ -96,7 +96,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     cmd.PhoneNumber,
                     cmd.CellPhone,
                     cmd.Document,
-                    cmd.AttendeeInnovationOrganizationTracks?.Where(oa => oa.IsChecked)?.Select(aiot => new AttendeeInnovationOrganizationTrack(innovationOrganizationTrackOptions?.FirstOrDefault(ioto => ioto.Uid == aiot.InnovationOrganizationTrackOptionUid), aiot.AdditionalInfo, cmd.UserId))?.ToList(),
+                    cmd.InnovationOrganizationTrackOptions?.Where(oa => oa.IsChecked)?.Select(aiot => new AttendeeInnovationOrganizationTrack(innovationOrganizationTrackOptions?.FirstOrDefault(ioto => ioto.Uid == aiot.InnovationOrganizationTrackOptionUid), aiot.AdditionalInfo, cmd.UserId))?.ToList(),
                     cmd.UserId);
                 if (!collaborator.IsValid())
                 {

@@ -8272,7 +8272,7 @@
     <Content Include="Areas\Innovation\Views\Commissions\Modals\CreateForm.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Shared\EditorTemplates\OrganizationActivityBaseCommand.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Shared\EditorTemplates\OrganizationRestrictionSpecificsBaseCommand.cshtml" />
-    <Content Include="Areas\Innovation\Views\Shared\EditorTemplates\AttendeeInnovationOrganizationTrackBaseCommand.cshtml" />
+    <Content Include="Areas\Innovation\Views\Shared\EditorTemplates\InnovationOrganizationTrackOptionBaseCommand.cshtml" />
     <Content Include="Areas\Innovation\Views\Commissions\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Commissions\Widgets\SocialNetworksWidget.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Widgets\SocialNetworksWidget.cshtml" />
@@ -8317,12 +8317,13 @@
     <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\SocialNetworksWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\TotalCountWidget.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\TracksWidget.cshtml" /> 
+    <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\TracksWidget.cshtml" />
     <Content Include="Areas\Music\Views\Projects\Widgets\EditionCountPieWidget.cshtml" />
-	<Content Include="Areas\Audiovisual\Views\Producers\Widgets\EditionCountOdometerWidget.cshtml" />
-	<Content Include="Areas\Innovation\Views\Projects\Widgets\EditionCountPieWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Producers\Widgets\EditionCountOdometerWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\Projects\Widgets\EditionCountPieWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\EditionScheduledCountGaugeWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EditionCountGaugeWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Shared\EditorTemplates\ProjectInterestBaseCommand.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

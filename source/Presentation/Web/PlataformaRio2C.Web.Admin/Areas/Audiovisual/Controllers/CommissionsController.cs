@@ -720,7 +720,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             try
             {
-                cmd = new CreateAudiovisualCollaborator(await this.interestRepo.FindAllByInterestGroupUidAsync(InterestGroup.Genre.Uid));
+                cmd = new CreateAudiovisualCollaborator(await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.Genre.Uid));
             }
             catch (DomainException ex)
             {
@@ -773,7 +773,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
-                cmd.UpdateDropdownProperties(await this.interestRepo.FindAllByInterestGroupUidAsync(InterestGroup.Genre.Uid));
+                cmd.UpdateDropdownProperties(await this.interestRepo.FindAllDtosByInterestGroupUidAsync(InterestGroup.Genre.Uid));
 
                 return Json(new
                 {

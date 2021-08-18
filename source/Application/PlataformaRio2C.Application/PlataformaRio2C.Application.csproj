@@ -350,7 +350,6 @@
     <Compile Include="CQRS\CommandsHandlers\Tracks\DeleteTrackCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Tracks\TrackBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationConfigs\UpdateNegotiationConfigMainInformationCommandHandler.cs" />
-    <Compile Include="CQRS\Commands\Audiovisual\Collaborators\BaseCommands\ProjectInterestBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\Collaborators\BaseCommands\AudiovisualCollaboratorBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\Collaborators\CreateAudiovisualCollaborator.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\Collaborators\UpdateAudiovisualCollaboratorAdminMainInformation.cs" />
@@ -387,7 +386,7 @@
     <Compile Include="CQRS\Commands\Innovation\Collaborators\UpdateInnovationCollaboratorAdminMainInformation.cs" />
     <Compile Include="CQRS\Commands\Innovation\Collaborators\UpdateInnovationCollaboratorTracks.cs" />
     <Compile Include="CQRS\Commands\Innovation\Collaborators\UpdateInnovationCollaboratorSocialNetworks.cs" />
-    <Compile Include="CQRS\Commands\Innovation\Organizations\BaseCommands\AttendeeInnovationOrganizationTrackBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Innovation\BaseCommands\InnovationOrganizationTrackOptionBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Innovation\Collaborators\CreateInnovationCollaborator.cs" />
     <Compile Include="CQRS\Commands\Innovation\Organizations\DeleteAttendeeInnovationOrganization.cs" />
     <Compile Include="CQRS\Commands\Innovation\Organizations\EvaluateInnovationOrganization.cs" />

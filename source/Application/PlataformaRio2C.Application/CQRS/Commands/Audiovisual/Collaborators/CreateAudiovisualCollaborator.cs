@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 
+using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
@@ -27,9 +28,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// Initializes a new instance of the <see cref="CreateAudiovisualCollaborator"/> class.
         /// </summary>
         /// <param name="innovationOptions">The innovation options.</param>
-        public CreateAudiovisualCollaborator(List<Interest> interests)
+        public CreateAudiovisualCollaborator(List<InterestDto> interestsDtos)
         {
-            this.UpdateBaseProperties(null, interests);
+            this.UpdateBaseProperties(null, interestsDtos);
         }
 
         /// <summary>

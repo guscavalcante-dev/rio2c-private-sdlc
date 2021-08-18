@@ -24,10 +24,10 @@
     <div class="form-group col-md-12">
         <div class="kt-section pt-4">
             <h3 class="kt-section__title mb-0">@Labels.Interests</h3>
-            @Html.ValidationMessage("AttendeeCollaboratorInterests", new { @class = "text-danger" })
+            @Html.ValidationMessage("Interests", new { @class = "text-danger" })
             <div class="kt-section__content mt-3">
                 <div class="kt-checkbox-list">
-                    @Html.EditorFor(m => m.AttendeeCollaboratorInterests)
+                    @Html.EditorFor(m => m.Interests)
                 </div>
             </div>
         </div>
