@@ -8323,7 +8323,6 @@
     <Content Include="Areas\Innovation\Views\Projects\Widgets\EditionCountPieWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\EditionScheduledCountGaugeWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EditionCountGaugeWidget.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Shared\EditorTemplates\ProjectInterestBaseCommand.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
