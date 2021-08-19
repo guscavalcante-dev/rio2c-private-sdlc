@@ -1,5 +1,5 @@
 ﻿@using System.Globalization
-@model PlataformaRio2C.Application.CQRS.Commands.CreateInnovationCollaborator
+@model PlataformaRio2C.Application.CQRS.Commands.InnovationCollaboratorBaseCommand
 <div class="row">
     <div class="form-group col-md-5">
         @Html.LabelFor(m => m.FirstName, new { @class = "control-label" })
@@ -24,7 +24,7 @@
     <div class="form-group col-md-12">
         <div class="kt-section pt-4">
             <h3 class="kt-section__title mb-0">@Labels.Tracks</h3>
-            @Html.ValidationMessage("AttendeeInnovationOrganizationTracks", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(m => m.InnovationOrganizationTrackOptions, "", new { @class = "text-danger" })
             <div class="kt-section__content mt-3">
                 <div class="kt-checkbox-list">
                     @Html.EditorFor(m => m.InnovationOrganizationTrackOptions)

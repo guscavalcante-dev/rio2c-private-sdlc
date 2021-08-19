@@ -674,9 +674,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="firstName">The first name.</param>
         /// <param name="lastNames">The last names.</param>
         /// <param name="email">The email.</param>
-        /// <param name="phoneNumber">The phone number.</param>
-        /// <param name="cellPhone">The cell phone.</param>
-        /// <param name="document">The document.</param>
         /// <param name="attendeeInnovationOrganizationTracks">The attendee innovation organization tracks.</param>
         /// <param name="userId">The user identifier.</param>
         public void UpdateInnovationCommission(
