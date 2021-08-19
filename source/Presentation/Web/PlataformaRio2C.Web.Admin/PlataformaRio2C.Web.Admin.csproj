@@ -367,6 +367,7 @@
     <Compile Include="App_Start\SimpleInjectorInitializer.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Audiovisual\AudiovisualAreaRegistration.cs" />
+    <Compile Include="Areas\Audiovisual\Controllers\CommissionsController.cs" />
     <Compile Include="Areas\Audiovisual\Controllers\MeetingsController.cs" />
     <Compile Include="Areas\Audiovisual\Controllers\MeetingParametersController.cs" />
     <Compile Include="Areas\Audiovisual\Controllers\OrganizationsController.cs" />
@@ -821,6 +822,17 @@
     <Content Include="Assets\img\logo-rio2c-footer.png" />
     <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
+    <Content Include="Assets\js\audiovisual\commissions\audiovisual.commissions.create.js" />
+    <Content Include="Assets\js\audiovisual\commissions\audiovisual.commissions.datatable.widget.js" />
+    <Content Include="Assets\js\audiovisual\commissions\audiovisual.commissions.delete.js" />
+    <Content Include="Assets\js\audiovisual\commissions\audiovisual.commissions.editioncount.widget.js" />
+    <Content Include="Assets\js\audiovisual\commissions\audiovisual.commissions.evaluations.widget.js" />
+    <Content Include="Assets\js\audiovisual\commissions\audiovisual.commissions.maininformation.widget.js" />
+    <Content Include="Assets\js\audiovisual\commissions\audiovisual.commissions.onboardinginfo.widget.js" />
+    <Content Include="Assets\js\audiovisual\commissions\audiovisual.commissions.socialnetworks.widget.js" />
+    <Content Include="Assets\js\audiovisual\commissions\audiovisual.commissions.totalcount.widget.js" />
+    <Content Include="Assets\js\audiovisual\commissions\audiovisual.commissions.interests.widget.js" />
+    <Content Include="Assets\js\audiovisual\commissions\audiovisual.commissions.update.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.editionscheduledcount.gauge.widget.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.sendemailtoplayers.datatable.widget.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.sendemailtoplayers.editioncount.widget.js" />
@@ -8260,7 +8272,7 @@
     <Content Include="Areas\Innovation\Views\Commissions\Modals\CreateForm.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Shared\EditorTemplates\OrganizationActivityBaseCommand.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Shared\EditorTemplates\OrganizationRestrictionSpecificsBaseCommand.cshtml" />
-    <Content Include="Areas\Innovation\Views\Shared\EditorTemplates\AttendeeInnovationOrganizationTrackBaseCommand.cshtml" />
+    <Content Include="Areas\Innovation\Views\Shared\EditorTemplates\InnovationOrganizationTrackOptionBaseCommand.cshtml" />
     <Content Include="Areas\Innovation\Views\Commissions\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Commissions\Widgets\SocialNetworksWidget.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Widgets\SocialNetworksWidget.cshtml" />
@@ -8288,12 +8300,30 @@
     <Content Include="Areas\Music\Views\Commissions\Widgets\EvaluationsWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Commissions\Modals\UpdateModal.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Players\Widgets\EditionCountOdometerWidget.cshtml" />
-
+    <Content Include="Areas\Audiovisual\Views\Commissions\Details.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Commissions\Index.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Commissions\Modals\_Form.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Commissions\Modals\CreateModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Commissions\Modals\UpdateMainInformationForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Commissions\Modals\UpdateMainInformationModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Commissions\Modals\UpdateModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Commissions\Modals\UpdateSocialNetworksForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Commissions\Modals\UpdateSocialNetworksModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Commissions\Modals\UpdateInterestsForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Commissions\Modals\UpdateInterestsModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\EvaluationsWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\MainInformationWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\SocialNetworksWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\InterestsWidget.cshtml" />
     <Content Include="Areas\Music\Views\Projects\Widgets\EditionCountPieWidget.cshtml" />
-	<Content Include="Areas\Audiovisual\Views\Producers\Widgets\EditionCountOdometerWidget.cshtml" />
-	<Content Include="Areas\Innovation\Views\Projects\Widgets\EditionCountPieWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Producers\Widgets\EditionCountOdometerWidget.cshtml" />
+    <Content Include="Areas\Innovation\Views\Projects\Widgets\EditionCountPieWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\EditionScheduledCountGaugeWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EditionCountGaugeWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Shared\EditorTemplates\ProjectInterestBaseCommand.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -9748,7 +9778,6 @@
     <Content Include="Views\Speakers\Widgets\RelatedParticipantsWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Reports\ProjectsSubmissions.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Reports\Widgets\ProjectsSubmissionsWidget.cshtml" />
-    <Content Include="Views\Speakers\Modals\UpdateSocialNetworksModal.cshtml" />
     <Content Include="Views\LogisticSponsors\Widgets\DataTableWidget.cshtml" />
     <Content Include="Views\LogisticSponsors\Modals\CreateModal.cshtml" />
     <Content Include="Views\LogisticSponsors\Modals\CreateForm.cshtml" />
@@ -9875,6 +9904,9 @@
     <Content Include="Views\LogisticSponsors\Widgets\TracksAndPresentationFormatsWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Commissions\Widgets\TracksWidget.cshtml" />
     <Content Include="Views\AdminMailerService\InnovationCommissionWelcomeEmail.cshtml" />
+    <Content Include="Views\AdminMailerService\AudiovisualCommissionWelcomeEmail.cshtml" />
+    <Content Include="Views\Shared\Collaborators\Modal\UpdateMainInformationModal.cshtml" />
+    <Content Include="Views\Shared\Collaborators\Modal\UpdateSocialNetworksModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

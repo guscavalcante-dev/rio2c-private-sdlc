@@ -1,0 +1,103 @@
+﻿@using System.Globalization
+@model PlataformaRio2C.Application.CQRS.Commands.SendAudiovisualCommissionWelcomeEmailAsync
+@{
+    var brCulture = new CultureInfo("pt-BR");
+    var usCulture = new CultureInfo("en-US");
+}
+<td valign="top">
+    <!-- content -->
+    <h1>
+        <span>Olá @Model.RecipientFirstName,</span><br />
+        <span style="font-style: italic; color: red;">Dear @Model.RecipientFirstName,</span>
+    </h1>
+    <p>
+        <span>
+            Seja bem-vindo(a) ao <span style="font-weight: 800;">Rio2C</span> - o maior encontro de criatividade e inovação da América Latina. Agradecemos antecipadamente a sua presença
+            na <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span>
+            (dias @Model.Edition.StartDate.ToBrazilTimeZone().Day a @Model.Edition.EndDate.ToBrazilTimeZone().Day de @Model.Edition.EndDate.ToBrazilTimeZone().ToString("MMMM", brCulture), @Model.Edition.EndDate.ToBrazilTimeZone().Year).
+        </span><br />
+        <span style="font-style: italic; color: red;">
+            Welcome to <span style="font-weight: 800;">Rio2C</span> - Latin America’s leading creativity and innovation event. We would like to thank you in advance for joining us
+            at <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span>
+            (@Model.Edition.EndDate.ToBrazilTimeZone().ToString("MMMM", usCulture) @Model.Edition.StartDate.ToBrazilTimeZone().Day<sup>@Model.Edition.StartDate.ToBrazilTimeZone().GetDaySuffix()</sup> – @Model.Edition.EndDate.ToBrazilTimeZone().Day<sup>@Model.Edition.EndDate.ToBrazilTimeZone().GetDaySuffix()</sup>, @Model.Edition.EndDate.ToBrazilTimeZone().Year).
+        </span>
+    </p>
+    <p>
+        <span>
+            Para a edição de @Model.Edition.UrlCode, foi criada a plataforma <span style="font-weight: 800;">MyRio2C</span>, na qual estarão concentradas as principais informações sobre sua participação
+            no <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span>, como: sua agenda, seu perfil, a programação do evento, a rede RIO2C para contato direto com outros convidados, credenciamento,
+            dentre outras funcionalidades.
+        </span><br />
+        <span style="font-style: italic; color: red;">
+            For our @Model.Edition.UrlCode edition, we created the <span style="font-weight: 800;">MyRio2C</span> platform, which will concentrate all the key information about your participation in our event, such as:
+            your schedule, your profile, the official event program, the RIO2C network for you to be able to reach out to other guests directly, accreditation, amongst other functions.
+        </span>
+    </p>
+    <p>
+        <span>
+            Convidamos você para acessar a plataforma <span style="font-weight: 800;">MyRio2C</span> agora e cadastrar seu perfil para o <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span>.
+        </span><br />
+        <span style="font-style: italic; color: red;">
+            We would like to invite you to register your <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span> profile now on <span style="font-weight: 800;">MyRio2C</span>.
+        </span>
+    </p>
+    <p>
+        <span>
+            Para acessá-la, clique no botão abaixo e utilize esse mesmo endereço de e-mail para fazer o acesso.
+        </span><br />
+        <span style="font-style: italic; color: red;">
+            Please click on the button below and register using your email address.
+        </span>
+    </p>
+    <div style="margin-top: 25px; margin-bottom: 25px;">
+        <!--Button:begin-->
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tr>
+                <td align="center">
+                    <table cellpadding="0" cellspacing="0" width="250" border="0" style="border-collapse: separate !important;">
+                        <tr>
+                            <td style="background-color: #EA202C; color: #FFFFFF; font-family: sans-serif; font-size: 16px; font-weight: bold; padding: 10px 10px; border-radius: 10px; text-align: center;">
+                                <a href="@($"{ViewBag.SiteUrl}/account/onboarding?culture={Model.UserInterfaceLanguage}&edition={Model.Edition.UrlCode}&email={Url.Encode(Model.RecipientEmail)}&uid={Model.RecipientUserUid}&token={Model.UserSecurityToken}")" style="color:#FFFFFF;text-decoration:none;">Clique Aqui / Click here</a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <!--Button:end-->
+    </div>
+    <p>
+        <span>
+            Em caso de dúvidas, favor entre em contato com a nossa equipe usando o assunto “<span style="font-weight: bold;">MyRio2C</span>” através do email: curadoria@rio2c.com.
+        </span><br />
+        <span style="font-style: italic; color: red;">
+            For any queries, please get in touch with our team using the subject “<span style="font-weight: bold;">MyRio2C</span>” via the email: curadoria@rio2c.com.
+        </span>
+    </p>
+    <p>
+        <span>
+            Desde já agradecemos sua cooperação.
+        </span><br />
+        <span style="font-style: italic; color: red;">
+            We thank you for your cooperation.
+        </span>
+    </p>
+    <p>
+        <span>
+            Seja bem-vindo ao <span style="font-weight: bold;">MyRio2C</span>!
+        </span><br />
+        <span style="font-style: italic; color: red;">
+            Welcome to <span style="font-weight: bold;">MyRio2C</span>!
+        </span>
+    </p>
+    <p>
+        <span>
+            Curadoria Rio2C
+        </span><br />
+        <span style="font-style: italic; color: red;">
+            Rio2C Curatorship
+        </span>
+    </p>
+</td>
+@section Styles {
+}

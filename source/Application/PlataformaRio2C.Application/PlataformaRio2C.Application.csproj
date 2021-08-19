@@ -179,6 +179,11 @@
     <Compile Include="Common\AppValidationResult.cs" />
     <Compile Include="Common\EntityViewModel.cs" />
     <Compile Include="Common\StatusProjectCodes.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Audiovisual\Collaborators\UpdateAudiovisualCollaboratorCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Audiovisual\Collaborators\CreateAudiovisualCollaboratorCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Audiovisual\Collaborators\UpdateAudiovisualCollaboratorAdminMainInformationCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Audiovisual\Collaborators\UpdateAudiovisualCollaboratorSocialNetworksCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Audiovisual\Collaborators\UpdateAudiovisualCollaboratorInterestsCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationConfigs\DeleteNegotiationConfigCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationConfigs\NegotiationConfigBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationConfigs\CreateNegotiationConfigCommandHandler.cs" />
@@ -225,6 +230,7 @@
     <Compile Include="CQRS\CommandsHandlers\Editions\UpdateEditionDatesInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Editions\UpdateEditionMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendAdminWelcomeEmailAsyncCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendAudiovisualCommissionWelcomeEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendInnovationCommissionWelcomeEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendMusicCommissionWelcomeEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Admin\SendPlayerNegotiationsEmailAsyncCommandHandler.cs" />
@@ -346,6 +352,12 @@
     <Compile Include="CQRS\CommandsHandlers\Tracks\DeleteTrackCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Tracks\TrackBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationConfigs\UpdateNegotiationConfigMainInformationCommandHandler.cs" />
+    <Compile Include="CQRS\Commands\Audiovisual\Collaborators\BaseCommands\AudiovisualCollaboratorBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Audiovisual\Collaborators\UpdateAudiovisualCollaborator.cs" />
+    <Compile Include="CQRS\Commands\Audiovisual\Collaborators\CreateAudiovisualCollaborator.cs" />
+    <Compile Include="CQRS\Commands\Audiovisual\Collaborators\UpdateAudiovisualCollaboratorAdminMainInformation.cs" />
+    <Compile Include="CQRS\Commands\Audiovisual\Collaborators\UpdateAudiovisualCollaboratorSocialNetworks.cs" />
+    <Compile Include="CQRS\Commands\Audiovisual\Collaborators\UpdateAudiovisualCollaboratorInterests.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\NegotiationConfigs\UpdateNegotiationConfigMainInformation.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\NegotiationConfigs\DeleteNegotiationConfig.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\NegotiationConfigs\CreateNegotiationConfig.cs" />
@@ -369,6 +381,7 @@
     <Compile Include="CQRS\Commands\Editions\UpdateEditionDatesInformation.cs" />
     <Compile Include="CQRS\Commands\Editions\UpdateEditionMainInformation.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendAdminWelcomeEmailAsync.cs" />
+    <Compile Include="CQRS\Commands\Emails\Admin\SendAudiovisualCommissionWelcomeEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendInnovationCommissionWelcomeEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendPlayerNegotiationsEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendProducerNegotiationsEmailAsync.cs" />
@@ -376,7 +389,7 @@
     <Compile Include="CQRS\Commands\Innovation\Collaborators\UpdateInnovationCollaboratorAdminMainInformation.cs" />
     <Compile Include="CQRS\Commands\Innovation\Collaborators\UpdateInnovationCollaboratorTracks.cs" />
     <Compile Include="CQRS\Commands\Innovation\Collaborators\UpdateInnovationCollaboratorSocialNetworks.cs" />
-    <Compile Include="CQRS\Commands\Innovation\Organizations\BaseCommands\AttendeeInnovationOrganizationTrackBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Innovation\BaseCommands\InnovationOrganizationTrackOptionBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Innovation\Collaborators\CreateInnovationCollaborator.cs" />
     <Compile Include="CQRS\Commands\Innovation\Organizations\DeleteAttendeeInnovationOrganization.cs" />
     <Compile Include="CQRS\Commands\Innovation\Organizations\EvaluateInnovationOrganization.cs" />
@@ -661,6 +674,7 @@
     <Compile Include="ViewModels\Api\Conference\LecturerGroupAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Activity\ActivityAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Agendas\AgendaSearchViewModel.cs" />
+    <Compile Include="ViewModels\Common\Audiovisual\Commissions\AudiovisualCommissionSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Audiovisual\Meetings\MeetingParameterSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\CollaboratorPlayer\CollaboratorPlayerEditAppViewModel.cs" />
     <Compile Include="ViewModels\Common\CollaboratorPlayer\CollaboratorPlayerItemListAppViewModel.cs" />
@@ -867,6 +881,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="CQRS\CommandsHandlers\Audiovisual\Collaborators\BaseCommandHandlers\" />
     <Folder Include="CQRS\CommandsHandlers\Innovation\Collaborators\BaseCommandHandlers\" />
     <Folder Include="CQRS\CommandsHandlers\SalesPlatforms\" />
     <Folder Include="CQRS\Commands\SalesPlatforms\" />

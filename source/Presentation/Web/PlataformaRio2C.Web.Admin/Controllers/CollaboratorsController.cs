@@ -11,19 +11,26 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository;
+using PlataformaRio2C.Application;
+using PlataformaRio2C.Application.CQRS.Commands;
+using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Application.ViewModels;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using Constants = PlataformaRio2C.Domain.Constants;
 
@@ -36,6 +43,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     {
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
         private readonly IFileRepository fileRepo;
+        private readonly ICollaboratorTypeRepository collaboratorTypeRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CollaboratorsController"/> class.
@@ -44,15 +52,18 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="identityController">The identity controller.</param>
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
         /// <param name="fileRepository">The file repository.</param>
+        /// <param name="collaboratorTypeRepository">The collaborator type repository.</param>
         public CollaboratorsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
-            IFileRepository fileRepository)
+            IFileRepository fileRepository,
+            ICollaboratorTypeRepository collaboratorTypeRepository)
             : base(commandBus, identityController)
         {
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
             this.fileRepo = fileRepository;
+            this.collaboratorTypeRepo = collaboratorTypeRepository;
         }
 
         /// <summary>Indexes the specified search view model.</summary>

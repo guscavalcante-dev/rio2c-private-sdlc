@@ -95,7 +95,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Projects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.AudioVisual, null),
                 new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "Audiovisual" }))
             });
 

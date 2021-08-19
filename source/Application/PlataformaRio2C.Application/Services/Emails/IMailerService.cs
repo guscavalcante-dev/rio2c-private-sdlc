@@ -32,6 +32,7 @@ namespace PlataformaRio2C.Application.Services
         MvcMailMessage SendSpeakerWelcomeEmail(SendSpeakerWelcomeEmailAsync cmd, Guid sentEmailUid);
         MvcMailMessage SendMusicCommissionWelcomeEmail(SendMusicCommissionWelcomeEmailAsync cmd, Guid sentEmailUid);
         MvcMailMessage SendInnovationCommissionWelcomeEmail(SendInnovationCommissionWelcomeEmailAsync cmd, Guid sentEmailUid);
+        MvcMailMessage SendAudiovisualCommissionWelcomeEmail(SendAudiovisualCommissionWelcomeEmailAsync cmd, Guid sentEmailUid);
         MvcMailMessage SendAdminWelcomeEmail(SendAdminWelcomeEmailAsync cmd, Guid sentEmailUid);
         MvcMailMessage SendPlayersNegotiationEmail(SendPlayerNegotiationsEmailAsync cmd, Guid sentEmailUid);
         MvcMailMessage SendProducersNegotiationEmail(SendProducerNegotiationsEmailAsync cmd, Guid sentEmailUid);

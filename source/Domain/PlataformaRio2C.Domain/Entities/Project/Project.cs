@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-21-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 08-17-2021
 // ***********************************************************************
 // <copyright file="Project.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -47,6 +47,9 @@ namespace PlataformaRio2C.Domain.Entities
         public bool IsPitching { get; private set; }
         public DateTimeOffset? FinishDate { get; private set; }
         public int ProjectBuyerEvaluationsCount { get; private set; }
+        public int CommissionEvaluationsCount { get; private set; }
+        public decimal? CommissionGrade { get; private set; }
+        public DateTimeOffset? LastCommissionEvaluationDate { get; private set; }
 
         public virtual ProjectType ProjectType { get; private set; }
         public virtual AttendeeOrganization SellerAttendeeOrganization { get; private set; }
@@ -61,6 +64,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<ProjectInterest> ProjectInterests { get; private set; }
         public virtual ICollection<ProjectTargetAudience> ProjectTargetAudiences { get; private set; }
         public virtual ICollection<ProjectBuyerEvaluation> ProjectBuyerEvaluations { get; private set; }
+        public virtual ICollection<CommissionEvaluation> CommissionEvaluations { get; private set; }
 
         private bool IsAdmin = false;
 

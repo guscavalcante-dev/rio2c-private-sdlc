@@ -28,7 +28,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
        
         [Display(Name = "Tracks", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneOption")]
-        public List<AttendeeInnovationOrganizationTrackBaseCommand> AttendeeInnovationOrganizationTracks { get; set; }
+        public List<InnovationOrganizationTrackOptionBaseCommand> AttendeeInnovationOrganizationTracks { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateInnovationCollaboratorTracks"/> class.</summary>
         public UpdateInnovationCollaboratorTracks()
@@ -95,12 +95,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             AttendeeCollaboratorTracksWidgetDto entity,
             List<InnovationOrganizationTrackOption> innovationOrganizationTrackOptions)
         {
-            this.AttendeeInnovationOrganizationTracks = new List<AttendeeInnovationOrganizationTrackBaseCommand>();
+            this.AttendeeInnovationOrganizationTracks = new List<InnovationOrganizationTrackOptionBaseCommand>();
             foreach (var innovationOrganizationTrackOption in innovationOrganizationTrackOptions)
             {
                 var attendeeCollaboratorInnovationOrganizationTrackDto = entity?.AttendeeCollaboratorInnovationOrganizationTrackDtos?.FirstOrDefault(aot => aot.InnovationOrganizationTrackOption.Uid == innovationOrganizationTrackOption.Uid);
-                this.AttendeeInnovationOrganizationTracks.Add(attendeeCollaboratorInnovationOrganizationTrackDto != null ? new AttendeeInnovationOrganizationTrackBaseCommand(attendeeCollaboratorInnovationOrganizationTrackDto) :
-                                                                                                            new AttendeeInnovationOrganizationTrackBaseCommand(innovationOrganizationTrackOption));
+                this.AttendeeInnovationOrganizationTracks.Add(attendeeCollaboratorInnovationOrganizationTrackDto != null ? new InnovationOrganizationTrackOptionBaseCommand(attendeeCollaboratorInnovationOrganizationTrackDto) :
+                                                                                                            new InnovationOrganizationTrackOptionBaseCommand(innovationOrganizationTrackOption));
             }
         }
     }

@@ -130,6 +130,8 @@
     <Compile Include="Dtos\Agendas\AgendaConferenceEventJsonDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorListDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorNetworkDto.cs" />
+    <Compile Include="Dtos\Audiovisual\CommissionAttendeeCollaboratorInterestDto.cs" />
+    <Compile Include="Dtos\Audiovisual\CommissionAttendeeCollaboratorInterestsWidgetDto.cs" />
     <Compile Include="Dtos\Innovation\AttendeeCollaboratorInnovationEvaluationsWidgetDto.cs" />
     <Compile Include="Dtos\Innovation\AttendeeCollaboratorTracksWidgetDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorSiteDetailsDto.cs" />
@@ -312,6 +314,8 @@
     <Compile Include="Dtos\Tracks\TrackDto.cs" />
     <Compile Include="Dtos\Tracks\TrackJsonDto.cs" />
     <Compile Include="Entities\Addresses\Address.cs" />
+    <Compile Include="Entities\Audiovisual\CommissionEvaluation.cs" />
+    <Compile Include="Entities\Audiovisual\CommissionAttendeeCollaboratorInterest.cs" />
     <Compile Include="Entities\Base\AggregateRoot.cs" />
     <Compile Include="Entities\Collaborator\AttendeeCollaborator.cs" />
     <Compile Include="Entities\Collaborator\AttendeeCollaboratorType.cs" />

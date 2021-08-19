@@ -1,0 +1,39 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model AttendeeCollaboratorSiteDetailsDto
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+            @Labels.SocialNetworks
+        </h3>
+    </div>
+    <div class="kt-portlet__head-toolbar">
+        <div class="kt-portlet__head-actions">
+            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="AudiovisualCommissionsSocialNetworksWidget.showUpdateModal();">
+                <i class="flaticon2-edit"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="kt-portlet__body pt-0">
+    <div class="row">
+        <div class="col-md-6 mt-20">
+            @Html.Partial("/Views/Shared/SocialNetworks/_WebsiteItem.cshtml", Model.Collaborator.Website, new ViewDataDictionary())
+        </div>
+        <div class="col-md-6 mt-20">
+            @Html.Partial("/Views/Shared/SocialNetworks/_LinkedinItem.cshtml", Model.Collaborator.Linkedin, new ViewDataDictionary())
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 mt-20">
+            @Html.Partial("/Views/Shared/SocialNetworks/_TwitterItem.cshtml", Model.Collaborator.Twitter, new ViewDataDictionary())
+        </div>
+        <div class="col-md-6 mt-20">
+            @Html.Partial("/Views/Shared/SocialNetworks/_InstagramItem.cshtml", Model.Collaborator.Instagram, new ViewDataDictionary())
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 mt-20">
+            @Html.Partial("/Views/Shared/SocialNetworks/_YoutubeItem.cshtml", Model.Collaborator.Youtube, new ViewDataDictionary())
+        </div>
+    </div>
+</div>

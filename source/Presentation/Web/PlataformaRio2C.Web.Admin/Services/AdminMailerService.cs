@@ -177,6 +177,35 @@ namespace PlataformaRio2C.Web.Admin.Services
             });
         }
 
+        /// <summary>
+        /// Sends the Audiovisual commission welcome email.
+        /// </summary>
+        /// <param name="cmd">The command.</param>
+        /// <param name="sentEmailUid">The sent email uid.</param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public MvcMailMessage SendAudiovisualCommissionWelcomeEmail(SendAudiovisualCommissionWelcomeEmailAsync cmd, Guid sentEmailUid)
+        {
+            this.SetCulture(cmd.UserInterfaceLanguage);
+
+            this.ViewData = new ViewDataDictionary(cmd);
+
+            return Populate(x =>
+            {
+                x.Subject = this.GetSubject(string.Format("Bem-vindo ao {0} | Welcome to {0}", cmd.Edition.Name), null);
+                x.ViewName = "AudiovisualCommissionWelcomeEmail";
+                x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
+                x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
+                ViewBag.SentEmailUid = sentEmailUid;
+                ViewBag.SiteUrl = this.siteUrl;
+
+                if (!string.IsNullOrEmpty(this.GetBccEmailRecipient(true)))
+                {
+                    x.Bcc.Add(this.GetBccEmailRecipient(true));
+                }
+            });
+        }
+
         /// <summary>Sends the admin welcome email.</summary>
         /// <param name="cmd">The command.</param>
         /// <param name="sentEmailUid">The sent email uid.</param>

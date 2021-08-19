@@ -785,6 +785,35 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            #region Collaborators - Commissions
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.commissions.list.js").Include(
+                "~/Assets/js/audiovisual/commissions/audiovisual.commissions.totalcount.widget.js",
+                "~/Assets/js/audiovisual/commissions/audiovisual.commissions.datatable.widget.js",
+                "~/Assets/js/salesplatforms/salesplatforms.export.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.commissions.editioncount.js").Include(
+                "~/Assets/js/audiovisual/commissions/audiovisual.commissions.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.commissions.create.js").Include(
+                "~/Assets/js/audiovisual/commissions/audiovisual.commissions.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.commissions.details.js").Include(
+                "~/Assets/js/audiovisual/commissions/audiovisual.commissions.maininformation.widget.js",
+                "~/Assets/js/audiovisual/commissions/audiovisual.commissions.socialnetworks.widget.js",
+                "~/Assets/js/audiovisual/commissions/audiovisual.commissions.onboardinginfo.widget.js",
+                "~/Assets/js/audiovisual/commissions/audiovisual.commissions.interests.widget.js",
+                "~/Assets/js/audiovisual/commissions/audiovisual.commissions.evaluations.widget.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.commissions.update.js").Include(
+                "~/Assets/js/audiovisual/commissions/audiovisual.commissions.update.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.commissions.delete.js").Include(
+                "~/Assets/js/audiovisual/commissions/audiovisual.commissions.delete.js"));
+
+            #endregion
+
             #endregion
 
             #region Music Page Bundles

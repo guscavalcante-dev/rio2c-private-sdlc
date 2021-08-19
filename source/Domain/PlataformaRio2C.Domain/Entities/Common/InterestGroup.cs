@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-14-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 08-17-2021
 // ***********************************************************************
 // <copyright file="InterestGroup.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -26,6 +26,7 @@ namespace PlataformaRio2C.Domain.Entities
         public string Name { get; private set; }
         public string Type { get; private set; }
         public int DisplayOrder { get; private set; }
+        public bool IsCommission { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="InterestGroup"/> class.</summary>
         protected InterestGroup()

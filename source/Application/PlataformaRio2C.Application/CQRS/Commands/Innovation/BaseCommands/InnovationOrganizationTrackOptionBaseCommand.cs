@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
-// Author           : Rafael Dantas Ruiz
-// Created          : 09-18-2019
+// Author           : Renan Valentim
+// Created          : 08-18-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 11-22-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 08-18-2021
 // ***********************************************************************
-// <copyright file="AttendeeInnovationOrganizationTrackBaseCommand.cs" company="Softo">
+// <copyright file="InnovationOrganizationTrackBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -19,8 +19,8 @@ using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>AttendeeInnovationOrganizationTrackBaseCommand</summary>
-    public class AttendeeInnovationOrganizationTrackBaseCommand
+    /// <summary>InnovationOrganizationTrackBaseCommand</summary>
+    public class InnovationOrganizationTrackOptionBaseCommand
     {
         public Guid InnovationOrganizationTrackOptionUid { get; set; }
         public string InnovationOrganizationTrackOptionName { get; set; }
@@ -32,10 +32,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string AdditionalInfo { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeeInnovationOrganizationTrackBaseCommand" /> class.
+        /// Initializes a new instance of the <see cref="InnovationOrganizationTrackOptionBaseCommand" /> class.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        public AttendeeInnovationOrganizationTrackBaseCommand(AttendeeInnovationOrganizationTrackDto entity)
+        public InnovationOrganizationTrackOptionBaseCommand(AttendeeInnovationOrganizationTrackDto entity)
         {
             this.InnovationOrganizationTrackOptionUid = entity.InnovationOrganizationTrackOption.Uid;
             this.InnovationOrganizationTrackOptionName = entity.InnovationOrganizationTrackOption.Name;
@@ -47,10 +47,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeeInnovationOrganizationTrackBaseCommand" /> class.
+        /// Initializes a new instance of the <see cref="InnovationOrganizationTrackOptionBaseCommand" /> class.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        public AttendeeInnovationOrganizationTrackBaseCommand(AttendeeCollaboratorInnovationOrganizationTrackDto entity)
+        public InnovationOrganizationTrackOptionBaseCommand(AttendeeCollaboratorInnovationOrganizationTrackDto entity)
         {
             this.InnovationOrganizationTrackOptionUid = entity.InnovationOrganizationTrackOption.Uid;
             this.InnovationOrganizationTrackOptionName = entity.InnovationOrganizationTrackOption.Name;
@@ -62,10 +62,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeeInnovationOrganizationTrackBaseCommand" /> class.
+        /// Initializes a new instance of the <see cref="InnovationOrganizationTrackOptionBaseCommand" /> class.
         /// </summary>
         /// <param name="innovationOrganizationTrackOption">The activity.</param>
-        public AttendeeInnovationOrganizationTrackBaseCommand(InnovationOrganizationTrackOption innovationOrganizationTrackOption)
+        public InnovationOrganizationTrackOptionBaseCommand(InnovationOrganizationTrackOption innovationOrganizationTrackOption)
         {
             this.InnovationOrganizationTrackOptionUid = innovationOrganizationTrackOption.Uid;
             this.InnovationOrganizationTrackOptionName = innovationOrganizationTrackOption.Name;
@@ -76,9 +76,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeeInnovationOrganizationTrackBaseCommand" /> class.
+        /// Initializes a new instance of the <see cref="InnovationOrganizationTrackOptionBaseCommand" /> class.
         /// </summary>
-        public AttendeeInnovationOrganizationTrackBaseCommand()
+        public InnovationOrganizationTrackOptionBaseCommand()
         {
         }
     }

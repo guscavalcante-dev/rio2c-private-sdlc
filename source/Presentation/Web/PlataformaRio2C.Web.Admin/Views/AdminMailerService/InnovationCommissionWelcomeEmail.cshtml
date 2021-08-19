@@ -38,7 +38,7 @@
             <span style="font-weight: 800;">Banca do Pitching de Startups @Model.Edition.UrlCode</span>.
         </span><br />
         <span style="font-style: italic; color: red;">
-            We believe that your performance will be of great interest to the <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span> audience and we would like to invite you to be part of the investor committee that will form the 
+            We believe that your performance will be of great interest to the <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span> audience and we would like to invite you to be part of the investor committee that will form the
             <span style="font-weight: 800;">Startups @Model.Edition.UrlCode Pitching Bank</span>.
         </span><br />
     </p>
@@ -55,6 +55,42 @@
         <br />
         <span style="font-style: italic; color: red;">We look forward to your confirmation and remain at your disposal for any further information.</span>
     </p>
+    <p>
+        <span>
+            Para acessar a plataforma <span style="font-weight: 800;">MyRio2C</span> agora e cadastrar seu perfil para o <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span>, clique no botão abaixo e utilize esse mesmo endereço de e-mail para fazer o acesso.
+        </span><br />
+        <span style="font-style: italic; color: red;">
+            To register your <span style="font-weight: 800;">Rio2C @Model.Edition.UrlCode</span> profile now on <span style="font-weight: 800;">MyRio2C</span>, click on the button below and register using your email address.
+        </span>
+    </p>
+    <div style="margin-top: 25px; margin-bottom: 25px;">
+        <!--Button:begin-->
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tr>
+                <td align="center">
+                    <table cellpadding="0" cellspacing="0" width="250" border="0" style="border-collapse: separate !important;">
+                        <tr>
+                            <td style="background-color: #EA202C; color: #FFFFFF; font-family: sans-serif; font-size: 16px; font-weight: bold; padding: 10px 10px; border-radius: 10px; text-align: center;">
+                                <a href="@($"{ViewBag.SiteUrl}/account/onboarding?culture={Model.UserInterfaceLanguage}&edition={Model.Edition.UrlCode}&email={Url.Encode(Model.RecipientEmail)}&uid={Model.RecipientUserUid}&token={Model.UserSecurityToken}")" style="color:#FFFFFF;text-decoration:none;">Clique Aqui / Click here</a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <!--Button:end-->
+    </div>
+    <p>
+        <span>
+            Em caso de dúvidas, favor entre em contato com a nossa equipe usando o assunto “<span style="font-weight: bold;">MyRio2C</span>” através do email: curadoria@rio2c.com.
+        </span><br />
+        <span style="font-style: italic; color: red;">
+            For any queries, please get in touch with our team using the subject “<span style="font-weight: bold;">MyRio2C</span>” via the email: curadoria@rio2c.com.
+        </span>
+    </p>
+
+
+
     <p>
         <span>Atenciosamente,</span>
         <br />

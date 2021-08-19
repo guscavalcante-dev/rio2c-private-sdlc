@@ -306,6 +306,10 @@
     <value>Audiovisual</value>
     <comment>Audiovisual</comment>
   </data>
+  <data name="AudiovisualCommission" xml:space="preserve">
+    <value>Audiovisual Commission</value>
+    <comment>Comissão de Audiovisual</comment>
+  </data>
   <data name="AudiovisualNegotiationsCreateEndDate" xml:space="preserve">
     <value>Audiovisual negotiations creation end date</value>
     <comment>Data de término da criação de negociações audiovisuais</comment>
@@ -1190,6 +1194,10 @@
   <data name="InnovationProjectSubmitStartDate" xml:space="preserve">
     <value>Innovation project submission start date</value>
     <comment>Data de início de envio de projeto de inovação</comment>
+  </data>
+  <data name="Interest" xml:space="preserve">
+    <value>Interest</value>
+    <comment>Interesse</comment>
   </data>
   <data name="Interests" xml:space="preserve">
     <value>Interests</value>
