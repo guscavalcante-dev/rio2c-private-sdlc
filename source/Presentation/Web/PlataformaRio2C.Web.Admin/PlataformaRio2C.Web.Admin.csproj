@@ -8302,7 +8302,7 @@
     <Content Include="Areas\Audiovisual\Views\Players\Widgets\EditionCountOdometerWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Commissions\Details.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Commissions\Index.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Commissions\Modals\CreateForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Commissions\Modals\_Form.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Commissions\Modals\CreateModal.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Commissions\Modals\UpdateMainInformationForm.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Commissions\Modals\UpdateMainInformationModal.cshtml" />

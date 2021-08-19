@@ -782,7 +782,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/CreateForm", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -806,13 +806,15 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUpdateModal(Guid? collaboratorUid, bool? isAddingToCurrentEdition)
         {
-            UpdateTinyCollaborator cmd;
+            UpdateAudiovisualCollaborator cmd;
 
             try
             {
-                cmd = new UpdateTinyCollaborator(
+                cmd = new UpdateAudiovisualCollaborator(
                     await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
-                    isAddingToCurrentEdition);
+                    isAddingToCurrentEdition,
+                    await this.attendeeCollaboratorRepo.FindInterestsWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id),
+                    await this.GetInterestsFromGenreInterestGroupAsync());
             }
             catch (DomainException ex)
             {
@@ -833,7 +835,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Update(UpdateTinyCollaborator cmd)
+        public async Task<ActionResult> Update(UpdateAudiovisualCollaborator cmd)
         {
             var result = new AppValidationResult();
 
@@ -865,13 +867,15 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
+                cmd.UpdateDropdownProperties(await this.GetInterestsFromGenreInterestGroupAsync());
+
                 return Json(new
                 {
                     status = "error",
                     message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Forms/_TinyForm.cshtml", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
