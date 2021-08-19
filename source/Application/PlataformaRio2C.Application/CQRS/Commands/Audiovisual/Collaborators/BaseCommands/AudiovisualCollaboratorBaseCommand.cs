@@ -40,12 +40,26 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// Updates the base properties.
         /// </summary>
         /// <param name="entity">The entity.</param>
+        /// <param name="commissionAttendeeCollaboratorInterestsWidgetDto">The entity.</param>
         /// <param name="interestsDtos">The interests.</param>
         public void UpdateBaseProperties(
-            CommissionAttendeeCollaboratorInterestsWidgetDto entity,
+            CollaboratorDto entity,
+            CommissionAttendeeCollaboratorInterestsWidgetDto commissionAttendeeCollaboratorInterestsWidgetDto,
             List<InterestDto> interestsDtos)
         {
-            this.UpdateInterests(entity, interestsDtos);
+            base.UpdateBaseProperties(entity);
+            this.UpdateInterests(commissionAttendeeCollaboratorInterestsWidgetDto, interestsDtos);
+        }
+
+        /// <summary>
+        /// Updates the base properties.
+        /// </summary>
+        /// <param name="interestsDtos">The interests.</param>
+        public void UpdateBaseProperties(
+            CommissionAttendeeCollaboratorInterestsWidgetDto commissionAttendeeCollaboratorInterestsWidgetDto,
+            List<InterestDto> interestsDtos)
+        {
+            this.UpdateInterests(commissionAttendeeCollaboratorInterestsWidgetDto, interestsDtos);
         }
 
         /// <summary>
@@ -61,16 +75,16 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>
         /// Updates the audiovisual interests.
         /// </summary>
-        /// <param name="entity">The entity.</param>
+        /// <param name="commissionAttendeeCollaboratorInterestsWidgetDto">The entity.</param>
         /// <param name="interests">The interests.</param>
         private void UpdateInterests(
-            CommissionAttendeeCollaboratorInterestsWidgetDto entity,
+            CommissionAttendeeCollaboratorInterestsWidgetDto commissionAttendeeCollaboratorInterestsWidgetDto,
             List<InterestDto> interestsDtos)
         {
             var interestsBaseCommands = new List<InterestBaseCommand>();
             foreach (var interestDto in interestsDtos)
             {
-                var commissionAttendeeCollaboratorInterestDto = entity?.CommissionAttendeeCollaboratorInterestDtos?.FirstOrDefault(oad => oad.Interest.Uid == interestDto.Interest.Uid);
+                var commissionAttendeeCollaboratorInterestDto = commissionAttendeeCollaboratorInterestsWidgetDto?.CommissionAttendeeCollaboratorInterestDtos?.FirstOrDefault(oad => oad.Interest.Uid == interestDto.Interest.Uid);
                 interestsBaseCommands.Add(commissionAttendeeCollaboratorInterestDto != null ? new InterestBaseCommand(commissionAttendeeCollaboratorInterestDto) :
                     new InterestBaseCommand(interestDto));
             }

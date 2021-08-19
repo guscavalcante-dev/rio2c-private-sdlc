@@ -179,6 +179,7 @@
     <Compile Include="Common\AppValidationResult.cs" />
     <Compile Include="Common\EntityViewModel.cs" />
     <Compile Include="Common\StatusProjectCodes.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Audiovisual\Collaborators\UpdateAudiovisualCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\Collaborators\CreateAudiovisualCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\Collaborators\UpdateAudiovisualCollaboratorAdminMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\Collaborators\UpdateAudiovisualCollaboratorSocialNetworksCommandHandler.cs" />
@@ -352,6 +353,7 @@
     <Compile Include="CQRS\CommandsHandlers\Tracks\TrackBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Audiovisual\NegotiationConfigs\UpdateNegotiationConfigMainInformationCommandHandler.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\Collaborators\BaseCommands\AudiovisualCollaboratorBaseCommand.cs" />
+    <Compile Include="CQRS\Commands\Audiovisual\Collaborators\UpdateAudiovisualCollaborator.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\Collaborators\CreateAudiovisualCollaborator.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\Collaborators\UpdateAudiovisualCollaboratorAdminMainInformation.cs" />
     <Compile Include="CQRS\Commands\Audiovisual\Collaborators\UpdateAudiovisualCollaboratorSocialNetworks.cs" />
