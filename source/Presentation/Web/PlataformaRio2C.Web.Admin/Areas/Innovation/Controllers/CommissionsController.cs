@@ -783,7 +783,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                     message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/CreateForm", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -807,13 +807,15 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUpdateModal(Guid? collaboratorUid, bool? isAddingToCurrentEdition)
         {
-            UpdateTinyCollaborator cmd;
+            UpdateInnovationCollaborator cmd;
 
             try
             {
-                cmd = new UpdateTinyCollaborator(
+                cmd = new UpdateInnovationCollaborator(
                     await this.CommandBus.Send(new FindCollaboratorDtoByUidAndByEditionIdAsync(collaboratorUid, this.EditionDto.Id, this.UserInterfaceLanguage)),
-                    isAddingToCurrentEdition);
+                    isAddingToCurrentEdition,
+                    await this.attendeeCollaboratorRepo.FindTracksWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id),
+                    await this.innovationOrganizationTrackOptionRepo.FindAllAsync());
             }
             catch (DomainException ex)
             {
@@ -834,7 +836,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Update(UpdateTinyCollaborator cmd)
+        public async Task<ActionResult> Update(UpdateInnovationCollaborator cmd)
         {
             var result = new AppValidationResult();
 
@@ -866,13 +868,15 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
+                cmd.UpdateDropdownProperties(await this.innovationOrganizationTrackOptionRepo.FindAllAsync());
+
                 return Json(new
                 {
                     status = "error",
                     message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Forms/_TinyForm.cshtml", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }

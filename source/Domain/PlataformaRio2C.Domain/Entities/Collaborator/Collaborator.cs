@@ -667,6 +667,39 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>
+        /// Updates the innovation commission.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastNames">The last names.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <param name="cellPhone">The cell phone.</param>
+        /// <param name="document">The document.</param>
+        /// <param name="attendeeInnovationOrganizationTracks">The attendee innovation organization tracks.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateInnovationCommission(
+            Edition edition,
+            CollaboratorType collaboratorType,
+            string firstName,
+            string lastNames,
+            string email,
+            List<AttendeeInnovationOrganizationTrack> attendeeInnovationOrganizationTracks,
+            int userId)
+        {
+            this.FirstName = firstName?.Trim();
+            this.LastNames = lastNames?.Trim();
+            this.PublicEmail = email?.Trim();
+
+            this.SetUpdateDate(userId);
+
+            //BE CAREFUL! Always call "SynchronizeAttendeeCollaborators before "UpdateUser", because "UpdateUser" require informations setted in "SynchronizeAttendeeCollaborators"!
+            this.SynchronizeAttendeeCollaborators(edition, collaboratorType, null, attendeeInnovationOrganizationTracks, null, null, true, userId);
+            this.UpdateUser(email);
+        }
+
+        /// <summary>
         /// Updates the special needs.
         /// </summary>
         /// <param name="hasAnySpecialNeeds">if set to <c>true</c> [has any special needs].</param>

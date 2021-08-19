@@ -8269,7 +8269,7 @@
     <Content Include="Areas\Innovation\Views\Commissions\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\web.config" />
     <Content Include="Areas\Innovation\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Innovation\Views\Commissions\Modals\CreateForm.cshtml" />
+    <Content Include="Areas\Innovation\Views\Commissions\Modals\_Form.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Shared\EditorTemplates\OrganizationActivityBaseCommand.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Shared\EditorTemplates\OrganizationRestrictionSpecificsBaseCommand.cshtml" />
     <Content Include="Areas\Innovation\Views\Shared\EditorTemplates\InnovationOrganizationTrackOptionBaseCommand.cshtml" />

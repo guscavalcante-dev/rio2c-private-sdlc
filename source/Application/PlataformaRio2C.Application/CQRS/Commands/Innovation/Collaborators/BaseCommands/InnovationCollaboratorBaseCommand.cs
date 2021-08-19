@@ -38,12 +38,28 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>
         /// Updates the models and lists.
         /// </summary>
+        /// <param name="entity">The entity.</param>
         /// <param name="innovationOrganizationTrackOptions">The innovation organization track options.</param>
         public void UpdateBaseProperties(
             AttendeeCollaboratorTracksWidgetDto entity, 
             List<InnovationOrganizationTrackOption> innovationOrganizationTrackOptions)
         {
             this.UpdateInnovationOrganizationTrackOptions(entity, innovationOrganizationTrackOptions);
+        }
+
+        /// <summary>
+        /// Updates the base properties.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="attendeeCollaboratorTracksWidgetDto">The attendee collaborator tracks widget dto.</param>
+        /// <param name="innovationOrganizationTrackOptions">The innovation organization track options.</param>
+        public void UpdateBaseProperties(
+            CollaboratorDto entity,
+            AttendeeCollaboratorTracksWidgetDto attendeeCollaboratorTracksWidgetDto,
+            List<InnovationOrganizationTrackOption> innovationOrganizationTrackOptions)
+        {
+            base.UpdateBaseProperties(entity);
+            this.UpdateInnovationOrganizationTrackOptions(attendeeCollaboratorTracksWidgetDto, innovationOrganizationTrackOptions);
         }
 
         /// <summary>
