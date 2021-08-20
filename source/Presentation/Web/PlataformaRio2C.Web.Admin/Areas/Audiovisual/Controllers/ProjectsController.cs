@@ -326,56 +326,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
         #region Details
 
-        ///// <summary>Detailses the specified identifier.</summary>
-        ///// <param name="id">The identifier.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> Details(Guid? id)
-        //{
-        //    var projectDto = await this.projectRepo.FindAdminDetailsDtoByProjectUidAndByEditionIdAsync(id ?? Guid.Empty, this.EditionDto.Id);
-        //    if (projectDto == null)
-        //    {
-        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("Index", "Projects", new { Area = "Audiovisual" });
-        //    }
-
-        //    #region Breadcrumb
-
-        //    ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Project, new List<BreadcrumbItemHelper> {
-        //        new BreadcrumbItemHelper(Labels.AudioVisual, null),
-        //        new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "Audiovisual" })),
-        //        new BreadcrumbItemHelper(projectDto.GetTitleDtoByLanguageCode(this.UserInterfaceLanguage).ProjectTitle.Value, Url.Action("Details", "Projects", new { Area = "Audiovisual", id }))
-        //    });
-
-        //    #endregion
-
-        //    return View(projectDto);
-        //}
-
-
-        //[HttpGet]
-        //public async Task<ActionResult> Details(int? id)
-        //{
-        //    var projectDto = await this.projectRepo.FindAdminDetailsDtoByProjectIdAndByEditionIdAsync(id ?? 0, this.EditionDto.Id);
-        //    if (projectDto == null)
-        //    {
-        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("Index", "Projects", new { Area = "Audiovisual" });
-        //    }
-
-        //    #region Breadcrumb
-
-        //    ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Project, new List<BreadcrumbItemHelper> {
-        //        new BreadcrumbItemHelper(Labels.AudioVisual, null),
-        //        new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "Audiovisual" })),
-        //        new BreadcrumbItemHelper(projectDto.GetTitleDtoByLanguageCode(this.UserInterfaceLanguage).ProjectTitle.Value, Url.Action("Details", "Projects", new { Area = "Audiovisual", id }))
-        //    });
-
-        //    #endregion
-
-        //    return View(projectDto);
-        //}
-
         /// <summary>
         /// Detailses the specified identifier.
         /// </summary>
