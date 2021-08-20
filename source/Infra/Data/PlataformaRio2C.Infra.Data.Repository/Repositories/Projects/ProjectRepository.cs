@@ -44,6 +44,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>
+        /// Finds the by id.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="projectId">The project id.</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> FindById(this IQueryable<Project> query, int projectId)
+        {
+            query = query.Where(p => p.Id == projectId);
+
+            return query;
+        }
+
         /// <summary>Finds the by edition identifier.</summary>
         /// <param name="query">The query.</param>
         /// <param name="editionId">The edition identifier.</param>
@@ -134,7 +147,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
-
         /// <summary>Finds the by keywords.</summary>
         /// <param name="query">The query.</param>
         /// <param name="keywords">The keywords.</param>
@@ -180,7 +192,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
-
         /// <summary>Finds by interest uids.</summary>
         /// <param name="query">The query.</param>
         /// <param name="interestUids">The interest uid.</param>
@@ -197,7 +208,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
-
         /// <summary>Finds by target audience uid.</summary>
         /// <param name="query">The query.</param>
         /// <param name="targetAudienceUid">The target audience uid.</param>
@@ -213,7 +223,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
-
 
         /// <summary>Finds the by target audience uids.</summary>
         /// <param name="query">The query.</param>
@@ -326,6 +335,46 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>
+        /// Finds the by is evaluated.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> FindByIsEvaluated(this IQueryable<Project> query)
+        {
+            query = query.Where(p => p.CommissionGrade != null);
+
+            return query;
+        }
+
+        /// <summary>
+        /// Finds the by uids.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="selectedProjectsUids">The selected projects uids.</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> FindByUids(this IQueryable<Project> query, List<Guid> selectedProjectsUids)
+        {
+            if (selectedProjectsUids?.Any() == true)
+            {
+                query = query.Where(c => selectedProjectsUids.Contains(c.Uid));
+            }
+
+            return query;
+        }
+
+        /// <summary>
+        /// Orders the specified query.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<Project> Order(this IQueryable<Project> query)
+        {
+            query = query.OrderBy(p => p.FinishDate);
+
+            return query;
+        }
     }
 
     #endregion
@@ -354,16 +403,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return pagedList;
         }
 
-        /// <summary>Finds the by uids.</summary>
+        /// <summary>
+        /// Orders the specified query.
+        /// </summary>
         /// <param name="query">The query.</param>
-        /// <param name="collaboratorsUids">The collaborators uids.</param>
         /// <returns></returns>
-        internal static IQueryable<Project> FindByUids(this IQueryable<Project> query, List<Guid> selectedProjectsUids)
+        internal static IQueryable<ProjectDto> Order(this IQueryable<ProjectDto> query)
         {
-            if (selectedProjectsUids?.Any() == true)
-            {
-                query = query.Where(c => selectedProjectsUids.Contains(c.Uid));
-            }
+            query = query.OrderBy(dto => dto.Project.FinishDate);
 
             return query;
         }
@@ -394,6 +441,18 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return pagedList;
         }
+
+        /// <summary>
+        /// Orders the specified query.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        internal static IQueryable<ProjectBaseDto> Order(this IQueryable<ProjectBaseDto> query)
+        {
+            query = query.OrderBy(dto => dto.FinishDate);
+
+            return query;
+        }
     }
 
     #endregion 
@@ -401,11 +460,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
     /// <summary>ProjectRepository</summary>
     public class ProjectRepository : Repository<Context.PlataformaRio2CContext, Project>, IProjectRepository
     {
-        /// <summary>Initializes a new instance of the <see cref="ProjectRepository"/> class.</summary>
+        private readonly IEditionRepository editioRepo;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProjectRepository"/> class.
+        /// </summary>
         /// <param name="context">The context.</param>
-        public ProjectRepository(Context.PlataformaRio2CContext context)
+        /// <param name="editionRepository">The edition repository.</param>
+        public ProjectRepository(
+            Context.PlataformaRio2CContext context,
+            IEditionRepository editionRepository
+            )
             : base(context)
         {
+            this.editioRepo = editionRepository;
         }
 
         /// <summary>Gets the base query.</summary>
@@ -482,7 +550,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<ProjectDto>> FindAllDtosToEvaluateAsync(Guid attendeeCollaboratorUid, string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int page, int pageSize)
+        public async Task<IPagedList<ProjectDto>> FindAllDtosToEvaluateAsync(
+            Guid attendeeCollaboratorUid,
+            string searchKeywords,
+            Guid? interestUid,
+            Guid? evaluationStatusUid,
+            int page,
+            int pageSize)
         {
             var matchInterestsGroups = new List<Guid>
             {
@@ -525,9 +599,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         InterestGroup = i.Interest.InterestGroup
                                     }),
                                     InterestGroupsMatches = p.ProjectInterests
-                                                                .Where(pi => !pi.IsDeleted && !pi.Interest.IsDeleted 
+                                                                .Where(pi => !pi.IsDeleted && !pi.Interest.IsDeleted
                                                                              && p.ProjectBuyerEvaluations
-                                                                                    .Any(pbe => !pbe.IsDeleted 
+                                                                                    .Any(pbe => !pbe.IsDeleted
                                                                                                   && pbe.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators
                                                                                                             .Where(aoc => aoc.AttendeeCollaborator.Uid == attendeeCollaboratorUid
                                                                                                                           && !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted && !aoc.AttendeeOrganization.Organization.IsDeleted)
@@ -564,6 +638,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .ToListPagedAsync(page, pageSize);
         }
 
+        /// <summary>
+        /// Finds the dto to evaluate asynchronous.
+        /// </summary>
+        /// <param name="attendeeCollaboratorUid">The attendee collaborator uid.</param>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
         public async Task<ProjectDto> FindDtoToEvaluateAsync(Guid attendeeCollaboratorUid, Guid projectUid)
         {
             var matchInterestsGroups = new List<Guid>
@@ -653,47 +733,60 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="languageCode">The language code.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<IPagedList<ProjectBaseDto>> FindAllBaseDtosByFiltersAndByPageAsync(
+        public async Task<IPagedList<ProjectBaseDto>> FindAllBaseDtosPagedAsync(
             int page,
             int pageSize,
             List<Tuple<string, string>> sortColumns,
             string keywords,
             bool showPitchings,
             Guid? interestUid,
+            Guid? evaluationStatusUid,
             string languageCode,
             int editionId)
         {
-            var query = this.GetBaseQuery()
-                                .FindByEditionId(editionId)
-                                .IsFinished()
-                                .IsPitching(showPitchings)
-                                .FindByKeywords(keywords)
-                                .FindByInterestUid(interestUid)
-                                .DynamicOrder<Project>(
-                                    sortColumns,
-                                    null,
-                                    new List<string> { "CreateDate", "FinishDate" },
-                                    "FinishDate")
-                                .Select(p => new ProjectBaseDto
-                                {
-                                    Id = p.Id,
-                                    Uid = p.Uid,
-                                    ProjectName = p.ProjectTitles.Where(t => t.Language.Code == languageCode).Select(t => t.Value).FirstOrDefault(),
-                                    ProducerName = p.SellerAttendeeOrganization.Organization.Name,
-                                    ProducerImageUploadDate = p.SellerAttendeeOrganization.Organization.ImageUploadDate,
-                                    ProducerUid = p.SellerAttendeeOrganization.Organization.Uid,
-                                    ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted && i.Interest.InterestGroup.Uid == InterestGroup.Genre.Uid).Select(i => new ProjectInterestDto
-                                    {
-                                        Interest = i.Interest,
-                                        InterestGroup = i.Interest.InterestGroup
-                                    }),
-                                    IsPitching = p.IsPitching,
-                                    CreateDate = p.CreateDate,
-                                    FinishDate = p.FinishDate
-                                });
+            var projectBaseDtos = await this.FindAllProjectBaseDtosByFilters(sortColumns, keywords, showPitchings, interestUid, evaluationStatusUid, languageCode, editionId);
+            var editionDto = await this.editioRepo.FindDtoAsync(editionId);
 
-            return await query
-                           .ToListPagedAsync(page, pageSize);
+            IEnumerable<ProjectBaseDto> projectBaseDtosResult = projectBaseDtos;
+            if (editionDto.IsProjectEvaluationOpen())
+            {
+                #region Evaluation is Open
+
+                if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
+                {
+                    projectBaseDtosResult = new List<ProjectBaseDto>(); //Returns a empty list
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
+                {
+                    projectBaseDtosResult = new List<ProjectBaseDto>(); //Returns a empty list
+                }
+
+                #endregion
+            }
+            else
+            {
+                #region Evaluation is Closed
+
+                var approvedProjectsIds = await this.FindAllApprovedProjectsIdsAsync(editionId);
+
+                if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
+                {
+                    projectBaseDtosResult = projectBaseDtos.Where(dto => approvedProjectsIds.Contains(dto.Project.Id));
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
+                {
+                    projectBaseDtosResult = projectBaseDtos.Where(dto => !approvedProjectsIds.Contains(dto.Project.Id));
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
+                {
+                    projectBaseDtosResult = new List<ProjectBaseDto>();
+                }
+
+                #endregion
+            }
+
+            return await projectBaseDtosResult
+                            .ToPagedListAsync(page, pageSize);
         }
 
         /// <summary>
@@ -772,6 +865,224 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 });
 
             return await query
+                            .Order()
+                            .ToListAsync();
+        }
+
+        /// <summary>
+        /// Finds all approved projects ids asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<int[]> FindAllApprovedProjectsIdsAsync(int editionId)
+        {
+            var edition = await this.editioRepo.FindByIdAsync(editionId);
+
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId)
+                                .FindByIsEvaluated();
+
+            return await query
+                            .OrderByDescending(p => p.CommissionGrade)
+                            .Take(edition.InnovationProjectMaximumApprovedCompaniesCount)
+                            .Select(p => p.Id)
+                            .ToArrayAsync();
+        }
+
+        /// <summary>
+        /// Finds all projects ids paged asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="interestUid">The interest uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="showPitchings">if set to <c>true</c> [show pitchings].</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<int[]> FindAllProjectsIdsPagedAsync(
+            int editionId,
+            string searchKeywords,
+            Guid? interestUid,
+            Guid? evaluationStatusUid,
+            bool showPitchings,
+            int page,
+            int pageSize)
+        {
+            //var projectsDtos = await this.FindAllDtosByFiltersAsync(searchKeywords, showPitchings, interestUid, null, null, editionId);
+            var projectsIds = await this.GetBaseQuery()
+                                .FindByEditionId(editionId)
+                                .IsFinished()
+                                .IsPitching(showPitchings)
+                                .FindByKeywords(searchKeywords)
+                                .FindByInterestUid(interestUid)
+                                .Order()
+                                .Select(p => p.Id)
+                                .ToListAsync();
+
+            var editionDto = await this.editioRepo.FindDtoAsync(editionId);
+
+            IEnumerable<int> projectsIdsResult = projectsIds;
+            if (editionDto.IsProjectEvaluationOpen())
+            {
+                #region Evaluation is Open
+
+                if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
+                {
+                    projectsIdsResult = new List<int>(); //Returns a empty list
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
+                {
+                    projectsIdsResult = new List<int>(); //Returns a empty list
+                }
+
+                #endregion
+            }
+            else
+            {
+                #region Evaluation is Closed
+
+                var approvedProjectsIds = await this.FindAllApprovedProjectsIdsAsync(editionId);
+
+                if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
+                {
+                    projectsIdsResult = projectsIds.Where(id => approvedProjectsIds.Contains(id));
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
+                {
+                    projectsIdsResult = projectsIds.Where(id => !approvedProjectsIds.Contains(id));
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
+                {
+                    projectsIdsResult = new List<int>();
+                }
+
+                #endregion
+            }
+
+            var projectsPagedList = projectsIdsResult.ToPagedList(page, pageSize);
+
+            return projectsPagedList
+                .ToArray();
+        }
+
+        /// <summary>
+        /// Counts the paged asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="interestUid">The interest uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="showPitchings">if set to <c>true</c> [show pitchings].</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<int> CountPagedAsync(
+            int editionId,
+            string searchKeywords,
+            Guid? interestUid,
+            Guid? evaluationStatusUid,
+            bool showPitchings,
+            int page,
+            int pageSize)
+        {
+            var projectsDtos = await this.FindAllDtosByFiltersAsync(searchKeywords, showPitchings, interestUid, null, null, editionId);
+            var editionDto = await this.editioRepo.FindDtoAsync(editionId);
+            var approvedProjectsIds = await this.FindAllApprovedProjectsIdsAsync(editionId);
+
+            IEnumerable<ProjectDto> projectsResult = projectsDtos;
+            if (editionDto.IsInnovationProjectEvaluationOpen())
+            {
+                #region Evaluation is Open
+
+                if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
+                {
+                    projectsResult = new List<ProjectDto>(); //Returns a empty list
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
+                {
+                    projectsResult = new List<ProjectDto>(); //Returns a empty list
+                }
+
+                #endregion
+            }
+            else
+            {
+                #region Evaluation is Closed
+
+                if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
+                {
+                    projectsResult = projectsDtos.Where(dto => approvedProjectsIds.Contains(dto.Project.Id));
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
+                {
+                    projectsResult = projectsDtos.Where(dto => !approvedProjectsIds.Contains(dto.Project.Id));
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
+                {
+                    projectsResult = new List<ProjectDto>();
+                }
+
+                #endregion
+            }
+
+            var projectsPagedList = await projectsResult
+                                                 .ToPagedListAsync(page, pageSize);
+
+            return projectsPagedList.Count;
+        }
+
+        /// <summary>
+        /// Finds all base dtos by filters.
+        /// </summary>
+        /// <param name="sortColumns">The sort columns.</param>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="showPitchings">if set to <c>true</c> [show pitchings].</param>
+        /// <param name="interestUid">The interest uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="languageCode">The language code.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        private async Task<List<ProjectBaseDto>> FindAllProjectBaseDtosByFilters(
+            List<Tuple<string, string>> sortColumns,
+            string keywords,
+            bool showPitchings,
+            Guid? interestUid,
+            Guid? evaluationStatusUid,
+            string languageCode,
+            int editionId)
+        {
+            var query = this.GetBaseQuery()
+                                            .FindByEditionId(editionId)
+                                            .IsFinished()
+                                            .IsPitching(showPitchings)
+                                            .FindByKeywords(keywords)
+                                            .FindByInterestUid(interestUid)
+                                            .DynamicOrder<Project>(
+                                                sortColumns,
+                                                null,
+                                                new List<string> { "CreateDate", "FinishDate" },
+                                                "FinishDate")
+                                            .Select(p => new ProjectBaseDto
+                                            {
+                                                Id = p.Id,
+                                                Uid = p.Uid,
+                                                ProjectName = p.ProjectTitles.Where(t => t.Language.Code == languageCode).Select(t => t.Value).FirstOrDefault(),
+                                                ProducerName = p.SellerAttendeeOrganization.Organization.Name,
+                                                ProducerImageUploadDate = p.SellerAttendeeOrganization.Organization.ImageUploadDate,
+                                                ProducerUid = p.SellerAttendeeOrganization.Organization.Uid,
+                                                ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted && i.Interest.InterestGroup.Uid == InterestGroup.Genre.Uid).Select(i => new ProjectInterestDto
+                                                {
+                                                    Interest = i.Interest,
+                                                    InterestGroup = i.Interest.InterestGroup
+                                                }),
+                                                IsPitching = p.IsPitching,
+                                                CreateDate = p.CreateDate,
+                                                FinishDate = p.FinishDate
+                                            });
+
+            return await query
+                            .Order()
                             .ToListAsync();
         }
 
@@ -788,6 +1099,31 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery(true)
                                 .FindByUid(projectUid)
                                 .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(p => new ProjectDto
+                            {
+                                Project = p,
+                                ProjectTitleDtos = p.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                {
+                                    ProjectTitle = t,
+                                    Language = t.Language
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the admin details dto by project identifier and by edition identifier asynchronous.
+        /// </summary>
+        /// <param name="projectId">The project identifier.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<ProjectDto> FindAdminDetailsDtoByProjectIdAndByEditionIdAsync(int projectId, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                               .FindById(projectId)
+                               .FindByEditionId(editionId, false);
 
             return await query
                             .Select(p => new ProjectDto
@@ -1395,13 +1731,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<IPagedList<AudiovisualProjectSubmissionDto>> FindAudiovisualProjectSubmissionDtosByFilterAndByPageAsync(
             string keywords,
             List<Guid> interestUids,
-            int editionId, 
-            bool isPitching, 
-            List<Guid> targetAudienceUids, 
-            DateTime? startDate, 
-            DateTime? endDate, 
-            int page = 1, 
-            int pageSize = 10, 
+            int editionId,
+            bool isPitching,
+            List<Guid> targetAudienceUids,
+            DateTime? startDate,
+            DateTime? endDate,
+            int page = 1,
+            int pageSize = 10,
             bool showAllEditions = false)
         {
             var query = this.FindAudiovisualProjectSubmissionDtosByFilter(keywords, interestUids, editionId, isPitching, targetAudienceUids, startDate, endDate, showAllEditions);
@@ -1424,12 +1760,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         public async Task<List<AudiovisualProjectSubmissionDto>> FindAudiovisualSubscribedProjectsDtosByFilterAsync(
             string keywords,
-            List<Guid> interestUids, 
-            int editionId, 
-            bool isPitching, 
+            List<Guid> interestUids,
+            int editionId,
+            bool isPitching,
             List<Guid> targetAudienceUids,
-            DateTime? startDate, 
-            DateTime? endDate, 
+            DateTime? startDate,
+            DateTime? endDate,
             bool showAllEditions = false)
         {
             var query = this.FindAudiovisualProjectSubmissionDtosByFilter(keywords, interestUids, editionId, isPitching, targetAudienceUids, startDate, endDate, showAllEditions);

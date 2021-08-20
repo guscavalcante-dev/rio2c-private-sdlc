@@ -2,8 +2,8 @@
 @model AttendeeCollaboratorInnovationEvaluationsWidgetDto
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
-    var approvedAttendeeInnovationOrganizationIds = ViewBag.ApprovedAttendeeInnovationOrganizationsIds as int[];
-    bool isInnovationProjectEvaluationClosed = !editionDto.IsInnovationProjectEvaluationOpen();
+    var approvedAttendeeInnovationOrganizationIds = ViewBag.ApprovedProjectsIds as int[];
+    bool isProjectEvaluationEnded = editionDto.IsProjectEvaluationEnded();
 }
 
 <div class="kt-portlet__head">
@@ -37,7 +37,7 @@
                                 var icon = "fa-diagnoses";
                                 var color = "warning";
                                 var text = Labels.UnderEvaluation;
-                                if (isInnovationProjectEvaluationClosed)
+                                if (isProjectEvaluationEnded)
                                 {
                                     if (approvedAttendeeInnovationOrganizationIds.Contains(attendeeInnovationOrganizationEvaluationDto.AttendeeInnovationOrganization.Id))
                                     {
@@ -58,7 +58,7 @@
                                             <i class="fa @icon"></i>
                                             <span>
                                                 @text
-                                                @if (isInnovationProjectEvaluationClosed)
+                                                @if (isProjectEvaluationEnded)
                                                 {
                                                     <b>@("(" + (attendeeInnovationOrganizationEvaluationDto.AttendeeInnovationOrganization.Grade?.ToString() ?? "-") + ")")</b>
                                                 }

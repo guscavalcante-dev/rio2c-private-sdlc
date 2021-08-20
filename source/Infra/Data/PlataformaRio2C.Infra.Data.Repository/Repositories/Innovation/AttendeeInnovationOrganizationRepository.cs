@@ -260,7 +260,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="innovationOrganizationTrackOptionUid">The innovation organization track option uid.</param>
         /// <returns></returns>
-        private async Task<List<AttendeeInnovationOrganization>> FindAllAttendeeInnovationOrganizationsAsync(int editionId, string searchKeywords, List<Guid?> innovationOrganizationTrackOptionUids)
+        private async Task<List<AttendeeInnovationOrganization>> FindAllAttendeeInnovationOrganizationsAsync(
+            int editionId,
+            string searchKeywords,
+            List<Guid?> innovationOrganizationTrackOptionUids)
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId)
@@ -279,7 +282,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="innovationOrganizationTrackOptionUid">The innovation organization track option uid.</param>
         /// <returns></returns>
-        private async Task<List<AttendeeInnovationOrganizationDto>> FindAllAttendeeInnovationOrganizationDtosAsync(int editionId, string searchKeywords, List<Guid?> innovationOrganizationTrackOptionUids)
+        private async Task<List<AttendeeInnovationOrganizationDto>> FindAllAttendeeInnovationOrganizationDtosAsync(
+            int editionId,
+            string searchKeywords,
+            List<Guid?> innovationOrganizationTrackOptionUids)
         {
             var query = this.GetBaseQuery()
                                .FindByEditionId(editionId)
@@ -353,7 +359,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="innovationOrganizationTrackOptionUid">The innovation organization track option uid.</param>
         /// <param name="sortColumns">The sort columns.</param>
         /// <returns></returns>
-        private async Task<List<AttendeeInnovationOrganizationJsonDto>> FindAllJsonDtosAsync(int editionId, string searchKeywords, List<Guid?> innovationOrganizationTrackOptionUids, List<Tuple<string, string>> sortColumns)
+        private async Task<List<AttendeeInnovationOrganizationJsonDto>> FindAllJsonDtosAsync(
+            int editionId,
+            string searchKeywords,
+            List<Guid?> innovationOrganizationTrackOptionUids,
+            List<Tuple<string, string>> sortColumns)
         {
             var query = this.GetBaseQuery()
                                .FindByEditionId(editionId, false)
@@ -404,11 +414,16 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<IPagedList<AttendeeInnovationOrganizationDto>> FindAllDtosPagedAsync(int editionId, string searchKeywords, List<Guid?> innovationOrganizationTrackOptionUids, Guid? evaluationStatusUid, int page, int pageSize)
+        public async Task<IPagedList<AttendeeInnovationOrganizationDto>> FindAllDtosPagedAsync(
+            int editionId,
+            string searchKeywords,
+            List<Guid?> innovationOrganizationTrackOptionUids,
+            Guid? evaluationStatusUid,
+            int page,
+            int pageSize)
         {
             var attendeeInnovationOrganizationsDtos = await this.FindAllAttendeeInnovationOrganizationDtosAsync(editionId, searchKeywords, innovationOrganizationTrackOptionUids);
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
-            var approvedAttendeeInnovationOrganizationsIds = await this.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(editionId);
 
             IEnumerable<AttendeeInnovationOrganizationDto> attendeeInnovationOrganizationDtosResult = attendeeInnovationOrganizationsDtos;
             if (editionDto.IsInnovationProjectEvaluationOpen())
@@ -429,6 +444,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             else
             {
                 #region Evaluation is Closed
+
+                var approvedAttendeeInnovationOrganizationsIds = await this.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(editionId);
 
                 if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
                 {
@@ -472,7 +489,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var attendeeInnovaitonOrganizationJsonDtos = await this.FindAllJsonDtosAsync(editionId, searchKeywords, innovationOrganizationTrackOptionUids, sortColumns);
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
-            var approvedMusicBandsIds = await this.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(editionId);
 
             IEnumerable<AttendeeInnovationOrganizationJsonDto> attendeeInnovaitonOrganizationJsonDtosResult = attendeeInnovaitonOrganizationJsonDtos;
             if (editionDto.IsInnovationProjectEvaluationOpen())
@@ -493,6 +509,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             else
             {
                 #region Evaluation is Closed
+
+                var approvedMusicBandsIds = await this.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(editionId);
 
                 if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
                 {
@@ -606,16 +624,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="innovationOrganizationTrackOptionUid">The innovation organization track option uid.</param>
+        /// <param name="innovationOrganizationTrackOptionUids">The innovation organization track option uids.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<int[]> FindAllInnovationOrganizationsIdsPagedAsync(int editionId, string searchKeywords, List<Guid?> innovationOrganizationTrackOptionUids, Guid? evaluationStatusUid, int page, int pageSize)
+        public async Task<int[]> FindAllInnovationOrganizationsIdsPagedAsync(
+            int editionId,
+            string searchKeywords,
+            List<Guid?> innovationOrganizationTrackOptionUids,
+            Guid? evaluationStatusUid,
+            int page,
+            int pageSize)
         {
             var attendeeInnovationOrganizations = await this.FindAllAttendeeInnovationOrganizationsAsync(editionId, searchKeywords, innovationOrganizationTrackOptionUids);
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
-            var approvedAttendeeInnovationOrganizationsIds = await this.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(editionId);
 
             IEnumerable<AttendeeInnovationOrganization> attendeeInnovationOrganizationResult = attendeeInnovationOrganizations;
             if (editionDto.IsInnovationProjectEvaluationOpen())
@@ -637,6 +660,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             {
                 #region Evaluation is Closed
 
+                var approvedAttendeeInnovationOrganizationsIds = await this.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(editionId);
+
                 if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
                 {
                     attendeeInnovationOrganizationResult = attendeeInnovationOrganizations.Where(aio => approvedAttendeeInnovationOrganizationsIds.Contains(aio.Id));
@@ -653,9 +678,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 #endregion
             }
 
-            var attendeeInnovationOrganizationsPagedList = await attendeeInnovationOrganizationResult
-                                                 .ToPagedListAsync(page, pageSize);
-
+            var attendeeInnovationOrganizationsPagedList = await attendeeInnovationOrganizationResult.ToPagedListAsync(page, pageSize);
             return attendeeInnovationOrganizationsPagedList
                             .Select(aio => aio.Id)
                             .OrderBy(aioId => aioId)
