@@ -235,7 +235,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                     evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid))
                 {
                     additionalParameters.Add("noRecordsFoundMessage", 
-                        $"{string.Format(Messages.TheEvaluationPeriodRunsFrom, this.EditionDto.InnovationProjectEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(), this.EditionDto.InnovationProjectEvaluationEndDate.ToBrazilTimeZone().ToShortDateString())}.</br>{Messages.TheProjectsWillReceiveFinalGradeAtPeriodEnds}");
+                        $"{string.Format(Messages.TheEvaluationPeriodRunsFrom, this.EditionDto.InnovationCommissionEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(), this.EditionDto.InnovationCommissionEvaluationEndDate.ToBrazilTimeZone().ToShortDateString())}.</br>{Messages.TheProjectsWillReceiveFinalGradeAtPeriodEnds}");
                 }
                 else if (!this.EditionDto.IsInnovationProjectEvaluationOpen() && 
                     evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)

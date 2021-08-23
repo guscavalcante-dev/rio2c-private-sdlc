@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Application
 // Author           : Renan Valentim
-// Created          : 20-03-2021
+// Created          : 03-20-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 20-03-2021
+// Last Modified On : 08-21-2021
 // ***********************************************************************
 // <copyright file="UpdateEditionDatesInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -63,26 +63,38 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            edition.UpdateDatesInformation(cmd.SellStartDate.Value,
-                                          cmd.SellEndDate.Value,
-                                          cmd.ProjectSubmitStartDate.Value,
-                                          cmd.ProjectSubmitEndDate.Value,
-                                          cmd.ProjectEvaluationStartDate.Value,
-                                          cmd.ProjectEvaluationEndDate.Value,
-                                          cmd.NegotiationStartDate.Value,
-                                          cmd.NegotiationEndDate.Value,
-                                          cmd.MusicProjectSubmitStartDate.Value,
-                                          cmd.MusicProjectSubmitEndDate.Value,
-                                          cmd.MusicProjectEvaluationStartDate.Value,
-                                          cmd.MusicProjectEvaluationEndDate.Value,
-                                          cmd.InnovationProjectSubmitStartDate.Value,
-                                          cmd.InnovationProjectSubmitEndDate.Value,
-                                          cmd.InnovationProjectEvaluationStartDate.Value,
-                                          cmd.InnovationProjectEvaluationEndDate.Value,
-                                          cmd.AudiovisualNegotiationsCreateStartDate.Value,
-                                          cmd.AudiovisualNegotiationsCreateEndDate.Value,
-                                          cmd.UserId);
-            
+            edition.UpdateDatesInformation(cmd.ProjectSubmitStartDate.Value,
+                                              cmd.ProjectSubmitEndDate.Value,
+                                              cmd.ProjectEvaluationStartDate.Value,
+                                              cmd.ProjectEvaluationEndDate.Value,
+                                              cmd.NegotiationStartDate.Value,
+                                              cmd.NegotiationEndDate.Value,
+                                              cmd.AttendeeOrganizationMaxSellProjectsCount.Value,
+                                              cmd.ProjectMaxBuyerEvaluationsCount.Value,
+
+                                              cmd.MusicProjectSubmitStartDate.Value,
+                                              cmd.MusicProjectSubmitEndDate.Value,
+                                              cmd.MusicCommissionEvaluationStartDate.Value,
+                                              cmd.MusicCommissionEvaluationEndDate.Value,
+                                              cmd.MusicCommissionMinimumEvaluationsCount.Value,
+                                              cmd.MusicCommissionMaximumApprovedBandsCount.Value,
+
+                                              cmd.InnovationProjectSubmitStartDate.Value,
+                                              cmd.InnovationProjectSubmitEndDate.Value,
+                                              cmd.InnovationCommissionEvaluationStartDate.Value,
+                                              cmd.InnovationCommissionEvaluationEndDate.Value,
+                                              cmd.InnovationCommissionMinimumEvaluationsCount.Value,
+                                              cmd.InnovationCommissionMaximumApprovedCompaniesCount.Value,
+
+                                              cmd.AudiovisualNegotiationsCreateStartDate.Value,
+                                              cmd.AudiovisualNegotiationsCreateEndDate.Value,
+                                              cmd.AudiovisualCommissionEvaluationStartDate.Value,
+                                              cmd.AudiovisualCommissionEvaluationEndDate.Value,
+                                              cmd.AudiovisualCommissionMinimumEvaluationsCount.Value,
+                                              cmd.AudiovisualCommissionMaximumApprovedProjectsCount.Value,
+
+                                              cmd.UserId);
+
             if (!edition.IsValid())
             {
                 this.AppValidationResult.Add(edition.ValidationResult);

@@ -1175,11 +1175,11 @@
     <value>Innovation Commission</value>
     <comment>Comissão de Inovação</comment>
   </data>
-  <data name="InnovationProjectEvaluationEndDate" xml:space="preserve">
+  <data name="InnovationCommissionEvaluationEndDate" xml:space="preserve">
     <value>Innovation project evaluation end date</value>
     <comment>Data de término da avaliação de projeto de inovação</comment>
   </data>
-  <data name="InnovationProjectEvaluationStartDate" xml:space="preserve">
+  <data name="InnovationCommissionEvaluationStartDate" xml:space="preserve">
     <value>Innovation project evaluation start date</value>
     <comment>Data de início da avaliação de projeto de inovação</comment>
   </data>
@@ -1460,19 +1460,19 @@
     <value>Musical instrument</value>
     <comment>Instrumento musical</comment>
   </data>
-  <data name="MusicProjectEvaluationEndDate" xml:space="preserve">
+  <data name="MusicCommissionEvaluationEndDate" xml:space="preserve">
     <value>Music project evaluation end date</value>
     <comment>Data de término da avaliação de projeto musical</comment>
   </data>
-  <data name="MusicProjectEvaluationStartDate" xml:space="preserve">
+  <data name="MusicCommissionEvaluationStartDate" xml:space="preserve">
     <value>Music project evaluation start date</value>
     <comment>Data de início da avaliação de projeto musical</comment>
   </data>
-  <data name="MusicProjectMaximumApprovedBandsCount" xml:space="preserve">
+  <data name="MusicCommissionMaximumApprovedBandsCount" xml:space="preserve">
     <value>Music Project Maximum Approved Bands Count</value>
     <comment>Quantidade mínima de votos para gerar média</comment>
   </data>
-  <data name="MusicProjectMinimumEvaluationsCount" xml:space="preserve">
+  <data name="MusicCommissionMinimumEvaluationsCount" xml:space="preserve">
     <value>Music Project Minimum Evaluations Count</value>
     <comment>Quantidade mínima de votos para gerar média</comment>
   </data>
@@ -2909,5 +2909,33 @@
   <data name="ZoomOut" xml:space="preserve">
     <value>Zoom Out</value>
     <comment>Menos Zoom</comment>
+  </data>
+  <data name="AudiovisualCommissionEvaluationEndDate" xml:space="preserve">
+    <value>Audiovisual commission evaluation end date</value>
+    <comment>Data de término da avaliação de projeto audiovisual</comment>
+  </data>
+  <data name="AudiovisualCommissionEvaluationStartDate" xml:space="preserve">
+    <value>Audiovisual commission evaluation start date</value>
+    <comment>Data de início da avaliação de projeto audiovisual</comment>
+  </data>
+  <data name="AudiovisualCommissionMaximumApprovedProjectsCount" xml:space="preserve">
+    <value>Audiovisual commission maximum approved projects count</value>
+    <comment>Quantidade máxima de projetos de audiovisual aprovados</comment>
+  </data>
+  <data name="AudiovisualCommissionMinimumEvaluationsCount" xml:space="preserve">
+    <value>Audiovisual commission minimum evaluations count</value>
+    <comment>Quantidade mínima de votos para gerar média de projeto audiovisual</comment>
+  </data>
+  <data name="InnovationCommissionMaximumApprovedCompaniesCount" xml:space="preserve">
+    <value>Innovation commission maximum approved companies count</value>
+    <comment>Quantidade máxima de empresas aprovadas</comment>
+  </data>
+  <data name="InnovationCommissionMinimumEvaluationsCount" xml:space="preserve">
+    <value>Innovation commission minimum evaluations count</value>
+    <comment>Quantidade mínima de votos para gerar média</comment>
+  </data>
+  <data name="AudiovisualNegotiations" xml:space="preserve">
+    <value>Audiovisual Negotiations</value>
+    <comment>Negociações Audiovisual</comment>
   </data>
 </root>

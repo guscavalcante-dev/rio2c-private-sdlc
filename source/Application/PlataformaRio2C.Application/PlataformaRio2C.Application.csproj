@@ -377,8 +377,10 @@
     <Compile Include="CQRS\Commands\ConferenceParticipantRoles\DeleteConferenceParticipantRole.cs" />
     <Compile Include="CQRS\Commands\ConferenceParticipantRoles\UpdateConferenceParticipantRoleMainInformation.cs" />
     <Compile Include="CQRS\Commands\Connections\CleanUpConnectionsAsync.cs" />
+    <Compile Include="CQRS\Commands\Editions\BaseCommands\EditionBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Editions\CreateEdition.cs" />
     <Compile Include="CQRS\Commands\Editions\DeleteEdition.cs" />
+    <Compile Include="CQRS\Commands\Editions\IEditionDatesInformation.cs" />
     <Compile Include="CQRS\Commands\Editions\UpdateEditionDatesInformation.cs" />
     <Compile Include="CQRS\Commands\Editions\UpdateEditionMainInformation.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendAdminWelcomeEmailAsync.cs" />

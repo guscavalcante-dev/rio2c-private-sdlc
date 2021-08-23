@@ -884,7 +884,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return await query
                             .OrderByDescending(p => p.CommissionGrade)
-                            .Take(edition.InnovationProjectMaximumApprovedCompaniesCount)
+                            .Take(edition.AudiovisualCommissionMaximumApprovedProjectsCount)
                             .Select(p => p.Id)
                             .ToArrayAsync();
         }
@@ -991,7 +991,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var approvedProjectsIds = await this.FindAllApprovedProjectsIdsAsync(editionId);
 
             IEnumerable<ProjectDto> projectsResult = projectsDtos;
-            if (editionDto.IsInnovationProjectEvaluationOpen())
+            if (editionDto.IsProjectEvaluationOpen())
             {
                 #region Evaluation is Open
 

@@ -160,7 +160,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             // Can only generate the 'AverageEvaluation' when the 'AttendeeMusicBandEvaluations' count 
             // is greater or equal than minimum necessary evaluations quantity
-            if (this.GetAttendeeMusicBandEvaluationTotalCount() >= edition.MusicProjectMinimumEvaluationsCount)
+            if (this.GetAttendeeMusicBandEvaluationTotalCount() >= edition.MusicCommissionMinimumEvaluationsCount)
             {
                 return this.FindAllAttendeeMusicBandEvaluationsNotDeleted().Sum(e => e.Grade) / this.FindAllAttendeeMusicBandEvaluationsNotDeleted().Count;
             }

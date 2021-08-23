@@ -939,7 +939,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return await query
                             .OrderByDescending(mp => mp.AttendeeMusicBandDto.AttendeeMusicBand.Grade)
-                            .Take(edition.MusicProjectMaximumApprovedBandsCount)
+                            .Take(edition.MusicCommissionMaximumApprovedBandsCount)
                             .ToListAsync();
         }
 
@@ -958,7 +958,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return await query
                             .OrderByDescending(mp => mp.AttendeeMusicBand.Grade)
-                            .Take(edition.MusicProjectMaximumApprovedBandsCount)
+                            .Take(edition.MusicCommissionMaximumApprovedBandsCount)
                             .Select(mp => mp.AttendeeMusicBand.Id)
                             .ToArrayAsync();
         }

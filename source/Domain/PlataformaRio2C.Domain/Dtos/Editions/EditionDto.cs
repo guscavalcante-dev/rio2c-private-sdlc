@@ -45,14 +45,14 @@ namespace PlataformaRio2C.Domain.Dtos
         public int ProjectMaxBuyerEvaluationsCount { get; private set; }
         public DateTimeOffset MusicProjectSubmitStartDate { get; private set; }
         public DateTimeOffset MusicProjectSubmitEndDate { get; private set; }
-        public DateTimeOffset MusicProjectEvaluationStartDate { get; private set; }
-        public DateTimeOffset MusicProjectEvaluationEndDate { get; private set; }
-        public int MusicProjectMinimumEvaluationsCount { get; private set; }
-        public int MusicProjectMaximumApprovedBandsCount { get; private set; }
+        public DateTimeOffset MusicCommissionEvaluationStartDate { get; private set; }
+        public DateTimeOffset MusicCommissionEvaluationEndDate { get; private set; }
+        public int MusicCommissionMinimumEvaluationsCount { get; private set; }
+        public int MusicCommissionMaximumApprovedBandsCount { get; private set; }
         public DateTimeOffset InnovationProjectSubmitStartDate { get; private set; }
         public DateTimeOffset InnovationProjectSubmitEndDate { get; private set; }
-        public DateTimeOffset InnovationProjectEvaluationStartDate { get; private set; }
-        public DateTimeOffset InnovationProjectEvaluationEndDate { get; private set; }
+        public DateTimeOffset InnovationCommissionEvaluationStartDate { get; private set; }
+        public DateTimeOffset InnovationCommissionEvaluationEndDate { get; private set; }
         public DateTimeOffset? AudiovisualNegotiationsCreateStartDate { get; private set; }
         public DateTimeOffset? AudiovisualNegotiationsCreateEndDate { get; private set; }
         public DateTimeOffset CreateDate { get; private set; }
@@ -102,14 +102,14 @@ namespace PlataformaRio2C.Domain.Dtos
             this.ProjectMaxBuyerEvaluationsCount = entity.ProjectMaxBuyerEvaluationsCount;
             this.MusicProjectSubmitStartDate = entity.MusicProjectSubmitStartDate;
             this.MusicProjectSubmitEndDate = entity.MusicProjectSubmitEndDate;
-            this.MusicProjectEvaluationStartDate = entity.MusicProjectEvaluationStartDate;
-            this.MusicProjectEvaluationEndDate = entity.MusicProjectEvaluationEndDate;
-            this.MusicProjectMinimumEvaluationsCount = entity.MusicProjectMinimumEvaluationsCount;
-            this.MusicProjectMaximumApprovedBandsCount = entity.MusicProjectMaximumApprovedBandsCount;
+            this.MusicCommissionEvaluationStartDate = entity.MusicCommissionEvaluationStartDate;
+            this.MusicCommissionEvaluationEndDate = entity.MusicCommissionEvaluationEndDate;
+            this.MusicCommissionMinimumEvaluationsCount = entity.MusicCommissionMinimumEvaluationsCount;
+            this.MusicCommissionMaximumApprovedBandsCount = entity.MusicCommissionMaximumApprovedBandsCount;
             this.InnovationProjectSubmitStartDate = entity.InnovationProjectSubmitStartDate;
             this.InnovationProjectSubmitEndDate = entity.InnovationProjectSubmitEndDate;
-            this.InnovationProjectEvaluationStartDate = entity.InnovationProjectEvaluationStartDate;
-            this.InnovationProjectEvaluationEndDate = entity.InnovationProjectEvaluationEndDate;
+            this.InnovationCommissionEvaluationStartDate = entity.InnovationCommissionEvaluationStartDate;
+            this.InnovationCommissionEvaluationEndDate = entity.InnovationCommissionEvaluationEndDate;
             this.AudiovisualNegotiationsCreateStartDate = entity.AudiovisualNegotiationsCreateStartDate;
             this.AudiovisualNegotiationsCreateEndDate = entity.AudiovisualNegotiationsCreateEndDate;
             this.CreateDate = entity.CreateDate;
@@ -223,7 +223,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is music project evaluation open]; otherwise, <c>false</c>.</returns>
         public bool IsMusicProjectEvaluationOpen()
         {
-            return DateTime.UtcNow >= this.MusicProjectEvaluationStartDate && DateTime.UtcNow <= this.MusicProjectEvaluationEndDate;
+            return DateTime.UtcNow >= this.MusicCommissionEvaluationStartDate && DateTime.UtcNow <= this.MusicCommissionEvaluationEndDate;
         }
 
         /// <summary>Determines whether [is music project evaluation started].</summary>
@@ -231,7 +231,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is music project evaluation started]; otherwise, <c>false</c>.</returns>
         public bool IsMusicProjectEvaluationStarted()
         {
-            return DateTime.UtcNow >= this.MusicProjectEvaluationStartDate;
+            return DateTime.UtcNow >= this.MusicCommissionEvaluationStartDate;
         }
 
         /// <summary>Determines whether [is music project evaluation ended].</summary>
@@ -239,7 +239,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is music project evaluation ended]; otherwise, <c>false</c>.</returns>
         public bool IsMusicProjectEvaluationEnded()
         {
-            return DateTime.UtcNow > this.MusicProjectEvaluationEndDate;
+            return DateTime.UtcNow > this.MusicCommissionEvaluationEndDate;
         }
 
         #endregion
@@ -283,7 +283,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is innovation project evaluation open]; otherwise, <c>false</c>.</returns>
         public bool IsInnovationProjectEvaluationOpen()
         {
-            return DateTime.UtcNow >= this.InnovationProjectEvaluationStartDate && DateTime.UtcNow <= this.InnovationProjectEvaluationEndDate;
+            return DateTime.UtcNow >= this.InnovationCommissionEvaluationStartDate && DateTime.UtcNow <= this.InnovationCommissionEvaluationEndDate;
         }
 
         /// <summary>Determines whether [is innovation project evaluation started].</summary>
@@ -291,7 +291,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is innovation project evaluation started]; otherwise, <c>false</c>.</returns>
         public bool IsInnovationProjectEvaluationStarted()
         {
-            return DateTime.UtcNow >= this.InnovationProjectEvaluationStartDate;
+            return DateTime.UtcNow >= this.InnovationCommissionEvaluationStartDate;
         }
 
         /// <summary>Determines whether [is innovation project evaluation ended].</summary>
@@ -299,7 +299,7 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is innovation project evaluation ended]; otherwise, <c>false</c>.</returns>
         public bool IsInnovationProjectEvaluationEnded()
         {
-            return DateTime.UtcNow > this.InnovationProjectEvaluationEndDate;
+            return DateTime.UtcNow > this.InnovationCommissionEvaluationEndDate;
         }
 
         #endregion

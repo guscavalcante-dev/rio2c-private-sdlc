@@ -46,7 +46,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             // Check if have existent editions with current UrlCode.
             // URLCode musb be unique.
-            var existentUrlCodeEdition = await editionRepo.FindByUrlCodeAsync(cmd.UrlCode);
+            var existentUrlCodeEdition = await editionRepo.FindByUrlCodeAsync(cmd.UrlCode.Value);
             if (existentUrlCodeEdition != null)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.Edition.ToLowerInvariant(), $"{Labels.TheM.ToLowerInvariant()} {Labels.UrlCode.ToLowerInvariant()}", cmd.UrlCode), new string[] { "ToastrError" }));
@@ -64,32 +64,45 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var edition = new Edition(editionUid,
                                       cmd.Name,
-                                      cmd.UrlCode,
+                                      cmd.UrlCode.Value,
                                       cmd.IsCurrent,
                                       cmd.IsActive,
-                                      cmd.AttendeeOrganizationMaxSellProjectsCount,
-                                      cmd.ProjectMaxBuyerEvaluationsCount,
+                                      cmd.AttendeeOrganizationMaxSellProjectsCount.Value,
+                                      cmd.ProjectMaxBuyerEvaluationsCount.Value,
                                       cmd.StartDate.Value,
                                       cmd.EndDate.Value,
                                       cmd.SellStartDate.Value,
                                       cmd.SellEndDate.Value,
+                                      cmd.OneToOneMeetingsScheduleDate.Value,
+
                                       cmd.ProjectSubmitStartDate.Value,
                                       cmd.ProjectSubmitEndDate.Value,
                                       cmd.ProjectEvaluationStartDate.Value,
-                                      cmd.ProjectEvaluationEndDate.Value,
-                                      cmd.OneToOneMeetingsScheduleDate.Value,
+                                      cmd.ProjectEvaluationEndDate.Value,           
                                       cmd.NegotiationStartDate.Value,
                                       cmd.NegotiationEndDate.Value,
+
                                       cmd.MusicProjectSubmitStartDate.Value,
                                       cmd.MusicProjectSubmitEndDate.Value,
-                                      cmd.MusicProjectEvaluationStartDate.Value,
-                                      cmd.MusicProjectEvaluationEndDate.Value,
+                                      cmd.MusicCommissionEvaluationStartDate.Value,
+                                      cmd.MusicCommissionEvaluationEndDate.Value,
+                                      cmd.MusicCommissionMinimumEvaluationsCount.Value,
+                                      cmd.MusicCommissionMaximumApprovedBandsCount.Value,
+
                                       cmd.InnovationProjectSubmitStartDate.Value,
                                       cmd.InnovationProjectSubmitEndDate.Value,
-                                      cmd.InnovationProjectEvaluationStartDate.Value,
-                                      cmd.InnovationProjectEvaluationEndDate.Value,
+                                      cmd.InnovationCommissionEvaluationStartDate.Value,
+                                      cmd.InnovationCommissionEvaluationEndDate.Value,
+                                      cmd.InnovationCommissionMinimumEvaluationsCount.Value,
+                                      cmd.InnovationCommissionMaximumApprovedCompaniesCount.Value,
+
                                       cmd.AudiovisualNegotiationsCreateEndDate.Value,
                                       cmd.AudiovisualNegotiationsCreateEndDate.Value,
+                                      cmd.AudiovisualCommissionEvaluationStartDate.Value,
+                                      cmd.AudiovisualCommissionEvaluationEndDate.Value,
+                                      cmd.AudiovisualCommissionMinimumEvaluationsCount.Value,
+                                      cmd.AudiovisualCommissionMaximumApprovedProjectsCount.Value,
+
                                       cmd.UserId);
 
             if (!edition.IsValid())

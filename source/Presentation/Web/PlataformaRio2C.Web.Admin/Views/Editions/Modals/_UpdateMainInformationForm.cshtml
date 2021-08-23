@@ -1,6 +1,6 @@
-﻿@using PlataformaRio2C.Domain.Dtos
-@*@using System.Globalization*@
-@model PlataformaRio2C.Application.CQRS.Commands.CreateEdition
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateEditionMainInformation
+@Html.HiddenFor(m => m.IsMainInformationRequired)
+@Html.HiddenFor(m => m.IsDatesInformationRequired)
 
 <div class="row">
     <div class="form-group col-8">
@@ -28,26 +28,14 @@
 </div>
 <div class="row">
     <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.AttendeeOrganizationMaxSellProjectsCount, new { @class = "control-label" })
-        @Html.TextBox("AttendeeOrganizationMaxSellProjectsCount", Model.AttendeeOrganizationMaxSellProjectsCount, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.AttendeeOrganizationMaxSellProjectsCount, "", new { @class = "text-danger" })
+        @Html.LabelFor(m => m.SellStartDate, new { @class = "control-label" })
+        @Html.TextBox("SellStartDate", Model.SellStartDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.SellStartDate, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.ProjectMaxBuyerEvaluationsCount, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.ProjectMaxBuyerEvaluationsCount, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.ProjectMaxBuyerEvaluationsCount, "", new { @class = "text-danger" })
-    </div>
-</div>
-<div class="row">
-    <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.MusicProjectMinimumEvaluationsCount, new { @class = "control-label" })
-        @Html.TextBox("MusicProjectMinimumEvaluationsCount", Model.MusicProjectMinimumEvaluationsCount, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.MusicProjectMinimumEvaluationsCount, "", new { @class = "text-danger" })
-    </div>
-    <div class="form-group col-md-6">
-        @Html.LabelFor(m => m.MusicProjectMaximumApprovedBandsCount, new { @class = "control-label" })
-        @Html.TextBox("MusicProjectMaximumApprovedBandsCount", Model.MusicProjectMaximumApprovedBandsCount, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.MusicProjectMaximumApprovedBandsCount, "", new { @class = "text-danger" })
+        @Html.LabelFor(m => m.SellEndDate, new { @class = "control-label" })
+        @Html.TextBox("SellEndDate", Model.SellEndDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.SellEndDate, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="row">

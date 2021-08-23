@@ -310,12 +310,12 @@
     <comment>Comissão de Audiovisual</comment>
   </data>
   <data name="AudiovisualNegotiationsCreateEndDate" xml:space="preserve">
-    <value>Data de término da criação de negociações audiovisuais</value>
-    <comment>Data de término da criação de negociações audiovisuais</comment>
+    <value>Data de término da criação de negociações</value>
+    <comment>Data de término da criação de negociações</comment>
   </data>
   <data name="AudiovisualNegotiationsCreateStartDate" xml:space="preserve">
-    <value>Data de início da criação de negociações audiovisuais</value>
-    <comment>Data de início da criação de negociações audiovisuais</comment>
+    <value>Data de início da criação de negociações</value>
+    <comment>Data de início da criação de negociações</comment>
   </data>
   <data name="AudiovisualPitchingSessions" xml:space="preserve">
     <value>Pitching de Audiovisual</value>
@@ -1173,11 +1173,11 @@
     <value>Comissão de Inovação</value>
     <comment>Comissão de Inovação</comment>
   </data>
-  <data name="InnovationProjectEvaluationEndDate" xml:space="preserve">
+  <data name="InnovationCommissionEvaluationEndDate" xml:space="preserve">
     <value>Data de término da avaliação de projeto de inovação</value>
     <comment>Data de término da avaliação de projeto de inovação</comment>
   </data>
-  <data name="InnovationProjectEvaluationStartDate" xml:space="preserve">
+  <data name="InnovationCommissionEvaluationStartDate" xml:space="preserve">
     <value>Data de início da avaliação de projeto de inovação</value>
     <comment>Data de início da avaliação de projeto de inovação</comment>
   </data>
@@ -1459,19 +1459,19 @@
     <value>Instrumento musical</value>
     <comment>Instrumento musical</comment>
   </data>
-  <data name="MusicProjectEvaluationEndDate" xml:space="preserve">
+  <data name="MusicCommissionEvaluationEndDate" xml:space="preserve">
     <value>Data de término da avaliação de projeto musical</value>
     <comment>Data de término da avaliação de projeto musical</comment>
   </data>
-  <data name="MusicProjectEvaluationStartDate" xml:space="preserve">
+  <data name="MusicCommissionEvaluationStartDate" xml:space="preserve">
     <value>Data de início da avaliação de projeto musical</value>
     <comment>Data de início da avaliação de projeto musical</comment>
   </data>
-  <data name="MusicProjectMaximumApprovedBandsCount" xml:space="preserve">
+  <data name="MusicCommissionMaximumApprovedBandsCount" xml:space="preserve">
     <value>Quantidade máxima de bandas aprovadas</value>
     <comment>Quantidade máxima de bandas aprovadas</comment>
   </data>
-  <data name="MusicProjectMinimumEvaluationsCount" xml:space="preserve">
+  <data name="MusicCommissionMinimumEvaluationsCount" xml:space="preserve">
     <value>Quantidade mínima de votos para gerar média</value>
     <comment>Quantidade mínima de votos para gerar média</comment>
   </data>
@@ -2914,5 +2914,33 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="ZoomOut" xml:space="preserve">
     <value>Menos Zoom</value>
     <comment>Menos Zoom</comment>
+  </data>
+  <data name="AudiovisualCommissionEvaluationEndDate" xml:space="preserve">
+    <value>Data de término da avaliação de projeto audiovisual</value>
+    <comment>Data de término da avaliação de projeto audiovisual</comment>
+  </data>
+  <data name="AudiovisualCommissionEvaluationStartDate" xml:space="preserve">
+    <value>Data de início da avaliação de projeto audiovisual</value>
+    <comment>Data de início da avaliação de projeto audiovisual</comment>
+  </data>
+  <data name="AudiovisualCommissionMaximumApprovedProjectsCount" xml:space="preserve">
+    <value>Quantidade máxima de projetos de audiovisual aprovados</value>
+    <comment>Quantidade máxima de projetos de audiovisual aprovados</comment>
+  </data>
+  <data name="AudiovisualCommissionMinimumEvaluationsCount" xml:space="preserve">
+    <value>Quantidade mínima de votos para gerar média de projeto audiovisual</value>
+    <comment>Quantidade mínima de votos para gerar média de projeto audiovisual</comment>
+  </data>
+  <data name="InnovationCommissionMaximumApprovedCompaniesCount" xml:space="preserve">
+    <value>Quantidade máxima de empresas aprovadas</value>
+    <comment>Quantidade máxima de empresas aprovadas</comment>
+  </data>
+  <data name="InnovationCommissionMinimumEvaluationsCount" xml:space="preserve">
+    <value>Quantidade mínima de votos para gerar média</value>
+    <comment>Quantidade mínima de votos para gerar média</comment>
+  </data>
+  <data name="AudiovisualNegotiations" xml:space="preserve">
+    <value>Negociações Audiovisual</value>
+    <comment>Negociações Audiovisual</comment>
   </data>
 </root>

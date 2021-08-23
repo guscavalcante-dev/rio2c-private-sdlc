@@ -1,104 +1,93 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @model EditionDto
-<div class="kt-portlet__body">
-    <div class="kt-widget kt-widget--user-profile-3">
-        <div class="kt-widget__top">
-            <div class="kt-widget__content pl-0" style="overflow: hidden;">
-                <div class="kt-widget__head">
-                    <span class="kt-widget__username">
-                        @(Model.Edition?.Name ?? "-")
-                    </span>
-                    <div class="kt-widget__action">
-                        <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="EditionsMainInformationWidget.showUpdateModal();">
-                            <i class="flaticon2-edit"></i>
-                        </button>
-                    </div>
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+            @(Model.Edition?.Name ?? "-")
+        </h3>
+    </div>
+    <div class="kt-portlet__head-toolbar">
+        <div class="kt-portlet__head-actions">
+            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="EditionsMainInformationWidget.showUpdateModal();">
+                <i class="flaticon2-edit"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="kt-portlet__body pt-0">
+    <div class="row">
+        <div class="col-md-4">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.UrlCode</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.Edition.UrlCode)
                 </div>
             </div>
         </div>
-        <div class="kt-widget__bottom">
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.UrlCode</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.UrlCode)</span></span>
-                </div>
-            </div>
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.StartDate</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.StartDate.ToBrazilTimeZone().ToShortDateString())</span></span>
-                </div>
-            </div>
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.EndDate</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.EndDate.ToBrazilTimeZone().ToShortDateString())</span></span>
-                </div>
-            </div>
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.IsCurrent</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.IsCurrent.ToYesOrNoString())</span></span>
-                </div>
-            </div>
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.IsActiveF</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.IsActive.ToYesOrNoString())</span></span>
+        <div class="col-md-4">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.IsCurrent</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.Edition.IsCurrent.ToYesOrNoString())
                 </div>
             </div>
         </div>
-        <div class="kt-widget__bottom">
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.OneToOneMeetingsScheduleDate</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.OneToOneMeetingsScheduleDate.ToBrazilTimeZone().ToShortDateString())</span></span>
-                </div>
-            </div>
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.AttendeeOrganizationMaxSellProjectsCount</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.AttendeeOrganizationMaxSellProjectsCount)</span></span>
-                </div>
-            </div>
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.ProjectMaxBuyerEvaluationsCount</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.ProjectMaxBuyerEvaluationsCount)</span></span>
+        <div class="col-md-4">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.IsActiveF</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.Edition.IsActive.ToYesOrNoString())
                 </div>
             </div>
         </div>
-        <div class="kt-widget__bottom">
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.MusicProjectMinimumEvaluationsCount</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.MusicProjectMinimumEvaluationsCount)</span></span>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.StartDate</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.Edition.StartDate.ToBrazilTimeZone().ToShortDateString())
                 </div>
             </div>
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.MusicProjectMaximumApprovedBandsCount</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.MusicProjectMaximumApprovedBandsCount)</span></span>
+        </div>
+        <div class="col-md-4">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.EndDate</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.Edition.EndDate.ToBrazilTimeZone().ToShortDateString())
                 </div>
             </div>
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <span class="kt-widget__value"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.SellStartDate</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.Edition.SellStartDate.ToBrazilTimeZone().ToShortDateString())
                 </div>
             </div>
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <span class="kt-widget__value"></span>
+        </div>
+        <div class="col-md-4">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.SellEndDate</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.Edition.SellEndDate.ToBrazilTimeZone().ToShortDateString())
                 </div>
             </div>
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <span class="kt-widget__value"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.OneToOneMeetingsScheduleDate</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.Edition.OneToOneMeetingsScheduleDate.ToBrazilTimeZone().ToShortDateString())
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+

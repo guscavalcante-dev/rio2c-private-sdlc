@@ -614,7 +614,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return await query
                             .OrderByDescending(aio => aio.Grade)
-                            .Take(edition.InnovationProjectMaximumApprovedCompaniesCount)
+                            .Take(edition.InnovationCommissionMaximumApprovedCompaniesCount)
                             .Select(aio => aio.Id)
                             .ToArrayAsync();
         }

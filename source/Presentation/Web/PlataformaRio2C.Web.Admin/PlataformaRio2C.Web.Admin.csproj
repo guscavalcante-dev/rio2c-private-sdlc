@@ -9851,7 +9851,7 @@
     <Content Include="Views\Editions\Index.cshtml" />
     <Content Include="Views\Editions\Modals\_CreateForm.cshtml" />
     <Content Include="Views\Editions\Modals\CreateModal.cshtml" />
-    <Content Include="Views\Editions\Modals\UpdateMainInformationForm.cshtml" />
+    <Content Include="Views\Editions\Modals\_UpdateMainInformationForm.cshtml" />
     <Content Include="Views\Editions\Modals\UpdateMainInformationModal.cshtml" />
     <Content Include="Views\Editions\Widgets\DataTableWidget.cshtml" />
     <Content Include="Views\Editions\Widgets\EditionCountWidget.cshtml" />
@@ -9860,10 +9860,8 @@
     <Content Include="Views\Events\Widgets\RelatedEventsWidget.cshtml" />
     <Content Include="Views\Themes\Metronic\_EditionSelector.cshtml" />
     <Content Include="Views\Editions\Widgets\DatesInformationWidget.cshtml" />
-    <Content Include="Views\Editions\Modals\UpdateDatesInformationForm.cshtml" />
+    <Content Include="Views\Editions\Modals\_UpdateDatesInformationForm.cshtml" />
     <Content Include="Views\Editions\Modals\UpdateDatesInformationModal.cshtml" />
-    <Content Include="Views\Editions\Modals\_UpdateDatesForm.cshtml" />
-    <Content Include="Views\Editions\Modals\_UpdateForm.cshtml" />
     <Content Include="Views\Administrators\Modals\_Form.cshtml" />
     <Content Include="Views\Administrators\Modals\CreateModal.cshtml" />
     <Content Include="Views\Administrators\Modals\UpdateModal.cshtml" />
