@@ -28,22 +28,7 @@ BEGIN TRY
 		ADD AudiovisualCommissionEvaluationStartDate  datetimeoffset  NULL
 		;
 
-		EXEC('UPDATE [dbo].[Editions] SET 
-				[AudiovisualCommissionEvaluationStartDate] = CAST(N''2018-01-01T03:00:00.0000000+00:00'' AS DateTimeOffset)
-				WHERE Uid = ''96485F4A-56B3-4D03-8847-26D864544FAB '';
-			
-				UPDATE [dbo].[Editions] SET 
-				[AudiovisualCommissionEvaluationStartDate] = CAST(N''2019-01-01T03:00:00.0000000+00:00'' AS DateTimeOffset)
-				WHERE Uid = ''80376662-12F6-44A1-8E71-ACBE001D3DF0'';
-
-				UPDATE [dbo].[Editions] SET 
-				[AudiovisualCommissionEvaluationStartDate] = CAST(N''2020-01-06T03:00:00.0000000+00:00'' AS DateTimeOffset)
-				WHERE Uid = ''88FB28B3-A952-4794-8783-88F6A08F78BE'';
-
-				UPDATE [dbo].[Editions] SET 
-				[AudiovisualCommissionEvaluationStartDate] = CAST(N''2021-08-06T03:00:00.0000000+00:00'' AS DateTimeOffset)
-				WHERE Uid = ''8B410F34-9529-4CFB-8418-9C0C0D2A1BAE'';
-				')
+		EXEC('UPDATE [dbo].[Editions] SET [AudiovisualCommissionEvaluationStartDate] = [ProjectEvaluationStartDate]')
 
 		ALTER TABLE "dbo"."Editions"
 		ALTER COLUMN AudiovisualCommissionEvaluationStartDate  datetimeoffset  NOT NULL
@@ -56,22 +41,7 @@ BEGIN TRY
 		ADD AudiovisualCommissionEvaluationEndDate  datetimeoffset  NULL
 		;
 
-		EXEC('UPDATE [dbo].[Editions] SET 
-				[AudiovisualCommissionEvaluationEndDate] = CAST(N''2018-02-16T02:59:59.0000000+00:00'' AS DateTimeOffset)
-				WHERE Uid = ''96485F4A-56B3-4D03-8847-26D864544FAB ''
-			
-				UPDATE [dbo].[Editions] SET 
-				[AudiovisualCommissionEvaluationEndDate] = CAST(N''2019-02-16T02:59:59.0000000+00:00'' AS DateTimeOffset)
-				WHERE Uid = ''80376662-12F6-44A1-8E71-ACBE001D3DF0''
-
-				UPDATE [dbo].[Editions] SET 
-				[AudiovisualCommissionEvaluationEndDate] = CAST(N''2020-04-01T02:59:59.0000000+00:00'' AS DateTimeOffset)
-				WHERE Uid = ''88FB28B3-A952-4794-8783-88F6A08F78BE''
-
-				UPDATE [dbo].[Editions] SET 
-				[AudiovisualCommissionEvaluationEndDate] = CAST(N''2021-09-01T02:59:59.0000000+00:00'' AS DateTimeOffset)
-				WHERE Uid = ''8B410F34-9529-4CFB-8418-9C0C0D2A1BAE''
-		')
+		EXEC('UPDATE [dbo].[Editions] SET [AudiovisualCommissionEvaluationEndDate] = [ProjectEvaluationEndDate]')
 
 		ALTER TABLE "dbo"."Editions"
 		ALTER COLUMN AudiovisualCommissionEvaluationEndDate  datetimeoffset  NOT NULL

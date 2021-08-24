@@ -80,8 +80,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.EditionMainInformation.UrlCode.Value,
                 cmd.EditionMainInformation.IsCurrent,
                 cmd.EditionMainInformation.IsActive,
-                cmd.EditionDate.AttendeeOrganizationMaxSellProjectsCount.Value,
-                cmd.EditionDate.ProjectMaxBuyerEvaluationsCount.Value,
                 cmd.EditionMainInformation.StartDate.Value,
                 cmd.EditionMainInformation.EndDate.Value,
                 cmd.EditionMainInformation.SellStartDate.Value,
@@ -94,6 +92,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.EditionDate.ProjectEvaluationEndDate.Value,           
                 cmd.EditionDate.NegotiationStartDate.Value,
                 cmd.EditionDate.NegotiationEndDate.Value,
+                cmd.EditionDate.AttendeeOrganizationMaxSellProjectsCount.Value,
+                cmd.EditionDate.ProjectMaxBuyerEvaluationsCount.Value,
 
                 cmd.EditionDate.MusicProjectSubmitStartDate.Value,
                 cmd.EditionDate.MusicProjectSubmitEndDate.Value,
