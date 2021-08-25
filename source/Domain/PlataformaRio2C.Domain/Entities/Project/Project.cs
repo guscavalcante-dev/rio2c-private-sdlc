@@ -895,7 +895,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         /// <param name="evaluatorUser">The evaluator user.</param>
         /// <param name="grade">The grade.</param>
-        public void CommissionEvaluate(User evaluatorUser, decimal grade, bool isAdmin)
+        public void AudiovisualComissionEvaluateProject(User evaluatorUser, decimal grade, bool isAdmin)
         {
             if (this.CommissionEvaluations == null)
                 this.CommissionEvaluations = new List<CommissionEvaluation>();

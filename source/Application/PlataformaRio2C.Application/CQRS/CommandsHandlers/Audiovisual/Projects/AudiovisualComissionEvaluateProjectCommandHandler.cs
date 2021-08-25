@@ -6,7 +6,7 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 07-28-2021
 // ***********************************************************************
-// <copyright file="EvaluateAudiovisualCommissionProjectCommandHandler.cs" company="Softo">
+// <copyright file="AudiovisualComissionEvaluateProjectCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -23,21 +23,21 @@ using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>EvaluateAudiovisualCommissionProjectCommandHandler</summary>
-    public class EvaluateAudiovisualCommissionProjectCommandHandler : BaseProjectCommandHandler, IRequestHandler<EvaluateAudiovisualCommissionProject, AppValidationResult>
+    /// <summary>AudiovisualComissionEvaluateProjectCommandHandler</summary>
+    public class AudiovisualComissionEvaluateProjectCommandHandler : BaseProjectCommandHandler, IRequestHandler<AudiovisualComissionEvaluateProject, AppValidationResult>
     {
         private readonly IEditionRepository editionRepo;
         private readonly IUserRepository userRepo;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EvaluateAudiovisualCommissionProjectCommandHandler"/> class.
+        /// Initializes a new instance of the <see cref="AudiovisualComissionEvaluateProjectCommandHandler"/> class.
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="projectRepository">The music band repo.</param>
         /// <param name="editionRepo">The edition repo.</param>
         /// <param name="userRepo">The user repo.</param>
-        public EvaluateAudiovisualCommissionProjectCommandHandler(
+        public AudiovisualComissionEvaluateProjectCommandHandler(
             IMediator commandBus,
             IUnitOfWork uow,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
@@ -57,7 +57,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="evaluateAudiovisualCommissionProject">The evaluate audiovisual commission project.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(EvaluateAudiovisualCommissionProject cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(AudiovisualComissionEvaluateProject cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
@@ -73,7 +73,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             if (!cmd.Grade.HasValue)
             {
-                this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.Grade, "10", "0"), new string[] { nameof(EvaluateAudiovisualCommissionProject.Grade) })));
+                this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.Grade, "10", "0"), new string[] { nameof(AudiovisualComissionEvaluateProject.Grade) })));
                 return this.AppValidationResult;
             }
 
@@ -85,7 +85,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
 
             var project = await ProjectRepo.FindByIdAsync(cmd.ProjectId.Value);
-            project.CommissionEvaluate(
+            project.AudiovisualComissionEvaluateProject(
                 //editionDto.Edition, //TODO: Why Project hasn't EditionId? 
                 await userRepo.FindByIdAsync(cmd.UserId),
                 cmd.Grade.Value,
