@@ -338,27 +338,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             try
             {
-                //Remove DatesInformation properties from ModelState validation.
-                //UpdateEditionMainInformation u;
-                //ModelState.Remove(nameof(u.SellStartDate));
-                //ModelState.Remove(nameof(u.SellEndDate));
-                //ModelState.Remove(nameof(u.ProjectSubmitStartDate));
-                //ModelState.Remove(nameof(u.ProjectSubmitEndDate));
-                //ModelState.Remove(nameof(u.ProjectEvaluationStartDate));
-                //ModelState.Remove(nameof(u.ProjectEvaluationEndDate));
-                //ModelState.Remove(nameof(u.NegotiationStartDate));
-                //ModelState.Remove(nameof(u.NegotiationEndDate));
-                //ModelState.Remove(nameof(u.MusicProjectSubmitStartDate));
-                //ModelState.Remove(nameof(u.MusicProjectSubmitEndDate));
-                //ModelState.Remove(nameof(u.MusicCommissionEvaluationStartDate));
-                //ModelState.Remove(nameof(u.MusicCommissionEvaluationEndDate));
-                //ModelState.Remove(nameof(u.InnovationProjectSubmitStartDate));
-                //ModelState.Remove(nameof(u.InnovationProjectSubmitEndDate));
-                //ModelState.Remove(nameof(u.InnovationCommissionEvaluationStartDate));
-                //ModelState.Remove(nameof(u.InnovationCommissionEvaluationEndDate));
-                //ModelState.Remove(nameof(u.AudiovisualNegotiationsCreateStartDate));
-                //ModelState.Remove(nameof(u.AudiovisualNegotiationsCreateEndDate));
-
                 if (!ModelState.IsValid)
                 {
                     throw new DomainException(Messages.CorrectFormValues);
@@ -457,18 +436,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             try
             {
-                //Remove MainInformation properties from ModelState validation.
-                //CreateEdition c;
-                //ModelState.Remove(nameof(c.Name));
-                //ModelState.Remove(nameof(c.UrlCode));
-                //ModelState.Remove(nameof(c.IsCurrent));
-                //ModelState.Remove(nameof(c.IsActive));
-                //ModelState.Remove(nameof(c.AttendeeOrganizationMaxSellProjectsCount));
-                //ModelState.Remove(nameof(c.ProjectMaxBuyerEvaluationsCount));
-                //ModelState.Remove(nameof(c.StartDate));
-                //ModelState.Remove(nameof(c.EndDate));
-                //ModelState.Remove(nameof(c.OneToOneMeetingsScheduleDate));
-
                 if (!ModelState.IsValid)
                 {
                     throw new DomainException(Messages.CorrectFormValues);

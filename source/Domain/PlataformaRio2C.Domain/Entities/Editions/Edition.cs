@@ -133,8 +133,6 @@ namespace PlataformaRio2C.Domain.Entities
             int urlCode,
             bool isCurrent,
             bool isActive,
-            int attendeeOrganizationMaxSellProjectsCount,
-            int projectMaxBuyerEvaluationsCount,
             DateTimeOffset startDate,
             DateTimeOffset endDate,
             DateTimeOffset sellStartDate,
@@ -147,6 +145,8 @@ namespace PlataformaRio2C.Domain.Entities
             DateTimeOffset projectEvaluationEndDate,
             DateTimeOffset negotiationStartDate,
             DateTimeOffset negotiationEndDate,
+            int attendeeOrganizationMaxSellProjectsCount,
+            int projectMaxBuyerEvaluationsCount,
 
             DateTimeOffset musicProjectSubmitStartDate,
             DateTimeOffset musicProjectSubmitEndDate,
@@ -176,8 +176,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.UrlCode = urlCode;
             this.IsCurrent = isCurrent;
             this.IsActive = isActive;
-            this.AttendeeOrganizationMaxSellProjectsCount = attendeeOrganizationMaxSellProjectsCount;
-            this.ProjectMaxBuyerEvaluationsCount = projectMaxBuyerEvaluationsCount;
             this.StartDate = startDate;
             this.EndDate = endDate;
             this.SellStartDate = sellStartDate;
@@ -191,6 +189,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.OneToOneMeetingsScheduleDate = oneToOneMeetingsScheduleDate;
             this.NegotiationStartDate = negotiationStartDate;
             this.NegotiationEndDate = negotiationEndDate;
+            this.AttendeeOrganizationMaxSellProjectsCount = attendeeOrganizationMaxSellProjectsCount;
+            this.ProjectMaxBuyerEvaluationsCount = projectMaxBuyerEvaluationsCount;
 
             // Music - Commissions
             this.MusicProjectSubmitStartDate = musicProjectSubmitStartDate;

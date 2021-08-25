@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-06-2020
+// Last Modified On : 08-24-2021
 // ***********************************************************************
 // <copyright file="UpdateEditionMainInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,7 +27,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     public class UpdateEditionMainInformationCommandHandler : EditionBaseCommandHandler, IRequestHandler<UpdateEditionMainInformation, AppValidationResult>
     {
         private readonly IEditionRepository editionRepo;
-        private readonly IAttendeeMusicBandRepository attendeeMusicBandRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateEditionMainInformationCommandHandler" /> class.
@@ -35,16 +34,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="editionRepository">The edition event repository.</param>
-        /// <param name="attendeeMusicBandRepository">The attendee music band repository.</param>
         public UpdateEditionMainInformationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            IEditionRepository editionRepository,
-            IAttendeeMusicBandRepository attendeeMusicBandRepository)
+            IEditionRepository editionRepository)
             : base(eventBus, uow, editionRepository)
         {
             this.editionRepo = editionRepository;
-            this.attendeeMusicBandRepo = attendeeMusicBandRepository;
         }
 
         /// <summary>
@@ -58,10 +54,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.Uow.BeginTransaction();
 
             var edition = await this.GetEditionByUid(cmd.EditionUid);
-
-            bool changedMusicCommissionMinimumEvaluationsCount = edition.MusicCommissionMinimumEvaluationsCount != cmd.MusicCommissionMinimumEvaluationsCount;
-            bool changedInnovationCommissionMinimumEvaluationsCount = edition.InnovationCommissionMinimumEvaluationsCount != cmd.InnovationCommissionMinimumEvaluationsCount;
-            bool changedAudiovisualCommissionMinimumEvaluationsCount = edition.AudiovisualCommissionMinimumEvaluationsCount != cmd.AudiovisualCommissionMinimumEvaluationsCount;
 
             #region Initial validations
 
@@ -91,16 +83,17 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            edition.UpdateMainInformation(cmd.Name,
-                                          cmd.UrlCode.Value,
-                                          cmd.IsCurrent,
-                                          cmd.IsActive,
-                                          cmd.StartDate.Value,
-                                          cmd.EndDate.Value,
-                                          cmd.SellStartDate.Value,
-                                          cmd.SellEndDate.Value,
-                                          cmd.OneToOneMeetingsScheduleDate.Value,
-                                          cmd.UserId);
+            edition.UpdateMainInformation(
+                cmd.Name,
+                cmd.UrlCode.Value,
+                cmd.IsCurrent,
+                cmd.IsActive,
+                cmd.StartDate.Value,
+                cmd.EndDate.Value,
+                cmd.SellStartDate.Value,
+                cmd.SellEndDate.Value,
+                cmd.OneToOneMeetingsScheduleDate.Value,
+                cmd.UserId);
 
             if (!edition.IsValid())
             {
@@ -115,30 +108,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             {
                 currentEditions.ForEach(e => e.DisableIsCurrent());
                 this.EditionRepo.UpdateAll(currentEditions);
-            }
-
-            //AttendeeMusicBandsGrades must be recalculated when changed "MusicCommissionMinimumEvaluationsCount".
-            if (changedMusicCommissionMinimumEvaluationsCount)
-            {
-                var attendeeMusicBands = await this.attendeeMusicBandRepo.FindAllByEditionIdAsync(edition.Id);
-                attendeeMusicBands.ForEach(amb => amb.RecalculateGrade(edition));
-                this.attendeeMusicBandRepo.UpdateAll(attendeeMusicBands);
-            }
-
-            if (changedInnovationCommissionMinimumEvaluationsCount)
-            {
-                //TODO: Implement this!
-                //var attendeeMusicBands = await this.attendeeMusicBandRepo.FindAllByEditionIdAsync(edition.Id);
-                //attendeeMusicBands.ForEach(amb => amb.RecalculateGrade(edition));
-                //this.attendeeMusicBandRepo.UpdateAll(attendeeMusicBands);
-            }
-
-            if (changedAudiovisualCommissionMinimumEvaluationsCount)
-            {
-                //TODO: Implement this!
-                //var attendeeMusicBands = await this.attendeeMusicBandRepo.FindAllByEditionIdAsync(edition.Id);
-                //attendeeMusicBands.ForEach(amb => amb.RecalculateGrade(edition));
-                //this.attendeeMusicBandRepo.UpdateAll(attendeeMusicBands);
             }
 
             #endregion
