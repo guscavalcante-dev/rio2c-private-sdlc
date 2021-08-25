@@ -38,6 +38,26 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         /// <param name="project">The project.</param>
         /// <param name="evaluatorUser">The evaluator user.</param>
+        /// <param name="grade">The grade.</param>
+        /// <param name="userId">The user identifier.</param>
+        public CommissionEvaluation(
+            Project project,
+            User evaluatorUser,
+            decimal grade,
+            int userId)
+        {
+            this.Project = project;
+            this.EvaluatorUser = evaluatorUser;
+            this.Grade = grade;
+
+            base.SetCreateDate(userId);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CommissionEvaluation"/> class.
+        /// </summary>
+        /// <param name="project">The project.</param>
+        /// <param name="evaluatorUser">The evaluator user.</param>
         /// <param name="userId">The user identifier.</param>
         public CommissionEvaluation(
             Project project,
@@ -61,11 +81,13 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>
-        /// Updates the specified user identifier.
+        /// Updates the specified grade.
         /// </summary>
+        /// <param name="grade">The grade.</param>
         /// <param name="userId">The user identifier.</param>
-        public void Update(int userId)
+        public void Update(decimal grade, int userId)
         {
+            this.Grade = grade;
             base.SetUpdateDate(userId);
         }
 

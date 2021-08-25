@@ -169,8 +169,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                 sb.Append($"        <td>");
                 sb.Append($"            <div class=\"col-md-12 justify-content-center\">");
                 sb.Append($"                <span class=\"kt-widget__button\" style=\"\" data-toggle=\"tooltip\" title=\"{text}\">");
-                sb.Append($"                    <label class=\"btn btn-label-{color} btn-sm\">");
-                sb.Append($"                        <i class=\"fa {icon}\"></i>");
+                sb.Append($"                    <label class=\"btn btn-label-{color} btn-sm m-1\">");
+                sb.Append($"                        <i class=\"fa {icon} p-0\"></i>");
                 sb.Append($"                    </label>");
                 sb.Append($"                </span>");
                 if (isInnovationProjectEvaluationClosed)

@@ -386,10 +386,10 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
         public ProjectBuyerEvaluation RefuseProjectBuyerEvaluation(
-            Guid attendeeOrganizationUid, 
-            ProjectEvaluationRefuseReason projectEvaluationRefuseReason, 
-            string reason, 
-            List<ProjectEvaluationStatus> projectEvaluationStatuses, 
+            Guid attendeeOrganizationUid,
+            ProjectEvaluationRefuseReason projectEvaluationRefuseReason,
+            string reason,
+            List<ProjectEvaluationStatus> projectEvaluationStatuses,
             int userId)
         {
             var buyerEvaluation = this.GetProjectBuyerEvaluationByAttendeeOrganizationUid(attendeeOrganizationUid);
@@ -757,8 +757,8 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         /// <param name="isAdmin">if set to <c>true</c> [is admin].</param>
         public void UpdateProjectTargetAudiences(
-            List<TargetAudience> targetAudiences, 
-            int userId, 
+            List<TargetAudience> targetAudiences,
+            int userId,
             bool isAdmin)
         {
             this.SynchronizeProjectTargetAudiences(targetAudiences, userId);
@@ -884,6 +884,101 @@ namespace PlataformaRio2C.Domain.Entities
             {
                 teaserLinkDb?.Delete(userId);
             }
+        }
+
+        #endregion
+
+        #region Commission Evaluations
+
+        /// <summary>
+        /// Evaluates the specified evaluator user.
+        /// </summary>
+        /// <param name="evaluatorUser">The evaluator user.</param>
+        /// <param name="grade">The grade.</param>
+        public void Evaluate(User evaluatorUser, decimal grade, bool isAdmin)
+        {
+            if (this.CommissionEvaluations == null)
+                this.CommissionEvaluations = new List<CommissionEvaluation>();
+
+            var existentProjectEvaluation = this.GetCommissionEvaluationByEvaluatorId(evaluatorUser.Id);
+            if (existentProjectEvaluation != null)
+            {
+                existentProjectEvaluation.Update(grade, evaluatorUser.Id);
+            }
+            else
+            {
+                this.CommissionEvaluations.Add(new CommissionEvaluation(
+                    this,
+                    evaluatorUser,
+                    grade,
+                    evaluatorUser.Id));
+            }
+
+            this.CommissionGrade = this.GetAverageEvaluation(this.SellerAttendeeOrganization.Edition); //TODO: Why Project hasn't EditionId? 
+            this.CommissionEvaluationsCount = this.GetCommissionEvaluationsTotalCount();
+            this.LastCommissionEvaluationDate = DateTime.UtcNow;
+            this.IsAdmin = isAdmin;
+        }
+
+        /// <summary>
+        /// Recalculates the grade.
+        /// </summary>
+        public void RecalculateGrade(Edition edition)
+        {
+            this.CommissionGrade = this.GetAverageEvaluation(edition);
+        }
+
+        /// <summary>
+        /// Gets the average evaluation.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <returns></returns>
+        private decimal? GetAverageEvaluation(Edition edition)
+        {
+            if (this.FindAllCommissionEvaluationsNotDeleted()?.Any() != true)
+            {
+                return null;
+            }
+
+            // Can only generate the 'AverageEvaluation' when the 'CommissionEvaluations' count 
+            // is greater or equal than minimum necessary evaluations quantity
+            if (this.GetCommissionEvaluationsTotalCount() >= edition.AudiovisualCommissionMinimumEvaluationsCount)
+            {
+                return this.FindAllCommissionEvaluationsNotDeleted().Sum(e => e.Grade) / this.FindAllCommissionEvaluationsNotDeleted().Count;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the commission evaluation by evaluator identifier.
+        /// </summary>
+        /// <param name="evaluatorUserId">The evaluator user identifier.</param>
+        /// <returns></returns>
+        private CommissionEvaluation GetCommissionEvaluationByEvaluatorId(int evaluatorUserId)
+        {
+            return this.FindAllCommissionEvaluationsNotDeleted().FirstOrDefault(ce =>
+                //ce.AttendeeInnovationOrganization.EditionId == this.EditionId && //TODO: Why Project hasn't EditionId? 
+                ce.EvaluatorUserId == evaluatorUserId);
+        }
+
+        /// <summary>
+        /// Gets the commission evaluations total count.
+        /// </summary>
+        /// <returns></returns>
+        private int GetCommissionEvaluationsTotalCount()
+        {
+            return this.FindAllCommissionEvaluationsNotDeleted()
+                .Count(); //.Count(aioe => aioe.AttendeeInnovationOrganization.EditionId == this.EditionId); //TODO: Why Project hasn't EditionId? 
+        }
+
+        /// <summary>
+        /// Finds all commission evaluations not deleted.
+        /// </summary>
+        /// <returns></returns>
+        private List<CommissionEvaluation> FindAllCommissionEvaluationsNotDeleted()
+        {
+            return this.CommissionEvaluations?.Where(aoc => !aoc.IsDeleted)?.ToList();
         }
 
         #endregion
@@ -1156,6 +1251,25 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.ProjectBuyerEvaluationsCount == 0)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheProjectMustHaveOnePlayer, Labels.Player), new string[] { "ToastrError" }));
+            }
+        }
+
+        /// <summary>Validates the project buyer evaluations.</summary>
+        public void ValidateCommissionEvaluations()
+        {
+            if (this.CommissionEvaluations?.Any() != true)
+            {
+                return;
+            }
+
+            if (!this.IsPitching)
+            {
+                this.ValidationResult.Add(new ValidationError(Messages.ProjectCannotBeEvaluatedIsNotPitching, new string[] { "ToastrError" }));
+            }
+
+            foreach (var projectBuyerEvaluation in this.ProjectBuyerEvaluations?.Where(t => !t.IsValid())?.ToList())
+            {
+                this.ValidationResult.Add(projectBuyerEvaluation.ValidationResult);
             }
         }
 

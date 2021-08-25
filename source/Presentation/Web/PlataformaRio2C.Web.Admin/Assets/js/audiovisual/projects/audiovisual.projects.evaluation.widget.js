@@ -6,13 +6,13 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 07-24-2021
 // ***********************************************************************
-// <copyright file="innovation.projects.evaluation.widget.js" company="Softo">
+// <copyright file="audiovisual.projects.evaluation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var InnovationProjectsEvaluationWidget = function () {
+var AudiovisualProjectsEvaluationWidget = function () {
 
     var widgetElementId = '#ProjectEvaluationWidget';
     var widgetElement;
@@ -35,9 +35,9 @@ var InnovationProjectsEvaluationWidget = function () {
         }
 
         var jsonParameters = new Object();
-        jsonParameters.attendeeInnovationOrganizationUid = $('#AggregateId').val();
+        jsonParameters.projectUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Projects/ShowEvaluationGradeWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/ShowEvaluationGradeWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -57,12 +57,12 @@ var InnovationProjectsEvaluationWidget = function () {
     };
 
     // Evaluation Grade ---------------------------------------------------------------------------
-    var submitEvaluationGrade = function (innovationOrganizationId) {
+    var submitEvaluationGrade = function (projectId) {
         var jsonParameters = new Object();
-        jsonParameters.innovationOrganizationId = innovationOrganizationId;
-        jsonParameters.grade = $('#AttendeeInnovationOrganizationEvaluationGrade').val();
+        jsonParameters.projectId = projectId;
+        jsonParameters.grade = $('#ProjectCommissionEvaluationGrade').val();
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Projects/Evaluate'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/Evaluate'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -77,9 +77,9 @@ var InnovationProjectsEvaluationWidget = function () {
             })
             .always(function () {
                 MyRio2cCommon.unblock();
-                InnovationProjectsEvaluationWidget.init();
-                InnovationProjectsEvaluatorsWidget.init();
-                InnovationProjectsMainInformationWidget.init();
+                AudiovisualProjectsEvaluationWidget.init();
+                AudiovisualProjectsEvaluatorsWidget.init();
+                AudiovisualProjectsMainInformationWidget.init();
             });
     };
 
@@ -89,8 +89,8 @@ var InnovationProjectsEvaluationWidget = function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
         },
-        submitEvaluationGrade: function (innovationOrganizationId) {
-            submitEvaluationGrade(innovationOrganizationId);
+        submitEvaluationGrade: function (projectId) {
+            submitEvaluationGrade(projectId);
         }
     };
 }();

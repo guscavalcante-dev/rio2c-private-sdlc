@@ -110,6 +110,33 @@ var AudiovisualProjectsMainInformationWidget = function () {
         });
     };
 
+    // Evaluation Grade ---------------------------------------------------------------------------
+    var submitEvaluationGrade = function (projectId) {
+        var jsonParameters = new Object();
+        jsonParameters.projectId = projectId;
+        jsonParameters.grade = $('#ProjectEvaluationGradeMain').val();
+
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/Evaluate'), jsonParameters, function (data) {
+            MyRio2cCommon.handleAjaxReturn({
+                data: data,
+                // Success
+                onSuccess: function () {
+                },
+                // Error
+                onError: function () {
+                }
+            });
+        })
+            .fail(function () {
+            })
+            .always(function () {
+                MyRio2cCommon.unblock();
+                //AudiovisualProjectsEvaluationWidget.init();
+                //AudiovisualProjectsEvaluatorsWidget.init();
+                AudiovisualProjectsMainInformationWidget.init();
+            });
+    };
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
@@ -117,6 +144,9 @@ var AudiovisualProjectsMainInformationWidget = function () {
         },
         showUpdateModal: function () {
             showUpdateModal();
-        }
+        },
+        submitEvaluationGrade: function (projectId) {
+            submitEvaluationGrade(projectId);
+        },
     };
 }();

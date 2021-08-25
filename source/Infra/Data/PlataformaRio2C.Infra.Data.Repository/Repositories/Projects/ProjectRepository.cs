@@ -489,6 +489,32 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         : consult;
         }
 
+        /// <summary>
+        /// Finds the by identifier asynchronous.
+        /// </summary>
+        /// <param name="projectId">The project identifier.</param>
+        /// <returns></returns>
+        public async Task<Project> FindByIdAsync(int projectId)
+        {
+            var query = this.GetBaseQuery()
+                            .FindById(projectId);
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the by uid asynchronous.
+        /// </summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        public async Task<Project> FindByUidAsync(Guid projectUid)
+        {
+            var query = this.GetBaseQuery()
+                            .FindByUid(projectUid);
+
+            return await query.FirstOrDefaultAsync();
+        }
+
         /// <summary>Finds all dtos to sell asynchronous.</summary>
         /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
         /// <param name="showAll">if set to <c>true</c> [show all].</param>
@@ -744,11 +770,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             string languageCode,
             int editionId)
         {
-            var projectBaseDtos = await this.FindAllProjectBaseDtosByFilters(sortColumns, keywords, showPitchings, interestUid, evaluationStatusUid, languageCode, editionId);
+            var projectBaseDtos = await this.FindAllProjectBaseDtosByFilters(sortColumns, keywords, showPitchings, interestUid, languageCode, editionId);
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
 
             IEnumerable<ProjectBaseDto> projectBaseDtosResult = projectBaseDtos;
-            if (editionDto.IsProjectEvaluationOpen())
+            if (editionDto.IsAudiovisualProjectEvaluationOpen())
             {
                 #region Evaluation is Open
 
@@ -767,7 +793,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             {
                 #region Evaluation is Closed
 
-                var approvedProjectsIds = await this.FindAllApprovedProjectsIdsAsync(editionId);
+                var approvedProjectsIds = await this.FindAllApprovedCommissionProjectsIdsAsync(editionId);
 
                 if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
                 {
@@ -874,7 +900,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<int[]> FindAllApprovedProjectsIdsAsync(int editionId)
+        public async Task<int[]> FindAllApprovedCommissionProjectsIdsAsync(int editionId)
         {
             var edition = await this.editioRepo.FindByIdAsync(editionId);
 
@@ -909,7 +935,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             int page,
             int pageSize)
         {
-            //var projectsDtos = await this.FindAllDtosByFiltersAsync(searchKeywords, showPitchings, interestUid, null, null, editionId);
             var projectsIds = await this.GetBaseQuery()
                                 .FindByEditionId(editionId)
                                 .IsFinished()
@@ -923,7 +948,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
 
             IEnumerable<int> projectsIdsResult = projectsIds;
-            if (editionDto.IsProjectEvaluationOpen())
+            if (editionDto.IsAudiovisualProjectEvaluationOpen())
             {
                 #region Evaluation is Open
 
@@ -942,7 +967,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             {
                 #region Evaluation is Closed
 
-                var approvedProjectsIds = await this.FindAllApprovedProjectsIdsAsync(editionId);
+                var approvedProjectsIds = await this.FindAllApprovedCommissionProjectsIdsAsync(editionId);
 
                 if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
                 {
@@ -988,10 +1013,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var projectsDtos = await this.FindAllDtosByFiltersAsync(searchKeywords, showPitchings, interestUid, null, null, editionId);
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
-            var approvedProjectsIds = await this.FindAllApprovedProjectsIdsAsync(editionId);
+            var approvedProjectsIds = await this.FindAllApprovedCommissionProjectsIdsAsync(editionId);
 
             IEnumerable<ProjectDto> projectsResult = projectsDtos;
-            if (editionDto.IsProjectEvaluationOpen())
+            if (editionDto.IsAudiovisualProjectEvaluationOpen())
             {
                 #region Evaluation is Open
 
@@ -1048,7 +1073,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             string keywords,
             bool showPitchings,
             Guid? interestUid,
-            Guid? evaluationStatusUid,
             string languageCode,
             int editionId)
         {
@@ -1078,11 +1102,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                 }),
                                                 IsPitching = p.IsPitching,
                                                 CreateDate = p.CreateDate,
-                                                FinishDate = p.FinishDate
+                                                FinishDate = p.FinishDate,
+                                                CommissionGrade = p.CommissionGrade,
+                                                CommissionEvaluationsCount = p.CommissionEvaluationsCount
                                             });
 
             return await query
-                            .Order()
+                            //.Order()
                             .ToListAsync();
         }
 
@@ -1129,11 +1155,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Select(p => new ProjectDto
                             {
                                 Project = p,
-                                ProjectTitleDtos = p.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                ProjectTitleDtos = p.ProjectTitles
+                                .Where(t => !t.IsDeleted)
+                                .Select(t => new ProjectTitleDto
                                 {
                                     ProjectTitle = t,
                                     Language = t.Language
-                                })
+                                }),
+                                ProjectCommissionEvaluationDtos = p.CommissionEvaluations
+                                .Where(ce => !ce.IsDeleted)
+                                .Select(ce => new ProjectCommissionEvaluationDto
+                                {
+                                    CommissionEvaluation = ce,
+                                    EvaluatorUser = ce.EvaluatorUser
+                                }).ToList()
                             })
                             .FirstOrDefaultAsync();
         }
@@ -1183,7 +1218,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 {
                                     ProjectAdditionalInformation = aa,
                                     Language = aa.Language
-                                })
+                                }),
+                                ProjectCommissionEvaluationDtos = p.CommissionEvaluations
+                                .Where(ce => !ce.IsDeleted)
+                                .Select(ce => new ProjectCommissionEvaluationDto
+                                {
+                                    CommissionEvaluation = ce,
+                                    EvaluatorUser = ce.EvaluatorUser
+                                }).ToList()
                             })
                             .FirstOrDefaultAsync();
         }
@@ -1272,6 +1314,66 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     ProjectEvaluationRefuseReason = be.ProjectEvaluationRefuseReason
                                 })
                             })
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the evaluation grade widget dto asynchronous.
+        /// </summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public async Task<ProjectDto> FindEvaluationGradeWidgetDtoAsync(Guid projectUid, int userId)
+        {
+            var query = this.GetBaseQuery()
+                              .FindByUid(projectUid)
+                              .Select(p => new ProjectDto
+                              {
+                                  Project = p,
+                                  ProjectCommissionEvaluationDtos = p.CommissionEvaluations
+                                                                                      .Where(ce => !ce.IsDeleted)
+                                                                                      .Select(ce => new ProjectCommissionEvaluationDto
+                                                                                      {
+                                                                                          CommissionEvaluation = ce,
+                                                                                          EvaluatorUser = ce.EvaluatorUser
+                                                                                      }).ToList(),
+                                  //Current ProjectCommissionEvaluation by user Id
+                                  ProjectCommissionEvaluationDto = p.CommissionEvaluations
+                                                                                   .Where(ce => !ce.IsDeleted && ce.EvaluatorUserId == userId)
+                                                                                   .Select(ce => new ProjectCommissionEvaluationDto
+                                                                                   {
+                                                                                       CommissionEvaluation = ce,
+                                                                                       EvaluatorUser = ce.EvaluatorUser
+                                                                                   }).FirstOrDefault()
+                              });
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the evaluators widget dto asynchronous.
+        /// </summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        public async Task<ProjectDto> FindEvaluatorsWidgetDtoAsync(Guid projectUid)
+        {
+            var query = this.GetBaseQuery()
+                              .FindByUid(projectUid)
+                              .Select(p => new ProjectDto
+                              {
+                                  Project = p,
+                                  ProjectCommissionEvaluationDtos = p.CommissionEvaluations
+                                                                        .Where(ce => !ce.IsDeleted)
+                                                                        .Select(ce =>
+                                                                        new ProjectCommissionEvaluationDto
+                                                                        {
+                                                                            CommissionEvaluation = ce,
+                                                                            EvaluatorUser = ce.EvaluatorUser
+                                                                        })
+                              });
+
+            return await query
                             .FirstOrDefaultAsync();
         }
 
@@ -1836,8 +1938,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .AsNoTracking();
         }
 
-
-
         public IEnumerable<Project> GetAllExcel()
         {
             return this.dbSet
@@ -1938,7 +2038,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         //.Include(i => i.PlayersRelated.Select(e => e.Player))
                         .FirstOrDefault(filter);
         }
-
 
         public override void Delete(Project entity)
         {

@@ -23,7 +23,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public Edition Edition { get; set; }
         public IEnumerable<EditionEventDto> EditionEventDtos { get; set; }
 
-        #region EditionDto Properties
+        #region Main Information
+
         public int Id { get; private set; }
         public Guid Uid { get; private set; }
         public string Name { get; private set; }
@@ -34,33 +35,52 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset EndDate { get; private set; }
         public DateTimeOffset SellStartDate { get; private set; }
         public DateTimeOffset SellEndDate { get; private set; }
+        public DateTimeOffset OneToOneMeetingsScheduleDate { get; private set; }
+
+        #endregion
+
+        #region Dates Information
+
+        // Audiovisual - Negotiations
         public DateTimeOffset ProjectSubmitStartDate { get; private set; }
         public DateTimeOffset ProjectSubmitEndDate { get; private set; }
         public DateTimeOffset ProjectEvaluationStartDate { get; private set; }
-        public DateTimeOffset ProjectEvaluationEndDate { get; private set; }
-        public DateTimeOffset OneToOneMeetingsScheduleDate { get; private set; }
+        public DateTimeOffset ProjectEvaluationEndDate { get; private set; }  
         public DateTimeOffset NegotiationStartDate { get; private set; }
         public DateTimeOffset NegotiationEndDate { get; private set; }
+        public DateTimeOffset? AudiovisualNegotiationsCreateStartDate { get; private set; }
+        public DateTimeOffset? AudiovisualNegotiationsCreateEndDate { get; private set; }
         public int AttendeeOrganizationMaxSellProjectsCount { get; private set; }
         public int ProjectMaxBuyerEvaluationsCount { get; private set; }
+
+        // Music - Commissions
         public DateTimeOffset MusicProjectSubmitStartDate { get; private set; }
         public DateTimeOffset MusicProjectSubmitEndDate { get; private set; }
         public DateTimeOffset MusicCommissionEvaluationStartDate { get; private set; }
         public DateTimeOffset MusicCommissionEvaluationEndDate { get; private set; }
         public int MusicCommissionMinimumEvaluationsCount { get; private set; }
         public int MusicCommissionMaximumApprovedBandsCount { get; private set; }
+
+        // Innovation - Commissions
         public DateTimeOffset InnovationProjectSubmitStartDate { get; private set; }
         public DateTimeOffset InnovationProjectSubmitEndDate { get; private set; }
         public DateTimeOffset InnovationCommissionEvaluationStartDate { get; private set; }
         public DateTimeOffset InnovationCommissionEvaluationEndDate { get; private set; }
-        public DateTimeOffset? AudiovisualNegotiationsCreateStartDate { get; private set; }
-        public DateTimeOffset? AudiovisualNegotiationsCreateEndDate { get; private set; }
+        public int InnovationCommissionMinimumEvaluationsCount { get; private set; }
+        public int InnovationCommissionMaximumApprovedCompaniesCount { get; private set; }
+
+        // Audiovisual - Commissions
+        public DateTimeOffset AudiovisualCommissionEvaluationStartDate { get; private set; }
+        public DateTimeOffset AudiovisualCommissionEvaluationEndDate { get; private set; }
+        public int AudiovisualCommissionMinimumEvaluationsCount { get; private set; }
+        public int AudiovisualCommissionMaximumApprovedProjectsCount { get; private set; }
+
+        #endregion
+
         public DateTimeOffset CreateDate { get; private set; }
         public int CreateUserId { get; private set; }
         public DateTimeOffset UpdateDate { get; private set; }
         public int UpdateUserId { get; private set; }
-
-        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EditionDto"/> class.
@@ -80,45 +100,60 @@ namespace PlataformaRio2C.Domain.Dtos
 
             this.Edition = entity;
 
+            // Main Information
             this.Id = entity.Id;
             this.Uid = entity.Uid;
             this.Name = entity.Name;
             this.UrlCode = entity.UrlCode;
             this.IsCurrent = entity.IsCurrent;
             this.IsActive = entity.IsActive;
-
             this.StartDate = entity.StartDate;
             this.EndDate = entity.EndDate;
             this.SellStartDate = entity.SellStartDate;
             this.SellEndDate = entity.SellEndDate;
+            this.OneToOneMeetingsScheduleDate = entity.OneToOneMeetingsScheduleDate;
+
+            // Audiovisual - Negotiations
             this.ProjectSubmitStartDate = entity.ProjectSubmitStartDate;
             this.ProjectSubmitEndDate = entity.ProjectSubmitEndDate;
             this.ProjectEvaluationStartDate = entity.ProjectEvaluationStartDate;
             this.ProjectEvaluationEndDate = entity.ProjectEvaluationEndDate;
-            this.OneToOneMeetingsScheduleDate = entity.OneToOneMeetingsScheduleDate;
             this.NegotiationStartDate = entity.NegotiationStartDate;
             this.NegotiationEndDate = entity.NegotiationEndDate;
             this.AttendeeOrganizationMaxSellProjectsCount = entity.AttendeeOrganizationMaxSellProjectsCount;
             this.ProjectMaxBuyerEvaluationsCount = entity.ProjectMaxBuyerEvaluationsCount;
+            
+            // Music - Commissions
             this.MusicProjectSubmitStartDate = entity.MusicProjectSubmitStartDate;
             this.MusicProjectSubmitEndDate = entity.MusicProjectSubmitEndDate;
             this.MusicCommissionEvaluationStartDate = entity.MusicCommissionEvaluationStartDate;
             this.MusicCommissionEvaluationEndDate = entity.MusicCommissionEvaluationEndDate;
             this.MusicCommissionMinimumEvaluationsCount = entity.MusicCommissionMinimumEvaluationsCount;
             this.MusicCommissionMaximumApprovedBandsCount = entity.MusicCommissionMaximumApprovedBandsCount;
+
+            // Innovation - Commissions
             this.InnovationProjectSubmitStartDate = entity.InnovationProjectSubmitStartDate;
             this.InnovationProjectSubmitEndDate = entity.InnovationProjectSubmitEndDate;
             this.InnovationCommissionEvaluationStartDate = entity.InnovationCommissionEvaluationStartDate;
             this.InnovationCommissionEvaluationEndDate = entity.InnovationCommissionEvaluationEndDate;
+            this.InnovationCommissionMinimumEvaluationsCount = entity.InnovationCommissionMinimumEvaluationsCount;
+            this.InnovationCommissionMaximumApprovedCompaniesCount = entity.InnovationCommissionMaximumApprovedCompaniesCount;
+
+            // Audiovisual - Commissions
             this.AudiovisualNegotiationsCreateStartDate = entity.AudiovisualNegotiationsCreateStartDate;
             this.AudiovisualNegotiationsCreateEndDate = entity.AudiovisualNegotiationsCreateEndDate;
+            this.AudiovisualCommissionEvaluationStartDate = entity.AudiovisualCommissionEvaluationStartDate;
+            this.AudiovisualCommissionEvaluationEndDate = entity.AudiovisualCommissionEvaluationEndDate;
+            this.AudiovisualCommissionMinimumEvaluationsCount = entity.AudiovisualCommissionMinimumEvaluationsCount;
+            this.AudiovisualCommissionMaximumApprovedProjectsCount = entity.AudiovisualCommissionMaximumApprovedProjectsCount;
+
             this.CreateDate = entity.CreateDate;
             this.CreateUserId = entity.CreateUserId;
             this.UpdateDate = entity.UpdateDate;
             this.UpdateUserId = entity.UpdateUserId;
         }
 
-        #region Audiovisual
+        #region Audiovisual - Negotiations
 
         #region Project Submit
 
@@ -186,7 +221,7 @@ namespace PlataformaRio2C.Domain.Dtos
 
         #endregion
 
-        #region Music
+        #region Music - Commissions
 
         #region Project Submit
 
@@ -246,7 +281,7 @@ namespace PlataformaRio2C.Domain.Dtos
 
         #endregion
 
-        #region Innovation
+        #region Innovation - Commissions
 
         #region Project Submit
 
@@ -300,6 +335,84 @@ namespace PlataformaRio2C.Domain.Dtos
         public bool IsInnovationProjectEvaluationEnded()
         {
             return DateTime.UtcNow > this.InnovationCommissionEvaluationEndDate;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Audiovisual - Commissions
+
+        #region Project Submit
+
+        /// <summary>
+        /// Determines whether [is audiovisual project submit open].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is audiovisual project submit open]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsAudiovisualProjectSubmitOpen()
+        {
+            return DateTime.UtcNow >= this.ProjectSubmitStartDate && DateTime.UtcNow <= this.ProjectSubmitEndDate;
+        }
+
+        /// <summary>
+        /// Determines whether [is audiovisual project submit started].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is audiovisual project submit started]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsAudiovisualProjectSubmitStarted()
+        {
+            return DateTime.UtcNow >= this.ProjectSubmitStartDate;
+        }
+
+        /// <summary>
+        /// Determines whether [is audiovisual project submit ended].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is audiovisual project submit ended]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsAudiovisualProjectSubmitEnded()
+        {
+            return DateTime.UtcNow > this.ProjectSubmitEndDate;
+        }
+
+        #endregion
+
+        #region Project Evaluation
+
+        /// <summary>
+        /// Determines whether [is audiovisual project evaluation open].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is audiovisual project evaluation open]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsAudiovisualProjectEvaluationOpen()
+        {
+            return DateTime.UtcNow >= this.AudiovisualCommissionEvaluationStartDate && DateTime.UtcNow <= this.AudiovisualCommissionEvaluationEndDate;
+        }
+
+        /// <summary>
+        /// Determines whether [is audiovisual project evaluation started].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is audiovisual project evaluation started]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsAudiovisualProjectEvaluationStarted()
+        {
+            return DateTime.UtcNow >= this.AudiovisualCommissionEvaluationStartDate;
+        }
+
+        /// <summary>
+        /// Determines whether [is audiovisual project evaluation ended].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is audiovisual project evaluation ended]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsAudiovisualProjectEvaluationEnded()
+        {
+            return DateTime.UtcNow > this.AudiovisualCommissionEvaluationEndDate;
         }
 
         #endregion

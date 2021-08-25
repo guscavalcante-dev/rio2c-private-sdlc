@@ -2938,4 +2938,8 @@
     <value>Audiovisual Negotiations</value>
     <comment>Negociações Audiovisual</comment>
   </data>
+  <data name="NotCheckedForPitching" xml:space="preserve">
+    <value>Not checked for Pitching</value>
+    <comment>Não participa do Pitching</comment>
+  </data>
 </root>

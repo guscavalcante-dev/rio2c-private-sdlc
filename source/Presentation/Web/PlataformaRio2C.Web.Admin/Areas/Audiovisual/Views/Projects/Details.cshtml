@@ -46,34 +46,37 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <!--begin:Main Information Widget-->
         <div class="row">
             <div class="col-12">
                 <div id="ProjectMainInformationWidget" class="kt-portlet" style="min-height: 325px;"></div>
             </div>
         </div>
-        <!--end:Main Information Widget-->
-        <!--begin:Interest Widget-->
         <div class="row">
             <div class="col-12">
                 <div id="ProjectInterestWidget" class="kt-portlet" style="min-height: 325px;"></div>
             </div>
         </div>
-        <!--end:Interest Widget-->
-        <!--begin:Links Widget-->
         <div class="row">
             <div class="col-12">
                 <div id="ProjectLinksWidget" class="kt-portlet" style="min-height: 325px;"></div>
             </div>
         </div>
-        <!--end:Links Widget-->
-        <!--begin:Company Widget-->
         <div class="row">
             <div class="col-12">
                 <div id="ProjectBuyercompanyWidget" class="kt-portlet" style="min-height: 325px;"></div>
             </div>
         </div>
-        <!--end:Company Widget-->
+        @if (Model.Project.IsPitching == true)
+        {
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="ProjectEvaluationWidget" class="kt-portlet" style="min-height: 296px;"></div>
+                </div>
+                <div class="col-md-6">
+                    <div id="ProjectEvaluatorsWidget" class="kt-portlet" style="min-height: 296px;"></div>
+                </div>
+            </div>
+        }
     </div>
 </div>
 @section Styles {
@@ -84,7 +87,6 @@
     @Scripts.Render("~/bundles/js/inputmask.js")
     @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/audiovisual.projects.widget.js")
-    @*@Scripts.Render("~/bundles/js/projects.buyercompany.widget.js")*@
     <script>
         // Page translations ----------------------------------------------------------------------
         var translations = {
@@ -100,6 +102,13 @@
             AudiovisualProjectsInterestWidget.init();
             AudiovisualProjectsLinksWidget.init();
             AudiovisualProjectsBuyerCompanyWidget.init();
-        });
+            @if (Model.Project.IsPitching == true)
+            {
+                <text>
+                    AudiovisualProjectsEvaluationWidget.init();
+                    AudiovisualProjectsEvaluatorsWidget.init();
+                </text>
+            }
+            });
     </script>
 }
