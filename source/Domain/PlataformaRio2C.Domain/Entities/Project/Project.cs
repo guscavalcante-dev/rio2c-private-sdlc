@@ -895,15 +895,15 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         /// <param name="evaluatorUser">The evaluator user.</param>
         /// <param name="grade">The grade.</param>
-        public void Evaluate(User evaluatorUser, decimal grade, bool isAdmin)
+        public void CommissionEvaluate(User evaluatorUser, decimal grade, bool isAdmin)
         {
             if (this.CommissionEvaluations == null)
                 this.CommissionEvaluations = new List<CommissionEvaluation>();
 
-            var existentProjectEvaluation = this.GetCommissionEvaluationByEvaluatorId(evaluatorUser.Id);
-            if (existentProjectEvaluation != null)
+            var existentCommissionEvaluation = this.GetCommissionEvaluationByEvaluatorId(evaluatorUser.Id);
+            if (existentCommissionEvaluation != null)
             {
-                existentProjectEvaluation.Update(grade, evaluatorUser.Id);
+                existentCommissionEvaluation.Update(grade, evaluatorUser.Id);
             }
             else
             {
@@ -1007,6 +1007,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateProjectImageLinks();
             this.ValidateProjectTeaserLinks();
             this.ValidateProjectBuyerEvaluations();
+            this.ValidateCommissionEvaluations();
 
             return this.ValidationResult.IsValid;
         }
@@ -1254,7 +1255,9 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        /// <summary>Validates the project buyer evaluations.</summary>
+        /// <summary>
+        /// Validates the commission evaluations.
+        /// </summary>
         public void ValidateCommissionEvaluations()
         {
             if (this.CommissionEvaluations?.Any() != true)
@@ -1267,9 +1270,9 @@ namespace PlataformaRio2C.Domain.Entities
                 this.ValidationResult.Add(new ValidationError(Messages.ProjectCannotBeEvaluatedIsNotPitching, new string[] { "ToastrError" }));
             }
 
-            foreach (var projectBuyerEvaluation in this.ProjectBuyerEvaluations?.Where(t => !t.IsValid())?.ToList())
+            foreach (var commissionEvaluation in this.CommissionEvaluations?.Where(t => !t.IsValid())?.ToList())
             {
-                this.ValidationResult.Add(projectBuyerEvaluation.ValidationResult);
+                this.ValidationResult.Add(commissionEvaluation.ValidationResult);
             }
         }
 

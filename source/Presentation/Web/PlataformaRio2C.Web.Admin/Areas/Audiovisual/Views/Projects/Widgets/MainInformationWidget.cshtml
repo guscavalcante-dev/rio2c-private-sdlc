@@ -71,7 +71,7 @@
                     {
                         <div class="kt-widget__desc myrio2c-evaluation-position col-md-5 pr-0">
                             <div class="kt-widget__text pull-right" data-id="EvaluationGradeMain">
-                                @if (editionDto?.IsAudiovisualProjectEvaluationStarted() != true)
+                                @if (editionDto?.IsAudiovisualCommissionProjectEvaluationStarted() != true)
                                 {
                                     <div class="row">
                                         <div class="col-12">
@@ -81,7 +81,7 @@
                                         </div>
                                     </div>
                                 }
-                                else if (editionDto?.IsAudiovisualProjectEvaluationOpen() == true)
+                                else if (editionDto?.IsAudiovisualCommissionProjectEvaluationOpen() == true)
                                 {
                                     var hasCurrentEvaluation = currentEvaluation != null;
                                     if (hasCurrentEvaluation)

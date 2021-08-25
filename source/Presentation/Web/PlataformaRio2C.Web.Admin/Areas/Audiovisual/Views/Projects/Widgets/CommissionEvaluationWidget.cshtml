@@ -11,16 +11,16 @@
     </div>
 </div>
 <div class="kt-portlet__body pt-0">
-    @if (editionDto?.IsAudiovisualProjectEvaluationOpen() == true)
+    @if (editionDto?.IsAudiovisualCommissionProjectEvaluationOpen() == true)
     {
         <form class="form-inline justify-content-center mt-85">
             <div class="form-group mb-2 mr-3">
                 @Html.TextBox("ProjectCommissionEvaluationGrade", Model.ProjectCommissionEvaluationDto?.CommissionEvaluation?.Grade, new { @class = "form-control text-center decimal-globalize-mask", placeholder = Labels.Grade, style = "width: 105px;" })
             </div>
-            <button type="button" class="btn btn-success mb-2" onclick="AudiovisualProjectsEvaluationWidget.submitEvaluationGrade('@Model.Project.Id');">@Labels.Evaluate</button>
+            <button type="button" class="btn btn-success mb-2" onclick="AudiovisualProjectsCommissionEvaluationWidget.submitEvaluationGrade('@Model.Project.Id');">@Labels.Evaluate</button>
         </form>
     }
-    else if (editionDto?.IsAudiovisualProjectEvaluationOpen() != true)
+    else if (editionDto?.IsAudiovisualCommissionProjectEvaluationOpen() != true)
     {
         <div class="row mt-75">
             <div class="col-12">

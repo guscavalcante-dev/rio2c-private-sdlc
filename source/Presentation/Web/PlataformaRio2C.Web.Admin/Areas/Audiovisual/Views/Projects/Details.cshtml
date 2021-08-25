@@ -5,7 +5,7 @@
     var totalProjectsCount = ViewBag.ProjectsTotalCount as int?;
     var currentProjectIndex = ViewBag.CurrentProjectIndex as int?;
 
-    var previousStepEvent = Url.Action("PreviousEvaluationDetails", "Projects", new
+    var previousStepEvent = Url.Action("PreviousCommissionEvaluationDetails", "Projects", new
     {
         Area = "Audiovisual",
         id = Model.Project.Id,
@@ -16,7 +16,7 @@
         pageSize = ViewBag.PageSize
     });
 
-    var nextStepEvent = Url.Action("NextEvaluationDetails", "Projects", new
+    var nextStepEvent = Url.Action("NextCommissionEvaluationDetails", "Projects", new
     {
         Area = "Audiovisual",
         id = Model.Project.Id,
@@ -105,7 +105,7 @@
             @if (Model.Project.IsPitching == true)
             {
                 <text>
-                    AudiovisualProjectsEvaluationWidget.init();
+                    AudiovisualProjectsCommissionEvaluationWidget.init();
                     AudiovisualProjectsEvaluatorsWidget.init();
                 </text>
             }

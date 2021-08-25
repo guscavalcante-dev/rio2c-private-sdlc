@@ -383,34 +383,34 @@ namespace PlataformaRio2C.Domain.Dtos
         #region Project Evaluation
 
         /// <summary>
-        /// Determines whether [is audiovisual project evaluation open].
+        /// Determines whether [is audiovisual commission project evaluation open].
         /// </summary>
         /// <returns>
-        ///   <c>true</c> if [is audiovisual project evaluation open]; otherwise, <c>false</c>.
+        ///   <c>true</c> if [is audiovisual commission project evaluation open]; otherwise, <c>false</c>.
         /// </returns>
-        public bool IsAudiovisualProjectEvaluationOpen()
+        public bool IsAudiovisualCommissionProjectEvaluationOpen()
         {
             return DateTime.UtcNow >= this.AudiovisualCommissionEvaluationStartDate && DateTime.UtcNow <= this.AudiovisualCommissionEvaluationEndDate;
         }
 
         /// <summary>
-        /// Determines whether [is audiovisual project evaluation started].
+        /// Determines whether [is audiovisual commission project evaluation started].
         /// </summary>
         /// <returns>
-        ///   <c>true</c> if [is audiovisual project evaluation started]; otherwise, <c>false</c>.
+        ///   <c>true</c> if [is audiovisual commission project evaluation started]; otherwise, <c>false</c>.
         /// </returns>
-        public bool IsAudiovisualProjectEvaluationStarted()
+        public bool IsAudiovisualCommissionProjectEvaluationStarted()
         {
             return DateTime.UtcNow >= this.AudiovisualCommissionEvaluationStartDate;
         }
 
         /// <summary>
-        /// Determines whether [is audiovisual project evaluation ended].
+        /// Determines whether [is audiovisual commission project evaluation ended].
         /// </summary>
         /// <returns>
-        ///   <c>true</c> if [is audiovisual project evaluation ended]; otherwise, <c>false</c>.
+        ///   <c>true</c> if [is audiovisual commission project evaluation ended]; otherwise, <c>false</c>.
         /// </returns>
-        public bool IsAudiovisualProjectEvaluationEnded()
+        public bool IsAudiovisualCommissionProjectEvaluationEnded()
         {
             return DateTime.UtcNow > this.AudiovisualCommissionEvaluationEndDate;
         }
