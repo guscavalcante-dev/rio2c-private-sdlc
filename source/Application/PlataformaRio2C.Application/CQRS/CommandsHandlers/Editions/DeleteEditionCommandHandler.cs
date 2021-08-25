@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-06-2020
+// Last Modified On : 08-24-2021
 // ***********************************************************************
 // <copyright file="DeleteEditionCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -35,9 +35,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
         }
 
-
         /// <summary>
-        /// Handles the specified command.
+        /// Handles the specified delete edition.
         /// </summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>

@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 03-03-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified By : Renan valentim
+// Last Modified On : 08-21-2021
 // ***********************************************************************
 // <copyright file="EditionsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -338,27 +338,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             try
             {
-                //Remove DatesInformation properties from ModelState validation.
-                UpdateEditionMainInformation u;
-                ModelState.Remove(nameof(u.SellStartDate));
-                ModelState.Remove(nameof(u.SellEndDate));
-                ModelState.Remove(nameof(u.ProjectSubmitStartDate));
-                ModelState.Remove(nameof(u.ProjectSubmitEndDate));
-                ModelState.Remove(nameof(u.ProjectEvaluationStartDate));
-                ModelState.Remove(nameof(u.ProjectEvaluationEndDate));
-                ModelState.Remove(nameof(u.NegotiationStartDate));
-                ModelState.Remove(nameof(u.NegotiationEndDate));
-                ModelState.Remove(nameof(u.MusicProjectSubmitStartDate));
-                ModelState.Remove(nameof(u.MusicProjectSubmitEndDate));
-                ModelState.Remove(nameof(u.MusicProjectEvaluationStartDate));
-                ModelState.Remove(nameof(u.MusicProjectEvaluationEndDate));
-                ModelState.Remove(nameof(u.InnovationProjectSubmitStartDate));
-                ModelState.Remove(nameof(u.InnovationProjectSubmitEndDate));
-                ModelState.Remove(nameof(u.InnovationProjectEvaluationStartDate));
-                ModelState.Remove(nameof(u.InnovationProjectEvaluationEndDate));
-                ModelState.Remove(nameof(u.AudiovisualNegotiationsCreateStartDate));
-                ModelState.Remove(nameof(u.AudiovisualNegotiationsCreateEndDate));
-
                 if (!ModelState.IsValid)
                 {
                     throw new DomainException(Messages.CorrectFormValues);
@@ -390,7 +369,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationForm", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("Modals/_UpdateMainInformationForm", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -416,7 +395,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowUpdateDatesInformationModal(Guid? editionUid)
         {
-            UpdateEditionMainInformation cmd;
+            UpdateEditionDatesInformation cmd;
 
             try
             {
@@ -426,7 +405,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Edition, Labels.FoundM.ToLowerInvariant()));
                 }
 
-                cmd = new UpdateEditionMainInformation(mainInformationWidgetDto);
+                cmd = new UpdateEditionDatesInformation(mainInformationWidgetDto);
             }
             catch (DomainException ex)
             {
@@ -457,18 +436,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             try
             {
-                //Remove MainInformation properties from ModelState validation.
-                CreateEdition c;
-                ModelState.Remove(nameof(c.Name));
-                ModelState.Remove(nameof(c.UrlCode));
-                ModelState.Remove(nameof(c.IsCurrent));
-                ModelState.Remove(nameof(c.IsActive));
-                ModelState.Remove(nameof(c.AttendeeOrganizationMaxSellProjectsCount));
-                ModelState.Remove(nameof(c.ProjectMaxBuyerEvaluationsCount));
-                ModelState.Remove(nameof(c.StartDate));
-                ModelState.Remove(nameof(c.EndDate));
-                ModelState.Remove(nameof(c.OneToOneMeetingsScheduleDate));
-
                 if (!ModelState.IsValid)
                 {
                     throw new DomainException(Messages.CorrectFormValues);
@@ -500,7 +467,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/UpdateDatesInformationForm", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("Modals/_UpdateDatesInformationForm", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }

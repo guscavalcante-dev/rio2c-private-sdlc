@@ -229,7 +229,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             // Can only generate the 'AverageEvaluation' when the 'AttendeeInnovationOrganizationEvaluations' count 
             // is greater or equal than minimum necessary evaluations quantity
-            if (this.GetAttendeeInnovationOrganizationEvaluationTotalCount() >= edition.InnovationProjectMinimumEvaluationsCount)
+            if (this.GetAttendeeInnovationOrganizationEvaluationTotalCount() >= edition.InnovationCommissionMinimumEvaluationsCount)
             {
                 return this.FindAllAttendeeInnovationOrganizationEvaluationsNotDeleted().Sum(e => e.Grade) / this.FindAllAttendeeInnovationOrganizationEvaluationsNotDeleted().Count;
             }

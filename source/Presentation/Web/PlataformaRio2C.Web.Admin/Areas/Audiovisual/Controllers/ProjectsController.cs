@@ -115,19 +115,24 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="interestUid">The interest uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Search(IDataTablesRequest request, bool showPitchings, Guid? interestUid)
+        public async Task<ActionResult> Search(IDataTablesRequest request, bool showPitchings, Guid? interestUid, Guid? evaluationStatusUid)
         {
-            var projects = await this.projectRepo.FindAllBaseDtosByFiltersAndByPageAsync(
-                request.Start / request.Length,
-                request.Length,
+            int page = request.Start / request.Length;
+            int pageSize = request.Length;
+            page++; //Necessary because DataTable is zero index based.
+
+            var projectsBaseDtos = await this.projectRepo.FindAllBaseDtosPagedAsync(
+                page,
+                pageSize,
                 request.GetSortColumns(),
                 request.Search?.Value,
                 showPitchings,
                 interestUid,
+                evaluationStatusUid,
                 this.UserInterfaceLanguage,
                 this.EditionDto.Id);
 
-            foreach (var project in projects)
+            foreach (var project in projectsBaseDtos)
             {
                 project.Genre = new List<string>();
                 foreach (var projectInterestDto in project.Genres)
@@ -136,7 +141,30 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
             }
 
-            var response = DataTablesResponse.Create(request, projects.TotalItemCount, projects.TotalItemCount, projects);
+            ViewBag.InterestUid = interestUid;
+            ViewBag.EvaluationStatusUid = evaluationStatusUid;
+            ViewBag.Page = page;
+            ViewBag.PageSize = pageSize;
+
+            IDictionary<string, object> additionalParameters = new Dictionary<string, object>();
+            if (projectsBaseDtos.TotalItemCount <= 0)
+            {
+                if (this.EditionDto.IsProjectEvaluationOpen() && (
+                    evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid ||
+                    evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid))
+                {
+                    additionalParameters.Add("noRecordsFoundMessage",
+                        $"{string.Format(Messages.TheEvaluationPeriodRunsFrom, this.EditionDto.ProjectEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(), this.EditionDto.ProjectEvaluationEndDate.ToBrazilTimeZone().ToShortDateString())}.</br>{Messages.TheProjectsWillReceiveFinalGradeAtPeriodEnds}");
+                }
+                else if (!this.EditionDto.IsProjectEvaluationOpen() &&
+                    evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
+                {
+                    additionalParameters.Add("noRecordsFoundMessage",
+                        $"{Messages.EvaluationPeriodClosed}<br/>{string.Format(Messages.ProjectsNotFoundWithStatus, Labels.UnderEvaluation)}");
+                }
+            }
+
+            var response = DataTablesResponse.Create(request, projectsBaseDtos.TotalItemCount, projectsBaseDtos.TotalItemCount, projectsBaseDtos, additionalParameters);
 
             return Json(new
             {
@@ -298,13 +326,26 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
         #region Details
 
-        /// <summary>Detailses the specified identifier.</summary>
+        /// <summary>
+        /// Detailses the specified identifier.
+        /// </summary>
         /// <param name="id">The identifier.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="interestUid">The interest uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="showPitchings">The show pitchings.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Details(Guid? id)
+        public async Task<ActionResult> Details(int? id, string searchKeywords = null, Guid? interestUid = null, Guid? evaluationStatusUid = null, bool? showPitchings = null, int? page = 1, int? pageSize = 10)
         {
-            var projectDto = await this.projectRepo.FindAdminDetailsDtoByProjectUidAndByEditionIdAsync(id ?? Guid.Empty, this.EditionDto.Id);
+            if (!page.HasValue || page <= 0)
+            {
+                page++;
+            }
+
+            var projectDto = await this.projectRepo.FindAdminDetailsDtoByProjectIdAndByEditionIdAsync(id ?? 0, this.EditionDto.Id);
             if (projectDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
@@ -313,16 +354,121 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Project, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.AudioVisual, null),
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper>{
                 new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "Audiovisual" })),
-                new BreadcrumbItemHelper(projectDto.GetTitleDtoByLanguageCode(this.UserInterfaceLanguage).ProjectTitle.Value, Url.Action("Details", "Projects", new { Area = "Audiovisual", id }))
+                new BreadcrumbItemHelper(projectDto?.Project?.GetTitleByLanguageCode(this.UserInterfaceLanguage) ?? Labels.Project, Url.Action("Details", "Projects", new { Area = "Audiovisual", id }))
             });
 
             #endregion
 
+            var allProjectsIds = await this.projectRepo.FindAllProjectsIdsPagedAsync(
+                this.EditionDto.Edition.Id,
+                searchKeywords,
+                interestUid,
+                evaluationStatusUid,
+                showPitchings ?? false,
+                page.Value,
+                pageSize.Value);
+            var currentProjectIdIndex = Array.IndexOf(allProjectsIds, id.Value) + 1; //Index start at 0, its a fix to "start at 1"
+
+            ViewBag.SearchKeywords = searchKeywords;
+            ViewBag.InterestUid = interestUid;
+            ViewBag.EvaluationStatusUid = evaluationStatusUid;
+            ViewBag.Page = page;
+            ViewBag.PageSize = pageSize;
+            ViewBag.CurrentProjectIndex = currentProjectIdIndex;
+
+            ViewBag.ProjectsTotalCount = await this.projectRepo.CountPagedAsync(this.EditionDto.Edition.Id, searchKeywords, interestUid, evaluationStatusUid, showPitchings ?? false, page.Value, pageSize.Value);
+            ViewBag.ApprovedProjectsIds = await this.projectRepo.FindAllApprovedProjectsIdsAsync(this.EditionDto.Edition.Id);
+
             return View(projectDto);
         }
+
+        /// <summary>
+        /// Previouses the evaluation details.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="interestUid">The music genre uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="showPitchings">The show pitchings.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> PreviousEvaluationDetails(int? id, string searchKeywords = null, Guid? interestUid = null, Guid? evaluationStatusUid = null, bool? showPitchings = null, int? page = 1, int? pageSize = 10)
+        {
+            var allProjectsIds = await this.projectRepo.FindAllProjectsIdsPagedAsync(
+                this.EditionDto.Edition.Id,
+                searchKeywords,
+                interestUid,
+                evaluationStatusUid,
+                showPitchings ?? false,
+                page.Value,
+                pageSize.Value);
+
+            var currentProjectIdIndex = Array.IndexOf(allProjectsIds, id.Value);
+            var previousProjectId = allProjectsIds.ElementAtOrDefault(currentProjectIdIndex - 1);
+            if (previousProjectId == 0)
+            {
+                previousProjectId = id.Value;
+            }
+
+            return RedirectToAction("Details",
+                new
+                {
+                    id = previousProjectId,
+                    searchKeywords,
+                    interestUid,
+                    showPitchings,
+                    page,
+                    pageSize
+                });
+        }
+
+        /// <summary>
+        /// Nexts the evaluation details.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="interestUid">The music genre uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="showPitchings">The show pitchings.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> NextEvaluationDetails(int? id, string searchKeywords = null, Guid? interestUid = null, Guid? evaluationStatusUid = null, bool? showPitchings = null, int? page = 1, int? pageSize = 10)
+        {
+            var allProjectsIds = await this.projectRepo.FindAllProjectsIdsPagedAsync(
+                this.EditionDto.Edition.Id,
+                searchKeywords,
+                interestUid,
+                evaluationStatusUid,
+                showPitchings ?? false,
+                page.Value,
+                pageSize.Value);
+
+            var currentProjectIdIndex = Array.IndexOf(allProjectsIds, id.Value);
+            var nextProjectId = allProjectsIds.ElementAtOrDefault(currentProjectIdIndex + 1);
+            if (nextProjectId == 0)
+            {
+                nextProjectId = id.Value;
+            }
+
+            return RedirectToAction("Details",
+                new
+                {
+                    id = nextProjectId,
+                    searchKeywords,
+                    interestUid,
+                    showPitchings,
+                    page,
+                    pageSize
+                });
+        }
+
+        #endregion
 
         #region Main Information Widget
 
@@ -941,8 +1087,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.UpdatedM) });
         }
-
-        #endregion
 
         #endregion
 

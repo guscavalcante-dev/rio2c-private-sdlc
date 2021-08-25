@@ -234,7 +234,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid))
                 {
                     additionalParameters.Add("noRecordsFoundMessage",
-                        $"{string.Format(Messages.TheEvaluationPeriodRunsFrom, this.EditionDto.MusicProjectEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(), this.EditionDto.MusicProjectEvaluationEndDate.ToBrazilTimeZone().ToShortDateString())}.</br>{Messages.TheProjectsWillReceiveFinalGradeAtPeriodEnds}");
+                        $"{string.Format(Messages.TheEvaluationPeriodRunsFrom, this.EditionDto.MusicCommissionEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(), this.EditionDto.MusicCommissionEvaluationEndDate.ToBrazilTimeZone().ToShortDateString())}.</br>{Messages.TheProjectsWillReceiveFinalGradeAtPeriodEnds}");
                 }
                 else if (!this.EditionDto.IsMusicProjectEvaluationOpen() &&
                     evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)

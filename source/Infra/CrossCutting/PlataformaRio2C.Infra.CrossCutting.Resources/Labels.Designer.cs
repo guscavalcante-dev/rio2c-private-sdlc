@@ -520,7 +520,52 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data de término da criação de negociações audiovisuais.
+        ///   Looks up a localized string similar to Data de término da avaliação de projeto audiovisual.
+        /// </summary>
+        public static string AudiovisualCommissionEvaluationEndDate {
+            get {
+                return ResourceManager.GetString("AudiovisualCommissionEvaluationEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de início da avaliação de projeto audiovisual.
+        /// </summary>
+        public static string AudiovisualCommissionEvaluationStartDate {
+            get {
+                return ResourceManager.GetString("AudiovisualCommissionEvaluationStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade máxima de projetos de audiovisual aprovados.
+        /// </summary>
+        public static string AudiovisualCommissionMaximumApprovedProjectsCount {
+            get {
+                return ResourceManager.GetString("AudiovisualCommissionMaximumApprovedProjectsCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade mínima de votos para gerar média de projeto audiovisual.
+        /// </summary>
+        public static string AudiovisualCommissionMinimumEvaluationsCount {
+            get {
+                return ResourceManager.GetString("AudiovisualCommissionMinimumEvaluationsCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Negociações Audiovisual.
+        /// </summary>
+        public static string AudiovisualNegotiations {
+            get {
+                return ResourceManager.GetString("AudiovisualNegotiations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de término da criação de negociações.
         /// </summary>
         public static string AudiovisualNegotiationsCreateEndDate {
             get {
@@ -529,7 +574,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data de início da criação de negociações audiovisuais.
+        ///   Looks up a localized string similar to Data de início da criação de negociações.
         /// </summary>
         public static string AudiovisualNegotiationsCreateStartDate {
             get {
@@ -2565,18 +2610,36 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Data de término da avaliação de projeto de inovação.
         /// </summary>
-        public static string InnovationProjectEvaluationEndDate {
+        public static string InnovationCommissionEvaluationEndDate {
             get {
-                return ResourceManager.GetString("InnovationProjectEvaluationEndDate", resourceCulture);
+                return ResourceManager.GetString("InnovationCommissionEvaluationEndDate", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Data de início da avaliação de projeto de inovação.
         /// </summary>
-        public static string InnovationProjectEvaluationStartDate {
+        public static string InnovationCommissionEvaluationStartDate {
             get {
-                return ResourceManager.GetString("InnovationProjectEvaluationStartDate", resourceCulture);
+                return ResourceManager.GetString("InnovationCommissionEvaluationStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade máxima de empresas aprovadas.
+        /// </summary>
+        public static string InnovationCommissionMaximumApprovedCompaniesCount {
+            get {
+                return ResourceManager.GetString("InnovationCommissionMaximumApprovedCompaniesCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade mínima de votos para gerar média.
+        /// </summary>
+        public static string InnovationCommissionMinimumEvaluationsCount {
+            get {
+                return ResourceManager.GetString("InnovationCommissionMinimumEvaluationsCount", resourceCulture);
             }
         }
         
@@ -3220,6 +3283,42 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data de término da avaliação de projeto musical.
+        /// </summary>
+        public static string MusicCommissionEvaluationEndDate {
+            get {
+                return ResourceManager.GetString("MusicCommissionEvaluationEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de início da avaliação de projeto musical.
+        /// </summary>
+        public static string MusicCommissionEvaluationStartDate {
+            get {
+                return ResourceManager.GetString("MusicCommissionEvaluationStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade máxima de bandas aprovadas.
+        /// </summary>
+        public static string MusicCommissionMaximumApprovedBandsCount {
+            get {
+                return ResourceManager.GetString("MusicCommissionMaximumApprovedBandsCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade mínima de votos para gerar média.
+        /// </summary>
+        public static string MusicCommissionMinimumEvaluationsCount {
+            get {
+                return ResourceManager.GetString("MusicCommissionMinimumEvaluationsCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Estilo musical.
         /// </summary>
         public static string MusicGenre {
@@ -3234,42 +3333,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string MusicInstrumentName {
             get {
                 return ResourceManager.GetString("MusicInstrumentName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Data de término da avaliação de projeto musical.
-        /// </summary>
-        public static string MusicProjectEvaluationEndDate {
-            get {
-                return ResourceManager.GetString("MusicProjectEvaluationEndDate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Data de início da avaliação de projeto musical.
-        /// </summary>
-        public static string MusicProjectEvaluationStartDate {
-            get {
-                return ResourceManager.GetString("MusicProjectEvaluationStartDate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Quantidade máxima de bandas aprovadas.
-        /// </summary>
-        public static string MusicProjectMaximumApprovedBandsCount {
-            get {
-                return ResourceManager.GetString("MusicProjectMaximumApprovedBandsCount", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Quantidade mínima de votos para gerar média.
-        /// </summary>
-        public static string MusicProjectMinimumEvaluationsCount {
-            get {
-                return ResourceManager.GetString("MusicProjectMinimumEvaluationsCount", resourceCulture);
             }
         }
         

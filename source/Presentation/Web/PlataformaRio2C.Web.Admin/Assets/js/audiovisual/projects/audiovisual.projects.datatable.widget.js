@@ -258,7 +258,7 @@ var AudiovisualProjectsDataTableWidget = function () {
                                             </a>\
                                             <div class="dropdown-menu dropdown-menu-right">';
 
-                        html += '<button class="dropdown-item" onclick="AudiovisualProjectsDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
+                        html += '<button class="dropdown-item" onclick="AudiovisualProjectsDataTableWidget.showDetails(\'' + full.Id + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
                         html += '<button class="dropdown-item" onclick="AudiovisualProjectsDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
 
                         html += '\
@@ -323,12 +323,12 @@ var AudiovisualProjectsDataTableWidget = function () {
         table.ajax.reload();
     };
 
-    var showDetails = function (projectUid) {
-        if (MyRio2cCommon.isNullOrEmpty(projectUid)) {
+    var showDetails = function (projectId) {
+        if (MyRio2cCommon.isNullOrEmpty(projectId)) {
             return;
         }
 
-        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/Details/' + projectUid);
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/Details/' + projectId);
     };
 
     return {
@@ -339,8 +339,8 @@ var AudiovisualProjectsDataTableWidget = function () {
         refreshData: function () {
             refreshData();
         },
-        showDetails: function (projectUid) {
-            showDetails(projectUid);
+        showDetails: function (projectId) {
+            showDetails(projectId);
         }
     };
 }();

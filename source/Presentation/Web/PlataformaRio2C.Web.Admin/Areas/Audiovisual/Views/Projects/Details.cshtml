@@ -2,8 +2,48 @@
 @model ProjectDto
 @{
     ViewBag.Title = $"{Labels.Project}  {Model.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value}";
+    var totalProjectsCount = ViewBag.ProjectsTotalCount as int?;
+    var currentProjectIndex = ViewBag.CurrentProjectIndex as int?;
+
+    var previousStepEvent = Url.Action("PreviousEvaluationDetails", "Projects", new
+    {
+        Area = "Audiovisual",
+        id = Model.Project.Id,
+        searchKeywords = ViewBag.SearchKeywords,
+        interestUid = ViewBag.InterestUid,
+        evaluationStatusUid = ViewBag.EvaluationStatusUid,
+        Page = ViewBag.Page,
+        pageSize = ViewBag.PageSize
+    });
+
+    var nextStepEvent = Url.Action("NextEvaluationDetails", "Projects", new
+    {
+        Area = "Audiovisual",
+        id = Model.Project.Id,
+        searchKeywords = ViewBag.SearchKeywords,
+        interestUid = ViewBag.InterestUid,
+        evaluationStatusUid = ViewBag.EvaluationStatusUid,
+        Page = ViewBag.Page,
+        pageSize = ViewBag.PageSize
+    });
 }
 @Html.Hidden("AggregateId", Model.Project.Uid)
+
+<div class="row">
+    <div class="col-md-12 d-flex justify-content-end pb-3 pr-4">
+        <div class="row d-flex font-weight-bold text-white" style="align-items: center;">
+            <div class="mr-3">
+                <span>@currentProjectIndex @Labels.Of @totalProjectsCount @Labels.Projects</span>
+            </div>
+            <button class="btn btn-outline-secondary mr-2" onclick="location.href='@previousStepEvent'">
+                <span class="font-weight-bold text-white"><</span>
+            </button>
+            <button class="btn btn-outline-secondary" onclick="location.href='@nextStepEvent'">
+                <span class="font-weight-bold text-white">></span>
+            </button>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-12">
         <!--begin:Main Information Widget-->

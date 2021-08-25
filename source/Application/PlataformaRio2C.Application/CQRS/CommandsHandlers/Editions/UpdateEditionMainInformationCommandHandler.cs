@@ -4,7 +4,7 @@
 // Created          : 01-06-2020
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-06-2020
+// Last Modified On : 08-24-2021
 // ***********************************************************************
 // <copyright file="UpdateEditionMainInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,7 +27,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     public class UpdateEditionMainInformationCommandHandler : EditionBaseCommandHandler, IRequestHandler<UpdateEditionMainInformation, AppValidationResult>
     {
         private readonly IEditionRepository editionRepo;
-        private readonly IAttendeeMusicBandRepository attendeeMusicBandRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateEditionMainInformationCommandHandler" /> class.
@@ -35,16 +34,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="editionRepository">The edition event repository.</param>
-        /// <param name="attendeeMusicBandRepository">The attendee music band repository.</param>
         public UpdateEditionMainInformationCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            IEditionRepository editionRepository,
-            IAttendeeMusicBandRepository attendeeMusicBandRepository)
+            IEditionRepository editionRepository)
             : base(eventBus, uow, editionRepository)
         {
             this.editionRepo = editionRepository;
-            this.attendeeMusicBandRepo = attendeeMusicBandRepository;
         }
 
         /// <summary>
@@ -59,12 +55,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var edition = await this.GetEditionByUid(cmd.EditionUid);
 
-            bool changedMusicProjectMinimumEvaluationsCount = edition.MusicProjectMinimumEvaluationsCount != cmd.MusicProjectMinimumEvaluationsCount;
-
             #region Initial validations
 
             //Validates existent URLCode. Must be unique!
-            var existentUrlCodeEdition = await editionRepo.FindByUrlCodeAsync(cmd.UrlCode);
+            var existentUrlCodeEdition = await editionRepo.FindByUrlCodeAsync(cmd.UrlCode.Value);
             if (existentUrlCodeEdition != null && existentUrlCodeEdition.Uid != cmd.EditionUid)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.Edition.ToLowerInvariant(), $"{Labels.TheM.ToLowerInvariant()} {Labels.UrlCode.ToLowerInvariant()}", cmd.UrlCode), new string[] { "ToastrError" }));
@@ -74,7 +68,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             currentEditions = currentEditions
                                 .Where(e => e.Uid != cmd.EditionUid) //Discard the currentEdition for the checks below
                                 .ToList(); 
-
 
             //Validates any active current edition. There should always be a single current edition!
             if (!cmd.IsCurrent && currentEditions?.Count == 0)
@@ -90,24 +83,25 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            edition.UpdateMainInformation(cmd.Name,
-                                          cmd.UrlCode,
-                                          cmd.IsCurrent,
-                                          cmd.IsActive,
-                                          cmd.AttendeeOrganizationMaxSellProjectsCount,
-                                          cmd.ProjectMaxBuyerEvaluationsCount,
-                                          cmd.MusicProjectMinimumEvaluationsCount,
-                                          cmd.MusicProjectMaximumApprovedBandsCount,
-                                          cmd.StartDate.Value,
-                                          cmd.EndDate.Value,
-                                          cmd.OneToOneMeetingsScheduleDate.Value,
-                                          cmd.UserId);
+            edition.UpdateMainInformation(
+                cmd.Name,
+                cmd.UrlCode.Value,
+                cmd.IsCurrent,
+                cmd.IsActive,
+                cmd.StartDate.Value,
+                cmd.EndDate.Value,
+                cmd.SellStartDate.Value,
+                cmd.SellEndDate.Value,
+                cmd.OneToOneMeetingsScheduleDate.Value,
+                cmd.UserId);
 
             if (!edition.IsValid())
             {
                 this.AppValidationResult.Add(edition.ValidationResult);
                 return this.AppValidationResult;
             }
+
+            #region Before Save
 
             //Uncheck all other editions IsCurrent property.
             if (edition.IsCurrent && currentEditions?.Count > 0)
@@ -116,13 +110,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 this.EditionRepo.UpdateAll(currentEditions);
             }
 
-            //AttendeeMusicBandsGrades must be recalculated when changed "MusicProjectMinimumEvaluationsCount".
-            if (changedMusicProjectMinimumEvaluationsCount)
-            {
-                var attendeeMusicBands = await this.attendeeMusicBandRepo.FindAllByEditionIdAsync(edition.Id);
-                attendeeMusicBands.ForEach(amb => amb.RecalculateGrade(edition));
-                this.attendeeMusicBandRepo.UpdateAll(attendeeMusicBands);
-            }
+            #endregion
 
             this.EditionRepo.Update(edition);
             this.Uow.SaveChanges();

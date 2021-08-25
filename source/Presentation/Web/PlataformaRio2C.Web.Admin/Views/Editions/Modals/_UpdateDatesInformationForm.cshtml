@@ -1,0 +1,164 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateEditionDatesInformation
+<h3 class="kt-section__title mb-4">@Labels.AudioVisual</h3>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.ProjectSubmitStartDate, new { @class = "control-label" })
+        @Html.TextBox("ProjectSubmitStartDate", Model.ProjectSubmitStartDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.ProjectSubmitStartDate, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.ProjectSubmitEndDate, new { @class = "control-label" })
+        @Html.TextBox("ProjectSubmitEndDate", Model.ProjectSubmitEndDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.ProjectSubmitEndDate, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.ProjectEvaluationStartDate, new { @class = "control-label" })
+        @Html.TextBox("ProjectEvaluationStartDate", Model.ProjectEvaluationStartDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.ProjectEvaluationStartDate, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.ProjectEvaluationEndDate, new { @class = "control-label" })
+        @Html.TextBox("ProjectEvaluationEndDate", Model.ProjectEvaluationEndDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.ProjectEvaluationEndDate, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.NegotiationStartDate, new { @class = "control-label" })
+        @Html.TextBox("NegotiationStartDate", Model.NegotiationStartDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.NegotiationStartDate, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.NegotiationEndDate, new { @class = "control-label" })
+        @Html.TextBox("NegotiationEndDate", Model.NegotiationEndDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.NegotiationEndDate, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.AttendeeOrganizationMaxSellProjectsCount, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.AttendeeOrganizationMaxSellProjectsCount, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.AttendeeOrganizationMaxSellProjectsCount, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.ProjectMaxBuyerEvaluationsCount, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.ProjectMaxBuyerEvaluationsCount, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ProjectMaxBuyerEvaluationsCount, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<h3 class="kt-section__title mt-30 mb-4">@Labels.MusicCommission</h3>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.MusicProjectSubmitStartDate, new { @class = "control-label" })
+        @Html.TextBox("MusicProjectSubmitStartDate", Model.MusicProjectSubmitStartDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.MusicProjectSubmitStartDate, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.MusicProjectSubmitEndDate, new { @class = "control-label" })
+        @Html.TextBox("MusicProjectSubmitEndDate", Model.MusicProjectSubmitEndDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.MusicProjectSubmitEndDate, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.MusicCommissionEvaluationStartDate, new { @class = "control-label" })
+        @Html.TextBox("MusicCommissionEvaluationStartDate", Model.MusicCommissionEvaluationStartDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.MusicCommissionEvaluationStartDate, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.MusicCommissionEvaluationEndDate, new { @class = "control-label" })
+        @Html.TextBox("MusicCommissionEvaluationEndDate", Model.MusicCommissionEvaluationEndDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.MusicCommissionEvaluationEndDate, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.MusicCommissionMinimumEvaluationsCount, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.MusicCommissionMinimumEvaluationsCount, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.MusicCommissionMinimumEvaluationsCount, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.MusicCommissionMaximumApprovedBandsCount, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.MusicCommissionMaximumApprovedBandsCount, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.MusicCommissionMaximumApprovedBandsCount, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<h3 class="kt-section__title mt-30 mb-4">@Labels.InnovationCommission</h3>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.InnovationProjectSubmitStartDate, new { @class = "control-label" })
+        @Html.TextBox("InnovationProjectSubmitStartDate", Model.InnovationProjectSubmitStartDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.InnovationProjectSubmitStartDate, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.InnovationProjectSubmitEndDate, new { @class = "control-label" })
+        @Html.TextBox("InnovationProjectSubmitEndDate", Model.InnovationProjectSubmitEndDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.InnovationProjectSubmitEndDate, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.InnovationCommissionEvaluationStartDate, new { @class = "control-label" })
+        @Html.TextBox("InnovationCommissionEvaluationStartDate", Model.InnovationCommissionEvaluationStartDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.InnovationCommissionEvaluationStartDate, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.InnovationCommissionEvaluationEndDate, new { @class = "control-label" })
+        @Html.TextBox("InnovationCommissionEvaluationEndDate", Model.InnovationCommissionEvaluationEndDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.InnovationCommissionEvaluationEndDate, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.InnovationCommissionMinimumEvaluationsCount, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.InnovationCommissionMinimumEvaluationsCount, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.InnovationCommissionMinimumEvaluationsCount, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.InnovationCommissionMaximumApprovedCompaniesCount, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.InnovationCommissionMaximumApprovedCompaniesCount, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.InnovationCommissionMaximumApprovedCompaniesCount, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<h3 class="kt-section__title mt-30 mb-4">@Labels.AudiovisualCommission</h3>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.AudiovisualNegotiationsCreateStartDate, new { @class = "control-label" })
+        @Html.TextBox("AudiovisualNegotiationsCreateStartDate", Model.AudiovisualNegotiationsCreateStartDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.AudiovisualNegotiationsCreateStartDate, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.AudiovisualNegotiationsCreateEndDate, new { @class = "control-label" })
+        @Html.TextBox("AudiovisualNegotiationsCreateEndDate", Model.AudiovisualNegotiationsCreateEndDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.AudiovisualNegotiationsCreateEndDate, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.AudiovisualCommissionEvaluationStartDate, new { @class = "control-label" })
+        @Html.TextBox("AudiovisualCommissionEvaluationStartDate", Model.AudiovisualCommissionEvaluationStartDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.AudiovisualCommissionEvaluationStartDate, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.AudiovisualCommissionEvaluationEndDate, new { @class = "control-label" })
+        @Html.TextBox("AudiovisualCommissionEvaluationEndDate", Model.AudiovisualCommissionEvaluationEndDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
+        @Html.ValidationMessageFor(m => m.AudiovisualCommissionEvaluationEndDate, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.AudiovisualCommissionMinimumEvaluationsCount, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.AudiovisualCommissionMinimumEvaluationsCount, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.AudiovisualCommissionMinimumEvaluationsCount, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.AudiovisualCommissionMaximumApprovedProjectsCount, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.AudiovisualCommissionMaximumApprovedProjectsCount, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.AudiovisualCommissionMaximumApprovedProjectsCount, "", new { @class = "text-danger" })
+    </div>
+</div>

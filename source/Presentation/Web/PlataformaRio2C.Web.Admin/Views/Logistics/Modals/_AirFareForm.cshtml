@@ -86,7 +86,7 @@
                 <input type="file" class="custom-file-input" id="Ticket" name="Ticket">
                 <label class="custom-file-label" for="Ticket"></label>
             </div>
-            <span class="form-text text-muted">@Messages.FileMustBePdf</span>
+            <span class="form-text text-muted">@(string.Format(Messages.FileTypeMustBe, "PDF"))</span>
         </div>
         @Html.ValidationMessageFor(m => m.Ticket, "", new { @class = "text-danger" })
     </div>

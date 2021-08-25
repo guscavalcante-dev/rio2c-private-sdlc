@@ -1,4 +1,4 @@
-﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateEditionMainInformation
+﻿@model PlataformaRio2C.Application.CQRS.Commands.UpdateEditionDatesInformation
 <div class="modal fade" id="UpdateDatesInformationModal" role="dialog" aria-labelledby="UpdateDatesInformationModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -13,7 +13,7 @@
                 {
                     @Html.HiddenFor(m => m.EditionUid)
                     <div id="form-container">
-                        @Html.Partial("Modals/UpdateDatesInformationForm", Model)
+                        @Html.Partial("Modals/_UpdateDatesInformationForm", Model)
                     </div>
                 }
             </div>

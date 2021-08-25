@@ -1,146 +1,272 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @model EditionDto
-<div class="kt-portlet__body">
-    <div class="kt-widget kt-widget--user-profile-3">
-        <div class="kt-widget__top">
-            <div class="kt-widget__content pl-0" style="overflow: hidden;">
-                <div class="kt-widget__head">
-                    <span class="kt-widget__username">
-                        @(Labels.Dates)
-                    </span>
-                    <div class="kt-widget__action">
-                        <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="EditionsDatesInformationWidget.showUpdateModal();">
-                            <i class="flaticon2-edit"></i>
-                        </button>
-                    </div>
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+            @Labels.Dates
+        </h3>
+    </div>
+    <div class="kt-portlet__head-toolbar">
+        <div class="kt-portlet__head-actions">
+            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="EditionsDatesInformationWidget.showUpdateModal();">
+                <i class="flaticon2-edit"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="kt-portlet__body pt-0">
+    <div class="mt-30 mb-0">
+        <h3 class="kt-subheader__title mb-0">@Labels.AudiovisualNegotiations</h3>
+        <div class="kt-separator kt-separator--border kt-separator--border w-100 mt-2"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.ProjectSubmitStartDate</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.Edition.ProjectSubmitStartDate.ToBrazilTimeZone().ToShortDateString())
                 </div>
             </div>
         </div>
-        <div class="kt-widget__bottom">
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.SellStartDate</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.SellStartDate.ToBrazilTimeZone().ToShortDateString())</span></span>
-                </div>
-            </div>
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.SellEndDate</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.SellEndDate.ToBrazilTimeZone().ToShortDateString())</span></span>
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.ProjectSubmitEndDate</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.Edition.ProjectSubmitEndDate.ToBrazilTimeZone().ToShortDateString())
                 </div>
             </div>
         </div>
-        <div class="kt-widget__bottom">
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.ProjectSubmitStartDate</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.ProjectSubmitStartDate.ToBrazilTimeZone().ToShortDateString())</span></span>
-                </div>
-            </div>
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.ProjectSubmitEndDate</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.ProjectSubmitEndDate.ToBrazilTimeZone().ToShortDateString())</span></span>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.ProjectEvaluationStartDate</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.Edition.ProjectEvaluationStartDate.ToBrazilTimeZone().ToShortDateString())
                 </div>
             </div>
         </div>
-        <div class="kt-widget__bottom">
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.ProjectEvaluationStartDate</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.ProjectEvaluationStartDate.ToBrazilTimeZone().ToShortDateString())</span></span>
-                </div>
-            </div>
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.ProjectEvaluationEndDate</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.ProjectEvaluationEndDate.ToBrazilTimeZone().ToShortDateString())</span></span>
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.ProjectEvaluationEndDate</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.Edition.ProjectEvaluationEndDate.ToBrazilTimeZone().ToShortDateString())
                 </div>
             </div>
         </div>
-        <div class="kt-widget__bottom">
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.NegotiationStartDate</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.NegotiationStartDate.ToBrazilTimeZone().ToShortDateString())</span></span>
-                </div>
-            </div>
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.NegotiationEndDate</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.NegotiationEndDate.ToBrazilTimeZone().ToShortDateString())</span></span>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.NegotiationStartDate</h3>
+            <div class="row">
+                <div class="col-12">
+                    @(Model.Edition.NegotiationStartDate.ToBrazilTimeZone().ToShortDateString())
                 </div>
             </div>
         </div>
-        <div class="kt-widget__bottom">
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.MusicProjectSubmitStartDate</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.MusicProjectSubmitStartDate.ToBrazilTimeZone().ToShortDateString())</span></span>
-                </div>
-            </div>
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.MusicProjectSubmitEndDate</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.MusicProjectSubmitEndDate.ToBrazilTimeZone().ToShortDateString())</span></span>
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.NegotiationEndDate</h3>
+            <div class="row">
+                <div class="col-12">
+                    @(Model.Edition.NegotiationEndDate.ToBrazilTimeZone().ToShortDateString())
                 </div>
             </div>
         </div>
-        <div class="kt-widget__bottom">
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.MusicProjectEvaluationStartDate</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.MusicProjectEvaluationStartDate.ToBrazilTimeZone().ToShortDateString())</span></span>
-                </div>
-            </div>
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.MusicProjectEvaluationEndDate</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.MusicProjectEvaluationEndDate.ToBrazilTimeZone().ToShortDateString())</span></span>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.AttendeeOrganizationMaxSellProjectsCount</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.Edition.AttendeeOrganizationMaxSellProjectsCount)
                 </div>
             </div>
         </div>
-        <div class="kt-widget__bottom">
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.InnovationProjectSubmitStartDate</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.InnovationProjectSubmitStartDate.ToBrazilTimeZone().ToShortDateString())</span></span>
-                </div>
-            </div>
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.InnovationProjectSubmitEndDate</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.InnovationProjectSubmitEndDate.ToBrazilTimeZone().ToShortDateString())</span></span>
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.ProjectMaxBuyerEvaluationsCount</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.Edition.ProjectMaxBuyerEvaluationsCount)
                 </div>
             </div>
         </div>
-        <div class="kt-widget__bottom">
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.InnovationProjectEvaluationStartDate</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.InnovationProjectEvaluationStartDate.ToBrazilTimeZone().ToShortDateString())</span></span>
-                </div>
-            </div>
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.InnovationProjectEvaluationEndDate</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.InnovationProjectEvaluationEndDate.ToBrazilTimeZone().ToShortDateString())</span></span>
+    </div>
+
+    <div class="mt-30 mb-0">
+        <h3 class="kt-subheader__title mb-0 mt-30">@Labels.MusicCommission</h3>
+        <div class="kt-separator kt-separator--border kt-separator--border w-100 mt-2"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mt-0 mb-3">@Labels.MusicProjectSubmitStartDate</h3>
+            <div class="row">
+                <div class="col-12">
+                    @(Model.Edition.MusicProjectSubmitStartDate.ToBrazilTimeZone().ToShortDateString())
                 </div>
             </div>
         </div>
-        <div class="kt-widget__bottom">
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.AudiovisualNegotiationsCreateStartDate</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.AudiovisualNegotiationsCreateStartDate?.ToBrazilTimeZone().ToShortDateString())</span></span>
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mt-0 mb-3">@Labels.MusicProjectSubmitEndDate</h3>
+            <div class="row">
+                <div class="col-12">
+                    @(Model.Edition.MusicProjectSubmitEndDate.ToBrazilTimeZone().ToShortDateString())
                 </div>
             </div>
-            <div class="kt-widget__item">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.AudiovisualNegotiationsCreateEndDate</span>
-                    <span class="kt-widget__value"><span>@(Model.Edition.AudiovisualNegotiationsCreateEndDate?.ToBrazilTimeZone().ToShortDateString())</span></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicCommissionEvaluationStartDate</h3>
+            <div class="row">
+                <div class="col-12">
+                    @(Model.Edition.MusicCommissionEvaluationStartDate.ToBrazilTimeZone().ToShortDateString())
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicCommissionEvaluationEndDate</h3>
+            <div class="row">
+                <div class="col-12">
+                    @(Model.Edition.MusicCommissionEvaluationEndDate.ToBrazilTimeZone().ToShortDateString())
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicCommissionMinimumEvaluationsCount</h3>
+            <div class="row">
+                <div class="col-12">
+                    @(Model.Edition.MusicCommissionMinimumEvaluationsCount)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.MusicCommissionMaximumApprovedBandsCount</h3>
+            <div class="row">
+                <div class="col-12">
+                    @(Model.Edition.MusicCommissionMaximumApprovedBandsCount)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-30 mb-0">
+        <h3 class="kt-subheader__title mb-0 mt-30">@Labels.InnovationCommission</h3>
+        <div class="kt-separator kt-separator--border kt-separator--border w-100 mt-2"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm  mt-0 mb-3">@Labels.InnovationProjectSubmitStartDate</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.Edition.InnovationProjectSubmitStartDate.ToBrazilTimeZone().ToShortDateString())
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm  mt-0 mb-3">@Labels.InnovationProjectSubmitEndDate</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.Edition.InnovationProjectSubmitEndDate.ToBrazilTimeZone().ToShortDateString())
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.InnovationCommissionEvaluationStartDate</h3>
+            <div class="row">
+                <div class="col-12">
+                    @(Model.Edition.InnovationCommissionEvaluationStartDate.ToBrazilTimeZone().ToShortDateString())
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.InnovationCommissionEvaluationEndDate</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.Edition.InnovationCommissionEvaluationEndDate.ToBrazilTimeZone().ToShortDateString())
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.InnovationCommissionMinimumEvaluationsCount</h3>
+            <div class="row">
+                <div class="col-12">
+                    @(Model.Edition.InnovationCommissionMinimumEvaluationsCount)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-3">@Labels.InnovationCommissionMaximumApprovedCompaniesCount</h3>
+            <div class="row">
+                <div class="col-12">
+                    @(Model.Edition.InnovationCommissionMaximumApprovedCompaniesCount)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-30 mb-0">
+        <h3 class="kt-subheader__title mb-0 mt-30">@Labels.AudiovisualCommission</h3>
+        <div class="kt-separator kt-separator--border kt-separator--border w-100 mt-2"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.AudiovisualNegotiationsCreateStartDate</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.Edition.AudiovisualNegotiationsCreateStartDate?.ToBrazilTimeZone().ToShortDateString())
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.AudiovisualNegotiationsCreateEndDate</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.Edition.AudiovisualNegotiationsCreateEndDate?.ToBrazilTimeZone().ToShortDateString())
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.AudiovisualCommissionEvaluationStartDate</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.Edition.AudiovisualCommissionEvaluationStartDate?.ToBrazilTimeZone().ToShortDateString())
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.AudiovisualCommissionEvaluationEndDate</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.Edition.AudiovisualCommissionEvaluationEndDate?.ToBrazilTimeZone().ToShortDateString())
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.AudiovisualCommissionMinimumEvaluationsCount</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.Edition.AudiovisualCommissionMinimumEvaluationsCount)
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3 class="kt-heading kt-heading--sm mb-0">@Labels.AudiovisualCommissionMaximumApprovedProjectsCount</h3>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @(Model.Edition.AudiovisualCommissionMaximumApprovedProjectsCount)
                 </div>
             </div>
         </div>
     </div>
 </div>
+
