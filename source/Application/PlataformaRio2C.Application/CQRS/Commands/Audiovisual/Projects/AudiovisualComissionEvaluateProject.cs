@@ -6,21 +6,19 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 08-23-2021
 // ***********************************************************************
-// <copyright file="EvaluateProject.cs" company="Softo">
+// <copyright file="AudiovisualComissionEvaluateProject.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.ComponentModel.DataAnnotations;
-using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using System.ComponentModel.DataAnnotations;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>EvaluateProject</summary>
-    public class EvaluateProject : BaseCommand
+    /// <summary>AudiovisualComissionEvaluateProject</summary>
+    public class AudiovisualComissionEvaluateProject : BaseCommand
     {
         [Display(Name = "Project", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -33,18 +31,18 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public Project Project { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EvaluateProject"/> class.
+        /// Initializes a new instance of the <see cref="AudiovisualComissionEvaluateProject"/> class.
         /// </summary>
         /// <param name="project">The project.</param>
         /// <param name="grade">The grade.</param>
-        public EvaluateProject(Project project, decimal? grade)
+        public AudiovisualComissionEvaluateProject(Project project, decimal? grade)
         {
             this.Grade = grade;
             this.UpdateModelsAndLists(project);
         }
 
-        /// <summary>Initializes a new instance of the <see cref="EvaluateProject"/> class.</summary>
-        public EvaluateProject()
+        /// <summary>Initializes a new instance of the <see cref="AudiovisualComissionEvaluateProject"/> class.</summary>
+        public AudiovisualComissionEvaluateProject()
         {
         }
 

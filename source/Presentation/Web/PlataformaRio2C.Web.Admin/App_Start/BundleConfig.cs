@@ -457,7 +457,7 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/audiovisual/projects/audiovisual.projects.links.widget.js",
                 "~/Assets/js/audiovisual/projects/audiovisual.projects.buyercompany.widget.js",
                 "~/Assets/js/audiovisual/projects/audiovisual.projects.evaluators.widget.js",
-                "~/Assets/js/audiovisual/projects/audiovisual.projects.evaluation.widget.js",
+                "~/Assets/js/audiovisual/projects/audiovisual.projects.commission.evaluation.widget.js",
                 "~/Assets/js/myrio2c.additionalinfo.js",
                 "~/Scripts/jquery.unobtrusive-ajax.js"));
 

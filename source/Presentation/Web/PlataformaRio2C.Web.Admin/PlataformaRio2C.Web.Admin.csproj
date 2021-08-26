@@ -854,7 +854,7 @@
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.interest.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.links.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.buyercompany.widget.js" />
-    <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.evaluation.widget.js" />
+    <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.commission.evaluation.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.evaluators.widget.js" />
     <Content Include="Assets\js\editions\editions.events.widget.js" />
     <Content Include="Assets\js\editions\editions.create.js" />
@@ -8325,8 +8325,8 @@
     <Content Include="Areas\Innovation\Views\Projects\Widgets\EditionCountPieWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\EditionScheduledCountGaugeWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EditionCountGaugeWidget.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EvaluatorsWidget.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EvaluationGradeWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\AudiovisualCommissionEvaluatorsWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\AudiovisualCommissionEvaluationWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

@@ -6,13 +6,13 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 07-24-2021
 // ***********************************************************************
-// <copyright file="audiovisual.projects.evaluation.widget.js" company="Softo">
+// <copyright file="audiovisual.projects.commission.evaluation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var AudiovisualProjectsEvaluationWidget = function () {
+var AudiovisualProjectsCommissionEvaluationWidget = function () {
 
     var widgetElementId = '#ProjectEvaluationWidget';
     var widgetElement;
@@ -37,7 +37,7 @@ var AudiovisualProjectsEvaluationWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.projectUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/ShowEvaluationGradeWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/ShowAudiovisualCommissionEvaluationWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -62,7 +62,7 @@ var AudiovisualProjectsEvaluationWidget = function () {
         jsonParameters.projectId = projectId;
         jsonParameters.grade = $('#ProjectCommissionEvaluationGrade').val();
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/Evaluate'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/AudiovisualComissionEvaluateProject'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -77,7 +77,7 @@ var AudiovisualProjectsEvaluationWidget = function () {
             })
             .always(function () {
                 MyRio2cCommon.unblock();
-                AudiovisualProjectsEvaluationWidget.init();
+                AudiovisualProjectsCommissionEvaluationWidget.init();
                 AudiovisualProjectsEvaluatorsWidget.init();
                 AudiovisualProjectsMainInformationWidget.init();
             });

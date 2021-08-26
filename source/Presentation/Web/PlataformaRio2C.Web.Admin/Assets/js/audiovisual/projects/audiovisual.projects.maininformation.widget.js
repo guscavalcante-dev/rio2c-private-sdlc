@@ -116,7 +116,7 @@ var AudiovisualProjectsMainInformationWidget = function () {
         jsonParameters.projectId = projectId;
         jsonParameters.grade = $('#ProjectEvaluationGradeMain').val();
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/Evaluate'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/AudiovisualComissionEvaluateProject'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -131,8 +131,8 @@ var AudiovisualProjectsMainInformationWidget = function () {
             })
             .always(function () {
                 MyRio2cCommon.unblock();
-                //AudiovisualProjectsEvaluationWidget.init();
-                //AudiovisualProjectsEvaluatorsWidget.init();
+                AudiovisualProjectsCommissionEvaluationWidget.init();
+                AudiovisualProjectsEvaluatorsWidget.init();
                 AudiovisualProjectsMainInformationWidget.init();
             });
     };

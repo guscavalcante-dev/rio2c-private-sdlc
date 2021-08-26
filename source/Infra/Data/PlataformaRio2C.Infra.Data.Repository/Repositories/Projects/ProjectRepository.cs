@@ -741,7 +741,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
 
             IEnumerable<ProjectBaseDto> projectBaseDtosResult = projectBaseDtos;
-            if (editionDto.IsAudiovisualProjectEvaluationOpen())
+            if (editionDto.IsAudiovisualCommissionProjectEvaluationOpen())
             {
                 #region Evaluation is Open
 
@@ -978,7 +978,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var editionDto = await this.editioRepo.FindDtoAsync(editionId);
 
             IEnumerable<int> projectsIdsResult = projectsIds;
-            if (editionDto.IsAudiovisualProjectEvaluationOpen())
+            if (editionDto.IsAudiovisualCommissionProjectEvaluationOpen())
             {
                 #region Evaluation is Open
 
@@ -1046,7 +1046,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var approvedProjectsIds = await this.FindAllApprovedCommissionProjectsIdsAsync(editionId);
 
             IEnumerable<ProjectDto> projectsResult = projectsDtos;
-            if (editionDto.IsAudiovisualProjectEvaluationOpen())
+            if (editionDto.IsAudiovisualCommissionProjectEvaluationOpen())
             {
                 #region Evaluation is Open
 
@@ -1358,12 +1358,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
-        /// Finds the evaluation grade widget dto asynchronous.
+        /// Finds the commission evaluation widget dto asynchronous.
         /// </summary>
         /// <param name="projectUid">The project uid.</param>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        public async Task<ProjectDto> FindEvaluationGradeWidgetDtoAsync(Guid projectUid, int userId)
+        public async Task<ProjectDto> FindAudiovisualCommissionEvaluationWidgetDtoAsync(Guid projectUid, int userId)
         {
             var query = this.GetBaseQuery()
                               .FindByUid(projectUid)
@@ -1396,7 +1396,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// </summary>
         /// <param name="projectUid">The project uid.</param>
         /// <returns></returns>
-        public async Task<ProjectDto> FindEvaluatorsWidgetDtoAsync(Guid projectUid)
+        public async Task<ProjectDto> FindAudiovisualCommissionEvaluatorsWidgetDtoAsync(Guid projectUid)
         {
             var query = this.GetBaseQuery()
                               .FindByUid(projectUid)
