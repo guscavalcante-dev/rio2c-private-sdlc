@@ -81,8 +81,8 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Audiovisual - Commissions
 
-        public DateTimeOffset? AudiovisualCommissionEvaluationStartDate { get; private set; }
-        public DateTimeOffset? AudiovisualCommissionEvaluationEndDate { get; private set; }
+        public DateTimeOffset AudiovisualCommissionEvaluationStartDate { get; private set; }
+        public DateTimeOffset AudiovisualCommissionEvaluationEndDate { get; private set; }
         public int AudiovisualCommissionMinimumEvaluationsCount { get; private set; }
         public int AudiovisualCommissionMaximumApprovedProjectsCount { get; private set; }
 

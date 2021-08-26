@@ -25,13 +25,15 @@ namespace PlataformaRio2C.Domain.Interfaces
     /// <summary>IProjectRepository</summary>
     public interface IProjectRepository : IRepository<Project>
     {
+        Task<Project> FindByIdAsync(int projectId);
+        Task<Project> FindByUidAsync(Guid projectUid);
         Task<List<ProjectDto>> FindAllDtosToSellAsync(Guid attendeeOrganizationUid, bool showAll);
         Task<IPagedList<ProjectDto>> FindAllDtosToEvaluateAsync(Guid attendeeCollaboratorUid, string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int page, int pageSize);
         Task<IPagedList<ProjectBaseDto>> FindAllBaseDtosPagedAsync(int page, int pageSize, List<Tuple<string, string>> sortColumns, string keywords, bool showPitchings, Guid? interestUid, Guid? evaluationStatusUid, string languageCode, int editionId);
         Task<List<ProjectDto>> FindAllDtosByFiltersAsync(string keywords, bool showPitchings, Guid? interestUid, List<Guid> projectUids, string languageCode, int editionId);
         Task<int> CountAllByDataTable(int editionId, bool showAllEditions = false);
         Task<int[]> FindAllProjectsIdsPagedAsync(int editionId, string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, bool showPitchings, int page, int pageSize);
-        Task<int[]> FindAllApprovedProjectsIdsAsync(int editionId);
+        Task<int[]> FindAllApprovedCommissionProjectsIdsAsync(int editionId);
         Task<int> CountPagedAsync(int editionId, string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, bool showPitchings, int page, int pageSize);
 
         #region Admin Widgets
@@ -42,6 +44,8 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<ProjectDto> FindAdminInterestWidgetDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindAdminLinksWidgetDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindAdminBuyerCompanyWidgetDtoByProjectUidAsync(Guid projectUid);
+        Task<ProjectDto> FindAudiovisualCommissionEvaluationWidgetDtoAsync(Guid projectUid, int userId);
+        Task<ProjectDto> FindAudiovisualCommissionEvaluatorsWidgetDtoAsync(Guid projectUid);
 
         #endregion
 

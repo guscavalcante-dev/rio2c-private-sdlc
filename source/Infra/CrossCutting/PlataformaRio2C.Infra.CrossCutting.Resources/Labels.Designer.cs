@@ -3589,6 +3589,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Não participa do Pitching.
+        /// </summary>
+        public static string NotCheckedForPitching {
+            get {
+                return ResourceManager.GetString("NotCheckedForPitching", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fora da edição {0}.
         /// </summary>
         public static string NotInEdition {

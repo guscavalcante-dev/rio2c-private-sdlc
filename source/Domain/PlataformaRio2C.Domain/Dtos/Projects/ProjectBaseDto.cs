@@ -31,6 +31,12 @@ namespace PlataformaRio2C.Domain.Dtos
         public bool? IsPitching { get; set; }
         public DateTimeOffset CreateDate { get; set; }
         public DateTimeOffset? FinishDate { get; set; }
+        public decimal? CommissionGrade { get; set; }
+        public int CommissionEvaluationsCount { get; set; }
+
+
+        public string EvaluationHtmlString { get; set; }
+        public string MenuActionsHtmlString { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="ProjectBaseDto"/> class.</summary>
         public ProjectBaseDto()

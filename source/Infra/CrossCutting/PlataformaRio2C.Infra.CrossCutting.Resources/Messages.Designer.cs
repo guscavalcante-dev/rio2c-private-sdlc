@@ -1473,6 +1473,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O projeto não pode ser avaliado pois não está cadastrado para pitching.
+        /// </summary>
+        public static string ProjectCannotBeEvaluatedIsNotPitching {
+            get {
+                return ResourceManager.GetString("ProjectCannotBeEvaluatedIsNotPitching", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O projeto está concluído e não pode ser alterado..
         /// </summary>
         public static string ProjectIsFinishedCannotBeUpdated {

@@ -14,7 +14,7 @@
     <div class="kt-portlet__body">
         <!--begin: SearchForm-->
         <div class="form-group row">
-            <div class="col-lg-6">
+            <div class="col-lg-4">
                 <label>@Labels.Search:</label>
                 @Html.TextBoxFor(m => m.Search, new { type = "search", @class = "form-control", autocomplete = "off", placeholder = $"{Labels.Title} {Labels.Or.ToLowerInvariant()} {Labels.Producer.ToLowerInvariant()}" })
             </div>
@@ -23,6 +23,10 @@
                 @Html.DropDownListFor(m => m.InterestUid, new SelectList(Model.Interests, "Uid", "Name", Model.InterestUid), $"{string.Format(Labels.SelectAMEntity, Labels.Genre.ToLowerInvariant())}...", new { @class = "form-control enable-datatable-reload enable-select2" })
             </div>
             <div class="col-lg-3">
+                <label>@Labels.Status:</label>
+                @Html.DropDownListFor(m => m.EvaluationStatusUid, new SelectList(Model.EvaluationStatuses, "Uid", "Name", Model.EvaluationStatusUid), $"{string.Format(Labels.SelectAMEntity, Labels.Status.ToLowerInvariant())}...", new { @class = "form-control enable-select2" })
+            </div>
+            <div class="col-lg-2">
                 <div class="form-group">
                     <label>&nbsp;</label>
                     <div class="kt-checkbox-list">
@@ -39,12 +43,13 @@
         <table class="table table-striped- table-bordered table-hover table-checkable" id="audiovisualprojects-list-table">
             <thead>
                 <tr>
-                    <th>@Labels.Title</th>
-                    <th>@Labels.Producer</th>
-                    <th>@Labels.Genre</th>
-                    <th class="dt-head-center dt-body-center">@Labels.CreateDate</th>
-                    <th class="dt-head-center dt-body-center">@Labels.SendDate</th>
-                    <th class="dt-head-center dt-body-center">@Labels.Actions</th>
+                    <th class="col-md-3">@Labels.Title</th>
+                    <th class="col-md-3">@Labels.Producer</th>
+                    <th class="col-md-2">@Labels.Genre</th>
+                    <th class="dt-head-center dt-body-center col-md-1">@Labels.Evaluation</th>
+                    <th class="dt-head-center dt-body-center col-md-1">@Labels.CreateDate</th>
+                    <th class="dt-head-center dt-body-center col-md-1">@Labels.SendDate</th>
+                    <th class="dt-head-center dt-body-center col-md-1">@Labels.Actions</th>
                 </tr>
             </thead>
         </table>

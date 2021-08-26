@@ -117,12 +117,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <summary>
         /// find by identifier as an asynchronous operation.
         /// </summary>
-        /// <param name="innovationOrganizationIds">The innovation organization ids.</param>
+        /// <param name="innovationOrganizationId">The innovation organization ids.</param>
         /// <returns>Task&lt;List&lt;InnovationOrganization&gt;&gt;.</returns>
-        public async Task<InnovationOrganization> FindByIdAsync(int innovationOrganizationIds)
+        public async Task<InnovationOrganization> FindByIdAsync(int innovationOrganizationId)
         {
             var query = this.GetBaseQuery()
-                            .FindByIds(new List<int?> { innovationOrganizationIds });
+                            .FindByIds(new List<int?> { innovationOrganizationId });
 
             return await query.FirstOrDefaultAsync();
         }

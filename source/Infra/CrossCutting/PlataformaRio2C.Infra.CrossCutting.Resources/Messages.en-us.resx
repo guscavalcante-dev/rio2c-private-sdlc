@@ -689,6 +689,10 @@
     <value>You have a new project for evaluation</value>
     <comment>Você tem um novo projeto para avaliação</comment>
   </data>
+  <data name="ProjectCannotBeEvaluatedIsNotPitching" xml:space="preserve">
+    <value>The project cannot be evaluated, it is not registered for pitching</value>
+    <comment>O projeto não pode ser avaliado pois não está cadastrado para pitching</comment>
+  </data>
   <data name="ProjectIsFinishedCannotBeUpdated" xml:space="preserve">
     <value>O projeto está concluído e não pode ser alterado.</value>
     <comment>O projeto está concluído e não pode ser alterado.</comment>

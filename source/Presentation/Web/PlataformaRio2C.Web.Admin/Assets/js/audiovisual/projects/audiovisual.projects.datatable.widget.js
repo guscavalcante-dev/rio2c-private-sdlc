@@ -134,7 +134,7 @@ var AudiovisualProjectsDataTableWidget = function () {
                         }
                     ]
                 }],
-            order: [[4, "asc"]],
+            order: [[5, "asc"]],
             sDom: '<"row"<"col-sm-6"l><"col-sm-6 text-right"B>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
             oSearch: {
                 sSearch: $('#Search').val()
@@ -144,6 +144,7 @@ var AudiovisualProjectsDataTableWidget = function () {
                 data: function (d) {
                     d.showPitchings = $('#ShowPitchings').prop('checked');
                     d.interestUid = $('#InterestUid').val();
+                    d.evaluationStatusUid = $('#EvaluationStatusUid').val();
                 },
                 dataFilter: function (data) {
                     var jsonReturned = JSON.parse(data);
@@ -161,6 +162,13 @@ var AudiovisualProjectsDataTableWidget = function () {
                             json.recordsTotal = jsonReturned.dataTable.TotalRecords;
                             json.recordsFiltered = jsonReturned.dataTable.TotalRecordsFiltered;
                             json.data = jsonReturned.dataTable.Data;
+
+                            if (jsonReturned.dataTable.TotalRecords == 0 && !MyRio2cCommon.isNullOrEmpty(jsonReturned.dataTable.AdditionalParameters.noRecordsFoundMessage)) {
+                                table.context[0].oLanguage.sEmptyTable = jsonReturned.dataTable.AdditionalParameters.noRecordsFoundMessage;
+                            }
+                            else {
+                                table.context[0].oLanguage.sEmptyTable = null;
+                            }
 
                             return JSON.stringify(json); // return JSON string
                         },
@@ -236,6 +244,12 @@ var AudiovisualProjectsDataTableWidget = function () {
                     }
                 },
                 {
+                    data: 'Evaluation',
+                    render: function (data, type, row, meta) {
+                        return row.EvaluationHtmlString;
+                    }
+                },
+                {
                     data: 'CreateDate',
                     render: function (data) {
                         return moment(data).tz(globalVariables.momentTimeZone).locale(globalVariables.userInterfaceLanguage).format('L LTS');
@@ -250,22 +264,8 @@ var AudiovisualProjectsDataTableWidget = function () {
                 {
                     data: 'Actions',
                     responsivePriority: -1,
-                    render: function (data, type, full, meta) {
-                        var html = '\
-                                        <span class="dropdown">\
-                                            <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">\
-                                              <i class="la la-ellipsis-h"></i>\
-                                            </a>\
-                                            <div class="dropdown-menu dropdown-menu-right">';
-
-                        html += '<button class="dropdown-item" onclick="AudiovisualProjectsDataTableWidget.showDetails(\'' + full.Id + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
-                        html += '<button class="dropdown-item" onclick="AudiovisualProjectsDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
-
-                        html += '\
-                                            </div>\
-                                        </span>';
-
-                        return html;
+                    render: function (data, type, row, meta) {
+                        return row.MenuActionsHtmlString;
                     }
                 }
             ],
@@ -286,8 +286,13 @@ var AudiovisualProjectsDataTableWidget = function () {
                     orderable: false
                 },
                 {
-                    targets: [3, 4],
+                    targets: [4, 5],
                     className: "dt-center"
+                },
+                {
+                    targets: [3],
+                    className: "dt-center",
+                    orderable: false
                 },
                 {
                     targets: -1,
@@ -309,6 +314,10 @@ var AudiovisualProjectsDataTableWidget = function () {
         });
 
         $('#InterestUid').on('change', function (e) {
+            table.ajax.reload();
+        });
+
+        $('#EvaluationStatusUid').on('change', function (e) {
             table.ajax.reload();
         });
 

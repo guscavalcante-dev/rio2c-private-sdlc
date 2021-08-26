@@ -41,10 +41,11 @@ using PlataformaRio2C.Infra.Report.Models;
 using PlataformaRio2C.Web.Admin.Controllers;
 using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
+using System.Text;
 
 namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 {
-    /// <summary>ProjectsController</summary>
+    /// <summary>The Audiovisual Commissions ProjectsController</summary>
     [AjaxAuthorize(Order = 1, Roles = Constants.Role.AnyAdmin)]
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AdminAudiovisual)]
     public class ProjectsController : BaseController
@@ -54,9 +55,10 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         private readonly ITargetAudienceRepository targetAudienceRepo;
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IFileRepository fileRepo;
+        private readonly IProjectEvaluationStatusRepository evaluationStatusRepo;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProjectsController" /> class.
+        /// Initializes a new instance of the <see cref="ProjectsController"/> class.
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
@@ -65,6 +67,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="targetAudienceRepository">The target audience repository.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="fileRepository">The file repository.</param>
+        /// <param name="evaluationStatusRepository">The evaluation status repository.</param>
         public ProjectsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
@@ -72,7 +75,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             IInterestRepository interestRepository,
             ITargetAudienceRepository targetAudienceRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
-            IFileRepository fileRepository)
+            IFileRepository fileRepository,
+            IProjectEvaluationStatusRepository evaluationStatusRepository)
             : base(commandBus, identityController)
         {
             this.projectRepo = projectRepository;
@@ -80,6 +84,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             this.targetAudienceRepo = targetAudienceRepository;
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.fileRepo = fileRepository;
+            this.evaluationStatusRepo = evaluationStatusRepository;
         }
 
         #region List
@@ -94,7 +99,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         {
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Projects, new List<BreadcrumbItemHelper> {
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.AudioVisual, null),
                 new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "Audiovisual" }))
             });
 
@@ -102,6 +108,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             searchViewModel.UpdateModelsAndLists(
                 await this.interestRepo.FindAllByInterestGroupUidAsync(InterestGroup.Genre.Uid),
+                await this.evaluationStatusRepo.FindAllAsync(),
                 this.UserInterfaceLanguage);
 
             return View(searchViewModel);
@@ -132,13 +139,107 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 this.UserInterfaceLanguage,
                 this.EditionDto.Id);
 
-            foreach (var project in projectsBaseDtos)
+            var approvedProjectsIds = await this.projectRepo.FindAllApprovedCommissionProjectsIdsAsync(this.EditionDto.Id);
+
+            StringBuilder sb = new StringBuilder();
+            foreach (var projectBaseDto in projectsBaseDtos)
             {
-                project.Genre = new List<string>();
-                foreach (var projectInterestDto in project.Genres)
+                #region Evaluation Column
+
+                var icon = "fa fa-diagnoses";
+                var color = "warning";
+                var text = Labels.UnderEvaluation;
+                bool isProjectEvaluationClosed = !this.EditionDto.IsAudiovisualCommissionProjectEvaluationOpen();
+
+                if (projectBaseDto.IsPitching == false)
                 {
-                    project.Genre.Add(projectInterestDto.Interest.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, '|'));
+                    icon = "la la-remove"; //fa fa-minus-circle
+                    color = "dark";
+                    text = Labels.NotCheckedForPitching;
                 }
+                else if (isProjectEvaluationClosed)
+                {
+                    if (approvedProjectsIds.Contains(projectBaseDto.Id))
+                    {
+                        icon = "fa fa-thumbs-up";
+                        color = "success";
+                        text = Labels.ProjectAccepted;
+                    }
+                    else
+                    {
+                        icon = "fa fa-thumbs-down";
+                        color = "danger";
+                        text = Labels.ProjectRefused;
+                    }
+                }
+
+                sb.Append($"<table class=\"\">");
+                sb.Append($"    <tr>");
+                sb.Append($"        <td>");
+                sb.Append($"            <div class=\"col-md-12 justify-content-center\">");
+                sb.Append($"                <span class=\"kt-widget__button\" data-toggle=\"tooltip\" title=\"{text}\">");
+                sb.Append($"                    <label class=\"btn btn-label-{color} btn-sm m-1\">");
+                sb.Append($"                        <i class=\"{icon} p-0\"></i>");
+                sb.Append($"                    </label>");
+                sb.Append($"                </span>");
+                if (isProjectEvaluationClosed)
+                {
+                    sb.Append("<div class=\"row justify-content-center\">");
+                    //sb.Append($"            <span style=\"margin-left: 5px;\">");
+                    sb.Append($"            <span>");
+                    sb.Append($"                <b>{projectBaseDto.CommissionGrade?.ToString() ?? "-"}</b>");
+                    sb.Append($"            </span>");
+                    sb.Append("</div>");
+                    //sb.Append("<br/>");
+                }
+                if (projectBaseDto.IsPitching == true)
+                {
+                    sb.Append("<div class=\"row justify-content-center\">");
+                    //sb.Append($"                <span style=\"margin-left: 5px;\">");
+                    sb.Append($"            <span>");
+                    sb.Append($"                    ({projectBaseDto.CommissionEvaluationsCount} {(projectBaseDto.CommissionEvaluationsCount == 1 ? Labels.Vote : Labels.Votes)})");
+                    sb.Append($"            </span>");
+                    sb.Append("</div>");
+                }
+
+                sb.Append($"            </div>");
+                sb.Append($"        </td>");
+                sb.Append($"    </tr>");
+                sb.Append($"</table>");
+                projectBaseDto.EvaluationHtmlString = sb.ToString();
+                sb.Clear();
+
+                #endregion
+
+                #region Menu Actions Column
+
+                sb.Append($"<span class=\"dropdown\">");
+                sb.Append($"     <a href = \"#\" class=\"btn btn-sm btn-clean btn-icon btn-icon-md\" data-toggle=\"dropdown\" aria-expanded=\"true\">");
+                sb.Append($"         <i class=\"la la-ellipsis-h\"></i>");
+                sb.Append($"     </a>");
+                sb.Append($"     <div class=\"dropdown-menu dropdown-menu-right\">");
+                sb.Append($"        <button class=\"dropdown-item\" onclick=\"AudiovisualProjectsDataTableWidget.showDetails({projectBaseDto.Id}, '', '{interestUid}', '{evaluationStatusUid}', '{page}', '{pageSize}');\">");
+                sb.Append($"            <i class=\"la la-eye\"></i> {@Labels.View}");
+                sb.Append($"        </button>");
+                sb.Append($"        <button class=\"dropdown-item\" onclick=\"AudiovisualProjectsDelete.showModal('{projectBaseDto.Uid}');\">");
+                sb.Append($"            <i class=\"la la-remove\"></i> {Labels.Remove}");
+                sb.Append($"        </button>");
+                sb.Append($"    </div>");
+                sb.Append($"</span>");
+                projectBaseDto.MenuActionsHtmlString = sb.ToString();
+                sb.Clear();
+
+                #endregion
+
+                #region Translate Project Genres
+
+                projectBaseDto.Genre = new List<string>();
+                foreach (var projectInterestDto in projectBaseDto.Genres)
+                {
+                    projectBaseDto.Genre.Add(projectInterestDto.Interest.Name.GetSeparatorTranslation(this.UserInterfaceLanguage, '|'));
+                }
+
+                #endregion
             }
 
             ViewBag.InterestUid = interestUid;
@@ -149,14 +250,14 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             IDictionary<string, object> additionalParameters = new Dictionary<string, object>();
             if (projectsBaseDtos.TotalItemCount <= 0)
             {
-                if (this.EditionDto.IsProjectEvaluationOpen() && (
+                if (this.EditionDto.IsAudiovisualCommissionProjectEvaluationOpen() && (
                     evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid ||
                     evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid))
                 {
                     additionalParameters.Add("noRecordsFoundMessage",
-                        $"{string.Format(Messages.TheEvaluationPeriodRunsFrom, this.EditionDto.ProjectEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(), this.EditionDto.ProjectEvaluationEndDate.ToBrazilTimeZone().ToShortDateString())}.</br>{Messages.TheProjectsWillReceiveFinalGradeAtPeriodEnds}");
+                        $"{string.Format(Messages.TheEvaluationPeriodRunsFrom, this.EditionDto.AudiovisualCommissionEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(), this.EditionDto.AudiovisualCommissionEvaluationEndDate.ToBrazilTimeZone().ToShortDateString())}.</br>{Messages.TheProjectsWillReceiveFinalGradeAtPeriodEnds}");
                 }
-                else if (!this.EditionDto.IsProjectEvaluationOpen() &&
+                else if (!this.EditionDto.IsAudiovisualCommissionProjectEvaluationOpen() &&
                     evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
                 {
                     additionalParameters.Add("noRecordsFoundMessage",
@@ -355,6 +456,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper>{
+                new BreadcrumbItemHelper(Labels.AudioVisual, null),
                 new BreadcrumbItemHelper(Labels.Projects, Url.Action("Index", "Projects", new { Area = "Audiovisual" })),
                 new BreadcrumbItemHelper(projectDto?.Project?.GetTitleByLanguageCode(this.UserInterfaceLanguage) ?? Labels.Project, Url.Action("Details", "Projects", new { Area = "Audiovisual", id }))
             });
@@ -379,7 +481,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             ViewBag.CurrentProjectIndex = currentProjectIdIndex;
 
             ViewBag.ProjectsTotalCount = await this.projectRepo.CountPagedAsync(this.EditionDto.Edition.Id, searchKeywords, interestUid, evaluationStatusUid, showPitchings ?? false, page.Value, pageSize.Value);
-            ViewBag.ApprovedProjectsIds = await this.projectRepo.FindAllApprovedProjectsIdsAsync(this.EditionDto.Edition.Id);
+            ViewBag.ApprovedProjectsIds = await this.projectRepo.FindAllApprovedCommissionProjectsIdsAsync(this.EditionDto.Edition.Id);
 
             return View(projectDto);
         }
@@ -396,7 +498,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> PreviousEvaluationDetails(int? id, string searchKeywords = null, Guid? interestUid = null, Guid? evaluationStatusUid = null, bool? showPitchings = null, int? page = 1, int? pageSize = 10)
+        public async Task<ActionResult> PreviousCommissionEvaluationDetails(int? id, string searchKeywords = null, Guid? interestUid = null, Guid? evaluationStatusUid = null, bool? showPitchings = null, int? page = 1, int? pageSize = 10)
         {
             var allProjectsIds = await this.projectRepo.FindAllProjectsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
@@ -438,7 +540,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> NextEvaluationDetails(int? id, string searchKeywords = null, Guid? interestUid = null, Guid? evaluationStatusUid = null, bool? showPitchings = null, int? page = 1, int? pageSize = 10)
+        public async Task<ActionResult> NextCommissionEvaluationDetails(int? id, string searchKeywords = null, Guid? interestUid = null, Guid? evaluationStatusUid = null, bool? showPitchings = null, int? page = 1, int? pageSize = 10)
         {
             var allProjectsIds = await this.projectRepo.FindAllProjectsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
@@ -483,6 +585,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
+
+            ViewBag.ApprovedProjectsIds = await this.projectRepo.FindAllApprovedCommissionProjectsIdsAsync(this.EditionDto.Edition.Id);
 
             return Json(new
             {
@@ -1089,6 +1193,121 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         }
 
         #endregion
+
+        #endregion
+
+        #region Audiovisual Commission Evaluation Widget 
+
+        /// <summary>
+        /// Shows the audiovisual commission evaluation widget.
+        /// </summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowAudiovisualCommissionEvaluationWidget(Guid? projectUid)
+        {
+            var evaluationDto = await this.projectRepo.FindAudiovisualCommissionEvaluationWidgetDtoAsync(projectUid ?? Guid.Empty, this.AdminAccessControlDto.User.Id);
+            if (evaluationDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            ViewBag.ApprovedProjectsIds = await this.projectRepo.FindAllApprovedCommissionProjectsIdsAsync(this.EditionDto.Edition.Id);
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/AudiovisualCommissionEvaluationWidget", evaluationDto), divIdOrClass = "#ProjectEvaluationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Evaluates the specified music band identifier.
+        /// </summary>
+        /// <param name="musicBandId">The music band identifier.</param>
+        /// <param name="grade">The grade.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> AudiovisualComissionEvaluateProject(int projectId, decimal? grade)
+        {
+            if (this.EditionDto?.IsAudiovisualCommissionProjectEvaluationOpen() != true)
+            {
+                return Json(new { status = "error", message = Messages.EvaluationPeriodClosed }, JsonRequestBehavior.AllowGet);
+            }
+
+            var result = new AppValidationResult();
+
+            try
+            {
+                var cmd = new AudiovisualComissionEvaluateProject(
+                    await this.projectRepo.FindByIdAsync(projectId),
+                    grade);
+
+                cmd.UpdatePreSendProperties(
+                  this.AdminAccessControlDto.User.Id,
+                  this.AdminAccessControlDto.User.Uid,
+                  this.EditionDto.Id,
+                  this.EditionDto.Uid,
+                  this.UserInterfaceLanguage,
+                  true);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors.Select(e => e = new AppValidationError(e.Message, "ToastrError", e.Code))?
+                                            .FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.Evaluated.ToLowerInvariant())
+            });
+        }
+
+        #endregion
+
+        #region Audiovisual Evaluators Widget
+
+        /// <summary>
+        /// Shows the audiovisual commission evaluators widget.
+        /// </summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowAudiovisualCommissionEvaluatorsWidget(Guid? projectUid)
+        {
+            var evaluationDto = await this.projectRepo.FindAudiovisualCommissionEvaluatorsWidgetDtoAsync(projectUid ?? Guid.Empty);
+            if (evaluationDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/AudiovisualCommissionEvaluatorsWidget", evaluationDto), divIdOrClass = "#ProjectEvaluatorsWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
         #endregion
 

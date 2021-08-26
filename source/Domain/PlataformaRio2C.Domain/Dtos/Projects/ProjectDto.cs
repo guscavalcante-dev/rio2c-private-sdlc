@@ -25,6 +25,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public Project Project { get; set; }
         public ProjectType ProjectType { get; set; }
         public AttendeeOrganizationDto SellerAttendeeOrganizationDto { get; set; }
+        public ProjectCommissionEvaluationDto ProjectCommissionEvaluationDto { get; set; }
+
         public IEnumerable<ProjectTitleDto> ProjectTitleDtos { get; set; }
         public IEnumerable<ProjectLogLineDto> ProjectLogLineDtos { get; set; }
         public IEnumerable<ProjectSummaryDto> ProjectSummaryDtos { get; set; }
@@ -36,6 +38,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public IEnumerable<ProjectTeaserLinkDto> ProjectTeaserLinkDtos { get; set; }
         public IEnumerable<ProjectBuyerEvaluationDto> ProjectBuyerEvaluationDtos { get; set; }
         public IEnumerable<InterestGroup> InterestGroupsMatches { get; set; }
+        public IEnumerable<ProjectCommissionEvaluationDto> ProjectCommissionEvaluationDtos { get; set; }
 
         public string ProjectTitle { get; set; }
 
@@ -104,6 +107,28 @@ namespace PlataformaRio2C.Domain.Dtos
         public int GetProjectsBuyerEvaluationsAvailable()
         {
             return this.GetProjectBuyerEvaluationMax() - this.GetProjectsBuyerEvaluationsUsed();
+        }
+
+        #endregion
+
+        #region Commission Evaluations
+
+        /// <summary>
+        /// Gets the project commission evaluation dto by user identifier.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public ProjectCommissionEvaluationDto GetProjectCommissionEvaluationDtoByUserId(int? userId)
+        {
+            if (!userId.HasValue)
+                return null;
+
+            if (this.ProjectCommissionEvaluationDtos == null)
+            {
+                this.ProjectCommissionEvaluationDtos = new List<ProjectCommissionEvaluationDto>();
+            }
+
+            return this.ProjectCommissionEvaluationDtos.FirstOrDefault(w => w.EvaluatorUser?.Id == userId);
         }
 
         #endregion
