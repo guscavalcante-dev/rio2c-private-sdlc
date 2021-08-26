@@ -46,24 +46,31 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
         private readonly IInterestRepository interestRepo;
+        private readonly IProjectRepository projectRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="CommissionsController"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CommissionsController"/> class.
+        /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
+        /// <param name="interestRepository">The interest repository.</param>
+        /// <param name="projectRepository">The project repository.</param>
         public CommissionsController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             ICollaboratorRepository collaboratorRepository,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
-            IInterestRepository interestRepository
+            IInterestRepository interestRepository,
+            IProjectRepository projectRepository
             )
             : base(commandBus, identityController)
         {
             this.collaboratorRepo = collaboratorRepository;
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
             this.interestRepo = interestRepository;
+            this.projectRepo = projectRepository;
         }
 
         #region List
@@ -273,28 +280,28 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
         #endregion
 
-        #region Evaluations Widget (TODO)
+        #region Commission Evaluations Widget
 
-        //[HttpGet]
-        //public async Task<ActionResult> ShowEvaluationsWidget(Guid? collaboratorUid)
-        //{
-        //    var innovationEvaluationsWidgetDto = await this.attendeeCollaboratorRepo.FindInnovationEvaluationsWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
-        //    if (innovationEvaluationsWidgetDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
+        [HttpGet]
+        public async Task<ActionResult> ShowCommissionEvaluationsWidget(Guid? collaboratorUid)
+        {
+            var audiovisualCommissionEvaluationsWidgetDto = await this.attendeeCollaboratorRepo.FindAudiovisualCommissionEvaluationsWidgetDtoAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
+            if (audiovisualCommissionEvaluationsWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    ViewBag.ApprovedAttendeeInnovationOrganizationsIds = await this.attendeeInnovationOrganizationRepo.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(this.EditionDto.Edition.Id);
+            ViewBag.ApprovedProjectsIds = await this.projectRepo.FindAllApprovedCommissionProjectsIdsAsync(this.EditionDto.Edition.Id);
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Widgets/EvaluationsWidget", innovationEvaluationsWidgetDto), divIdOrClass = "#InnovationCommissionEvaluationsWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/CommissionEvaluationsWidget", audiovisualCommissionEvaluationsWidgetDto), divIdOrClass = "#AudiovisualCommissionEvaluationsWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
         #endregion
 

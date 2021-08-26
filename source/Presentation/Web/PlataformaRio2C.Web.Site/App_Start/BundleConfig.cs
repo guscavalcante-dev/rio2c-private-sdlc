@@ -298,7 +298,7 @@ namespace PlataformaRio2C.Web.Site
 
             #endregion
 
-            #region Projects
+            #region Projects - Negotiations
 
             bundles.Add(new ScriptBundle("~/bundles/js/projects.producerinfo.js").Include(
                 "~/Assets/js/projects/projects.producerinfo.js",
@@ -326,6 +326,24 @@ namespace PlataformaRio2C.Web.Site
 
             bundles.Add(new ScriptBundle("~/bundles/js/projects.buyerevaluation.update.widget.js").Include(
                 "~/Assets/js/projects/projects.buyerevaluation.update.widget.js"));
+
+            #endregion
+
+            #region Projects - Commissions
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.projects.widget.js").Include(
+               "~/Assets/js/audiovisual/projects/audiovisual.projects.maininformation.widget.js",
+               "~/Assets/js/audiovisual/projects/audiovisual.projects.evaluators.widget.js",
+               "~/Assets/js/audiovisual/projects/audiovisual.projects.businessinformation.widget.js",
+               "~/Assets/js/audiovisual/projects/audiovisual.projects.presentation.widget.js"
+               ));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.projects.evaluation.list.widget.js").Include(
+                "~/Assets/js/audiovisual/projects/audiovisual.projects.evaluation.list.widget.js",
+                "~/Scripts/jquery.unobtrusive-ajax.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.projects.evaluation.widget.js").Include(
+                "~/Assets/js/audiovisual/projects/audiovisual.projects.evaluation.widget.js"));
 
             #endregion
 
@@ -390,7 +408,7 @@ namespace PlataformaRio2C.Web.Site
 
             #region Music Page Bundles
 
-            #region Projects
+            #region Projects - Commissions
 
             bundles.Add(new ScriptBundle("~/bundles/js/music.projects.widget.js").Include(
                 "~/Assets/js/music/projects/music.projects.maininformation.widget.js",
@@ -416,7 +434,7 @@ namespace PlataformaRio2C.Web.Site
 
             #region Innovation Page Bundles
 
-            #region Projects
+            #region Projects - Commissions
 
             bundles.Add(new ScriptBundle("~/bundles/js/innovation.projects.widget.js").Include(
                "~/Assets/js/innovation/projects/innovation.projects.maininformation.widget.js",

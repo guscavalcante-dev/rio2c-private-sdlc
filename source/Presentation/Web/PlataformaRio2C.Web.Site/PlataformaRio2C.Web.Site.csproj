@@ -338,6 +338,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SimpleInjectorInitializer.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Audiovisual\Controllers\ProjectsController.cs" />
+    <Compile Include="Areas\Audiovisual\AudiovisualAreaRegistration.cs" />
     <Compile Include="Areas\Innovation\Controllers\ProjectsController.cs" />
     <Compile Include="Areas\Innovation\InnovationAreaRegistration.cs" />
     <Compile Include="Areas\Music\Controllers\MusicBandController.cs" />
@@ -834,6 +836,10 @@
     <Content Include="Assets\js\executives\executives.socialnetworks.widget.js" />
     <Content Include="Assets\js\executives\executives.maininformation.widget.js" />
     <Content Include="Assets\js\executives\executives.logisticinfo.widget.js" />
+    <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.evaluation.list.widget.js" />
+    <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.evaluation.widget.js" />
+    <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.evaluators.widget.js" />
+    <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.maininformation.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.businessinformation.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.evaluation.list.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.evaluation.widget.js" />
@@ -6879,6 +6885,24 @@
     <Content Include="Areas\Innovation\Views\Projects\Widgets\FoundersWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Projects\Widgets\BusinessInformationWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Projects\Widgets\PresentationWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\EvaluationDetails.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\EvaluationList.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Index.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Shared\_Evaluation.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\BusinessInformationWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EvaluationGradeWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EvaluationListItemWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EvaluationListWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EvaluatorsWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\ExperiencesWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\FoundersWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\MainInformationWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\ObjectivesWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\PresentationWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\TechnologiesWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\TracksWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\web.config" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />
@@ -7732,6 +7756,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Audiovisual\Data\" />
+    <Folder Include="Areas\Audiovisual\Views\Projects\Modals\" />
+    <Folder Include="Areas\Audiovisual\Views\Shared\" />
     <Folder Include="Areas\Innovation\Data\" />
     <Folder Include="Areas\Innovation\Views\Projects\Modals\" />
     <Folder Include="Areas\Innovation\Views\Shared\" />

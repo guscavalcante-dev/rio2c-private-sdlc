@@ -34,7 +34,7 @@ var AudiovisualCommissionsEvaluationsWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.collaboratorUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Commissions/ShowEvaluationsWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Commissions/ShowCommissionEvaluationsWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

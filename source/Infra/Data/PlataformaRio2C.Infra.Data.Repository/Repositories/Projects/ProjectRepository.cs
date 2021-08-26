@@ -476,6 +476,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             this.editioRepo = editionRepository;
         }
 
+        #region Private Methods
+
         /// <summary>Gets the base query.</summary>
         /// <param name="readonly">if set to <c>true</c> [readonly].</param>
         /// <returns></returns>
@@ -488,6 +490,54 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                         ? consult.AsNoTracking()
                         : consult;
         }
+
+        /// <summary>
+        /// Finds all project dtos asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="interestUid">The interest uid.</param>
+        /// <returns></returns>
+        private async Task<List<ProjectDto>> FindAllProjectDtosAsync(
+            int editionId,
+            string searchKeywords,
+            Guid? interestUid)
+        {
+            var query = this.GetBaseQuery()
+                               .FindByEditionId(editionId)
+                               .FindByKeywords(searchKeywords)
+                               .FindByInterestUid(interestUid)
+                               .Select(p => new ProjectDto
+                               {
+                                   Project = p,
+                                   SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                   {
+                                       AttendeeOrganization = p.SellerAttendeeOrganization,
+                                       Organization = p.SellerAttendeeOrganization.Organization,
+                                       Edition = p.SellerAttendeeOrganization.Edition
+                                   },
+                                   ProjectCommissionEvaluationDtos = p.CommissionEvaluations.Where(ce => !ce.IsDeleted).Select(ce => new ProjectCommissionEvaluationDto
+                                   {
+                                       CommissionEvaluation = ce,
+                                       EvaluatorUser = ce.EvaluatorUser
+                                   }),
+                                   ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted && i.Interest.InterestGroup.Uid == InterestGroup.Genre.Uid).Select(i => new ProjectInterestDto
+                                   {
+                                       Interest = i.Interest,
+                                       InterestGroup = i.Interest.InterestGroup
+                                   }),
+                                   ProjectTargetAudienceDtos = p.ProjectTargetAudiences.Where(ta => !ta.IsDeleted).Select(ta => new ProjectTargetAudienceDto
+                                   {
+                                       TargetAudience = ta.TargetAudience
+                                   }),
+                               });
+
+            return await query
+                            .Order()
+                            .ToListAsync();
+        }
+
+        #endregion
 
         /// <summary>
         /// Finds the by identifier asynchronous.
@@ -665,89 +715,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
-        /// Finds the dto to evaluate asynchronous.
-        /// </summary>
-        /// <param name="attendeeCollaboratorUid">The attendee collaborator uid.</param>
-        /// <param name="projectUid">The project uid.</param>
-        /// <returns></returns>
-        public async Task<ProjectDto> FindDtoToEvaluateAsync(Guid attendeeCollaboratorUid, Guid projectUid)
-        {
-            var matchInterestsGroups = new List<Guid>
-            {
-                InterestGroup.LookingFor.Uid,
-                InterestGroup.ProjectStatus.Uid,
-                InterestGroup.Platforms.Uid,
-                InterestGroup.Genre.Uid
-            };
-
-            var query = this.GetBaseQuery()
-                                .FindByUid(projectUid)
-                                .IsFinished()
-                                .Select(p => new ProjectDto
-                                {
-                                    Project = p,
-                                    ProjectType = p.ProjectType,
-                                    SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
-                                    {
-                                        AttendeeOrganization = p.SellerAttendeeOrganization,
-                                        Organization = p.SellerAttendeeOrganization.Organization,
-                                        Edition = p.SellerAttendeeOrganization.Edition
-                                    },
-                                    ProjectTitleDtos = p.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
-                                    {
-                                        ProjectTitle = t,
-                                        Language = t.Language
-                                    }),
-                                    ProjectLogLineDtos = p.ProjectLogLines.Where(ll => !ll.IsDeleted).Select(ll => new ProjectLogLineDto
-                                    {
-                                        ProjectLogLine = ll,
-                                        Language = ll.Language
-                                    }),
-                                    ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted).Select(i => new ProjectInterestDto
-                                    {
-                                        ProjectInterest = i,
-                                        Interest = i.Interest,
-                                        InterestGroup = i.Interest.InterestGroup
-                                    }),
-                                    InterestGroupsMatches = p.ProjectInterests
-                                                                .Where(pi => !pi.IsDeleted && !pi.Interest.IsDeleted
-                                                                             && p.ProjectBuyerEvaluations
-                                                                                    .Any(pbe => !pbe.IsDeleted
-                                                                                                  && pbe.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators
-                                                                                                            .Where(aoc => aoc.AttendeeCollaborator.Uid == attendeeCollaboratorUid
-                                                                                                                          && !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted && !aoc.AttendeeOrganization.Organization.IsDeleted)
-                                                                                                            .FirstOrDefault()
-                                                                                                            .AttendeeOrganization.Organization.OrganizationInterests
-                                                                                                                    .Any(oi => !oi.IsDeleted && !oi.Interest.IsDeleted
-                                                                                                                               && matchInterestsGroups.Contains(oi.Interest.InterestGroup.Uid)
-                                                                                                                               && oi.Interest.Id == pi.Interest.Id)))
-                                                                .Select(pi => pi.Interest.InterestGroup)
-                                                                .Distinct(),
-                                    ProjectBuyerEvaluationDtos = p.ProjectBuyerEvaluations
-                                                                    .Where(pbe => !pbe.IsDeleted
-                                                                                  && !pbe.BuyerAttendeeOrganization.IsDeleted
-                                                                                  && pbe.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators
-                                                                                                                      .Any(aoc => !aoc.IsDeleted
-                                                                                                                                  && aoc.AttendeeCollaborator.Uid == attendeeCollaboratorUid))
-                                    .Select(be => new ProjectBuyerEvaluationDto
-                                    {
-                                        ProjectBuyerEvaluation = be,
-                                        BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
-                                        {
-                                            AttendeeOrganization = be.BuyerAttendeeOrganization,
-                                            Organization = be.BuyerAttendeeOrganization.Organization,
-                                            Edition = be.BuyerAttendeeOrganization.Edition
-                                        },
-                                        ProjectEvaluationStatus = be.ProjectEvaluationStatus,
-                                        ProjectEvaluationRefuseReason = be.ProjectEvaluationRefuseReason
-                                    })
-                                });
-
-            return await query
-                            .FirstOrDefaultAsync();
-        }
-
-        /// <summary>
         /// Finds all base dtos by filters and by page asynchronous.
         /// </summary>
         /// <param name="page">The page.</param>
@@ -812,6 +779,69 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             }
 
             return await projectBaseDtosResult
+                            .ToPagedListAsync(page, pageSize);
+        }
+
+        /// <summary>
+        /// Finds all dtos paged asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="interestUid">The interest uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public async Task<IPagedList<ProjectDto>> FindAllDtosPagedAsync(
+            int editionId,
+            string searchKeywords,
+            Guid? interestUid,
+            Guid? evaluationStatusUid,
+            int page,
+            int pageSize)
+        {
+            var projectsDtos = await this.FindAllProjectDtosAsync(editionId, searchKeywords, interestUid);
+            var editionDto = await this.editioRepo.FindDtoAsync(editionId);
+
+            IEnumerable<ProjectDto> projectDtosResult = projectsDtos;
+            if (editionDto.IsAudiovisualProjectEvaluationOpen())
+            {
+                #region Evaluation is Open
+
+                if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
+                {
+                    projectDtosResult = new List<ProjectDto>(); //Returns a empty list
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
+                {
+                    projectDtosResult = new List<ProjectDto>(); //Returns a empty list
+                }
+
+                #endregion
+            }
+            else
+            {
+                #region Evaluation is Closed
+
+                var approvedProjectsIds = await this.FindAllApprovedCommissionProjectsIdsAsync(editionId);
+
+                if (evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid)
+                {
+                    projectDtosResult = projectsDtos.Where(dto => approvedProjectsIds.Contains(dto.Project.Id));
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.Refused.Uid)
+                {
+                    projectDtosResult = projectsDtos.Where(dto => !approvedProjectsIds.Contains(dto.Project.Id));
+                }
+                else if (evaluationStatusUid == ProjectEvaluationStatus.UnderEvaluation.Uid)
+                {
+                    projectDtosResult = new List<ProjectDto>();
+                }
+
+                #endregion
+            }
+
+            return await projectDtosResult
                             .ToPagedListAsync(page, pageSize);
         }
 
@@ -1076,40 +1106,50 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             string languageCode,
             int editionId)
         {
-            var query = this.GetBaseQuery()
-                                            .FindByEditionId(editionId)
-                                            .IsFinished()
-                                            .IsPitching(showPitchings)
-                                            .FindByKeywords(keywords)
-                                            .FindByInterestUid(interestUid)
-                                            .DynamicOrder<Project>(
-                                                sortColumns,
-                                                null,
-                                                new List<string> { "CreateDate", "FinishDate" },
-                                                "FinishDate")
-                                            .Select(p => new ProjectBaseDto
-                                            {
-                                                Id = p.Id,
-                                                Uid = p.Uid,
-                                                ProjectName = p.ProjectTitles.Where(t => t.Language.Code == languageCode).Select(t => t.Value).FirstOrDefault(),
-                                                ProducerName = p.SellerAttendeeOrganization.Organization.Name,
-                                                ProducerImageUploadDate = p.SellerAttendeeOrganization.Organization.ImageUploadDate,
-                                                ProducerUid = p.SellerAttendeeOrganization.Organization.Uid,
-                                                ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted && i.Interest.InterestGroup.Uid == InterestGroup.Genre.Uid).Select(i => new ProjectInterestDto
-                                                {
-                                                    Interest = i.Interest,
-                                                    InterestGroup = i.Interest.InterestGroup
-                                                }),
-                                                IsPitching = p.IsPitching,
-                                                CreateDate = p.CreateDate,
-                                                FinishDate = p.FinishDate,
-                                                CommissionGrade = p.CommissionGrade,
-                                                CommissionEvaluationsCount = p.CommissionEvaluationsCount
-                                            });
+            this.SetProxyEnabled(false);
 
-            return await query
+            var query = this.GetBaseQuery(true)
+                            .FindByEditionId(editionId)
+                            .IsFinished()
+                            .IsPitching(showPitchings)
+                            .FindByKeywords(keywords)
+                            .FindByInterestUid(interestUid)
+                            .DynamicOrder<Project>(
+                                sortColumns,
+                                null,
+                                new List<string> { "CreateDate", "FinishDate" },
+                                "FinishDate")
+                            .Select(p => new ProjectBaseDto
+                            {
+                                Id = p.Id,
+                                Uid = p.Uid,
+                                ProjectName = p.ProjectTitles.Where(t => t.Language.Code == languageCode).Select(t => t.Value).FirstOrDefault(),
+                                ProducerName = p.SellerAttendeeOrganization.Organization.Name,
+                                ProducerImageUploadDate = p.SellerAttendeeOrganization.Organization.ImageUploadDate,
+                                ProducerUid = p.SellerAttendeeOrganization.Organization.Uid,
+                                ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted && i.Interest.InterestGroup.Uid == InterestGroup.Genre.Uid).Select(i => new ProjectInterestDto
+                                {
+                                    Interest = i.Interest,
+                                    InterestGroup = i.Interest.InterestGroup
+                                }),
+                                ProjectTargetAudienceDtos = p.ProjectTargetAudiences.Where(ta => !ta.IsDeleted).Select(ta => new ProjectTargetAudienceDto
+                                {
+                                    TargetAudience = ta.TargetAudience
+                                }),
+                                IsPitching = p.IsPitching,
+                                CreateDate = p.CreateDate,
+                                FinishDate = p.FinishDate,
+                                CommissionGrade = p.CommissionGrade,
+                                CommissionEvaluationsCount = p.CommissionEvaluationsCount
+                            });
+
+            var result = await query
                             //.Order()
                             .ToListAsync();
+
+            this.SetProxyEnabled(true);
+
+            return result;
         }
 
         #region Admin Widgets
@@ -1711,6 +1751,88 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        /// <summary>
+        /// Finds the dto to evaluate asynchronous.
+        /// </summary>
+        /// <param name="attendeeCollaboratorUid">The attendee collaborator uid.</param>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        public async Task<ProjectDto> FindDtoToEvaluateAsync(Guid attendeeCollaboratorUid, Guid projectUid)
+        {
+            var matchInterestsGroups = new List<Guid>
+            {
+                InterestGroup.LookingFor.Uid,
+                InterestGroup.ProjectStatus.Uid,
+                InterestGroup.Platforms.Uid,
+                InterestGroup.Genre.Uid
+            };
+
+            var query = this.GetBaseQuery()
+                                .FindByUid(projectUid)
+                                .IsFinished()
+                                .Select(p => new ProjectDto
+                                {
+                                    Project = p,
+                                    ProjectType = p.ProjectType,
+                                    SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                    {
+                                        AttendeeOrganization = p.SellerAttendeeOrganization,
+                                        Organization = p.SellerAttendeeOrganization.Organization,
+                                        Edition = p.SellerAttendeeOrganization.Edition
+                                    },
+                                    ProjectTitleDtos = p.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                    {
+                                        ProjectTitle = t,
+                                        Language = t.Language
+                                    }),
+                                    ProjectLogLineDtos = p.ProjectLogLines.Where(ll => !ll.IsDeleted).Select(ll => new ProjectLogLineDto
+                                    {
+                                        ProjectLogLine = ll,
+                                        Language = ll.Language
+                                    }),
+                                    ProjectInterestDtos = p.ProjectInterests.Where(i => !i.IsDeleted).Select(i => new ProjectInterestDto
+                                    {
+                                        ProjectInterest = i,
+                                        Interest = i.Interest,
+                                        InterestGroup = i.Interest.InterestGroup
+                                    }),
+                                    InterestGroupsMatches = p.ProjectInterests
+                                                                .Where(pi => !pi.IsDeleted && !pi.Interest.IsDeleted
+                                                                             && p.ProjectBuyerEvaluations
+                                                                                    .Any(pbe => !pbe.IsDeleted
+                                                                                                  && pbe.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators
+                                                                                                            .Where(aoc => aoc.AttendeeCollaborator.Uid == attendeeCollaboratorUid
+                                                                                                                          && !aoc.IsDeleted && !aoc.AttendeeOrganization.IsDeleted && !aoc.AttendeeOrganization.Organization.IsDeleted)
+                                                                                                            .FirstOrDefault()
+                                                                                                            .AttendeeOrganization.Organization.OrganizationInterests
+                                                                                                                    .Any(oi => !oi.IsDeleted && !oi.Interest.IsDeleted
+                                                                                                                               && matchInterestsGroups.Contains(oi.Interest.InterestGroup.Uid)
+                                                                                                                               && oi.Interest.Id == pi.Interest.Id)))
+                                                                .Select(pi => pi.Interest.InterestGroup)
+                                                                .Distinct(),
+                                    ProjectBuyerEvaluationDtos = p.ProjectBuyerEvaluations
+                                                                    .Where(pbe => !pbe.IsDeleted
+                                                                                  && !pbe.BuyerAttendeeOrganization.IsDeleted
+                                                                                  && pbe.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators
+                                                                                                                      .Any(aoc => !aoc.IsDeleted
+                                                                                                                                  && aoc.AttendeeCollaborator.Uid == attendeeCollaboratorUid))
+                                    .Select(be => new ProjectBuyerEvaluationDto
+                                    {
+                                        ProjectBuyerEvaluation = be,
+                                        BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                        {
+                                            AttendeeOrganization = be.BuyerAttendeeOrganization,
+                                            Organization = be.BuyerAttendeeOrganization.Organization,
+                                            Edition = be.BuyerAttendeeOrganization.Edition
+                                        },
+                                        ProjectEvaluationStatus = be.ProjectEvaluationStatus,
+                                        ProjectEvaluationRefuseReason = be.ProjectEvaluationRefuseReason
+                                    })
+                                });
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
 
         /// <summary>
         /// Counts all projects for pitching by edition or in all editions.

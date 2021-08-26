@@ -313,7 +313,8 @@ namespace PlataformaRio2C.Infra.Data.Repository
         }
 
         /// <summary>
-        /// Sets the proxy enable.
+        /// Sets the proxy enabled/disabled. 
+        /// Use this to prevent "A circular reference was detected while serializing an object of type" exception.
         /// </summary>
         /// <param name="isEnabled">if set to <c>true</c> [is enabled].</param>
         public void SetProxyEnabled(bool isEnabled)

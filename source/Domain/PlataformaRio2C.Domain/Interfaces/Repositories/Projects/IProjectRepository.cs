@@ -29,7 +29,10 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<Project> FindByUidAsync(Guid projectUid);
         Task<List<ProjectDto>> FindAllDtosToSellAsync(Guid attendeeOrganizationUid, bool showAll);
         Task<IPagedList<ProjectDto>> FindAllDtosToEvaluateAsync(Guid attendeeCollaboratorUid, string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int page, int pageSize);
-        Task<IPagedList<ProjectBaseDto>> FindAllBaseDtosPagedAsync(int page, int pageSize, List<Tuple<string, string>> sortColumns, string keywords, bool showPitchings, Guid? interestUid, Guid? evaluationStatusUid, string languageCode, int editionId);
+        Task<IPagedList<ProjectBaseDto>> FindAllBaseDtosPagedAsync(int page, int pageSize, List<Tuple<string, string>> sortColumns, string keywords, bool showPitchings, Guid? interestUid, Guid? evaluationStatusUid, string languageCode, int editionId);  
+        
+        Task<IPagedList<ProjectDto>> FindAllDtosPagedAsync(int editionId, string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int page, int pageSize);
+        
         Task<List<ProjectDto>> FindAllDtosByFiltersAsync(string keywords, bool showPitchings, Guid? interestUid, List<Guid> projectUids, string languageCode, int editionId);
         Task<int> CountAllByDataTable(int editionId, bool showAllEditions = false);
         Task<int[]> FindAllProjectsIdsPagedAsync(int editionId, string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, bool showPitchings, int page, int pageSize);

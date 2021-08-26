@@ -8315,7 +8315,7 @@
     <Content Include="Areas\Audiovisual\Views\Commissions\Modals\UpdateInterestsModal.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\DataTableWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\EditionCountWidget.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\EvaluationsWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\CommissionEvaluationsWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\SocialNetworksWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\TotalCountWidget.cshtml" />

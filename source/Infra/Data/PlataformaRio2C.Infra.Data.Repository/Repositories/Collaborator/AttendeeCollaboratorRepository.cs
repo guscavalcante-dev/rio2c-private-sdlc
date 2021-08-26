@@ -548,6 +548,39 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        /// <summary>
+        /// Finds the audiovisual commission evaluations widget dto asynchronous.
+        /// </summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeCollaboratorAudiovisualCommissionEvaluationsWidgetDto> FindAudiovisualCommissionEvaluationsWidgetDtoAsync(Guid collaboratorUid, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByCollaboratorUid(collaboratorUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(ac => new AttendeeCollaboratorAudiovisualCommissionEvaluationsWidgetDto
+                            {
+                                AttendeeCollaboratorDto = new AttendeeCollaboratorDto
+                                {
+                                    AttendeeCollaborator = ac,
+                                    Collaborator = ac.Collaborator
+                                },
+                                AttendeeCollaboratorAudiovisualCommissionEvaluationDtos = ac.Collaborator.User.CommissionEvaluations
+                                                                                        .Where(ce => !ce.IsDeleted)
+                                                                                        .OrderBy(ce => ce.CreateDate)
+                                                                                        .Select(ce => new AttendeeCollaboratorAudiovisualCommissionEvaluationDto
+                                                                                        {
+                                                                                            CommissionEvaluation = ce,
+                                                                                            Project = ce.Project,
+                                                                                            EvaluatorUser = ce.EvaluatorUser
+                                                                                        }).ToList()
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
         /// <summary>Finds the API configuration widget dto by collaborator uid and by edition identifier asynchronous.</summary>
         /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <param name="editionId">The edition identifier.</param>

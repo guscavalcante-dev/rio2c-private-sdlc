@@ -11,24 +11,33 @@
             <span class="kt-menu__link-text">@Labels.Dashboard</span>
         </a>
     </li>
-    @if (userAccessControlDto?.HasAnyCollaboratorType(new[] { Constants.CollaboratorType.ExecutiveAudiovisual, Constants.CollaboratorType.Industry }) == true)
+    @if (userAccessControlDto?.HasAnyCollaboratorType(new[] { Constants.CollaboratorType.CommissionAudiovisual, Constants.CollaboratorType.ExecutiveAudiovisual, Constants.CollaboratorType.Industry }) == true)
     {
         var projectsUrl = Url.Action("Index", "Projects", new { Area = "" });
         var isOpenCondition = this.IsOpen(menuOpenCssClass, "SubmittedList", "Projects", null);
 
-        if (editionDto?.IsProjectSubmitStarted() == true && userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true)
-        {
-            projectsUrl = Url.Action("SubmittedList", "Projects", new { Area = "" });
-        }
-        else if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) == true)
-        {
-            projectsUrl = Url.Action("EvaluationList", "Projects", new { Area = "" });
-            isOpenCondition = this.IsOpen(menuOpenCssClass, "EvaluationList", "Projects", null);
+        //if (editionDto?.IsProjectSubmitStarted() == true && userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true)
+        //{
+        //    projectsUrl = Url.Action("SubmittedList", "Projects", new { Area = "" });
+        //}
+        //else if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) == true)
+        //{
+        //    projectsUrl = Url.Action("EvaluationList", "Projects", new { Area = "" });
+        //    isOpenCondition = this.IsOpen(menuOpenCssClass, "EvaluationList", "Projects", null);
 
-            if (editionDto?.IsProjectEvaluationStarted() != true)
+        //    if (editionDto?.IsProjectEvaluationStarted() != true)
+        //    {
+        //        projectsUrl = Url.Action("Index", "Projects", new { Area = "" });
+        //        isOpenCondition = this.IsOpen(menuOpenCssClass, "Index", "Projects", null); ;
+        //    }
+        //}
+        //else 
+        if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.CommissionAudiovisual) == true)
+        {
+            projectsUrl = Url.Action("EvaluationList", "Projects", new { Area = "Audiovisual" });
+            if (editionDto?.IsAudiovisualProjectEvaluationStarted() != true)
             {
-                projectsUrl = Url.Action("Index", "Projects", new { Area = "" });
-                isOpenCondition = this.IsOpen(menuOpenCssClass, "Index", "Projects", null); ;
+                projectsUrl = Url.Action("Index", "Projects", new { Area = "Audiovisual" });
             }
         }
         <li class="kt-menu__item @isOpenCondition" aria-haspopup="true">
@@ -71,15 +80,4 @@
             </a>
         </li>
     }
-    @*<li class="kt-menu__item" aria-haspopup="true">
-        <a class="kt-menu__link" href="#" onclick="return false;" data-toggle="kt-tooltip" title="" data-placement="bottom" data-original-title="@Labels.ComingSoon...">
-            <span class="kt-menu__link-text">@Labels.Talents</span>
-        </a>
-    </li>*@
-    @*<li class="kt-menu__separator"></li>
-    <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "Index", "Tickets", null)" aria-haspopup="true">
-        <a class="kt-menu__link" href="#" onclick="return false;" data-toggle="kt-tooltip" title="" data-placement="bottom" data-original-title="@Labels.ComingSoon...">
-            <span class="kt-menu__link-text">@Labels.Badges</span>
-        </a>
-    </li>*@
 </ul>

@@ -1,0 +1,102 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Statics
+@model ProjectDto
+@{
+    var evaluationDetailsAction = Url.Action("EvaluationDetails", "Projects", new
+    {
+        Area = "Audiovisual",
+        id = Model.Project.Id,
+        //step = 0,
+        searchKeywords = ViewBag.SearchKeywords,
+        interestUid = ViewBag.InterestUid,
+        evaluationStatusUid = ViewBag.EvaluationStatusUid,
+        Page = ViewBag.Page,
+        pageSize = ViewBag.PageSize
+    });
+}
+@if (Model != null)
+{
+    <div class="col-sm-6 col-lg-6 col-xl-4">
+        <div class="kt-portlet kt-portlet--height-fluid" id="project-@Model.Project.Uid">
+            <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="text-center w-100">
+                            @if (Model.SellerAttendeeOrganizationDto?.Organization?.HasImage() == true)
+                            {
+                                @*<img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, Model.SellerAttendeeOrganizationDto.Organization.Uid, Model.SellerAttendeeOrganizationDto.Organization.ImageUploadDate, false)" class="w-100" alt="" style="height: 125px; border-radius: 4px; object-fit: cover;">*@
+                                <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, Model.SellerAttendeeOrganizationDto.Organization.Uid, Model.SellerAttendeeOrganizationDto.Organization.ImageUploadDate, false)" class="w-100" style="height: 125px; border-radius: 4px; object-fit: cover;" alt="image">
+                            }
+                            else
+                            {
+                                <div class="kt-userpic kt-userpic--lg kt-userpic--brand">
+                                    <span style="width: 100%; height: 125px; font-size: 40px;">@(Model.SellerAttendeeOrganizationDto?.Organization?.GetTradeNameAbbreviation())</span>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-2">
+                        <span style="font-weight: normal; font-size: 13px; line-height: 19px; color: #898C98;">@(Model.SellerAttendeeOrganizationDto?.Organization?.Name ?? "-")</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <span style="font-weight: 600; font-size: 17px; line-height: 19px; color: #403D50;">@(Model.Project?.GetTitleByLanguageCode(ViewBag.UserInterfaceLanguage) ?? "-")</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <div style="font-weight: normal; font-size: 13px; line-height: 19px; color: #403D50; width: 65px; display: inline-block;">@Labels.Genres:</div>
+                        @if (Model.ProjectInterestDtos?.Any() == true)
+                        {
+                            foreach (var projectInterestDto in Model.ProjectInterestDtos)
+                            {
+                                <span class="kt-badge kt-badge--inline kt-badge--info mt-1">
+                                    @(projectInterestDto.Interest.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                    @if (projectInterestDto.Interest.HasAdditionalInfo && !string.IsNullOrEmpty(projectInterestDto.ProjectInterest.AdditionalInfo))
+                                    {
+                                        @projectInterestDto.ProjectInterest.AdditionalInfo
+                                    }
+                                </span>
+                            }
+                        }
+                        else
+                        {
+                            @:-
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-2">
+                        <div style="font-weight: normal; font-size: 13px; line-height: 19px; color: #403D50; width: 88px; display: inline-block;">@Labels.TargetAudience:</div>
+                        @if (Model.ProjectTargetAudienceDtos?.Any() == true)
+                        {
+                            foreach (var projectTargetAudienceDto in Model.ProjectTargetAudienceDtos)
+                            {
+                                <span class="kt-badge kt-badge--inline kt-badge--primary">@(projectTargetAudienceDto.TargetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
+                            }
+                        }
+                        else
+                        {
+                            @:-
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mt-4">
+                        @Html.Partial("Shared/_Evaluation", Model)
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-2">
+                    <div class="col-md-12 text-center">
+                        <a href="@evaluationDetailsAction" class="btn btn-brand">@Labels.View</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

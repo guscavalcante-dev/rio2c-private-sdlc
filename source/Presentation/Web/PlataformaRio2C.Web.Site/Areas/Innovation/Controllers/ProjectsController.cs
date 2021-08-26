@@ -107,7 +107,6 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
             ViewBag.InnovationOrganizationTrackOptions = (await this.innovationOrganizationTrackOptionRepo.FindAllAsync()).GetSeparatorTranslation(m => m.Name, this.UserInterfaceLanguage, '|');
             ViewBag.ProjectEvaluationStatuses = (await this.evaluationStatusRepo.FindAllAsync()).GetSeparatorTranslation(m => m.Name, this.UserInterfaceLanguage, '|');
 
-
             return View();
         }
 

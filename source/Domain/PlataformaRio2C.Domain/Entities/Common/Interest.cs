@@ -13,6 +13,7 @@
 // ***********************************************************************
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -28,6 +29,7 @@ namespace PlataformaRio2C.Domain.Entities
         public bool HasAdditionalInfo { get; private set; }
 
         public virtual InterestGroup InterestGroup { get; private set; }
+        public virtual List<CommissionAttendeeCollaboratorInterest> CommissionAttendeeCollaboratorInterests { get; set; }
 
         public string Name { get; private set; }
 
