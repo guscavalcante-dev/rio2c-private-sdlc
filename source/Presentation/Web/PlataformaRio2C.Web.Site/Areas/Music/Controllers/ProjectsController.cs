@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 02-26-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 08-28-2021
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -101,8 +101,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Music, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.ProjectsEvaluation, Url.Action("EvaluationList", "Projects", new { Area = "Music" })),
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.MusicProjects, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Music, Url.Action("EvaluationList", "Projects", new { Area = "Music" })),
             });
 
             #endregion
@@ -220,8 +220,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Music.Controllers
 
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Music, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("EvaluationList", "Projects", new { Area = "Music" })),
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.MusicProjects, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Music, Url.Action("EvaluationList", "Projects", new { Area = "Music", searchKeywords, musicGenreUid, evaluationStatusUid, page, pageSize })),
                 new BreadcrumbItemHelper(musicProjectDto.AttendeeMusicBandDto?.MusicBand?.Name ?? Labels.Project, Url.Action("EvaluationDetails", "Projects", new { Area = "Music", id }))
             });
 

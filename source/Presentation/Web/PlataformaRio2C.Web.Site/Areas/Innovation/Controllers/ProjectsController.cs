@@ -4,7 +4,7 @@
 // Created          : 07-28-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-28-2021
+// Last Modified On : 08-28-2021
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -130,8 +130,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
 
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Innovation, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.ProjectsEvaluation, Url.Action("EvaluationList", "Projects", new { Area = "Innovation" })),
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.InnovationProjects, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Innovation, Url.Action("EvaluationList", "Projects", new { Area = "Innovation" })),
             });
 
             #endregion
@@ -190,28 +190,20 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
 
-            List<Guid?> innovationOrganizationTrackOptionUids = new List<Guid?>();
-            if (!innovationOrganizationTrackOptionUid.HasValue)
+            var attendeeInnovationOrganizationTrackOptionUids = await this.GetAttendeeCollaboratorInnovationOrganizationTrackOptionsUids();
+            if (attendeeInnovationOrganizationTrackOptionUids.Count <= 0)
             {
-                var userDto = await this.userRepo.FindUserDtoByUserIdAsync(this.UserAccessControlDto.User.Id);
-                var attendeeCollaborator = userDto.Collaborator?.GetAttendeeCollaboratorByEditionId(this.EditionDto.Edition.Id);
-                if (attendeeCollaborator != null)
+                return Json(new
                 {
-                    var innovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllByAttendeeCollaboratorIdAsync(attendeeCollaborator.Id);
-                    innovationOrganizationTrackOptionUids = innovationOrganizationTrackOptions.Select(ioto => ioto.Uid as Guid?).ToList();
-                }
-                else
+                    status = "success",
+                    pages = new List<dynamic>
                 {
-                    //Admin cannot have Collaborator/AttendeeCollaborator, so, get all InnovationOrganizationTrackOptions to list in Dropdown.
-                    var innovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllAsync();
-                    innovationOrganizationTrackOptionUids = innovationOrganizationTrackOptions.Select(ioto => ioto.Uid as Guid?).ToList();
+                    new { page = this.RenderRazorViewToString("Widgets/EvaluationListWidget", null), divIdOrClass = "#InnovationProjectEvaluationListWidget" },
                 }
+                }, JsonRequestBehavior.AllowGet);
             }
-            else
-            {
-                //Seach by selected "InnovationOrganizationTrackOption" in dropdown
-                innovationOrganizationTrackOptionUids = new List<Guid?>() { innovationOrganizationTrackOptionUid };
-            }
+
+            var innovationOrganizationTrackOptionUids = await this.GetSearchInnovationOrganizationTrackOptionUids(innovationOrganizationTrackOptionUid);
 
             var projects = await this.attendeeInnovationOrganizationRepo.FindAllDtosPagedAsync(
                 this.EditionDto.Id,
@@ -306,8 +298,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
 
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Innovation, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Projects, Url.Action("EvaluationList", "Projects", new { Area = "Innovation" })),
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.InnovationProjects, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Innovation, Url.Action("EvaluationList", "Projects", new { Area = "Innovation", searchKeywords, innovationOrganizationTrackOptionUid, evaluationStatusUid, page, pageSize })),
                 new BreadcrumbItemHelper(attendeeInnovationOrganizationDto?.InnovationOrganization?.Name ?? Labels.Project, Url.Action("EvaluationDetails", "Projects", new { Area = "Innovation", id }))
             });
 

@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-28-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 08-28-2021
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -173,7 +173,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     }
                 }
 
-                sb.Append($"<table class=\"\">");
+                sb.Append($"<table>");
                 sb.Append($"    <tr>");
                 sb.Append($"        <td>");
                 sb.Append($"            <div class=\"col-md-12 justify-content-center\">");
@@ -182,26 +182,23 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 sb.Append($"                        <i class=\"{icon} p-0\"></i>");
                 sb.Append($"                    </label>");
                 sb.Append($"                </span>");
-                if (isProjectEvaluationClosed)
-                {
-                    sb.Append("<div class=\"row justify-content-center\">");
-                    //sb.Append($"            <span style=\"margin-left: 5px;\">");
-                    sb.Append($"            <span>");
-                    sb.Append($"                <b>{projectBaseDto.CommissionGrade?.ToString() ?? "-"}</b>");
-                    sb.Append($"            </span>");
-                    sb.Append("</div>");
-                    //sb.Append("<br/>");
-                }
                 if (projectBaseDto.IsPitching == true)
                 {
-                    sb.Append("<div class=\"row justify-content-center\">");
-                    //sb.Append($"                <span style=\"margin-left: 5px;\">");
-                    sb.Append($"            <span>");
-                    sb.Append($"                    ({projectBaseDto.CommissionEvaluationsCount} {(projectBaseDto.CommissionEvaluationsCount == 1 ? Labels.Vote : Labels.Votes)})");
-                    sb.Append($"            </span>");
-                    sb.Append("</div>");
-                }
+                    if (isProjectEvaluationClosed)
+                    {
+                        sb.Append("         <div class=\"row justify-content-center\">");
+                        sb.Append($"            <span>");
+                        sb.Append($"                <b>{projectBaseDto.CommissionGrade?.ToString() ?? "-"}</b>");
+                        sb.Append($"            </span>");
+                        sb.Append("         </div>");
+                    }
 
+                    sb.Append("         <div class=\"row justify-content-center\">");
+                    sb.Append($"            <span>");
+                    sb.Append($"                ({projectBaseDto.CommissionEvaluationsCount} {(projectBaseDto.CommissionEvaluationsCount == 1 ? Labels.Vote : Labels.Votes)})");
+                    sb.Append($"            </span>");
+                    sb.Append("         </div>");
+                }
                 sb.Append($"            </div>");
                 sb.Append($"        </td>");
                 sb.Append($"    </tr>");
@@ -292,7 +289,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             var projectsDtos = await this.projectRepo.FindAllDtosByFiltersAsync(
                 keyword,
                 showPitchings,
-                interestUid,
+                new List<Guid?> { interestUid },
                 selectedProjectsUids?.ToListGuid(','),
                 this.UserInterfaceLanguage,
                 this.EditionDto.Id);
@@ -466,7 +463,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             var allProjectsIds = await this.projectRepo.FindAllProjectsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
                 searchKeywords,
-                interestUid,
+                new List<Guid?> { interestUid },
                 evaluationStatusUid,
                 showPitchings ?? false,
                 page.Value,
@@ -480,18 +477,18 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             ViewBag.PageSize = pageSize;
             ViewBag.CurrentProjectIndex = currentProjectIdIndex;
 
-            ViewBag.ProjectsTotalCount = await this.projectRepo.CountPagedAsync(this.EditionDto.Edition.Id, searchKeywords, interestUid, evaluationStatusUid, showPitchings ?? false, page.Value, pageSize.Value);
+            ViewBag.ProjectsTotalCount = await this.projectRepo.CountPagedAsync(this.EditionDto.Edition.Id, searchKeywords, new List<Guid?> { interestUid }, evaluationStatusUid, showPitchings ?? false, page.Value, pageSize.Value);
             ViewBag.ApprovedProjectsIds = await this.projectRepo.FindAllApprovedCommissionProjectsIdsAsync(this.EditionDto.Edition.Id);
 
             return View(projectDto);
         }
 
         /// <summary>
-        /// Previouses the evaluation details.
+        /// Previouses the commission evaluation details.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="interestUid">The music genre uid.</param>
+        /// <param name="interestUid">The interest uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="showPitchings">The show pitchings.</param>
         /// <param name="page">The page.</param>
@@ -503,7 +500,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             var allProjectsIds = await this.projectRepo.FindAllProjectsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
                 searchKeywords,
-                interestUid,
+                new List<Guid?> { interestUid },
                 evaluationStatusUid,
                 showPitchings ?? false,
                 page.Value,
@@ -529,11 +526,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         }
 
         /// <summary>
-        /// Nexts the evaluation details.
+        /// Nexts the commission evaluation details.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="interestUid">The music genre uid.</param>
+        /// <param name="interestUid">The interest uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="showPitchings">The show pitchings.</param>
         /// <param name="page">The page.</param>
@@ -545,7 +542,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             var allProjectsIds = await this.projectRepo.FindAllProjectsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
                 searchKeywords,
-                interestUid,
+                new List<Guid?> { interestUid },
                 evaluationStatusUid,
                 showPitchings ?? false,
                 page.Value,

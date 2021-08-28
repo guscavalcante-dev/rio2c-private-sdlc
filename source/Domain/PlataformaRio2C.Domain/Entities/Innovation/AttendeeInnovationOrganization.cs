@@ -4,7 +4,7 @@
 // Created          : 06-29-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 06-29-2021
+// Last Modified On : 08-28-2021
 // ***********************************************************************
 // <copyright file="AttendeeInnovationOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -640,7 +640,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         private void ValidateMarketSize()
         {
-            if (this.MarketSize.Length > MarketSizeMaxLenght)
+            if (this.MarketSize?.Length > MarketSizeMaxLenght)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(MarketSize), MarketSizeMaxLenght, 1), new string[] { nameof(MarketSize) }));
             }
@@ -651,7 +651,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         private void ValidateBusinessDefinition()
         {
-            if (this.BusinessDefinition.Length > BusinessDefinitionMaxLenght)
+            if (this.BusinessDefinition?.Length > BusinessDefinitionMaxLenght)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(BusinessDefinition), BusinessDefinitionMaxLenght, 1), new string[] { nameof(BusinessDefinition) }));
             }
@@ -662,7 +662,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         private void ValidateBusinessFocus()
         {
-            if (this.BusinessFocus.Length > BusinessFocusMaxLenght)
+            if (this.BusinessFocus?.Length > BusinessFocusMaxLenght)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(BusinessFocus), BusinessFocusMaxLenght, 1), new string[] { nameof(BusinessFocus) }));
             }
@@ -673,7 +673,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         private void ValidateBusinessDifferentials()
         {
-            if (this.BusinessDifferentials.Length > BusinessDifferentialsMaxLenght)
+            if (this.BusinessDifferentials?.Length > BusinessDifferentialsMaxLenght)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(BusinessDifferentials), BusinessDifferentialsMaxLenght, 1), new string[] { nameof(BusinessDifferentials) }));
             }
@@ -684,7 +684,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         private void ValidateBusinessEconomicModel()
         {
-            if (this.BusinessEconomicModel.Length > BusinessEconomicModelMaxLenght)
+            if (this.BusinessEconomicModel?.Length > BusinessEconomicModelMaxLenght)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(BusinessEconomicModel), BusinessEconomicModelMaxLenght, 1), new string[] { nameof(BusinessEconomicModel) }));
             }
@@ -695,7 +695,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         private void ValidateBusinessOperationalModel()
         {
-            if (this.BusinessOperationalModel.Length > BusinessOperationalModelMaxLenght)
+            if (this.BusinessOperationalModel?.Length > BusinessOperationalModelMaxLenght)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(BusinessOperationalModel), BusinessOperationalModelMaxLenght, 1), new string[] { nameof(BusinessOperationalModel) }));
             }
@@ -706,7 +706,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         private void ValidateVideoUrl()
         {
-            if (this.VideoUrl.Length > VideoUrlMaxLenght)
+            if (this.VideoUrl?.Length > VideoUrlMaxLenght)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(VideoUrl), VideoUrlMaxLenght, 1), new string[] { nameof(VideoUrl) }));
             }
@@ -717,7 +717,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         private void ValidateBusinessStage()
         {
-            if (this.BusinessStage.Length > BusinessStageMaxLenght)
+            if (this.BusinessStage?.Length > BusinessStageMaxLenght)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(BusinessStage), BusinessStageMaxLenght, 1), new string[] { nameof(BusinessStage) }));
             }

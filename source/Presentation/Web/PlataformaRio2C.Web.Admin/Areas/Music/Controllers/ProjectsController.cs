@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 03-01-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 08-28-2021
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -149,24 +149,29 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                     }
                 }
 
-                sb.Append($"<table class=\"image-side-text\">");
+                sb.Append($"<table>");
                 sb.Append($"    <tr>");
                 sb.Append($"        <td>");
                 sb.Append($"            <div class=\"col-md-12 justify-content-center\">");
-                sb.Append($"                <span class=\"kt-widget__button\" style=\"\" data-toggle=\"tooltip\" title=\"{text}\">");
+                sb.Append($"                <span class=\"kt-widget__button\" data-toggle=\"tooltip\" title=\"{text}\">");
                 sb.Append($"                    <label class=\"btn btn-label-{color} btn-sm m-1\">");
                 sb.Append($"                        <i class=\"fa {icon} p-0\"></i>");
                 sb.Append($"                    </label>");
                 sb.Append($"                </span>");
                 if (isMusicProjectEvaluationClosed)
                 {
-                    sb.Append($"            <span class=\"margin-left: 5px;\">");
-                    sb.Append($"                <b>{musicProjectJsonDto.Grade?.ToString() ?? "-"}</b>");
-                    sb.Append($"            </span>");
+                    sb.Append("             <div class=\"row justify-content-center\">");
+                    sb.Append($"                <span>");
+                    sb.Append($"                    <b>{musicProjectJsonDto.Grade?.ToString() ?? "-"}</b>");
+                    sb.Append($"                </span>");
+                    sb.Append("             </div>");
                 }
-                sb.Append($"                <span class=\"margin-left: 5px;\">");
-                sb.Append($"                    ({musicProjectJsonDto.EvaluationsCount} {(musicProjectJsonDto.EvaluationsCount == 1 ? Labels.Vote : Labels.Votes)})");
-                sb.Append($"                </span>");
+
+                sb.Append("                 <div class=\"row justify-content-center\">");
+                sb.Append($"                    <span>");
+                sb.Append($"                        ({musicProjectJsonDto.EvaluationsCount} {(musicProjectJsonDto.EvaluationsCount == 1 ? Labels.Vote : Labels.Votes)})");
+                sb.Append($"                    </span>");
+                sb.Append("                 </div>");
                 sb.Append($"            </div>");
                 sb.Append($"        </td>");
                 sb.Append($"    </tr>");
@@ -186,7 +191,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 sb.Append($"        <button class=\"dropdown-item\" onclick=\"MusicProjectsDataTableWidget.showDetails({musicProjectJsonDto.MusicProjectId}, '', '{musicGenreUid}', '{evaluationStatusUid}', '{page}', '{pageSize}');\">");
                 sb.Append($"            <i class=\"la la-eye\"></i> {@Labels.View}");
                 sb.Append($"        </button>");
-                sb.Append($"        <button class=\"dropdown-item\" onclick=\"MusicProjectsDelete.showModal({musicProjectJsonDto.MusicProjectId});\">");
+                sb.Append($"        <button class=\"dropdown-item\" onclick=\"MusicProjectsDelete.showModal('{musicProjectJsonDto.MusicProjectUid}');\">");
                 sb.Append($"            <i class=\"la la-remove\"></i> {Labels.Remove}");
                 sb.Append($"        </button>");
                 sb.Append($"    </div>");

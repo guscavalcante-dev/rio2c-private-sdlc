@@ -4,7 +4,7 @@
 // Created          : 07-28-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-28-2021
+// Last Modified On : 08-28-2021
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -62,7 +62,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             IProjectEvaluationStatusRepository evaluationStatusRepository,
             IUserRepository userRepository,
             IInterestRepository interestRepository,
-             ITargetAudienceRepository targetAudienceRepository
+            ITargetAudienceRepository targetAudienceRepository
             )
             : base(commandBus, identityController)
         {
@@ -112,15 +112,15 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionAudiovisual)]
         public async Task<ActionResult> EvaluationList(string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 12)
         {
-            if (this.EditionDto?.IsAudiovisualProjectEvaluationStarted() != true)
+            if (this.EditionDto?.IsAudiovisualCommissionProjectEvaluationStarted() != true)
             {
                 return RedirectToAction("Index", "Projects", new { Area = "Audiovisual" });
             }
 
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudioVisual, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.ProjectsEvaluation, Url.Action("EvaluationList", "Projects", new { Area = "Audiovisual" })),
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.AudioVisual, Url.Action("EvaluationList", "Projects", new { Area = "Audiovisual" })),
             });
 
             #endregion
@@ -174,39 +174,32 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionAudiovisual)]
         public async Task<ActionResult> ShowEvaluationListWidget(string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 12)
         {
-            if (this.EditionDto?.IsAudiovisualProjectEvaluationStarted() != true)
+            if (this.EditionDto?.IsAudiovisualCommissionProjectEvaluationStarted() != true)
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
 
-            List<Guid?> interestsUids = new List<Guid?>();
-            if (!interestUid.HasValue)
+            var attendeeCollaboratorInterestsUids = await this.GetAttendeeCollaboratorInterestsUids();
+            if (attendeeCollaboratorInterestsUids.Count <= 0)
             {
-                var userDto = await this.userRepo.FindUserDtoByUserIdAsync(this.UserAccessControlDto.User.Id);
-                var attendeeCollaborator = userDto.Collaborator?.GetAttendeeCollaboratorByEditionId(this.EditionDto.Edition.Id);
-                if (attendeeCollaborator != null)
+                return Json(new
                 {
-                    var interests = await this.interestRepo.FindAllByAttendeeCollaboratorIdAsync(attendeeCollaborator.Id);
-                    interestsUids = interests.Select(i => i.Uid as Guid?).ToList();
-                }
-                else
+                    status = "success",
+                    pages = new List<dynamic>
                 {
-                    //Admin cannot have Collaborator/AttendeeCollaborator, so, get all Interests to list in Dropdown.
-                    var interests = await this.interestRepo.FindAllByInterestGroupUidAsync(InterestGroup.Genre.Uid);
-                    interestsUids = interests.Select(i => i.Uid as Guid?).ToList();
+                    new { page = this.RenderRazorViewToString("Widgets/EvaluationListWidget", null), divIdOrClass = "#ProjectEvaluationListWidget" },
                 }
+                }, JsonRequestBehavior.AllowGet);
             }
-            else
-            {
-                //Seach by selected "Interest" in dropdown
-                interestsUids = new List<Guid?>() { interestUid };
-            }
+
+            var interestsUids = await this.GetSearchInterestsUids(interestUid);
 
             var projects = await this.projectRepo.FindAllDtosPagedAsync(
                  this.EditionDto.Id,
                  searchKeywords,
-                 interestUid,
+                 interestsUids,
                  evaluationStatusUid,
+                 true,
                  page.Value,
                  pageSize.Value);
 
@@ -236,7 +229,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionAudiovisual)]
         public async Task<ActionResult> ShowEvaluationListItemWidget(Guid? projectUid)
         {
-            if (this.EditionDto?.IsAudiovisualProjectEvaluationStarted() != true)
+            if (this.EditionDto?.IsAudiovisualCommissionProjectEvaluationStarted() != true)
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
@@ -260,416 +253,390 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 
         #endregion
 
-        //#region Details
+        #region Details
 
-        ///// <summary>
-        ///// Evaluations the details.
-        ///// </summary>
-        ///// <param name="id">The identifier.</param>
-        ///// <param name="searchKeywords">The search keywords.</param>
-        ///// <param name="interestUid">The innovation organization track option uid.</param>
-        ///// <param name="evaluationStatusUid">The evaluation status uid.</param>
-        ///// <param name="page">The page.</param>
-        ///// <param name="pageSize">Size of the page.</param>
-        ///// <returns></returns>
-        //[AuthorizeCollaboratorType(Types = Constants.CollaboratorType.CommissionAudiovisual)]
-        //public async Task<ActionResult> EvaluationDetails(int? id, string searchKeywords = null, Guid? interestUid = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 12)
-        //{
-        //    if (this.EditionDto?.IsAudiovisualProjectEvaluationStarted() != true)
-        //    {
-        //        this.StatusMessageToastr(Messages.OutOfEvaluationPeriod, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("Index", "Projects", new { Area = "Innovation" });
-        //    }
+        /// <summary>
+        /// Evaluations the details.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="interestUid">The interest uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="showPitchings">The show pitchings.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        [AuthorizeCollaboratorType(Types = Constants.CollaboratorType.CommissionAudiovisual)]
+        public async Task<ActionResult> EvaluationDetails(int? id, string searchKeywords = null, Guid? interestUid = null, Guid? evaluationStatusUid = null, bool showPitchings = true, int? page = 1, int? pageSize = 12)
+        {
+            if (this.EditionDto?.IsAudiovisualCommissionProjectEvaluationStarted() != true)
+            {
+                this.StatusMessageToastr(Messages.OutOfEvaluationPeriod, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Projects", new { Area = "Audiovisual" });
+            }
 
-        //    var attendeeInnovationOrganizationDto = await this.attendeeInnovationOrganizationRepo.FindDtoToEvaluateAsync(id ?? 0);
-        //    var attendeeCollaboratorInnovationOrganizationTrackOptionsUids = await this.GetAttendeeCollaboratorInterestsUids();
+            var projectDto = await this.projectRepo.FindDtoToEvaluateAsync(id ?? 0);
+            var attendeeCollaboratorInterestsUids = await this.GetAttendeeCollaboratorInterestsUids();
 
-        //    if (attendeeInnovationOrganizationDto == null ||
-        //        attendeeInnovationOrganizationDto.AttendeeInnovationOrganizationTrackDtos.Any(aiotDto => attendeeCollaboratorInnovationOrganizationTrackOptionsUids.Contains(aiotDto.InnovationOrganizationTrackOption.Uid)) == false)
-        //    {
-        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("EvaluationList", "Projects", new { Area = "Innovation" });
-        //    }
+            if (projectDto == null ||
+                projectDto.ProjectInterestDtos.Any(dto => attendeeCollaboratorInterestsUids.Contains(dto.Interest.Uid)) == false)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("EvaluationList", "Projects", new { Area = "Audiovisual" });
+            }
 
-        //    var interestsUids = await this.GetSearchInterestsUids(interestUid);
+            var interestsUids = await this.GetSearchInterestsUids(interestUid);
 
-        //    #region Breadcrumb
+            #region Breadcrumb
 
-        //    ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Innovation, new List<BreadcrumbItemHelper> {
-        //        new BreadcrumbItemHelper(Labels.Projects, Url.Action("EvaluationList", "Projects", new { Area = "Innovation" })),
-        //        new BreadcrumbItemHelper(attendeeInnovationOrganizationDto?.InnovationOrganization?.Name ?? Labels.Project, Url.Action("EvaluationDetails", "Projects", new { Area = "Innovation", id }))
-        //    });
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.AudioVisual, Url.Action("EvaluationList", "Projects", new { Area = "Audiovisual", searchKeywords, interestUid, evaluationStatusUid, page, pageSize })),
+                new BreadcrumbItemHelper(projectDto?.GetTitleDtoByLanguageCode(this.UserInterfaceLanguage)?.ProjectTitle?.Value ?? Labels.Project, Url.Action("EvaluationDetails", "Projects", new { Area = "Audiovisual", id }))
+            });
 
-        //    #endregion
+            #endregion
 
-        //    var allInnovationOrganizationsIds = await this.attendeeInnovationOrganizationRepo.FindAllInnovationOrganizationsIdsPagedAsync(
-        //        this.EditionDto.Edition.Id,
-        //        searchKeywords,
-        //        interestsUids,
-        //        evaluationStatusUid,
-        //        page.Value,
-        //        pageSize.Value);
-        //    var currentInnovationProjectIdIndex = Array.IndexOf(allInnovationOrganizationsIds, id.Value) + 1; //Index start at 0, its a fix to "start at 1"
+            var allProjectsIds = await this.projectRepo.FindAllProjectsIdsPagedAsync(
+                this.EditionDto.Edition.Id,
+                searchKeywords,
+                interestsUids,
+                evaluationStatusUid,
+                showPitchings,
+                page.Value,
+                pageSize.Value);
+            var currentProjectIdIndex = Array.IndexOf(allProjectsIds, id.Value) + 1; //Index start at 0, its a fix to "start at 1"
 
-        //    ViewBag.SearchKeywords = searchKeywords;
-        //    ViewBag.InterestUid = interestUid;
-        //    ViewBag.EvaluationStatusUid = evaluationStatusUid;
-        //    ViewBag.Page = page;
-        //    ViewBag.PageSize = pageSize;
-        //    ViewBag.CurrentInnovationProjectIndex = currentInnovationProjectIdIndex;
-        //    ViewBag.InnovationOrganizationsTotalCount = await this.attendeeInnovationOrganizationRepo.CountPagedAsync(this.EditionDto.Edition.Id, searchKeywords, interestsUids, evaluationStatusUid, page.Value, pageSize.Value);
-        //    ViewBag.ApprovedAttendeeInnovationOrganizationsIds = await this.attendeeInnovationOrganizationRepo.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(this.EditionDto.Edition.Id);
+            ViewBag.SearchKeywords = searchKeywords;
+            ViewBag.InterestUid = interestUid;
+            ViewBag.EvaluationStatusUid = evaluationStatusUid;
+            ViewBag.Page = page;
+            ViewBag.PageSize = pageSize;
+            ViewBag.CurrentProjectIndex = currentProjectIdIndex;
+            ViewBag.ProjectsTotalCount = await this.projectRepo.CountPagedAsync(this.EditionDto.Edition.Id, searchKeywords, interestsUids, evaluationStatusUid, showPitchings, page.Value, pageSize.Value);
+            ViewBag.ApprovedProjectsIds = await this.projectRepo.FindAllApprovedCommissionProjectsIdsAsync(this.EditionDto.Edition.Id);
 
-        //    return View(attendeeInnovationOrganizationDto);
-        //}
+            return View(projectDto);
+        }
 
-        ///// <summary>
-        ///// Previouses the evaluation details.
-        ///// </summary>
-        ///// <param name="id">The identifier.</param>
-        ///// <param name="searchKeywords">The search keywords.</param>
-        ///// <param name="interestUid">The innovation organization track option uid.</param>
-        ///// <param name="evaluationStatusUid">The evaluation status uid.</param>
-        ///// <param name="page">The page.</param>
-        ///// <param name="pageSize">Size of the page.</param>
-        ///// <returns></returns>
-        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionAudiovisual)]
-        //public async Task<ActionResult> PreviousEvaluationDetails(int? id, string searchKeywords = null, Guid? interestUid = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 12)
-        //{
-        //    var interestsUids = await this.GetSearchInterestsUids(interestUid);
+        /// <summary>
+        /// Previouses the evaluation details.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="interestUid">The interest uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="showPitchings">The show pitchings.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionAudiovisual)]
+        public async Task<ActionResult> PreviousEvaluationDetails(int? id, string searchKeywords = null, Guid? interestUid = null, Guid? evaluationStatusUid = null, bool showPitchings = true, int? page = 1, int? pageSize = 12)
+        {
+            var interestsUids = await this.GetSearchInterestsUids(interestUid);
 
-        //    var allInnovationOrganizationsIds = await this.attendeeInnovationOrganizationRepo.FindAllInnovationOrganizationsIdsPagedAsync(
-        //        this.EditionDto.Edition.Id,
-        //        searchKeywords,
-        //        interestsUids,
-        //        evaluationStatusUid,
-        //        page.Value,
-        //        pageSize.Value);
+            var allProjectsIds = await this.projectRepo.FindAllProjectsIdsPagedAsync(
+                  this.EditionDto.Edition.Id,
+                  searchKeywords,
+                  interestsUids,
+                  evaluationStatusUid,
+                  showPitchings,
+                  page.Value,
+                  pageSize.Value);
 
-        //    var currentInnovationProjectIdIndex = Array.IndexOf(allInnovationOrganizationsIds, id.Value);
-        //    var previousProjectId = allInnovationOrganizationsIds.ElementAtOrDefault(currentInnovationProjectIdIndex - 1);
-        //    if (previousProjectId == 0)
-        //        previousProjectId = id.Value;
+            var currentProjectIdIndex = Array.IndexOf(allProjectsIds, id.Value);
+            var previousProjectId = allProjectsIds.ElementAtOrDefault(currentProjectIdIndex - 1);
+            if (previousProjectId == 0)
+                previousProjectId = id.Value;
 
-        //    return RedirectToAction("EvaluationDetails",
-        //        new
-        //        {
-        //            id = previousProjectId,
-        //            searchKeywords,
-        //            interestUid,
-        //            evaluationStatusUid,
-        //            page,
-        //            pageSize
-        //        });
-        //}
+            return RedirectToAction("EvaluationDetails",
+                new
+                {
+                    id = previousProjectId,
+                    searchKeywords,
+                    interestUid,
+                    evaluationStatusUid,
+                    showPitchings,
+                    page,
+                    pageSize
+                });
+        }
 
-        ///// <summary>
-        ///// Nexts the evaluation details.
-        ///// </summary>
-        ///// <param name="id">The identifier.</param>
-        ///// <param name="searchKeywords">The search keywords.</param>
-        ///// <param name="interestUid">The innovation organization track option uid.</param>
-        ///// <param name="evaluationStatusUid">The evaluation status uid.</param>
-        ///// <param name="page">The page.</param>
-        ///// <param name="pageSize">Size of the page.</param>
-        ///// <returns></returns>
-        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionAudiovisual)]
-        //public async Task<ActionResult> NextEvaluationDetails(int? id, string searchKeywords = null, Guid? interestUid = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 12)
-        //{
-        //    var interestsUids = await this.GetSearchInterestsUids(interestUid);
+        /// <summary>
+        /// Nexts the evaluation details.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="interestUid">The interest uid.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="showPitchings">The show pitchings.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionAudiovisual)]
+        public async Task<ActionResult> NextEvaluationDetails(int? id, string searchKeywords = null, Guid? interestUid = null, Guid? evaluationStatusUid = null, bool showPitchings = true, int? page = 1, int? pageSize = 12)
+        {
+            var interestsUids = await this.GetSearchInterestsUids(interestUid);
 
-        //    var allInnovationOrganizationsIds = await this.attendeeInnovationOrganizationRepo.FindAllInnovationOrganizationsIdsPagedAsync(
-        //        this.EditionDto.Edition.Id,
-        //        searchKeywords,
-        //        interestsUids,
-        //        evaluationStatusUid,
-        //        page.Value,
-        //        pageSize.Value);
+            var allProjectsIds = await this.projectRepo.FindAllProjectsIdsPagedAsync(
+                this.EditionDto.Edition.Id,
+                searchKeywords,
+                interestsUids,
+                evaluationStatusUid,
+                showPitchings,
+                page.Value,
+                pageSize.Value);
 
-        //    var currentInnovationProjectIdIndex = Array.IndexOf(allInnovationOrganizationsIds, id.Value);
-        //    var nextProjectId = allInnovationOrganizationsIds.ElementAtOrDefault(currentInnovationProjectIdIndex + 1);
-        //    if (nextProjectId == 0)
-        //        nextProjectId = id.Value;
+            var currentProjectIdIndex = Array.IndexOf(allProjectsIds, id.Value);
+            var nextProjectId = allProjectsIds.ElementAtOrDefault(currentProjectIdIndex + 1);
+            if (nextProjectId == 0)
+                nextProjectId = id.Value;
 
-        //    return RedirectToAction("EvaluationDetails",
-        //        new
-        //        {
-        //            id = nextProjectId,
-        //            searchKeywords,
-        //            interestUid,
-        //            evaluationStatusUid,
-        //            page,
-        //            pageSize
-        //        });
-        //}
+            return RedirectToAction("EvaluationDetails",
+                new
+                {
+                    id = nextProjectId,
+                    searchKeywords,
+                    interestUid,
+                    evaluationStatusUid,
+                    showPitchings,
+                    page,
+                    pageSize
+                });
+        }
 
-        //#endregion
+        #endregion
 
-        //#region Main Information Widget
+        #region Main Information Widget
 
-        ///// <summary>
-        ///// Shows the main information widget.
-        ///// </summary>
-        ///// <param name="projectUid">The project uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowMainInformationWidget(Guid? projectUid)
-        //{
-        //    var mainInformationWidgetDto = await this.projectRepo.FindSiteMainInformationWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
-        //    if (mainInformationWidgetDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
+        /// <summary>
+        /// Shows the main information widget.
+        /// </summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowMainInformationWidget(Guid? projectUid)
+        {
+            var mainInformationWidgetDto = await this.projectRepo.FindSiteMainInformationWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
+            if (mainInformationWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(mainInformationWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true                                                                    // Seller
-        //        && (this.UserAccessControlDto?.HasAnyEditionAttendeeOrganization(mainInformationWidgetDto.ProjectBuyerEvaluationDtos?.Select(pbed => pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid)?.ToList()) != true   // Buyer with project finished
-        //            || mainInformationWidgetDto.Project?.IsFinished() != true))
-        //    {
-        //        return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-        //    }
+            //if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(mainInformationWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true                                                                    // Seller
+            //    && (this.UserAccessControlDto?.HasAnyEditionAttendeeOrganization(mainInformationWidgetDto.ProjectBuyerEvaluationDtos?.Select(pbed => pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid)?.ToList()) != true   // Buyer with project finished
+            //        || mainInformationWidgetDto.Project?.IsFinished() != true))
+            //{
+            //    return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+            //}
 
-        //    #region AttendeeCollaborator and AttendeeInnovationOrganization Tracks validation (TODO)
+            #region Attendee Collaborator Interest validation
 
-        //    var attendeeCollaboratorInnovationOrganizationTrackOptionsUids = await this.GetAttendeeCollaboratorInterestsUids();
+            var attendeeCollaboratorInterestUids = await this.GetAttendeeCollaboratorInterestsUids();
 
-        //    if (mainInformationWidgetDto == null ||
-        //        mainInformationWidgetDto.AttendeeInnovationOrganizationTrackDtos.Any(aiotDto => attendeeCollaboratorInnovationOrganizationTrackOptionsUids.Contains(aiotDto.InnovationOrganizationTrackOption.Uid)) == false)
-        //    {
-        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("EvaluationList", "Projects", new { Area = "Innovation" });
-        //    }
+            if (mainInformationWidgetDto == null ||
+                mainInformationWidgetDto.ProjectInterestDtos?.Any(dto => attendeeCollaboratorInterestUids.Contains(dto.Interest.Uid)) == false)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("EvaluationList", "Projects", new { Area = "Audiovisual" });
+            }
 
-        //    #endregion
+            #endregion
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#ProjectMainInformationWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#ProjectMainInformationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
-        //#endregion
+        #endregion
 
-        //#region Interest Widget
+        #region Interest Widget
 
-        ///// <summary>Shows the interest widget.</summary>
-        ///// <param name="projectUid">The project uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowInterestWidget(Guid? projectUid)
-        //{
-        //    var interestWidgetDto = await this.projectRepo.FindSiteInterestWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
-        //    if (interestWidgetDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
+        /// <summary>Shows the interest widget.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowInterestWidget(Guid? projectUid)
+        {
+            var interestWidgetDto = await this.projectRepo.FindSiteInterestWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
+            if (interestWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true                                                                    // Seller
-        //        && (this.UserAccessControlDto?.HasAnyEditionAttendeeOrganization(interestWidgetDto.ProjectBuyerEvaluationDtos?.Select(pbed => pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid)?.ToList()) != true   // Buyer with project finished
-        //            || interestWidgetDto.Project?.IsFinished() != true))
-        //    {
-        //        return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-        //    }
+            //if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true                                                                    // Seller
+            //    && (this.UserAccessControlDto?.HasAnyEditionAttendeeOrganization(interestWidgetDto.ProjectBuyerEvaluationDtos?.Select(pbed => pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid)?.ToList()) != true   // Buyer with project finished
+            //        || interestWidgetDto.Project?.IsFinished() != true))
+            //{
+            //    return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+            //}
 
-        //    ViewBag.GroupedInterests = await this.interestRepo.FindAllGroupedByInterestGroupsAsync();
-        //    ViewBag.TargetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id);
+            ViewBag.GroupedInterests = await this.interestRepo.FindAllGroupedByInterestGroupsAsync();
+            ViewBag.TargetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id);
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Widgets/InterestWidget", interestWidgetDto), divIdOrClass = "#ProjectInterestWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/InterestWidget", interestWidgetDto), divIdOrClass = "#ProjectInterestWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
-        //#endregion
+        #endregion
 
-        //#region Links Widget
+        #region Links Widget
 
-        ///// <summary>Shows the links widget.</summary>
-        ///// <param name="projectUid">The project uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //public async Task<ActionResult> ShowLinksWidget(Guid? projectUid)
-        //{
-        //    var linksWidgetDto = await this.projectRepo.FindSiteLinksWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
-        //    if (linksWidgetDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
+        /// <summary>Shows the links widget.</summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowLinksWidget(Guid? projectUid)
+        {
+            var linksWidgetDto = await this.projectRepo.FindSiteLinksWidgetDtoByProjectUidAsync(projectUid ?? Guid.Empty);
+            if (linksWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(linksWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true                                                                    // Seller
-        //        && (this.UserAccessControlDto?.HasAnyEditionAttendeeOrganization(linksWidgetDto.ProjectBuyerEvaluationDtos?.Select(pbed => pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid)?.ToList()) != true   // Buyer with project finished
-        //            || linksWidgetDto.Project?.IsFinished() != true))
-        //    {
-        //        return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-        //    }
+            //if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(linksWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true                                                                    // Seller
+            //    && (this.UserAccessControlDto?.HasAnyEditionAttendeeOrganization(linksWidgetDto.ProjectBuyerEvaluationDtos?.Select(pbed => pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid)?.ToList()) != true   // Buyer with project finished
+            //        || linksWidgetDto.Project?.IsFinished() != true))
+            //{
+            //    return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+            //}
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Widgets/LinksWidget", linksWidgetDto), divIdOrClass = "#ProjectLinksWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/LinksWidget", linksWidgetDto), divIdOrClass = "#ProjectLinksWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
-        //#endregion
+        #endregion
 
-        //#region Evaluation Grade Widget 
+        #region Audiovisual Commission Evaluation Widget 
 
-        ///// <summary>
-        ///// Shows the evaluation grade widget.
-        ///// </summary>
-        ///// <param name="projectUid">The project uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionAudiovisual)]
-        //public async Task<ActionResult> ShowEvaluationGradeWidget(Guid? projectUid)
-        //{
-        //    if (this.EditionDto?.IsAudiovisualProjectEvaluationStarted() != true)
-        //    {
-        //        return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-        //    }
+        /// <summary>
+        /// Shows the audiovisual commission evaluation widget.
+        /// </summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowAudiovisualCommissionEvaluationWidget(Guid? projectUid)
+        {
+            var evaluationDto = await this.projectRepo.FindAudiovisualCommissionEvaluationWidgetDtoAsync(projectUid ?? Guid.Empty, this.UserAccessControlDto.User.Id);
+            if (evaluationDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    var evaluationDto = await this.projectRepo.FindEvaluationGradeWidgetDtoAsync(projectUid ?? Guid.Empty, this.UserAccessControlDto.User.Id);
-        //    if (evaluationDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
+            ViewBag.ApprovedProjectsIds = await this.projectRepo.FindAllApprovedCommissionProjectsIdsAsync(this.EditionDto.Edition.Id);
 
-        //    #region AttendeeCollaborator and AttendeeInnovationOrganization Tracks validation (TODO)
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/AudiovisualCommissionEvaluationWidget", evaluationDto), divIdOrClass = "#ProjectEvaluationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
-        //    var attendeeCollaboratorInterestsUids = await this.GetAttendeeCollaboratorInterestsUids();
+        /// <summary>
+        /// Evaluates the specified music band identifier.
+        /// </summary>
+        /// <param name="musicBandId">The music band identifier.</param>
+        /// <param name="grade">The grade.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> AudiovisualComissionEvaluateProject(int projectId, decimal? grade)
+        {
+            if (this.EditionDto?.IsAudiovisualCommissionProjectEvaluationOpen() != true)
+            {
+                return Json(new { status = "error", message = Messages.EvaluationPeriodClosed }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    if (evaluationDto == null ||
-        //        evaluationDto.AttendeeInnovationOrganizationTrackDtos.Any(aiotDto => attendeeCollaboratorInterestsUids.Contains(aiotDto.InnovationOrganizationTrackOption.Uid)) == false)
-        //    {
-        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("EvaluationList", "Projects", new { Area = "Innovation" });
-        //    }
+            var result = new AppValidationResult();
 
-        //    #endregion
+            try
+            {
+                var cmd = new AudiovisualComissionEvaluateProject(
+                    await this.projectRepo.FindByIdAsync(projectId),
+                    grade);
 
-        //    ViewBag.ApprovedProjectsIds = await this.projectRepo.FindAllApprovedCommissionProjectsIdsAsync(this.EditionDto.Edition.Id);
+                cmd.UpdatePreSendProperties(
+                  this.UserAccessControlDto.User.Id,
+                  this.UserAccessControlDto.User.Uid,
+                  this.EditionDto.Id,
+                  this.EditionDto.Uid,
+                  this.UserInterfaceLanguage,
+                  true);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors.Select(e => e = new AppValidationError(e.Message, "ToastrError", e.Code))?
+                                            .FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Widgets/EvaluationGradeWidget", evaluationDto), divIdOrClass = "#ProjectEvaluationWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            return Json(new
+            {
+                status = "success",
+                message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.Evaluated.ToLowerInvariant())
+            });
+        }
 
-        ///// <summary>
-        ///// Evaluates the specified innovation organization identifier.
-        ///// </summary>
-        ///// <param name="projectId">The innovation organization identifier.</param>
-        ///// <param name="grade">The grade.</param>
-        ///// <returns></returns>
-        ///// <exception cref="DomainException"></exception>
-        //[HttpPost]
-        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionAudiovisual)]
-        //public async Task<ActionResult> Evaluate(int projectId, decimal? grade)
-        //{
-        //    if (this.EditionDto?.IsAudiovisualProjectEvaluationOpen() != true)
-        //    {
-        //        return Json(new { status = "error", message = Messages.OutOfEvaluationPeriod }, JsonRequestBehavior.AllowGet);
-        //    }
+        #endregion
 
-        //    var result = new AppValidationResult();
+        #region Audiovisual Evaluators Widget
 
-        //    try
-        //    {
-        //        var cmd = new EvaluateProject(
-        //            await this.projectRepo.FindByIdAsync(projectId),
-        //            grade);
+        /// <summary>
+        /// Shows the audiovisual commission evaluators widget.
+        /// </summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowAudiovisualCommissionEvaluatorsWidget(Guid? projectUid)
+        {
+            var evaluationDto = await this.projectRepo.FindAudiovisualCommissionEvaluatorsWidgetDtoAsync(projectUid ?? Guid.Empty);
+            if (evaluationDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
 
-        //        cmd.UpdatePreSendProperties(
-        //            this.UserAccessControlDto.User.Id,
-        //            this.UserAccessControlDto.User.Uid,
-        //            this.EditionDto.Id,
-        //            this.EditionDto.Uid,
-        //            this.UserInterfaceLanguage);
-        //        result = await this.CommandBus.Send(cmd);
-        //        if (!result.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        return Json(new
-        //        {
-        //            status = "error",
-        //            message = result.Errors.Select(e => e = new AppValidationError(e.Message, "ToastrError", e.Code))?
-        //                                    .FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
-        //        }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-        //    }
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/AudiovisualCommissionEvaluatorsWidget", evaluationDto), divIdOrClass = "#ProjectEvaluatorsWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        message = string.Format(Messages.EntityActionSuccessfull, Labels.Project, Labels.Evaluated.ToLowerInvariant())
-        //    });
-        //}
-
-        //#endregion
-
-        //#region Evaluators Widget
-
-        //[HttpGet]
-        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionAudiovisual)]
-        //public async Task<ActionResult> ShowEvaluatorsWidget(Guid? projectUid)
-        //{
-        //    if (this.EditionDto?.IsAudiovisualProjectEvaluationStarted() != true)
-        //    {
-        //        return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-        //    }
-
-        //    var evaluationDto = await this.projectRepo.FindEvaluatorsWidgetDtoAsync(projectUid ?? Guid.Empty);
-        //    if (evaluationDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
-
-        //    #region AttendeeCollaborator and AttendeeInnovationOrganization Tracks validation (TODO)
-
-        //    var attendeeCollaboratorInterestsUids = await this.GetAttendeeCollaboratorInterestsUids();
-
-        //    if (evaluationDto == null ||
-        //        evaluationDto.AttendeeInnovationOrganizationTrackDtos.Any(aiotDto => attendeeCollaboratorInterestsUids.Contains(aiotDto.InnovationOrganizationTrackOption.Uid)) == false)
-        //    {
-        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("EvaluationList", "Projects", new { Area = "Innovation" });
-        //    }
-
-        //    #endregion
-
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Widgets/EvaluatorsWidget", evaluationDto), divIdOrClass = "#ProjectEvaluatorsWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
-
-        //#endregion
+        #endregion
 
         /// <summary>
         /// Gets the attendee collaborator interests uids.

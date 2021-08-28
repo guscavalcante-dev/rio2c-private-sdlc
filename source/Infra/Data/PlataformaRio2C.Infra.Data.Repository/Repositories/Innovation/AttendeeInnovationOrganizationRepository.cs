@@ -4,7 +4,7 @@
 // Created          : 08-30-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 06-30-2021
+// Last Modified On : 08-28-2021
 // ***********************************************************************
 // <copyright file="AttendeeInnovationOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -1238,6 +1238,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                     })
                                     .OrderByDescending(iog => iog.InnovationProjectsTotalCount)
                                     .ToListAsync();
+        }
+
+        /// <summary>
+        /// Finds all by edition identifier asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<List<AttendeeInnovationOrganization>> FindAllByEditionIdAsync(int editionId)
+        {
+            var query = this.GetBaseQuery()
+                               .FindByEditionId(editionId);
+
+            return await query
+                            .ToListAsync();
         }
     }
 }

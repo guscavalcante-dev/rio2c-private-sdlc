@@ -2426,8 +2426,8 @@
     <comment>Exibir rodadas de negócio</comment>
   </data>
   <data name="ShowPitchings" xml:space="preserve">
-    <value>Show pitchings</value>
-    <comment>Exibir pitchings</comment>
+    <value>Show pitchings only</value>
+    <comment>Exibir somente pitchings</comment>
   </data>
   <data name="ShowTransfers" xml:space="preserve">
     <value>Show transfers</value>

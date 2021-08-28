@@ -286,7 +286,7 @@ var SpeakersDataTableWidget = function () {
                             html += '<button class="dropdown-item" onclick="SpeakersUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         }
                         else {
-                            html += '<button class="dropdown-item" onclick="SpeakersDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-edit"></i> ' + labels.edit + '</button>';
+                            html += '<button class="dropdown-item" onclick="SpeakersDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
                         }
 
                         if (full.IsInCurrentEdition && full.IsInOtherEdition) {

@@ -4,7 +4,7 @@
 // Created          : 07-08-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-23-2021
+// Last Modified On : 08-28-2021
 // ***********************************************************************
 // <copyright file="CommissionsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -78,7 +78,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.InnovationCommission, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.InnovationCommission, Url.Action("Index", "Commissions", new { Area = "Innovation" }))
+                new BreadcrumbItemHelper(Labels.Innovation, null),
+                new BreadcrumbItemHelper(Labels.Commission, Url.Action("Index", "Commissions", new { Area = "Innovation" }))
             });
 
             #endregion
@@ -148,7 +149,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.InnovationCommission, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.InnovationCommission, Url.Action("Index", "Commissions", new { Area = "Innovation" })),
+                new BreadcrumbItemHelper(Labels.Innovation, null),
+                new BreadcrumbItemHelper(Labels.Commission, Url.Action("Index", "Commissions", new { Area = "Innovation" })),
                 new BreadcrumbItemHelper(attendeeCollaboratorDto.Collaborator.GetFullName(), Url.Action("Details", "Commissions", new { Area = "Innovation", id }))
             });
 
@@ -293,294 +295,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
                 pages = new List<dynamic>
                 {
                     new { page = this.RenderRazorViewToString("Widgets/EvaluationsWidget", innovationEvaluationsWidgetDto), divIdOrClass = "#InnovationCommissionEvaluationsWidget" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        #endregion
-
-        //TODO: Remove these above widgets from here! Move it all to a CollaboratorsController or something!
-        #region Main Information Widget
-
-        /// <summary>Shows the main information widget.</summary>
-        /// <param name="collaboratorUid">The collaborator uid.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ShowMainInformationWidget(Guid? collaboratorUid)
-        {
-            var mainInformationWidgetDto = await this.attendeeCollaboratorRepo.FindSiteMainInformationWidgetDtoByCollaboratorUidAndByEditionIdAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
-            if (mainInformationWidgetDto == null)
-            {
-                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#InnovationCommissionMainInformationWidget" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        #region Update
-
-        /// <summary>Shows the update main information modal.</summary>
-        /// <param name="collaboratorUid">The collaborator uid.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ShowUpdateMainInformationModal(Guid? collaboratorUid)
-        {
-            UpdateInnovationCollaboratorAdminMainInformation cmd;
-
-            try
-            {
-                var mainInformationWidgetDto = await this.attendeeCollaboratorRepo.FindSiteMainInformationWidgetDtoByCollaboratorUidAndByEditionIdAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
-                if (mainInformationWidgetDto == null)
-                {
-                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()));
-                }
-
-                cmd = new UpdateInnovationCollaboratorAdminMainInformation(
-                    mainInformationWidgetDto,
-                    await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
-                    EditionDto.Id,
-                    UserInterfaceLanguage);
-            }
-            catch (DomainException ex)
-            {
-                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Modals/UpdateMainInformationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>Updates the main information.</summary>
-        /// <param name="cmd">The command.</param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> UpdateMainInformation(UpdateInnovationCollaboratorAdminMainInformation cmd)
-        {
-            var result = new AppValidationResult();
-
-            try
-            {
-                // Commission members does not have public email
-                if (ModelState.ContainsKey("SharePublicEmail"))
-                {
-                    ModelState["SharePublicEmail"].Errors.Clear();
-                }
-
-                if (!ModelState.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-
-                cmd.UpdatePreSendProperties(
-                    Domain.Constants.CollaboratorType.CommissionInnovation,
-                    this.AdminAccessControlDto.User.Id,
-                    this.AdminAccessControlDto.User.Uid,
-                    this.EditionDto.Id,
-                    this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
-                result = await this.CommandBus.Send(cmd);
-                if (!result.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-            }
-            catch (DomainException ex)
-            {
-                foreach (var error in result.Errors)
-                {
-                    var target = error.Target ?? "";
-                    ModelState.AddModelError(target, error.Message);
-                }
-
-                cmd.UpdateModelsAndLists(
-                    await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
-                    EditionDto.Id,
-                    UserInterfaceLanguage);
-
-                return Json(new
-                {
-                    status = "error",
-                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
-                    pages = new List<dynamic>
-                    {
-                        new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Forms/_MainInformationForm.cshtml", cmd), divIdOrClass = "#form-container" },
-                    }
-                }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Member, Labels.UpdatedM) });
-        }
-
-        #endregion
-
-        #endregion
-
-        #region Social Networks Widget
-
-        /// <summary>Shows the social networks widget.</summary>
-        /// <param name="collaboratorUid">The collaborator uid.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ShowSocialNetworksWidget(Guid? collaboratorUid)
-        {
-            var socialNetworksWidgetDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUidAndByEditionIdAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
-            if (socialNetworksWidgetDto == null)
-            {
-                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Widgets/SocialNetworksWidget", socialNetworksWidgetDto), divIdOrClass = "#InnovationCommissionSocialNetworksWidget" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        #region Update
-
-        /// <summary>Shows the update social networks modal.</summary>
-        /// <param name="collaboratorUid">The collaborator uid.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ShowUpdateSocialNetworksModal(Guid? collaboratorUid)
-        {
-            UpdateInnovationCollaboratorSocialNetworks cmd;
-
-            try
-            {
-                var socialNetworksWidgetDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUidAndByEditionIdAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
-                if (socialNetworksWidgetDto == null)
-                {
-                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()));
-                }
-
-                cmd = new UpdateInnovationCollaboratorSocialNetworks(socialNetworksWidgetDto);
-            }
-            catch (DomainException ex)
-            {
-                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("Modals/UpdateSocialNetworksModal", cmd), divIdOrClass = "#GlobalModalContainer" },
-                }
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>Updates the social networks.</summary>
-        /// <param name="cmd">The command.</param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> UpdateSocialNetworks(UpdateInnovationCollaboratorSocialNetworks cmd)
-        {
-            var result = new AppValidationResult();
-
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-
-                cmd.UpdatePreSendProperties(
-                    this.AdminAccessControlDto.User.Id,
-                    this.AdminAccessControlDto.User.Uid,
-                    this.EditionDto.Id,
-                    this.EditionDto.Uid,
-                    this.UserInterfaceLanguage);
-                result = await this.CommandBus.Send(cmd);
-                if (!result.IsValid)
-                {
-                    throw new DomainException(Messages.CorrectFormValues);
-                }
-            }
-            catch (DomainException ex)
-            {
-                foreach (var error in result.Errors)
-                {
-                    var target = error.Target ?? "";
-                    ModelState.AddModelError(target, error.Message);
-                }
-
-                return Json(new
-                {
-                    status = "error",
-                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
-                    pages = new List<dynamic>
-                    {
-                        new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Forms/_SocialNetworksForm.cshtml", cmd), divIdOrClass = "#form-container" },
-                    }
-                }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Member, Labels.UpdatedM) });
-        }
-
-        #endregion
-
-        #endregion
-
-        #region Onboarding Info Widget
-
-        /// <summary>Shows the onboarding information widget.</summary>
-        /// <param name="collaboratorUid">The collaborator uid.</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> ShowOnboardingInfoWidget(Guid? collaboratorUid)
-        {
-            var collaboratorTypeUid = CollaboratorType.ComissionInnovation.Uid;
-
-            var onboardingInfoWidgetDto = await this.attendeeCollaboratorRepo.FindOnboardingInfoWidgetDtoAsync(collaboratorUid ?? Guid.Empty, collaboratorTypeUid, this.EditionDto.Id);
-            if (onboardingInfoWidgetDto == null)
-            {
-                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-            }
-
-            ViewBag.CollaboratorTypeUid = collaboratorTypeUid;
-
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
-                {
-                    new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Widgets/OnboardingInfoWidget.cshtml", onboardingInfoWidgetDto), divIdOrClass = "#InnovationCommissionOnboardingInfoWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }

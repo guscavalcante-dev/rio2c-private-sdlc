@@ -2431,8 +2431,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <comment>Exibir rodadas de negócio</comment>
   </data>
   <data name="ShowPitchings" xml:space="preserve">
-    <value>Exibir pitchings</value>
-    <comment>Exibir pitchings</comment>
+    <value>Exibir somente pitchings</value>
+    <comment>Exibir somente pitchings</comment>
   </data>
   <data name="ShowTransfers" xml:space="preserve">
     <value>Exibir transfers</value>

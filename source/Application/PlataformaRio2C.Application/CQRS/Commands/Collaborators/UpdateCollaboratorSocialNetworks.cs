@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 01-16-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-16-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 08-28-2021
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorSocialNetworks.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -43,17 +43,22 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(300, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Youtube { get; set; }
 
-        public string CollaboratorTypeName { get; private set; }
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public string CollaboratorTypeName { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorSocialNetworks"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateCollaboratorSocialNetworks" /> class.
+        /// </summary>
         /// <param name="entity">The entity.</param>
-        public UpdateCollaboratorSocialNetworks(AttendeeCollaboratorSiteDetailsDto entity)
+        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
+        public UpdateCollaboratorSocialNetworks(AttendeeCollaboratorSiteDetailsDto entity, string collaboratorTypeName)
         {
             this.Website = entity?.Collaborator?.Website;
             this.Linkedin = entity?.Collaborator?.Linkedin;
             this.Twitter = entity?.Collaborator?.Twitter;
             this.Instagram = entity?.Collaborator?.Instagram;
             this.Youtube = entity?.Collaborator?.Youtube;
+            this.CollaboratorTypeName = collaboratorTypeName;
         }
 
         /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorSocialNetworks"/> class.</summary>

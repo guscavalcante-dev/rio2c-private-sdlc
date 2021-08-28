@@ -4,6 +4,7 @@
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var editionDto = ViewBag.EditionDto as EditionDto;
     var menuOpenCssClass = "kt-menu__item--open";
+    var audiovisualCollaboratorTypesCount = userAccessControlDto?.CountCollaboratorTypes(Constants.CollaboratorType.Audiovisuals);
 }
 <ul class="kt-menu__nav">
     <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "Index", "Home", null)" aria-haspopup="true">
@@ -11,42 +12,47 @@
             <span class="kt-menu__link-text">@Labels.Dashboard</span>
         </a>
     </li>
-    @if (userAccessControlDto?.HasAnyCollaboratorType(new[] { Constants.CollaboratorType.CommissionAudiovisual, Constants.CollaboratorType.ExecutiveAudiovisual, Constants.CollaboratorType.Industry }) == true)
+    @if (audiovisualCollaboratorTypesCount > 0)
     {
         var projectsUrl = Url.Action("Index", "Projects", new { Area = "" });
-        var isOpenCondition = this.IsOpen(menuOpenCssClass, "SubmittedList", "Projects", null);
 
-        //if (editionDto?.IsProjectSubmitStarted() == true && userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true)
+        //if (audiovisualCollaboratorTypesCount == 1)
         //{
-        //    projectsUrl = Url.Action("SubmittedList", "Projects", new { Area = "" });
-        //}
-        //else if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) == true)
-        //{
-        //    projectsUrl = Url.Action("EvaluationList", "Projects", new { Area = "" });
-        //    isOpenCondition = this.IsOpen(menuOpenCssClass, "EvaluationList", "Projects", null);
-
-        //    if (editionDto?.IsProjectEvaluationStarted() != true)
-        //    {
-        //        projectsUrl = Url.Action("Index", "Projects", new { Area = "" });
-        //        isOpenCondition = this.IsOpen(menuOpenCssClass, "Index", "Projects", null); ;
-        //    }
-        //}
-        //else 
         if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.CommissionAudiovisual) == true)
         {
             projectsUrl = Url.Action("EvaluationList", "Projects", new { Area = "Audiovisual" });
-            if (editionDto?.IsAudiovisualProjectEvaluationStarted() != true)
+
+            if (editionDto?.IsAudiovisualCommissionProjectEvaluationStarted() != true)
             {
                 projectsUrl = Url.Action("Index", "Projects", new { Area = "Audiovisual" });
             }
         }
-        <li class="kt-menu__item @isOpenCondition" aria-haspopup="true">
-            <a class="kt-menu__link" href="@projectsUrl">
-                <span class="kt-menu__link-text">@Labels.AudioVisual</span>
-            </a>
-        </li>
+        else if (editionDto?.IsProjectSubmitStarted() == true && userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true)
+        {
+            projectsUrl = Url.Action("SubmittedList", "Projects", new { Area = "" });
+        }
+        else if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) == true)
+        {
+            projectsUrl = Url.Action("EvaluationList", "Projects", new { Area = "" });
+
+            if (editionDto?.IsProjectEvaluationStarted() != true)
+            {
+                projectsUrl = Url.Action("Index", "Projects", new { Area = "" });
+            }
+        }
+
+            <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "Projects", "Audiovisual")" aria-haspopup="true">
+                <a class="kt-menu__link" href="@projectsUrl">
+                    <span class="kt-menu__link-text">@Labels.AudioVisual</span>
+                </a>
+            </li>
+        //}
+        //else if (audiovisualCollaboratorTypesCount > 1)
+        //{
+        //    //TODO: Create menu with submenu
+        //}
     }
-    @if (userAccessControlDto?.HasAnyCollaboratorType(new[] { Constants.CollaboratorType.CommissionMusic, Constants.CollaboratorType.Music }) == true)
+    @if (userAccessControlDto?.HasAnyCollaboratorType(Constants.CollaboratorType.Musics) == true)
     {
         var projectsUrl = Url.Action("Index", "Projects", new { Area = "" });
         if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.CommissionMusic) == true)
@@ -63,7 +69,7 @@
             </a>
         </li>
     }
-    @if (userAccessControlDto?.HasAnyCollaboratorType(new[] { Constants.CollaboratorType.CommissionInnovation, Constants.CollaboratorType.Innovation }) == true)
+    @if (userAccessControlDto?.HasAnyCollaboratorType(Constants.CollaboratorType.Innovations) == true)
     {
         var projectsUrl = Url.Action("Index", "Projects", new { Area = "" });
         if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.CommissionInnovation) == true)

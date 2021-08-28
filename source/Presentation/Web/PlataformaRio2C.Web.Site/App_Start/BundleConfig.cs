@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-28-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-27-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 08-28-2021
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -333,10 +333,10 @@ namespace PlataformaRio2C.Web.Site
 
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.projects.widget.js").Include(
                "~/Assets/js/audiovisual/projects/audiovisual.projects.maininformation.widget.js",
+               "~/Assets/js/audiovisual/projects/audiovisual.projects.commission.evaluation.widget.js",
                "~/Assets/js/audiovisual/projects/audiovisual.projects.evaluators.widget.js",
-               "~/Assets/js/audiovisual/projects/audiovisual.projects.businessinformation.widget.js",
-               "~/Assets/js/audiovisual/projects/audiovisual.projects.presentation.widget.js"
-               ));
+               "~/Assets/js/audiovisual/projects/audiovisual.projects.interest.widget.js",
+               "~/Assets/js/audiovisual/projects/audiovisual.projects.links.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.projects.evaluation.list.widget.js").Include(
                 "~/Assets/js/audiovisual/projects/audiovisual.projects.evaluation.list.widget.js",

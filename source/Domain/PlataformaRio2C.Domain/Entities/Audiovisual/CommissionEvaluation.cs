@@ -4,7 +4,7 @@
 // Created          : 08-17-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-17-2021
+// Last Modified On : 08-28-2021
 // ***********************************************************************
 // <copyright file="CommissionEvaluation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -93,18 +94,39 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Valitations
 
-        /// <summary>
-        /// Returns true if ... is valid.
-        /// </summary>
-        /// <returns><c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
+        /// <summary>Returns true if ... is valid.</summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
         public override bool IsValid()
         {
-            if (this.ValidationResult == null)
-            {
-                this.ValidationResult = new ValidationResult();
-            }
+            this.ValidationResult = new ValidationResult();
+
+            this.ValidateGrade();
+            this.ValidateEvaluatorUser();
 
             return this.ValidationResult.IsValid;
+        }
+
+        /// <summary>
+        /// Validates the grade.
+        /// </summary>
+        public void ValidateGrade()
+        {
+            if (this.Grade < 0 || this.Grade > 10)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.Grade, "10", "0"), new string[] { "Grade" }));
+            }
+        }
+
+        /// <summary>
+        /// Validates the evaluator user.
+        /// </summary>
+        public void ValidateEvaluatorUser()
+        {
+            if (this.EvaluatorUser == null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, Labels.EvaluatorUser), new string[] { "EvaluatorUserId" }));
+            }
         }
 
         #endregion

@@ -8,7 +8,6 @@
     var currentEvaluation = Model.GetProjectCommissionEvaluationDtoByUserId(adminAccessControlDto?.User?.Id ?? 0);
     var approvedProjectsIds = ViewBag.ApprovedProjectsIds as int[];
     var isThisProjectApproved = (approvedProjectsIds?.Contains(Model.Project.Id) == true);
-    //var collaboratorDto = Model.GetAttendeeInnovationOrganizationCollaboratorByEditionId(editionDto.Id);
 }
 <div class="kt-portlet__body">
     <div class="kt-widget kt-widget--user-profile-3">
@@ -55,17 +54,6 @@
                                 <span class="kt-badge kt-badge--inline kt-badge--info">@Labels.Pitching</span>
                             </div>
                         }
-                        <div class="kt-widget__info" style="display: block;">
-                            @{
-                                var logLineDto = Model.GetLogLineDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
-                            }
-                            @if (logLineDto != null)
-                            {
-                                <div class="kt-widget__desc" style="word-wrap: break-word;">
-                                    @(Html.Raw(logLineDto.ProjectLogLine?.Value?.Replace("\n", "<br/>") ?? "-"))
-                                </div>
-                            }
-                        </div>
                     </div>
                     @if (Model.Project?.IsPitching == true)
                     {
@@ -133,6 +121,16 @@
         <div class="kt-widget__bottom">
             @{
                 var summaryDto = Model.GetSummaryDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
+                var logLineDto = Model.GetLogLineDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
+            }
+            @if (logLineDto != null)
+            {
+                <div class="kt-widget__item w-100">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.LogLines</span>
+                        <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Html.Raw(logLineDto.ProjectLogLine?.Value?.Replace("\n", "<br/>") ?? "-"))</span></span>
+                    </div>
+                </div>
             }
             @if (summaryDto != null)
             {

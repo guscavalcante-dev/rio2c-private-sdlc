@@ -827,9 +827,6 @@
     <Content Include="Assets\js\audiovisual\commissions\audiovisual.commissions.delete.js" />
     <Content Include="Assets\js\audiovisual\commissions\audiovisual.commissions.editioncount.widget.js" />
     <Content Include="Assets\js\audiovisual\commissions\audiovisual.commissions.evaluations.widget.js" />
-    <Content Include="Assets\js\audiovisual\commissions\audiovisual.commissions.maininformation.widget.js" />
-    <Content Include="Assets\js\audiovisual\commissions\audiovisual.commissions.onboardinginfo.widget.js" />
-    <Content Include="Assets\js\audiovisual\commissions\audiovisual.commissions.socialnetworks.widget.js" />
     <Content Include="Assets\js\audiovisual\commissions\audiovisual.commissions.totalcount.widget.js" />
     <Content Include="Assets\js\audiovisual\commissions\audiovisual.commissions.interests.widget.js" />
     <Content Include="Assets\js\audiovisual\commissions\audiovisual.commissions.update.js" />
@@ -856,6 +853,9 @@
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.buyercompany.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.commission.evaluation.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.evaluators.widget.js" />
+    <Content Include="Assets\js\collaborators\collaborators.onboardinginfo.widget.js" />
+    <Content Include="Assets\js\collaborators\collaborators.socialnetworks.widget.js" />
+    <Content Include="Assets\js\collaborators\collaborators.maininformation.widget.js" />
     <Content Include="Assets\js\editions\editions.events.widget.js" />
     <Content Include="Assets\js\editions\editions.create.js" />
     <Content Include="Assets\js\editions\editions.datatable.widget.js" />
@@ -868,9 +868,6 @@
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.datatable.widget.js" />
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.delete.js" />
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.editioncount.widget.js" />
-    <Content Include="Assets\js\innovation\commissions\innovation.commissions.maininformation.widget.js" />
-    <Content Include="Assets\js\innovation\commissions\innovation.commissions.onboardinginfo.widget.js" />
-    <Content Include="Assets\js\innovation\commissions\innovation.commissions.socialnetworks.widget.js" />
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.evaluations.widget.js" />
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.tracks.widget.js" />
     <Content Include="Assets\js\innovation\commissions\innovation.commissions.totalcount.widget.js" />
@@ -950,7 +947,6 @@
     <Content Include="Assets\js\administrators\administrators.totalcount.widget.js" />
     <Content Include="Assets\js\administrators\administrators.update.js" />
     <Content Include="Assets\js\music\commissions\music.commissions.evaluations.widget.js" />
-    <Content Include="Assets\js\music\commissions\music.commissions.onboardinginfo.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.clipping.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.datatable.widget.js" />
     <Content Include="Assets\js\music\projects\music.projects.editioncount.pie.widget.js" />
@@ -1006,20 +1002,15 @@
     <Content Include="Assets\js\music\commissions\music.commissions.datatable.widget.js" />
     <Content Include="Assets\js\music\commissions\music.commissions.delete.js" />
     <Content Include="Assets\js\music\commissions\music.commissions.editioncount.widget.js" />
-    <Content Include="Assets\js\music\commissions\music.commissions.maininformation.widget.js" />
-    <Content Include="Assets\js\music\commissions\music.commissions.socialnetworks.widget.js" />
     <Content Include="Assets\js\music\commissions\music.commissions.totalcount.widget.js" />
     <Content Include="Assets\js\music\commissions\music.commissions.update.js" />
     <Content Include="Assets\js\salesplatforms\salesplatforms.export.js" />
     <Content Include="Assets\js\speakers\speakers.conferences.widget.js" />
-    <Content Include="Assets\js\speakers\speakers.onboardinginfo.widget.js" />
-    <Content Include="Assets\js\speakers\speakers.socialnetworks.widget.js" />
     <Content Include="Assets\js\speakers\speakers.participants.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.editioncount.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.totalcount.widget.js" />
     <Content Include="Assets\js\speakers\speakers.company.widget.js" />
     <Content Include="Assets\js\speakers\speakers.apiconfiguration.widget.js" />
-    <Content Include="Assets\js\speakers\speakers.maininformation.widget.js" />
     <Content Include="Assets\js\speakers\speakers.create.js" />
     <Content Include="Assets\js\speakers\speakers.datatable.widget.js" />
     <Content Include="Assets\js\speakers\speakers.delete.js" />
@@ -8276,8 +8267,6 @@
     <Content Include="Areas\Audiovisual\Views\Shared\EditorTemplates\OrganizationRestrictionSpecificsBaseCommand.cshtml" />
     <Content Include="Areas\Innovation\Views\Shared\EditorTemplates\InnovationOrganizationTrackOptionBaseCommand.cshtml" />
     <Content Include="Areas\Innovation\Views\Commissions\Widgets\MainInformationWidget.cshtml" />
-    <Content Include="Areas\Innovation\Views\Commissions\Widgets\SocialNetworksWidget.cshtml" />
-    <Content Include="Areas\Music\Views\Commissions\Widgets\SocialNetworksWidget.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Commissions\Modals\UpdateMainInformationForm.cshtml" />
     <Content Include="Areas\Innovation\Views\Commissions\Modals\UpdateSocialNetworksForm.cshtml" />
@@ -8317,7 +8306,6 @@
     <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\CommissionEvaluationsWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\MainInformationWidget.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\SocialNetworksWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Commissions\Widgets\InterestsWidget.cshtml" />
     <Content Include="Areas\Music\Views\Projects\Widgets\EditionCountPieWidget.cshtml" />
@@ -9873,7 +9861,6 @@
     <Content Include="Views\Administrators\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Views\Administrators\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Views\Administrators\Index.cshtml" />
-    <Content Include="Views\Collaborators\Index.cshtml" />
     <Content Include="Views\AdminMailerService\AdminWelcomeEmail.cshtml" />
     <Content Include="Views\Administrators\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Views\Administrators\Details.cshtml" />
@@ -9908,6 +9895,13 @@
     <Content Include="Views\AdminMailerService\AudiovisualCommissionWelcomeEmail.cshtml" />
     <Content Include="Views\Shared\Collaborators\Modal\UpdateMainInformationModal.cshtml" />
     <Content Include="Views\Shared\Collaborators\Modal\UpdateSocialNetworksModal.cshtml" />
+    <Content Include="Views\Collaborators\Widgets\MainInformationWidget.cshtml" />
+    <Content Include="Views\Collaborators\Widgets\SocialNetworksWidget.cshtml" />
+    <Content Include="Views\Collaborators\Modals\UpdateMainInformationForm.cshtml" />
+    <Content Include="Views\Collaborators\Modals\UpdateMainInformationModal.cshtml" />
+    <Content Include="Views\Collaborators\Modals\UpdateSocialNetworksForm.cshtml" />
+    <Content Include="Views\Collaborators\Modals\UpdateSocialNetworksModal.cshtml" />
+    <Content Include="Views\Collaborators\Widgets\OnboardingInfoWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

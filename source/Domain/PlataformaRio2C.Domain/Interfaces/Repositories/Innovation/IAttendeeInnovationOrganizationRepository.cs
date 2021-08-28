@@ -4,7 +4,7 @@
 // Created          : 06-29-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 06-29-2021
+// Last Modified On : 08-28-2021
 // ***********************************************************************
 // <copyright file="IAttendeeInnovationOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -42,6 +42,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<List<AttendeeInnovationOrganization>> FindAllByIdsAsync(List<int?> attendeeInnovationOrganizationIds);
         Task<List<AttendeeInnovationOrganization>> FindAllByUidsAsync(List<Guid?> attendeeInnovationOrganizationUids);
         Task<AttendeeInnovationOrganization> FindByDocumentAndEditionIdAsync(string document, int editionId);
+        Task<List<AttendeeInnovationOrganization>> FindAllByEditionIdAsync(int editionId);
         Task<int[]> FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(int editionId);
         Task<int[]> FindAllInnovationOrganizationsIdsPagedAsync(int editionId, string searchKeywords, List<Guid?> innovationOrganizationTrackOptionUids, Guid? evaluationStatusUid, int page, int pageSize);
         Task<int> CountAsync(int editionId, bool showAllEditions = false);

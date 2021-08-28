@@ -1,28 +1,29 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Rafael Dantas Ruiz
-// Created          : 01-16-2020
+// Created          : 06-20-2021
 //
 // Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-18-2020
+// Last Modified On : 06-21-2021
 // ***********************************************************************
-// <copyright file="speakers.socialnetworks.widget.js" company="Softo">
+// <copyright file="audiovisual.projects.links.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var CollaboratorsSocialNetworksWidget = function () {
+var AudiovisualProjectsLinksWidget = function () {
 
-    var widgetElementId = '#SpeakerSocialNetworksWidget';
+    var widgetElementId = '#ProjectLinksWidget';
     var widgetElement = $(widgetElementId);
 
-    var updateModalId = '#UpdateSocialNetworksModal';
-    var updateFormId = '#UpdateSocialNetworksForm';
+    var updateModalId = '#UpdateLinksModal';
+    var updateFormId = '#UpdateLinksForm';
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         KTApp.initTooltips();
+        MyRio2cCommon.initScroll();
     };
 
     var show = function () {
@@ -31,9 +32,9 @@ var CollaboratorsSocialNetworksWidget = function () {
         }
 
         var jsonParameters = new Object();
-        jsonParameters.collaboratorUid = $('#SpeakerAggregateId').val();
+        jsonParameters.projectUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/ShowSocialNetworksWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/ShowLinksWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -41,13 +42,15 @@ var CollaboratorsSocialNetworksWidget = function () {
                     enableShowPlugins();
                 },
                 // Error
-                onError: function () {
+                onError: function() {
                 }
             });
         })
         .fail(function () {
+            //showAlert();
+            //MyRio2cCommon.unblock(widgetElementId);
         })
-        .always(function () {
+        .always(function() {
             MyRio2cCommon.unblock({ idOrClass: widgetElementId });
         });
     };
@@ -59,8 +62,8 @@ var CollaboratorsSocialNetworksWidget = function () {
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (CollaboratorsSocialNetworksWidget) !== 'undefined') {
-	                CollaboratorsSocialNetworksWidget.init();
+                if (typeof (AudiovisualProjectsLinksWidget) !== 'undefined') {
+                    AudiovisualProjectsLinksWidget.init();
                 }
             },
             onError: function (data) {
@@ -74,6 +77,7 @@ var CollaboratorsSocialNetworksWidget = function () {
     };
 
     var enableUpdatePlugins = function () {
+        //MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2' });
         enableAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
@@ -82,20 +86,20 @@ var CollaboratorsSocialNetworksWidget = function () {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
-        jsonParameters.collaboratorUid = $('#SpeakerAggregateId').val();
+        jsonParameters.projectUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/ShowUpdateSocialNetworksModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/ShowUpdateLinksModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
-                data: data,
-                // Success
-                onSuccess: function () {
-                    enableUpdatePlugins();
-                    $(updateModalId).modal();
-                },
-                // Error
-                onError: function () {
-                }
-            });
+            data: data,
+            // Success
+            onSuccess: function () {
+                enableUpdatePlugins();
+                $(updateModalId).modal();
+            },
+            // Error
+            onError: function () {
+            }
+        });
         })
         .fail(function () {
         })

@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-28-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 08-28-2021
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -438,7 +438,7 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
-            #region Projects
+            #region Projects - Negotiations
 
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.projects.list.js").Include(
                 "~/Assets/js/audiovisual/projects/audiovisual.projects.datatable.widget.js",
@@ -506,15 +506,15 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/themes/metronic/css/demo4/pages/pricing/pricing-1.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/speakers.details.js").Include(
-                "~/Assets/js/speakers/speakers.maininformation.widget.js",
-                "~/Assets/js/speakers/speakers.socialnetworks.widget.js",
+                "~/Assets/js/collaborators/collaborators.maininformation.widget.js",
+                "~/Assets/js/collaborators/collaborators.socialnetworks.widget.js",
+                "~/Assets/js/collaborators/collaborators.onboardinginfo.widget.js",
                 "~/Assets/js/speakers/speakers.company.widget.js",
                 "~/Assets/js/speakers/speakers.conferences.widget.js",
                 "~/Assets/js/speakers/speakers.participants.widget.js",
                 "~/Assets/js/companies/companyinfo.autocomplete.js",
                 "~/Assets/js/myrio2c.companynumber.js",
-                "~/Assets/js/speakers/speakers.apiconfiguration.widget.js",
-                "~/Assets/js/speakers/speakers.onboardinginfo.widget.js"));
+                "~/Assets/js/speakers/speakers.apiconfiguration.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/speakers.update.js").Include(
                 "~/Assets/js/speakers/speakers.update.js"));
@@ -787,7 +787,7 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
-            #region Collaborators - Commissions
+            #region Commissions
 
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.commissions.list.js").Include(
                 "~/Assets/js/audiovisual/commissions/audiovisual.commissions.totalcount.widget.js",
@@ -801,9 +801,9 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/audiovisual/commissions/audiovisual.commissions.create.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.commissions.details.js").Include(
-                "~/Assets/js/audiovisual/commissions/audiovisual.commissions.maininformation.widget.js",
-                "~/Assets/js/audiovisual/commissions/audiovisual.commissions.socialnetworks.widget.js",
-                "~/Assets/js/audiovisual/commissions/audiovisual.commissions.onboardinginfo.widget.js",
+                "~/Assets/js/collaborators/collaborators.maininformation.widget.js",
+                "~/Assets/js/collaborators/collaborators.socialnetworks.widget.js",
+                "~/Assets/js/collaborators/collaborators.onboardinginfo.widget.js",
                 "~/Assets/js/audiovisual/commissions/audiovisual.commissions.interests.widget.js",
                 "~/Assets/js/audiovisual/commissions/audiovisual.commissions.evaluations.widget.js"
                 ));
@@ -820,7 +820,7 @@ namespace PlataformaRio2C.Web.Admin
 
             #region Music Page Bundles
 
-            #region Collaborators - Commissions
+            #region Commissions
 
             bundles.Add(new ScriptBundle("~/bundles/js/music.commissions.list.js").Include(
                 "~/Assets/js/music/commissions/music.commissions.totalcount.widget.js",
@@ -834,9 +834,9 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/music/commissions/music.commissions.create.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/music.commissions.details.js").Include(
-                "~/Assets/js/music/commissions/music.commissions.maininformation.widget.js",
-                "~/Assets/js/music/commissions/music.commissions.socialnetworks.widget.js",
-                "~/Assets/js/music/commissions/music.commissions.onboardinginfo.widget.js",
+                "~/Assets/js/collaborators/collaborators.maininformation.widget.js",
+                "~/Assets/js/collaborators/collaborators.socialnetworks.widget.js",
+                "~/Assets/js/collaborators/collaborators.onboardinginfo.widget.js",
                 "~/Assets/js/music/commissions/music.commissions.evaluations.widget.js"
                 ));
 
@@ -883,7 +883,7 @@ namespace PlataformaRio2C.Web.Admin
 
             #region Innovation Page Bundles
 
-            #region Collaborators - Commissions
+            #region Commissions
 
             bundles.Add(new ScriptBundle("~/bundles/js/innovation.commissions.list.js").Include(
                 "~/Assets/js/innovation/commissions/innovation.commissions.totalcount.widget.js",
@@ -897,9 +897,9 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/innovation/commissions/innovation.commissions.create.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/innovation.commissions.details.js").Include(
-                "~/Assets/js/innovation/commissions/innovation.commissions.maininformation.widget.js",
-                "~/Assets/js/innovation/commissions/innovation.commissions.socialnetworks.widget.js",
-                "~/Assets/js/innovation/commissions/innovation.commissions.onboardinginfo.widget.js",
+                "~/Assets/js/collaborators/collaborators.maininformation.widget.js",
+                "~/Assets/js/collaborators/collaborators.socialnetworks.widget.js",
+                "~/Assets/js/collaborators/collaborators.onboardinginfo.widget.js",
                 "~/Assets/js/innovation/commissions/innovation.commissions.tracks.widget.js",
                 "~/Assets/js/innovation/commissions/innovation.commissions.evaluations.widget.js"
                 ));

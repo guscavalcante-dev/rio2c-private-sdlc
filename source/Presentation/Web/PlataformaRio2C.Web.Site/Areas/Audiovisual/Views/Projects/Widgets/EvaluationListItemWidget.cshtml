@@ -25,8 +25,16 @@
                         <div class="text-center w-100">
                             @if (Model.SellerAttendeeOrganizationDto?.Organization?.HasImage() == true)
                             {
-                                @*<img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, Model.SellerAttendeeOrganizationDto.Organization.Uid, Model.SellerAttendeeOrganizationDto.Organization.ImageUploadDate, false)" class="w-100" alt="" style="height: 125px; border-radius: 4px; object-fit: cover;">*@
-                                <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, Model.SellerAttendeeOrganizationDto.Organization.Uid, Model.SellerAttendeeOrganizationDto.Organization.ImageUploadDate, false)" class="w-100" style="height: 125px; border-radius: 4px; object-fit: cover;" alt="image">
+                                try
+                                {
+                                    <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, Model.SellerAttendeeOrganizationDto.Organization.Uid, Model.SellerAttendeeOrganizationDto.Organization.ImageUploadDate, false)" class="w-100" style="height: 125px; border-radius: 4px; object-fit: cover;" alt="image">
+                                }
+                                catch
+                                {
+                                    <div class="kt-userpic kt-userpic--lg kt-userpic--brand">
+                                        <span style="width: 100%; height: 125px; font-size: 40px;">@(Model.SellerAttendeeOrganizationDto?.Organization?.GetTradeNameAbbreviation())</span>
+                                    </div>
+                                }
                             }
                             else
                             {
@@ -43,7 +51,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12 mt-3">
+                    <div class="col-12 mt-3" style="min-height:41px;">
                         <span style="font-weight: 600; font-size: 17px; line-height: 19px; color: #403D50;">@(Model.Project?.GetTitleByLanguageCode(ViewBag.UserInterfaceLanguage) ?? "-")</span>
                     </div>
                 </div>
@@ -77,7 +85,7 @@
                         {
                             foreach (var projectTargetAudienceDto in Model.ProjectTargetAudienceDtos)
                             {
-                                <span class="kt-badge kt-badge--inline kt-badge--primary">@(projectTargetAudienceDto.TargetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
+                                <span class="kt-badge kt-badge--inline kt-badge--info mt-1">@(projectTargetAudienceDto.TargetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
                             }
                         }
                         else

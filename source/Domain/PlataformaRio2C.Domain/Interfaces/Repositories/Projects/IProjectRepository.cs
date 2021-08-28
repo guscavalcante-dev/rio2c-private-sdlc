@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-02-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 08-28-2021
 // ***********************************************************************
 // <copyright file="IProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,15 +29,14 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<Project> FindByUidAsync(Guid projectUid);
         Task<List<ProjectDto>> FindAllDtosToSellAsync(Guid attendeeOrganizationUid, bool showAll);
         Task<IPagedList<ProjectDto>> FindAllDtosToEvaluateAsync(Guid attendeeCollaboratorUid, string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int page, int pageSize);
-        Task<IPagedList<ProjectBaseDto>> FindAllBaseDtosPagedAsync(int page, int pageSize, List<Tuple<string, string>> sortColumns, string keywords, bool showPitchings, Guid? interestUid, Guid? evaluationStatusUid, string languageCode, int editionId);  
-        
-        Task<IPagedList<ProjectDto>> FindAllDtosPagedAsync(int editionId, string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int page, int pageSize);
-        
-        Task<List<ProjectDto>> FindAllDtosByFiltersAsync(string keywords, bool showPitchings, Guid? interestUid, List<Guid> projectUids, string languageCode, int editionId);
+        Task<IPagedList<ProjectBaseDto>> FindAllBaseDtosPagedAsync(int page, int pageSize, List<Tuple<string, string>> sortColumns, string keywords, bool showPitchings, Guid? interestUid, Guid? evaluationStatusUid, string languageCode, int editionId);        
+        Task<IPagedList<ProjectDto>> FindAllDtosPagedAsync(int editionId, string searchKeywords, List<Guid?> interestUids, Guid? evaluationStatusUid, bool showPitchings, int page, int pageSize);
+        Task<List<ProjectDto>> FindAllDtosByFiltersAsync(string keywords, bool showPitchings, List<Guid?> interestUids, List<Guid> projectUids, string languageCode, int editionId);
+        Task<List<Project>> FindAllByEditionIdAsync(int editionId);
         Task<int> CountAllByDataTable(int editionId, bool showAllEditions = false);
-        Task<int[]> FindAllProjectsIdsPagedAsync(int editionId, string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, bool showPitchings, int page, int pageSize);
+        Task<int[]> FindAllProjectsIdsPagedAsync(int editionId, string searchKeywords, List<Guid?> interestUids, Guid? evaluationStatusUid, bool showPitchings, int page, int pageSize);
         Task<int[]> FindAllApprovedCommissionProjectsIdsAsync(int editionId);
-        Task<int> CountPagedAsync(int editionId, string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, bool showPitchings, int page, int pageSize);
+        Task<int> CountPagedAsync(int editionId, string searchKeywords, List<Guid?> interestUids, Guid? evaluationStatusUid, bool showPitchings, int page, int pageSize);
 
         #region Admin Widgets
 
@@ -62,9 +61,11 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<ProjectDto> FindSiteDuplicateDtoByProjectUidAsync(Guid projectUid);
         Task<ProjectDto> FindSiteBuyerEvaluationWidgetDtoByProjectUidAsync(Guid projectUid, Guid attendeeCollaboratorUid);
         Task<ProjectDto> FindDtoToEvaluateAsync(Guid attendeeCollaboratorUid, Guid projectUid);
-        IEnumerable<AudiovisualProjectSubmissionDto> FindAudiovisualProjectSubmissionDtosByFilter(string keywords, List<Guid> interestUids, int editionId, bool isPitching, List<Guid> targetAudienceUids, DateTime? startDate, DateTime? endDate, bool showAllEditions = false);
-        Task<IPagedList<AudiovisualProjectSubmissionDto>> FindAudiovisualProjectSubmissionDtosByFilterAndByPageAsync(string keywords, List<Guid> interestUids, int editionId, bool isPitching, List<Guid> targetAudienceUids, DateTime? startDate, DateTime? endDate, int page, int pageSize, bool showAllEditions = false);
-        Task<List<AudiovisualProjectSubmissionDto>> FindAudiovisualSubscribedProjectsDtosByFilterAsync(string keywords, List<Guid> interestUids, int editionId, bool isPitching, List<Guid> targetAudienceUids, DateTime? startDate, DateTime? endDate, bool showAllEditions = false);
+        Task<ProjectDto> FindDtoToEvaluateAsync(int projectId);
+
+        IEnumerable<AudiovisualProjectSubmissionDto> FindAudiovisualProjectSubmissionDtosByFilter(string keywords, List<Guid?> interestUids, int editionId, bool isPitching, List<Guid> targetAudienceUids, DateTime? startDate, DateTime? endDate, bool showAllEditions = false);
+        Task<IPagedList<AudiovisualProjectSubmissionDto>> FindAudiovisualProjectSubmissionDtosByFilterAndByPageAsync(string keywords, List<Guid?> interestUids, int editionId, bool isPitching, List<Guid> targetAudienceUids, DateTime? startDate, DateTime? endDate, int page, int pageSize, bool showAllEditions = false);
+        Task<List<AudiovisualProjectSubmissionDto>> FindAudiovisualSubscribedProjectsDtosByFilterAsync(string keywords, List<Guid?> interestUids, int editionId, bool isPitching, List<Guid> targetAudienceUids, DateTime? startDate, DateTime? endDate, bool showAllEditions = false);
 
         #endregion
 

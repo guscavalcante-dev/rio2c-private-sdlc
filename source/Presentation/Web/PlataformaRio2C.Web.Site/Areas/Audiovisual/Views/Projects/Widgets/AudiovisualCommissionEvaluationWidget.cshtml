@@ -1,12 +1,9 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
-@model AttendeeInnovationOrganizationDto
+@model ProjectDto
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
-    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
-    var evaluationsCount = Model.AttendeeInnovationOrganizationEvaluationDtos?.Count();
-    var currentEvaluation = Model.AttendeeInnovationOrganizationEvaluationDto;
-    var approvedAttendeeInnovationOrganizationsIds = ViewBag.ApprovedAttendeeInnovationOrganizationsIds as int[];
-    var isThisInnovationProjectApproved = approvedAttendeeInnovationOrganizationsIds.Contains(Model.AttendeeInnovationOrganization.Id);
+    var approvedProjectsIds = ViewBag.ApprovedProjectsIds as int[];
+    var isThisProjectApproved = approvedProjectsIds?.Contains(Model.Project.Id) == true;
 }
 <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
@@ -14,16 +11,16 @@
     </div>
 </div>
 <div class="kt-portlet__body pt-0">
-    @if (editionDto?.IsInnovationProjectEvaluationOpen() == true)
+    @if (editionDto?.IsAudiovisualCommissionProjectEvaluationOpen() == true)
     {
         <form class="form-inline justify-content-center mt-85">
             <div class="form-group mb-2 mr-3">
-                @Html.TextBox("AttendeeInnovationOrganizationEvaluationGrade", Model.AttendeeInnovationOrganizationEvaluationDto?.AttendeeInnovationOrganizationEvaluation?.Grade, new { @class = "form-control text-center decimal-globalize-mask", placeholder = Labels.Grade, style = "width: 105px;" }) @*, @type = "number", @min = "1", @max = "10", @step = ".10"*@
+                @Html.TextBox("ProjectCommissionEvaluationGrade", Model.ProjectCommissionEvaluationDto?.CommissionEvaluation?.Grade, new { @class = "form-control text-center decimal-globalize-mask", placeholder = Labels.Grade, style = "width: 105px;" })
             </div>
-            <button type="button" class="btn btn-success mb-2" onclick="InnovationProjectsEvaluationWidget.submitEvaluationGrade('@Model.InnovationOrganization.Id');">@Labels.Evaluate</button>
+            <button type="button" class="btn btn-success mb-2" onclick="AudiovisualProjectsCommissionEvaluationWidget.submitEvaluationGrade('@Model.Project.Id');">@Labels.Evaluate</button>
         </form>
     }
-    else if (editionDto?.IsInnovationProjectEvaluationStarted() != true)
+    else if (editionDto?.IsAudiovisualCommissionProjectEvaluationStarted() != true)
     {
         <div class="row mt-75">
             <div class="col-12">
@@ -39,7 +36,7 @@
         var color = "warning";
         var status = Labels.UnderEvaluation;
 
-        if (isThisInnovationProjectApproved)
+        if (isThisProjectApproved)
         {
             icon = "fa-thumbs-up";
             color = "success";
@@ -58,7 +55,7 @@
             <div class="form-group mb-2">
                 <div class="myrio2c-evaluation-grade-box-sm form-control">
                     <span class="grade-label mr-2">@Labels.Average</span>
-                    <span class="grade-vote">@(Model.AttendeeInnovationOrganization?.Grade?.ToString() ?? "-")</span>
+                    <span class="grade-vote">@(Model.Project?.CommissionGrade?.ToString() ?? "-")</span>
                 </div>
             </div>
         </form>

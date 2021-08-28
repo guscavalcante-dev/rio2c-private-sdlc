@@ -3,8 +3,8 @@
 // Author           : William Sergio Almado Junior
 // Created          : 01-13-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-02-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 08-28-2021
 // ***********************************************************************
 // <copyright file="ReportsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -99,7 +99,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         {
             var audiovisualProjectSubscriptionDtos = await this.projectRepo.FindAudiovisualProjectSubmissionDtosByFilterAndByPageAsync(
                 searchViewModel.Search,
-                searchViewModel.InterestUids.ToListGuid(','),
+                searchViewModel.InterestUids.ToListNullableGuid(','),
                 this.EditionDto.Id,
                 searchViewModel.IsPitching,
                 searchViewModel.TargetAudienceUids.ToListGuid(','),
@@ -160,7 +160,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             var audiovisualProjectSubscriptionDtos = await this.projectRepo.FindAudiovisualSubscribedProjectsDtosByFilterAsync(
                 search,
-                interestUids.ToListGuid(','),
+                interestUids.ToListNullableGuid(','),
                 this.EditionDto.Id,
                 isPitching,
                 targetAudienceUids.ToListGuid(','),

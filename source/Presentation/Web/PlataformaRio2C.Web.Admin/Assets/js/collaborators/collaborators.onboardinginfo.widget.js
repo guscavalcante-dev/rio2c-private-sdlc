@@ -1,37 +1,37 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Renan Valentim
-// Created          : 07-24-2021
+// Created          : 08-14-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-24-2021
+// Last Modified On : 08-14-2021
 // ***********************************************************************
-// <copyright file="audiovisual.projects.evaluators.widget.js" company="Softo">
+// <copyright file="collaborators.onboardinginfo.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var AudiovisualProjectsEvaluatorsWidget = function () {
+var CollaboratorsOnboardingInfoWidget = function () {
 
-    var widgetElementId = '#ProjectEvaluatorsWidget';
+    var widgetElementId = '#OnboardingInfoWidget';
     var widgetElement = $(widgetElementId);
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         KTApp.initTooltips();
-        MyRio2cCommon.initScroll();
     };
 
-    var show = function () {
+    var show = function (collaboratorTypeName) {
         if (widgetElement.length <= 0) {
             return;
         }
 
         var jsonParameters = new Object();
-        jsonParameters.projectUid = $('#AggregateId').val();
+        jsonParameters.collaboratorUid = $('#AggregateId').val();
+        jsonParameters.collaboratorTypeName = collaboratorTypeName;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/ShowAudiovisualCommissionEvaluatorsWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Collaborators/ShowOnboardingInfoWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -39,21 +39,21 @@ var AudiovisualProjectsEvaluatorsWidget = function () {
                     enableShowPlugins();
                 },
                 // Error
-                onError: function() {
+                onError: function () {
                 }
             });
         })
         .fail(function () {
         })
-        .always(function() {
+        .always(function () {
             MyRio2cCommon.unblock({ idOrClass: widgetElementId });
         });
     };
 
     return {
-        init: function () {
+        init: function (collaboratorTypeName) {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
-            show();
+            show(collaboratorTypeName);
         }
     };
 }();

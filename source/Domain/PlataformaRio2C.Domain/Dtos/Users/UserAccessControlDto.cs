@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-04-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-13-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 08-28-2021
 // ***********************************************************************
 // <copyright file="UserAccessControlDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -163,6 +163,27 @@ namespace PlataformaRio2C.Domain.Dtos
             }
 
             return this.EditionCollaboratorTypes?.Any(ect => collaboratorTypes.Contains(ect.Name)) == true;
+        }
+
+        /// <summary>
+        /// Counts the collaborator types.
+        /// </summary>
+        /// <param name="collaboratorTypes">The collaborator types.</param>
+        /// <returns></returns>
+        public int CountCollaboratorTypes(string[] collaboratorTypes)
+        {
+            if (this.IsAdmin())
+            {
+                //Return 2 only for...
+                return 2;
+            }
+
+            if (collaboratorTypes?.Any() != true)
+            {
+                return 0;
+            }
+
+            return this.EditionCollaboratorTypes?.Count(ect => collaboratorTypes.Contains(ect.Name)) ?? 0;
         }
 
         /// <summary>Determines whether [has edition attendee organization] [the specified attendee organization uid].</summary>

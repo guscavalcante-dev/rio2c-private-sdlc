@@ -4,7 +4,7 @@
 // Created          : 03-23-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-23-2021
+// Last Modified On : 08-28-2021
 // ***********************************************************************
 // <copyright file="AttendeeMusicBandRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -83,7 +83,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
-        /// Finds the by edition identifier asynchronous.
+        /// Finds all by edition identifier asynchronous.
         /// </summary>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>

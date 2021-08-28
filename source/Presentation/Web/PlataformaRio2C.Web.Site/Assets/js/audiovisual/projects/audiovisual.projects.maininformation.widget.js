@@ -1,18 +1,18 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Web.Site
-// Author           : Renan Valentim
-// Created          : 07-28-2021
+// Assembly         : PlataformaRio2C.Web.Admin
+// Author           : Rafael Dantas Ruiz
+// Created          : 06-20-2021
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 07-28-2021
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 06-21-2021
 // ***********************************************************************
-// <copyright file="innovation.projects.maininformation.widget.js" company="Softo">
+// <copyright file="audiovisual.projects.maininformation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var InnovationProjectsMainInformationWidget = function () {
+var AudiovisualProjectsMainInformationWidget = function () {
 
     var widgetElementId = '#ProjectMainInformationWidget';
     var widgetElement = $(widgetElementId);
@@ -32,9 +32,9 @@ var InnovationProjectsMainInformationWidget = function () {
         }
 
         var jsonParameters = new Object();
-        jsonParameters.attendeeInnovationOrganizationUid = $('#AggregateId').val();
+        jsonParameters.projectUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Projects/ShowMainInformationWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/ShowMainInformationWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -55,13 +55,68 @@ var InnovationProjectsMainInformationWidget = function () {
         });
     };
 
-    // Evaluation Grade ---------------------------------------------------------------------------
-    var submitEvaluationGrade = function (innovationOrganizationId) {
-        var jsonParameters = new Object();
-        jsonParameters.innovationOrganizationId = innovationOrganizationId;
-        jsonParameters.grade = $('#AttendeeInnovationOrganizationEvaluationGradeMain').val();
+    // Update -------------------------------------------------------------------------------------
+    var enableAjaxForm = function () {
+        MyRio2cCommon.enableAjaxForm({
+            idOrClass: updateFormId,
+            onSuccess: function (data) {
+                $(updateModalId).modal('hide');
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Projects/Evaluate'), jsonParameters, function (data) {
+                if (typeof (AudiovisualProjectsMainInformationWidget) !== 'undefined') {
+                    AudiovisualProjectsMainInformationWidget.init();
+                }
+            },
+            onError: function (data) {
+                if (MyRio2cCommon.hasProperty(data, 'pages')) {
+                    enableUpdatePlugins();
+                }
+
+                $(updateFormId).find(":input.input-validation-error:first").focus();
+            }
+        });
+    };
+
+    var enableUpdatePlugins = function () {
+        //MyRio2cCommon.enableSelect2({ inputIdOrClass: updateFormId + ' .enable-select2' });
+        MyRio2cInputMask.enableMask('#TotalPlayingTime', '99:99:99');
+        MyRio2cInputMask.enableMask('#EachEpisodePlayingTime', '99:99:99');
+        enableAjaxForm();
+        MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
+    };
+
+    var showUpdateModal = function () {
+        MyRio2cCommon.block({ isModal: true });
+
+        var jsonParameters = new Object();
+        jsonParameters.projectUid = $('#AggregateId').val();
+
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/ShowUpdateMainInformationModal'), jsonParameters, function (data) {
+            MyRio2cCommon.handleAjaxReturn({
+            data: data,
+            // Success
+            onSuccess: function () {
+                enableUpdatePlugins();
+                $(updateModalId).modal();
+            },
+            // Error
+            onError: function () {
+            }
+        });
+        })
+        .fail(function () {
+        })
+        .always(function () {
+            MyRio2cCommon.unblock();
+        });
+    };
+
+    // Evaluation Grade ---------------------------------------------------------------------------
+    var submitEvaluationGrade = function (projectId) {
+        var jsonParameters = new Object();
+        jsonParameters.projectId = projectId;
+        jsonParameters.grade = $('#ProjectEvaluationGradeMain').val();
+
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/AudiovisualComissionEvaluateProject'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -76,9 +131,9 @@ var InnovationProjectsMainInformationWidget = function () {
             })
             .always(function () {
                 MyRio2cCommon.unblock();
-                InnovationProjectsEvaluationWidget.init();
-                InnovationProjectsEvaluatorsWidget.init();
-                InnovationProjectsMainInformationWidget.init();
+                AudiovisualProjectsCommissionEvaluationWidget.init();
+                AudiovisualProjectsEvaluatorsWidget.init();
+                AudiovisualProjectsMainInformationWidget.init();
             });
     };
 
@@ -87,8 +142,11 @@ var InnovationProjectsMainInformationWidget = function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
         },
-        submitEvaluationGrade: function (innovationOrganizationId) {
-            submitEvaluationGrade(innovationOrganizationId);
+        showUpdateModal: function () {
+            showUpdateModal();
+        },
+        submitEvaluationGrade: function (projectId) {
+            submitEvaluationGrade(projectId);
         },
     };
 }();

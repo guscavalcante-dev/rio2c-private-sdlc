@@ -9,7 +9,7 @@
             <div class="kt-subheader__main">
                 <h3 class="kt-subheader__title">@breadcrumb.Title</h3>
                 <div class="kt-subheader__breadcrumbs">
-                    <a href="@Url.Action("Index", "Home")" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i> <span class="kt-subheader__breadcrumbs-link pr-0">@Labels.Dashboard</span></a>
+                    <a href="@Url.Action("Index", "Home", new { Area = "" })" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i> <span class="kt-subheader__breadcrumbs-link pr-0">@Labels.Dashboard</span></a>
                     @if (breadcrumb?.Items?.Any() == true)
                     {
                         foreach (var item in breadcrumb.Items)
