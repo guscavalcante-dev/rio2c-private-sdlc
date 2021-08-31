@@ -269,7 +269,7 @@ var CollaboratorsDataTableWidget = function () {
                             html += '<button class="dropdown-item" onclick="CollaboratorsUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         }
 
-                        html += '<button class="dropdown-item" onclick="CollaboratorsUpdate.showModal(\'' + full.Uid + '\', false);"><i class="la la-edit"></i> ' + labels.edit + '</button>';
+                        html += '<button class="dropdown-item" onclick="CollaboratorsDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
 
                         if (full.IsInCurrentEdition && full.IsInOtherEdition) {
                             html += '<button class="dropdown-item" onclick="CollaboratorsDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + removeFromEdition + '</button>';
@@ -330,6 +330,14 @@ var CollaboratorsDataTableWidget = function () {
         table.ajax.reload();
     };
 
+    var showDetails = function (commissionUid) {
+        if (MyRio2cCommon.isNullOrEmpty(commissionUid)) {
+            return;
+        }
+
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/Details/' + commissionUid);
+    };
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
@@ -340,6 +348,9 @@ var CollaboratorsDataTableWidget = function () {
         },
         exportEventbriteCsv: function() {
             exportEventbriteCsv();
+        },
+        showDetails: function (commissionUid) {
+            showDetails(commissionUid);
         }
     };
 }();

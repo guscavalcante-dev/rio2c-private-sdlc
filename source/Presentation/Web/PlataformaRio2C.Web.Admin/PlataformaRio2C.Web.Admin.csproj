@@ -9902,6 +9902,7 @@
     <Content Include="Views\Collaborators\Modals\UpdateSocialNetworksForm.cshtml" />
     <Content Include="Views\Collaborators\Modals\UpdateSocialNetworksModal.cshtml" />
     <Content Include="Views\Collaborators\Widgets\OnboardingInfoWidget.cshtml" />
+    <Content Include="Views\PlayersExecutives\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

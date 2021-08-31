@@ -46,7 +46,6 @@ var CollaboratorsUpdate = function () {
         enableFormValidation();
     };
     
-
     var changePreviousEditionsRequired = function () {
 	    $("#HasEditionSelected").val($('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox:checked').length > 0 ? "True" : null);
 	    var dataValMsgFor = $('[data-valmsg-for="HasEditionSelected"]');

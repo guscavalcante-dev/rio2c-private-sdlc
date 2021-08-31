@@ -48,7 +48,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
     {
         private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
+        private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
         private readonly IFileRepository fileRepo;
+        
 
         /// <summary>Initializes a new instance of the <see cref="PlayersExecutivesController"/> class.</summary>
         /// <param name="commandBus">The command bus.</param>
@@ -61,11 +63,14 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             IdentityAutenticationService identityController,
             ICollaboratorRepository collaboratorRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
-            IFileRepository fileRepository)
+            IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
+            IFileRepository fileRepository
+            )
             : base(commandBus, identityController)
         {
             this.collaboratorRepo = collaboratorRepository;
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
+            this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
             this.fileRepo = fileRepository;
         }
 
@@ -123,6 +128,36 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         }
 
         #endregion
+
+        #endregion
+
+        #region Details
+
+        /// <summary>Detailses the specified identifier.</summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> Details(Guid? id)
+        {
+            var attendeeCollaboratorDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUidAndByEditionIdAsync(id ?? Guid.Empty, this.EditionDto.Id);
+            if (attendeeCollaboratorDto == null)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Commissions", new { Area = "Audiovisual" });
+            }
+
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.PlayersExecutives, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Players, null),
+                new BreadcrumbItemHelper(Labels.Executives, Url.Action("Index", "PlayersExecutives", new { Area = "" })),
+                new BreadcrumbItemHelper(attendeeCollaboratorDto.Collaborator.GetFullName(), Url.Action("Details", "PlayersExecutives", new { Area = "", id }))
+            });
+
+            #endregion
+
+            return View(attendeeCollaboratorDto);
+        }
 
         #endregion
 
