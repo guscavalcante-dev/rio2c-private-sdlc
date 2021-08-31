@@ -29,18 +29,19 @@
                 </a>
             </div>
             <div class="kt-widget__content" style="overflow: hidden;">
-                <div class="kt-widget__info col-md-12 mr-0 pr-0 pl-0">
+                <div class="kt-widget__head">
+                    <span class="kt-widget__username">
+                        @(Model.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value ?? "-")
+                    </span>
+                    <div class="kt-widget__action">
+                        <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="AudiovisualProjectsMainInformationWidget.showUpdateModal();">
+                            <i class="flaticon2-edit"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="kt-widget__info col-md-12 mr-0 pr-0 pl-0 pt-3">
                     <div class="kt-widget__desc pl-0 @(Model?.Project?.IsPitching == true ? "col-md-7" : "col-md-12")">
-                        <div class="kt-widget__head">
-                            <span class="kt-widget__username">
-                                @(Model.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value ?? "-")
-                            </span>
-                            <div class="kt-widget__action">
-                                <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="AudiovisualProjectsMainInformationWidget.showUpdateModal();">
-                                    <i class="flaticon2-edit"></i>
-                                </button>
-                            </div>
-                        </div>
+
                         <div class="kt-widget__subhead pt-0">
                             @Labels.Producer: <a href="@Url.Action("Details", "Producers", new { Area = "Audiovisual", id = Model.SellerAttendeeOrganizationDto?.Organization?.Uid })" target="_blank">@(Model.SellerAttendeeOrganizationDto?.Organization?.TradeName ?? "-")</a>
                             @if (!string.IsNullOrEmpty(Model.SellerAttendeeOrganizationDto?.Organization?.Document))
