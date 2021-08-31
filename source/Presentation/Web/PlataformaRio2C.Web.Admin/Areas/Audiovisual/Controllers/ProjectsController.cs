@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-28-2021
+// Last Modified On : 08-31-2021
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -141,92 +141,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             var approvedProjectsIds = await this.projectRepo.FindAllApprovedCommissionProjectsIdsAsync(this.EditionDto.Id);
 
-            StringBuilder sb = new StringBuilder();
             foreach (var projectBaseDto in projectsBaseDtos)
             {
-                #region Evaluation Column
-
-                var icon = "fa fa-diagnoses";
-                var color = "warning";
-                var text = Labels.UnderEvaluation;
-                bool isProjectEvaluationClosed = !this.EditionDto.IsAudiovisualCommissionProjectEvaluationOpen();
-
-                if (projectBaseDto.IsPitching == false)
-                {
-                    icon = "la la-remove"; //fa fa-minus-circle
-                    color = "dark";
-                    text = Labels.NotCheckedForPitching;
-                }
-                else if (isProjectEvaluationClosed)
-                {
-                    if (approvedProjectsIds.Contains(projectBaseDto.Id))
-                    {
-                        icon = "fa fa-thumbs-up";
-                        color = "success";
-                        text = Labels.ProjectAccepted;
-                    }
-                    else
-                    {
-                        icon = "fa fa-thumbs-down";
-                        color = "danger";
-                        text = Labels.ProjectRefused;
-                    }
-                }
-
-                sb.Append($"<table>");
-                sb.Append($"    <tr>");
-                sb.Append($"        <td>");
-                sb.Append($"            <div class=\"col-md-12 justify-content-center\">");
-                sb.Append($"                <span class=\"kt-widget__button\" data-toggle=\"tooltip\" title=\"{text}\">");
-                sb.Append($"                    <label class=\"btn btn-label-{color} btn-sm m-1\">");
-                sb.Append($"                        <i class=\"{icon} p-0\"></i>");
-                sb.Append($"                    </label>");
-                sb.Append($"                </span>");
-                if (projectBaseDto.IsPitching == true)
-                {
-                    if (isProjectEvaluationClosed)
-                    {
-                        sb.Append("         <div class=\"row justify-content-center\">");
-                        sb.Append($"            <span>");
-                        sb.Append($"                <b>{projectBaseDto.CommissionGrade?.ToString() ?? "-"}</b>");
-                        sb.Append($"            </span>");
-                        sb.Append("         </div>");
-                    }
-
-                    sb.Append("         <div class=\"row justify-content-center\">");
-                    sb.Append($"            <span>");
-                    sb.Append($"                ({projectBaseDto.CommissionEvaluationsCount} {(projectBaseDto.CommissionEvaluationsCount == 1 ? Labels.Vote : Labels.Votes)})");
-                    sb.Append($"            </span>");
-                    sb.Append("         </div>");
-                }
-                sb.Append($"            </div>");
-                sb.Append($"        </td>");
-                sb.Append($"    </tr>");
-                sb.Append($"</table>");
-                projectBaseDto.EvaluationHtmlString = sb.ToString();
-                sb.Clear();
-
-                #endregion
-
-                #region Menu Actions Column
-
-                sb.Append($"<span class=\"dropdown\">");
-                sb.Append($"     <a href = \"#\" class=\"btn btn-sm btn-clean btn-icon btn-icon-md\" data-toggle=\"dropdown\" aria-expanded=\"true\">");
-                sb.Append($"         <i class=\"la la-ellipsis-h\"></i>");
-                sb.Append($"     </a>");
-                sb.Append($"     <div class=\"dropdown-menu dropdown-menu-right\">");
-                sb.Append($"        <button class=\"dropdown-item\" onclick=\"AudiovisualProjectsDataTableWidget.showDetails({projectBaseDto.Id}, '', '{interestUid}', '{evaluationStatusUid}', '{page}', '{pageSize}');\">");
-                sb.Append($"            <i class=\"la la-eye\"></i> {@Labels.View}");
-                sb.Append($"        </button>");
-                sb.Append($"        <button class=\"dropdown-item\" onclick=\"AudiovisualProjectsDelete.showModal('{projectBaseDto.Uid}');\">");
-                sb.Append($"            <i class=\"la la-remove\"></i> {Labels.Remove}");
-                sb.Append($"        </button>");
-                sb.Append($"    </div>");
-                sb.Append($"</span>");
-                projectBaseDto.MenuActionsHtmlString = sb.ToString();
-                sb.Clear();
-
-                #endregion
+                projectBaseDto.IsApproved = approvedProjectsIds.Contains(projectBaseDto.Id);
 
                 #region Translate Project Genres
 
@@ -267,7 +184,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             return Json(new
             {
                 status = "success",
-                dataTable = response
+                dataTable = response,
+                searchKeywords = request.Search?.Value,
+                interestUid,
+                evaluationStatusUid,
+                showPitchings,
+                page,
+                pageSize
             }, JsonRequestBehavior.AllowGet);
         }
 
@@ -566,8 +489,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     pageSize
                 });
         }
-
-        #endregion
 
         #region Main Information Widget
 
@@ -1305,6 +1226,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
             }, JsonRequestBehavior.AllowGet);
         }
+
+        #endregion
 
         #endregion
 

@@ -3,8 +3,8 @@
 // Author           : William Sergio Almado Junior
 // Created          : 12-13-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-20-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 08-31-2021
 // ***********************************************************************
 // <copyright file="ProjectBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,10 +33,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset? FinishDate { get; set; }
         public decimal? CommissionGrade { get; set; }
         public int CommissionEvaluationsCount { get; set; }
-
-
-        public string EvaluationHtmlString { get; set; }
-        public string MenuActionsHtmlString { get; set; }
+        public bool IsApproved { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="ProjectBaseDto"/> class.</summary>
         public ProjectBaseDto()

@@ -4,7 +4,7 @@
 // Created          : 07-24-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-24-2021
+// Last Modified On : 08-31-2021
 // ***********************************************************************
 // <copyright file="innovation.projects.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -101,6 +101,12 @@ var InnovationProjectsDataTableWidget = function () {
                                 table.context[0].oLanguage.sEmptyTable = null;
                             }
 
+                            searchKeywords = jsonReturned.searchKeywords;
+                            innovationOrganizationTrackUid = jsonReturned.innovationOrganizationTrackUid;
+                            evaluationStatusUid = jsonReturned.evaluationStatusUid;
+                            initialPage = jsonReturned.page;
+                            initialPageSize = jsonReturned.pageSize;
+
                             return JSON.stringify(json); // return JSON string
                         },
                         // Error
@@ -159,7 +165,52 @@ var InnovationProjectsDataTableWidget = function () {
                 {
                     data: 'Evaluation',
                     render: function (data, type, row, meta) {
-                        return row.EvaluationHtmlString;
+                        var icon = "fa fa-diagnoses";
+                        var color = "warning";
+                        var text = translations.underEvaluation;
+
+                        if (isProjectEvaluationClosed) {
+                            if (row.IsApproved) {
+                                icon = "fa fa-thumbs-up";
+                                color = "success";
+                                text = translations.projectAccepted;
+                            }
+                            else {
+                                icon = "fa fa-thumbs-down";
+                                color = "danger";
+                                text = translations.projectRefused;
+                            }
+                        }
+
+                        var html = '<table>';
+                        html += '       <tr>';
+                        html += '           <td>';
+                        html += '               <div class="col-md-12 justify-content-center">';
+                        html += '                   <span class="kt-widget__button" data-toggle="tooltip" title="' + text + '">';
+                        html += '                       <label class="btn btn-label-' + color + ' btn-sm m-1">';
+                        html += '                           <i class="' + icon + ' p-0"></i>';
+                        html += '                       </label>';
+                        html += '                   </span>';
+
+                        if (isProjectEvaluationClosed) {
+                            html += '           <div class="row justify-content-center">';
+                            html += '               <span>';
+                            html += '                   <b>' + (!MyRio2cCommon.isNullOrEmpty(row.Grade) ? parseFloat(row.Grade).toFixed(2).replace('.', ',') : '-') + '</b>';
+                            html += '               </span>';
+                            html += '           </div>';
+                        }
+
+                        html += '               <div class="row justify-content-center">';
+                        html += '                   <span>';
+                        html += '                       (' + row.EvaluationsCount + ' ' + (row.EvaluationsCount == 1 ? translations.vote : translations.votes) + ')';
+                        html += '                   </span>';
+                        html += '               </div>';
+                        html += '           </div>';
+                        html += '       </td>';
+                        html += '   </tr>';
+                        html += '</table>';
+
+                        return html;
                     }
                 },
                 {
@@ -178,7 +229,21 @@ var InnovationProjectsDataTableWidget = function () {
 	                data: 'Actions',
 	                responsivePriority: -1,
 	                render: function (data, type, row, meta) {
-                        return row.MenuActionsHtmlString;
+                        var html = '\<span class="dropdown">';
+                        html += '\      <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">';
+                        html += '\          <i class="la la-ellipsis-h"></i>';
+                        html += '\      </a>';
+                        html += '\      <div class="dropdown-menu dropdown-menu-right">';
+                        html += '\          <button class="dropdown-item" onclick="InnovationProjectsDataTableWidget.showDetails(\'' + row.AttendeeInnovationOrganizationId + '\', \'' + searchKeywords + '\', \'' + innovationOrganizationTrackUid + '\', \'' + evaluationStatusUid + '\', \'' + initialPage + '\', \'' + initialPageSize + '\');">';
+                        html += '\              <i class="la la-eye"></i>' + labels.view + '';
+                        html += '\          </button>';
+                        html += '\          <button class="dropdown-item" onclick="InnovationProjectsDelete.showModal(\'' + row.AttendeeInnovationOrganizationUid + '\');">';
+                        html += '\              <i class="la la-remove"></i>' + labels.remove + '';
+                        html += '\          </button>';
+                        html += '\      </div>';
+                        html += '\  </span>';
+
+                        return html;
 	                }
                 }
             ],

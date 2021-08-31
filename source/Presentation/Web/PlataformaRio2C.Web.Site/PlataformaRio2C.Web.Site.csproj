@@ -6890,7 +6890,7 @@
     <Content Include="Areas\Innovation\Views\Projects\Widgets\PresentationWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\EvaluationDetails.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Projects\EvaluationList.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\CommissionEvaluationList.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Index.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Shared\_Evaluation.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EvaluationListItemWidget.cshtml" />

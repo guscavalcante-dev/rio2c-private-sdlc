@@ -4,7 +4,7 @@
 // Created          : 07-24-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-24-2021
+// Last Modified On : 08-31-2021
 // ***********************************************************************
 // <copyright file="AttendeeInnovationOrganizationJsonDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,8 +28,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset? ImageUploadDate { get; set; }
         public decimal? Grade { get; set; }
         public int EvaluationsCount { get; set; }
-        public string EvaluationHtmlString { get; set; }
-        public string MenuActionsHtmlString { get; set; }
+        public bool IsApproved { get; set; }
 
         public IList<string> InnovationOrganizationTracksNames { get; set; }
 

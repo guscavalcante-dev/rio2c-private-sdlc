@@ -4,7 +4,7 @@
 // Created          : 07-28-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-28-2021
+// Last Modified On : 08-31-2021
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -110,7 +110,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         /// <returns></returns>
         [HttpGet]
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionAudiovisual)]
-        public async Task<ActionResult> EvaluationList(string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 12)
+        public async Task<ActionResult> CommissionEvaluationList(string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 12)
         {
             if (this.EditionDto?.IsAudiovisualCommissionProjectEvaluationStarted() != true)
             {
@@ -120,7 +120,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.AudioVisual, Url.Action("EvaluationList", "Projects", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(Labels.AudioVisual, Url.Action("CommissionEvaluationList", "Projects", new { Area = "Audiovisual" })),
             });
 
             #endregion
@@ -282,7 +282,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 projectDto.ProjectInterestDtos.Any(dto => attendeeCollaboratorInterestsUids.Contains(dto.Interest.Uid)) == false)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("EvaluationList", "Projects", new { Area = "Audiovisual" });
+                return RedirectToAction("CommissionEvaluationList", "Projects", new { Area = "Audiovisual" });
             }
 
             var interestsUids = await this.GetSearchInterestsUids(interestUid);
@@ -290,7 +290,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.AudiovisualProjects, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.AudioVisual, Url.Action("EvaluationList", "Projects", new { Area = "Audiovisual", searchKeywords, interestUid, evaluationStatusUid, page, pageSize })),
+                new BreadcrumbItemHelper(Labels.AudioVisual, Url.Action("CommissionEvaluationList", "Projects", new { Area = "Audiovisual", searchKeywords, interestUid, evaluationStatusUid, page, pageSize })),
                 new BreadcrumbItemHelper(projectDto?.GetTitleDtoByLanguageCode(this.UserInterfaceLanguage)?.ProjectTitle?.Value ?? Labels.Project, Url.Action("EvaluationDetails", "Projects", new { Area = "Audiovisual", id }))
             });
 
@@ -422,13 +422,6 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            //if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(mainInformationWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true                                                                    // Seller
-            //    && (this.UserAccessControlDto?.HasAnyEditionAttendeeOrganization(mainInformationWidgetDto.ProjectBuyerEvaluationDtos?.Select(pbed => pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid)?.ToList()) != true   // Buyer with project finished
-            //        || mainInformationWidgetDto.Project?.IsFinished() != true))
-            //{
-            //    return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-            //}
-
             #region Attendee Collaborator Interest validation
 
             var attendeeCollaboratorInterestUids = await this.GetAttendeeCollaboratorInterestsUids();
@@ -437,7 +430,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 mainInformationWidgetDto.ProjectInterestDtos?.Any(dto => attendeeCollaboratorInterestUids.Contains(dto.Interest.Uid)) == false)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("EvaluationList", "Projects", new { Area = "Audiovisual" });
+                return RedirectToAction("CommissionEvaluationList", "Projects", new { Area = "Audiovisual" });
             }
 
             #endregion
@@ -468,13 +461,6 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            //if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(interestWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true                                                                    // Seller
-            //    && (this.UserAccessControlDto?.HasAnyEditionAttendeeOrganization(interestWidgetDto.ProjectBuyerEvaluationDtos?.Select(pbed => pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid)?.ToList()) != true   // Buyer with project finished
-            //        || interestWidgetDto.Project?.IsFinished() != true))
-            //{
-            //    return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-            //}
-
             ViewBag.GroupedInterests = await this.interestRepo.FindAllGroupedByInterestGroupsAsync();
             ViewBag.TargetAudiences = await this.targetAudienceRepo.FindAllByProjectTypeIdAsync(ProjectType.Audiovisual.Id);
 
@@ -503,13 +489,6 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
-
-            //if (this.UserAccessControlDto?.HasEditionAttendeeOrganization(linksWidgetDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) != true                                                                    // Seller
-            //    && (this.UserAccessControlDto?.HasAnyEditionAttendeeOrganization(linksWidgetDto.ProjectBuyerEvaluationDtos?.Select(pbed => pbed.BuyerAttendeeOrganizationDto.AttendeeOrganization.Uid)?.ToList()) != true   // Buyer with project finished
-            //        || linksWidgetDto.Project?.IsFinished() != true))
-            //{
-            //    return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-            //}
 
             return Json(new
             {
