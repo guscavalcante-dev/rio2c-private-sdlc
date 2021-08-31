@@ -51,7 +51,7 @@
         }
         else if (audiovisualCollaboratorTypesCount > 1)
         {
-            <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel @this.IsOpen(menuOpenCssClass, null, "Projects", null)" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
+            <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel @this.IsOpen(menuOpenCssClass, null, "Projects", "Audiovisual")" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
                 <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">@Labels.AudioVisual</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
                 <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
                     <ul class="kt-menu__subnav">
@@ -70,7 +70,7 @@
                         {
                             projectsUrl = Url.Action("SubmittedList", "Projects", new { Area = "" });
 
-                            <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "SubmittedList", "Projects", null)" aria-haspopup="true">
+                            <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "SubmittedList", "Projects", "")" aria-haspopup="true">
                                 <a href="@projectsUrl" class="kt-menu__link">
                                     <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
                                     <span class="kt-menu__link-text">@Labels.ProjectsSubmission</span>
@@ -79,7 +79,7 @@
                         }
                         @if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) == true && editionDto?.IsProjectEvaluationStarted() == true)
                         {
-                            projectsUrl = Url.Action("EvaluationList", "Projects", null);
+                            projectsUrl = Url.Action("EvaluationList", "Projects", new { Area = "" });
 
                             <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "EvaluationList", "Projects", "")" aria-haspopup="true">
                                 <a href="@projectsUrl" class="kt-menu__link">
