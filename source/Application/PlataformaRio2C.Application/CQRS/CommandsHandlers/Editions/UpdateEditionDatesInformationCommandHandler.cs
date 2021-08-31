@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 03-20-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-24-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 08-28-2021
 // ***********************************************************************
 // <copyright file="UpdateEditionDatesInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,6 +25,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     {
         private readonly IEditionRepository editionRepo;
         private readonly IAttendeeMusicBandRepository attendeeMusicBandRepo;
+        private readonly IAttendeeInnovationOrganizationRepository attendeeInnovationOrganizationRepo;
+        private readonly IProjectRepository projectRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateEditionDatesInformationCommandHandler"/> class.
@@ -37,11 +39,16 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IMediator eventBus,
             IUnitOfWork uow,
             IEditionRepository editionRepository,
-            IAttendeeMusicBandRepository attendeeMusicBandRepository)
+            IAttendeeMusicBandRepository attendeeMusicBandRepository,
+            IAttendeeInnovationOrganizationRepository attendeeInnovationOrganizationRepository,
+            IProjectRepository projectRepository
+            )
             : base(eventBus, uow, editionRepository)
         {
             this.editionRepo = editionRepository;
             this.attendeeMusicBandRepo = attendeeMusicBandRepository;
+            this.attendeeInnovationOrganizationRepo = attendeeInnovationOrganizationRepository;
+            this.projectRepo = projectRepository;
         }
 
         /// <summary>
@@ -111,7 +118,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #region Before Save
 
-            //AttendeeMusicBandsGrades must be recalculated when changed "MusicCommissionMinimumEvaluationsCount".
+            // Music Projects Grades must be recalculated when changed "MusicCommissionMinimumEvaluationsCount"
             if (changedMusicCommissionMinimumEvaluationsCount)
             {
                 var attendeeMusicBands = await this.attendeeMusicBandRepo.FindAllByEditionIdAsync(edition.Id);
@@ -119,24 +126,23 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 this.attendeeMusicBandRepo.UpdateAll(attendeeMusicBands);
             }
 
+            // Innovation Projects Grades must be recalculated when changed "InnovationCommissionMinimumEvaluationsCount"
             if (changedInnovationCommissionMinimumEvaluationsCount)
             {
-                //TODO: Implement this!
-                //var attendeeMusicBands = await this.attendeeMusicBandRepo.FindAllByEditionIdAsync(edition.Id);
-                //attendeeMusicBands.ForEach(amb => amb.RecalculateGrade(edition));
-                //this.attendeeMusicBandRepo.UpdateAll(attendeeMusicBands);
+                var attendeeInnovationOrganizations = await this.attendeeInnovationOrganizationRepo.FindAllByEditionIdAsync(edition.Id);
+                attendeeInnovationOrganizations.ForEach(amb => amb.RecalculateGrade(edition));
+                this.attendeeInnovationOrganizationRepo.UpdateAll(attendeeInnovationOrganizations);
             }
 
+            // Audiovisual Projects Grades must be recalculated when changed "AudiovisualCommissionMinimumEvaluationsCount"
             if (changedAudiovisualCommissionMinimumEvaluationsCount)
             {
-                //TODO: Implement this!
-                //var attendeeMusicBands = await this.attendeeMusicBandRepo.FindAllByEditionIdAsync(edition.Id);
-                //attendeeMusicBands.ForEach(amb => amb.RecalculateGrade(edition));
-                //this.attendeeMusicBandRepo.UpdateAll(attendeeMusicBands);
+                var projects = await this.projectRepo.FindAllByEditionIdAsync(edition.Id);
+                projects.ForEach(amb => amb.RecalculateGrade(edition));
+                this.projectRepo.UpdateAll(projects);
             }
 
             #endregion
-
 
             this.EditionRepo.Update(edition);
             this.Uow.SaveChanges();

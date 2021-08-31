@@ -28,5 +28,6 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<List<IGrouping<InterestGroup, Interest>>> FindAllGroupedByInterestGroupsAsync();
         Task<List<Interest>> FindAllByUidsAsync(List<Guid> interestsUids);
         Task<List<Interest>> FindAllByInterestGroupUidAsync(Guid interestGroupUid);
+        Task<List<Interest>> FindAllByAttendeeCollaboratorIdAsync(int attendeeCollaboratorId);
     }
 }

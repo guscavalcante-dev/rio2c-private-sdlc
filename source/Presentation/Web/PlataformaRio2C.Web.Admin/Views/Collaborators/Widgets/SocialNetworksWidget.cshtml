@@ -1,5 +1,8 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @model AttendeeCollaboratorSiteDetailsDto
+@{
+    var collaboratorType = ViewBag.CollaboratorType;
+}
 <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
         <h3 class="kt-portlet__head-title">
@@ -8,7 +11,7 @@
     </div>
     <div class="kt-portlet__head-toolbar">
         <div class="kt-portlet__head-actions">
-            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="AudiovisualCommissionsSocialNetworksWidget.showUpdateModal();">
+            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="CollaboratorsSocialNetworksWidget.showUpdateModal('@collaboratorType');">
                 <i class="flaticon2-edit"></i>
             </button>
         </div>

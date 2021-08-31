@@ -3,8 +3,8 @@
 // Author           : William Sergio Almado Junior
 // Created          : 12-13-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-21-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 08-31-2021
 // ***********************************************************************
 // <copyright file="audiovisual.projects.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -170,6 +170,13 @@ var AudiovisualProjectsDataTableWidget = function () {
                                 table.context[0].oLanguage.sEmptyTable = null;
                             }
 
+                            searchKeywords = jsonReturned.searchKeywords;
+                            interestUid = jsonReturned.interestUid;
+                            evaluationStatusUid = jsonReturned.evaluationStatusUid;
+                            showPitchings = jsonReturned.showPitchings;
+                            initialPage = jsonReturned.page;
+                            initialPageSize = jsonReturned.pageSize;
+
                             return JSON.stringify(json); // return JSON string
                         },
                         // Error
@@ -246,7 +253,59 @@ var AudiovisualProjectsDataTableWidget = function () {
                 {
                     data: 'Evaluation',
                     render: function (data, type, row, meta) {
-                        return row.EvaluationHtmlString;
+                        var icon = "fa fa-diagnoses";
+                        var color = "warning";
+                        var text = translations.underEvaluation;
+
+                        if (row.IsPitching == false) {
+                            icon = "la la-remove";
+                            color = "dark";
+                            text = translations.notCheckedForPitching;
+                        } else if (isProjectEvaluationClosed) {
+                            if (row.IsApproved) {
+                                icon = "fa fa-thumbs-up";
+                                color = "success";
+                                text = translations.projectAccepted;
+                            }
+                            else {
+                                icon = "fa fa-thumbs-down";
+                                color = "danger";
+                                text = translations.projectRefused;
+                            }
+                        }
+
+                        var html = '<table>';
+                        html += '       <tr>';
+                        html += '           <td>';
+                        html += '               <div class="col-md-12 justify-content-center">';
+                        html += '                   <span class="kt-widget__button" data-toggle="tooltip" title="' + text + '">';
+                        html += '                       <label class="btn btn-label-' + color + ' btn-sm m-1">';
+                        html += '                           <i class="' + icon + ' p-0"></i>';
+                        html += '                       </label>';
+                        html += '                   </span>';
+
+                        if (row.IsPitching == true) {
+                            if (isProjectEvaluationClosed) {
+                                html += '           <div class="row justify-content-center">';
+                                html += '               <span>';
+                                html += '                   <b>' + (!MyRio2cCommon.isNullOrEmpty(row.CommissionGrade) ? parseFloat(row.CommissionGrade).toFixed(2).replace('.', ',') : '-') + '</b>';
+                                html += '               </span>';
+                                html += '           </div>';
+                            }
+
+                            html += '               <div class="row justify-content-center">';
+                            html += '                   <span>';
+                            html += '                       (' + row.CommissionEvaluationsCount + ' ' + (row.CommissionEvaluationsCount == 1 ? translations.vote : translations.votes) + ')';
+                            html += '                   </span>';
+                            html += '               </div>';
+                        }
+                       
+                        html += '           </div>';
+                        html += '       </td>';
+                        html += '   </tr>';
+                        html += '</table>';
+
+                        return html;
                     }
                 },
                 {
@@ -265,7 +324,21 @@ var AudiovisualProjectsDataTableWidget = function () {
                     data: 'Actions',
                     responsivePriority: -1,
                     render: function (data, type, row, meta) {
-                        return row.MenuActionsHtmlString;
+                        var html = '\<span class="dropdown">';
+                        html += '\      <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">';
+                        html += '\          <i class="la la-ellipsis-h"></i>';
+                        html += '\      </a>';
+                        html += '\      <div class="dropdown-menu dropdown-menu-right">';
+                        html += '\          <button class="dropdown-item" onclick="AudiovisualProjectsDataTableWidget.showDetails(\'' + row.Id + '\', \'' + searchKeywords + '\', \'' + interestUid + '\', \'' + evaluationStatusUid + '\', \'' + showPitchings + '\', \'' + initialPage + '\', \'' + initialPageSize + '\');">';
+                        html += '\              <i class="la la-eye"></i>' + labels.view + '';
+                        html += '\          </button>';
+                        html += '\          <button class="dropdown-item" onclick="AudiovisualProjectsDelete.showModal(\'' + row.Uid + '\');">';
+                        html += '\              <i class="la la-remove"></i>' + labels.remove + '';
+                        html += '\          </button>';
+                        html += '\      </div>';
+                        html += '\  </span>';
+
+                        return html;
                     }
                 }
             ],
@@ -332,12 +405,19 @@ var AudiovisualProjectsDataTableWidget = function () {
         table.ajax.reload();
     };
 
-    var showDetails = function (projectId) {
+    var showDetails = function (projectId, searchKeywords, interestUid, evaluationStatusUid, showPitchings, page, pageSize) {
         if (MyRio2cCommon.isNullOrEmpty(projectId)) {
             return;
         }
 
-        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/Details/' + projectId);
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/Details/' + projectId
+            + '?searchKeywords=' + searchKeywords
+            + '&interestUid=' + interestUid
+            + '&evaluationStatusUid=' + evaluationStatusUid
+            + '&showPitchings=' + showPitchings
+            + '&page=' + page
+            + '&pageSize=' + pageSize
+        );
     };
 
     return {
@@ -348,8 +428,8 @@ var AudiovisualProjectsDataTableWidget = function () {
         refreshData: function () {
             refreshData();
         },
-        showDetails: function (projectId) {
-            showDetails(projectId);
+        showDetails: function (projectId, searchKeywords, interestUid, evaluationStatusUid, showPitchings, page, pageSize) {
+            showDetails(projectId, searchKeywords, interestUid, evaluationStatusUid, showPitchings, page, pageSize);
         }
     };
 }();

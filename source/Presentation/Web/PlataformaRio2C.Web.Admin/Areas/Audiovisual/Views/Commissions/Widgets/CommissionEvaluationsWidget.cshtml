@@ -1,9 +1,9 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
-@model AttendeeCollaboratorInnovationEvaluationsWidgetDto
+@model AttendeeCollaboratorAudiovisualCommissionEvaluationsWidgetDto
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
-    var approvedAttendeeInnovationOrganizationIds = ViewBag.ApprovedProjectsIds as int[];
-    bool isProjectEvaluationEnded = editionDto.IsProjectEvaluationEnded();
+    var approvedProjectsIds = ViewBag.ApprovedProjectsIds as int[];
+    bool isProjectEvaluationEnded = editionDto.IsAudiovisualCommissionProjectEvaluationEnded();
 }
 
 <div class="kt-portlet__head">
@@ -14,24 +14,24 @@
     </div>
 </div>
 <div class="kt-portlet__body pt-0">
-    @if (Model?.AttendeeInnovationOrganizationEvaluationDtos?.Any() == true)
+    @if (Model?.AttendeeCollaboratorAudiovisualCommissionEvaluationDtos?.Any() == true)
     {
         <table class="table table-sm table-head-bg-brand table-body-scroll">
             <thead class="thead-inverse">
                 <tr>
-                    <th>@Labels.Startup</th>
+                    <th>@Labels.Project</th>
                     <th class="text-center">@Labels.Grade</th>
                     <th class="text-center">@Labels.EvaluationDate</th>
                     <th class="text-center">@Labels.Status</th>
                 </tr>
             </thead>
             <tbody class="rio2c-scroll" style="max-height:230px;">
-                @foreach (var attendeeInnovationOrganizationEvaluationDto in Model.AttendeeInnovationOrganizationEvaluationDtos.OrderBy(aioeDto => aioeDto.AttendeeInnovationOrganizationEvaluation.CreateDate))
+                @foreach (var attendeeCollaboratorAudiovisualCommissionEvaluationDto in Model.AttendeeCollaboratorAudiovisualCommissionEvaluationDtos.OrderBy(dto => dto.CommissionEvaluation.CreateDate))
                 {
                     <tr>
-                        <td class="align-middle">@(attendeeInnovationOrganizationEvaluationDto.InnovationOrganization.Name)</td>
-                        <td class="text-center align-middle">@(attendeeInnovationOrganizationEvaluationDto.AttendeeInnovationOrganizationEvaluation.Grade)</td>
-                        <td class="text-center align-middle">@(attendeeInnovationOrganizationEvaluationDto.AttendeeInnovationOrganizationEvaluation.CreateDate.ToBrazilTimeZone().ToShortDateString())</td>
+                        <td class="align-middle">@(attendeeCollaboratorAudiovisualCommissionEvaluationDto.Project.GetTitleByLanguageCode(ViewBag.UserInterfaceLanguage))</td>
+                        <td class="text-center align-middle">@(attendeeCollaboratorAudiovisualCommissionEvaluationDto.CommissionEvaluation.Grade)</td>
+                        <td class="text-center align-middle">@(attendeeCollaboratorAudiovisualCommissionEvaluationDto.CommissionEvaluation.CreateDate.ToBrazilTimeZone().ToShortDateString())</td>
                         <td class="align-middle pb-0 mb-0">
                             @{
                                 var icon = "fa-diagnoses";
@@ -39,7 +39,7 @@
                                 var text = Labels.UnderEvaluation;
                                 if (isProjectEvaluationEnded)
                                 {
-                                    if (approvedAttendeeInnovationOrganizationIds.Contains(attendeeInnovationOrganizationEvaluationDto.AttendeeInnovationOrganization.Id))
+                                    if (approvedProjectsIds.Contains(attendeeCollaboratorAudiovisualCommissionEvaluationDto.Project.Id))
                                     {
                                         icon = "fa-thumbs-up";
                                         color = "success";
@@ -60,7 +60,7 @@
                                                 @text
                                                 @if (isProjectEvaluationEnded)
                                                 {
-                                                    <b>@("(" + (attendeeInnovationOrganizationEvaluationDto.AttendeeInnovationOrganization.Grade?.ToString() ?? "-") + ")")</b>
+                                                    <b>@("(" + (attendeeCollaboratorAudiovisualCommissionEvaluationDto.Project.CommissionGrade?.ToString() ?? "-") + ")")</b>
                                                 }
                                             </span>
                                         </label>

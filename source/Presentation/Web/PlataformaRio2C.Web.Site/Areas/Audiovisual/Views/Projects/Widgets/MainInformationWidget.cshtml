@@ -1,0 +1,207 @@
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Statics
+@model ProjectDto
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var currentEvaluation = Model.GetProjectCommissionEvaluationDtoByUserId(userAccessControlDto?.User?.Id ?? 0);
+    var approvedProjectsIds = ViewBag.ApprovedProjectsIds as int[];
+    var isThisProjectApproved = (approvedProjectsIds?.Contains(Model.Project.Id) == true);
+}
+<div class="kt-portlet__body">
+    <div class="kt-widget kt-widget--user-profile-3">
+        <div class="kt-widget__top">
+            <div style="float: right;">
+                <a href="@Url.Action("Details", "Producers", new { Area = "Audiovisual", id = Model.SellerAttendeeOrganizationDto?.Organization?.Uid })" target="_blank">
+                    @if (Model.SellerAttendeeOrganizationDto?.Organization?.HasImage() == true)
+                    {
+                        <div class="kt-widget__media">
+                            <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, Model.SellerAttendeeOrganizationDto.Organization.Uid, Model.SellerAttendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="image">
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest" style="width: 110px; height: 110px;">
+                            @(Model.SellerAttendeeOrganizationDto?.Organization?.GetTradeNameAbbreviation() ?? "-")
+                        </div>
+                    }
+                </a>
+            </div>
+            <div class="kt-widget__content" style="overflow: hidden;">
+                <div class="kt-widget__info col-md-12 mr-0 pr-0 pl-0">
+                    <div class="kt-widget__desc pl-0 @(Model?.Project?.IsPitching == true ? "col-md-6" : "col-md-12")">
+                        <div class="kt-widget__head">
+                            <span class="kt-widget__username">
+                                @(Model.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value ?? "-")
+                            </span>
+                        </div>
+                        <div class="kt-widget__subhead pt-0">
+                            @Labels.Producer: <a href="@Url.Action("Details", "Producers", new { Area = "Audiovisual", id = Model.SellerAttendeeOrganizationDto?.Organization?.Uid })" target="_blank">@(Model.SellerAttendeeOrganizationDto?.Organization?.TradeName ?? "-")</a>
+                            @if (!string.IsNullOrEmpty(Model.SellerAttendeeOrganizationDto?.Organization?.Document))
+                            {
+                                @:- @(Model.SellerAttendeeOrganizationDto?.Organization.Document)
+                            }
+                        </div>
+                        @if (Model.Project?.IsPitching == true)
+                        {
+                            <div class="kt-widget__subhead pt-0 mt-0">
+                                <span class="kt-badge kt-badge--inline kt-badge--info">@Labels.Pitching</span>
+                            </div>
+                        }
+                    </div>
+                    @if (Model.Project?.IsPitching == true)
+                    {
+                        <div class="kt-widget__desc myrio2c-evaluation-position col-md-6 pr-0">
+                            <div class="kt-widget__text pull-right" data-id="EvaluationGradeMain">
+                                @if (editionDto?.IsAudiovisualCommissionProjectEvaluationStarted() != true)
+                                {
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="myrio2c-alert-box danger mx-auto text-center">
+                                                <span>@Messages.OutOfEvaluationPeriod</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else if (editionDto?.IsAudiovisualCommissionProjectEvaluationOpen() == true)
+                                {
+                                    var hasCurrentEvaluation = currentEvaluation != null;
+                                    if (hasCurrentEvaluation)
+                                    {
+                                        <div class="view">
+                                            <form class="form-inline">
+                                                <div class="form-group">
+                                                    <div class="myrio2c-evaluation-grade-box-lg form-control" data-toggle="tooltip" title="@Labels.ClickHereToEvaluateProject" onclick="MyRio2cCommon.enableFieldEdit({ dataId: 'EvaluationGradeMain' })" style="cursor: pointer;">
+                                                        <span class="grade-label mr-2">@Labels.Evaluation</span>
+                                                        <span class="grade-vote">@(currentEvaluation?.CommissionEvaluation?.Grade)</span>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    }
+                                    <div class="edit @(hasCurrentEvaluation ? "d-none" : "")">
+                                        <form class="form-inline myrio2c-evaluation-grade-box-form justify-content-center">
+                                            <div class="form-group font-weight-bold ml-3 mr-3 mt-2 mb-2">@Labels.EvaluateProject</div>
+                                            <div class="form-group mt-2 mb-2 mr-3">
+                                                @Html.TextBox("ProjectEvaluationGradeMain", currentEvaluation?.CommissionEvaluation?.Grade, new { @class = "form-control text-center decimal-globalize-mask", placeholder = Labels.Grade, style = "width: 105px;" })
+                                            </div>
+                                            <button type="button" class="btn btn-success mt-2 mb-2 mr-3" onclick="AudiovisualProjectsMainInformationWidget.submitEvaluationGrade('@Model.Project.Id');">@Labels.Evaluate</button>
+                                            @if (hasCurrentEvaluation)
+                                            {
+                                                <button type="button" class="btn btn-secondary mt-2 mb-2 mr-2 pl-4" onclick="MyRio2cCommon.disableFieldEdit({ dataId: 'EvaluationGradeMain' })" data-toggle="tooltip" title="@(Labels.Cancel)">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                            }
+                                        </form>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <form class="form-inline">
+                                        <div class="form-group mb-2">
+                                            <div class="myrio2c-evaluation-grade-box-lg form-control">
+                                                <span class="grade-label mr-2">@Labels.Average</span>
+                                                <span class="grade-vote">@(Model.Project?.CommissionGrade?.ToString() ?? "-")</span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="kt-widget__bottom">
+            @{
+                var summaryDto = Model.GetSummaryDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
+                var logLineDto = Model.GetLogLineDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
+            }
+            @if (logLineDto != null)
+            {
+                <div class="kt-widget__item w-100">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.LogLines</span>
+                        <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Html.Raw(logLineDto.ProjectLogLine?.Value?.Replace("\n", "<br/>") ?? "-"))</span></span>
+                    </div>
+                </div>
+            }
+            @if (summaryDto != null)
+            {
+                <div class="kt-widget__item w-100">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.Summary</span>
+                        <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Html.Raw(summaryDto.ProjectSummary?.Value?.Replace("\n", "<br/>") ?? "-"))</span></span>
+                    </div>
+                </div>
+            }
+            <div class="kt-widget__item w-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.TotalPlayingTime</span>
+                    <span class="kt-widget__value"><span>@(Model.Project?.TotalPlayingTime ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.NumberOfEpisodes</span>
+                    <span class="kt-widget__value"><span>@(Model.Project?.NumberOfEpisodes?.ToString() ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.EachEpisodePlayingTime</span>
+                    <span class="kt-widget__value"><span>@(Model.Project?.EachEpisodePlayingTime ?? "-")</span></span>
+                </div>
+            </div>
+            @{
+                var productionPlanDto = Model.GetProductionPlanDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
+            }
+            @if (productionPlanDto != null)
+            {
+                <div class="kt-widget__item w-100">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.ProductionPlan</span>
+                        <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Html.Raw(productionPlanDto.ProjectProductionPlan?.Value?.Replace("\n", "<br/>") ?? "-"))</span></span>
+                    </div>
+                </div>
+            }
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.ValuePerEpisode</span>
+                    <span class="kt-widget__value"><span>@(Model.Project?.ValuePerEpisode?.ToString() ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.TotalValueOfProject</span>
+                    <span class="kt-widget__value"><span>@(Model.Project?.TotalValueOfProject?.ToString() ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.ValueAlreadyRaised</span>
+                    <span class="kt-widget__value"><span>@(Model.Project?.ValueAlreadyRaised?.ToString() ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.ValueStillNeeded</span>
+                    <span class="kt-widget__value"><span>@(Model.Project?.ValueStillNeeded?.ToString() ?? "-")</span></span>
+                </div>
+            </div>
+            @{
+                var additionalInformationDto = Model.GetAdditionalInformationDtoByLanguageCode(ViewBag.UserInterfaceLanguage);
+            }
+            @if (additionalInformationDto != null)
+            {
+                <div class="kt-widget__item w-100">
+                    <div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.AdditionalInformation</span>
+                        <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Html.Raw(additionalInformationDto.ProjectAdditionalInformation?.Value?.Replace("\n", "<br/>") ?? "-"))</span></span>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

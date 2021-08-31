@@ -1,4 +1,5 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Constants
 @model AttendeeCollaboratorSiteDetailsDto
 @{
     ViewBag.Title = $"{Labels.Member}  {Model.Collaborator.GetFullName()}";
@@ -10,18 +11,14 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
-                    <!--begin:Main Information Widget-->
                     <div class="col-12">
-                        <div id="MusicCommissionMainInformationWidget" class="kt-portlet" style="min-height: 325px;"></div>
+                        <div id="MainInformationWidget" class="kt-portlet" style="min-height: 325px;"></div>
                     </div>
-                    <!--end:Main Information Widget-->
                 </div>
                 <div class="row">
-                    <!--begin:Social Networks Widget-->
                     <div class="col-12">
-                        <div id="MusicCommissionSocialNetworksWidget" class="kt-portlet" style="min-height: 325px;"></div>
+                        <div id="SocialNetworksWidget" class="kt-portlet" style="min-height: 325px;"></div>
                     </div>
-                    <!--end:Social Networks Widget-->
                 </div>
                 <div class="row">
                     <div class="col-12">
@@ -37,7 +34,7 @@
         <!--begin:Api Configurations Widget-->
         <div class="row">
             <div class="col-12">
-                <div id="MusicCommissionOnboardingInfoWidget" class="kt-portlet" style="min-height: 325px;"></div>
+                <div id="OnboardingInfoWidget" class="kt-portlet" style="min-height: 325px;"></div>
             </div>
         </div>
         <!--end:Api Configurations Widget-->
@@ -59,14 +56,12 @@
     @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/addresses.form.js")
     @Scripts.Render("~/bundles/js/music.commissions.details.js")
-    <script>
-        // Page translations ----------------------------------------------------------------------
-
+<script>
         jQuery(document).ready(function () {
-            CollaboratorsMainInformationWidget.init();
-            CollaboratorsSocialNetworksWidget.init();
-            CollaboratorsOnboardingInfoWidget.init();
+            CollaboratorsMainInformationWidget.init('@(CollaboratorType.CommissionAudiovisual)');
+            CollaboratorsSocialNetworksWidget.init('@(CollaboratorType.CommissionAudiovisual)');
+            CollaboratorsOnboardingInfoWidget.init('@(CollaboratorType.CommissionAudiovisual)');
             MusicCommissionsEvaluationsWidget.init();
         });
-    </script>
+</script>
 }

@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-26-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-18-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 08-28-2021
 // ***********************************************************************
 // <copyright file="CollaboratorType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -53,6 +53,21 @@ namespace PlataformaRio2C.Domain.Constants
         public static readonly string[] Executives =
         {
             ExecutiveAudiovisual, ExecutiveMusic, ExecutiveInnovation
+        };
+
+        public static readonly string[] Audiovisuals =
+        {
+            AdminAudiovisual, CommissionAudiovisual, ExecutiveAudiovisual, Industry
+        };
+
+        public static readonly string[] Musics =
+        {
+            AdminMusic, CommissionMusic, ExecutiveMusic, Music
+        };
+
+        public static readonly string[] Innovations =
+        {
+            AdminInnovation, CommissionInnovation, ExecutiveInnovation, Innovation
         };
 
         #region Networks

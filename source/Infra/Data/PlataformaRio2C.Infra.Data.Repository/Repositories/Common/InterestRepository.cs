@@ -87,6 +87,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>
+        /// Finds the by attendee collaborator identifier.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
+        /// <returns></returns>
+        internal static IQueryable<Interest> FindByAttendeeCollaboratorId(this IQueryable<Interest> query, int attendeeCollaboratorId)
+        {
+            query = query.Where(ioto => ioto.CommissionAttendeeCollaboratorInterests
+                                                .Where(caci => !caci.IsDeleted)
+                                                .Any(caci => caci.AttendeeCollaboratorId == attendeeCollaboratorId));
+
+            return query;
+        }
     }
 
     #endregion
@@ -185,6 +200,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return await query
                 .Order()
                 .ToListAsync();
+        }
+
+        /// <summary>
+        /// Finds all by attendee collaborator identifier asynchronous.
+        /// </summary>
+        /// <param name="attendeeCollaboratorId">The attendee collaborator identifier.</param>
+        /// <returns></returns>
+        public async Task<List<Interest>> FindAllByAttendeeCollaboratorIdAsync(int attendeeCollaboratorId)
+        {
+            var query = this.GetBaseQuery()
+                            .FindByAttendeeCollaboratorId(attendeeCollaboratorId)
+                            .Order();
+
+            return await query.ToListAsync();
         }
 
         #region Old

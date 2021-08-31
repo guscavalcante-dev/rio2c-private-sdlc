@@ -1,6 +1,8 @@
-﻿@model AudiovisualProjectSearchViewModel
+﻿@using PlataformaRio2C.Domain.Dtos
+@model AudiovisualProjectSearchViewModel
 @{
     ViewBag.Title = Labels.Projects;
+    var editionDto = ViewBag.EditionDto as EditionDto;
 }
 <!--begin:: Quick Stats-->
 <div class="row">
@@ -28,14 +30,27 @@
     @Scripts.Render("~/bundles/js/audiovisual.projects.list.js")
     @Scripts.Render("~/bundles/js/audiovisual.projects.editioncount.widget.js")
     @Scripts.Render("~/bundles/js/audiovisual.projects.delete.js")
-    <script>
+<script>
         // Page translations ----------------------------------------------------------------------
         var translations = {
             downloadPdfs: '@Labels.DownloadPdfs',
             confirmDownloadAll: '@Labels.ConfirmDownloadAllProjects',
             confirmDownloadSelected: '@Labels.ConfirmDownloadSelectedProjects',
-            pitching: '@Labels.Pitching'
+            pitching: '@Labels.Pitching',
+
+            underEvaluation: '@Labels.UnderEvaluation',
+            notCheckedForPitching: '@Labels.NotCheckedForPitching',
+            projectAccepted: '@Labels.ProjectAccepted',
+            projectRefused: '@Labels.ProjectRefused',
+            vote: '@Labels.Vote',
+            votes: '@Labels.Votes'
         };
+
+        var isProjectEvaluationClosed = @(Json.Encode(!editionDto.IsAudiovisualCommissionProjectEvaluationOpen()));
+        var searchKeywords = '@ViewBag.SearchKeywords';
+        var interestUid = '@ViewBag.InterestUid';
+        var evaluationStatusUid = '@ViewBag.EvaluationStatusUid';
+        var showPitchings = @(Json.Encode(ViewBag.ShowPitchings));
 
         // Pagination -----------------------------------------------------------------------------
         var initialPage = @(ViewBag.Page?.ToString() ?? "null");
@@ -46,5 +61,5 @@
             AudiovisualProjectsTotalCountWidget.init();
             AudiovisualProjectsEditionCountWidget.init();
         });
-    </script>
+</script>
 }

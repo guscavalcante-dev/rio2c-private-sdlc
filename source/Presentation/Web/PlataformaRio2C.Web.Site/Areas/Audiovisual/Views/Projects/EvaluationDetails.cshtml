@@ -1,0 +1,100 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model ProjectDto
+@{
+    ViewBag.Title = $"{Labels.AudiovisualCommission} {Model.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value}";
+    var totalProjectsCount = ViewBag.ProjectsTotalCount as int?;
+    var currentProjectIndex = ViewBag.CurrentProjectIndex as int?;
+
+    var previousStepEvent = Url.Action("PreviousEvaluationDetails", "Projects", new
+    {
+        Area = "Audiovisual",
+        id = Model.Project.Id,
+        searchKeywords = ViewBag.SearchKeywords,
+        interestUid = ViewBag.InterestUid,
+        evaluationStatusUid = ViewBag.EvaluationStatusUid,
+        Page = ViewBag.Page,
+        pageSize = ViewBag.PageSize
+    });
+
+    var nextStepEvent = Url.Action("NextEvaluationDetails", "Projects", new
+    {
+        Area = "Audiovisual",
+        id = Model.Project.Id,
+        searchKeywords = ViewBag.SearchKeywords,
+        interestUid = ViewBag.InterestUid,
+        evaluationStatusUid = ViewBag.EvaluationStatusUid,
+        Page = ViewBag.Page,
+        pageSize = ViewBag.PageSize
+    });
+}
+@Html.Hidden("AggregateId", Model.Project.Uid)
+
+<div class="row">
+    <div class="col-md-12 d-flex justify-content-end pb-3 pr-4">
+        <div class="row d-flex font-weight-bold text-white" style="align-items: center;">
+            <div class="mr-3">
+                <span>@currentProjectIndex @Labels.Of @totalProjectsCount @Labels.Projects</span>
+            </div>
+            <button class="btn btn-outline-secondary mr-2" onclick="location.href='@previousStepEvent'">
+                <span class="font-weight-bold text-white"><</span>
+            </button>
+            <button class="btn btn-outline-secondary" onclick="location.href='@nextStepEvent'">
+                <span class="font-weight-bold text-white">></span>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12">
+                <div id="ProjectMainInformationWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div id="ProjectInterestWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div id="ProjectLinksWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+        </div>
+        @if (Model.Project.IsPitching == true)
+        {
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="ProjectEvaluationWidget" class="kt-portlet" style="min-height: 296px;"></div>
+                </div>
+                <div class="col-md-6">
+                    <div id="ProjectEvaluatorsWidget" class="kt-portlet" style="min-height: 296px;"></div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section Styles {
+    @Styles.Render("~/bundles/css/select2.css")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/js/select2.js")
+    @Scripts.Render("~/bundles/js/inputmask.js")
+    @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/audiovisual.projects.widget.js")
+    @Scripts.Render("~/bundles/js/audiovisual.projects.evaluation.widget.js")
+    <script>
+        jQuery(document).ready(function () {
+            AudiovisualProjectsMainInformationWidget.init();
+            AudiovisualProjectsInterestWidget.init();
+            AudiovisualProjectsLinksWidget.init();
+            @if (Model.Project.IsPitching == true)
+            {
+                <text>
+                    AudiovisualProjectsCommissionEvaluationWidget.init();
+                    AudiovisualProjectsEvaluatorsWidget.init();
+                </text>
+            }
+        });
+    </script>
+}

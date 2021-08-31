@@ -5596,7 +5596,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exibir pitchings.
+        ///   Looks up a localized string similar to Exibir somente pitchings.
         /// </summary>
         public static string ShowPitchings {
             get {

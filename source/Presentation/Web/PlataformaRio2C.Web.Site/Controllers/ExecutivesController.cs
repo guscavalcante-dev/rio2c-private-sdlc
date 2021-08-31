@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 10-09-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-20-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 08-28-2021
 // ***********************************************************************
 // <copyright file="ExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -76,6 +76,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             return View(attendeeCollaboratorDto);
         }
 
+        //TODO: Refactor: Move MainInformationWidget & SocialNetworksWidget to a CollaboratorsController!
         #region Main Information Widget
 
         /// <summary>Shows the main information widget.</summary>
@@ -269,7 +270,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
 
-                cmd = new UpdateCollaboratorSocialNetworks(socialNetworksWidgetDto);
+                cmd = new UpdateCollaboratorSocialNetworks(socialNetworksWidgetDto, null);
             }
             catch (DomainException ex)
             {
@@ -345,6 +346,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         #endregion
 
         #endregion
+
 
         #region Company Widget
 

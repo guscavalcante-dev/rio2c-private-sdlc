@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-17-2021
+// Last Modified On : 08-28-2021
 // ***********************************************************************
 // <copyright file="Project.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -914,7 +914,7 @@ namespace PlataformaRio2C.Domain.Entities
                     evaluatorUser.Id));
             }
 
-            this.CommissionGrade = this.GetAverageEvaluation(this.SellerAttendeeOrganization.Edition); //TODO: Why Project hasn't EditionId? 
+            this.CommissionGrade = this.GetAverageEvaluation(this.SellerAttendeeOrganization.Edition);
             this.CommissionEvaluationsCount = this.GetCommissionEvaluationsTotalCount();
             this.LastCommissionEvaluationDate = DateTime.UtcNow;
             this.IsAdmin = isAdmin;
@@ -958,7 +958,7 @@ namespace PlataformaRio2C.Domain.Entities
         private CommissionEvaluation GetCommissionEvaluationByEvaluatorId(int evaluatorUserId)
         {
             return this.FindAllCommissionEvaluationsNotDeleted().FirstOrDefault(ce =>
-                //ce.AttendeeInnovationOrganization.EditionId == this.EditionId && //TODO: Why Project hasn't EditionId? 
+                ce.Project.SellerAttendeeOrganization.EditionId == this.SellerAttendeeOrganization.EditionId &&
                 ce.EvaluatorUserId == evaluatorUserId);
         }
 
@@ -969,7 +969,7 @@ namespace PlataformaRio2C.Domain.Entities
         private int GetCommissionEvaluationsTotalCount()
         {
             return this.FindAllCommissionEvaluationsNotDeleted()
-                .Count(); //.Count(aioe => aioe.AttendeeInnovationOrganization.EditionId == this.EditionId); //TODO: Why Project hasn't EditionId? 
+                .Count(ce => (ce.Project.SellerAttendeeOrganization.EditionId == this.SellerAttendeeOrganization.EditionId));
         }
 
         /// <summary>

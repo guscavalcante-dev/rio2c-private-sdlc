@@ -1,0 +1,65 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@using System.Linq;
+@model ProjectDto
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+    var currentEvaluation = Model.GetProjectCommissionEvaluationDtoByUserId(userAccessControlDto?.User?.Id ?? 0);
+    var approvedProjectsIds = ViewBag.ApprovedProjectsIds as int[];
+    var isThisProjectApproved = approvedProjectsIds?.Contains(Model.Project.Id) == true;
+}
+@if (editionDto?.IsAudiovisualCommissionProjectEvaluationOpen() == true)
+{
+    var hasCurrentEvaluation = currentEvaluation != null;
+    if (hasCurrentEvaluation)
+    {
+        <form class="form-inline justify-content-center">
+            <div class="form-group mb-2">
+                <div class="myrio2c-evaluation-grade-box-lg form-control">
+                    <span class="grade-label mr-2">@Labels.Evaluation</span>
+                    <span class="grade-vote">@(currentEvaluation?.CommissionEvaluation?.Grade ?? 0)</span>
+                </div>
+            </div>
+        </form>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-12 mb-2">
+                <div class="myrio2c-alert-box warning mx-auto text-center">
+                    <span>@Messages.NotEvaluated</span>
+                </div>
+            </div>
+        </div>
+    }
+}
+else if (editionDto?.IsAudiovisualCommissionProjectEvaluationEnded() == true)
+{
+    var icon = "fa-diagnoses";
+    var color = "warning";
+    var status = Labels.UnderEvaluation;
+
+    if (isThisProjectApproved)
+    {
+        icon = "fa-thumbs-up";
+        color = "success";
+        status = Labels.ProjectAccepted;
+    }
+    else
+    {
+        icon = "fa-thumbs-down";
+        color = "danger";
+        status = Labels.ProjectRefused;
+    }
+    <form class="form-inline justify-content-center">
+        <span class="btn btn-label-@(color) mb-2 mr-4">
+            <i class="fa @(icon) mr-1"></i> @status
+        </span>
+        <div class="form-group mb-2">
+            <div class="myrio2c-evaluation-grade-box-sm form-control">
+                <span class="grade-label mr-2">@Labels.Average</span>
+                <span class="grade-vote">@(Model.Project?.CommissionGrade?.ToString() ?? "-")</span>
+            </div>
+        </div>
+    </form>
+}

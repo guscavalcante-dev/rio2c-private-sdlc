@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-02-2021
+// Last Modified On : 08-28-2021
 // ***********************************************************************
 // <copyright file="StringExtensions.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -236,6 +236,33 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         public static List<Guid> ToListGuid(this string s, char separator)
         {
             var list = new List<Guid>();
+
+            var splitted = s?.Split(separator);
+            if (splitted == null || splitted.Length <= 0)
+            {
+                return list;
+            }
+
+            foreach (var split in splitted)
+            {
+                if (Guid.TryParse(split, out Guid guid))
+                {
+                    list.Add(guid);
+                }
+            }
+
+            return list;
+        }
+
+        /// <summary>
+        /// Converts to listnullableguid.
+        /// </summary>
+        /// <param name="s">The s.</param>
+        /// <param name="separator">The separator.</param>
+        /// <returns></returns>
+        public static List<Guid?> ToListNullableGuid(this string s, char separator)
+        {
+            var list = new List<Guid?>();
 
             var splitted = s?.Split(separator);
             if (splitted == null || splitted.Length <= 0)

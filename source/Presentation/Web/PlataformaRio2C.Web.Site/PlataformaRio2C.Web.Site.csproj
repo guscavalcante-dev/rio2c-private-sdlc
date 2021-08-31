@@ -338,6 +338,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SimpleInjectorInitializer.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Audiovisual\Controllers\ProjectsController.cs" />
+    <Compile Include="Areas\Audiovisual\AudiovisualAreaRegistration.cs" />
     <Compile Include="Areas\Innovation\Controllers\ProjectsController.cs" />
     <Compile Include="Areas\Innovation\InnovationAreaRegistration.cs" />
     <Compile Include="Areas\Music\Controllers\MusicBandController.cs" />
@@ -822,6 +824,9 @@
     <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
     <Content Include="Assets\js\attendeeorganizations\attendeeorganizations.form.js" />
+    <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.commission.evaluation.widget.js" />
+    <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.interest.widget.js" />
+    <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.links.widget.js" />
     <Content Include="Assets\js\companies\companies.executive.widget.js" />
     <Content Include="Assets\js\companies\companies.interest.widget.js" />
     <Content Include="Assets\js\companies\companies.socialnetworks.widget.js" />
@@ -834,6 +839,10 @@
     <Content Include="Assets\js\executives\executives.socialnetworks.widget.js" />
     <Content Include="Assets\js\executives\executives.maininformation.widget.js" />
     <Content Include="Assets\js\executives\executives.logisticinfo.widget.js" />
+    <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.evaluation.list.widget.js" />
+    <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.evaluation.widget.js" />
+    <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.evaluators.widget.js" />
+    <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.maininformation.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.businessinformation.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.evaluation.list.widget.js" />
     <Content Include="Assets\js\innovation\projects\innovation.projects.evaluation.widget.js" />
@@ -6879,6 +6888,19 @@
     <Content Include="Areas\Innovation\Views\Projects\Widgets\FoundersWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Projects\Widgets\BusinessInformationWidget.cshtml" />
     <Content Include="Areas\Innovation\Views\Projects\Widgets\PresentationWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\EvaluationDetails.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\CommissionEvaluationList.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Index.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Shared\_Evaluation.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EvaluationListItemWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EvaluationListWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\MainInformationWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\web.config" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\InterestWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\LinksWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\AudiovisualCommissionEvaluationWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Projects\Widgets\AudiovisualCommissionEvaluatorsWidget.cshtml" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />
@@ -7653,7 +7675,7 @@
     <Content Include="Views\Shared\EditorTemplates\OrganizationRestrictionSpecificsBaseCommand.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\OrganizationActivityBaseCommand.cshtml" />
     <Content Include="Views\Shared\Widgets\BadgesWidget.cshtml" />
-    <Content Include="Views\Shared\Widgets\ProjectsWidget.cshtml" />
+    <Content Include="Views\Shared\Widgets\AudiovisualProjectsWidget.cshtml" />
     <Content Include="Views\Home\Widgets\WeConnectedWidget.cshtml" />
     <Content Include="Views\Companies\Details.cshtml" />
     <Content Include="Views\Companies\Widgets\AddressWidget.cshtml" />
@@ -7732,6 +7754,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Audiovisual\Data\" />
+    <Folder Include="Areas\Audiovisual\Views\Projects\Modals\" />
+    <Folder Include="Areas\Audiovisual\Views\Shared\" />
     <Folder Include="Areas\Innovation\Data\" />
     <Folder Include="Areas\Innovation\Views\Projects\Modals\" />
     <Folder Include="Areas\Innovation\Views\Shared\" />

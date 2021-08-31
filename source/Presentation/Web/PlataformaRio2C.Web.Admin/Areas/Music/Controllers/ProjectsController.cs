@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 03-01-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 08-31-2021
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -123,78 +123,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
 
             var approvedAttendeeMusicBandsIds = await this.musicProjectRepo.FindAllApprovedAttendeeMusicBandsIdsAsync(this.EditionDto.Id);
 
-            StringBuilder sb = new StringBuilder();
             foreach (var musicProjectJsonDto in musicProjectJsonDtos)
             {
-                #region Evaluation Column
-
-                var icon = "fa-diagnoses";
-                var color = "warning";
-                var text = Labels.UnderEvaluation;
-                bool isMusicProjectEvaluationClosed = !this.EditionDto.IsMusicProjectEvaluationOpen();
-
-                if (isMusicProjectEvaluationClosed)
-                {
-                    if (approvedAttendeeMusicBandsIds.Contains(musicProjectJsonDto.AttendeeMusicBandId))
-                    {
-                        icon = "fa-thumbs-up";
-                        color = "success";
-                        text = Labels.ProjectAccepted;
-                    }
-                    else
-                    {
-                        icon = "fa-thumbs-down";
-                        color = "danger";
-                        text = Labels.ProjectRefused;
-                    }
-                }
-
-                sb.Append($"<table class=\"image-side-text\">");
-                sb.Append($"    <tr>");
-                sb.Append($"        <td>");
-                sb.Append($"            <div class=\"col-md-12 justify-content-center\">");
-                sb.Append($"                <span class=\"kt-widget__button\" style=\"\" data-toggle=\"tooltip\" title=\"{text}\">");
-                sb.Append($"                    <label class=\"btn btn-label-{color} btn-sm m-1\">");
-                sb.Append($"                        <i class=\"fa {icon} p-0\"></i>");
-                sb.Append($"                    </label>");
-                sb.Append($"                </span>");
-                if (isMusicProjectEvaluationClosed)
-                {
-                    sb.Append($"            <span class=\"margin-left: 5px;\">");
-                    sb.Append($"                <b>{musicProjectJsonDto.Grade?.ToString() ?? "-"}</b>");
-                    sb.Append($"            </span>");
-                }
-                sb.Append($"                <span class=\"margin-left: 5px;\">");
-                sb.Append($"                    ({musicProjectJsonDto.EvaluationsCount} {(musicProjectJsonDto.EvaluationsCount == 1 ? Labels.Vote : Labels.Votes)})");
-                sb.Append($"                </span>");
-                sb.Append($"            </div>");
-                sb.Append($"        </td>");
-                sb.Append($"    </tr>");
-                sb.Append($"</table>");
-                musicProjectJsonDto.EvaluationHtmlString = sb.ToString();
-                sb.Clear();
-
-                #endregion
-
-                #region Menu Actions Column
-
-                sb.Append($"<span class=\"dropdown\">");
-                sb.Append($"     <a href = \"#\" class=\"btn btn-sm btn-clean btn-icon btn-icon-md\" data-toggle=\"dropdown\" aria-expanded=\"true\">");
-                sb.Append($"         <i class=\"la la-ellipsis-h\"></i>");
-                sb.Append($"     </a>");
-                sb.Append($"     <div class=\"dropdown-menu dropdown-menu-right\">");
-                sb.Append($"        <button class=\"dropdown-item\" onclick=\"MusicProjectsDataTableWidget.showDetails({musicProjectJsonDto.MusicProjectId}, '', '{musicGenreUid}', '{evaluationStatusUid}', '{page}', '{pageSize}');\">");
-                sb.Append($"            <i class=\"la la-eye\"></i> {@Labels.View}");
-                sb.Append($"        </button>");
-                sb.Append($"        <button class=\"dropdown-item\" onclick=\"MusicProjectsDelete.showModal({musicProjectJsonDto.MusicProjectId});\">");
-                sb.Append($"            <i class=\"la la-remove\"></i> {Labels.Remove}");
-                sb.Append($"        </button>");
-                sb.Append($"    </div>");
-                sb.Append($"</span>");
-                musicProjectJsonDto.MenuActionsHtmlString = sb.ToString();
-                sb.Clear();
-
-                #endregion
+                musicProjectJsonDto.IsApproved = approvedAttendeeMusicBandsIds.Contains(musicProjectJsonDto.AttendeeMusicBandId);
 
                 #region Translate MusicBandTypeName
 
@@ -249,7 +180,12 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
             return Json(new
             {
                 status = "success",
-                dataTable = response
+                dataTable = response,
+                searchKeywords = request.Search?.Value,
+                musicGenreUid,
+                evaluationStatusUid,
+                page,
+                pageSize
             }, JsonRequestBehavior.AllowGet);
         }
 

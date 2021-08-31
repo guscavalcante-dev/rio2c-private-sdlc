@@ -1,6 +1,8 @@
-﻿@model CollaboratorSearchViewModel
+﻿@using PlataformaRio2C.Domain.Dtos
+@model CollaboratorSearchViewModel
 @{
     ViewBag.Title = Labels.ProjectsForPitching;
+    var editionDto = ViewBag.EditionDto as EditionDto;
 }
 <!--begin:: Quick Stats-->
 <div class="row">
@@ -31,14 +33,22 @@
 <script>
         // Page translations ----------------------------------------------------------------------
         var translations = {
+            underEvaluation: '@Labels.UnderEvaluation',
+            notCheckedForPitching: '@Labels.NotCheckedForPitching',
+            projectAccepted: '@Labels.ProjectAccepted',
+            projectRefused: '@Labels.ProjectRefused',
+            vote: '@Labels.Vote',
+            votes: '@Labels.Votes'
         };
+
+        var isProjectEvaluationClosed = @(Json.Encode(!editionDto.IsMusicProjectEvaluationOpen()));
+        var searchKeywords = '@ViewBag.SearchKeywords';
+        var musicGenreUid = '@ViewBag.MusicGenreUid';
+        var evaluationStatusUid = '@ViewBag.EvaluationStatusUid';
 
         // Pagination -----------------------------------------------------------------------------
         var initialPage = @(ViewBag.Page?.ToString() ?? "null");
         var initialPageSize = @(ViewBag.PageSize?.ToString() ?? "null");
-        var searchKeywords = '@ViewBag.SearchKeywords';
-        var musicGenreUid = '@ViewBag.MusicGenreUid';
-        var evaluationStatusUid = '@ViewBag.EvaluationStatusUid';
 
         jQuery(document).ready(function () {
             MusicProjectsDataTableWidget.init();

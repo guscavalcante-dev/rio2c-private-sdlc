@@ -1,24 +1,24 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Renan Valentim
-// Created          : 08-14-2021
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 06-20-2020
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 08-14-2021
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 06-21-2021
 // ***********************************************************************
-// <copyright file="audiovisual.commissions.socialnetworks.widget.js" company="Softo">
+// <copyright file="audiovisual.projects.interest.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var AudiovisualCommissionsSocialNetworksWidget = function () {
+var AudiovisualProjectsInterestWidget = function () {
 
-    var widgetElementId = '#AudiovisualCommissionSocialNetworksWidget';
+    var widgetElementId = '#ProjectInterestWidget';
     var widgetElement = $(widgetElementId);
 
-    var updateModalId = '#UpdateSocialNetworksModal';
-    var updateFormId = '#UpdateSocialNetworksForm';
+    var updateModalId = '#UpdateInterestModal';
+    var updateFormId = '#UpdateInterestForm';
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
@@ -31,9 +31,9 @@ var AudiovisualCommissionsSocialNetworksWidget = function () {
         }
 
         var jsonParameters = new Object();
-        jsonParameters.collaboratorUid = $('#AggregateId').val();
+        jsonParameters.projectUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Commissions/ShowSocialNetworksWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/ShowInterestWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -41,13 +41,15 @@ var AudiovisualCommissionsSocialNetworksWidget = function () {
                     enableShowPlugins();
                 },
                 // Error
-                onError: function () {
+                onError: function() {
                 }
             });
         })
         .fail(function () {
+            //showAlert();
+            //MyRio2cCommon.unblock(widgetElementId);
         })
-        .always(function () {
+        .always(function() {
             MyRio2cCommon.unblock({ idOrClass: widgetElementId });
         });
     };
@@ -59,8 +61,8 @@ var AudiovisualCommissionsSocialNetworksWidget = function () {
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (AudiovisualCommissionsSocialNetworksWidget) !== 'undefined') {
-                    AudiovisualCommissionsSocialNetworksWidget.init();
+                if (typeof (AudiovisualProjectsInterestWidget) !== 'undefined') {
+                    AudiovisualProjectsInterestWidget.init();
                 }
             },
             onError: function (data) {
@@ -74,28 +76,34 @@ var AudiovisualCommissionsSocialNetworksWidget = function () {
     };
 
     var enableUpdatePlugins = function () {
+        MyRio2cCommon.enableAtLeastOnCheckboxByNameValidation(updateFormId);
         enableAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
+
+        // Enable additional info textbox
+        if (typeof (MyRio2cCommonAdditionalInfo) !== 'undefined') {
+            MyRio2cCommonAdditionalInfo.init();
+        }
     };
 
     var showUpdateModal = function () {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
-        jsonParameters.collaboratorUid = $('#AggregateId').val();
+        jsonParameters.projectUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Commissions/ShowUpdateSocialNetworksModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Projects/ShowUpdateInterestModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
-                data: data,
-                // Success
-                onSuccess: function () {
-                    enableUpdatePlugins();
-                    $(updateModalId).modal();
-                },
-                // Error
-                onError: function () {
-                }
-            });
+            data: data,
+            // Success
+            onSuccess: function () {
+                enableUpdatePlugins();
+                $(updateModalId).modal();
+            },
+            // Error
+            onError: function () {
+            }
+        });
         })
         .fail(function () {
         })
@@ -104,6 +112,20 @@ var AudiovisualCommissionsSocialNetworksWidget = function () {
         });
     };
 
+    //// Form submit --------------------------------------------------------------------------------
+    //var submit = function () {
+    //    var validator = $(updateFormId).validate();
+    //    var formValidation = $(updateFormId).valid();
+    //    //var interestsValidation = MyRio2cCommon.validateRequireOneGroup();
+
+    //    if (formValidation/* && interestsValidation*/) {
+    //        MyRio2cCommon.submitForm(updateFormId);
+    //    }
+    //    else {
+    //        validator.focusInvalid();
+    //    }
+    //};
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
@@ -111,6 +133,9 @@ var AudiovisualCommissionsSocialNetworksWidget = function () {
         },
         showUpdateModal: function () {
             showUpdateModal();
-        }
+        },
+        //submit: function () {
+        //    submit();
+        //}
     };
 }();

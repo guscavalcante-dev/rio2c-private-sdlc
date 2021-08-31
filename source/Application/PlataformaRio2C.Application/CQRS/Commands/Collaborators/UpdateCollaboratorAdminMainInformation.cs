@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-16-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-21-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 08-28-2021
 // ***********************************************************************
 // <copyright file="UpdateCollaboratorAdminMainInformation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -53,8 +53,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(50, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string CellPhone { get; set; }
 
-        public string CollaboratorTypeName { get; private set; }
-        
         [Display(Name = "BirthDate", ResourceType = typeof(Labels))]
         public DateTime? BirthDate { get; set; }
         
@@ -104,16 +102,21 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 
         [Display(Name = "HaveYouBeenToRio2CBefore", ResourceType = typeof(Labels))]
         public bool? HaveYouBeenToRio2CBefore { get; set; }
-        
-        public IEnumerable<Guid> EditionsUids { get; set; }
-
-        public IEnumerable<EditionDto> Editions { get; set; }
 
         [RequiredIf("HaveYouBeenToRio2CBefore", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneOption")]
-        public bool? HasEditionSelected { get;set; }
+        public bool? HasEditionSelected { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateCollaboratorAdminMainInformation"/> class.</summary>
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public string CollaboratorTypeName { get; set; }
+
+        public IEnumerable<Guid> EditionsUids { get; set; }
+        public IEnumerable<EditionDto> Editions { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateCollaboratorAdminMainInformation"/> class.
+        /// </summary>
         /// <param name="entity">The entity.</param>
+        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
         /// <param name="genders">The genders.</param>
         /// <param name="industries">The industries.</param>
         /// <param name="roles">The roles.</param>
@@ -122,7 +125,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="currentEditionId">The current edition identifier.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public UpdateCollaboratorAdminMainInformation(
-            AttendeeCollaboratorSiteMainInformationWidgetDto entity, 
+            AttendeeCollaboratorSiteMainInformationWidgetDto entity,
+            string collaboratorTypeName,
             List<CollaboratorGender> genders, 
             List<CollaboratorIndustry> industries, 
             List<CollaboratorRole> roles,
@@ -132,6 +136,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string userInterfaceLanguage)
             : base(entity, languagesDtos, false, false, false)
         {
+            this.CollaboratorTypeName = collaboratorTypeName;
+
             this.UpdateModelsAndLists(genders, industries, roles, editionsDtos, currentEditionId, userInterfaceLanguage);
             this.UpdateEditions(editionsDtos, entity.Collaborator, currentEditionId);
 

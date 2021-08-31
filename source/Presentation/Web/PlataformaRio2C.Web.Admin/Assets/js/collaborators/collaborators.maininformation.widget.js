@@ -1,39 +1,41 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Renan Valentim
-// Created          : 07-08-2021
+// Created          : 08-14-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-08-2021
+// Last Modified On : 08-14-2021
 // ***********************************************************************
-// <copyright file="innovation.commissions.maininformation.widget.js" company="Softo">
+// <copyright file="collaborators.maininformation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var InnovationCommissionsMainInformationWidget = function () {
+var CollaboratorsMainInformationWidget = function () {
 
-    var widgetElementId = '#InnovationCommissionMainInformationWidget';
+    var widgetElementId = '#MainInformationWidget';
     var widgetElement = $(widgetElementId);
 
     var updateModalId = '#UpdateMainInformationModal';
     var updateFormId = '#UpdateMainInformationForm';
+    var collaboratorTypeNameId = '#CollaboratorTypeName';
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         KTApp.initTooltips();
     };
 
-    var show = function () {
+    var show = function (collaboratorType) {
         if (widgetElement.length <= 0) {
             return;
         }
 
         var jsonParameters = new Object();
         jsonParameters.collaboratorUid = $('#AggregateId').val();
+        jsonParameters.collaboratorType = collaboratorType;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Commissions/ShowMainInformationWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Collaborators/ShowMainInformationWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -59,8 +61,8 @@ var InnovationCommissionsMainInformationWidget = function () {
             onSuccess: function (data) {
                 $(updateModalId).modal('hide');
 
-                if (typeof (InnovationCommissionsMainInformationWidget) !== 'undefined') {
-                    InnovationCommissionsMainInformationWidget.init();
+                if (typeof (CollaboratorsMainInformationWidget) !== 'undefined') {
+                    CollaboratorsMainInformationWidget.init($(collaboratorTypeNameId).val());
                 }
             },
             onError: function (data) {
@@ -92,7 +94,6 @@ var InnovationCommissionsMainInformationWidget = function () {
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
 
-
     var changePreviousEditionsRequired = function () {
 	    $("#HasEditionSelected").val($('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox:checked').length > 0 ? "True" : null);
 	    var dataValMsgFor = $('[data-valmsg-for="HasEditionSelected"]');
@@ -112,14 +113,15 @@ var InnovationCommissionsMainInformationWidget = function () {
 	    });
     }
 
-    var showUpdateModal = function () {
+    var showUpdateModal = function (collaboratorType) {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
         jsonParameters.collaboratorUid = $('#AggregateId').val();
         jsonParameters.isAddingToCurrentEdition = true;
+        jsonParameters.collaboratorType = collaboratorType;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Commissions/ShowUpdateMainInformationModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Collaborators/ShowUpdateMainInformationModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -140,12 +142,12 @@ var InnovationCommissionsMainInformationWidget = function () {
     };
 
     return {
-        init: function () {
+        init: function (collaboratorType) {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
-            show();
+            show(collaboratorType);
         },
-        showUpdateModal: function () {
-            showUpdateModal();
+        showUpdateModal: function (collaboratorType) {
+            showUpdateModal(collaboratorType);
         }
     };
 }();

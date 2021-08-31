@@ -4,7 +4,7 @@
 // Created          : 07-28-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-28-2021
+// Last Modified On : 08-28-2021
 // ***********************************************************************
 // <copyright file="AudiovisualComissionEvaluateProjectCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -86,7 +86,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             var project = await ProjectRepo.FindByIdAsync(cmd.ProjectId.Value);
             project.AudiovisualComissionEvaluateProject(
-                //editionDto.Edition, //TODO: Why Project hasn't EditionId? 
                 await userRepo.FindByIdAsync(cmd.UserId),
                 cmd.Grade.Value,
                 cmd.IsAdmin);

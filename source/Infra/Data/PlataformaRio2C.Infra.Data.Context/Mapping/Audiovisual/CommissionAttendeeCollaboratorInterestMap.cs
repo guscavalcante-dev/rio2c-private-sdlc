@@ -26,7 +26,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
 
             // Relationships
             this.HasRequired(caci => caci.Interest)
-                .WithMany()
+                .WithMany(i => i.CommissionAttendeeCollaboratorInterests)
                 .HasForeignKey(caci => caci.InterestId);
 
             this.HasRequired(caci => caci.AttendeeCollaborator)
