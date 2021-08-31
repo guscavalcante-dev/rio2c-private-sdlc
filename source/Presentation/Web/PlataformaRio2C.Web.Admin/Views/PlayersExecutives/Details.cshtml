@@ -20,6 +20,11 @@
                         <div id="SocialNetworksWidget" class="kt-portlet" style="min-height: 325px;"></div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div id="CollaboratorCompanyWidget" class="kt-portlet" style="min-height: 325px;"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -39,11 +44,12 @@
     @Scripts.Render("~/bundles/js/bootstrap-datepicker.js")
     @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/addresses.form.js")
-    @Scripts.Render("~/bundles/js/audiovisual.commissions.details.js")
+    @Scripts.Render("~/bundles/js/collaborators.details.js")
 <script>
         jQuery(document).ready(function () {
             CollaboratorsMainInformationWidget.init('@(CollaboratorType.ExecutiveAudiovisual)');
             CollaboratorsSocialNetworksWidget.init('@(CollaboratorType.ExecutiveAudiovisual)');
+            CollaboratorsCompanyWidget.init();
         });
 </script>
 }

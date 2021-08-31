@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-28-2021
+// Last Modified On : 08-31-2021
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -486,6 +486,15 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/collaborators.delete.js").Include(
                 "~/Assets/js/audiovisual/collaborators/collaborators.delete.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/collaborators.details.js").Include(
+                "~/Assets/js/collaborators/collaborators.maininformation.widget.js",
+                "~/Assets/js/collaborators/collaborators.socialnetworks.widget.js",
+                "~/Assets/js/collaborators/collaborators.onboardinginfo.widget.js",
+                "~/Assets/js/collaborators/collaborators.company.widget.js",
+                "~/Assets/js/companies/companyinfo.autocomplete.js",
+                "~/Assets/js/myrio2c.companynumber.js"
+                ));
+
             #endregion
 
             #region Collaborators - Speakers
@@ -509,7 +518,7 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/collaborators/collaborators.maininformation.widget.js",
                 "~/Assets/js/collaborators/collaborators.socialnetworks.widget.js",
                 "~/Assets/js/collaborators/collaborators.onboardinginfo.widget.js",
-                "~/Assets/js/speakers/speakers.company.widget.js",
+                "~/Assets/js/collaborators/collaborators.company.widget.js",
                 "~/Assets/js/speakers/speakers.conferences.widget.js",
                 "~/Assets/js/speakers/speakers.participants.widget.js",
                 "~/Assets/js/companies/companyinfo.autocomplete.js",

@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-26-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-23-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 08-31-2021
 // ***********************************************************************
 // <copyright file="collaborators.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -272,7 +272,7 @@ var CollaboratorsDataTableWidget = function () {
                         html += '<button class="dropdown-item" onclick="CollaboratorsDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
 
                         if (full.IsInCurrentEdition && full.IsInOtherEdition) {
-                            html += '<button class="dropdown-item" onclick="CollaboratorsDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + removeFromEdition + '</button>';
+                            html += '<button class="dropdown-item" onclick="CollaboratorsDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-remove"></i> ' + removeFromEdition + '</button>';
                         }
                         else {
                             html += '<button class="dropdown-item" onclick="CollaboratorsDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';

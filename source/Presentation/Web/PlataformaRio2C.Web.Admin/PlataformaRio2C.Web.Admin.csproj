@@ -856,6 +856,7 @@
     <Content Include="Assets\js\collaborators\collaborators.onboardinginfo.widget.js" />
     <Content Include="Assets\js\collaborators\collaborators.socialnetworks.widget.js" />
     <Content Include="Assets\js\collaborators\collaborators.maininformation.widget.js" />
+    <Content Include="Assets\js\collaborators\collaborators.company.widget.js" />
     <Content Include="Assets\js\editions\editions.events.widget.js" />
     <Content Include="Assets\js\editions\editions.create.js" />
     <Content Include="Assets\js\editions\editions.datatable.widget.js" />
@@ -1009,7 +1010,6 @@
     <Content Include="Assets\js\speakers\speakers.participants.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.editioncount.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.totalcount.widget.js" />
-    <Content Include="Assets\js\speakers\speakers.company.widget.js" />
     <Content Include="Assets\js\speakers\speakers.apiconfiguration.widget.js" />
     <Content Include="Assets\js\speakers\speakers.create.js" />
     <Content Include="Assets\js\speakers\speakers.datatable.widget.js" />
@@ -9684,8 +9684,6 @@
     <Content Include="Views\AdminMailerService\SpeakerWelcomeEmail.cshtml" />
     <Content Include="Views\SalesPlatforms\Modals\EventbriteCsvModal.cshtml" />
     <Content Include="Views\Speakers\Details.cshtml" />
-    <Content Include="Views\Speakers\Modals\UpdateMainInformationModal.cshtml" />
-    <Content Include="Views\Speakers\Modals\UpdateCompanyInfoModal.cshtml" />
     <Content Include="Views\Speakers\Widgets\ApiConfigurationWidget.cshtml" />
     <Content Include="Views\Speakers\Modals\UpdateApiConfigurationModal.cshtml" />
     <Content Include="Views\Speakers\Modals\UpdateApiConfigurationForm.cshtml" />
@@ -9802,7 +9800,6 @@
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\DataTableWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EditionCountWidget.cshtml" />
-    <Content Include="Views\Speakers\Modals\UpdateSocialNetworksModal.cshtml" />
     <Content Include="Views\Shared\Collaborators\Widgets\OnboardingInfoWidget.cshtml" />
     <Content Include="Views\AdminMailerService\MusicCommissionWelcomeEmail.cshtml" />
     <Content Include="Views\Shared\SocialNetworks\_WebsiteItem.cshtml" />
@@ -9903,6 +9900,8 @@
     <Content Include="Views\Collaborators\Modals\UpdateSocialNetworksModal.cshtml" />
     <Content Include="Views\Collaborators\Widgets\OnboardingInfoWidget.cshtml" />
     <Content Include="Views\PlayersExecutives\Details.cshtml" />
+    <Content Include="Views\Collaborators\Widgets\CompanyWidget.cshtml" />
+    <Content Include="Views\Collaborators\Modals\UpdateCompanyInfoModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

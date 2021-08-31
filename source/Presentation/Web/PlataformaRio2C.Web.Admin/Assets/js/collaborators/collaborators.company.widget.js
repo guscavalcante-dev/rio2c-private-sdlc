@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Rafael Dantas Ruiz
-// Created          : 12-16-2019
+// Author           : Renan Valentim
+// Created          : 08-31-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-18-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 08-31-2021
 // ***********************************************************************
-// <copyright file="speakers.company.widget.js" company="Softo">
+// <copyright file="collaborators.company.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -14,7 +14,7 @@
 
 var CollaboratorsCompanyWidget = function () {
 
-    var widgetElementId = '#SpeakerCompanyWidget';
+    var widgetElementId = '#CollaboratorCompanyWidget';
     var widgetElement = $(widgetElementId);
 
     var createModalId = '#UpdateCompanyInfoModal';
@@ -23,6 +23,7 @@ var CollaboratorsCompanyWidget = function () {
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         KTApp.initTooltips();
+        MyRio2cCommon.initScroll();
     };
 
     var show = function () {
@@ -31,9 +32,9 @@ var CollaboratorsCompanyWidget = function () {
         }
 
         var jsonParameters = new Object();
-        jsonParameters.collaboratorUid = $('#SpeakerAggregateId').val();
+        jsonParameters.collaboratorUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/ShowCompanyWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Collaborators/ShowCompanyWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -94,10 +95,10 @@ var CollaboratorsCompanyWidget = function () {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
-        jsonParameters.collaboratorUid = $('#SpeakerAggregateId').val();
+        jsonParameters.collaboratorUid = $('#AggregateId').val();
         jsonParameters.organizationUid = organizationUid;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/ShowUpdateCompanyInfoModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Collaborators/ShowUpdateCompanyInfoModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -125,7 +126,7 @@ var CollaboratorsCompanyWidget = function () {
         jsonParameters.collaboratorUid = $('#AggregateId').val();
         jsonParameters.organizationUid = organizationUid;
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/DeleteOrganization'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Collaborators/DeleteOrganization'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
