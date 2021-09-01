@@ -17,7 +17,7 @@
     <div class="kt-widget kt-widget--user-profile-3">
         <div class="kt-widget__top">
             <div style="float: right;">
-                <a href="@Url.Action("EvaluationDetails", "Projects", new {Area = "Innovation", id = Model.AttendeeInnovationOrganization?.Uid})" target="_blank">
+                <a href="@Url.Action("EvaluationDetails", "Projects", new {Area = "Innovation", id = Model.AttendeeInnovationOrganization?.Id})" target="_blank">
                     @if (Model.InnovationOrganization?.HasImage() == true)
                     {
                         <div class="kt-widget__media">
