@@ -8,12 +8,13 @@
     var currentEvaluation = Model.GetProjectCommissionEvaluationDtoByUserId(userAccessControlDto?.User?.Id ?? 0);
     var approvedProjectsIds = ViewBag.ApprovedProjectsIds as int[];
     var isThisProjectApproved = (approvedProjectsIds?.Contains(Model.Project.Id) == true);
+    var companyDetailsUrl = Url.Action("Details", "Companies", new { Area = "", id = Model.SellerAttendeeOrganizationDto?.Organization?.Uid });
 }
 <div class="kt-portlet__body">
     <div class="kt-widget kt-widget--user-profile-3">
         <div class="kt-widget__top">
             <div style="float: right;">
-                <a href="@Url.Action("Details", "Producers", new { Area = "Audiovisual", id = Model.SellerAttendeeOrganizationDto?.Organization?.Uid })" target="_blank">
+                <a href="@companyDetailsUrl" target="_blank">
                     @if (Model.SellerAttendeeOrganizationDto?.Organization?.HasImage() == true)
                     {
                         <div class="kt-widget__media">
@@ -37,7 +38,7 @@
                             </span>
                         </div>
                         <div class="kt-widget__subhead pt-0">
-                            @Labels.Producer: <a href="@Url.Action("Details", "Producers", new { Area = "Audiovisual", id = Model.SellerAttendeeOrganizationDto?.Organization?.Uid })" target="_blank">@(Model.SellerAttendeeOrganizationDto?.Organization?.TradeName ?? "-")</a>
+                            @Labels.Producer: <a href="@companyDetailsUrl" target="_blank">@(Model.SellerAttendeeOrganizationDto?.Organization?.TradeName ?? "-")</a>
                             @if (!string.IsNullOrEmpty(Model.SellerAttendeeOrganizationDto?.Organization?.Document))
                             {
                                 @:- @(Model.SellerAttendeeOrganizationDto?.Organization.Document)
