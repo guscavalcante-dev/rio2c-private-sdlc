@@ -44,6 +44,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
         private readonly IFileRepository fileRepo;
         private readonly ICollaboratorTypeRepository collaboratorTypeRepo;
+        private readonly IOrganizationTypeRepository organizationTypeRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CollaboratorsController"/> class.
@@ -58,12 +59,14 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             IdentityAutenticationService identityController,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
             IFileRepository fileRepository,
-            ICollaboratorTypeRepository collaboratorTypeRepository)
+            ICollaboratorTypeRepository collaboratorTypeRepository,
+             IOrganizationTypeRepository organizationTypeRepository)
             : base(commandBus, identityController)
         {
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
             this.fileRepo = fileRepository;
             this.collaboratorTypeRepo = collaboratorTypeRepository;
+            this.organizationTypeRepo = organizationTypeRepository;
         }
 
         /// <summary>Indexes the specified search view model.</summary>
@@ -432,13 +435,15 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowCompanyWidget(Guid? collaboratorUid)
+        public async Task<ActionResult> ShowCompanyWidget(Guid? collaboratorUid, string organizationTypeName)
         {
             var companyWidgetDto = await this.attendeeCollaboratorRepo.FindSiteCompanyWidgetDtoByCollaboratorUidAndByEditionIdAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
             if (companyWidgetDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
+
+            ViewBag.OrganizationTypeName = organizationTypeName;
 
             return Json(new
             {
@@ -570,7 +575,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    Constants.CollaboratorType.Speaker,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,

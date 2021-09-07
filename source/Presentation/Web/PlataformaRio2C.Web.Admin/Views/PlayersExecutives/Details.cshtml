@@ -45,11 +45,11 @@
     @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/addresses.form.js")
     @Scripts.Render("~/bundles/js/collaborators.details.js")
-<script>
+    <script>
         jQuery(document).ready(function () {
             CollaboratorsMainInformationWidget.init('@(CollaboratorType.ExecutiveAudiovisual)');
             CollaboratorsSocialNetworksWidget.init('@(CollaboratorType.ExecutiveAudiovisual)');
-            CollaboratorsCompanyWidget.init();
+            CollaboratorsCompanyWidget.init('@(OrganizationType.AudiovisualBuyer)');
         });
-</script>
+    </script>
 }

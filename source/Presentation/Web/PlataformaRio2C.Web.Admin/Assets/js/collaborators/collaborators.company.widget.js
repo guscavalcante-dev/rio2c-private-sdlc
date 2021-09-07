@@ -20,19 +20,24 @@ var CollaboratorsCompanyWidget = function () {
     var createModalId = '#UpdateCompanyInfoModal';
     var createFormId = '#UpdateCompanyInfoForm';
 
+    var _organizationTypeName = '';
+
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         KTApp.initTooltips();
         MyRio2cCommon.initScroll();
     };
 
-    var show = function () {
+    var show = function (organizationTypeName) {
         if (widgetElement.length <= 0) {
             return;
         }
 
+        _organizationTypeName = organizationTypeName;
+
         var jsonParameters = new Object();
         jsonParameters.collaboratorUid = $('#AggregateId').val();
+        jsonParameters.organizationTypeName = organizationTypeName;
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Collaborators/ShowCompanyWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -61,7 +66,7 @@ var CollaboratorsCompanyWidget = function () {
                 $(createModalId).modal('hide');
 
                 if (typeof (CollaboratorsCompanyWidget) !== 'undefined') {
-	                CollaboratorsCompanyWidget.init();
+                    CollaboratorsCompanyWidget.init(_organizationTypeName);
                 }
             },
             onError: function (data) {
@@ -132,7 +137,7 @@ var CollaboratorsCompanyWidget = function () {
                 // Success
                 onSuccess: function () {
                     if (typeof (CollaboratorsCompanyWidget) !== 'undefined') {
-	                    CollaboratorsCompanyWidget.init();
+                        CollaboratorsCompanyWidget.init(_organizationTypeName);
                     }
                 },
                 // Error
@@ -175,9 +180,9 @@ var CollaboratorsCompanyWidget = function () {
     };
 
     return {
-        init: function () {
+        init: function (organizationTypeName) {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
-            show();
+            show(organizationTypeName);
         },
         showUpdateModal: function (organizationUid) {
             showUpdateModal(organizationUid);

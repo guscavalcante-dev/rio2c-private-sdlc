@@ -3778,6 +3778,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tipo de Empresa.
+        /// </summary>
+        public static string OrganizationType {
+            get {
+                return ResourceManager.GetString("OrganizationType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Outros.
         /// </summary>
         public static string Others {

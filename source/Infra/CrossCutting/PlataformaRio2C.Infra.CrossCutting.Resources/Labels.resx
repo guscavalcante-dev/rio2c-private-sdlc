@@ -2947,4 +2947,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Não participa do Pitching</value>
     <comment>Não participa do Pitching</comment>
   </data>
+  <data name="OrganizationType" xml:space="preserve">
+    <value>Tipo de Empresa</value>
+    <comment>Tipo de Empresa</comment>
+  </data>
 </root>

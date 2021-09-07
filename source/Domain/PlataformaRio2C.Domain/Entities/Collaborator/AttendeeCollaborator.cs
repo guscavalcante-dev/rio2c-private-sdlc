@@ -761,6 +761,11 @@ namespace PlataformaRio2C.Domain.Entities
             this.AttendeeOrganizationCollaborators.Add(new AttendeeOrganizationCollaborator(attendeeOrganization, this, userId));
         }
 
+        /// <summary>
+        /// Finds the attendee organization collaborator by organization uid.
+        /// </summary>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <returns></returns>
         private AttendeeOrganizationCollaborator FindAttendeeOrganizationCollaboratorByOrganizationUid(Guid organizationUid)
         {
             return this.AttendeeOrganizationCollaborators?.FirstOrDefault(aoc => aoc.AttendeeOrganization.Organization.Uid == organizationUid);

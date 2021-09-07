@@ -1,7 +1,12 @@
 ﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
 @using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Constants
 @using PlataformaRio2C.Domain.Statics
 @model AttendeeCollaboratorSiteCompanyWidgetDto
+@{
+    var organizationTypeName = ViewBag.OrganizationTypeName as string;
+    var organizationUrlAction = "";
+}
 <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
         <h3 class="kt-portlet__head-title">
@@ -32,18 +37,18 @@
                             <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right" style="">
                                 <ul class="kt-nav">
                                     <li class="kt-nav__item">
-                                        <a href="#" class="kt-nav__link" onclick="CollaboratorsCompanyWidget.showUpdateModal('@attendeeOrganizationDto.Organization.Uid'); return false;">
+                                        <a class="kt-nav__link" onclick="CollaboratorsCompanyWidget.showUpdateModal('@attendeeOrganizationDto.Organization.Uid'); return false;">
                                             <i class="kt-nav__link-icon flaticon2-edit"></i>
                                             <span class="kt-nav__link-text">@Labels.Edit</span>
                                         </a>
                                     </li>
                                     <li class="kt-nav__item">
-                                        <a href="#" class="kt-nav__link" onclick="CollaboratorsCompanyWidget.showDeleteModal('@attendeeOrganizationDto.Organization.Uid'); return false;">
+                                        <a class="kt-nav__link" onclick="CollaboratorsCompanyWidget.showDeleteModal('@attendeeOrganizationDto.Organization.Uid'); return false;">
                                             <i class="kt-nav__link-icon flaticon2-delete"></i>
                                             <span class="kt-nav__link-text">@Labels.Remove</span>
                                         </a>
                                     </li>
-                                </ul>							
+                                </ul>
                             </div>
                         </div>
                         <div class="kt-portlet__body mt-10">
@@ -63,18 +68,26 @@
                                         }
                                     </div>
                                     <div class="kt-widget__info">
-                                        <a @*href="@Url.Action("Details", "Companies", new { id = attendeeOrganizationDto.Organization.Uid })"*@ class="kt-widget__username">@attendeeOrganizationDto.Organization.TradeName</a>
-                                        @*<span class="kt-widget__desc">@(attendeeOrganizationDto.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value ?? "-")</span>*@
+                                        <a class="kt-widget__username">@attendeeOrganizationDto.Organization.TradeName</a>
                                         <span class="kt-widget__desc">
-                                            <a @*href="@Url.Action("Details", "Companies", new { id = attendeeOrganizationDto.Organization.Uid })"*@>
-                                                <small><i class="flaticon-profile"></i> @Labels.SeeDescription</small>
-                                            </a>
+                                            @if (organizationTypeName == OrganizationType.AudiovisualBuyer)
+                                            {
+                                                organizationUrlAction = Url.Action("Details", "Players", new { Area = "Audiovisual", id = attendeeOrganizationDto.Organization.Uid });
+                                            }
+                                            else if (organizationTypeName == OrganizationType.AudiovisualSeller)
+                                            {
+                                                organizationUrlAction = Url.Action("Details", "Producers", new { Area = "Audiovisual", id = attendeeOrganizationDto.Organization.Uid });
+                                            }
+
+                                            @if (!string.IsNullOrEmpty(organizationUrlAction))
+                                            {
+                                                <a href="@organizationUrlAction" target="_blank">
+                                                    <small><i class="flaticon-profile"></i> @Labels.SeeDescription</small>
+                                                </a>
+                                            }
                                         </span>
                                     </div>
                                 </div>
-                                @*<div class="kt-widget__footer">
-                                        <button type="button" class="btn btn-label-warning btn-lg btn-upper">write message</button>
-                                    </div>*@
                             </div>
                             <!--end::Widget -->
                         </div>

@@ -2942,4 +2942,8 @@
     <value>Not checked for Pitching</value>
     <comment>Não participa do Pitching</comment>
   </data>
+  <data name="OrganizationType" xml:space="preserve">
+    <value>Organization type</value>
+    <comment>Tipo de Empresa</comment>
+  </data>
 </root>

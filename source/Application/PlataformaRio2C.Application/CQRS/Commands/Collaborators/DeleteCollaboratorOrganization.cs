@@ -21,8 +21,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public Guid CollaboratorUid { get; set; }
         public Guid OrganizationUid { get; set; }
 
-        public string CollaboratorTypeName { get; private set; }
-
         /// <summary>Initializes a new instance of the <see cref="DeleteCollaboratorOrganization"/> class.</summary>
         public DeleteCollaboratorOrganization()
         {
@@ -36,15 +34,13 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="editionUid">The edition uid.</param>
         /// <param name="userInterfaceLanguage">The user interface language.</param>
         public void UpdatePreSendProperties(
-            string collaboratorTypeName,
             int userId,
             Guid userUid,
             int? editionId,
             Guid? editionUid,
             string userInterfaceLanguage)
         {
-            this.CollaboratorTypeName = collaboratorTypeName;
-            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, UserInterfaceLanguage);
+            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, userInterfaceLanguage);
         }
     }
 }
