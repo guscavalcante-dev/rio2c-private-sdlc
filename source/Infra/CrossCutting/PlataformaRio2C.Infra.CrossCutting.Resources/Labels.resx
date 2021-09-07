@@ -2951,4 +2951,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Tipo de Empresa</value>
     <comment>Tipo de Empresa</comment>
   </data>
+  <data name="Unblock" xml:space="preserve">
+    <value>Desbloquear</value>
+    <comment>Desbloquear</comment>
+  </data>
 </root>

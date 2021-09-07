@@ -271,6 +271,9 @@ var CollaboratorsDataTableWidget = function () {
 
                         html += '<button class="dropdown-item" onclick="CollaboratorsDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
 
+                        //TODO: Implements collaborator user blocks RIO2CMY-73
+                        /*html += '<button class="dropdown-item" onclick="AdministratorsDataTableWidget.toogleStatus(\'' + full.UserBaseDto.Uid + '\',\'' + !full.Active + '\');"><i class="la la-lock"></i> ' + ((full.Active) ? labels.block : labels.unblock) + '</button>';*/
+
                         if (full.IsInCurrentEdition && full.IsInOtherEdition) {
                             html += '<button class="dropdown-item" onclick="CollaboratorsDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-remove"></i> ' + removeFromEdition + '</button>';
                         }
