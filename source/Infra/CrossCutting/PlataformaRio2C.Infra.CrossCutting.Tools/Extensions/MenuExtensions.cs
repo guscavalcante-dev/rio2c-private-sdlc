@@ -31,7 +31,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
         /// <returns></returns>
         public static string IsOpen(this WebViewPage page, string cssClass, string actionNames, string controlNames, string areaName, char separatorCharacter = ',')
         {
-            if (!string.IsNullOrEmpty(areaName))
+            if (areaName != null)
             {
                 var currentAreaName = page.ViewContext.RouteData.DataTokens["area"]?.ToString() ?? "";
                 if (currentAreaName != areaName)

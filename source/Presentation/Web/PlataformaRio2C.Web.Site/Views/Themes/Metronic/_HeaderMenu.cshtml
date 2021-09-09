@@ -43,7 +43,10 @@
                 }
             }
 
-            <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "Projects", "Audiovisual")" aria-haspopup="true">
+            <li class="kt-menu__item 
+                @this.IsOpen(menuOpenCssClass, null, "Projects", "Audiovisual")
+                @this.IsOpen(menuOpenCssClass, "SubmittedList,EvaluationList", "Projects", "")
+                " aria-haspopup="true">
                 <a class="kt-menu__link" href="@projectsUrl">
                     <span class="kt-menu__link-text">@Labels.AudioVisual</span>
                 </a>
@@ -51,7 +54,10 @@
         }
         else if (audiovisualCollaboratorTypesCount > 1)
         {
-            <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel @this.IsOpen(menuOpenCssClass, null, "Projects", "Audiovisual")" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
+            <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel 
+                @this.IsOpen(menuOpenCssClass, null, "Projects", "Audiovisual") 
+                @this.IsOpen(menuOpenCssClass, "SubmittedList,EvaluationList", "Projects", "")
+                " data-ktmenu-submenu-toggle="click" aria-haspopup="true">
                 <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">@Labels.AudioVisual</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
                 <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
                     <ul class="kt-menu__subnav">

@@ -25,22 +25,5 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public DeleteCollaboratorOrganization()
         {
         }
-
-        /// <summary>Updates the pre send properties.</summary>
-        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
-        /// <param name="userId">The user identifier.</param>
-        /// <param name="userUid">The user uid.</param>
-        /// <param name="editionId">The edition identifier.</param>
-        /// <param name="editionUid">The edition uid.</param>
-        /// <param name="userInterfaceLanguage">The user interface language.</param>
-        public void UpdatePreSendProperties(
-            int userId,
-            Guid userUid,
-            int? editionId,
-            Guid? editionUid,
-            string userInterfaceLanguage)
-        {
-            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, userInterfaceLanguage);
-        }
     }
 }

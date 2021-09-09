@@ -417,7 +417,7 @@
     <Compile Include="Controllers\CitiesController.cs" />
     <Compile Include="Controllers\ConferencesController.cs" />
     <Compile Include="Controllers\SpeakersController.cs" />
-    <Compile Include="Controllers\PlayersExecutivesController.cs" />
+    <Compile Include="Areas\Audiovisual\Controllers\PlayersExecutivesController.cs" />
     <Compile Include="Controllers\StatesController.cs" />
     <Compile Include="Areas\Audiovisual\Controllers\PlayersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -9656,17 +9656,17 @@
     <Content Include="Views\Holdings\Edit.cshtml" />
     <Content Include="Views\Holdings\_Editor.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AddressBaseCommand.cshtml" />
-    <Content Include="Views\PlayersExecutives\_Editor.cshtml" />
-    <Content Include="Views\PlayersExecutives\Create.cshtml" />
-    <Content Include="Views\PlayersExecutives\Edit.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PlayersExecutives\_Editor.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PlayersExecutives\Create.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PlayersExecutives\Edit.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CollaboratorJobTitleBaseCommand.cshtml" />
-    <Content Include="Views\PlayersExecutives\Index.cshtml" />
-    <Content Include="Views\PlayersExecutives\Modals\_Form.cshtml" />
-    <Content Include="Views\PlayersExecutives\Modals\CreateModal.cshtml" />
-    <Content Include="Views\PlayersExecutives\Modals\UpdateModal.cshtml" />
-    <Content Include="Views\PlayersExecutives\Widgets\DataTableWidget.cshtml" />
-    <Content Include="Views\PlayersExecutives\Widgets\EditionCountWidget.cshtml" />
-    <Content Include="Views\PlayersExecutives\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PlayersExecutives\Index.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PlayersExecutives\Modals\_Form.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PlayersExecutives\Modals\CreateModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PlayersExecutives\Modals\UpdateModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PlayersExecutives\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PlayersExecutives\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PlayersExecutives\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CollaboratorMiniBioBaseCommand.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AttendeeOrganizationBaseCommand.cshtml" />
     <Content Include="Views\AdminMailerService\_AdminEmailLayout.cshtml" />
@@ -9899,7 +9899,7 @@
     <Content Include="Views\Collaborators\Modals\UpdateSocialNetworksForm.cshtml" />
     <Content Include="Views\Collaborators\Modals\UpdateSocialNetworksModal.cshtml" />
     <Content Include="Views\Collaborators\Widgets\OnboardingInfoWidget.cshtml" />
-    <Content Include="Views\PlayersExecutives\Details.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PlayersExecutives\Details.cshtml" />
     <Content Include="Views\Collaborators\Widgets\CompanyWidget.cshtml" />
     <Content Include="Views\Collaborators\Modals\UpdateCompanyInfoModal.cshtml" />
   </ItemGroup>

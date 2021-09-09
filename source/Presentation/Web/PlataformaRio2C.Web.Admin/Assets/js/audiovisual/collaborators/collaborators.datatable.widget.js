@@ -25,7 +25,7 @@ var CollaboratorsDataTableWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.selectedCollaboratorsUids = $('#playersexecutives-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/SendInvitationEmails'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PlayersExecutives/SendInvitationEmails'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -155,7 +155,7 @@ var CollaboratorsDataTableWidget = function () {
                 sSearch: $('#Search').val()
             },
             ajax: {
-                url: MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/Search'),
+                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PlayersExecutives/Search'),
                 data: function (d) {
                     d.showAllEditions = $('#ShowAllEditions').prop('checked');
                     d.showAllParticipants = $('#ShowAllParticipants').prop('checked');
@@ -338,7 +338,7 @@ var CollaboratorsDataTableWidget = function () {
             return;
         }
 
-        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/Details/' + commissionUid);
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PlayersExecutives/Details/' + commissionUid);
     };
 
     return {

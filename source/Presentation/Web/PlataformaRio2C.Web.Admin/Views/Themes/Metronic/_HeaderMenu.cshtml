@@ -67,8 +67,8 @@
                                 <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "Players", "Audiovisual")" aria-haspopup="true">
                                     <a href="@Url.Action("Index", "Players", new { Area = "Audiovisual" })" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.Companies</span></a>
                                 </li>
-                                <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "PlayersExecutives", null)" aria-haspopup="true">
-                                    <a href="@Url.Action("Index", "PlayersExecutives", new { Area = "" })" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.Executives</span></a>
+                                <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "PlayersExecutives", "Audiovisual")" aria-haspopup="true">
+                                    <a href="@Url.Action("Index", "PlayersExecutives", new { Area = "Audiovisual" })" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.Executives</span></a>
                                 </li>
                             </ul>
                         </div>

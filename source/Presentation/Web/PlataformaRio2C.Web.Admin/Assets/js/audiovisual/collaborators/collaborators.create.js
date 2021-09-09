@@ -64,12 +64,13 @@ var CollaboratorsCreate = function () {
     }
 
     // Show modal ---------------------------------------------------------------------------------
-    var showModal = function () {
+    var showModal = function (attendeeOrganizationUid) {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
+        jsonParameters.attendeeOrganizationUid = attendeeOrganizationUid;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/ShowCreateModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PlayersExecutives/ShowCreateModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -107,6 +108,9 @@ var CollaboratorsCreate = function () {
                 if (typeof (CollaboratorsEditionCountWidget) !== 'undefined') {
                     CollaboratorsEditionCountWidget.init();
                 }
+                if (typeof (CompanyExecutiveWidget) !== 'undefined') {
+                    AudiovisualOrganizationsExecutiveWidget.init();
+                }
             },
             onError: function (data) {
                 if (MyRio2cCommon.hasProperty(data, 'pages')) {
@@ -119,8 +123,8 @@ var CollaboratorsCreate = function () {
     };
 
     return {
-        showModal: function () {
-            showModal();
+        showModal: function (attendeeOrganizationUid) {
+            showModal(attendeeOrganizationUid);
         }
     };
 }();

@@ -422,6 +422,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #endregion
 
+        //TODO: refactor: Implements here "UpdateStatus" and "UpdatePassword" from AdministratorsController
+
         // GET: /Account/SendCode
         [AllowAnonymous]
         public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)

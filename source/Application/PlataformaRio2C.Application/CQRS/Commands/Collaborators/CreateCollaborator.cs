@@ -11,7 +11,9 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 
@@ -57,6 +59,49 @@ namespace PlataformaRio2C.Application.CQRS.Commands
                 isMiniBioRequired, 
                 isImageRequired, 
                 userInterfaceLanguage);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateCollaborator" /> class.
+        /// </summary>
+        /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
+        /// <param name="languagesDtos">The languages dtos.</param>
+        /// <param name="genders">The genders.</param>
+        /// <param name="industries">The industries.</param>
+        /// <param name="collaboratorRoles">The roles.</param>
+        /// <param name="editionsDtos">The editions dtos.</param>
+        /// <param name="currentEditionId">The current edition identifier.</param>
+        /// <param name="isJobTitleRequired">if set to <c>true</c> [is job title required].</param>
+        /// <param name="isMiniBioRequired">if set to <c>true</c> [is mini bio required].</param>
+        /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public CreateCollaborator(
+            Guid? attendeeOrganizationUid,
+            List<LanguageDto> languagesDtos,
+            List<CollaboratorGender> genders,
+            List<CollaboratorIndustry> industries,
+            List<CollaboratorRole> collaboratorRoles,
+            List<EditionDto> editionsDtos,
+            int currentEditionId,
+            bool isJobTitleRequired,
+            bool isMiniBioRequired,
+            bool isImageRequired,
+            string userInterfaceLanguage)
+        {
+            this.UpdateBaseProperties(null,
+                null,
+                languagesDtos,
+                genders,
+                industries,
+                collaboratorRoles,
+                editionsDtos,
+                currentEditionId,
+                isJobTitleRequired,
+                isMiniBioRequired,
+                isImageRequired,
+                userInterfaceLanguage);
+
+            base.SetAttendeeOrganizationUid(attendeeOrganizationUid);
         }
 
         /// <summary>Initializes a new instance of the <see cref="CreateCollaborator"/> class.</summary>

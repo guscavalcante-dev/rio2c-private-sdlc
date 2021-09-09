@@ -21,7 +21,7 @@ var CollaboratorsDelete = function () {
         var jsonParameters = new Object();
         jsonParameters.collaboratorUid = collaboratorUid;
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/Delete'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PlayersExecutives/Delete'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

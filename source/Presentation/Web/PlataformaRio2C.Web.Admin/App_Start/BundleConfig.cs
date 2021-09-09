@@ -251,7 +251,7 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/components/bootstrap-timepicker/bootstrap-datepicker.pt-br.js"));
 
             #endregion
-            
+
             #region Bootstrap Timepicker
 
             bundles.Add(new StyleBundle("~/bundles/css/bootstrap-timepicker.css")
@@ -384,15 +384,15 @@ namespace PlataformaRio2C.Web.Admin
             #region Organizations
 
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.organizations.widget.js").Include(
-                "~/Assets/js/audiovisual/organizations/audiovisual.organizations.maininformation.widget.js",
-                "~/Assets/js/audiovisual/organizations/audiovisual.organizations.socialnetworks.widget.js",
-                "~/Assets/js/audiovisual/organizations/audiovisual.organizations.address.widget.js",
-                "~/Assets/js/audiovisual/organizations/audiovisual.organizations.activity.widget.js",
-                "~/Assets/js/audiovisual/organizations/audiovisual.organizations.targetaudience.widget.js",
-                "~/Assets/js/audiovisual/organizations/audiovisual.organizations.interest.widget.js",
-                "~/Assets/js/audiovisual/organizations/audiovisual.organizations.executive.widget.js",
-                "~/Assets/js/myrio2c.companynumber.js",
-                "~/Assets/js/myrio2c.additionalinfo.js"));
+                 "~/Assets/js/audiovisual/organizations/audiovisual.organizations.maininformation.widget.js",
+                 "~/Assets/js/audiovisual/organizations/audiovisual.organizations.socialnetworks.widget.js",
+                 "~/Assets/js/audiovisual/organizations/audiovisual.organizations.address.widget.js",
+                 "~/Assets/js/audiovisual/organizations/audiovisual.organizations.activity.widget.js",
+                 "~/Assets/js/audiovisual/organizations/audiovisual.organizations.targetaudience.widget.js",
+                 "~/Assets/js/audiovisual/organizations/audiovisual.organizations.interest.widget.js",
+                 "~/Assets/js/audiovisual/organizations/audiovisual.organizations.executive.widget.js",
+                 "~/Assets/js/myrio2c.companynumber.js",
+                 "~/Assets/js/myrio2c.additionalinfo.js"));
 
             #endregion
 
@@ -478,7 +478,9 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/collaborators.create.js").Include(
                 "~/Assets/js/audiovisual/collaborators/collaborators.create.js",
-                "~/Assets/js/myrio2c.publicemail.js"));
+                "~/Assets/js/myrio2c.publicemail.js",
+                "~/Assets/js/attendeeorganizations/attendeeorganizations.form.js",
+                "~/Assets/js/dynamic.list.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/collaborators.update.js").Include(
                 "~/Assets/js/audiovisual/collaborators/collaborators.update.js"));
@@ -704,7 +706,7 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.reports.projectssubmissions.widget.js").Include(
                 "~/Assets/js/audiovisual/reports/audiovisual.reports.projectssubmissions.widget.js",
                 "~/Scripts/jquery.unobtrusive-ajax.js"));
-            
+
             #endregion
 
             #region Meeting Parameters
@@ -1046,7 +1048,7 @@ namespace PlataformaRio2C.Web.Admin
             //bundlesJqueryval.Include("~/Scripts/jquery.validate.globalize.min.js");       
             bundles.Add(bundlesJqueryval);
 
-          
+
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                         "~/Scripts/popper.min.js",
@@ -1162,9 +1164,9 @@ namespace PlataformaRio2C.Web.Admin
             #endregion
 
             // Required to generate bundles on release running in visual studio
-            #if !DEBUG
+#if !DEBUG
             BundleTable.EnableOptimizations = true;
-            #endif
+#endif
         }
     }
 }

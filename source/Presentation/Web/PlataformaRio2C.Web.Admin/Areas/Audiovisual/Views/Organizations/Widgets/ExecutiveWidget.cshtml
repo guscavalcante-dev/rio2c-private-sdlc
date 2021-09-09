@@ -8,16 +8,13 @@
             @Labels.Executives
         </h3>
     </div>
-    @*@if (Model.IsInCurrentEdition == true)
-    {
-        <div class="kt-portlet__head-toolbar">
-            <div class="kt-portlet__head-actions">
-                <a class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="return false;" data-toggle="kt-tooltip" title="" data-placement="right" data-original-title="@Labels.ComingSoon...">
-                    <i class="flaticon2-edit"></i>
-                </a>
-            </div>
+    <div class="kt-portlet__head-toolbar">
+        <div class="kt-portlet__head-actions">
+            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="CollaboratorsCreate.showModal('@(Model.AttendeeOrganization.Uid)');">
+                <i class="flaticon2-plus"></i>
+            </button>
         </div>
-    }*@
+    </div>
 </div>
 <div class="kt-portlet__body">
     @if (Model.AttendeeCollaboratorsDtos?.Any() == true)
@@ -46,7 +43,7 @@
                                         }
                                     </div>
                                     <div class="kt-widget__info">
-                                        <a href="#" onclick="return false;" @*href="@Url.Action("Details", "PlayersExecutives", new { Area = "", id = attendeeCollaboratorDto.Collaborator.Uid})"*@ class="kt-widget__username">
+                                        <a @*href="@Url.Action("Details", "PlayersExecutives", new { Area = "", id = attendeeCollaboratorDto.Collaborator.Uid})"*@ class="kt-widget__username">
                                             @attendeeCollaboratorDto.Collaborator.GetDisplayName()
                                         </a>
                                         @{

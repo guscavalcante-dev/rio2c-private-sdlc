@@ -36,8 +36,9 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Admin.Filters;
 using Constants = PlataformaRio2C.Domain.Constants;
+using PlataformaRio2C.Web.Admin.Controllers;
 
-namespace PlataformaRio2C.Web.Admin.Controllers
+namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 {
     /// <summary>
     /// PlayersExecutivesController
@@ -50,16 +51,18 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
         private readonly IFileRepository fileRepo;
-        
 
-        /// <summary>Initializes a new instance of the <see cref="PlayersExecutivesController"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PlayersExecutivesController" /> class.
+        /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
+        /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
         /// <param name="fileRepository">The file repository.</param>
         public PlayersExecutivesController(
-            IMediator commandBus, 
+            IMediator commandBus,
             IdentityAutenticationService identityController,
             ICollaboratorRepository collaboratorRepository,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
@@ -85,8 +88,9 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Players, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Companies, Url.Action("Index", "Players", new { Area = "" })),
-                new BreadcrumbItemHelper(Labels.Executives, Url.Action("Index", "PlayersExecutives", new { Area = "" }))
+                new BreadcrumbItemHelper(Labels.AudioVisual, null),
+                new BreadcrumbItemHelper(Labels.Players, Url.Action("Index", "Players", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(Labels.Executives, Url.Action("Index", "PlayersExecutives", new { Area = "Audiovisual" }))
             });
 
             #endregion
@@ -105,7 +109,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllParticipants, bool? showHighlights)
         {
-            var playersExecutives = await this.collaboratorRepo.FindAllByDataTable(
+            var audiovisualExecutives = await this.collaboratorRepo.FindAllByDataTable(
                 request.Start / request.Length,
                 request.Length,
                 request.Search?.Value,
@@ -118,7 +122,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 this.EditionDto?.Id
             );
 
-            var response = DataTablesResponse.Create(request, playersExecutives.TotalItemCount, playersExecutives.TotalItemCount, playersExecutives);
+            var response = DataTablesResponse.Create(request, audiovisualExecutives.TotalItemCount, audiovisualExecutives.TotalItemCount, audiovisualExecutives);
 
             return Json(new
             {
@@ -149,9 +153,10 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.PlayersExecutives, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Players, null),
-                new BreadcrumbItemHelper(Labels.Executives, Url.Action("Index", "PlayersExecutives", new { Area = "" })),
-                new BreadcrumbItemHelper(attendeeCollaboratorDto.Collaborator.GetFullName(), Url.Action("Details", "PlayersExecutives", new { Area = "", id }))
+                new BreadcrumbItemHelper(Labels.AudioVisual, null),
+                new BreadcrumbItemHelper(Labels.Players, Url.Action("Index", "Players", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(Labels.Executives, Url.Action("Index", "PlayersExecutives", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(attendeeCollaboratorDto.Collaborator.GetFullName(), Url.Action("Details", "PlayersExecutives", new { Area = "Audiovisual", id }))
             });
 
             #endregion
@@ -290,20 +295,40 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <summary>Shows the create modal.</summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowCreateModal()
+        public async Task<ActionResult> ShowCreateModal(Guid? attendeeOrganizationUid)
         {
-            var cmd = new CreateCollaborator(
-                await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.Player.Uid),
-                await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
-                await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
-                await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
-                await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
-                await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
-                EditionDto.Id,
-                false,
-                false,
-                false,
-                UserInterfaceLanguage);
+            CreateCollaborator cmd;
+
+            if (attendeeOrganizationUid.HasValue)
+            {
+                cmd = new CreateCollaborator(
+                    attendeeOrganizationUid,
+                    await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
+                    EditionDto.Id,
+                    false,
+                    false,
+                    false,
+                    UserInterfaceLanguage);
+            }
+            else
+            {
+                cmd = new CreateCollaborator(
+                    await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.Player.Uid),
+                    await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
+                    await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
+                    EditionDto.Id,
+                    false,
+                    false,
+                    false,
+                    UserInterfaceLanguage);
+            }
 
             return Json(new
             {
