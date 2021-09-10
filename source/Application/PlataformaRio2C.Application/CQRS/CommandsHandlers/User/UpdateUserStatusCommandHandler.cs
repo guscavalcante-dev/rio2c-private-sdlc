@@ -3,10 +3,10 @@
 // Author           : Renan Valentim
 // Created          : 04-24-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-09-2021
 // ***********************************************************************
-// <copyright file="UpdateAdministratorStatusCommandHandler.cs" company="Softo">
+// <copyright file="UpdateUserStatusCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -20,19 +20,19 @@ using PlataformaRio2C.Infra.Data.Context.Interfaces;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>UpdateAdministratorStatusCommandHandler</summary>
-    public class UpdateAdministratorStatusCommandHandler : BaseAdministratorCommandHandler, IRequestHandler<UpdateAdministratorStatus, AppValidationResult>
+    /// <summary>UpdateUserStatusCommandHandler</summary>
+    public class UpdateUserStatusCommandHandler : BaseAdministratorCommandHandler, IRequestHandler<UpdateUserStatus, AppValidationResult>
     {
         private readonly IUserRepository userRepo;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateAdministratorStatusCommandHandler"/> class.
+        /// Initializes a new instance of the <see cref="UpdateUserStatusCommandHandler"/> class.
         /// </summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
         /// <param name="userRepository">The user repository.</param>
-        public UpdateAdministratorStatusCommandHandler(
+        public UpdateUserStatusCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
             ICollaboratorRepository collaboratorRepository,
@@ -48,7 +48,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(UpdateAdministratorStatus cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(UpdateUserStatus cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 

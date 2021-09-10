@@ -421,6 +421,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Por favor, confirme para bloquear..
+        /// </summary>
+        public static string ConfirmBlock {
+            get {
+                return ResourceManager.GetString("ConfirmBlock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Por favor, confirme para excluir..
         /// </summary>
         public static string ConfirmDelete {
@@ -444,6 +453,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ConfirmToSendInvitationEmails {
             get {
                 return ResourceManager.GetString("ConfirmToSendInvitationEmails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Por favor, confirme para desbloquear..
+        /// </summary>
+        public static string ConfirmUnblock {
+            get {
+                return ResourceManager.GetString("ConfirmUnblock", resourceCulture);
             }
         }
         

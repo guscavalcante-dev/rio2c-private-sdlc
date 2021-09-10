@@ -278,7 +278,7 @@
     <Compile Include="CQRS\CommandsHandlers\Administrators\BaseAdministratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Administrators\CreateAdministratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Administrators\DeleteAdministratorCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Administrators\UpdateAdministratorStatusCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\User\UpdateUserStatusCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Administrators\UpdateAdministratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Messages\SendUnreadConversationsEmailsAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Music\Bands\BaseCommandHandlers\ReleasedMusicProjectBaseCommandHandler.cs" />
@@ -422,7 +422,7 @@
     <Compile Include="CQRS\Commands\Administrators\BaseCommands\AdministratorBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Administrators\CreateAdministrator.cs" />
     <Compile Include="CQRS\Commands\Administrators\DeleteAdministrator.cs" />
-    <Compile Include="CQRS\Commands\Administrators\UpdateAdministratorStatus.cs" />
+    <Compile Include="CQRS\Commands\User\UpdateUserStatus.cs" />
     <Compile Include="CQRS\Commands\Administrators\UpdateAdministrator.cs" />
     <Compile Include="CQRS\Commands\Music\Bands\BaseCommands\ReleasedMusicProjectBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Music\Bands\BaseCommands\MusicBandTeamMemberBaseCommand.cs" />

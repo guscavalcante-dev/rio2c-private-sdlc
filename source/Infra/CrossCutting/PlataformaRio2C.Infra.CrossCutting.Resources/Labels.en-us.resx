@@ -2953,4 +2953,8 @@
     <value>Unblock</value>
     <comment>Desbloquear</comment>
   </data>
+  <data name="Blocked" xml:space="preserve">
+    <value>Blocked</value>
+    <comment>Bloqueado</comment>
+  </data>
 </root>

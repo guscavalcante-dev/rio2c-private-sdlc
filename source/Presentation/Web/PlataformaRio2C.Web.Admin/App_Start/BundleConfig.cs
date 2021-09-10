@@ -302,6 +302,13 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            #region Accounts Page Bundles
+
+            bundles.Add(new ScriptBundle("~/bundles/js/accounts.update.userstatus.js").Include(
+               "~/Assets/js/collaborators/accounts.update.userstatus.js"));
+
+            #endregion
+
             #region Administration Page Bundles
 
             #region Administrator
@@ -325,10 +332,6 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/administrators.maininformation.widget.js").Include(
                 "~/Assets/js/administrators/administrators.maininformation.widget.js"));
-
-
-            bundles.Add(new ScriptBundle("~/bundles/js/administrators.changepassword.widget.js").Include(
-                "~/Assets/js/administrators/administrators.changepassword.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/administrators.form.js").Include(
                 "~/Assets/js/administrators/administrators.form.js"));
@@ -469,9 +472,9 @@ namespace PlataformaRio2C.Web.Admin
             #region Collaborators - Executives
 
             bundles.Add(new ScriptBundle("~/bundles/js/collaborators.list.js").Include(
-                "~/Assets/js/audiovisual/collaborators/collaborators.totalcount.widget.js",
-                "~/Assets/js/audiovisual/collaborators/collaborators.datatable.widget.js",
-                "~/Assets/js/salesplatforms/salesplatforms.export.js"));
+                 "~/Assets/js/audiovisual/collaborators/collaborators.totalcount.widget.js",
+                 "~/Assets/js/audiovisual/collaborators/collaborators.datatable.widget.js",
+                 "~/Assets/js/salesplatforms/salesplatforms.export.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/collaborators.editioncount.js").Include(
                 "~/Assets/js/audiovisual/collaborators/collaborators.editioncount.widget.js"));

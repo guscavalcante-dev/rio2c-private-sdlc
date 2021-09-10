@@ -691,7 +691,13 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                 }
                                                                                             })),
 
-                                JobTitle = c.JobTitles.FirstOrDefault(jb => !jb.IsDeleted && jb.CollaboratorId == c.Id).Value
+                                JobTitle = c.JobTitles.FirstOrDefault(jb => !jb.IsDeleted && jb.CollaboratorId == c.Id).Value,
+                                Active = c.User.Active,
+                                UserBaseDto = new UserBaseDto
+                                {
+                                    Id = c.User.Id,
+                                    Uid = c.User.Uid
+                                }
                             })
                             .ToListPagedAsync(page, pageSize);
         }

@@ -124,7 +124,10 @@
             selectAll: '@Labels.SelectAll',
             unselectAll: '@Labels.UnselectAll',
             block: '@Labels.Block',
-            unblock: '@Labels.Unblock'
+            unblock: '@Labels.Unblock',
+            blocked: '@Labels.Blocked',
+            blockConfirmationMessage: '@Messages.ConfirmBlock',
+            unblockConfirmationMessage: '@Messages.ConfirmUnblock',
         };
 
         // MyRio2CCommon script -----------------------------------------------
@@ -133,7 +136,7 @@
         //Enable Globalize with current culture
         Globalize.culture(@(new HtmlString(string.Format("\'{0}\'", CultureInfo.CurrentCulture))));
 
-        @Html.StatusMessageToastr()     
+        @Html.StatusMessageToastr()
 </script>
     <!--end: MyRio2C Scripts-->
     <!--begin::Page Scripts -->

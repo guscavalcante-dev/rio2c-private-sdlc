@@ -275,19 +275,20 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is player attendee organizations onboarding finished]; otherwise, <c>false</c>.</returns>
         public bool IsPlayerAttendeeOrganizationsOnboardingFinished()
         {
-            return this.IsPlayerOrganizatiosnOnboardingFinished() 
+            return this.IsPlayerOrganizationsOnboardingFinished() 
                    && this.IsPlayerOrganizationsInterestsOnboardingFinished();
         }
 
         /// <summary>Determines whether [is player organizatiosn onboarding finished].</summary>
         /// <returns>
         ///   <c>true</c> if [is player organizatiosn onboarding finished]; otherwise, <c>false</c>.</returns>
-        public bool IsPlayerOrganizatiosnOnboardingFinished()
+        public bool IsPlayerOrganizationsOnboardingFinished()
         {
-            return !this.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual)                                              // Not Player //TODO: Change to check attendee organization type (must be dto)
+            return !this.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual)                                              // Is Player
                     || (this.EditionAttendeeOrganizations?.Any() == false                                                                  // No organization related
                         || (this.EditionAttendeeOrganizations?.Any() == true                                                               // or has at least one organization linked
-                            && this.EditionAttendeeOrganizations?.All(eao => eao.OnboardingOrganizationDate.HasValue) == true));           // and all organizations interests onboarding are finished
+                            && this.EditionAttendeeOrganizations?.Where(ao => ao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted && aot.OrganizationType.Name == Constants.OrganizationType.AudiovisualBuyer))
+                                                                    .All(ao => ao.OnboardingOrganizationDate.HasValue) == true));          // and all organizations interests onboarding are finished
         }
 
         /// <summary>Determines whether [is player organization interests onboarding pending].</summary>
@@ -295,10 +296,11 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is player organization interests onboarding pending]; otherwise, <c>false</c>.</returns>
         public bool IsPlayerOrganizationInterestsOnboardingPending()
         {
-            return this.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual)                                               // Is Player //TODO: Change to check attendee organization type (must be dto)
-                   && this.EditionAttendeeOrganizations?.Any() == true                                                                     // Has at least one organization linked
-                   && this.EditionAttendeeOrganizations?.Any(eao => eao.OnboardingOrganizationDate.HasValue                                // and at least one organization onboarded
-                                                                    && !eao.OnboardingInterestsDate.HasValue) == true;                     // and this organization interests area not onboarded
+            return this.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual)                                                // Is Player
+                   && this.EditionAttendeeOrganizations?.Any() == true                                                                      // Has at least one organization linked
+                   && this.EditionAttendeeOrganizations?.Where(ao => ao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted && aot.OrganizationType.Name == Constants.OrganizationType.AudiovisualBuyer))
+                                                        .Any(ao => ao.OnboardingOrganizationDate.HasValue                                   // and at least one organization onboarded
+                                                                   && !ao.OnboardingInterestsDate.HasValue) == true;                        // and this organization interests area not onboarded
         }
 
         /// <summary>Determines whether [is player organizations interests onboarding finished].</summary>
@@ -306,10 +308,11 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is player organizations interests onboarding finished]; otherwise, <c>false</c>.</returns>
         public bool IsPlayerOrganizationsInterestsOnboardingFinished()
         {
-            return !this.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual)                                              // Not Player //TODO: Change to check attendee organization type (must be dto)
+            return !this.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual)                                              // Is Player 
                    || (this.EditionAttendeeOrganizations?.Any() == false                                                                   // No organization related
                        || (this.EditionAttendeeOrganizations?.Any() == true                                                                // or has at least one organization linked
-                           && this.EditionAttendeeOrganizations?.All(eao => eao.OnboardingInterestsDate.HasValue) == true));               // and all organizations interests onboarding are finished
+                           && this.EditionAttendeeOrganizations?.Where(ao => ao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted && aot.OrganizationType.Name == Constants.OrganizationType.AudiovisualBuyer))
+                                                                    .All(ao => ao.OnboardingInterestsDate.HasValue) == true));             // and all organizations interests onboarding are finished
         }
 
         /// <summary>Determines whether [is ticket buyer organization onboarding pending].</summary>
@@ -317,11 +320,12 @@ namespace PlataformaRio2C.Domain.Dtos
         ///   <c>true</c> if [is ticket buyer organization onboarding pending]; otherwise, <c>false</c>.</returns>
         public bool IsTicketBuyerOrganizationOnboardingPending()
         {
-            return !this.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual)                                              // Not player //TODO: Change to check attendee organization type (must be dto)
+            return !this.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual)                                              // Is player
                    && this.HasAnyCollaboratorType(Constants.CollaboratorType.TicketBuyers)                                                 // Is ticket buyer
                    && (!this.EditionAttendeeCollaborator.OnboardingOrganizationDataSkippedDate.HasValue                                    // Not skipped the onboarding of company data
                        && (this.EditionAttendeeOrganizations?.Any() == false                                                               // No organization related
-                           || this.EditionAttendeeOrganizations?.All(eao => eao.OnboardingFinishDate.HasValue) == false));                 // or has organizations without onboarding     
+                           || this.EditionAttendeeOrganizations?.Where(ao => ao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted && aot.OrganizationType.Name == Constants.OrganizationType.AudiovisualBuyer))
+                                                                    .All(ao => ao.OnboardingFinishDate.HasValue) == false));               // or has organizations without onboarding     
         }
 
         #endregion
@@ -337,7 +341,7 @@ namespace PlataformaRio2C.Domain.Dtos
         {
             return this.HasCollaboratorType(Constants.CollaboratorType.Industry)
                    && (this.EditionAttendeeOrganizations?.Any() == false
-                       || this.EditionAttendeeOrganizations?.Any(eao => eao.ProjectSubmissionOrganizationDate.HasValue) == false);
+                       || this.EditionAttendeeOrganizations?.Any(ao => ao.ProjectSubmissionOrganizationDate.HasValue) == false);
         }
 
         /// <summary>Determines whether [is project submission terms acceptance pending].</summary>

@@ -853,6 +853,7 @@
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.buyercompany.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.commission.evaluation.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.evaluators.widget.js" />
+    <Content Include="Assets\js\accounts\accounts.update.userstatus.js" />
     <Content Include="Assets\js\collaborators\collaborators.onboardinginfo.widget.js" />
     <Content Include="Assets\js\collaborators\collaborators.socialnetworks.widget.js" />
     <Content Include="Assets\js\collaborators\collaborators.maininformation.widget.js" />
@@ -938,7 +939,6 @@
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.maininformation.widget.js" />
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.totalcount.widget.js" />
     <Content Include="Assets\js\logistics\logistics.airfare.widget.js" />
-    <Content Include="Assets\js\administrators\administrators.changepassword.widget.js" />
     <Content Include="Assets\js\administrators\administrators.form.js" />
     <Content Include="Assets\js\administrators\administrators.maininformation.widget.js" />
     <Content Include="Assets\js\administrators\administrators.create.js" />

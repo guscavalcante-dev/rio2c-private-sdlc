@@ -49,9 +49,15 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         private readonly ITargetAudienceRepository targetAudiencesRepo;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MusicBandsApiController"/> class.
+        /// Initializes a new instance of the <see cref="MusicBandsApiController" /> class.
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
+        /// <param name="identityController">The identity controller.</param>
+        /// <param name="editionRepository">The edition repository.</param>
+        /// <param name="languageRepository">The language repository.</param>
+        /// <param name="musicBandTypesRepository">The music band types repository.</param>
+        /// <param name="musicGenresRepository">The music genres repository.</param>
+        /// <param name="targetAudiencesRepository">The target audiences repository.</param>
         public MusicBandsApiController(
             IMediator commandBus,
             IdentityAutenticationService identityController,

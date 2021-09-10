@@ -2955,4 +2955,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Desbloquear</value>
     <comment>Desbloquear</comment>
   </data>
+  <data name="Blocked" xml:space="preserve">
+    <value>Bloqueado</value>
+    <comment>Bloqueado</comment>
+  </data>
 </root>

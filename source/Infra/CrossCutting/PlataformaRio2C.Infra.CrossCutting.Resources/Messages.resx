@@ -262,6 +262,10 @@
     <value>Confirme e complete seus dados de acesso</value>
     <comment>Confirme e complete seus dados de acesso</comment>
   </data>
+  <data name="ConfirmBlock" xml:space="preserve">
+    <value>Por favor, confirme para bloquear.</value>
+    <comment>Por favor, confirme para bloquear.</comment>
+  </data>
   <data name="ConfirmDelete" xml:space="preserve">
     <value>Por favor, confirme para excluir.</value>
     <comment>Por favor, confirme para excluir.</comment>
@@ -273,6 +277,10 @@
   <data name="ConfirmToSendInvitationEmails" xml:space="preserve">
     <value>Confirme para enviar os e-mails de convite</value>
     <comment>Confirme para enviar os e-mails de convite</comment>
+  </data>
+  <data name="ConfirmUnblock" xml:space="preserve">
+    <value>Por favor, confirme para desbloquear.</value>
+    <comment>Por favor, confirme para desbloquear.</comment>
   </data>
   <data name="CorrectFormValues" xml:space="preserve">
     <value>Por favor, corrija os erros do formulário.</value>
