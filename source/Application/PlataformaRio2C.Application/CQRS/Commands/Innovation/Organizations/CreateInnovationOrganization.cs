@@ -4,7 +4,7 @@
 // Created          : 28-06-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 28-06-2021
+// Last Modified On : 09-10-2021
 // ***********************************************************************
 // <copyright file="CreateInnovationOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Collections.Generic;
 

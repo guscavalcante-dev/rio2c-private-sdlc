@@ -4,7 +4,7 @@
 // Created          : 23-03-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 23-03-2021
+// Last Modified On : 09-10-2021
 // ***********************************************************************
 // <copyright file="CreateMusicBand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -22,7 +22,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     {
         public Guid MusicBandTypeUid { get; private set; }
         public string Name { get; private set; }
-        public string ImageUrl { get; private set; }
+        public string ImageFile { get; private set; }
         public string FormationDate { get; private set; }
         public string MainMusicInfluences { get; private set; }
         public string Facebook { get; private set; }
@@ -40,9 +40,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateMusicBand"/> class.
         /// </summary>
-        /// <param name="musicBandTypeUid">The music band type identifier.</param>
+        /// <param name="musicBandTypeUid">The music band type uid.</param>
         /// <param name="name">The name.</param>
-        /// <param name="imageUrl">The image URL.</param>
+        /// <param name="imageFile">The image file.</param>
         /// <param name="formationDate">The formation date.</param>
         /// <param name="mainMusicInfluences">The main music influences.</param>
         /// <param name="facebook">The facebook.</param>
@@ -59,7 +59,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public CreateMusicBand(
             Guid musicBandTypeUid,
             string name,
-            string imageUrl,
+            string imageFile,
             string formationDate,
             string mainMusicInfluences,
             string facebook,
@@ -76,7 +76,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         {
             this.MusicBandTypeUid = musicBandTypeUid;
             this.Name = name;
-            this.ImageUrl = imageUrl;
+            this.ImageFile = imageFile;
             this.FormationDate = formationDate;
             this.MainMusicInfluences = mainMusicInfluences;
             this.Facebook = facebook;
@@ -90,27 +90,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.ReleasedMusicProjectsApiDtos = releasedMusicProjectsApiDtos;
             this.MusicGenresApiDtos = musicGenresApiDtos;
             this.TargetAudiencesApiDtos = targetAudiencesApiDtos;
-        }
-
-        /// <summary>Initializes a new instance of the <see cref="CreateMusicBand"/> class.</summary>
-        public CreateMusicBand(MusicBandApiDto musicBandApiDto)
-        {
-            this.MusicBandTypeUid = musicBandApiDto.MusicBandTypeUid;
-            this.Name = musicBandApiDto.Name;
-            this.ImageUrl = musicBandApiDto.ImageUrl;
-            this.FormationDate = musicBandApiDto.FormationDate;
-            this.MainMusicInfluences = musicBandApiDto.MainMusicInfluences;
-            this.Facebook = musicBandApiDto.Facebook;
-            this.Instagram = musicBandApiDto.Instagram;
-            this.Twitter = musicBandApiDto.Twitter;
-            this.Youtube = musicBandApiDto.Youtube;
-            this.MusicProjectApiDto = musicBandApiDto.MusicProjectApiDto;
-            this.MusicBandResponsibleApiDto = musicBandApiDto.MusicBandResponsibleApiDto;
-            this.MusicBandMembersApiDtos = musicBandApiDto.MusicBandMembersApiDtos;
-            this.MusicBandTeamMembersApiDtos = musicBandApiDto.MusicBandTeamMembersApiDtos;
-            this.ReleasedMusicProjectsApiDtos = musicBandApiDto.ReleasedMusicProjectsApiDtos;
-            this.MusicGenresApiDtos = musicBandApiDto.MusicGenresApiDtos;
-            this.TargetAudiencesApiDtos = musicBandApiDto.TargetAudiencesApiDtos;
         }
 
         /// <summary>

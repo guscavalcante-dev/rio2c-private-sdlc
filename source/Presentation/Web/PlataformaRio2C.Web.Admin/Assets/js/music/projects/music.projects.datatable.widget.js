@@ -46,7 +46,7 @@ var MusicProjectsDataTableWidget = function () {
         }
 
         var globalVariables = MyRio2cCommon.getGlobalVariables();
-        var imageDirectory = 'https://' + globalVariables.bucket + '/img/organizations/';
+        var imageDirectory = 'https://' + globalVariables.bucket + '/img/music/bands/';
 
         // Initiate datatable
         table = tableElement.DataTable({
@@ -134,19 +134,13 @@ var MusicProjectsDataTableWidget = function () {
                                     <tr>\
                                         <td>';
 
-                        if (!MyRio2cCommon.isNullOrEmpty(row.MusicBandImageUrl)) {
-                            html += '<img src="' + row.MusicBandImageUrl + '" /> ';
+                        if (!MyRio2cCommon.isNullOrEmpty(row.ImageUploadDate)) {
+                            html += '<img src="' + imageDirectory + row.MusicBandUid + '_thumbnail.png?v=' + moment(row.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
                         }
                         else {
                             html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';
                         }
-                        //TODO: Enable this to get image from AWS! Today image's going from database and not AWS. Refactor this!
-                        //if (!MyRio2cCommon.isNullOrEmpty(full.ImageUploadDate)) {
-                        //    html += '<img src="' + imageDirectory + full.Uid + '_thumbnail.png?v=' + moment(full.ImageUploadDate).locale(globalVariables.userInterfaceLanguage).format('YYYYMMDDHHmmss') + '" /> ';
-                        //}
-                        //else {
-                        //    html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';
-                        //}
+
                         html += '       <td> ' + data + '</td>\
                                     </tr>\
                                 </table>';

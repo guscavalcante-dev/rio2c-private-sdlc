@@ -384,8 +384,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="musicGenreUid">The music genre uid.</param>
-        /// <param name="page">The page.</param>
-        /// <param name="pageSize">Size of the page.</param>
         /// <param name="sortColumns">The sort columns.</param>
         /// <returns></returns>
         private async Task<List<MusicProjectJsonDto>> FindAllJsonDtosAsync(int editionId, string searchKeywords, Guid? musicGenreUid, List<Tuple<string, string>> sortColumns)
@@ -403,15 +401,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                    MusicProjectId = mp.Id,
                                    MusicProjectUid = mp.Uid,
                                    AttendeeMusicBandId = mp.AttendeeMusicBand.Id,
+                                   MusicBandUid = mp.AttendeeMusicBand.MusicBand.Uid,
                                    MusicBandName = mp.AttendeeMusicBand.MusicBand.Name,
-                                   MusicBandImageUrl = mp.AttendeeMusicBand.MusicBand.ImageUrl,
                                    MusicBandTypeName = mp.AttendeeMusicBand.MusicBand.MusicBandType.Name,
-                                   //EvaluationStatusName = mp.ProjectEvaluationStatus.Name,
-                                   //EvaluationUserName = mp.EvaluationUser.Name,
+                                   ImageUploadDate = mp.AttendeeMusicBand.MusicBand.ImageUploadDate,
                                    Grade = mp.AttendeeMusicBand.Grade,
                                    EvaluationsCount = mp.AttendeeMusicBand.AttendeeMusicBandEvaluations.Count,
-
-
                                    MusicGenreNames = mp.AttendeeMusicBand.MusicBand.MusicBandGenres
                                                            .Where(mbg => !mbg.IsDeleted && !mbg.MusicGenre.IsDeleted)
                                                            .OrderBy(mbg => mbg.MusicGenre.DisplayOrder)
@@ -426,7 +421,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return await query
                             .ToListAsync();
-            //.ToListPagedAsync(page, pageSize);
         }
 
         #endregion

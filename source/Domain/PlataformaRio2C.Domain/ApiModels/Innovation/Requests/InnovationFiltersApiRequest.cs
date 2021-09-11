@@ -4,19 +4,18 @@
 // Created          : 07-20-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-20-2021
+// Last Modified On : 09-10-2021
 // ***********************************************************************
-// <copyright file="InnovationOrganizationObjectivesOptionsApiRequest.cs" company="Softo">
+// <copyright file="InnovationFiltersApiRequest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using Newtonsoft.Json;
 
 namespace PlataformaRio2C.Domain.ApiModels
 {
-    /// <summary>InnovationOrganizationObjectivesOptionsApiRequest</summary>
-    public class InnovationOrganizationObjectivesOptionsApiRequest : ApiPageBaseRequest
+    /// <summary>InnovationFiltersApiRequest</summary>
+    public class InnovationFiltersApiRequest : ApiPageBaseRequest
     {
     }
 }

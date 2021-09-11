@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Site
 // Author           : Renan Valentim
-// Created          : 03-27-2021
+// Created          : 09-10-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-27-2021
+// Last Modified On : 09-10-2021
 // ***********************************************************************
-// <copyright file="TargetAudiencesApiResponse.cs" company="Softo">
+// <copyright file="MusicFiltersApiResponse.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -17,9 +17,15 @@ using Newtonsoft.Json;
 
 namespace PlataformaRio2C.Domain.ApiModels
 {
-    /// <summary>TargetAudiencesApiResponse</summary>
-    public class TargetAudiencesApiResponse : ApiBaseResponse
+    /// <summary>MusicFiltersApiResponse</summary>
+    public class MusicFiltersApiResponse : ApiBaseResponse
     {
+        [JsonProperty("musicBandTypes")]
+        public List<ApiListItemBaseResponse> MusicBandTypes { get; set; }
+
+        [JsonProperty("musicGenres")]
+        public List<ApiListItemBaseResponse> MusicGenres { get; set; }
+
         [JsonProperty("targetAudiences")]
         public List<ApiListItemBaseResponse> TargetAudiences { get; set; }
     }
