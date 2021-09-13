@@ -305,7 +305,7 @@ namespace PlataformaRio2C.Web.Admin
             #region Accounts Page Bundles
 
             bundles.Add(new ScriptBundle("~/bundles/js/accounts.update.userstatus.js").Include(
-               "~/Assets/js/collaborators/accounts.update.userstatus.js"));
+               "~/Assets/js/accounts/accounts.update.userstatus.js"));
 
             #endregion
 
