@@ -3,11 +3,11 @@
 // Author           : Renan Valentim
 // Created          : 06-28-2021
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 09-10-2021
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 09-13-2021
 // ***********************************************************************
-// <copyright file="CreateStartupCommandHandler.cs" company="">
-//     Copyright ©  2017
+// <copyright file="CreateInnovationOrganizationCommandHandler.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
@@ -31,7 +31,9 @@ using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>CreateStartupCommandHandler</summary>
+    /// <summary>
+    /// CreateInnovationOrganizationCommandHandler
+    /// </summary>
     public class CreateInnovationOrganizationCommandHandler : InnovationOrganizationBaseCommandHandler, IRequestHandler<CreateInnovationOrganization, AppValidationResult>
     {
         private readonly IEditionRepository editionRepo;

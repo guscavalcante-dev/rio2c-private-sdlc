@@ -3,15 +3,14 @@
 // Author           : Renan Valentim
 // Created          : 03-01-2021
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 09-10-2021
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 09-13-2021
 // ***********************************************************************
 // <copyright file="MusicBandsApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
 using MediatR;
 using Newtonsoft.Json;
 using PlataformaRio2C.Application;
@@ -33,6 +32,9 @@ using System.Web.Http;
 
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 {
+    /// <summary>
+    /// MusicBandsApiController
+    /// </summary>
     [System.Web.Http.RoutePrefix("api/v1.0/music")]
     public class MusicBandsApiController : BaseApiController
     {
@@ -48,6 +50,12 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// Initializes a new instance of the <see cref="MusicBandsApiController"/> class.
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
+        /// <param name="identityController">The identity controller.</param>
+        /// <param name="editionRepository">The edition repository.</param>
+        /// <param name="languageRepository">The language repository.</param>
+        /// <param name="musicBandTypesRepository">The music band types repository.</param>
+        /// <param name="musicGenresRepository">The music genres repository.</param>
+        /// <param name="targetAudiencesRepository">The target audiences repository.</param>
         public MusicBandsApiController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
@@ -69,10 +77,9 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <summary>
         /// Creates the music band.
         /// </summary>
-        /// <param name="musicBandApiDto">The music band dto.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="request">The request.</param>
         /// <returns></returns>
-        /// <exception cref="DomainException">
-        /// </exception>
         [HttpPost]
         [Route("createmusicband/{key?}")]
         public async Task<IHttpActionResult> CreateMusicBand(string key, HttpRequestMessage request)

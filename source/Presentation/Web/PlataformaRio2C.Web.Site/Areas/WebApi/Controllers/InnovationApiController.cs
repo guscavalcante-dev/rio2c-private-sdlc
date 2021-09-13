@@ -3,15 +3,14 @@
 // Author           : Renan Valentim
 // Created          : 06-28-2021
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 09-10-2021
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 09-13-2021
 // ***********************************************************************
 // <copyright file="InnovationApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-
 using MediatR;
 using Newtonsoft.Json;
 using PlataformaRio2C.Application;
@@ -32,6 +31,9 @@ using System.Web.Http;
 
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 {
+    /// <summary>
+    /// InnovationApiController
+    /// </summary>
     [System.Web.Http.RoutePrefix("api/v1.0/innovation")]
     public class InnovationApiController : BaseApiController
     {
@@ -49,6 +51,14 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// Initializes a new instance of the <see cref="InnovationApiController"/> class.
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
+        /// <param name="identityController">The identity controller.</param>
+        /// <param name="editionRepository">The edition repository.</param>
+        /// <param name="languageRepository">The language repository.</param>
+        /// <param name="workDedicationRepository">The work dedication repository.</param>
+        /// <param name="innovationOrganizationExperienceOptionRepository">The innovation organization experience option repository.</param>
+        /// <param name="innovationOrganizationTrackOptionRepository">The innovation organization track option repository.</param>
+        /// <param name="innovationOrganizationTechnologyOptionRepository">The innovation organization technology option repository.</param>
+        /// <param name="innovationOrganizationObjectivesOptionRepository">The innovation organization objectives option repository.</param>
         public InnovationApiController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
@@ -76,12 +86,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="request">The request.</param>
-        /// <returns>Task&lt;IHttpActionResult&gt;.</returns>
-        /// <exception cref="DomainException"></exception>
-        /// <exception cref="DomainException"></exception>
-        /// <exception cref="DomainException"></exception>
-        /// <exception cref="DomainException"></exception>
-        /// <exception cref="DomainException"></exception>
+        /// <returns></returns>
         [HttpPost]
         [Route("createstartup/{key?}")]
         public async Task<IHttpActionResult> CreateStartup(string key, HttpRequestMessage request)
