@@ -1,0 +1,104 @@
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Constants
+@using PlataformaRio2C.Domain.Statics
+@model AttendeeCollaboratorSiteCompanyWidgetDto
+@{
+    var organizationTypeName = ViewBag.OrganizationTypeName as string;
+    var organizationUrlAction = "";
+}
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+            @Labels.Companies
+        </h3>
+    </div>
+    <div class="kt-portlet__head-toolbar">
+        <div class="kt-portlet__head-actions">
+            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="CollaboratorsCompanyWidget.showUpdateModal();">
+                <i class="flaticon2-plus"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="kt-portlet__body">
+    @if (Model.AttendeeOrganizationsDtos?.Any() == true)
+    {
+        <div class="row rio2c-scroll" style="height: 200px;">
+            @foreach (var attendeeOrganizationDto in Model.AttendeeOrganizationsDtos)
+            {
+                <div class="col-sm-6 col-xl-4">
+                    <!--Begin::Portlet-->
+                    <div class="kt-portlet kt-portlet--height-fluid">
+                        <div class="text-right pr-2 pt-2">
+                            <a href="#" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" data-toggle="dropdown" aria-expanded="false">
+                                <i class="flaticon-more-1"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right" style="">
+                                <ul class="kt-nav">
+                                    <li class="kt-nav__item">
+                                        <a class="kt-nav__link" onclick="CollaboratorsCompanyWidget.showUpdateModal('@attendeeOrganizationDto.Organization.Uid'); return false;">
+                                            <i class="kt-nav__link-icon flaticon2-edit"></i>
+                                            <span class="kt-nav__link-text">@Labels.Edit</span>
+                                        </a>
+                                    </li>
+                                    <li class="kt-nav__item">
+                                        <a class="kt-nav__link" onclick="CollaboratorsCompanyWidget.showDeleteModal('@attendeeOrganizationDto.Organization.Uid'); return false;">
+                                            <i class="kt-nav__link-icon flaticon2-delete"></i>
+                                            <span class="kt-nav__link-text">@Labels.Remove</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="kt-portlet__body mt-10">
+                            <!--begin::Widget -->
+                            <div class="kt-widget kt-widget--user-profile-2" style="flex-direction: row;">
+                                <div class="kt-widget__head">
+                                    <div class="kt-widget__media">
+                                        @if (attendeeOrganizationDto.Organization.HasImage())
+                                        {
+                                            <img class="kt-widget__img" src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, attendeeOrganizationDto.Organization.Uid, attendeeOrganizationDto.Organization.ImageUploadDate, true)" alt="image">
+                                        }
+                                        else
+                                        {
+                                            <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest">
+                                                @(attendeeOrganizationDto.Organization.GetTradeNameAbbreviation())
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="kt-widget__info">
+                                        <a class="kt-widget__username">@attendeeOrganizationDto.Organization.TradeName</a>
+                                        <span class="kt-widget__desc">
+                                            @if (organizationTypeName == OrganizationType.AudiovisualBuyer)
+                                            {
+                                                organizationUrlAction = Url.Action("Details", "Players", new { Area = "Audiovisual", id = attendeeOrganizationDto.Organization.Uid });
+                                            }
+                                            else if (organizationTypeName == OrganizationType.AudiovisualSeller)
+                                            {
+                                                organizationUrlAction = Url.Action("Details", "Producers", new { Area = "Audiovisual", id = attendeeOrganizationDto.Organization.Uid });
+                                            }
+
+                                            @if (!string.IsNullOrEmpty(organizationUrlAction))
+                                            {
+                                                <a href="@organizationUrlAction" target="_blank">
+                                                    <small><i class="flaticon-profile"></i> @Labels.SeeDescription</small>
+                                                </a>
+                                            }
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Widget -->
+                        </div>
+                    </div>
+                    <!--End::Portlet-->
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <span class="text-center">@string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundF)</span>
+    }
+</div>

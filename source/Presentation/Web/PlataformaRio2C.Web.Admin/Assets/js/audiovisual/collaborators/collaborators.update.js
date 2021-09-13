@@ -46,7 +46,6 @@ var CollaboratorsUpdate = function () {
         enableFormValidation();
     };
     
-
     var changePreviousEditionsRequired = function () {
 	    $("#HasEditionSelected").val($('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox:checked').length > 0 ? "True" : null);
 	    var dataValMsgFor = $('[data-valmsg-for="HasEditionSelected"]');
@@ -74,7 +73,7 @@ var CollaboratorsUpdate = function () {
         jsonParameters.collaboratorUid = collaboratorUid;
         jsonParameters.isAddingToCurrentEdition = isAddingToCurrentEdition;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/ShowUpdateModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PlayersExecutives/ShowUpdateModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

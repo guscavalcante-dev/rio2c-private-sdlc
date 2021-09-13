@@ -381,7 +381,6 @@
     <Compile Include="Areas\WebApi\Controllers\BaseApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\CollaboratorPlayerController.cs" />
     <Compile Include="Areas\WebApi\Controllers\ConferenceController.cs" />
-    <Compile Include="Areas\WebApi\Controllers\CollaboratorsController.cs" />
     <Compile Include="Areas\WebApi\Controllers\DashboardController.cs" />
     <Compile Include="Areas\WebApi\Controllers\CollaboratorProducerController.cs" />
     <Compile Include="Areas\WebApi\Controllers\HoldingController.cs" />
@@ -417,7 +416,7 @@
     <Compile Include="Controllers\CitiesController.cs" />
     <Compile Include="Controllers\ConferencesController.cs" />
     <Compile Include="Controllers\SpeakersController.cs" />
-    <Compile Include="Controllers\PlayersExecutivesController.cs" />
+    <Compile Include="Areas\Audiovisual\Controllers\PlayersExecutivesController.cs" />
     <Compile Include="Controllers\StatesController.cs" />
     <Compile Include="Areas\Audiovisual\Controllers\PlayersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -853,9 +852,13 @@
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.buyercompany.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.commission.evaluation.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.evaluators.widget.js" />
+    <Content Include="Assets\js\accounts\accounts.update.userstatus.js" />
     <Content Include="Assets\js\collaborators\collaborators.onboardinginfo.widget.js" />
     <Content Include="Assets\js\collaborators\collaborators.socialnetworks.widget.js" />
     <Content Include="Assets\js\collaborators\collaborators.maininformation.widget.js" />
+    <Content Include="Assets\js\collaborators\collaborators.company.widget.js" />
+    <Content Include="Assets\js\companies\company.executive.delete.js" />
+    <Content Include="Assets\js\companies\company.executive.create.js" />
     <Content Include="Assets\js\editions\editions.events.widget.js" />
     <Content Include="Assets\js\editions\editions.create.js" />
     <Content Include="Assets\js\editions\editions.datatable.widget.js" />
@@ -937,7 +940,6 @@
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.maininformation.widget.js" />
     <Content Include="Assets\js\conferenceparticipantroles\conferenceparticipantroles.totalcount.widget.js" />
     <Content Include="Assets\js\logistics\logistics.airfare.widget.js" />
-    <Content Include="Assets\js\administrators\administrators.changepassword.widget.js" />
     <Content Include="Assets\js\administrators\administrators.form.js" />
     <Content Include="Assets\js\administrators\administrators.maininformation.widget.js" />
     <Content Include="Assets\js\administrators\administrators.create.js" />
@@ -1009,7 +1011,6 @@
     <Content Include="Assets\js\speakers\speakers.participants.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.editioncount.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.totalcount.widget.js" />
-    <Content Include="Assets\js\speakers\speakers.company.widget.js" />
     <Content Include="Assets\js\speakers\speakers.apiconfiguration.widget.js" />
     <Content Include="Assets\js\speakers\speakers.create.js" />
     <Content Include="Assets\js\speakers\speakers.datatable.widget.js" />
@@ -8143,18 +8144,15 @@
     <Content Include="Areas\Music\Views\web.config" />
     <Content Include="Areas\Music\Views\Commissions\Details.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Index.cshtml" />
-    <Content Include="Views\Shared\Collaborators\Forms\_TinyForm.cshtml" />
+    <Content Include="Views\Collaborators\Forms\_TinyForm.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Modals\CreateModal.cshtml" />
-    <Content Include="Views\Shared\Collaborators\Forms\_MainInformationForm.cshtml" />
+    <Content Include="Views\Collaborators\Forms\_MainInformationForm.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Modals\UpdateMainInformationModal.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Modals\UpdateModal.cshtml" />
-    <Content Include="Views\Shared\Collaborators\Forms\_SocialNetworksForm.cshtml" />
+    <Content Include="Views\Collaborators\Forms\_SocialNetworksForm.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Modals\UpdateSocialNetworksModal.cshtml" />
-    <Content Include="Views\Shared\Collaborators\Widgets\CompanyWidget.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Widgets\DataTableWidget.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Widgets\EditionCountWidget.cshtml" />
-    <Content Include="Views\Shared\Collaborators\Widgets\MainInformationWidget.cshtml" />
-    <Content Include="Views\Shared\Collaborators\Widgets\SocialNetworksWidget.cshtml" />
     <Content Include="Areas\Music\Views\Commissions\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Areas\Music\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Music\Views\Projects\Index.cshtml" />
@@ -8315,6 +8313,8 @@
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EditionCountGaugeWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\AudiovisualCommissionEvaluatorsWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\AudiovisualCommissionEvaluationWidget.cshtml" />
+    <Content Include="Views\Companies\Modals\CreateOrganizationExecutiveForm.cshtml" />
+    <Content Include="Views\Companies\Modals\CreateOrganizationExecutiveModal.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -9656,17 +9656,14 @@
     <Content Include="Views\Holdings\Edit.cshtml" />
     <Content Include="Views\Holdings\_Editor.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AddressBaseCommand.cshtml" />
-    <Content Include="Views\PlayersExecutives\_Editor.cshtml" />
-    <Content Include="Views\PlayersExecutives\Create.cshtml" />
-    <Content Include="Views\PlayersExecutives\Edit.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CollaboratorJobTitleBaseCommand.cshtml" />
-    <Content Include="Views\PlayersExecutives\Index.cshtml" />
-    <Content Include="Views\PlayersExecutives\Modals\_Form.cshtml" />
-    <Content Include="Views\PlayersExecutives\Modals\CreateModal.cshtml" />
-    <Content Include="Views\PlayersExecutives\Modals\UpdateModal.cshtml" />
-    <Content Include="Views\PlayersExecutives\Widgets\DataTableWidget.cshtml" />
-    <Content Include="Views\PlayersExecutives\Widgets\EditionCountWidget.cshtml" />
-    <Content Include="Views\PlayersExecutives\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PlayersExecutives\Index.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PlayersExecutives\Modals\_Form.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PlayersExecutives\Modals\CreateModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PlayersExecutives\Modals\UpdateModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PlayersExecutives\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PlayersExecutives\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PlayersExecutives\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CollaboratorMiniBioBaseCommand.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AttendeeOrganizationBaseCommand.cshtml" />
     <Content Include="Views\AdminMailerService\_AdminEmailLayout.cshtml" />
@@ -9684,8 +9681,6 @@
     <Content Include="Views\AdminMailerService\SpeakerWelcomeEmail.cshtml" />
     <Content Include="Views\SalesPlatforms\Modals\EventbriteCsvModal.cshtml" />
     <Content Include="Views\Speakers\Details.cshtml" />
-    <Content Include="Views\Speakers\Modals\UpdateMainInformationModal.cshtml" />
-    <Content Include="Views\Speakers\Modals\UpdateCompanyInfoModal.cshtml" />
     <Content Include="Views\Speakers\Widgets\ApiConfigurationWidget.cshtml" />
     <Content Include="Views\Speakers\Modals\UpdateApiConfigurationModal.cshtml" />
     <Content Include="Views\Speakers\Modals\UpdateApiConfigurationForm.cshtml" />
@@ -9802,8 +9797,6 @@
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\DataTableWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EditionCountWidget.cshtml" />
-    <Content Include="Views\Speakers\Modals\UpdateSocialNetworksModal.cshtml" />
-    <Content Include="Views\Shared\Collaborators\Widgets\OnboardingInfoWidget.cshtml" />
     <Content Include="Views\AdminMailerService\MusicCommissionWelcomeEmail.cshtml" />
     <Content Include="Views\Shared\SocialNetworks\_WebsiteItem.cshtml" />
     <Content Include="Views\Shared\SocialNetworks\_LinkedInItem.cshtml" />
@@ -9893,8 +9886,6 @@
     <Content Include="Areas\Innovation\Views\Commissions\Widgets\TracksWidget.cshtml" />
     <Content Include="Views\AdminMailerService\InnovationCommissionWelcomeEmail.cshtml" />
     <Content Include="Views\AdminMailerService\AudiovisualCommissionWelcomeEmail.cshtml" />
-    <Content Include="Views\Shared\Collaborators\Modal\UpdateMainInformationModal.cshtml" />
-    <Content Include="Views\Shared\Collaborators\Modal\UpdateSocialNetworksModal.cshtml" />
     <Content Include="Views\Collaborators\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Views\Collaborators\Widgets\SocialNetworksWidget.cshtml" />
     <Content Include="Views\Collaborators\Modals\UpdateMainInformationForm.cshtml" />
@@ -9902,6 +9893,9 @@
     <Content Include="Views\Collaborators\Modals\UpdateSocialNetworksForm.cshtml" />
     <Content Include="Views\Collaborators\Modals\UpdateSocialNetworksModal.cshtml" />
     <Content Include="Views\Collaborators\Widgets\OnboardingInfoWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\PlayersExecutives\Details.cshtml" />
+    <Content Include="Views\Collaborators\Widgets\CompanyWidget.cshtml" />
+    <Content Include="Views\Collaborators\Modals\UpdateCompanyInfoModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

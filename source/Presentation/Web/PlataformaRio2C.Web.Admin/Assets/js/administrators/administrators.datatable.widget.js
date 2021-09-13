@@ -133,7 +133,6 @@ var AdministratorsDataTableWidget = function () {
                 {
                     data: 'FullName',
                     render: function (data, type, full, meta) {
-                        var blocked = 'Bloqueado';
                         var html = '\
                                 <table class="image-side-text text-left">\
                                     <tr>\
@@ -147,21 +146,18 @@ var AdministratorsDataTableWidget = function () {
                         }
 
                         html += '       <td> ' + full.FullName + '</td>';
-                        html +='    </tr>';
-
-                        
-
-                        html +='        </table>';
+                        html += '    </tr>';
+                        html += ' </table>';
 
                         if (!full.Active) {
-                            html += '<span class="kt-badge kt-badge--inline kt-badge--info mt-2" style="color: #ffffff; background: #E66E72">' + blocked + '</span><br>';
+                            html += '<span class="kt-badge kt-badge--inline kt-badge--info mt-2" style="color: #ffffff; background: #E66E72">' + labels.blocked + '</span><br>';
                         }
 
                         if (!full.IsInCurrentEdition && !full.IsAdminFull) {
                             html += '<span class="kt-badge kt-badge--inline kt-badge--info mt-2">' + labels.notInEdition + '</span>';
                         }
 
-                        
+
 
                         return html;
                     }
@@ -215,8 +211,8 @@ var AdministratorsDataTableWidget = function () {
                         }
 
                         html += '<button class="dropdown-item" onclick="AdministratorsDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
-                        html += '<button class="dropdown-item" onclick="AdministratorsChangePassword.showModal(\'' + full.Uid + '\',\'novasenha\');"><i class="la la-key"></i> ' + changePassword + '</button>';
-                        html += '<button class="dropdown-item" onclick="AdministratorsDataTableWidget.toogleStatus(\'' + full.UserBaseDto.Uid + '\',\'' + !full.Active + '\');"><i class="la la-lock"></i> ' + ((full.Active)?block:unblock) + '</button>';
+                        html += '<button class="dropdown-item" onclick="AccountsPassword.showResetModal(\'' + full.Id + '\');"><i class="la la-key"></i> ' + changePassword + '</button>';
+                        html += '<button class="dropdown-item" onclick="AccountsUpdateUserStatus.showModal(\'' + full.UserBaseDto.Uid + '\',\'' + !full.Active + '\');"><i class="la la-lock"></i> ' + ((full.Active) ? block : unblock) + '</button>';
 
                         if (full.IsInCurrentEdition && full.IsInOtherEdition) {
                             html += '<button class="dropdown-item" onclick="AdministratorsDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-minus"></i> ' + removeFromEdition + '</button>';
@@ -294,33 +290,30 @@ var AdministratorsDataTableWidget = function () {
         window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Administrators/Details/' + collaboratorUid);
     };
 
-    var toogleStatus = function (userUid, active) {
-
+    var updateUserStatus = function (userUid, active) {
         var jsonParameters = new Object();
         jsonParameters.userUid = userUid;
         jsonParameters.active = active;
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Administrators/UpdateAdministratorStatus'), jsonParameters, function (data) {
-            /*
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Account/UpdateUserStatus'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
                 onSuccess: function () {
-                    enablePlugins();
-                    $(modalId).modal();
                 },
                 // Error
                 onError: function () {
                 }
             });
-            */
         })
-        .fail(function () {
-        })
-        .always(function () {
-            AdministratorsDataTableWidget.refreshData();
-            MyRio2cCommon.unblock();
-        });
+            .fail(function () {
+            })
+            .always(function () {
+                if (typeof (AdministratorsDataTableWidget) !== 'undefined') {
+                    AdministratorsDataTableWidget.refreshData();
+                }
+                MyRio2cCommon.unblock();
+            });
     }
 
     return {
@@ -337,8 +330,8 @@ var AdministratorsDataTableWidget = function () {
         showDetails: function (collaboratorUid) {
             showDetails(collaboratorUid);
         },
-        toogleStatus: function (userUid, active) {
-            toogleStatus(userUid, active);
+        updateUserStatus: function (userUid, active) {
+            updateUserStatus(userUid, active);
         }
     };
 }();

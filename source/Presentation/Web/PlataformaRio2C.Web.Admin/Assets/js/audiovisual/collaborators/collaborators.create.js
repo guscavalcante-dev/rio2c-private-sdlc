@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-26-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-21-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-13-2021
 // ***********************************************************************
 // <copyright file="collaborators.create.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -64,12 +64,13 @@ var CollaboratorsCreate = function () {
     }
 
     // Show modal ---------------------------------------------------------------------------------
-    var showModal = function () {
+    var showModal = function (attendeeOrganizationUid) {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
+        jsonParameters.attendeeOrganizationUid = attendeeOrganizationUid;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/ShowCreateModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PlayersExecutives/ShowCreateModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -119,8 +120,8 @@ var CollaboratorsCreate = function () {
     };
 
     return {
-        showModal: function () {
-            showModal();
+        showModal: function (attendeeOrganizationUid) {
+            showModal(attendeeOrganizationUid);
         }
     };
 }();

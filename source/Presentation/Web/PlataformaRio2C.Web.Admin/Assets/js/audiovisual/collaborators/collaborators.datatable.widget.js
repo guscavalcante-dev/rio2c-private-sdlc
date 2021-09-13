@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-26-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-23-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 08-31-2021
 // ***********************************************************************
 // <copyright file="collaborators.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -25,7 +25,7 @@ var CollaboratorsDataTableWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.selectedCollaboratorsUids = $('#playersexecutives-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/SendInvitationEmails'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PlayersExecutives/SendInvitationEmails'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -155,7 +155,7 @@ var CollaboratorsDataTableWidget = function () {
                 sSearch: $('#Search').val()
             },
             ajax: {
-                url: MyRio2cCommon.getUrlWithCultureAndEdition('/PlayersExecutives/Search'),
+                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PlayersExecutives/Search'),
                 data: function (d) {
                     d.showAllEditions = $('#ShowAllEditions').prop('checked');
                     d.showAllParticipants = $('#ShowAllParticipants').prop('checked');
@@ -210,6 +210,10 @@ var CollaboratorsDataTableWidget = function () {
                         html += '       <td> ' + full.FullName + '</td>\
                                     </tr>\
                                 </table>';
+
+                        if (!full.Active) {
+                            html += '<span class="kt-badge kt-badge--inline kt-badge--info mt-2" style="color: #ffffff; background: #E66E72">' + labels.blocked + '</span><br>';
+                        }
 
                         if (!full.IsInCurrentEdition) {
                             html += '<span class="kt-badge kt-badge--inline kt-badge--info mt-2">' + labels.notInEdition + '</span>';
@@ -269,10 +273,11 @@ var CollaboratorsDataTableWidget = function () {
                             html += '<button class="dropdown-item" onclick="CollaboratorsUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         }
 
-                        html += '<button class="dropdown-item" onclick="CollaboratorsUpdate.showModal(\'' + full.Uid + '\', false);"><i class="la la-edit"></i> ' + labels.edit + '</button>';
+                        html += '<button class="dropdown-item" onclick="CollaboratorsDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
+                        html += '<button class="dropdown-item" onclick="AccountsUpdateUserStatus.showModal(\'' + full.UserBaseDto.Uid + '\',\'' + !full.Active + '\');"><i class="la la-lock"></i> ' + ((full.Active) ? labels.block : labels.unblock) + '</button>';
 
                         if (full.IsInCurrentEdition && full.IsInOtherEdition) {
-                            html += '<button class="dropdown-item" onclick="CollaboratorsDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + removeFromEdition + '</button>';
+                            html += '<button class="dropdown-item" onclick="CollaboratorsDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-remove"></i> ' + removeFromEdition + '</button>';
                         }
                         else {
                             html += '<button class="dropdown-item" onclick="CollaboratorsDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
@@ -330,6 +335,14 @@ var CollaboratorsDataTableWidget = function () {
         table.ajax.reload();
     };
 
+    var showDetails = function (commissionUid) {
+        if (MyRio2cCommon.isNullOrEmpty(commissionUid)) {
+            return;
+        }
+
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PlayersExecutives/Details/' + commissionUid);
+    };
+
     return {
         init: function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
@@ -340,6 +353,9 @@ var CollaboratorsDataTableWidget = function () {
         },
         exportEventbriteCsv: function() {
             exportEventbriteCsv();
+        },
+        showDetails: function (commissionUid) {
+            showDetails(commissionUid);
         }
     };
 }();

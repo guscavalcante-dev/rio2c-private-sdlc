@@ -1,41 +1,34 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Rafael Dantas Ruiz
-// Created          : 08-26-2019
+// Author           : Renan Valentim
+// Created          : 09-13-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-13-2021
 // ***********************************************************************
-// <copyright file="collaborators.delete.js" company="Softo">
+// <copyright file="company.executive.create" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var CollaboratorsDelete = function () {
+var CompanyExecutiveDelete = function () {
 
     // Delete -------------------------------------------------------------------------------------
-    var executeDelete = function (collaboratorUid) {
+    var executeDelete = function (collaboratorUid, organizationUid) {
         MyRio2cCommon.block();
 
         var jsonParameters = new Object();
         jsonParameters.collaboratorUid = collaboratorUid;
+        jsonParameters.organizationUid = organizationUid;
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PlayersExecutives/Delete'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Collaborators/DeleteOrganization'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
                 onSuccess: function () {
-                    if (typeof (CollaboratorsDataTableWidget) !== 'undefined') {
-                        CollaboratorsDataTableWidget.refreshData();
-                    }
-
-                    if (typeof (CollaboratorsTotalCountWidget) !== 'undefined') {
-                        CollaboratorsTotalCountWidget.init();
-                    }
-
-                    if (typeof (CollaboratorsEditionCountWidget) !== 'undefined') {
-                        CollaboratorsEditionCountWidget.init();
+                    if (typeof (CompanyExecutiveWidget) !== 'undefined') {
+                        AudiovisualOrganizationsExecutiveWidget.init();
                     }
                 },
                 // Error
@@ -43,14 +36,14 @@ var CollaboratorsDelete = function () {
                 }
             });
         })
-        .fail(function () {
-        })
-        .always(function () {
-            MyRio2cCommon.unblock();
-        });
+            .fail(function () {
+            })
+            .always(function () {
+                MyRio2cCommon.unblock();
+            });
     };
 
-    var showModal = function (collaboratorUid, isDeletingFromCurrentEdition) {
+    var showModal = function (collaboratorUid, organizationUid, isDeletingFromCurrentEdition) {
         var message = labels.deleteConfirmationMessage;
 
         if (isDeletingFromCurrentEdition) {
@@ -70,7 +63,7 @@ var CollaboratorsDelete = function () {
                     label: labels.remove,
                     className: "btn btn-danger",
                     callback: function () {
-                        executeDelete(collaboratorUid);
+                        executeDelete(collaboratorUid, organizationUid);
                     }
                 }
             }
@@ -78,8 +71,8 @@ var CollaboratorsDelete = function () {
     };
 
     return {
-        showModal: function (collaboratorUid, isDeletingFromCurrentEdition) {
-            showModal(collaboratorUid, isDeletingFromCurrentEdition);
+        showModal: function (collaboratorUid, organizationUid, isDeletingFromCurrentEdition) {
+            showModal(collaboratorUid, organizationUid, isDeletingFromCurrentEdition);
         }
     };
 }();

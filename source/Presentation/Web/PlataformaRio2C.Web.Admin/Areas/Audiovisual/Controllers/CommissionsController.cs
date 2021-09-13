@@ -165,8 +165,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             return View(attendeeCollaboratorDto);
         }
 
-        #endregion
-
         #region Interests Widget
 
         [HttpGet]
@@ -304,6 +302,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
             }, JsonRequestBehavior.AllowGet);
         }
+
+        #endregion
 
         #endregion
 

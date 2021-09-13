@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Rafael Dantas Ruiz
-// Created          : 12-16-2019
+// Author           : Renan Valentim
+// Created          : 08-31-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-18-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 08-31-2021
 // ***********************************************************************
-// <copyright file="speakers.company.widget.js" company="Softo">
+// <copyright file="collaborators.company.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -14,26 +14,32 @@
 
 var CollaboratorsCompanyWidget = function () {
 
-    var widgetElementId = '#SpeakerCompanyWidget';
+    var widgetElementId = '#CollaboratorCompanyWidget';
     var widgetElement = $(widgetElementId);
 
     var createModalId = '#UpdateCompanyInfoModal';
     var createFormId = '#UpdateCompanyInfoForm';
 
+    var _organizationTypeName = '';
+
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
         KTApp.initTooltips();
+        MyRio2cCommon.initScroll();
     };
 
-    var show = function () {
+    var show = function (organizationTypeName) {
         if (widgetElement.length <= 0) {
             return;
         }
 
-        var jsonParameters = new Object();
-        jsonParameters.collaboratorUid = $('#SpeakerAggregateId').val();
+        _organizationTypeName = organizationTypeName;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/ShowCompanyWidget'), jsonParameters, function (data) {
+        var jsonParameters = new Object();
+        jsonParameters.collaboratorUid = $('#AggregateId').val();
+        jsonParameters.organizationTypeName = organizationTypeName;
+
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Collaborators/ShowCompanyWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -60,7 +66,7 @@ var CollaboratorsCompanyWidget = function () {
                 $(createModalId).modal('hide');
 
                 if (typeof (CollaboratorsCompanyWidget) !== 'undefined') {
-	                CollaboratorsCompanyWidget.init();
+                    CollaboratorsCompanyWidget.init(_organizationTypeName);
                 }
             },
             onError: function (data) {
@@ -94,10 +100,10 @@ var CollaboratorsCompanyWidget = function () {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
-        jsonParameters.collaboratorUid = $('#SpeakerAggregateId').val();
+        jsonParameters.collaboratorUid = $('#AggregateId').val();
         jsonParameters.organizationUid = organizationUid;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/ShowUpdateCompanyInfoModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Collaborators/ShowUpdateCompanyInfoModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -125,13 +131,13 @@ var CollaboratorsCompanyWidget = function () {
         jsonParameters.collaboratorUid = $('#AggregateId').val();
         jsonParameters.organizationUid = organizationUid;
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Speakers/DeleteOrganization'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Collaborators/DeleteOrganization'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
                 onSuccess: function () {
                     if (typeof (CollaboratorsCompanyWidget) !== 'undefined') {
-	                    CollaboratorsCompanyWidget.init();
+                        CollaboratorsCompanyWidget.init(_organizationTypeName);
                     }
                 },
                 // Error
@@ -174,9 +180,9 @@ var CollaboratorsCompanyWidget = function () {
     };
 
     return {
-        init: function () {
+        init: function (organizationTypeName) {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
-            show();
+            show(organizationTypeName);
         },
         showUpdateModal: function (organizationUid) {
             showUpdateModal(organizationUid);

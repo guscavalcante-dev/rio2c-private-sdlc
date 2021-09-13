@@ -718,6 +718,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bloqueado.
+        /// </summary>
+        public static string Blocked {
+            get {
+                return ResourceManager.GetString("Blocked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Summit Marcas.
         /// </summary>
         public static string BrandedContentSummit {
@@ -3778,6 +3787,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tipo de Empresa.
+        /// </summary>
+        public static string OrganizationType {
+            get {
+                return ResourceManager.GetString("OrganizationType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Outros.
         /// </summary>
         public static string Others {
@@ -6249,6 +6267,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string TypeYourMessage {
             get {
                 return ResourceManager.GetString("TypeYourMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Desbloquear.
+        /// </summary>
+        public static string Unblock {
+            get {
+                return ResourceManager.GetString("Unblock", resourceCulture);
             }
         }
         

@@ -2942,4 +2942,19 @@
     <value>Not checked for Pitching</value>
     <comment>Não participa do Pitching</comment>
   </data>
+  <data name="OrganizationType" xml:space="preserve">
+    <value>Organization type</value>
+    <comment>Tipo de Empresa</comment>
+  </data>
+  <data name="D" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Unblock" xml:space="preserve">
+    <value>Unblock</value>
+    <comment>Desbloquear</comment>
+  </data>
+  <data name="Blocked" xml:space="preserve">
+    <value>Blocked</value>
+    <comment>Bloqueado</comment>
+  </data>
 </root>

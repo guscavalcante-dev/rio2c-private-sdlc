@@ -45,8 +45,6 @@ var AudiovisualOrganizationsExecutiveWidget = function () {
             });
         })
         .fail(function () {
-            //showAlert();
-            //MyRio2cCommon.unblock(widgetElementId);
         })
         .always(function() {
             MyRio2cCommon.unblock({ idOrClass: widgetElementId });

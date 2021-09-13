@@ -97,7 +97,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             }
 
             // Redirect to organization data if not finished and there is no pending interests to do before
-            if (this.UserAccessControlDto?.IsPlayerOrganizatiosnOnboardingFinished() != true
+            if (this.UserAccessControlDto?.IsPlayerOrganizationsOnboardingFinished() != true
                 && this.UserAccessControlDto?.IsPlayerOrganizationInterestsOnboardingPending() != true)
             {
                 return RedirectToAction("PlayerInfo", "Onboarding");
@@ -559,7 +559,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> PlayerInfo()
         {
-            if (this.UserAccessControlDto?.IsPlayerOrganizatiosnOnboardingFinished() == true)
+            if (this.UserAccessControlDto?.IsPlayerOrganizationsOnboardingFinished() == true)
             {
                 return RedirectToAction("Index", "Onboarding");
             }
@@ -601,7 +601,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpPost]
         public async Task<ActionResult> PlayerInfo(OnboardPlayerOrganizationData cmd)
         {
-            if (this.UserAccessControlDto?.IsPlayerOrganizatiosnOnboardingFinished() == true)
+            if (this.UserAccessControlDto?.IsPlayerOrganizationsOnboardingFinished() == true)
             {
                 return RedirectToAction("Index", "Onboarding");
             }
@@ -698,7 +698,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             var currentOrganization = this.UserAccessControlDto?.EditionAttendeeOrganizations?.FirstOrDefault(eao => eao.OnboardingOrganizationDate.HasValue
                                                                                                                      && !eao.OnboardingInterestsDate.HasValue
                                                                                                                      && eao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
-                                                                                                                                                                 && aot.OrganizationType.Name == "Player"))?.Organization;
+                                                                                                                                                                 && aot.OrganizationType.Name == Constants.OrganizationType.AudiovisualBuyer))?.Organization;
             if (currentOrganization == null)
             {
                 return RedirectToAction("Index", "Onboarding");

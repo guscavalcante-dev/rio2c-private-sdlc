@@ -16,7 +16,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Update", "PlayersExecutives", new { Area = "" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UpdatePlayerExecutiveForm" }))
+                @using (Html.BeginForm("Update", "PlayersExecutives", new { Area = "Audiovisual" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UpdatePlayerExecutiveForm" }))
                 {
                     @Html.HiddenFor(m => m.CollaboratorUid)
                     @Html.HiddenFor(m => m.IsAddingToCurrentEdition)

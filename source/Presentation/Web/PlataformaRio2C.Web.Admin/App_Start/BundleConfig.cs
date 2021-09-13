@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-28-2021
+// Last Modified On : 09-13-2021
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -251,7 +251,7 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/components/bootstrap-timepicker/bootstrap-datepicker.pt-br.js"));
 
             #endregion
-            
+
             #region Bootstrap Timepicker
 
             bundles.Add(new StyleBundle("~/bundles/css/bootstrap-timepicker.css")
@@ -302,6 +302,13 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            #region Accounts Page Bundles
+
+            bundles.Add(new ScriptBundle("~/bundles/js/accounts.update.userstatus.js").Include(
+               "~/Assets/js/collaborators/accounts.update.userstatus.js"));
+
+            #endregion
+
             #region Administration Page Bundles
 
             #region Administrator
@@ -325,10 +332,6 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/administrators.maininformation.widget.js").Include(
                 "~/Assets/js/administrators/administrators.maininformation.widget.js"));
-
-
-            bundles.Add(new ScriptBundle("~/bundles/js/administrators.changepassword.widget.js").Include(
-                "~/Assets/js/administrators/administrators.changepassword.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/administrators.form.js").Include(
                 "~/Assets/js/administrators/administrators.form.js"));
@@ -384,15 +387,15 @@ namespace PlataformaRio2C.Web.Admin
             #region Organizations
 
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.organizations.widget.js").Include(
-                "~/Assets/js/audiovisual/organizations/audiovisual.organizations.maininformation.widget.js",
-                "~/Assets/js/audiovisual/organizations/audiovisual.organizations.socialnetworks.widget.js",
-                "~/Assets/js/audiovisual/organizations/audiovisual.organizations.address.widget.js",
-                "~/Assets/js/audiovisual/organizations/audiovisual.organizations.activity.widget.js",
-                "~/Assets/js/audiovisual/organizations/audiovisual.organizations.targetaudience.widget.js",
-                "~/Assets/js/audiovisual/organizations/audiovisual.organizations.interest.widget.js",
-                "~/Assets/js/audiovisual/organizations/audiovisual.organizations.executive.widget.js",
-                "~/Assets/js/myrio2c.companynumber.js",
-                "~/Assets/js/myrio2c.additionalinfo.js"));
+                 "~/Assets/js/audiovisual/organizations/audiovisual.organizations.maininformation.widget.js",
+                 "~/Assets/js/audiovisual/organizations/audiovisual.organizations.socialnetworks.widget.js",
+                 "~/Assets/js/audiovisual/organizations/audiovisual.organizations.address.widget.js",
+                 "~/Assets/js/audiovisual/organizations/audiovisual.organizations.activity.widget.js",
+                 "~/Assets/js/audiovisual/organizations/audiovisual.organizations.targetaudience.widget.js",
+                 "~/Assets/js/audiovisual/organizations/audiovisual.organizations.interest.widget.js",
+                 "~/Assets/js/audiovisual/organizations/audiovisual.organizations.executive.widget.js",
+                 "~/Assets/js/myrio2c.companynumber.js",
+                 "~/Assets/js/myrio2c.additionalinfo.js"));
 
             #endregion
 
@@ -469,22 +472,33 @@ namespace PlataformaRio2C.Web.Admin
             #region Collaborators - Executives
 
             bundles.Add(new ScriptBundle("~/bundles/js/collaborators.list.js").Include(
-                "~/Assets/js/audiovisual/collaborators/collaborators.totalcount.widget.js",
-                "~/Assets/js/audiovisual/collaborators/collaborators.datatable.widget.js",
-                "~/Assets/js/salesplatforms/salesplatforms.export.js"));
+                 "~/Assets/js/audiovisual/collaborators/collaborators.totalcount.widget.js",
+                 "~/Assets/js/audiovisual/collaborators/collaborators.datatable.widget.js",
+                 "~/Assets/js/salesplatforms/salesplatforms.export.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/collaborators.editioncount.js").Include(
                 "~/Assets/js/audiovisual/collaborators/collaborators.editioncount.widget.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/collaborators.create.js").Include(
                 "~/Assets/js/audiovisual/collaborators/collaborators.create.js",
-                "~/Assets/js/myrio2c.publicemail.js"));
+                "~/Assets/js/myrio2c.publicemail.js",
+                "~/Assets/js/attendeeorganizations/attendeeorganizations.form.js",
+                "~/Assets/js/dynamic.list.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/collaborators.update.js").Include(
                 "~/Assets/js/audiovisual/collaborators/collaborators.update.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/collaborators.delete.js").Include(
                 "~/Assets/js/audiovisual/collaborators/collaborators.delete.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/collaborators.details.js").Include(
+                "~/Assets/js/collaborators/collaborators.maininformation.widget.js",
+                "~/Assets/js/collaborators/collaborators.socialnetworks.widget.js",
+                "~/Assets/js/collaborators/collaborators.onboardinginfo.widget.js",
+                "~/Assets/js/collaborators/collaborators.company.widget.js",
+                "~/Assets/js/companies/companyinfo.autocomplete.js",
+                "~/Assets/js/myrio2c.companynumber.js"
+                ));
 
             #endregion
 
@@ -509,7 +523,7 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/collaborators/collaborators.maininformation.widget.js",
                 "~/Assets/js/collaborators/collaborators.socialnetworks.widget.js",
                 "~/Assets/js/collaborators/collaborators.onboardinginfo.widget.js",
-                "~/Assets/js/speakers/speakers.company.widget.js",
+                "~/Assets/js/collaborators/collaborators.company.widget.js",
                 "~/Assets/js/speakers/speakers.conferences.widget.js",
                 "~/Assets/js/speakers/speakers.participants.widget.js",
                 "~/Assets/js/companies/companyinfo.autocomplete.js",
@@ -528,6 +542,16 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/attendeeorganizations.form.js").Include(
                 "~/Assets/js/attendeeorganizations/attendeeorganizations.form.js"));
+
+            #endregion
+
+            #region Companies - Executives
+
+            bundles.Add(new ScriptBundle("~/bundles/js/company.executive.create.js").Include(
+                "~/Assets/js/companies/company.executive.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/company.executive.delete.js").Include(
+                "~/Assets/js/companies/company.executive.delete.js"));
 
             #endregion
 
@@ -695,7 +719,7 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.reports.projectssubmissions.widget.js").Include(
                 "~/Assets/js/audiovisual/reports/audiovisual.reports.projectssubmissions.widget.js",
                 "~/Scripts/jquery.unobtrusive-ajax.js"));
-            
+
             #endregion
 
             #region Meeting Parameters
@@ -1037,7 +1061,7 @@ namespace PlataformaRio2C.Web.Admin
             //bundlesJqueryval.Include("~/Scripts/jquery.validate.globalize.min.js");       
             bundles.Add(bundlesJqueryval);
 
-          
+
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                         "~/Scripts/popper.min.js",
@@ -1153,9 +1177,9 @@ namespace PlataformaRio2C.Web.Admin
             #endregion
 
             // Required to generate bundles on release running in visual studio
-            #if !DEBUG
+#if !DEBUG
             BundleTable.EnableOptimizations = true;
-            #endif
+#endif
         }
     }
 }
