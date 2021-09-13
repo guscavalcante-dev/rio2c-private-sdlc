@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-26-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-23-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-13-2021
 // ***********************************************************************
 // <copyright file="PlayersExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -295,28 +295,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <summary>Shows the create modal.</summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowCreateModal(Guid? attendeeOrganizationUid)
+        public async Task<ActionResult> ShowCreateModal()
         {
-            CreateCollaborator cmd;
-
-            if (attendeeOrganizationUid.HasValue)
-            {
-                cmd = new CreateCollaborator(
-                    attendeeOrganizationUid,
-                    await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllCollaboratorIndustryAsync(this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllCollaboratorRoleAsync(this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllEditionsDtosAsync(true)),
-                    EditionDto.Id,
-                    false,
-                    false,
-                    false,
-                    UserInterfaceLanguage);
-            }
-            else
-            {
-                cmd = new CreateCollaborator(
+            CreateCollaborator cmd = new CreateCollaborator(
                     await this.attendeeOrganizationRepo.FindAllBaseDtosByEditionUidAsync(this.EditionDto.Id, false, OrganizationType.Player.Uid),
                     await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
                     await this.CommandBus.Send(new FindAllCollaboratorGenderAsync(this.UserInterfaceLanguage)),
@@ -328,7 +309,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     false,
                     false,
                     UserInterfaceLanguage);
-            }
 
             return Json(new
             {

@@ -1,9 +1,5 @@
 ﻿@using PlataformaRio2C.Application.CQRS.Commands
 @model CollaboratorDataBaseCommand
-@{
-    var hasPlayerManuallySelected = Model.AttendeeOrganizationUid.HasValue;
-}
-@Html.HiddenFor(m => m.AttendeeOrganizationUid)
 <div class="kt-section">
     <div class="kt-separator kt-separator--border-dashed"></div>
     <h3 class="kt-section__title mb-0">@Labels.PersonalInformation</h3>
@@ -13,25 +9,22 @@
             <div class="col-lg-4 text-center">
                 @Html.EditorFor(m => m.CropperImage)
             </div>
-            @if (!hasPlayerManuallySelected)
-            {
-                <div class="col-lg-8">
-                    <div class="kt-section">
-                        <h3 class="kt-section__title mb-0">Holding » Player</h3>
-                        @Html.ValidationMessage("Players", new { @class = "text-danger" })
-                        <div class="kt-section__content mt-3">
-                            <div id="attendeeorganization-list">
-                                @Html.EditorFor(m => m.AttendeeOrganizationBaseCommands)
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <button type="button" class="btn btn-primary" onclick="AttendeeOrganizationsForm.add(); return false;">@Labels.NewM @Labels.Player</button>
-                                </div>
+            <div class="col-lg-8">
+                <div class="kt-section">
+                    <h3 class="kt-section__title mb-0">Holding » Player</h3>
+                    @Html.ValidationMessage("Players", new { @class = "text-danger" })
+                    <div class="kt-section__content mt-3">
+                        <div id="attendeeorganization-list">
+                            @Html.EditorFor(m => m.AttendeeOrganizationBaseCommands)
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-primary" onclick="AttendeeOrganizationsForm.add(); return false;">@Labels.NewM @Labels.Player</button>
                             </div>
                         </div>
                     </div>
                 </div>
-            }
+            </div>
         </div>
         <div class="form-group row">
             <div class="col-md-5">
@@ -309,14 +302,11 @@
         </div>
     </div>
 </div>
-@if (!hasPlayerManuallySelected)
-{
-    <!-- BEGIN TEMPLATE INSTALLMENT -->
-    <div id="atendeeorganization-template" style="display: none">
-        @Html.EditorFor(m => m.TemplateAttendeeOrganizationBaseCommands)
-    </div>
-    <!-- END TEMPLATE INSTALLMENT -->
-}
+<!-- BEGIN TEMPLATE INSTALLMENT -->
+<div id="atendeeorganization-template" style="display: none">
+    @Html.EditorFor(m => m.TemplateAttendeeOrganizationBaseCommands)
+</div>
+<!-- END TEMPLATE INSTALLMENT -->
 <script>
     // Templates ----------------------------------------------------------
     var templates = {

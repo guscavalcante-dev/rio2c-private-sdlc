@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-19-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-13-2021
 // ***********************************************************************
 // <copyright file="CompaniesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,6 +23,10 @@ using PlataformaRio2C.Application.CQRS.Queries;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Application;
+using System.Linq;
+using PlataformaRio2C.Domain.Entities;
 
 namespace PlataformaRio2C.Web.Admin.Controllers
 {
@@ -76,6 +80,159 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     new { page = this.RenderRazorViewToString("/Views/Companies/Shared/_TicketBuyerCompanyInfoForm.cshtml", cmd), divIdOrClass = "#form-container" },
                 }
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Create Executive
+
+        /// <summary>
+        /// Shows the create player executive modal.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowCreateExecutiveModal(Guid? attendeeOrganizationUid)
+        {
+            CreateOrganizationExecutive cmd;
+
+            try
+            {
+                if (!attendeeOrganizationUid.HasValue)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundM.ToLowerInvariant()));
+                }
+
+                cmd = new CreateOrganizationExecutive(attendeeOrganizationUid);
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
+
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/CreateOrganizationExecutiveModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Creates the specified command.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> CreateExecutive(CreateOrganizationExecutive cmd)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    Domain.Constants.CollaboratorType.ExecutiveAudiovisual,
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/CreateOrganizationExecutiveForm", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Executive, Labels.CreatedM) });
+        }
+
+        #endregion
+
+        #region Delete Executive
+
+        /// <summary>
+        /// Deletes the executive.
+        /// </summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException">
+        /// </exception>
+        [HttpPost]
+        public async Task<ActionResult> DeleteExecutive(DeleteCollaborator cmd)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    Domain.Constants.CollaboratorType.ExecutiveAudiovisual,
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Executive, Labels.DeletedM) });
         }
 
         #endregion

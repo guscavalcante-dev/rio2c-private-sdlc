@@ -10,7 +10,7 @@
     </div>
     <div class="kt-portlet__head-toolbar">
         <div class="kt-portlet__head-actions">
-            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="CollaboratorsCreate.showModal('@(Model.AttendeeOrganization.Uid)');">
+            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="CompanyExecutiveCreate.showModal('@Model.AttendeeOrganization.Uid');">
                 <i class="flaticon2-plus"></i>
             </button>
         </div>
@@ -25,8 +25,22 @@
                 <div class="col-sm-6 col-md-6 col-xl-4">
                     <!--Begin::Portlet-->
                     <div class="kt-portlet kt-portlet--height-fluid">
-                        @*<div class="kt-portlet__head kt-portlet__head--noborder"></div>*@
-                        <div class="kt-portlet__body mt-40">
+                        <div class="text-right pr-2 pt-2">
+                            <a href="#" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" data-toggle="dropdown" aria-expanded="false">
+                                <i class="flaticon-more-1"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right" style="">
+                                <ul class="kt-nav">
+                                    <li class="kt-nav__item">
+                                        <a class="kt-nav__link" onclick="CompanyExecutiveDelete.showModal('@attendeeCollaboratorDto.Collaborator.Uid', '@Model.AttendeeOrganization.Organization.Uid'); return false;">
+                                            <i class="kt-nav__link-icon flaticon2-delete"></i>
+                                            <span class="kt-nav__link-text">@Labels.Remove</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="kt-portlet__body mt-10">
                             <!--begin::Widget -->
                             <div class="kt-widget kt-widget--user-profile-2" style="flex-direction: row;">
                                 <div class="kt-widget__head">
@@ -53,15 +67,14 @@
                                         {
                                             <span class="kt-widget__desc">@jobTitle</span>
                                         }
-                                        <span class="kt-widget__desc"><a href="#" onclick="return false;" @*href="@Url.Action("Details", "PlayersExecutives", new { Area = "", id = attendeeCollaboratorDto.Collaborator.Uid })"*@>
-                                            <small><i class="flaticon-profile"></i> @Labels.SeeMiniBio</small>
-                                        </a></span>
+                                        <span class="kt-widget__desc">
+                                            <a href="#" onclick="return false;" @*href="@Url.Action("Details", "PlayersExecutives", new { Area = "", id = attendeeCollaboratorDto.Collaborator.Uid })"*@>
+                                                <small><i class="flaticon-profile"></i> @Labels.SeeMiniBio</small>
+                                            </a>
+                                        </span>
                                     </div>
                                 </div>
-                                @*<div class="kt-widget__footer">
-                                    <button type="button" class="btn btn-label-warning btn-lg btn-upper">write message</button>
-                                </div>*@
-                            </div>         
+                            </div>
                             <!--end::Widget -->
                         </div>
                     </div>

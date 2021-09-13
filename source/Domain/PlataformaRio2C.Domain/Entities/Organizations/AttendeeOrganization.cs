@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-09-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-21-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-13-2021
 // ***********************************************************************
 // <copyright file="AttendeeOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -188,6 +188,46 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Attendee Organization Collaborators
 
+        /// <summary>
+        /// Synchronizes the attendee organization collaborators.
+        /// </summary>
+        /// <param name="attendeeOrganizations">The attendee organizations.</param>
+        /// <param name="attendeeCollaborator">The attendee collaborator.</param>
+        /// <param name="shouldDeleteOrganizations">if set to <c>true</c> [should delete organizations].</param>
+        /// <param name="userId">The user identifier.</param>
+        public void SynchronizeAttendeeOrganizationCollaborators(List<AttendeeOrganization> attendeeOrganizations, AttendeeCollaborator attendeeCollaborator, bool shouldDeleteOrganizations, int userId)
+        {
+            if (this.AttendeeOrganizationCollaborators == null)
+            {
+                this.AttendeeOrganizationCollaborators = new List<AttendeeOrganizationCollaborator>();
+            }
+
+            if (shouldDeleteOrganizations)
+            {
+                this.DeleteAttendeeOrganizationCollaborators(attendeeOrganizations, userId);
+            }
+
+            if (attendeeOrganizations?.Any() != true)
+            {
+                return;
+            }
+
+            // Create or update
+            foreach (var attendeeOrganization in attendeeOrganizations)
+            {
+                var attendeeOrganizationCollaboratorDb = this.AttendeeOrganizationCollaborators.FirstOrDefault(aoc => aoc.AttendeeOrganizationId == attendeeOrganization.Id 
+                                                                                                                    && aoc.AttendeeCollaboratorId == attendeeCollaborator.Id);
+                if (attendeeOrganizationCollaboratorDb != null)
+                {
+                    attendeeOrganizationCollaboratorDb.Update(userId);
+                }
+                else
+                {
+                    this.CreateAttendeeOrganizationCollaborator(attendeeOrganization, attendeeCollaborator, userId);
+                }
+            }
+        }
+
         /// <summary>Deletes the attendee organization collaborators.</summary>
         /// <param name="userId">The user identifier.</param>
         private void DeleteAttendeeOrganizationCollaborators(int userId)
@@ -196,6 +236,33 @@ namespace PlataformaRio2C.Domain.Entities
             {
                 attendeeOrganizationCollaborator.Delete(userId);
             }
+        }
+
+        /// <summary>
+        /// Deletes the attendee organization collaborators.
+        /// </summary>
+        /// <param name="newAttendeeOrganizations">The new attendee organizations.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteAttendeeOrganizationCollaborators(List<AttendeeOrganization> newAttendeeOrganizations, int userId)
+        {
+            var attendeeOrganizationCollaboratorToDelete = this.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted
+                                                                                                               && newAttendeeOrganizations?.Select(nao => nao.Id)?.Contains(aoc.AttendeeOrganizationId) == false)
+                                                                                                 .ToList();
+            foreach (var attendeeOrganizationCollaborator in attendeeOrganizationCollaboratorToDelete)
+            {
+                attendeeOrganizationCollaborator.Delete(userId);
+            }
+        }
+
+        /// <summary>
+        /// Creates the attendee organization collaborator.
+        /// </summary>
+        /// <param name="attendeeOrganization">The attendee organization.</param>
+        /// <param name="attendeeCollaborator">The attendee collaborator.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void CreateAttendeeOrganizationCollaborator(AttendeeOrganization attendeeOrganization, AttendeeCollaborator attendeeCollaborator, int userId)
+        {
+            this.AttendeeOrganizationCollaborators.Add(new AttendeeOrganizationCollaborator(attendeeOrganization, attendeeCollaborator, userId));
         }
 
         /// <summary>Finds all attendee organization collaborators not deleted.</summary>

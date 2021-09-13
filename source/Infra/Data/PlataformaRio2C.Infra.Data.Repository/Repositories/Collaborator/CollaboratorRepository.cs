@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-23-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-13-2021
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -525,7 +525,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         UpdateDate = c.UpdateDate,
                                         UpdateUserId = c.UpdateUserId,
                                         UserInterfaceLanguage = userInterfaceLanguage,
-
                                         Roles = c.User.Roles,
                                         AttendeeCollaboratorTypeDtos = c.AttendeeCollaborators
                                                                             .FirstOrDefault(ac => !ac.IsDeleted && ac.EditionId == editionId)
@@ -538,7 +537,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                         CollaboratorType = act.CollaboratorType
                                                                                     })
                                                                                 .ToList(),
-
+                                        EditionAttendeeCollaborator = c.AttendeeCollaborators.FirstOrDefault(ac => !ac.IsDeleted && ac.EditionId == editionId),
                                         EditionAttendeeCollaboratorBaseDto = c.AttendeeCollaborators.Where(ac => !ac.IsDeleted && ac.EditionId == editionId).Select(ac => new AttendeeCollaboratorBaseDto
                                         {
                                             Id = ac.Id,

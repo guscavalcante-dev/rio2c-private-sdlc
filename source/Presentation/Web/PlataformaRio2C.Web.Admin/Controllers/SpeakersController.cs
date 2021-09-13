@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-31-2021
+// Last Modified On : 09-13-2021
 // ***********************************************************************
 // <copyright file="SpeakersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -527,7 +527,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Forms/_TinyForm.cshtml", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("/Views/Collaborators/Forms/_TinyForm.cshtml", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -618,7 +618,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Forms/_TinyForm.cshtml", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("/Views/Collaborators/Forms/_TinyForm.cshtml", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }

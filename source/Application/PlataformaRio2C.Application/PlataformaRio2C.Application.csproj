@@ -241,6 +241,8 @@
     <Compile Include="CQRS\CommandsHandlers\Emails\Site\SendProjectBuyerEvaluationEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Site\SendUnreadConversationEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Site\SendProducerWelcomeEmailAsyncCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Organizations\DeleteOrganizationExecutiveCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Organizations\CreateOrganizationExecutiveCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\BaseHoldingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\DeleteHoldingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\UpdateHoldingCommandHandler.cs" />
@@ -391,6 +393,8 @@
     <Compile Include="CQRS\Commands\Emails\Admin\SendInnovationCommissionWelcomeEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendPlayerNegotiationsEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendProducerNegotiationsEmailAsync.cs" />
+    <Compile Include="CQRS\Commands\Organizations\DeleteOrganizationExecutive.cs" />
+    <Compile Include="CQRS\Commands\Organizations\CreateOrganizationExecutive.cs" />
     <Compile Include="CQRS\Commands\Innovation\Collaborators\BaseCommands\InnovationCollaboratorBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Innovation\Collaborators\UpdateInnovationCollaborator.cs" />
     <Compile Include="CQRS\Commands\Innovation\Collaborators\UpdateInnovationCollaboratorAdminMainInformation.cs" />
@@ -814,7 +818,6 @@
     <Compile Include="ViewModels\Common\User\UserAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Event\EventAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Holdings\HoldingDescriptionAppViewModel.cs" />
-    <Compile Include="ViewModels\Common\Holdings\HoldingAppViewModel.cs" />
     <Compile Include="ViewModels\Common\ImageFileAppViewModel.cs" />
     <Compile Include="ViewModels\Common\LanguageAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Player\Properties\PlayerDescriptionAppViewModel.cs" />

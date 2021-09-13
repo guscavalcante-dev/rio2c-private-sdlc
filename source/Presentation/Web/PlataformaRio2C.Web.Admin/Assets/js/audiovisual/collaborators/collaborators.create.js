@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-26-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-21-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-13-2021
 // ***********************************************************************
 // <copyright file="collaborators.create.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -107,9 +107,6 @@ var CollaboratorsCreate = function () {
 
                 if (typeof (CollaboratorsEditionCountWidget) !== 'undefined') {
                     CollaboratorsEditionCountWidget.init();
-                }
-                if (typeof (CompanyExecutiveWidget) !== 'undefined') {
-                    AudiovisualOrganizationsExecutiveWidget.init();
                 }
             },
             onError: function (data) {

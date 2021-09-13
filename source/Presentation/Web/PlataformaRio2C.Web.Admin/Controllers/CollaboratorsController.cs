@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-31-2021
+// Last Modified On : 09-13-2021
 // ***********************************************************************
 // <copyright file="CollaboratorsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -45,28 +45,33 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         private readonly IFileRepository fileRepo;
         private readonly ICollaboratorTypeRepository collaboratorTypeRepo;
         private readonly IOrganizationTypeRepository organizationTypeRepo;
+        private readonly ICollaboratorRepository collaboratorRepo;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CollaboratorsController"/> class.
+        /// Initializes a new instance of the <see cref="CollaboratorsController" /> class.
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="attendeeCollaboratorRepository">The attendee collaborator repository.</param>
         /// <param name="fileRepository">The file repository.</param>
         /// <param name="collaboratorTypeRepository">The collaborator type repository.</param>
+        /// <param name="organizationTypeRepository">The organization type repository.</param>
+        /// <param name="collaboratorRepository">The collaborator repository.</param>
         public CollaboratorsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
             IAttendeeCollaboratorRepository attendeeCollaboratorRepository,
             IFileRepository fileRepository,
             ICollaboratorTypeRepository collaboratorTypeRepository,
-             IOrganizationTypeRepository organizationTypeRepository)
+            IOrganizationTypeRepository organizationTypeRepository,
+            ICollaboratorRepository collaboratorRepository)
             : base(commandBus, identityController)
         {
             this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
             this.fileRepo = fileRepository;
             this.collaboratorTypeRepo = collaboratorTypeRepository;
             this.organizationTypeRepo = organizationTypeRepository;
+            this.collaboratorRepo = collaboratorRepository;
         }
 
         /// <summary>Indexes the specified search view model.</summary>
@@ -118,6 +123,49 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.CollaboratorUid, c.ImageUploadDate, true) : null,
                     JobTitle = c.GetCollaboratorJobTitleBaseDtoByLanguageCode(this.UserInterfaceLanguage)?.Value?.Trim(),
                     Companies = c.OrganizationsDtos?.Select(od => new CollaboratorsDropdownOrganizationDto()
+                    {
+                        Uid = od.Uid,
+                        TradeName = od.TradeName,
+                        CompanyName = od.CompanyName,
+                        Picture = od.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, od.Uid, od.ImageUploadDate, true) : null
+                    })?.ToList()
+                })?.ToList()
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Finds all by filters.</summary>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="page">The page.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> FindAllExecutivesByFilters(string keywords, int? page = 1)
+        {
+            var collaboratorsApiDtos = await this.collaboratorRepo.FindAllDropdownApiListDtoPaged(
+                this.EditionDto.Id,
+                keywords,
+                false,
+                Constants.CollaboratorType.ExecutiveAudiovisual,
+                false,
+                page.Value,
+                10);
+
+            return Json(new
+            {
+                status = "success",
+                HasPreviousPage = collaboratorsApiDtos.HasPreviousPage,
+                HasNextPage = collaboratorsApiDtos.HasNextPage,
+                TotalItemCount = collaboratorsApiDtos.TotalItemCount,
+                PageCount = collaboratorsApiDtos.PageCount,
+                PageNumber = collaboratorsApiDtos.PageNumber,
+                PageSize = collaboratorsApiDtos.PageSize,
+                Collaborators = collaboratorsApiDtos?.Select(c => new CollaboratorsDropdownDto
+                {
+                    Uid = c.Uid,
+                    BadgeName = c.BadgeName?.Trim(),
+                    Name = c.Name?.Trim(),
+                    Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.Uid, c.ImageUploadDate, true) : null,
+                    JobTitle = c.GetCollaboratorJobTitleBaseDtoByLanguageCode(this.UserInterfaceLanguage)?.Value?.Trim(),
+                    Companies = c.OrganizationsDtos?.Select(od => new CollaboratorsDropdownOrganizationDto
                     {
                         Uid = od.Uid,
                         TradeName = od.TradeName,
@@ -378,7 +426,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("/Views/Shared/Collaborators/Forms/_SocialNetworksForm.cshtml", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("/Views/Collaborators/Forms/_SocialNetworksForm.cshtml", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }

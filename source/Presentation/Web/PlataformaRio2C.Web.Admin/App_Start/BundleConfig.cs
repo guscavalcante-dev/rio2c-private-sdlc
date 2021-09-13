@@ -4,7 +4,7 @@
 // Created          : 06-28-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-31-2021
+// Last Modified On : 09-13-2021
 // ***********************************************************************
 // <copyright file="BundleConfig.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -542,6 +542,16 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/attendeeorganizations.form.js").Include(
                 "~/Assets/js/attendeeorganizations/attendeeorganizations.form.js"));
+
+            #endregion
+
+            #region Companies - Executives
+
+            bundles.Add(new ScriptBundle("~/bundles/js/company.executive.create.js").Include(
+                "~/Assets/js/companies/company.executive.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/company.executive.delete.js").Include(
+                "~/Assets/js/companies/company.executive.delete.js"));
 
             #endregion
 

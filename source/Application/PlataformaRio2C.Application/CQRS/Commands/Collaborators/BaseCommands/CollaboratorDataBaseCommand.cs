@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-12-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-15-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-13-2021
 // ***********************************************************************
 // <copyright file="CollaboratorDataBaseCommand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -124,7 +124,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [RequiredIf("HaveYouBeenToRio2CBefore", "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "SelectAtLeastOneOption")]
         public bool? HasEditionSelected { get; set; }
 
-        public Guid? AttendeeOrganizationUid { get; private set; }
         public List<AttendeeOrganizationBaseCommand> AttendeeOrganizationBaseCommands { get; set; }
         public List<CollaboratorJobTitleBaseCommand> JobTitles { get; set; }
         public List<CollaboratorMiniBioBaseCommand> MiniBios { get; set; }
@@ -350,17 +349,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateIndustries(industries, userInterfaceLanguage);
             this.UpdateCollaboratorRoles(collaboratorRoles, userInterfaceLanguage);
             this.UpdateEditions(editionsDtos, currentEditionId);
-        }
-
-        /// <summary>
-        /// Use this to manual selection for AttendeeOrganizationUid. (Player's dropdown at Create or Update Collaborator form)
-        /// </summary>
-        /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
-        public void SetAttendeeOrganizationUid(Guid? attendeeOrganizationUid)
-        {
-            this.AttendeeOrganizationUid = attendeeOrganizationUid;
-            this.AttendeeOrganizationBaseCommands = new List<AttendeeOrganizationBaseCommand>();
-            this.AttendeeOrganizationBaseCommands.Add(new AttendeeOrganizationBaseCommand() { AttendeeOrganizationUid = attendeeOrganizationUid });
         }
     }
 }
