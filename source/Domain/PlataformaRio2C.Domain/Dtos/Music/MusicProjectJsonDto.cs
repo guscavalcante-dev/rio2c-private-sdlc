@@ -22,12 +22,13 @@ namespace PlataformaRio2C.Domain.Dtos
         public int MusicProjectId { get; set; }
         public Guid MusicProjectUid { get; set; }
         public int AttendeeMusicBandId { get; set; }
+        public Guid MusicBandUid { get; set; }
         public string MusicBandName { get; set; }
-        public string MusicBandImageUrl { get; set; }
         public string MusicBandTypeName { get; set; }
         public decimal? Grade { get; set; }
         public int EvaluationsCount { get; set; }
         public bool IsApproved { get; set; }
+        public DateTimeOffset? ImageUploadDate { get; set; }
 
         public IList<string> MusicGenreNames { get; set; }
         public IList<string> MusicTargetAudiencesNames { get; set; }

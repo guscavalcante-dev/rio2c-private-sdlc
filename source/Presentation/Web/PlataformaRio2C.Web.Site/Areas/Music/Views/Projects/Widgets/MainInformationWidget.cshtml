@@ -1,5 +1,7 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @using Constants = PlataformaRio2C.Domain.Constants;
+@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Statics
 @model MusicProjectDto
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
@@ -17,7 +19,7 @@
                     @if (Model.AttendeeMusicBandDto?.MusicBand?.HasImage() == true)
                     {
                         <div class="kt-widget__media">
-                            <img src="@(Model.AttendeeMusicBandDto?.MusicBand.ImageUrl)" alt="image">
+                            <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.MusicBandImage, Model.AttendeeMusicBandDto.MusicBand.Uid, Model.AttendeeMusicBandDto.MusicBand.ImageUploadDate, true)" alt="image">
                         </div>
                     }
                     else
@@ -134,123 +136,6 @@
                 </div>
             </div>
         </div>
-        @*<div class="kt-widget__top">
-            <div style="float: right;">
-                <a href="@Url.Action("EvaluationDetails", "Projects", new { Area = "Music", id = Model.MusicProject?.Id })" target="_blank">
-                    @if (Model.AttendeeMusicBandDto?.MusicBand?.HasImage() == true)
-                    {
-                        <div class="kt-widget__media">
-                            <img src="@(Model.AttendeeMusicBandDto?.MusicBand.ImageUrl)" alt="image">
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest" style="width: 110px; height: 110px;">
-                            <span>@(Model.AttendeeMusicBandDto?.MusicBand?.GetNameAbbreviation() ?? "-")</span>
-                        </div>
-                    }
-                </a>
-            </div>
-            <div class="kt-widget__content" style="overflow: hidden;">
-                <div class="kt-widget__head">
-                    <span class="kt-widget__username">
-                        @(Model.AttendeeMusicBandDto?.MusicBand?.Name ?? "-")
-                    </span>
-                </div>
-                <div class="kt-widget__subhead pt-0">
-                    @(Model.AttendeeMusicBandDto?.MusicBandType?.Name ?? "-")
-                </div>
-                <div class="kt-widget__subhead pt-1 pb-0">
-                    @Labels.MusicGenre:
-                    @if (Model.AttendeeMusicBandDto?.MusicBandGenreDtos?.Any() == true)
-                    {
-                        foreach (var musicBandGenreDto in Model.AttendeeMusicBandDto.MusicBandGenreDtos)
-                        {
-                            <span class="kt-badge kt-badge--inline kt-badge--info">
-                                @(musicBandGenreDto.MusicGenre.Name)
-                                @if (musicBandGenreDto.MusicGenre.HasAdditionalInfo && !string.IsNullOrEmpty(musicBandGenreDto.MusicBandGenre.AdditionalInfo))
-                                {
-                                    @musicBandGenreDto.MusicBandGenre.AdditionalInfo
-                                }
-                            </span>
-                        }
-                    }
-                    else
-                    {
-                        @:-
-                    }
-                </div>
-                <div class="kt-widget__subhead pt-1 pb-0">
-                    @Labels.TargetAudience:
-                    @if (Model.AttendeeMusicBandDto?.MusicBandTargetAudienceDtos?.Any() == true)
-                    {
-                        foreach (var musicBandTargetAudienceDto in Model.AttendeeMusicBandDto.MusicBandTargetAudienceDtos)
-                        {
-                            <span class="kt-badge kt-badge--inline kt-badge--primary">@(musicBandTargetAudienceDto.TargetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
-                        }
-                    }
-                    else
-                    {
-                        @:-
-                    }
-                </div>
-            </div>
-            <div class="kt-widget__content d-flex flex-row-reverse">
-                <div data-id="EvaluationGradeMain">
-                    @if (editionDto?.IsMusicProjectEvaluationOpen() == true)
-                    {
-                        var hasCurrentEvaluation = currentEvaluation != null;
-                        if (hasCurrentEvaluation)
-                        {
-                            <div class="view">
-                                <div class="row" style="display: flex; align-items: center;">
-                                    <div class="card bg-gray" style="margin-left:5px;cursor:pointer;" data-toggle="tooltip" title="@Labels.ClickHereToEvaluateProject" onclick="MyRio2cCommon.enableFieldEdit({ dataId: 'EvaluationGradeMain' })">
-                                        <div class="card-body">
-                                            <span>@Labels.Evaluation</span>
-                                            <span><b>@(currentEvaluation?.AttendeeMusicBandEvaluation?.Grade)</b></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                        <div class="edit col-md-12 row @(hasCurrentEvaluation ? "d-none" : "")" style="display: flex; align-items: center;">
-                            <div class="col-md-4 d-flex flex-row">
-                                @Labels.EvaluateProject
-                            </div>
-                            <div class="col-md-8">
-                                <div class="row d-flex flex-row">
-                                    <div class="col-md-5">
-                                        @Html.TextBox("AttendeeMusicBandEvaluationGradeMain", currentEvaluation?.AttendeeMusicBandEvaluation?.Grade, new { @class = "form-control text-center decimal-globalize-mask", @autocomplete = "off" })
-                                    </div>
-                                    <div class="col-md-7">
-                                        <div class="row">
-                                            <div class="col-md-offset-10">
-                                                <button type="button" class="btn btn-success" onclick="MusicProjectsMainInformationWidget.submitEvaluationGrade('@Model.MusicProject.AttendeeMusicBand.MusicBandId'); MyRio2cCommon.disableFieldEdit({ dataId: 'EvaluationGradeMain' })">
-                                                    @Labels.Evaluate
-                                                </button>
-                                            </div>
-                                            @if (hasCurrentEvaluation)
-                                            {
-                                                <div class="col-md-2">
-                                                    <button type="button" class="btn btn-secondary" onclick="MyRio2cCommon.disableFieldEdit({ dataId: 'EvaluationGradeMain' })" data-toggle="tooltip" title="@(Labels.Cancel)">
-                                                        <i class="fa fa-times" style="padding:5px;"></i>
-                                                    </button>
-                                                </div>
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    }
-                    else
-                    {
-                        <button class="btn btn-danger form-control">@Messages.EvaluationPeriodClosed</button>
-                    }
-                </div>
-            </div>
-        </div>*@
         <div class="kt-widget__bottom">
             @if (!string.IsNullOrEmpty(Model.MusicProject?.Release))
             {

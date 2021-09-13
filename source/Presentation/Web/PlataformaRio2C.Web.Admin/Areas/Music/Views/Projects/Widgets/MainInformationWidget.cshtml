@@ -1,4 +1,6 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Statics
 @model MusicProjectDto
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
@@ -15,7 +17,7 @@
                     @if (Model.AttendeeMusicBandDto?.MusicBand?.HasImage() == true)
                     {
                         <div class="kt-widget__media">
-                            <img src="@(Model.AttendeeMusicBandDto?.MusicBand.ImageUrl)" alt="image">
+                            <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.MusicBandImage, Model.AttendeeMusicBandDto.MusicBand.Uid, Model.AttendeeMusicBandDto.MusicBand.ImageUploadDate, true)" alt="image">
                         </div>
                     }
                     else

@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 28-06-2021
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 28-06-2021
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 09-13-2021
 // ***********************************************************************
 // <copyright file="CreateInnovationOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Dtos;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Collections.Generic;
 
@@ -66,6 +65,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="marketSize">Size of the market.</param>
         /// <param name="businessEconomicModel">The business economic model.</param>
         /// <param name="businessOperationalModel">The business operational model.</param>
+        /// <param name="imageFile">The image file.</param>
+        /// <param name="videoUrl">The video URL.</param>
         /// <param name="businessDifferentials">The business differentials.</param>
         /// <param name="businessStage">The business stage.</param>
         /// <param name="responsibleName">Name of the responsible.</param>
@@ -79,6 +80,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="innovationOrganizationExperienceOptionApiDtos">The innovation organization experience option API dtos.</param>
         /// <param name="innovationOrganizationTrackOptionApiDtos">The innovation organization track option API dtos.</param>
         /// <param name="innovationOrganizationObjectivesOptionApiDtos">The innovation organization objectives option API dtos.</param>
+        /// <param name="innovationOrganizationTechnologyOptionApiDtos">The innovation organization technology option API dtos.</param>
         public CreateInnovationOrganization(
             string name,
             string document,

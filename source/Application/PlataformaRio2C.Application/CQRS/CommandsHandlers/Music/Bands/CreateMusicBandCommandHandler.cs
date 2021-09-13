@@ -12,13 +12,14 @@
 // <summary></summary>
 // ***********************************************************************
 using MediatR;
+using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
+using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
 using System.Linq;
 using System.Threading;
@@ -33,17 +34,19 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IEditionRepository editionRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
         private readonly IMusicGenreRepository musicGenreRepo;
-        private readonly ICollaboratorTypeRepository collaboratorTypeRepo;
         private readonly ICollaboratorRepository collaboratorRepo;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateMusicBandCommandHandler"/> class.
+        /// Initializes a new instance of the <see cref="CreateMusicBandCommandHandler" /> class.
         /// </summary>
         /// <param name="commandBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="musicBandRepo">The music band repo.</param>
         /// <param name="musicBandTypeRepo">The music band type repo.</param>
         /// <param name="editionRepo">The edition repo.</param>
+        /// <param name="targetAudienceRepo">The target audience repo.</param>
+        /// <param name="musicGenreRepo">The music genre repo.</param>
+        /// <param name="collaboratorRepo">The collaborator repo.</param>
         public CreateMusicBandCommandHandler(
             IMediator commandBus,
             IUnitOfWork uow,
@@ -52,7 +55,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IEditionRepository editionRepo,
             ITargetAudienceRepository targetAudienceRepo,
             IMusicGenreRepository musicGenreRepo,
-            ICollaboratorTypeRepository collaboratorTypeRepo,
             ICollaboratorRepository collaboratorRepo
             )
             : base(commandBus, uow, musicBandRepo)
@@ -61,7 +63,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.editionRepo = editionRepo;
             this.targetAudienceRepo = targetAudienceRepo;
             this.musicGenreRepo = musicGenreRepo;
-            this.collaboratorTypeRepo = collaboratorTypeRepo;
             this.collaboratorRepo = collaboratorRepo;
         }
 
@@ -212,13 +213,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 musicBandType,
                 editionDto.Edition,
                 cmd.Name,
-                cmd.ImageUrl,
                 cmd.FormationDate,
                 cmd.MainMusicInfluences,
                 cmd.Facebook,
                 cmd.Instagram,
                 cmd.Twitter,
                 cmd.Youtube,
+                !string.IsNullOrEmpty(cmd.ImageFile),
                 cmd.MusicProjectApiDto,
                 collaboratorDto?.EditionAttendeeCollaborator,
                 cmd.MusicGenresApiDtos,
@@ -237,6 +238,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.MusicBandRepo.Create(musicBand);
             this.Uow.SaveChanges();
             this.AppValidationResult.Data = musicBand;
+
+            //Uploads the Image
+            if (!string.IsNullOrEmpty(cmd.ImageFile))
+            {
+                ImageHelper.UploadOriginalAndThumbnailImages(
+                   musicBand.Uid,
+                   cmd.ImageFile,
+                   FileRepositoryPathType.MusicBandImage);
+            }
 
             return this.AppValidationResult;
         }

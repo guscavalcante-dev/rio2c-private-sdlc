@@ -4,7 +4,7 @@
 // Created          : 28-06-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 28-06-2021
+// Last Modified On : 09-10-2021
 // ***********************************************************************
 // <copyright file="InnovationOrganizationApiDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -12,7 +12,6 @@
 // <summary></summary>
 // ***********************************************************************
 using Newtonsoft.Json;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;

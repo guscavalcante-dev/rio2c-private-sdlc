@@ -309,16 +309,6 @@ namespace PlataformaRio2C.Domain.Entities
             return this.Name?.GetTwoLetterCode();
         }
 
-        /// <summary>
-        /// Deletes the specified user identifier.
-        /// </summary>
-        /// <param name="userId">The user identifier.</param>
-        public new void Delete(int userId)
-        {
-            this.DeleteAttendeeInnovationOrganizations(userId);
-            base.Delete(userId);
-        }
-
         /// <summary>Updates the image upload date.</summary>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
@@ -722,6 +712,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         private void ValidateAttendeeInnovationOrganizations()
         {
+            if (this.AttendeeInnovationOrganizations?.Any() != true)
+            {
+                return;
+            }
+
             foreach (var attendeeInnovationOrganization in this.AttendeeInnovationOrganizations.Where(aiof => !aiof.IsValid()))
             {
                 this.ValidationResult.Add(attendeeInnovationOrganization.ValidationResult);
