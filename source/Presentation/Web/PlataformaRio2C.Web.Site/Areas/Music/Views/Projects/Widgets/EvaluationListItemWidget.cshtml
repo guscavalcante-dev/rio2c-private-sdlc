@@ -1,4 +1,6 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Statics
 @model MusicProjectDto
 @{
     var evaluationDetailsAction = Url.Action("EvaluationDetails", "Projects", new
@@ -23,7 +25,7 @@
                         <div class="text-center w-100">
                             @if (Model.AttendeeMusicBandDto?.MusicBand?.HasImage() == true)
                             {
-                                <img src="@(Model.AttendeeMusicBandDto?.MusicBand.ImageUrl)" class="w-100" alt="" style="height: 125px; border-radius: 4px; object-fit: cover;">
+                                <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.MusicBandImage, Model.AttendeeMusicBandDto.AttendeeMusicBand.MusicBand.Uid, Model.AttendeeMusicBandDto.AttendeeMusicBand.MusicBand.ImageUploadDate, false)" class="w-100" alt="" style="height: 125px; border-radius: 4px; object-fit: cover;">
                             }
                             else
                             {

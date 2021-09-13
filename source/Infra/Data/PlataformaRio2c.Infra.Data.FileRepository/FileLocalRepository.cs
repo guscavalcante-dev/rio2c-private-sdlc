@@ -25,6 +25,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
         private readonly string localBucket;
         private readonly string imagesHoldingsDirectory;
         private readonly string imagesOrganizationsDirectory;
+        private readonly string imagesMusicBandsDirectory;
         private readonly string imagesUsersDirectory;
         private readonly string filesLogisticsAirfareDirectory;
         private readonly string filesInnovationOrganizationsDirectory;
@@ -37,6 +38,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
             this.localBucket = ConfigurationManager.AppSettings["LocalBucket"];
             this.imagesHoldingsDirectory = ConfigurationManager.AppSettings["LocalImagesHoldingsDirectory"];
             this.imagesOrganizationsDirectory = ConfigurationManager.AppSettings["LocalImagesOrganizationsDirectory"];
+            this.imagesMusicBandsDirectory = ConfigurationManager.AppSettings["LocalImagesMusicBandsDirectory"];
             this.imagesUsersDirectory = ConfigurationManager.AppSettings["LocalImagesUsersDirectory"];
             this.filesLogisticsAirfareDirectory = ConfigurationManager.AppSettings["LocalFilesLogisticsAirfareDirectory"];
             this.filesInnovationOrganizationsDirectory = ConfigurationManager.AppSettings["LocalFilesInnovationOrganizationsDirectory"];
@@ -168,6 +170,11 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
             if (fileRepositoryPathType.Uid == FileRepositoryPathType.OrganizationImage.Uid)
             {
                 return string.Format(this.imagesOrganizationsDirectory, args);
+            }
+
+            if (fileRepositoryPathType.Uid == FileRepositoryPathType.MusicBandImage.Uid)
+            {
+                return string.Format(this.imagesMusicBandsDirectory, args);
             }
 
             if (fileRepositoryPathType.Uid == FileRepositoryPathType.UserImage.Uid)

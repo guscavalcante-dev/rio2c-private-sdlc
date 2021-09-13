@@ -137,6 +137,7 @@ var InnovationProjectsDataTableWidget = function () {
                         else {
                             html += '<img src="' + imageDirectory + 'no-image.png?v=20190818200849" /> ';
                         }
+
                         html += '       <td> ' + data + '</td>\
                                     </tr>\
                                 </table>';

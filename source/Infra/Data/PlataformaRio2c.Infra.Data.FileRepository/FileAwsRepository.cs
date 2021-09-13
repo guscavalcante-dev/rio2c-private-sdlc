@@ -32,6 +32,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
         private readonly string awsBucket;
         private readonly string imagesHoldingsDirectory;
         private readonly string imagesOrganizationsDirectory;
+        private readonly string imagesMusicBandsDirectory;
         private readonly string imagesUsersDirectory;
         private readonly string filesLogisticsAirfareDirectory;
         private readonly string filesInnovationOrganizationsDirectory;
@@ -46,6 +47,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
             this.awsBucket = ConfigurationManager.AppSettings["AWSBucket"];
             this.imagesHoldingsDirectory = ConfigurationManager.AppSettings["AwsImagesHoldingsDirectory"];
             this.imagesOrganizationsDirectory = ConfigurationManager.AppSettings["AwsImagesOrganizationsDirectory"];
+            this.imagesMusicBandsDirectory = ConfigurationManager.AppSettings["AwsImagesMusicBandsDirectory"];
             this.imagesUsersDirectory = ConfigurationManager.AppSettings["AwsImagesUsersDirectory"];
             this.filesLogisticsAirfareDirectory = ConfigurationManager.AppSettings["AwsFilesLogisticsAirfareDirectory"];
             this.filesInnovationOrganizationsDirectory = ConfigurationManager.AppSettings["AwsFilesInnovationOrganizationsDirectory"];
@@ -205,6 +207,11 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
             if (fileRepositoryPathType.Uid == FileRepositoryPathType.OrganizationImage.Uid)
             {
                 return string.Format(this.imagesOrganizationsDirectory, args);
+            }
+
+            if (fileRepositoryPathType.Uid == FileRepositoryPathType.MusicBandImage.Uid)
+            {
+                return string.Format(this.imagesMusicBandsDirectory, args);
             }
 
             if (fileRepositoryPathType.Uid == FileRepositoryPathType.UserImage.Uid)

@@ -3,21 +3,14 @@
 // Author           : Renan Valentim
 // Created          : 06-28-2021
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 06-28-2021
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 09-13-2021
 // ***********************************************************************
-// <copyright file="CreateStartupCommandHandler.cs" company="">
-//     Copyright ©  2017
+// <copyright file="CreateInnovationOrganizationCommandHandler.cs" company="Softo">
+//     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2c.Infra.Data.FileRepository.Helpers;
@@ -28,14 +21,19 @@ using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Statics;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Statics;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>CreateStartupCommandHandler</summary>
+    /// <summary>
+    /// CreateInnovationOrganizationCommandHandler
+    /// </summary>
     public class CreateInnovationOrganizationCommandHandler : InnovationOrganizationBaseCommandHandler, IRequestHandler<CreateInnovationOrganization, AppValidationResult>
     {
         private readonly IEditionRepository editionRepo;
@@ -47,7 +45,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepo;
         private readonly IInnovationOrganizationTechnologyOptionRepository innovationOrganizationTechnologyOptionRepo;
         private readonly IInnovationOrganizationObjectivesOptionRepository innovationOrganizationObjectivesOptionRepo;
-        private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateInnovationOrganizationCommandHandler" /> class.
@@ -55,10 +52,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="commandBus">The command bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="innovationOrganizationRepository">The innovation organization repo.</param>
-        /// <param name="innovationOptionRepository">The innovation option repo.</param>
-        /// <param name="editionRepo">The edition repo.</param>
+        /// <param name="attendeeInnovationOrganizationRepository">The attendee innovation organization repository.</param>
+        /// <param name="editionRepository">The edition repository.</param>
         /// <param name="collaboratorRepository">The collaborator repo.</param>
         /// <param name="workDedicationRepository">The work dedication repo.</param>
+        /// <param name="fileRepository">The file repository.</param>
+        /// <param name="innovationOrganizationExperienceOptionRepository">The innovation organization experience option repository.</param>
+        /// <param name="innovationOrganizationTrackOptionRepository">The innovation organization track option repository.</param>
+        /// <param name="innovationOrganizationTechnologyOptionRepository">The innovation organization technology option repository.</param>
+        /// <param name="innovationOrganizationObjectivesOptionRepository">The innovation organization objectives option repository.</param>
         public CreateInnovationOrganizationCommandHandler(
             IMediator commandBus,
             IUnitOfWork uow,
@@ -71,8 +73,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IInnovationOrganizationExperienceOptionRepository innovationOrganizationExperienceOptionRepository,
             IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepository,
             IInnovationOrganizationTechnologyOptionRepository innovationOrganizationTechnologyOptionRepository,
-            IInnovationOrganizationObjectivesOptionRepository innovationOrganizationObjectivesOptionRepository,
-            IAttendeeCollaboratorRepository attendeeCollaboratorRepository
+            IInnovationOrganizationObjectivesOptionRepository innovationOrganizationObjectivesOptionRepository
             )
             : base(commandBus, uow, innovationOrganizationRepository)
         {
@@ -85,7 +86,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.innovationOrganizationTrackOptionRepo = innovationOrganizationTrackOptionRepository;
             this.innovationOrganizationTechnologyOptionRepo = innovationOrganizationTechnologyOptionRepository;
             this.innovationOrganizationObjectivesOptionRepo = innovationOrganizationObjectivesOptionRepository;
-            this.attendeeCollaboratorRepo = attendeeCollaboratorRepository;
         }
 
         /// <summary>

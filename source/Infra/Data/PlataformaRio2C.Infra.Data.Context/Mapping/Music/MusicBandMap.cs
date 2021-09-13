@@ -27,9 +27,6 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.Property(t => t.Name)
                 .HasMaxLength(MusicBand.NameMaxLength);
 
-            this.Property(t => t.ImageUrl)
-                .HasMaxLength(MusicBand.ImageUrlMaxLength);
-
             this.Property(t => t.FormationDate)
                 .HasMaxLength(MusicBand.FormationDateMaxLength);
 

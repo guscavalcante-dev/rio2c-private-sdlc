@@ -26,7 +26,6 @@ namespace PlataformaRio2C.Domain.Entities
     {
         public static readonly int NameMinLength = 1;
         public static readonly int NameMaxLength = 300;
-        public static readonly int ImageUrlMaxLength = 300;
         public static readonly int FormationDateMaxLength = 300;
         public static readonly int MainMusicInfluencesMaxLength = 600;
         public static readonly int FacebookMaxLength = 300;
@@ -36,13 +35,13 @@ namespace PlataformaRio2C.Domain.Entities
 
         public int MusicBandTypeId { get; private set; }
         public string Name { get; private set; }
-        public string ImageUrl { get; private set; }
         public string FormationDate { get; private set; }
         public string MainMusicInfluences { get; private set; }
         public string Facebook { get; private set; }
         public string Instagram { get; private set; }
         public string Twitter { get; private set; }
         public string Youtube { get; private set; }
+        public DateTimeOffset? ImageUploadDate { get; private set; }
 
         public virtual MusicBandType MusicBandType { get; private set; }
 
@@ -59,13 +58,13 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="musicBandType">Type of the music band.</param>
         /// <param name="edition">The edition.</param>
         /// <param name="name">The name.</param>
-        /// <param name="imageUrl">The image URL.</param>
         /// <param name="formationDate">The formation date.</param>
         /// <param name="mainMusicInfluences">The main music influences.</param>
         /// <param name="facebook">The facebook.</param>
         /// <param name="instagram">The instagram.</param>
         /// <param name="twitter">The twitter.</param>
         /// <param name="youtube">The youtube.</param>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="musicProjectApiDto">The music project API dto.</param>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
         /// <param name="musicGenreApiDtos">The music genre API dtos.</param>
@@ -78,13 +77,13 @@ namespace PlataformaRio2C.Domain.Entities
             MusicBandType musicBandType,
             Edition edition,
             string name,
-            string imageUrl,
             string formationDate,
             string mainMusicInfluences,
             string facebook,
             string instagram,
             string twitter,
             string youtube,
+            bool isImageUploaded,
             MusicProjectApiDto musicProjectApiDto,
             AttendeeCollaborator attendeeCollaborator,
             List<MusicGenreApiDto> musicGenreApiDtos,
@@ -96,7 +95,6 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.MusicBandType = musicBandType;
             this.Name = name;
-            this.ImageUrl = imageUrl;
             this.FormationDate = formationDate;
             this.MainMusicInfluences = mainMusicInfluences;
             this.Facebook = facebook;
@@ -104,9 +102,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.Twitter = twitter;
             this.Youtube = youtube;
 
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
+            this.UpdateImageUploadDate(isImageUploaded, false);
+            base.SetCreateDate(userId);
 
             this.SynchronizeAttendeeMusicBandsCollaborators(edition, attendeeCollaborator, musicProjectApiDto, userId);  
             this.AddMusicBandGenresDtos(musicGenreApiDtos, userId);
@@ -121,77 +118,12 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Updates the main information.</summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="name">The name.</param>
-        /// <param name="formationDate">The formation date.</param>
-        /// <param name="imageUrl">The image URL.</param>
-        /// <param name="mainMusicInfluences">The main music influences.</param>
-        /// <param name="release">The release.</param>
-        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
-        /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
-        /// <param name="userId">The user identifier.</param>
-        public void UpdateMainInformation(
-            Edition edition,
-            string name,
-            string formationDate,
-            string imageUrl,
-            string mainMusicInfluences,
-            string release,
-            bool isImageUploaded,
-            bool isImageDeleted,
-            int userId)
+        /// <summary>Determines whether this instance has image.</summary>
+        /// <returns>
+        ///   <c>true</c> if this instance has image; otherwise, <c>false</c>.</returns>
+        public bool HasImage()
         {
-            this.Name = name?.Trim();
-            this.FormationDate = formationDate?.Trim();
-            this.ImageUrl = imageUrl?.Trim();
-            this.MainMusicInfluences = mainMusicInfluences?.Trim();
-
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
-        }
-
-        /// <summary>
-        /// Updates the social networks.
-        /// </summary>
-        /// <param name="facebook">The facebook.</param>
-        /// <param name="twitter">The twitter.</param>
-        /// <param name="instagram">The instagram.</param>
-        /// <param name="youtube">The youtube.</param>
-        /// <param name="userId">The user identifier.</param>
-        public void UpdateSocialNetworks(
-            string facebook,
-            string twitter,
-            string instagram,
-            string youtube,
-            int userId)
-        {
-            this.Facebook = facebook?.Trim();
-            this.Instagram = instagram?.Trim();
-            this.Twitter = twitter?.Trim();
-            this.Youtube = youtube?.Trim();
-
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
-        }
-
-        /// <summary>Deletes the specified edition.</summary>
-        /// <param name="edition">The edition.</param>
-        /// <param name="organizationType">Type of the organization.</param>
-        /// <param name="userId">The user identifier.</param>
-        public void Delete(Edition edition, OrganizationType organizationType, int userId)
-        {
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
-            this.DeleteAttendeeMusicBand(edition, userId);
-
-            if (this.FindAllAttendeeMusicBandsNotDeleted(edition)?.Any() == false)
-            {
-                this.IsDeleted = true;
-                this.ImageUrl = null;
-            }
+            return this.ImageUploadDate.HasValue;
         }
 
         /// <summary>Gets the name abbreviation.</summary>
@@ -201,12 +133,19 @@ namespace PlataformaRio2C.Domain.Entities
             return this.Name?.GetTwoLetterCode();
         }
 
-        /// <summary>Determines whether this instance has image.</summary>
-        /// <returns>
-        ///   <c>true</c> if this instance has image; otherwise, <c>false</c>.</returns>
-        public bool HasImage()
+        /// <summary>Updates the image upload date.</summary>
+        /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
+        /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
+        private void UpdateImageUploadDate(bool isImageUploaded, bool isImageDeleted)
         {
-            return !string.IsNullOrEmpty(this.ImageUrl);
+            if (isImageUploaded)
+            {
+                this.ImageUploadDate = DateTime.UtcNow;
+            }
+            else if (isImageDeleted)
+            {
+                this.ImageUploadDate = null;
+            }
         }
 
         #region Attendee Music Bands
@@ -429,7 +368,6 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.ValidateMusicBandType();
             this.ValidateName();
-            this.ValidateImageUrl();
             this.ValidateMainMusicInfluences();
             this.ValidateFormationDate();
             this.ValidateFacebook();
@@ -441,7 +379,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateMusicBandMembers();
             this.ValidateMusicBandTeamMembers();
             this.ValidateReleasedMusicProjects();
-            this.ValidateAttendeeMusicBand();
+            this.ValidateAttendeeMusicBands();
 
             return this.ValidationResult.IsValid;
         }
@@ -466,15 +404,6 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.Name?.Trim().Length < NameMinLength || this.Name?.Trim().Length > NameMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Name, NameMaxLength, NameMinLength), new string[] { "Name" }));
-            }
-        }
-
-        /// <summary>Validates the image URL.</summary>
-        public void ValidateImageUrl()
-        {
-            if (!string.IsNullOrEmpty(this.ImageUrl) && this.ImageUrl?.Trim().Length > ImageUrlMaxLength)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.Photo, ImageUrlMaxLength, 1), new string[] { "ImageUrl" }));
             }
         }
 
@@ -603,9 +532,9 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>
-        /// Validates the attendee music band.
+        /// Validates the attendee music bands.
         /// </summary>
-        public void ValidateAttendeeMusicBand()
+        public void ValidateAttendeeMusicBands()
         {
             if (this.AttendeeMusicBands?.Any() != true)
             {
