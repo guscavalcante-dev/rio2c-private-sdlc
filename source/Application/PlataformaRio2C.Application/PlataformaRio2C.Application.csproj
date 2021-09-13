@@ -241,7 +241,6 @@
     <Compile Include="CQRS\CommandsHandlers\Emails\Site\SendProjectBuyerEvaluationEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Site\SendUnreadConversationEmailAsyncCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Emails\Site\SendProducerWelcomeEmailAsyncCommandHandler.cs" />
-    <Compile Include="CQRS\CommandsHandlers\Organizations\DeleteOrganizationExecutiveCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Organizations\CreateOrganizationExecutiveCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\BaseHoldingCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Holdings\DeleteHoldingCommandHandler.cs" />
@@ -393,7 +392,6 @@
     <Compile Include="CQRS\Commands\Emails\Admin\SendInnovationCommissionWelcomeEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendPlayerNegotiationsEmailAsync.cs" />
     <Compile Include="CQRS\Commands\Emails\Admin\SendProducerNegotiationsEmailAsync.cs" />
-    <Compile Include="CQRS\Commands\Organizations\DeleteOrganizationExecutive.cs" />
     <Compile Include="CQRS\Commands\Organizations\CreateOrganizationExecutive.cs" />
     <Compile Include="CQRS\Commands\Innovation\Collaborators\BaseCommands\InnovationCollaboratorBaseCommand.cs" />
     <Compile Include="CQRS\Commands\Innovation\Collaborators\UpdateInnovationCollaborator.cs" />
