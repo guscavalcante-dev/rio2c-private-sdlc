@@ -477,7 +477,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
         #endregion
 
-        #region Company Widget
+        #region Companies Widget
 
         /// <summary>Shows the company widget.</summary>
         /// <param name="collaboratorUid">The collaborator uid.</param>
@@ -655,7 +655,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Speaker, Labels.DeletedM) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Company, Labels.DeletedM) });
         }
 
         #endregion

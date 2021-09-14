@@ -11,15 +11,15 @@
             </div>
             <div class="col-lg-8">
                 <div class="kt-section">
-                    <h3 class="kt-section__title mb-0">@Labels.Holding » @Labels.Player</h3>
-                    @Html.ValidationMessage("Players", new { @class = "text-danger" })
+                    <h3 class="kt-section__title mb-0">@Labels.Holding » @Labels.Producer</h3>
+                    @Html.ValidationMessage("Producers", new { @class = "text-danger" })
                     <div class="kt-section__content mt-3">
                         <div id="attendeeorganization-list">
                             @Html.EditorFor(m => m.AttendeeOrganizationBaseCommands)
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <button type="button" class="btn btn-primary" onclick="AttendeeOrganizationsForm.add(); return false;">@Labels.NewM @Labels.Player</button>
+                                <button type="button" class="btn btn-primary" onclick="AttendeeOrganizationsForm.add(); return false;">@Labels.NewM @Labels.Producer</button>
                             </div>
                         </div>
                     </div>

@@ -4367,6 +4367,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Executivos das Produtoras.
+        /// </summary>
+        public static string ProducersExecutives {
+            get {
+                return ResourceManager.GetString("ProducersExecutives", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Produtora.
         /// </summary>
         public static string ProducerSingle {

@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 08-26-2019
 // ***********************************************************************
-// <copyright file="collaborators.delete.js" company="Softo">
+// <copyright file="logistics.airfare.delete.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>

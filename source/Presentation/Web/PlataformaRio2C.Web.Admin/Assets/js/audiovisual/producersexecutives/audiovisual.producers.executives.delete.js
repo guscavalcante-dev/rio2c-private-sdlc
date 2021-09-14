@@ -1,18 +1,18 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Rafael Dantas Ruiz
-// Created          : 08-26-2019
+// Author           : Renan Valentim
+// Created          : 09-14-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 08-26-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-14-2021
 // ***********************************************************************
-// <copyright file="collaborators.delete.js" company="Softo">
+// <copyright file="audiovisual.producers.executives.delete.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var CollaboratorsDelete = function () {
+var ProducersExecutivesDelete = function () {
 
     // Delete -------------------------------------------------------------------------------------
     var executeDelete = function (collaboratorUid) {
@@ -21,21 +21,21 @@ var CollaboratorsDelete = function () {
         var jsonParameters = new Object();
         jsonParameters.collaboratorUid = collaboratorUid;
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PlayersExecutives/Delete'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/ProducersExecutives/Delete'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
                 onSuccess: function () {
-                    if (typeof (CollaboratorsDataTableWidget) !== 'undefined') {
-                        CollaboratorsDataTableWidget.refreshData();
+                    if (typeof (ProducersExecutivesDataTableWidget) !== 'undefined') {
+                        ProducersExecutivesDataTableWidget.refreshData();
                     }
 
-                    if (typeof (CollaboratorsTotalCountWidget) !== 'undefined') {
-                        CollaboratorsTotalCountWidget.init();
+                    if (typeof (ProducersExecutivesTotalCountWidget) !== 'undefined') {
+                        ProducersExecutivesTotalCountWidget.init();
                     }
 
-                    if (typeof (CollaboratorsEditionCountWidget) !== 'undefined') {
-                        CollaboratorsEditionCountWidget.init();
+                    if (typeof (ProducersExecutivesEditionCountWidget) !== 'undefined') {
+                        ProducersExecutivesEditionCountWidget.init();
                     }
                 },
                 // Error

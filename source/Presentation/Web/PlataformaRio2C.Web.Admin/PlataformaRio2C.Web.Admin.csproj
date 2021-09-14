@@ -371,6 +371,7 @@
     <Compile Include="Areas\Audiovisual\Controllers\MeetingsController.cs" />
     <Compile Include="Areas\Audiovisual\Controllers\MeetingParametersController.cs" />
     <Compile Include="Areas\Audiovisual\Controllers\OrganizationsController.cs" />
+    <Compile Include="Areas\Audiovisual\Controllers\ProducersExecutivesController.cs" />
     <Compile Include="Areas\Audiovisual\Controllers\ProducersController.cs" />
     <Compile Include="Areas\Innovation\Controllers\CommissionsController.cs" />
     <Compile Include="Areas\Innovation\Controllers\ProjectsController.cs" />
@@ -841,6 +842,12 @@
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.scheduled.create.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.report.widget.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.logistics.info.widget.js" />
+    <Content Include="Assets\js\audiovisual\producersexecutives\audiovisual.producers.executives.create.js" />
+    <Content Include="Assets\js\audiovisual\producersexecutives\audiovisual.producers.executives.datatable.widget.js" />
+    <Content Include="Assets\js\audiovisual\producersexecutives\audiovisual.producers.executives.delete.js" />
+    <Content Include="Assets\js\audiovisual\producersexecutives\audiovisual.producers.executives.editioncount.widget.js" />
+    <Content Include="Assets\js\audiovisual\producersexecutives\audiovisual.producers.executives.totalcount.widget.js" />
+    <Content Include="Assets\js\audiovisual\producersexecutives\audiovisual.producers.executives.update.js" />
     <Content Include="Assets\js\audiovisual\players\audiovisual.players.editioncountodometer.widget.js" />
     <Content Include="Assets\js\audiovisual\producers\audiovisual.producers.editioncountodometer.widget.js" />
     <Content Include="Assets\js\audiovisual\producers\audiovisual.producers.delete.js" />
@@ -857,8 +864,6 @@
     <Content Include="Assets\js\collaborators\collaborators.socialnetworks.widget.js" />
     <Content Include="Assets\js\collaborators\collaborators.maininformation.widget.js" />
     <Content Include="Assets\js\collaborators\collaborators.company.widget.js" />
-    <Content Include="Assets\js\companies\company.executive.delete.js" />
-    <Content Include="Assets\js\companies\company.executive.create.js" />
     <Content Include="Assets\js\editions\editions.events.widget.js" />
     <Content Include="Assets\js\editions\editions.create.js" />
     <Content Include="Assets\js\editions\editions.datatable.widget.js" />
@@ -966,7 +971,7 @@
     <Content Include="Assets\js\music\projects\music.projects.delete.js" />
     <Content Include="Assets\js\audiovisual\organizations\audiovisual.organizations.activity.widget.js" />
     <Content Include="Assets\js\audiovisual\organizations\audiovisual.organizations.address.widget.js" />
-    <Content Include="Assets\js\audiovisual\organizations\audiovisual.organizations.executive.widget.js" />
+    <Content Include="Assets\js\audiovisual\organizations\audiovisual.organizations.executives.widget.js" />
     <Content Include="Assets\js\audiovisual\organizations\audiovisual.organizations.interest.widget.js" />
     <Content Include="Assets\js\audiovisual\organizations\audiovisual.organizations.maininformation.widget.js" />
     <Content Include="Assets\js\audiovisual\organizations\audiovisual.organizations.socialnetworks.widget.js" />
@@ -1045,12 +1050,12 @@
     <Content Include="Assets\js\holdings\holdings.editioncount.widget.js" />
     <Content Include="Assets\js\holdings\holdings.totalcount.widget.js" />
     <Content Include="Assets\js\holdings\holdings.datatable.widget.js" />
-    <Content Include="Assets\js\audiovisual\collaborators\collaborators.create.js" />
-    <Content Include="Assets\js\audiovisual\collaborators\collaborators.datatable.widget.js" />
-    <Content Include="Assets\js\audiovisual\collaborators\collaborators.delete.js" />
-    <Content Include="Assets\js\audiovisual\collaborators\collaborators.editioncount.widget.js" />
-    <Content Include="Assets\js\audiovisual\collaborators\collaborators.totalcount.widget.js" />
-    <Content Include="Assets\js\audiovisual\collaborators\collaborators.update.js" />
+    <Content Include="Assets\js\audiovisual\playersexecutives\audiovisual.players.executives.create.js" />
+    <Content Include="Assets\js\audiovisual\playersexecutives\audiovisual.players.executives.datatable.widget.js" />
+    <Content Include="Assets\js\audiovisual\playersexecutives\audiovisual.players.executives.delete.js" />
+    <Content Include="Assets\js\audiovisual\playersexecutives\audiovisual.players.executives.editioncount.widget.js" />
+    <Content Include="Assets\js\audiovisual\playersexecutives\audiovisual.players.executives.totalcount.widget.js" />
+    <Content Include="Assets\js\audiovisual\playersexecutives\audiovisual.players.executives.update.js" />
     <Content Include="Assets\js\attendeeorganizations\attendeeorganizations.form.js" />
     <Content Include="Assets\js\myrio2c.inputmask.js" />
     <Content Include="Assets\js\myrio2c.showhidepassword.js" />
@@ -8313,8 +8318,16 @@
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EditionCountGaugeWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\AudiovisualCommissionEvaluatorsWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\AudiovisualCommissionEvaluationWidget.cshtml" />
-    <Content Include="Views\Companies\Modals\CreateOrganizationExecutiveForm.cshtml" />
-    <Content Include="Views\Companies\Modals\CreateOrganizationExecutiveModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Organizations\Modals\CreateOrganizationExecutiveForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Organizations\Modals\CreateOrganizationExecutiveModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\ProducersExecutives\Details.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\ProducersExecutives\Index.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\ProducersExecutives\Modals\_Form.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\ProducersExecutives\Modals\CreateModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\ProducersExecutives\Modals\UpdateModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\ProducersExecutives\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\ProducersExecutives\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\ProducersExecutives\Widgets\TotalCountWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -9859,7 +9872,7 @@
     <Content Include="Views\Administrators\Details.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Organizations\Widgets\ActivityWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Organizations\Widgets\AddressWidget.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Organizations\Widgets\ExecutiveWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Organizations\Widgets\ExecutivesWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Organizations\Widgets\InterestWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Organizations\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Organizations\Widgets\SocialNetworksWidget.cshtml" />

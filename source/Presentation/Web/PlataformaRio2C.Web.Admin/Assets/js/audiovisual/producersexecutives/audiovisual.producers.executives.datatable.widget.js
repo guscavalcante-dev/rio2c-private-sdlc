@@ -1,21 +1,21 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Rafael Dantas Ruiz
-// Created          : 08-26-2019
+// Author           : Renan Valentim
+// Created          : 09-14-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-31-2021
+// Last Modified On : 09-14-2021
 // ***********************************************************************
-// <copyright file="collaborators.datatable.widget.js" company="Softo">
+// <copyright file="audiovisual.producers.executives.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var CollaboratorsDataTableWidget = function () {
+var ProducersExecutivesDataTableWidget = function () {
 
-    var widgetElementId = '#PlayersExecutivesDataTableWidget';
-    var tableElementId = '#playersexecutives-list-table';
+    var widgetElementId = '#ProducersExecutivesDataTableWidget';
+    var tableElementId = '#producersexecutives-list-table';
     var table;
 
     // Invitation email ---------------------------------------------------------------------------
@@ -23,9 +23,9 @@ var CollaboratorsDataTableWidget = function () {
         MyRio2cCommon.block();
 
         var jsonParameters = new Object();
-        jsonParameters.selectedCollaboratorsUids = $('#playersexecutives-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
+        jsonParameters.selectedCollaboratorsUids = $('#producersexecutives-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PlayersExecutives/SendInvitationEmails'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/ProducersExecutives/SendInvitationEmails'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -41,8 +41,8 @@ var CollaboratorsDataTableWidget = function () {
         .always(function () {
             MyRio2cCommon.unblock();
 
-            if (typeof (CollaboratorsDataTableWidget) !== 'undefined') {
-                CollaboratorsDataTableWidget.refreshData();
+            if (typeof (ProducersExecutivesDataTableWidget) !== 'undefined') {
+                ProducersExecutivesDataTableWidget.refreshData();
             }
         });
     };
@@ -126,7 +126,7 @@ var CollaboratorsDataTableWidget = function () {
                         action: function (e, dt, node, config) {
                             $('.dt-button-background').remove();
                             var eventbriteCsvExport = dt.ajax.params();
-                            eventbriteCsvExport.selectedCollaboratorsUids = $('#playersexecutives-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
+                            eventbriteCsvExport.selectedCollaboratorsUids = $('#producersexecutives-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
                             eventbriteCsvExport.showAllEditions = $('#ShowAllEditions').prop('checked');
                             eventbriteCsvExport.showAllParticipants = $('#ShowAllParticipants').prop('checked');
                             eventbriteCsvExport.collaboratorTypeName = collaboratorTypeName;
@@ -155,7 +155,7 @@ var CollaboratorsDataTableWidget = function () {
                 sSearch: $('#Search').val()
             },
             ajax: {
-                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PlayersExecutives/Search'),
+                url: MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/ProducersExecutives/Search'),
                 data: function (d) {
                     d.showAllEditions = $('#ShowAllEditions').prop('checked');
                     d.showAllParticipants = $('#ShowAllParticipants').prop('checked');
@@ -224,7 +224,7 @@ var CollaboratorsDataTableWidget = function () {
                 },
                 { data: 'Email' },
                 {
-                    data: 'Player',
+                    data: 'Producer',
                     render: function (data, type, row, meta) {
                         var html = '<ul class="m-0 pl-4">';
 
@@ -270,17 +270,17 @@ var CollaboratorsDataTableWidget = function () {
                                             <div class="dropdown-menu dropdown-menu-right">';
 
                         if (!full.IsInCurrentEdition) {
-                            html += '<button class="dropdown-item" onclick="CollaboratorsUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
+                            html += '<button class="dropdown-item" onclick="ProducersExecutivesUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         }
 
-                        html += '<button class="dropdown-item" onclick="CollaboratorsDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
+                        html += '<button class="dropdown-item" onclick="ProducersExecutivesDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
                         html += '<button class="dropdown-item" onclick="AccountsUpdateUserStatus.showModal(\'' + full.UserBaseDto.Uid + '\',\'' + !full.Active + '\');"><i class="la la-lock"></i> ' + ((full.Active) ? labels.block : labels.unblock) + '</button>';
 
                         if (full.IsInCurrentEdition && full.IsInOtherEdition) {
-                            html += '<button class="dropdown-item" onclick="CollaboratorsDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-remove"></i> ' + removeFromEdition + '</button>';
+                            html += '<button class="dropdown-item" onclick="ProducersExecutivesDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-remove"></i> ' + removeFromEdition + '</button>';
                         }
                         else {
-                            html += '<button class="dropdown-item" onclick="CollaboratorsDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+                            html += '<button class="dropdown-item" onclick="ProducersExecutivesDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
                         }
 
                         html += '\
@@ -340,7 +340,7 @@ var CollaboratorsDataTableWidget = function () {
             return;
         }
 
-        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PlayersExecutives/Details/' + commissionUid);
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/ProducersExecutives/Details/' + commissionUid);
     };
 
     return {

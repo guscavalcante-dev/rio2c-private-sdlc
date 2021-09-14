@@ -3,16 +3,16 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-26-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-27-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-14-2021
 // ***********************************************************************
-// <copyright file="collaborators.totalcount.widget.js" company="Softo">
+// <copyright file="audiovisual.players.executives.totalcount.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var CollaboratorsTotalCountWidget = function () {
+var PlayersExecutivesTotalCountWidget = function () {
 
     var widgetElementId = '#PlayersExecutivesTotalCountWidget';
     var chartElementId = 'PlayersExecutivesTotalCountChart';

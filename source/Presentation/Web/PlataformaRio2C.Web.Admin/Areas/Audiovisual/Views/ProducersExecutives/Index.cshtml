@@ -1,17 +1,17 @@
 ﻿@model CollaboratorSearchViewModel
 @{
-    ViewBag.Title = Labels.PlayersExecutives;
+    ViewBag.Title = Labels.ProducersExecutives;
 }
 <!--begin:: Quick Stats-->
 <div class="row">
     <div class="col-sm-6">
         <!--begin:: Total Count Widget-->
-        <div id="PlayersExecutivesTotalCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <div id="ProducersExecutivesTotalCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
         <!--end:: Total Count Widget-->
     </div>
     <div class="col-sm-6">
         <!--begin:: Edition Count-->
-        <div id="PlayersExecutivesEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
+        <div id="ProducersExecutivesEditionCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
         <!--end:: Edition Count-->
     </div>
 </div>
@@ -32,12 +32,12 @@
     @Scripts.Render("~/bundles/js/dynamic.list.js")
     @Scripts.Render("~/bundles/js/bootstrap-datepicker.js")
     @Scripts.Render("~/bundles/js/accounts.update.userstatus.js")
-    @Scripts.Render("~/bundles/js/audiovisual.players.executives.list.js")
-    @Scripts.Render("~/bundles/js/audiovisual.players.executives.editioncount.js")
+    @Scripts.Render("~/bundles/js/audiovisual.producers.executives.list.js")
+    @Scripts.Render("~/bundles/js/audiovisual.producers.executives.editioncount.js")
     @Scripts.Render("~/bundles/js/attendeeorganizations.form.js")
-    @Scripts.Render("~/bundles/js/audiovisual.players.executives.create.js")
-    @Scripts.Render("~/bundles/js/audiovisual.players.executives.update.js")
-    @Scripts.Render("~/bundles/js/audiovisual.players.executives.delete.js")
+    @Scripts.Render("~/bundles/js/audiovisual.producers.executives.create.js")
+    @Scripts.Render("~/bundles/js/audiovisual.producers.executives.update.js")
+    @Scripts.Render("~/bundles/js/audiovisual.producers.executives.delete.js")
     @Scripts.Render("~/bundles/js/addresses.form.js")
     <script>
         var collaboratorTypeName = '@PlataformaRio2C.Domain.Entities.CollaboratorType.ExecutiveAudiovisual.Name';
@@ -58,9 +58,9 @@
         var initialPageSize = @(Model.PageSize?.ToString() ?? "null");
 
         jQuery(document).ready(function () {
-            PlayersExecutivesTotalCountWidget.init();
-            PlayersExecutivesEditionCountWidget.init();
-            PlayersExecutivesDataTableWidget.init();
+            ProducersExecutivesTotalCountWidget.init();
+            ProducersExecutivesEditionCountWidget.init();
+            ProducersExecutivesDataTableWidget.init();
         });
     </script>
 }

@@ -37,8 +37,8 @@ var AccountsUpdateUserStatus = function () {
                 if (typeof (AdministratorsDataTableWidget) !== 'undefined') {
                     AdministratorsDataTableWidget.refreshData();
                 }
-                if (typeof (CollaboratorsDataTableWidget) !== 'undefined') {
-                    CollaboratorsDataTableWidget.refreshData();
+                if (typeof (PlayersExecutivesDataTableWidget) !== 'undefined') {
+                    PlayersExecutivesDataTableWidget.refreshData();
                 }
                 MyRio2cCommon.unblock();
             });

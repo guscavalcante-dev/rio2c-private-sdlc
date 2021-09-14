@@ -2959,4 +2959,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Bloqueado</value>
     <comment>Bloqueado</comment>
   </data>
+  <data name="ProducersExecutives" xml:space="preserve">
+    <value>Executivos das Produtoras</value>
+    <comment>Executivos das Produtoras</comment>
+  </data>
 </root>

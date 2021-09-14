@@ -6,7 +6,7 @@
 // Last Modified By : Rafael Dantas Ruiz
 // Last Modified On : 03-10-2020
 // ***********************************************************************
-// <copyright file="collaborators.update.js" company="Softo">
+// <copyright file="logistics.update.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>

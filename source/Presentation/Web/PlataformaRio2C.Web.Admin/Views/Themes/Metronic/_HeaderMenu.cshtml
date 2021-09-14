@@ -80,8 +80,8 @@
                                 <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Producers", "Audiovisual")" aria-haspopup="true">
                                     <a href="@Url.Action("Index", "Producers", new { Area = "Audiovisual" })" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.Companies</span></a>
                                 </li>
-                                <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "Index", "CollaboratorProducer", null)" aria-haspopup="true">
-                                    <a href="#" @*href="@Url.Action("Index", "CollaboratorProducer", new { Area = "" })"*@ class="kt-menu__link "><span class="kt-menu__link-text">@Labels.Executives</span></a>
+                                <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "ProducersExecutives", "Audiovisual")" aria-haspopup="true">
+                                    <a href="@Url.Action("Index", "ProducersExecutives", new { Area = "Audiovisual" })" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.Executives</span></a>
                                 </li>
                             </ul>
                         </div>

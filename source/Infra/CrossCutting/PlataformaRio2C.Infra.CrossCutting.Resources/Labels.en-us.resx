@@ -2957,4 +2957,8 @@
     <value>Blocked</value>
     <comment>Bloqueado</comment>
   </data>
+  <data name="ProducersExecutives" xml:space="preserve">
+    <value>Producers Executives</value>
+    <comment>Executivos das Produtoras</comment>
+  </data>
 </root>
