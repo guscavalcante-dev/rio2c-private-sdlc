@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-13-2021
+// Last Modified On : 09-15-2021
 // ***********************************************************************
 // <copyright file="ProducersExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -116,6 +116,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 request.GetSortColumns(),
                 new List<Guid>(),
                 new string[] { Constants.CollaboratorType.ExecutiveAudiovisual },
+                new string[] { OrganizationType.Producer.Name },
                 showAllEditions,
                 showAllParticipants,
                 showHighlights,

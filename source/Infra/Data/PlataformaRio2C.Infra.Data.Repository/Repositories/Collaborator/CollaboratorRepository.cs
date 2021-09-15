@@ -4,7 +4,7 @@
 // Created          : 06-19-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-13-2021
+// Last Modified On : 09-15-2021
 // ***********************************************************************
 // <copyright file="CollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -374,6 +374,25 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>
+        /// Finds the name of the by organization type.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="organizationTypeNames">The organization type names.</param>
+        /// <returns></returns>
+        internal static IQueryable<Collaborator> FindByOrganizationTypeNames(this IQueryable<Collaborator> query, string[] organizationTypeNames)
+        {
+            if(organizationTypeNames?.Any(name => !string.IsNullOrEmpty(name)) == true)
+            {
+                query = query.Where(c => c.AttendeeCollaborators.Where(ac => !ac.IsDeleted).Any(
+                        ac => ac.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted).Any(
+                            aoc => aoc.AttendeeOrganization.AttendeeOrganizationTypes.Where(aot => !aot.IsDeleted).Any(
+                                aot => organizationTypeNames.Contains(aot.OrganizationType.Name)))));
+            }
+
+            return query;
+        }
     }
 
     #endregion
@@ -627,18 +646,27 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             List<Tuple<string, string>> sortColumns,
             List<Guid> collaboratorsUids,
             string[] collaboratorTypeNames,
+            string[] organizationTypeNames,
             bool showAllEditions,
             bool showAllParticipants,
             bool? showHighlights,
             int? editionId)
         {
+            this.SetProxyEnabled(false);
+
+            if(organizationTypeNames == null)
+            {
+                organizationTypeNames = new string[] { };
+            }
+
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords, editionId)
                                 .FindByUids(collaboratorsUids)
                                 .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeNames, showAllEditions, showAllParticipants, editionId)
-                                .FindByHighlights(collaboratorTypeNames, showHighlights);
+                                .FindByHighlights(collaboratorTypeNames, showHighlights)
+                                .FindByOrganizationTypeNames(organizationTypeNames);
 
-            return await query
+            var collaborators = await query
                             .DynamicOrder<Collaborator>(
                                 sortColumns,
                                 new List<Tuple<string, string>>
@@ -668,13 +696,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                                                 && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
                                                                                                                                                                            && collaboratorTypeNames.Contains(act.CollaboratorType.Name))) :
                                                                                    null,
-                                IsInOtherEdition = c.User.Roles.Any(r => r.Name == Constants.Role.Admin) 
-                                                   || (editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId
-                                                                                                           && !ac.IsDeleted)),
+                                IsInOtherEdition = c.User.Roles.Any(r => r.Name == Constants.Role.Admin)
+                                                   || (editionId.HasValue && c.AttendeeCollaborators.Any(ac => ac.EditionId != editionId && !ac.IsDeleted)),
                                 AttendeeOrganizationBasesDtos = c.AttendeeCollaborators
                                                                     .Where(at => !at.IsDeleted && at.EditionId == editionId)
                                                                     .SelectMany(at => at.AttendeeOrganizationCollaborators
-                                                                                            .Where(aoc => !aoc.IsDeleted)
+                                                                                            .Where(aoc => !aoc.IsDeleted
+                                                                                                            && (organizationTypeNames.Any(ctn => !string.IsNullOrEmpty(ctn)) == true ?
+                                                                                                                    //Search by OrganizationType
+                                                                                                                    aoc.AttendeeOrganization.AttendeeOrganizationTypes
+                                                                                                                        .Where(aot => !aot.IsDeleted)
+                                                                                                                        .Any(aot => organizationTypeNames.Contains(aot.OrganizationType.Name))
+                                                                                                                    :
+                                                                                                                    //Return true because isn't searching by OrganizationType
+                                                                                                                    true))
                                                                                             .Select(aoc => new AttendeeOrganizationBaseDto
                                                                                             {
                                                                                                 Uid = aoc.AttendeeOrganization.Uid,
@@ -699,6 +734,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 }
                             })
                             .ToListPagedAsync(page, pageSize);
+
+            this.SetProxyEnabled(true);
+
+            return collaborators;
         }
 
         /// <summary>Counts all by data table.</summary>

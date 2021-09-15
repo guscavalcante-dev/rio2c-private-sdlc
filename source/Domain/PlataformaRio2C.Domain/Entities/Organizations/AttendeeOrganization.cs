@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-13-2021
+// Last Modified On : 09-15-2021
 // ***********************************************************************
 // <copyright file="AttendeeOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -144,6 +144,15 @@ namespace PlataformaRio2C.Domain.Entities
             else
             {
                 this.AttendeeOrganizationTypes.Add(new AttendeeOrganizationType(this, organizationType, isApiDisplayEnabled, apiHighlightPosition, userId));
+
+                if (organizationType.IsSeller)
+                {
+                    //TODO: Update all AttendeeOrganizationCollaborators with "CollaboratorType.AudiovisualProducerExecutive (This collaboratorType must be created first!)" if "OrganizationType.IsSeller"    
+                    //foreach (var attendeeOrganizationCollaborator in this.AttendeeOrganizationCollaborators)
+                    //{
+                        
+                    //}
+                }
             }
         }
 
