@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-19-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="OrganizationTypeRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -73,38 +73,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>
+        /// Finds the name of the by.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="organizationTypeName">Name of the organization type.</param>
+        /// <returns></returns>
+        internal static IQueryable<OrganizationType> FindByName(this IQueryable<OrganizationType> query, string organizationTypeName)
+        {
+            query = query.Where(ct => ct.Name == organizationTypeName);
+
+            return query;
+        }
     }
 
     #endregion
-
-    //#region OrganizationBaseDto IQueryable Extensions
-
-    ///// <summary>
-    ///// OrganizationBaseDtoIQueryableExtensions
-    ///// </summary>
-    //internal static class OrganizationBaseDtoIQueryableExtensions
-    //{
-    //    /// <summary>
-    //    /// To the list paged.
-    //    /// </summary>
-    //    /// <param name="query">The query.</param>
-    //    /// <param name="page">The page.</param>
-    //    /// <param name="pageSize">Size of the page.</param>
-    //    /// <returns></returns>
-    //    internal static async Task<IPagedList<OrganizationBaseDto>> ToListPagedAsync(this IQueryable<OrganizationBaseDto> query, int page, int pageSize)
-    //    {
-    //        page++;
-
-    //        // Page the list
-    //        var pagedList = await query.ToPagedListAsync(page, pageSize);
-    //        if (pagedList.PageNumber != 1 && pagedList.PageCount > 0 && page > pagedList.PageCount)
-    //            pagedList = await query.ToPagedListAsync(pagedList.PageCount, pageSize);
-
-    //        return pagedList;
-    //    }
-    //}
-
-    //#endregion
 
     /// <summary>OrganizationTypeRepository</summary>
     public class OrganizationTypeRepository : Repository<PlataformaRio2CContext, OrganizationType>, IOrganizationTypeRepository
@@ -138,6 +122,20 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                                 .FindByUid(organizationTypeUid);
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the by name asynchronous.
+        /// </summary>
+        /// <param name="organizationTypeName">Name of the organization type.</param>
+        /// <returns></returns>
+        public async Task<OrganizationType> FindByNameAsync(string organizationTypeName)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByName(organizationTypeName);
 
             return await query
                             .FirstOrDefaultAsync();

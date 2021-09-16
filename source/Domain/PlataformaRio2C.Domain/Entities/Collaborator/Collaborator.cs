@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-22-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="Collaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -872,13 +872,16 @@ namespace PlataformaRio2C.Domain.Entities
             this.PublicEmail = sharePublicEmail == true ? publicEmail?.Trim() : null;
         }
 
-        /// <summary>Deletes the specified edition.</summary>
+        /// <summary>
+        /// Deletes the specified edition.
+        /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="organizationType">Type of the organization.</param>
         /// <param name="userId">The user identifier.</param>
-        public void Delete(Edition edition, CollaboratorType collaboratorType, int userId)
+        public void Delete(Edition edition, CollaboratorType collaboratorType, OrganizationType organizationType, int userId)
         {
-            this.DeleteAttendeeCollaborators(edition, collaboratorType, userId);
+            this.DeleteAttendeeCollaborators(edition, collaboratorType, organizationType, userId);
             this.DeleteUser();
 
             // Delete only if the collaborator has no attendee collaborators in any edition and is not admin
@@ -1629,15 +1632,18 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        /// <summary>Deletes the attendee collaborators.</summary>
+        /// <summary>
+        /// Deletes the attendee collaborators.
+        /// </summary>
         /// <param name="edition">The edition.</param>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="organizationType">Type of the organization.</param>
         /// <param name="userId">The user identifier.</param>
-        private void DeleteAttendeeCollaborators(Edition edition, CollaboratorType collaboratorType, int userId)
+        private void DeleteAttendeeCollaborators(Edition edition, CollaboratorType collaboratorType, OrganizationType organizationType, int userId)
         {
             foreach (var attendeeCollaborator in this.FindAllAttendeeCollaboratorsNotDeleted(edition))
             {
-                attendeeCollaborator?.Delete(collaboratorType, userId);
+                attendeeCollaborator?.Delete(collaboratorType, organizationType, userId);
             }
         }
 

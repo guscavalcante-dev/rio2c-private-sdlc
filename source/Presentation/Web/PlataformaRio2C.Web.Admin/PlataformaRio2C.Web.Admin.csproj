@@ -9901,11 +9901,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Audiovisual\Data\" />
-    <Folder Include="Areas\Innovation\Data\" />
     <Folder Include="Areas\Innovation\Views\Projects\Modals\" />
     <Folder Include="Areas\Innovation\Views\Projects\Shared\" />
-    <Folder Include="Areas\Music\Data\" />
     <Folder Include="Areas\Music\Views\Shared\" />
     <Folder Include="Scripts\ckeditor\images\" />
     <Folder Include="Scripts\ckeditor\plugins\a11yhelp\lang\" />
@@ -9927,7 +9924,6 @@
     <Folder Include="Scripts\ckeditor\skins\v2\images\" />
     <Folder Include="Scripts\ckeditor\themes\default\" />
     <Folder Include="UploadsArchives\" />
-    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\fonts\glyphicons-halflings-regular.woff" />

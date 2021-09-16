@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-19-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="IOrganizationTypeRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,7 +21,6 @@ namespace PlataformaRio2C.Domain.Interfaces
     public interface IOrganizationTypeRepository : IRepository<OrganizationType>
     {
         Task<OrganizationType> FindByUidAsync(Guid organizationTypeUid);
-        //Task<OrganizationDto> FindDtoByUidAsync(Guid holdingUid);
-        //Task<List<Organization>> GetAllAsync();
+        Task<OrganizationType> FindByNameAsync(string organizationTypeName);
     }
 }

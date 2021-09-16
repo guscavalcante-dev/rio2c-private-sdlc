@@ -4,7 +4,7 @@
 // Created          : 08-31-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-31-2021
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="collaborators.company.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -89,7 +89,7 @@ var CollaboratorsCompanyWidget = function () {
         }
 
         if (typeof (CompanyInfoAutocomplete) !== 'undefined' && $('#IsUpdate').val() !== 'True') {
-            CompanyInfoAutocomplete.init('/Companies/ShowTicketBuyerFilledForm', enableUpdatePlugins);
+            CompanyInfoAutocomplete.init('/Companies/ShowTicketBuyerFilledForm', enableUpdatePlugins, _organizationTypeName);
         }
 
         enableAjaxForm();

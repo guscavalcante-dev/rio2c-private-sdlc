@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-26-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 01-02-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="DeleteCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -21,12 +21,45 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public Guid CollaboratorUid { get; set; }
         public string CollaboratorTypeName { get; set; }
 
+        /// <summary>
+        /// This parameter is only necessary when deleting Producers or Players Executives.
+        /// TODO: This will be deleted when split the CollaboratorType.AudiovisualExecutive to AudiovisualPlayerExecutive and AudiovisualProducerExecutive
+        /// </summary>
+        public string OrganizationTypeName { get; set; }
+
         /// <summary>Initializes a new instance of the <see cref="DeleteCollaborator"/> class.</summary>
         public DeleteCollaborator()
         {
         }
 
-        /// <summary>Updates the pre send properties.</summary>
+        /// <summary>
+        /// Updates the pre send properties.
+        /// </summary>
+        /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
+        /// <param name="organizationTypeName">This parameter is only necessary when deleting Producers or Players Executives.
+        /// This will be deleted when split the CollaboratorType.AudiovisualExecutive to AudiovisualPlayerExecutive and AudiovisualProducerExecutive</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="userUid">The user uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="editionUid">The edition uid.</param>
+        /// <param name="userInterfaceLanguage">The user interface language.</param>
+        public void UpdatePreSendProperties(
+            string collaboratorTypeName,
+            string organizationTypeName,
+            int userId,
+            Guid userUid,
+            int? editionId,
+            Guid? editionUid,
+            string userInterfaceLanguage)
+        {
+            this.CollaboratorTypeName = collaboratorTypeName;
+            this.OrganizationTypeName = organizationTypeName;
+            this.UpdatePreSendProperties(userId, userUid, editionId, editionUid, userInterfaceLanguage);
+        }
+
+        /// <summary>
+        /// Updates the pre send properties.
+        /// </summary>
         /// <param name="collaboratorTypeName">Name of the collaborator type.</param>
         /// <param name="userId">The user identifier.</param>
         /// <param name="userUid">The user uid.</param>

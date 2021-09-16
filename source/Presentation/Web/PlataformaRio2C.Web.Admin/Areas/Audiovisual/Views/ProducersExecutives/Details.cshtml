@@ -1,5 +1,5 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
-@using PlataformaRio2C.Domain.Constants
+@using PlataformaRio2C.Domain.Entities
 @model AttendeeCollaboratorSiteDetailsDto
 @{
     ViewBag.Title = $"{Labels.Executive}  {Model.Collaborator.GetFullName()}";
@@ -47,9 +47,9 @@
     @Scripts.Render("~/bundles/js/collaborators.details.js")
     <script>
         jQuery(document).ready(function () {
-            CollaboratorsMainInformationWidget.init('@(CollaboratorType.ExecutiveAudiovisual)');
-            CollaboratorsSocialNetworksWidget.init('@(CollaboratorType.ExecutiveAudiovisual)');
-            CollaboratorsCompanyWidget.init('@(OrganizationType.AudiovisualSeller)');
+            CollaboratorsMainInformationWidget.init('@(CollaboratorType.ExecutiveAudiovisual.Name)');
+            CollaboratorsSocialNetworksWidget.init('@(CollaboratorType.ExecutiveAudiovisual.Name)');
+            CollaboratorsCompanyWidget.init('@(OrganizationType.Producer.Name)');
         });
     </script>
 }

@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 02-26-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-04-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="AttendeeMusicBand.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -80,7 +80,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Deletes the specified user identifier.</summary>
         /// <param name="userId">The user identifier.</param>
-        public void Delete(int userId)
+        public new void Delete(int userId)
         {
             if (this.FindAllMusicProjectsNotDeleted()?.Any() == true)
             {
@@ -93,18 +93,7 @@ namespace PlataformaRio2C.Domain.Entities
                 return;
             }
 
-            this.IsDeleted = true;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
-        }
-
-        /// <summary>Restores the specified user identifier.</summary>
-        /// <param name="userId">The user identifier.</param>
-        public void Restore(int userId)
-        {
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            base.Delete(userId);
         }
 
         #region Evaluation
@@ -133,7 +122,7 @@ namespace PlataformaRio2C.Domain.Entities
                     evaluatorUser.Id));
             }
 
-            this.Grade = this.GetAverageEvaluation(this.Edition);
+            this.Grade = this.GetAverageEvaluation();
             this.EvaluationsCount = this.GetAttendeeMusicBandEvaluationTotalCount();
             this.LastEvaluationDate = DateTime.UtcNow;
         }
@@ -141,17 +130,24 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>
         /// Recalculates the grade.
         /// </summary>
-        public void RecalculateGrade(Edition edition)
+        public void RecalculateGrade()
         {
-            this.Grade = this.GetAverageEvaluation(edition);
+            this.Grade = this.GetAverageEvaluation();
+        }
+
+        /// <summary>
+        /// Recalculates the votes count.
+        /// </summary>
+        public void RecalculateVotesCount()
+        {
+            this.EvaluationsCount = this.GetAttendeeMusicBandEvaluationTotalCount();
         }
 
         /// <summary>
         /// Gets the average evaluation.
         /// </summary>
-        /// <param name="edition">The edition.</param>
         /// <returns></returns>
-        private decimal? GetAverageEvaluation(Edition edition)
+        private decimal? GetAverageEvaluation()
         {
             if (this.FindAllAttendeeMusicBandEvaluationsNotDeleted()?.Any() != true)
             {
@@ -160,7 +156,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             // Can only generate the 'AverageEvaluation' when the 'AttendeeMusicBandEvaluations' count 
             // is greater or equal than minimum necessary evaluations quantity
-            if (this.GetAttendeeMusicBandEvaluationTotalCount() >= edition.MusicCommissionMinimumEvaluationsCount)
+            if (this.GetAttendeeMusicBandEvaluationTotalCount() >= this.Edition?.MusicCommissionMinimumEvaluationsCount)
             {
                 return this.FindAllAttendeeMusicBandEvaluationsNotDeleted().Sum(e => e.Grade) / this.FindAllAttendeeMusicBandEvaluationsNotDeleted().Count;
             }

@@ -429,7 +429,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersReadString)]
         public async Task<ActionResult> ShowTotalCountWidget()
         {
-            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(Constants.CollaboratorType.Speaker, true, this.EditionDto.Id);
+            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
+                Constants.CollaboratorType.Speaker,
+                null,
+                true, 
+                this.EditionDto.Id);
 
             return Json(new
             {
@@ -451,7 +455,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersReadString)]
         public async Task<ActionResult> ShowEditionCountWidget()
         {
-            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(Constants.CollaboratorType.Speaker, false, this.EditionDto.Id);
+            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
+                Constants.CollaboratorType.Speaker,
+                null,
+                false, 
+                this.EditionDto.Id);
 
             return Json(new
             {

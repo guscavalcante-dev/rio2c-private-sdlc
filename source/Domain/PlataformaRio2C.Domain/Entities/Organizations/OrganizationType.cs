@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="OrganizationType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -42,24 +42,6 @@ namespace PlataformaRio2C.Domain.Entities
 
         public virtual ICollection<AttendeeOrganizationType> AttendeeOrganizationTypes { get; private set; }
 
-        //public virtual Address Address { get; private set; }
-        //public virtual ICollection<PlayerDescription> Descriptions { get; private set; }
-        //public virtual ICollection<PlayerInterest> Interests { get; private set; }
-        //public virtual ICollection<Collaborator> Collaborators { get; private set; }
-        //public virtual ICollection<Collaborator> CollaboratorsOld { get; private set; }
-        //public virtual ICollection<PlayerActivity> PlayerActivitys { get; private set; }
-        //public virtual ICollection<PlayerTargetAudience> PlayerTargetAudience { get; private set; }
-        //public virtual ICollection<PlayerRestrictionsSpecifics> RestrictionsSpecifics { get; private set; }
-
-        ///// <summary>Initializes a new instance of the <see cref="OrganizationType"/> class.</summary>
-        ///// <param name="name">The name.</param>
-        ///// <param name="holding">The holding.</param>
-        //public OrganizationType(string name, Holding holding)
-        //{
-        //    this.SetName(name);
-        //    this.SetHolding(holding);
-        //}
-
         /// <summary>Initializes a new instance of the <see cref="OrganizationType"/> class.</summary>
         /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <param name="name">The name.</param>
@@ -86,43 +68,22 @@ namespace PlataformaRio2C.Domain.Entities
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="OrganizationType"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OrganizationType" /> class.
+        /// </summary>
         protected OrganizationType()
-        {
+        { 
         }
 
-        ///// <summary>Sets the name.</summary>
-        ///// <param name="name">The name.</param>
-        //public void SetName(string name)
-        //{
-        //    this.Name = name;
-        //}
-
-        ///// <summary>Sets the holding.</summary>
-        ///// <param name="holding">The holding.</param>
-        //public void SetHolding(Holding holding)
-        //{
-        //    this.Holding = holding;
-        //    this.HoldingId = holding.Id;
-        //}
-
-        /// <summary>Returns true if ... is valid.</summary>
+        /// <summary>
+        /// Returns true if ... is valid.
+        /// </summary>
         /// <returns>
-        ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
+        ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.
+        /// </returns>
         public override bool IsValid()
         {
             return true;
-            //ValidationResult = new ValidationResult();
-
-            //ValidationResult.Add(new PlayerIsConsistent().Valid(this));
-
-            //if (Image != null)
-            //{
-            //    ValidationResult.Add(new ImageIsConsistent().Valid(this.Image));
-            //    ValidationResult.Add(new PlayerImageIsConsistent().Valid(this));
-            //}
-
-            //return ValidationResult.IsValid;
         }
     }
 }

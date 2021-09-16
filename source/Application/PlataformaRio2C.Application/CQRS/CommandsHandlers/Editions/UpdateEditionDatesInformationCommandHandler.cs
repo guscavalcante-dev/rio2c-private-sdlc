@@ -4,7 +4,7 @@
 // Created          : 03-20-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-28-2021
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="UpdateEditionDatesInformationCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -122,7 +122,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             if (changedMusicCommissionMinimumEvaluationsCount)
             {
                 var attendeeMusicBands = await this.attendeeMusicBandRepo.FindAllByEditionIdAsync(edition.Id);
-                attendeeMusicBands.ForEach(amb => amb.RecalculateGrade(edition));
+                attendeeMusicBands.ForEach(amb => amb.RecalculateGrade());
                 this.attendeeMusicBandRepo.UpdateAll(attendeeMusicBands);
             }
 
@@ -130,7 +130,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             if (changedInnovationCommissionMinimumEvaluationsCount)
             {
                 var attendeeInnovationOrganizations = await this.attendeeInnovationOrganizationRepo.FindAllByEditionIdAsync(edition.Id);
-                attendeeInnovationOrganizations.ForEach(amb => amb.RecalculateGrade(edition));
+                attendeeInnovationOrganizations.ForEach(amb => amb.RecalculateGrade());
                 this.attendeeInnovationOrganizationRepo.UpdateAll(attendeeInnovationOrganizations);
             }
 

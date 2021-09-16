@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-25-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -694,10 +694,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<OrganizationApiListDto>> FindAllOrganizationsApiPaged(int editionId, string companyName, string tradeName, string document, int page, int pageSize)
+        public async Task<IPagedList<OrganizationApiListDto>> FindAllOrganizationsApiPaged(int? editionId, string companyName, string tradeName, string document, Guid organizationTypeUid, int page, int pageSize)
         {
             var query = this.GetBaseQuery()
-                                //.FindByOrganizationTypeUidAndByEditionId(Guid.Empty, true, true, editionId)
+                                .FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, true, false, editionId)
                                 .FindByCompanyName(companyName)
                                 .FindByTradeName(tradeName)
                                 .FindByEqualDocument(document);

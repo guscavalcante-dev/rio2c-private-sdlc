@@ -115,7 +115,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 request.Search?.Value,
                 request.GetSortColumns(),
                 new List<Guid>(),
-                new string[] { Constants.CollaboratorType.ExecutiveAudiovisual },
+                new string[] { CollaboratorType.ExecutiveAudiovisual.Name },
                 new string[] { OrganizationType.Producer.Name },
                 showAllEditions,
                 showAllParticipants,
@@ -144,11 +144,15 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> Details(Guid? id)
         {
-            var attendeeCollaboratorDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUidAndByEditionIdAsync(id ?? Guid.Empty, this.EditionDto.Id);
+            var attendeeCollaboratorDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUidAndByCollaboratorTypeUidAsync(
+                id ?? Guid.Empty, 
+                CollaboratorType.ExecutiveAudiovisual.Uid, 
+                OrganizationType.Producer.Uid);
+
             if (attendeeCollaboratorDto == null)
             {
-                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "Commissions", new { Area = "Audiovisual" });
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "ProducersExecutives", new { Area = "Audiovisual" });
             }
 
             #region Breadcrumb
@@ -167,87 +171,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
         #endregion
 
-        #region Send Invitation Emails
-
-        /// <summary>Sends the invitation emails.</summary>
-        /// <param name="selectedCollaboratorsUids">The selected collaborators uids.</param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> SendInvitationEmails(string selectedCollaboratorsUids)
-        {
-            AppValidationResult result = null;
-
-            try
-            {
-                if (string.IsNullOrEmpty(selectedCollaboratorsUids))
-                {
-                    throw new DomainException(Messages.SelectAtLeastOneOption);
-                }
-
-                var collaboratorsUids = selectedCollaboratorsUids?.ToListGuid(',');
-                if (!collaboratorsUids.Any())
-                {
-                    throw new DomainException(Messages.SelectAtLeastOneOption);
-                }
-
-                var collaboratorsDtos = await this.collaboratorRepo.FindAllCollaboratorsByCollaboratorsUids(this.EditionDto.Id, collaboratorsUids);
-                if (collaboratorsDtos?.Any() != true)
-                {
-                    throw new DomainException(Messages.SelectAtLeastOneOption);
-                }
-
-                List<string> errors = new List<string>();
-                foreach (var collaboratorDto in collaboratorsDtos)
-                {
-                    var collaboratorLanguageCode = collaboratorDto.Language?.Code ?? this.UserInterfaceLanguage;
-
-                    try
-                    {
-                        result = await this.CommandBus.Send(new SendProducerWelcomeEmailAsync(
-                            collaboratorDto.User.SecurityStamp,
-                            collaboratorDto.User.Id,
-                            collaboratorDto.User.Uid,
-                            collaboratorDto.GetFirstName(),
-                            collaboratorDto.GetFullName(collaboratorLanguageCode),
-                            collaboratorDto.User.Email,
-                            this.EditionDto.Edition,
-                            collaboratorLanguageCode));
-                        if (!result.IsValid)
-                        {
-                            throw new DomainException(Messages.CorrectFormValues);
-                        }
-                    }
-                    catch (DomainException ex)
-                    {
-                        //Cannot stop sending email when exception occurs.
-                        errors.AddRange(result.Errors.Select(e => e.Message));
-                    }
-                    catch (Exception ex)
-                    {
-                        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                    }
-                }
-
-                if (errors.Any())
-                {
-                    throw new DomainException(string.Format(Messages.OneOrMoreEmailsNotSend, Labels.WelcomeEmail));
-                }
-            }
-            catch (DomainException ex)
-            {
-                return Json(new { status = "error", message = ex.GetInnerMessage(), }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Email.ToLowerInvariant(), Labels.Sent.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        }
-
-        #endregion
-
         #region Total Count Widget
 
         /// <summary>Shows the total count widget.</summary>
@@ -255,7 +178,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowTotalCountWidget()
         {
-            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(Constants.CollaboratorType.ExecutiveAudiovisual, true, this.EditionDto.Id);
+            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
+                CollaboratorType.ExecutiveAudiovisual.Name,
+                OrganizationType.Producer.Name,
+                true, 
+                this.EditionDto.Id);
 
             return Json(new
             {
@@ -275,7 +202,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <returns></returns>
         public async Task<ActionResult> ShowEditionCountWidget()
         {
-            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(Constants.CollaboratorType.ExecutiveAudiovisual, false, this.EditionDto.Id);
+            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
+                CollaboratorType.ExecutiveAudiovisual.Name,
+                OrganizationType.Producer.Name,
+                false, 
+                this.EditionDto.Id);
 
             return Json(new
             {
@@ -514,7 +445,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    Domain.Constants.CollaboratorType.ExecutiveAudiovisual,
+                    CollaboratorType.ExecutiveAudiovisual.Name,
+                    OrganizationType.Producer.Name,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,

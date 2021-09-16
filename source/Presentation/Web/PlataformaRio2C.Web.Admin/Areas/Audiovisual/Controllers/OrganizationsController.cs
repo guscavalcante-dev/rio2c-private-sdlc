@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 03-08-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="OrganizationsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -871,6 +871,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
+
+            ViewBag.OrganizationTypeUid = organizationTypeUid;
 
             return Json(new
             {

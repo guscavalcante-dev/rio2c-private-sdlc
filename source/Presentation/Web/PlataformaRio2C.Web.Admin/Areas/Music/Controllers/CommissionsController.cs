@@ -266,7 +266,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowTotalCountWidget()
         {
-            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(Constants.CollaboratorType.CommissionMusic, true, this.EditionDto.Id);
+            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
+                Constants.CollaboratorType.CommissionMusic,
+                null,
+                true, 
+                this.EditionDto.Id);
 
             return Json(new
             {
@@ -286,7 +290,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <returns></returns>
         public async Task<ActionResult> ShowEditionCountWidget()
         {
-            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(Constants.CollaboratorType.CommissionMusic, false, this.EditionDto.Id);
+            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
+                Constants.CollaboratorType.CommissionMusic,
+                null,
+                false, 
+                this.EditionDto.Id);
 
             return Json(new
             {

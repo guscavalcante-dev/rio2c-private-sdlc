@@ -4,7 +4,7 @@
 // Created          : 09-14-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-14-2021
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="audiovisual.producers.executives.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,57 +18,6 @@ var ProducersExecutivesDataTableWidget = function () {
     var tableElementId = '#producersexecutives-list-table';
     var table;
 
-    // Invitation email ---------------------------------------------------------------------------
-    var sendInvitationEmails = function () {
-        MyRio2cCommon.block();
-
-        var jsonParameters = new Object();
-        jsonParameters.selectedCollaboratorsUids = $('#producersexecutives-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
-
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/ProducersExecutives/SendInvitationEmails'), jsonParameters, function (data) {
-            MyRio2cCommon.handleAjaxReturn({
-                data: data,
-                // Success
-                onSuccess: function () {
-                },
-                // Error
-                onError: function () {
-                }
-            });
-        })
-        .fail(function () {
-        })
-        .always(function () {
-            MyRio2cCommon.unblock();
-
-            if (typeof (ProducersExecutivesDataTableWidget) !== 'undefined') {
-                ProducersExecutivesDataTableWidget.refreshData();
-            }
-        });
-    };
-
-    var showSendInvitationEmailsModal = function () {
-        bootbox.dialog({
-            message: confirmToSendInvitationEmails,
-            buttons: {
-                cancel: {
-                    label: labels.cancel,
-                    className: "btn btn-secondary btn-elevate mr-auto",
-                    callback: function () {
-                    }
-                },
-                confirm: {
-                    label: labels.send,
-                    className: "btn btn-brand btn-elevate",
-                    callback: function () {
-                        sendInvitationEmails();
-                    }
-                }
-            }
-        });
-    };
-
-    // Init datatable -----------------------------------------------------------------------------
     var initiListTable = function () {
 
         var tableElement = $(tableElementId);
@@ -114,26 +63,26 @@ var ProducersExecutivesDataTableWidget = function () {
                 extend: 'collection',
                 text: labels.actions,
                 buttons: [
-                    {
-                        text: sendInvitationEmail,
-                        action: function (e, dt, node, config) {
-                            $('.dt-button-background').remove();
-                            showSendInvitationEmailsModal();
-                        }
-                    },
-                    {
-                        text: exportToEventbrite,
-                        action: function (e, dt, node, config) {
-                            $('.dt-button-background').remove();
-                            var eventbriteCsvExport = dt.ajax.params();
-                            eventbriteCsvExport.selectedCollaboratorsUids = $('#producersexecutives-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
-                            eventbriteCsvExport.showAllEditions = $('#ShowAllEditions').prop('checked');
-                            eventbriteCsvExport.showAllParticipants = $('#ShowAllParticipants').prop('checked');
-                            eventbriteCsvExport.collaboratorTypeName = collaboratorTypeName;
+                    //{
+                    //    text: sendInvitationEmail,
+                    //    action: function (e, dt, node, config) {
+                    //        $('.dt-button-background').remove();
+                    //        showSendInvitationEmailsModal();
+                    //    }
+                    //},
+                    //{
+                    //    text: exportToEventbrite,
+                    //    action: function (e, dt, node, config) {
+                    //        $('.dt-button-background').remove();
+                    //        var eventbriteCsvExport = dt.ajax.params();
+                    //        eventbriteCsvExport.selectedCollaboratorsUids = $('#producersexecutives-list-table_wrapper tr.selected').map(function () { return $(this).data('id'); }).get().join(',');
+                    //        eventbriteCsvExport.showAllEditions = $('#ShowAllEditions').prop('checked');
+                    //        eventbriteCsvExport.showAllParticipants = $('#ShowAllParticipants').prop('checked');
+                    //        eventbriteCsvExport.collaboratorTypeName = collaboratorTypeName;
 
-                            SalesPlatformsExport.showExportEventbriteCsvModal(eventbriteCsvExport);
-                        }
-                    },
+                    //        SalesPlatformsExport.showExportEventbriteCsvModal(eventbriteCsvExport);
+                    //    }
+                    //},
                     {
                         text: labels.selectAll,
                         action: function (e, dt, node, config) {
@@ -276,13 +225,13 @@ var ProducersExecutivesDataTableWidget = function () {
                         html += '<button class="dropdown-item" onclick="ProducersExecutivesDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
                         html += '<button class="dropdown-item" onclick="AccountsUpdateUserStatus.showModal(\'' + full.UserBaseDto.Uid + '\',\'' + !full.Active + '\');"><i class="la la-lock"></i> ' + ((full.Active) ? labels.block : labels.unblock) + '</button>';
 
-                        if (full.IsInCurrentEdition && full.IsInOtherEdition) {
-                            html += '<button class="dropdown-item" onclick="ProducersExecutivesDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-remove"></i> ' + removeFromEdition + '</button>';
-                        }
-                        else {
-                            html += '<button class="dropdown-item" onclick="ProducersExecutivesDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
-                        }
-
+                        //if (full.IsInCurrentEdition && full.IsInOtherEdition) {
+                        //    html += '<button class="dropdown-item" onclick="ProducersExecutivesDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-remove"></i> ' + removeFromEdition + '</button>';
+                        //}
+                        //else {
+                        //    html += '<button class="dropdown-item" onclick="ProducersExecutivesDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+                        //}
+                        html += '<button class="dropdown-item" onclick="ProducersExecutivesDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
                         html += '\
                                             </div>\
                                         </span>';

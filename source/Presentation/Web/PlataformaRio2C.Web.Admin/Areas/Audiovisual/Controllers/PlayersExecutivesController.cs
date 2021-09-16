@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-15-2021
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="PlayersExecutivesController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -115,7 +115,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 request.Search?.Value,
                 request.GetSortColumns(),
                 new List<Guid>(),
-                new string[] { Constants.CollaboratorType.ExecutiveAudiovisual },
+                new string[] { CollaboratorType.ExecutiveAudiovisual.Name },
                 new string[] { OrganizationType.Player.Name },
                 showAllEditions,
                 showAllParticipants,
@@ -144,11 +144,15 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> Details(Guid? id)
         {
-            var attendeeCollaboratorDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUidAndByEditionIdAsync(id ?? Guid.Empty, this.EditionDto.Id);
+            var attendeeCollaboratorDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUidAndByCollaboratorTypeUidAsync(
+                id ?? Guid.Empty,
+                CollaboratorType.ExecutiveAudiovisual.Uid,
+                OrganizationType.Player.Uid);
+
             if (attendeeCollaboratorDto == null)
             {
-                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "Commissions", new { Area = "Audiovisual" });
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "PlayersExecutives", new { Area = "Audiovisual" });
             }
 
             #region Breadcrumb
@@ -257,7 +261,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowTotalCountWidget()
         {
-            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(Constants.CollaboratorType.ExecutiveAudiovisual, true, this.EditionDto.Id);
+            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
+                CollaboratorType.ExecutiveAudiovisual.Name,
+                OrganizationType.Player.Name,
+                true,
+                this.EditionDto.Id);
 
             return Json(new
             {
@@ -277,7 +285,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <returns></returns>
         public async Task<ActionResult> ShowEditionCountWidget()
         {
-            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(Constants.CollaboratorType.ExecutiveAudiovisual, false, this.EditionDto.Id);
+            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
+                CollaboratorType.ExecutiveAudiovisual.Name,
+                OrganizationType.Player.Name,
+                false,
+                this.EditionDto.Id);
 
             return Json(new
             {
@@ -516,7 +528,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    Domain.Constants.CollaboratorType.ExecutiveAudiovisual,
+                    CollaboratorType.ExecutiveAudiovisual.Name,
+                    OrganizationType.Player.Name,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,

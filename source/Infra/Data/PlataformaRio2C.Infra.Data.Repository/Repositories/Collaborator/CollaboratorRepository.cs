@@ -745,10 +745,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<int> CountAllByDataTable(string collaboratorTypeName, bool showAllEditions, int? editionId)
+        public async Task<int> CountAllByDataTable(string collaboratorTypeName, string organizationTypeName, bool showAllEditions, int? editionId)
         {
             var query = this.GetBaseQuery()
-                                .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, showAllEditions, false, editionId);
+                                .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, showAllEditions, false, editionId)
+                                .FindByOrganizationTypeNames(new string[] { organizationTypeName });
 
             return await query.CountAsync();
         }

@@ -1,7 +1,12 @@
 ﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
 @using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Domain.Statics
+@using PlataformaRio2C.Domain.Entities
 @model AttendeeOrganizationExecutiveWidgetDto
+@{
+    var organizationTypeUid = (Guid?)ViewBag.OrganizationTypeUid;
+    var organizationUrlAction = "";
+}
 <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
         <h3 class="kt-portlet__head-title">
@@ -57,20 +62,30 @@
                                         }
                                     </div>
                                     <div class="kt-widget__info">
-                                        <a @*href="@Url.Action("Details", "PlayersExecutives", new { Area = "", id = attendeeCollaboratorDto.Collaborator.Uid})"*@ class="kt-widget__username">
-                                            @attendeeCollaboratorDto.Collaborator.GetDisplayName()
-                                        </a>
+                                        <a class="kt-widget__username">@attendeeCollaboratorDto.Collaborator.GetDisplayName()</a>
                                         @{
                                             var jobTitle = attendeeCollaboratorDto.GetJobTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.Value;
+
+                                            if (organizationTypeUid == OrganizationType.Player.Uid)
+                                            {
+                                                organizationUrlAction = Url.Action("Details", "PlayersExecutives", new { Area = "Audiovisual", id = attendeeCollaboratorDto.Collaborator.Uid });
+                                            }
+                                            else if (organizationTypeUid == OrganizationType.Producer.Uid)
+                                            {
+                                                organizationUrlAction = Url.Action("Details", "ProducersExecutives", new { Area = "Audiovisual", id = attendeeCollaboratorDto.Collaborator.Uid });
+                                            }
                                         }
                                         @if (!string.IsNullOrEmpty(jobTitle))
                                         {
                                             <span class="kt-widget__desc">@jobTitle</span>
                                         }
                                         <span class="kt-widget__desc">
-                                            <a href="#" onclick="return false;" @*href="@Url.Action("Details", "PlayersExecutives", new { Area = "", id = attendeeCollaboratorDto.Collaborator.Uid })"*@>
-                                                <small><i class="flaticon-profile"></i> @Labels.SeeMiniBio</small>
-                                            </a>
+                                            @if (!string.IsNullOrEmpty(organizationUrlAction))
+                                            {
+                                                <a href="@organizationUrlAction" target="_blank">
+                                                    <small><i class="flaticon-profile"></i> @Labels.SeeDescription</small>
+                                                </a>
+                                            }
                                         </span>
                                     </div>
                                 </div>
@@ -78,8 +93,8 @@
                             <!--end::Widget -->
                         </div>
                     </div>
-                    <!--End::Portlet--> 
-                </div>            
+                    <!--End::Portlet-->
+                </div>
             }
         </div>
     }

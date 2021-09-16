@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-26-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-22-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="AttendeeCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -311,12 +311,43 @@ namespace PlataformaRio2C.Domain.Entities
             this.SynchronizeAttendeeOrganizationCollaborators(attendeeOrganizations, shouldDeleteOrganizations, userId);
         }
 
-        /// <summary>Deletes the specified collaborator type.</summary>
+        /// <summary>
+        /// Deletes the specified collaborator type.
+        /// </summary>
         /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="organizationType">Type of the organization.</param>
         /// <param name="userId">The user identifier.</param>
-        public void Delete(CollaboratorType collaboratorType, int userId)
+        public void Delete(CollaboratorType collaboratorType, OrganizationType organizationType, int userId)
         {
-            this.DeleteAttendeeCollaboratorType(collaboratorType, userId);
+            //If is necessary because Player and Producer Executives uses the same collaboratorType (AudiovisualExecutive)
+            //TODO: This will be fixed when split the CollaboratorType.AudiovisualExecutive to AudiovisualPlayerExecutive and AudiovisualProducerExecutive
+            if (collaboratorType.Name == CollaboratorType.ExecutiveAudiovisual.Name)
+            {
+                this.DeleteAttendeeOrganizationCollaborators(organizationType, userId);
+
+                var attendeeOrganizationCollaborators = this.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted && aoc.AttendeeOrganization.AttendeeOrganizationTypes.Any(aot => !aot.AttendeeOrganization.IsDeleted 
+                                                                                                                                                                                            && !aot.IsDeleted
+                                                                                                                                                                                            && (aot.OrganizationType.Uid == OrganizationType.Player.Uid
+                                                                                                                                                                                                || aot.OrganizationType.Uid == OrganizationType.Producer.Uid)));
+                if(attendeeOrganizationCollaborators?.Any() == false)
+                {
+                    this.DeleteAttendeeCollaboratorType(collaboratorType, userId);
+                }
+            }
+            else if(collaboratorType.Name == CollaboratorType.ComissionInnovation.Name)
+            {
+                this.DeleteAttendeeCollaboratorType(collaboratorType, userId);
+                this.DeleteAttendeeInnovationOrganizationEvaluations(userId);
+            }
+            else if (collaboratorType.Name == CollaboratorType.ComissionMusic.Name)
+            {
+                this.DeleteAttendeeCollaboratorType(collaboratorType, userId);
+                this.DeleteAttendeeMusicBandsEvaluations(userId);
+            }
+            else
+            {
+                this.DeleteAttendeeCollaboratorType(collaboratorType, userId);
+            }
 
             if (this.FindAllAttendeeCollaboratorTypesNotDeleted()?.Any() == true)
             {
@@ -324,12 +355,9 @@ namespace PlataformaRio2C.Domain.Entities
             }
 
             this.DeleteConferenceParticipants(userId);
-            this.DeleteAttendeeInnovationOrganizationEvaluations(userId);
             this.DeleteAttendeeOrganizationCollaborators(new List<AttendeeOrganization>(), userId);
 
-            this.IsDeleted = true;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            base.Delete(userId);
         }
 
         /// <summary>Sends the welcome email send date.</summary>
@@ -747,6 +775,25 @@ namespace PlataformaRio2C.Domain.Entities
             var attendeeOrganizationCollaboratorToDelete = this.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted
                                                                                                                && newAttendeeOrganizations?.Select(nao => nao.Id)?.Contains(aoc.AttendeeOrganizationId) == false)
                                                                                                  .ToList();
+            foreach (var attendeeOrganizationCollaborator in attendeeOrganizationCollaboratorToDelete)
+            {
+                attendeeOrganizationCollaborator.Delete(userId);
+            }
+        }
+
+        /// <summary>
+        /// Deletes the attendee organization collaborators.
+        /// </summary>
+        /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void DeleteAttendeeOrganizationCollaborators(OrganizationType organizationType, int userId)
+        {
+            var attendeeOrganizationCollaboratorToDelete = this.AttendeeOrganizationCollaborators.Where(
+                aoc => !aoc.IsDeleted
+                        && aoc.AttendeeOrganization.AttendeeOrganizationTypes.Any(
+                            aot => !aot.IsDeleted
+                                && aot.OrganizationType.Uid == organizationType.Uid)).ToList();
+
             foreach (var attendeeOrganizationCollaborator in attendeeOrganizationCollaboratorToDelete)
             {
                 attendeeOrganizationCollaborator.Delete(userId);
@@ -1264,11 +1311,28 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         private void DeleteAttendeeInnovationOrganizationEvaluations(int userId)
         {
-            if (this.Collaborator?.User?.AttendeeInnovationOrganizationEvaluations?.Any() == true)
+            if (this.Collaborator?.User?.AttendeeInnovationOrganizationEvaluations?.Any() == true
+                && this.Edition.IsInnovationProjectEvaluationOpen())
             {
                 foreach (var attendeeInnovationOrganizationEvaluation in this.Collaborator.User.AttendeeInnovationOrganizationEvaluations.Where(c => !c.IsDeleted))
                 {
                     attendeeInnovationOrganizationEvaluation.Delete(userId);
+                }
+            }
+        }
+
+        #endregion
+
+        #region Attendee Music Bands Evaluations
+
+        private void DeleteAttendeeMusicBandsEvaluations(int userId)
+        {
+            if (this.Collaborator?.User?.AttendeeMusicBandEvaluations?.Any() == true
+                && this.Edition.IsMusicProjectEvaluationOpen())
+            {
+                foreach (var attendeeMusicBandEvaluation in this.Collaborator.User.AttendeeMusicBandEvaluations.Where(c => !c.IsDeleted))
+                {
+                    attendeeMusicBandEvaluation.Delete(userId);
                 }
             }
         }

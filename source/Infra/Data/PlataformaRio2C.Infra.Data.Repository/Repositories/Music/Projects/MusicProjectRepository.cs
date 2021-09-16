@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 02-26-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-02-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="MusicProjectRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -406,7 +406,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                    MusicBandTypeName = mp.AttendeeMusicBand.MusicBand.MusicBandType.Name,
                                    ImageUploadDate = mp.AttendeeMusicBand.MusicBand.ImageUploadDate,
                                    Grade = mp.AttendeeMusicBand.Grade,
-                                   EvaluationsCount = mp.AttendeeMusicBand.AttendeeMusicBandEvaluations.Count,
+                                   EvaluationsCount = mp.AttendeeMusicBand.AttendeeMusicBandEvaluations.Count(ambe => !ambe.IsDeleted),
                                    MusicGenreNames = mp.AttendeeMusicBand.MusicBand.MusicBandGenres
                                                            .Where(mbg => !mbg.IsDeleted && !mbg.MusicGenre.IsDeleted)
                                                            .OrderBy(mbg => mbg.MusicGenre.DisplayOrder)

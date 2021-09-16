@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-26-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-23-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="TicketType.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -33,6 +33,9 @@ namespace PlataformaRio2C.Domain.Entities
         public static CollaboratorType AdminEditorial = new CollaboratorType(new Guid("3CC40A76-5E69-43E0-872E-2DA26C3C1434"), "Admin | Editorial");
         public static CollaboratorType AdminConferences = new CollaboratorType(new Guid("203D6BFB-3009-4E7E-8BE9-A4F02DA795BB"), "Admin | Conferences");
 
+        /// <summary>
+        /// TODO: This CollaboratorType must be splitted on 2 other CollaboratorTypes: AudiovisualPlayerExecutive and AudiovisualProducerExecutive.
+        /// </summary>
         public static CollaboratorType ExecutiveAudiovisual = new CollaboratorType(new Guid("2D6F0E07-7990-458A-8207-1471DC3D1833"), "Executive | Audiovisual");
         public static CollaboratorType ExecutiveMusic = new CollaboratorType(new Guid("F05C6213-5CDE-46B8-A617-DF339D9903A9"), "Executive | Music");
         public static CollaboratorType ExecutiveInnovation = new CollaboratorType(new Guid("7E4909E0-3DE9-4B55-A678-3C4C277A89DA"), "Executive | Innovation");

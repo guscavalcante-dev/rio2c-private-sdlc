@@ -4,7 +4,7 @@
 // Created          : 03-30-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 03-30-2021
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="AttendeeMusicBandEvaluation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -60,24 +60,6 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Deletes the specified user identifier.</summary>
-        /// <param name="userId">The user identifier.</param>
-        public void Delete(int userId)
-        {
-            this.IsDeleted = true;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
-        }
-
-        /// <summary>Restores the specified user identifier.</summary>
-        /// <param name="userId">The user identifier.</param>
-        public void Restore(int userId)
-        {
-            this.IsDeleted = false;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
-        }
-
         /// <summary>
         /// Updates the specified grade.
         /// </summary>
@@ -90,6 +72,17 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
+        }
+
+        /// <summary>
+        /// Deletes the specified user identifier.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        public new void Delete(int userId)
+        {
+            base.Delete(userId);
+            this.AttendeeMusicBand.RecalculateGrade();
+            this.AttendeeMusicBand.RecalculateVotesCount();
         }
 
         #region Validations

@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 09-02-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-20-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -220,6 +220,35 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
 
             return query;
         }
+
+        /// <summary>
+        /// Finds the by collaborator type uid.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="collaboratorTypeUid">The collaborator type uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeCollaborator> FindByCollaboratorTypeUid(this IQueryable<AttendeeCollaborator> query, Guid collaboratorTypeUid)
+        {
+            query = query.Where(ac => ac.AttendeeCollaboratorTypes.Any(act => act.CollaboratorType.Uid == collaboratorTypeUid));
+
+            return query;
+        }
+
+        /// <summary>
+        /// Finds the by collaborator type uid.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="organizationTypeUid">The collaborator type uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeCollaborator> FindByOrganizationTypeUid(this IQueryable<AttendeeCollaborator> query, Guid organizationTypeUid)
+        {
+            query = query.Where(
+                ac => ac.AttendeeOrganizationCollaborators.Any(
+                    aoc => aoc.AttendeeOrganization.AttendeeOrganizationTypes.Any(
+                        aot => aot.OrganizationType.Uid == organizationTypeUid)));
+
+            return query;
+        }
     }
 
     #endregion
@@ -295,6 +324,30 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery(true)
                                 .FindByCollaboratorUid(collaboratorUid)
                                 .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(ac => new AttendeeCollaboratorSiteDetailsDto
+                            {
+                                AttendeeCollaborator = ac,
+                                Collaborator = ac.Collaborator,
+                                HasLogistic = ac.Logistics.Any(l => !l.IsDeleted)
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the site detailst dto by collaborator uid and collaborator type uid and by edition identifier asynchronous.
+        /// </summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <param name="collaboratorTypeUid">The collaborator type uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeCollaboratorSiteDetailsDto> FindSiteDetailstDtoByCollaboratorUidAndByCollaboratorTypeUidAsync(Guid collaboratorUid, Guid collaboratorTypeUid, Guid organizationTypeUid)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByCollaboratorUid(collaboratorUid)
+                                //.FindByCollaboratorTypeUid(collaboratorTypeUid) //TODO: Find by collaboratorType when CollaboratorType.ExecutiveAudiovisual has been splited on AudiovisualPlayerExecutive and AudiovisualProducerExecutive
+                                .FindByOrganizationTypeUid(organizationTypeUid);
 
             return await query
                             .Select(ac => new AttendeeCollaboratorSiteDetailsDto
