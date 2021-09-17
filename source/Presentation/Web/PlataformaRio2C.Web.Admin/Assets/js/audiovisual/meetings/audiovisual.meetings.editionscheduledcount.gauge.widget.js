@@ -200,7 +200,7 @@ var AudiovisualMeetingsEditionScheduledCountGaugeWidget = function () {
             label.horizontalCenter = "middle";
             label.verticalCenter = "bottom";
             label.text = "0";
-            label.fill = am4core.color(matchingGrade.color);
+            label.fill = matchingGrade == null ? am4core.color("#000") : am4core.color(matchingGrade.color);
             label.id = totalCountLabelId;
 
             //Only trigger animation when the chartData is greather than charMinValue. Otherwise, visual bug occurs.
