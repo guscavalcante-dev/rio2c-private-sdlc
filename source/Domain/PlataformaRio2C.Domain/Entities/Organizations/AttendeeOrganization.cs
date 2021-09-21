@@ -231,7 +231,7 @@ namespace PlataformaRio2C.Domain.Entities
                 return;
             }
 
-            var attendeeOrganizationCollaborators = this.AttendeeOrganizationCollaborators.Where(aoc => aoc.AttendeeCollaboratorId == attendeeCollaborator.Id);
+            var attendeeOrganizationCollaborators = this.FindAttendeeOrganizationCollaboratorByAttendeeCollaboratorIdNotDeleted(attendeeCollaborator.Id);
             foreach (var attendeeOrganizationCollaborator in attendeeOrganizationCollaborators)
             {
                 attendeeOrganizationCollaborator.Delete(userId);
@@ -239,7 +239,11 @@ namespace PlataformaRio2C.Domain.Entities
 
             if (collaboratorType?.Name == CollaboratorType.AudiovisualPlayerExecutive.Name)
             {
-                attendeeCollaborator.SynchronizeAttendeeCollaboratorType(collaboratorType, false, null, userId);
+                //Deactivate the AttendeeCollaborator when disassociated from all AttendeeOrganizations
+                if (!attendeeCollaborator.AttendeeOrganizationCollaborators.Any(aoc => !aoc.IsDeleted))
+                {
+                    attendeeCollaborator.DeleteAttendeeCollaboratorTypeAndAttendeeCollaborator(collaboratorType, userId);
+                }
             }
         }
 
@@ -269,6 +273,13 @@ namespace PlataformaRio2C.Domain.Entities
         private List<AttendeeOrganizationCollaborator> FindAllAttendeeOrganizationCollaboratorsNotDeleted()
         {
             return this.AttendeeOrganizationCollaborators?.Where(aoc => !aoc.IsDeleted)?.ToList();
+        }
+
+
+        private List<AttendeeOrganizationCollaborator> FindAttendeeOrganizationCollaboratorByAttendeeCollaboratorIdNotDeleted(int attendeeCollaboratorId)
+        {
+            return this.AttendeeOrganizationCollaborators?.Where(aoc => !aoc.IsDeleted 
+                                                                        && aoc.AttendeeCollaboratorId == attendeeCollaboratorId)?.ToList();
         }
 
         #endregion

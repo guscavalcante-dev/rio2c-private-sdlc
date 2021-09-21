@@ -4,9 +4,9 @@
 @using PlataformaRio2C.Domain.Statics
 @model AttendeeCollaboratorSiteCompanyWidgetDto
 @{
-    @Html.Hidden("OrganizationTypeName", ViewBag.OrganizationTypeName as string);
+    @Html.Hidden("OrganizationTypeUid", ViewBag.OrganizationTypeUid as Guid?);
     @Html.Hidden("OrganizationTypeForDropdownSearch", ViewBag.OrganizationTypeForDropdownSearch as string);
-    var organizationTypeName = ViewBag.OrganizationTypeName as string;
+    var organizationTypeUid = ViewBag.OrganizationTypeUid as Guid?;
     var organizationUrlAction = "";
 }
 <div class="kt-portlet__head">
@@ -66,11 +66,11 @@
                                     <div class="kt-widget__info">
                                         <a class="kt-widget__username">@attendeeOrganizationDto.Organization.TradeName</a>
                                         <span class="kt-widget__desc">
-                                            @if (organizationTypeName == OrganizationType.Player.Name)
+                                            @if (organizationTypeUid == OrganizationType.Player.Uid)
                                             {
                                                 organizationUrlAction = Url.Action("Details", "Players", new { Area = "Audiovisual", id = attendeeOrganizationDto.Organization.Uid });
                                             }
-                                            else if (organizationTypeName == OrganizationType.Producer.Name)
+                                            else if (organizationTypeUid == OrganizationType.Producer.Uid)
                                             {
                                                 organizationUrlAction = Url.Action("Details", "Producers", new { Area = "Audiovisual", id = attendeeOrganizationDto.Organization.Uid });
                                             }

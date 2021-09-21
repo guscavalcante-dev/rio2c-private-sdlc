@@ -20,6 +20,7 @@ var AudiovisualOrganizationsExecutivesWidget = function () {
     var createModalId = '#AssociateExecutiveModal';
     var createFormId = '#AssociateExecutiveForm';
 
+    var organizationTypeElementId = '#OrganizationTypeUid';
     var collaboratorTypeForDropdownSearchId = '#CollaboratorTypeForDropdownSearch';
 
     // Show ---------------------------------------------------------------------------------------
@@ -35,7 +36,7 @@ var AudiovisualOrganizationsExecutivesWidget = function () {
 
         var jsonParameters = new Object();
         jsonParameters.organizationUid = $('#AggregateId').val();
-        jsonParameters.organizationTypeUid = $('#OrganizationTypeUid').val();
+        jsonParameters.organizationTypeUid = $(organizationTypeElementId).val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Organizations/ShowExecutivesWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -64,7 +65,7 @@ var AudiovisualOrganizationsExecutivesWidget = function () {
                 $(createModalId).modal('hide');
 
                 if (typeof (OrganizationExecutivesWidget) !== 'undefined') {
-                    AudiovisualOrganizationsExecutivesWidget.init();
+                    AudiovisualOrganizationsExecutivesWidget.init($(organizationTypeElementId).val());
                 }
             },
             onError: function (data) {
@@ -99,7 +100,7 @@ var AudiovisualOrganizationsExecutivesWidget = function () {
 
         var jsonParameters = new Object();
         jsonParameters.organizationUid = organizationUid;
-        jsonParameters.organizationTypeUid = $('#OrganizationTypeUid').val();
+        jsonParameters.organizationTypeUid = $(organizationTypeElementId).val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Organizations/ShowAssociateExecutiveModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -128,7 +129,7 @@ var AudiovisualOrganizationsExecutivesWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.collaboratorUid = collaboratorUid;
         jsonParameters.organizationUid = organizationUid;
-        jsonParameters.organizationTypeUid = $('#OrganizationTypeUid').val();
+        jsonParameters.organizationTypeUid = $(organizationTypeElementId).val();
 
         $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Organizations/DisassociateExecutive'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -136,7 +137,7 @@ var AudiovisualOrganizationsExecutivesWidget = function () {
                 // Success
                 onSuccess: function () {
                     if (typeof (OrganizationExecutivesWidget) !== 'undefined') {
-                        AudiovisualOrganizationsExecutivesWidget.init();
+                        AudiovisualOrganizationsExecutivesWidget.init($(organizationTypeElementId).val());
                     }
                 },
                 // Error

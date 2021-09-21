@@ -31,8 +31,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = "CollaboratorType", ResourceType = typeof(Labels))]
         public string CollaboratorTypeName { get; set; }
-
+        
         [Display(Name = "OrganizationType", ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public Guid? OrganizationTypeUid { get; set; }
 
         /// <summary>

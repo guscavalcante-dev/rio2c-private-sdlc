@@ -483,16 +483,17 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowCompanyWidget(Guid? collaboratorUid, string organizationTypeName)
+        public async Task<ActionResult> ShowCompanyWidget(Guid? collaboratorUid, Guid? organizationTypeUid)
         {
+            ViewBag.OrganizationTypeUid = organizationTypeUid;
+            ViewBag.OrganizationTypeForDropdownSearch = organizationTypeUid == OrganizationType.Player.Uid ? "Players" : "Producers";
+
             var companyWidgetDto = await this.attendeeCollaboratorRepo.FindSiteCompanyWidgetDtoByCollaboratorUidAndByEditionIdAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
             if (companyWidgetDto == null)
             {
-                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", $"{ViewBag.OrganizationTypeForDropdownSearch}Executives", new { Area = "Audiovisual" });
             }
-
-            ViewBag.OrganizationTypeName = organizationTypeName;
-            ViewBag.OrganizationTypeForDropdownSearch = organizationTypeName == OrganizationType.Player.Name ? "Players" : "Producers";
 
             return Json(new
             {
@@ -512,7 +513,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowAssociateCompanyModal(Guid? collaboratorUid)
+        public async Task<ActionResult> ShowAssociateCompanyModal(Guid? collaboratorUid, Guid? organizationTypeUid)
         {
             AssociateOrganizationCollaborator cmd;
 
@@ -520,17 +521,17 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             {
                 if (!collaboratorUid.HasValue)
                 {
-                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundM.ToLowerInvariant()));
+                    return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
                 }
 
-                cmd = new AssociateOrganizationCollaborator(null, collaboratorUid);
+                cmd = new AssociateOrganizationCollaborator(null, collaboratorUid, organizationTypeUid);
             }
             catch (DomainException ex)
             {
                 return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
             }
 
-            ModelState.Clear();
+            ViewBag.OrganizationTypeUid = organizationTypeUid;
 
             return Json(new
             {
@@ -559,8 +560,17 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     throw new DomainException(Messages.CorrectFormValues);
                 }
 
+                if (cmd.OrganizationTypeUid == OrganizationType.Player.Uid)
+                {
+                    cmd.CollaboratorTypeName = CollaboratorType.AudiovisualPlayerExecutive.Name;
+                }
+                else if (cmd.OrganizationTypeUid == OrganizationType.Producer.Uid)
+                {
+                    cmd.CollaboratorTypeName = CollaboratorType.Industry.Name;
+                }
+
                 cmd.UpdatePreSendProperties(
-                    //Domain.Constants.CollaboratorType.AudiovisualPlayerExecutive,
+                    cmd.CollaboratorTypeName,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -620,8 +630,17 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     throw new DomainException(Messages.CorrectFormValues);
                 }
 
+                if (cmd.OrganizationTypeUid == OrganizationType.Player.Uid)
+                {
+                    cmd.CollaboratorTypeName = CollaboratorType.AudiovisualPlayerExecutive.Name;
+                }
+                else if (cmd.OrganizationTypeUid == OrganizationType.Producer.Uid)
+                {
+                    cmd.CollaboratorTypeName = CollaboratorType.Industry.Name;
+                }
+
                 cmd.UpdatePreSendProperties(
-                    //Domain.Constants.CollaboratorType.AudiovisualPlayerExecutive,
+                    cmd.CollaboratorTypeName,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,

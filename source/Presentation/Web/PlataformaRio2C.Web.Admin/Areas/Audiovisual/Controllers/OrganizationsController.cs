@@ -879,25 +879,27 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 collaboratorTypeUid = CollaboratorType.Industry.Uid;
             }
 
-            var executiveWidget = await this.attendeeOrganizationRepo.FindAdminExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(
+            ViewBag.OrganizationTypeUid = organizationTypeUid;
+            ViewBag.CollaboratorTypeForDropdownSearch = organizationTypeUid == OrganizationType.Player.Uid ? "PlayersExecutives" : "ProducersExecutives";
+
+            var executiveWidgetDto = await this.attendeeOrganizationRepo.FindAdminExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(
                 organizationUid ?? Guid.Empty,
                 organizationTypeUid ?? Guid.Empty,
                 collaboratorTypeUid ?? Guid.Empty,
                 this.EditionDto.Id);
-            if (executiveWidget == null)
+            if (executiveWidgetDto == null)
             {
-                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", $"{ViewBag.CollaboratorTypeForDropdownSearch}", new { Area = "Audiovisual" });
             }
 
-            ViewBag.OrganizationTypeUid = organizationTypeUid;
-            ViewBag.CollaboratorTypeForDropdownSearch = organizationTypeUid == OrganizationType.Player.Uid ? "PlayersExecutives" : "ProducersExecutives";
 
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/ExecutivesWidget", executiveWidget), divIdOrClass = "#OrganizationExecutivesWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/ExecutivesWidget", executiveWidgetDto), divIdOrClass = "#OrganizationExecutivesWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }

@@ -12,6 +12,7 @@
                 @using (Html.BeginForm("AssociateCompany", "Collaborators", new { Area = "" }, FormMethod.Post, new { id = "AssociateCompanyForm" }))
                 {
                     @Html.HiddenFor(m => m.CollaboratorUid)
+                    @Html.HiddenFor(m => m.OrganizationTypeUid)
                     <div id="form-container">
                         @Html.Partial("Modals/AssociateCompanyForm", Model)
                     </div>

@@ -324,7 +324,7 @@ namespace PlataformaRio2C.Domain.Entities
                 this.DeleteAttendeeCollaboratorType(collaboratorType, userId);
                 this.DeleteAttendeeOrganizationCollaborators(organizationType, userId);
             }
-            else if(collaboratorType.Name == CollaboratorType.ComissionInnovation.Name)
+            else if (collaboratorType.Name == CollaboratorType.ComissionInnovation.Name)
             {
                 this.DeleteAttendeeCollaboratorType(collaboratorType, userId);
                 this.DeleteAttendeeInnovationOrganizationEvaluations(userId);
@@ -403,7 +403,7 @@ namespace PlataformaRio2C.Domain.Entities
             {
                 this.IsDeleted = true;
             }
-            
+
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
@@ -471,7 +471,7 @@ namespace PlataformaRio2C.Domain.Entities
         private void DeleteAdministratorAttendeeCollaboratorTypes(List<CollaboratorType> newCollaboratorTypes, int userId)
         {
             var collaboratorTypesToDelete = this.AttendeeCollaboratorTypes.Where(act => !act.IsDeleted
-                                                                                                       && act.CollaboratorType.Role.Name == Constants.Role.AdminPartial 
+                                                                                                       && act.CollaboratorType.Role.Name == Constants.Role.AdminPartial
                                                                                                        && newCollaboratorTypes?.Select(nct => nct.Id)?.Contains(act.CollaboratorTypeId) == false)
                 .ToList();
 
@@ -630,6 +630,21 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>
+        /// Deletes the AttendeeCollaboratorType and if has no any AttendeeCollaboratorTypes, deletes the current AttendeeCollaborator.
+        /// </summary>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void DeleteAttendeeCollaboratorTypeAndAttendeeCollaborator(CollaboratorType collaboratorType, int userId)
+        {
+            this.DeleteAttendeeCollaboratorType(collaboratorType, userId);
+
+            if (this.FindAllAttendeeCollaboratorTypesNotDeleted()?.Any() != true)
+            {
+                this.IsDeleted = true;
+            }
+        }
+
+        /// <summary>
         /// Synchronizes the non administrator attendee collaborator types.
         /// </summary>
         /// <param name="collaboratorTypes">The collaborator types.</param>
@@ -779,11 +794,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         private void DeleteAttendeeOrganizationCollaborators(OrganizationType organizationType, int userId)
         {
-            var attendeeOrganizationCollaboratorToDelete = this.AttendeeOrganizationCollaborators.Where(
-                aoc => !aoc.IsDeleted
-                        && aoc.AttendeeOrganization.AttendeeOrganizationTypes.Any(
-                            aot => !aot.IsDeleted
-                                && aot.OrganizationType.Uid == organizationType.Uid)).ToList();
+            var attendeeOrganizationCollaboratorToDelete = this.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted
+                                                                                                                && aoc.AttendeeOrganization.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
+                                                                                                                                                                                    && aot.OrganizationType.Uid == organizationType?.Uid)).ToList();
 
             foreach (var attendeeOrganizationCollaborator in attendeeOrganizationCollaboratorToDelete)
             {
@@ -973,8 +986,7 @@ namespace PlataformaRio2C.Domain.Entities
                 this.DeleteAttendeeCollaboratorType(collaboratorType, userId);
             }
 
-            var attendeeCollaboratorTypes = this.FindAllAttendeeCollaboratorTypesNotDeleted();
-            if (attendeeCollaboratorTypes?.Any() != true)
+            if (this.FindAllAttendeeCollaboratorTypesNotDeleted()?.Any() != true)
             {
                 this.IsDeleted = true;
             }
@@ -1101,8 +1113,8 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="shouldDeleteAttendeeInnovationOrganizationCollaborators">if set to <c>true</c> [should delete music bands].</param>
         /// <param name="userId">The user identifier.</param>
         public void SynchronizeAttendeeInnovationOrganizationCollaborators(
-            List<AttendeeInnovationOrganization> attendeeInnovationOrganizations, 
-            bool shouldDeleteAttendeeInnovationOrganizationCollaborators, 
+            List<AttendeeInnovationOrganization> attendeeInnovationOrganizations,
+            bool shouldDeleteAttendeeInnovationOrganizationCollaborators,
             int userId)
         {
             if (this.AttendeeInnovationOrganizationCollaborators == null)
@@ -1228,7 +1240,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="newAttendeeInnovationOrganizationTracks">The new attendee innovation organization tracks.</param>
         /// <param name="userId">The user identifier.</param>
         private void DeleteAttendeeCollaboratorInnovationOrganizationTracks(
-            List<AttendeeInnovationOrganizationTrack> newAttendeeInnovationOrganizationTracks, 
+            List<AttendeeInnovationOrganizationTrack> newAttendeeInnovationOrganizationTracks,
             int userId)
         {
             var attendeeCollaboratorInnovationOrganizationTracksToDelete = this.AttendeeCollaboratorInnovationOrganizationTracks.Where(db => newAttendeeInnovationOrganizationTracks?.Select(ioto => ioto.InnovationOrganizationTrackOption.Uid)?.Contains(db.InnovationOrganizationTrackOption.Uid) == false && !db.IsDeleted).ToList();
@@ -1284,7 +1296,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="newCommissionAttendeeCollaboratorInterests">The new attendee collaborator interests.</param>
         /// <param name="userId">The user identifier.</param>
         private void DeleteCommissionAttendeeCollaboratorInterests(
-            List<CommissionAttendeeCollaboratorInterest> newCommissionAttendeeCollaboratorInterests, 
+            List<CommissionAttendeeCollaboratorInterest> newCommissionAttendeeCollaboratorInterests,
             int userId)
         {
             var commissionAttendeeCollaboratorInterestsToDelete = this.CommissionAttendeeCollaboratorInterests.Where(db => newCommissionAttendeeCollaboratorInterests?.Select(aci => aci.Interest.Uid)?.Contains(db.Interest.Uid) == false && !db.IsDeleted).ToList();

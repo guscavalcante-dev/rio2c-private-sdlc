@@ -4,6 +4,7 @@
 @using PlataformaRio2C.Domain.Entities
 @model AttendeeOrganizationExecutiveWidgetDto
 @{
+    @Html.Hidden("OrganizationTypeUid", ViewBag.OrganizationTypeUid as Guid?);
     @Html.Hidden("CollaboratorTypeForDropdownSearch", ViewBag.CollaboratorTypeForDropdownSearch as string);
     var organizationTypeUid = (Guid?)ViewBag.OrganizationTypeUid;
     var organizationUrlAction = "";
