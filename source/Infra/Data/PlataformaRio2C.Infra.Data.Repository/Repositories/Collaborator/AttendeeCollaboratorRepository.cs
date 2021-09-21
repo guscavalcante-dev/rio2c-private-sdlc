@@ -123,7 +123,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                               && act.CollaboratorType.Name == Domain.Constants.CollaboratorType.Industry)
                                       || (ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted // Player without tickets
                                                                                  && !act.CollaboratorType.IsDeleted
-                                                                                 && act.CollaboratorType.Name == Domain.Constants.CollaboratorType.ExecutiveAudiovisual)
+                                                                                 && act.CollaboratorType.Name == Domain.Constants.CollaboratorType.AudiovisualPlayerExecutive)
                                           && !ac.AttendeeCollaboratorTickets.Any(act => !act.IsDeleted && !act.AttendeeSalesPlatformTicketType.IsDeleted)));
 
             return query;
@@ -346,7 +346,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery(true)
                                 .FindByCollaboratorUid(collaboratorUid)
-                                //.FindByCollaboratorTypeUid(collaboratorTypeUid) //TODO: Find by collaboratorType when CollaboratorType.ExecutiveAudiovisual has been splited on AudiovisualPlayerExecutive and AudiovisualProducerExecutive
+                                //.FindByCollaboratorTypeUid(collaboratorTypeUid) //TODO: Find by collaboratorType when CollaboratorType.AudiovisualPlayerExecutive has been splited on AudiovisualPlayerExecutive and AudiovisualProducerExecutive
                                 .FindByOrganizationTypeUid(organizationTypeUid);
 
             return await query

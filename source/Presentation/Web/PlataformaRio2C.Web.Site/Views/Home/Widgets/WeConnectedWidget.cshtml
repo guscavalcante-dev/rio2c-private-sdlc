@@ -4,7 +4,7 @@
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var hasSurveyPermission = userAccessControlDto?.HasAnyCollaboratorType(new[]
     {
-        CollaboratorType.ExecutiveAudiovisual
+        CollaboratorType.AudiovisualPlayerExecutive
     }) ?? false;
     DateTime date;
 }

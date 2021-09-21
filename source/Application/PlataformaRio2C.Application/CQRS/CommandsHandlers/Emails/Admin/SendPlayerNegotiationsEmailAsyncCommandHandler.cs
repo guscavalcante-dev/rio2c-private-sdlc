@@ -70,25 +70,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             this.SentEmailRepo.Create(sentEmail);
 
-            //// Update collaborator welcome email
-            //var collaborator = await this.collaboratorRepo.GetAsync(cmd.Collaboratoruid);
-            //if (collaborator == null || collaborator.IsDeleted 
-            //    || !collaborator.AttendeeCollaborators.Any(ac => !ac.IsDeleted
-            //                                                     && ac.EditionId == cmd.Edition.Id
-            //                                                     && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
-            //                                                                                                && !act.CollaboratorType.IsDeleted
-            //                                                                                                && act.CollaboratorType.Uid == CollaboratorType.ExecutiveAudiovisual.Uid)))
-            //{
-            //    this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundM))));
-            //}
-
-            //if (!this.AppValidationResult.IsValid)
-            //{
-            //    return this.AppValidationResult;
-            //}
-
-            //collaborator?.SendWelcomeEmailSendDate(cmd.Edition.Id, cmd.UserId);
-
             // Sends the email
             await this.MailerService.SendPlayersNegotiationEmail(cmd, sentEmail.Uid).SendAsync();
 
@@ -96,10 +77,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             this.AppValidationResult.Data = sentEmail;
             return this.AppValidationResult;
-
-            //this.eventBus.Publish(new PropertyCreated(propertyId), cancellationToken);
-
-            //return Task.FromResult(propertyId); // use it when the methed is not async
         }
     }
 }

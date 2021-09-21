@@ -698,7 +698,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
             var currentOrganization = this.UserAccessControlDto?.EditionAttendeeOrganizations?.FirstOrDefault(eao => eao.OnboardingOrganizationDate.HasValue
                                                                                                                      && !eao.OnboardingInterestsDate.HasValue
                                                                                                                      && eao.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
-                                                                                                                                                                 && aot.OrganizationType.Name == Constants.OrganizationType.AudiovisualBuyer))?.Organization;
+                                                                                                                                                                 && aot.OrganizationType.Name == OrganizationType.Player.Name))?.Organization;
             if (currentOrganization == null)
             {
                 return RedirectToAction("Index", "Onboarding");
@@ -957,7 +957,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <summary>Sets the view bags.</summary>
         private void SetViewBags()
         {
-            var isPlayer = ViewBag.IsPlayer = this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual);
+            var isPlayer = ViewBag.IsPlayer = this.UserAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.AudiovisualPlayerExecutive);
 
             if (isPlayer)
             {
@@ -965,7 +965,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                                                                 .Where(eao => !eao.IsDeleted
                                                                               && eao.AttendeeOrganizationTypes?
                                                                                   .Any(aot => !aot.IsDeleted
-                                                                                              && aot.OrganizationType.Name == Constants.OrganizationType.AudiovisualBuyer) == true)?
+                                                                                              && aot.OrganizationType.Name == OrganizationType.Player.Name) == true)?
                                                                 .ToList();
             }
 

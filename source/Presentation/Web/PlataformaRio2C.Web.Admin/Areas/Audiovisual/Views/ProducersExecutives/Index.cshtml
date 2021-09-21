@@ -35,12 +35,9 @@
     @Scripts.Render("~/bundles/js/audiovisual.producers.executives.list.js")
     @Scripts.Render("~/bundles/js/audiovisual.producers.executives.editioncount.js")
     @Scripts.Render("~/bundles/js/attendeeorganizations.form.js")
-    @Scripts.Render("~/bundles/js/audiovisual.producers.executives.create.js")
-    @Scripts.Render("~/bundles/js/audiovisual.producers.executives.update.js")
-    @Scripts.Render("~/bundles/js/audiovisual.producers.executives.delete.js")
     @Scripts.Render("~/bundles/js/addresses.form.js")
     <script>
-        var collaboratorTypeName = '@PlataformaRio2C.Domain.Entities.CollaboratorType.ExecutiveAudiovisual.Name';
+        var collaboratorTypeName = '@PlataformaRio2C.Domain.Entities.CollaboratorType.AudiovisualPlayerExecutive.Name';
 
         // Page translations ----------------------------------------------------------------------
         var addToEdition = '@string.Format(Labels.AddToEdition, ViewBag.EditionDto.UrlCode)';

@@ -418,6 +418,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
+        /// Finds the by uid asynchronous.
+        /// </summary>
+        /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
+        /// <returns></returns>
+        public async Task<AttendeeOrganization> FindByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId, bool showAllEditions)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByOrganizationUid(organizationUid)
+                                .FindByEditionId(editionId, showAllEditions);
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+
+        /// <summary>
         /// Finds the details dto by organization uid and by edition identifier asynchronous.
         /// </summary>
         /// <param name="organizationUid">The organization uid.</param>
@@ -661,7 +676,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<AttendeeOrganizationExecutiveWidgetDto> FindAdminExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, Guid organizationTypeUid, int editionId)
+        public async Task<AttendeeOrganizationExecutiveWidgetDto> FindAdminExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, Guid organizationTypeUid, Guid collaboratorTypeUid, int editionId)
         {
             var query = this.GetBaseQuery(true)
                                 .FindByOrganizationUid(organizationUid)
@@ -677,9 +692,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                               && !aot.IsDeleted),
                                 AttendeeCollaboratorsDtos = ao.AttendeeOrganizationCollaborators
                                                                     .Where(aoc => !aoc.IsDeleted
-                                                                                                          && aoc.AttendeeCollaborator.Edition.Id == editionId
-                                                                                                          && !aoc.AttendeeCollaborator.IsDeleted
-                                                                                                          && !aoc.AttendeeCollaborator.Collaborator.IsDeleted)
+                                                                                    && aoc.AttendeeCollaborator.Edition.Id == editionId
+                                                                                    && !aoc.AttendeeCollaborator.IsDeleted
+                                                                                    && !aoc.AttendeeCollaborator.Collaborator.IsDeleted
+                                                                                    && aoc.AttendeeCollaborator.AttendeeCollaboratorTypes.Any(act => act.CollaboratorType.Uid == collaboratorTypeUid))
                                                                     .Select(aoc => new AttendeeCollaboratorDto
                                                                     {
                                                                         AttendeeCollaborator = aoc.AttendeeCollaborator,

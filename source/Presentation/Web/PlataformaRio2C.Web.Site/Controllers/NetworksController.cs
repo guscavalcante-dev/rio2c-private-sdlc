@@ -198,7 +198,6 @@ namespace PlataformaRio2C.Web.Site.Controllers
         /// <summary>Messageses this instance.</summary>
         /// <returns></returns>
         [HttpGet]
-        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.ExecutiveAudiovisual + "," + Constants.CollaboratorType.Industry)]
         public async Task<ActionResult> Messages(Guid? id)
         {
             #region Breadcrumb

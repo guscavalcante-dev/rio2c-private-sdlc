@@ -218,9 +218,9 @@ var ProducersExecutivesDataTableWidget = function () {
                                             </a>\
                                             <div class="dropdown-menu dropdown-menu-right">';
 
-                        if (!full.IsInCurrentEdition) {
-                            html += '<button class="dropdown-item" onclick="ProducersExecutivesUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
-                        }
+                        //if (!full.IsInCurrentEdition) {
+                        //    html += '<button class="dropdown-item" onclick="ProducersExecutivesUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
+                        //}
 
                         html += '<button class="dropdown-item" onclick="ProducersExecutivesDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
                         html += '<button class="dropdown-item" onclick="AccountsUpdateUserStatus.showModal(\'' + full.UserBaseDto.Uid + '\',\'' + !full.Active + '\');"><i class="la la-lock"></i> ' + ((full.Active) ? labels.block : labels.unblock) + '</button>';
@@ -231,7 +231,7 @@ var ProducersExecutivesDataTableWidget = function () {
                         //else {
                         //    html += '<button class="dropdown-item" onclick="ProducersExecutivesDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
                         //}
-                        html += '<button class="dropdown-item" onclick="ProducersExecutivesDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+
                         html += '\
                                             </div>\
                                         </span>';

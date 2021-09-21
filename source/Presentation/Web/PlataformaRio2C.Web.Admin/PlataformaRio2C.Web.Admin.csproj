@@ -831,12 +831,9 @@
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.scheduled.create.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.report.widget.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.logistics.info.widget.js" />
-    <Content Include="Assets\js\audiovisual\producersexecutives\audiovisual.producers.executives.create.js" />
     <Content Include="Assets\js\audiovisual\producersexecutives\audiovisual.producers.executives.datatable.widget.js" />
-    <Content Include="Assets\js\audiovisual\producersexecutives\audiovisual.producers.executives.delete.js" />
     <Content Include="Assets\js\audiovisual\producersexecutives\audiovisual.producers.executives.editioncount.widget.js" />
     <Content Include="Assets\js\audiovisual\producersexecutives\audiovisual.producers.executives.totalcount.widget.js" />
-    <Content Include="Assets\js\audiovisual\producersexecutives\audiovisual.producers.executives.update.js" />
     <Content Include="Assets\js\audiovisual\players\audiovisual.players.editioncountodometer.widget.js" />
     <Content Include="Assets\js\audiovisual\producers\audiovisual.producers.editioncountodometer.widget.js" />
     <Content Include="Assets\js\audiovisual\producers\audiovisual.producers.delete.js" />
@@ -8307,8 +8304,8 @@
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\EditionCountGaugeWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\AudiovisualCommissionEvaluatorsWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Projects\Widgets\AudiovisualCommissionEvaluationWidget.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Organizations\Modals\CreateOrganizationExecutiveForm.cshtml" />
-    <Content Include="Areas\Audiovisual\Views\Organizations\Modals\CreateOrganizationExecutiveModal.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Organizations\Modals\AssociateExecutiveForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Organizations\Modals\AssociateExecutiveModal.cshtml" />
     <Content Include="Areas\Audiovisual\Views\ProducersExecutives\Details.cshtml" />
     <Content Include="Areas\Audiovisual\Views\ProducersExecutives\Index.cshtml" />
     <Content Include="Areas\Audiovisual\Views\ProducersExecutives\Modals\_Form.cshtml" />
@@ -9898,6 +9895,8 @@
     <Content Include="Areas\Audiovisual\Views\PlayersExecutives\Details.cshtml" />
     <Content Include="Views\Collaborators\Widgets\CompanyWidget.cshtml" />
     <Content Include="Views\Collaborators\Modals\UpdateCompanyInfoModal.cshtml" />
+    <Content Include="Views\Collaborators\Modals\AssociateCompanyForm.cshtml" />
+    <Content Include="Views\Collaborators\Modals\AssociateCompanyModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

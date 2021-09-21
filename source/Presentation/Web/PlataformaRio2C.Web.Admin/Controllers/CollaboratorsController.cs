@@ -138,13 +138,13 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         /// <param name="page">The page.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> FindAllExecutivesByFilters(string keywords, int? page = 1)
+        public async Task<ActionResult> FindAllExecutivesByFilters(string keywords, int? page = 1, string collaboratorTypeName = Constants.CollaboratorType.AudiovisualPlayerExecutive)
         {
             var collaboratorsApiDtos = await this.collaboratorRepo.FindAllDropdownApiListDtoPaged(
                 this.EditionDto.Id,
                 keywords,
                 false,
-                Constants.CollaboratorType.ExecutiveAudiovisual,
+                collaboratorTypeName, //Constants.CollaboratorType.AudiovisualPlayerExecutive
                 false,
                 page.Value,
                 10);
@@ -452,7 +452,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         public async Task<ActionResult> ShowOnboardingInfoWidget(Guid? collaboratorUid, string collaboratorTypeName)
         {
             var collaboratorType = await collaboratorTypeRepo.FindByNameAsync(collaboratorTypeName);
-            if(collaboratorType == null)
+            if (collaboratorType == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.CollaboratorType, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
@@ -492,6 +492,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             }
 
             ViewBag.OrganizationTypeName = organizationTypeName;
+            ViewBag.OrganizationTypeForDropdownSearch = organizationTypeName == OrganizationType.Player.Name ? "Players" : "Producers";
 
             return Json(new
             {
@@ -503,30 +504,26 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        #region Update
+        #region Associate
 
-        /// <summary>Shows the update company information modal.</summary>
+        /// <summary>
+        /// Shows the associate company modal.
+        /// </summary>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowUpdateCompanyInfoModal(Guid? collaboratorUid, Guid? organizationUid)
+        public async Task<ActionResult> ShowAssociateCompanyModal(Guid? collaboratorUid)
         {
-            CreateTicketBuyerOrganizationData cmd;
+            AssociateOrganizationCollaborator cmd;
 
             try
             {
                 if (!collaboratorUid.HasValue)
                 {
-                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Speaker, Labels.FoundM.ToLowerInvariant()));
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundM.ToLowerInvariant()));
                 }
 
-                cmd = new CreateTicketBuyerOrganizationData(
-                    collaboratorUid.Value,
-                    organizationUid.HasValue ? await this.CommandBus.Send(new FindOrganizationDtoByUidAsync(organizationUid, this.EditionDto.Id, this.UserInterfaceLanguage)) : null,
-                    await this.CommandBus.Send(new FindAllLanguagesDtosAsync(this.UserInterfaceLanguage)),
-                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)),
-                    false,
-                    false,
-                    false);
+                cmd = new AssociateOrganizationCollaborator(null, collaboratorUid);
             }
             catch (DomainException ex)
             {
@@ -540,16 +537,18 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Modals/UpdateCompanyInfoModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                    new { page = this.RenderRazorViewToString("Modals/AssociateCompanyModal", cmd), divIdOrClass = "#GlobalModalContainer" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
 
-        /// <summary>Updates the company information.</summary>
+        /// <summary>
+        /// Associates the company.
+        /// </summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> UpdateCompanyInformation(CreateTicketBuyerOrganizationData cmd)
+        public async Task<ActionResult> AssociateCompany(AssociateOrganizationCollaborator cmd)
         {
             var result = new AppValidationResult();
 
@@ -561,7 +560,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    cmd.CollaboratorUid,
+                    //Domain.Constants.CollaboratorType.AudiovisualPlayerExecutive,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -581,16 +580,13 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
-                cmd.UpdateDropdownProperties(
-                    await this.CommandBus.Send(new FindAllCountriesBaseDtosAsync(this.UserInterfaceLanguage)));
-
                 return Json(new
                 {
                     status = "error",
                     message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("/Views/Companies/Shared/_TicketBuyerCompanyInfoForm.cshtml", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("Modals/AssociateExecutiveForm", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -600,18 +596,20 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Company, Labels.UpdatedF) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Executive, Labels.Associated.ToLowerInvariant()) });
         }
 
         #endregion
 
-        #region Delete
+        #region Disassociate
 
-        /// <summary>Deletes the organization.</summary>
+        /// <summary>
+        /// Disassociates the company.
+        /// </summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> DeleteOrganization(DeleteCollaboratorOrganization cmd)
+        public async Task<ActionResult> DisassociateCompany(DisassociateOrganizationCollaborator cmd)
         {
             var result = new AppValidationResult();
 
@@ -623,6 +621,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
+                    //Domain.Constants.CollaboratorType.AudiovisualPlayerExecutive,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -655,7 +654,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Company, Labels.DeletedM) });
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Executive, Labels.Disassociated.ToLowerInvariant()) });
         }
 
         #endregion

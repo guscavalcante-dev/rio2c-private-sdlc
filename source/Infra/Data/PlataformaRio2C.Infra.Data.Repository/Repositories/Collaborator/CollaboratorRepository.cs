@@ -385,10 +385,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             if(organizationTypeNames?.Any(name => !string.IsNullOrEmpty(name)) == true)
             {
-                query = query.Where(c => c.AttendeeCollaborators.Where(ac => !ac.IsDeleted).Any(
-                        ac => ac.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted).Any(
-                            aoc => aoc.AttendeeOrganization.AttendeeOrganizationTypes.Where(aot => !aot.IsDeleted).Any(
-                                aot => organizationTypeNames.Contains(aot.OrganizationType.Name)))));
+                query = query.Where(c => c.AttendeeCollaborators.Where(ac => !ac.IsDeleted).Any(ac => ac.AttendeeOrganizationCollaborators
+                                                                                                        .Where(aoc => !aoc.IsDeleted)
+                                                                                                        .Any(aoc => aoc.AttendeeOrganization.AttendeeOrganizationTypes
+                                                                                                                    .Where(aot => !aot.IsDeleted)
+                                                                                                                    .Any(aot => organizationTypeNames.Contains(aot.OrganizationType.Name)))));
             }
 
             return query;

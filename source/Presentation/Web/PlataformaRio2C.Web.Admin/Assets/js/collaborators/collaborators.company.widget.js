@@ -17,10 +17,10 @@ var CollaboratorsCompanyWidget = function () {
     var widgetElementId = '#CollaboratorCompanyWidget';
     var widgetElement = $(widgetElementId);
 
-    var createModalId = '#UpdateCompanyInfoModal';
-    var createFormId = '#UpdateCompanyInfoForm';
+    var createModalId = '#AssociateCompanyModal';
+    var createFormId = '#AssociateCompanyForm';
 
-    var _organizationTypeName = '';
+    var organizationTypeForDropdownSearchId = '#OrganizationTypeForDropdownSearch';
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
@@ -32,8 +32,6 @@ var CollaboratorsCompanyWidget = function () {
         if (widgetElement.length <= 0) {
             return;
         }
-
-        _organizationTypeName = organizationTypeName;
 
         var jsonParameters = new Object();
         jsonParameters.collaboratorUid = $('#AggregateId').val();
@@ -58,20 +56,20 @@ var CollaboratorsCompanyWidget = function () {
             });
     };
 
-    // Update -------------------------------------------------------------------------------------
-    var enableAjaxForm = function () {
+    // Associate --------------------------------------------------------------------------------------
+    var enableAssociateAjaxForm = function () {
         MyRio2cCommon.enableAjaxForm({
             idOrClass: createFormId,
             onSuccess: function (data) {
                 $(createModalId).modal('hide');
 
                 if (typeof (CollaboratorsCompanyWidget) !== 'undefined') {
-                    CollaboratorsCompanyWidget.init(_organizationTypeName);
+                    CollaboratorsCompanyWidget.init();
                 }
             },
             onError: function (data) {
                 if (MyRio2cCommon.hasProperty(data, 'pages')) {
-                    enableUpdatePlugins();
+                    enableAssociatePlugins();
                 }
 
                 $(createFormId).find(":input.input-validation-error:first").focus();
@@ -79,36 +77,34 @@ var CollaboratorsCompanyWidget = function () {
         });
     };
 
-    var enableUpdatePlugins = function () {
-        if (typeof (MyRio2cCropper) !== 'undefined') {
-            MyRio2cCropper.init({ formIdOrClass: createFormId });
-        }
-        
-        if (typeof (AddressesForm) !== 'undefined') {
-            AddressesForm.init();
-        }
-
-        if (typeof (CompanyInfoAutocomplete) !== 'undefined' && $('#IsUpdate').val() !== 'True') {
-            CompanyInfoAutocomplete.init('/Companies/ShowTicketBuyerFilledForm', enableUpdatePlugins, _organizationTypeName);
-        }
-
-        enableAjaxForm();
+    var enableAssociatePlugins = function () {
+        enableAssociateAjaxForm();
+        MyRio2cCommon.enableOrganizationSelect2({
+            inputIdOrClass: '#OrganizationUid',
+            url: '/' + $(organizationTypeForDropdownSearchId).val() + '/FindAllByFilters',
+            placeholder: labels.selectPlaceholder,
+            //customFilter: 'HasProjectNegotiationNotScheduled',
+            //selectedOption: {
+            //    id: $('#InitialBuyerOrganizationUid').val(),
+            //    text: $('#InitialBuyerOrganizationName').val()
+            //}
+        });
+        //MyRio2cCommon.enableSelect2({ inputIdOrClass: createFormId + ' .enable-select2', allowClear: true });
         MyRio2cCommon.enableFormValidation({ formIdOrClass: createFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
 
-    var showUpdateModal = function (organizationUid) {
+    var showAssociateModal = function (collaboratorUid) {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
-        jsonParameters.collaboratorUid = $('#AggregateId').val();
-        jsonParameters.organizationUid = organizationUid;
+        jsonParameters.collaboratorUid = collaboratorUid;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Collaborators/ShowUpdateCompanyInfoModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Collaborators/ShowAssociateCompanyModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
                 onSuccess: function () {
-                    enableUpdatePlugins();
+                    enableAssociatePlugins();
                     $(createModalId).modal();
                 },
                 // Error
@@ -116,28 +112,28 @@ var CollaboratorsCompanyWidget = function () {
                 }
             });
         })
-        .fail(function () {
-        })
-        .always(function () {
-            MyRio2cCommon.unblock();
-        });
+            .fail(function () {
+            })
+            .always(function () {
+                MyRio2cCommon.unblock();
+            });
     };
 
-    // Delete -------------------------------------------------------------------------------------
-    var executeDelete = function (organizationUid) {
+    // Delete --------------------------------------------------------------------------------------
+    var executeDisassociate = function (collaboratorUid, organizationUid) {
         MyRio2cCommon.block();
 
         var jsonParameters = new Object();
-        jsonParameters.collaboratorUid = $('#AggregateId').val();
+        jsonParameters.collaboratorUid = collaboratorUid;
         jsonParameters.organizationUid = organizationUid;
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Collaborators/DeleteOrganization'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Collaborators/DisassociateCompany'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
                 onSuccess: function () {
                     if (typeof (CollaboratorsCompanyWidget) !== 'undefined') {
-                        CollaboratorsCompanyWidget.init(_organizationTypeName);
+                        CollaboratorsCompanyWidget.init();
                     }
                 },
                 // Error
@@ -145,19 +141,15 @@ var CollaboratorsCompanyWidget = function () {
                 }
             });
         })
-        .fail(function () {
-        })
-        .always(function () {
-            MyRio2cCommon.unblock();
-        });
+            .fail(function () {
+            })
+            .always(function () {
+                MyRio2cCommon.unblock();
+            });
     };
 
-    var showDeleteModal = function (organizationUid, isDeletingFromCurrentEdition) {
+    var showDisassociateModal = function (collaboratorUid, organizationUid) {
         var message = labels.deleteConfirmationMessage;
-
-        if (isDeletingFromCurrentEdition) {
-            message = labels.deleteCurrentEditionConfirmationMessage;
-        }
 
         bootbox.dialog({
             message: message,
@@ -172,7 +164,7 @@ var CollaboratorsCompanyWidget = function () {
                     label: labels.remove,
                     className: "btn btn-danger",
                     callback: function () {
-                        executeDelete(organizationUid);
+                        executeDisassociate(collaboratorUid, organizationUid);
                     }
                 }
             }
@@ -184,11 +176,11 @@ var CollaboratorsCompanyWidget = function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             show(organizationTypeName);
         },
-        showUpdateModal: function (organizationUid) {
-            showUpdateModal(organizationUid);
+        showAssociateModal: function (collaboratorUid) {
+            showAssociateModal(collaboratorUid);
         },
-        showDeleteModal: function (organizationUid) {
-            showDeleteModal(organizationUid);
-        }
+        showDisassociateModal: function (collaboratorUid, organizationUid) {
+            showDisassociateModal(collaboratorUid, organizationUid);
+        },
     };
 }();

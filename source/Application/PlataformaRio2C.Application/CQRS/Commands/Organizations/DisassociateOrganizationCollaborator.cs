@@ -6,7 +6,7 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 09-13-2021
 // ***********************************************************************
-// <copyright file="CreateOrganizationExecutive.cs" company="Softo">
+// <copyright file="DisassociateOrganizationCollaborator.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -18,12 +18,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
-    /// <summary>CreateOrganizationExecutive</summary>
-    public class CreateOrganizationExecutive : BaseCommand
+    /// <summary>DisassociateOrganizationCollaborator</summary>
+    public class DisassociateOrganizationCollaborator : BaseCommand
     {
         [Display(Name = "Company", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public Guid? AttendeeOrganizationUid { get; set; }
+        public Guid? OrganizationUid { get; set; }
 
         [Display(Name = "Executive", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
@@ -32,17 +32,22 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Display(Name = "CollaboratorType", ResourceType = typeof(Labels))]
         public string CollaboratorTypeName { get; set; }
 
+        [Display(Name = "OrganizationType", ResourceType = typeof(Labels))]
+        public Guid? OrganizationTypeUid { get; set; }
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateTinyCollaborator"/> class.
+        /// Initializes a new instance of the <see cref="DisassociateOrganizationCollaborator"/> class.
         /// </summary>
-        /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
-        public CreateOrganizationExecutive(Guid? attendeeOrganizationUid)
+        /// <param name="organizationUid">The attendee organization uid.</param>
+        public DisassociateOrganizationCollaborator(Guid? organizationUid)
         {
-            this.AttendeeOrganizationUid = attendeeOrganizationUid;
+            this.OrganizationUid = organizationUid;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="CreateOrganizationExecutive"/> class.</summary>
-        public CreateOrganizationExecutive()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DisassociateOrganizationCollaborator"/> class.
+        /// </summary>
+        public DisassociateOrganizationCollaborator()
         {
         }
 

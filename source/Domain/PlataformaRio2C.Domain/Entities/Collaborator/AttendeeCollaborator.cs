@@ -319,20 +319,10 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public void Delete(CollaboratorType collaboratorType, OrganizationType organizationType, int userId)
         {
-            //If is necessary because Player and Producer Executives uses the same collaboratorType (AudiovisualExecutive)
-            //TODO: This will be fixed when split the CollaboratorType.AudiovisualExecutive to AudiovisualPlayerExecutive and AudiovisualProducerExecutive
-            if (collaboratorType.Name == CollaboratorType.ExecutiveAudiovisual.Name)
+            if (collaboratorType.Name == CollaboratorType.AudiovisualPlayerExecutive.Name)
             {
+                this.DeleteAttendeeCollaboratorType(collaboratorType, userId);
                 this.DeleteAttendeeOrganizationCollaborators(organizationType, userId);
-
-                var attendeeOrganizationCollaborators = this.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted && aoc.AttendeeOrganization.AttendeeOrganizationTypes.Any(aot => !aot.AttendeeOrganization.IsDeleted 
-                                                                                                                                                                                            && !aot.IsDeleted
-                                                                                                                                                                                            && (aot.OrganizationType.Uid == OrganizationType.Player.Uid
-                                                                                                                                                                                                || aot.OrganizationType.Uid == OrganizationType.Producer.Uid)));
-                if(attendeeOrganizationCollaborators?.Any() == false)
-                {
-                    this.DeleteAttendeeCollaboratorType(collaboratorType, userId);
-                }
             }
             else if(collaboratorType.Name == CollaboratorType.ComissionInnovation.Name)
             {
@@ -344,7 +334,8 @@ namespace PlataformaRio2C.Domain.Entities
                 this.DeleteAttendeeCollaboratorType(collaboratorType, userId);
                 this.DeleteAttendeeMusicBandsEvaluations(userId);
             }
-            else
+            // Cannot delete AttendeeCollaboratorType for ticket buyers!
+            else if (!Constants.CollaboratorType.TicketBuyers.Contains(collaboratorType.Name))
             {
                 this.DeleteAttendeeCollaboratorType(collaboratorType, userId);
             }
@@ -615,7 +606,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isApiDisplayEnabled">The is API display enabled.</param>
         /// <param name="apiHighlightPosition">The API highlight position.</param>
         /// <param name="userId">The user identifier.</param>
-        private void SynchronizeAttendeeCollaboratorType(CollaboratorType collaboratorType, bool? isApiDisplayEnabled, int? apiHighlightPosition, int userId)
+        public void SynchronizeAttendeeCollaboratorType(CollaboratorType collaboratorType, bool? isApiDisplayEnabled, int? apiHighlightPosition, int userId)
         {
             if (collaboratorType == null || string.IsNullOrEmpty(collaboratorType.Name))
             {

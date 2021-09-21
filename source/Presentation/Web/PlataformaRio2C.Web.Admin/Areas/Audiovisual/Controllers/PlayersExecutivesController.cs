@@ -115,7 +115,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 request.Search?.Value,
                 request.GetSortColumns(),
                 new List<Guid>(),
-                new string[] { CollaboratorType.ExecutiveAudiovisual.Name },
+                new string[] { CollaboratorType.AudiovisualPlayerExecutive.Name },
                 new string[] { OrganizationType.Player.Name },
                 showAllEditions,
                 showAllParticipants,
@@ -146,7 +146,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         {
             var attendeeCollaboratorDto = await this.attendeeCollaboratorRepo.FindSiteDetailstDtoByCollaboratorUidAndByCollaboratorTypeUidAsync(
                 id ?? Guid.Empty,
-                CollaboratorType.ExecutiveAudiovisual.Uid,
+                CollaboratorType.AudiovisualPlayerExecutive.Uid,
                 OrganizationType.Player.Uid);
 
             if (attendeeCollaboratorDto == null)
@@ -262,7 +262,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         public async Task<ActionResult> ShowTotalCountWidget()
         {
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
-                CollaboratorType.ExecutiveAudiovisual.Name,
+                CollaboratorType.AudiovisualPlayerExecutive.Name,
                 OrganizationType.Player.Name,
                 true,
                 this.EditionDto.Id);
@@ -286,7 +286,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         public async Task<ActionResult> ShowEditionCountWidget()
         {
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
-                CollaboratorType.ExecutiveAudiovisual.Name,
+                CollaboratorType.AudiovisualPlayerExecutive.Name,
                 OrganizationType.Player.Name,
                 false,
                 this.EditionDto.Id);
@@ -349,7 +349,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    Domain.Constants.CollaboratorType.ExecutiveAudiovisual,
+                    Domain.Constants.CollaboratorType.AudiovisualPlayerExecutive,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -459,7 +459,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    Domain.Constants.CollaboratorType.ExecutiveAudiovisual,
+                    Domain.Constants.CollaboratorType.AudiovisualPlayerExecutive,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -528,7 +528,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    CollaboratorType.ExecutiveAudiovisual.Name,
+                    CollaboratorType.AudiovisualPlayerExecutive.Name,
                     OrganizationType.Player.Name,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
@@ -581,7 +581,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 this.EditionDto.Id,
                 keywords,
                 filterByProjectsInNegotiation.Value,
-                Constants.CollaboratorType.ExecutiveAudiovisual,
+                Constants.CollaboratorType.AudiovisualPlayerExecutive,
                 false,
                 page.Value,
                 10);

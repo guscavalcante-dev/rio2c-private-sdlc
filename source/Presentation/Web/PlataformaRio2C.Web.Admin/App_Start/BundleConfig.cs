@@ -488,18 +488,6 @@ namespace PlataformaRio2C.Web.Admin
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.producers.executives.editioncount.js").Include(
                 "~/Assets/js/audiovisual/producersexecutives/audiovisual.producers.executives.editioncount.widget.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.producers.executives.create.js").Include(
-                "~/Assets/js/audiovisual/producersexecutives/audiovisual.producers.executives.create.js",
-                "~/Assets/js/myrio2c.publicemail.js",
-                "~/Assets/js/attendeeorganizations/attendeeorganizations.form.js",
-                "~/Assets/js/dynamic.list.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.producers.executives.update.js").Include(
-                "~/Assets/js/audiovisual/producersexecutives/audiovisual.producers.executives.update.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.producers.executives.delete.js").Include(
-                "~/Assets/js/audiovisual/producersexecutives/audiovisual.producers.executives.delete.js"));
-
             #endregion
 
             #region Projects - Negotiations

@@ -24,7 +24,7 @@ namespace PlataformaRio2C.Domain.Constants
         public const string AdminEditorial = "Admin | Editorial";
         public const string AdminConferences = "Admin | Conferences";
 
-        public const string ExecutiveAudiovisual = "Executive | Audiovisual";
+        public const string AudiovisualPlayerExecutive = "Executive | Audiovisual Player";
         public const string ExecutiveMusic = "Executive | Music";
         public const string ExecutiveInnovation = "Executive | Innovation";
 
@@ -52,12 +52,12 @@ namespace PlataformaRio2C.Domain.Constants
 
         public static readonly string[] Executives =
         {
-            ExecutiveAudiovisual, ExecutiveMusic, ExecutiveInnovation
+            AudiovisualPlayerExecutive, ExecutiveMusic, ExecutiveInnovation
         };
 
         public static readonly string[] Audiovisuals =
         {
-            AdminAudiovisual, CommissionAudiovisual, ExecutiveAudiovisual, Industry
+            AdminAudiovisual, CommissionAudiovisual, AudiovisualPlayerExecutive, Industry
         };
 
         public static readonly string[] Musics =
@@ -74,14 +74,14 @@ namespace PlataformaRio2C.Domain.Constants
 
         public static readonly string[] NetworksArray =
         {
-            ExecutiveAudiovisual, Speaker, Industry, Summit, Creator
+            AudiovisualPlayerExecutive, Speaker, Industry, Summit, Creator
         };
 
-        public const string NetworksString = ExecutiveAudiovisual + "," + Speaker + "," + Industry + "," + Summit + "," + Creator;
+        public const string NetworksString = AudiovisualPlayerExecutive + "," + Speaker + "," + Industry + "," + Summit + "," + Creator;
 
         public static readonly string[] NetworksFullVisibilityArray =
         {
-            ExecutiveAudiovisual, Speaker, Industry, Summit
+            AudiovisualPlayerExecutive, Speaker, Industry, Summit
         };
 
         #endregion

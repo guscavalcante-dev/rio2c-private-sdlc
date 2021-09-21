@@ -4,7 +4,7 @@
     ViewBag.Title = Labels.Projects;
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var isSeller = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true;
-    var isBuyer = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) == true;
+    var isBuyer = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.AudiovisualPlayerExecutive) == true;
     var editionDto = ViewBag.EditionDto as EditionDto;
 }
 <div class="row">

@@ -34,9 +34,9 @@ namespace PlataformaRio2C.Domain.Entities
         public static CollaboratorType AdminConferences = new CollaboratorType(new Guid("203D6BFB-3009-4E7E-8BE9-A4F02DA795BB"), "Admin | Conferences");
 
         /// <summary>
-        /// TODO: This CollaboratorType must be splitted on 2 other CollaboratorTypes: AudiovisualPlayerExecutive and AudiovisualProducerExecutive.
+        /// TODO: Create AudiovisualProducerExecutive, like AudiovisualPlayerExecutive
         /// </summary>
-        public static CollaboratorType ExecutiveAudiovisual = new CollaboratorType(new Guid("2D6F0E07-7990-458A-8207-1471DC3D1833"), "Executive | Audiovisual");
+        public static CollaboratorType AudiovisualPlayerExecutive = new CollaboratorType(new Guid("2D6F0E07-7990-458A-8207-1471DC3D1833"), "Executive | Audiovisual Player");
         public static CollaboratorType ExecutiveMusic = new CollaboratorType(new Guid("F05C6213-5CDE-46B8-A617-DF339D9903A9"), "Executive | Music");
         public static CollaboratorType ExecutiveInnovation = new CollaboratorType(new Guid("7E4909E0-3DE9-4B55-A678-3C4C277A89DA"), "Executive | Innovation");
 

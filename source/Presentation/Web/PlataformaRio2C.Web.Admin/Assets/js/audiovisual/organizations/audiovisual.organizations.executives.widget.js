@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 06-03-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-22-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-20-2021
 // ***********************************************************************
 // <copyright file="audiovisual.organizations.executives.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,8 +17,10 @@ var AudiovisualOrganizationsExecutivesWidget = function () {
     var widgetElementId = '#OrganizationExecutivesWidget';
     var widgetElement = $(widgetElementId);
 
-    var createModalId = '#CreateOrganizationExecutiveModal';
-    var createFormId = '#CreateOrganizationExecutiveForm';
+    var createModalId = '#AssociateExecutiveModal';
+    var createFormId = '#AssociateExecutiveForm';
+
+    var collaboratorTypeForDropdownSearchId = '#CollaboratorTypeForDropdownSearch';
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
@@ -54,8 +56,8 @@ var AudiovisualOrganizationsExecutivesWidget = function () {
         });
     };
 
-    // Create --------------------------------------------------------------------------------------
-    var enableCreateAjaxForm = function () {
+    // Associate --------------------------------------------------------------------------------------
+    var enableAssociateAjaxForm = function () {
         MyRio2cCommon.enableAjaxForm({
             idOrClass: createFormId,
             onSuccess: function (data) {
@@ -67,7 +69,7 @@ var AudiovisualOrganizationsExecutivesWidget = function () {
             },
             onError: function (data) {
                 if (MyRio2cCommon.hasProperty(data, 'pages')) {
-                    enableCreatePlugins();
+                    enableAssociatePlugins();
                 }
 
                 $(createFormId).find(":input.input-validation-error:first").focus();
@@ -75,25 +77,36 @@ var AudiovisualOrganizationsExecutivesWidget = function () {
         });
     };
 
-    var enableCreatePlugins = function () {
-        enableCreateAjaxForm();
-        MyRio2cCommon.enableCollaboratorSelect2({ url: '/Collaborators/FindAllExecutivesByFilters' });
+    var enableAssociatePlugins = function () {
+        enableAssociateAjaxForm();
+        MyRio2cCommon.enableCollaboratorSelect2({
+            url: '/' + $(collaboratorTypeForDropdownSearchId).val() + '/FindAllByFilters',
+            placeholder: labels.selectPlaceholder,
+            //customFilter: 'HasProjectNegotiationNotScheduled',
+            //selectedOption: {
+            //    id: $('#InitialBuyerOrganizationUid').val(),
+            //    text: $('#InitialBuyerOrganizationName').val()
+            //}
+        });
+
+
         MyRio2cCommon.enableSelect2({ inputIdOrClass: createFormId + ' .enable-select2', allowClear: true });
         MyRio2cCommon.enableFormValidation({ formIdOrClass: createFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };
 
-    var showCreateModal = function (attendeeOrganizationUid) {
+    var showAssociateModal = function (organizationUid) {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
-        jsonParameters.attendeeOrganizationUid = attendeeOrganizationUid;
+        jsonParameters.organizationUid = organizationUid;
+        jsonParameters.organizationTypeUid = $('#OrganizationTypeUid').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Organizations/ShowCreateExecutiveModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Organizations/ShowAssociateExecutiveModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
                 onSuccess: function () {
-                    enableCreatePlugins();
+                    enableAssociatePlugins();
                     $(createModalId).modal();
                 },
                 // Error
@@ -109,14 +122,15 @@ var AudiovisualOrganizationsExecutivesWidget = function () {
     };
 
     // Delete --------------------------------------------------------------------------------------
-    var executeDelete = function (collaboratorUid, organizationUid) {
+    var executeDisassociate = function (collaboratorUid, organizationUid) {
         MyRio2cCommon.block();
 
         var jsonParameters = new Object();
         jsonParameters.collaboratorUid = collaboratorUid;
         jsonParameters.organizationUid = organizationUid;
+        jsonParameters.organizationTypeUid = $('#OrganizationTypeUid').val();
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Organizations/DeleteExecutive'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Organizations/DisassociateExecutive'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -137,12 +151,8 @@ var AudiovisualOrganizationsExecutivesWidget = function () {
             });
     };
 
-    var showDeleteModal = function (collaboratorUid, organizationUid, isDeletingFromCurrentEdition) {
+    var showDisassociateModal = function (collaboratorUid, organizationUid) {
         var message = labels.deleteConfirmationMessage;
-
-        if (isDeletingFromCurrentEdition) {
-            message = labels.deleteCurrentEditionConfirmationMessage;
-        }
 
         bootbox.dialog({
             message: message,
@@ -157,7 +167,7 @@ var AudiovisualOrganizationsExecutivesWidget = function () {
                     label: labels.remove,
                     className: "btn btn-danger",
                     callback: function () {
-                        executeDelete(collaboratorUid, organizationUid);
+                        executeDisassociate(collaboratorUid, organizationUid);
                     }
                 }
             }
@@ -169,11 +179,11 @@ var AudiovisualOrganizationsExecutivesWidget = function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
         },
-        showCreateModal: function (attendeeOrganizationUid) {
-            showCreateModal(attendeeOrganizationUid);
+        showAssociateModal: function (organizationUid) {
+            showAssociateModal(organizationUid);
         },
-        showDeleteModal: function (collaboratorUid, organizationUid, isDeletingFromCurrentEdition) {
-            showDeleteModal(collaboratorUid, organizationUid, isDeletingFromCurrentEdition);
+        showDisassociateModal: function (collaboratorUid, organizationUid) {
+            showDisassociateModal(collaboratorUid, organizationUid);
         },
     };
 }();

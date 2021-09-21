@@ -6,65 +6,73 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 09-13-2021
 // ***********************************************************************
-// <copyright file="CreateOrganizationExecutiveCommandHandler.cs" company="Softo">
+// <copyright file="AssociateOrganizationCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
-using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Domain.Validation;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
-    /// <summary>CreateOrganizationExecutiveCommandHandler</summary>
-    public class CreateOrganizationExecutiveCommandHandler : BaseCollaboratorCommandHandler, IRequestHandler<CreateOrganizationExecutive, AppValidationResult>
+    /// <summary>AssociateOrganizationCollaboratorCommandHandler</summary>
+    public class AssociateOrganizationCollaboratorCommandHandler : BaseCommandHandler, IRequestHandler<AssociateOrganizationCollaborator, AppValidationResult>
     {
         private readonly IAttendeeOrganizationRepository attendeeOrganizationRepo;
+        private readonly ICollaboratorTypeRepository collaboratorTypeRepo;
+        private readonly ICollaboratorRepository collaboratorRepo;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateOrganizationExecutiveCommandHandler" /> class.
+        /// Initializes a new instance of the <see cref="AssociateOrganizationCollaboratorCommandHandler" /> class.
         /// </summary>
         /// <param name="eventBus">The event bus.</param>
         /// <param name="uow">The uow.</param>
         /// <param name="collaboratorRepository">The collaborator repository.</param>
+        /// <param name="collaboratorTypeRepository">The collaborator type repository.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
-        public CreateOrganizationExecutiveCommandHandler(
+        public AssociateOrganizationCollaboratorCommandHandler(
             IMediator eventBus,
             IUnitOfWork uow,
-            ICollaboratorRepository collaboratorRepository,
-            IAttendeeOrganizationRepository attendeeOrganizationRepository
+            ICollaboratorTypeRepository collaboratorTypeRepository,
+            IAttendeeOrganizationRepository attendeeOrganizationRepository,
+            ICollaboratorRepository collaboratorRepository
             )
-            : base(eventBus, uow, collaboratorRepository)
+            : base(eventBus, uow)
         {
+            this.collaboratorTypeRepo = collaboratorTypeRepository;
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
+            this.collaboratorRepo = collaboratorRepository;
         }
 
         /// <summary>Handles the specified create tiny collaborator.</summary>
         /// <param name="cmd">The command.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
-        public async Task<AppValidationResult> Handle(CreateOrganizationExecutive cmd, CancellationToken cancellationToken)
+        public async Task<AppValidationResult> Handle(AssociateOrganizationCollaborator cmd, CancellationToken cancellationToken)
         {
             this.Uow.BeginTransaction();
 
             #region Initial validations
 
-            var attendeeOrganization = await this.attendeeOrganizationRepo.FindByUidAsync(cmd.AttendeeOrganizationUid ?? Guid.Empty);
+            var attendeeOrganization = await this.attendeeOrganizationRepo.FindByOrganizationUidAndByEditionIdAsync(
+                cmd.OrganizationUid ?? Guid.Empty,
+                cmd.EditionId ?? 0,
+                false);
+
             if (attendeeOrganization == null)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundF)));
             }
 
-            var collaboratorDto = await this.CollaboratorRepo.FindDtoByUidAndByEditionIdAsync(cmd.CollaboratorUid ?? Guid.Empty, cmd.EditionId ?? 0, cmd.UserInterfaceLanguage);
+            var collaboratorDto = await this.collaboratorRepo.FindDtoByUidAndByEditionIdAsync(cmd.CollaboratorUid ?? Guid.Empty, cmd.EditionId ?? 0, cmd.UserInterfaceLanguage);
             if (collaboratorDto == null)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundF)));
@@ -78,7 +86,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            attendeeOrganization.SynchronizeAttendeeOrganizationCollaborators(new List<AttendeeOrganization> { attendeeOrganization }, collaboratorDto.EditionAttendeeCollaborator, false, cmd.UserId);
+            attendeeOrganization.AssociateCollaborator(
+                collaboratorDto.EditionAttendeeCollaborator,
+                await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
+                cmd.UserId);
 
             if (!attendeeOrganization.IsValid())
             {

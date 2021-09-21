@@ -1,9 +1,11 @@
 ﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
 @using PlataformaRio2C.Domain.Dtos
-@using PlataformaRio2C.Domain.Constants
+@using PlataformaRio2C.Domain.Entities
 @using PlataformaRio2C.Domain.Statics
 @model AttendeeCollaboratorSiteCompanyWidgetDto
 @{
+    @Html.Hidden("OrganizationTypeName", ViewBag.OrganizationTypeName as string);
+    @Html.Hidden("OrganizationTypeForDropdownSearch", ViewBag.OrganizationTypeForDropdownSearch as string);
     var organizationTypeName = ViewBag.OrganizationTypeName as string;
     var organizationUrlAction = "";
 }
@@ -15,7 +17,7 @@
     </div>
     <div class="kt-portlet__head-toolbar">
         <div class="kt-portlet__head-actions">
-            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="CollaboratorsCompanyWidget.showUpdateModal();">
+            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="CollaboratorsCompanyWidget.showAssociateModal('@Model.Collaborator.Uid');">
                 <i class="flaticon2-plus"></i>
             </button>
         </div>
@@ -37,13 +39,7 @@
                             <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right" style="">
                                 <ul class="kt-nav">
                                     <li class="kt-nav__item">
-                                        <a class="kt-nav__link" onclick="CollaboratorsCompanyWidget.showUpdateModal('@attendeeOrganizationDto.Organization.Uid'); return false;">
-                                            <i class="kt-nav__link-icon flaticon2-edit"></i>
-                                            <span class="kt-nav__link-text">@Labels.Edit</span>
-                                        </a>
-                                    </li>
-                                    <li class="kt-nav__item">
-                                        <a class="kt-nav__link" onclick="CollaboratorsCompanyWidget.showDeleteModal('@attendeeOrganizationDto.Organization.Uid'); return false;">
+                                        <a class="kt-nav__link" onclick="CollaboratorsCompanyWidget.showDisassociateModal('@Model.Collaborator.Uid', '@attendeeOrganizationDto.Organization.Uid'); return false;">
                                             <i class="kt-nav__link-icon flaticon2-delete"></i>
                                             <span class="kt-nav__link-text">@Labels.Remove</span>
                                         </a>
@@ -70,11 +66,11 @@
                                     <div class="kt-widget__info">
                                         <a class="kt-widget__username">@attendeeOrganizationDto.Organization.TradeName</a>
                                         <span class="kt-widget__desc">
-                                            @if (organizationTypeName == OrganizationType.AudiovisualBuyer)
+                                            @if (organizationTypeName == OrganizationType.Player.Name)
                                             {
                                                 organizationUrlAction = Url.Action("Details", "Players", new { Area = "Audiovisual", id = attendeeOrganizationDto.Organization.Uid });
                                             }
-                                            else if (organizationTypeName == OrganizationType.AudiovisualSeller)
+                                            else if (organizationTypeName == OrganizationType.Producer.Name)
                                             {
                                                 organizationUrlAction = Url.Action("Details", "Producers", new { Area = "Audiovisual", id = attendeeOrganizationDto.Organization.Uid });
                                             }

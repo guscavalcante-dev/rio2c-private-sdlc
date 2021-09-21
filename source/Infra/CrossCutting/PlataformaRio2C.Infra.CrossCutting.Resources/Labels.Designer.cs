@@ -484,6 +484,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Associar.
+        /// </summary>
+        public static string Associate {
+            get {
+                return ResourceManager.GetString("Associate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Associado.
+        /// </summary>
+        public static string Associated {
+            get {
+                return ResourceManager.GetString("Associated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to em.
         /// </summary>
         public static string At {
@@ -1614,6 +1632,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Disabled {
             get {
                 return ResourceManager.GetString("Disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Desassociar.
+        /// </summary>
+        public static string Disassociate {
+            get {
+                return ResourceManager.GetString("Disassociate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Desassociado.
+        /// </summary>
+        public static string Disassociated {
+            get {
+                return ResourceManager.GetString("Disassociated", resourceCulture);
             }
         }
         

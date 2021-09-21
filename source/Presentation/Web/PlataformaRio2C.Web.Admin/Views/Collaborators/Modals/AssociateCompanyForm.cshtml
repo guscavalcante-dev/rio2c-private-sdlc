@@ -1,0 +1,8 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.AssociateOrganizationCollaborator
+<div class="row">
+    <div class="form-group col-md-12">
+        @Html.LabelFor(m => m.OrganizationUid, new { @class = "control-label" })
+        @Html.DropDownList("OrganizationUid", Enumerable.Empty<SelectListItem>(), $"{Labels.Select}...", new { @class = "form-control enable-collaborator-select2" })
+        @Html.ValidationMessageFor(m => m.OrganizationUid, "", new { @class = "text-danger" })
+    </div>
+</div>

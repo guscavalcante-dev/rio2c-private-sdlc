@@ -33,7 +33,7 @@
             {
                 projectsUrl = Url.Action("SubmittedList", "Projects", new { Area = "" });
             }
-            else if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) == true)
+            else if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.AudiovisualPlayerExecutive) == true)
             {
                 projectsUrl = Url.Action("EvaluationList", "Projects", new { Area = "" });
 
@@ -83,7 +83,7 @@
                                 </a>
                             </li>
                         }
-                        @if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) == true && editionDto?.IsProjectEvaluationStarted() == true)
+                        @if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.AudiovisualPlayerExecutive) == true && editionDto?.IsProjectEvaluationStarted() == true)
                         {
                             projectsUrl = Url.Action("EvaluationList", "Projects", new { Area = "" });
 

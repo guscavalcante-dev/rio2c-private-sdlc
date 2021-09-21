@@ -47,8 +47,8 @@
     @Scripts.Render("~/bundles/js/collaborators.details.js")
     <script>
         jQuery(document).ready(function () {
-            CollaboratorsMainInformationWidget.init('@(CollaboratorType.ExecutiveAudiovisual.Name)');
-            CollaboratorsSocialNetworksWidget.init('@(CollaboratorType.ExecutiveAudiovisual.Name)');
+            CollaboratorsMainInformationWidget.init('@(CollaboratorType.AudiovisualPlayerExecutive.Name)');
+            CollaboratorsSocialNetworksWidget.init('@(CollaboratorType.AudiovisualPlayerExecutive.Name)');
             CollaboratorsCompanyWidget.init('@(OrganizationType.Producer.Name)');
         });
     </script>
