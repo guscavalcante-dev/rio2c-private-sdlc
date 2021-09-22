@@ -4,7 +4,7 @@
 // Created          : 12-12-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-13-2021
+// Last Modified On : 09-15-2021
 // ***********************************************************************
 // <copyright file="SpeakersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -106,6 +106,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 request.GetSortColumns(),
                 new List<Guid>(),
                 new string[] { Constants.CollaboratorType.Speaker },
+                null,
                 showAllEditions,
                 showAllParticipants,
                 showHighlights,
@@ -428,7 +429,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersReadString)]
         public async Task<ActionResult> ShowTotalCountWidget()
         {
-            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(Constants.CollaboratorType.Speaker, true, this.EditionDto.Id);
+            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
+                Constants.CollaboratorType.Speaker,
+                null,
+                true, 
+                this.EditionDto.Id);
 
             return Json(new
             {
@@ -450,7 +455,11 @@ namespace PlataformaRio2C.Web.Admin.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.SpeakersReadString)]
         public async Task<ActionResult> ShowEditionCountWidget()
         {
-            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(Constants.CollaboratorType.Speaker, false, this.EditionDto.Id);
+            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
+                Constants.CollaboratorType.Speaker,
+                null,
+                false, 
+                this.EditionDto.Id);
 
             return Json(new
             {

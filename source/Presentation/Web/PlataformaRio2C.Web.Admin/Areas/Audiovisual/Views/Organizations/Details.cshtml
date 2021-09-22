@@ -60,7 +60,7 @@
         <!--begin:Executive Widget-->
         <div class="row">
             <div class="col-12">
-                <div id="CompanyExecutiveWidget" class="kt-portlet" style="min-height: 325px;"></div>
+                <div id="OrganizationExecutivesWidget" class="kt-portlet" style="min-height: 325px;"></div>
             </div>
         </div>
         <!--end:Executive Widget-->
@@ -78,10 +78,8 @@
     @Scripts.Render("~/bundles/js/inputmask.js")
     @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/addresses.form.js")
-    @Scripts.Render("~/bundles/js/collaborators.create.js")
+    @Scripts.Render("~/bundles/js/audiovisual.players.executives.create.js")
     @Scripts.Render("~/bundles/js/audiovisual.organizations.widget.js")
-    @Scripts.Render("~/bundles/js/company.executive.create.js")
-    @Scripts.Render("~/bundles/js/company.executive.delete.js")
     <script>
         // Page translations ----------------------------------------------------------------------
 
@@ -92,7 +90,7 @@
             AudiovisualOrganizationsActivityWidget.init();
             AudiovisualOrganizationsTargetAudienceWidget.init();
             AudiovisualOrganizationsInterestWidget.init();
-            AudiovisualOrganizationsExecutiveWidget.init();
+            AudiovisualOrganizationsExecutivesWidget.init();
         });
     </script>
 }

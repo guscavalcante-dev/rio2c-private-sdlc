@@ -4,7 +4,7 @@
 // Created          : 02-25-2020
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-13-2021
+// Last Modified On : 09-15-2021
 // ***********************************************************************
 // <copyright file="CommissionsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -101,6 +101,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
                 request.GetSortColumns(),
                 new List<Guid>(),
                 new string[] { Constants.CollaboratorType.CommissionMusic },
+                null,
                 showAllEditions,
                 showAllParticipants,
                 null,
@@ -265,7 +266,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowTotalCountWidget()
         {
-            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(Constants.CollaboratorType.CommissionMusic, true, this.EditionDto.Id);
+            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
+                Constants.CollaboratorType.CommissionMusic,
+                null,
+                true, 
+                this.EditionDto.Id);
 
             return Json(new
             {
@@ -285,7 +290,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Music.Controllers
         /// <returns></returns>
         public async Task<ActionResult> ShowEditionCountWidget()
         {
-            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(Constants.CollaboratorType.CommissionMusic, false, this.EditionDto.Id);
+            var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
+                Constants.CollaboratorType.CommissionMusic,
+                null,
+                false, 
+                this.EditionDto.Id);
 
             return Json(new
             {

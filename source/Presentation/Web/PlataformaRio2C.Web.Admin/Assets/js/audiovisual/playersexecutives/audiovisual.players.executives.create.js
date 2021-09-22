@@ -3,19 +3,19 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-26-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-21-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-14-2021
 // ***********************************************************************
-// <copyright file="collaborators.update.js" company="Softo">
+// <copyright file="audiovisual.players.executives.create.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var CollaboratorsUpdate = function () {
+var PlayersExecutivesCreate = function () {
 
-    var modalId = '#UpdatePlayerExecutiveModal';
-    var formId = '#UpdatePlayerExecutiveForm';
+    var modalId = '#CreatePlayerExecutiveModal';
+    var formId = '#CreatePlayerExecutiveForm';
 
     // Enable form validation ---------------------------------------------------------------------
     var enableFormValidation = function () {
@@ -29,51 +29,48 @@ var CollaboratorsUpdate = function () {
         }
 
         MyRio2cCropper.init({ formIdOrClass: formId });
-        MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });        
-        MyRio2cCommon.enableDatePicker({ inputIdOrClass: formId + ' .enable-datepicker' });        
+        MyRio2cCommon.enableSelect2({ inputIdOrClass: formId + ' .enable-select2' });
         AttendeeOrganizationsForm.init(formId);
-        AddressesForm.init();
-        //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-jobtitle', maxCharCount: 81 });
-        //MyRio2cCommon.enableCkEditor({ idOrClass: '.ckeditor-rio2c-minibio', maxCharCount: 710 });
-
+        AddressesForm.init();        
         MyRio2cCommon.enableDropdownChangeEvent("CollaboratorGenderUid", "CollaboratorGenderAdditionalInfo");
         MyRio2cCommon.enableDropdownChangeEvent("CollaboratorRoleUid", "CollaboratorRoleAdditionalInfo");
         MyRio2cCommon.enableDropdownChangeEvent("CollaboratorIndustryUid", "CollaboratorIndustryAdditionalInfo");
         MyRio2cCommon.enableYesNoRadioEvent("HasAnySpecialNeeds");
         MyRio2cCommon.enableYesNoRadioEvent("HaveYouBeenToRio2CBefore");
+        MyRio2cCommon.enableDatePicker({ inputIdOrClass: formId + ' .enable-datepicker' });
         changePreviousEditionsRequired();
+        MyRio2cCommon.enableAtLeastOnCheckboxByNameValidation("HaveYouBeenToRio2CBefore");
         enableAjaxForm();
         enableFormValidation();
     };
-    
+
     var changePreviousEditionsRequired = function () {
 	    $("#HasEditionSelected").val($('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox:checked').length > 0 ? "True" : null);
-	    var dataValMsgFor = $('[data-valmsg-for="HasEditionSelected"]');
+        var dataValMsgFor = $('[data-valmsg-for="HasEditionSelected"]');
 
-	    $('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox').on('click', function () {
-		    if ($('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox:checked').length > 0) {
-			    $("#HasEditionSelected").val("True");
-			    dataValMsgFor.html('');
-			    dataValMsgFor.addClass('field-validation-valid');
-			    dataValMsgFor.removeClass('field-validation-error');
-		    } else {
-			    $("#HasEditionSelected").val("False");
-			    dataValMsgFor.html('<span for="' + name + '" generated="true" class="">' + labels.selectAtLeastOneOption + '</span>');
-			    dataValMsgFor.removeClass('field-validation-valid');
-			    dataValMsgFor.addClass('field-validation-error');
-		    }
+        $('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox').on('click', function () {
+            if ($('[data-additionalinfo="HaveYouBeenToRio2CBefore"] :checkbox:checked').length > 0) {
+                $("#HasEditionSelected").val("True");
+                dataValMsgFor.html('');
+                dataValMsgFor.addClass('field-validation-valid');
+                dataValMsgFor.removeClass('field-validation-error');
+            } else {
+                $("#HasEditionSelected").val("False");
+                dataValMsgFor.html('<span for="' + name + '" generated="true" class="">' + labels.selectAtLeastOneOption + '</span>');
+                dataValMsgFor.removeClass('field-validation-valid');
+                dataValMsgFor.addClass('field-validation-error');
+            }
 	    });
     }
 
     // Show modal ---------------------------------------------------------------------------------
-    var showModal = function (collaboratorUid, isAddingToCurrentEdition) {
+    var showModal = function (attendeeOrganizationUid) {
         MyRio2cCommon.block({ isModal: true });
 
         var jsonParameters = new Object();
-        jsonParameters.collaboratorUid = collaboratorUid;
-        jsonParameters.isAddingToCurrentEdition = isAddingToCurrentEdition;
+        jsonParameters.attendeeOrganizationUid = attendeeOrganizationUid;
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PlayersExecutives/ShowUpdateModal'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PlayersExecutives/ShowCreateModal'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -92,7 +89,7 @@ var CollaboratorsUpdate = function () {
             MyRio2cCommon.unblock();
         });
     };
-
+    
     // Enable ajax form ---------------------------------------------------------------------------
     var enableAjaxForm = function () {
         MyRio2cCommon.enableAjaxForm({
@@ -100,16 +97,16 @@ var CollaboratorsUpdate = function () {
             onSuccess: function (data) {
                 $(modalId).modal('hide');
 
-                if (typeof (CollaboratorsDataTableWidget) !== 'undefined') {
-                    CollaboratorsDataTableWidget.refreshData();
+                if (typeof (PlayersExecutivesDataTableWidget) !== 'undefined') {
+                    PlayersExecutivesDataTableWidget.refreshData();
                 }
 
-                if (typeof (CollaboratorsTotalCountWidget) !== 'undefined') {
-                    CollaboratorsTotalCountWidget.init();
+                if (typeof (PlayersExecutivesTotalCountWidget) !== 'undefined') {
+                    PlayersExecutivesTotalCountWidget.init();
                 }
 
-                if (typeof (CollaboratorsEditionCountWidget) !== 'undefined') {
-                    CollaboratorsEditionCountWidget.init();
+                if (typeof (PlayersExecutivesEditionCountWidget) !== 'undefined') {
+                    PlayersExecutivesEditionCountWidget.init();
                 }
             },
             onError: function (data) {
@@ -123,8 +120,8 @@ var CollaboratorsUpdate = function () {
     };
 
     return {
-        showModal: function (collaboratorUid, isAddingToCurrentEdition) {
-            showModal(collaboratorUid, isAddingToCurrentEdition);
+        showModal: function (attendeeOrganizationUid) {
+            showModal(attendeeOrganizationUid);
         }
     };
 }();

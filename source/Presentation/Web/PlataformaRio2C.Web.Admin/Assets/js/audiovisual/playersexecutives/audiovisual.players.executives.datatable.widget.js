@@ -4,15 +4,15 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-31-2021
+// Last Modified On : 09-14-2021
 // ***********************************************************************
-// <copyright file="collaborators.datatable.widget.js" company="Softo">
+// <copyright file="audiovisual.players.executives.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var CollaboratorsDataTableWidget = function () {
+var PlayersExecutivesDataTableWidget = function () {
 
     var widgetElementId = '#PlayersExecutivesDataTableWidget';
     var tableElementId = '#playersexecutives-list-table';
@@ -41,8 +41,8 @@ var CollaboratorsDataTableWidget = function () {
         .always(function () {
             MyRio2cCommon.unblock();
 
-            if (typeof (CollaboratorsDataTableWidget) !== 'undefined') {
-                CollaboratorsDataTableWidget.refreshData();
+            if (typeof (PlayersExecutivesDataTableWidget) !== 'undefined') {
+                PlayersExecutivesDataTableWidget.refreshData();
             }
         });
     };
@@ -270,17 +270,17 @@ var CollaboratorsDataTableWidget = function () {
                                             <div class="dropdown-menu dropdown-menu-right">';
 
                         if (!full.IsInCurrentEdition) {
-                            html += '<button class="dropdown-item" onclick="CollaboratorsUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
+                            html += '<button class="dropdown-item" onclick="PlayersExecutivesUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         }
 
-                        html += '<button class="dropdown-item" onclick="CollaboratorsDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
+                        html += '<button class="dropdown-item" onclick="PlayersExecutivesDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
                         html += '<button class="dropdown-item" onclick="AccountsUpdateUserStatus.showModal(\'' + full.UserBaseDto.Uid + '\',\'' + !full.Active + '\');"><i class="la la-lock"></i> ' + ((full.Active) ? labels.block : labels.unblock) + '</button>';
 
                         if (full.IsInCurrentEdition && full.IsInOtherEdition) {
-                            html += '<button class="dropdown-item" onclick="CollaboratorsDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-remove"></i> ' + removeFromEdition + '</button>';
+                            html += '<button class="dropdown-item" onclick="PlayersExecutivesDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-remove"></i> ' + removeFromEdition + '</button>';
                         }
                         else {
-                            html += '<button class="dropdown-item" onclick="CollaboratorsDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
+                            html += '<button class="dropdown-item" onclick="PlayersExecutivesDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
                         }
 
                         html += '\

@@ -74,7 +74,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                                                  && ac.EditionId == cmd.Edition.Id
                                                                  && ac.AttendeeCollaboratorTypes.Any(act => !act.IsDeleted
                                                                                                             && !act.CollaboratorType.IsDeleted
-                                                                                                            && act.CollaboratorType.Uid == CollaboratorType.ExecutiveAudiovisual.Uid)))
+                                                                                                            && act.CollaboratorType.Uid == CollaboratorType.AudiovisualPlayerExecutive.Uid)))
             {
                 this.AppValidationResult.Add(this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundM))));
             }

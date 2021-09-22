@@ -3,14 +3,15 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 10-14-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-19-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="OrganizationsApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -33,7 +34,9 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         private readonly IEditionRepository editionRepo;
         private readonly IFileRepository fileRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="OrganizationsApiController"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OrganizationsApiController" /> class.
+        /// </summary>
         /// <param name="organizationRepository">The organization repository.</param>
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="fileRepository">The file repository.</param>
@@ -69,10 +72,11 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             //}
 
             var organizationsApiDtos = await this.organizationRepo.FindAllOrganizationsApiPaged(
-                0, //edition.Id, // NOT BEING USED
+                null, // NOT BEING USED
                 request?.CompanyName,
                 request?.TradeName,
                 request?.GetCompanyNumber(),
+                Guid.Empty, //Required only on Web.Admin.OrganizationsApiController
                 request?.Page ?? 1, 
                 request?.PageSize ?? 10);
 

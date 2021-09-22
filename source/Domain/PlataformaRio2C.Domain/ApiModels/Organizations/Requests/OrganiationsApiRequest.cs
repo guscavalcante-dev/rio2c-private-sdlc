@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 10-14-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-19-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="OrganiationsApiRequest.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -27,6 +27,9 @@ namespace PlataformaRio2C.Domain.ApiModels
 
         [JsonProperty("companyNumber")]
         public string CompanyNumber { get; set; }
+
+        [JsonProperty("organizationTypeName")]
+        public string OrganizationTypeName { get; set; }
 
         /// <summary>Gets the company number.</summary>
         /// <returns></returns>

@@ -1,34 +1,41 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
-// Author           : Renan Valentim
-// Created          : 09-13-2021
+// Author           : Rafael Dantas Ruiz
+// Created          : 08-26-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-13-2021
+// Last Modified On : 09-14-2021
 // ***********************************************************************
-// <copyright file="company.executive.create" company="Softo">
+// <copyright file="audiovisual.players.executives.delete.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var CompanyExecutiveDelete = function () {
+var PlayersExecutivesDelete = function () {
 
     // Delete -------------------------------------------------------------------------------------
-    var executeDelete = function (collaboratorUid, organizationUid) {
+    var executeDelete = function (collaboratorUid) {
         MyRio2cCommon.block();
 
         var jsonParameters = new Object();
         jsonParameters.collaboratorUid = collaboratorUid;
-        jsonParameters.organizationUid = organizationUid;
 
-        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Collaborators/DeleteOrganization'), jsonParameters, function (data) {
+        $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/PlayersExecutives/Delete'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
                 onSuccess: function () {
-                    if (typeof (CompanyExecutiveWidget) !== 'undefined') {
-                        AudiovisualOrganizationsExecutiveWidget.init();
+                    if (typeof (PlayersExecutivesDataTableWidget) !== 'undefined') {
+                        PlayersExecutivesDataTableWidget.refreshData();
+                    }
+
+                    if (typeof (PlayersExecutivesTotalCountWidget) !== 'undefined') {
+                        PlayersExecutivesTotalCountWidget.init();
+                    }
+
+                    if (typeof (PlayersExecutivesEditionCountWidget) !== 'undefined') {
+                        PlayersExecutivesEditionCountWidget.init();
                     }
                 },
                 // Error
@@ -36,14 +43,14 @@ var CompanyExecutiveDelete = function () {
                 }
             });
         })
-            .fail(function () {
-            })
-            .always(function () {
-                MyRio2cCommon.unblock();
-            });
+        .fail(function () {
+        })
+        .always(function () {
+            MyRio2cCommon.unblock();
+        });
     };
 
-    var showModal = function (collaboratorUid, organizationUid, isDeletingFromCurrentEdition) {
+    var showModal = function (collaboratorUid, isDeletingFromCurrentEdition) {
         var message = labels.deleteConfirmationMessage;
 
         if (isDeletingFromCurrentEdition) {
@@ -63,7 +70,7 @@ var CompanyExecutiveDelete = function () {
                     label: labels.remove,
                     className: "btn btn-danger",
                     callback: function () {
-                        executeDelete(collaboratorUid, organizationUid);
+                        executeDelete(collaboratorUid);
                     }
                 }
             }
@@ -71,8 +78,8 @@ var CompanyExecutiveDelete = function () {
     };
 
     return {
-        showModal: function (collaboratorUid, organizationUid, isDeletingFromCurrentEdition) {
-            showModal(collaboratorUid, organizationUid, isDeletingFromCurrentEdition);
+        showModal: function (collaboratorUid, isDeletingFromCurrentEdition) {
+            showModal(collaboratorUid, isDeletingFromCurrentEdition);
         }
     };
 }();

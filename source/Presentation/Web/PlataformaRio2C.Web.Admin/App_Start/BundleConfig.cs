@@ -393,9 +393,22 @@ namespace PlataformaRio2C.Web.Admin
                  "~/Assets/js/audiovisual/organizations/audiovisual.organizations.activity.widget.js",
                  "~/Assets/js/audiovisual/organizations/audiovisual.organizations.targetaudience.widget.js",
                  "~/Assets/js/audiovisual/organizations/audiovisual.organizations.interest.widget.js",
-                 "~/Assets/js/audiovisual/organizations/audiovisual.organizations.executive.widget.js",
+                 "~/Assets/js/audiovisual/organizations/audiovisual.organizations.executives.widget.js",
                  "~/Assets/js/myrio2c.companynumber.js",
                  "~/Assets/js/myrio2c.additionalinfo.js"));
+
+            #endregion
+
+            #region Collaborators 
+
+            bundles.Add(new ScriptBundle("~/bundles/js/collaborators.details.js").Include(
+                "~/Assets/js/collaborators/collaborators.maininformation.widget.js",
+                "~/Assets/js/collaborators/collaborators.socialnetworks.widget.js",
+                "~/Assets/js/collaborators/collaborators.onboardinginfo.widget.js",
+                "~/Assets/js/collaborators/collaborators.company.widget.js",
+                "~/Assets/js/companies/companyinfo.autocomplete.js",
+                "~/Assets/js/myrio2c.companynumber.js"
+                ));
 
             #endregion
 
@@ -424,6 +437,30 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            #region Players - Executives
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.players.executives.list.js").Include(
+                 "~/Assets/js/audiovisual/playersexecutives/audiovisual.players.executives.totalcount.widget.js",
+                 "~/Assets/js/audiovisual/playersexecutives/audiovisual.players.executives.datatable.widget.js",
+                 "~/Assets/js/salesplatforms/salesplatforms.export.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.players.executives.editioncount.js").Include(
+                "~/Assets/js/audiovisual/playersexecutives/audiovisual.players.executives.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.players.executives.create.js").Include(
+                "~/Assets/js/audiovisual/playersexecutives/audiovisual.players.executives.create.js",
+                "~/Assets/js/myrio2c.publicemail.js",
+                "~/Assets/js/attendeeorganizations/attendeeorganizations.form.js",
+                "~/Assets/js/dynamic.list.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.players.executives.update.js").Include(
+                "~/Assets/js/audiovisual/playersexecutives/audiovisual.players.executives.update.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.players.executives.delete.js").Include(
+                "~/Assets/js/audiovisual/playersexecutives/audiovisual.players.executives.delete.js"));
+
+            #endregion
+
             #region Producers
 
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.producers.list.js").Include(
@@ -438,6 +475,18 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.producers.editioncountodometer.widget.js").Include(
                 "~/Assets/js/audiovisual/producers/audiovisual.producers.editioncountodometer.widget.js"));
+
+            #endregion
+
+            #region Producers - Executives
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.producers.executives.list.js").Include(
+                 "~/Assets/js/audiovisual/producersexecutives/audiovisual.producers.executives.totalcount.widget.js",
+                 "~/Assets/js/audiovisual/producersexecutives/audiovisual.producers.executives.datatable.widget.js",
+                 "~/Assets/js/salesplatforms/salesplatforms.export.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.producers.executives.editioncount.js").Include(
+                "~/Assets/js/audiovisual/producersexecutives/audiovisual.producers.executives.editioncount.widget.js"));
 
             #endregion
 
@@ -469,40 +518,7 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
-            #region Collaborators - Executives
-
-            bundles.Add(new ScriptBundle("~/bundles/js/collaborators.list.js").Include(
-                 "~/Assets/js/audiovisual/collaborators/collaborators.totalcount.widget.js",
-                 "~/Assets/js/audiovisual/collaborators/collaborators.datatable.widget.js",
-                 "~/Assets/js/salesplatforms/salesplatforms.export.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/collaborators.editioncount.js").Include(
-                "~/Assets/js/audiovisual/collaborators/collaborators.editioncount.widget.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/collaborators.create.js").Include(
-                "~/Assets/js/audiovisual/collaborators/collaborators.create.js",
-                "~/Assets/js/myrio2c.publicemail.js",
-                "~/Assets/js/attendeeorganizations/attendeeorganizations.form.js",
-                "~/Assets/js/dynamic.list.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/collaborators.update.js").Include(
-                "~/Assets/js/audiovisual/collaborators/collaborators.update.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/collaborators.delete.js").Include(
-                "~/Assets/js/audiovisual/collaborators/collaborators.delete.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/collaborators.details.js").Include(
-                "~/Assets/js/collaborators/collaborators.maininformation.widget.js",
-                "~/Assets/js/collaborators/collaborators.socialnetworks.widget.js",
-                "~/Assets/js/collaborators/collaborators.onboardinginfo.widget.js",
-                "~/Assets/js/collaborators/collaborators.company.widget.js",
-                "~/Assets/js/companies/companyinfo.autocomplete.js",
-                "~/Assets/js/myrio2c.companynumber.js"
-                ));
-
-            #endregion
-
-            #region Collaborators - Speakers
+            #region Speakers
 
             bundles.Add(new ScriptBundle("~/bundles/js/speakers.list.js").Include(
                 "~/Assets/js/speakers/speakers.totalcount.widget.js",
@@ -511,10 +527,6 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/speakers.editioncount.js").Include(
                 "~/Assets/js/speakers/speakers.editioncount.widget.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/speakers.create.js").Include(
-                "~/Assets/js/speakers/speakers.create.js",
-                "~/Assets/js/myrio2c.publicemail.js"));
 
             bundles.Add(new StyleBundle("~/bundles/css/speakers.details.css").Include(
                 "~/Assets/themes/metronic/css/demo4/pages/pricing/pricing-1.css"));
@@ -530,6 +542,10 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/js/myrio2c.companynumber.js",
                 "~/Assets/js/speakers/speakers.apiconfiguration.widget.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/speakers.create.js").Include(
+                "~/Assets/js/speakers/speakers.create.js",
+                "~/Assets/js/myrio2c.publicemail.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/js/speakers.update.js").Include(
                 "~/Assets/js/speakers/speakers.update.js"));
 
@@ -542,16 +558,6 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/attendeeorganizations.form.js").Include(
                 "~/Assets/js/attendeeorganizations/attendeeorganizations.form.js"));
-
-            #endregion
-
-            #region Companies - Executives
-
-            bundles.Add(new ScriptBundle("~/bundles/js/company.executive.create.js").Include(
-                "~/Assets/js/companies/company.executive.create.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/js/company.executive.delete.js").Include(
-                "~/Assets/js/companies/company.executive.delete.js"));
 
             #endregion
 

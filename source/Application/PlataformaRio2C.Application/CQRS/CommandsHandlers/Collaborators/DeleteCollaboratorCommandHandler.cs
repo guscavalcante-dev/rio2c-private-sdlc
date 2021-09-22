@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-27-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 09-26-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="DeleteCollaboratorCommandHandler.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -28,6 +28,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     {
         private readonly IEditionRepository editionRepo;
         private readonly ICollaboratorTypeRepository collaboratorTypeRepo;
+        private readonly IOrganizationTypeRepository organizationTypeRepo;
 
         /// <summary>Initializes a new instance of the <see cref="DeleteCollaboratorCommandHandler"/> class.</summary>
         /// <param name="eventBus">The event bus.</param>
@@ -40,11 +41,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IUnitOfWork uow,
             ICollaboratorRepository collaboratorRepository,
             IEditionRepository editionRepository,
-            ICollaboratorTypeRepository collaboratorTypeRepository)
+            ICollaboratorTypeRepository collaboratorTypeRepository,
+            IOrganizationTypeRepository organizationTypeRepository)
             : base(eventBus, uow, collaboratorRepository)
         {
             this.editionRepo = editionRepository;
             this.collaboratorTypeRepo = collaboratorTypeRepository;
+            this.organizationTypeRepo = organizationTypeRepository;
         }
 
         /// <summary>Handles the specified delete collaborator.</summary>
@@ -75,6 +78,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             collaborator.Delete(
                 edition,
                 await this.collaboratorTypeRepo.FindByNameAsync(cmd.CollaboratorTypeName),
+                await this.organizationTypeRepo.FindByNameAsync(cmd.OrganizationTypeName),
                 cmd.UserId);
             if (!collaborator.IsValid())
             {

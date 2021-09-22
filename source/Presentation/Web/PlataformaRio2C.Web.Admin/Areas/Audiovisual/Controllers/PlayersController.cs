@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="PlayersController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -200,10 +200,15 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> Details(Guid? id)
         {
-            var attendeeOrganizationDto = await this.attendeeOrganizationRepo.FindDetailsDtoByOrganizationUidAndByEditionIdAsync(id ?? Guid.Empty, this.EditionDto.Id, true);
+            var attendeeOrganizationDto = await this.attendeeOrganizationRepo.FindDetailsDtoByOrganizationUidAndByOrganizationTypeUidAsync(
+                id ?? Guid.Empty, 
+                OrganizationType.Player.Uid,
+                this.EditionDto.Id, 
+                true);
+
             if (attendeeOrganizationDto == null)
             {
-                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Player, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
                 return RedirectToAction("Index", "Players", new { Area = "Audiovisual" });
             }
 
@@ -513,9 +518,10 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 Organizations = collaboratorsApiDtos?.Select(c => new OrganizationDropdownDto
                 {
                     Uid = c.Uid,
+                    Name = c.Name,
                     TradeName = c.TradeName,
                     CompanyName = c.CompanyName,
-                    Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.Uid, c.ImageUploadDate, true) : null
+                    Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, c.Uid, c.ImageUploadDate, true) : null
                 })?.ToList()
             }, JsonRequestBehavior.AllowGet);
         }

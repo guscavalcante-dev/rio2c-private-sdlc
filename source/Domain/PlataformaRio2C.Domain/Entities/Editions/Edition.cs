@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="Edition.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -430,6 +430,38 @@ namespace PlataformaRio2C.Domain.Entities
                 editionEvent.Delete(userId);
             }
         }
+
+        #endregion
+
+        #region Music - Commissions
+
+        #region Project Evaluation
+
+        /// <summary>Determines whether [is music project evaluation open].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is music project evaluation open]; otherwise, <c>false</c>.</returns>
+        public bool IsMusicProjectEvaluationOpen()
+        {
+            return DateTime.UtcNow >= this.MusicCommissionEvaluationStartDate && DateTime.UtcNow <= this.MusicCommissionEvaluationEndDate;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Innovation - Commissions
+
+        #region Project Evaluation
+
+        /// <summary>Determines whether [is innovation project evaluation open].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is innovation project evaluation open]; otherwise, <c>false</c>.</returns>
+        public bool IsInnovationProjectEvaluationOpen()
+        {
+            return DateTime.UtcNow >= this.InnovationCommissionEvaluationStartDate && DateTime.UtcNow <= this.InnovationCommissionEvaluationEndDate;
+        }
+
+        #endregion
 
         #endregion
 

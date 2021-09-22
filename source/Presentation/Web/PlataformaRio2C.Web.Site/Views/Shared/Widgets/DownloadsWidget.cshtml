@@ -3,7 +3,7 @@
 @{
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var isAudiovisualSeller = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true;
-    var isAudiovisualBuyer = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.ExecutiveAudiovisual) == true;
+    var isAudiovisualBuyer = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.AudiovisualPlayerExecutive) == true;
     var hasDownload = false;
 }
 @if (!isAudiovisualSeller && !isAudiovisualBuyer)

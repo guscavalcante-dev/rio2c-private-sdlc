@@ -1,0 +1,27 @@
+﻿@model PlataformaRio2C.Application.CQRS.Commands.AssociateOrganizationCollaborator
+<div class="modal fade" id="AssociateCompanyModal" role="dialog" aria-labelledby="AssociateCompanyModal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    @(Labels.Associate + " " + Labels.Company)
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("AssociateCompany", "Collaborators", new { Area = "" }, FormMethod.Post, new { id = "AssociateCompanyForm" }))
+                {
+                    @Html.HiddenFor(m => m.CollaboratorUid)
+                    @Html.HiddenFor(m => m.OrganizationTypeUid)
+                    <div id="form-container">
+                        @Html.Partial("Modals/AssociateCompanyForm", Model)
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">@Labels.Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="$('#AssociateCompanyForm').submit();">@Labels.Save</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -4,7 +4,7 @@
 // Created          : 08-09-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-13-2021
+// Last Modified On : 09-15-2021
 // ***********************************************************************
 // <copyright file="AttendeeOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -51,10 +51,10 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isVirtualMeeting">The is virtual meeting.</param>
         /// <param name="userId">The user identifier.</param>
         public AttendeeOrganization(
-            Edition edition, 
-            Organization organization, 
-            OrganizationType organizationType, 
-            bool? isApiDisplayEnabled, 
+            Edition edition,
+            Organization organization,
+            OrganizationType organizationType,
+            bool? isApiDisplayEnabled,
             int? apiHighlightPosition,
             bool? isVirtualMeeting,
             int userId)
@@ -64,7 +64,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.SellProjectsCount = 0;
             this.SynchronizeAttendeeOrganizationTypes(organizationType, isApiDisplayEnabled, apiHighlightPosition, userId);
 
-            if (organizationType?.Name == Constants.OrganizationType.AudiovisualBuyer)
+            if (organizationType?.Name == OrganizationType.Player.Name)
                 this.IsVirtualMeeting = isVirtualMeeting;
             else
                 this.IsVirtualMeeting = null;
@@ -111,7 +111,7 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.IsVirtualMeeting = isVirtualMeeting;
             this.SynchronizeAttendeeOrganizationTypes(organizationType, isApiDisplayEnabled, apiHighlightPosition, userId);
-            
+
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
@@ -189,41 +189,60 @@ namespace PlataformaRio2C.Domain.Entities
         #region Attendee Organization Collaborators
 
         /// <summary>
-        /// Synchronizes the attendee organization collaborators.
+        /// Associates the collaborator.
         /// </summary>
-        /// <param name="attendeeOrganizations">The attendee organizations.</param>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
-        /// <param name="shouldDeleteOrganizations">if set to <c>true</c> [should delete organizations].</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
         /// <param name="userId">The user identifier.</param>
-        public void SynchronizeAttendeeOrganizationCollaborators(List<AttendeeOrganization> attendeeOrganizations, AttendeeCollaborator attendeeCollaborator, bool shouldDeleteOrganizations, int userId)
+        public void AssociateCollaborator(AttendeeCollaborator attendeeCollaborator, CollaboratorType collaboratorType, int userId)
         {
             if (this.AttendeeOrganizationCollaborators == null)
             {
                 this.AttendeeOrganizationCollaborators = new List<AttendeeOrganizationCollaborator>();
             }
 
-            if (shouldDeleteOrganizations)
+            if (collaboratorType?.Name == CollaboratorType.AudiovisualPlayerExecutive.Name)
             {
-                this.DeleteAttendeeOrganizationCollaborators(attendeeOrganizations, userId);
+                attendeeCollaborator.SynchronizeAttendeeCollaboratorType(collaboratorType, false, null, userId);
             }
 
-            if (attendeeOrganizations?.Any() != true)
+            var attendeeOrganizationCollaboratorDb = this.AttendeeOrganizationCollaborators.FirstOrDefault(aoc => aoc.AttendeeCollaboratorId == attendeeCollaborator.Id);
+            if (attendeeOrganizationCollaboratorDb != null)
+            {
+                attendeeOrganizationCollaboratorDb.Update(userId);
+            }
+            else
+            {
+                this.CreateAttendeeOrganizationCollaborator(this, attendeeCollaborator, userId);
+            }
+        }
+
+
+        /// <summary>
+        /// Disassociates the collaborator.
+        /// </summary>
+        /// <param name="attendeeCollaborator">The attendee collaborator.</param>
+        /// <param name="collaboratorType">Type of the collaborator.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void DisassociateCollaborator(AttendeeCollaborator attendeeCollaborator, CollaboratorType collaboratorType, int userId)
+        {
+            if (this.AttendeeOrganizationCollaborators == null)
             {
                 return;
             }
 
-            // Create or update
-            foreach (var attendeeOrganization in attendeeOrganizations)
+            var attendeeOrganizationCollaborators = this.FindAttendeeOrganizationCollaboratorByAttendeeCollaboratorIdNotDeleted(attendeeCollaborator.Id);
+            foreach (var attendeeOrganizationCollaborator in attendeeOrganizationCollaborators)
             {
-                var attendeeOrganizationCollaboratorDb = this.AttendeeOrganizationCollaborators.FirstOrDefault(aoc => aoc.AttendeeOrganizationId == attendeeOrganization.Id 
-                                                                                                                    && aoc.AttendeeCollaboratorId == attendeeCollaborator.Id);
-                if (attendeeOrganizationCollaboratorDb != null)
+                attendeeOrganizationCollaborator.Delete(userId);
+            }
+
+            if (collaboratorType?.Name == CollaboratorType.AudiovisualPlayerExecutive.Name)
+            {
+                //Deactivate the AttendeeCollaborator when disassociated from all AttendeeOrganizations
+                if (!attendeeCollaborator.AttendeeOrganizationCollaborators.Any(aoc => !aoc.IsDeleted))
                 {
-                    attendeeOrganizationCollaboratorDb.Update(userId);
-                }
-                else
-                {
-                    this.CreateAttendeeOrganizationCollaborator(attendeeOrganization, attendeeCollaborator, userId);
+                    attendeeCollaborator.DeleteAttendeeCollaboratorTypeAndAttendeeCollaborator(collaboratorType, userId);
                 }
             }
         }
@@ -233,22 +252,6 @@ namespace PlataformaRio2C.Domain.Entities
         private void DeleteAttendeeOrganizationCollaborators(int userId)
         {
             foreach (var attendeeOrganizationCollaborator in this.FindAllAttendeeOrganizationCollaboratorsNotDeleted())
-            {
-                attendeeOrganizationCollaborator.Delete(userId);
-            }
-        }
-
-        /// <summary>
-        /// Deletes the attendee organization collaborators.
-        /// </summary>
-        /// <param name="newAttendeeOrganizations">The new attendee organizations.</param>
-        /// <param name="userId">The user identifier.</param>
-        private void DeleteAttendeeOrganizationCollaborators(List<AttendeeOrganization> newAttendeeOrganizations, int userId)
-        {
-            var attendeeOrganizationCollaboratorToDelete = this.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted
-                                                                                                               && newAttendeeOrganizations?.Select(nao => nao.Id)?.Contains(aoc.AttendeeOrganizationId) == false)
-                                                                                                 .ToList();
-            foreach (var attendeeOrganizationCollaborator in attendeeOrganizationCollaboratorToDelete)
             {
                 attendeeOrganizationCollaborator.Delete(userId);
             }
@@ -270,6 +273,13 @@ namespace PlataformaRio2C.Domain.Entities
         private List<AttendeeOrganizationCollaborator> FindAllAttendeeOrganizationCollaboratorsNotDeleted()
         {
             return this.AttendeeOrganizationCollaborators?.Where(aoc => !aoc.IsDeleted)?.ToList();
+        }
+
+
+        private List<AttendeeOrganizationCollaborator> FindAttendeeOrganizationCollaboratorByAttendeeCollaboratorIdNotDeleted(int attendeeCollaboratorId)
+        {
+            return this.AttendeeOrganizationCollaborators?.Where(aoc => !aoc.IsDeleted 
+                                                                        && aoc.AttendeeCollaboratorId == attendeeCollaboratorId)?.ToList();
         }
 
         #endregion

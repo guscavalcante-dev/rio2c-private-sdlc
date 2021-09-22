@@ -2959,4 +2959,24 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Bloqueado</value>
     <comment>Bloqueado</comment>
   </data>
+  <data name="ProducersExecutives" xml:space="preserve">
+    <value>Executivos das Produtoras</value>
+    <comment>Executivos das Produtoras</comment>
+  </data>
+  <data name="Associate" xml:space="preserve">
+    <value>Associar</value>
+    <comment>Associar</comment>
+  </data>
+  <data name="Associated" xml:space="preserve">
+    <value>Associado</value>
+    <comment>Associado</comment>
+  </data>
+  <data name="Disassociate" xml:space="preserve">
+    <value>Desassociar</value>
+    <comment>Desassociar</comment>
+  </data>
+  <data name="Disassociated" xml:space="preserve">
+    <value>Desassociado</value>
+    <comment>Desassociado</comment>
+  </data>
 </root>

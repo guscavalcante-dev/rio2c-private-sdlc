@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 03-08-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-09-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="OrganizationsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -44,6 +44,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         private readonly IActivityRepository activityRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
         private readonly IInterestRepository interestRepo;
+        private readonly ICollaboratorTypeRepository collaboratorTypeRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OrganizationsController"/> class.
@@ -62,7 +63,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IActivityRepository activityRepository,
             ITargetAudienceRepository targetAudienceRepository,
-            IInterestRepository interestRepository)
+            IInterestRepository interestRepository,
+            ICollaboratorTypeRepository collaboratorTypeRepository)
             : base(commandBus, identityController)
         {
             this.organizationTypeRepo = organizationTypeRepository;
@@ -70,6 +72,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
             this.activityRepo = activityRepository;
             this.targetAudienceRepo = targetAudienceRepository;
             this.interestRepo = interestRepository;
+            this.collaboratorTypeRepo = collaboratorTypeRepository;
         }
 
         #region Main Information Widget
@@ -852,7 +855,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
         #endregion
 
-        #region Executive Widget
+        #region Executives Widget
 
         /// <summary>
         /// Shows the executive widget.
@@ -861,26 +864,214 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowExecutiveWidget(Guid? organizationUid, Guid? organizationTypeUid)
+        public async Task<ActionResult> ShowExecutivesWidget(Guid? organizationUid, Guid? organizationTypeUid)
         {
-            var executiveWidget = await this.attendeeOrganizationRepo.FindAdminExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(
+            //We may have to review this rule, but for now it has been defined that we will list the collaborators according to the rules below.
+            Guid? collaboratorTypeUid = null;
+            if (organizationTypeUid == OrganizationType.Player.Uid)
+            {
+                //When OrganizationType = Player, must list only collaborators wiwh CollaboratorType = AudiovisualPlayerExecutive on Widget
+                collaboratorTypeUid = CollaboratorType.AudiovisualPlayerExecutive.Uid;
+            }
+            else if (organizationTypeUid == OrganizationType.Producer.Uid)
+            {
+                //When OrganizationType = Producer, must list only collaborators wiwh CollaboratorType = Industry on Widget
+                collaboratorTypeUid = CollaboratorType.Industry.Uid;
+            }
+
+            ViewBag.OrganizationTypeUid = organizationTypeUid;
+            ViewBag.CollaboratorTypeForDropdownSearch = organizationTypeUid == OrganizationType.Player.Uid ? "PlayersExecutives" : "ProducersExecutives";
+
+            var executiveWidgetDto = await this.attendeeOrganizationRepo.FindAdminExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(
                 organizationUid ?? Guid.Empty,
                 organizationTypeUid ?? Guid.Empty,
+                collaboratorTypeUid ?? Guid.Empty,
                 this.EditionDto.Id);
-            if (executiveWidget == null)
+            if (executiveWidgetDto == null)
             {
-                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundF.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", $"{ViewBag.CollaboratorTypeForDropdownSearch}", new { Area = "Audiovisual" });
             }
+
 
             return Json(new
             {
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/ExecutiveWidget", executiveWidget), divIdOrClass = "#CompanyExecutiveWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/ExecutivesWidget", executiveWidgetDto), divIdOrClass = "#OrganizationExecutivesWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
+
+        #region Associate
+
+        /// <summary>
+        /// Shows the create player executive modal.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowAssociateExecutiveModal(Guid? organizationUid, Guid? organizationTypeUid)
+        {
+            AssociateOrganizationCollaborator cmd;
+
+            try
+            {
+                if (!organizationUid.HasValue)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundM.ToLowerInvariant()));
+                }
+
+                cmd = new AssociateOrganizationCollaborator(organizationUid, null, organizationTypeUid);
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
+
+            ViewBag.OrganizationTypeUid = organizationTypeUid;
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/AssociateExecutiveModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>Creates the specified command.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> AssociateExecutive(AssociateOrganizationCollaborator cmd)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                if (cmd.OrganizationTypeUid == OrganizationType.Player.Uid)
+                {
+                    cmd.CollaboratorTypeName = CollaboratorType.AudiovisualPlayerExecutive.Name;
+                }
+                else if (cmd.OrganizationTypeUid == OrganizationType.Producer.Uid)
+                {
+                    cmd.CollaboratorTypeName = CollaboratorType.Industry.Name;
+                }
+
+                cmd.UpdatePreSendProperties(
+                    cmd.CollaboratorTypeName,
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("Modals/AssociateExecutiveForm", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Executive, Labels.Associated.ToLowerInvariant()) });
+        }
+
+        #endregion
+
+        #region Disassociate
+
+        /// <summary>Deletes the organization.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> DisassociateExecutive(DisassociateOrganizationCollaborator cmd)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                if (cmd.OrganizationTypeUid == OrganizationType.Player.Uid)
+                {
+                    cmd.CollaboratorTypeName = CollaboratorType.AudiovisualPlayerExecutive.Name;
+                }
+                else if (cmd.OrganizationTypeUid == OrganizationType.Producer.Uid)
+                {
+                    cmd.CollaboratorTypeName = CollaboratorType.Industry.Name;
+                }
+
+                cmd.UpdatePreSendProperties(
+                    cmd.CollaboratorTypeName,
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Executive, Labels.Disassociated.ToLowerInvariant()) });
+        }
+
+        #endregion
 
         #endregion
     }

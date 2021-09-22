@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 12-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 12-19-2019
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="companyinfo.autocomplete.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -20,11 +20,12 @@ var CompanyInfoAutocomplete = function () {
     var companyNumberId = '#Document';
     var showFormUrl = '/Companies/ShowTicketBuyerFilledForm';
     var formPluginsCallback = null;
+    var _organizationTypeName;
 
     var spinnerClass = 'kt-spinner kt-spinner--sm kt-spinner--brand kt-spinner--right kt-spinner--input';
 
     // Init elements ------------------------------------------------------------------------------
-    var initElements = function (pShowFormUrl, pFormPluginsCallback) {
+    var initElements = function (pShowFormUrl, pFormPluginsCallback, organizationTypeName) {
         if (!MyRio2cCommon.isNullOrEmpty(pShowFormUrl)) {
             showFormUrl = pShowFormUrl;
         }
@@ -32,6 +33,8 @@ var CompanyInfoAutocomplete = function () {
         if (!MyRio2cCommon.isNullOrEmpty(pFormPluginsCallback)) {
             formPluginsCallback = pFormPluginsCallback;
         }
+
+        _organizationTypeName = organizationTypeName;
     };
 
     // Show form ----------------------------------------------------------------------------------
@@ -117,6 +120,10 @@ var CompanyInfoAutocomplete = function () {
             serviceUrl: '/api/v1.0/organizations',
             paramName: 'tradeName',
             minChars: 3,
+            params: {
+                tradeName: 'tradeName',
+                organizationTypeName: _organizationTypeName
+            },
             deferRequestBy: 500,
             //noCache: true,
             transformResult: function (data) {
@@ -267,8 +274,8 @@ var CompanyInfoAutocomplete = function () {
     };
 
     return {
-        init: function (pShowFormUrl, pFormPluginsCallback) {
-            initElements(pShowFormUrl, pFormPluginsCallback);
+        init: function (pShowFormUrl, pFormPluginsCallback, organizationTypeName) {
+            initElements(pShowFormUrl, pFormPluginsCallback, organizationTypeName);
             enablePlugins();
         }
     };

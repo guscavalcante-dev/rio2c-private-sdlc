@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-26-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-23-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-15-2021
 // ***********************************************************************
 // <copyright file="CollaboratorBaseDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -49,13 +49,11 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset? SpeakerCurrentEditionOnboardingFinishDate => this.EditionAttendeeCollaborator?.SpeakerTermsAcceptanceDate;
         public bool IsInCurrentEdition => this.EditionAttendeeCollaborator != null;
         public bool IsInOtherEdition { get; set; }
-        //public bool? IsVirtualMeeting => this.EditionAttendeeCollaborator?.AttendeeOrganizationCollaborators?.Any(aoc => aoc.AttendeeOrganization?.IsVirtualMeeting == true);
 
         public UserBaseDto UserBaseDto { get; set; }
 
         public IEnumerable<AttendeeOrganizationBaseDto> AttendeeOrganizationBasesDtos { get; set; }
         public IEnumerable<CollaboratorJobTitleBaseDto> JobTitlesDtos { get; set; }
-
         public IEnumerable<Role> Roles { get; set; }
         public IEnumerable<AttendeeCollaboratorTypeDto> AttendeeCollaboratorTypeDtos { get; set; }
 

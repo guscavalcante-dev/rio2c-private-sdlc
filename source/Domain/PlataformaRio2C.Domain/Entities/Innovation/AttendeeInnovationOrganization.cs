@@ -4,7 +4,7 @@
 // Created          : 06-29-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-28-2021
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="AttendeeInnovationOrganization.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -202,7 +202,7 @@ namespace PlataformaRio2C.Domain.Entities
                     evaluatorUser.Id));
             }
 
-            this.Grade = this.GetAverageEvaluation(this.Edition);
+            this.Grade = this.GetAverageEvaluation();
             this.EvaluationsCount = this.GetAttendeeInnovationOrganizationEvaluationTotalCount();
             this.LastEvaluationDate = DateTime.UtcNow;
         }
@@ -210,17 +210,24 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>
         /// Recalculates the grade.
         /// </summary>
-        public void RecalculateGrade(Edition edition)
+        public void RecalculateGrade()
         {
-            this.Grade = this.GetAverageEvaluation(edition);
+            this.Grade = this.GetAverageEvaluation();
+        }
+
+        /// <summary>
+        /// Recalculates the votes count.
+        /// </summary>
+        public void RecalculateVotesCount()
+        {
+            this.EvaluationsCount = this.GetAttendeeInnovationOrganizationEvaluationTotalCount();
         }
 
         /// <summary>
         /// Gets the average evaluation.
         /// </summary>
-        /// <param name="edition">The edition.</param>
         /// <returns></returns>
-        private decimal? GetAverageEvaluation(Edition edition)
+        private decimal? GetAverageEvaluation()
         {
             if (this.FindAllAttendeeInnovationOrganizationEvaluationsNotDeleted()?.Any() != true)
             {
@@ -229,7 +236,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             // Can only generate the 'AverageEvaluation' when the 'AttendeeInnovationOrganizationEvaluations' count 
             // is greater or equal than minimum necessary evaluations quantity
-            if (this.GetAttendeeInnovationOrganizationEvaluationTotalCount() >= edition.InnovationCommissionMinimumEvaluationsCount)
+            if (this.GetAttendeeInnovationOrganizationEvaluationTotalCount() >= this.Edition?.InnovationCommissionMinimumEvaluationsCount)
             {
                 return this.FindAllAttendeeInnovationOrganizationEvaluationsNotDeleted().Sum(e => e.Grade) / this.FindAllAttendeeInnovationOrganizationEvaluationsNotDeleted().Count;
             }

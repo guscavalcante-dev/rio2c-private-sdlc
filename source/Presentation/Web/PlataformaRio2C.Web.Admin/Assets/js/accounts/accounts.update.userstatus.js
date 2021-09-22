@@ -4,7 +4,7 @@
 // Created          : 09-10-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-10-2021
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="accounts.update.userstatus.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -37,8 +37,11 @@ var AccountsUpdateUserStatus = function () {
                 if (typeof (AdministratorsDataTableWidget) !== 'undefined') {
                     AdministratorsDataTableWidget.refreshData();
                 }
-                if (typeof (CollaboratorsDataTableWidget) !== 'undefined') {
-                    CollaboratorsDataTableWidget.refreshData();
+                if (typeof (PlayersExecutivesDataTableWidget) !== 'undefined') {
+                    PlayersExecutivesDataTableWidget.refreshData();
+                }
+                if (typeof (ProducersExecutivesDataTableWidget) !== 'undefined') {
+                    ProducersExecutivesDataTableWidget.refreshData();
                 }
                 MyRio2cCommon.unblock();
             });

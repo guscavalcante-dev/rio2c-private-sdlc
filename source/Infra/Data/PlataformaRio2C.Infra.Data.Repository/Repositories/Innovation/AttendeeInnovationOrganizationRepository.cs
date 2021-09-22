@@ -4,7 +4,7 @@
 // Created          : 08-30-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-28-2021
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="AttendeeInnovationOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -384,7 +384,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                    InnovationOrganizationServiceName = aio.InnovationOrganization.ServiceName,
                                    ImageUploadDate = aio.InnovationOrganization.ImageUploadDate,
                                    Grade = aio.Grade,
-                                   EvaluationsCount = aio.EvaluationsCount,
+                                   EvaluationsCount = aio.AttendeeInnovationOrganizationEvaluations.Count(aioe => !aioe.IsDeleted),
                                    InnovationOrganizationTracksNames = aio.AttendeeInnovationOrganizationTracks
                                                                             .Where(aiot => !aio.IsDeleted &&
                                                                                             !aiot.IsDeleted &&

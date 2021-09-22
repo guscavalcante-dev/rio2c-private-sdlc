@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 02-26-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 07-23-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-15-2021
 // ***********************************************************************
 // <copyright file="SalesPlatformsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -105,6 +105,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                     request?.GetSortColumns(),
                     selectedCollaboratorsUids?.ToListGuid(','),
                     new string[] { collaboratorTypeName },
+                    null,
                     showAllEditions,
                     showAllParticipants,
                     showHighlights,

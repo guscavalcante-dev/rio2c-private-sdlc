@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-28-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-26-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="AttendeeOrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -134,12 +134,29 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <returns></returns>
-        internal static IQueryable<AttendeeOrganization> FindByOrganizationTypeUid(this IQueryable<AttendeeOrganization> query, int editionId, bool showAllEditions, Guid organizationTypeUid)
+        internal static IQueryable<AttendeeOrganization> FindByOrganizationTypeUidAndEditionId(this IQueryable<AttendeeOrganization> query, int editionId, bool showAllEditions, Guid organizationTypeUid)
         {
             query = query.Where(ao => (showAllEditions || ao.EditionId == editionId)
                                       && ao.AttendeeOrganizationTypes.Any(aot => aot.OrganizationType.Uid == organizationTypeUid
                                                                                   && !aot.IsDeleted
                                                                                   && !aot.OrganizationType.IsDeleted));
+
+            return query;
+        }
+
+        /// <summary>
+        /// Finds the by organization type uid.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="organizationTypeUid">The organization type uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeOrganization> FindByOrganizationTypeUid(this IQueryable<AttendeeOrganization> query, Guid organizationTypeUid)
+        {
+            query = query.Where(
+                ao => ao.AttendeeOrganizationTypes.Any(
+                    aot => aot.OrganizationType.Uid == organizationTypeUid
+                            && !aot.IsDeleted
+                            && !aot.OrganizationType.IsDeleted));
 
             return query;
         }
@@ -349,7 +366,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                                 .FindByEditionId(editionId, showAllEditions)
-                                .FindByOrganizationTypeUid(editionId, showAllEditions, organizationTypeUid);
+                                .FindByOrganizationTypeUidAndEditionId(editionId, showAllEditions, organizationTypeUid);
 
             return await query
                             .Select(ao => new AttendeeOrganizationBaseDto
@@ -401,6 +418,21 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         /// <summary>
+        /// Finds the by uid asynchronous.
+        /// </summary>
+        /// <param name="attendeeOrganizationUid">The attendee organization uid.</param>
+        /// <returns></returns>
+        public async Task<AttendeeOrganization> FindByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId, bool showAllEditions)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByOrganizationUid(organizationUid)
+                                .FindByEditionId(editionId, showAllEditions);
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+
+        /// <summary>
         /// Finds the details dto by organization uid and by edition identifier asynchronous.
         /// </summary>
         /// <param name="organizationUid">The organization uid.</param>
@@ -411,6 +443,37 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery(true)
                                 .FindByOrganizationUid(organizationUid)
+                                .FindByEditionId(editionId, showAllEditions);
+
+            return await query
+                            .Select(ao => new AttendeeOrganizationSiteDetailsDto
+                            {
+                                AttendeeOrganization = ao,
+                                Organization = ao.Organization,
+                                AttendeeOrganizationTypesDtos = ao.AttendeeOrganizationTypes
+                                                                        .Where(aot => !aot.IsDeleted && !aot.OrganizationType.IsDeleted)
+                                                                        .Select(aot => new AttendeeOrganizationTypeDto
+                                                                        {
+                                                                            AttendeeOrganizationType = aot,
+                                                                            OrganizationType = aot.OrganizationType
+                                                                        })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the details dto by organization uid and by edition identifier asynchronous.
+        /// </summary>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="organizationTypeUid">The organization type uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
+        /// <returns></returns>
+        public async Task<AttendeeOrganizationSiteDetailsDto> FindDetailsDtoByOrganizationUidAndByOrganizationTypeUidAsync(Guid organizationUid, Guid organizationTypeUid, int editionId, bool showAllEditions)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByOrganizationUid(organizationUid)
+                                .FindByOrganizationTypeUid(organizationTypeUid)
                                 .FindByEditionId(editionId, showAllEditions);
 
             return await query
@@ -613,7 +676,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="organizationTypeUid">The organization type uid.</param>
         /// <param name="editionId">The edition identifier.</param>
         /// <returns></returns>
-        public async Task<AttendeeOrganizationExecutiveWidgetDto> FindAdminExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, Guid organizationTypeUid, int editionId)
+        public async Task<AttendeeOrganizationExecutiveWidgetDto> FindAdminExecutiveWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, Guid organizationTypeUid, Guid collaboratorTypeUid, int editionId)
         {
             var query = this.GetBaseQuery(true)
                                 .FindByOrganizationUid(organizationUid)
@@ -629,9 +692,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                               && !aot.IsDeleted),
                                 AttendeeCollaboratorsDtos = ao.AttendeeOrganizationCollaborators
                                                                     .Where(aoc => !aoc.IsDeleted
-                                                                                                          && aoc.AttendeeCollaborator.Edition.Id == editionId
-                                                                                                          && !aoc.AttendeeCollaborator.IsDeleted
-                                                                                                          && !aoc.AttendeeCollaborator.Collaborator.IsDeleted)
+                                                                                    && aoc.AttendeeCollaborator.Edition.Id == editionId
+                                                                                    && !aoc.AttendeeCollaborator.IsDeleted
+                                                                                    && !aoc.AttendeeCollaborator.Collaborator.IsDeleted
+                                                                                    && aoc.AttendeeCollaborator.AttendeeCollaboratorTypes.Any(act => act.CollaboratorType.Uid == collaboratorTypeUid))
                                                                     .Select(aoc => new AttendeeCollaboratorDto
                                                                     {
                                                                         AttendeeCollaborator = aoc.AttendeeCollaborator,
@@ -782,7 +846,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                  .ToList();
 
             var query = this.GetBaseQuery()
-                                .FindByOrganizationTypeUid(editionId, false, buyerOrganizationType?.Uid ?? Guid.Empty)
+                                .FindByOrganizationTypeUidAndEditionId(editionId, false, buyerOrganizationType?.Uid ?? Guid.Empty)
                                 .FindNotByUid(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid)
                                 .FindByKeywords(searchKeywords)
                                 .FindByInterestUids(matchInterests)
@@ -815,7 +879,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var buyerOrganizationType = projectDto.ProjectType?.OrganizationTypes?.FirstOrDefault(ot => !ot.IsDeleted && !ot.IsSeller);
 
             var query = this.GetBaseQuery()
-                                .FindByOrganizationTypeUid(editionId, false, buyerOrganizationType?.Uid ?? Guid.Empty)
+                                .FindByOrganizationTypeUidAndEditionId(editionId, false, buyerOrganizationType?.Uid ?? Guid.Empty)
                                 .FindNotByUid(projectDto.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid)
                                 .FindByKeywords(searchKeywords)
                                 .IsOnboardingFinished();
@@ -857,7 +921,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords)
                                 .FindByEditionId(editionId, false)
-                                .FindByOrganizationTypeUid(editionId, false, OrganizationType.Player.Uid)
+                                .FindByOrganizationTypeUidAndEditionId(editionId, false, OrganizationType.Player.Uid)
                                 .HasActiveBuyerNegotiations();
 
             return await query
@@ -958,7 +1022,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByKeywords(keywords)
                                 .FindByUids(selectedAttendeeOrganizationsUids)
                                 .FindByEditionId(editionId, false)
-                                .FindByOrganizationTypeUid(editionId, false, OrganizationType.Player.Uid)
+                                .FindByOrganizationTypeUidAndEditionId(editionId, false, OrganizationType.Player.Uid)
                                 .HasActiveBuyerNegotiations();
 
             return await query
@@ -1069,7 +1133,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                 .FindByEditionId(editionId ?? 0, showAllEditions)
-                .FindByOrganizationTypeUid(editionId ?? 0, showAllEditions, OrganizationType.Player.Uid)
+                .FindByOrganizationTypeUidAndEditionId(editionId ?? 0, showAllEditions, OrganizationType.Player.Uid)
                 .HasActiveBuyerNegotiations();
 
             return await query.CountAsync();
@@ -1100,7 +1164,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             var query = this.GetBaseQuery()
                                 .FindByKeywords(keywords)
                                 .FindByEditionId(editionId, false)
-                                .FindByOrganizationTypeUid(editionId, false, OrganizationType.Producer.Uid)
+                                .FindByOrganizationTypeUidAndEditionId(editionId, false, OrganizationType.Producer.Uid)
                                 .HasActiveSellerNegotiations();
 
             return await query
@@ -1202,7 +1266,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByKeywords(keywords)
                                 .FindByUids(selectedAttendeeOrganizationsUids)
                                 .FindByEditionId(editionId, false)
-                                .FindByOrganizationTypeUid(editionId, false, OrganizationType.Producer.Uid)
+                                .FindByOrganizationTypeUidAndEditionId(editionId, false, OrganizationType.Producer.Uid)
                                 .HasActiveSellerNegotiations();
 
             return await query
@@ -1314,7 +1378,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                             .FindByEditionId(editionId ?? 0, showAllEditions)
-                            .FindByOrganizationTypeUid(editionId ?? 0, showAllEditions, OrganizationType.Producer.Uid)
+                            .FindByOrganizationTypeUidAndEditionId(editionId ?? 0, showAllEditions, OrganizationType.Producer.Uid)
                             .HasActiveSellerNegotiations();
 
             return await query.CountAsync();

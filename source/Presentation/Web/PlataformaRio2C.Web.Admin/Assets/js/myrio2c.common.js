@@ -1318,8 +1318,16 @@ var MyRio2cCommon = function () {
         container +=
             '</div > ' +
             '<div class="select2-result-collaborator__meta">' +
-            '<div class="select2-result-collaborator__title">' + organization.TradeName + '</div>' +
-            '<div class="select2-result-collaborator__description">' + organization.CompanyName + '</div>';
+            '<div class="select2-result-collaborator__title">' + organization.Name + '</div>';
+
+        if (organization.TradeName != organization.Name) {
+            container += '<div class="select2-result-collaborator__description">' + organization.TradeName + '</div>';
+        }
+        
+        if (organization.CompanyName != organization.Name
+            && organization.CompanyName != organization.TradeName) {
+            container += '<div class="select2-result-collaborator__description">' + organization.CompanyName + '</div>';
+        }
 
         container +=
             '   </div>' +

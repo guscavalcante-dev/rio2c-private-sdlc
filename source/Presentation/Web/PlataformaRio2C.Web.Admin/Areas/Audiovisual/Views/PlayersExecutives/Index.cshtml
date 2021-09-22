@@ -32,15 +32,15 @@
     @Scripts.Render("~/bundles/js/dynamic.list.js")
     @Scripts.Render("~/bundles/js/bootstrap-datepicker.js")
     @Scripts.Render("~/bundles/js/accounts.update.userstatus.js")
-    @Scripts.Render("~/bundles/js/collaborators.list.js")
-    @Scripts.Render("~/bundles/js/collaborators.editioncount.js")
+    @Scripts.Render("~/bundles/js/audiovisual.players.executives.list.js")
+    @Scripts.Render("~/bundles/js/audiovisual.players.executives.editioncount.js")
     @Scripts.Render("~/bundles/js/attendeeorganizations.form.js")
-    @Scripts.Render("~/bundles/js/collaborators.create.js")
-    @Scripts.Render("~/bundles/js/collaborators.update.js")
-    @Scripts.Render("~/bundles/js/collaborators.delete.js")
+    @Scripts.Render("~/bundles/js/audiovisual.players.executives.create.js")
+    @Scripts.Render("~/bundles/js/audiovisual.players.executives.update.js")
+    @Scripts.Render("~/bundles/js/audiovisual.players.executives.delete.js")
     @Scripts.Render("~/bundles/js/addresses.form.js")
     <script>
-        var collaboratorTypeName = '@PlataformaRio2C.Domain.Entities.CollaboratorType.ExecutiveAudiovisual.Name';
+        var collaboratorTypeName = '@PlataformaRio2C.Domain.Entities.CollaboratorType.AudiovisualPlayerExecutive.Name';
 
         // Page translations ----------------------------------------------------------------------
         var addToEdition = '@string.Format(Labels.AddToEdition, ViewBag.EditionDto.UrlCode)';
@@ -58,9 +58,9 @@
         var initialPageSize = @(Model.PageSize?.ToString() ?? "null");
 
         jQuery(document).ready(function () {
-            CollaboratorsTotalCountWidget.init();
-            CollaboratorsEditionCountWidget.init();
-            CollaboratorsDataTableWidget.init();
+            PlayersExecutivesTotalCountWidget.init();
+            PlayersExecutivesEditionCountWidget.init();
+            PlayersExecutivesDataTableWidget.init();
         });
     </script>
 }

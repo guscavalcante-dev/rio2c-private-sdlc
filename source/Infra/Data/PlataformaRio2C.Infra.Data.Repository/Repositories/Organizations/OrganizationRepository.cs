@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 06-25-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="OrganizationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -632,11 +632,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Select(c => new OrganizationApiListDto
                             {
                                 Uid = c.Uid,
-                                TradeName = c.TradeName,
+                                Name = c.Name,
                                 CompanyName = c.CompanyName,
+                                TradeName = c.TradeName,
                                 ImageUploadDate = c.ImageUploadDate,
                             })
-                            .OrderBy(o => o.TradeName)
+                            .OrderBy(o => o.Name)
                             .ToListPagedAsync(page, pageSize);
         }
 
@@ -672,6 +673,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Select(o => new OrganizationApiListDto
                             {
                                 Uid = o.Uid,
+                                Name = o.Name,
                                 CompanyName = o.CompanyName,
                                 TradeName = o.TradeName,
                                 ImageUploadDate = o.ImageUploadDate,
@@ -694,10 +696,10 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
-        public async Task<IPagedList<OrganizationApiListDto>> FindAllOrganizationsApiPaged(int editionId, string companyName, string tradeName, string document, int page, int pageSize)
+        public async Task<IPagedList<OrganizationApiListDto>> FindAllOrganizationsApiPaged(int? editionId, string companyName, string tradeName, string document, Guid organizationTypeUid, int page, int pageSize)
         {
             var query = this.GetBaseQuery()
-                                //.FindByOrganizationTypeUidAndByEditionId(Guid.Empty, true, true, editionId)
+                                .FindByOrganizationTypeUidAndByEditionId(organizationTypeUid, true, false, editionId)
                                 .FindByCompanyName(companyName)
                                 .FindByTradeName(tradeName)
                                 .FindByEqualDocument(document);
@@ -707,6 +709,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Select(o => new OrganizationApiListDto
                             {
                                 Uid = o.Uid,
+                                Name = o.Name,
                                 CompanyName = o.CompanyName,
                                 TradeName = o.TradeName,
                                 Document = o.Document,

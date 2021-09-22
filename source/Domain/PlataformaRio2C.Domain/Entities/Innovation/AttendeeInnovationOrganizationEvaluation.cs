@@ -4,7 +4,7 @@
 // Created          : 07-07-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-07-2021
+// Last Modified On : 09-16-2021
 // ***********************************************************************
 // <copyright file="AttendeeInnovationOrganizationEvaluation.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -60,7 +60,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         public AttendeeInnovationOrganizationEvaluation()
         {
-
         }
 
         /// <summary>
@@ -72,6 +71,17 @@ namespace PlataformaRio2C.Domain.Entities
         {
             this.Grade = grade;
             base.SetUpdateDate(userId);
+        }
+
+        /// <summary>
+        /// Deletes the specified user identifier.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        public new void Delete(int userId)
+        {
+            base.Delete(userId);
+            this.AttendeeInnovationOrganization.RecalculateGrade();
+            this.AttendeeInnovationOrganization.RecalculateVotesCount();
         }
 
         #region Valitations
