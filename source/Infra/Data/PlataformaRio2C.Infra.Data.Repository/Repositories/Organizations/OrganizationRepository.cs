@@ -632,11 +632,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Select(c => new OrganizationApiListDto
                             {
                                 Uid = c.Uid,
-                                TradeName = c.TradeName,
+                                Name = c.Name,
                                 CompanyName = c.CompanyName,
+                                TradeName = c.TradeName,
                                 ImageUploadDate = c.ImageUploadDate,
                             })
-                            .OrderBy(o => o.TradeName)
+                            .OrderBy(o => o.Name)
                             .ToListPagedAsync(page, pageSize);
         }
 
@@ -672,6 +673,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Select(o => new OrganizationApiListDto
                             {
                                 Uid = o.Uid,
+                                Name = o.Name,
                                 CompanyName = o.CompanyName,
                                 TradeName = o.TradeName,
                                 ImageUploadDate = o.ImageUploadDate,
@@ -707,6 +709,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .Select(o => new OrganizationApiListDto
                             {
                                 Uid = o.Uid,
+                                Name = o.Name,
                                 CompanyName = o.CompanyName,
                                 TradeName = o.TradeName,
                                 Document = o.Document,

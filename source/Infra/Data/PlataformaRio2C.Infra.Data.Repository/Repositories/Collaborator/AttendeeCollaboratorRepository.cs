@@ -1189,6 +1189,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         .Select(aoc => new OrganizationApiListDto
                                         {
                                             Uid = aoc.AttendeeOrganization.Organization.Uid,
+                                            Name = aoc.AttendeeOrganization.Organization.Name,
                                             CompanyName = aoc.AttendeeOrganization.Organization.CompanyName,
                                             TradeName = aoc.AttendeeOrganization.Organization.TradeName,
                                             ImageUploadDate = aoc.AttendeeOrganization.Organization.ImageUploadDate

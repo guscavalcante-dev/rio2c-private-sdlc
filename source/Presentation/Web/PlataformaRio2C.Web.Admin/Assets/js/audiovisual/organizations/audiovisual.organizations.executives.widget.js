@@ -90,7 +90,6 @@ var AudiovisualOrganizationsExecutivesWidget = function () {
             //}
         });
 
-
         MyRio2cCommon.enableSelect2({ inputIdOrClass: createFormId + ' .enable-select2', allowClear: true });
         MyRio2cCommon.enableFormValidation({ formIdOrClass: createFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
     };

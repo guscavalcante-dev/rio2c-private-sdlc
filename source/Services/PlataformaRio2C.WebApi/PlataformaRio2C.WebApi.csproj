@@ -309,9 +309,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Api\Controllers\BaseApiController.cs" />
     <Compile Include="Areas\Api\V1\Controllers\ConferenceController.cs" />
-    <Compile Include="Areas\Api\V1\Controllers\ExecutivePlayerController.cs" />
     <Compile Include="Areas\Api\V1\Controllers\ExecutiveProducerController.cs" />
-    <Compile Include="Areas\Api\V1\Controllers\PlayerController.cs" />
     <Compile Include="Areas\Api\V1\Controllers\ProducerController.cs" />
     <Compile Include="Areas\Api\ViewModels\Error.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />

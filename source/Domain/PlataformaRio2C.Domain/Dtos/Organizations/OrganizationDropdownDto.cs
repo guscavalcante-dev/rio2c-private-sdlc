@@ -22,13 +22,16 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonProperty("uid", Order = 100)]
         public Guid Uid { get; set; }
 
-        [JsonProperty("tradeName", Order = 200)]
+        [JsonProperty("name", Order = 200)]
+        public string Name { get; set; }
+
+        [JsonProperty("tradeName", Order = 300)]
         public string TradeName { get; set; }
 
-        [JsonProperty("companyName", Order = 300)]
+        [JsonProperty("companyName", Order = 400)]
         public string CompanyName { get; set; }
 
-        [JsonProperty("picture", Order = 400)]
+        [JsonProperty("picture", Order = 500)]
         public string Picture { get; set; }
     }
 }

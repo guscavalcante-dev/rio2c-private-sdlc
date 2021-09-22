@@ -381,15 +381,17 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="query">The query.</param>
         /// <param name="organizationTypeNames">The organization type names.</param>
         /// <returns></returns>
-        internal static IQueryable<Collaborator> FindByOrganizationTypeNames(this IQueryable<Collaborator> query, string[] organizationTypeNames)
+        internal static IQueryable<Collaborator> FindByOrganizationTypeNames(this IQueryable<Collaborator> query, string[] organizationTypeNames, bool showAllEditions, bool showAllParticipants, int? editionId)
         {
             if(organizationTypeNames?.Any(name => !string.IsNullOrEmpty(name)) == true)
             {
-                query = query.Where(c => c.AttendeeCollaborators.Where(ac => !ac.IsDeleted).Any(ac => ac.AttendeeOrganizationCollaborators
-                                                                                                        .Where(aoc => !aoc.IsDeleted)
-                                                                                                        .Any(aoc => aoc.AttendeeOrganization.AttendeeOrganizationTypes
-                                                                                                                    .Where(aot => !aot.IsDeleted)
-                                                                                                                    .Any(aot => organizationTypeNames.Contains(aot.OrganizationType.Name)))));
+                query = query.Where(c => showAllParticipants || c.AttendeeCollaborators.Any(ac => (showAllEditions || ac.EditionId == editionId)
+                                                                                                  && !ac.IsDeleted
+                                                                                                  && !ac.Edition.IsDeleted
+                                                                                                  && (showAllParticipants 
+                                                                                                      || ac.AttendeeOrganizationCollaborators.Any(aoc => !aoc.IsDeleted 
+                                                                                                                                                         && aoc.AttendeeOrganization.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted 
+                                                                                                                                                                                                                           && organizationTypeNames.Contains(aot.OrganizationType.Name))))));
             }
 
             return query;
@@ -665,7 +667,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FindByUids(collaboratorsUids)
                                 .FindByCollaboratorTypeNameAndByEditionId(collaboratorTypeNames, showAllEditions, showAllParticipants, editionId)
                                 .FindByHighlights(collaboratorTypeNames, showHighlights)
-                                .FindByOrganizationTypeNames(organizationTypeNames);
+                                .FindByOrganizationTypeNames(organizationTypeNames, showAllEditions, showAllParticipants, editionId);
 
             var collaborators = await query
                             .DynamicOrder<Collaborator>(
@@ -750,7 +752,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             var query = this.GetBaseQuery()
                                 .FindByCollaboratorTypeNameAndByEditionId(new string[] { collaboratorTypeName }, showAllEditions, false, editionId)
-                                .FindByOrganizationTypeNames(new string[] { organizationTypeName });
+                                .FindByOrganizationTypeNames(new string[] { organizationTypeName }, showAllEditions, false, editionId);
 
             return await query.CountAsync();
         }
@@ -1439,6 +1441,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                     .Select(aoc => new OrganizationApiListDto
                                                                                     {
                                                                                         Uid = aoc.AttendeeOrganization.Organization.Uid,
+                                                                                        Name = aoc.AttendeeOrganization.Organization.Name,
                                                                                         CompanyName = aoc.AttendeeOrganization.Organization.CompanyName,
                                                                                         TradeName = aoc.AttendeeOrganization.Organization.TradeName,
                                                                                         ImageUploadDate = aoc.AttendeeOrganization.Organization.ImageUploadDate
@@ -1557,6 +1560,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                         .Select(aoc => new OrganizationApiListDto
                                         {
                                             Uid = aoc.AttendeeOrganization.Organization.Uid,
+                                            Name = aoc.AttendeeOrganization.Organization.Name,
                                             CompanyName = aoc.AttendeeOrganization.Organization.CompanyName,
                                             TradeName = aoc.AttendeeOrganization.Organization.TradeName,
                                             ImageUploadDate = aoc.AttendeeOrganization.Organization.ImageUploadDate

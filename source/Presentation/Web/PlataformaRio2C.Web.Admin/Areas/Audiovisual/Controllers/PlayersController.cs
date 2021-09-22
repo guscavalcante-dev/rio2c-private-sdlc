@@ -518,6 +518,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 Organizations = collaboratorsApiDtos?.Select(c => new OrganizationDropdownDto
                 {
                     Uid = c.Uid,
+                    Name = c.Name,
                     TradeName = c.TradeName,
                     CompanyName = c.CompanyName,
                     Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.Uid, c.ImageUploadDate, true) : null

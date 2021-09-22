@@ -19,6 +19,7 @@ namespace PlataformaRio2C.Domain.Dtos
     public class OrganizationApiListDto
     {
         public Guid Uid { get; set; }
+        public string Name { get; set; }
         public string CompanyName { get; set; }
         public string TradeName { get; set; }
         public string Document { get; set; }
