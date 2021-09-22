@@ -305,7 +305,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                     Name = c.Name,
                     TradeName = c.TradeName,
                     CompanyName = c.CompanyName,
-                    Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.UserImage, c.Uid, c.ImageUploadDate, true) : null
+                    Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, c.Uid, c.ImageUploadDate, true) : null
                 })?.ToList()
             }, JsonRequestBehavior.AllowGet);
         }
