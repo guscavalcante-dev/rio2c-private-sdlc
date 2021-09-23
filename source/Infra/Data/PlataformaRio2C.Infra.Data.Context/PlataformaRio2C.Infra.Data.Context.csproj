@@ -460,6 +460,7 @@
     <Content Include="SqlScripts\Deltas\20210713_213000_0038_ChangesForIntiSalesPlatform.sql" />
     <Content Include="SqlScripts\Deltas\20210709_162400_0036_ChangesForAdminPartialCollaboratorTypes.sql" />
     <Content Include="SqlScripts\Deltas\20210707_165300_0035_ChangesForInnovation.sql" />
+    <Content Include="SqlScripts\Deltas\20210923_144400_0045_ChangesForAttendeeCollaboratorTickets.sql" />
     <Content Include="SqlScripts\Deltas\20210917_191500_0044_ChangesForOrganizationTypes.sql" />
     <Content Include="SqlScripts\Deltas\20210913_091100_0043_ChangesForMusicBands.sql" />
     <Content Include="SqlScripts\Deltas\20210820_154000_0042_ChangesForCommissions.sql" />

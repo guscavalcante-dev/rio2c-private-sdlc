@@ -65,6 +65,9 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Mode
         [JsonProperty("block_name")]
         public string BlockName { get; set; }
 
+        [JsonProperty("eticket_link")]
+        public string TicketUrl { get; set; }
+
         [JsonProperty("completed_at")]
         public DateTime? CompletedAt { get; set; }
 

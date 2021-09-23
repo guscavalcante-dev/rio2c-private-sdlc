@@ -54,6 +54,12 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
         public bool IsBarcodeUsed { get; private set; }
         public DateTime? BarcodeUpdateDate { get; private set; }
 
+        // Ticket Url
+        public string TicketUrl { get; private set; }
+        public bool IsTicketPrinted { get; private set; }
+        public bool IsTicketUsed { get; private set; }
+        public DateTime? TicketUpdateDate { get; private set; }
+
         /// <summary>Initializes a new instance of the <see cref="SalesPlatformAttendeeDto"/> class.</summary>
         public SalesPlatformAttendeeDto()
         {
@@ -98,6 +104,12 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
             this.IsBarcodePrinted = barcode?.IsPrinted ?? false;
             this.IsBarcodeUsed = barcode?.IsBarcodeUsed() ?? false;
             this.BarcodeUpdateDate = barcode?.Changed;
+
+            // TicketUrl - Eventbrite uses Barcode instead of TicketUrl
+            //this.TicketUrl = "";
+            //this.IsTicketPrinted = false;
+            //this.IsTicketUsed = false;
+            //this.TicketUpdateDate = null;
         }
 
         /// <summary>
@@ -131,12 +143,18 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
             this.BirthDate = "";
             this.CellPhone = "0";
             this.JobTitle = "_";
-            
-            // Barcode            
-            this.Barcode = intiPayload.ValidatorCode;
-            this.IsBarcodePrinted = false;
-            this.IsBarcodeUsed = false;
-            this.BarcodeUpdateDate = intiPayload?.Timestamp;
+
+            // Barcode - INTI uses TicketUrl instead of Barcode
+            //this.Barcode = intiPayload.ValidatorCode;
+            //this.IsBarcodePrinted = false;
+            //this.IsBarcodeUsed = false;
+            //this.BarcodeUpdateDate = intiPayload?.Timestamp;
+
+            // TicketUrl            
+            this.TicketUrl = intiPayload.TicketUrl;
+            this.IsTicketPrinted = false;
+            this.IsTicketUsed = false;
+            this.TicketUpdateDate = intiPayload?.Timestamp;
         }
     }
 }
