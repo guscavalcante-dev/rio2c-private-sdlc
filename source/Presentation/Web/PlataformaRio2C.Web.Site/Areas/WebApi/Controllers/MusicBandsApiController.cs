@@ -23,6 +23,7 @@ using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Infra.Data.Context.Interfaces;
 using System;
 using System.Configuration;
 using System.Linq;
@@ -45,6 +46,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         private readonly IMusicBandTypeRepository musicBandTypesRepo;
         private readonly IMusicGenreRepository musicGenresRepo;
         private readonly ITargetAudienceRepository targetAudiencesRepo;
+        private readonly IMusicBandRepository musicBandRepo;
+        private readonly IUnitOfWork uow;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MusicBandsApiController" /> class.
@@ -63,7 +66,9 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             ILanguageRepository languageRepository,
             IMusicBandTypeRepository musicBandTypesRepository,
             IMusicGenreRepository musicGenresRepository,
-            ITargetAudienceRepository targetAudiencesRepository)
+            ITargetAudienceRepository targetAudiencesRepository,
+            IMusicBandRepository musicBandRepository,
+            IUnitOfWork unitOfWork)
         {
             this.commandBus = commandBus;
             this.identityController = identityController;
@@ -72,6 +77,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             this.musicBandTypesRepo = musicBandTypesRepository;
             this.musicGenresRepo = musicGenresRepository;
             this.targetAudiencesRepo = targetAudiencesRepository;
+            this.musicBandRepo = musicBandRepository;
+            this.uow = unitOfWork;
         }
 
         /// <summary>
@@ -149,20 +156,20 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             }
             catch (DomainException ex)
             {
-                return await Json(new 
-                { 
-                    status = ApiStatus.Error, 
-                    message = ex.GetInnerMessage(), 
-                    errors = validationResult?.Errors?.Select(e => new { e.Code, e.Message }) 
+                return await Json(new
+                {
+                    status = ApiStatus.Error,
+                    message = ex.GetInnerMessage(),
+                    errors = validationResult?.Errors?.Select(e => new { e.Code, e.Message })
                 });
             }
             catch (JsonSerializationException ex)
             {
-                return await Json(new 
+                return await Json(new
                 {
-                    status = ApiStatus.Error, 
-                    message = ex.GetInnerMessage(), 
-                    errors = validationResult?.Errors?.Select(e => new { e.Code, e.Message }) 
+                    status = ApiStatus.Error,
+                    message = ex.GetInnerMessage(),
+                    errors = validationResult?.Errors?.Select(e => new { e.Code, e.Message })
                 });
             }
             catch (Exception ex)
@@ -238,6 +245,58 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
                     Status = ApiStatus.Success
                 });
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00004", Message = "Music filters api failed." } });
+            }
+        }
+
+        [HttpGet]
+        [Route("migrateimagestoaws")]
+        public async Task<IHttpActionResult> MigrateImagesToAWS(string key, HttpRequestMessage request)
+        {
+            if (key.ToLowerInvariant() != "4f6d4f34-c9ef-4721-bf50-363e370d7d4e")
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00001", Message = "Key does not match!" } });
+
+            try
+            {
+                System.Net.NetworkCredential credentials = new System.Net.NetworkCredential();
+                HttpClientHandler handler = new HttpClientHandler { Credentials = credentials };
+                HttpClient client = new HttpClient(handler);
+                this.uow.BeginTransaction();
+
+                var musicBands = this.musicBandRepo.GetAll(w => w.ImageUrl != null).ToList();
+                foreach (var musicBand in musicBands)
+                {
+                    if (!string.IsNullOrEmpty(musicBand.ImageUrl))
+                    {
+                        try
+                        {
+                            var imageBytes = await client.GetByteArrayAsync(musicBand.ImageUrl);
+
+                            //1. Faz upload, pois se ocorrer erro de falta de memória, não apaga a imagem da banda do DB permitindo que tente novamente mais tarde.
+                            PlataformaRio2c.Infra.Data.FileRepository.Helpers.ImageHelper.UploadOriginalAndThumbnailImages(
+                                musicBand.Uid,
+                                Convert.ToBase64String(imageBytes),
+                                Domain.Statics.FileRepositoryPathType.MusicBandImage);
+
+                            //2. Só apaga a imagem do DB quando efetuar o upload com sucesso.
+                            musicBand.UpdateImageUploadDate(true, false);
+                            musicBand.ImageUrl = null;
+                            this.musicBandRepo.Update(musicBand);
+                            this.uow.SaveChanges(); //Sei que não é o correto chamar SaveChanges dentro de foreach, mas neste caso precisa salvar a cada upload feito pra não correr o risco de subir a mesma imagem 2x.
+                        }
+                        catch
+                        {
+                            //As imagens onde ocorrer erro ficarão registradas no DB e terão de ser tratadas manualmente.
+                            continue;
+                        }
+                    }
+                }
+
+                return await Json(new { status = ApiStatus.Success, message = string.Format(Messages.EntityActionSuccessfull, Labels.MusicBands, Labels.UpdatedM) });
             }
             catch (Exception ex)
             {
