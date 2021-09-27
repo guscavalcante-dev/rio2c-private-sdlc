@@ -145,7 +145,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
             this.JobTitle = "_";
 
             // Barcode - INTI uses TicketUrl instead of Barcode
-            this.Barcode = "";
+            this.Barcode = null;
             this.IsBarcodePrinted = false;
             this.IsBarcodeUsed = false;
             this.BarcodeUpdateDate = null;
