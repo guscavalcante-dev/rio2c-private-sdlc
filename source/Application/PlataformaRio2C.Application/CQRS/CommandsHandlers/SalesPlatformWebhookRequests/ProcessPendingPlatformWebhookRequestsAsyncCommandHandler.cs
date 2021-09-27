@@ -11,11 +11,6 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using PlataformaRio2C.Application.CQRS.Commands;
 using PlataformaRio2C.Application.CQRS.Queries;
@@ -25,9 +20,11 @@ using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.Data.Context.Interfaces;
-using System.Web.Script.Serialization;
-using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Models;
-using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 {
@@ -101,7 +98,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             // Loop webhook requests
             foreach (var processingRequestDto in pendingRequestsDtos)
-            {                                
+            {
                 Tuple<string, List<SalesPlatformAttendeeDto>> salesPlatformResponse;
 
                 #region Get info from api
@@ -110,7 +107,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 salesPlatformResponse = salesPlatformService.ExecuteRequest();
 
                 try
-                {      
+                {
                     if (salesPlatformResponse?.Item2?.Any() != true)
                     {
                         var errorMessage = $"No attendee returned by api for Uid: {processingRequestDto.Uid}";
@@ -191,7 +188,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                             {
                                 // Update collaborator ticket
                                 var response = await this.CommandBus.Send(new UpdateCollaboratorTicket(
-                                    collaboratorByEmail, 
+                                    collaboratorByEmail,
                                     salesPlatformAttendeeDto,
                                     attendeeSalesPlatformDto.Edition,
                                     collaboratorByAttendeeId?.GetAttendeeCollaboratorByEditionId(attendeeSalesPlatformDto.Edition.Id)?.GetAllAttendeeOrganizations(),
@@ -208,7 +205,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                             {
                                 // Delete ticket from collaboratorAttendeeId
                                 var response1 = await this.CommandBus.Send(new DeleteCollaboratorTicket(
-                                    collaboratorByAttendeeId, 
+                                    collaboratorByAttendeeId,
                                     salesPlatformAttendeeDto,
                                     attendeeSalesPlatformDto.Edition,
                                     attendeeSalesPlatformTicketTypeDto.AttendeeSalesPlatformTicketType,
@@ -353,9 +350,17 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 #endregion
             }
 
-            this.Uow.SaveChanges();
+            var saved = this.Uow.SaveChanges();
 
             #endregion
+
+            if (!saved.Success)
+            {
+                foreach (var validationResult in saved.ValidationResults)
+                {
+                    this.AppValidationResult.Add(validationResult.ErrorMessage);
+                }
+            }
 
             if (!this.ValidationResult.IsValid)
             {

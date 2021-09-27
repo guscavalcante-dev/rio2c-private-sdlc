@@ -39,6 +39,9 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.Property(t => t.JobTitle)
                 .HasMaxLength(AttendeeCollaboratorTicket.JobTitleMaxLength);
 
+            this.Property(t => t.TicketUrl)
+                .HasMaxLength(AttendeeCollaboratorTicket.TicketUrlMaxLength);
+
             // Relationships
             this.HasRequired(t => t.AttendeeCollaborator)
                 .WithMany(e => e.AttendeeCollaboratorTickets)

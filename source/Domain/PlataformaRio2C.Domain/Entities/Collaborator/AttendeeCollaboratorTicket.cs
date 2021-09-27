@@ -33,6 +33,8 @@ namespace PlataformaRio2C.Domain.Entities
         public static readonly int JobTitleMaxLength = 200;
         public static readonly int BarcodeMinLength = 1;
         public static readonly int BarcodeMaxLength = 40;
+        public static readonly int TicketUrlMinLength = 1;
+        public static readonly int TicketUrlMaxLength = 400;
 
         public int AttendeeCollaboratorId { get; private set; }
         public int AttendeeSalesPlatformTicketTypeId { get; private set; }
@@ -49,10 +51,18 @@ namespace PlataformaRio2C.Domain.Entities
         public bool IsBarcodeUsed { get; private set; }
         public DateTimeOffset? BarcodeUpdateDate { get; private set; }
 
+        // Ticket Url
+        public string TicketUrl { get; private set; }
+        public bool IsTicketPrinted { get; private set; }
+        public bool IsTicketUsed { get; private set; }
+        public DateTimeOffset? TicketUpdateDate { get; private set; }
+
         public virtual AttendeeCollaborator AttendeeCollaborator { get; private set; }
         public virtual AttendeeSalesPlatformTicketType AttendeeSalesPlatformTicketType { get; private set; }
 
-        /// <summary>Initializes a new instance of the <see cref="AttendeeCollaboratorTicket"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttendeeCollaboratorTicket"/> class.
+        /// </summary>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
         /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
         /// <param name="salesPlatformAttendeeId">The sales platform attendee identifier.</param>
@@ -65,6 +75,10 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isBarcodePrinted">if set to <c>true</c> [is barcode printed].</param>
         /// <param name="isBarcodeUsed">if set to <c>true</c> [is barcode used].</param>
         /// <param name="barcodeUpdateDate">The barcode update date.</param>
+        /// <param name="ticketUrl">The ticket URL.</param>
+        /// <param name="isTicketPrinted">if set to <c>true</c> [is ticket printed].</param>
+        /// <param name="isTicketUsed">if set to <c>true</c> [is ticket used].</param>
+        /// <param name="ticketUpdateDate">The ticket update date.</param>
         /// <param name="userId">The user identifier.</param>
         public AttendeeCollaboratorTicket(
             AttendeeCollaborator attendeeCollaborator, 
@@ -79,6 +93,10 @@ namespace PlataformaRio2C.Domain.Entities
             bool isBarcodePrinted,
             bool isBarcodeUsed,
             DateTime? barcodeUpdateDate,
+            string ticketUrl,
+            bool isTicketPrinted,
+            bool isTicketUsed,
+            DateTime? ticketUpdateDate,
             int userId)
         {
             this.AttendeeCollaborator = attendeeCollaborator;
@@ -95,7 +113,13 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsBarcodePrinted = isBarcodePrinted;
             this.IsBarcodeUsed = isBarcodeUsed;
             this.BarcodeUpdateDate = barcodeUpdateDate;
-            
+
+            // Ticket Url
+            this.TicketUrl = ticketUrl?.Trim();
+            this.IsTicketPrinted = isTicketPrinted;
+            this.IsTicketUsed = isTicketUsed;
+            this.TicketUpdateDate = ticketUpdateDate;
+
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
             this.CreateUserId = this.UpdateUserId= userId;
@@ -106,7 +130,9 @@ namespace PlataformaRio2C.Domain.Entities
         {
         }
 
-        /// <summary>Updates the specified attendee sales platform ticket type.</summary>
+        /// <summary>
+        /// Updates the specified attendee sales platform ticket type.
+        /// </summary>
         /// <param name="attendeeSalesPlatformTicketType">Type of the attendee sales platform ticket.</param>
         /// <param name="salesPlatformUpdateDate">The sales platform update date.</param>
         /// <param name="firstName">The first name.</param>
@@ -117,6 +143,10 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isBarcodePrinted">if set to <c>true</c> [is barcode printed].</param>
         /// <param name="isBarcodeUsed">if set to <c>true</c> [is barcode used].</param>
         /// <param name="barcodeUpdateDate">The barcode update date.</param>
+        /// <param name="ticketUrl">The ticket URL.</param>
+        /// <param name="isTicketPrinted">if set to <c>true</c> [is ticket printed].</param>
+        /// <param name="isTicketUsed">if set to <c>true</c> [is ticket used].</param>
+        /// <param name="ticketUpdateDate">The ticket update date.</param>
         /// <param name="userId">The user identifier.</param>
         public void Update(
             AttendeeSalesPlatformTicketType attendeeSalesPlatformTicketType,
@@ -129,6 +159,10 @@ namespace PlataformaRio2C.Domain.Entities
             bool isBarcodePrinted,
             bool isBarcodeUsed,
             DateTime? barcodeUpdateDate,
+            string ticketUrl,
+            bool isTicketPrinted,
+            bool isTicketUsed,
+            DateTime? ticketUpdateDate,
             int userId)
         {
             // Check if the update date is before the last update
@@ -156,18 +190,28 @@ namespace PlataformaRio2C.Domain.Entities
             this.IsBarcodeUsed = isBarcodeUsed;
             this.BarcodeUpdateDate = barcodeUpdateDate;
 
+            // Ticket Url
+            this.TicketUrl = ticketUrl?.Trim();
+            this.IsTicketPrinted = isTicketPrinted;
+            this.IsTicketUsed = isTicketUsed;
+            this.TicketUpdateDate = ticketUpdateDate;
+
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
         }
 
-        /// <summary>Deletes the specified sales platform update date.</summary>
+        /// <summary>
+        /// Deletes the specified sales platform update date.
+        /// </summary>
         /// <param name="salesPlatformUpdateDate">The sales platform update date.</param>
         /// <param name="barcodeUpdateDate">The barcode update date.</param>
+        /// <param name="ticketUpdateDate">The ticket update date.</param>
         /// <param name="userId">The user identifier.</param>
         public void Delete(
             DateTime salesPlatformUpdateDate,
             DateTime? barcodeUpdateDate,
+            DateTime? ticketUpdateDate,
             int userId)
         {
             if (barcodeUpdateDate.HasValue && barcodeUpdateDate.Value < this.BarcodeUpdateDate)
@@ -181,6 +225,17 @@ namespace PlataformaRio2C.Domain.Entities
                 return;
             }
 
+            if (ticketUpdateDate.HasValue && ticketUpdateDate.Value < this.TicketUpdateDate)
+            {
+                if (this.ValidationResult == null)
+                {
+                    this.ValidationResult = new ValidationResult();
+                }
+
+                this.ValidationResult.Add(new ValidationError($"Ticket update is older than the last update (Current: {salesPlatformUpdateDate.ToString("yyyyMMddHHmmss")}; Last: {this.SalesPlatformUpdateDate.ToString("yyyyMMddHHmmss")})."));
+                return;
+            }
+
             if (this.IsDeleted)
             {
                 return;
@@ -188,9 +243,8 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.SalesPlatformUpdateDate = salesPlatformUpdateDate;
             this.BarcodeUpdateDate = barcodeUpdateDate;
-            this.IsDeleted = true;
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            this.TicketUpdateDate = ticketUpdateDate;
+            base.Delete(userId);
         }
 
         #region Validations
@@ -211,6 +265,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ValidateCellPhone();
             this.ValidateJobTitle();
             this.ValidateBarcode();
+            this.ValidateTicketUrl();
 
             return this.ValidationResult.IsValid;
         }
@@ -278,6 +333,15 @@ namespace PlataformaRio2C.Domain.Entities
             if (this.Barcode?.Trim().Length < BarcodeMinLength || this.Barcode?.Trim().Length > BarcodeMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, "Barcode", BarcodeMaxLength, BarcodeMinLength), new string[] { "Barcode" }));
+            }
+        }
+
+        /// <summary>Validates the ticket URL.</summary>
+        public void ValidateTicketUrl()
+        {
+            if (this.TicketUrl?.Trim().Length < TicketUrlMinLength || this.TicketUrl?.Trim().Length > TicketUrlMaxLength)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, nameof(this.TicketUrl), TicketUrlMaxLength, TicketUrlMinLength), new string[] { nameof(this.TicketUrl) }));
             }
         }
 
