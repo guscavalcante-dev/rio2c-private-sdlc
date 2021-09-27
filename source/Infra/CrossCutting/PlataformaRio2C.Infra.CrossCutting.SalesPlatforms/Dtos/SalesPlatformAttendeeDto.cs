@@ -106,10 +106,10 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
             this.BarcodeUpdateDate = barcode?.Changed;
 
             // TicketUrl - Eventbrite uses Barcode instead of TicketUrl
-            //this.TicketUrl = "";
-            //this.IsTicketPrinted = false;
-            //this.IsTicketUsed = false;
-            //this.TicketUpdateDate = null;
+            this.TicketUrl = null;
+            this.IsTicketPrinted = false;
+            this.IsTicketUsed = false;
+            this.TicketUpdateDate = null;
         }
 
         /// <summary>
@@ -145,10 +145,10 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
             this.JobTitle = "_";
 
             // Barcode - INTI uses TicketUrl instead of Barcode
-            //this.Barcode = intiPayload.ValidatorCode;
-            //this.IsBarcodePrinted = false;
-            //this.IsBarcodeUsed = false;
-            //this.BarcodeUpdateDate = intiPayload?.Timestamp;
+            this.Barcode = "";
+            this.IsBarcodePrinted = false;
+            this.IsBarcodeUsed = false;
+            this.BarcodeUpdateDate = null;
 
             // TicketUrl            
             this.TicketUrl = intiPayload.TicketUrl;
