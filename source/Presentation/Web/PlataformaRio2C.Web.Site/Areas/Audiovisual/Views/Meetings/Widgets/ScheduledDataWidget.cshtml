@@ -1,0 +1,65 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
+@model List<NegotiationGroupedByDateDto>
+@if (Model?.Any() == true)
+{
+    foreach (var negotiationGroupedByDateDto in Model)
+    {
+        <div class="col-sm-12 col-lg-12 col-xl-12  p-0 m-0">
+            <div class="kt-portlet kt-portlet--height-fluid">
+                <div class="kt-portlet__body">
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="w-100">
+                                <h3 class="kt-portlet__head-title" style="font-size: 20px;">@(negotiationGroupedByDateDto?.Date.ToStringDayMonthYearExtensive(Labels.Of))</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover table-checkable" id="conferences-list-table">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">@Labels.Hour</th>
+                                    <th>@Labels.Producer</th>
+                                    <th>@Labels.Project</th>
+                                    <th>@Labels.Room</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var negotiationDto in negotiationGroupedByDateDto.NegotiationDtos)
+                                {
+                                    <tr>
+                                        <td class="align-middle text-center col-md-2">@(negotiationDto?.Negotiation?.StartDate.ToBrazilTimeZone().ToShortTimeString()) - @(negotiationDto?.Negotiation?.EndDate.ToBrazilTimeZone().ToShortTimeString())</td>
+                                        <td class="align-middle col-md-4">@(negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.SellerAttendeeOrganizationDto?.Organization?.TradeName)</td>
+                                        <td class="align-middle col-md-3">@(negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value)</td>
+                                        <td class="align-middle col-md-3">
+                                            <div class="d-flex w-100 justify-content-between align-items-center">
+                                                <span>@(negotiationDto?.RoomDto?.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.RoomName?.Value)</span>
+                                                <div>
+                                                    @if (negotiationDto?.RoomDto?.Room?.IsVirtualMeeting == true && !string.IsNullOrEmpty(negotiationDto?.RoomDto?.Room?.VirtualMeetingUrl))
+                                                    {
+                                                        <button type="button" class="btn btn-success btn-font-sm">
+                                                            <a class="text-white" href="@(negotiationDto?.RoomDto?.Room?.VirtualMeetingUrl)" target="_blank">@Labels.Join</a>
+                                                        </button>
+                                                    }
+                                                    else if (negotiationDto?.RoomDto?.Room?.IsVirtualMeeting == false)
+                                                    {
+                                                        <span>@(negotiationDto.Negotiation.TableNumber)</span>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="col-12 text-center mt-30">@string.Format(Messages.EntityNotAction, Labels.ScheduledNegotiations, Labels.FoundFP)</div>
+}

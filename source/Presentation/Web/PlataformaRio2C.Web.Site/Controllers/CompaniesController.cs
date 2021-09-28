@@ -29,6 +29,9 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Web.Site.Filters;
 using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2c.Infra.Data.FileRepository;
+using PlataformaRio2C.Domain.Statics;
 
 namespace PlataformaRio2C.Web.Site.Controllers
 {
@@ -41,27 +44,37 @@ namespace PlataformaRio2C.Web.Site.Controllers
         private readonly IActivityRepository activityRepo;
         private readonly ITargetAudienceRepository targetAudienceRepo;
         private readonly IInterestRepository interestRepo;
+        private readonly IOrganizationRepository organizationRepo;
+        private readonly IFileRepository fileRepo;
 
-        /// <summary>Initializes a new instance of the <see cref="CompaniesController"/> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CompaniesController"/> class.
+        /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="attendeeOrganizationRepository">The attendee organization repository.</param>
         /// <param name="activityRepository">The activity repository.</param>
         /// <param name="targetAudienceRepository">The target audience repository.</param>
         /// <param name="interestRepository">The interest repository.</param>
+        /// <param name="organizationRepository">The organization repository.</param>
+        /// <param name="fileRepository">The file repository.</param>
         public CompaniesController(
             IMediator commandBus, 
             IdentityAutenticationService identityController,
             IAttendeeOrganizationRepository attendeeOrganizationRepository,
             IActivityRepository activityRepository,
             ITargetAudienceRepository targetAudienceRepository,
-            IInterestRepository interestRepository)
+            IInterestRepository interestRepository,
+            IOrganizationRepository organizationRepository,
+            IFileRepository fileRepository)
             : base(commandBus, identityController)
         {
             this.attendeeOrganizationRepo = attendeeOrganizationRepository;
             this.activityRepo = activityRepository;
             this.targetAudienceRepo = targetAudienceRepository;
             this.interestRepo = interestRepository;
+            this.organizationRepo = organizationRepository;
+            this.fileRepo = fileRepository;
         }
 
         /// <summary>Detailses the specified identifier.</summary>
@@ -956,6 +969,86 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 {
                     new { page = this.RenderRazorViewToString("/Views/Companies/Shared/_ProducerInfoForm.cshtml", cmd), divIdOrClass = "#form-container" },
                 }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Finds
+
+        /// <summary>
+        /// Finds all players by filters.
+        /// </summary>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="customFilter">The custom filter.</param>
+        /// <param name="page">The page.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> FindAllPlayersByFilters(string keywords, string customFilter, int? page = 1)
+        {
+            var collaboratorsApiDtos = await this.organizationRepo.FindAllDropdownApiListDtoPaged(
+                this.EditionDto.Id,
+                keywords,
+                customFilter,
+                OrganizationType.Player.Uid,
+                page.Value,
+                10);
+
+            return Json(new
+            {
+                status = "success",
+                HasPreviousPage = collaboratorsApiDtos.HasPreviousPage,
+                HasNextPage = collaboratorsApiDtos.HasNextPage,
+                TotalItemCount = collaboratorsApiDtos.TotalItemCount,
+                PageCount = collaboratorsApiDtos.PageCount,
+                PageNumber = collaboratorsApiDtos.PageNumber,
+                PageSize = collaboratorsApiDtos.PageSize,
+                Organizations = collaboratorsApiDtos?.Select(c => new OrganizationDropdownDto
+                {
+                    Uid = c.Uid,
+                    Name = c.Name,
+                    TradeName = c.TradeName,
+                    CompanyName = c.CompanyName,
+                    Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, c.Uid, c.ImageUploadDate, true) : null
+                })?.ToList()
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Finds all producers by filters.
+        /// </summary>
+        /// <param name="keywords">The keywords.</param>
+        /// <param name="customFilter">The custom filter.</param>
+        /// <param name="page">The page.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> FindAllProducersByFilters(string keywords, string customFilter, int? page = 1)
+        {
+            var collaboratorsApiDtos = await this.organizationRepo.FindAllDropdownApiListDtoPaged(
+                this.EditionDto.Id,
+                keywords,
+                customFilter,
+                OrganizationType.Producer.Uid,
+                page.Value,
+                10);
+
+            return Json(new
+            {
+                status = "success",
+                HasPreviousPage = collaboratorsApiDtos.HasPreviousPage,
+                HasNextPage = collaboratorsApiDtos.HasNextPage,
+                TotalItemCount = collaboratorsApiDtos.TotalItemCount,
+                PageCount = collaboratorsApiDtos.PageCount,
+                PageNumber = collaboratorsApiDtos.PageNumber,
+                PageSize = collaboratorsApiDtos.PageSize,
+                Organizations = collaboratorsApiDtos?.Select(c => new OrganizationDropdownDto
+                {
+                    Uid = c.Uid,
+                    Name = c.Name,
+                    TradeName = c.TradeName,
+                    CompanyName = c.CompanyName,
+                    Picture = c.ImageUploadDate.HasValue ? this.fileRepo.GetImageUrl(FileRepositoryPathType.OrganizationImage, c.Uid, c.ImageUploadDate, true) : null
+                })?.ToList()
             }, JsonRequestBehavior.AllowGet);
         }
 

@@ -4,7 +4,7 @@
 // Created          : 10-14-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-16-2021
+// Last Modified On : 09-27-2021
 // ***********************************************************************
 // <copyright file="OrganizationsApiController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -77,6 +77,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 request?.TradeName,
                 request?.GetCompanyNumber(),
                 Guid.Empty, //Required only on Web.Admin.OrganizationsApiController
+                true,
+                true,
                 request?.Page ?? 1, 
                 request?.PageSize ?? 10);
 

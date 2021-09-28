@@ -685,6 +685,7 @@
     <Compile Include="ViewModels\Common\Activity\ActivityAppViewModel.cs" />
     <Compile Include="ViewModels\Common\Agendas\AgendaSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Audiovisual\Commissions\AudiovisualCommissionSearchViewModel.cs" />
+    <Compile Include="ViewModels\Common\Audiovisual\Meetings\ScheduledSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\Audiovisual\Meetings\MeetingParameterSearchViewModel.cs" />
     <Compile Include="ViewModels\Common\CollaboratorPlayer\CollaboratorPlayerEditAppViewModel.cs" />
     <Compile Include="ViewModels\Common\CollaboratorPlayer\CollaboratorPlayerItemListAppViewModel.cs" />

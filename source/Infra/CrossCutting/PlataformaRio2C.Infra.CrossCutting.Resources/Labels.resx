@@ -2979,4 +2979,8 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Desassociado</value>
     <comment>Desassociado</comment>
   </data>
+  <data name="Join" xml:space="preserve">
+    <value>Participar</value>
+    <comment>Participar</comment>
+  </data>
 </root>

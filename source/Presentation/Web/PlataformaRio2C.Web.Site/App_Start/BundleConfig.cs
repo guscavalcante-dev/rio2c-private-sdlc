@@ -404,6 +404,14 @@ namespace PlataformaRio2C.Web.Site
 
             #endregion
 
+            #region Meetings Scheduled
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.scheduled.widget.js").Include(
+                "~/Assets/js/audiovisual/meetings/audiovisual.meetings.scheduled.widget.js",
+                "~/Assets/js/audiovisual/meetings/audiovisual.meetings.scheduled.delete.js"));
+
+            #endregion
+
             #endregion
 
             #region Music Page Bundles

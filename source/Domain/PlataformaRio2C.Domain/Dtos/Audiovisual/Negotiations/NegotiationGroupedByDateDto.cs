@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 03-07-2020
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-08-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 27-09-2021
 // ***********************************************************************
 // <copyright file="NegotiationGroupedByDateDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -23,6 +23,7 @@ namespace PlataformaRio2C.Domain.Dtos
     {
         public DateTime Date { get; set; }
         public List<NegotiationGroupedByRoomDto> NegotiationGroupedByRoomDtos { get; set; }
+        public List<NegotiationDto> NegotiationDtos { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="NegotiationGroupedByDateDto"/> class.</summary>
         /// <param name="date">The date.</param>
@@ -35,6 +36,17 @@ namespace PlataformaRio2C.Domain.Dtos
                                                     .OrderBy(n => n.Key.Id)
                                                     .Select(n => new NegotiationGroupedByRoomDto(n.Key, n.ToList()))?
                                                     .ToList();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NegotiationGroupedByDateDto"/> class.
+        /// </summary>
+        /// <param name="date">The date.</param>
+        /// <param name="negotiationsDtos">The negotiations dtos.</param>
+        public NegotiationGroupedByDateDto(DateTime date, List<NegotiationDto> negotiationsDtos)
+        {
+            this.Date = date;
+            this.NegotiationDtos = negotiationsDtos;
         }
 
         /// <summary>Initializes a new instance of the <see cref="NegotiationGroupedByDateDto"/> class.</summary>
