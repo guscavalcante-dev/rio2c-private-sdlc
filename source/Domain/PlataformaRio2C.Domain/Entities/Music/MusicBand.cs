@@ -42,6 +42,7 @@ namespace PlataformaRio2C.Domain.Entities
         public string Twitter { get; private set; }
         public string Youtube { get; private set; }
         public DateTimeOffset? ImageUploadDate { get; private set; }
+        public string ImageUrl { get; set; }
 
         public virtual MusicBandType MusicBandType { get; private set; }
 
@@ -136,7 +137,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Updates the image upload date.</summary>
         /// <param name="isImageUploaded">if set to <c>true</c> [is image uploaded].</param>
         /// <param name="isImageDeleted">if set to <c>true</c> [is image deleted].</param>
-        private void UpdateImageUploadDate(bool isImageUploaded, bool isImageDeleted)
+        public void UpdateImageUploadDate(bool isImageUploaded, bool isImageDeleted)
         {
             if (isImageUploaded)
             {
