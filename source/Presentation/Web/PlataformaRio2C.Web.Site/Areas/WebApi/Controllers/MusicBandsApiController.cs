@@ -276,25 +276,22 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                         {
                             var imageBytes = await client.GetByteArrayAsync(musicBand.ImageUrl);
 
-                            //1. Faz upload, pois se ocorrer erro de falta de memória, não apaga a imagem da banda do DB permitindo que tente novamente mais tarde.
                             PlataformaRio2c.Infra.Data.FileRepository.Helpers.ImageHelper.UploadOriginalAndThumbnailImages(
                                 musicBand.Uid,
                                 Convert.ToBase64String(imageBytes),
                                 Domain.Statics.FileRepositoryPathType.MusicBandImage);
 
-                            //2. Só apaga a imagem do DB quando efetuar o upload com sucesso.
                             musicBand.UpdateImageUploadDate(true, false);
                             musicBand.ImageUrl = null;
                             this.musicBandRepo.Update(musicBand);
-                            this.uow.SaveChanges(); //Sei que não é o correto chamar SaveChanges dentro de foreach, mas neste caso precisa salvar a cada upload feito pra não correr o risco de subir a mesma imagem 2x.
                         }
                         catch
                         {
-                            //As imagens onde ocorrer erro ficarão registradas no DB e terão de ser tratadas manualmente.
-                            continue;
                         }
                     }
                 }
+
+                this.uow.SaveChanges();
 
                 return await Json(new { status = ApiStatus.Success, message = string.Format(Messages.EntityActionSuccessfull, Labels.MusicBands, Labels.UpdatedM) });
             }
