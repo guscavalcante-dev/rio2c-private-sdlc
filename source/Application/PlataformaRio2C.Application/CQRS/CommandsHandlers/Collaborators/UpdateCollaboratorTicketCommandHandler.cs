@@ -77,6 +77,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.SalesPlatformAttendeeDto.IsBarcodePrinted,
                 cmd.SalesPlatformAttendeeDto.IsBarcodeUsed,
                 cmd.SalesPlatformAttendeeDto.BarcodeUpdateDate,
+                cmd.SalesPlatformAttendeeDto.TicketUrl,
+                cmd.SalesPlatformAttendeeDto.IsTicketPrinted,
+                cmd.SalesPlatformAttendeeDto.IsTicketUsed,
+                cmd.SalesPlatformAttendeeDto.TicketUpdateDate,
                 1);
             if (!cmd.Collaborator.IsValid())
             {

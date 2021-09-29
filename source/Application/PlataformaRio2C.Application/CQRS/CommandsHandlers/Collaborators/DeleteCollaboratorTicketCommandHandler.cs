@@ -68,6 +68,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.SalesPlatformAttendeeDto.AttendeeId,
                 cmd.SalesPlatformAttendeeDto.SalesPlatformUpdateDate,
                 cmd.SalesPlatformAttendeeDto.BarcodeUpdateDate,
+                cmd.SalesPlatformAttendeeDto.TicketUpdateDate,
                 1);
             if (!cmd.Collaborator.IsValid())
             {
