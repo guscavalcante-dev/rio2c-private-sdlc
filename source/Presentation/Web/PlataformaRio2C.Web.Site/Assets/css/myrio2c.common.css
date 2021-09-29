@@ -45,15 +45,20 @@ table.image-side-text td {
     padding: 0 0 0 5px;
 }
 
-    table.image-side-text td img {
-        max-width: 50px;
-        max-height: 50px;
-    }
+table.image-side-text td img {
+    max-width: 50px;
+    max-height: 50px;
+}
 
 .clickable {
     cursor: pointer;
 }
 
+.image-max-size {
+    max-width: 50px;
+    max-height: 50px;
+    margin: 0 5px 0 5px;
+}
 
 /*
     Footer

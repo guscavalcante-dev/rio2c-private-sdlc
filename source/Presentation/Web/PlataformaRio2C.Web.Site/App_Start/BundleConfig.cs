@@ -174,14 +174,6 @@ namespace PlataformaRio2C.Web.Site
 
             #endregion
 
-            //#region CKEditor
-
-            //bundles.Add(new ScriptBundle("~/bundles/js/ckEditor.js").Include(
-            //    "~/Scripts/ckeditor/ckeditor.js",
-            //    "~/Content/js/ckeditor_config.js"));
-
-            //#endregion
-
             #region Cropperjs
 
             bundles.Add(new StyleBundle("~/bundles/css/cropper.css")
@@ -471,7 +463,6 @@ namespace PlataformaRio2C.Web.Site
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-1.x.min.js"));
-
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                        "~/Scripts/jquery.validate.min.js",

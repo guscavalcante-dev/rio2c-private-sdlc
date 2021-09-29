@@ -26,18 +26,6 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
         void Upload(Stream inputStream, string contentType, string fileName, FileRepositoryPathType fileRepositoryPathType, params object[] args);
         void DeleteImages(Guid imageUid, FileRepositoryPathType fileRepositoryPathType, params object[] args);
         void DeleteFiles(string fileName, FileRepositoryPathType fileRepositoryPathType, params object[] args);
-
-        //string GetLinkForAvatar(int id, int personTypeId = 1);
-        //bool HasAvatar(int id);
-        //bool HasAvatarCopy(int id);
-        //string GetLink(string fileName, string fileType, string id = null);
-        //MemoryStream Get(string fileName, string fileType, string id = null);
-        //void Upload(Stream inputStream, string contentType, string fileName, string fileType, string id = null);
-        //List<string> GetFiles(string directory, string filename = null);
-        //string GetPhysicalDirectory(string fileType, string id = null);
-        //void DeleteFile(string file, string fileType);
-        //void DeleteFileAllTypes(string fileName, string fileType, string id = null);
-        //void DeleteOldFileAllTypes(string fileName, string fileType, string id = null);
-        //void DuplicateFile(string fileName, string fileType);
+        string GetBaseUrl();
     }
 }

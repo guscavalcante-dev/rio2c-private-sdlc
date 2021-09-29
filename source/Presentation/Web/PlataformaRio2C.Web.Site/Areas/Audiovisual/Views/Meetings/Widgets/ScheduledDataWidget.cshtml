@@ -1,5 +1,7 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
+@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Statics
 @model List<NegotiationGroupedByDateDto>
 @if (Model?.Any() == true)
 {
@@ -22,32 +24,60 @@
                                     <th class="text-center">@Labels.Hour</th>
                                     <th>@Labels.Producer</th>
                                     <th>@Labels.Project</th>
-                                    <th>@Labels.Room</th>
+                                    <th class="border-right-0">@Labels.Room</th>
+                                    <th class="border-left-0">&nbsp;</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var negotiationDto in negotiationGroupedByDateDto.NegotiationDtos)
                                 {
                                     <tr>
-                                        <td class="align-middle text-center col-md-2">@(negotiationDto?.Negotiation?.StartDate.ToBrazilTimeZone().ToShortTimeString()) - @(negotiationDto?.Negotiation?.EndDate.ToBrazilTimeZone().ToShortTimeString())</td>
-                                        <td class="align-middle col-md-4">@(negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.SellerAttendeeOrganizationDto?.Organization?.TradeName)</td>
-                                        <td class="align-middle col-md-3">@(negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value)</td>
-                                        <td class="align-middle col-md-3">
-                                            <div class="d-flex w-100 justify-content-between align-items-center">
-                                                <span>@(negotiationDto?.RoomDto?.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.RoomName?.Value)</span>
-                                                <div>
-                                                    @if (negotiationDto?.RoomDto?.Room?.IsVirtualMeeting == true && !string.IsNullOrEmpty(negotiationDto?.RoomDto?.Room?.VirtualMeetingUrl))
-                                                    {
-                                                        <button type="button" class="btn btn-success btn-font-sm">
-                                                            <a class="text-white" href="@(negotiationDto?.RoomDto?.Room?.VirtualMeetingUrl)" target="_blank">@Labels.Join</a>
-                                                        </button>
-                                                    }
-                                                    else if (negotiationDto?.RoomDto?.Room?.IsVirtualMeeting == false)
-                                                    {
-                                                        <span>@(negotiationDto.Negotiation.TableNumber)</span>
-                                                    }
-                                                </div>
+                                        <td class="align-middle text-center col-sm-3 col-lg-2">
+                                            @(negotiationDto?.Negotiation?.StartDate.ToBrazilTimeZone().ToShortTimeString()) <span class="d-none d-sm-inline">-</span><span class="d-sm-none"><br /></span> @(negotiationDto?.Negotiation?.EndDate.ToBrazilTimeZone().ToShortTimeString())
+                                        </td>
+                                        <td class="col-md-4">
+                                            <div class="row align-items-center" >
+                                                @{
+                                                    var organization = negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.SellerAttendeeOrganizationDto?.Organization;
+                                                    <div class="col-md-3  p-0">
+                                                        @if (organization?.HasImage() == true)
+                                                        {
+                                                            <div class="kt-widget__media">
+                                                                <img src="@ImageHelper.GetNoImageUrl()" class="image-max-size" alt="image">
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="kt-widget kt-widget--user-profile-3">
+                                                                <div class="kt-widget__top">
+                                                                    <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest ml-2 image-max-size" style="width: 50px; height: 50px;">
+                                                                        @(organization?.GetTradeNameAbbreviation() ?? "-")
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                    <div class="col-md-9 p-0">
+                                                        <span>@(negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.SellerAttendeeOrganizationDto?.Organization?.TradeName)</span>
+                                                    </div>
+                                                }
                                             </div>
+                                        </td>
+                                        <td class="align-middle col-md-3">@(negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value)</td>
+                                        <td class="align-middle border-right-0">
+                                            <span>@(negotiationDto?.RoomDto?.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.RoomName?.Value)</span>
+                                        </td>
+                                        <td class="align-middle text-right border-left-0">
+                                            @if (negotiationDto?.RoomDto?.Room?.IsVirtualMeeting == true && !string.IsNullOrEmpty(negotiationDto?.RoomDto?.Room?.VirtualMeetingUrl))
+                                            {
+                                                <button type="button" class="btn btn-success btn-font-sm">
+                                                    <a class="text-white" href="@(negotiationDto?.RoomDto?.Room?.VirtualMeetingUrl)" target="_blank">@Labels.Join</a>
+                                                </button>
+                                            }
+                                            else if (negotiationDto?.RoomDto?.Room?.IsVirtualMeeting == false)
+                                            {
+                                                <span>@Labels.Table @(negotiationDto.Negotiation.TableNumber)</span>
+                                            }
                                         </td>
                                     </tr>
                                 }

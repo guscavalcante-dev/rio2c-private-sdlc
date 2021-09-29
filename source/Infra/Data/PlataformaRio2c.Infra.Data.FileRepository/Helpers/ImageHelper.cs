@@ -140,15 +140,26 @@ namespace PlataformaRio2c.Infra.Data.FileRepository.Helpers
             return fileRepo.GetImageUrl(fileRepositoryPathType, imageUid, imageUploadDate, isThumbnail);
         }
 
+        /// <summary>
+        /// Gets the no image URL.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="FileRepositoryFactory"></exception>
+        public static string GetNoImageUrl()
+        {
+            var fileRepo = new FileRepositoryFactory().Get();
+            return $"{fileRepo.GetBaseUrl()}/no-image.png";
+        }
+
         #region Private Methods
 
-        /// <summary>Uploads the logo.</summary>
-        /// <param name="siteId">The site identifier.</param>
-        /// <param name="imageBytes">The image bytes.</param>
-        /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
-        /// <param name="isOriginalLogo">if set to <c>true</c> [is original logo].</param>
-        /// <param name="additionalFileInfo">The additional file information.</param>
-        private static void UploadLogo(Guid siteId, byte[] imageBytes, FileRepositoryPathType fileRepositoryPathType, bool isOriginalLogo, string additionalFileInfo = null)
+            /// <summary>Uploads the logo.</summary>
+            /// <param name="siteId">The site identifier.</param>
+            /// <param name="imageBytes">The image bytes.</param>
+            /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
+            /// <param name="isOriginalLogo">if set to <c>true</c> [is original logo].</param>
+            /// <param name="additionalFileInfo">The additional file information.</param>
+            private static void UploadLogo(Guid siteId, byte[] imageBytes, FileRepositoryPathType fileRepositoryPathType, bool isOriginalLogo, string additionalFileInfo = null)
         {
             IFileRepository fileRepo = new FileRepositoryFactory().Get();
 
