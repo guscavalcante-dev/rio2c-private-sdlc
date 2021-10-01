@@ -1,8 +1,10 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
 @using PlataformaRio2c.Infra.Data.FileRepository.Helpers
-@using PlataformaRio2C.Domain.Statics
 @model List<NegotiationGroupedByDateDto>
+@{
+    var brazilUtc = @DateTimeExtensions.GetBrazilUtc();
+}
 @if (Model?.Any() == true)
 {
     foreach (var negotiationGroupedByDateDto in Model)
@@ -33,10 +35,13 @@
                                 {
                                     <tr>
                                         <td class="align-middle text-center col-sm-3 col-lg-2">
-                                            @(negotiationDto?.Negotiation?.StartDate.ToBrazilTimeZone().ToShortTimeString()) <span class="d-none d-sm-inline">-</span><span class="d-sm-none"><br /></span> @(negotiationDto?.Negotiation?.EndDate.ToBrazilTimeZone().ToShortTimeString())
+                                            @(negotiationDto?.Negotiation?.StartDate.ToBrazilTimeZone().ToShortTimeString())
+                                            <span class="d-none d-sm-inline">-</span><span class="d-sm-none"><br /></span>
+                                            @(negotiationDto?.Negotiation?.EndDate.ToBrazilTimeZone().ToShortTimeString()) 
+                                            <span class="d-block form-optional-input">(@brazilUtc)</span>
                                         </td>
                                         <td class="col-md-4">
-                                            <div class="row align-items-center" >
+                                            <div class="row align-items-center">
                                                 @{
                                                     var organization = negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.SellerAttendeeOrganizationDto?.Organization;
                                                     <div class="col-md-3  p-0">
