@@ -575,6 +575,9 @@
   <data name="NameIsRequired" xml:space="preserve">
     <value>Nome obrigatório.</value>
   </data>
+  <data name="NegotiationPeriodClosed" xml:space="preserve">
+    <value>Período de negociação encerrado!</value>
+  </data>
   <data name="NoBadgesAvaiable" xml:space="preserve">
     <value>Nenhum ingresso disponível.</value>
     <comment>Nenhum ingresso disponível.</comment>

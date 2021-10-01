@@ -1194,6 +1194,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Período de negociação encerrado!.
+        /// </summary>
+        public static string NegotiationPeriodClosed {
+            get {
+                return ResourceManager.GetString("NegotiationPeriodClosed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nenhum ingresso disponível..
         /// </summary>
         public static string NoBadgesAvaiable {

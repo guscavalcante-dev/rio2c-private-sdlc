@@ -1,0 +1,40 @@
+﻿@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Statics
+@model NegotiationDto
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
+}
+
+<div class="kt-portlet__body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-center">
+                <section class="mt-0">
+                    <div class="timer-group">
+                        <div class="timer hour">
+                            <div class="hand"><span id="hourHand1"></span></div>
+                            <div class="hand"><span id="hourHand2"></span></div>
+                        </div>
+                        <div class="timer minute">
+                            <div class="hand"><span></span></div>
+                            <div class="hand"><span></span></div>
+                        </div>
+                        <div class="timer second">
+                            <div class="hand"><span id="secondHand1"></span></div>
+                            <div class="hand"><span id="secondHand2"></span></div>
+                        </div>
+                        <div class="face">
+                            <h2 class="clock" id="description">Rodada de Negócios em andamento</h2>
+                            <p class="clock" id="time">00:00:00</p>
+                        </div>
+                    </div>
+                </section>
+                <button class="btn btn-primary mt-5" onclick="Chronograph.init('2021-10-01 16:10:00')">
+                    <span>Start</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

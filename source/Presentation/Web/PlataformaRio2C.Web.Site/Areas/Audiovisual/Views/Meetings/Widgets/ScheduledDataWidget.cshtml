@@ -71,7 +71,7 @@
                                             @if (negotiationDto?.RoomDto?.Room?.IsVirtualMeeting == true && !string.IsNullOrEmpty(negotiationDto?.RoomDto?.Room?.VirtualMeetingUrl))
                                             {
                                                 <button type="button" class="btn btn-success btn-font-sm">
-                                                    <a class="text-white" href="@(negotiationDto?.RoomDto?.Room?.VirtualMeetingUrl)" target="_blank">@Labels.Join</a>
+                                                    <a class="text-white" href="@Url.Action("Details", "Meetings", new { Area = "Audiovisual", id = negotiationDto?.Negotiation.Uid })" target="_blank">@Labels.Join</a>
                                                 </button>
                                             }
                                             else if (negotiationDto?.RoomDto?.Room?.IsVirtualMeeting == false)

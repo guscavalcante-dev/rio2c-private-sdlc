@@ -393,6 +393,8 @@
     <Content Include="Assets\components\bootstrap-maxlength\src\bootstrap-maxlength.js" />
     <Content Include="Assets\components\bootstrap-timepicker\bootstrap-datepicker.en-us.js" />
     <Content Include="Assets\components\bootstrap-timepicker\bootstrap-datepicker.pt-br.js" />
+    <Content Include="Assets\components\chronograph\chronograph.css" />
+    <Content Include="Assets\components\chronograph\chronograph.js" />
     <Content Include="Assets\components\cropper\demo\css\main.css" />
     <Content Include="Assets\components\cropper\demo\index.html" />
     <Content Include="Assets\components\cropper\demo\js\main.js" />
@@ -800,6 +802,8 @@
     <Content Include="Assets\js\accounts\accounts.password.js" />
     <Content Include="Assets\js\addresses\addresses.form.js" />
     <Content Include="Assets\js\attendeeorganizations\attendeeorganizations.form.js" />
+    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.maininformation.widget.js" />
+    <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.virtualmeeting.widget.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.scheduled.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.commission.evaluation.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.interest.widget.js" />
@@ -6881,6 +6885,8 @@
     <Content Include="Areas\Audiovisual\Views\Meetings\Index.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\ScheduledDataWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\ScheduledWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Details.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\MainInformationWidget.cshtml" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />
@@ -7531,7 +7537,6 @@
     <Content Include="Views\Term\Player.cshtml" />
     <Content Include="Views\Account\UserNotFound.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\HttpPostedFileBase.cshtml" />
-    <Content Include="Views\Shared\_LayoutModal.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Player\Index.cshtml" />
     <Content Include="Views\Shared\_TabsCollaboratorProfileEditor.cshtml" />
@@ -7624,7 +7629,6 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
@@ -7635,7 +7639,6 @@
     <Content Include="Views\Account\VerifyCode.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Shared\_LayoutBasic.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\SiteMailerService\TicketBuyerWelcomeEmail.cshtml" />
     <Content Include="Views\SiteMailerService\_SiteEmailLayout.cshtml" />

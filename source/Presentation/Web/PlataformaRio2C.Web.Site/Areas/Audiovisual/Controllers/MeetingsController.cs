@@ -31,7 +31,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 {
     /// <summary>MeetingsController</summary>
     [AjaxAuthorize(Order = 1)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AudiovisualPlayerExecutive)]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AudiovisualPlayerExecutive + "," + Constants.CollaboratorType.Industry)]
     public class MeetingsController : BaseController
     {
         private readonly INegotiationRepository negotiationRepo;
@@ -92,6 +92,101 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet,
                 MaxJsonLength = Int32.MaxValue
             };
+        }
+
+        #endregion
+
+        #region Details
+
+        public async Task<ActionResult> Details(Guid? id)
+        {
+            var negotiationDto = await this.negotiationRepo.FindDtoAsync(id ?? Guid.Empty);
+            if (negotiationDto == null)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.OneToOneMeeting, Labels.FoundF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Meetings", new { Area = "Audiovisual" });
+            }
+
+            // 1 - Validate if the period of negotiations is open (table editions)
+            if (this.EditionDto?.IsAudiovisualProjectNegotiationsStarted() != true)
+            {
+                return Json(new { status = "error", message = Messages.NegotiationPeriodClosed }, JsonRequestBehavior.AllowGet);
+            }
+
+            // 2 - Validate if the current current user is an executive of the player or producer
+            // Validação implementada como atributo do Controller. Precisa implementar na action também?
+            // [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AudiovisualPlayerExecutive + "," + Constants.CollaboratorType.Industry)]
+
+            // 3 - Validate if the current datetime is in the period of the negotiation (5 minutes before or 5 minutes later)
+            // Vai ser feito via JS para bloquear somente o "meeting widget". Não iremos bloquear o Details pois o MainInformationWidget tem que ser exibido.
+
+            // 4 - Validate if the current Player accepts virtual meeting
+            if (negotiationDto?.ProjectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.AttendeeOrganization?.IsVirtualMeeting == false)
+            {
+                this.StatusMessageToastr(Messages.AccessDenied, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Meetings", new { Area = "Audiovisual" });
+            }
+
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.AudioVisual, null),
+                new BreadcrumbItemHelper(Labels.OneToOneMeeting, Url.Action("Index", "Meetings", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(negotiationDto.RoomDto.GetRoomNameByLanguageCode(this.UserInterfaceLanguage)?.RoomName?.Value, Url.Action("Details", "Meetings", new { Area = "Audiovisual", id }))
+            });
+
+            #endregion
+
+            return View(negotiationDto);
+        }
+
+        #region Main Information Widget
+
+        /// <summary>
+        /// Shows the main information widget.
+        /// </summary>
+        /// <param name="negotiationUid">The negotiation uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowMainInformationWidget(Guid? negotiationUid)
+        {
+            var negotiationDto = await this.negotiationRepo.FindDtoAsync(negotiationUid ?? Guid.Empty);
+            if (negotiationDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", negotiationDto), divIdOrClass = "#AudiovisualMeetingsMainInformationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        public async Task<ActionResult> BrandingInfo()
+        {
+            return Json(new
+            {
+                // The domain url to apply (will replace the domain in the sharing conference link/embed section)
+                inviteDomain = "example-company.org",
+                // The hex value for the colour used as background
+                backgroundColor = "#fff",
+                // The url for the image used as background
+                backgroundImageUrl = "https://example.com/background-img.png",
+                // The anchor url used when clicking the logo image
+                logoClickUrl = "https://my.rio2c.com",
+                // The url used for the image used as logo
+                logoImageUrl = "http://localhost:43931/Assets/img/logo_rio2c_white.png",
+                // Overwrite for pool of background images for avatars
+                //avatarBackgrounds = "['url(https://example.com/avatar-background-1.png)', '#FFF']",
+                // The lobby/prejoin screen background
+                premeetingBackground = "url(http://localhost:43931/Assets/img/header.jpg?20190829)"
+            }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

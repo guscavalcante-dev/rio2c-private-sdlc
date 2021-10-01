@@ -20,14 +20,14 @@
             <div class="kt-notification">
                 @if (isSeller)
                 {
-                    if (editionDto?.IsProjectSubmitStarted() != true || editionDto.IsProjectSubmitEnded() != true)
+                    if (editionDto?.IsAudiovisualProjectSubmitStarted() != true || editionDto.IsAudiovisualProjectSubmitEnded() != true)
                     {
                         var subscriptionUrl = Url.Action("SubmittedList", "Projects", new { Area = "" });
                         var editionUrl = Url.Action("SubmittedList", "Projects", new { Area = "" });
-                        if (editionDto?.IsProjectSubmitStarted() != true)
+                        if (editionDto?.IsAudiovisualProjectSubmitStarted() != true)
                         {
                             subscriptionUrl = Url.Action("Index", "Projects", new { Area = "" });
-                            editionUrl = Url.Action("Index", "Projects", new { Area = "" });                            
+                            editionUrl = Url.Action("Index", "Projects", new { Area = "" });
                         }
                         <a href="@subscriptionUrl" class="kt-notification__item">
                             <div class="kt-notification__item-icon">
@@ -63,7 +63,7 @@
                         </a>
                     }
                     var resultUrl = Url.Action("SubmittedList", "Projects", new { Area = "" });
-                    if (editionDto?.IsProjectSubmitEnded() != true)
+                    if (editionDto?.IsAudiovisualProjectSubmitEnded() != true)
                     {
                         resultUrl = Url.Action("Index", "Projects", new { Area = "" });
                     }
@@ -103,7 +103,7 @@
                 @if (isBuyer)
                 {
                     var evaluationUrl = Url.Action("EvaluationList", "Projects", new { Area = "" });
-                    if (editionDto?.IsProjectEvaluationStarted() != true)
+                    if (editionDto?.IsProjectBuyerEvaluationStarted() != true)
                     {
                         evaluationUrl = Url.Action("Index", "Projects", new { Area = "" });
                     }
@@ -121,18 +121,11 @@
                         <div class="kt-notification__item-details">
                             <div class="kt-notification__item-title">
                                 @Labels.Evaluation
-                                @if (editionDto?.IsProjectEvaluationOpen() == true && userAccessControlDto.ProjectEvaluationsPendingCount > 0)
+                                @if (editionDto?.IsProjectBuyerEvaluationOpen() == true && userAccessControlDto.ProjectEvaluationsPendingCount > 0)
                                 {
                                     <span class="kt-badge kt-badge--danger float-right mr-2">@userAccessControlDto.ProjectEvaluationsPendingCount</span>
                                 }
                             </div>
-                            @*@if (editionDto?.IsProjectEvaluationOpen() == true && userAccessControlDto.ProjectEvaluationsPendingCount > 0)
-                            {
-                                <div class="kt-notification__item-time">
-                                    @userAccessControlDto.ProjectEvaluationsPendingCount 
-                                    @((userAccessControlDto.ProjectEvaluationsPendingCount == 1 ? Labels.PendingS : Labels.PendingP).ToLowerInvariant())
-                                </div>
-                            }*@
                         </div>
                     </a>
                 }
