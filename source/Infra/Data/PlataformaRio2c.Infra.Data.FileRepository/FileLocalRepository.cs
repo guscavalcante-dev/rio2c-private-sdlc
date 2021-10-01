@@ -93,6 +93,13 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
             return this.GetDirectoryUrl(fileRepositoryPathType) + fileUid;
         }
 
+        /// <summary>Gets the base URL.</summary>
+        /// <returns></returns>
+        public string GetBaseUrl()
+        {
+            return "/" + this.localBucket + "/";
+        }
+
         #endregion
 
         #region Upload
@@ -193,13 +200,6 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
             }
 
             return string.Empty;
-        }
-
-        /// <summary>Gets the base URL.</summary>
-        /// <returns></returns>
-        private string GetBaseUrl()
-        {
-            return "/" + this.localBucket + "/";
         }
 
         #endregion

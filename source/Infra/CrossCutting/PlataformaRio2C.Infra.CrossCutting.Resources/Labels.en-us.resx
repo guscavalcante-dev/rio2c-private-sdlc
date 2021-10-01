@@ -2977,4 +2977,8 @@
     <value>Disassociated</value>
     <comment>Desassociado</comment>
   </data>
+  <data name="Join" xml:space="preserve">
+    <value>Join</value>
+    <comment>Participar</comment>
+  </data>
 </root>

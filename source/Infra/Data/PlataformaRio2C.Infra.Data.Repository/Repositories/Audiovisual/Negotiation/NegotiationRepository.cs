@@ -112,6 +112,24 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return query;
         }
 
+        /// <summary>
+        /// Finds the by attendee collaborator uid.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="attendeeCollaboratorUid">The attendee collaborator uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<Negotiation> FindByAttendeeCollaboratorUid(this IQueryable<Negotiation> query, Guid? attendeeCollaboratorUid)
+        {
+            if (attendeeCollaboratorUid.HasValue)
+            {
+                query = query
+                            .Where(n => n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.AttendeeOrganizationCollaborators.Any(aoc => aoc.AttendeeCollaborator.Uid == attendeeCollaboratorUid)
+                                        || n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators.Any(aoc => aoc.AttendeeCollaborator.Uid == attendeeCollaboratorUid));
+            }
+
+            return query;
+        }
+
         /// <summary>Finds the by date range.</summary>
         /// <param name="query">The query.</param>
         /// <param name="startDate">The start date.</param>
@@ -542,6 +560,102 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return (await query.ToListAsync())
                                 .GroupBy(n => n.StartDate.ToBrazilTimeZone().Date)
                                 .Select(nd => new NegotiationReportGroupedByDateDto(nd.Key, nd.ToList()))
+                                .OrderBy(ngd => ngd.Date)
+                                .ToList();
+        }
+
+        /// <summary>
+        /// Finds the collaborator scheduled widget dto asynchronous.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="buyerOrganizationUid">The buyer organization uid.</param>
+        /// <param name="sellerOrganizationUid">The seller organization uid.</param>
+        /// <param name="projectKeywords">The project keywords.</param>
+        /// <param name="negotiationDate">The negotiation date.</param>
+        /// <param name="roomUid">The room uid.</param>
+        /// <param name="attendeeCollaboratorUid">The attendee collaborator uid.</param>
+        /// <returns></returns>
+        public async Task<List<NegotiationGroupedByDateDto>> FindCollaboratorScheduledWidgetDtoAsync(
+            int editionId,
+            Guid? buyerOrganizationUid,
+            Guid? sellerOrganizationUid,
+            string projectKeywords,
+            DateTime? negotiationDate,
+            Guid? attendeeCollaboratorUid)
+        {
+            var query = this.GetBaseQuery()
+                                .FindByEditionId(editionId)
+                                .FindByBuyerOrganizationUid(buyerOrganizationUid)
+                                .FindBySellerOrganizationUid(sellerOrganizationUid)
+                                .FindByProjectKeywords(projectKeywords)
+                                .FindByDate(negotiationDate)
+                                .FindByAttendeeCollaboratorUid(attendeeCollaboratorUid)
+                                .Include(n => n.Room)
+                                .Include(n => n.Room.RoomNames)
+                                .Include(n => n.Room.RoomNames.Select(rn => rn.Language))
+                                .Include(n => n.ProjectBuyerEvaluation)
+                                .Include(n => n.ProjectBuyerEvaluation.Project)
+                                .Include(n => n.ProjectBuyerEvaluation.Project.ProjectTitles)
+                                .Include(n => n.ProjectBuyerEvaluation.Project.ProjectTitles.Select(pt => pt.Language))
+                                .Include(n => n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization)
+                                .Include(n => n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.Organization)
+                                .Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization)
+                                .Include(n => n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization);
+
+            return (await query.ToListAsync())
+                                .GroupBy(n => n.StartDate.ToBrazilTimeZone().Date)
+                                .Select(nd => new NegotiationGroupedByDateDto(
+                                    nd.Key, 
+                                    nd.Select(n => new NegotiationDto 
+                                    {
+                                        Negotiation = n,
+                                        ProjectBuyerEvaluationDto = new ProjectBuyerEvaluationDto()
+                                        {
+                                            ProjectBuyerEvaluation = n.ProjectBuyerEvaluation,
+                                            ProjectEvaluationStatus = n.ProjectBuyerEvaluation.ProjectEvaluationStatus,
+                                            BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto()
+                                            {
+                                                AttendeeOrganization = n.ProjectBuyerEvaluation.BuyerAttendeeOrganization,
+                                                Organization = n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization
+                                            },
+                                            ProjectDto = new ProjectDto()
+                                            {
+                                                Project = n.ProjectBuyerEvaluation.Project,
+                                                SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                                {
+                                                    AttendeeOrganization = n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization,
+                                                    Organization = n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.Organization
+                                                },
+                                                ProjectTitleDtos = n.ProjectBuyerEvaluation.Project.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                                {
+                                                    ProjectTitle = t,
+                                                    Language = t.Language
+                                                }),
+                                            }
+                                        },
+                                        RoomDto = new RoomDto()
+                                        {
+                                            Room = n.Room,
+                                            RoomNameDtos = n.Room.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto
+                                            {
+                                                RoomName = rn,
+                                                LanguageDto = new LanguageDto
+                                                {
+                                                    Id = rn.Language.Id,
+                                                    Uid = rn.Language.Uid,
+                                                    Code = rn.Language.Code
+                                                }
+                                            })
+                                        },
+                                        UpdaterDto = new UserBaseDto
+                                        {
+                                            Id = n.Updater.Id,
+                                            Uid = n.Updater.Uid,
+                                            Name = n.Updater.Name,
+                                            Email = n.Updater.Email
+                                        }
+                                    }).ToList())
+                                )
                                 .OrderBy(ngd => ngd.Date)
                                 .ToList();
         }

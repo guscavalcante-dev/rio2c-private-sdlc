@@ -196,5 +196,35 @@ namespace PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
 
             return dt?.ToString("dd/MM/yyyy hh:mm");
         }
+
+        /// <summary>
+        /// Converts to stringdaymonthyearextensive.
+        /// </summary>
+        /// <param name="dt">The dt.</param>
+        /// <returns></returns>
+        public static string ToStringDayMonthYearExtensive(this DateTime dt, string separator)
+        {
+            if (dt == null)
+            {
+                return "";
+            }
+
+            return dt.ToString($"dd '{separator}' MMMM '{separator}' yyyy");
+        }
+
+        /// <summary>
+        /// Converts to stringdaymonthyearextensive.
+        /// </summary>
+        /// <param name="dt">The dt.</param>
+        /// <returns></returns>
+        public static string ToStringDayMonthYearExtensive(this DateTime? dt, string separator)
+        {
+            if (dt == null)
+            {
+                return "";
+            }
+            
+            return dt?.ToString($"dd '{separator}' MMMM '{separator}' yyyy");
+        }
     }
 }

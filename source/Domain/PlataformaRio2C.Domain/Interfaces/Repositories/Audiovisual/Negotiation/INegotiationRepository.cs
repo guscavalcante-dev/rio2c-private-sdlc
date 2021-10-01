@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 06-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-30-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 09-27-2021
 // ***********************************************************************
 // <copyright file="INegotiationRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -31,6 +31,8 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<List<Negotiation>> FindScheduledNegotiationsByRoomIdAsync(int roomId, bool showAllRooms = false);
         Task<List<NegotiationDto>> FindAllScheduleDtosAsync(int editionId, int? attendeeCollaboratorId, DateTimeOffset startDate, DateTimeOffset endDate);
         Task<List<NegotiationReportGroupedByDateDto>> FindReportWidgetDtoAsync(int editionId, Guid? buyerOrganizationUid, Guid? sellerOrganizationUid, string projectKeywords, DateTime? negotiationDate, Guid? roomUid);
+        Task<List<NegotiationGroupedByDateDto>> FindCollaboratorScheduledWidgetDtoAsync(int editionId, Guid? buyerOrganizationUid, Guid? sellerOrganizationUid, string projectKeywords, DateTime? negotiationDate, Guid? attendeeCollaboratorUid);
+
         void Truncate();
     }    
 }

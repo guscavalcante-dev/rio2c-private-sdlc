@@ -1,0 +1,44 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+}
+<div class="col-12">
+    <div class="kt-portlet kt-portlet--mobile">
+        <div class="kt-portlet__head kt-portlet__head--lg">
+            <div class="kt-portlet__head-label">
+                <span class="kt-portlet__head-icon">
+                    <i class="kt-font-brand flaticon2-line-chart"></i>
+                </span>
+                <h3 class="kt-portlet__head-title">
+                    @Labels.ScheduledNegotiations
+                </h3>
+            </div>
+        </div>
+        <div class="kt-portlet__body pb-0">
+            <!--begin: SearchForm-->
+            <div class="row">
+                @*<div class="col-12 col-md-12 mt-2">
+                        @Html.DropDownList("SearchBuyerOrganizationUid", Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAMEntity, Labels.Player.ToLowerInvariant())}", new { @class = "form-control" })
+                    </div>*@
+                <div class="col-12 col-md-12 mt-2">
+                    @Html.DropDownList("SearchSellerOrganizationUid", Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAFEntity, Labels.Producer.ToLowerInvariant())}", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-6 mt-2">
+                    @Html.TextBox("SearchProjectKeywords", null, new { type = "search", @class = "form-control", autocomplete = "off", placeholder = $"{Labels.Project}" })
+                </div>
+                <div class="col-12 col-md-5 mt-2">
+                    @Html.TextBox("SearchDate", null, new { @class = "form-control enable-datepicker", type = "search", data_date_start_date = editionDto?.StartDate.ToBrazilTimeZone().ToShortDateString(), data_date_end_date = editionDto?.EndDate.ToBrazilTimeZone().ToShortDateString(), placeholder = Labels.Date })
+                </div>
+                <div class="form-group col-1 col-md-1 mt-2">
+                    <button type="button" class="btn btn-primary btn-icon" onclick="AudiovisualMeetingsScheduledWidget.search();"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+            <!--end: SearchForm-->
+            <!--begin:: Result-->
+            <!--end:: Result-->
+        </div>
+    </div>
+    <div id="AudiovisualMeetingsScheduledWidget" class="mt-2" style="min-height: 500px;"></div>
+</div>
