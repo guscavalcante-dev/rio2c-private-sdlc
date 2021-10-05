@@ -104,6 +104,11 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 
         #region Details
 
+        /// <summary>
+        /// Detailses the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public async Task<ActionResult> Details(Guid? id)
         {
             var negotiationDto = await this.negotiationRepo.FindDtoAsync(id ?? Guid.Empty);
@@ -192,27 +197,6 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         }
 
         #endregion
-
-        public async Task<ActionResult> BrandingInfo()
-        {
-            return Json(new
-            {
-                // The domain url to apply (will replace the domain in the sharing conference link/embed section)
-                inviteDomain = "example-company.org",
-                // The hex value for the colour used as background
-                backgroundColor = "#fff",
-                // The url for the image used as background
-                backgroundImageUrl = "https://example.com/background-img.png",
-                // The anchor url used when clicking the logo image
-                logoClickUrl = "https://my.rio2c.com",
-                // The url used for the image used as logo
-                logoImageUrl = "http://localhost:43931/Assets/img/logo_rio2c_white.png",
-                // Overwrite for pool of background images for avatars
-                //avatarBackgrounds = "['url(https://example.com/avatar-background-1.png)', '#FFF']",
-                // The lobby/prejoin screen background
-                premeetingBackground = "url(http://localhost:43931/Assets/img/header.jpg?20190829)"
-            }, JsonRequestBehavior.AllowGet);
-        }
 
         #endregion
     }

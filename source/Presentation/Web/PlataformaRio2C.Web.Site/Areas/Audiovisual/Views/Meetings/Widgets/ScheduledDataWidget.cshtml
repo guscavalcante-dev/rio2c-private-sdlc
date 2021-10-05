@@ -73,7 +73,7 @@
                                             <span>@(negotiationDto?.RoomDto?.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.RoomName?.Value)</span>
                                         </td>
                                         <td class="align-middle text-right border-left-0">
-                                            @if (negotiationDto?.RoomDto?.Room?.IsVirtualMeeting == true && !string.IsNullOrEmpty(negotiationDto?.RoomDto?.Room?.VirtualMeetingUrl))
+                                            @if (negotiationDto?.RoomDto?.Room?.IsVirtualMeeting == true)
                                             {
                                                 <button type="button" class="btn btn-success btn-font-sm">
                                                     <a class="text-white" href="@Url.Action("Details", "Meetings", new { Area = "Audiovisual", id = negotiationDto?.Negotiation.Uid })">@Labels.Join</a>
