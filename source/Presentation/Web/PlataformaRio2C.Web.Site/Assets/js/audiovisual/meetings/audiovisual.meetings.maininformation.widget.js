@@ -50,7 +50,6 @@ var AudiovisualMeetingsMainInformationWidget = function () {
         });
     };
 
-
     // Exit Room ----------------------------------------------------------------------------------
     var showExitRoomModal = function () {
         bootbox.dialog({

@@ -216,22 +216,3 @@ section {
         border-right-color: rgb(217, 30, 24);
     } 
 }
-
-@media only screen and (max-width: 470px) {
-    section {
-        zoom: 80%;
-    }
-}
-
-@media only screen and (max-width: 380px) {
-    section {
-        zoom: 60%;
-    }
-}
-
-
-@media only screen and (max-width: 300px) {
-    section {
-        zoom: 40%;
-    }
-}

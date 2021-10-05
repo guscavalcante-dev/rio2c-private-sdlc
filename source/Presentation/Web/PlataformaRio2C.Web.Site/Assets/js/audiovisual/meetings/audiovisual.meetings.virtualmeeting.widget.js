@@ -31,21 +31,37 @@ var AudiovisualMeetingsVirtualMeetingWidget = function () {
     var enableShowPlugins = function () {
         KTApp.initTooltips();
 
-        var refreshId = setInterval(function () {
-            var ret = validateRoom();
+        var refreshIdMeeting = setInterval(function () {
+            var ret = validateVirtualMeeting();
             if (ret === true) {
-                clearInterval(refreshId);
+                clearInterval(refreshIdMeeting);
             }
         }, 1000);
+
+        var refreshIdTimer = setInterval(function () {
+            var ret = validateCountdownTimer();
+            if (ret === true) {
+                clearInterval(refreshIdTimer);
+            }
+        }, 1000);
+
+        window.onbeforeunload = function (evt) {
+            hangUpParticipant();
+            return null;
+        };
+
+        //window.addEventListener("beforeunload", function (e) {
+        //    hangUpParticipant();
+        //}, false);
+
     };
 
-    var validateRoom = function () {
+    var validateVirtualMeeting = function () {
 
         if (!MyRio2cCommon.isNullOrEmpty(_negotiationStartDate)) {
             const currentDate = new Date();
-            const negotiationStartDate = new Date(_negotiationStartDate);
-            const negotiationEndDate = new Date(_negotiationEndDate);
             const roomLiberationDate = new Date(_roomLiberationDate);
+            const negotiationEndDate = new Date(_negotiationEndDate);
 
             if (currentDate > negotiationEndDate) {
                 // Business round has been finished
@@ -63,14 +79,44 @@ var AudiovisualMeetingsVirtualMeetingWidget = function () {
                     $('#LiberationNotice').removeClass('d-flex').addClass('d-none');
                     $('#FinishedNotice').removeClass('d-flex').addClass('d-none');
                     $('#MeetingIframeWidget').removeClass('d-none');
-                    if (typeof (Chronograph) !== 'undefined') {
-                        Chronograph.init(negotiationEndDate);
-                    }
 
                     showJitsiMeet();
                 }
                 finally {
-                    // finally is important to avoid looping! showJitsiMeet() or Chronograph.init() can throw errors!
+                    // finally is important to avoid looping! showJitsiMeet() can throw errors!
+                    return true;
+                }
+            }
+            else {
+                return true;
+            }
+        }
+    }
+
+    var validateCountdownTimer = function () {
+        if (!MyRio2cCommon.isNullOrEmpty(_negotiationStartDate)) {
+            const currentDate = new Date();
+            const negotiationStartDate = new Date(_negotiationStartDate);
+            const negotiationEndDate = new Date(_negotiationEndDate);
+
+            if (currentDate > negotiationEndDate) {
+                // Business round has been finished
+                return true;
+            }
+            else if (currentDate < negotiationStartDate) {
+                // Business round has not started yet
+                //$('#LiberationNotice').removeClass('d-none').addClass('d-flex');
+                return false;
+            }
+            else if (currentDate >= negotiationStartDate && currentDate <= negotiationEndDate) {
+                // Business round in progress
+                try {
+                    if (typeof (Chronograph) !== 'undefined') {
+                        Chronograph.init(negotiationEndDate);
+                    }
+                }
+                finally {
+                    // finally is important to avoid looping! Chronograph.init() can throw errors!
                     return true;
                 }
             }
@@ -123,6 +169,7 @@ var AudiovisualMeetingsVirtualMeetingWidget = function () {
                 subject: translations.meetings,
                 defaultLanguage: 'en',
                 //disablePolls: true,
+                disableThirdPartyRequests: true,
                 toolbarButtons: [
                     'camera',
                     'chat',

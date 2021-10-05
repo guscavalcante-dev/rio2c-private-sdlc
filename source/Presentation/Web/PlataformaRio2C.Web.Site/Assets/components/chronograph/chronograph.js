@@ -54,6 +54,12 @@ var Chronograph = function () {
         if (elapsed < 0) {
             document.getElementById('time').innerText = "-";
             document.getElementById('description').innerText = translations.finished;
+
+            //Disconnect from Jitsi Meet API.
+            if (typeof (AudiovisualMeetingsVirtualMeetingWidget) !== 'undefined') {
+                AudiovisualMeetingsVirtualMeetingWidget.hangUpParticipant();
+            }
+
             return;
         }
 
