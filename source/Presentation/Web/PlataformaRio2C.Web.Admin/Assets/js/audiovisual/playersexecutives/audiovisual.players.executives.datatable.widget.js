@@ -4,7 +4,7 @@
 // Created          : 08-26-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-14-2021
+// Last Modified On : 10-04-2021
 // ***********************************************************************
 // <copyright file="audiovisual.players.executives.datatable.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.

@@ -4,7 +4,7 @@
 // Created          : 09-30-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-30-2021
+// Last Modified On : 10-04-2021
 // ***********************************************************************
 // <copyright file="chronograph.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -53,7 +53,7 @@ var Chronograph = function () {
         // If the count down is finished, write some text
         if (elapsed < 0) {
             document.getElementById('time').innerText = "-";
-            document.getElementById('description').innerText = "RODADA DE NEGÓCIOS ENCERRADA";
+            document.getElementById('description').innerText = translations.finished;
             return;
         }
 
@@ -61,7 +61,6 @@ var Chronograph = function () {
     }
 
     var startCountDown = function (endDate) {
-
         countDownDate = new Date(endDate).getTime();
 
         //before start countDown
@@ -74,6 +73,8 @@ var Chronograph = function () {
 
             document.getElementById('hourHand1').style.animationPlayState = 'running';
             document.getElementById('hourHand2').style.animationPlayState = 'running';
+
+            document.getElementById('description').innerText = translations.inProgress;
 
             //start countDown
             tick();

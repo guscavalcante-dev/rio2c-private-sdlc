@@ -4,7 +4,7 @@
 // Created          : 09-29-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-29-2021
+// Last Modified On : 10-04-2021
 // ***********************************************************************
 // <copyright file="audiovisual.meetings.maininformation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -50,9 +50,45 @@ var AudiovisualMeetingsMainInformationWidget = function () {
         });
     };
 
+
+    // Exit Room ----------------------------------------------------------------------------------
+    var showExitRoomModal = function () {
+        bootbox.dialog({
+            message: translations.leaveMeetingconfirmationMessage,
+            buttons: {
+                cancel: {
+                    label: labels.cancel,
+                    className: "btn btn-secondary btn-elevate mr-auto",
+                    callback: function () {
+                    }
+                },
+                confirm: {
+                    label: labels.yes,
+                    className: "btn btn-brand btn-elevate",
+                    callback: function () {
+                        exitRoom();
+                    }
+                }
+            }
+        });
+    };
+
+    var exitRoom = function () {
+        //Disconnect from Jitsi Meet API, because it stills connected when closes the page.
+        if (typeof (AudiovisualMeetingsVirtualMeetingWidget) !== 'undefined') {
+            AudiovisualMeetingsVirtualMeetingWidget.hangUpParticipant();
+        }
+
+        //Redirect to meetings list
+        window.location.href = MyRio2cCommon.getUrlWithCultureAndEdition('/Audiovisual/Meetings/Index/');
+    }
+
     return {
         init: function () {
             show();
+        },
+        exitRoom: function () {
+            showExitRoomModal();
         }
     };
 }();

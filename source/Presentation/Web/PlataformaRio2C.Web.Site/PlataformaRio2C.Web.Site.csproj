@@ -6887,6 +6887,7 @@
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\ScheduledWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Details.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\MainInformationWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Meetings\Widgets\VirtualMeetingWidget.cshtml" />
     <None Include="Content\less\components\gallery.less" />
     <Content Include="Content\less\bootstrap\glyphicons.less" />
     <Content Include="Content\less\bootstrap\grid.less" />

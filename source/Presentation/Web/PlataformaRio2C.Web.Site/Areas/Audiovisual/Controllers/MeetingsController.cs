@@ -4,7 +4,7 @@
 // Created          : 07-28-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-31-2021
+// Last Modified On : 10-04-2021
 // ***********************************************************************
 // <copyright file="MeetingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -107,20 +107,11 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 return RedirectToAction("Index", "Meetings", new { Area = "Audiovisual" });
             }
 
-            // 1 - Validate if the period of negotiations is open (table editions)
             if (this.EditionDto?.IsAudiovisualProjectNegotiationsStarted() != true)
             {
                 return Json(new { status = "error", message = Messages.NegotiationPeriodClosed }, JsonRequestBehavior.AllowGet);
             }
 
-            // 2 - Validate if the current current user is an executive of the player or producer
-            // Validação implementada como atributo do Controller. Precisa implementar na action também?
-            // [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AudiovisualPlayerExecutive + "," + Constants.CollaboratorType.Industry)]
-
-            // 3 - Validate if the current datetime is in the period of the negotiation (5 minutes before or 5 minutes later)
-            // Vai ser feito via JS para bloquear somente o "meeting widget". Não iremos bloquear o Details pois o MainInformationWidget tem que ser exibido.
-
-            // 4 - Validate if the current Player accepts virtual meeting
             if (negotiationDto?.ProjectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.AttendeeOrganization?.IsVirtualMeeting == false)
             {
                 this.StatusMessageToastr(Messages.AccessDenied, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
@@ -162,6 +153,34 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 pages = new List<dynamic>
                 {
                     new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", negotiationDto), divIdOrClass = "#AudiovisualMeetingsMainInformationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Virtual Meeting Widget
+
+        /// <summary>
+        /// Shows the main information widget.
+        /// </summary>
+        /// <param name="negotiationUid">The negotiation uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowVirtualMeetingWidget(Guid? negotiationUid)
+        {
+            var negotiationDto = await this.negotiationRepo.FindDtoAsync(negotiationUid ?? Guid.Empty);
+            if (negotiationDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/VirtualMeetingWidget", negotiationDto), divIdOrClass = "#AudiovisualMeetingsVirtualMeetingWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }

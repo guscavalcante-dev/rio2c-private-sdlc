@@ -16,6 +16,7 @@ section {
     margin: 0 auto;
     position: relative;
     width: 400px;
+    zoom: 30%;
 }
 
 
@@ -29,7 +30,7 @@ section {
 }
 
     .timer:after {
-        background: #111 url(https://codepen.io/images/classy_fabric.png);
+        background: #111;
         border-radius: 50%;
         content: "";
         display: block;
@@ -159,13 +160,13 @@ section {
     position: absolute;
     width: 296px;
     text-align: center;
-    top: 52px;
+    top: 70px;
     color: #fff;
     font-family: 'Yanone Kaffeesatz', sans-serif;
 }
 
-    .face h2 {
-        font-weight: 100;
+    .face h1 {
+        font-size: 3.5rem;
     }
 
     .face p.clock {

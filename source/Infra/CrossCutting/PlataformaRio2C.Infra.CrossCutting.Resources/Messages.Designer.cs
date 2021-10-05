@@ -142,6 +142,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Esta rodada de negócios já foi encerrada.
+        /// </summary>
+        public static string BusinessRoundFinished {
+            get {
+                return ResourceManager.GetString("BusinessRoundFinished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} {1} {2} para esse projeto..
         /// </summary>
         public static string BuyerEvaluationsAvailableForProject {
@@ -444,6 +453,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string ConfirmDeleteEdition {
             get {
                 return ResourceManager.GetString("ConfirmDeleteEdition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deseja realmente sair desta reunião?.
+        /// </summary>
+        public static string ConfirmToLeaveMeeting {
+            get {
+                return ResourceManager.GetString("ConfirmToLeaveMeeting", resourceCulture);
             }
         }
         
@@ -1937,6 +1955,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string RestrictionsSpecificsInPtBrMandatory {
             get {
                 return ResourceManager.GetString("RestrictionsSpecificsInPtBrMandatory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sala será liberada {0} minutos antes do horário agendado.
+        /// </summary>
+        public static string RoomReleasedMinutesScheduledDate {
+            get {
+                return ResourceManager.GetString("RoomReleasedMinutesScheduledDate", resourceCulture);
             }
         }
         

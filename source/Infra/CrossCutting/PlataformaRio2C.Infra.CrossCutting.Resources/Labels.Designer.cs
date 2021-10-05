@@ -2239,6 +2239,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Finalizada.
+        /// </summary>
+        public static string FinishedF {
+            get {
+                return ResourceManager.GetString("FinishedF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finalizado.
+        /// </summary>
+        public static string FinishedM {
+            get {
+                return ResourceManager.GetString("FinishedM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Primeiro nome.
         /// </summary>
         public static string FirstName {
@@ -2716,6 +2734,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Em andamento.
+        /// </summary>
+        public static string InProgress {
+            get {
+                return ResourceManager.GetString("InProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Interesse.
         /// </summary>
         public static string Interest {
@@ -2901,6 +2928,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Later {
             get {
                 return ResourceManager.GetString("Later", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sair da Sala.
+        /// </summary>
+        public static string LeaveRoom {
+            get {
+                return ResourceManager.GetString("LeaveRoom", resourceCulture);
             }
         }
         
@@ -3657,6 +3693,24 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string NotInEdition {
             get {
                 return ResourceManager.GetString("NotInEdition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Não iniciada.
+        /// </summary>
+        public static string NotStartedF {
+            get {
+                return ResourceManager.GetString("NotStartedF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Não iniciado.
+        /// </summary>
+        public static string NotStartedM {
+            get {
+                return ResourceManager.GetString("NotStartedM", resourceCulture);
             }
         }
         
