@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 07-28-2021
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 10-04-2021
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 10-01-2021
 // ***********************************************************************
 // <copyright file="MeetingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -17,7 +17,6 @@ using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Site.Controllers;
 using PlataformaRio2C.Web.Site.Filters;
@@ -29,13 +28,19 @@ using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 {
-    /// <summary>MeetingsController</summary>
+    /// <summary>
+    /// MeetingsController
+    /// </summary>
     [AjaxAuthorize(Order = 1)]
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AudiovisualPlayerExecutive + "," + Constants.CollaboratorType.Industry)]
     public class MeetingsController : BaseController
     {
         private readonly INegotiationRepository negotiationRepo;
 
+        /// <summary>Initializes a new instance of the <see cref="MeetingsController" /> class.</summary>
+        /// <param name="commandBus">The command bus.</param>
+        /// <param name="identityController">The identity controller.</param>
+        /// <param name="negotiationRepository">The negotiation repository.</param>
         public MeetingsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
