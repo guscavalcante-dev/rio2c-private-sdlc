@@ -55,6 +55,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.BusinessRound, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.AudioVisual, null),
                 new BreadcrumbItemHelper(Labels.ScheduledNegotiations, Url.Action("Index", "Meetings", new { Area = "Audiovisual" }))
             });
 
@@ -122,7 +123,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
                 new BreadcrumbItemHelper(Labels.AudioVisual, null),
-                new BreadcrumbItemHelper(Labels.OneToOneMeeting, Url.Action("Index", "Meetings", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(Labels.ScheduledNegotiations, Url.Action("Index", "Meetings", new { Area = "Audiovisual" })),
                 new BreadcrumbItemHelper(negotiationDto.RoomDto.GetRoomNameByLanguageCode(this.UserInterfaceLanguage)?.RoomName?.Value, Url.Action("Details", "Meetings", new { Area = "Audiovisual", id }))
             });
 

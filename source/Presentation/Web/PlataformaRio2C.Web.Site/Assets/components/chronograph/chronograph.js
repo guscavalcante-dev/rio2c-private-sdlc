@@ -4,7 +4,7 @@
 // Created          : 09-30-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 10-04-2021
+// Last Modified On : 10-06-2021
 // ***********************************************************************
 // <copyright file="chronograph.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -18,20 +18,51 @@ var Chronograph = function () {
     var one_hour = one_minute * 60;
     var one_day = one_hour * 24;
     var countDownDate;
+    var showMeetingAlmostOverAlert = true;
+    var _messages = {
+        inProgress: 'In progress',
+        isAlmostOver: 'Meeting is almost over',
+        finished: 'Finished'
+    };
 
-    // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
-    var requestAnimationFrame = (function () {
-        return window.requestAnimationFrame ||
-            window.webkitRequestAnimationFrame ||
-            window.mozRequestAnimationFrame ||
-            window.oRequestAnimationFrame ||
-            window.msRequestAnimationFrame ||
-            function (callback) {
-                window.setTimeout(callback, 1000 / 60);
-            };
-    }());
+    var startCountDown = function (endDate, messages, almostFinishedMinutes, almostFinishedCallback, finishedCallback) {
 
-    var tick = function() {
+        enablePlugins(messages);
+        countDownDate = new Date(endDate).getTime();
+
+        // Before start countDown
+        const seconds = ((countDownDate - new Date().getTime()) / 1000);
+        var animationDuration = seconds.toString() + "s";
+        var almosFinishedSeconds = Math.floor(almostFinishedMinutes * one_minute);
+
+        if (seconds > 0) {
+            document.getElementById('hourHand1').style.animationDuration = animationDuration;
+            document.getElementById('hourHand2').style.animationDuration = animationDuration;
+
+            document.getElementById('hourHand1').style.animationPlayState = 'running';
+            document.getElementById('hourHand2').style.animationPlayState = 'running';
+
+            document.getElementById('description').innerText = _messages.inProgress;
+
+            // Start countDown
+            //tick(almostFinishedMinutes, almostFinishedCallback, finishedCallback);
+
+            var refreshId = setInterval(function () {
+                var ret = tick(almosFinishedSeconds, almostFinishedCallback, finishedCallback);
+                if (ret === true) {
+                    clearInterval(refreshId);
+                }
+            }, 1000);
+        }
+    }
+
+    var enablePlugins = function (messages) {
+        if (messages !== 'undefined') {
+            _messages = messages;
+        }
+    }
+
+    var tick = function (almostFinishedSeconds, almostFinishedCallback, finishedCallback) {
         // Get today's date and time
         var now = new Date().getTime();
 
@@ -50,46 +81,33 @@ var Chronograph = function () {
 
         document.getElementById('time').innerText = parts.join(':');
 
-        // If the count down is finished, write some text
-        if (elapsed < 0) {
-            document.getElementById('time').innerText = "-";
-            document.getElementById('description').innerText = translations.finished;
+        if (elapsed <= almostFinishedSeconds && showMeetingAlmostOverAlert) {
+            if (typeof (almostFinishedCallback) === 'function') {
+                almostFinishedCallback();
+                showMeetingAlmostOverAlert = false;
+                return false;
+            }
+        }
 
-            //Disconnect from Jitsi Meet API.
-            if (typeof (AudiovisualMeetingsVirtualMeetingWidget) !== 'undefined') {
-                AudiovisualMeetingsVirtualMeetingWidget.hangUpParticipant();
+        // If the count down is finished
+        if (elapsed < 0) {
+            if (typeof (finishedCallback) === 'function') {
+                finishedCallback();
+                return true;
             }
 
-            return;
+            // Clear countdown labels
+            document.getElementById('time').innerText = "-";
+            document.getElementById('description').innerText = _messages.finished;
+            return true;
         }
 
-        requestAnimationFrame(tick);
-    }
-
-    var startCountDown = function (endDate) {
-        countDownDate = new Date(endDate).getTime();
-
-        //before start countDown
-        const seconds = ((countDownDate - new Date().getTime()) / 1000);
-        var animationDuration = seconds.toString() + "s";
-
-        if (seconds > 0) {
-            document.getElementById('hourHand1').style.animationDuration = animationDuration;
-            document.getElementById('hourHand2').style.animationDuration = animationDuration;
-
-            document.getElementById('hourHand1').style.animationPlayState = 'running';
-            document.getElementById('hourHand2').style.animationPlayState = 'running';
-
-            document.getElementById('description').innerText = translations.inProgress;
-
-            //start countDown
-            tick();
-        }
+        return false;
     }
 
     return {
-        init: function (endDate) {
-            startCountDown(endDate);
+        init: function (endDate, messages, almostFinishedMinutes, almostFinishedCallback, finishedCallback) {
+            startCountDown(endDate, messages, almostFinishedMinutes, almostFinishedCallback, finishedCallback);
         }
     };
 }();

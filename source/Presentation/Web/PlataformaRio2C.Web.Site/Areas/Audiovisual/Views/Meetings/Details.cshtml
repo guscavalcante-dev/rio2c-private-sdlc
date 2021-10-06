@@ -4,11 +4,6 @@
     ViewBag.Title = $"{Labels.OneToOneMeetings} {Model.RoomDto.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.RoomName?.Value}";
 }
 @Html.Hidden("AggregateId", Model.Negotiation.Uid)
-@Html.Hidden("UserEmail", ViewBag.UserAccessControlDto.User.Email as string)
-@Html.Hidden("DisplayName", (ViewBag.UserAccessControlDto.Collaborator?.GetDisplayName() ?? ViewBag.UserAccessControlDto.User.Name) as string)
-@Html.Hidden("NegotiationStartDate", Model.Negotiation.StartDate.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US")));
-@Html.Hidden("NegotiationEndDate", Model.Negotiation.EndDate.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US")))
-@Html.Hidden("RoomLiberationDate", ((Model.Negotiation.StartDate.AddMinutes(-5).ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US")))))
 
 <div class="row">
     <div class="col-md-12">
@@ -38,18 +33,28 @@
     @Scripts.Render("~/bundles/js/chronograph.js")
     @Scripts.Render("~/bundles/js/audiovisual.meetings.widget.js")
 
-    <script>
+<script>
         // Page translations ----------------------------------------------------------------------
         var translations = {
-            meetings: '@Labels.OneToOneMeeting',
-            finished: '@Labels.FinishedF',
-            inProgress: '@Labels.InProgress',
-            leaveMeetingconfirmationMessage: '@Messages.ConfirmToLeaveMeeting'
+            meetings: '@Html.Raw(Labels.OneToOneMeeting)',
+            finished: '@Html.Raw(Labels.FinishedF)',
+            inProgress: '@Html.Raw(Labels.InProgress)',
+            leaveMeetingconfirmationMessage: '@Html.Raw(Messages.ConfirmToLeaveMeeting)',
+            isAlmostOver: '@Html.Raw(Messages.MeetingIsAlmostOver)',
+            isOver: '@Html.Raw(Messages.MeetingIsOver)'
         };
+
+        var meeting = {
+            negotiationStartDate: '@(Model.Negotiation.StartDate.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US")))',
+            negotiationEndDate: '@(Model.Negotiation.EndDate.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US")))',
+            roomLiberationDate: '@(Model.Negotiation.StartDate.AddMinutes(-5).ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US")))',
+            userEmail: '@(Html.Raw(ViewBag.UserAccessControlDto.User.Email as string))',
+            userDisplayName: '@(Html.Raw((ViewBag.UserAccessControlDto.Collaborator?.GetDisplayName() ?? ViewBag.UserAccessControlDto.User.Name) as string))'
+        }
 
         jQuery(document).ready(function () {
             AudiovisualMeetingsMainInformationWidget.init();
             AudiovisualMeetingsVirtualMeetingWidget.init();
         });
-    </script>
+</script>
 }
