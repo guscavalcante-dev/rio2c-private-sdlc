@@ -623,6 +623,32 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .FirstOrDefaultAsync();
         }
 
+        /// <summary>
+        /// Finds the API configuration widget dto by organization uid and by edition identifier asynchronous.
+        /// </summary>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public async Task<AttendeeOrganizationApiConfigurationWidgetDto> FindApiConfigurationWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId)
+        {
+            var query = this.GetBaseQuery(true)
+                                .FindByOrganizationUid(organizationUid)
+                                .FindByEditionId(editionId, false);
+
+            return await query
+                            .Select(ao => new AttendeeOrganizationApiConfigurationWidgetDto
+                            {
+                                AttendeeOrganization = ao,
+                                Organization = ao.Organization,
+                                AttendeeOrganizationTypeDtos = ao.AttendeeOrganizationTypes.Where(aot => !aot.IsDeleted).Select(aot => new AttendeeOrganizationTypeDto
+                                {
+                                    AttendeeOrganizationType = aot,
+                                    OrganizationType = aot.OrganizationType
+                                })
+                            })
+                            .FirstOrDefaultAsync();
+        }
+
         #endregion
 
         #region Admin Widgets
@@ -1385,6 +1411,37 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         }
 
         #endregion
+
+        #endregion
+
+        #region Api
+
+        /// <summary>Finds all API configuration widget dto by highlight.</summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <param name="organizationTypeName">Name of the organization type.</param>
+        /// <returns></returns>
+        public async Task<List<AttendeeOrganizationApiConfigurationWidgetDto>> FindAllApiConfigurationWidgetDtoByHighlight(int editionId, Guid organizationTypeUid)
+        {
+            var query = this.GetBaseQuery()
+                                .Where(ac => !ac.IsDeleted
+                                             && ac.EditionId == editionId
+                                             && ac.AttendeeOrganizationTypes.Any(aot => !aot.IsDeleted
+                                                                                     && aot.OrganizationType.Uid == organizationTypeUid
+                                                                                     && aot.ApiHighlightPosition.HasValue));
+
+            return await query
+                            .Select(ac => new AttendeeOrganizationApiConfigurationWidgetDto
+                            {
+                                AttendeeOrganization = ac,
+                                Organization = ac.Organization,
+                                AttendeeOrganizationTypeDtos = ac.AttendeeOrganizationTypes.Where(act => !act.IsDeleted).Select(act => new AttendeeOrganizationTypeDto
+                                {
+                                    AttendeeOrganizationType = act,
+                                    OrganizationType = act.OrganizationType
+                                })
+                            })
+                            .ToListAsync();
+        }
 
         #endregion
     }

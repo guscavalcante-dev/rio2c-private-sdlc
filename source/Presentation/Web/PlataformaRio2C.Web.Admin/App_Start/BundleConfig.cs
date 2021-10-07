@@ -386,6 +386,9 @@ namespace PlataformaRio2C.Web.Admin
 
             #region Organizations
 
+            bundles.Add(new StyleBundle("~/bundles/css/audiovisual.organizations.apiconfiguration.css").Include(
+                "~/Assets/themes/metronic/css/demo4/pages/pricing/pricing-1.css"));
+
             bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.organizations.widget.js").Include(
                  "~/Assets/js/audiovisual/organizations/audiovisual.organizations.maininformation.widget.js",
                  "~/Assets/js/audiovisual/organizations/audiovisual.organizations.socialnetworks.widget.js",
@@ -394,6 +397,7 @@ namespace PlataformaRio2C.Web.Admin
                  "~/Assets/js/audiovisual/organizations/audiovisual.organizations.targetaudience.widget.js",
                  "~/Assets/js/audiovisual/organizations/audiovisual.organizations.interest.widget.js",
                  "~/Assets/js/audiovisual/organizations/audiovisual.organizations.executives.widget.js",
+                 "~/Assets/js/audiovisual/organizations/audiovisual.organizations.apiconfiguration.widget.js",
                  "~/Assets/js/myrio2c.companynumber.js",
                  "~/Assets/js/myrio2c.additionalinfo.js"));
 

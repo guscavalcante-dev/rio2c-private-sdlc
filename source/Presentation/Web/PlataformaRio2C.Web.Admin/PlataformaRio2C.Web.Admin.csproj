@@ -831,6 +831,7 @@
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.scheduled.create.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.report.widget.js" />
     <Content Include="Assets\js\audiovisual\meetings\audiovisual.meetings.logistics.info.widget.js" />
+    <Content Include="Assets\js\audiovisual\organizations\audiovisual.organizations.apiconfiguration.widget.js" />
     <Content Include="Assets\js\audiovisual\producersexecutives\audiovisual.producers.executives.datatable.widget.js" />
     <Content Include="Assets\js\audiovisual\producersexecutives\audiovisual.producers.executives.editioncount.widget.js" />
     <Content Include="Assets\js\audiovisual\producersexecutives\audiovisual.producers.executives.totalcount.widget.js" />
@@ -8314,6 +8315,10 @@
     <Content Include="Areas\Audiovisual\Views\ProducersExecutives\Widgets\DataTableWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\ProducersExecutives\Widgets\EditionCountWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\ProducersExecutives\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Players\Details.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Organizations\Widgets\ApiConfigurationWidget.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Organizations\Modals\UpdateApiConfigurationForm.cshtml" />
+    <Content Include="Areas\Audiovisual\Views\Organizations\Modals\UpdateApiConfigurationModal.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

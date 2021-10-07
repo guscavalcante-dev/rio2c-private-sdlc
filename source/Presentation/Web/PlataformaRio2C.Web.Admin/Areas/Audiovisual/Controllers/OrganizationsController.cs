@@ -1074,5 +1074,129 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
         #endregion
 
         #endregion
+
+        #region Api Configuration Widget
+
+        /// <summary>
+        /// Shows the API configuration widget.
+        /// </summary>
+        /// <param name="organizationUid">The organization uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowApiConfigurationWidget(Guid? organizationUid, Guid? organizationTypeUid)
+        {
+            var apiConfigurationWidgetDto = await this.attendeeOrganizationRepo.FindApiConfigurationWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id);
+            if (apiConfigurationWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            ViewBag.OrganizationTypeUid = organizationTypeUid;
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/ApiConfigurationWidget", apiConfigurationWidgetDto), divIdOrClass = "#OrganizationApiConfigurationWidget" },
+                }
+
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #region Update
+
+        [HttpGet]
+        public async Task<ActionResult> ShowUpdateApiConfigurationModal(Guid? organizationUid, Guid? organizationTypeUid)
+        {
+            UpdateOrganizationApiConfiguration cmd;
+
+            try
+            {
+                var apiConfigurationWidgetDto = await this.attendeeOrganizationRepo.FindApiConfigurationWidgetDtoByOrganizationUidAndByEditionIdAsync(organizationUid ?? Guid.Empty, this.EditionDto.Id);
+                if (apiConfigurationWidgetDto == null)
+                {
+                    throw new DomainException(string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundM.ToLowerInvariant()));
+                }
+
+                cmd = new UpdateOrganizationApiConfiguration(
+                    apiConfigurationWidgetDto,
+                    organizationTypeUid ?? Guid.Empty,
+                    await this.attendeeOrganizationRepo.FindAllApiConfigurationWidgetDtoByHighlight(this.EditionDto.Id, organizationTypeUid ?? Guid.Empty));
+            }
+            catch (DomainException ex)
+            {
+                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Modals/UpdateApiConfigurationModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpPost]
+        public async Task<ActionResult> UpdateApiConfiguration(UpdateOrganizationApiConfiguration cmd)
+        {
+            var result = new AppValidationResult();
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+
+                cmd.UpdatePreSendProperties(
+                    this.AdminAccessControlDto.User.Id,
+                    this.AdminAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
+            }
+            catch (DomainException ex)
+            {
+                foreach (var error in result.Errors)
+                {
+                    var target = error.Target ?? "";
+                    ModelState.AddModelError(target, error.Message);
+                }
+
+                cmd.UpdateBaseModels(
+                    await this.attendeeOrganizationRepo.FindAllApiConfigurationWidgetDtoByHighlight(this.EditionDto.Id, cmd.OrganizationTypeUid), 
+                    cmd.OrganizationTypeUid);
+
+                return Json(new
+                {
+                    status = "error",
+                    message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                    pages = new List<dynamic>
+                    {
+                        new { page = this.RenderRazorViewToString("~/Areas/Audiovisual/Views/Organizations/Modals/UpdateApiConfigurationForm.cshtml", cmd), divIdOrClass = "#form-container" },
+                    }
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Company, Labels.UpdatedM) });
+        }
+
+        #endregion
+
+        #endregion
     }
 }

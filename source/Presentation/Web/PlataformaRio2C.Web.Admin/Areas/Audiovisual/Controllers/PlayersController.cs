@@ -224,7 +224,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
 
             ViewBag.OrganizationTypeUid = OrganizationType.Player.Uid; // It's the admin page accessed and not the organization type of the current organization
 
-            return View("../Organizations/Details", attendeeOrganizationDto);
+            return View(attendeeOrganizationDto);
         }
 
         #endregion

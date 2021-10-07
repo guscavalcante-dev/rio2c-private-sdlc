@@ -941,6 +941,28 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Attendee Organizations
 
+        /// <summary>
+        /// Updates the API configuration.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="isApiDisplayEnabled">if set to <c>true</c> [is API display enabled].</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateApiConfiguration(
+            Edition edition,
+            OrganizationType organizationType,
+            bool isApiDisplayEnabled,
+            int? apiHighlightPosition,
+            int userId)
+        {
+            var attendeeOrganization = this.GetAttendeeOrganizationByEditionId(edition?.Id ?? 0);
+            attendeeOrganization?.UpdateApiConfiguration(organizationType, isApiDisplayEnabled, apiHighlightPosition, userId);
+
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
         /// <summary>Deletes the attendee organization type highlight position.</summary>
         /// <param name="edition">The edition.</param>
         /// <param name="organizationType">Type of the organization.</param>
@@ -996,7 +1018,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="apiHighlightPosition">The API highlight position.</param>
         /// <param name="attendeeCollaborator">The attendee collaborator.</param>
         /// <param name="isAddingToCurrentEdition">if set to <c>true</c> [is adding to current edition].</param>
-        /// <param name="isVirtualMeeting">if set to <c>true</c> [is virtual meeting].</param>
+        /// <param name="isVirtualMeeting">The is virtual meeting.</param>
         /// <param name="userId">The user identifier.</param>
         private void SynchronizeAttendeeOrganizations(
             Edition edition, 
