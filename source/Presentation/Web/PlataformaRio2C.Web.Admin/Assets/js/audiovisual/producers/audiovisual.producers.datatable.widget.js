@@ -150,7 +150,9 @@ var AudiovisualProducersDataTableWidget = function () {
                                             </a>\
                                             <div class="dropdown-menu dropdown-menu-right">';
 
-                        html += '<button class="dropdown-item" onclick="AudiovisualProducersDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
+                        if (full.IsInCurrentEdition) {
+                            html += '<button class="dropdown-item" onclick="AudiovisualProducersDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
+                        }
 
                         if (full.IsInCurrentEdition && full.IsInOtherEdition) {
                             html += '<button class="dropdown-item" onclick="AudiovisualProducersDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + removeFromEdition + '</button>';
