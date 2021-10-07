@@ -119,6 +119,21 @@ namespace PlataformaRio2C.Domain.Entities
 
         #region Attendee Organization Types
 
+        /// <summary>
+        /// Updates the API configuration.
+        /// </summary>
+        /// <param name="organizationType">Type of the organization.</param>
+        /// <param name="isApiDisplayEnabled">if set to <c>true</c> [is API display enabled].</param>
+        /// <param name="apiHighlightPosition">The API highlight position.</param>
+        /// <param name="userId">The user identifier.</param>
+        public void UpdateApiConfiguration(OrganizationType organizationType, bool isApiDisplayEnabled, int? apiHighlightPosition, int userId)
+        {
+            this.SynchronizeAttendeeOrganizationTypes(organizationType, isApiDisplayEnabled, apiHighlightPosition, userId);
+
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
         /// <summary>Synchronizes the attendee organization types.</summary>
         /// <param name="organizationType">Type of the organization.</param>
         /// <param name="isApiDisplayEnabled">The is API display enabled.</param>

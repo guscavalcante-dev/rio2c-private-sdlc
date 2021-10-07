@@ -1,0 +1,52 @@
+﻿@using PlataformaRio2C.Domain.Entities
+@using PlataformaRio2C.Domain.Dtos
+@model AttendeeOrganizationApiConfigurationWidgetDto
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+    var organizationTypeUid = ViewBag.OrganizationTypeUid as Guid?;
+    var attendeeOrganizationTypeDto = Model.GetAttendeeOrganizationTypeDtoByOrganizationTypeUid(organizationTypeUid ?? Guid.Empty);
+}
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+            @Labels.ApiConfigurations
+        </h3>
+    </div>
+    <div class="kt-portlet__head-toolbar">
+        <div class="kt-portlet__head-actions">
+            <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md btn-circle" onclick="AudiovisualOrganizationsApiConfigurationWidget.showUpdateModal();">
+                <i class="flaticon2-edit"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="kt-portlet__body">
+    <div class="kt-pricing-1">
+        <div class="kt-pricing-1__items row p-0">
+            <div class="kt-pricing-1__item col-lg-12">
+                <div class="kt-pricing-1__visual" style="margin-top: 8rem;">
+                    <div class="kt-pricing-1__hexagon1"></div>
+                    <div class="kt-pricing-1__hexagon2"></div>
+                    @if (attendeeOrganizationTypeDto?.AttendeeOrganizationType?.IsApiDisplayEnabled == true)
+                    {
+                        <span class="kt-pricing-1__icon kt-font-success"><i class="fa flaticon2-checkmark"></i></span>
+                    }
+                    else
+                    {
+                        <span class="kt-pricing-1__icon kt-font-danger"><i class="fa flaticon2-cross"></i></span>
+                    }
+                </div>
+                <span class="kt-pricing-1__description d-block" style="margin-top: 215px;">
+                    @(attendeeOrganizationTypeDto?.AttendeeOrganizationType?.IsApiDisplayEnabled == true ? 
+                        string.Format(Messages.ShowingOnSiteEdition, editionDto?.UrlCode) : 
+                        string.Format(Messages.NotShowingOnSiteEdition, editionDto?.UrlCode))
+                </span>
+                @if (attendeeOrganizationTypeDto?.AttendeeOrganizationType?.IsApiDisplayEnabled == true && attendeeOrganizationTypeDto?.AttendeeOrganizationType?.ApiHighlightPosition != null)
+                {
+                    <span class="kt-pricing-1__price mt-2">@(attendeeOrganizationTypeDto?.AttendeeOrganizationType?.ApiHighlightPosition?.ToString() ?? "-")</span>
+                    <h2 class="kt-pricing-1__subtitle">@Labels.HighlightPosition</h2>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -36,6 +36,7 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<AttendeeOrganizationSiteActivityWidgetDto> FindActivityWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId, bool showAllEditions);
         Task<AttendeeOrganizationSiteTargetAudienceWidgetDto> FindTargetAudienceWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId, bool showAllEditions);
         Task<AttendeeOrganizationSiteInterestWidgetDto> FindInterestWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId, bool showAllEditions);
+        Task<AttendeeOrganizationApiConfigurationWidgetDto> FindApiConfigurationWidgetDtoByOrganizationUidAndByEditionIdAsync(Guid organizationUid, int editionId);
 
         #endregion
 
@@ -78,6 +79,12 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<int> CountAllByActiveSellerNegotiationsAndByDataTable(bool showAllEditions, int? editionId);
 
         #endregion
+
+        #endregion
+
+        #region Api
+
+        Task<List<AttendeeOrganizationApiConfigurationWidgetDto>> FindAllApiConfigurationWidgetDtoByHighlight(int editionId, Guid organizationTypeUid);
 
         #endregion
     }

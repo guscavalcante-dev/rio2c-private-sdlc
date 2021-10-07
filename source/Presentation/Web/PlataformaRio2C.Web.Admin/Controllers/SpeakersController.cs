@@ -220,7 +220,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             var apiConfigurationWidgetDto = await this.attendeeCollaboratorRepo.FindApiConfigurationWidgetDtoByCollaboratorUidAndByEditionIdAsync(collaboratorUid ?? Guid.Empty, this.EditionDto.Id);
             if (apiConfigurationWidgetDto == null)
             {
-                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Company, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Speaker, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
             return Json(new
