@@ -149,6 +149,9 @@
   <data name="BadgeIsRequired" xml:space="preserve">
     <value>Nome do crachá obrigatório.</value>
   </data>
+  <data name="BusinessRoundFinished" xml:space="preserve">
+    <value>Esta rodada de negócios já foi encerrada</value>
+  </data>
   <data name="BuyerEvaluationsAvailableForProject" xml:space="preserve">
     <value>{0} {1} {2} para esse projeto.</value>
     <comment>{0} {1} {2} para esse projeto.</comment>
@@ -273,6 +276,9 @@
   <data name="ConfirmDeleteEdition" xml:space="preserve">
     <value>Por favor, confirme para excluir da edição {0}.</value>
     <comment>Por favor, confirme para excluir da edição {0}.</comment>
+  </data>
+  <data name="ConfirmToLeaveMeeting" xml:space="preserve">
+    <value>Deseja realmente sair desta reunião?</value>
   </data>
   <data name="ConfirmToSendInvitationEmails" xml:space="preserve">
     <value>Confirme para enviar os e-mails de convite</value>
@@ -575,6 +581,9 @@
   <data name="NameIsRequired" xml:space="preserve">
     <value>Nome obrigatório.</value>
   </data>
+  <data name="NegotiationPeriodClosed" xml:space="preserve">
+    <value>Período de negociação encerrado!</value>
+  </data>
   <data name="NoBadgesAvaiable" xml:space="preserve">
     <value>Nenhum ingresso disponível.</value>
     <comment>Nenhum ingresso disponível.</comment>
@@ -857,6 +866,9 @@
   </data>
   <data name="RestrictionsSpecificsInPtBrMandatory" xml:space="preserve">
     <value>Restrições e especificades em português é obrigatório.</value>
+  </data>
+  <data name="RoomReleasedMinutesScheduledDate" xml:space="preserve">
+    <value>Sala será liberada {0} minutos antes do horário agendado</value>
   </data>
   <data name="ScheduledOneToOneMeetings" xml:space="preserve">
     <value>Rodadas de Negócios Agendadas</value>

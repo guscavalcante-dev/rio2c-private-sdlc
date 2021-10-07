@@ -129,14 +129,14 @@
                     }) == true)
                     {
                         var projectsUrl = Url.Action("Index", "Projects", new { Area = "" });
-                        if (editionDto?.IsProjectSubmitStarted() == true && userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true)
+                        if (editionDto?.IsAudiovisualProjectSubmitStarted() == true && userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true)
                         {
                             projectsUrl = Url.Action("SubmittedList", "Projects", new { Area = "" });
                         }
                         else if (userAccessControlDto?.HasCollaboratorType(CollaboratorType.AudiovisualPlayerExecutive.Name) == true)
                         {
                             projectsUrl = Url.Action("EvaluationList", "Projects", new { Area = "" });
-                            if (editionDto?.IsProjectEvaluationStarted() != true)
+                            if (editionDto?.IsProjectBuyerEvaluationStarted() != true)
                             {
                                 projectsUrl = Url.Action("Index", "Projects", new { Area = "" });
                             }

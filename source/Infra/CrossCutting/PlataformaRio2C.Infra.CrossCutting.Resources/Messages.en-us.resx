@@ -149,6 +149,10 @@
   <data name="BadgeIsRequired" xml:space="preserve">
     <value>Badge is required.</value>
   </data>
+  <data name="BusinessRoundFinished" xml:space="preserve">
+    <value>This business round has been finished</value>
+    <comment>Esta rodada de negócios já foi encerrada</comment>
+  </data>
   <data name="BuyerEvaluationsAvailableForProject" xml:space="preserve">
     <value>{0} {1} {2} for this project.</value>
     <comment>{0} {1} {2} para esse projeto.</comment>
@@ -273,6 +277,10 @@
   <data name="ConfirmDeleteEdition" xml:space="preserve">
     <value>Please, confirm to delete from {0} edition.</value>
     <comment>Por favor, confirme para excluir da edição {0}.</comment>
+  </data>
+  <data name="ConfirmToLeaveMeeting" xml:space="preserve">
+    <value>Do you really want to leave this meeting?</value>
+    <comment>Deseja realmente sair desta reunião?</comment>
   </data>
   <data name="ConfirmToSendInvitationEmails" xml:space="preserve">
     <value>Confirm to send invitation emails</value>
@@ -575,6 +583,10 @@
   <data name="NameIsRequired" xml:space="preserve">
     <value>Name required.</value>
   </data>
+  <data name="NegotiationPeriodClosed" xml:space="preserve">
+    <value>Negotiation period closed!</value>
+    <comment>Período de negociação encerrado!</comment>
+  </data>
   <data name="NoBadgesAvaiable" xml:space="preserve">
     <value>No badges avaiable.</value>
     <comment>Nenhum ingresso disponível.</comment>
@@ -855,6 +867,10 @@
   </data>
   <data name="RestrictionsSpecificsInEnglishMandatory" xml:space="preserve">
     <value>Restrictions or specifics in English is required.</value>
+  </data>
+  <data name="RoomReleasedMinutesScheduledDate" xml:space="preserve">
+    <value>Room will be released {0} minutes before the scheduled time</value>
+    <comment>Sala será liberada {0} minutos antes do horário agendado</comment>
   </data>
   <data name="ScheduledOneToOneMeetings" xml:space="preserve">
     <value>Scheduled One-to-One Meetings</value>

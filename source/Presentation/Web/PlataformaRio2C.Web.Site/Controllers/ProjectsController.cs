@@ -115,7 +115,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             #endregion
 
-            if (this.EditionDto?.IsProjectSubmitStarted() != true)
+            if (this.EditionDto?.IsAudiovisualProjectSubmitStarted() != true)
             {
                 return RedirectToAction("Index", "Projects", new { Area = "" });
             }
@@ -160,7 +160,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.Industry)]
         public async Task<ActionResult> SubmittedDetails(Guid? id)
         {
-            if (this.EditionDto?.IsProjectSubmitStarted() != true)
+            if (this.EditionDto?.IsAudiovisualProjectSubmitStarted() != true)
             {
                 return RedirectToAction("Index", "Projects", new { Area = "" });
             }
@@ -244,7 +244,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
 
-                if (this.EditionDto?.IsProjectSubmitOpen() != true)
+                if (this.EditionDto?.IsAudiovisualProjectSubmitOpen() != true)
                 {
                     throw new DomainException(Messages.ProjectSubmissionNotOpen);
                 }
@@ -395,7 +395,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
 
-                if (this.EditionDto?.IsProjectSubmitOpen() != true)
+                if (this.EditionDto?.IsAudiovisualProjectSubmitOpen() != true)
                 {
                     throw new DomainException(Messages.ProjectSubmissionNotOpen);
                 }
@@ -541,7 +541,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
 
-                if (this.EditionDto?.IsProjectSubmitOpen() != true)
+                if (this.EditionDto?.IsAudiovisualProjectSubmitOpen() != true)
                 {
                     throw new DomainException(Messages.ProjectSubmissionNotOpen);
                 }
@@ -682,7 +682,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
 
-                if (this.EditionDto?.IsProjectSubmitOpen() != true)
+                if (this.EditionDto?.IsAudiovisualProjectSubmitOpen() != true)
                 {
                     throw new DomainException(Messages.ProjectSubmissionNotOpen);
                 }
@@ -730,7 +730,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             #endregion
 
-            if (this.EditionDto?.IsProjectSubmitOpen() != true)
+            if (this.EditionDto?.IsAudiovisualProjectSubmitOpen() != true)
             {
                 this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
                 return RedirectToAction("Index", "Projects");
@@ -802,7 +802,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             #endregion
 
-            if (this.EditionDto?.IsProjectSubmitOpen() != true)
+            if (this.EditionDto?.IsAudiovisualProjectSubmitOpen() != true)
             {
                 this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
                 return RedirectToAction("Index", "Projects");
@@ -900,7 +900,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             #endregion
 
-            if (this.EditionDto?.IsProjectSubmitOpen() != true)
+            if (this.EditionDto?.IsAudiovisualProjectSubmitOpen() != true)
             {
                 this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
                 return RedirectToAction("Index", "Projects");
@@ -943,7 +943,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             #endregion
 
-            if (this.EditionDto?.IsProjectSubmitOpen() != true)
+            if (this.EditionDto?.IsAudiovisualProjectSubmitOpen() != true)
             {
                 this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
                 return RedirectToAction("Index", "Projects");
@@ -1028,7 +1028,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             #endregion
 
-            if (this.EditionDto?.IsProjectSubmitOpen() != true)
+            if (this.EditionDto?.IsAudiovisualProjectSubmitOpen() != true)
             {
                 this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
                 return RedirectToAction("Index", "Projects");
@@ -1060,7 +1060,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             #endregion
 
-            if (this.EditionDto?.IsProjectSubmitOpen() != true)
+            if (this.EditionDto?.IsAudiovisualProjectSubmitOpen() != true)
             {
                 this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
                 return RedirectToAction("Index", "Projects");
@@ -1157,7 +1157,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             #endregion
 
-            if (this.EditionDto?.IsProjectSubmitOpen() != true)
+            if (this.EditionDto?.IsAudiovisualProjectSubmitOpen() != true)
             {
                 this.StatusMessageToastr(Messages.ProjectSubmissionNotOpen, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
                 return RedirectToAction("Index", "Projects");
@@ -1483,7 +1483,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> EvaluationList(string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 10)
         {
-            if (this.EditionDto?.IsProjectEvaluationStarted() != true)
+            if (this.EditionDto?.IsProjectBuyerEvaluationStarted() != true)
             {
                 return RedirectToAction("Index", "Projects", new { Area = "" });
             }
@@ -1519,7 +1519,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowEvaluationListWidget(string searchKeywords, Guid? interestUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 10)
         {
-            if (this.EditionDto?.IsProjectEvaluationStarted() != true)
+            if (this.EditionDto?.IsProjectBuyerEvaluationStarted() != true)
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
@@ -1555,7 +1555,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowEvaluationListItemWidget(Guid? projectUid)
         {
-            if (this.EditionDto?.IsProjectEvaluationStarted() != true)
+            if (this.EditionDto?.IsProjectBuyerEvaluationStarted() != true)
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
@@ -1589,7 +1589,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.AudiovisualPlayerExecutive)]
         public async Task<ActionResult> EvaluationDetails(Guid? id)
         {
-            if (this.EditionDto?.IsProjectEvaluationStarted() != true)
+            if (this.EditionDto?.IsProjectBuyerEvaluationStarted() != true)
             {
                 return RedirectToAction("Index", "Projects", new { Area = "" });
             }
@@ -1633,7 +1633,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowBuyerEvaluationWidget(Guid? projectUid)
         {
-            if (this.EditionDto?.IsProjectEvaluationStarted() != true)
+            if (this.EditionDto?.IsProjectBuyerEvaluationStarted() != true)
             {
                 return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
             }
@@ -1678,7 +1678,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             try
             {
-                if (this.EditionDto?.IsProjectEvaluationOpen() != true)
+                if (this.EditionDto?.IsProjectBuyerEvaluationOpen() != true)
                 {
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
@@ -1728,7 +1728,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             try
             {
-                if (this.EditionDto?.IsProjectEvaluationOpen() != true)
+                if (this.EditionDto?.IsProjectBuyerEvaluationOpen() != true)
                 {
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
@@ -1801,7 +1801,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             try
             {
-                if (this.EditionDto?.IsProjectEvaluationOpen() != true)
+                if (this.EditionDto?.IsProjectBuyerEvaluationOpen() != true)
                 {
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }
@@ -1852,7 +1852,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
 
             try
             {
-                if (this.EditionDto?.IsProjectEvaluationOpen() != true)
+                if (this.EditionDto?.IsProjectBuyerEvaluationOpen() != true)
                 {
                     throw new DomainException(Texts.ForbiddenErrorMessage);
                 }

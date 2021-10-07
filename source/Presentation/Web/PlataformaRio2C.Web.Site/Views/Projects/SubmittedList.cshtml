@@ -6,8 +6,8 @@
 @{
     ViewBag.Title = Labels.ProjectsSubmission;
     var editionDto = ViewBag.EditionDto as EditionDto;
-    var isProjectSubmitOpen = editionDto?.IsProjectSubmitOpen() == true;
-    var isEvaluationReleasedForDisclosure = editionDto?.IsEvaluationReleasedForDisclosure() == true;
+    var isProjectSubmitOpen = editionDto?.IsAudiovisualProjectSubmitOpen() == true;
+    var isEvaluationReleasedForDisclosure = editionDto?.IsProjectBuyerEvaluationReleasedForDisclosure() == true;
     var hasProjectSpace = Model.Any(m => m.IsFakeProject);
 }
 @section Scripts {

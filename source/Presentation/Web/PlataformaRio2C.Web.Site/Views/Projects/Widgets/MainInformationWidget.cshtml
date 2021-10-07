@@ -6,7 +6,7 @@
     var editionDto = ViewBag.EditionDto as EditionDto;
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var isCollaborator = userAccessControlDto?.HasEditionAttendeeOrganization(Model.SellerAttendeeOrganizationDto.AttendeeOrganization.Uid) == true;
-    var isProjectSubmissionOpen = editionDto?.IsProjectSubmitOpen() == true;
+    var isProjectSubmissionOpen = editionDto?.IsAudiovisualProjectSubmitOpen() == true;
     var isProjectFinished = Model.Project.IsFinished();
 }
 <div class="kt-portlet__body">

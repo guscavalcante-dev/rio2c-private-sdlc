@@ -44,7 +44,7 @@
                                             <div class="row align-items-center">
                                                 @{
                                                     var organization = negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.SellerAttendeeOrganizationDto?.Organization;
-                                                    <div class="col-md-3  p-0">
+                                                    <div class="col-md-2  p-0">
                                                         @if (organization?.HasImage() == true)
                                                         {
                                                             <div class="kt-widget__media">
@@ -62,7 +62,7 @@
                                                             </div>
                                                         }
                                                     </div>
-                                                    <div class="col-md-9 p-0">
+                                                    <div class="col-md-10 p-0">
                                                         <span>@(negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.SellerAttendeeOrganizationDto?.Organization?.TradeName)</span>
                                                     </div>
                                                 }
@@ -73,10 +73,10 @@
                                             <span>@(negotiationDto?.RoomDto?.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.RoomName?.Value)</span>
                                         </td>
                                         <td class="align-middle text-right border-left-0">
-                                            @if (negotiationDto?.RoomDto?.Room?.IsVirtualMeeting == true && !string.IsNullOrEmpty(negotiationDto?.RoomDto?.Room?.VirtualMeetingUrl))
+                                            @if (negotiationDto?.RoomDto?.Room?.IsVirtualMeeting == true)
                                             {
                                                 <button type="button" class="btn btn-success btn-font-sm">
-                                                    <a class="text-white" href="@(negotiationDto?.RoomDto?.Room?.VirtualMeetingUrl)" target="_blank">@Labels.Join</a>
+                                                    <a class="text-white" href="@Url.Action("Details", "Meetings", new { Area = "Audiovisual", id = negotiationDto?.Negotiation.Uid })">@Labels.Join</a>
                                                 </button>
                                             }
                                             else if (negotiationDto?.RoomDto?.Room?.IsVirtualMeeting == false)

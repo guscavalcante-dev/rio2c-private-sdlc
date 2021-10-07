@@ -2983,4 +2983,22 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Participar</value>
     <comment>Participar</comment>
   </data>
+  <data name="FinishedF" xml:space="preserve">
+    <value>Finalizada</value>
+  </data>
+  <data name="FinishedM" xml:space="preserve">
+    <value>Finalizado</value>
+  </data>
+  <data name="InProgress" xml:space="preserve">
+    <value>Em andamento</value>
+  </data>
+  <data name="LeaveRoom" xml:space="preserve">
+    <value>Sair da Sala</value>
+  </data>
+  <data name="NotStartedF" xml:space="preserve">
+    <value>Não iniciada</value>
+  </data>
+  <data name="NotStartedM" xml:space="preserve">
+    <value>Não iniciado</value>
+  </data>
 </root>

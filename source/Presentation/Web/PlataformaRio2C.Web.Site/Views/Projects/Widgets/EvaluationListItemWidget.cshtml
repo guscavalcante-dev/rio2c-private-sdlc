@@ -79,7 +79,7 @@
             <div class="col-4 text-center">
                 <a href="@Url.Action("EvaluationDetails", "Projects", new { id = Model.Project.Uid, Area = "" })" class="btn btn-brand">@Labels.View</a>
             </div>
-            @if (editionDto?.IsProjectEvaluationOpen() == true)
+            @if (editionDto?.IsProjectBuyerEvaluationOpen() == true)
             {
                 <div class="col-4 text-center">
                     <button type="button" class="btn btn-success" onclick="ProjectsBuyerEvaluationUpdateWidget.showAcceptModal('@Model.Project.Uid');">

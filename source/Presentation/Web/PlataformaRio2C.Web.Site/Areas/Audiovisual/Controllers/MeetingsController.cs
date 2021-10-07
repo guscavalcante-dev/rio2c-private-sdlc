@@ -17,6 +17,7 @@ using PlataformaRio2C.Domain.Interfaces;
 using PlataformaRio2C.Infra.CrossCutting.Identity.AuthorizeAttributes;
 using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Helpers;
 using PlataformaRio2C.Web.Site.Controllers;
 using PlataformaRio2C.Web.Site.Filters;
@@ -32,7 +33,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
     /// MeetingsController
     /// </summary>
     [AjaxAuthorize(Order = 1)]
-    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AudiovisualPlayerExecutive)]
+    [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AudiovisualPlayerExecutive + "," + Constants.CollaboratorType.Industry)]
     public class MeetingsController : BaseController
     {
         private readonly INegotiationRepository negotiationRepo;
@@ -98,6 +99,104 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 MaxJsonLength = Int32.MaxValue
             };
         }
+
+        #endregion
+
+        #region Details
+
+        /// <summary>
+        /// Detailses the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
+        public async Task<ActionResult> Details(Guid? id)
+        {
+            var negotiationDto = await this.negotiationRepo.FindDtoAsync(id ?? Guid.Empty);
+            if (negotiationDto == null)
+            {
+                this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.OneToOneMeeting, Labels.FoundF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Meetings", new { Area = "Audiovisual" });
+            }
+
+            if (this.EditionDto?.IsAudiovisualProjectNegotiationsStarted() != true)
+            {
+                return Json(new { status = "error", message = Messages.NegotiationPeriodClosed }, JsonRequestBehavior.AllowGet);
+            }
+
+            if (negotiationDto?.ProjectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.AttendeeOrganization?.IsVirtualMeeting == false)
+            {
+                this.StatusMessageToastr(Messages.AccessDenied, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Meetings", new { Area = "Audiovisual" });
+            }
+
+            #region Breadcrumb
+
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.AudioVisual, null),
+                new BreadcrumbItemHelper(Labels.OneToOneMeeting, Url.Action("Index", "Meetings", new { Area = "Audiovisual" })),
+                new BreadcrumbItemHelper(negotiationDto.RoomDto.GetRoomNameByLanguageCode(this.UserInterfaceLanguage)?.RoomName?.Value, Url.Action("Details", "Meetings", new { Area = "Audiovisual", id }))
+            });
+
+            #endregion
+
+            return View(negotiationDto);
+        }
+
+        #region Main Information Widget
+
+        /// <summary>
+        /// Shows the main information widget.
+        /// </summary>
+        /// <param name="negotiationUid">The negotiation uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowMainInformationWidget(Guid? negotiationUid)
+        {
+            var negotiationDto = await this.negotiationRepo.FindDtoAsync(negotiationUid ?? Guid.Empty);
+            if (negotiationDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", negotiationDto), divIdOrClass = "#AudiovisualMeetingsMainInformationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Virtual Meeting Widget
+
+        /// <summary>
+        /// Shows the main information widget.
+        /// </summary>
+        /// <param name="negotiationUid">The negotiation uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> ShowVirtualMeetingWidget(Guid? negotiationUid)
+        {
+            var negotiationDto = await this.negotiationRepo.FindDtoAsync(negotiationUid ?? Guid.Empty);
+            if (negotiationDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/VirtualMeetingWidget", negotiationDto), divIdOrClass = "#AudiovisualMeetingsVirtualMeetingWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
 
         #endregion
     }

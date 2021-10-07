@@ -326,7 +326,12 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                           {
                                               AttendeeOrganization = n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization,
                                               Organization = n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.Organization
-                                          }
+                                          },
+                                          ProjectTitleDtos = n.ProjectBuyerEvaluation.Project.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
+                                          {
+                                              ProjectTitle = t,
+                                              Language = t.Language
+                                          })
                                       }
                                   },
                                   RoomDto = new RoomDto()

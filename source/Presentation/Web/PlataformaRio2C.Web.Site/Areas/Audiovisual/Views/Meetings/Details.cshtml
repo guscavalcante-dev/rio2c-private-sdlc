@@ -1,0 +1,55 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model NegotiationDto
+@{
+    ViewBag.Title = $"{Labels.OneToOneMeetings} {Model.RoomDto.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.RoomName?.Value}";
+}
+@Html.Hidden("AggregateId", Model.Negotiation.Uid)
+@Html.Hidden("UserEmail", ViewBag.UserAccessControlDto.User.Email as string)
+@Html.Hidden("DisplayName", (ViewBag.UserAccessControlDto.Collaborator?.GetDisplayName() ?? ViewBag.UserAccessControlDto.User.Name) as string)
+@Html.Hidden("NegotiationStartDate", Model.Negotiation.StartDate.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US")));
+@Html.Hidden("NegotiationEndDate", Model.Negotiation.EndDate.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US")))
+@Html.Hidden("RoomLiberationDate", ((Model.Negotiation.StartDate.AddMinutes(-5).ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US")))))
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12">
+                <div id="AudiovisualMeetingsMainInformationWidget" class="kt-portlet" style="min-height: 100px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12">
+                <div id="AudiovisualMeetingsVirtualMeetingWidget" class="kt-portlet" style="min-height: 325px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Styles {
+    @Styles.Render("~/bundles/css/chronograph.css")
+}
+@section Scripts {
+    @* TODO: Migrade jit.si to BundlesConfig?*@
+    <script src='https://meet.jit.si/external_api.js'></script>
+    @Scripts.Render("~/bundles/js/bootbox.js")
+    @Scripts.Render("~/bundles/js/chronograph.js")
+    @Scripts.Render("~/bundles/js/audiovisual.meetings.widget.js")
+
+    <script>
+        // Page translations ----------------------------------------------------------------------
+        var translations = {
+            meetings: '@Labels.OneToOneMeeting',
+            finished: '@Labels.FinishedF',
+            inProgress: '@Labels.InProgress',
+            leaveMeetingconfirmationMessage: '@Messages.ConfirmToLeaveMeeting'
+        };
+
+        jQuery(document).ready(function () {
+            AudiovisualMeetingsMainInformationWidget.init();
+            AudiovisualMeetingsVirtualMeetingWidget.init();
+        });
+    </script>
+}
