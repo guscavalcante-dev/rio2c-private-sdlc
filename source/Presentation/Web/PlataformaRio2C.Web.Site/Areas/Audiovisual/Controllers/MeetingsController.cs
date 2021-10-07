@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 07-28-2021
 //
-// Last Modified By : Renan Valentim
-// Last Modified On : 10-04-2021
+// Last Modified By : Rafael Dantas Ruiz
+// Last Modified On : 10-01-2021
 // ***********************************************************************
 // <copyright file="MeetingsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -29,13 +29,19 @@ using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 {
-    /// <summary>MeetingsController</summary>
+    /// <summary>
+    /// MeetingsController
+    /// </summary>
     [AjaxAuthorize(Order = 1)]
     [AuthorizeCollaboratorType(Order = 2, Types = Constants.CollaboratorType.AudiovisualPlayerExecutive + "," + Constants.CollaboratorType.Industry)]
     public class MeetingsController : BaseController
     {
         private readonly INegotiationRepository negotiationRepo;
 
+        /// <summary>Initializes a new instance of the <see cref="MeetingsController" /> class.</summary>
+        /// <param name="commandBus">The command bus.</param>
+        /// <param name="identityController">The identity controller.</param>
+        /// <param name="negotiationRepository">The negotiation repository.</param>
         public MeetingsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
@@ -99,6 +105,11 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 
         #region Details
 
+        /// <summary>
+        /// Detailses the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public async Task<ActionResult> Details(Guid? id)
         {
             var negotiationDto = await this.negotiationRepo.FindDtoAsync(id ?? Guid.Empty);
@@ -187,27 +198,6 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         }
 
         #endregion
-
-        public async Task<ActionResult> BrandingInfo()
-        {
-            return Json(new
-            {
-                // The domain url to apply (will replace the domain in the sharing conference link/embed section)
-                inviteDomain = "example-company.org",
-                // The hex value for the colour used as background
-                backgroundColor = "#fff",
-                // The url for the image used as background
-                backgroundImageUrl = "https://example.com/background-img.png",
-                // The anchor url used when clicking the logo image
-                logoClickUrl = "https://my.rio2c.com",
-                // The url used for the image used as logo
-                logoImageUrl = "http://localhost:43931/Assets/img/logo_rio2c_white.png",
-                // Overwrite for pool of background images for avatars
-                //avatarBackgrounds = "['url(https://example.com/avatar-background-1.png)', '#FFF']",
-                // The lobby/prejoin screen background
-                premeetingBackground = "url(http://localhost:43931/Assets/img/header.jpg?20190829)"
-            }, JsonRequestBehavior.AllowGet);
-        }
 
         #endregion
     }
