@@ -142,15 +142,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Esta rodada de negócios já foi encerrada.
-        /// </summary>
-        public static string BusinessRoundFinished {
-            get {
-                return ResourceManager.GetString("BusinessRoundFinished", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to {0} {1} {2} para esse projeto..
         /// </summary>
         public static string BuyerEvaluationsAvailableForProject {
@@ -1163,6 +1154,33 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string MaxProjectBuyersGroupsReached {
             get {
                 return ResourceManager.GetString("MaxProjectBuyersGroupsReached", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Esta reunião já foi encerrada!.
+        /// </summary>
+        public static string MeetingFinished {
+            get {
+                return ResourceManager.GetString("MeetingFinished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Atenção! A reunião está quase acabando. 1 minuto restante..
+        /// </summary>
+        public static string MeetingIsAlmostOver {
+            get {
+                return ResourceManager.GetString("MeetingIsAlmostOver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O tempo da rodada de negócios se esgotou e esta reunião chegou ao fim! Agradecemos pela sua presença no MyRio2C!.
+        /// </summary>
+        public static string MeetingIsOver {
+            get {
+                return ResourceManager.GetString("MeetingIsOver", resourceCulture);
             }
         }
         

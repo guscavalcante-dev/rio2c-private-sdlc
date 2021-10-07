@@ -149,9 +149,6 @@
   <data name="BadgeIsRequired" xml:space="preserve">
     <value>Nome do crachá obrigatório.</value>
   </data>
-  <data name="BusinessRoundFinished" xml:space="preserve">
-    <value>Esta rodada de negócios já foi encerrada</value>
-  </data>
   <data name="BuyerEvaluationsAvailableForProject" xml:space="preserve">
     <value>{0} {1} {2} para esse projeto.</value>
     <comment>{0} {1} {2} para esse projeto.</comment>
@@ -565,6 +562,15 @@
   <data name="MaxProjectBuyersGroupsReached" xml:space="preserve">
     <value>Você não pode selecionar um novo {0} para avaliar o projeto pois todos os grupos de {1} {2} já foram utilizados.</value>
     <comment>Você não pode selecionar um novo {0} para avaliar o projeto pois todos os grupos de {1} {2} já foram utilizados.</comment>
+  </data>
+  <data name="MeetingFinished" xml:space="preserve">
+    <value>Esta reunião já foi encerrada!</value>
+  </data>
+  <data name="MeetingIsAlmostOver" xml:space="preserve">
+    <value>Atenção! A reunião está quase acabando. 1 minuto restante.</value>
+  </data>
+  <data name="MeetingIsOver" xml:space="preserve">
+    <value>O tempo da rodada de negócios se esgotou e esta reunião chegou ao fim! Agradecemos pela sua presença no MyRio2C!</value>
   </data>
   <data name="MessageIsTooLong" xml:space="preserve">
     <value>A mensagem é longa demais. Tente encurtá-la ou enviá-la em múltiplas partes.</value>
