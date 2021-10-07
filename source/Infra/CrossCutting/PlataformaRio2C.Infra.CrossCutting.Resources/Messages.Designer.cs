@@ -448,6 +448,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deseja realmente sair desta reunião?.
+        /// </summary>
+        public static string ConfirmToLeaveMeeting {
+            get {
+                return ResourceManager.GetString("ConfirmToLeaveMeeting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirme para enviar os e-mails de convite.
         /// </summary>
         public static string ConfirmToSendInvitationEmails {
@@ -1149,6 +1158,33 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Esta reunião já foi encerrada!.
+        /// </summary>
+        public static string MeetingFinished {
+            get {
+                return ResourceManager.GetString("MeetingFinished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Atenção! A reunião está quase acabando. 1 minuto restante..
+        /// </summary>
+        public static string MeetingIsAlmostOver {
+            get {
+                return ResourceManager.GetString("MeetingIsAlmostOver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O tempo da rodada de negócios se esgotou e esta reunião chegou ao fim! Agradecemos pela sua presença no MyRio2C!.
+        /// </summary>
+        public static string MeetingIsOver {
+            get {
+                return ResourceManager.GetString("MeetingIsOver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A mensagem é longa demais. Tente encurtá-la ou enviá-la em múltiplas partes..
         /// </summary>
         public static string MessageIsTooLong {
@@ -1190,6 +1226,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string NameIsRequired {
             get {
                 return ResourceManager.GetString("NameIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Período de negociação encerrado!.
+        /// </summary>
+        public static string NegotiationPeriodClosed {
+            get {
+                return ResourceManager.GetString("NegotiationPeriodClosed", resourceCulture);
             }
         }
         
@@ -1928,6 +1973,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string RestrictionsSpecificsInPtBrMandatory {
             get {
                 return ResourceManager.GetString("RestrictionsSpecificsInPtBrMandatory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sala será liberada {0} minutos antes do horário agendado.
+        /// </summary>
+        public static string RoomReleasedMinutesScheduledDate {
+            get {
+                return ResourceManager.GetString("RoomReleasedMinutesScheduledDate", resourceCulture);
             }
         }
         

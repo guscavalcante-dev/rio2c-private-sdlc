@@ -274,6 +274,10 @@
     <value>Please, confirm to delete from {0} edition.</value>
     <comment>Por favor, confirme para excluir da edição {0}.</comment>
   </data>
+  <data name="ConfirmToLeaveMeeting" xml:space="preserve">
+    <value>Do you really want to leave this meeting?</value>
+    <comment>Deseja realmente sair desta reunião?</comment>
+  </data>
   <data name="ConfirmToSendInvitationEmails" xml:space="preserve">
     <value>Confirm to send invitation emails</value>
     <comment>Confirme para enviar os e-mails de convite</comment>
@@ -560,6 +564,18 @@
     <value>You cannot select a new {0} to evaluate the project because all {1} groups of {2} are already being used.</value>
     <comment>Você não pode selecionar um novo {0} para avaliar o projeto pois todos os grupos de {1} {2} já foram utilizados.</comment>
   </data>
+  <data name="MeetingFinished" xml:space="preserve">
+    <value>This meeting has been finished!</value>
+    <comment>Esta reunião já foi encerrada!</comment>
+  </data>
+  <data name="MeetingIsAlmostOver" xml:space="preserve">
+    <value>Attention! The meeting is almost over. 1 minute left.</value>
+    <comment>Atenção! A reunião está quase acabando. 1 minuto restante.</comment>
+  </data>
+  <data name="MeetingIsOver" xml:space="preserve">
+    <value>The time for the business round has run out and this meeting is over! We thank you for your presence on MyRio2C!</value>
+    <comment>O tempo da rodada de negócios se esgotou e esta reunião chegou ao fim! Agradecemos pela sua presença no MyRio2C!</comment>
+  </data>
   <data name="MessageIsTooLong" xml:space="preserve">
     <value>The message is too long. Try shortening it or sending it in multiple parts.</value>
   </data>
@@ -574,6 +590,10 @@
   </data>
   <data name="NameIsRequired" xml:space="preserve">
     <value>Name required.</value>
+  </data>
+  <data name="NegotiationPeriodClosed" xml:space="preserve">
+    <value>Negotiation period closed!</value>
+    <comment>Período de negociação encerrado!</comment>
   </data>
   <data name="NoBadgesAvaiable" xml:space="preserve">
     <value>No badges avaiable.</value>
@@ -855,6 +875,10 @@
   </data>
   <data name="RestrictionsSpecificsInEnglishMandatory" xml:space="preserve">
     <value>Restrictions or specifics in English is required.</value>
+  </data>
+  <data name="RoomReleasedMinutesScheduledDate" xml:space="preserve">
+    <value>Room will be released {0} minutes before the scheduled time</value>
+    <comment>Sala será liberada {0} minutos antes do horário agendado</comment>
   </data>
   <data name="ScheduledOneToOneMeetings" xml:space="preserve">
     <value>Scheduled One-to-One Meetings</value>

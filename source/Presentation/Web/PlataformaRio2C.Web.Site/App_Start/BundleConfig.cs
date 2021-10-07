@@ -246,6 +246,16 @@ namespace PlataformaRio2C.Web.Site
 
             #endregion
 
+            #region Chronograph
+
+            bundles.Add(new StyleBundle("~/bundles/css/chronograph.css")
+               .Include("~/Assets/components/chronograph/chronograph.css", new CssRewriteUrlTransform()));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/chronograph.js").Include(
+                "~/Assets/components/chronograph/chronograph.js"));
+
+            #endregion
+
             #endregion
 
             #region Common Pages Bundles
@@ -396,11 +406,15 @@ namespace PlataformaRio2C.Web.Site
 
             #endregion
 
-            #region Meetings Scheduled
+            #region Meetings
 
-            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.scheduled.widget.js").Include(
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.list.widget.js").Include(
                 "~/Assets/js/audiovisual/meetings/audiovisual.meetings.scheduled.widget.js",
                 "~/Assets/js/audiovisual/meetings/audiovisual.meetings.scheduled.delete.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/audiovisual.meetings.widget.js").Include(
+                "~/Assets/js/audiovisual/meetings/audiovisual.meetings.maininformation.widget.js",
+                "~/Assets/js/audiovisual/meetings/audiovisual.meetings.virtualmeeting.widget.js"));
 
             #endregion
 
@@ -500,54 +514,6 @@ namespace PlataformaRio2C.Web.Site
                 "~/Content/js/fabric.js",
                 "~/Content/js/darkroom.js"));
 
-
-            //#region bundlesAngular
-
-            //var bundlesAngular = new ScriptBundle("~/Scripts/angular/bundles");
-            //bundlesAngular.Include("~/Scripts/angular/angular.min.js");
-            //bundlesAngular.Include("~/Scripts/angular/angular-aria.min.js");
-            //bundlesAngular.Include("~/Scripts/angular/angular-animate.min.js");
-            //bundlesAngular.Include("~/Scripts/angular/angular-messages.min.js");
-            //bundlesAngular.Include("~/Scripts/angular/angular-sanitize.min.js");
-            //bundlesAngular.Include("~/Scripts/angular/angular-route.min.js");
-            //bundlesAngular.Include("~/Scripts/angular/angular-cookies.min.js");
-            //bundlesAngular.Include("~/Scripts/angular-ui/ui-bootstrap.min.js");
-            //bundlesAngular.Include("~/Scripts/angular-ui/ui-bootstrap-tpls.min.js");
-            //bundlesAngular.Include("~/Scripts/ngToast/ngToast.min.js");
-            //bundlesAngular.Include("~/Scripts/MarlinToolKit/MarlinAlert/MarlinAlert.module.js");
-            //bundlesAngular.Include("~/Scripts/MarlinToolKit/MarlinAlert/MarlinAlert.config.js");
-            //bundlesAngular.Include("~/Scripts/MarlinToolKit/MarlinAlert/*.js");
-            //bundlesAngular.Include("~/Scripts/MarlinToolKit/MarlinToolKit.module.js");
-            //bundlesAngular.Include("~/Scripts/angular-vs-repeat-master/angular-vs-repeat.min.js");
-            //bundlesAngular.Include("~/Scripts/Moment/moment.min.js");
-            //bundlesAngular.Include("~/Scripts/Moment/moment-with-locales.min.js");
-
-
-            //bundles.Add(bundlesAngular);
-
-            //#endregion
-
-            //#region bundlesAngularExtensions
-
-            //var bundlesAngularExtensions = new ScriptBundle("~/Content/js/Rio2C/bundles");
-            //bundlesAngularExtensions.Include("~/Content/js/Rio2C/Rio2C.module.js");
-            //bundlesAngularExtensions.Include("~/Content/js/Rio2C/Rio2C.config.js");
-            //bundlesAngularExtensions.Include("~/Content/js/Rio2C/Rio2C.loadimage.directive.js");
-            //bundlesAngularExtensions.Include("~/Content/js/Rio2C/Rio2C.pluralize.filter.js");
-            //bundlesAngularExtensions.Include("~/Content/js/Rio2C/Project/Project.module.js");
-            //bundlesAngularExtensions.Include("~/Content/js/Rio2C/Project/*.js");
-            //bundlesAngularExtensions.Include("~/Content/js/Rio2C/Player/Player.module.js");
-            //bundlesAngularExtensions.Include("~/Content/js/Rio2C/Player/*.js");
-            //bundlesAngularExtensions.Include("~/Content/js/Rio2C/Conference/Conference.module.js");
-            //bundlesAngularExtensions.Include("~/Content/js/Rio2C/Conference/*.js");
-            //bundlesAngularExtensions.Include("~/Content/js/Rio2C/Message/Message.module.js");
-            //bundlesAngularExtensions.Include("~/Content/js/Rio2C/Message/*.js");
-            //bundlesAngularExtensions.Include("~/Content/js/Rio2C/Schedule/Schedule.module.js");
-            //bundlesAngularExtensions.Include("~/Content/js/Rio2C/Schedule/*.js");
-            //bundles.Add(bundlesAngularExtensions);
-
-            //#endregion
-
             #endregion
 
             #region Styles
@@ -580,18 +546,6 @@ namespace PlataformaRio2C.Web.Site
 
             #endregion
                             
-            #region Bootstrap Datepicker
-                        
-            //bundles.Add(new ScriptBundle("~/bundles/js/globalize.js").Include(
-            //    "~/Assets/components/cldr/cldr.js",
-            //    "~/Assets/components/cldr/event.js",
-            //    "~/Assets/components/cldr/supplemental.js",
-            //    "~/Assets/components/globalize/globalize.js",
-            //    "~/Assets/components/globalize/number.js",
-            //    "~/Assets/components/globalize/date.js"));
-
-            #endregion
-
             // Required to generate bundles on release running in visual studio
             #if !DEBUG
             BundleTable.EnableOptimizations = true;

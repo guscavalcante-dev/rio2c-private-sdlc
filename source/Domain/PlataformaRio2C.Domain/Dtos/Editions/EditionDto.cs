@@ -153,75 +153,7 @@ namespace PlataformaRio2C.Domain.Dtos
             this.UpdateUserId = entity.UpdateUserId;
         }
 
-        #region Audiovisual - Negotiations
-
-        #region Project Submit
-
-        /// <summary>Determines whether [is project submit open].</summary>
-        /// <returns>
-        ///   <c>true</c> if [is project submit open]; otherwise, <c>false</c>.</returns>
-        public bool IsProjectSubmitOpen()
-        {
-            return DateTime.UtcNow >= this.ProjectSubmitStartDate && DateTime.UtcNow <= this.ProjectSubmitEndDate;
-        }
-
-        /// <summary>Determines whether [is project submit started].</summary>
-        /// <returns>
-        ///   <c>true</c> if [is project submit started]; otherwise, <c>false</c>.</returns>
-        public bool IsProjectSubmitStarted()
-        {
-            return DateTime.UtcNow >= this.ProjectSubmitStartDate;
-        }
-
-        /// <summary>Determines whether [is project submit ended].</summary>
-        /// <returns>
-        ///   <c>true</c> if [is project submit ended]; otherwise, <c>false</c>.</returns>
-        public bool IsProjectSubmitEnded()
-        {
-            return DateTime.UtcNow > this.ProjectSubmitEndDate;
-        }
-
-        #endregion
-
-        #region Project Evaluation
-
-        /// <summary>Determines whether [is project evaluation open].</summary>
-        /// <returns>
-        ///   <c>true</c> if [is project evaluation open]; otherwise, <c>false</c>.</returns>
-        public bool IsProjectEvaluationOpen()
-        {
-            return DateTime.UtcNow >= this.ProjectEvaluationStartDate && DateTime.UtcNow <= this.ProjectEvaluationEndDate;
-        }
-
-        /// <summary>Determines whether [is project evaluation started].</summary>
-        /// <returns>
-        ///   <c>true</c> if [is project evaluation started]; otherwise, <c>false</c>.</returns>
-        public bool IsProjectEvaluationStarted()
-        {
-            return DateTime.UtcNow >= this.ProjectEvaluationStartDate;
-        }
-
-        /// <summary>Determines whether [is project evaluation ended].</summary>
-        /// <returns>
-        ///   <c>true</c> if [is project evaluation ended]; otherwise, <c>false</c>.</returns>
-        public bool IsProjectEvaluationEnded()
-        {
-            return DateTime.UtcNow > this.ProjectEvaluationEndDate;
-        }
-
-        /// <summary>Determines whether [is evaluation released for disclosure].</summary>
-        /// <returns>
-        ///   <c>true</c> if [is evaluation released for disclosure]; otherwise, <c>false</c>.</returns>
-        public bool IsEvaluationReleasedForDisclosure()
-        {
-            return DateTime.UtcNow > this.OneToOneMeetingsScheduleDate;
-        }
-
-        #endregion
-
-        #endregion
-
-        #region Music - Commissions
+        #region Music
 
         #region Project Submit
 
@@ -281,7 +213,7 @@ namespace PlataformaRio2C.Domain.Dtos
 
         #endregion
 
-        #region Innovation - Commissions
+        #region Innovation
 
         #region Project Submit
 
@@ -341,7 +273,7 @@ namespace PlataformaRio2C.Domain.Dtos
 
         #endregion
 
-        #region Audiovisual - Commissions
+        #region Audiovisual
 
         #region Project Submit
 
@@ -380,7 +312,7 @@ namespace PlataformaRio2C.Domain.Dtos
 
         #endregion
 
-        #region Project Evaluation
+        #region Project Evaluation - Commission
 
         /// <summary>
         /// Determines whether [is audiovisual commission project evaluation open].
@@ -413,6 +345,58 @@ namespace PlataformaRio2C.Domain.Dtos
         public bool IsAudiovisualCommissionProjectEvaluationEnded()
         {
             return DateTime.UtcNow > this.AudiovisualCommissionEvaluationEndDate;
+        }
+
+        #endregion
+
+        #region Project Evaluation - Buyer
+
+        /// <summary>
+        /// Determines whether [is project buyer evaluation open].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is project buyer evaluation open]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsProjectBuyerEvaluationOpen()
+        {
+            return DateTime.UtcNow >= this.ProjectEvaluationStartDate && DateTime.UtcNow <= this.ProjectEvaluationEndDate;
+        }
+
+        /// <summary>
+        /// Determines whether [is project buyer evaluation started].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is project buyer evaluation started]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsProjectBuyerEvaluationStarted()
+        {
+            return DateTime.UtcNow >= this.ProjectEvaluationStartDate;
+        }
+
+        /// <summary>
+        /// Determines whether [is project buyer evaluation released for disclosure].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is project buyer evaluation released for disclosure]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsProjectBuyerEvaluationReleasedForDisclosure()
+        {
+            return DateTime.UtcNow > this.OneToOneMeetingsScheduleDate;
+        }
+
+        #endregion
+
+        #region Project Negotiations
+
+        /// <summary>
+        /// Determines whether [is audiovisual project negotiations started].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is audiovisual project negotiations started]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsAudiovisualProjectNegotiationsStarted()
+        {
+            return DateTime.UtcNow >= this.NegotiationStartDate;
         }
 
         #endregion

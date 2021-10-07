@@ -2981,4 +2981,22 @@
     <value>Join</value>
     <comment>Participar</comment>
   </data>
+  <data name="FinishedF" xml:space="preserve">
+    <value>Finished</value>
+  </data>
+  <data name="FinishedM" xml:space="preserve">
+    <value>Finished</value>
+  </data>
+  <data name="InProgress" xml:space="preserve">
+    <value>In progress</value>
+  </data>
+  <data name="LeaveRoom" xml:space="preserve">
+    <value>Leave Room</value>
+  </data>
+  <data name="NotStartedF" xml:space="preserve">
+    <value>Não iniciada</value>
+  </data>
+  <data name="NotStartedM" xml:space="preserve">
+    <value>Não iniciado</value>
+  </data>
 </root>

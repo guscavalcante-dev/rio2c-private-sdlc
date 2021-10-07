@@ -274,6 +274,9 @@
     <value>Por favor, confirme para excluir da edição {0}.</value>
     <comment>Por favor, confirme para excluir da edição {0}.</comment>
   </data>
+  <data name="ConfirmToLeaveMeeting" xml:space="preserve">
+    <value>Deseja realmente sair desta reunião?</value>
+  </data>
   <data name="ConfirmToSendInvitationEmails" xml:space="preserve">
     <value>Confirme para enviar os e-mails de convite</value>
     <comment>Confirme para enviar os e-mails de convite</comment>
@@ -560,6 +563,15 @@
     <value>Você não pode selecionar um novo {0} para avaliar o projeto pois todos os grupos de {1} {2} já foram utilizados.</value>
     <comment>Você não pode selecionar um novo {0} para avaliar o projeto pois todos os grupos de {1} {2} já foram utilizados.</comment>
   </data>
+  <data name="MeetingFinished" xml:space="preserve">
+    <value>Esta reunião já foi encerrada!</value>
+  </data>
+  <data name="MeetingIsAlmostOver" xml:space="preserve">
+    <value>Atenção! A reunião está quase acabando. 1 minuto restante.</value>
+  </data>
+  <data name="MeetingIsOver" xml:space="preserve">
+    <value>O tempo da rodada de negócios se esgotou e esta reunião chegou ao fim! Agradecemos pela sua presença no MyRio2C!</value>
+  </data>
   <data name="MessageIsTooLong" xml:space="preserve">
     <value>A mensagem é longa demais. Tente encurtá-la ou enviá-la em múltiplas partes.</value>
   </data>
@@ -574,6 +586,9 @@
   </data>
   <data name="NameIsRequired" xml:space="preserve">
     <value>Nome obrigatório.</value>
+  </data>
+  <data name="NegotiationPeriodClosed" xml:space="preserve">
+    <value>Período de negociação encerrado!</value>
   </data>
   <data name="NoBadgesAvaiable" xml:space="preserve">
     <value>Nenhum ingresso disponível.</value>
@@ -857,6 +872,9 @@
   </data>
   <data name="RestrictionsSpecificsInPtBrMandatory" xml:space="preserve">
     <value>Restrições e especificades em português é obrigatório.</value>
+  </data>
+  <data name="RoomReleasedMinutesScheduledDate" xml:space="preserve">
+    <value>Sala será liberada {0} minutos antes do horário agendado</value>
   </data>
   <data name="ScheduledOneToOneMeetings" xml:space="preserve">
     <value>Rodadas de Negócios Agendadas</value>

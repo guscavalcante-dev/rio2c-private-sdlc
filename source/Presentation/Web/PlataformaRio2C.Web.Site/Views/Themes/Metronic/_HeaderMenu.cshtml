@@ -35,7 +35,7 @@
                     </a>
                 </li>
             }
-            else if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true && editionDto?.IsProjectSubmitStarted() == true)
+            else if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true && editionDto?.IsAudiovisualProjectSubmitStarted() == true)
             {
                 <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "SubmittedList", "Projects", "")" aria-haspopup="true">
                     <a class="kt-menu__link" href="@(Url.Action("SubmittedList", "Projects", new { Area = "" }))">
@@ -47,7 +47,7 @@
             {
                 projectsUrl = Url.Action("EvaluationList", "Projects", new { Area = "" });
 
-                if (editionDto?.IsProjectEvaluationStarted() != true)
+                if (editionDto?.IsProjectBuyerEvaluationStarted() != true)
                 {
                     projectsUrl = Url.Action("Index", "Projects", new { Area = "" });
                 }
@@ -96,7 +96,7 @@
                                 </a>
                             </li>
                         }
-                        @if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true && editionDto?.IsProjectSubmitStarted() == true)
+                        @if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true && editionDto?.IsAudiovisualProjectSubmitStarted() == true)
                         {
                             projectsUrl = Url.Action("SubmittedList", "Projects", new { Area = "" });
 
@@ -107,7 +107,7 @@
                                 </a>
                             </li>
                         }
-                        @if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.AudiovisualPlayerExecutive) == true && editionDto?.IsProjectEvaluationStarted() == true)
+                        @if (userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.AudiovisualPlayerExecutive) == true && editionDto?.IsProjectBuyerEvaluationStarted() == true)
                         {
                             projectsUrl = Url.Action("EvaluationList", "Projects", new { Area = "" });
 

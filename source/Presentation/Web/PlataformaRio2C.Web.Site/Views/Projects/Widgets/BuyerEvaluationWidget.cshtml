@@ -10,7 +10,7 @@
 </div>
 <div class="kt-portlet__body">
     <div class="kt-widget5">
-        <div class="kt-widget kt-widget--project-1" style="@(editionDto?.IsProjectEvaluationOpen() == true ? "border-bottom: 0.07rem dashed #ebedf2;" : string.Empty)">
+        <div class="kt-widget kt-widget--project-1" style="@(editionDto?.IsProjectBuyerEvaluationOpen() == true ? "border-bottom: 0.07rem dashed #ebedf2;" : string.Empty)">
             <div class="kt-widget__body pb-0">
                 <div class="kt-widget__content">
                     @Html.Partial("Shared/_BuyersEvaluations", Model)
@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="row mt-20 justify-content-center">
-        @if (editionDto?.IsProjectEvaluationOpen() == true)
+        @if (editionDto?.IsProjectBuyerEvaluationOpen() == true)
         {
             <div class="col-4 text-center">
                 <button type="button" class="btn btn-success" onclick="ProjectsBuyerEvaluationUpdateWidget.showAcceptModal('@Model.Project.Uid');">
