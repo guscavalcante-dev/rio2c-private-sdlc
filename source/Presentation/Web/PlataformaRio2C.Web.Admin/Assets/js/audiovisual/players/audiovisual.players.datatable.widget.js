@@ -159,11 +159,12 @@ var AudiovisualPlayersDataTableWidget = function () {
                         if (!full.IsInCurrentEdition) {
                             html += '<button class="dropdown-item" onclick="AudiovisualPlayersUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         }
-
-                        html += '<button class="dropdown-item" onclick="AudiovisualPlayersDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
+                        else {
+                            html += '<button class="dropdown-item" onclick="AudiovisualPlayersDataTableWidget.showDetails(\'' + full.Uid + '\', false);"><i class="la la-eye"></i> ' + labels.view + '</button>';
+                        }
 
                         if (full.IsInCurrentEdition && full.IsInOtherEdition) {
-                            html += '<button class="dropdown-item" onclick="AudiovisualPlayersDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + removeFromEdition + '</button>';
+                            html += '<button class="dropdown-item" onclick="AudiovisualPlayersDelete.showModal(\'' + full.Uid + '\', true);"><i class="la la-minus"></i> ' + removeFromEdition + '</button>';
                         }
                         else {
                             html += '<button class="dropdown-item" onclick="AudiovisualPlayersDelete.showModal(\'' + full.Uid + '\', false);"><i class="la la-remove"></i> ' + labels.remove + '</button>';
