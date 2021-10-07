@@ -204,7 +204,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 id ?? Guid.Empty, 
                 OrganizationType.Player.Uid,
                 this.EditionDto.Id, 
-                true);
+                false);
 
             if (attendeeOrganizationDto == null)
             {
