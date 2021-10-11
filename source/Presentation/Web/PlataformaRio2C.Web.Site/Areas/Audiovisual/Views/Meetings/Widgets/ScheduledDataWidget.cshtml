@@ -1,6 +1,7 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
 @using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Statics
 @model List<NegotiationGroupedByDateDto>
 @{
     var brazilUtc = @DateTimeExtensions.GetBrazilUtc();
@@ -37,32 +38,35 @@
                                         <td class="align-middle text-center col-sm-3 col-lg-2">
                                             @(negotiationDto?.Negotiation?.StartDate.ToBrazilTimeZone().ToShortTimeString())
                                             <span class="d-none d-sm-inline">-</span><span class="d-sm-none"><br /></span>
-                                            @(negotiationDto?.Negotiation?.EndDate.ToBrazilTimeZone().ToShortTimeString()) 
+                                            @(negotiationDto?.Negotiation?.EndDate.ToBrazilTimeZone().ToShortTimeString())
                                             <span class="d-block form-optional-input">(@brazilUtc)</span>
                                         </td>
                                         <td class="col-md-4">
                                             <div class="row align-items-center">
                                                 @{
                                                     var organization = negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.SellerAttendeeOrganizationDto?.Organization;
-                                                    <div class="col-md-2  p-0">
-                                                        @if (organization?.HasImage() == true)
-                                                        {
-                                                            <div class="kt-widget__media">
-                                                                <img src="@ImageHelper.GetNoImageUrl()" class="image-max-size" alt="image">
-                                                            </div>
-                                                        }
-                                                        else
-                                                        {
-                                                            <div class="kt-widget kt-widget--user-profile-3">
-                                                                <div class="kt-widget__top">
+                                                    <div class="col-md-2">
+                                                        <div class="kt-widget kt-widget--user-profile-3">
+                                                            <div class="kt-widget__top">
+                                                                @if (organization?.HasImage() == true)
+                                                                {
+                                                                    <div style="float: right;">
+                                                                        <div class="kt-widget__media">
+                                                                            <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, organization.Uid, organization.ImageUploadDate, true)" alt="image" style="max-width:50px; max-height:50px;">
+                                                                        </div>
+                                                                    </div>
+
+                                                                }
+                                                                else
+                                                                {
                                                                     <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest ml-2 image-max-size" style="width: 50px; height: 50px;">
                                                                         @(organization?.GetTradeNameAbbreviation() ?? "-")
                                                                     </div>
-                                                                </div>
+                                                                }
                                                             </div>
-                                                        }
+                                                        </div>
                                                     </div>
-                                                    <div class="col-md-10 p-0">
+                                                    <div class="col-md-10">
                                                         <span>@(negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.SellerAttendeeOrganizationDto?.Organization?.TradeName)</span>
                                                     </div>
                                                 }
