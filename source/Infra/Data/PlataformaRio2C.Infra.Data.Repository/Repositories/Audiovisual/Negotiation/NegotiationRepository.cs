@@ -331,6 +331,11 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                           {
                                               ProjectTitle = t,
                                               Language = t.Language
+                                          }),
+                                          ProjectLogLineDtos = n.ProjectBuyerEvaluation.Project.ProjectLogLines.Where(ll => !ll.IsDeleted).Select(ll => new ProjectLogLineDto
+                                          {
+                                              ProjectLogLine = ll,
+                                              Language = ll.Language
                                           })
                                       }
                                   },
