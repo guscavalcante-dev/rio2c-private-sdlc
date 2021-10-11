@@ -248,8 +248,9 @@ namespace PlataformaRio2C.Web.Site
 
             #region Chronograph
 
-            bundles.Add(new StyleBundle("~/bundles/css/chronograph.css")
-               .Include("~/Assets/components/chronograph/chronograph.css", new CssRewriteUrlTransform()));
+            bundles.Add(new StyleBundle("~/bundles/css/chronograph.css").Include(
+                "~/Assets/components/chronograph/fonts.css",
+                "~/Assets/components/chronograph/chronograph.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/chronograph.js").Include(
                 "~/Assets/components/chronograph/chronograph.js"));

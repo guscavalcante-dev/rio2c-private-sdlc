@@ -395,6 +395,7 @@
     <Content Include="Assets\components\bootstrap-timepicker\bootstrap-datepicker.pt-br.js" />
     <Content Include="Assets\components\chronograph\chronograph.css" />
     <Content Include="Assets\components\chronograph\chronograph.js" />
+    <Content Include="Assets\components\chronograph\fonts.css" />
     <Content Include="Assets\components\cropper\demo\css\main.css" />
     <Content Include="Assets\components\cropper\demo\index.html" />
     <Content Include="Assets\components\cropper\demo\js\main.js" />
