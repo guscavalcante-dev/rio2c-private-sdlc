@@ -1,19 +1,8 @@
-﻿@{
+﻿@using PlataformaRio2C.Domain.Entities
+@{
     ViewBag.Title = Labels.OneToOneMeetings + " | " + Labels.ScheduledNegotiations;
 }
-<!--begin:: Quick Stats-->
-<!--<div class="row">-->
-<!--begin:: Edition Scheduled Count Widget-->
-<!--<div class="col-sm-6">
-    <div id="AudiovisualMeetingsEditionScheduledCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-</div>-->
-<!--end:: Edition Scheduled Count Widget-->
-<!--begin:: Edition Unscheduled Count Widget-->
-<!--<div class="col-sm-6">
-    <div id="AudiovisualMeetingsEditionUnscheduledCountWidget" class="kt-portlet kt-portlet--fit kt-portlet--head-noborder" style="min-height: 230px;"></div>
-</div>-->
-<!--end:: Edition Unscheduled Count Widget-->
-<!--</div>-->
+@Html.Hidden("CollaboratorTypeUid", ViewBag.CollaboratorTypeUid as Guid?)
 <!--end:: Quick Stats-->
 <div class="row">
     <!--begin:: Scheduled Meetings Widget-->
@@ -30,10 +19,7 @@
     @Scripts.Render("~/bundles/js/bootbox.js")
     @Scripts.Render("~/bundles/js/bootstrap-datepicker.js")
     @Scripts.Render("~/bundles/js/audiovisual.meetings.list.widget.js")
-    @*@Scripts.Render("~/bundles/js/chart.js")*@
-    @*@Scripts.Render("~/bundles/js/audiovisual.meetings.editionscheduledcount.widget.js")
-        @Scripts.Render("~/bundles/js/audiovisual.meetings.editionunscheduledcount.widget.js")*@
-    <script>
+<script>
         // Page translations ----------------------------------------------------------------------
         var translations = {
             playerDropdownPlaceholder: '@string.Format(Labels.SelectAMEntity, Labels.Player.ToLowerInvariant())...',
@@ -43,11 +29,12 @@
             startTimeDropdownPlaceholder: '@Html.Raw(string.Format(Labels.SelectAFEntity, Labels.StartTime.ToLowerInvariant()))...'
         };
 
+        var isPlayerExecutive = $('#CollaboratorTypeUid').val() == '@(CollaboratorType.AudiovisualPlayerExecutive.Uid)';
+        var isProducerExecutive = $('#CollaboratorTypeUid').val() == '@(CollaboratorType.Industry.Uid)';
+
         // Pagination -----------------------------------------------------------------------------
         jQuery(document).ready(function () {
-            //AudiovisualMeetingsEditionScheduledCountWidget.init();
-            //AudiovisualMeetingsEditionUnscheduledCountWidget.init();
             AudiovisualMeetingsScheduledWidget.init();
         });
-    </script>
+</script>
 }
