@@ -169,8 +169,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 Player = nd.ProjectBuyerEvaluationDto.BuyerAttendeeOrganizationDto.Organization.TradeName,
                 Room = nd.RoomDto.GetRoomNameByLanguageCode(this.UserInterfaceLanguage)?.RoomName?.Value,
                 TableNumber = nd.Negotiation.TableNumber,
-                RoundNumber = nd.Negotiation.RoundNumber,
-                VirtualMeetingUrl = nd.RoomDto.Room.VirtualMeetingUrl
+                RoundNumber = nd.Negotiation.RoundNumber
             });
 
             return Json(new

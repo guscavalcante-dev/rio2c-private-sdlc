@@ -20,11 +20,5 @@
             </div>
             @Html.ValidationMessageFor(m => m.IsVirtualMeeting, "", new { @class = "text-danger" })
         </div>
-
-        <div class="form-group" data-additionalinfo="IsVirtualMeeting">
-            <label class="control-label">@Labels.VirtualMeetingUrl</label>
-            @Html.TextBoxFor(m => m.VirtualMeetingUrl, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.VirtualMeetingUrl, "", new { @class = "text-danger" })
-        </div>
     </div>
 </div>

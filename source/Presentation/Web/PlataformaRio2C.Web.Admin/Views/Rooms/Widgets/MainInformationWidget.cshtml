@@ -16,33 +16,13 @@
                 </div>
             </div>
         </div>
-        @if (Model.Room.IsVirtualMeeting == true)
-        {
-            <div class="kt-widget__bottom">
-                <div class="kt-widget__item">
-                    <div class="kt-widget__details">
-                        <span class="kt-widget__title">@Labels.RoomType</span>
-                        <span class="kt-widget__value"><span>@(Model.Room.IsVirtualMeeting ? Labels.Virtual : Labels.Presential)</span></span>
-                    </div>
-                </div>
-                <div class="kt-widget__item">
-                    <div class="kt-widget__details">
-                        <span class="kt-widget__title">@Labels.VirtualMeetingUrl</span>
-                        <span class="kt-widget__value"><span>@Model.Room.VirtualMeetingUrl</span></span>
-                    </div>
+        <div class="kt-widget__bottom">
+            <div class="kt-widget__item">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.RoomType</span>
+                    <span class="kt-widget__value"><span>@(Model.Room.IsVirtualMeeting ? Labels.Virtual : Labels.Presential)</span></span>
                 </div>
             </div>
-        }
-        <div class="kt-widget__bottom">
-            @if (!Model.Room.IsVirtualMeeting)
-            {
-                <div class="kt-widget__item">
-                    <div class="kt-widget__details">
-                        <span class="kt-widget__title">@Labels.RoomType</span>
-                        <span class="kt-widget__value"><span>@(Model.Room.IsVirtualMeeting ? Labels.Virtual : Labels.Presential)</span></span>
-                    </div>
-                </div>
-            }
             <div class="kt-widget__item">
                 <div class="kt-widget__details">
                     <span class="kt-widget__title">@Labels.CreateDate</span>

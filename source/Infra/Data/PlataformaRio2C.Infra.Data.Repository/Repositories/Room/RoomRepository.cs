@@ -301,7 +301,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 Uid = r.Uid,
                                 Name = r.RoomNames.FirstOrDefault(rn => !rn.IsDeleted && rn.LanguageId == languageId).Value,
                                 IsVirtualMeeting = r.IsVirtualMeeting,
-                                VirtualMeetingUrl = r.VirtualMeetingUrl,
                                 CreateDate = r.CreateDate,
                                 UpdateDate = r.UpdateDate
                             })

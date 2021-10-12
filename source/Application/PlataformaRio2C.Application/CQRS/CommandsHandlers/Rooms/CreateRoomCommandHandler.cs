@@ -63,7 +63,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 await this.editionRepo.GetAsync(cmd.EditionId ?? 0),
                 cmd.Names?.Select(d => new RoomName(d.Value, languageDtos?.FirstOrDefault(l => l.Code == d.LanguageCode)?.Language, cmd.UserId))?.ToList(),
                 cmd.IsVirtualMeeting,
-                cmd.VirtualMeetingUrl,
                 cmd.UserId);
             if (!room.IsValid())
             {
