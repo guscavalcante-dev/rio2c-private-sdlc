@@ -15,10 +15,10 @@
 
 <div class="kt-portlet__body">
     <div class="row">
-        <div class="col-md-5">
-            <div class="kt-widget kt-widget--user-profile-3">
-                <div class="kt-widget__top">
-                    <div style="float: right;">
+        <div class="col-md-8 kt-widget kt-widget--user-profile-3">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="kt-widget__top">
                         <a href="@sellerCompanyDetailsUrl" target="_blank">
                             @if (sellerAttendeeOrganizationDto?.Organization?.HasImage() == true)
                             {
@@ -34,35 +34,56 @@
                             }
                         </a>
                     </div>
-                    <div class="kt-widget__content" style="overflow: hidden;">
-                        <div class="kt-widget__info col-md-12 mr-0 pr-0 pl-0">
-                            <div class="kt-widget__desc pl-0">
-                                <div class="kt-widget__subhead">
-                                    <span>@Labels.Player:</span> <a href="@buyerCompanyDetailsUrl" target="_blank">@(buyerAttendeeOrganizationDto?.Organization?.TradeName ?? "-")</a>
+                </div>
+                <div class="col-md-6">
+                    <div class="kt-widget__top">
+                        <div class="kt-widget__content" style="overflow: hidden;">
+                            <div class="col-md-12 mr-0 pr-0 pl-0">
+                                <div class="kt-widget__desc pl-0">
+                                    <div class="kt-widget__subhead">
+                                        <span>@Labels.Player:</span> <a href="@buyerCompanyDetailsUrl" target="_blank">@(buyerAttendeeOrganizationDto?.Organization?.TradeName ?? "-")</a>
+                                    </div>
+                                    <div class="kt-widget__subhead">
+                                        <span>@Labels.Project:</span> <a>@(projectDto.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value ?? "-")</a>
+                                    </div>
+                                    <div class="kt-widget__subhead">
+                                        <span>@Labels.Producer:</span> <a href="@sellerCompanyDetailsUrl" target="_blank">@(sellerAttendeeOrganizationDto?.Organization?.TradeName ?? "-")</a>
+                                    </div>
                                 </div>
-                                <div class="kt-widget__subhead">
-                                    <span>@Labels.Project:</span> <a>@(projectDto.GetTitleDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectTitle?.Value ?? "-")</a>
-                                </div>
-                                <div class="kt-widget__subhead">
-                                    <span>@Labels.Producer:</span> <a href="@sellerCompanyDetailsUrl" target="_blank">@(sellerAttendeeOrganizationDto?.Organization?.TradeName ?? "-")</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="kt-widget__top">
+                        <div class="kt-widget__content" style="overflow: hidden;">
+                            <div class="col-md-12 mr-0 pr-0 pl-0">
+                                <div class="kt-widget__desc pl-0">
+                                    <div class="kt-widget__subhead">
+                                        <span>@Labels.Date:</span> <a>@(Model.Negotiation.StartDate.ToBrazilTimeZone().Date.ToStringDayMonthYearExtensive(Labels.Of))</a>
+                                    </div>
+                                    <div class="kt-widget__subhead">
+                                        <span>@Labels.Hour:</span> <a>@(Model.Negotiation?.StartDate.ToBrazilTimeZone().ToShortTimeString()) - @(Model.Negotiation?.EndDate.ToBrazilTimeZone().ToShortTimeString())</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="kt-widget kt-widget--user-profile-3">
-                <div class="kt-widget__top">
-                    <div class="kt-widget__content" style="overflow: hidden;">
-                        <div class="kt-widget__info col-md-12 mr-0 pr-0 pl-0">
-                            <div class="kt-widget__desc pl-0">
-                                <div class="kt-widget__subhead">
-                                    <span>@Labels.Date:</span> <a>@(Model.Negotiation.StartDate.ToBrazilTimeZone().Date.ToStringDayMonthYearExtensive(Labels.Of))</a>
-                                </div>
-                                <div class="kt-widget__subhead">
-                                    <span>@Labels.Hour:</span> <a>@(Model.Negotiation?.StartDate.ToBrazilTimeZone().ToShortTimeString()) - @(Model.Negotiation?.EndDate.ToBrazilTimeZone().ToShortTimeString())</a>
+            <div class="row pt-0">
+                <div class="col-md-2"></div>
+                <div class="col-md-10">
+                    <div class="kt-widget__top">
+                        <div class="kt-widget__content" style="overflow: hidden;">
+                            <div class="col-md-12 mr-0 pr-0 pl-0">
+                                <div class="kt-widget__desc pl-0">
+                                    <div class="kt-widget__subhead pt-1">
+                                        <span>@Labels.Description</span><br />
+                                        <span>
+                                            <a>@(projectDto.GetLogLineDtoByLanguageCode(ViewBag.UserInterfaceLanguage)?.ProjectLogLine?.Value ?? "-")</a>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -71,8 +92,8 @@
             </div>
         </div>
         <div class="col-md-2">
-            <div class="text-center">
-                <section class="timer-container mt-0">
+            <div class="text-center h-100">
+                <section class="timer-container mt-0 h-100">
                     <div class="timer-group">
                         <div class="timer hour">
                             <div class="hand"><span id="hourHand1"></span></div>
