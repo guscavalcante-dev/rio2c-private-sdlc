@@ -10,7 +10,7 @@
     var projectDto = Model.ProjectBuyerEvaluationDto?.ProjectDto as ProjectDto;
     var buyerCompanyDetailsUrl = Url.Action("Details", "Companies", new { Area = "", id = buyerAttendeeOrganizationDto?.Organization?.Uid });
     var sellerCompanyDetailsUrl = Url.Action("Details", "Companies", new { Area = "", id = sellerAttendeeOrganizationDto?.Organization?.Uid });
-
+    var brazilUtc = @DateTimeExtensions.GetBrazilUtc();
 }
 
 <div class="kt-portlet__body">
@@ -63,7 +63,11 @@
                                         <span>@Labels.Date:</span> <a>@(Model.Negotiation.StartDate.ToBrazilTimeZone().Date.ToStringDayMonthYearExtensive(Labels.Of))</a>
                                     </div>
                                     <div class="kt-widget__subhead">
-                                        <span>@Labels.Hour:</span> <a>@(Model.Negotiation?.StartDate.ToBrazilTimeZone().ToShortTimeString()) - @(Model.Negotiation?.EndDate.ToBrazilTimeZone().ToShortTimeString())</a>
+                                        <span>@Labels.Hour:</span> <a>
+                                            @(Model.Negotiation?.StartDate.ToBrazilTimeZone().ToShortTimeString()) - @(Model.Negotiation?.EndDate.ToBrazilTimeZone().ToShortTimeString())
+                                            <span class="form-optional-input">(@brazilUtc)</span>
+                                        </a>
+
                                     </div>
                                 </div>
                             </div>

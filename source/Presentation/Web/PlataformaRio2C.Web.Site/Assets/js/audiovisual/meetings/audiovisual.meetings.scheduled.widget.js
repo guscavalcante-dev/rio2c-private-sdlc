@@ -43,8 +43,13 @@ var AudiovisualMeetingsScheduledWidget = function () {
     var enableSearchForm = function () {
         enableSearchEvents();
 
-        //MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#SearchBuyerOrganizationUid', url: '/Companies/FindAllPlayersByFilters', customFilter: 'HasProjectNegotiationScheduled', placeholder: translations.playerDropdownPlaceholder });
-        MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#SearchSellerOrganizationUid', url: '/Companies/FindAllProducersByFilters', customFilter: 'HasProjectNegotiationScheduled', placeholder: translations.producerDropdownPlaceholder });
+        if (isPlayerExecutive) {
+            MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#SearchSellerOrganizationUid', url: '/Companies/FindAllProducersByFilters', customFilter: 'HasProjectNegotiationScheduled', placeholder: translations.producerDropdownPlaceholder });
+        }
+        else {
+            MyRio2cCommon.enableOrganizationSelect2({ inputIdOrClass: '#SearchBuyerOrganizationUid', url: '/Companies/FindAllPlayersByFilters', customFilter: 'HasProjectNegotiationScheduled', placeholder: translations.playerDropdownPlaceholder });
+        }
+
 	    MyRio2cCommon.enableDatePicker({ inputIdOrClass: '.enable-datepicker' });
     }
 
@@ -63,6 +68,7 @@ var AudiovisualMeetingsScheduledWidget = function () {
         jsonParameters.buyerOrganizationUid = $('#SearchBuyerOrganizationUid').val();
         jsonParameters.sellerOrganizationUid = $('#SearchSellerOrganizationUid').val();
         jsonParameters.projectKeywords = $('#SearchProjectKeywords').val();
+        jsonParameters.collaboratorTypeUid = $('#CollaboratorTypeUid').val();
 
         var date = $('#SearchDate').val();
         if (!MyRio2cCommon.isNullOrEmpty(date)) {

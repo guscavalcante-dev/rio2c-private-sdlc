@@ -1,7 +1,10 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Entities
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
+    var isPlayerExecutive = (ViewBag.CollaboratorTypeUid as Guid?) == CollaboratorType.AudiovisualPlayerExecutive.Uid;
 }
+@Html.Hidden("CollaboratorTypeUid", ViewBag.CollaboratorTypeUid as Guid?)
 <div class="col-12">
     <div class="kt-portlet kt-portlet--mobile">
         <div class="kt-portlet__head kt-portlet__head--lg">
@@ -17,11 +20,15 @@
         <div class="kt-portlet__body pb-0">
             <!--begin: SearchForm-->
             <div class="row">
-                @*<div class="col-12 col-md-12 mt-2">
-                        @Html.DropDownList("SearchBuyerOrganizationUid", Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAMEntity, Labels.Player.ToLowerInvariant())}", new { @class = "form-control" })
-                    </div>*@
                 <div class="col-12 col-md-12 mt-2">
-                    @Html.DropDownList("SearchSellerOrganizationUid", Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAFEntity, Labels.Producer.ToLowerInvariant())}", new { @class = "form-control" })
+                    @if (isPlayerExecutive)
+                    {
+                        @Html.DropDownList("SearchSellerOrganizationUid", Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAFEntity, Labels.Producer.ToLowerInvariant())}", new { @class = "form-control" });
+                    }
+                    else
+                    {
+                        @Html.DropDownList("SearchBuyerOrganizationUid", Enumerable.Empty<SelectListItem>(), $"{string.Format(Labels.SelectAMEntity, Labels.Player.ToLowerInvariant())}", new { @class = "form-control" });
+                    }
                 </div>
             </div>
             <div class="row">

@@ -1,10 +1,12 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2C.Domain.Entities
+@using PlataformaRio2C.Domain.Statics
 @using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions
 @using PlataformaRio2c.Infra.Data.FileRepository.Helpers
-@using PlataformaRio2C.Domain.Statics
 @model List<NegotiationGroupedByDateDto>
 @{
     var brazilUtc = @DateTimeExtensions.GetBrazilUtc();
+    var isPlayerExecutive = (ViewBag.CollaboratorTypeUid as Guid?) == CollaboratorType.AudiovisualPlayerExecutive.Uid;
 }
 @if (Model?.Any() == true)
 {
@@ -25,7 +27,14 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">@Labels.Hour</th>
-                                    <th>@Labels.Producer</th>
+                                    @if (isPlayerExecutive)
+                                    {
+                                        <th>@Labels.Producer</th>
+                                    }
+                                    else
+                                    {
+                                        <th>@Labels.Player</th>
+                                    }
                                     <th>@Labels.Project</th>
                                     <th class="border-right-0">@Labels.Room</th>
                                     <th class="border-left-0">&nbsp;</th>
@@ -44,7 +53,8 @@
                                         <td class="col-md-4">
                                             <div class="row align-items-center">
                                                 @{
-                                                    var organization = negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.SellerAttendeeOrganizationDto?.Organization;
+                                                    var organization = isPlayerExecutive ? negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.SellerAttendeeOrganizationDto?.Organization : 
+                                                                                            negotiationDto?.ProjectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.Organization;
                                                     <div class="col-md-2">
                                                         <div class="kt-widget kt-widget--user-profile-3">
                                                             <div class="kt-widget__top">
@@ -55,7 +65,6 @@
                                                                             <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, organization.Uid, organization.ImageUploadDate, true)" alt="image" style="max-width:50px; max-height:50px;">
                                                                         </div>
                                                                     </div>
-
                                                                 }
                                                                 else
                                                                 {
@@ -67,7 +76,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-10">
-                                                        <span>@(negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.SellerAttendeeOrganizationDto?.Organization?.TradeName)</span>
+                                                        <span>@(organization?.TradeName)</span>
                                                     </div>
                                                 }
                                             </div>

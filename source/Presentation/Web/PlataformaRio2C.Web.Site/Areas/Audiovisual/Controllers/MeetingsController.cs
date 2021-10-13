@@ -56,16 +56,18 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         /// <summary>Indexes this instance.</summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(Guid? collaboratorTypeUid)
         {
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.BusinessRound, new List<BreadcrumbItemHelper> {
                 new BreadcrumbItemHelper(Labels.AudioVisual, null),
-                new BreadcrumbItemHelper(Labels.ScheduledNegotiations, Url.Action("Index", "Meetings", new { Area = "Audiovisual" }))
+                new BreadcrumbItemHelper(Labels.ScheduledNegotiations, Url.Action("Index", "Meetings", new { Area = "Audiovisual", CollaboratorTypeUid = collaboratorTypeUid }))
             });
 
             #endregion
+
+            ViewBag.CollaboratorTypeUid = collaboratorTypeUid;
 
             return View();
         }
@@ -85,6 +87,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 searchViewModel.ProjectKeywords,
                 searchViewModel.Date,
                 this.UserAccessControlDto?.EditionAttendeeCollaborator?.Uid);
+
+            ViewBag.CollaboratorTypeUid = searchViewModel.CollaboratorTypeUid;
 
             return new JsonResult()
             {

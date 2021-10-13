@@ -32,6 +32,9 @@ namespace PlataformaRio2C.Application.ViewModels
         [Display(Name = "Project", ResourceType = typeof(Labels))]
         public string ProjectKeywords { get; set; }
 
+        [Display(Name = "CollaboratorType", ResourceType = typeof(Labels))]
+        public Guid? CollaboratorTypeUid { get; set; }
+
         /// <summary>Initializes a new instance of the <see cref="ScheduledSearchViewModel"/> class.</summary>
         public ScheduledSearchViewModel()
         {
