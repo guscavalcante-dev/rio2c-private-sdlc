@@ -217,8 +217,7 @@ var AgendasWidget = function () {
                                                 player: eventEl.Player,
                                                 room: eventEl.Room,
                                                 tableNumber: eventEl.TableNumber,
-                                                roundNumber: eventEl.RoundNumber,
-                                                virtualMeetingUrl: eventEl.VirtualMeetingUrl
+                                                roundNumber: eventEl.RoundNumber
                                             }
                                         })
                                     );
@@ -477,11 +476,6 @@ var AgendasWidget = function () {
                     .replace("popoverRoom", info.event.extendedProps.room)
                     .replace("popoverTableNumber", info.event.extendedProps.tableNumber)
                     .replace("popoverRoundNumber", info.event.extendedProps.roundNumber);
-
-                if (!MyRio2cCommon.isNullOrEmpty(info.event.extendedProps.virtualMeetingUrl)) {
-                    popover = popover.replaceAll("popoverVirtualMeetingUrl", info.event.extendedProps.virtualMeetingUrl);
-                    popover = popover.replace("d-none", "");
-                }
 
                 return popover;
             },

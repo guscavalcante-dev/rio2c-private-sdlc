@@ -1021,7 +1021,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                         Uid = n.Room.Uid,
                                                                         Name = n.Room.RoomNames.FirstOrDefault(rn => !rn.IsDeleted && rn.LanguageId == languageId).Value,
                                                                         IsVirtualMeeting = n.Room.IsVirtualMeeting,
-                                                                        VirtualMeetingUrl = n.Room.VirtualMeetingUrl,
                                                                         CreateDate = n.Room.CreateDate,
                                                                         UpdateDate = n.Room.UpdateDate
                                                                     }
@@ -1140,7 +1139,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                         Uid = n.Room.Uid,
                                                                         Name = n.Room.RoomNames.FirstOrDefault(rn => !rn.IsDeleted && rn.LanguageId == languageId).Value,
                                                                         IsVirtualMeeting = n.Room.IsVirtualMeeting,
-                                                                        VirtualMeetingUrl = n.Room.VirtualMeetingUrl,
                                                                         CreateDate = n.Room.CreateDate,
                                                                         UpdateDate = n.Room.UpdateDate
                                                                     }
@@ -1265,7 +1263,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                         Uid = n.Room.Uid,
                                                                         Name = n.Room.RoomNames.FirstOrDefault(rn => !rn.IsDeleted && rn.LanguageId == languageId).Value,
                                                                         IsVirtualMeeting = n.Room.IsVirtualMeeting,
-                                                                        VirtualMeetingUrl = n.Room.VirtualMeetingUrl,
                                                                         CreateDate = n.Room.CreateDate,
                                                                         UpdateDate = n.Room.UpdateDate
                                                                     }
@@ -1385,7 +1382,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                         Uid = n.Room.Uid,
                                                                         Name = n.Room.RoomNames.FirstOrDefault(rn => !rn.IsDeleted && rn.LanguageId == languageId).Value,
                                                                         IsVirtualMeeting = n.Room.IsVirtualMeeting,
-                                                                        VirtualMeetingUrl = n.Room.VirtualMeetingUrl,
                                                                         CreateDate = n.Room.CreateDate,
                                                                         UpdateDate = n.Room.UpdateDate
                                                                     }
