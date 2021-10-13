@@ -4,7 +4,7 @@
 // Created          : 09-02-2019
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 09-16-2021
+// Last Modified On : 10-13-2021
 // ***********************************************************************
 // <copyright file="AttendeeCollaboratorRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -246,6 +246,19 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 ac => ac.AttendeeOrganizationCollaborators.Any(
                     aoc => aoc.AttendeeOrganization.AttendeeOrganizationTypes.Any(
                         aot => aot.OrganizationType.Uid == organizationTypeUid)));
+
+            return query;
+        }
+
+        /// <summary>
+        /// Removes the current collaborator.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <param name="collaboratorUid">The collaborator uid.</param>
+        /// <returns></returns>
+        internal static IQueryable<AttendeeCollaborator> RemoveCurrentCollaborator(this IQueryable<AttendeeCollaborator> query, Guid collaboratorUid)
+        {
+            query = query.Where(ac => ac.Collaborator.Uid != collaboratorUid);
 
             return query;
         }
@@ -1071,6 +1084,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         public async Task<IPagedList<AttendeeCollaboratorNetworkDto>> FindAllNetworkDtoByEditionIdPagedAsync(
             int editionId,
             string keywords,
+            Guid currentCollaboratorUid,
             Guid? collaboratorRoleUid,
             Guid? collaboratorIndustryUid,
             int page,
@@ -1082,7 +1096,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                 .IsNetworkParticipant()
                                 .FindByKeywords(keywords)
                                 .FindByCollaboratorRoleUid(collaboratorRoleUid)
-                                .FindByCollaboratorIndustryUid(collaboratorIndustryUid);
+                                .FindByCollaboratorIndustryUid(collaboratorIndustryUid)
+                                .RemoveCurrentCollaborator(currentCollaboratorUid);
 
             return await query
                             .Select(ac => new AttendeeCollaboratorNetworkDto
