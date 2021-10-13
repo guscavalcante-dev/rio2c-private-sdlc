@@ -1,18 +1,11 @@
 ﻿.timer-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 50vh;
+    height: 150px;
 }
 
 .timer-group {
-    height: 400px;
-    margin: 0 auto;
-    position: relative;
-    width: 400px;
-    zoom: 30%;
+    margin-left: -106px;
+    transform: scale(0.35);
 }
-
 
 .timer {
     border-radius: 50%;
@@ -188,7 +181,7 @@
     to {
         border-top-color: rgb(217, 30, 24);
         border-right-color: rgb(217, 30, 24);
-    }   
+    }
 }
 
 @keyframes spin2 {
@@ -207,5 +200,5 @@
     to {
         border-top-color: rgb(217, 30, 24);
         border-right-color: rgb(217, 30, 24);
-    } 
+    }
 }
