@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 11-19-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-17-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 10-13-2021
 // ***********************************************************************
 // <copyright file="NetworksController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -140,9 +140,10 @@ namespace PlataformaRio2C.Web.Site.Controllers
             int? page = 1, int? 
             pageSize = 15)
         {
-            var attendeeCollaboratos = await this.attendeeCollaboratorRepo.FindAllNetworkDtoByEditionIdPagedAsync(
+            var attendeeCollaborators = await this.attendeeCollaboratorRepo.FindAllNetworkDtoByEditionIdPagedAsync(
                 this.EditionDto.Id, 
-                searchKeywords, 
+                searchKeywords,
+                this.UserAccessControlDto?.User?.Collaborator?.Uid ?? Guid.Empty,
                 collaboratorRoleUid, 
                 collaboratorIndustryUid, 
                 page.Value, 
@@ -156,7 +157,7 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/ContactsWidget", attendeeCollaboratos), divIdOrClass = "#NetworksContactsListWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/ContactsWidget", attendeeCollaborators), divIdOrClass = "#NetworksContactsListWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
