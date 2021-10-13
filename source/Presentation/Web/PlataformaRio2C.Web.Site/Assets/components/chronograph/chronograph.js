@@ -25,7 +25,7 @@ var Chronograph = function () {
         finished: 'Finished'
     };
 
-    var startCountDown = function (endDate, messages, almostFinishedMinutes, almostFinishedCallback, finishedCallback) {
+    var startCountDown = function (endDate, messages, everyTickCallback, almostFinishedMinutes, almostFinishedCallback, finishedCallback) {
 
         enablePlugins(messages);
         countDownDate = new Date(endDate).getTime();
@@ -44,11 +44,8 @@ var Chronograph = function () {
 
             document.getElementById('description').innerText = _messages.inProgress;
 
-            // Start countDown
-            //tick(almostFinishedMinutes, almostFinishedCallback, finishedCallback);
-
             var refreshId = setInterval(function () {
-                var ret = tick(almosFinishedSeconds, almostFinishedCallback, finishedCallback);
+                var ret = tick(everyTickCallback, almosFinishedSeconds, almostFinishedCallback, finishedCallback);
                 if (ret === true) {
                     clearInterval(refreshId);
                 }
@@ -62,7 +59,7 @@ var Chronograph = function () {
         }
     }
 
-    var tick = function (almostFinishedSeconds, almostFinishedCallback, finishedCallback) {
+    var tick = function (everyTickCallback, almostFinishedSeconds, almostFinishedCallback, finishedCallback) {
         // Get today's date and time
         var now = new Date().getTime();
 
@@ -80,6 +77,10 @@ var Chronograph = function () {
         parts[2] = (parts[2].length == 1) ? '0' + parts[2] : parts[2];
 
         document.getElementById('time').innerText = parts.join(':');
+
+        if (typeof (everyTickCallback) === 'function') {
+            everyTickCallback();
+        }
 
         if (elapsed <= almostFinishedSeconds && showMeetingAlmostOverAlert) {
             if (typeof (almostFinishedCallback) === 'function') {
@@ -106,8 +107,8 @@ var Chronograph = function () {
     }
 
     return {
-        init: function (endDate, messages, almostFinishedMinutes, almostFinishedCallback, finishedCallback) {
-            startCountDown(endDate, messages, almostFinishedMinutes, almostFinishedCallback, finishedCallback);
+        init: function (endDate, messages, everyTickCallback, almostFinishedMinutes, almostFinishedCallback, finishedCallback) {
+            startCountDown(endDate, messages, everyTickCallback, almostFinishedMinutes, almostFinishedCallback, finishedCallback);
         }
     };
 }();
