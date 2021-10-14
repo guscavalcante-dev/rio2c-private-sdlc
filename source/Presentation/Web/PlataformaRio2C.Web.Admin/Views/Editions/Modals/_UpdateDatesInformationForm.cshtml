@@ -48,6 +48,16 @@
         @Html.ValidationMessageFor(m => m.ProjectMaxBuyerEvaluationsCount, "", new { @class = "text-danger" })
     </div>
 </div>
+<div class="row">
+    <div class="form-group col-md-6">
+        <label class="control-label" for="AudiovisualNegotiationsVirtualMeetingsJoinMinutes">
+            <span>@Labels.AudiovisualNegotiationsVirtualMeetingsJoinMinutes</span>
+            <span class="form-optional-input">(@Labels.Minutes)</span>
+        </label> 
+        @Html.TextBoxFor(m => m.AudiovisualNegotiationsVirtualMeetingsJoinMinutes, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.AudiovisualNegotiationsVirtualMeetingsJoinMinutes, "", new { @class = "text-danger" })
+    </div>
+</div>
 
 <h3 class="kt-section__title mt-30 mb-4">@Labels.MusicCommission</h3>
 <div class="row">

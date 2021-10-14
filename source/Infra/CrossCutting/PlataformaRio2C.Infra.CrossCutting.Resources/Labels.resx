@@ -2997,4 +2997,10 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="NotStartedM" xml:space="preserve">
     <value>Não iniciado</value>
   </data>
+  <data name="AudiovisualNegotiationsVirtualMeetingsJoinMinutes" xml:space="preserve">
+    <value>Tempo de espera para liberação da sala de reunião virtual</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>Minutos</value>
+  </data>
 </root>

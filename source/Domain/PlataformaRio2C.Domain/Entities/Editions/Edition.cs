@@ -54,6 +54,7 @@ namespace PlataformaRio2C.Domain.Entities
         public DateTimeOffset? AudiovisualNegotiationsCreateEndDate { get; private set; }
         public int AttendeeOrganizationMaxSellProjectsCount { get; private set; }
         public int ProjectMaxBuyerEvaluationsCount { get; private set; }
+        public short AudiovisualNegotiationsVirtualMeetingsJoinMinutes { get; private set; }
 
         #endregion
 
@@ -107,25 +108,34 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="endDate">The end date.</param>
         /// <param name="sellStartDate">The sell start date.</param>
         /// <param name="sellEndDate">The sell end date.</param>
+        /// <param name="oneToOneMeetingsScheduleDate">The one to one meetings schedule date.</param>
         /// <param name="projectSubmitStartDate">The project submit start date.</param>
         /// <param name="projectSubmitEndDate">The project submit end date.</param>
         /// <param name="projectEvaluationStartDate">The project evaluation start date.</param>
         /// <param name="projectEvaluationEndDate">The project evaluation end date.</param>
-        /// <param name="oneToOneMeetingsScheduleDate">The one to one meetings schedule date.</param>
         /// <param name="negotiationStartDate">The negotiation start date.</param>
         /// <param name="negotiationEndDate">The negotiation end date.</param>
         /// <param name="attendeeOrganizationMaxSellProjectsCount">The attendee organization maximum sell projects count.</param>
         /// <param name="projectMaxBuyerEvaluationsCount">The project maximum buyer evaluations count.</param>
+        /// <param name="audiovisualNegotiationsVirtualMeetingsJoinMinutes">The audiovisual negotiations virtual meetings join minutes.</param>
         /// <param name="musicProjectSubmitStartDate">The music project submit start date.</param>
         /// <param name="musicProjectSubmitEndDate">The music project submit end date.</param>
-        /// <param name="musicCommissionEvaluationStartDate">The music project evaluation start date.</param>
-        /// <param name="musicCommissionEvaluationEndDate">The music project evaluation end date.</param>
+        /// <param name="musicCommissionEvaluationStartDate">The music commission evaluation start date.</param>
+        /// <param name="musicCommissionEvaluationEndDate">The music commission evaluation end date.</param>
+        /// <param name="musicCommissionMinimumEvaluationsCount">The music commission minimum evaluations count.</param>
+        /// <param name="musicCommissionMaximumApprovedBandsCount">The music commission maximum approved bands count.</param>
         /// <param name="innovationProjectSubmitStartDate">The innovation project submit start date.</param>
         /// <param name="innovationProjectSubmitEndDate">The innovation project submit end date.</param>
-        /// <param name="innovationCommissionEvaluationStartDate">The innovation project evaluation start date.</param>
-        /// <param name="innovationCommissionEvaluationEndDate">The innovation project evaluation end date.</param>
+        /// <param name="innovationCommissionEvaluationStartDate">The innovation commission evaluation start date.</param>
+        /// <param name="innovationCommissionEvaluationEndDate">The innovation commission evaluation end date.</param>
+        /// <param name="innovationCommissionMinimumEvaluationsCount">The innovation commission minimum evaluations count.</param>
+        /// <param name="innovationCommissionMaximumApprovedCompaniesCount">The innovation commission maximum approved companies count.</param>
         /// <param name="audiovisualNegotiationsCreateStartDate">The audiovisual negotiations create start date.</param>
         /// <param name="audiovisualNegotiationsCreateEndDate">The audiovisual negotiations create end date.</param>
+        /// <param name="audiovisualCommissionEvaluationStartDate">The audiovisual commission evaluation start date.</param>
+        /// <param name="audiovisualCommissionEvaluationEndDate">The audiovisual commission evaluation end date.</param>
+        /// <param name="audiovisualCommissionMinimumEvaluationsCount">The audiovisual commission minimum evaluations count.</param>
+        /// <param name="audiovisualCommissionMaximumApprovedProjectsCount">The audiovisual commission maximum approved projects count.</param>
         /// <param name="userId">The user identifier.</param>
         public Edition(
             Guid uid,
@@ -147,6 +157,7 @@ namespace PlataformaRio2C.Domain.Entities
             DateTimeOffset negotiationEndDate,
             int attendeeOrganizationMaxSellProjectsCount,
             int projectMaxBuyerEvaluationsCount,
+            short audiovisualNegotiationsVirtualMeetingsJoinMinutes,
 
             DateTimeOffset musicProjectSubmitStartDate,
             DateTimeOffset musicProjectSubmitEndDate,
@@ -191,6 +202,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.NegotiationEndDate = negotiationEndDate;
             this.AttendeeOrganizationMaxSellProjectsCount = attendeeOrganizationMaxSellProjectsCount;
             this.ProjectMaxBuyerEvaluationsCount = projectMaxBuyerEvaluationsCount;
+            this.AudiovisualNegotiationsVirtualMeetingsJoinMinutes = audiovisualNegotiationsVirtualMeetingsJoinMinutes;
 
             // Music - Commissions
             this.MusicProjectSubmitStartDate = musicProjectSubmitStartDate;
@@ -273,6 +285,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="projectEvaluationEndDate">The project evaluation end date.</param>
         /// <param name="negotiationStartDate">The negotiation start date.</param>
         /// <param name="negotiationEndDate">The negotiation end date.</param>
+        /// <param name="attendeeOrganizationMaxSellProjectsCount">The attendee organization maximum sell projects count.</param>
+        /// <param name="projectMaxBuyerEvaluationsCount">The project maximum buyer evaluations count.</param>
+        /// <param name="audiovisualNegotiationsVirtualMeetingsJoinMinutes">The audiovisual negotiations virtual meetings join minutes.</param>
         /// <param name="musicProjectSubmitStartDate">The music project submit start date.</param>
         /// <param name="musicProjectSubmitEndDate">The music project submit end date.</param>
         /// <param name="musicCommissionEvaluationStartDate">The music commission evaluation start date.</param>
@@ -301,6 +316,7 @@ namespace PlataformaRio2C.Domain.Entities
             DateTime negotiationEndDate,
             int attendeeOrganizationMaxSellProjectsCount,
             int projectMaxBuyerEvaluationsCount,
+            short audiovisualNegotiationsVirtualMeetingsJoinMinutes,
 
             DateTime musicProjectSubmitStartDate,
             DateTime musicProjectSubmitEndDate,
@@ -333,6 +349,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.NegotiationEndDate = negotiationEndDate.ToEndDateTimeOffset();
             this.AttendeeOrganizationMaxSellProjectsCount = attendeeOrganizationMaxSellProjectsCount;
             this.ProjectMaxBuyerEvaluationsCount = projectMaxBuyerEvaluationsCount;
+            this.AudiovisualNegotiationsVirtualMeetingsJoinMinutes = audiovisualNegotiationsVirtualMeetingsJoinMinutes;
 
             this.MusicProjectSubmitStartDate = musicProjectSubmitStartDate.ToEndDateTimeOffset();
             this.MusicProjectSubmitEndDate = musicProjectSubmitEndDate.ToEndDateTimeOffset();

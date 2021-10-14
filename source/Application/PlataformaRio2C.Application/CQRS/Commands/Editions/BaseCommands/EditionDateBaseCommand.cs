@@ -142,6 +142,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public int? ProjectMaxBuyerEvaluationsCount { get; set; }
 
+        [Display(Name = nameof(AudiovisualNegotiationsVirtualMeetingsJoinMinutes), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public short? AudiovisualNegotiationsVirtualMeetingsJoinMinutes { get; set; }
+
         #endregion
 
         /// <summary>
@@ -180,6 +184,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.NegotiationEndDate = editionDto.Edition.NegotiationEndDate.ToBrazilTimeZone();
             this.AttendeeOrganizationMaxSellProjectsCount = editionDto.Edition.AttendeeOrganizationMaxSellProjectsCount;
             this.ProjectMaxBuyerEvaluationsCount = editionDto.Edition.ProjectMaxBuyerEvaluationsCount;
+            this.AudiovisualNegotiationsVirtualMeetingsJoinMinutes = editionDto.Edition.AudiovisualNegotiationsVirtualMeetingsJoinMinutes;
 
             // Music - Commissions
             this.MusicProjectSubmitStartDate = editionDto.Edition.MusicProjectSubmitStartDate.ToBrazilTimeZone();

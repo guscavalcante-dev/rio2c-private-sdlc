@@ -23,7 +23,7 @@
                 <div id="LiberationNotice" class="d-none flex-column justify-content-center align-items-center" style="background-color: #48475B; min-height: 300px;">
                     <div class="kt-spinner kt-spinner--lg kt-spinner--danger"></div>
                     <div class="pt-4 text-center">
-                        <span class="text-white">@(string.Format(Messages.RoomReleasedMinutesScheduledDate, "5"))</span>
+                        <span class="text-white">@(string.Format(Messages.RoomReleasedMinutesScheduledDate, editionDto.Edition.AudiovisualNegotiationsVirtualMeetingsJoinMinutes.ToString()))</span>
                     </div>
                 </div>
                 <div id="MeetingIframeWidget" class="kt-portlet d-none" style="min-height: 325px; grid-area: 1/1;"></div>

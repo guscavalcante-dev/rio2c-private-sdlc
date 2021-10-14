@@ -2,6 +2,7 @@
 @model NegotiationDto
 @{
     ViewBag.Title = $"{Labels.OneToOneMeetings} {Model.RoomDto.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.RoomName?.Value}";
+    var editionDto = ViewBag.EditionDto as EditionDto;
 }
 @Html.Hidden("AggregateId", Model.Negotiation.Uid)
 
@@ -47,7 +48,7 @@
         var meeting = {
             negotiationStartDate: '@(Model.Negotiation.StartDate.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US")))',
             negotiationEndDate: '@(Model.Negotiation.EndDate.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US")))',
-            roomLiberationDate: '@(Model.Negotiation.StartDate.AddMinutes(-5).ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US")))',
+            roomLiberationDate: '@(Model.Negotiation.StartDate.AddMinutes(-editionDto.Edition.AudiovisualNegotiationsVirtualMeetingsJoinMinutes).ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US")))',
             userEmail: '@(Html.Raw(ViewBag.UserAccessControlDto.User.Email as string))',
             userDisplayName: '@(Html.Raw((ViewBag.UserAccessControlDto.Collaborator?.GetDisplayName() ?? ViewBag.UserAccessControlDto.User.Name) as string))'
         }
