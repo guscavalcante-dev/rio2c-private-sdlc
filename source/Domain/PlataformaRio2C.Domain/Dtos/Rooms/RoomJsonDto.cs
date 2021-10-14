@@ -22,7 +22,6 @@ namespace PlataformaRio2C.Domain.Dtos
         public Guid Uid { get; set; }
         public string Name { get; set; }
         public bool IsVirtualMeeting { get; set; }
-        public string VirtualMeetingUrl { get; set; }
         public DateTimeOffset CreateDate { get; set; }
         public DateTimeOffset UpdateDate { get; set; }
 
