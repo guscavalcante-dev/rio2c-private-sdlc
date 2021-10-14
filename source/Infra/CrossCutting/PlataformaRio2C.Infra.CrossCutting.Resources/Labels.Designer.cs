@@ -601,6 +601,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tempo de espera para liberação da sala de reunião virtual.
+        /// </summary>
+        public static string AudiovisualNegotiationsVirtualMeetingsJoinMinutes {
+            get {
+                return ResourceManager.GetString("AudiovisualNegotiationsVirtualMeetingsJoinMinutes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pitching de Audiovisual.
         /// </summary>
         public static string AudiovisualPitchingSessions {
@@ -3279,6 +3288,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string MiniBios {
             get {
                 return ResourceManager.GetString("MiniBios", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minutos.
+        /// </summary>
+        public static string Minutes {
+            get {
+                return ResourceManager.GetString("Minutes", resourceCulture);
             }
         }
         

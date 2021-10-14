@@ -86,6 +86,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 cmd.NegotiationEndDate.Value,
                 cmd.AttendeeOrganizationMaxSellProjectsCount.Value,
                 cmd.ProjectMaxBuyerEvaluationsCount.Value,
+                cmd.AudiovisualNegotiationsVirtualMeetingsJoinMinutes.Value,
 
                 cmd.MusicProjectSubmitStartDate.Value,
                 cmd.MusicProjectSubmitEndDate.Value,

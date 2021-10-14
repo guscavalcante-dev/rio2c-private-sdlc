@@ -2995,4 +2995,12 @@
   <data name="NotStartedM" xml:space="preserve">
     <value>Não iniciado</value>
   </data>
+  <data name="AudiovisualNegotiationsVirtualMeetingsJoinMinutes" xml:space="preserve">
+    <value>Waiting time to release the virtual meeting room</value>
+    <comment>Tempo de espera para liberação da sala de reunião virtual</comment>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>Minutes</value>
+    <comment>Minutos</comment>
+  </data>
 </root>
