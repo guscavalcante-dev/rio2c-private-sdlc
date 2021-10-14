@@ -190,6 +190,11 @@ var AudiovisualMeetingsVirtualMeetingWidget = function () {
     }
 
     // Countdown timer ------------------------------------------------------------------------------------
+    var everyTick = function () {
+        // Shows the timer!
+        $('#chronographTimer').removeClass('d-none');
+    }
+
     var almostFinishedCountDown = function () {
         if (typeof (MyRio2cCommon) !== 'undefined') {
             MyRio2cCommon.showAlert({ message: translations.isAlmostOver, messageType: 'Info', isFixed: true });
@@ -240,7 +245,7 @@ var AudiovisualMeetingsVirtualMeetingWidget = function () {
                 // Business round in progress
                 try {
                     if (typeof (Chronograph) !== 'undefined') {
-                        Chronograph.init(negotiationEndDate, translations, 1, almostFinishedCountDown, finishedCountdown);
+                        Chronograph.init(negotiationEndDate, translations, everyTick, 1, almostFinishedCountDown, finishedCountdown);
                     }
                 }
                 finally {
