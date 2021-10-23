@@ -4,7 +4,7 @@
 // Created          : 09-30-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 10-06-2021
+// Last Modified On : 10-23-2021
 // ***********************************************************************
 // <copyright file="chronograph.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -19,13 +19,14 @@ var Chronograph = function () {
     var one_day = one_hour * 24;
     var countDownDate;
     var showMeetingAlmostOverAlert = true;
+    var showMeetingAlmostOverOneMinuteAlert = true;
     var _messages = {
         inProgress: 'In progress',
         isAlmostOver: 'Meeting is almost over',
         finished: 'Finished'
     };
 
-    var startCountDown = function (endDate, messages, everyTickCallback, almostFinishedMinutes, almostFinishedCallback, finishedCallback) {
+    var startCountDown = function (endDate, messages, everyTickCallback, almostOverMinutes, almostOverCallback, almostOverOneMinuteCallback, finishedCallback) {
 
         enablePlugins(messages);
         countDownDate = new Date(endDate).getTime();
@@ -33,7 +34,7 @@ var Chronograph = function () {
         // Before start countDown
         const seconds = ((countDownDate - new Date().getTime()) / 1000);
         var animationDuration = seconds.toString() + "s";
-        var almosFinishedSeconds = Math.floor(almostFinishedMinutes * one_minute);
+        var almosFinishedSeconds = Math.floor(almostOverMinutes * one_minute);
 
         if (seconds > 0) {
             document.getElementById('hourHand1').style.animationDuration = animationDuration;
@@ -45,7 +46,7 @@ var Chronograph = function () {
             document.getElementById('description').innerText = _messages.inProgress;
 
             var refreshId = setInterval(function () {
-                var ret = tick(everyTickCallback, almosFinishedSeconds, almostFinishedCallback, finishedCallback);
+                var ret = tick(everyTickCallback, almosFinishedSeconds, almostOverCallback, almostOverOneMinuteCallback, finishedCallback);
                 if (ret === true) {
                     clearInterval(refreshId);
                 }
@@ -59,7 +60,7 @@ var Chronograph = function () {
         }
     }
 
-    var tick = function (everyTickCallback, almostFinishedSeconds, almostFinishedCallback, finishedCallback) {
+    var tick = function (everyTickCallback, almostOverSeconds, almostOverCallback, almostOverOneMinuteCallback, finishedCallback) {
         // Get today's date and time
         var now = new Date().getTime();
 
@@ -82,10 +83,18 @@ var Chronograph = function () {
             everyTickCallback();
         }
 
-        if (elapsed <= almostFinishedSeconds && showMeetingAlmostOverAlert) {
-            if (typeof (almostFinishedCallback) === 'function') {
-                almostFinishedCallback();
+        if (elapsed <= almostOverSeconds && showMeetingAlmostOverAlert) {
+            if (typeof (almostOverCallback) === 'function') {
+                almostOverCallback();
                 showMeetingAlmostOverAlert = false;
+                return false;
+            }
+        }
+
+        if (elapsed <= one_minute && showMeetingAlmostOverOneMinuteAlert) {
+            if (typeof (almostOverOneMinuteCallback) === 'function') {
+                almostOverOneMinuteCallback();
+                showMeetingAlmostOverOneMinuteAlert = false;
                 return false;
             }
         }
@@ -107,8 +116,8 @@ var Chronograph = function () {
     }
 
     return {
-        init: function (endDate, messages, everyTickCallback, almostFinishedMinutes, almostFinishedCallback, finishedCallback) {
-            startCountDown(endDate, messages, everyTickCallback, almostFinishedMinutes, almostFinishedCallback, finishedCallback);
+        init: function (endDate, messages, everyTickCallback, almostOverMinutes, almostOverCallback, almostOverOneMinuteCallback, finishedCallback) {
+            startCountDown(endDate, messages, everyTickCallback, almostOverMinutes, almostOverCallback, almostOverOneMinuteCallback, finishedCallback);
         }
     };
 }();

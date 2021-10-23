@@ -4,7 +4,7 @@
 // Created          : 09-29-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 10-06-2021
+// Last Modified On : 10-23-2021
 // ***********************************************************************
 // <copyright file="audiovisual.meetings.virtualmeeting.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -195,9 +195,20 @@ var AudiovisualMeetingsVirtualMeetingWidget = function () {
         $('#chronographTimer').removeClass('d-none');
     }
 
-    var almostFinishedCountDown = function () {
+    var almostOverCountDown = function () {
         if (typeof (MyRio2cCommon) !== 'undefined') {
-            MyRio2cCommon.showAlert({ message: translations.isAlmostOver, messageType: 'Info', isFixed: true });
+            MyRio2cCommon.showAlert({ message: translations.isAlmostOver, messageType: 'info', isFixed: true });
+        }
+
+        if (!MyRio2cCommon.isNullOrEmpty(meeting.meetingIsAlmostOverAudioFile)) {
+            var audio = new Audio(meeting.meetingIsAlmostOverAudioFile);
+            audio.play();
+        }
+    }
+
+    var almostOverOneMinuteCountDown = function () {
+        if (typeof (MyRio2cCommon) !== 'undefined') {
+            MyRio2cCommon.showAlert({ message: translations.isAlmostOverOneMinute, messageType: 'warning', isFixed: true });
         }
     }
 
@@ -245,7 +256,7 @@ var AudiovisualMeetingsVirtualMeetingWidget = function () {
                 // Business round in progress
                 try {
                     if (typeof (Chronograph) !== 'undefined') {
-                        Chronograph.init(negotiationEndDate, translations, everyTick, 1, almostFinishedCountDown, finishedCountdown);
+                        Chronograph.init(negotiationEndDate, translations, everyTick, meeting.almostOverMinutes, almostOverCountDown, almostOverOneMinuteCountDown, finishedCountdown);
                     }
                 }
                 finally {
