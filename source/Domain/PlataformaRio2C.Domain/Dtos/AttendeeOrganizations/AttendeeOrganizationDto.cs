@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Entities;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -21,6 +22,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public AttendeeOrganization AttendeeOrganization { get; set; }
         public Organization Organization { get; set; }
         public Edition Edition { get; set; }
+        public List<AttendeeOrganizationCollaborator> AttendeeOrganizationCollaborators { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeOrganizationDto"/> class.</summary>
         public AttendeeOrganizationDto()

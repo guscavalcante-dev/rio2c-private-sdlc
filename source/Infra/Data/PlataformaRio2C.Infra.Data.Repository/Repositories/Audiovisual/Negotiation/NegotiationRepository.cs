@@ -317,7 +317,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                       BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto()
                                       {
                                           AttendeeOrganization = n.ProjectBuyerEvaluation.BuyerAttendeeOrganization,
-                                          Organization = n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization
+                                          Organization = n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization,
+                                          AttendeeOrganizationCollaborators = n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators.ToList()
                                       },
                                       ProjectDto = new ProjectDto()
                                       {
@@ -325,7 +326,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                           SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
                                           {
                                               AttendeeOrganization = n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization,
-                                              Organization = n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.Organization
+                                              Organization = n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.Organization,
+                                              AttendeeOrganizationCollaborators = n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.AttendeeOrganizationCollaborators.ToList()
                                           },
                                           ProjectTitleDtos = n.ProjectBuyerEvaluation.Project.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
                                           {
