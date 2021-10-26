@@ -22,7 +22,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public AttendeeOrganization AttendeeOrganization { get; set; }
         public Organization Organization { get; set; }
         public Edition Edition { get; set; }
-        public List<AttendeeOrganizationCollaborator> AttendeeOrganizationCollaborators { get; set; }
+        public IEnumerable<AttendeeCollaboratorDto> AttendeeCollaboratorDtos { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeOrganizationDto"/> class.</summary>
         public AttendeeOrganizationDto()
