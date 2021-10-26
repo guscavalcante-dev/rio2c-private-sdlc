@@ -3,8 +3,8 @@
 // Author           : Rafael Dantas Ruiz
 // Created          : 08-15-2019
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-16-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 10-23-2021
 // ***********************************************************************
 // <copyright file="FileAwsRepository.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -36,7 +36,8 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
         private readonly string imagesUsersDirectory;
         private readonly string filesLogisticsAirfareDirectory;
         private readonly string filesInnovationOrganizationsDirectory;
-        
+        private readonly string audioFilesDirectory;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="FileAwsRepository"/> class.
         /// </summary>
@@ -51,6 +52,7 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
             this.imagesUsersDirectory = ConfigurationManager.AppSettings["AwsImagesUsersDirectory"];
             this.filesLogisticsAirfareDirectory = ConfigurationManager.AppSettings["AwsFilesLogisticsAirfareDirectory"];
             this.filesInnovationOrganizationsDirectory = ConfigurationManager.AppSettings["AwsFilesInnovationOrganizationsDirectory"];
+            this.audioFilesDirectory = ConfigurationManager.AppSettings["AwsAudioFilesDirectory"];
         }
 
         #region Get Url
@@ -93,6 +95,30 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
             return this.GetUrl(fileRepositoryPathType, objectUid.Value) + $"{additionalFileInfo}{fileExtension}" + $"?v={uploadDate.Value.ToString("yyyyMMddHHmmss")}";
         }
 
+        /// <summary>
+        /// Gets the file URL.
+        /// </summary>
+        /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
+        /// <param name="fileName">Name of the file.</param>
+        /// <param name="uploadDate">The upload date.</param>
+        /// <param name="additionalFileInfo">The additional file information.</param>
+        /// <param name="fileExtension">The file extension.</param>
+        /// <returns></returns>
+        public string GetFileUrl(FileRepositoryPathType fileRepositoryPathType, string fileName, string additionalFileInfo = null, string fileExtension = null)
+        {
+            if (string.IsNullOrEmpty(fileName))
+            {
+                return string.Empty;
+            }
+
+            if (string.IsNullOrEmpty(fileExtension))
+            {
+                fileExtension = FileType.Pdf;
+            }
+
+            return this.GetUrl(fileRepositoryPathType, fileName) + $"{additionalFileInfo}{fileExtension}";
+        }
+
         /// <summary>Gets the URL.</summary>
         /// <param name="fileRepositoryPathType">Type of the file.</param>
         /// <param name="fileUid">The file uid.</param>
@@ -100,6 +126,17 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
         public string GetUrl(FileRepositoryPathType fileRepositoryPathType, Guid fileUid)
         {
             return this.GetDirectoryUrl(fileRepositoryPathType) + fileUid;
+        }
+
+        /// <summary>
+        /// Gets the URL.
+        /// </summary>
+        /// <param name="fileRepositoryPathType">Type of the file repository path.</param>
+        /// <param name="fileName">Name of the file.</param>
+        /// <returns></returns>
+        public string GetUrl(FileRepositoryPathType fileRepositoryPathType, string fileName)
+        {
+            return this.GetDirectoryUrl(fileRepositoryPathType) + fileName;
         }
 
         /// <summary>Gets the base URL.</summary>
@@ -239,6 +276,11 @@ namespace PlataformaRio2c.Infra.Data.FileRepository
             if (fileRepositoryPathType.Uid == FileRepositoryPathType.InnovationOrganizationPresentationFile.Uid)
             {
                 return string.Format(this.filesInnovationOrganizationsDirectory, args);
+            }
+
+            if (fileRepositoryPathType.Uid == FileRepositoryPathType.AudioFile.Uid)
+            {
+                return string.Format(this.audioFilesDirectory, args);
             }
 
             return string.Empty;

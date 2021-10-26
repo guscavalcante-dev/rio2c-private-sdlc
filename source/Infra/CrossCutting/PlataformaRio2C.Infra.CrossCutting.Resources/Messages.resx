@@ -567,7 +567,7 @@
     <value>Esta reunião já foi encerrada!</value>
   </data>
   <data name="MeetingIsAlmostOver" xml:space="preserve">
-    <value>Atenção! A reunião está quase acabando. 1 minuto restante.</value>
+    <value>Atenção! A reunião está quase acabando. {0} minuto(s) restante(s).</value>
   </data>
   <data name="MeetingIsOver" xml:space="preserve">
     <value>O tempo da rodada de negócios se esgotou e esta reunião chegou ao fim! Agradecemos pela sua presença no MyRio2C!</value>

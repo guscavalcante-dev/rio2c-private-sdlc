@@ -569,8 +569,8 @@
     <comment>Esta reunião já foi encerrada!</comment>
   </data>
   <data name="MeetingIsAlmostOver" xml:space="preserve">
-    <value>Attention! The meeting is almost over. 1 minute left.</value>
-    <comment>Atenção! A reunião está quase acabando. 1 minuto restante.</comment>
+    <value>Attention! The meeting is almost over. {0} minute(s) left.</value>
+    <comment>Atenção! A reunião está quase acabando. {0} minuto(s) restante(s).</comment>
   </data>
   <data name="MeetingIsOver" xml:space="preserve">
     <value>The time for the business round has run out and this meeting is over! We thank you for your presence on MyRio2C!</value>

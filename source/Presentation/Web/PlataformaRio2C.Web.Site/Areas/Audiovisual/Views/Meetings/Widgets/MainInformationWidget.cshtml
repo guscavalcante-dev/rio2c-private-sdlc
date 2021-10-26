@@ -3,8 +3,6 @@
 @using PlataformaRio2C.Domain.Statics
 @model NegotiationDto
 @{
-    var editionDto = ViewBag.EditionDto as EditionDto;
-    var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var buyerAttendeeOrganizationDto = Model.ProjectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto as AttendeeOrganizationDto;
     var sellerAttendeeOrganizationDto = Model.ProjectBuyerEvaluationDto?.ProjectDto?.SellerAttendeeOrganizationDto as AttendeeOrganizationDto;
     var projectDto = Model.ProjectBuyerEvaluationDto?.ProjectDto as ProjectDto;
@@ -12,7 +10,6 @@
     var sellerCompanyDetailsUrl = Url.Action("Details", "Companies", new { Area = "", id = sellerAttendeeOrganizationDto?.Organization?.Uid });
     var brazilUtc = @DateTimeExtensions.GetBrazilUtc();
 }
-
 <div class="kt-portlet__body">
     <div class="row">
         <div class="col-lg-8 col-md-7 kt-widget kt-widget--user-profile-3">

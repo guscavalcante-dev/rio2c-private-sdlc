@@ -1167,7 +1167,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Atenção! A reunião está quase acabando. 1 minuto restante..
+        ///   Looks up a localized string similar to Atenção! A reunião está quase acabando. {0} minuto(s) restante(s)..
         /// </summary>
         public static string MeetingIsAlmostOver {
             get {

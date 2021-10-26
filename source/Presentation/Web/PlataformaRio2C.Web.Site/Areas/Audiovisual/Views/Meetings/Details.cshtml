@@ -1,4 +1,7 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
+@using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Statics
+@using PlataformaRio2C.Infra.CrossCutting.Tools.Statics;
 @model NegotiationDto
 @{
     ViewBag.Title = $"{Labels.OneToOneMeetings} {Model.RoomDto.GetRoomNameByLanguageCode(ViewBag.UserInterfaceLanguage)?.RoomName?.Value}";
@@ -35,13 +38,16 @@
     @Scripts.Render("~/bundles/js/audiovisual.meetings.widget.js")
 
 <script>
+        @{var showMeetingIsAlmosOverAlertInMinutes = 5; }
+
         // Page translations ----------------------------------------------------------------------
         var translations = {
             meetings: '@Html.Raw(Labels.OneToOneMeeting)',
             finished: '@Html.Raw(Labels.FinishedF)',
             inProgress: '@Html.Raw(Labels.InProgress)',
             leaveMeetingconfirmationMessage: '@Html.Raw(Messages.ConfirmToLeaveMeeting)',
-            isAlmostOver: '@Html.Raw(Messages.MeetingIsAlmostOver)',
+            isAlmostOver: '@Html.Raw(string.Format(Messages.MeetingIsAlmostOver, showMeetingIsAlmosOverAlertInMinutes))',
+            isAlmostOverOneMinute: '@Html.Raw(string.Format(Messages.MeetingIsAlmostOver, 1))',
             isOver: '@Html.Raw(Messages.MeetingIsOver)'
         };
 
@@ -50,7 +56,9 @@
             negotiationEndDate: '@(Model.Negotiation.EndDate.ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US")))',
             roomLiberationDate: '@(Model.Negotiation.StartDate.AddMinutes(-editionDto.Edition.AudiovisualNegotiationsVirtualMeetingsJoinMinutes).ToString(System.Globalization.CultureInfo.CreateSpecificCulture("en-US")))',
             userEmail: '@(Html.Raw(ViewBag.UserAccessControlDto.User.Email as string))',
-            userDisplayName: '@(Html.Raw((ViewBag.UserAccessControlDto.Collaborator?.GetDisplayName() ?? ViewBag.UserAccessControlDto.User.Name) as string))'
+            userDisplayName: '@(Html.Raw((ViewBag.UserAccessControlDto.Collaborator?.GetDisplayName() ?? ViewBag.UserAccessControlDto.User.Name) as string))',
+            meetingIsAlmostOverAudioFile: '@FileHelper.GetFileUrl(FileRepositoryPathType.AudioFile, "audiovisual-meeting-isalmostover", null, FileType.Mp4)',
+            almostOverMinutes: '@showMeetingIsAlmosOverAlertInMinutes'
         }
 
         jQuery(document).ready(function () {
