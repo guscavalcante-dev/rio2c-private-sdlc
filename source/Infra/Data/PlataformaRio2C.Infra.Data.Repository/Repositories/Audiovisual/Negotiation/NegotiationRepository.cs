@@ -206,7 +206,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         internal static IQueryable<Negotiation> FindByRoomId(this IQueryable<Negotiation> query, int? roomId, bool showAllRooms = false)
         {
             query = query.Where(n => showAllRooms || n.Room.Id == roomId);
-            
+
             return query;
         }
 
@@ -312,12 +312,14 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                   Negotiation = n,
                                   ProjectBuyerEvaluationDto = new ProjectBuyerEvaluationDto()
                                   {
-                                      ProjectBuyerEvaluation = n.ProjectBuyerEvaluation,
-                                      ProjectEvaluationStatus = n.ProjectBuyerEvaluation.ProjectEvaluationStatus,
                                       BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto()
                                       {
                                           AttendeeOrganization = n.ProjectBuyerEvaluation.BuyerAttendeeOrganization,
-                                          Organization = n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization
+                                          Organization = n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization,
+                                          AttendeeCollaboratorDtos = n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted).Select(aoc => new AttendeeCollaboratorDto
+                                          {
+                                              AttendeeCollaborator = aoc.AttendeeCollaborator
+                                          })
                                       },
                                       ProjectDto = new ProjectDto()
                                       {
@@ -325,7 +327,68 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                           SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
                                           {
                                               AttendeeOrganization = n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization,
-                                              Organization = n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.Organization
+                                              Organization = n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.Organization,
+                                              AttendeeCollaboratorDtos = n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted).Select(aoc => new AttendeeCollaboratorDto
+                                              {
+                                                  AttendeeCollaborator = aoc.AttendeeCollaborator
+                                              })
+                                          }
+                                      }
+                                  },
+                                  RoomDto = new RoomDto()
+                                  {
+                                      Room = n.Room,
+                                      RoomNameDtos = n.Room.RoomNames.Where(rn => !rn.IsDeleted).Select(rn => new RoomNameDto
+                                      {
+                                          RoomName = rn,
+                                          LanguageDto = new LanguageDto
+                                          {
+                                              Id = rn.Language.Id,
+                                              Uid = rn.Language.Uid,
+                                              Code = rn.Language.Code
+                                          }
+                                      })
+                                  }
+                              })
+                              .FirstOrDefaultAsync();
+
+            return negotiationDto;
+        }
+
+        /// <summary>
+        /// Finds the main information widget dto asynchronous.
+        /// </summary>
+        /// <param name="negotiationUid">The negotiation uid.</param>
+        /// <returns></returns>
+        public async Task<NegotiationDto> FindMainInformationWidgetDtoAsync(Guid negotiationUid)
+        {
+            var negotiationDto = await this.GetBaseQuery()
+                              .FindByUid(negotiationUid)
+                              .Select(n => new NegotiationDto
+                              {
+                                  Negotiation = n,
+                                  ProjectBuyerEvaluationDto = new ProjectBuyerEvaluationDto()
+                                  {
+                                      BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto()
+                                      {
+                                          AttendeeOrganization = n.ProjectBuyerEvaluation.BuyerAttendeeOrganization,
+                                          Organization = n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.Organization,
+                                          AttendeeCollaboratorDtos = n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted).Select(aoc => new AttendeeCollaboratorDto
+                                          {
+                                              AttendeeCollaborator = aoc.AttendeeCollaborator
+                                          })
+                                      },
+                                      ProjectDto = new ProjectDto()
+                                      {
+                                          Project = n.ProjectBuyerEvaluation.Project,
+                                          SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                          {
+                                              AttendeeOrganization = n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization,
+                                              Organization = n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.Organization,
+                                              AttendeeCollaboratorDtos = n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted).Select(aoc => new AttendeeCollaboratorDto
+                                              {
+                                                  AttendeeCollaborator = aoc.AttendeeCollaborator
+                                              })
                                           },
                                           ProjectTitleDtos = n.ProjectBuyerEvaluation.Project.ProjectTitles.Where(t => !t.IsDeleted).Select(t => new ProjectTitleDto
                                           {
@@ -352,13 +415,43 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                               Code = rn.Language.Code
                                           }
                                       })
-                                  },
-                                  UpdaterDto = new UserBaseDto
+                                  }
+                              })
+                              .FirstOrDefaultAsync();
+
+            return negotiationDto;
+        }
+
+        /// <summary>
+        /// Finds the virtual meeting widget dto asynchronous.
+        /// </summary>
+        /// <param name="negotiationUid">The negotiation uid.</param>
+        /// <returns></returns>
+        public async Task<NegotiationDto> FindVirtualMeetingWidgetDtoAsync(Guid negotiationUid)
+        {
+            var negotiationDto = await this.GetBaseQuery()
+                              .FindByUid(negotiationUid)
+                              .Select(n => new NegotiationDto
+                              {
+                                  ProjectBuyerEvaluationDto = new ProjectBuyerEvaluationDto()
                                   {
-                                      Id = n.Updater.Id,
-                                      Uid = n.Updater.Uid,
-                                      Name = n.Updater.Name,
-                                      Email = n.Updater.Email
+                                      BuyerAttendeeOrganizationDto = new AttendeeOrganizationDto()
+                                      {
+                                          AttendeeCollaboratorDtos = n.ProjectBuyerEvaluation.BuyerAttendeeOrganization.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted).Select(aoc => new AttendeeCollaboratorDto
+                                          {
+                                              AttendeeCollaborator = aoc.AttendeeCollaborator
+                                          })
+                                      },
+                                      ProjectDto = new ProjectDto()
+                                      {
+                                          SellerAttendeeOrganizationDto = new AttendeeOrganizationDto
+                                          {
+                                              AttendeeCollaboratorDtos = n.ProjectBuyerEvaluation.Project.SellerAttendeeOrganization.AttendeeOrganizationCollaborators.Where(aoc => !aoc.IsDeleted).Select(aoc => new AttendeeCollaboratorDto
+                                              {
+                                                  AttendeeCollaborator = aoc.AttendeeCollaborator
+                                              })
+                                          }
+                                      }
                                   }
                               })
                               .FirstOrDefaultAsync();
@@ -615,8 +708,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
             return (await query.ToListAsync())
                                 .GroupBy(n => n.StartDate.ToBrazilTimeZone().Date)
                                 .Select(nd => new NegotiationGroupedByDateDto(
-                                    nd.Key, 
-                                    nd.Select(n => new NegotiationDto 
+                                    nd.Key,
+                                    nd.Select(n => new NegotiationDto
                                     {
                                         Negotiation = n,
                                         ProjectBuyerEvaluationDto = new ProjectBuyerEvaluationDto()

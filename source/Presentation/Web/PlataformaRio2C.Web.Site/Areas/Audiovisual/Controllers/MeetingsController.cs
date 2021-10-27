@@ -23,6 +23,7 @@ using PlataformaRio2C.Web.Site.Controllers;
 using PlataformaRio2C.Web.Site.Filters;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Constants = PlataformaRio2C.Domain.Constants;
@@ -134,6 +135,15 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                 return RedirectToAction("Index", "Meetings", new { Area = "Audiovisual" });
             }
 
+            if (negotiationDto?.ProjectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.AttendeeCollaboratorDtos?
+                    .Any(acDto => acDto?.AttendeeCollaborator?.Id == this.UserAccessControlDto?.EditionAttendeeCollaborator?.Id) == false &&
+                negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.SellerAttendeeOrganizationDto?.AttendeeCollaboratorDtos?
+                    .Any(acDto => acDto?.AttendeeCollaborator?.Id == this.UserAccessControlDto?.EditionAttendeeCollaborator?.Id) == false)
+            {
+                this.StatusMessageToastr(Messages.AccessDenied, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Meetings", new { Area = "Audiovisual" });
+            }
+
             #region Breadcrumb
 
             ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.OneToOneMeetings, new List<BreadcrumbItemHelper> {
@@ -157,10 +167,19 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowMainInformationWidget(Guid? negotiationUid)
         {
-            var negotiationDto = await this.negotiationRepo.FindDtoAsync(negotiationUid ?? Guid.Empty);
+            var negotiationDto = await this.negotiationRepo.FindMainInformationWidgetDtoAsync(negotiationUid ?? Guid.Empty);
             if (negotiationDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            if (negotiationDto?.ProjectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.AttendeeCollaboratorDtos?
+                    .Any(acDto => acDto?.AttendeeCollaborator?.Id == this.UserAccessControlDto?.EditionAttendeeCollaborator?.Id) == false &&
+                negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.SellerAttendeeOrganizationDto?.AttendeeCollaboratorDtos?
+                    .Any(acDto => acDto?.AttendeeCollaborator?.Id == this.UserAccessControlDto?.EditionAttendeeCollaborator?.Id) == false)
+            {
+                this.StatusMessageToastr(Messages.AccessDenied, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Meetings", new { Area = "Audiovisual" });
             }
 
             return Json(new
@@ -185,10 +204,19 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowVirtualMeetingWidget(Guid? negotiationUid)
         {
-            var negotiationDto = await this.negotiationRepo.FindDtoAsync(negotiationUid ?? Guid.Empty);
+            var negotiationDto = await this.negotiationRepo.FindVirtualMeetingWidgetDtoAsync(negotiationUid ?? Guid.Empty);
             if (negotiationDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Negotiation, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            if (negotiationDto?.ProjectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.AttendeeCollaboratorDtos?
+                   .Any(acDto => acDto?.AttendeeCollaborator?.Id == this.UserAccessControlDto?.EditionAttendeeCollaborator?.Id) == false &&
+               negotiationDto?.ProjectBuyerEvaluationDto?.ProjectDto?.SellerAttendeeOrganizationDto?.AttendeeCollaboratorDtos?
+                   .Any(acDto => acDto?.AttendeeCollaborator?.Id == this.UserAccessControlDto?.EditionAttendeeCollaborator?.Id) == false)
+            {
+                this.StatusMessageToastr(Messages.AccessDenied, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
+                return RedirectToAction("Index", "Meetings", new { Area = "Audiovisual" });
             }
 
             return Json(new
