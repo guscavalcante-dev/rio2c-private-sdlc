@@ -26,7 +26,7 @@
             <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">@Labels.Management</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
             <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
                 <ul class="kt-menu__subnav">
-                    <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, "Index", "Editions", null)" aria-haspopup="true">
+                    <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "Editions", null)" aria-haspopup="true">
                         <a href="@Url.Action("Index", "Editions", new { Area = "" })" class="kt-menu__link"><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
                             <span class="kt-menu__link-text">@Labels.Editions</span>
                         </a>
