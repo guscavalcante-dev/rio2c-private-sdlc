@@ -41,7 +41,7 @@
                     }
                     <div class="kt-widget4__info">
                         <span class="kt-widget4__title">@technologyOption.GetNameTranslation(CultureInfo.CurrentCulture.ToString())</span>
-                        @if (technologyOption.HasAdditionalInfo && !string.IsNullOrEmpty(attendeeInnovationOrganizationTechnologyDto.AttendeeInnovationOrganizationTechnology.AdditionalInfo))
+                        @if (technologyOption.HasAdditionalInfo && !string.IsNullOrEmpty(attendeeInnovationOrganizationTechnologyDto?.AttendeeInnovationOrganizationTechnology?.AdditionalInfo))
                         {
                             @("» " + attendeeInnovationOrganizationTechnologyDto.AttendeeInnovationOrganizationTechnology.AdditionalInfo)
                         }
