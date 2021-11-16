@@ -26,17 +26,12 @@
 <div class="row">
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionMainInformation.SellStartDate, new { @class = "control-label" })
-        @Html.TextBox("EditionMainInformation.SellStartDate", Model.EditionMainInformation.SellStartDate?.ToShortDateString(), new
-   {
-       @class = "form-control enable-datepicker"/*, @readonly = "readonly", data_date_start_date = Model?.StartDate?.ToBrazilTimeZone().ToShortDateString(), data_date_end_date = Model?.EndDate?.ToBrazilTimeZone().ToShortDateString()*/
-        })
+        @Html.TextBox("EditionMainInformation.SellStartDate", Model.EditionMainInformation.SellStartDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
         @Html.ValidationMessageFor(m => m.EditionMainInformation.SellStartDate, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionMainInformation.SellEndDate, new { @class = "control-label" })
-        @Html.TextBox("EditionMainInformation.SellEndDate", Model.EditionMainInformation.SellEndDate?.ToShortDateString(), new
-        {
-            @class = "form-control enable-datepicker"@*, @readonly = "readonly",data_date_sell_start_date = editionDto?.SellStartDate.ToBrazilTimeZone().ToShortDateString(), data_date_sell_end_date = editionDto?.SellEndDate.ToBrazilTimeZone().ToShortDateString()*@})
+        @Html.TextBox("EditionMainInformation.SellEndDate", Model.EditionMainInformation.SellEndDate?.ToShortDateString(), new { @class = "form-control enable-datepicker" })
         @Html.ValidationMessageFor(m => m.EditionMainInformation.SellEndDate, "", new { @class = "text-danger" })
     </div>
 </div>
@@ -45,7 +40,7 @@
         @Html.LabelFor(m => m.EditionMainInformation.OneToOneMeetingsScheduleDate, new { @class = "control-label" })
         @Html.TextBox("EditionMainInformation.OneToOneMeetingsScheduleDate", Model.EditionMainInformation.OneToOneMeetingsScheduleDate?.ToShortDateString(), new
         {
-            @class = "form-control enable-datepicker"@*, @readonly = "readonly", data_date_start_date = editionDto?.StartDate.ToBrazilTimeZone().ToShortDateString(), data_date_end_date = editionDto?.EndDate.ToBrazilTimeZone().ToShortDateString()*@})
+            @class = "form-control enable-datepicker" })
         @Html.ValidationMessageFor(m => m.EditionMainInformation.OneToOneMeetingsScheduleDate, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-3">
@@ -96,14 +91,14 @@
         @Html.LabelFor(m => m.EditionDate.ProjectSubmitStartDate, new { @class = "control-label" })
         @Html.TextBox("EditionDate.ProjectSubmitStartDate", Model.EditionDate.ProjectSubmitStartDate?.ToShortDateString(), new
         {
-            @class = "form-control enable-datepicker"@*, @readonly = "readonly",data_date_projectsubmit_start_date = editionDto?.ProjectSubmitStartDate.ToBrazilTimeZone().ToShortDateString(), data_date_projectsubmit_end_date = editionDto?.ProjectSubmitEndDate.ToBrazilTimeZone().ToShortDateString()*@})
+            @class = "form-control enable-datepicker" })
         @Html.ValidationMessageFor(m => m.EditionDate.ProjectSubmitStartDate, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionDate.ProjectSubmitEndDate, new { @class = "control-label" })
         @Html.TextBox("EditionDate.ProjectSubmitEndDate", Model.EditionDate.ProjectSubmitEndDate?.ToShortDateString(), new
         {
-            @class = "form-control enable-datepicker"@*, @readonly = "readonly",data_date_projectsubmit_start_date = editionDto?.ProjectSubmitStartDate.ToBrazilTimeZone().ToShortDateString(), data_date_projectsubmit_end_date = editionDto?.ProjectSubmitEndDate.ToBrazilTimeZone().ToShortDateString()*@})
+            @class = "form-control enable-datepicker" })
         @Html.ValidationMessageFor(m => m.EditionDate.ProjectSubmitEndDate, "", new { @class = "text-danger" })
     </div>
 </div>
@@ -112,14 +107,14 @@
         @Html.LabelFor(m => m.EditionDate.ProjectEvaluationStartDate, new { @class = "control-label" })
         @Html.TextBox("EditionDate.ProjectEvaluationStartDate", Model.EditionDate.ProjectEvaluationStartDate?.ToShortDateString(), new
         {
-            @class = "form-control enable-datepicker"@*, @readonly = "readonly", data_date_projectevaluation_start_date = editionDto?.ProjectEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(), data_date_projectevaluation_end_date = editionDto?.ProjectEvaluationEndDate.ToBrazilTimeZone().ToShortDateString()*@})
+            @class = "form-control enable-datepicker" })
         @Html.ValidationMessageFor(m => m.EditionDate.ProjectEvaluationStartDate, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionDate.ProjectEvaluationEndDate, new { @class = "control-label" })
         @Html.TextBox("EditionDate.ProjectEvaluationEndDate", Model.EditionDate.ProjectEvaluationEndDate?.ToShortDateString(), new
         {
-            @class = "form-control enable-datepicker"@*, @readonly = "readonly", data_date_projectevaluation_start_date = editionDto?.ProjectEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(), data_date_projectevaluation_end_date = editionDto?.ProjectEvaluationEndDate.ToBrazilTimeZone().ToShortDateString()*@})
+            @class = "form-control enable-datepicker" })
         @Html.ValidationMessageFor(m => m.EditionDate.ProjectEvaluationEndDate, "", new { @class = "text-danger" })
     </div>
 </div>
@@ -128,14 +123,14 @@
         @Html.LabelFor(m => m.EditionDate.NegotiationStartDate, new { @class = "control-label" })
         @Html.TextBox("EditionDate.NegotiationStartDate", Model.EditionDate.NegotiationStartDate?.ToShortDateString(), new
         {
-            @class = "form-control enable-datepicker"@*, @readonly = "readonly", data_date_negotiation_start_date = editionDto?.NegotiationStartDate.ToBrazilTimeZone().ToShortDateString(), data_date_negotiation_end_date = editionDto?.NegotiationEndDate.ToBrazilTimeZone().ToShortDateString()*@})
+            @class = "form-control enable-datepicker" })
         @Html.ValidationMessageFor(m => m.EditionDate.NegotiationStartDate, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionDate.NegotiationEndDate, new { @class = "control-label" })
         @Html.TextBox("EditionDate.NegotiationEndDate", Model.EditionDate.NegotiationEndDate?.ToShortDateString(), new
         {
-            @class = "form-control enable-datepicker"@*, @readonly = "readonly", data_date_negotiation_start_date = editionDto?.NegotiationStartDate.ToBrazilTimeZone().ToShortDateString(), data_date_negotiation_end_date = editionDto?.NegotiationEndDate.ToBrazilTimeZone().ToShortDateString()*@})
+            @class = "form-control enable-datepicker" })
         @Html.ValidationMessageFor(m => m.EditionDate.NegotiationEndDate, "", new { @class = "text-danger" })
     </div>
 </div>
@@ -151,6 +146,17 @@
         @Html.ValidationMessageFor(m => m.EditionDate.ProjectMaxBuyerEvaluationsCount, "", new { @class = "text-danger" })
     </div>
 </div>
+<div class="row">
+    <div class="form-group col-md-6">
+        <label class="control-label" for="AudiovisualNegotiationsVirtualMeetingsJoinMinutes">
+            <span>@Labels.AudiovisualNegotiationsVirtualMeetingsJoinMinutes</span>
+            <span class="form-optional-input">(@Labels.Minutes)</span>
+        </label>
+        @Html.TextBox("EditionDate.AudiovisualNegotiationsVirtualMeetingsJoinMinutes", Model.EditionDate.AudiovisualNegotiationsVirtualMeetingsJoinMinutes, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.EditionDate.AudiovisualNegotiationsVirtualMeetingsJoinMinutes, "", new { @class = "text-danger" })
+    </div>
+</div>
+
 <!-- Audiovisual Negotiations - End  -->
 <!-- Music Commissions - Begin -->
 <h3 class="kt-section__title mt-30 mb-4">@Labels.MusicCommission</h3>
@@ -159,14 +165,14 @@
         @Html.LabelFor(m => m.EditionDate.MusicProjectSubmitStartDate, new { @class = "control-label" })
         @Html.TextBox("EditionDate.MusicProjectSubmitStartDate", Model.EditionDate.MusicProjectSubmitStartDate?.ToShortDateString(), new
         {
-            @class = "form-control enable-datepicker"@*, @readonly = "readonly", data_date_musicprojectsubmit_start_date = editionDto?.MusicProjectSubmitStartDate.ToBrazilTimeZone().ToShortDateString(), data_date_musicprojectsubmit_end_date = editionDto?.MusicProjectSubmitEndDate.ToBrazilTimeZone().ToShortDateString()*@})
+            @class = "form-control enable-datepicker" })
         @Html.ValidationMessageFor(m => m.EditionDate.MusicProjectSubmitStartDate, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionDate.MusicProjectSubmitEndDate, new { @class = "control-label" })
         @Html.TextBox("EditionDate.MusicProjectSubmitEndDate", Model.EditionDate.MusicProjectSubmitEndDate?.ToShortDateString(), new
         {
-            @class = "form-control enable-datepicker"@*, @readonly = "readonly", data_date_musicprojectsubmit_start_date = editionDto?.MusicProjectSubmitStartDate.ToBrazilTimeZone().ToShortDateString(), data_date_musicprojectsubmit_end_date = editionDto?.MusicProjectSubmitEndDate.ToBrazilTimeZone().ToShortDateString()*@})
+            @class = "form-control enable-datepicker" })
         @Html.ValidationMessageFor(m => m.EditionDate.MusicProjectSubmitEndDate, "", new { @class = "text-danger" })
     </div>
 </div>
@@ -175,14 +181,14 @@
         @Html.LabelFor(m => m.EditionDate.MusicCommissionEvaluationStartDate, new { @class = "control-label" })
         @Html.TextBox("EditionDate.MusicCommissionEvaluationStartDate", Model.EditionDate.MusicCommissionEvaluationStartDate?.ToShortDateString(), new
         {
-            @class = "form-control enable-datepicker"@*, @readonly = "readonly", data_date_musicprojectevaluation_start_date = editionDto?.MusicCommissionEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(), data_date_musicprojectevaluation_end_date = editionDto?.MusicCommissionEvaluationEndDate.ToBrazilTimeZone().ToShortDateString()*@})
+            @class = "form-control enable-datepicker" })
         @Html.ValidationMessageFor(m => m.EditionDate.MusicCommissionEvaluationStartDate, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionDate.MusicCommissionEvaluationEndDate, new { @class = "control-label" })
         @Html.TextBox("EditionDate.MusicCommissionEvaluationEndDate", Model.EditionDate.MusicCommissionEvaluationEndDate?.ToShortDateString(), new
         {
-            @class = "form-control enable-datepicker"@*, @readonly = "readonly", data_date_musicprojectevaluation_start_date = editionDto?.MusicCommissionEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(), data_date_musicprojectevaluation_end_date = editionDto?.MusicCommissionEvaluationEndDate.ToBrazilTimeZone().ToShortDateString()*@})
+            @class = "form-control enable-datepicker" })
         @Html.ValidationMessageFor(m => m.EditionDate.MusicCommissionEvaluationEndDate, "", new { @class = "text-danger" })
     </div>
 </div>
@@ -206,14 +212,14 @@
         @Html.LabelFor(m => m.EditionDate.InnovationProjectSubmitStartDate, new { @class = "control-label" })
         @Html.TextBox("EditionDate.InnovationProjectSubmitStartDate", Model.EditionDate.InnovationProjectSubmitStartDate?.ToShortDateString(), new
         {
-            @class = "form-control enable-datepicker"@*, @readonly = "readonly", data_date_innovationprojectsubmit_start_date = editionDto?.InnovationProjectSubmitStartDate.ToBrazilTimeZone().ToShortDateString(), data_date_innovationprojectsubmit_end_date = editionDto?.InnovationProjectSubmitEndDate.ToBrazilTimeZone().ToShortDateString()*@})
+            @class = "form-control enable-datepicker" })
         @Html.ValidationMessageFor(m => m.EditionDate.InnovationProjectSubmitStartDate, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionDate.InnovationProjectSubmitEndDate, new { @class = "control-label" })
         @Html.TextBox("EditionDate.InnovationProjectSubmitEndDate", Model.EditionDate.InnovationProjectSubmitEndDate?.ToShortDateString(), new
         {
-            @class = "form-control enable-datepicker"@*, @readonly = "readonly", data_date_innovationprojectsubmit_start_date = editionDto?.InnovationProjectSubmitStartDate.ToBrazilTimeZone().ToShortDateString(), data_date_innovationprojectsubmit_end_date = editionDto?.InnovationProjectSubmitEndDate.ToBrazilTimeZone().ToShortDateString()*@})
+            @class = "form-control enable-datepicker" })
         @Html.ValidationMessageFor(m => m.EditionDate.InnovationProjectSubmitEndDate, "", new { @class = "text-danger" })
     </div>
 </div>
@@ -222,14 +228,14 @@
         @Html.LabelFor(m => m.EditionDate.InnovationCommissionEvaluationStartDate, new { @class = "control-label" })
         @Html.TextBox("EditionDate.InnovationCommissionEvaluationStartDate", Model.EditionDate.InnovationCommissionEvaluationStartDate?.ToShortDateString(), new
         {
-            @class = "form-control enable-datepicker"@*, @readonly = "readonly", data_date_innovationprojectevaluation_start_date = editionDto?.InnovationCommissionEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(), data_date_innovationprojectevaluation_end_date = editionDto?.InnovationCommissionEvaluationEndDate.ToBrazilTimeZone().ToShortDateString()*@})
+            @class = "form-control enable-datepicker" })
         @Html.ValidationMessageFor(m => m.EditionDate.InnovationCommissionEvaluationStartDate, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionDate.InnovationCommissionEvaluationEndDate, new { @class = "control-label" })
         @Html.TextBox("EditionDate.InnovationCommissionEvaluationEndDate", Model.EditionDate.InnovationCommissionEvaluationEndDate?.ToShortDateString(), new
         {
-            @class = "form-control enable-datepicker"@*, @readonly = "readonly", data_date_innovationprojectevaluation_start_date = editionDto?.InnovationCommissionEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(), data_date_innovationprojectevaluation_end_date = editionDto?.InnovationCommissionEvaluationEndDate.ToBrazilTimeZone().ToShortDateString()*@})
+            @class = "form-control enable-datepicker" })
         @Html.ValidationMessageFor(m => m.EditionDate.InnovationCommissionEvaluationEndDate, "", new { @class = "text-danger" })
     </div>
 </div>
@@ -253,14 +259,14 @@
         @Html.LabelFor(m => m.EditionDate.AudiovisualNegotiationsCreateStartDate, new { @class = "control-label" })
         @Html.TextBox("EditionDate.AudiovisualNegotiationsCreateStartDate", Model.EditionDate.AudiovisualNegotiationsCreateStartDate?.ToShortDateString(), new
         {
-            @class = "form-control enable-datepicker"@*, @readonly = "readonly", data_date_audiovisualnegotiationscreate_start_date = editionDto?.AudiovisualNegotiationsCreateStartDate?.ToBrazilTimeZone().ToShortDateString(), data_date_audiovisualnegotiationscreate_end_date = editionDto?.AudiovisualNegotiationsCreateEndDate?.ToBrazilTimeZone().ToShortDateString()*@})
+            @class = "form-control enable-datepicker" })
         @Html.ValidationMessageFor(m => m.EditionDate.AudiovisualNegotiationsCreateStartDate, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionDate.AudiovisualNegotiationsCreateEndDate, new { @class = "control-label" })
         @Html.TextBox("EditionDate.AudiovisualNegotiationsCreateEndDate", Model.EditionDate.AudiovisualNegotiationsCreateEndDate?.ToShortDateString(), new
         {
-            @class = "form-control enable-datepicker"@*, @readonly = "readonly", data_date_audiovisualnegotiationscreate_start_date = editionDto?.AudiovisualNegotiationsCreateStartDate?.ToBrazilTimeZone().ToShortDateString(), data_date_audiovisualnegotiationscreate_end_date = editionDto?.AudiovisualNegotiationsCreateEndDate?.ToBrazilTimeZone().ToShortDateString()*@})
+            @class = "form-control enable-datepicker" })
         @Html.ValidationMessageFor(m => m.EditionDate.AudiovisualNegotiationsCreateEndDate, "", new { @class = "text-danger" })
     </div>
 </div>
@@ -269,14 +275,14 @@
         @Html.LabelFor(m => m.EditionDate.AudiovisualCommissionEvaluationStartDate, new { @class = "control-label" })
         @Html.TextBox("EditionDate.AudiovisualCommissionEvaluationStartDate", Model.EditionDate.AudiovisualCommissionEvaluationStartDate?.ToShortDateString(), new
         {
-            @class = "form-control enable-datepicker"@*, @readonly = "readonly", data_date_innovationprojectevaluation_start_date = editionDto?.InnovationCommissionEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(), data_date_innovationprojectevaluation_end_date = editionDto?.InnovationCommissionEvaluationEndDate.ToBrazilTimeZone().ToShortDateString()*@})
+            @class = "form-control enable-datepicker" })
         @Html.ValidationMessageFor(m => m.EditionDate.AudiovisualCommissionEvaluationStartDate, "", new { @class = "text-danger" })
     </div>
     <div class="form-group col-md-6">
         @Html.LabelFor(m => m.EditionDate.AudiovisualCommissionEvaluationEndDate, new { @class = "control-label" })
         @Html.TextBox("EditionDate.AudiovisualCommissionEvaluationEndDate", Model.EditionDate.AudiovisualCommissionEvaluationEndDate?.ToShortDateString(), new
         {
-            @class = "form-control enable-datepicker"@*, @readonly = "readonly", data_date_innovationprojectevaluation_start_date = editionDto?.InnovationCommissionEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(), data_date_innovationprojectevaluation_end_date = editionDto?.InnovationCommissionEvaluationEndDate.ToBrazilTimeZone().ToShortDateString()*@})
+            @class = "form-control enable-datepicker" })
         @Html.ValidationMessageFor(m => m.EditionDate.AudiovisualCommissionEvaluationEndDate, "", new { @class = "text-danger" })
     </div>
 </div>
