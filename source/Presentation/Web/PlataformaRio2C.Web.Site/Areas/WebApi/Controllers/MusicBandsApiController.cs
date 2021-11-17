@@ -117,6 +117,11 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 #endregion
 
                 var musicBandApiDto = JsonConvert.DeserializeObject<MusicBandApiDto>(request.Content.ReadAsStringAsync().Result);
+                if (musicBandApiDto == null)
+                {
+                    throw new DomainException(Messages.IncorrectJsonStructure);
+                }
+
                 if (!musicBandApiDto.IsValid())
                 {
                     validationResult.Add(musicBandApiDto.ValidationResult);
