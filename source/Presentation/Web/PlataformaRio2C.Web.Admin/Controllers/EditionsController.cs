@@ -116,7 +116,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             if (editionDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Edition, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "Events", new { Area = "" });
+                return RedirectToAction("Index", "Editions", new { Area = "" });
             }
 
             #region Breadcrumb
@@ -125,8 +125,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 new BreadcrumbItemHelper(Labels.Editions, Url.Action("Index", "Editions", new { Area = "" })),
                 new BreadcrumbItemHelper(editionDto.Edition.Name, Url.Action("Details", "Editions", new { id }))
             });
-
-            //ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Editions, null);
 
             #endregion
 
