@@ -117,7 +117,6 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 #endregion
 
                 var innovationOrganizationApiDto = JsonConvert.DeserializeObject<InnovationOrganizationApiDto>(request.Content.ReadAsStringAsync().Result);
-
                 if (innovationOrganizationApiDto == null)
                 {
                     throw new DomainException(Messages.IncorrectJsonStructure);
