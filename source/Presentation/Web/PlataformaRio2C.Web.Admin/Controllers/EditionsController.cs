@@ -116,7 +116,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
             if (editionDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Edition, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "Events", new { Area = "" });
+                return RedirectToAction("Index", "Editions", new { Area = "" });
             }
 
             #region Breadcrumb
