@@ -126,8 +126,6 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 new BreadcrumbItemHelper(editionDto.Edition.Name, Url.Action("Details", "Editions", new { id }))
             });
 
-            //ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Editions, null);
-
             #endregion
 
             return View(editionDto);

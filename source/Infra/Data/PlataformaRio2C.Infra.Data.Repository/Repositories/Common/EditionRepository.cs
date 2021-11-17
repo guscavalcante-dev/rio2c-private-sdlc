@@ -212,7 +212,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                               .FindByUid(editionUid)
                               .FirstOrDefaultAsync();
 
-            return new EditionDto(edition);
+            return edition != null ? new EditionDto(edition) : null;
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                               .FindById(editionId)
                               .FirstOrDefaultAsync();
 
-            return new EditionDto(edition);
+            return edition != null ? new EditionDto(edition) : null;
         }
 
         /// <summary>
