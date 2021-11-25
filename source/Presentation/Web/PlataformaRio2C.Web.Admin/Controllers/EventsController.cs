@@ -162,7 +162,7 @@ namespace PlataformaRio2C.Web.Admin.Controllers
 
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Conferences, new List<BreadcrumbItemHelper> {
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.Events, new List<BreadcrumbItemHelper> {
                 new BreadcrumbItemHelper(Labels.Events, Url.Action("Index", "Events", new { Area = "" })),
                 new BreadcrumbItemHelper(editionEventDto.EditionEvent.Name, Url.Action("Details", "Events", new { id }))
             });
