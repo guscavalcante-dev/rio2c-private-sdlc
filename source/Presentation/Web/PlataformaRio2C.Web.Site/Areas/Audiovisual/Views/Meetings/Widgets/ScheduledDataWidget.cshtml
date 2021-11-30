@@ -89,7 +89,7 @@
                                             @if (negotiationDto?.RoomDto?.Room?.IsVirtualMeeting == true)
                                             {
                                                 <button type="button" class="btn btn-success btn-font-sm">
-                                                    <a class="text-white" href="@Url.Action("Details", "Meetings", new { Area = "Audiovisual", id = negotiationDto?.Negotiation.Uid })">@Labels.Join</a>
+                                                    <a class="text-white" href="@Url.Action("Details", "Meetings", new { Area = "Audiovisual", id = negotiationDto?.Negotiation.Uid, collaboratorTypeUid = ViewBag.CollaboratorTypeUid })">@Labels.Join</a>
                                                 </button>
                                             }
                                             else if (negotiationDto?.RoomDto?.Room?.IsVirtualMeeting == false)
