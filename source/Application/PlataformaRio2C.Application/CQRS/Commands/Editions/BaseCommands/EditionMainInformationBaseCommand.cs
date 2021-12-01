@@ -56,6 +56,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = nameof(SellEndDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [GreaterThanOrEqualTo(nameof(SellStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
         public DateTime? SellEndDate { get; set; }
 
         [Display(Name = nameof(OneToOneMeetingsScheduleDate), ResourceType = typeof(Labels))]

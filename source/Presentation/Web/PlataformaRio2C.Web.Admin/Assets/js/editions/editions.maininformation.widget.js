@@ -159,7 +159,6 @@ var EditionsMainInformationWidget = function () {
         MyRio2cCommon.enableDatePicker({ inputIdOrClass: updateFormId + ' .enable-datepicker' });
         enableAjaxForm();
         MyRio2cCommon.enableFormValidation({ formIdOrClass: updateFormId, enableHiddenInputsValidation: true, enableMaxlength: true });
-        //enableDatePickerDateRangeChangeEvent();
     };
 
     var showUpdateModal = function () {

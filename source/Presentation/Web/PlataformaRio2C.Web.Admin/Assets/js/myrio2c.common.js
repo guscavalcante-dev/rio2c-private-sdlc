@@ -708,21 +708,22 @@ var MyRio2cCommon = function () {
 
         var format = $.fn.datepicker.dates[MyRio2cCommon.getGlobalVariable('userInterfaceLanguage')].format;
 
+        $(options.inputIdOrClass).datepicker({
+            todayHighlight: true,
+            orientation: options.orientation,
+            autoclose: options.autoclose,
+            format: format,
+            language: MyRio2cCommon.getGlobalVariable('userInterfaceLanguage')
+        });
+
         $.validator.methods.date = function (value, element) {
             moment.locale(MyRio2cCommon.getGlobalVariable('userInterfaceLanguage'));
             return this.optional(element) || moment(value, format.toUpperCase(), true).isValid();
         }
 
-        $(options.inputIdOrClass).datepicker({
-            todayHighlight: true,
-            orientation: options.orientation,
-            autoclose: options.autoclose,
-            language: MyRio2cCommon.getGlobalVariable('userInterfaceLanguage')
-        });
-
         $(options.inputIdOrClass).inputmask("datetime", {
             inputFormat: format,
-            placeholder: "__/__/____",
+            placeholder: "__/__/____"
         });
     };
 
@@ -1323,7 +1324,7 @@ var MyRio2cCommon = function () {
         if (organization.TradeName != organization.Name) {
             container += '<div class="select2-result-collaborator__description">' + organization.TradeName + '</div>';
         }
-        
+
         if (organization.CompanyName != organization.Name
             && organization.CompanyName != organization.TradeName) {
             container += '<div class="select2-result-collaborator__description">' + organization.CompanyName + '</div>';
