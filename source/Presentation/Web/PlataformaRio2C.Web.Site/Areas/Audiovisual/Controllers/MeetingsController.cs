@@ -68,6 +68,11 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
 
             #endregion
 
+            if (!collaboratorTypeUid.HasValue)
+            {
+                collaboratorTypeUid = this.UserAccessControlDto.EditionCollaboratorTypes.FirstOrDefault().Uid;
+            }
+
             ViewBag.CollaboratorTypeUid = collaboratorTypeUid;
 
             return View();
@@ -115,13 +120,13 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public async Task<ActionResult> Details(Guid? id)
+        public async Task<ActionResult> Details(Guid? id, Guid? collaboratorTypeUid)
         {
             var negotiationDto = await this.negotiationRepo.FindDtoAsync(id ?? Guid.Empty);
             if (negotiationDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.OneToOneMeeting, Labels.FoundF.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "Meetings", new { Area = "Audiovisual" });
+                return RedirectToAction("Index", "Meetings", new { Area = "Audiovisual", CollaboratorTypeUid = collaboratorTypeUid });
             }
 
             if (this.EditionDto?.IsAudiovisualProjectNegotiationsStarted() != true)
@@ -132,7 +137,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
             if (negotiationDto?.ProjectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.AttendeeOrganization?.IsVirtualMeeting == false)
             {
                 this.StatusMessageToastr(Messages.AccessDenied, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "Meetings", new { Area = "Audiovisual" });
+                return RedirectToAction("Index", "Meetings", new { Area = "Audiovisual", CollaboratorTypeUid = collaboratorTypeUid });
             }
 
             if (negotiationDto?.ProjectBuyerEvaluationDto?.BuyerAttendeeOrganizationDto?.AttendeeCollaboratorDtos?
@@ -141,7 +146,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Audiovisual.Controllers
                     .Any(acDto => acDto?.AttendeeCollaborator?.Id == this.UserAccessControlDto?.EditionAttendeeCollaborator?.Id) == false)
             {
                 this.StatusMessageToastr(Messages.AccessDenied, Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "Meetings", new { Area = "Audiovisual" });
+                return RedirectToAction("Index", "Meetings", new { Area = "Audiovisual", CollaboratorTypeUid = collaboratorTypeUid });
             }
 
             #region Breadcrumb
