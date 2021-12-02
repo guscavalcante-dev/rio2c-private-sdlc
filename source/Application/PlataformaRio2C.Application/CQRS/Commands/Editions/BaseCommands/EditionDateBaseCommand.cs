@@ -13,6 +13,7 @@
 // ***********************************************************************
 using System;
 using System.ComponentModel.DataAnnotations;
+using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
@@ -32,6 +33,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = nameof(MusicProjectSubmitEndDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [GreaterThanOrEqualTo(nameof(MusicProjectSubmitStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
         public DateTime? MusicProjectSubmitEndDate { get; set; }
 
         [Display(Name = nameof(MusicCommissionEvaluationStartDate), ResourceType = typeof(Labels))]
@@ -40,6 +42,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = nameof(MusicCommissionEvaluationEndDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [GreaterThanOrEqualTo(nameof(MusicCommissionEvaluationStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
         public DateTime? MusicCommissionEvaluationEndDate { get; set; }
 
         [Display(Name = nameof(MusicCommissionMaximumApprovedBandsCount), ResourceType = typeof(Labels))]
@@ -60,6 +63,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = nameof(InnovationProjectSubmitEndDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [GreaterThanOrEqualTo(nameof(InnovationProjectSubmitStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
         public DateTime? InnovationProjectSubmitEndDate { get; set; }
 
         [Display(Name = nameof(InnovationCommissionEvaluationStartDate), ResourceType = typeof(Labels))]
@@ -68,6 +72,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = nameof(InnovationCommissionEvaluationEndDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [GreaterThanOrEqualTo(nameof(InnovationCommissionEvaluationStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
         public DateTime? InnovationCommissionEvaluationEndDate { get; set; }
 
         [Display(Name = nameof(InnovationCommissionMaximumApprovedCompaniesCount), ResourceType = typeof(Labels))]
@@ -88,6 +93,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = nameof(AudiovisualCommissionEvaluationEndDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [GreaterThanOrEqualTo(nameof(AudiovisualCommissionEvaluationStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
         public DateTime? AudiovisualCommissionEvaluationEndDate { get; set; }
 
         [Display(Name = nameof(AudiovisualCommissionMaximumApprovedProjectsCount), ResourceType = typeof(Labels))]
@@ -108,6 +114,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = nameof(ProjectSubmitEndDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [GreaterThanOrEqualTo(nameof(ProjectSubmitStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
         public DateTime? ProjectSubmitEndDate { get; set; }
 
         [Display(Name = nameof(ProjectEvaluationStartDate), ResourceType = typeof(Labels))]
@@ -116,6 +123,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = nameof(ProjectEvaluationEndDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [GreaterThanOrEqualTo(nameof(ProjectEvaluationStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
         public DateTime? ProjectEvaluationEndDate { get; set; }
 
         [Display(Name = nameof(NegotiationStartDate), ResourceType = typeof(Labels))]
@@ -124,6 +132,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = nameof(NegotiationEndDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [GreaterThanOrEqualTo(nameof(NegotiationStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
         public DateTime? NegotiationEndDate { get; set; }
 
         [Display(Name = nameof(AudiovisualNegotiationsCreateStartDate), ResourceType = typeof(Labels))]
@@ -132,6 +141,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         [Display(Name = nameof(AudiovisualNegotiationsCreateEndDate), ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [GreaterThanOrEqualTo(nameof(AudiovisualNegotiationsCreateStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
         public DateTime? AudiovisualNegotiationsCreateEndDate { get; set; }
 
         [Display(Name = nameof(AttendeeOrganizationMaxSellProjectsCount), ResourceType = typeof(Labels))]

@@ -125,8 +125,6 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new ScriptBundle("~/bundles/js/layoutGlobalCustomized.js").Include(
                 "~/Assets/js/myrio2c.common.js",
-                "~/Assets/components/globalize/globalize.js",
-                "~/Assets/components/globalize/cultures/globalize.culture.pt-BR.js",
                 "~/Assets/components/jquery.form/jquery.form.js",
                 "~/Assets/components/hideshowpassword/hideShowPassword.js",
                 "~/Assets/js/myrio2c.showhidepassword.js",
@@ -164,14 +162,6 @@ namespace PlataformaRio2C.Web.Admin
                 "~/Assets/themes/metronic/vendors/general/chart.js/dist/Chart.bundle.js"));
 
             #endregion
-
-            //#region CKEditor
-
-            //bundles.Add(new ScriptBundle("~/bundles/js/ckEditor.js").Include(
-            //    "~/Scripts/ckeditor/ckeditor.js",
-            //    "~/Content/js/ckeditor_config.js"));
-
-            //#endregion
 
             #region Cropperjs
 
@@ -290,6 +280,16 @@ namespace PlataformaRio2C.Web.Admin
 
             bundles.Add(new StyleBundle("~/bundles/css/odometer.css")
                 .Include("~/Assets/components/odometer/themes/odometer-theme-car.css"));
+
+            #endregion
+
+            #region Globalize
+
+            bundles.Add(new ScriptBundle("~/bundles/js/globalize.js").Include(
+                "~/Assets/components/globalize/globalize.js",
+                "~/Assets/components/globalize/cultures/globalize.culture.pt-BR.js"
+                ,"~/Assets/components/globalize/cultures/globalize.culture.en-US.js"
+                ));
 
             #endregion
 
