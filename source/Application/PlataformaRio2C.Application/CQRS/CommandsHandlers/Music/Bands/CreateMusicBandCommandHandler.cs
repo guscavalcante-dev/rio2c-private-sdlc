@@ -112,6 +112,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                                     new MusicGenreApiDto()
                                                     {
                                                         Uid = mg.Uid,
+                                                        AdditionalInfo = mg.AdditionalInfo,
                                                         MusicGenre = musicGenreRepo.Get(mg.Uid)
                                                     }).ToList();
 
