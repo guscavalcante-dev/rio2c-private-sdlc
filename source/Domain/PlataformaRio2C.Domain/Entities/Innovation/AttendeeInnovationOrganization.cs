@@ -419,7 +419,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="additionalInfo">The additional information.</param>
         /// <param name="userId">The user identifier.</param>
         public void SynchronizeAttendeeInnovationOrganizationExperiences(
-            InnovationOrganizationExperienceOption innovationOrganizationExperienceOption, 
+            InnovationOrganizationExperienceOption innovationOrganizationExperienceOption,
             string additionalInfo,
             int userId)
         {
@@ -429,9 +429,9 @@ namespace PlataformaRio2C.Domain.Entities
             }
 
             this.AttendeeInnovationOrganizationExperiences.Add(new AttendeeInnovationOrganizationExperience(
-                this, 
-                innovationOrganizationExperienceOption, 
-                additionalInfo, 
+                this,
+                innovationOrganizationExperienceOption,
+                additionalInfo,
                 userId));
 
             this.UpdateDate = DateTime.UtcNow;
@@ -735,6 +735,11 @@ namespace PlataformaRio2C.Domain.Entities
         /// </summary>
         private void ValidateAttendeeInnovationOrganizationFounders()
         {
+            if (this.FindAllAttendeeInnovationOrganizationFoundersNotDeleted()?.GroupBy(aiof => aiof.Fullname)?.Any(g => g.Count() > 1) == true)
+            {
+                this.ValidationResult.Add(new ValidationError(Messages.FoundersNamesMustBeDistinct));
+            }
+
             foreach (var attendeeInnovationOrganizationFounder in this.FindAllAttendeeInnovationOrganizationFoundersNotDeleted()?.Where(aiof => !aiof.IsValid()))
             {
                 this.ValidationResult.Add(attendeeInnovationOrganizationFounder.ValidationResult);

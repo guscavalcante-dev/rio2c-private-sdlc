@@ -429,6 +429,9 @@
     <value>The file type must be {0}.</value>
     <comment>O arquivo deve ser do tipo {0}.</comment>
   </data>
+  <data name="FoundersNamesMustBeDistinct" xml:space="preserve">
+    <value>Founders' names must be distinct!</value>
+  </data>
   <data name="FundingPlan" xml:space="preserve">
     <value>Funding plan &lt;small&gt;(only for projects under development/production)&lt;/small&gt;</value>
     <comment>Plano de financiamento &lt;small&gt;(apenas projetos em desenvolvimento/produção)&lt;/small&gt;</comment>
@@ -947,6 +950,9 @@
   <data name="TheProjectsWillReceiveFinalGradeAtPeriodEnds" xml:space="preserve">
     <value>The projects will receive the final grade and approval status only at the period ends.</value>
     <comment>Os projetos receberão a nota final e o status de aprovação somente ao final desse período</comment>
+  </data>
+  <data name="ThereIsAlreadyFounderForStartup" xml:space="preserve">
+    <value>There is already a registered founder named {0} for this startup</value>
   </data>
   <data name="ThereIsalreadyProjectRegisteredWithThisTitle" xml:space="preserve">
     <value>There is already a project registered with this title!</value>

@@ -19,7 +19,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Messages {
@@ -821,6 +821,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string FileTypeMustBe {
             get {
                 return ResourceManager.GetString("FileTypeMustBe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nomes dos Fundadores devem ser distintos!.
+        /// </summary>
+        public static string FoundersNamesMustBeDistinct {
+            get {
+                return ResourceManager.GetString("FoundersNamesMustBeDistinct", resourceCulture);
             }
         }
         
@@ -2153,6 +2162,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string TheProjectsWillReceiveFinalGradeAtPeriodEnds {
             get {
                 return ResourceManager.GetString("TheProjectsWillReceiveFinalGradeAtPeriodEnds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Já existe um fundador cadastrado com o nome {0} para esta startup.
+        /// </summary>
+        public static string ThereIsAlreadyFounderForStartup {
+            get {
+                return ResourceManager.GetString("ThereIsAlreadyFounderForStartup", resourceCulture);
             }
         }
         
