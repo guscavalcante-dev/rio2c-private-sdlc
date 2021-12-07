@@ -25,6 +25,9 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonProperty("uid")]
         public Guid Uid { get; set; }
 
+        [JsonProperty("additionalInfo")]
+        public string AdditionalInfo { get; set; }
+
         [JsonIgnore]
         public MusicGenre MusicGenre { get; set; }
 

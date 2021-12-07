@@ -327,7 +327,7 @@ namespace PlataformaRio2C.Domain.Entities
 
             foreach (var musicGenre in musicGenreApiDtos)
             {
-                this.MusicBandGenres.Add(new MusicBandGenre(this, musicGenre.MusicGenre, null, userId));
+                this.MusicBandGenres.Add(new MusicBandGenre(this, musicGenre.MusicGenre, musicGenre.AdditionalInfo, userId));
             }
         }
 
