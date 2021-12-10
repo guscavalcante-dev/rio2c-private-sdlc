@@ -133,8 +133,7 @@ namespace PlataformaRio2C.Web.Admin.Services
 
             return Populate(x =>
             {
-                x.Subject = this.GetSubject(string.Format("Bem-vindo ao {0} | Welcome to {0}", cmd.Edition.Name), null);
-                //x.Subject = this.GetSubject(string.Format(Labels.WelcomeToEdition, cmd.EditionName));
+                x.Subject = this.GetSubject(string.Format("Complete seu cadastro na Comissão de Música do {0} | Complete your registration at {0} Music Commission", cmd.Edition.Name), null);
                 x.ViewName = "MusicCommissionWelcomeEmail";
                 x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
                 x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
@@ -163,7 +162,7 @@ namespace PlataformaRio2C.Web.Admin.Services
 
             return Populate(x =>
             {
-                x.Subject = this.GetSubject(string.Format("Bem-vindo ao {0} | Welcome to {0}", cmd.Edition.Name), null);
+                x.Subject = this.GetSubject(string.Format("Complete seu cadastro na Comissão de Inovação do {0} | Complete your registration at {0} Innovation Commission", cmd.Edition.Name), null);
                 x.ViewName = "InnovationCommissionWelcomeEmail";
                 x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
                 x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
@@ -192,7 +191,7 @@ namespace PlataformaRio2C.Web.Admin.Services
 
             return Populate(x =>
             {
-                x.Subject = this.GetSubject(string.Format("Bem-vindo ao {0} | Welcome to {0}", cmd.Edition.Name), null);
+                x.Subject = this.GetSubject(string.Format("Complete seu cadastro na Comissão Audiovisual do {0} | Complete your registration at {0} Audiovisual Commission", cmd.Edition.Name), null);
                 x.ViewName = "AudiovisualCommissionWelcomeEmail";
                 x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
                 x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
