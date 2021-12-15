@@ -260,7 +260,7 @@
     <value>All players</value>
   </data>
   <data name="AllRegistrationDocuments" xml:space="preserve">
-    <value>CPF / Vat Number / RG / Passaporte</value>
+    <value>CPF / Company registration number / RG / Passport</value>
     <comment>CPF / CNPJ / RG / Passaporte</comment>
   </data>
   <data name="Alter" xml:space="preserve">
@@ -488,7 +488,7 @@
     <value>Close</value>
   </data>
   <data name="CNPJ" xml:space="preserve">
-    <value>Company Number</value>
+    <value>Company registration number</value>
     <comment>CNPJ</comment>
   </data>
   <data name="Code" xml:space="preserve">
@@ -531,7 +531,7 @@
     <value>Company</value>
   </data>
   <data name="CompanyDocument" xml:space="preserve">
-    <value>Company number</value>
+    <value>Company registration number</value>
     <comment>CNPJ</comment>
   </data>
   <data name="CompanyInfo" xml:space="preserve">
