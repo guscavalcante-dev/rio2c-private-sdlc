@@ -493,7 +493,7 @@
     <value>Invalid code.</value>
   </data>
   <data name="InvalidCompanyNumber" xml:space="preserve">
-    <value>Invalid company number.</value>
+    <value>Invalid company registration number.</value>
     <comment>CNPJ inválido.</comment>
   </data>
   <data name="InvalidExtensionPng" xml:space="preserve">
@@ -994,8 +994,11 @@
     <value>{0} sent you a message</value>
     <comment>{0} enviou uma mensagem</comment>
   </data>
+  <data name="VatNumberIsInvalid" xml:space="preserve">
+    <value>Invalid company registration number</value>
+  </data>
   <data name="VatNumberIsRequired" xml:space="preserve">
-    <value>Vat number required.</value>
+    <value>Company registration number is required.</value>
   </data>
   <data name="WebSiteIsRequired" xml:space="preserve">
     <value>Website is required.</value>
