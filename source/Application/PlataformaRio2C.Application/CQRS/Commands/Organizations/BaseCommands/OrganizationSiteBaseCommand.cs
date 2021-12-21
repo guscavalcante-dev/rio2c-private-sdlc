@@ -71,8 +71,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(300, MinimumLength = 1, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string Youtube { get; set; }
 
-        [Display(Name = "AcceptsVirtualMeeting", ResourceType = typeof(Labels))]
-        //[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public bool IsVirtualMeetingRequired { get; set; }
+
+        [Display(Name = "MeetingType", ResourceType = typeof(Labels))]
+        [RadioButtonRequiredIf(nameof(IsVirtualMeetingRequired), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         public bool? IsVirtualMeeting { get; set; }
 
         public AddressBaseCommand Address { get; set; }
@@ -110,7 +112,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<TargetAudience> targetAudiences,
             bool isDescriptionRequired, 
             bool isAddressRequired, 
-            bool isImageRequired)
+            bool isImageRequired,
+            bool isVirtualMeetingRequired = true)
         {
             this.OrganizationUid = entity?.Uid;
             this.CompanyName = entity?.CompanyName;
@@ -131,6 +134,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.UpdateDropdownProperties(countriesBaseDtos, targetAudiences);
             this.UpdaterBaseDto = entity?.UpdaterDto;
             this.UpdateDate = entity?.UpdateDate;
+            this.IsVirtualMeetingRequired = isVirtualMeetingRequired;
         }
 
         /// <summary>Initializes a new instance of the <see cref="OrganizationSiteBaseCommand"/> class.</summary>

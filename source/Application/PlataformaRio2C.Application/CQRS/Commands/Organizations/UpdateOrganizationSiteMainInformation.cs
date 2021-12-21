@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -24,6 +25,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [Display(Name = "TradeName", ResourceType = typeof(Labels))]
         [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
         [StringLength(100, MinimumLength = 2, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
+
         public string TradeName { get; set; }
 
         /// <summary>
@@ -33,8 +35,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="languagesDtos">The languages dtos.</param>
         public UpdateOrganizationSiteMainInformation(
             AttendeeOrganizationMainInformationWidgetDto entity,
-            List<LanguageDto> languagesDtos)
-            : base(entity, languagesDtos, true, true, true, true)
+            List<LanguageDto> languagesDtos,
+            bool isVirtualMeetingRequired = true)
+            : base(entity, languagesDtos, true, true, true, true, isVirtualMeetingRequired)
         {
             this.TradeName = entity?.Organization?.TradeName;
         }
