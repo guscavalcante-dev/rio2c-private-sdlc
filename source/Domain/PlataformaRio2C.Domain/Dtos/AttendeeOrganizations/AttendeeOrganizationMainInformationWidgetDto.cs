@@ -26,6 +26,7 @@ namespace PlataformaRio2C.Domain.Dtos
         public Country Country { get; set; }
         public State State { get; set; }
         public bool? IsInCurrentEdition { get; set; }
+        public bool? IsVirtualMeeting { get; set; }
 
         public IEnumerable<OrganizationDescriptionBaseDto> DescriptionsDtos { get; set; }
 
