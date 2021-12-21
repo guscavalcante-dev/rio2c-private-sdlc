@@ -49,6 +49,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public Country Country { get; private set; }
 
+        public bool IsVirtualMeetingRequired { get; set; }
+
+        [Display(Name = "MeetingType", ResourceType = typeof(Labels))]
+        [RadioButtonRequiredIf(nameof(IsVirtualMeetingRequired), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public bool? IsVirtualMeeting { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateOrganizationMainInformationBaseCommand"/> class.
         /// </summary>
@@ -58,13 +64,15 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isCompanyDocumentRequired">if set to <c>true</c> [is company document required].</param>
         /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
+        /// <param name="isVirtualMeetingRequired">if set to <c>true</c> [is virtual meeting required].</param>
         public UpdateOrganizationMainInformationBaseCommand(
             AttendeeOrganizationMainInformationWidgetDto entity,
             List<LanguageDto> languagesDtos,
             bool isCompanyNameRequired,
             bool isCompanyDocumentRequired,
             bool isDescriptionRequired,
-            bool isImageRequired)
+            bool isImageRequired,
+            bool isVirtualMeetingRequired = true)
         {
             this.OrganizationUid = entity.Organization.Uid;
 
@@ -72,6 +80,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.CompanyName = entity?.Organization?.CompanyName;
             this.IsCompanyDocumentRequired = isCompanyDocumentRequired && entity?.Country?.IsCompanyNumberRequired == true;
             this.Document = entity?.Organization?.Document;
+
+            this.IsVirtualMeetingRequired = isVirtualMeetingRequired;
+            this.IsVirtualMeeting = entity?.IsVirtualMeeting;
 
             this.UpdateDescriptions(entity, languagesDtos, isDescriptionRequired);
             this.UpdateCropperImage(entity, isImageRequired);
