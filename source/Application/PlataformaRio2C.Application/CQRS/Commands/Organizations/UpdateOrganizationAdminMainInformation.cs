@@ -19,8 +19,6 @@ using Foolproof;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Entities;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
-using PlataformaRio2C.Infra.CrossCutting.Tools.Attributes;
-using Constants = PlataformaRio2C.Domain.Constants;
 
 namespace PlataformaRio2C.Application.CQRS.Commands
 {
@@ -46,12 +44,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         [StringLength(100, MinimumLength = 2, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyBetweenLengths")]
         public string TradeName { get; set; }
 
-        public bool IsVirtualMeetingRequired { get; set; }
-
-        [Display(Name = "MeetingType", ResourceType = typeof(Labels))]
-        [RadioButtonRequiredIf(nameof(IsVirtualMeetingRequired), "True", ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
-        public bool? IsVirtualMeeting { get; set; }
-
         public int[] ApiHighlightPositions = new[] { 1, 2, 3, 4, 5 };
 
         [Display(Name = "DisplayOnSite", ResourceType = typeof(Labels))]
@@ -75,7 +67,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             OrganizationType organizationType,
             List<HoldingBaseDto> holdingBaseDtos,
             List<LanguageDto> languagesDtos)
-            : base (entity, languagesDtos, false, false, false, false)
+            : base (entity, languagesDtos, false, false, false, false, false)
         {
             this.OrganizationTypeUid = organizationType?.Uid;
             this.OrganizationType = organizationType;
@@ -84,7 +76,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Name = entity?.Organization?.Name;
             this.TradeName = entity?.Organization?.TradeName;
             this.IsVirtualMeeting = entity?.AttendeeOrganization?.IsVirtualMeeting;
-            this.IsVirtualMeetingRequired = organizationType?.Uid == OrganizationType.Player.Uid;
 
             this.UpdateModelsAndLists(holdingBaseDtos);
             this.UpdateApiConfigurations(entity, organizationType);
