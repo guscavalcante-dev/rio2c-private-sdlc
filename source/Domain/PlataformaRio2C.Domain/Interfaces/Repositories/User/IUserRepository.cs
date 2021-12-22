@@ -24,6 +24,8 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<User> FindByIdAsync(int userId);
         Task<User> FindByUidAsync(Guid userUid);
         Task<User> FindByUserNameAsync(string userName);
+        Task<User> FindUserByEmailUidAsync(string userEmail, Guid uid);
+        Task<User> FindUserByEmailAsync(string userEmail);
         Task<UserDto> FindUserDtoByUserIdAsync(int userId);
         AdminAccessControlDto FindAdminAccessControlDtoByUserIdAndByEditionId(int userId, int editionId);
         UserAccessControlDto FindUserAccessControlDtoByUserIdAndByEditionId(int userId, int editionId);
