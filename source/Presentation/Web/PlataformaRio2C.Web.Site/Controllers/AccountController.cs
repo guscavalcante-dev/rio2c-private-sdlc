@@ -124,26 +124,20 @@ namespace PlataformaRio2C.Web.Site.Controllers
                 return View(model);
             }
 
-            var user = AsyncHelpers.RunSync<ApplicationUser>(() => _identityController.FindByEmailAsync(model.Email));
+            var user = await this.userRepo.FindUserByEmailAsync(model.Email);
+
             if (user == null)
             {
                 this.SignOut();
                 ModelState.AddModelError("", Messages.LoginOrPasswordIsIncorrect);
                 return View(model);
-            }
+            } 
 
             var result = await _identityController.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, true);
             switch (result)
             {
                 case IdentitySignInStatus.Success:
                     {
-                        if (user.IsDeleted || !user.Active)
-                        {
-                            this.SignOut();
-                            ModelState.AddModelError("", Messages.AccessDenied);
-                            return View(model);
-                        }
-
                         // Check if user has any role
                         var userRoles = await this._identityController.FindAllRolesByUserIdAsync(user.Id);
                         if (userRoles?.Any() != true)
@@ -475,16 +469,12 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     return RedirectToAction("Forbidden", "Error");
                 }
 
-                var user = await this._identityController.FindByEmailAsync(email);
-                if (user == null || email != user.Email || uid.Value != user.Uid || token != user.SecurityStamp)
+                var user = await this.userRepo.FindUserByEmailUidAsync(email, uid.Value);
+                
+                if (user == null || token != user.SecurityStamp) 
                 {
                     return RedirectToAction("Forbidden", "Error");
-                }
-
-                if (user.IsDeleted || !user.Active)
-                {
-                    return RedirectToAction("Forbidden", "Error");
-                }
+                }              
 
                 // Check if user has any role
                 var userRoles = await this._identityController.FindAllRolesByUserIdAsync(user.Id);
@@ -493,7 +483,14 @@ namespace PlataformaRio2C.Web.Site.Controllers
                     return RedirectToAction("Forbidden", "Error");
                 }
 
-                await _identityController.SignInAsync(this.authenticationManager, user, true);
+                var userApplication = await this._identityController.FindByIdAsync(user.Id);
+
+                if(userApplication == null)
+                {
+                    return RedirectToAction("Forbidden", "Error");
+                }
+
+                await _identityController.SignInAsync(this.authenticationManager, userApplication, true);
 
                 //if (!await _identityController.IsInRoleAsync(user.Id, Domain.Statics.Role.User.Name) &&
                 //    !await _identityController.IsInRoleAsync(user.Id, Domain.Statics.Role.Admin.Name))

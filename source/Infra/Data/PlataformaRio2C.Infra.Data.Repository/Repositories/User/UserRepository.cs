@@ -134,6 +134,25 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                 .FirstOrDefaultAsync();
         }
 
+        /// <summary>Finds the user dto by user e-mail and uid asynchronous.</summary>
+        /// <param name="userEmail">The userEmai.</param>
+        /// <param name="uid">The uid.</param>
+        /// <returns></returns>
+        public async Task<User> FindUserByEmailUidAsync(string userEmail, Guid uid)
+        {
+            var query = this.GetBaseQuery();
+            return await query.Where(x => x.Email.Equals(userEmail) && x.Uid.Equals(uid) && !x.IsDeleted && x.Active).FirstOrDefaultAsync();
+        }
+
+        /// <summary>Finds the user dto by user e-mail asynchronous.</summary>
+        /// <param name="userEmail">The userEmail.</param>
+        /// <returns></returns>
+        public async Task<User> FindUserByEmailAsync(string userEmail)
+        {
+            var query = this.GetBaseQuery();
+            return await query.Where(x => x.Email.Equals(userEmail) && !x.IsDeleted && x.Active).FirstOrDefaultAsync();
+        }
+
         /// <summary>Finds the user dto by user identifier asynchronous.</summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
