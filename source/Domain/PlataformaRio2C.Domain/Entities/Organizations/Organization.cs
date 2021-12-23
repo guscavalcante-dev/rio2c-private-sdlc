@@ -449,7 +449,8 @@ namespace PlataformaRio2C.Domain.Entities
             bool isImageUploaded,
             bool isImageDeleted,
             List<OrganizationDescription> organizationDescriptions,
-            int userId)
+            int userId,
+            bool? isVirtualMeeting)
         {
             this.CompanyName = companyName?.Trim();
             this.TradeName = tradeName?.Trim();
@@ -459,7 +460,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.UpdateUserId = userId;
             this.SynchronizeOrganizationDescriptions(organizationDescriptions, userId);
 
-            //this.SynchronizeAttendeeOrganizations(edition, null, null, null, null, false, null, userId);
+            this.SynchronizeAttendeeOrganizations(edition, null, null, null, null, false, isVirtualMeeting, userId);
         }
 
         /// <summary>Updates the social networks.</summary>

@@ -34,6 +34,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="isDescriptionRequired">if set to <c>true</c> [is description required].</param>
         /// <param name="isAddressRequired">if set to <c>true</c> [is address required].</param>
         /// <param name="isImageRequired">if set to <c>true</c> [is image required].</param>
+        /// <param name="isVirtualMeetingRequired">if set to <c>true</c> [is virtual meeting required].</param>
         public OnboardPlayerOrganizationData(
             OrganizationDto entity, 
             List<LanguageDto> languagesDtos, 
@@ -42,8 +43,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<TargetAudience> targetAudiences,
             bool isDescriptionRequired, 
             bool isAddressRequired, 
-            bool isImageRequired)
-            : base(entity, languagesDtos, countriesBaseDtos, activities, targetAudiences, isDescriptionRequired, isAddressRequired, isImageRequired)
+            bool isImageRequired,
+            bool isVirtualMeetingRequired = true)
+            : base(entity, languagesDtos, countriesBaseDtos, activities, targetAudiences, isDescriptionRequired, isAddressRequired, isImageRequired, isVirtualMeetingRequired)
         {
         }
 

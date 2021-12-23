@@ -76,12 +76,42 @@
                                         </div>
                                     </div>
                                     <div class="kt-section">
+                                        <h3 class="kt-heading kt-heading--md">@Labels.OneToOneMeetingConfiguration</h3>
+                                        <div class="kt-section__content">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    @Html.HiddenFor(m => m.IsVirtualMeetingRequired)
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            @Html.LabelFor(m => m.IsVirtualMeeting, new { @class = "control-label" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group col-12 mb-0">
+                                                            <div class="kt-radio-list ml-3" data-id="IsVirtualMeeting">
+                                                                <label class="kt-radio">
+                                                                    @Html.RadioButtonFor(m => m.IsVirtualMeeting, true) @Labels.Virtual
+                                                                    <span></span>
+                                                                </label>
+                                                                <label class="kt-radio">
+                                                                    @Html.RadioButtonFor(m => m.IsVirtualMeeting, false) @Labels.Presential
+                                                                    <span></span>
+                                                                </label>
+                                                                @Html.ValidationMessageFor(m => m.IsVirtualMeeting, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="kt-section">
                                         <h3 class="kt-heading kt-heading--md">@Labels.SocialNetworks</h3>
                                         <div class="kt-section__content mt-3">
                                             <div class="row">
                                                 <div class="form-group col-xl-6">
                                                     @Html.LabelFor(m => m.Website, new { @class = "control-label" }) <span class="form-optional-input text-muted">@Labels.Optional</span>
-                                                    @Html.TextBoxFor(m => m.Website, new { @class = "form-control" }) 
+                                                    @Html.TextBoxFor(m => m.Website, new { @class = "form-control" })
                                                     <span class="form-text text-muted">@Messages.WebsiteUrl</span>
                                                     <span class="form-text text-muted">@Labels.Eg: site.com @Labels.Or www.site.com</span>
                                                     @Html.ValidationMessageFor(m => m.Website, "", new { @class = "text-danger" })
@@ -163,10 +193,10 @@
                                                                        value="@targetAudience.Uid"
                                                                        class="require-one"
                                                                        data-id="targetaudience-group"
-                                                                       @if (Model.TargetAudiencesUids?.Contains(targetAudience.Uid) == true) { <text> checked </text>  } /> @targetAudience.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')
-                                                                <span></span>
-                                                            </label>
-                                                        }
+                                                                       @if (Model.TargetAudiencesUids?.Contains(targetAudience.Uid) == true) { <text> checked </text> } /> @targetAudience.Name.GetSeparatorTranslation(CultureInfo.CurrentCulture.ToString(), '|')
+                                                                    <span></span>
+                                                                </label>
+                                                            }
                                                     </div>
                                                 </div>
                                             </div>
