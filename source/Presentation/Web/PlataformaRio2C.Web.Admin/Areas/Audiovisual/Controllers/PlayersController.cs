@@ -250,7 +250,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Audiovisual.Controllers
                 false,
                 false,
                 false,
-                false);
+                true);
 
             return Json(new
             {
