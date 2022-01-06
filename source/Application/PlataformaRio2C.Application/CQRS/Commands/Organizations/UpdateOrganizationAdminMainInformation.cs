@@ -67,7 +67,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             OrganizationType organizationType,
             List<HoldingBaseDto> holdingBaseDtos,
             List<LanguageDto> languagesDtos)
-            : base (entity, languagesDtos, false, false, false, false, false)
+            : base (entity, languagesDtos, false, false, false, false, true)
         {
             this.OrganizationTypeUid = organizationType?.Uid;
             this.OrganizationType = organizationType;
