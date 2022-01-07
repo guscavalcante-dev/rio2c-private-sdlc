@@ -463,7 +463,8 @@ namespace PlataformaRio2C.Web.Admin.Controllers
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
 
-            ViewBag.CollaboratorTypeName = collaboratorTypeName;
+            ViewBag.CollaboratorTypeUid = collaboratorType.Uid;
+
 
             return Json(new
             {
