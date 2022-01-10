@@ -33,25 +33,45 @@ namespace PlataformaRio2C.Domain.Dtos
 
         #region Required
 
+        /*
+         * MANGO | DADOS DO EMPREENDIMENTO -> Nome da Startup * 
+         * FORM REQUESTED | 1.	Identificação do Participante: |  Nome ou nome da Empresa*; 
+         */
         [JsonRequired]
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string Name { get; set; } //todoremove OK_FORM_REQUESTED
 
+        /*
+        * MANGO | DADOS DO EMPREENDIMENTO -> CNPJ  * 
+        * FORM REQUESTED | 1.	Identificação do Participante: | CPF ou CNPJ*; 
+        */
         [JsonRequired]
         [JsonProperty("document")]
-        public string Document { get; set; }
+        public string Document { get; set; } //todoremove OK_FORM_REQUESTED
 
+        /*
+        * MANGO | DADOS DO EMPREENDIMENTO -> Razão Social * 
+        * FORM REQUESTED | NOT_FOUND
+        */
         [JsonRequired]
         [JsonProperty("serviceName")]
-        public string ServiceName { get; set; }
+        public string ServiceName { get; set; } //todoremove NOT_OK_FORM_REQUESTED
 
+        /*
+        * MANGO | DADOS DO EMPREENDIMENTO -> Responsável  * 
+        * FORM REQUESTED | 1.	Identificação do Participante: | Nome do Representante*; 
+        */
         [JsonRequired]
         [JsonProperty("responsibleName")]
-        public string ResponsibleName { get; set; }
+        public string ResponsibleName { get; set; } //todoremove OK_FORM_REQUESTED
 
+        /*
+        * MANGO | DADOS DO EMPREENDIMENTO -> Vídeo de Apresentação
+        * FORM REQUESTED | NOT_FOUND
+        */
         [JsonRequired]
         [JsonProperty("videoUrl")]
-        public string VideoUrl { get; set; }
+        public string VideoUrl { get; set; } //todoremove NOT_OK_FORM_REQUESTED
 
         [JsonRequired]
         [JsonProperty("email")]
@@ -65,14 +85,26 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonProperty("cellPhone")]
         public string CellPhone { get; set; }
 
+        /*
+        * MANGO | DADOS DO EMPREENDIMENTO -> Data de Fundação * 
+        * FORM REQUESTED | NOT_FOUND
+        */
         [JsonRequired]
         [JsonProperty("foundationDate")]
         public DateTime FoundationDate { get; set; }
 
+        /*
+       * MANGO | INFORMAÇÕES ADICIONAIS -> Receita Acumulada *
+       * FORM REQUESTED | 2.	Produto ou Serviço: | Faturamento acumulado dos últimos 3 meses (em reais R$) *; 
+       */
         [JsonRequired]
         [JsonProperty("accumulatedRevenue")]
         public decimal AccumulatedRevenue { get; set; }
 
+        /*
+        * MANGO | INFORMAÇÕES ADICIONAIS -> Descrição sobre a Startup *
+        * FORM REQUESTED | 2.	Produto ou Serviço: | Descreva sua startup em uma sentença (no máximo até 600 caracteres com espaço)*;
+        */
         [JsonRequired]
         [JsonProperty("description")]
         public string Description { get; set; }
@@ -81,6 +113,10 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonProperty("businessDefinition")]
         public string BusinessDefinition { get; set; }
 
+        /*
+        * MANGO | INFORMAÇÕES ADICIONAIS -> Foco do Neǵocio * // ESCRITO ERRADO
+        * FORM REQUESTED | 2.	Produto ou Serviço: | Especificação do foco principal do negócio (que problema resolve)*;
+        */
         [JsonRequired]
         [JsonProperty("businessFocus")]
         public string BusinessFocus { get; set; }
@@ -93,14 +129,22 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonProperty("businessStage")]
         public string BusinessStage { get; set; }
 
+        /*
+        * MANGO | DADOS DO EMPREENDIMENTO -> Logo da Startup * 
+        * FORM REQUESTED | NOT_FOUND
+        */
         /// <summary>
         /// Don't remove order. This is for JSON beauty design. 
         /// Should be aligned at end of JSON.
         /// </summary>
         [JsonRequired]
         [JsonProperty("imageFile", Order = 98)]
-        public string ImageFile { get; set; }
+        public string ImageFile { get; set; } //todoremove NOT_OK_FORM_REQUESTED
 
+        /*
+        * MANGO | DADOS DO EMPREENDIMENTO -> Apresentação da Empresa * 
+        * FORM REQUESTED | NOT_FOUND
+        */
         /// <summary>
         /// Don't remove order. This is for JSON beauty design. 
         /// Should be aligned at end of JSON.
@@ -135,7 +179,12 @@ namespace PlataformaRio2C.Domain.Dtos
         #endregion
 
         #region Lists
-
+        /*
+        * MANGO | FUNDADORES
+        * MANGO | FUNDADORES -> Nome  * 
+        * MANGO | FUNDADORES -> Currículo  * 
+        * MANGO | FUNDADORES -> Tempo de Dedicação *
+        */
         [JsonRequired]
         [JsonProperty("founders")]
         public List<AttendeeInnovationOrganizationFounderApiDto> AttendeeInnovationOrganizationFounderApiDtos { get; set; }
@@ -144,6 +193,11 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonProperty("competingCompanies")]
         public List<AttendeeInnovationOrganizationCompetitorApiDto> AttendeeInnovationOrganizationCompetitorApiDtos { get; set; }
 
+        /*
+        * MANGO | INFORMACAO ADICIONAIS -> Experiencias da organização
+        * Options in DataBase: select * from InnovationOrganizationExperienceOptions;
+        * FORM REQUESTED | 2.	Produto ou Serviço: | Quais dessas experiências a empresa já participou? (pode marcar mais de uma opção)
+        */
         [JsonRequired]
         [JsonProperty("companyExperiences")]
         public List<InnovationOrganizationExperienceOptionApiDto> InnovationOrganizationExperienceOptionApiDtos { get; set; }
@@ -152,6 +206,11 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonProperty("tracks")]
         public List<InnovationOrganizationTrackOptionApiDto> InnovationOrganizationTrackOptionApiDtos { get; set; }
 
+        /*
+        * MANGO | INFORMACAO ADICIONAIS -> Tecnologias da Organização
+        * Options in DataBase: select * from InnovationOrganizationTechnologyOptions;
+        * FORM REQUESTED | 2.	Produto ou Serviço: | Tecnologia usadas: (pode marcar mais de uma opção)
+        */
         [JsonRequired]
         [JsonProperty("technologyExperiences")]
         public List<InnovationOrganizationTechnologyOptionApiDto> InnovationOrganizationTechnologyOptionApiDtos { get; set; }

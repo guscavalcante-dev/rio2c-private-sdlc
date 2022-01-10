@@ -23,17 +23,29 @@ namespace PlataformaRio2C.Domain.Dtos
     /// <summary>AttendeeInnovationOrganizationFounderApiDto</summary>
     public class AttendeeInnovationOrganizationFounderApiDto
     {
+        /*
+        * MANGO | FUNDADORES -> Nome  * 
+        * FORM REQUESTED | 1.	Identificação do Participante: | Nome dos fundadores*; 
+        */
         [JsonRequired]
         [JsonProperty("fullName")]
-        public string FullName { get; set; }
+        public string FullName { get; set; } //todoremove OK
 
+        /*
+        * MANGO | FUNDADORES -> Currículo  * 
+        * FORM REQUESTED | 1.	Identificação do Participante: | Curriculum * (no máximo até 700 caracteres com espaço)
+        */
         [JsonRequired]
         [JsonProperty("curriculum")]
-        public string Curriculum { get; set; }
+        public string Curriculum { get; set; } //todoremove OK
 
+        /*
+        * MANGO | FUNDADORES -> Tempo de Dedicação *
+        * FORM REQUESTED | 1.	Identificação do Participante: | Dedicação * (pode marcar apenas um)
+        */
         [JsonRequired]
         [JsonProperty("workDedicationUid")]
-        public Guid WorkDedicationUid { get; set; }
+        public Guid WorkDedicationUid { get; set; } //todoremove OK
 
         [JsonIgnore]
         public AttendeeInnovationOrganizationFounder AttendeeInnovationOrganizationFounder { get; set; }
