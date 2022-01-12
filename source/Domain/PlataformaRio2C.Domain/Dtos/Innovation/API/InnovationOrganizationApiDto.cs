@@ -71,23 +71,37 @@ namespace PlataformaRio2C.Domain.Dtos
         */
         [JsonRequired]
         [JsonProperty("videoUrl")]
-        public string VideoUrl { get; set; } //todoremove NOT_OK_FORM_REQUESTED
+        public string VideoUrl { get; set; }
 
+        /*
+        * MANGO | DADOS DE CONTATO -> E-mail  * 
+        * FORM REQUESTED | 1.	Identificação do Participante: | E-mail e telefone de contato*; 
+        */
         [JsonRequired]
         [JsonProperty("email")]
         public string Email { get; set; }
 
+        /*
+        * MANGO | DADOS DE CONTATO -> Telefone * 
+        * FORM REQUESTED | 1.	Identificação do Participante: | E-mail e telefone de contato*;
+        * OBS: No Mango não está como obrigatório
+        */
         [JsonRequired]
         [JsonProperty("phoneNumber")]
         public string PhoneNumber { get; set; }
 
+        /*
+        * MANGO | DADOS DE CONTATO -> Celular * 
+        * FORM REQUESTED | 1.	Identificação do Participante: | E-mail e telefone de contato*;
+        * OBS: No Mango não está como obrigatório
+        */
         [JsonRequired]
         [JsonProperty("cellPhone")]
         public string CellPhone { get; set; }
 
         /*
-        * MANGO | DADOS DO EMPREENDIMENTO -> Data de Fundação * 
-        * FORM REQUESTED | NOT_FOUND
+        * MANGO | FUNDADORES -> Data de Fundação * 
+        * FORM REQUESTED | 6)	Deseja participar para Rodadas de Negócios? * Se a resposta for sim, abrir as perguntas abaixo: a)	Ano de Fundação da empresa*;
         */
         [JsonRequired]
         [JsonProperty("foundationDate")]
@@ -121,10 +135,18 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonProperty("businessFocus")]
         public string BusinessFocus { get; set; }
 
+        /*
+        * MANGO | INFORMAÇÕES ADICIONAIS -> Diferenciais do Negócio *
+        * FORM REQUESTED | 2.	Produto ou Serviço: | Quais os diferenciais do negócio (qual a solução e impactos gerados)*;
+        */
         [JsonRequired]
         [JsonProperty("businessDifferentials")]
         public string BusinessDifferentials { get; set; }
 
+        /*
+       * MANGO | INFORMAÇÕES ADICIONAIS -> Estágio do Negócio *
+       * FORM REQUESTED | 2.	Produto ou Serviço: | Especificação do estágio em que negócio se encontra*
+       */
         [JsonRequired]
         [JsonProperty("businessStage")]
         public string BusinessStage { get; set; }
@@ -143,7 +165,7 @@ namespace PlataformaRio2C.Domain.Dtos
 
         /*
         * MANGO | DADOS DO EMPREENDIMENTO -> Apresentação da Empresa * 
-        * FORM REQUESTED | NOT_FOUND
+        * FORM REQUESTED | 2.	Produto ou Serviço: | n)	Pitch deck - apresentação em slides (Só serão aceitos materiais em formato pdf)*;
         */
         /// <summary>
         /// Don't remove order. This is for JSON beauty design. 
@@ -157,15 +179,31 @@ namespace PlataformaRio2C.Domain.Dtos
 
         #region Not required
 
+        /*
+        * MANGO | DADOS DE CONTATO -> Website
+        * FORM REQUESTED | 2.	Produto ou Serviço: | Site do negócio (se houver);
+        */
         [JsonProperty("website")]
         public string Website { get; set; }
 
+        /*
+        * MANGO | INFORMAÇÕES ADICIONAIS -> Tamanho de Mercado *
+        * FORM REQUESTED | 2.	Produto ou Serviço: | Especificação do impacto do negócio (tamanho do mercado)*;
+        */
         [JsonProperty("marketSize")]
         public string MarketSize { get; set; }
 
+        /*
+        * MANGO | INFORMAÇÕES ADICIONAIS -> Modelo Economico * // ESCRITO ERRADO E ESTA COMO OBRIGATÓRIO NO MANGO
+        * FORM REQUESTED | 2.	Produto ou Serviço: | Especificação do impacto do negócio (tamanho do mercado)*;
+        */
         [JsonProperty("businessEconomicModel")]
         public string BusinessEconomicModel { get; set; }
 
+        /*
+        * MANGO | INFORMAÇÕES ADICIONAIS -> Modelo Operacional * // ESTA COMO OBRIGATÓRIO NO MANGO
+        * FORM REQUESTED | 2.	Produto ou Serviço: | Especificação do impacto do negócio (tamanho do mercado)*;
+        */
         [JsonProperty("businessOperationalModel")]
         public string BusinessOperationalModel { get; set; }
 
@@ -189,6 +227,10 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonProperty("founders")]
         public List<AttendeeInnovationOrganizationFounderApiDto> AttendeeInnovationOrganizationFounderApiDtos { get; set; }
 
+        /*
+        * MANGO | PRINCIPAIS CONCORRENTES NO MERCADO -> Nome *
+        * FORM REQUESTED | 2.	Produto ou Serviço: | Quem são seus concorrentes? Cite até 3*;
+        */
         [JsonRequired]
         [JsonProperty("competingCompanies")]
         public List<AttendeeInnovationOrganizationCompetitorApiDto> AttendeeInnovationOrganizationCompetitorApiDtos { get; set; }
@@ -202,6 +244,12 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonProperty("companyExperiences")]
         public List<InnovationOrganizationExperienceOptionApiDto> InnovationOrganizationExperienceOptionApiDtos { get; set; }
 
+        /*
+        * MANGO | INFORMACAO ADICIONAIS -> Trilhas da organização
+        * Options in DataBase: select * from InnovationOrganizationTrackOptions;
+        * FORM REQUESTED | 3)	Enquadre seu produto ou serviço num track abaixo*:
+        * OBS: No Mango não está como obrigatório
+        */
         [JsonRequired]
         [JsonProperty("tracks")]
         public List<InnovationOrganizationTrackOptionApiDto> InnovationOrganizationTrackOptionApiDtos { get; set; }
@@ -215,6 +263,11 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonProperty("technologyExperiences")]
         public List<InnovationOrganizationTechnologyOptionApiDto> InnovationOrganizationTechnologyOptionApiDtos { get; set; }
 
+        /*
+        * MANGO | INFORMACAO ADICIONAIS -> Objetivos da Organização
+        * Options in DataBase: select * from InnovationOrganizationObjectivesOptions;
+        * FORM REQUESTED | 5)	Qual o seu principal objetivo em participar do Pitching? (pode marcar mais de uma opção)
+        */
         [JsonRequired]
         [JsonProperty("companyObjectives")]
         public List<InnovationOrganizationObjectivesOptionApiDto> InnovationOrganizationObjectivesOptionApiDtos { get; set; }
