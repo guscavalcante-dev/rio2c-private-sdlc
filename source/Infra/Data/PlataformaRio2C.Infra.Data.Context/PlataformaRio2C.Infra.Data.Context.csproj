@@ -119,6 +119,8 @@
     <Compile Include="Mapping\Innovation\AttendeeInnovationOrganizationMap.cs" />
     <Compile Include="Mapping\Innovation\AttendeeInnovationOrganizationCollaboratorMap.cs" />
     <Compile Include="Mapping\Innovation\InnovationOrganizationObjectivesOptionMap.cs" />
+    <Compile Include="Mapping\Innovation\AttendeeInnovationOrganizationSustainableDevelopmentObjectiveMap.cs" />
+    <Compile Include="Mapping\Innovation\InnovationOrganizationSustainableDevelopmentObjectivesOptionMap.cs" />
     <Compile Include="Mapping\Innovation\InnovationOrganizationTrackOptionMap.cs" />
     <Compile Include="Mapping\Innovation\InnovationOrganizationExperienceOptionMap.cs" />
     <Compile Include="Mapping\Innovation\InnovationOrganizationTechnologyOptionMap.cs" />

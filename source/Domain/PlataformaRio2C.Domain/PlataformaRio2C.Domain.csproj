@@ -334,10 +334,12 @@
     <Compile Include="Entities\Editions\EditionEvent.cs" />
     <Compile Include="Entities\Innovation\AttendeeInnovationOrganizationObjective.cs" />
     <Compile Include="Entities\Innovation\AttendeeCollaboratorInnovationOrganizationTrack.cs" />
+    <Compile Include="Entities\Innovation\AttendeeInnovationOrganizationSustainableDevelopmentObjective.cs" />
     <Compile Include="Entities\Innovation\InnovationOrganizationObjectivesOption.cs" />
     <Compile Include="Entities\Innovation\AttendeeInnovationOrganizationTechnology.cs" />
     <Compile Include="Entities\Innovation\InnovationOrganizationTechnologyOption.cs" />
     <Compile Include="Entities\Innovation\AttendeeInnovationOrganizationTrack.cs" />
+    <Compile Include="Entities\Innovation\InnovationOrganizationSustainableDevelopmentObjectivesOption.cs" />
     <Compile Include="Entities\Innovation\InnovationOrganizationTrackOption.cs" />
     <Compile Include="Entities\Innovation\AttendeeInnovationOrganizationEvaluation.cs" />
     <Compile Include="Entities\Innovation\AttendeeInnovationOrganizationCollaborator.cs" />
@@ -444,6 +446,7 @@
     <Compile Include="Interfaces\Repositories\Addresses\IStateRepository.cs" />
     <Compile Include="Interfaces\Repositories\Editions\IEditionEventRepository.cs" />
     <Compile Include="Interfaces\Repositories\Innovation\IAttendeeInnovationOrganizationRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Innovation\IInnovationOrganizationSustainableDevelopmentObjectivesOptionRepository.cs" />
     <Compile Include="Interfaces\Repositories\Innovation\IInnovationOrganizationObjectivesOptionRepository.cs" />
     <Compile Include="Interfaces\Repositories\Innovation\IInnovationOrganizationTechnologyOptionRepository.cs" />
     <Compile Include="Interfaces\Repositories\Innovation\IInnovationOrganizationTrackOptionRepository.cs" />
