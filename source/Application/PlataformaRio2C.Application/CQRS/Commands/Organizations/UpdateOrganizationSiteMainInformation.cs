@@ -35,9 +35,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="languagesDtos">The languages dtos.</param>
         public UpdateOrganizationSiteMainInformation(
             AttendeeOrganizationMainInformationWidgetDto entity,
-            List<LanguageDto> languagesDtos,
-            bool isVirtualMeetingRequired = true)
-            : base(entity, languagesDtos, true, true, true, true, isVirtualMeetingRequired)
+            List<LanguageDto> languagesDtos)
+            : base(entity, languagesDtos, true, true, true, true)
         {
             this.TradeName = entity?.Organization?.TradeName;
         }
