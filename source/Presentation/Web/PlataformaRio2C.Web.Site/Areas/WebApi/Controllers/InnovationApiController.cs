@@ -46,6 +46,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         private readonly IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepo;
         private readonly IInnovationOrganizationTechnologyOptionRepository innovationOrganizationTechnologyOptionRepo;
         private readonly IInnovationOrganizationObjectivesOptionRepository innovationOrganizationObjectivesOptionRepo;
+        private readonly IInnovationOrganizationSustainableDevelopmentObjectivesOptionRepository innovationOrganizationSustainableDevelopmentObjectivesOptionRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InnovationApiController"/> class.
@@ -59,6 +60,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <param name="innovationOrganizationTrackOptionRepository">The innovation organization track option repository.</param>
         /// <param name="innovationOrganizationTechnologyOptionRepository">The innovation organization technology option repository.</param>
         /// <param name="innovationOrganizationObjectivesOptionRepository">The innovation organization objectives option repository.</param>
+        /// <param name="innovationOrganizationSustainableDevelopmentObjectivesOptionRepository">The innovation organization sustainable development objectives option repository.</param>
         public InnovationApiController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
@@ -68,7 +70,10 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             IInnovationOrganizationExperienceOptionRepository innovationOrganizationExperienceOptionRepository,
             IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepository,
             IInnovationOrganizationTechnologyOptionRepository innovationOrganizationTechnologyOptionRepository,
-            IInnovationOrganizationObjectivesOptionRepository innovationOrganizationObjectivesOptionRepository)
+            IInnovationOrganizationObjectivesOptionRepository innovationOrganizationObjectivesOptionRepository,
+            IInnovationOrganizationSustainableDevelopmentObjectivesOptionRepository innovationOrganizationSustainableDevelopmentObjectivesOptionRepository
+
+            )
         {
             this.commandBus = commandBus;
             this.identityController = identityController;
@@ -79,6 +84,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             this.innovationOrganizationTrackOptionRepo = innovationOrganizationTrackOptionRepository;
             this.innovationOrganizationTechnologyOptionRepo = innovationOrganizationTechnologyOptionRepository;
             this.innovationOrganizationObjectivesOptionRepo = innovationOrganizationObjectivesOptionRepository;
+            this.innovationOrganizationSustainableDevelopmentObjectivesOptionRepository = innovationOrganizationSustainableDevelopmentObjectivesOptionRepository;
         }
 
         /// <summary>
@@ -239,6 +245,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 var innovationOrganizationExperienceOptions = await this.innovationOrganizationExperienceOptionRepo.FindAllAsync();
                 var innovationOrganizationTechnologyOptions = await this.innovationOrganizationTechnologyOptionRepo.FindAllAsync();
                 var innovationOrganizationObjectivesOptions = await this.innovationOrganizationObjectivesOptionRepo.FindAllAsync();
+                var innovationOrganizationSustainableDevelopmentObjectivesOptions = await this.innovationOrganizationSustainableDevelopmentObjectivesOptionRepository.FindAllAsync();
                 var innovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllAsync();
                 var workDedications = await this.workDedicationRepo.FindAllAsync();
 
@@ -260,6 +267,14 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     {
                         Uid = iooo.Uid,
                         Name = iooo.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
+                    })?.ToList(),
+
+                    InnovationOrganizationSustainableDevelopmentObjectivesOptions = innovationOrganizationSustainableDevelopmentObjectivesOptions.Select(iooo => new InnovationOrganizationSustainableDevelopmentObjectivesOptionListItemApiResponse()
+                    {
+                        Uid = iooo.Uid,
+                        Name = iooo.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code),
+                        Description = iooo.GetDesctiptionTranslation(requestLanguage?.Code ?? defaultLanguage?.Code),
+                        DisplayOrder = iooo.DisplayOrder
                     })?.ToList(),
 
                     InnovationOrganizationTrackOptions = innovationOrganizationTrackOptions.Select(ioto => new InnovationOrganizationTrackOptionListItemApiResponse()

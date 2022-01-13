@@ -94,6 +94,7 @@
     <Compile Include="ApiModels\Innovation\Requests\InnovationFiltersApiRequest.cs" />
     <Compile Include="ApiModels\ApiListItemBaseResponse.cs" />
     <Compile Include="ApiModels\Innovation\Responses\InnovationFiltersApiResponse.cs" />
+    <Compile Include="ApiModels\Innovation\Responses\InnovationOrganizationSustainableDevelopmentObjectivesOptionListItemApiResponse.cs" />
     <Compile Include="ApiModels\Innovation\Responses\InnovationOrganizationTrackOptionListItemApiResponse.cs" />
     <Compile Include="ApiModels\LanguageValueApiResponse.cs" />
     <Compile Include="ApiModels\MusicBands\Requests\MusicFiltersApiRequest.cs" />
