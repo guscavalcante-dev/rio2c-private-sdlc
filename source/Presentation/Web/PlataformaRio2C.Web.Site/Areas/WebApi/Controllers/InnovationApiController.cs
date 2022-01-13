@@ -162,7 +162,9 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     innovationOrganizationApiDto.InnovationOrganizationExperienceOptionApiDtos,
                     innovationOrganizationApiDto.InnovationOrganizationTrackOptionApiDtos,
                     innovationOrganizationApiDto.InnovationOrganizationObjectivesOptionApiDtos,
-                    innovationOrganizationApiDto.InnovationOrganizationTechnologyOptionApiDtos);
+                    innovationOrganizationApiDto.InnovationOrganizationTechnologyOptionApiDtos,
+                    innovationOrganizationApiDto.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos
+                    );
 
                 cmd.UpdatePreSendProperties(
                     applicationUser.Id,

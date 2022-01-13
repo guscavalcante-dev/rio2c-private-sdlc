@@ -123,6 +123,7 @@
     <Compile Include="Dtos\Audiovisual\AttendeeCollaboratorAudiovisualCommissionEvaluationsWidgetDto.cs" />
     <Compile Include="Dtos\Audiovisual\CommissionAttendeeCollaboratorInterestDto.cs" />
     <Compile Include="Dtos\Audiovisual\CommissionAttendeeCollaboratorInterestsWidgetDto.cs" />
+    <Compile Include="Dtos\Innovation\API\InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto.cs" />
     <Compile Include="Dtos\Innovation\AttendeeCollaboratorInnovationEvaluationsWidgetDto.cs" />
     <Compile Include="Dtos\Innovation\AttendeeCollaboratorTracksWidgetDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorSiteDetailsDto.cs" />

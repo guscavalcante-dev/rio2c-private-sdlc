@@ -272,6 +272,15 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonProperty("companyObjectives")]
         public List<InnovationOrganizationObjectivesOptionApiDto> InnovationOrganizationObjectivesOptionApiDtos { get; set; }
 
+        /*
+        * MANGO | INFORMACAO ADICIONAIS -> Objetivos da Organização sustentável de desenvolvimento
+        * Options in DataBase: select * from  InnovationOrganizationSustainableDevelopmentObjectivesOption;
+        * FORM REQUESTED | 4)	Em qual(s) dos 17 Objetivos de Desenvolvimento Sustentável (ODS) sua startup se enquadra? (pode marcar mais de uma opção) 
+        */
+        [JsonRequired]
+        [JsonProperty("sustainableDevelopmentObjectives")]
+        public List<InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto> InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos { get; set; }
+
         #endregion
 
         /// <summary>Initializes a new instance of the <see cref="InnovationOrganizationApiDto"/> class.</summary>

@@ -49,6 +49,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public List<InnovationOrganizationTrackOptionApiDto> InnovationOrganizationTrackOptionApiDtos { get; set; }
         public List<InnovationOrganizationObjectivesOptionApiDto> InnovationOrganizationObjectivesOptionApiDtos { get; set; }
         public List<InnovationOrganizationTechnologyOptionApiDto> InnovationOrganizationTechnologyOptionApiDtos { get; set; }
+        public List<InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto> InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateInnovationOrganization"/> class.
@@ -81,6 +82,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="innovationOrganizationTrackOptionApiDtos">The innovation organization track option API dtos.</param>
         /// <param name="innovationOrganizationObjectivesOptionApiDtos">The innovation organization objectives option API dtos.</param>
         /// <param name="innovationOrganizationTechnologyOptionApiDtos">The innovation organization technology option API dtos.</param>
+        /// <param name="innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos">The innovation organization sustainable development objectives option API dtos.</param>
         public CreateInnovationOrganization(
             string name,
             string document,
@@ -109,7 +111,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<InnovationOrganizationExperienceOptionApiDto> innovationOrganizationExperienceOptionApiDtos,
             List<InnovationOrganizationTrackOptionApiDto> innovationOrganizationTrackOptionApiDtos,
             List<InnovationOrganizationObjectivesOptionApiDto> innovationOrganizationObjectivesOptionApiDtos,
-            List<InnovationOrganizationTechnologyOptionApiDto> innovationOrganizationTechnologyOptionApiDtos)
+            List<InnovationOrganizationTechnologyOptionApiDto> innovationOrganizationTechnologyOptionApiDtos,
+            List<InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto> innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos
+            )
         {
             this.Name = name;
             this.Document = document;
@@ -140,6 +144,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.InnovationOrganizationTrackOptionApiDtos = innovationOrganizationTrackOptionApiDtos;
             this.InnovationOrganizationObjectivesOptionApiDtos = innovationOrganizationObjectivesOptionApiDtos;
             this.InnovationOrganizationTechnologyOptionApiDtos = innovationOrganizationTechnologyOptionApiDtos;
+            this.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos = innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos;
         }
     }
 }
