@@ -74,6 +74,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="innovationOrganizationObjectivesOptionApiDtos">The innovation organization objectives option API dtos.</param>
         /// <param name="innovationOrganizationTechnologyOptionApiDtos">The innovation organization technology option API dtos.</param>
         /// <param name="innovationOrganizationTrackOptionApiDtos">The innovation organization track option API dtos.</param>
+        /// <param name="innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos">The innovation organization sustainable development objectives option API dtos.</param>
         /// <param name="userId">The user identifier.</param>
         public InnovationOrganization(
             Edition edition,
@@ -102,6 +103,8 @@ namespace PlataformaRio2C.Domain.Entities
             List<InnovationOrganizationObjectivesOptionApiDto> innovationOrganizationObjectivesOptionApiDtos,
             List<InnovationOrganizationTechnologyOptionApiDto> innovationOrganizationTechnologyOptionApiDtos,
             List<InnovationOrganizationTrackOptionApiDto> innovationOrganizationTrackOptionApiDtos,
+            List<InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto> innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos,
+
             int userId)
         {
             this.Name = name;
@@ -159,6 +162,11 @@ namespace PlataformaRio2C.Domain.Entities
                 innovationOrganizationTechnologyOptionApiDtos,
                 userId);
 
+            this.SynchronizeAttendeeInnovationOrganizationSustainableDevelopmentObjectives(
+               edition,
+               innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos,
+               userId); 
+
             this.SynchronizeAttendeeInnovationOrganizationTracks(
                 edition,
                 innovationOrganizationTrackOptionApiDtos,
@@ -202,6 +210,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="innovationOrganizationObjectivesOptionApiDtos">The innovation organization objectives option API dtos.</param>
         /// <param name="innovationOrganizationTechnologyOptionApiDtos">The innovation organization technology option API dtos.</param>
         /// <param name="innovationOrganizationTrackOptionApiDtos">The innovation organization track option API dtos.</param>
+        /// <param name="innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos">The innovation organization track option API dtos.</param>
         /// <param name="userId">The user identifier.</param>
         public void Update(
             Edition edition,
@@ -231,6 +240,7 @@ namespace PlataformaRio2C.Domain.Entities
             List<InnovationOrganizationObjectivesOptionApiDto> innovationOrganizationObjectivesOptionApiDtos,
             List<InnovationOrganizationTechnologyOptionApiDto> innovationOrganizationTechnologyOptionApiDtos,
             List<InnovationOrganizationTrackOptionApiDto> innovationOrganizationTrackOptionApiDtos,
+            List<InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto> innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos,
             int userId)
         {
             this.Name = name;
@@ -292,6 +302,11 @@ namespace PlataformaRio2C.Domain.Entities
                 edition,
                 innovationOrganizationTrackOptionApiDtos,
                 userId);
+
+            this.SynchronizeAttendeeInnovationOrganizationSustainableDevelopmentObjectives(
+               edition,
+               innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos,
+               userId);
         }
 
         /// <summary>Determines whether this instance has image.</summary>
@@ -624,6 +639,35 @@ namespace PlataformaRio2C.Domain.Entities
                 attendeeInnovationOrganization?.SynchronizeAttendeeInnovationOrganizationTracks(
                     innovationOrganizationTrackOptionApiDto.InnovationOrganizationTrackOption,
                     innovationOrganizationTrackOptionApiDto.AdditionalInfo,
+                    userId);
+            }
+
+            this.UpdateDate = DateTime.UtcNow;
+            this.UpdateUserId = userId;
+        }
+
+        #endregion
+
+        #region Attendee Innovation Organization Sustainable Developemnt Objectives
+
+        /// <summary>
+        /// Synchronizes the attendee innovation Sustainable Development Objectives
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="innovationOrganizationSustainableDevelopmentObjectivesOptionApiDto">The innovation organization Sustainable Development Objectives option API dtos.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeAttendeeInnovationOrganizationSustainableDevelopmentObjectives(
+            Edition edition,
+            List<InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto> innovationOrganizationSustainableDevelopmentObjectivesOptionApiDto,
+            int userId)
+        {
+            var attendeeInnovationOrganization = this.GetAttendeeInnovationOrganizationByEditionId(edition?.Id ?? 0);
+
+            foreach (var objective in innovationOrganizationSustainableDevelopmentObjectivesOptionApiDto)
+            {
+                attendeeInnovationOrganization?.SynchronizeAttendeeInnovationOrganizationSustainableDevelopmentObjectives(
+                    objective.InnovationOrganizationSustainableDevelopmentObjectivesOption,
+                    objective.AdditionalInfo,
                     userId);
             }
 

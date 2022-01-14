@@ -45,6 +45,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         private readonly IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepo;
         private readonly IInnovationOrganizationTechnologyOptionRepository innovationOrganizationTechnologyOptionRepo;
         private readonly IInnovationOrganizationObjectivesOptionRepository innovationOrganizationObjectivesOptionRepo;
+        private readonly IInnovationOrganizationSustainableDevelopmentObjectivesOptionRepository innovationOrganizationSustainableDevelopmentObjectivesOptionRepo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateInnovationOrganizationCommandHandler" /> class.
@@ -61,6 +62,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         /// <param name="innovationOrganizationTrackOptionRepository">The innovation organization track option repository.</param>
         /// <param name="innovationOrganizationTechnologyOptionRepository">The innovation organization technology option repository.</param>
         /// <param name="innovationOrganizationObjectivesOptionRepository">The innovation organization objectives option repository.</param>
+        /// <param name="innovationOrganizationSustainableDevelopmentObjectivesOptionRepository">The innovation sustainable development objectives option repository.</param>
         public CreateInnovationOrganizationCommandHandler(
             IMediator commandBus,
             IUnitOfWork uow,
@@ -73,7 +75,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             IInnovationOrganizationExperienceOptionRepository innovationOrganizationExperienceOptionRepository,
             IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepository,
             IInnovationOrganizationTechnologyOptionRepository innovationOrganizationTechnologyOptionRepository,
-            IInnovationOrganizationObjectivesOptionRepository innovationOrganizationObjectivesOptionRepository
+            IInnovationOrganizationObjectivesOptionRepository innovationOrganizationObjectivesOptionRepository,
+            IInnovationOrganizationSustainableDevelopmentObjectivesOptionRepository innovationOrganizationSustainableDevelopmentObjectivesOptionRepository
             )
             : base(commandBus, uow, innovationOrganizationRepository)
         {
@@ -86,6 +89,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             this.innovationOrganizationTrackOptionRepo = innovationOrganizationTrackOptionRepository;
             this.innovationOrganizationTechnologyOptionRepo = innovationOrganizationTechnologyOptionRepository;
             this.innovationOrganizationObjectivesOptionRepo = innovationOrganizationObjectivesOptionRepository;
+            this.innovationOrganizationSustainableDevelopmentObjectivesOptionRepo = innovationOrganizationSustainableDevelopmentObjectivesOptionRepository;
         }
 
         /// <summary>
@@ -151,6 +155,14 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                                                                        Uid = ta.Uid,
                                                                        AdditionalInfo = ta.AdditionalInfo,
                                                                        InnovationOrganizationObjectivesOption = this.innovationOrganizationObjectivesOptionRepo.FindByUid(ta.Uid)
+                                                                   }).ToList();
+
+            cmd.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos = cmd.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos.Select(ta =>
+                                                                   new InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto()
+                                                                   {
+                                                                       Uid = ta.Uid,
+                                                                       AdditionalInfo = ta.AdditionalInfo,
+                                                                       InnovationOrganizationSustainableDevelopmentObjectivesOption = this.innovationOrganizationSustainableDevelopmentObjectivesOptionRepo.FindByUid(ta.Uid)
                                                                    }).ToList();
 
             cmd.InnovationOrganizationTechnologyOptionApiDtos = cmd.InnovationOrganizationTechnologyOptionApiDtos.Select(ta =>
@@ -282,6 +294,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                        cmd.InnovationOrganizationObjectivesOptionApiDtos,
                        cmd.InnovationOrganizationTechnologyOptionApiDtos,
                        cmd.InnovationOrganizationTrackOptionApiDtos,
+                       cmd.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos,
                        cmd.UserId);
 
                 this.InnovationOrganizationRepo.Create(innovationOrganization);
@@ -320,6 +333,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                        cmd.InnovationOrganizationObjectivesOptionApiDtos,
                        cmd.InnovationOrganizationTechnologyOptionApiDtos,
                        cmd.InnovationOrganizationTrackOptionApiDtos,
+                       cmd.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos,
                        cmd.UserId);
 
                 this.InnovationOrganizationRepo.Update(innovationOrganization);

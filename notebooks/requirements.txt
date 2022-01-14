@@ -1,6 +1,0 @@
-pyodbc
-pandas
-datetime
-argparse
-xlsxwriter
-sendgrid

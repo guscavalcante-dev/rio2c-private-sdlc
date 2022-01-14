@@ -69,7 +69,7 @@ namespace PlataformaRio2C.Domain.Dtos
         * MANGO | DADOS DO EMPREENDIMENTO -> Vídeo de Apresentação
         * FORM REQUESTED | NOT_FOUND
         */
-        [JsonRequired]
+        //[JsonRequired]
         [JsonProperty("videoUrl")]
         public string VideoUrl { get; set; }
 
@@ -112,7 +112,7 @@ namespace PlataformaRio2C.Domain.Dtos
        * FORM REQUESTED | 2.	Produto ou Serviço: | Faturamento acumulado dos últimos 3 meses (em reais R$) *; 
        */
         [JsonRequired]
-        [JsonProperty("accumulatedRevenue")]
+        [JsonProperty("accumulatedRevenueThreeMonths")]
         public decimal AccumulatedRevenue { get; set; }
 
         /*
