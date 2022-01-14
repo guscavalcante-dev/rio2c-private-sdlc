@@ -175,6 +175,42 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonProperty("presentationFile", Order = 99)]
         public string PresentationFile { get; set; }
 
+        /*
+        * MANGO | NOVO
+        * FORM REQUESTED | 6)	Deseja participar para Rodadas de Negócios? *
+        */
+        /// <summary>
+        /// Don't remove order. This is for JSON beauty design. 
+        /// Should be aligned at end of JSON.
+        /// </summary>
+        [JsonRequired]
+        [JsonProperty("wouldYouLikeParticipateBusinessRound", Order = 100)]
+        public bool WouldYouLikeParticipateBusinessRound { get;  set; }
+
+        /*
+         * MANGO | NOVO
+         * FORM REQUESTED | 6)	Deseja participar para Rodadas de Negócios? * | a)	Ano de Fundação da empresa*;
+         */
+        /// <summary>
+        /// Don't remove order. This is for JSON beauty design. 
+        /// Should be aligned at end of JSON.
+        /// </summary>
+        [JsonRequired]
+        [JsonProperty("accumulatedRevenueForLastTwelveMonths", Order = 101)]
+        public decimal? AccumulatedRevenueForLastTwelveMonths { get; set; }
+
+        /*
+        * MANGO | NOVO
+        * FORM REQUESTED | 6)	Deseja participar para Rodadas de Negócios? * | b)	Faturamento acumulado dos últimos 12 meses (em reais R$) *; 
+        */
+        /// <summary>
+        /// Don't remove order. This is for JSON beauty design. 
+        /// Should be aligned at end of JSON.
+        /// </summary>
+        [JsonRequired]
+        [JsonProperty("businessFoundationYear", Order = 102)]
+        public int? BusinessFoundationYear { get; set; }
+
         #endregion
 
         #region Not required
@@ -309,20 +345,20 @@ namespace PlataformaRio2C.Domain.Dtos
         /// </summary>
         private void ValidatePresentationFile()
         {
-            if (string.IsNullOrEmpty(this.PresentationFile))
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(PresentationFile)), new string[] { nameof(PresentationFile) }));
-            }
+            //if (string.IsNullOrEmpty(this.PresentationFile))
+            //{
+            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(PresentationFile)), new string[] { nameof(PresentationFile) }));
+            //}
 
-            if (!this.PresentationFile.IsBase64String())
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityMustBeBase64, nameof(PresentationFile)), new string[] { nameof(PresentationFile) }));
-            }
+            //if (!this.PresentationFile.IsBase64String())
+            //{
+            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityMustBeBase64, nameof(PresentationFile)), new string[] { nameof(PresentationFile) }));
+            //}
 
-            if (!this.EnabledPresentationFileTypes.Contains(this.PresentationFile.GetBase64FileExtension()))
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.FileTypeMustBe, this.EnabledPresentationFileTypes.ToString(",")), new string[] { nameof(PresentationFile) }));
-            }
+            //if (!this.EnabledPresentationFileTypes.Contains(this.PresentationFile.GetBase64FileExtension()))
+            //{
+            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.FileTypeMustBe, this.EnabledPresentationFileTypes.ToString(",")), new string[] { nameof(PresentationFile) }));
+            //}
         }
 
         #endregion

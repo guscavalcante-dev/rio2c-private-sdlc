@@ -295,6 +295,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                        cmd.InnovationOrganizationTechnologyOptionApiDtos,
                        cmd.InnovationOrganizationTrackOptionApiDtos,
                        cmd.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos,
+                       cmd.WouldYouLikeParticipateBusinessRound,
+                       cmd.AccumulatedRevenueForLastTwelveMonths,
+                       cmd.BusinessFoundationYear,
                        cmd.UserId);
 
                 this.InnovationOrganizationRepo.Create(innovationOrganization);
@@ -334,6 +337,9 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                        cmd.InnovationOrganizationTechnologyOptionApiDtos,
                        cmd.InnovationOrganizationTrackOptionApiDtos,
                        cmd.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos,
+                       cmd.WouldYouLikeParticipateBusinessRound,
+                       cmd.AccumulatedRevenueForLastTwelveMonths,
+                       cmd.BusinessFoundationYear,
                        cmd.UserId);
 
                 this.InnovationOrganizationRepo.Update(innovationOrganization);

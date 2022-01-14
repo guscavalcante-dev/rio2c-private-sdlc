@@ -75,6 +75,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="innovationOrganizationTechnologyOptionApiDtos">The innovation organization technology option API dtos.</param>
         /// <param name="innovationOrganizationTrackOptionApiDtos">The innovation organization track option API dtos.</param>
         /// <param name="innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos">The innovation organization sustainable development objectives option API dtos.</param>
+        /// <param name="wouldYouLikeParticipateBusinessRound">would you like participate business round.</param>
+        /// <param name="accumulatedRevenueForLastTwelveMonths">accumulated revenue for last twelve months.</param>
+        /// <param name="businessFoundationYear">business foundtaion year.</param>
         /// <param name="userId">The user identifier.</param>
         public InnovationOrganization(
             Edition edition,
@@ -104,7 +107,9 @@ namespace PlataformaRio2C.Domain.Entities
             List<InnovationOrganizationTechnologyOptionApiDto> innovationOrganizationTechnologyOptionApiDtos,
             List<InnovationOrganizationTrackOptionApiDto> innovationOrganizationTrackOptionApiDtos,
             List<InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto> innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos,
-
+            bool? wouldYouLikeParticipateBusinessRound,
+            decimal? accumulatedRevenueForLastTwelveMonths,
+            int? businessFoundationYear,
             int userId)
         {
             this.Name = name;
@@ -130,6 +135,9 @@ namespace PlataformaRio2C.Domain.Entities
                 businessOperationalModel,
                 videoUrl,
                 presentationFileExtension,
+                wouldYouLikeParticipateBusinessRound,
+                accumulatedRevenueForLastTwelveMonths,
+                businessFoundationYear,
                 userId);
 
             this.SynchronizeAttendeeInnovationOrganizationCollaborators(
@@ -211,6 +219,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="innovationOrganizationTechnologyOptionApiDtos">The innovation organization technology option API dtos.</param>
         /// <param name="innovationOrganizationTrackOptionApiDtos">The innovation organization track option API dtos.</param>
         /// <param name="innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos">The innovation organization track option API dtos.</param>
+        /// <param name="wouldYouLikeParticipateBusinessRound">would you like participate business round.</param>
+        /// <param name="accumulatedRevenueForLastTwelveMonths">accumulated revenue for last twelve months.</param>
+        /// <param name="businessFoundationYear">business foundtaion year.</param>
         /// <param name="userId">The user identifier.</param>
         public void Update(
             Edition edition,
@@ -241,6 +252,9 @@ namespace PlataformaRio2C.Domain.Entities
             List<InnovationOrganizationTechnologyOptionApiDto> innovationOrganizationTechnologyOptionApiDtos,
             List<InnovationOrganizationTrackOptionApiDto> innovationOrganizationTrackOptionApiDtos,
             List<InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto> innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos,
+            bool? wouldYouLikeParticipateBusinessRound,
+            decimal? accumulatedRevenueForLastTwelveMonths,
+            int? businessFoundationYear,
             int userId)
         {
             this.Name = name;
@@ -266,6 +280,9 @@ namespace PlataformaRio2C.Domain.Entities
                 businessOperationalModel,
                 videoUrl,
                 presentationFileExtension,
+                wouldYouLikeParticipateBusinessRound,
+                accumulatedRevenueForLastTwelveMonths,
+                businessFoundationYear,
                 userId);
 
             this.SynchronizeAttendeeInnovationOrganizationCollaborators(
@@ -371,6 +388,9 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isPresentationUploaded">if set to <c>true</c> [is presentation uploaded].</param>
         /// <param name="businessOperationalModel">The business operational model.</param>
         /// <param name="videoUrl">The video URL.</param>
+        /// <param name="wouldYouLikeParticipateBusinessRound">would you like participate business round.</param>
+        /// <param name="accumulatedRevenueForLastTwelveMonths">accumulated revenue for last twelve months.</param>
+        /// <param name="businessFoundationYear">business foundtaion year.</param>
         /// <param name="userId">The user identifier.</param>
         private void SynchronizeAttendeeInnovationOrganizations(
             Edition edition,
@@ -385,6 +405,9 @@ namespace PlataformaRio2C.Domain.Entities
             string businessOperationalModel,
             string videoUrl,
             string presentationFileExtension,
+            bool? wouldYouLikeParticipateBusinessRound,
+            decimal? accumulatedRevenueForLastTwelveMonths,
+            int? businessFoundationYear,
             int userId)
         {
             if (edition == null)
@@ -419,6 +442,9 @@ namespace PlataformaRio2C.Domain.Entities
                     businessOperationalModel,
                     videoUrl,
                     presentationFileExtension,
+                    wouldYouLikeParticipateBusinessRound,
+                    accumulatedRevenueForLastTwelveMonths,
+                    businessFoundationYear,
                     userId));
             }
         }

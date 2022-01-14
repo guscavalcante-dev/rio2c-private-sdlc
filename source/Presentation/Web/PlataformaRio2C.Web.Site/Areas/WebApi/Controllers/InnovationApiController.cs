@@ -95,7 +95,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("createstartup/{key?}")]
-        public async Task<IHttpActionResult> CreateStartup(string key, HttpRequestMessage request)
+        public async Task<IHttpActionResult> CreateStartup(string key, [FromBody] InnovationOrganizationApiDto innovationOrganizationApiDto)
         {
             var validationResult = new AppValidationResult();
 
@@ -122,7 +122,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
                 #endregion
 
-                var innovationOrganizationApiDto = JsonConvert.DeserializeObject<InnovationOrganizationApiDto>(request.Content.ReadAsStringAsync().Result);
+                //var innovationOrganizationApiDto = JsonConvert.DeserializeObject<InnovationOrganizationApiDto>(request.Content.ReadAsStringAsync().Result);
                 if (innovationOrganizationApiDto == null)
                 {
                     throw new DomainException(Messages.IncorrectJsonStructure);
@@ -163,7 +163,10 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     innovationOrganizationApiDto.InnovationOrganizationTrackOptionApiDtos,
                     innovationOrganizationApiDto.InnovationOrganizationObjectivesOptionApiDtos,
                     innovationOrganizationApiDto.InnovationOrganizationTechnologyOptionApiDtos,
-                    innovationOrganizationApiDto.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos
+                    innovationOrganizationApiDto.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos,
+                    innovationOrganizationApiDto.WouldYouLikeParticipateBusinessRound,
+                    innovationOrganizationApiDto.AccumulatedRevenueForLastTwelveMonths,
+                    innovationOrganizationApiDto.BusinessFoundationYear
                     );
 
                 cmd.UpdatePreSendProperties(
