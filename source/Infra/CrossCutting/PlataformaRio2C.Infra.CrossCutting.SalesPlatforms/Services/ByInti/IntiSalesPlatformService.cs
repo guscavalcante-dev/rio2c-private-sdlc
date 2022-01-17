@@ -21,7 +21,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Models;
 
-namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti 
+namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti
 {
     /// <summary>
     /// IntiSalesPlatformService
@@ -59,17 +59,6 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti
             salesPlatformAttendeeDtos.Add(new SalesPlatformAttendeeDto(payload));
 
             return new Tuple<string, List<SalesPlatformAttendeeDto>>(payload.GetSalesPlatformAction(), salesPlatformAttendeeDtos);
-
-            //switch (payload.Action)
-            //{
-            //    // Attendees updates
-            //    case IntiAction.TicketSold:
-            //        return new Tuple<string, List<SalesPlatformAttendeeDto>>(payload.GetSalesPlatformAction(), salesPlatformAttendeeDtos);
-
-            //    // Other Updates
-            //    default:
-            //        throw new DomainException($"Inti action ({payload.Action}) not configured.");
-            //}
         }
 
         #region Private Methods

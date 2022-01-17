@@ -119,25 +119,25 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
         public SalesPlatformAttendeeDto(IntiPayload intiPayload)
         {
             // Event
-            this.EventId = intiPayload.Relationships.EventId;
+            this.EventId = intiPayload?.Relationships?.EventId;
 
             // Order
-            this.OrderId = intiPayload.Relationships.OrderId;
+            this.OrderId = intiPayload?.Relationships?.OrderId;
 
             // Attendee
-            this.AttendeeId = intiPayload.Id;
+            this.AttendeeId = intiPayload?.Id;
             this.SalesPlatformUpdateDate = intiPayload.Timestamp;
-            this.SalesPlatformAttendeeStatus = intiPayload.GetSalesPlatformAttendeeStatus();
+            this.SalesPlatformAttendeeStatus = intiPayload?.GetSalesPlatformAttendeeStatus();
             this.IsCancelled = false;
             this.IsCheckedIn = false;
-            this.TicketClassId = intiPayload.PriceName;
-            this.TicketClassName = intiPayload.PriceName;
+            this.TicketClassId = intiPayload?.PriceName;
+            this.TicketClassName = intiPayload?.PriceName;
 
             // Profile
-            this.FirstName = intiPayload.Name.Contains(" ") ? intiPayload.Name.Split(Convert.ToChar(" "))[0] : intiPayload.Name;
-            this.LastName = intiPayload.Name.Contains(" ") ? intiPayload.Name.Split(Convert.ToChar(" "))[1] : " "; 
-            this.Name = intiPayload.Name;
-            this.Email = intiPayload.Email;
+            this.FirstName = intiPayload?.Name?.Contains(" ") == true? intiPayload?.Name?.Split(Convert.ToChar(" "))[0] : intiPayload?.Name;
+            this.LastName = intiPayload?.Name?.Contains(" ") == true? intiPayload?.Name?.Split(Convert.ToChar(" "))[1] : " "; 
+            this.Name = intiPayload?.Name;
+            this.Email = intiPayload?.Email;
             this.Gender = "";
             this.Age = null;
             this.BirthDate = "";
@@ -151,7 +151,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos
             this.BarcodeUpdateDate = null;
 
             // TicketUrl            
-            this.TicketUrl = intiPayload.TicketUrl;
+            this.TicketUrl = intiPayload?.TicketUrl;
             this.IsTicketPrinted = false;
             this.IsTicketUsed = false;
             this.TicketUpdateDate = intiPayload?.Timestamp;
