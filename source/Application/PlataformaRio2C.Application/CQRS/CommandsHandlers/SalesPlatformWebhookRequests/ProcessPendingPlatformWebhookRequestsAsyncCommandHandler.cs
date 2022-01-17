@@ -326,10 +326,18 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     // Action not mapped
                     else
                     {
-                        var errorMessage = $"Sales platform action not configured (Uid: {processingRequestDto.Uid}).";
-                        this.ValidationResult.Add(new ValidationError(errorMessage));
-                        processingRequestDto.SalesPlatformWebhookRequest.Abort("000000009", errorMessage);
-                        this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
+                        //TODO: Confirm this fix with Rafael Ruiz:
+                        //The "processingRequestDto.SalesPlatformWebhookRequest.Abort" is setting "IsProcessing = false",
+                        //and its throws a exception at "processingRequestDto.SalesPlatformWebhookRequest.Conclude()" (line 355) because have a "ValidateProcessing();" validation.
+
+                        //var errorMessage = $"Sales platform action not configured (Uid: {processingRequestDto.Uid}).";
+                        //this.ValidationResult.Add(new ValidationError(errorMessage));
+                        //processingRequestDto.SalesPlatformWebhookRequest.Abort("000000009", errorMessage);
+                        //this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
+                        //continue;
+
+                        var errorMessage = $"Sales platform action not configured ({salesPlatformResponse.Item1}).";
+                        currentValidationResult.Add(new ValidationError("000000009", errorMessage));
                         continue;
                     }
                 }

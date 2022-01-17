@@ -13,8 +13,10 @@
 // ***********************************************************************
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Dtos;
 using System;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Models
 {
@@ -78,7 +80,8 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Mode
         public IntiSaleOrCancellationExtraValue[] ExtraValues { get; set; }
 
         [JsonProperty("discount")]
-        public IntiSaleOrCancellationDiscount[] Discount { get; set; }
+        [JsonConverter(typeof(SingleOrArrayConverter<IntiSaleOrCancellationDiscount>))]
+        public List<IntiSaleOrCancellationDiscount> Discount { get; set; }
 
         [JsonProperty("relationships")]
         public IntiSaleOrCancellationRelationships Relationships { get; set; }
@@ -106,7 +109,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Mode
         /// <returns></returns>
         public string GetSalesPlatformAttendeeStatus()
         {
-            switch (this.Action.ToLowerInvariant())
+            switch (this.Action?.ToLowerInvariant())
             {
                 case IntiAction.TicketSold:
                 case IntiAction.ParticipantUpdated:
@@ -162,5 +165,38 @@ namespace PlataformaRio2C.Infra.CrossCutting.SalesPlatforms.Services.ByInti.Mode
 
         [JsonProperty("buyer_id")]
         public string BuyerId { get; set; }
+    }
+
+    class SingleOrArrayConverter<T> : JsonConverter
+    {
+        public override bool CanConvert(Type objectType)
+        {
+            return (objectType == typeof(List<T>));
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            JToken token = JToken.Load(reader);
+            if (token.Type == JTokenType.Array)
+            {
+                return token.ToObject<List<T>>();
+            }
+            return new List<T> { token.ToObject<T>() };
+        }
+
+        public override bool CanWrite
+        {
+            get { return false; }
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            List<T> list = (List<T>)value;
+            if (list.Count == 1)
+            {
+                value = list[0];
+            }
+            serializer.Serialize(writer, value);
+        }
     }
 }
