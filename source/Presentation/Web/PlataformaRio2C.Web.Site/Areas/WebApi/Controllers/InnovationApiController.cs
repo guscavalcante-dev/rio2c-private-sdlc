@@ -145,7 +145,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     innovationOrganizationApiDto.BusinessEconomicModel,
                     innovationOrganizationApiDto.BusinessOperationalModel,
                     innovationOrganizationApiDto.ImageFile,
-                    innovationOrganizationApiDto.VideoUrl,
+                    "",
                     innovationOrganizationApiDto.BusinessDifferentials,
                     innovationOrganizationApiDto.BusinessStage,
                     innovationOrganizationApiDto.ResponsibleName,

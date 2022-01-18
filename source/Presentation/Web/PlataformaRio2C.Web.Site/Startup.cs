@@ -54,8 +54,7 @@ namespace PlataformaRio2C.Web.Site
             config.MessageHandlers.Add(new LanguageMessageHandler());            
 
             var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
-            //todo validate with team
-            json.UseDataContractJsonSerializer = false;
+            json.UseDataContractJsonSerializer = true;
             json.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
             json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 

@@ -29,8 +29,6 @@ namespace PlataformaRio2C.Domain.Entities
         public int DisplayOrder { get; set; }
         public bool HasAdditionalInfo { get; set; }
 
-        public virtual List<AttendeeInnovationOrganizationSustainableDevelopmentObjective> AttendeInnovationOrganizationSustainableDevelopmentObjective { get; set; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="InnovationOrganizationSustainableDevelopmentObjectivesOption"/> class.
         /// </summary>

@@ -24,6 +24,16 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         public AttendeeInnovationOrganizationSustainableDevelopmentObjectiveMap()
         {
             this.ToTable("AttendeeInnovationOrganizationSustainableDevelopmentObjectives");
+
+            // Relationships
+            this.HasRequired(t => t.AttendeeInnovationOrganization)
+                .WithMany(aio => aio.AttendeeInnovationOrganizationSustainableDevelopmentObjective)
+                .HasForeignKey(d => d.AttendeeInnovationOrganizationId);
+
+            this.HasRequired(t => t.InnovationOrganizationSustainableDevelopmentObjectiveOption)
+                .WithMany()
+                .HasForeignKey(d => d.InnovationOrganizationSustainableDevelopmentObjectiveOptionId);
+            this.Property(x => x.InnovationOrganizationSustainableDevelopmentObjectiveOptionId).HasColumnName("InnovationOrganizationSustainableDevelopmentObjectiveOptionId");
         }
     }
 }

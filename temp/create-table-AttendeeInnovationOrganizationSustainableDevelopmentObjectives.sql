@@ -38,7 +38,7 @@ ALTER TABLE [dbo].[AttendeeInnovationOrganizationSustainableDevelopmentObjective
 GO
 
 ALTER TABLE [dbo].[AttendeeInnovationOrganizationSustainableDevelopmentObjectives]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeInnovationOrganizations_AttendeeInnovationOrgSustDevObj_InnovationOrgSustDevObjOptId] FOREIGN KEY([InnovationOrganizationSustainableDevelopmentObjectiveOptionId])
-REFERENCES [dbo].[AttendeeInnovationOrganizationSustainableDevelopmentObjectives] ([Id])
+REFERENCES [dbo].[InnovationOrganizationSustainableDevelopmentObjectivesOptions] ([Id])
 GO
 
 ALTER TABLE [dbo].[AttendeeInnovationOrganizationSustainableDevelopmentObjectives] CHECK CONSTRAINT [FK_AttendeeInnovationOrganizations_AttendeeInnovationOrgSustDevObj_InnovationOrgSustDevObjOptId]

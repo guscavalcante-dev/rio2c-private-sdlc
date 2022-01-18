@@ -13,6 +13,7 @@
 // ***********************************************************************
 using PlataformaRio2C.Domain.Validation;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -28,7 +29,7 @@ namespace PlataformaRio2C.Domain.Entities
         public string AdditionalInfo { get; set; }
 
         public virtual AttendeeInnovationOrganization AttendeeInnovationOrganization { get; private set; }
-        public virtual InnovationOrganizationSustainableDevelopmentObjectivesOption InnovationOrganizationSustainableDevelopmentObjectivesOption { get; private set; }
+        public virtual InnovationOrganizationSustainableDevelopmentObjectivesOption InnovationOrganizationSustainableDevelopmentObjectiveOption { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttendeInnovationOrganizationSustainableDevelopmentObjective"/> class.
@@ -39,16 +40,16 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public AttendeeInnovationOrganizationSustainableDevelopmentObjective(
             AttendeeInnovationOrganization attendeeInnovationOrganization,
-            InnovationOrganizationSustainableDevelopmentObjectivesOption innovationOrganizationSustainableDevelopmentObjectivesOption,
+            InnovationOrganizationSustainableDevelopmentObjectivesOption innovationOrganizationSustainableDevelopmentObjectiveOption,
             string additionalInfo,
             int userId)
         {
             this.AttendeeInnovationOrganization = attendeeInnovationOrganization;
-            this.InnovationOrganizationSustainableDevelopmentObjectivesOption = innovationOrganizationSustainableDevelopmentObjectivesOption;
+            this.InnovationOrganizationSustainableDevelopmentObjectiveOption = innovationOrganizationSustainableDevelopmentObjectiveOption;
             this.AdditionalInfo = additionalInfo;
 
             this.AttendeeInnovationOrganizationId = attendeeInnovationOrganization?.Id ?? 0;
-            this.InnovationOrganizationSustainableDevelopmentObjectiveOptionId = innovationOrganizationSustainableDevelopmentObjectivesOption?.Id ?? 0;
+            //this.InnovationOrganizationSustainableDevelopmentObjectiveOptionId = innovationOrganizationSustainableDevelopmentObjectiveOption?.Id ?? 0;
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
@@ -62,12 +63,12 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="additionalInfo">The additional information.</param>
         /// <param name="userId">The user identifier.</param>
         public AttendeeInnovationOrganizationSustainableDevelopmentObjective(
-            InnovationOrganizationSustainableDevelopmentObjectivesOption innovationOrganizationSustainableDevelopmentObjectivesOption,
+            InnovationOrganizationSustainableDevelopmentObjectivesOption innovationOrganizationSustainableDevelopmentObjectiveOption,
             string additionalInfo,
             int userId)
         {
-            this.InnovationOrganizationSustainableDevelopmentObjectivesOption = innovationOrganizationSustainableDevelopmentObjectivesOption;
-            this.InnovationOrganizationSustainableDevelopmentObjectiveOptionId = innovationOrganizationSustainableDevelopmentObjectivesOption?.Id ?? 0;
+            this.InnovationOrganizationSustainableDevelopmentObjectiveOption = innovationOrganizationSustainableDevelopmentObjectiveOption;
+            //this.InnovationOrganizationSustainableDevelopmentObjectiveOptionId = innovationOrganizationSustainableDevelopmentObjectiveOption?.Id ?? 0;
             this.AdditionalInfo = additionalInfo?.Trim();
 
             this.IsDeleted = false;
@@ -76,7 +77,7 @@ namespace PlataformaRio2C.Domain.Entities
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeInnovationOrganizationSustainableDevelopmentObjective"/> class.
+        /// Initializes a new instance of the <see cref="AttendeeInnovationOrganizationSustainableDevelopmentObjective"/> class.
         /// </summary>
         public AttendeeInnovationOrganizationSustainableDevelopmentObjective()
         {}
