@@ -25,7 +25,6 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System;
 using System.Configuration;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -91,17 +90,15 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// Creates the startup.
         /// </summary>
         /// <param name="key">The key.</param>
-        /// <param name="request">The request.</param>
+        /// <param name="innovationOrganizationInput">The request.</param>
         /// <returns></returns>
-        [HttpPost]
-        [Route("createstartup/{key?}")]
-        public async Task<IHttpActionResult> CreateStartup(string key, [FromBody] InnovationOrganizationApiDto innovationOrganizationApiDto)
+        [Route("create-startup/{key}"), HttpPost]
+        public async Task<IHttpActionResult> CreateStartup(string key,  [FromBody] InnovationOrganizationApiDto innovationOrganizationApiDto)
         {
             var validationResult = new AppValidationResult();
-
             try
             {
-                #region Initial Validations
+                #region Initial Validations            
 
                 if (key.ToLowerInvariant() != ConfigurationManager.AppSettings["CreateStartupApiKey"].ToLowerInvariant())
                 {
@@ -122,7 +119,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
                 #endregion
 
-                //var innovationOrganizationApiDto = JsonConvert.DeserializeObject<InnovationOrganizationApiDto>(request.Content.ReadAsStringAsync().Result);
+                
                 if (innovationOrganizationApiDto == null)
                 {
                     throw new DomainException(Messages.IncorrectJsonStructure);
@@ -215,7 +212,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <param name="request">The request.</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("filters")]
+        [Route("api/v1.0/innovation/filters")]
         public async Task<IHttpActionResult> Filters([FromUri] InnovationFiltersApiRequest request)
         {
             try
