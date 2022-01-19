@@ -14,6 +14,7 @@
 using PlataformaRio2C.Domain.Validation;
 using System;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -41,6 +42,9 @@ namespace PlataformaRio2C.Domain.Entities
         public string ProcessingErrorMessage { get; private set; }
         public int? ManualProcessingUserId { get; private set; }
         public string SecurityStamp { get; private set; }
+
+        [NotMapped]
+        public bool IsAborted { get; private set; }
 
         public virtual SalesPlatform SalesPlatform { get; private set; }
 
@@ -156,6 +160,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.ProcessingErrorCode = errorCode;
             this.ProcessingErrorMessage = errorMessage;
             this.SecurityStamp = Guid.NewGuid().ToString();
+            this.IsAborted = true;
         }
 
         /// <summary>Gets the next processing date.</summary>
