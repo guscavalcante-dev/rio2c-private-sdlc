@@ -3,7 +3,7 @@
 // Author           : Renan Valentim
 // Created          : 28-06-2021
 //
-// Last Modified By : Renan Valentim
+// Last Modified By : Rafael Franco
 // Last Modified On : 09-10-2021
 // ***********************************************************************
 // <copyright file="InnovationOrganizationApiDto.cs" company="Softo">
@@ -33,170 +33,65 @@ namespace PlataformaRio2C.Domain.Dtos
 
         #region Required
 
-        /*
-         * MANGO | DADOS DO EMPREENDIMENTO -> Nome da Startup * 
-         * FORM REQUESTED | 1.	Identificação do Participante: |  Nome ou nome da Empresa*; 
-         */
         [JsonRequired]
         [JsonProperty("name")]
-        public string Name { get; set; } //todoremove OK_FORM_REQUESTED
+        public string Name { get; set; } 
 
-        /*
-        * MANGO | DADOS DO EMPREENDIMENTO -> CNPJ  * 
-        * FORM REQUESTED | 1.	Identificação do Participante: | CPF ou CNPJ*; 
-        */
         [JsonRequired]
         [JsonProperty("document")]
-        public string Document { get; set; } //todoremove OK_FORM_REQUESTED
+        public string Document { get; set; } 
 
-        /*
-        * MANGO | DADOS DO EMPREENDIMENTO -> Razão Social * 
-        * FORM REQUESTED | NOT_FOUND
-        */
         [JsonRequired]
         [JsonProperty("serviceName")]
-        public string ServiceName { get; set; } //todoremove NOT_OK_FORM_REQUESTED
+        public string ServiceName { get; set; } 
 
-        /*
-        * MANGO | DADOS DO EMPREENDIMENTO -> Responsável  * 
-        * FORM REQUESTED | 1.	Identificação do Participante: | Nome do Representante*; 
-        */
         [JsonRequired]
         [JsonProperty("responsibleName")]
-        public string ResponsibleName { get; set; } //todoremove OK_FORM_REQUESTED
+        public string ResponsibleName { get; set; } 
 
-        /*
-        * MANGO | DADOS DE CONTATO -> E-mail  * 
-        * FORM REQUESTED | 1.	Identificação do Participante: | E-mail e telefone de contato*; 
-        */
         [JsonRequired]
         [JsonProperty("email")]
         public string Email { get; set; }
 
-        /*
-        * MANGO | DADOS DE CONTATO -> Telefone * 
-        * FORM REQUESTED | 1.	Identificação do Participante: | E-mail e telefone de contato*;
-        * OBS: No Mango não está como obrigatório
-        */
-        [JsonProperty("phoneNumber")]
-        public string PhoneNumber { get; set; }
-
-        /*
-        * MANGO | DADOS DE CONTATO -> Celular * 
-        * FORM REQUESTED | 1.	Identificação do Participante: | E-mail e telefone de contato*;
-        * OBS: No Mango não está como obrigatório
-        */
         [JsonRequired]
         [JsonProperty("cellPhone")]
         public string CellPhone { get; set; }
 
-        /*
-        * MANGO | FUNDADORES -> Data de Fundação * 
-        * FORM REQUESTED | 6)	Deseja participar para Rodadas de Negócios? * Se a resposta for sim, abrir as perguntas abaixo: a)	Ano de Fundação da empresa*;
-        */
-        [JsonRequired]
-        [JsonProperty("foundationDate")]
-        public DateTime FoundationDate { get; set; }
-
-        /*
-       * MANGO | INFORMAÇÕES ADICIONAIS -> Receita Acumulada *
-       * FORM REQUESTED | 2.	Produto ou Serviço: | Faturamento acumulado dos últimos 3 meses (em reais R$) *; 
-       */
         [JsonRequired]
         [JsonProperty("accumulatedRevenueThreeMonths")]
         public decimal AccumulatedRevenue { get; set; }
 
-        /*
-        * MANGO | INFORMAÇÕES ADICIONAIS -> Descrição sobre a Startup *
-        * FORM REQUESTED | 2.	Produto ou Serviço: | Descreva sua startup em uma sentença (no máximo até 600 caracteres com espaço)*;
-        */
         [JsonRequired]
         [JsonProperty("description")]
         public string Description { get; set; }
 
         [JsonRequired]
-        [JsonProperty("businessDefinition")]
-        public string BusinessDefinition { get; set; }
-
-        /*
-        * MANGO | INFORMAÇÕES ADICIONAIS -> Foco do Neǵocio * // ESCRITO ERRADO
-        * FORM REQUESTED | 2.	Produto ou Serviço: | Especificação do foco principal do negócio (que problema resolve)*;
-        */
-        [JsonRequired]
         [JsonProperty("businessFocus")]
         public string BusinessFocus { get; set; }
 
-        /*
-        * MANGO | INFORMAÇÕES ADICIONAIS -> Diferenciais do Negócio *
-        * FORM REQUESTED | 2.	Produto ou Serviço: | Quais os diferenciais do negócio (qual a solução e impactos gerados)*;
-        */
         [JsonRequired]
         [JsonProperty("businessDifferentials")]
         public string BusinessDifferentials { get; set; }
 
-        /*
-       * MANGO | INFORMAÇÕES ADICIONAIS -> Estágio do Negócio *
-       * FORM REQUESTED | 2.	Produto ou Serviço: | Especificação do estágio em que negócio se encontra*
-       */
         [JsonRequired]
         [JsonProperty("businessStage")]
         public string BusinessStage { get; set; }
 
-        /*
-        * MANGO | DADOS DO EMPREENDIMENTO -> Logo da Startup * 
-        * FORM REQUESTED | NOT_FOUND
-        */
-        /// <summary>
-        /// Don't remove order. This is for JSON beauty design. 
-        /// Should be aligned at end of JSON.
-        /// </summary>
         [JsonRequired]
         [JsonProperty("imageFile", Order = 98)]
-        public string ImageFile { get; set; } //todoremove NOT_OK_FORM_REQUESTED
+        public string ImageFile { get; set; }
 
-        /*
-        * MANGO | DADOS DO EMPREENDIMENTO -> Apresentação da Empresa * 
-        * FORM REQUESTED | 2.	Produto ou Serviço: | n)	Pitch deck - apresentação em slides (Só serão aceitos materiais em formato pdf)*;
-        */
-        /// <summary>
-        /// Don't remove order. This is for JSON beauty design. 
-        /// Should be aligned at end of JSON.
-        /// </summary>
         [JsonRequired]
         [JsonProperty("presentationFile", Order = 99)]
         public string PresentationFile { get; set; }
 
-        /*
-        * MANGO | NOVO
-        * FORM REQUESTED | 6)	Deseja participar para Rodadas de Negócios? *
-        */
-        /// <summary>
-        /// Don't remove order. This is for JSON beauty design. 
-        /// Should be aligned at end of JSON.
-        /// </summary>
         [JsonRequired]
         [JsonProperty("wouldYouLikeParticipateBusinessRound", Order = 100)]
         public bool WouldYouLikeParticipateBusinessRound { get;  set; }
 
-        /*
-         * MANGO | NOVO
-         * FORM REQUESTED | 6)	Deseja participar para Rodadas de Negócios? * | a)	Ano de Fundação da empresa*;
-         */
-        /// <summary>
-        /// Don't remove order. This is for JSON beauty design. 
-        /// Should be aligned at end of JSON.
-        /// </summary>
         [JsonProperty("accumulatedRevenueForLastTwelveMonths", Order = 101)]
         public decimal? AccumulatedRevenueForLastTwelveMonths { get; set; }
 
-        /*
-        * MANGO | NOVO
-        * FORM REQUESTED | 6)	Deseja participar para Rodadas de Negócios? * | b)	Faturamento acumulado dos últimos 12 meses (em reais R$) *; 
-        */
-        /// <summary>
-        /// Don't remove order. This is for JSON beauty design. 
-        /// Should be aligned at end of JSON.
-        /// </summary>
         [JsonProperty("businessFoundationYear", Order = 102)]
         public int? BusinessFoundationYear { get; set; }
 
@@ -204,31 +99,15 @@ namespace PlataformaRio2C.Domain.Dtos
 
         #region Not required
 
-        /*
-        * MANGO | DADOS DE CONTATO -> Website
-        * FORM REQUESTED | 2.	Produto ou Serviço: | Site do negócio (se houver);
-        */
         [JsonProperty("website")]
         public string Website { get; set; }
 
-        /*
-        * MANGO | INFORMAÇÕES ADICIONAIS -> Tamanho de Mercado *
-        * FORM REQUESTED | 2.	Produto ou Serviço: | Especificação do impacto do negócio (tamanho do mercado)*;
-        */
         [JsonProperty("marketSize")]
         public string MarketSize { get; set; }
 
-        /*
-        * MANGO | INFORMAÇÕES ADICIONAIS -> Modelo Economico * // ESCRITO ERRADO E ESTA COMO OBRIGATÓRIO NO MANGO
-        * FORM REQUESTED | 2.	Produto ou Serviço: | Especificação do impacto do negócio (tamanho do mercado)*;
-        */
         [JsonProperty("businessEconomicModel")]
         public string BusinessEconomicModel { get; set; }
 
-        /*
-        * MANGO | INFORMAÇÕES ADICIONAIS -> Modelo Operacional * // ESTA COMO OBRIGATÓRIO NO MANGO
-        * FORM REQUESTED | 2.	Produto ou Serviço: | Especificação do impacto do negócio (tamanho do mercado)*;
-        */
         [JsonProperty("businessOperationalModel")]
         public string BusinessOperationalModel { get; set; }
 
@@ -242,64 +121,29 @@ namespace PlataformaRio2C.Domain.Dtos
         #endregion
 
         #region Lists
-        /*
-        * MANGO | FUNDADORES
-        * MANGO | FUNDADORES -> Nome  * 
-        * MANGO | FUNDADORES -> Currículo  * 
-        * MANGO | FUNDADORES -> Tempo de Dedicação *
-        */
+
         [JsonRequired]
         [JsonProperty("founders")]
         public List<AttendeeInnovationOrganizationFounderApiDto> AttendeeInnovationOrganizationFounderApiDtos { get; set; }
 
-        /*
-        * MANGO | PRINCIPAIS CONCORRENTES NO MERCADO -> Nome *
-        * FORM REQUESTED | 2.	Produto ou Serviço: | Quem são seus concorrentes? Cite até 3*;
-        */
         [JsonRequired]
         [JsonProperty("competingCompanies")]
         public List<AttendeeInnovationOrganizationCompetitorApiDto> AttendeeInnovationOrganizationCompetitorApiDtos { get; set; }
 
-        /*
-        * MANGO | INFORMACAO ADICIONAIS -> Experiencias da organização
-        * Options in DataBase: select * from InnovationOrganizationExperienceOptions;
-        * FORM REQUESTED | 2.	Produto ou Serviço: | Quais dessas experiências a empresa já participou? (pode marcar mais de uma opção)
-        */
         [JsonProperty("companyExperiences")]
         public List<InnovationOrganizationExperienceOptionApiDto> InnovationOrganizationExperienceOptionApiDtos { get; set; }
 
-        /*
-        * MANGO | INFORMACAO ADICIONAIS -> Trilhas da organização
-        * Options in DataBase: select * from InnovationOrganizationTrackOptions;
-        * FORM REQUESTED | 3)	Enquadre seu produto ou serviço num track abaixo*:
-        * OBS: No Mango não está como obrigatório
-        */
         [JsonRequired]
         [JsonProperty("tracks")]
         public List<InnovationOrganizationTrackOptionApiDto> InnovationOrganizationTrackOptionApiDtos { get; set; }
 
-        /*
-        * MANGO | INFORMACAO ADICIONAIS -> Tecnologias da Organização
-        * Options in DataBase: select * from InnovationOrganizationTechnologyOptions;
-        * FORM REQUESTED | 2.	Produto ou Serviço: | Tecnologia usadas: (pode marcar mais de uma opção)
-        */
         [JsonProperty("technologyExperiences")]
         public List<InnovationOrganizationTechnologyOptionApiDto> InnovationOrganizationTechnologyOptionApiDtos { get; set; }
 
-        /*
-        * MANGO | INFORMACAO ADICIONAIS -> Objetivos da Organização
-        * Options in DataBase: select * from InnovationOrganizationObjectivesOptions;
-        * FORM REQUESTED | 5)	Qual o seu principal objetivo em participar do Pitching? (pode marcar mais de uma opção)
-        */
         [JsonRequired]
         [JsonProperty("companyObjectives")]
         public List<InnovationOrganizationObjectivesOptionApiDto> InnovationOrganizationObjectivesOptionApiDtos { get; set; }
 
-        /*
-        * MANGO | INFORMACAO ADICIONAIS -> Objetivos da Organização sustentável de desenvolvimento
-        * Options in DataBase: select * from  InnovationOrganizationSustainableDevelopmentObjectivesOption;
-        * FORM REQUESTED | 4)	Em qual(s) dos 17 Objetivos de Desenvolvimento Sustentável (ODS) sua startup se enquadra? (pode marcar mais de uma opção) 
-        */
         [JsonRequired]
         [JsonProperty("sustainableDevelopmentObjectives")]
         public List<InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto> InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos { get; set; }
@@ -308,8 +152,7 @@ namespace PlataformaRio2C.Domain.Dtos
 
         /// <summary>Initializes a new instance of the <see cref="InnovationOrganizationApiDto"/> class.</summary>
         public InnovationOrganizationApiDto()
-        {
-        }
+        {}
 
         #region Validations
 
@@ -372,7 +215,7 @@ namespace PlataformaRio2C.Domain.Dtos
 
             if (Description == null || Description?.Length == 0)
             {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(CellPhone)), new string[] { nameof(CellPhone) }));
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(Description)), new string[] { nameof(Description) }));
             }
 
             if (ImageFile == null || ImageFile?.Length == 0)
@@ -413,6 +256,11 @@ namespace PlataformaRio2C.Domain.Dtos
             if (this.AttendeeInnovationOrganizationFounderApiDtos.Count == 0)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, "founders"), new string[] { "founders" }));
+            }
+
+            if (this.AttendeeInnovationOrganizationCompetitorApiDtos.Count == 0)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, "competingCompanies"), new string[] { "competingCompanies" }));
             }
 
             if (this.AttendeeInnovationOrganizationFounderApiDtos.Count > 0)
@@ -491,12 +339,9 @@ namespace PlataformaRio2C.Domain.Dtos
             i.ResponsibleName = "Sylvester Stallone";
             i.Email = "acmetoasters3000@gmail.com";
             i.ImageFile = "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";
-            i.PhoneNumber = "1437319489";
             i.CellPhone = "14998269754";
-            i.FoundationDate = DateTime.Today;
             i.AccumulatedRevenue = 7000;
             i.Description = "My Employee (max 600 chars)";
-            i.BusinessDefinition = "My Business definition";
             i.BusinessFocus = "My Business focus";
             i.BusinessDifferentials = "My Business differentials";
 

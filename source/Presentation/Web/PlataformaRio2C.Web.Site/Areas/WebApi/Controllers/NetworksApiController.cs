@@ -16,6 +16,7 @@ using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
@@ -25,6 +26,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 {
     /// <summary>NetworksApiController</summary>
+    [ApiExplorerSettings(IgnoreApi = true)]
     [System.Web.Http.RoutePrefix("api/v1.0/networks")]
     public class NetworksApiController : BaseApiController
     {
