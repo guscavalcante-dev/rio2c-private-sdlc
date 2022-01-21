@@ -1,7 +1,6 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @using Constants = PlataformaRio2C.Domain.Constants;
 @{
-    var editionDto = ViewBag.EditionDto as EditionDto;
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var isAudiovisualSeller = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.Industry) == true;
     var isAudiovisualBuyer = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.AudiovisualPlayerExecutive) == true;
@@ -37,7 +36,7 @@
                     </div>
                     <div class="kt-notification__item-details">
                         <div class="kt-notification__item-title text-wrap">
-                            @(string.Format(Labels.PlayersRegulationPdf, editionDto.UrlCode))
+                            @Labels.PlayersRegulationPdf
                         </div>
                     </div>
                 </a>
@@ -98,7 +97,7 @@
                     </div>
                     <div class="kt-notification__item-details">
                         <div class="kt-notification__item-title text-wrap">
-                            @(string.Format(Labels.ProducersRegulationPdf, editionDto.UrlCode))
+                            @Labels.ProducersRegulationPdf
                         </div>
                     </div>
                 </a>

@@ -222,7 +222,10 @@ var ProducersExecutivesDataTableWidget = function () {
                         //    html += '<button class="dropdown-item" onclick="ProducersExecutivesUpdate.showModal(\'' + full.Uid + '\', true);"><i class="la la-plus"></i> ' + addToEdition + '</button>';
                         //}
 
-                        html += '<button class="dropdown-item" onclick="ProducersExecutivesDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
+                        if (full.IsInCurrentEdition) {
+                            html += '<button class="dropdown-item" onclick="ProducersExecutivesDataTableWidget.showDetails(\'' + full.Uid + '\');"><i class="la la-eye"></i> ' + labels.view + '</button>';
+                        }
+
                         html += '<button class="dropdown-item" onclick="AccountsUpdateUserStatus.showModal(\'' + full.UserBaseDto.Uid + '\',\'' + !full.Active + '\');"><i class="la la-lock"></i> ' + ((full.Active) ? labels.block : labels.unblock) + '</button>';
 
                         //if (full.IsInCurrentEdition && full.IsInOtherEdition) {
