@@ -1803,7 +1803,7 @@
     <comment>Players cadastrados</comment>
   </data>
   <data name="PlayersRegulationPdf" xml:space="preserve">
-    <value>Regulamento Rodadas de Negócio (PLAYER) - Rio2C {0} (PDF)</value>
+    <value>Regulamento Rodadas de Negócio (PLAYER) - Rio2C 2022 (PDF)</value>
     
   </data>
   <data name="PlayersSelectedForEvaluation" xml:space="preserve">
@@ -1910,7 +1910,7 @@
     <comment>Produtoras cadastradas</comment>
   </data>
   <data name="ProducersRegulationPdf" xml:space="preserve">
-    <value>Regulamento Rodadas de Negócio (PARTICIPANTE) - Rio2C {0} (PDF)</value>
+    <value>Regulamento Rodadas de Negócio (PARTICIPANTE) - Rio2C 2022 (PDF)</value>
     
   </data>
   <data name="ProducersSpaceSlash" xml:space="preserve">
