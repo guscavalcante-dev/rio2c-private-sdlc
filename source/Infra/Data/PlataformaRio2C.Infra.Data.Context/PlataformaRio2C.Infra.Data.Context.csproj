@@ -79,13 +79,8 @@
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Mapping\Audiovisual\CommissionEvaluationMap.cs" />
     <Compile Include="Mapping\Audiovisual\CommissionAttendeeCollaboratorInterestMap.cs" />
-    <Compile Include="Mapping\Cartoon\CartoonProjectBibleLinkMap.cs" />
-    <Compile Include="Mapping\Cartoon\CartoonProjectLogLineMap.cs" />
     <Compile Include="Mapping\Cartoon\CartoonProjectMap.cs" />
-    <Compile Include="Mapping\Cartoon\CartoonProjectProductionPlanMap.cs" />
-    <Compile Include="Mapping\Cartoon\CartoonProjectSummaryMap.cs" />
-    <Compile Include="Mapping\Cartoon\CartoonProjectTeaserLinkMap.cs" />
-    <Compile Include="Mapping\Cartoon\CartoonProjectTitleMap.cs" />
+    <Compile Include="Mapping\Cartoon\CartoonProjectFormatMap.cs" />
     <Compile Include="Mapping\Collaborator\AttendeeCollaboratorMap.cs" />
     <Compile Include="Mapping\Collaborator\AttendeeCollaboratorTypeMap.cs" />
     <Compile Include="Mapping\Collaborator\AttendeeCollaboratorTicketMap.cs" />

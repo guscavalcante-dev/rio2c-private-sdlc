@@ -122,6 +122,8 @@
     <Compile Include="Dtos\Audiovisual\AttendeeCollaboratorAudiovisualCommissionEvaluationsWidgetDto.cs" />
     <Compile Include="Dtos\Audiovisual\CommissionAttendeeCollaboratorInterestDto.cs" />
     <Compile Include="Dtos\Audiovisual\CommissionAttendeeCollaboratorInterestsWidgetDto.cs" />
+    <Compile Include="Dtos\Cartoon\API\CartoonProjectApiDto.cs" />
+    <Compile Include="Dtos\Cartoon\API\CartoonProjectFormatApiDto.cs" />
     <Compile Include="Dtos\Innovation\AttendeeCollaboratorInnovationEvaluationsWidgetDto.cs" />
     <Compile Include="Dtos\Innovation\AttendeeCollaboratorTracksWidgetDto.cs" />
     <Compile Include="Dtos\AttendeeCollaborators\AttendeeCollaboratorSiteDetailsDto.cs" />
@@ -308,13 +310,17 @@
     <Compile Include="Entities\Audiovisual\CommissionEvaluation.cs" />
     <Compile Include="Entities\Audiovisual\CommissionAttendeeCollaboratorInterest.cs" />
     <Compile Include="Entities\Base\AggregateRoot.cs" />
+    <Compile Include="Entities\Cartoon\AttendeeCartoonProjectFormat.cs" />
+    <Compile Include="Entities\Cartoon\AttendeeCartoonProject.cs" />
     <Compile Include="Entities\Cartoon\CartoonProject.cs" />
     <Compile Include="Entities\Cartoon\CartoonProjectBibleLink.cs" />
     <Compile Include="Entities\Cartoon\CartoonProjectLogLine.cs" />
     <Compile Include="Entities\Cartoon\CartoonProjectProductionPlan.cs" />
+    <Compile Include="Entities\Cartoon\CartoonProjectMotivation.cs" />
     <Compile Include="Entities\Cartoon\CartoonProjectSummary.cs" />
     <Compile Include="Entities\Cartoon\CartoonProjectTeaserLink.cs" />
     <Compile Include="Entities\Cartoon\CartoonProjectTitle.cs" />
+    <Compile Include="Entities\Cartoon\CartoonProjectFormat.cs" />
     <Compile Include="Entities\Collaborator\AttendeeCollaborator.cs" />
     <Compile Include="Entities\Collaborator\AttendeeCollaboratorType.cs" />
     <Compile Include="Entities\Collaborator\AttendeeCollaboratorTicket.cs" />
@@ -426,6 +432,9 @@
     <Compile Include="Enums\NegotiationTypeCodes.cs" />
     <Compile Include="Enums\StatusProjectCodes.cs" />
     <Compile Include="Interfaces\IMailCollaboratorRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Cartoon\IAttendeeCartoonProjectRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Cartoon\ICartoonProjectRepository.cs" />
+    <Compile Include="Interfaces\Repositories\Cartoon\ICartoonProjectFormatRepository.cs" />
     <Compile Include="Interfaces\Repositories\Collaborators\IAttendeeCollaboratorTicketRepository.cs" />
     <Compile Include="Interfaces\Repositories\Collaborators\IAttendeeCollaboratorRepository.cs" />
     <Compile Include="Interfaces\Repositories\AttendeeOrganizations\IAttendeeOrganizationRepository.cs" />
