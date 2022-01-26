@@ -39,10 +39,10 @@ namespace PlataformaRio2C.Domain.Entities
         public string Name { get; private set; }
         public string Document { get; private set; }
         public string ServiceName { get; private set; }
-        public DateTime FoundationDate { get; private set; }
         public string Description { get; private set; }
         public string Website { get; private set; }
         public DateTimeOffset? ImageUploadDate { get; private set; }
+        public int? FoundationYear { get; private set; }
 
         public virtual ICollection<AttendeeInnovationOrganization> AttendeeInnovationOrganizations { get; private set; }
 
@@ -85,7 +85,6 @@ namespace PlataformaRio2C.Domain.Entities
             string name,
             string document,
             string serviceName,
-            DateTime foundationDate,
             string description,
             string website,
             decimal accumulatedRevenue,
@@ -115,9 +114,9 @@ namespace PlataformaRio2C.Domain.Entities
             this.Name = name;
             this.Document = document.RemoveNonNumeric();
             this.ServiceName = serviceName;
-            this.FoundationDate = foundationDate;
             this.Description = description;
             this.Website = website;
+            this.FoundationYear = businessFoundationYear;
 
             this.UpdateImageUploadDate(isImageUploaded, false);
             base.SetCreateDate(userId);
@@ -137,7 +136,6 @@ namespace PlataformaRio2C.Domain.Entities
                 presentationFileExtension,
                 wouldYouLikeParticipateBusinessRound,
                 accumulatedRevenueForLastTwelveMonths,
-                businessFoundationYear,
                 userId);
 
             this.SynchronizeAttendeeInnovationOrganizationCollaborators(
@@ -197,7 +195,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="name">The name.</param>
         /// <param name="document">The document.</param>
         /// <param name="serviceName">Name of the service.</param>
-        /// <param name="foundationDate">The foundation date.</param>
         /// <param name="description">The description.</param>
         /// <param name="website">The website.</param>
         /// <param name="accumulatedRevenue">The accumulated revenue.</param>
@@ -260,9 +257,9 @@ namespace PlataformaRio2C.Domain.Entities
             this.Name = name;
             this.Document = document.RemoveNonNumeric();
             this.ServiceName = serviceName;
-            this.FoundationDate = foundationDate;
             this.Description = description;
             this.Website = website;
+            this.FoundationYear = businessFoundationYear;
 
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             base.SetUpdateDate(userId);
@@ -282,7 +279,6 @@ namespace PlataformaRio2C.Domain.Entities
                 presentationFileExtension,
                 wouldYouLikeParticipateBusinessRound,
                 accumulatedRevenueForLastTwelveMonths,
-                businessFoundationYear,
                 userId);
 
             this.SynchronizeAttendeeInnovationOrganizationCollaborators(
@@ -390,7 +386,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="videoUrl">The video URL.</param>
         /// <param name="wouldYouLikeParticipateBusinessRound">would you like participate business round.</param>
         /// <param name="accumulatedRevenueForLastTwelveMonths">accumulated revenue for last twelve months.</param>
-        /// <param name="businessFoundationYear">business foundtaion year.</param>
         /// <param name="userId">The user identifier.</param>
         private void SynchronizeAttendeeInnovationOrganizations(
             Edition edition,
@@ -407,7 +402,6 @@ namespace PlataformaRio2C.Domain.Entities
             string presentationFileExtension,
             bool? wouldYouLikeParticipateBusinessRound,
             decimal? accumulatedRevenueForLastTwelveMonths,
-            int? businessFoundationYear,
             int userId)
         {
             if (edition == null)
@@ -444,7 +438,6 @@ namespace PlataformaRio2C.Domain.Entities
                     presentationFileExtension,
                     wouldYouLikeParticipateBusinessRound,
                     accumulatedRevenueForLastTwelveMonths,
-                    businessFoundationYear,
                     userId));
             }
         }

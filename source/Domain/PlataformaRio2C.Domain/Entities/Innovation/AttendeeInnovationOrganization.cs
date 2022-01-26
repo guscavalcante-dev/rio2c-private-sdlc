@@ -61,8 +61,7 @@ namespace PlataformaRio2C.Domain.Entities
 
         public bool? WouldYouLikeParticipateBusinessRound { get; private set; }
         public decimal? AccumulatedRevenueForLastTwelveMonths { get; private set; }
-        public int? BusinessFoundationYear { get; private set; }
-
+        
         public virtual ICollection<AttendeeInnovationOrganizationCollaborator> AttendeeInnovationOrganizationCollaborators { get; private set; }
         public virtual ICollection<AttendeeInnovationOrganizationCompetitor> AttendeeInnovationOrganizationCompetitors { get; private set; }
         public virtual ICollection<AttendeeInnovationOrganizationFounder> AttendeeInnovationOrganizationFounders { get; private set; }
@@ -90,7 +89,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="videoUrl">The video URL.</param>
         /// <param name="wouldYouLikeParticipateBusinessRound">would you like participate business round.</param>
         /// <param name="accumulatedRevenueForLastTwelveMonths">accumulated revenue for last twelve months.</param>
-        /// <param name="businessFoundationYear">business foundtaion year.</param>
         /// <param name="userId">The user identifier.</param>
         public AttendeeInnovationOrganization(
             Edition edition,
@@ -108,7 +106,6 @@ namespace PlataformaRio2C.Domain.Entities
             string presentationFileExtension,
             bool? wouldYouLikeParticipateBusinessRound,
             decimal? accumulatedRevenueForLastTwelveMonths,
-            int? businessFoundationYear,
             int userId)
         {
             this.Edition = edition;
@@ -125,8 +122,6 @@ namespace PlataformaRio2C.Domain.Entities
             this.PresentationFileExtension = presentationFileExtension;
             this.WouldYouLikeParticipateBusinessRound = wouldYouLikeParticipateBusinessRound;
             this.AccumulatedRevenueForLastTwelveMonths = accumulatedRevenueForLastTwelveMonths;
-            this.BusinessFoundationYear = businessFoundationYear;
-
             this.SetCreateDate(userId);
             this.UpdatePresentationUploadDate(isPresentationUploaded, false);
         }

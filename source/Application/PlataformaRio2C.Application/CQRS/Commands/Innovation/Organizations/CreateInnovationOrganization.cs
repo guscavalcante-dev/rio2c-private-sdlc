@@ -45,7 +45,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         public bool? WouldYouLikeParticipateBusinessRound { get; private set; }
         public decimal? AccumulatedRevenueForLastTwelveMonths { get; private set; }
-        public int? BusinessFoundationYear { get; private set; }
+        public int? FoundationYear { get; private set; }
 
         public List<AttendeeInnovationOrganizationFounderApiDto> AttendeeInnovationOrganizationFounderApiDtos { get; set; }
         public List<AttendeeInnovationOrganizationCompetitorApiDto> AttendeeInnovationOrganizationCompetitorApiDtos { get; set; }
@@ -158,7 +158,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
             this.WouldYouLikeParticipateBusinessRound = wouldYouLikeParticipateBusinessRound;
             this.AccumulatedRevenueForLastTwelveMonths = accumulatedRevenueForLastTwelveMonths;
-            this.BusinessFoundationYear = businessFoundationYear;
+            this.FoundationYear = businessFoundationYear;
         }
     }
 }

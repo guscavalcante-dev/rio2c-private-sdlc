@@ -273,7 +273,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                        cmd.Name,
                        cmd.Document,
                        cmd.ServiceName,
-                       cmd.FoundationDate,
                        cmd.Description,
                        cmd.Website,
                        cmd.AccumulatedRevenue,
@@ -297,7 +296,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                        cmd.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos,
                        cmd.WouldYouLikeParticipateBusinessRound,
                        cmd.AccumulatedRevenueForLastTwelveMonths,
-                       cmd.BusinessFoundationYear,
+                       cmd.FoundationYear,
                        cmd.UserId);
 
                 this.InnovationOrganizationRepo.Create(innovationOrganization);
@@ -339,7 +338,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                        cmd.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos,
                        cmd.WouldYouLikeParticipateBusinessRound,
                        cmd.AccumulatedRevenueForLastTwelveMonths,
-                       cmd.BusinessFoundationYear,
+                       cmd.FoundationYear,
                        cmd.UserId);
 
                 this.InnovationOrganizationRepo.Update(innovationOrganization);
