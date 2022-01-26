@@ -70,10 +70,7 @@ namespace PlataformaRio2C.Domain.Entities
             this.InnovationOrganizationSustainableDevelopmentObjectiveOption = innovationOrganizationSustainableDevelopmentObjectiveOption;
             //this.InnovationOrganizationSustainableDevelopmentObjectiveOptionId = innovationOrganizationSustainableDevelopmentObjectiveOption?.Id ?? 0;
             this.AdditionalInfo = additionalInfo?.Trim();
-
-            this.IsDeleted = false;
-            this.CreateDate = this.UpdateDate = DateTime.UtcNow;
-            this.CreateUserId = this.UpdateUserId = userId;
+            base.SetCreateDate(userId);
         }
 
         /// <summary>

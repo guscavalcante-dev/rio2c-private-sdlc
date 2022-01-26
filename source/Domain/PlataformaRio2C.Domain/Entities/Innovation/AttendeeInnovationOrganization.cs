@@ -648,9 +648,7 @@ namespace PlataformaRio2C.Domain.Entities
                 innovationOrganizationSustainableDevelopmentObjectivesOption,
                 additionalInfo,
                 userId));
-
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            base.SetUpdateDate(userId);
         }
 
         /// <summary>

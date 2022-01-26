@@ -689,9 +689,7 @@ namespace PlataformaRio2C.Domain.Entities
                     objective.AdditionalInfo,
                     userId);
             }
-
-            this.UpdateDate = DateTime.UtcNow;
-            this.UpdateUserId = userId;
+            base.SetUpdateDate(userId);
         }
 
         #endregion
