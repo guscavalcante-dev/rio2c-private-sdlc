@@ -26,6 +26,9 @@ namespace PlataformaRio2C.Domain.ApiModels
         [JsonProperty("organizationObjectives")]
         public List<ApiListItemBaseResponse> InnovationOrganizationObjectivesOptions { get; set; }
 
+        [JsonProperty("organizationSustainableDevelopmentObjectives")]
+        public List<InnovationOrganizationSustainableDevelopmentObjectivesOptionListItemApiResponse> InnovationOrganizationSustainableDevelopmentObjectivesOptions { get; set; }
+
         [JsonProperty("organizationTechnologies")]
         public List<ApiListItemBaseResponse> InnovationOrganizationTechnologyOptions { get; set; }
 

@@ -43,12 +43,17 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string PresentationFile { get; private set; }
         public string PresentationFileName { get; private set; }
 
+        public bool? WouldYouLikeParticipateBusinessRound { get; private set; }
+        public decimal? AccumulatedRevenueForLastTwelveMonths { get; private set; }
+        public int? FoundationYear { get; private set; }
+
         public List<AttendeeInnovationOrganizationFounderApiDto> AttendeeInnovationOrganizationFounderApiDtos { get; set; }
         public List<AttendeeInnovationOrganizationCompetitorApiDto> AttendeeInnovationOrganizationCompetitorApiDtos { get; set; }
         public List<InnovationOrganizationExperienceOptionApiDto> InnovationOrganizationExperienceOptionApiDtos { get; set; }
         public List<InnovationOrganizationTrackOptionApiDto> InnovationOrganizationTrackOptionApiDtos { get; set; }
         public List<InnovationOrganizationObjectivesOptionApiDto> InnovationOrganizationObjectivesOptionApiDtos { get; set; }
         public List<InnovationOrganizationTechnologyOptionApiDto> InnovationOrganizationTechnologyOptionApiDtos { get; set; }
+        public List<InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto> InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateInnovationOrganization"/> class.
@@ -81,6 +86,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="innovationOrganizationTrackOptionApiDtos">The innovation organization track option API dtos.</param>
         /// <param name="innovationOrganizationObjectivesOptionApiDtos">The innovation organization objectives option API dtos.</param>
         /// <param name="innovationOrganizationTechnologyOptionApiDtos">The innovation organization technology option API dtos.</param>
+        /// <param name="innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos">The innovation organization sustainable development objectives option API dtos.</param>
+        /// <param name="wouldYouLikeParticipateBusinessRound">would you like participate business round.</param>
+        /// <param name="accumulatedRevenueForLastTwelveMonths">accumulated revenue for last twelve months.</param>
+        /// <param name="businessFoundationYear">business foundtaion year.</param>
         public CreateInnovationOrganization(
             string name,
             string document,
@@ -109,7 +118,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             List<InnovationOrganizationExperienceOptionApiDto> innovationOrganizationExperienceOptionApiDtos,
             List<InnovationOrganizationTrackOptionApiDto> innovationOrganizationTrackOptionApiDtos,
             List<InnovationOrganizationObjectivesOptionApiDto> innovationOrganizationObjectivesOptionApiDtos,
-            List<InnovationOrganizationTechnologyOptionApiDto> innovationOrganizationTechnologyOptionApiDtos)
+            List<InnovationOrganizationTechnologyOptionApiDto> innovationOrganizationTechnologyOptionApiDtos,
+            List<InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto> innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos,
+            bool? wouldYouLikeParticipateBusinessRound,
+            decimal? accumulatedRevenueForLastTwelveMonths,
+            int? businessFoundationYear
+            )
         {
             this.Name = name;
             this.Document = document;
@@ -140,6 +154,11 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.InnovationOrganizationTrackOptionApiDtos = innovationOrganizationTrackOptionApiDtos;
             this.InnovationOrganizationObjectivesOptionApiDtos = innovationOrganizationObjectivesOptionApiDtos;
             this.InnovationOrganizationTechnologyOptionApiDtos = innovationOrganizationTechnologyOptionApiDtos;
+            this.InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos = innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos;
+
+            this.WouldYouLikeParticipateBusinessRound = wouldYouLikeParticipateBusinessRound;
+            this.AccumulatedRevenueForLastTwelveMonths = accumulatedRevenueForLastTwelveMonths;
+            this.FoundationYear = businessFoundationYear;
         }
     }
 }

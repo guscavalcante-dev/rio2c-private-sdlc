@@ -15,6 +15,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 using PlataformaRio2c.Infra.Data.FileRepository;
 using PlataformaRio2C.Domain.ApiModels;
 using PlataformaRio2C.Domain.Interfaces;
@@ -26,6 +27,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
     /// <summary>
     /// OrganizationsApiController
     /// </summary>
+    [ApiExplorerSettings(IgnoreApi = true)]
     [System.Web.Http.RoutePrefix("api/v1.0")]
     [AjaxAuthorize(Order = 1)]
     public class OrganizationsApiController : BaseApiController

@@ -58,10 +58,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.Name = innovationOrganizationApiDto.Name;
             this.Document = innovationOrganizationApiDto.Document;
             this.ServiceName = innovationOrganizationApiDto.ServiceName;
-            this.FoundationDate = innovationOrganizationApiDto.FoundationDate;
+            this.FoundationDate = DateTime.Now;
             this.AccumulatedRevenue = innovationOrganizationApiDto.AccumulatedRevenue;
             this.Description = innovationOrganizationApiDto.Description;
-            this.BusinessDefinition = innovationOrganizationApiDto.BusinessDefinition;
+            this.BusinessDefinition = "";
             this.Website = innovationOrganizationApiDto.Website;
             this.BusinessFocus = innovationOrganizationApiDto.BusinessFocus;
             this.MarketSize = innovationOrganizationApiDto.MarketSize;
@@ -71,7 +71,7 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.BusinessStage = innovationOrganizationApiDto.BusinessStage;
             this.ResponsibleName = innovationOrganizationApiDto.ResponsibleName;
             this.Email = innovationOrganizationApiDto.Email;
-            this.PhoneNumber = innovationOrganizationApiDto.PhoneNumber;
+            this.PhoneNumber = "";
             this.CellPhone = innovationOrganizationApiDto.CellPhone;
             this.PresentationFile = innovationOrganizationApiDto.PresentationFile;
 

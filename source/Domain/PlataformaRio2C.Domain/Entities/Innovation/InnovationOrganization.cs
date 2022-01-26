@@ -39,10 +39,10 @@ namespace PlataformaRio2C.Domain.Entities
         public string Name { get; private set; }
         public string Document { get; private set; }
         public string ServiceName { get; private set; }
-        public DateTime FoundationDate { get; private set; }
         public string Description { get; private set; }
         public string Website { get; private set; }
         public DateTimeOffset? ImageUploadDate { get; private set; }
+        public int? FoundationYear { get; private set; }
 
         public virtual ICollection<AttendeeInnovationOrganization> AttendeeInnovationOrganizations { get; private set; }
 
@@ -74,6 +74,10 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="innovationOrganizationObjectivesOptionApiDtos">The innovation organization objectives option API dtos.</param>
         /// <param name="innovationOrganizationTechnologyOptionApiDtos">The innovation organization technology option API dtos.</param>
         /// <param name="innovationOrganizationTrackOptionApiDtos">The innovation organization track option API dtos.</param>
+        /// <param name="innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos">The innovation organization sustainable development objectives option API dtos.</param>
+        /// <param name="wouldYouLikeParticipateBusinessRound">would you like participate business round.</param>
+        /// <param name="accumulatedRevenueForLastTwelveMonths">accumulated revenue for last twelve months.</param>
+        /// <param name="businessFoundationYear">business foundtaion year.</param>
         /// <param name="userId">The user identifier.</param>
         public InnovationOrganization(
             Edition edition,
@@ -81,7 +85,6 @@ namespace PlataformaRio2C.Domain.Entities
             string name,
             string document,
             string serviceName,
-            DateTime foundationDate,
             string description,
             string website,
             decimal accumulatedRevenue,
@@ -102,14 +105,18 @@ namespace PlataformaRio2C.Domain.Entities
             List<InnovationOrganizationObjectivesOptionApiDto> innovationOrganizationObjectivesOptionApiDtos,
             List<InnovationOrganizationTechnologyOptionApiDto> innovationOrganizationTechnologyOptionApiDtos,
             List<InnovationOrganizationTrackOptionApiDto> innovationOrganizationTrackOptionApiDtos,
+            List<InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto> innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos,
+            bool? wouldYouLikeParticipateBusinessRound,
+            decimal? accumulatedRevenueForLastTwelveMonths,
+            int? businessFoundationYear,
             int userId)
         {
             this.Name = name;
             this.Document = document.RemoveNonNumeric();
             this.ServiceName = serviceName;
-            this.FoundationDate = foundationDate;
             this.Description = description;
             this.Website = website;
+            this.FoundationYear = businessFoundationYear;
 
             this.UpdateImageUploadDate(isImageUploaded, false);
             base.SetCreateDate(userId);
@@ -127,6 +134,8 @@ namespace PlataformaRio2C.Domain.Entities
                 businessOperationalModel,
                 videoUrl,
                 presentationFileExtension,
+                wouldYouLikeParticipateBusinessRound,
+                accumulatedRevenueForLastTwelveMonths,
                 userId);
 
             this.SynchronizeAttendeeInnovationOrganizationCollaborators(
@@ -159,6 +168,11 @@ namespace PlataformaRio2C.Domain.Entities
                 innovationOrganizationTechnologyOptionApiDtos,
                 userId);
 
+            this.SynchronizeAttendeeInnovationOrganizationSustainableDevelopmentObjectives(
+               edition,
+               innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos,
+               userId); 
+
             this.SynchronizeAttendeeInnovationOrganizationTracks(
                 edition,
                 innovationOrganizationTrackOptionApiDtos,
@@ -181,7 +195,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="name">The name.</param>
         /// <param name="document">The document.</param>
         /// <param name="serviceName">Name of the service.</param>
-        /// <param name="foundationDate">The foundation date.</param>
         /// <param name="description">The description.</param>
         /// <param name="website">The website.</param>
         /// <param name="accumulatedRevenue">The accumulated revenue.</param>
@@ -202,6 +215,10 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="innovationOrganizationObjectivesOptionApiDtos">The innovation organization objectives option API dtos.</param>
         /// <param name="innovationOrganizationTechnologyOptionApiDtos">The innovation organization technology option API dtos.</param>
         /// <param name="innovationOrganizationTrackOptionApiDtos">The innovation organization track option API dtos.</param>
+        /// <param name="innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos">The innovation organization track option API dtos.</param>
+        /// <param name="wouldYouLikeParticipateBusinessRound">would you like participate business round.</param>
+        /// <param name="accumulatedRevenueForLastTwelveMonths">accumulated revenue for last twelve months.</param>
+        /// <param name="businessFoundationYear">business foundtaion year.</param>
         /// <param name="userId">The user identifier.</param>
         public void Update(
             Edition edition,
@@ -231,14 +248,18 @@ namespace PlataformaRio2C.Domain.Entities
             List<InnovationOrganizationObjectivesOptionApiDto> innovationOrganizationObjectivesOptionApiDtos,
             List<InnovationOrganizationTechnologyOptionApiDto> innovationOrganizationTechnologyOptionApiDtos,
             List<InnovationOrganizationTrackOptionApiDto> innovationOrganizationTrackOptionApiDtos,
+            List<InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto> innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos,
+            bool? wouldYouLikeParticipateBusinessRound,
+            decimal? accumulatedRevenueForLastTwelveMonths,
+            int? businessFoundationYear,
             int userId)
         {
             this.Name = name;
             this.Document = document.RemoveNonNumeric();
             this.ServiceName = serviceName;
-            this.FoundationDate = foundationDate;
             this.Description = description;
             this.Website = website;
+            this.FoundationYear = businessFoundationYear;
 
             this.UpdateImageUploadDate(isImageUploaded, isImageDeleted);
             base.SetUpdateDate(userId);
@@ -256,6 +277,8 @@ namespace PlataformaRio2C.Domain.Entities
                 businessOperationalModel,
                 videoUrl,
                 presentationFileExtension,
+                wouldYouLikeParticipateBusinessRound,
+                accumulatedRevenueForLastTwelveMonths,
                 userId);
 
             this.SynchronizeAttendeeInnovationOrganizationCollaborators(
@@ -292,6 +315,11 @@ namespace PlataformaRio2C.Domain.Entities
                 edition,
                 innovationOrganizationTrackOptionApiDtos,
                 userId);
+
+            this.SynchronizeAttendeeInnovationOrganizationSustainableDevelopmentObjectives(
+               edition,
+               innovationOrganizationSustainableDevelopmentObjectivesOptionApiDtos,
+               userId);
         }
 
         /// <summary>Determines whether this instance has image.</summary>
@@ -356,6 +384,8 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="isPresentationUploaded">if set to <c>true</c> [is presentation uploaded].</param>
         /// <param name="businessOperationalModel">The business operational model.</param>
         /// <param name="videoUrl">The video URL.</param>
+        /// <param name="wouldYouLikeParticipateBusinessRound">would you like participate business round.</param>
+        /// <param name="accumulatedRevenueForLastTwelveMonths">accumulated revenue for last twelve months.</param>
         /// <param name="userId">The user identifier.</param>
         private void SynchronizeAttendeeInnovationOrganizations(
             Edition edition,
@@ -370,6 +400,8 @@ namespace PlataformaRio2C.Domain.Entities
             string businessOperationalModel,
             string videoUrl,
             string presentationFileExtension,
+            bool? wouldYouLikeParticipateBusinessRound,
+            decimal? accumulatedRevenueForLastTwelveMonths,
             int userId)
         {
             if (edition == null)
@@ -404,6 +436,8 @@ namespace PlataformaRio2C.Domain.Entities
                     businessOperationalModel,
                     videoUrl,
                     presentationFileExtension,
+                    wouldYouLikeParticipateBusinessRound,
+                    accumulatedRevenueForLastTwelveMonths,
                     userId));
             }
         }
@@ -629,6 +663,33 @@ namespace PlataformaRio2C.Domain.Entities
 
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;
+        }
+
+        #endregion
+
+        #region Attendee Innovation Organization Sustainable Developemnt Objectives
+
+        /// <summary>
+        /// Synchronizes the attendee innovation Sustainable Development Objectives
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="innovationOrganizationSustainableDevelopmentObjectivesOptionApiDto">The innovation organization Sustainable Development Objectives option API dtos.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void SynchronizeAttendeeInnovationOrganizationSustainableDevelopmentObjectives(
+            Edition edition,
+            List<InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto> innovationOrganizationSustainableDevelopmentObjectivesOptionApiDto,
+            int userId)
+        {
+            var attendeeInnovationOrganization = this.GetAttendeeInnovationOrganizationByEditionId(edition?.Id ?? 0);
+
+            foreach (var objective in innovationOrganizationSustainableDevelopmentObjectivesOptionApiDto)
+            {
+                attendeeInnovationOrganization?.SynchronizeAttendeeInnovationOrganizationSustainableDevelopmentObjectives(
+                    objective.InnovationOrganizationSustainableDevelopmentObjectivesOption,
+                    objective.AdditionalInfo,
+                    userId);
+            }
+            base.SetUpdateDate(userId);
         }
 
         #endregion
