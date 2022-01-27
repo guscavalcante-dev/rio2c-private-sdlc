@@ -3,6 +3,7 @@ using Newtonsoft.Json.Serialization;
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Routing;
 
 namespace PlataformaRio2C.Web.Site.Areas.WebApi
@@ -13,6 +14,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi
         {            
             // Web API routes
             config.MapHttpAttributeRoutes();
+            var cors = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors();
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
