@@ -17,6 +17,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Description;
 using MediatR;
 using PlataformaRio2C.Application;
 using PlataformaRio2C.Application.CQRS.Commands;
@@ -26,6 +27,7 @@ using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 {
     /// <summary>SalesPlatformsApiController</summary>
+    [ApiExplorerSettings(IgnoreApi = true)]
     [System.Web.Http.RoutePrefix("api/v1.0/salesplatforms")]
     public class SalesPlatformsApiController : BaseApiController
     {

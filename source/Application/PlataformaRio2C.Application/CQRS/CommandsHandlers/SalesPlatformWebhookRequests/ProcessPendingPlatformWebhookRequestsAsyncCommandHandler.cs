@@ -309,7 +309,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     {
                         //TODO: Implement attendee checked in
                         var errorMessage = $"Attended checked in not implemented (Uid: {processingRequestDto.Uid}).";
-                        this.ValidationResult.Add(new ValidationError(errorMessage));
+                        currentValidationResult.Add(new ValidationError(errorMessage));
                         processingRequestDto.SalesPlatformWebhookRequest.Abort("000000007", errorMessage);
                         this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
                         continue;
@@ -318,7 +318,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     else if (salesPlatformResponse.Item1 == SalesPlatformAction.AttendeeCheckedOut)
                     {
                         var errorMessage = $"Attended checked out not implemented (Uid: {processingRequestDto.Uid}).";
-                        this.ValidationResult.Add(new ValidationError(errorMessage));
+                        currentValidationResult.Add(new ValidationError(errorMessage));
                         processingRequestDto.SalesPlatformWebhookRequest.Abort("000000008", errorMessage);
                         this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
                         continue;
@@ -326,18 +326,10 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                     // Action not mapped
                     else
                     {
-                        //TODO: Confirm this fix with Rafael Ruiz:
-                        //The "processingRequestDto.SalesPlatformWebhookRequest.Abort" is setting "IsProcessing = false",
-                        //and its throws a exception at "processingRequestDto.SalesPlatformWebhookRequest.Conclude()" (line 355) because have a "ValidateProcessing();" validation.
-
-                        //var errorMessage = $"Sales platform action not configured (Uid: {processingRequestDto.Uid}).";
-                        //this.ValidationResult.Add(new ValidationError(errorMessage));
-                        //processingRequestDto.SalesPlatformWebhookRequest.Abort("000000009", errorMessage);
-                        //this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
-                        //continue;
-
                         var errorMessage = $"Sales platform action not configured ({salesPlatformResponse.Item1}).";
                         currentValidationResult.Add(new ValidationError("000000009", errorMessage));
+                        processingRequestDto.SalesPlatformWebhookRequest.Abort("000000009", errorMessage);
+                        this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
                         continue;
                     }
                 }
@@ -346,14 +338,22 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 {
                     this.AppValidationResult.Add(currentValidationResult);
 
-                    var firstError = currentValidationResult?.Errors?.FirstOrDefault();
-                    processingRequestDto.SalesPlatformWebhookRequest.Postpone(firstError?.Code, firstError?.Message);
-                    this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
-                    continue;
+                    //Cannot set "Postpone" to current "processingRequest" which is already aborted, because the action to be performed with the current request has been defined and it is marked with "IsProcesssed = 1".
+                    //If you try to set "Postpone", an error will occur, because inside this method has a validation "ValidateProcessing()",
+                    //and this will return an exception because this request has already been processed (IsProcessed = 1).
+                    //The "Postpone" at this point only can be setted for "SalesPlatformAction.AttendeeUpdated".
+                    if (!processingRequestDto.SalesPlatformWebhookRequest.IsAborted)
+                    {
+                        var firstError = currentValidationResult?.Errors?.FirstOrDefault();
+                        processingRequestDto.SalesPlatformWebhookRequest.Postpone(firstError?.Code, firstError?.Message);
+                        this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
+                    }
                 }
-
-                processingRequestDto.SalesPlatformWebhookRequest.Conclude();
-                this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
+                else
+                {
+                    processingRequestDto.SalesPlatformWebhookRequest.Conclude();
+                    this.SalesPlatformWebhookRequestRepo.Update(processingRequestDto.SalesPlatformWebhookRequest);
+                }
 
                 #endregion
             }

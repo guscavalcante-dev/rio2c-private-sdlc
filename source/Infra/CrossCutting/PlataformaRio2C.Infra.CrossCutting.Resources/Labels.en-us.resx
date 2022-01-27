@@ -1802,7 +1802,7 @@
     <comment>Players registered</comment>
   </data>
   <data name="PlayersRegulationPdf" xml:space="preserve">
-    <value>PLAYER_One-to-One Meetings’ Regulation - Rio2C 2020 (PDF)</value>
+    <value>One-to-One Meetings’ Regulation (PLAYER) - Rio2C 2022 (PDF)</value>
     <comment>PLAYER_Regulamento Rodadas de Negócio - Rio2C 2020.pdf</comment>
   </data>
   <data name="PlayersSelectedForEvaluation" xml:space="preserve">
@@ -1909,7 +1909,7 @@
     <comment>Producers registered</comment>
   </data>
   <data name="ProducersRegulationPdf" xml:space="preserve">
-    <value>One-to-One Meetings’ Regulation - Rio2C 2020 (PDF)</value>
+    <value>One-to-One Meetings’ Regulation (PARTICIPANT) - Rio2C 2022 (PDF)</value>
     <comment>Regulamento Rodadas de Negócio - Rio2C 2020.pdf</comment>
   </data>
   <data name="ProducersSpaceSlash" xml:space="preserve">
@@ -2513,7 +2513,7 @@
     <comment>Estado</comment>
   </data>
   <data name="StepByStepForAudiovisualProjectEnrollment" xml:space="preserve">
-    <value>Step By Step For Audiovisual Project Enrollment (PDF)</value>
+    <value>Step By Step For Audiovisual Project Enrollment 2022 (PDF)</value>
   </data>
   <data name="Steps" xml:space="preserve">
     <value>Steps</value>

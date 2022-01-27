@@ -293,6 +293,14 @@
   <data name="ArrivalTime" xml:space="preserve">
     <value>Hora de Chegada</value>
   </data>
+  <data name="Associate" xml:space="preserve">
+    <value>Associar</value>
+    <comment>Associar</comment>
+  </data>
+  <data name="Associated" xml:space="preserve">
+    <value>Associado</value>
+    <comment>Associado</comment>
+  </data>
   <data name="At" xml:space="preserve">
     <value>em</value>
     <comment>em</comment>
@@ -309,6 +317,26 @@
     <value>Comissão de Audiovisual</value>
     <comment>Comissão de Audiovisual</comment>
   </data>
+  <data name="AudiovisualCommissionEvaluationEndDate" xml:space="preserve">
+    <value>Data de término da avaliação de projeto audiovisual</value>
+    <comment>Data de término da avaliação de projeto audiovisual</comment>
+  </data>
+  <data name="AudiovisualCommissionEvaluationStartDate" xml:space="preserve">
+    <value>Data de início da avaliação de projeto audiovisual</value>
+    <comment>Data de início da avaliação de projeto audiovisual</comment>
+  </data>
+  <data name="AudiovisualCommissionMaximumApprovedProjectsCount" xml:space="preserve">
+    <value>Quantidade máxima de projetos de audiovisual aprovados</value>
+    <comment>Quantidade máxima de projetos de audiovisual aprovados</comment>
+  </data>
+  <data name="AudiovisualCommissionMinimumEvaluationsCount" xml:space="preserve">
+    <value>Quantidade mínima de votos para gerar média de projeto audiovisual</value>
+    <comment>Quantidade mínima de votos para gerar média de projeto audiovisual</comment>
+  </data>
+  <data name="AudiovisualNegotiations" xml:space="preserve">
+    <value>Negociações Audiovisual</value>
+    <comment>Negociações Audiovisual</comment>
+  </data>
   <data name="AudiovisualNegotiationsCreateEndDate" xml:space="preserve">
     <value>Data de término da criação de negociações</value>
     <comment>Data de término da criação de negociações</comment>
@@ -316,6 +344,9 @@
   <data name="AudiovisualNegotiationsCreateStartDate" xml:space="preserve">
     <value>Data de início da criação de negociações</value>
     <comment>Data de início da criação de negociações</comment>
+  </data>
+  <data name="AudiovisualNegotiationsVirtualMeetingsJoinMinutes" xml:space="preserve">
+    <value>Tempo de espera para liberação da sala de reunião virtual</value>
   </data>
   <data name="AudiovisualPitchingSessions" xml:space="preserve">
     <value>Pitching de Audiovisual</value>
@@ -375,6 +406,10 @@
   <data name="Block" xml:space="preserve">
     <value>Bloquear</value>
     <comment>Bloquear</comment>
+  </data>
+  <data name="Blocked" xml:space="preserve">
+    <value>Bloqueado</value>
+    <comment>Bloqueado</comment>
   </data>
   <data name="BrandedContentSummit" xml:space="preserve">
     <value>Summit Marcas</value>
@@ -749,6 +784,14 @@
     <value>Desativado</value>
     <comment>Desativado</comment>
   </data>
+  <data name="Disassociate" xml:space="preserve">
+    <value>Desassociar</value>
+    <comment>Desassociar</comment>
+  </data>
+  <data name="Disassociated" xml:space="preserve">
+    <value>Desassociado</value>
+    <comment>Desassociado</comment>
+  </data>
   <data name="Disconnected" xml:space="preserve">
     <value>Desconectado</value>
     <comment>Desconectado</comment>
@@ -998,6 +1041,12 @@
     <value>Data de conclusão</value>
     <comment>Data de conclusão</comment>
   </data>
+  <data name="FinishedF" xml:space="preserve">
+    <value>Finalizada</value>
+  </data>
+  <data name="FinishedM" xml:space="preserve">
+    <value>Finalizado</value>
+  </data>
   <data name="FirstName" xml:space="preserve">
     <value>Primeiro nome</value>
     <comment>Primeiro nome</comment>
@@ -1005,6 +1054,9 @@
   <data name="Flight" xml:space="preserve">
     <value>Voo</value>
     <comment>Voo</comment>
+  </data>
+  <data name="FondFP" xml:space="preserve">
+    <value></value>
   </data>
   <data name="ForgotPassword" xml:space="preserve">
     <value>Esqueceu a senha</value>
@@ -1181,6 +1233,14 @@
     <value>Data de início da avaliação de projeto de inovação</value>
     <comment>Data de início da avaliação de projeto de inovação</comment>
   </data>
+  <data name="InnovationCommissionMaximumApprovedCompaniesCount" xml:space="preserve">
+    <value>Quantidade máxima de empresas aprovadas</value>
+    <comment>Quantidade máxima de empresas aprovadas</comment>
+  </data>
+  <data name="InnovationCommissionMinimumEvaluationsCount" xml:space="preserve">
+    <value>Quantidade mínima de votos para gerar média</value>
+    <comment>Quantidade mínima de votos para gerar média</comment>
+  </data>
   <data name="InnovationProjects" xml:space="preserve">
     <value>Projetos de Inovação</value>
     <comment>Projetos de Inovação</comment>
@@ -1192,6 +1252,9 @@
   <data name="InnovationProjectSubmitStartDate" xml:space="preserve">
     <value>Data de início de envio de projeto de inovação</value>
     <comment>Data de início de envio de projeto de inovação</comment>
+  </data>
+  <data name="InProgress" xml:space="preserve">
+    <value>Em andamento</value>
   </data>
   <data name="Interest" xml:space="preserve">
     <value>Interesse</value>
@@ -1257,6 +1320,10 @@
     <value>Cargos</value>
     <comment>Cargos</comment>
   </data>
+  <data name="Join" xml:space="preserve">
+    <value>Participar</value>
+    <comment>Participar</comment>
+  </data>
   <data name="Language" xml:space="preserve">
     <value>Idioma</value>
     <comment>Idioma</comment>
@@ -1272,6 +1339,9 @@
   <data name="Later" xml:space="preserve">
     <value>Depois</value>
     <comment>Depois</comment>
+  </data>
+  <data name="LeaveRoom" xml:space="preserve">
+    <value>Sair da Sala</value>
   </data>
   <data name="LectureDetails" xml:space="preserve">
     <value>Detalhes da Palestra</value>
@@ -1411,6 +1481,9 @@
     <value>Mini-biografias</value>
     <comment>Mini-biografias</comment>
   </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>Minutos</value>
+  </data>
   <data name="Music" xml:space="preserve">
     <value>Música</value>
     <comment>Música</comment>
@@ -1451,14 +1524,6 @@
     <value>Comissão de Música</value>
     <comment>Comissão de Música</comment>
   </data>
-  <data name="MusicGenre" xml:space="preserve">
-    <value>Estilo musical</value>
-    <comment>Estilo musical</comment>
-  </data>
-  <data name="MusicInstrumentName" xml:space="preserve">
-    <value>Instrumento musical</value>
-    <comment>Instrumento musical</comment>
-  </data>
   <data name="MusicCommissionEvaluationEndDate" xml:space="preserve">
     <value>Data de término da avaliação de projeto musical</value>
     <comment>Data de término da avaliação de projeto musical</comment>
@@ -1474,6 +1539,14 @@
   <data name="MusicCommissionMinimumEvaluationsCount" xml:space="preserve">
     <value>Quantidade mínima de votos para gerar média</value>
     <comment>Quantidade mínima de votos para gerar média</comment>
+  </data>
+  <data name="MusicGenre" xml:space="preserve">
+    <value>Estilo musical</value>
+    <comment>Estilo musical</comment>
+  </data>
+  <data name="MusicInstrumentName" xml:space="preserve">
+    <value>Instrumento musical</value>
+    <comment>Instrumento musical</comment>
   </data>
   <data name="MusicProjects" xml:space="preserve">
     <value>Projetos de Música</value>
@@ -1579,9 +1652,19 @@
   <data name="NotAccepted" xml:space="preserve">
     <value>Não aceito</value>
   </data>
+  <data name="NotCheckedForPitching" xml:space="preserve">
+    <value>Não participa do Pitching</value>
+    <comment>Não participa do Pitching</comment>
+  </data>
   <data name="NotInEdition" xml:space="preserve">
     <value>Fora da edição {0}</value>
     <comment>Fora da edição {0}</comment>
+  </data>
+  <data name="NotStartedF" xml:space="preserve">
+    <value>Não iniciada</value>
+  </data>
+  <data name="NotStartedM" xml:space="preserve">
+    <value>Não iniciado</value>
   </data>
   <data name="NoUserHasBeenFoundInChat" xml:space="preserve">
     <value>Nenhum usuário encontrado.</value>
@@ -1655,6 +1738,10 @@
   <data name="Or" xml:space="preserve">
     <value>ou</value>
     <comment>ou</comment>
+  </data>
+  <data name="OrganizationType" xml:space="preserve">
+    <value>Tipo de Empresa</value>
+    <comment>Tipo de Empresa</comment>
   </data>
   <data name="Others" xml:space="preserve">
     <value>Outros</value>
@@ -1803,8 +1890,8 @@
     <comment>Players cadastrados</comment>
   </data>
   <data name="PlayersRegulationPdf" xml:space="preserve">
-    <value>PLAYER_Regulamento Rodadas de Negócio - Rio2C 2020 (PDF)</value>
-    <comment>PLAYER_Regulamento Rodadas de Negócio - Rio2C 2020.pdf</comment>
+    <value>Regulamento Rodadas de Negócio (PLAYER) - Rio2C 2022 (PDF)</value>
+    
   </data>
   <data name="PlayersSelectedForEvaluation" xml:space="preserve">
     <value>Players selecionados para avaliação</value>
@@ -1902,6 +1989,10 @@
     <value>Produtoras</value>
     <comment>Produtoras</comment>
   </data>
+  <data name="ProducersExecutives" xml:space="preserve">
+    <value>Executivos das Produtoras</value>
+    <comment>Executivos das Produtoras</comment>
+  </data>
   <data name="ProducerSingle" xml:space="preserve">
     <value>Produtora</value>
   </data>
@@ -1910,8 +2001,8 @@
     <comment>Produtoras cadastradas</comment>
   </data>
   <data name="ProducersRegulationPdf" xml:space="preserve">
-    <value>Regulamento Rodadas de Negócio - Rio2C 2020 (PDF)</value>
-    <comment>Regulamento Rodadas de Negócio - Rio2C 2020.pdf</comment>
+    <value>Regulamento Rodadas de Negócio (PARTICIPANTE) - Rio2C 2022 (PDF)</value>
+    
   </data>
   <data name="ProducersSpaceSlash" xml:space="preserve">
     <value>Produtores / Empresas</value>
@@ -2520,7 +2611,7 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
     <value>Status</value>
   </data>
   <data name="StepByStepForAudiovisualProjectEnrollment" xml:space="preserve">
-    <value>Passo a passo para Inscrição de Projetos Audiovisual (PDF)</value>
+    <value>Passo a passo para Inscrição de Projetos Audiovisual 2022 (PDF)</value>
     <comment>Passo a passo para Inscrição de Projetos Audiovisual</comment>
   </data>
   <data name="Steps" xml:space="preserve">
@@ -2709,6 +2800,10 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   </data>
   <data name="TypeYourMessage" xml:space="preserve">
     <value>Digite sua mensagem</value>
+  </data>
+  <data name="Unblock" xml:space="preserve">
+    <value>Desbloquear</value>
+    <comment>Desbloquear</comment>
   </data>
   <data name="UncheckAll" xml:space="preserve">
     <value>Desmarcar todos</value>
@@ -2910,97 +3005,5 @@ Insira os mesmos dados informados para cada credencial adquirida no Sistema de V
   <data name="ZoomOut" xml:space="preserve">
     <value>Menos Zoom</value>
     <comment>Menos Zoom</comment>
-  </data>
-  <data name="AudiovisualCommissionEvaluationEndDate" xml:space="preserve">
-    <value>Data de término da avaliação de projeto audiovisual</value>
-    <comment>Data de término da avaliação de projeto audiovisual</comment>
-  </data>
-  <data name="AudiovisualCommissionEvaluationStartDate" xml:space="preserve">
-    <value>Data de início da avaliação de projeto audiovisual</value>
-    <comment>Data de início da avaliação de projeto audiovisual</comment>
-  </data>
-  <data name="AudiovisualCommissionMaximumApprovedProjectsCount" xml:space="preserve">
-    <value>Quantidade máxima de projetos de audiovisual aprovados</value>
-    <comment>Quantidade máxima de projetos de audiovisual aprovados</comment>
-  </data>
-  <data name="AudiovisualCommissionMinimumEvaluationsCount" xml:space="preserve">
-    <value>Quantidade mínima de votos para gerar média de projeto audiovisual</value>
-    <comment>Quantidade mínima de votos para gerar média de projeto audiovisual</comment>
-  </data>
-  <data name="InnovationCommissionMaximumApprovedCompaniesCount" xml:space="preserve">
-    <value>Quantidade máxima de empresas aprovadas</value>
-    <comment>Quantidade máxima de empresas aprovadas</comment>
-  </data>
-  <data name="InnovationCommissionMinimumEvaluationsCount" xml:space="preserve">
-    <value>Quantidade mínima de votos para gerar média</value>
-    <comment>Quantidade mínima de votos para gerar média</comment>
-  </data>
-  <data name="AudiovisualNegotiations" xml:space="preserve">
-    <value>Negociações Audiovisual</value>
-    <comment>Negociações Audiovisual</comment>
-  </data>
-  <data name="NotCheckedForPitching" xml:space="preserve">
-    <value>Não participa do Pitching</value>
-    <comment>Não participa do Pitching</comment>
-  </data>
-  <data name="OrganizationType" xml:space="preserve">
-    <value>Tipo de Empresa</value>
-    <comment>Tipo de Empresa</comment>
-  </data>
-  <data name="Unblock" xml:space="preserve">
-    <value>Desbloquear</value>
-    <comment>Desbloquear</comment>
-  </data>
-  <data name="Blocked" xml:space="preserve">
-    <value>Bloqueado</value>
-    <comment>Bloqueado</comment>
-  </data>
-  <data name="ProducersExecutives" xml:space="preserve">
-    <value>Executivos das Produtoras</value>
-    <comment>Executivos das Produtoras</comment>
-  </data>
-  <data name="Associate" xml:space="preserve">
-    <value>Associar</value>
-    <comment>Associar</comment>
-  </data>
-  <data name="Associated" xml:space="preserve">
-    <value>Associado</value>
-    <comment>Associado</comment>
-  </data>
-  <data name="Disassociate" xml:space="preserve">
-    <value>Desassociar</value>
-    <comment>Desassociar</comment>
-  </data>
-  <data name="Disassociated" xml:space="preserve">
-    <value>Desassociado</value>
-    <comment>Desassociado</comment>
-  </data>
-  <data name="Join" xml:space="preserve">
-    <value>Participar</value>
-    <comment>Participar</comment>
-  </data>
-  <data name="FinishedF" xml:space="preserve">
-    <value>Finalizada</value>
-  </data>
-  <data name="FinishedM" xml:space="preserve">
-    <value>Finalizado</value>
-  </data>
-  <data name="InProgress" xml:space="preserve">
-    <value>Em andamento</value>
-  </data>
-  <data name="LeaveRoom" xml:space="preserve">
-    <value>Sair da Sala</value>
-  </data>
-  <data name="NotStartedF" xml:space="preserve">
-    <value>Não iniciada</value>
-  </data>
-  <data name="NotStartedM" xml:space="preserve">
-    <value>Não iniciado</value>
-  </data>
-  <data name="AudiovisualNegotiationsVirtualMeetingsJoinMinutes" xml:space="preserve">
-    <value>Tempo de espera para liberação da sala de reunião virtual</value>
-  </data>
-  <data name="Minutes" xml:space="preserve">
-    <value>Minutos</value>
   </data>
 </root>
