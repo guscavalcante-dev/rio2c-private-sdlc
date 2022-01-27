@@ -14,10 +14,10 @@
             {
                 var listCulture = new CultureInfo(culture);
                 var nativeName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(listCulture.NativeName);
-
+                var cultureItem = culture.ToLowerInvariant();
                 <li class="kt-nav__item">
                     @*kt-nav__item--active*@
-                    <a href="@Url.Action("SetCulture", "Home", new { Area = "", culture = culture.ToLowerInvariant(), returnUrl = Request.Path })" class="kt-nav__link">
+                    <a href="/@cultureItem" class="kt-nav__link">
                         <span class="kt-nav__link-icon"><img src="~/Assets/themes/metronic/media/flags/@(CultureHelper.GetCultureFlagImage(listCulture.Name))" alt="@(nativeName)" /></span>
                         <span class="kt-nav__link-text">@(nativeName)</span>
                     </a>
