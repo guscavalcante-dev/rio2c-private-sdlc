@@ -2,6 +2,7 @@ using System.Web.Http;
 using WebActivatorEx;
 using PlataformaRio2C.Web.Site;
 using Swashbuckle.Application;
+using System.Configuration;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
@@ -20,7 +21,7 @@ namespace PlataformaRio2C.Web.Site
                         // However, there may be situations (e.g. proxy and load-balanced environments) where this does not
                         // resolve correctly. You can workaround this by providing your own code to determine the root URL.
                         //
-                        //c.RootUrl(req => GetRootUrlFromAppConfig());
+                        c.RootUrl(req => GetRootUrlFromAppConfig());
 
                         // If schemes are not explicitly provided in a Swagger 2.0 document, then the scheme used to access
                         // the docs is taken as the default. If your API supports multiple schemes and you want to be explicit
@@ -32,6 +33,7 @@ namespace PlataformaRio2C.Web.Site
                         // hold additional metadata for an API. Version and title are required but you can also provide
                         // additional fields by chaining methods off SingleApiVersion.
                         //
+ 
                         c.SingleApiVersion("v1", "PlataformaRio2C.Web.Site");
 
                         // If you want the output Swagger docs to be indented properly, enable the "PrettyPrint" option.
@@ -255,6 +257,11 @@ namespace PlataformaRio2C.Web.Site
         protected static string GetXmlCommentsPath()
         {
             return System.String.Format(@"{0}\bin\PlataformaRio2C.Web.Site.xml", System.AppDomain.CurrentDomain.BaseDirectory);
+        }
+
+        protected static string GetRootUrlFromAppConfig()
+        {
+            return ConfigurationManager.AppSettings["BaseUrl"]; ;
         }
     }
 }
