@@ -82,8 +82,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns>IQueryable&lt;AttendeeCartoonProject&gt;.</returns>
         internal static IQueryable<AttendeeCartoonProject> FindByTitleAndEditionId(this IQueryable<AttendeeCartoonProject> query, string title, int editionId)
         {
-            title = title.RemoveNonNumeric();
-
             query = query.Where(acp => acp.CartoonProject.Title == title
                                         && acp.EditionId == editionId);
 

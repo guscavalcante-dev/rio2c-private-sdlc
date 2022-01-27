@@ -55,6 +55,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="cartoonProjectFormat">The cartoon project format.</param>
         /// <param name="userId">The user identifier.</param>
         public CartoonProject(
+            Edition edition,
             string title,
             string logLine,
             string summary,
@@ -76,6 +77,10 @@ namespace PlataformaRio2C.Domain.Entities
             this.CartoonProjectFormat = cartoonProjectFormat;
 
             this.SetCreateDate(userId);
+
+            this.SynchronizeAttendeeCartoonProjects(
+                edition,
+                userId);
         }
 
         /// <summary>Initializes a new instance of the <see cref="CartoonProject"/> class.</summary>

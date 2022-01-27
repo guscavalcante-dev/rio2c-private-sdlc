@@ -6,7 +6,7 @@
 // Last Modified By : Renan Valentim
 // Last Modified On : 01-24-2022
 // ***********************************************************************
-// <copyright file="CartoonProjectBibleLinkMap.cs" company="Softo">
+// <copyright file="AttendeeCartoonProjectMap.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -16,21 +16,22 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace PlataformaRio2C.Infra.Data.Context.Mapping
 {
-    /// <summary>CartoonProjectBibleLinkMap</summary>
-    public class CartoonProjectBibleLinkMap : EntityTypeConfiguration<CartoonProjectBibleLink>
+    /// <summary>AttendeeCartoonProjectMap</summary>
+    public class AttendeeCartoonProjectMap : EntityTypeConfiguration<AttendeeCartoonProject>
     {
-        /// <summary>Initializes a new instance of the <see cref="CartoonProjectBibleLinkMap"/> class.</summary>
-        public CartoonProjectBibleLinkMap()
+        /// <summary>Initializes a new instance of the <see cref="AttendeeCartoonProjectMap"/> class.</summary>
+        public AttendeeCartoonProjectMap()
         {
-            this.ToTable("CartoonProjectBibleLinks");
+            this.ToTable("AttendeeCartoonProjects");
 
-            Property(u => u.Value)
-                .HasMaxLength(CartoonProjectBibleLink.ValueMaxLength);
+            // Relationships
+            this.HasRequired(t => t.Edition)
+                .WithMany()
+                .HasForeignKey(d => d.EditionId);
 
-            //Relationships
             this.HasRequired(t => t.CartoonProject)
-                .WithMany(e => e.CartoonProjectBibleLinks)
-                .HasForeignKey(t => t.CartoonProjectId);
+                   .WithMany(t => t.AttendeeCartoonProjects)
+                   .HasForeignKey(d => d.CartoonProjectId);
         }
     }
 }

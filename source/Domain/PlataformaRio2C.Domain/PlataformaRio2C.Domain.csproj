@@ -84,6 +84,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiModels\ApiBaseRequest.cs" />
+    <Compile Include="ApiModels\Cartoon\Requests\CartoonFiltersApiRequest.cs" />
+    <Compile Include="ApiModels\Cartoon\Responses\CartoonFiltersApiResponse.cs" />
     <Compile Include="ApiModels\Conferences\Requests\ConferencesFiltersApiRequest.cs" />
     <Compile Include="ApiModels\Conferences\Requests\ConferencesApiRequest.cs" />
     <Compile Include="ApiModels\Conferences\Requests\ConferenceApiRequest.cs" />
@@ -310,16 +312,8 @@
     <Compile Include="Entities\Audiovisual\CommissionEvaluation.cs" />
     <Compile Include="Entities\Audiovisual\CommissionAttendeeCollaboratorInterest.cs" />
     <Compile Include="Entities\Base\AggregateRoot.cs" />
-    <Compile Include="Entities\Cartoon\AttendeeCartoonProjectFormat.cs" />
     <Compile Include="Entities\Cartoon\AttendeeCartoonProject.cs" />
     <Compile Include="Entities\Cartoon\CartoonProject.cs" />
-    <Compile Include="Entities\Cartoon\CartoonProjectBibleLink.cs" />
-    <Compile Include="Entities\Cartoon\CartoonProjectLogLine.cs" />
-    <Compile Include="Entities\Cartoon\CartoonProjectProductionPlan.cs" />
-    <Compile Include="Entities\Cartoon\CartoonProjectMotivation.cs" />
-    <Compile Include="Entities\Cartoon\CartoonProjectSummary.cs" />
-    <Compile Include="Entities\Cartoon\CartoonProjectTeaserLink.cs" />
-    <Compile Include="Entities\Cartoon\CartoonProjectTitle.cs" />
     <Compile Include="Entities\Cartoon\CartoonProjectFormat.cs" />
     <Compile Include="Entities\Collaborator\AttendeeCollaborator.cs" />
     <Compile Include="Entities\Collaborator\AttendeeCollaboratorType.cs" />

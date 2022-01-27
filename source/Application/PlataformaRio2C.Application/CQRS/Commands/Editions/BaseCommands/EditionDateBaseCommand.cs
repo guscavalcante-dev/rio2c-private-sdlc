@@ -158,6 +158,36 @@ namespace PlataformaRio2C.Application.CQRS.Commands
 
         #endregion
 
+        #region Cartoon - Commissions
+
+        [Display(Name = nameof(CartoonProjectSubmitStartDate), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public DateTime? CartoonProjectSubmitStartDate { get; set; }
+
+        [Display(Name = nameof(CartoonProjectSubmitEndDate), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [GreaterThanOrEqualTo(nameof(CartoonProjectSubmitStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
+        public DateTime? CartoonProjectSubmitEndDate { get; set; }
+
+        [Display(Name = nameof(CartoonCommissionEvaluationStartDate), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public DateTime? CartoonCommissionEvaluationStartDate { get; set; }
+
+        [Display(Name = nameof(CartoonCommissionEvaluationEndDate), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        [GreaterThanOrEqualTo(nameof(CartoonCommissionEvaluationStartDate), ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "PropertyGreaterThanProperty")]
+        public DateTime? CartoonCommissionEvaluationEndDate { get; set; }
+
+        [Display(Name = nameof(CartoonCommissionMaximumApprovedProjectsCount), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public int? CartoonCommissionMaximumApprovedProjectsCount { get; set; }
+
+        [Display(Name = nameof(CartoonCommissionMinimumEvaluationsCount), ResourceType = typeof(Labels))]
+        [Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = "TheFieldIsRequired")]
+        public int? CartoonCommissionMinimumEvaluationsCount { get; set; }
+
+        #endregion
+
         /// <summary>
         /// Initializes a new instance of the <see cref="EditionDateBaseCommand"/> class.
         /// </summary>
@@ -219,6 +249,14 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.AudiovisualCommissionEvaluationEndDate = editionDto.Edition.AudiovisualCommissionEvaluationEndDate.ToBrazilTimeZone();
             this.AudiovisualCommissionMaximumApprovedProjectsCount = editionDto.Edition.AudiovisualCommissionMaximumApprovedProjectsCount;
             this.AudiovisualCommissionMinimumEvaluationsCount = editionDto.Edition.AudiovisualCommissionMinimumEvaluationsCount;
+
+            // Cartoon - Commissions
+            this.CartoonProjectSubmitStartDate = editionDto.Edition.CartoonProjectSubmitStartDate.ToBrazilTimeZone();
+            this.CartoonProjectSubmitEndDate = editionDto.Edition.CartoonProjectSubmitEndDate.ToBrazilTimeZone();
+            this.CartoonCommissionEvaluationStartDate = editionDto.Edition.CartoonCommissionEvaluationStartDate.ToBrazilTimeZone();
+            this.CartoonCommissionEvaluationEndDate = editionDto.Edition.CartoonCommissionEvaluationEndDate.ToBrazilTimeZone();
+            this.CartoonCommissionMaximumApprovedProjectsCount = editionDto.Edition.CartoonCommissionMaximumApprovedProjectsCount;
+            this.CartoonCommissionMinimumEvaluationsCount = editionDto.Edition.CartoonCommissionMinimumEvaluationsCount;
         }
     }
 }

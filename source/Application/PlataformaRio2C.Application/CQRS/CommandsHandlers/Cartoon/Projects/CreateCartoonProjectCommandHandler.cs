@@ -38,8 +38,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
     {
         private readonly IEditionRepository editionRepo;
         private readonly ICollaboratorRepository collaboratorRepo;
-        private readonly IWorkDedicationRepository workDedicationRepo;
-        private readonly IFileRepository fileRepo;
         private readonly ICartoonProjectFormatRepository cartoonProjectFormatRepo;
         private readonly IAttendeeCartoonProjectRepository attendeeCartoonProjectRepo;
 
@@ -49,7 +47,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             ICartoonProjectRepository cartoonProjectRepository,
             IEditionRepository editionRepository,
             ICollaboratorRepository collaboratorRepository,
-            IFileRepository fileRepository,
             ICartoonProjectFormatRepository cartoonProjectFormatRepository,
             IAttendeeCartoonProjectRepository attendeeCartoonProjectRepository
             )
@@ -57,7 +54,6 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.editionRepo = editionRepository;
             this.collaboratorRepo = collaboratorRepository;
-            this.fileRepo = fileRepository;
             this.cartoonProjectFormatRepo = cartoonProjectFormatRepository;
             this.attendeeCartoonProjectRepo = attendeeCartoonProjectRepository;
         }
@@ -82,7 +78,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                 return this.AppValidationResult;
             }
 
-            if (editionDto.IsInnovationProjectSubmitEnded())
+            if (editionDto.IsCartoonProjectSubmitEnded())
             {
                 this.ValidationResult.Add(new ValidationError(Messages.ProjectSubmitPeriodClosed, new string[] { "ToastrError" }));
                 this.AppValidationResult.Add(this.ValidationResult);
@@ -93,6 +89,12 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             if (existentAttendeeCartoonProject != null)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityExistsWithSameProperty, Labels.Project, Labels.Title, cmd.Title), new string[] { "ToastrError" }));
+            }
+
+            var cartoonProjectFormat = this.cartoonProjectFormatRepo.FindByUid(cmd.CartoonProjectFormatUid);
+            if (cartoonProjectFormat == null)
+            {
+                this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Format, Labels.FoundM, cmd.CartoonProjectFormatUid), new string[] { "ToastrError" }));
             }
 
             if (!this.ValidationResult.IsValid)
@@ -184,13 +186,13 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
             }
             collaboratorDto = await collaboratorRepo.FindByEmailAsync(cmd.ContactEmail, editionDto.Id);
 
-            var cartoonProjectFormat = this.cartoonProjectFormatRepo.FindByUid(cmd.CartoonProjectFormatUid);
             var cartoonProject = await this.CartoonProjectRepo.FindByTitleAsync(cmd.Title);
             if (cartoonProject == null)
             {
                 #region Creates new Cartoon Project
 
                 cartoonProject = new CartoonProject(
+                       editionDto.Edition,
                        cmd.Title,
                        cmd.Logline,
                        cmd.Summary,

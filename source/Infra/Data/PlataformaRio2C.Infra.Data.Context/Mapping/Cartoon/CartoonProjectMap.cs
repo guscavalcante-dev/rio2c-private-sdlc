@@ -24,21 +24,12 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         {
             this.ToTable("CartoonProjects");
 
-            //this.Property(t => t.TotalPlayingTime)
-            //    .HasMaxLength(CartoonProject.TotalPlayingTimeMaxLength)
-            //    .IsRequired();
-
             this.Property(t => t.EachEpisodePlayingTime)
                 .HasMaxLength(CartoonProject.EachEpisodePlayingTimeMaxLength);
 
-            //Relationships
-            //this.HasRequired(t => t.SellerAttendeeOrganization)
-            //    .WithMany(e => e.SellProjects)
-            //    .HasForeignKey(d => d.SellerAttendeeOrganizationId);
-
-            //this.HasMany(c => c.CartoonProjectTitles)
-            //      .WithRequired(t => t.CartoonProject)
-            //      .HasForeignKey(t => t.CartoonProjectId);
+            this.HasRequired(t => t.CartoonProjectFormat)
+                .WithMany()
+                .HasForeignKey(d => d.CartoonProjectFormatId);
         }
     }
 }

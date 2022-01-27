@@ -3003,4 +3003,31 @@
     <value>Minutes</value>
     <comment>Minutos</comment>
   </data>
+  <data name="CartoonCommission" xml:space="preserve">
+    <value>Cartoon Commission</value>
+  </data>
+  <data name="CartoonCommissionEvaluationEndDate" xml:space="preserve">
+    <value>Cartoon project evaluation end date</value>
+  </data>
+  <data name="CartoonCommissionEvaluationStartDate" xml:space="preserve">
+    <value>Cartoon project evaluation start date</value>
+  </data>
+  <data name="CartoonCommissionMaximumApprovedProjectsCount" xml:space="preserve">
+    <value>Cartoon commission maximum approved companies count</value>
+  </data>
+  <data name="CartoonCommissionMinimumEvaluationsCount" xml:space="preserve">
+    <value>Cartoon commission minimum evaluations count</value>
+  </data>
+  <data name="CartoonProjectSubmitEndDate" xml:space="preserve">
+    <value>Cartoon project submission end date</value>
+  </data>
+  <data name="CartoonProjectSubmitStartDate" xml:space="preserve">
+    <value>Cartoon project submission start date</value>
+  </data>
+  <data name="CartoonProject" xml:space="preserve">
+    <value>Cartoon Project</value>
+  </data>
+  <data name="CartoonProjects" xml:space="preserve">
+    <value>Cartoon Projects</value>
+  </data>
 </root>

@@ -41,44 +41,28 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         private readonly IdentityAutenticationService identityController;
         private readonly IEditionRepository editionRepo;
         private readonly ILanguageRepository languageRepo;
-        private readonly IWorkDedicationRepository workDedicationRepo;
-        private readonly IInnovationOrganizationExperienceOptionRepository innovationOrganizationExperienceOptionRepo;
-        private readonly IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepo;
-        private readonly IInnovationOrganizationTechnologyOptionRepository innovationOrganizationTechnologyOptionRepo;
-        private readonly IInnovationOrganizationObjectivesOptionRepository innovationOrganizationObjectivesOptionRepo;
+        private readonly ICartoonProjectFormatRepository cartoonProjectFormatRepo;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CartoonApiController"/> class.
+        /// Initializes a new instance of the <see cref="CartoonApiController" /> class.
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
         /// <param name="editionRepository">The edition repository.</param>
         /// <param name="languageRepository">The language repository.</param>
-        /// <param name="workDedicationRepository">The work dedication repository.</param>
-        /// <param name="innovationOrganizationExperienceOptionRepository">The innovation organization experience option repository.</param>
-        /// <param name="innovationOrganizationTrackOptionRepository">The innovation organization track option repository.</param>
-        /// <param name="innovationOrganizationTechnologyOptionRepository">The innovation organization technology option repository.</param>
-        /// <param name="innovationOrganizationObjectivesOptionRepository">The innovation organization objectives option repository.</param>
+        /// <param name="cartoonProjectFormatRepository">The cartoon project format repository.</param>
         public CartoonApiController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
             IEditionRepository editionRepository,
             ILanguageRepository languageRepository,
-            IWorkDedicationRepository workDedicationRepository,
-            IInnovationOrganizationExperienceOptionRepository innovationOrganizationExperienceOptionRepository,
-            IInnovationOrganizationTrackOptionRepository innovationOrganizationTrackOptionRepository,
-            IInnovationOrganizationTechnologyOptionRepository innovationOrganizationTechnologyOptionRepository,
-            IInnovationOrganizationObjectivesOptionRepository innovationOrganizationObjectivesOptionRepository)
+            ICartoonProjectFormatRepository cartoonProjectFormatRepository)
         {
             this.commandBus = commandBus;
             this.identityController = identityController;
             this.editionRepo = editionRepository;
             this.languageRepo = languageRepository;
-            this.workDedicationRepo = workDedicationRepository;
-            this.innovationOrganizationExperienceOptionRepo = innovationOrganizationExperienceOptionRepository;
-            this.innovationOrganizationTrackOptionRepo = innovationOrganizationTrackOptionRepository;
-            this.innovationOrganizationTechnologyOptionRepo = innovationOrganizationTechnologyOptionRepository;
-            this.innovationOrganizationObjectivesOptionRepo = innovationOrganizationObjectivesOptionRepository;
+            this.cartoonProjectFormatRepo = cartoonProjectFormatRepository;
         }
 
         /// <summary>
@@ -87,8 +71,6 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <param name="key">The key.</param>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        /// <exception cref="PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions.DomainException">
-        /// </exception>
         [HttpPost]
         [Route("createcartoonproject/{key?}")]
         public async Task<IHttpActionResult> CreateCartoonProject(string key, HttpRequestMessage request)
@@ -187,17 +169,18 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 return await Json(new { status = ApiStatus.Error, message = Messages.WeFoundAndError });
             }
 
-            return await Json(new { status = ApiStatus.Success, message = string.Format(Messages.EntityActionSuccessfull, Labels.Startup, Labels.CreatedF) });
+            return await Json(new { status = ApiStatus.Success, message = string.Format(Messages.EntityActionSuccessfull, Labels.CartoonProject, Labels.CreatedF) });
         }
 
+
         /// <summary>
-        /// Get innovation API filters
+        /// Filterses the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
         [HttpGet]
         [Route("filters")]
-        public async Task<IHttpActionResult> Filters([FromUri] InnovationFiltersApiRequest request)
+        public async Task<IHttpActionResult> Filters([FromUri] CartoonFiltersApiRequest request)
         {
             try
             {
@@ -228,52 +211,23 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
 
                 #endregion
 
-                var innovationOrganizationExperienceOptions = await this.innovationOrganizationExperienceOptionRepo.FindAllAsync();
-                var innovationOrganizationTechnologyOptions = await this.innovationOrganizationTechnologyOptionRepo.FindAllAsync();
-                var innovationOrganizationObjectivesOptions = await this.innovationOrganizationObjectivesOptionRepo.FindAllAsync();
-                var innovationOrganizationTrackOptions = await this.innovationOrganizationTrackOptionRepo.FindAllAsync();
-                var workDedications = await this.workDedicationRepo.FindAllAsync();
+                var cartoonProjectFormats = await this.cartoonProjectFormatRepo.FindAllAsync();
 
-                return await Json(new InnovationFiltersApiResponse
+                return await Json(new CartoonFiltersApiResponse
                 {
-                    InnovationOrganizationExperienceOptions = innovationOrganizationExperienceOptions.Select(ioeo => new ApiListItemBaseResponse()
+                    ProjectFormats = cartoonProjectFormats.Select(ioeo => new ApiListItemBaseResponse()
                     {
                         Uid = ioeo.Uid,
                         Name = ioeo.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
                     })?.ToList(),
 
-                    InnovationOrganizationTechnologyOptions = innovationOrganizationTechnologyOptions.Select(ioto => new ApiListItemBaseResponse()
-                    {
-                        Uid = ioto.Uid,
-                        Name = ioto.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
-                    })?.ToList(),
-
-                    InnovationOrganizationObjectivesOptions = innovationOrganizationObjectivesOptions.Select(iooo => new ApiListItemBaseResponse()
-                    {
-                        Uid = iooo.Uid,
-                        Name = iooo.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
-                    })?.ToList(),
-
-                    InnovationOrganizationTrackOptions = innovationOrganizationTrackOptions.Select(ioto => new InnovationOrganizationTrackOptionListItemApiResponse()
-                    {
-                        Uid = ioto.Uid,
-                        Name = ioto.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code),
-                        Description = ioto.GetDesctiptionTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
-                    })?.ToList(),
-
-                    WorkDedications = workDedications.Select(wd => new ApiListItemBaseResponse()
-                    {
-                        Uid = wd.Uid,
-                        Name = wd.GetNameTranslation(requestLanguage?.Code ?? defaultLanguage?.Code)
-                    })?.ToList(),
-                    
                     Status = ApiStatus.Success
                 });
             }
             catch (Exception ex)
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00004", Message = "Innovation filters api failed." } });
+                return await Json(new ApiBaseResponse { Status = ApiStatus.Error, Error = new ApiError { Code = "00004", Message = "Cartoon filters api failed." } });
             }
         }
     }
