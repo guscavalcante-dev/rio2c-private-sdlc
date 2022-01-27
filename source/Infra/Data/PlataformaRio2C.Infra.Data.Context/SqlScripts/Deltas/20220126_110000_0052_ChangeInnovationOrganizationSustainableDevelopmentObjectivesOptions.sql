@@ -1,4 +1,4 @@
---must run on deploy | test: yes, not done
+--must run on deploy | test: no, not done
 --must run on deploy | prod: yes, not done
 --possible values are: "no", "yes, not done" and "yes, done"
 
@@ -91,8 +91,6 @@ BEGIN TRY
 		BEGIN
 		INSERT [dbo].[InnovationOrganizationSustainableDevelopmentObjectivesOptions] ([Uid], [Name], [DisplayOrder], [HasAdditionalInfo], [IsDeleted], [CreateDate], [CreateUserId], [UpdateDate], [UpdateUserId], [Description]) VALUES (N'6e11b3a0-db0b-407b-aef3-ff601c42d566', N'Parcerias e Meios de Implementação', 17, 0, 0, CAST(N'2022-01-12T00:00:00.0000000-03:00' AS DateTimeOffset), 1, CAST(N'2022-01-12T00:00:00.0000000-03:00' AS DateTimeOffset), 1, N'Fortalecer os meios de implementação e revitalizar a parceria global para o desenvolvimento sustentável.')
 		END
-
-		SET IDENTITY_INSERT [dbo].[InnovationOrganizationSustainableDevelopmentObjectivesOptions] ON
 
 	COMMIT TRAN -- Transaction Success!
 END TRY
