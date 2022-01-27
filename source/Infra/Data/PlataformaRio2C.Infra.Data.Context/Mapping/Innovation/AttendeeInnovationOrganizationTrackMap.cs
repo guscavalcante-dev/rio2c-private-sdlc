@@ -32,6 +32,7 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
             this.HasRequired(t => t.InnovationOrganizationTrackOption)
                 .WithMany()
                 .HasForeignKey(d => d.InnovationOrganizationTrackOptionId);
+            this.Property(x => x.InnovationOrganizationTrackOptionId).HasColumnName("InnovationOrganizationTrackOptionId");
         }
     }
 }
