@@ -22,6 +22,8 @@ using PlataformaRio2C.Infra.CrossCutting.Identity.Service;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Exceptions;
 using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
+using PlataformaRio2C.Web.Site.Areas.WebApi.Controllers.Contracts;
+using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Configuration;
 using System.Linq;
@@ -173,6 +175,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <response code="200">OK</response>
         /// <response code="500">Internal Server Error</response>
         [Route("create-startup/{key}"), HttpPost]
+        [SwaggerResponse(System.Net.HttpStatusCode.OK)]
+        [SwaggerResponse(System.Net.HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> CreateStartup(string key,  [FromBody] InnovationOrganizationApiDto innovationOrganizationApiDto)
         {
             var validationResult = new AppValidationResult();
