@@ -907,6 +907,87 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Comissão de Cartoon.
+        /// </summary>
+        public static string CartoonCommission {
+            get {
+                return ResourceManager.GetString("CartoonCommission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de término da avaliação de projeto de cartoon.
+        /// </summary>
+        public static string CartoonCommissionEvaluationEndDate {
+            get {
+                return ResourceManager.GetString("CartoonCommissionEvaluationEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de início da avaliação de projeto de cartoon.
+        /// </summary>
+        public static string CartoonCommissionEvaluationStartDate {
+            get {
+                return ResourceManager.GetString("CartoonCommissionEvaluationStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade máxima de empresas aprovadas.
+        /// </summary>
+        public static string CartoonCommissionMaximumApprovedProjectsCount {
+            get {
+                return ResourceManager.GetString("CartoonCommissionMaximumApprovedProjectsCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade mínima de votos para gerar média.
+        /// </summary>
+        public static string CartoonCommissionMinimumEvaluationsCount {
+            get {
+                return ResourceManager.GetString("CartoonCommissionMinimumEvaluationsCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Projeto de Cartoon.
+        /// </summary>
+        public static string CartoonProject {
+            get {
+                return ResourceManager.GetString("CartoonProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Projetos de Cartoon.
+        /// </summary>
+        public static string CartoonProjects {
+            get {
+                return ResourceManager.GetString("CartoonProjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de término de envio de projeto de cartoon.
+        /// </summary>
+        public static string CartoonProjectSubmitEndDate {
+            get {
+                return ResourceManager.GetString("CartoonProjectSubmitEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de início de envio de projeto de cartoon.
+        /// </summary>
+        public static string CartoonProjectSubmitStartDate {
+            get {
+                return ResourceManager.GetString("CartoonProjectSubmitStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Celular.
         /// </summary>
         public static string CellPhone {

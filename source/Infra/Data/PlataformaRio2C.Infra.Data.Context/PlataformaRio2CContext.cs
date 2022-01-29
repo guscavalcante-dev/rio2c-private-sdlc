@@ -193,6 +193,12 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new QuizOptionMap());
             modelBuilder.Configurations.Add(new QuizAnswerMap());
 
+            // Cartoon
+            modelBuilder.Configurations.Add(new CartoonProjectMap());
+            modelBuilder.Configurations.Add(new AttendeeCartoonProjectMap());
+            modelBuilder.Configurations.Add(new CartoonProjectFormatMap());
+            
+
             base.OnModelCreating(modelBuilder);
         }
 

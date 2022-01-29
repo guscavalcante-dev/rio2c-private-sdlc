@@ -353,6 +353,7 @@
     <Compile Include="Areas\Audiovisual\Controllers\MeetingsController.cs" />
     <Compile Include="Areas\Audiovisual\Controllers\ProjectsController.cs" />
     <Compile Include="Areas\Audiovisual\AudiovisualAreaRegistration.cs" />
+    <Compile Include="Areas\Cartoon\CartoonAreaRegistration.cs" />
     <Compile Include="Areas\Innovation\Controllers\ProjectsController.cs" />
     <Compile Include="Areas\Innovation\InnovationAreaRegistration.cs" />
     <Compile Include="Areas\Music\Controllers\MusicBandController.cs" />
@@ -361,6 +362,7 @@
     <Compile Include="Areas\Player\PlayerAreaRegistration.cs" />
     <Compile Include="Areas\Producer\ProducerAreaRegistration.cs" />
     <Compile Include="Areas\WebApi\Controllers\BaseApiController.cs" />
+    <Compile Include="Areas\WebApi\Controllers\CartoonApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\Contracts\ResponseApi.cs" />
     <Compile Include="Areas\WebApi\Controllers\InnovationApiController.cs" />
     <Compile Include="Areas\WebApi\Controllers\MusicBandsApiController.cs" />
@@ -7755,6 +7757,8 @@
     <Folder Include="Areas\Audiovisual\Data\" />
     <Folder Include="Areas\Audiovisual\Views\Projects\Modals\" />
     <Folder Include="Areas\Audiovisual\Views\Shared\" />
+    <Folder Include="Areas\Cartoon\Controllers\" />
+    <Folder Include="Areas\Cartoon\Views\" />
     <Folder Include="Areas\Innovation\Data\" />
     <Folder Include="Areas\Innovation\Views\Projects\Modals\" />
     <Folder Include="Areas\Innovation\Views\Shared\" />

@@ -74,6 +74,14 @@ namespace PlataformaRio2C.Domain.Dtos
         public DateTimeOffset AudiovisualCommissionEvaluationEndDate { get; private set; }
         public int AudiovisualCommissionMinimumEvaluationsCount { get; private set; }
         public int AudiovisualCommissionMaximumApprovedProjectsCount { get; private set; }
+        
+        // Cartoon - Commissions
+        public DateTimeOffset CartoonProjectSubmitStartDate { get; private set; }
+        public DateTimeOffset CartoonProjectSubmitEndDate { get; private set; }
+        public DateTimeOffset CartoonCommissionEvaluationStartDate { get; private set; }
+        public DateTimeOffset CartoonCommissionEvaluationEndDate { get; private set; }
+        public int CartoonCommissionMinimumEvaluationsCount { get; private set; }
+        public int CartoonCommissionMaximumApprovedProjectsCount { get; private set; }
 
         #endregion
 
@@ -146,6 +154,14 @@ namespace PlataformaRio2C.Domain.Dtos
             this.AudiovisualCommissionEvaluationEndDate = entity.AudiovisualCommissionEvaluationEndDate;
             this.AudiovisualCommissionMinimumEvaluationsCount = entity.AudiovisualCommissionMinimumEvaluationsCount;
             this.AudiovisualCommissionMaximumApprovedProjectsCount = entity.AudiovisualCommissionMaximumApprovedProjectsCount;
+
+            // Cartoon - Commissions
+            this.CartoonProjectSubmitStartDate = entity.CartoonProjectSubmitStartDate;
+            this.CartoonProjectSubmitEndDate = entity.CartoonProjectSubmitEndDate;
+            this.CartoonCommissionEvaluationStartDate = entity.CartoonCommissionEvaluationStartDate;
+            this.CartoonCommissionEvaluationEndDate = entity.CartoonCommissionEvaluationEndDate;
+            this.CartoonCommissionMinimumEvaluationsCount = entity.CartoonCommissionMinimumEvaluationsCount;
+            this.CartoonCommissionMaximumApprovedProjectsCount = entity.CartoonCommissionMaximumApprovedProjectsCount;
 
             this.CreateDate = entity.CreateDate;
             this.CreateUserId = entity.CreateUserId;
@@ -397,6 +413,66 @@ namespace PlataformaRio2C.Domain.Dtos
         public bool IsAudiovisualProjectNegotiationsStarted()
         {
             return DateTime.UtcNow >= this.NegotiationStartDate;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Cartoon
+
+        #region Project Submit
+
+        /// <summary>Determines whether [is Cartoon project submit open].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is Cartoon project submit open]; otherwise, <c>false</c>.</returns>
+        public bool IsCartoonProjectSubmitOpen()
+        {
+            return DateTime.UtcNow >= this.CartoonProjectSubmitStartDate && DateTime.UtcNow <= this.CartoonProjectSubmitEndDate;
+        }
+
+        /// <summary>Determines whether [is Cartoon project submit started].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is Cartoon project submit started]; otherwise, <c>false</c>.</returns>
+        public bool IsCartoonProjectSubmitStarted()
+        {
+            return DateTime.UtcNow >= this.CartoonProjectSubmitStartDate;
+        }
+
+        /// <summary>Determines whether [is Cartoon project submit ended].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is Cartoon project submit ended]; otherwise, <c>false</c>.</returns>
+        public bool IsCartoonProjectSubmitEnded()
+        {
+            return DateTime.UtcNow > this.CartoonProjectSubmitEndDate;
+        }
+
+        #endregion
+
+        #region Project Evaluation
+
+        /// <summary>Determines whether [is Cartoon project evaluation open].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is Cartoon project evaluation open]; otherwise, <c>false</c>.</returns>
+        public bool IsCartoonProjectEvaluationOpen()
+        {
+            return DateTime.UtcNow >= this.CartoonCommissionEvaluationStartDate && DateTime.UtcNow <= this.CartoonCommissionEvaluationEndDate;
+        }
+
+        /// <summary>Determines whether [is Cartoon project evaluation started].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is Cartoon project evaluation started]; otherwise, <c>false</c>.</returns>
+        public bool IsCartoonProjectEvaluationStarted()
+        {
+            return DateTime.UtcNow >= this.CartoonCommissionEvaluationStartDate;
+        }
+
+        /// <summary>Determines whether [is Cartoon project evaluation ended].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is Cartoon project evaluation ended]; otherwise, <c>false</c>.</returns>
+        public bool IsCartoonProjectEvaluationEnded()
+        {
+            return DateTime.UtcNow > this.CartoonCommissionEvaluationEndDate;
         }
 
         #endregion

@@ -477,6 +477,33 @@
   <data name="Caption" xml:space="preserve">
     <value>Legenda:</value>
   </data>
+  <data name="CartoonCommission" xml:space="preserve">
+    <value>Comissão de Cartoon</value>
+  </data>
+  <data name="CartoonCommissionEvaluationEndDate" xml:space="preserve">
+    <value>Data de término da avaliação de projeto de cartoon</value>
+  </data>
+  <data name="CartoonCommissionEvaluationStartDate" xml:space="preserve">
+    <value>Data de início da avaliação de projeto de cartoon</value>
+  </data>
+  <data name="CartoonCommissionMaximumApprovedProjectsCount" xml:space="preserve">
+    <value>Quantidade máxima de empresas aprovadas</value>
+  </data>
+  <data name="CartoonCommissionMinimumEvaluationsCount" xml:space="preserve">
+    <value>Quantidade mínima de votos para gerar média</value>
+  </data>
+  <data name="CartoonProject" xml:space="preserve">
+    <value>Projeto de Cartoon</value>
+  </data>
+  <data name="CartoonProjects" xml:space="preserve">
+    <value>Projetos de Cartoon</value>
+  </data>
+  <data name="CartoonProjectSubmitEndDate" xml:space="preserve">
+    <value>Data de término de envio de projeto de cartoon</value>
+  </data>
+  <data name="CartoonProjectSubmitStartDate" xml:space="preserve">
+    <value>Data de início de envio de projeto de cartoon</value>
+  </data>
   <data name="CellPhone" xml:space="preserve">
     <value>Celular</value>
     <comment>Celular</comment>
@@ -1891,7 +1918,6 @@
   </data>
   <data name="PlayersRegulationPdf" xml:space="preserve">
     <value>Regulamento Rodadas de Negócio (PLAYER) - Rio2C 2022 (PDF)</value>
-    
   </data>
   <data name="PlayersSelectedForEvaluation" xml:space="preserve">
     <value>Players selecionados para avaliação</value>
@@ -2002,7 +2028,6 @@
   </data>
   <data name="ProducersRegulationPdf" xml:space="preserve">
     <value>Regulamento Rodadas de Negócio (PARTICIPANTE) - Rio2C 2022 (PDF)</value>
-    
   </data>
   <data name="ProducersSpaceSlash" xml:space="preserve">
     <value>Produtores / Empresas</value>
