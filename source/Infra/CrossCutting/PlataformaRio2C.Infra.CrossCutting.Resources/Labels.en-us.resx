@@ -494,6 +494,9 @@
   <data name="CartoonCommissionMinimumEvaluationsCount" xml:space="preserve">
     <value>Cartoon commission minimum evaluations count</value>
   </data>
+  <data name="Cartoonito" xml:space="preserve">
+    <value>Cartoonito</value>
+  </data>
   <data name="CartoonProject" xml:space="preserve">
     <value>Cartoon Project</value>
   </data>
