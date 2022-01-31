@@ -54,8 +54,8 @@ namespace PlataformaRio2C.Domain.Entities
             this.EditionId = edition?.Id ?? 0;
             this.Edition = edition;
             this.Name = name?.Trim();
-            this.StartDate = startDate.ToUtcTimeZone();
-            this.EndDate = endDate.ToEndDateTimeOffset();
+            this.StartDate = startDate;
+            this.EndDate = endDate;
 
             this.IsDeleted = false;
             this.CreateDate = this.UpdateDate = DateTime.UtcNow;
@@ -159,17 +159,17 @@ namespace PlataformaRio2C.Domain.Entities
         /// <summary>Validates the dates.</summary>
         public void ValidateDates()
         {
-            if (this.StartDate < this.Edition.StartDate || this.StartDate > this.Edition.EndDate)
+            if (this.StartDate.Date < this.Edition.StartDate.Date || this.StartDate.Date > this.Edition.EndDate.Date)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.StartDate, this.Edition.EndDate.ToBrazilTimeZone().ToShortDateString(), this.Edition.StartDate.ToBrazilTimeZone().ToShortDateString()), new string[] { "StartDate" }));
             }
 
-            if (this.EndDate < this.Edition.StartDate || this.EndDate > this.Edition.EndDate)
+            if (this.EndDate.Date < this.Edition.StartDate.Date || this.EndDate.Date > this.Edition.EndDate.Date)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenDates, Labels.EndDate, this.Edition.EndDate.ToBrazilTimeZone().ToShortDateString(), this.Edition.StartDate.ToBrazilTimeZone().ToShortDateString()), new string[] { "EndDate" }));
             }
 
-            if (this.StartDate > this.EndDate)
+            if (this.StartDate.Date > this.EndDate.Date)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyGreaterThanProperty, Labels.EndDate, Labels.StartDate), new string[] { "EndDate" }));
             }
