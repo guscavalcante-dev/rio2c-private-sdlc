@@ -2,7 +2,7 @@
     var editionDto = ViewBag.EditionDto;
     var activeEditions = ViewBag.ActiveEditions;
 }
-@if (activeEditions.Count > 1)
+@if (activeEditions?.Count > 1)
 {
     <div class="kt-header__topbar-item kt-header__topbar-item--langs" style="margin: 0;">
         <div class="kt-header__topbar-wrapper" data-offset="10px,0px">
