@@ -980,6 +980,38 @@ namespace PlataformaRio2C.Web.Admin
 
             #endregion
 
+            #region Cartoon Page Bundles
+
+            #region Commissions
+
+            bundles.Add(new ScriptBundle("~/bundles/js/cartoon.commissions.list.js").Include(
+                "~/Assets/js/cartoon/commissions/cartoon.commissions.totalcount.widget.js",
+                "~/Assets/js/cartoon/commissions/cartoon.commissions.datatable.widget.js",
+                "~/Assets/js/salesplatforms/salesplatforms.export.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/cartoon.commissions.editioncount.js").Include(
+                "~/Assets/js/cartoon/commissions/cartoon.commissions.editioncount.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/cartoon.commissions.create.js").Include(
+                "~/Assets/js/cartoon/commissions/cartoon.commissions.create.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/cartoon.commissions.details.js").Include(
+                "~/Assets/js/collaborators/collaborators.maininformation.widget.js",
+                "~/Assets/js/collaborators/collaborators.socialnetworks.widget.js",
+                "~/Assets/js/collaborators/collaborators.onboardinginfo.widget.js",
+                "~/Assets/js/cartoon/commissions/cartoon.commissions.evaluations.widget.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/cartoon.commissions.update.js").Include(
+                "~/Assets/js/cartoon/commissions/cartoon.commissions.update.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/cartoon.commissions.delete.js").Include(
+                "~/Assets/js/cartoon/commissions/cartoon.commissions.delete.js"));
+
+            #endregion
+
+            #endregion
+
             #region Logistics - Sponsors
 
             bundles.Add(new ScriptBundle("~/bundles/js/logisticsponsors.list.js").Include(

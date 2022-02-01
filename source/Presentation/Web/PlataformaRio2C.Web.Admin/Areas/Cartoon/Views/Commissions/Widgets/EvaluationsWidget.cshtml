@@ -1,0 +1,86 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model AttendeeCollaboratorCartoonEvaluationsWidgetDto
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+    var approvedAttendeeCartoonProjectIds = ViewBag.ApprovedAttendeeCartoonProjectsIds as int[];
+    bool isProjectEvaluationClosed = !editionDto.IsCartoonProjectEvaluationOpen();
+}
+
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+            @Labels.Evaluations
+        </h3>
+    </div>
+</div>
+<div class="kt-portlet__body pt-0">
+    @if (Model?.AttendeeCartoonProjectEvaluationDtos?.Any() == true)
+    {
+        <table class="table table-sm table-head-bg-brand table-body-scroll">
+            <thead class="thead-inverse">
+                <tr>
+                    <th>@Labels.Startup</th>
+                    <th class="text-center">@Labels.Grade</th>
+                    <th class="text-center">@Labels.EvaluationDate</th>
+                    <th class="text-center">@Labels.Status</th>
+                </tr>
+            </thead>
+            <tbody class="rio2c-scroll" style="max-height:230px;">
+                @foreach (var attendeeCartoonProjectEvaluationDto in Model.AttendeeCartoonProjectEvaluationDtos.OrderBy(aioeDto => aioeDto.AttendeeCartoonProjectEvaluation.CreateDate))
+                {
+                    <tr>
+                        <td class="align-middle">@(attendeeCartoonProjectEvaluationDto.CartoonProject.Name)</td>
+                        <td class="text-center align-middle">@(attendeeCartoonProjectEvaluationDto.AttendeeCartoonProjectEvaluation.Grade)</td>
+                        <td class="text-center align-middle">@(attendeeCartoonProjectEvaluationDto.AttendeeCartoonProjectEvaluation.CreateDate.ToBrazilTimeZone().ToShortDateString())</td>
+                        <td class="align-middle pb-0 mb-0">
+                            @{
+                                var icon = "fa-diagnoses";
+                                var color = "warning";
+                                var text = Labels.UnderEvaluation;
+                                if (isProjectEvaluationClosed)
+                                {
+                                    if (approvedAttendeeCartoonProjectIds.Contains(attendeeCartoonProjectEvaluationDto.AttendeeCartoonProject.Id))
+                                    {
+                                        icon = "fa-thumbs-up";
+                                        color = "success";
+                                        text = Labels.ProjectAccepted;
+                                    }
+                                    else
+                                    {
+                                        icon = "fa-thumbs-down";
+                                        color = "danger";
+                                        text = Labels.ProjectRefused;
+                                    }
+                                }
+                                <div class="col-md-12 justify-content-center text-center">
+                                    <span class="kt-widget__button" data-toggle="tooltip" title="@text">
+                                        <label class="btn btn-label-@color btn-sm w-100 mt-1">
+                                            <i class="fa @icon"></i>
+                                            <span>
+                                                @text
+                                                @if (isProjectEvaluationClosed)
+                                                {
+                                                    <b>@("(" + (attendeeCartoonProjectEvaluationDto.AttendeeCartoonProject.Grade?.ToString() ?? "-") + ")")</b>
+                                                }
+                                            </span>
+                                        </label>
+                                    </span>
+
+                                </div>}
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="row mt-75">
+            <div class="col-12">
+                <div class="myrio2c-alert-box danger mx-auto text-center">
+                    <span>@string.Format(Messages.EntityNotAction, Labels.Evaluations, Labels.FoundFP)</span>
+                </div>
+            </div>
+        </div>
+    }
+</div>

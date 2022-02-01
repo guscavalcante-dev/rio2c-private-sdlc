@@ -373,6 +373,8 @@
     <Compile Include="Areas\Audiovisual\Controllers\OrganizationsController.cs" />
     <Compile Include="Areas\Audiovisual\Controllers\ProducersExecutivesController.cs" />
     <Compile Include="Areas\Audiovisual\Controllers\ProducersController.cs" />
+    <Compile Include="Areas\Cartoon\CartoonAreaRegistration.cs" />
+    <Compile Include="Areas\Cartoon\Controllers\CommissionsController.cs" />
     <Compile Include="Areas\Innovation\Controllers\CommissionsController.cs" />
     <Compile Include="Areas\Innovation\Controllers\ProjectsController.cs" />
     <Compile Include="Areas\Innovation\InnovationAreaRegistration.cs" />
@@ -847,6 +849,13 @@
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.commission.evaluation.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.evaluators.widget.js" />
     <Content Include="Assets\js\accounts\accounts.update.userstatus.js" />
+    <Content Include="Assets\js\cartoon\commissions\cartoon.commissions.create.js" />
+    <Content Include="Assets\js\cartoon\commissions\cartoon.commissions.datatable.widget.js" />
+    <Content Include="Assets\js\cartoon\commissions\cartoon.commissions.delete.js" />
+    <Content Include="Assets\js\cartoon\commissions\cartoon.commissions.editioncount.widget.js" />
+    <Content Include="Assets\js\cartoon\commissions\cartoon.commissions.evaluations.widget.js" />
+    <Content Include="Assets\js\cartoon\commissions\cartoon.commissions.totalcount.widget.js" />
+    <Content Include="Assets\js\cartoon\commissions\cartoon.commissions.update.js" />
     <Content Include="Assets\js\collaborators\collaborators.onboardinginfo.widget.js" />
     <Content Include="Assets\js\collaborators\collaborators.socialnetworks.widget.js" />
     <Content Include="Assets\js\collaborators\collaborators.maininformation.widget.js" />
@@ -8319,6 +8328,22 @@
     <Content Include="Areas\Audiovisual\Views\Organizations\Widgets\ApiConfigurationWidget.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Organizations\Modals\UpdateApiConfigurationForm.cshtml" />
     <Content Include="Areas\Audiovisual\Views\Organizations\Modals\UpdateApiConfigurationModal.cshtml" />
+    <Content Include="Areas\Cartoon\Views\Commissions\Modals\_Form.cshtml" />
+    <Content Include="Areas\Cartoon\Views\Commissions\Modals\CreateModal.cshtml" />
+    <Content Include="Areas\Cartoon\Views\Commissions\Modals\UpdateMainInformationForm.cshtml" />
+    <Content Include="Areas\Cartoon\Views\Commissions\Modals\UpdateMainInformationModal.cshtml" />
+    <Content Include="Areas\Cartoon\Views\Commissions\Modals\UpdateModal.cshtml" />
+    <Content Include="Areas\Cartoon\Views\Commissions\Modals\UpdateSocialNetworksForm.cshtml" />
+    <Content Include="Areas\Cartoon\Views\Commissions\Modals\UpdateSocialNetworksModal.cshtml" />
+    <Content Include="Areas\Cartoon\Views\Commissions\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Areas\Cartoon\Views\Commissions\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Areas\Cartoon\Views\Commissions\Widgets\EvaluationsWidget.cshtml" />
+    <Content Include="Areas\Cartoon\Views\Commissions\Widgets\MainInformationWidget.cshtml" />
+    <Content Include="Areas\Cartoon\Views\Commissions\Widgets\TotalCountWidget.cshtml" />
+    <Content Include="Areas\Cartoon\Views\Commissions\Details.cshtml" />
+    <Content Include="Areas\Cartoon\Views\Commissions\Index.cshtml" />
+    <Content Include="Areas\Cartoon\Views\web.config" />
+    <Content Include="Areas\Cartoon\Views\_ViewStart.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
