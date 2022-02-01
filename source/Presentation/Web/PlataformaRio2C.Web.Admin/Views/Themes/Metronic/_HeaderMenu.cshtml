@@ -6,6 +6,7 @@
     var isAdminAudiovisual = adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminAudiovisual) == true;
     var isAdminMusic = adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminMusic) == true;
     var isAdminInnovation = adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminInnovation) == true;
+    var isAdminCartoon = adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminCartoon) == true;
     var isAdminEditorial = adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminEditorial) == true;
     var isAdminLogistic = adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminLogistic) == true;
     var isAdminConferences = adminAccessControlDto?.HasCollaboratorType(CollaboratorType.AdminConferences) == true;
@@ -27,17 +28,20 @@
             <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
                 <ul class="kt-menu__subnav">
                     <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "Editions", null)" aria-haspopup="true">
-                        <a href="@Url.Action("Index", "Editions", new { Area = "" })" class="kt-menu__link"><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                        <a href="@Url.Action("Index", "Editions", new { Area = "" })" class="kt-menu__link">
+                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
                             <span class="kt-menu__link-text">@Labels.Editions</span>
                         </a>
                     </li>
                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Events", null)" aria-haspopup="true">
-                        <a href="@Url.Action("Index", "Events", new { Area = "" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                        <a href="@Url.Action("Index", "Events", new { Area = "" })" class="kt-menu__link ">
+                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
                             <span class="kt-menu__link-text">@Labels.Events</span>
                         </a>
                     </li>
                     <li class="kt-menu__item @this.IsOpen(menuOpenCssClass, null, "Administrators", null)" aria-haspopup="true">
-                        <a href="@Url.Action("Index", "Administrators", new { Area = "" })" class="kt-menu__link"><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                        <a href="@Url.Action("Index", "Administrators", new { Area = "" })" class="kt-menu__link">
+                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
                             <span class="kt-menu__link-text">@Labels.Administrators</span>
                         </a>
                     </li>
@@ -103,8 +107,8 @@
                                     <a href="@Url.Action("Unscheduled", "Meetings", new { Area = "Audiovisual" })" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.UnscheduledNegotiations</span></a>
                                 </li>
                                 @*<li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "RegisterNegotiationManual", "ScheduleOneToOneMeetings", null)" aria-haspopup="true">
-                        <a href="@Url.Action("RegisterNegotiationManual", "ScheduleOneToOneMeetings", new { Area = "" })" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.ScheduleNegotiation</span></a>
-                    </li>*@
+                                        <a href="@Url.Action("RegisterNegotiationManual", "ScheduleOneToOneMeetings", new { Area = "" })" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.ScheduleNegotiation</span></a>
+                                    </li>*@
                                 <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, "SendEmailToPlayers", "Meetings", "Audiovisual")" aria-haspopup="true">
                                     <a href="@Url.Action("SendEmailToPlayers", "Meetings", new { Area = "Audiovisual" })" class="kt-menu__link "><span class="kt-menu__link-text">@Labels.SendEmailToPlayers</span></a>
                                 </li>
@@ -163,6 +167,22 @@
             </div>
         </li>
     }
+    @if (isAdminFull || isAdminCartoon)
+    {
+        @*<li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel @this.IsOpen(menuOpenCssClass, null, "Commissions,Projects", "Cartoon")" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
+            <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">@Labels.Cartoonito</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
+            <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
+                <ul class="kt-menu__subnav">
+                    <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Commissions",  "Cartoon")" aria-haspopup="true">
+                        <a href="@Url.Action("Index", "Commissions", new { Area = "Cartoon" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Commission</span></a>
+                    </li>
+                    <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Projects",  "Cartoon")" aria-haspopup="true">
+                        <a href="@Url.Action("Index", "Projects", new { Area = "Cartoon" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">@Labels.Projects</span></a>
+                    </li>
+                </ul>
+            </div>
+        </li>*@
+    }
     @if (isAdminFull || isAdminConferences)
     {
         <li class="kt-menu__item kt-menu__item--submenu kt-menu__item--rel @this.IsOpen(menuOpenCssClass, null, "Conferences,Speakers,Rooms,Pillars,Tracks,PresentationFormats,ParticipantRoles", null)" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
@@ -170,37 +190,44 @@
             <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
                 <ul class="kt-menu__subnav">
                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Conferences", null)" aria-haspopup="true">
-                        <a href="@Url.Action("Index", "Conferences", new { Area = "" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                        <a href="@Url.Action("Index", "Conferences", new { Area = "" })" class="kt-menu__link ">
+                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
                             <span class="kt-menu__link-text">@Labels.Conferences</span>
                         </a>
                     </li>
                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Speakers", null)" aria-haspopup="true">
-                        <a href="@Url.Action("Index", "Speakers", new { Area = "" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                        <a href="@Url.Action("Index", "Speakers", new { Area = "" })" class="kt-menu__link ">
+                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
                             <span class="kt-menu__link-text">@Labels.Speakers</span>
                         </a>
                     </li>
                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Rooms", null)" aria-haspopup="true">
-                        <a href="@Url.Action("Index", "Rooms", new { Area = "" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                        <a href="@Url.Action("Index", "Rooms", new { Area = "" })" class="kt-menu__link ">
+                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
                             <span class="kt-menu__link-text">@Labels.Rooms</span>
                         </a>
                     </li>
                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Pillars", null)" aria-haspopup="true">
-                        <a href="@Url.Action("Index", "Pillars", new { Area = "" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                        <a href="@Url.Action("Index", "Pillars", new { Area = "" })" class="kt-menu__link ">
+                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
                             <span class="kt-menu__link-text">@Labels.Pillars</span>
                         </a>
                     </li>
                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Tracks", null)" aria-haspopup="true">
-                        <a href="@Url.Action("Index", "Tracks", new { Area = "" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                        <a href="@Url.Action("Index", "Tracks", new { Area = "" })" class="kt-menu__link ">
+                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
                             <span class="kt-menu__link-text">@Labels.Tracks</span>
                         </a>
                     </li>
                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "PresentationFormats", null)" aria-haspopup="true">
-                        <a href="@Url.Action("Index", "PresentationFormats", new { Area = "" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                        <a href="@Url.Action("Index", "PresentationFormats", new { Area = "" })" class="kt-menu__link ">
+                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
                             <span class="kt-menu__link-text">@Labels.PresentationFormats</span>
                         </a>
                     </li>
                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "ParticipantRoles", null)" aria-haspopup="true">
-                        <a href="@Url.Action("Index", "ParticipantRoles", new { Area = "" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                        <a href="@Url.Action("Index", "ParticipantRoles", new { Area = "" })" class="kt-menu__link ">
+                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
                             <span class="kt-menu__link-text">@Labels.SpeakersRoles</span>
                         </a>
                     </li>
@@ -215,17 +242,20 @@
             <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
                 <ul class="kt-menu__subnav">
                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Logistics", null)" aria-haspopup="true">
-                        <a href="@Url.Action("Index", "Logistics", new { Area = "" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                        <a href="@Url.Action("Index", "Logistics", new { Area = "" })" class="kt-menu__link ">
+                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
                             <span class="kt-menu__link-text">@Labels.Requests</span>
                         </a>
                     </li>
                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "LogisticSponsors", null)" aria-haspopup="true">
-                        <a href="@Url.Action("Index", "LogisticSponsors", new { Area = "" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                        <a href="@Url.Action("Index", "LogisticSponsors", new { Area = "" })" class="kt-menu__link ">
+                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
                             <span class="kt-menu__link-text">@Labels.Sponsors</span>
                         </a>
                     </li>
                     <li class="kt-menu__item @this.IsOpen(menuItemOpenCssClass, null, "Places", null)" aria-haspopup="true">
-                        <a href="@Url.Action("Index", "Places", new { Area = "" })" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                        <a href="@Url.Action("Index", "Places", new { Area = "" })" class="kt-menu__link ">
+                            <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
                             <span class="kt-menu__link-text">@Labels.Places</span>
                         </a>
                     </li>

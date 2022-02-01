@@ -492,6 +492,9 @@
   <data name="CartoonCommissionMinimumEvaluationsCount" xml:space="preserve">
     <value>Quantidade mínima de votos para gerar média</value>
   </data>
+  <data name="Cartoonito" xml:space="preserve">
+    <value>Cartoonito</value>
+  </data>
   <data name="CartoonProject" xml:space="preserve">
     <value>Projeto de Cartoon</value>
   </data>

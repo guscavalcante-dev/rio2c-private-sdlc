@@ -30,6 +30,7 @@ namespace PlataformaRio2C.Domain.Entities
         public static CollaboratorType AdminLogistic = new CollaboratorType(new Guid("2141F9F7-4037-423C-81BF-7ED27520489A"), "Admin | Logistic");
         public static CollaboratorType AdminMusic = new CollaboratorType(new Guid("A838C20B-DD55-4B9D-AECB-37A7E5320DB0"), "Admin | Music");
         public static CollaboratorType AdminInnovation = new CollaboratorType(new Guid("ADF9A699-A8BC-4A1D-8971-C0AC7776D335"), "Admin | Innovation");
+        public static CollaboratorType AdminCartoon = new CollaboratorType(new Guid("C55E9C0C-2432-422C-87C6-199457A7C555"), "Admin | Cartoon");
         public static CollaboratorType AdminEditorial = new CollaboratorType(new Guid("3CC40A76-5E69-43E0-872E-2DA26C3C1434"), "Admin | Editorial");
         public static CollaboratorType AdminConferences = new CollaboratorType(new Guid("203D6BFB-3009-4E7E-8BE9-A4F02DA795BB"), "Admin | Conferences");
 
@@ -39,10 +40,12 @@ namespace PlataformaRio2C.Domain.Entities
         public static CollaboratorType AudiovisualPlayerExecutive = new CollaboratorType(new Guid("2D6F0E07-7990-458A-8207-1471DC3D1833"), "Executive | Audiovisual Player");
         public static CollaboratorType ExecutiveMusic = new CollaboratorType(new Guid("F05C6213-5CDE-46B8-A617-DF339D9903A9"), "Executive | Music");
         public static CollaboratorType ExecutiveInnovation = new CollaboratorType(new Guid("7E4909E0-3DE9-4B55-A678-3C4C277A89DA"), "Executive | Innovation");
+        public static CollaboratorType ExecutiveCartoon = new CollaboratorType(new Guid("E632C88F-73D2-4EBA-9704-408EF4397DC2"), "Executive | Cartoon");
 
         public static CollaboratorType ComissionAudiovisual = new CollaboratorType(new Guid("60AAFB26-B483-425F-BFA6-ED0D45F3CBCB"), "Commission | Audiovisual");
         public static CollaboratorType ComissionMusic = new CollaboratorType(new Guid("3633CF67-840F-4061-B480-C075A5E9F5EE"), "Commission | Music");
         public static CollaboratorType ComissionInnovation = new CollaboratorType(new Guid("758A53BB-7C3C-4B6F-967B-C6E613568586"), "Commission | Innovation");
+        public static CollaboratorType ComissionCartoon = new CollaboratorType(new Guid("A2D0F90D-EA2E-4226-A3EC-47C3360CA1C0"), "Commission | Cartoon");
 
         public static CollaboratorType Speaker = new CollaboratorType(new Guid("5DA172D8-8D4A-493B-9EEE-F544805A511F"), "Speaker");
         public static CollaboratorType Industry = new CollaboratorType(new Guid("4B0DD2CA-12AE-4357-BEC4-BA4D3820351D"), "Industry");
@@ -51,6 +54,7 @@ namespace PlataformaRio2C.Domain.Entities
         public static CollaboratorType Festvalia = new CollaboratorType(new Guid("C23C069D-0E3F-4E52-A96D-1F0ABD79E82D"), "Festvalia");
         public static CollaboratorType Music = new CollaboratorType(new Guid("1610EB14-D2E0-4B09-81F9-F904C1FF37B5"), "Music");
         public static CollaboratorType Innovation = new CollaboratorType(new Guid("E1A6AEEE-15FD-4BDB-B899-ACC462F30258"), "Innovation");
+        public static CollaboratorType Cartoon = new CollaboratorType(new Guid("A1BBA990-1A08-4381-B233-E0AECE6532DB"), "Cartoon");
 
         #endregion
 
