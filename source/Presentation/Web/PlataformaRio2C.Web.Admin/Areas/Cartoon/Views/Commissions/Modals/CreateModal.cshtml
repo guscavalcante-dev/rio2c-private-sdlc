@@ -7,11 +7,12 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Create", "Commissions", new { Area = "Innovation" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "CreateCommissionForm" }))
+                @using (Html.BeginForm("Create", "Commissions", new { Area = "Cartoon" }, FormMethod.Post, new { enctype = "multipart/form-data", id = "CreateCommissionForm" }))
                 {
-                    <div id="form-container">
-                        @Html.Partial("Modals/_Form", Model)
-                    </div>
+                <div id="form-container">
+                    @Html.Partial("Modals/_Form", Model)
+                    @*@Html.Partial("/Views/Collaborators/Forms/_TinyForm.cshtml", Model)*@
+                </div>
                 }
             </div>
             <div class="modal-footer">

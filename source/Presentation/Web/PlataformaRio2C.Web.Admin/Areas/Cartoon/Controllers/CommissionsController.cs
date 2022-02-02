@@ -318,35 +318,51 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
 
         /// <summary>Shows the create modal.</summary>
         /// <returns></returns>
+
+        //public async Task<ActionResult> ShowCreateModal()
+        //{
+        //    var cmd = new CreateTinyCollaborator();
+
+        //    return Json(new
+        //    {
+        //        status = "success",
+        //        pages = new List<dynamic>
+        //        {
+        //            new { page = this.RenderRazorViewToString("Modals/CreateModal", cmd), divIdOrClass = "#GlobalModalContainer" },
+        //        }
+        //    }, JsonRequestBehavior.AllowGet);
+        //}
         [HttpGet]
         public async Task<ActionResult> ShowCreateModal()
         {
-            CreateInnovationCollaborator cmd;
+            {
+                CreateInnovationCollaborator cmd;
 
-            try
-            {
-                cmd = new CreateInnovationCollaborator(null);
-            }
-            catch (DomainException ex)
-            {
-                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-            }
+                try
+                {
+                    cmd = new CreateInnovationCollaborator();
+                }
+                catch (DomainException ex)
+                {
+                    return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
+                }
 
-            return Json(new
-            {
-                status = "success",
-                pages = new List<dynamic>
+                return Json(new
+                {
+                    status = "success",
+                    pages = new List<dynamic>
                 {
                     new { page = this.RenderRazorViewToString("Modals/CreateModal", cmd), divIdOrClass = "#GlobalModalContainer" },
                 }
-            }, JsonRequestBehavior.AllowGet);
+                }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         /// <summary>Creates the specified collaborator.</summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> Create(CreateInnovationCollaborator cmd)
+        public async Task<ActionResult> Create(CreateTinyCollaborator cmd)
         {
             var result = new AppValidationResult();
 
@@ -358,7 +374,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    Constants.CollaboratorType.CommissionInnovation,
+                    Constants.CollaboratorType.CommissionMusic,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -378,15 +394,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
-                cmd.UpdateDropdownProperties(null);
-
                 return Json(new
                 {
                     status = "error",
                     message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("/Views/Collaborators/Forms/_TinyForm.cshtml", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -398,6 +412,58 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
 
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Member, Labels.CreatedM) });
         }
+        //public async Task<ActionResult> Create(CreateInnovationCollaborator cmd)
+        //{
+        //    var result = new AppValidationResult();
+
+        //    try
+        //    {
+        //        if (!ModelState.IsValid)
+        //        {
+        //            throw new DomainException(Messages.CorrectFormValues);
+        //        }
+
+        //        cmd.UpdatePreSendProperties(
+        //            Constants.CollaboratorType.CommissionInnovation,
+        //            this.AdminAccessControlDto.User.Id,
+        //            this.AdminAccessControlDto.User.Uid,
+        //            this.EditionDto.Id,
+        //            this.EditionDto.Uid,
+        //            this.UserInterfaceLanguage);
+        //        result = await this.CommandBus.Send(cmd);
+        //        if (!result.IsValid)
+        //        {
+        //            throw new DomainException(Messages.CorrectFormValues);
+        //        }
+        //    }
+        //    catch (DomainException ex)
+        //    {
+        //        foreach (var error in result.Errors)
+        //        {
+        //            var target = error.Target ?? "";
+        //            ModelState.AddModelError(target, error.Message);
+        //        }
+
+        //        cmd.UpdateDropdownProperties(null);
+
+        //        return Json(new
+        //        {
+        //            status = "error",
+        //            message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+        //            pages = new List<dynamic>
+        //            {
+        //                new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
+        //            }
+        //        }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Member, Labels.CreatedM) });
+        //}
 
         #endregion
 
