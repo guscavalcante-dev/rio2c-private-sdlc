@@ -106,6 +106,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ao menos um criador deve estar marcado como Responsável.
+        /// </summary>
+        public static string AtLeastOneCreatorMustBeMarkedAsResponsible {
+            get {
+                return ResourceManager.GetString("AtLeastOneCreatorMustBeMarkedAsResponsible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Substitui o destaque da lista abaixo..
         /// </summary>
         public static string AttentionHighlightsList {
@@ -1334,6 +1343,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string OneOrMoreEmailsNotSend {
             get {
                 return ResourceManager.GetString("OneOrMoreEmailsNotSend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Somente um Criador deve estar marcado como Responsável.
+        /// </summary>
+        public static string OnlyOneCreatorMustBeMarkedAsResponsible {
+            get {
+                return ResourceManager.GetString("OnlyOneCreatorMustBeMarkedAsResponsible", resourceCulture);
             }
         }
         

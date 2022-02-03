@@ -113,13 +113,6 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 }
 
                 var cmd = new CreateCartoonProject(
-                    cartoonProjectApiDto.ContactDocument,
-                    cartoonProjectApiDto.ContactFistName,
-                    cartoonProjectApiDto.ContactLastName,
-                    cartoonProjectApiDto.ContactEmail,
-                    cartoonProjectApiDto.ContactCellPhone,
-                    cartoonProjectApiDto.ContactPhoneNumber,
-                    cartoonProjectApiDto.CreatorsMiniBio,
                     cartoonProjectApiDto.NumberOfEpisodes,
                     cartoonProjectApiDto.EachEpisodePlayingTime,
                     cartoonProjectApiDto.TotalValueOfProject,
@@ -130,7 +123,9 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                     cartoonProjectApiDto.ProductionPlan,
                     cartoonProjectApiDto.ProjectBibleUrl,
                     cartoonProjectApiDto.ProjectTeaserUrl,
-                    cartoonProjectApiDto.ProjectFormatUid);
+                    cartoonProjectApiDto.ProjectFormatUid,
+                    cartoonProjectApiDto.CartoonProjectCompanyApiDto,
+                    cartoonProjectApiDto.CartoonProjectCreatorApiDtos);
 
                 cmd.UpdatePreSendProperties(
                     applicationUser.Id,
@@ -169,9 +164,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 return await Json(new { status = ApiStatus.Error, message = Messages.WeFoundAndError });
             }
 
-            return await Json(new { status = ApiStatus.Success, message = string.Format(Messages.EntityActionSuccessfull, Labels.CartoonProject, Labels.CreatedF) });
+            return await Json(new { status = ApiStatus.Success, message = string.Format(Messages.EntityActionSuccessfull, Labels.CartoonProject, Labels.CreatedM) });
         }
-
 
         /// <summary>
         /// Filterses the specified request.

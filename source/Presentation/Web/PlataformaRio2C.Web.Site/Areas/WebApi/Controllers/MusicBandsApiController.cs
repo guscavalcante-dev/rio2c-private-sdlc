@@ -50,7 +50,7 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         private readonly IUnitOfWork uow;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MusicBandsApiController" /> class.
+        /// Initializes a new instance of the <see cref="MusicBandsApiController"/> class.
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
@@ -59,6 +59,8 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
         /// <param name="musicBandTypesRepository">The music band types repository.</param>
         /// <param name="musicGenresRepository">The music genres repository.</param>
         /// <param name="targetAudiencesRepository">The target audiences repository.</param>
+        /// <param name="musicBandRepository">The music band repository.</param>
+        /// <param name="unitOfWork">The unit of work.</param>
         public MusicBandsApiController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
@@ -258,6 +260,12 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Migrates the images to aws.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
         [HttpGet]
         [Route("migrateimagestoaws")]
         public async Task<IHttpActionResult> MigrateImagesToAWS(string key, HttpRequestMessage request)
