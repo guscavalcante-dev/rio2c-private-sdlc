@@ -26,33 +26,6 @@ namespace PlataformaRio2C.Domain.Dtos
     public class CartoonProjectApiDto
     {
         [JsonRequired]
-        [JsonProperty("contactDocument")]
-        public string ContactDocument { get; set; }
-
-        [JsonRequired]
-        [JsonProperty("contactFistName")]
-        public string ContactFistName { get; set; }
-
-        [JsonRequired]
-        [JsonProperty("contactLastName")]
-        public string ContactLastName { get; set; }
-
-        [JsonRequired]
-        [JsonProperty("contactEmail")]
-        public string ContactEmail { get; set; }
-
-        [JsonRequired]
-        [JsonProperty("contactCellPhone")]
-        public string ContactCellPhone { get; set; }
-
-        [JsonProperty("contactPhoneNumber")]
-        public string ContactPhoneNumber { get; set; }
-
-        [JsonRequired]
-        [JsonProperty("creatorsMiniBio")]
-        public string CreatorsMiniBio { get; set; }
-
-        [JsonRequired]
         [JsonProperty("numberOfEpisodes")]
         public int NumberOfEpisodes { get; set; }
 
@@ -94,13 +67,21 @@ namespace PlataformaRio2C.Domain.Dtos
         [JsonProperty("projectFormatUid")]
         public Guid ProjectFormatUid { get; set; }
 
+        [JsonRequired]
+        [JsonProperty("company")]
+        public CartoonProjectCompanyApiDto CartoonProjectCompanyApiDto { get; set; }
+
+        [JsonRequired]
+        [JsonProperty("creators")]
+        public List<CartoonProjectCreatorApiDto> CartoonProjectCreatorApiDtos { get; set; }
+
         /// <summary>Initializes a new instance of the <see cref="CartoonProjectApiDto"/> class.</summary>
         public CartoonProjectApiDto()
         {
         }
 
         #region Validations
-        
+
         [JsonIgnore]
         public ValidationResult ValidationResult { get; set; }
 
@@ -113,30 +94,25 @@ namespace PlataformaRio2C.Domain.Dtos
         public bool IsValid()
         {
             this.ValidationResult = new ValidationResult();
-            this.CustomValidation();
+            this.ValidateCartoonProjectCreators();
 
             return this.ValidationResult.IsValid;
         }
 
         /// <summary>
-        /// Validates the presentation file.
+        /// Validates the cartoon project creators.
         /// </summary>
-        private void CustomValidation()
+        private void ValidateCartoonProjectCreators()
         {
-            //if (string.IsNullOrEmpty(this.PresentationFile))
-            //{
-            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(PresentationFile)), new string[] { nameof(PresentationFile) }));
-            //}
+            if (this.CartoonProjectCreatorApiDtos.Count(i => i.IsResponsible) == 0)
+            {
+                this.ValidationResult.Add(new ValidationError(Messages.AtLeastOneCreatorMustBeMarkedAsResponsible));
+            }
 
-            //if (!this.PresentationFile.IsBase64String())
-            //{
-            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityMustBeBase64, nameof(PresentationFile)), new string[] { nameof(PresentationFile) }));
-            //}
-
-            //if (!this.EnabledPresentationFileTypes.Contains(this.PresentationFile.GetBase64FileExtension()))
-            //{
-            //    this.ValidationResult.Add(new ValidationError(string.Format(Messages.FileTypeMustBe, this.EnabledPresentationFileTypes.ToString(",")), new string[] { nameof(PresentationFile) }));
-            //}
+            if (this.CartoonProjectCreatorApiDtos.Count(i => i.IsResponsible) > 1)
+            {
+                this.ValidationResult.Add(new ValidationError(Messages.OnlyOneCreatorMustBeMarkedAsResponsible));
+            }
         }
 
         #endregion
@@ -152,14 +128,6 @@ namespace PlataformaRio2C.Domain.Dtos
             CartoonProjectApiDto i = new CartoonProjectApiDto()
             {
                 Title = "Oggy and the Cockroaches",
-
-                ContactFistName = "Oggy",
-                ContactLastName = "Jack",
-                ContactDocument = "892.108.070-81",
-                ContactEmail = "renan.valentim+99@sof.to",
-                ContactCellPhone = "+55 11 998369856",
-                ContactPhoneNumber = "+55 11 37319856",
-                CreatorsMiniBio = "My MiniBio with 3000 max lenght.",
                 EachEpisodePlayingTime = "00:20:00",
                 NumberOfEpisodes = 5,
                 Logline = "My LogLine with 3000 max lenght.",
@@ -170,6 +138,43 @@ namespace PlataformaRio2C.Domain.Dtos
                 Summary = "Summary",
                 TotalValueOfProject = "US$ 10.000.000",
                 ProjectFormatUid = new Guid("44ab63de-66ba-4032-b9ec-171539413e85")
+            };
+
+            i.CartoonProjectCompanyApiDto = new CartoonProjectCompanyApiDto()
+            {
+                Name = "Xilam Animation",
+                TradeName = "Xilam Animation's Trade Name",
+                Document = "07.294.769/0001-09",
+                PhoneNumber = "(14) 99999-9999",
+                Address = "Rua Elziabeth Jesus de Freitas, 94, Avaré/SP",
+                ZipCode = "18706280",
+                ReelUrl = "www.youtube.com/my-reel-url"
+            };
+
+            i.CartoonProjectCreatorApiDtos = new List<CartoonProjectCreatorApiDto>()
+            {
+                new CartoonProjectCreatorApiDto()
+                {
+                    FirstName = "Jean-Yves",
+                    LastName = "Raimbaud",
+                    Document = "451756930",
+                    Email = "jean@xilamtv.com",
+                    CellPhone = "(14) 88888-8888",
+                    PhoneNumber = "(14) 77777-7777",
+                    MiniBio = "Jean-Yves Minibio's",
+                    IsResponsible = true
+                },
+                new CartoonProjectCreatorApiDto()
+                {
+                    FirstName = "Olivier",
+                    LastName = "Jean-Marie",
+                    Document = "451756931",
+                    Email = "oliver@xilamtv.com",
+                    CellPhone = "(14) 66666-6666",
+                    PhoneNumber = "(14) 55555-5555",
+                    MiniBio = "Olivier Minibio's",
+                    IsResponsible = false
+                },
             };
 
             return Newtonsoft.Json.JsonConvert.SerializeObject(i);

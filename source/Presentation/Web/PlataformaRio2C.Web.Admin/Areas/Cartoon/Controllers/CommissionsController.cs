@@ -273,7 +273,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
         public async Task<ActionResult> ShowTotalCountWidget()
         {
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
-                Constants.CollaboratorType.CommissionInnovation,
+                Constants.CollaboratorType.CommissionCartoon,
                 null,
                 true, 
                 this.EditionDto.Id);

@@ -80,6 +80,8 @@
     <Compile Include="Mapping\Audiovisual\CommissionEvaluationMap.cs" />
     <Compile Include="Mapping\Audiovisual\CommissionAttendeeCollaboratorInterestMap.cs" />
     <Compile Include="Mapping\Cartoon\AttendeeCartoonProjectMap.cs" />
+    <Compile Include="Mapping\Cartoon\CartoonProjectOrganizationMap.cs" />
+    <Compile Include="Mapping\Cartoon\CartoonProjectCreatorMap.cs" />
     <Compile Include="Mapping\Cartoon\CartoonProjectMap.cs" />
     <Compile Include="Mapping\Cartoon\CartoonProjectFormatMap.cs" />
     <Compile Include="Mapping\Collaborator\AttendeeCollaboratorMap.cs" />
@@ -472,6 +474,7 @@
     <Content Include="SqlScripts\Deltas\20210811_103400_0040_ChangesForInnovation.sql" />
     <Content Include="SqlScripts\Deltas\20210721_143900_0039_ChangesForInnovation.sql" />
     <Content Include="SqlScripts\Deltas\20220126_110000_0052_ChangeInnovationOrganizationSustainableDevelopmentObjectivesOptions.sql" />
+    <Content Include="SqlScripts\Deltas\20220202_133500_0054_ChangesForCartoon.sql" />
     <Content Include="SqlScripts\Deltas\20220129_134800_0053_ChangesForCollaboratorTypes.sql" />
     <Content Include="SqlScripts\Deltas\20220126_110000_0051_ChangeInnovationOrganizationTrackOptions.sql" />
     <Content Include="SqlScripts\Deltas\20220126_110000_0050_ChangesInnovationOrganization.sql" />
