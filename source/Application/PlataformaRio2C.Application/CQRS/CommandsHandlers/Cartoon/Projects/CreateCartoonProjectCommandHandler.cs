@@ -105,22 +105,25 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
             #endregion
 
-            var collaboratorDto = await collaboratorRepo.FindByEmailAsync(cmd.ContactEmail, editionDto.Id);
+            //Don't worry about cartoonProjectCreatorApiDto null validation because its validated previously by CartoonProjectApiDto.ValidateCartoonProjectCreators().
+            var cartoonProjectCreatorApiDto = cmd.CartoonProjectCreatorApiDtos.FirstOrDefault(i => i.IsResponsible);
+
+            var collaboratorDto = await collaboratorRepo.FindByEmailAsync(cartoonProjectCreatorApiDto.Email, editionDto.Id);
             if (collaboratorDto == null)
             {
                 #region Creates new Collaborator and User
 
                 var createCollaboratorCommand = new CreateTinyCollaborator();
                 createCollaboratorCommand.UpdateBaseProperties(
-                    cmd.ContactFistName,
-                    cmd.ContactLastName,
-                    cmd.ContactEmail,
-                    cmd.ContactPhoneNumber,
-                    cmd.ContactCellPhone,
-                    cmd.ContactDocument);
+                    cartoonProjectCreatorApiDto.FirstName,
+                    cartoonProjectCreatorApiDto.LastName,
+                    cartoonProjectCreatorApiDto.Email,
+                    cartoonProjectCreatorApiDto.PhoneNumber,
+                    cartoonProjectCreatorApiDto.CellPhone,
+                    cartoonProjectCreatorApiDto.Document);
 
                 createCollaboratorCommand.UpdatePreSendProperties(
-                    CollaboratorType.Innovation.Name,
+                    CollaboratorType.Cartoon.Name,
                     cmd.UserId,
                     cmd.UserUid,
                     editionDto.Id,
@@ -151,15 +154,15 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
                 var updateCollaboratorCommand = new UpdateTinyCollaborator(collaboratorDto, true);
                 updateCollaboratorCommand.UpdateBaseProperties(
-                    cmd.ContactFistName,
-                    cmd.ContactLastName,
-                    cmd.ContactEmail,
-                    cmd.ContactPhoneNumber,
-                    cmd.ContactCellPhone,
-                    cmd.ContactDocument);
+                    cartoonProjectCreatorApiDto.FirstName,
+                    cartoonProjectCreatorApiDto.LastName,
+                    cartoonProjectCreatorApiDto.Email,
+                    cartoonProjectCreatorApiDto.PhoneNumber,
+                    cartoonProjectCreatorApiDto.CellPhone,
+                    cartoonProjectCreatorApiDto.Document);
 
                 updateCollaboratorCommand.UpdatePreSendProperties(
-                    CollaboratorType.Innovation.Name,
+                    CollaboratorType.Cartoon.Name,
                     cmd.UserId,
                     cmd.UserUid,
                     editionDto.Id,
@@ -184,7 +187,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
 
                 #endregion
             }
-            collaboratorDto = await collaboratorRepo.FindByEmailAsync(cmd.ContactEmail, editionDto.Id);
+            collaboratorDto = await collaboratorRepo.FindByEmailAsync(cartoonProjectCreatorApiDto.Email, editionDto.Id);
 
             var cartoonProject = await this.CartoonProjectRepo.FindByTitleAsync(cmd.Title);
             if (cartoonProject == null)
@@ -201,6 +204,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                        cmd.EachEpisodePlayingTime,
                        cmd.TotalValueOfProject,
                        cartoonProjectFormat,
+                       cmd.CartoonProjectCompanyApiDto,
+                       cmd.CartoonProjectCreatorApiDtos,
                        cmd.UserId);
 
                 this.CartoonProjectRepo.Create(cartoonProject);
@@ -221,6 +226,8 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
                        cmd.EachEpisodePlayingTime,
                        cmd.TotalValueOfProject,
                        cartoonProjectFormat,
+                       cmd.CartoonProjectCompanyApiDto,
+                       cmd.CartoonProjectCreatorApiDtos,
                        cmd.UserId);
 
                 this.CartoonProjectRepo.Update(cartoonProject);

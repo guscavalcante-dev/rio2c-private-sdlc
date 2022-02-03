@@ -1519,6 +1519,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Motivação Criativa.
+        /// </summary>
+        public static string CreativeMotivation {
+            get {
+                return ResourceManager.GetString("CreativeMotivation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Curadoria.
         /// </summary>
         public static string Curatorship {
@@ -4948,6 +4957,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         public static string Recorders {
             get {
                 return ResourceManager.GetString("Recorders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reel.
+        /// </summary>
+        public static string ReelUrl {
+            get {
+                return ResourceManager.GetString("ReelUrl", resourceCulture);
             }
         }
         

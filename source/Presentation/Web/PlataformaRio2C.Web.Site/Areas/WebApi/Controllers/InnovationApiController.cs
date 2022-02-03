@@ -202,7 +202,6 @@ namespace PlataformaRio2C.Web.Site.Areas.WebApi.Controllers
                 }
 
                 #endregion
-
                 
                 if (innovationOrganizationApiDto == null)
                 {

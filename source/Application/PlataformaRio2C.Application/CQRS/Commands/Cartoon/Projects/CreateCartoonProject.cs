@@ -21,13 +21,6 @@ namespace PlataformaRio2C.Application.CQRS.Commands
     /// <summary>CreateCartoonProject</summary>
     public class CreateCartoonProject : BaseCommand
     {
-        public string ContactDocument { get; private set; }
-        public string ContactFistName { get; private set; }
-        public string ContactLastName { get; private set; }
-        public string ContactEmail { get; private set; }
-        public string ContactCellPhone { get; private set; }
-        public string ContactPhoneNumber { get; private set; }
-        public string CreatorsMiniBio { get; private set; }
         public int NumberOfEpisodes { get; private set; }
         public string EachEpisodePlayingTime { get; private set; }
         public string TotalValueOfProject { get; private set; }
@@ -40,16 +33,12 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         public string ProjectTeaserUrl { get; private set; }
         public Guid CartoonProjectFormatUid { get; private set; }
 
+        public CartoonProjectCompanyApiDto CartoonProjectCompanyApiDto { get; private set; }
+        public List<CartoonProjectCreatorApiDto> CartoonProjectCreatorApiDtos { get; private set; }
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateCartoonProject" /> class.
+        /// Initializes a new instance of the <see cref="CreateCartoonProject"/> class.
         /// </summary>
-        /// <param name="contactDocument">The contact document.</param>
-        /// <param name="contactFistName">Name of the contact fist.</param>
-        /// <param name="contactLastName">Last name of the contact.</param>
-        /// <param name="contactEmail">The contact email.</param>
-        /// <param name="contactCellPhone">The contact cell phone.</param>
-        /// <param name="contactPhoneNumber">The contact phone number.</param>
-        /// <param name="creatorsMiniBio">The creators mini bio.</param>
         /// <param name="numberOfEpisodes">The number of episodes.</param>
         /// <param name="eachEpisodePlayingTime">The each episode playing time.</param>
         /// <param name="totalValueOfProject">The total value of project.</param>
@@ -61,14 +50,9 @@ namespace PlataformaRio2C.Application.CQRS.Commands
         /// <param name="projectBibleUrl">The project bible URL.</param>
         /// <param name="projectTeaserUrl">The project teaser URL.</param>
         /// <param name="cartoonProjectFormatUid">The cartoon project format uid.</param>
+        /// <param name="cartoonProjectCompanyApiDto">The cartoon project company API dto.</param>
+        /// <param name="cartoonProjectCreatorApiDtos">The cartoon project creator API dtos.</param>
         public CreateCartoonProject(
-            string contactDocument,
-            string contactFistName,
-            string contactLastName,
-            string contactEmail,
-            string contactCellPhone,
-            string contactPhoneNumber,
-            string creatorsMiniBio,
             int numberOfEpisodes,
             string eachEpisodePlayingTime,
             string totalValueOfProject,
@@ -79,15 +63,10 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             string productionPlan,
             string projectBibleUrl,
             string projectTeaserUrl,
-            Guid cartoonProjectFormatUid)
+            Guid cartoonProjectFormatUid,
+            CartoonProjectCompanyApiDto cartoonProjectCompanyApiDto,
+            List<CartoonProjectCreatorApiDto> cartoonProjectCreatorApiDtos)
         {
-            this.ContactDocument = contactDocument;
-            this.ContactFistName = contactFistName;
-            this.ContactLastName = contactLastName;
-            this.ContactEmail = contactEmail;
-            this.ContactCellPhone = contactCellPhone;
-            this.ContactPhoneNumber = contactPhoneNumber;
-            this.CreatorsMiniBio = creatorsMiniBio;
             this.NumberOfEpisodes = numberOfEpisodes;
             this.EachEpisodePlayingTime = eachEpisodePlayingTime;
             this.TotalValueOfProject = totalValueOfProject;
@@ -99,6 +78,8 @@ namespace PlataformaRio2C.Application.CQRS.Commands
             this.ProjectBibleUrl = projectBibleUrl;
             this.ProjectTeaserUrl = projectTeaserUrl;
             this.CartoonProjectFormatUid = cartoonProjectFormatUid;
+            this.CartoonProjectCompanyApiDto = cartoonProjectCompanyApiDto;
+            this.CartoonProjectCreatorApiDtos = cartoonProjectCreatorApiDtos;
         }
     }
 }
