@@ -319,19 +319,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
         /// <summary>Shows the create modal.</summary>
         /// <returns></returns>
 
-        //public async Task<ActionResult> ShowCreateModal()
-        //{
-        //    var cmd = new CreateTinyCollaborator();
-
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Modals/CreateModal", cmd), divIdOrClass = "#GlobalModalContainer" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
         [HttpGet]
         public async Task<ActionResult> ShowCreateModal()
         {
