@@ -24,8 +24,23 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         {
             this.ToTable("CartoonProjects");
 
+            this.Property(t => t.Title)
+                .HasMaxLength(CartoonProject.TitleMaxLength);
+
+            this.Property(t => t.LogLine)
+                .HasMaxLength(CartoonProject.LogLineMaxLength);
+
+            this.Property(t => t.Summary)
+                .HasMaxLength(CartoonProject.SummaryMaxLength);
+
+            this.Property(t => t.Motivation)
+                .HasMaxLength(CartoonProject.MotivationMaxLength);
+
             this.Property(t => t.EachEpisodePlayingTime)
                 .HasMaxLength(CartoonProject.EachEpisodePlayingTimeMaxLength);
+
+            this.Property(t => t.TotalValueOfProject)
+                .HasMaxLength(CartoonProject.TotalValueOfProjectMaxLength);
 
             this.HasRequired(t => t.CartoonProjectFormat)
                 .WithMany()

@@ -197,7 +197,8 @@ namespace PlataformaRio2C.Infra.Data.Context
             modelBuilder.Configurations.Add(new CartoonProjectMap());
             modelBuilder.Configurations.Add(new AttendeeCartoonProjectMap());
             modelBuilder.Configurations.Add(new CartoonProjectFormatMap());
-            
+            modelBuilder.Configurations.Add(new CartoonProjectCreatorMap());
+            modelBuilder.Configurations.Add(new CartoonProjectOrganizationMap());
 
             base.OnModelCreating(modelBuilder);
         }

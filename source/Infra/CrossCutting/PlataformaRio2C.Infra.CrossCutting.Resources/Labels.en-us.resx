@@ -725,6 +725,9 @@
   <data name="CreateProject" xml:space="preserve">
     <value>Create Project</value>
   </data>
+  <data name="CreativeMotivation" xml:space="preserve">
+    <value>Creative Motivation</value>
+  </data>
   <data name="Curatorship" xml:space="preserve">
     <value>Curatorship</value>
     <comment>Curadoria</comment>
@@ -2176,6 +2179,9 @@
   <data name="Recorders" xml:space="preserve">
     <value>Recorders</value>
     <comment>Gravadoras</comment>
+  </data>
+  <data name="ReelUrl" xml:space="preserve">
+    <value>Reel</value>
   </data>
   <data name="Refuse" xml:space="preserve">
     <value>Refuse</value>

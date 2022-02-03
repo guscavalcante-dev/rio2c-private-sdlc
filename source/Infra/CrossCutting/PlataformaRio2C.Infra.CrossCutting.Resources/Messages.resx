@@ -135,6 +135,9 @@
   <data name="AddressIsRequired" xml:space="preserve">
     <value>Endereço obrigatório.</value>
   </data>
+  <data name="AtLeastOneCreatorMustBeMarkedAsResponsible" xml:space="preserve">
+    <value>Ao menos um criador deve estar marcado como Responsável</value>
+  </data>
   <data name="AttentionHighlightsList" xml:space="preserve">
     <value>Substitui o destaque da lista abaixo.</value>
     <comment>Substitui o destaque da lista abaixo.</comment>
@@ -630,6 +633,9 @@
   <data name="OneOrMoreEmailsNotSend" xml:space="preserve">
     <value>Um ou mais e-mails não foram enviados, por favor verifique o campo “{0}” para identificar os que não foram enviados</value>
     <comment>Um ou mais e-mails de convite não foram enviados, por favor verifique o campo “{0}” para identificar os que não foram enviados</comment>
+  </data>
+  <data name="OnlyOneCreatorMustBeMarkedAsResponsible" xml:space="preserve">
+    <value>Somente um Criador deve estar marcado como Responsável</value>
   </data>
   <data name="OutOfEvaluationPeriod" xml:space="preserve">
     <value>Fora do período de avaliação.</value>
