@@ -361,6 +361,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
         /// <summary>Creates the specified collaborator.</summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
+
         [HttpPost]
         public async Task<ActionResult> Create(CreateTinyCollaborator cmd)
         {
@@ -374,7 +375,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    Constants.CollaboratorType.CommissionMusic,
+                    Constants.CollaboratorType.CommissionCartoon,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -412,59 +413,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
 
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Member, Labels.CreatedM) });
         }
-        //public async Task<ActionResult> Create(CreateInnovationCollaborator cmd)
-        //{
-        //    var result = new AppValidationResult();
-
-        //    try
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
-
-        //        cmd.UpdatePreSendProperties(
-        //            Constants.CollaboratorType.CommissionInnovation,
-        //            this.AdminAccessControlDto.User.Id,
-        //            this.AdminAccessControlDto.User.Uid,
-        //            this.EditionDto.Id,
-        //            this.EditionDto.Uid,
-        //            this.UserInterfaceLanguage);
-        //        result = await this.CommandBus.Send(cmd);
-        //        if (!result.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        foreach (var error in result.Errors)
-        //        {
-        //            var target = error.Target ?? "";
-        //            ModelState.AddModelError(target, error.Message);
-        //        }
-
-        //        cmd.UpdateDropdownProperties(null);
-
-        //        return Json(new
-        //        {
-        //            status = "error",
-        //            message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
-        //            pages = new List<dynamic>
-        //            {
-        //                new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
-        //            }
-        //        }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-        //    }
-
-        //    return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Member, Labels.CreatedM) });
-        //}
-
         #endregion
 
         #region Update
