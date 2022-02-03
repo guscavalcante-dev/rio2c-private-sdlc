@@ -514,7 +514,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    Constants.CollaboratorType.CommissionInnovation,
+                    Constants.CollaboratorType.CommissionCartoon,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
