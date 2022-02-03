@@ -614,6 +614,34 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                             .FirstOrDefaultAsync();
         }
 
+        //public async Task<AttendeeCollaboratorCartoonEvaluationsWidgetDto> FindCartoonEvaluationsWidgetDtoAsync(Guid collaboratorUid, int editionId)
+        //{
+        //    var query = this.GetBaseQuery(true)
+        //                        .FindByCollaboratorUid(collaboratorUid)
+        //                        .FindByEditionId(editionId, false);
+
+        //    return await query
+        //                    .Select(ac => new AttendeeCollaboratorCartoonEvaluationsWidgetDto
+        //                    {
+        //                        AttendeeCollaboratorDto = new AttendeeCollaboratorDto
+        //                        {
+        //                            AttendeeCollaborator = ac,
+        //                            Collaborator = ac.Collaborator
+        //                        },
+        //                        AttendeeCartoonProjectEvaluationDtos = ac.Collaborator.User.AttendeeMusicBandEvaluations
+        //                                                                                .Where(ambe => !ambe.IsDeleted)
+        //                                                                                .OrderBy(ambe => ambe.CreateDate)
+        //                                                                                .Select(ambe => new AttendeeMusicBandEvaluationDto
+        //                                                                                {
+        //                                                                                    AttendeeMusicBandEvaluation = ambe,
+        //                                                                                    AttendeeMusicBand = ambe.AttendeeMusicBand,
+        //                                                                                    MusicBand = ambe.AttendeeMusicBand.MusicBand,
+        //                                                                                    EvaluatorUser = ambe.EvaluatorUser
+        //                                                                                }).ToList()
+        //                    })
+        //                    .FirstOrDefaultAsync();
+        //}
+
         /// <summary>
         /// Finds the audiovisual commission evaluations widget dto asynchronous.
         /// </summary>
