@@ -45,6 +45,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
         private readonly ICollaboratorRepository collaboratorRepo;
         private readonly IAttendeeCollaboratorRepository attendeeCollaboratorRepo;
         private readonly IAttendeeInnovationOrganizationRepository attendeeInnovationOrganizationRepo;
+        
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CommissionsController" /> class.
@@ -95,7 +96,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
         /// <param name="request">The request.</param>
         /// <param name="showAllEditions">if set to <c>true</c> [show all editions].</param>
         /// <param name="showAllParticipants">if set to <c>true</c> [show all participants].</param>
-        /// <param name="innovationOrganizationTrackOptionUid">The innovation organization track option uid.</param>
+  
         /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> Search(IDataTablesRequest request, bool showAllEditions, bool showAllParticipants)
@@ -139,15 +140,15 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
             if (attendeeCollaboratorDto == null)
             {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Member, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-                return RedirectToAction("Index", "Commissions", new { Area = "Innovation" });
+                return RedirectToAction("Index", "Commissions", new { Area = "Cartoon" });
             }
 
             #region Breadcrumb
 
-            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.InnovationCommission, new List<BreadcrumbItemHelper> {
-                new BreadcrumbItemHelper(Labels.Innovation, null),
-                new BreadcrumbItemHelper(Labels.Commission, Url.Action("Index", "Commissions", new { Area = "Innovation" })),
-                new BreadcrumbItemHelper(attendeeCollaboratorDto.Collaborator.GetFullName(), Url.Action("Details", "Commissions", new { Area = "Innovation", id }))
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CartoonCommission, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Cartoonito, null),
+                new BreadcrumbItemHelper(Labels.Commission, Url.Action("Index", "Commissions", new { Area = "Cartoon" })),
+                new BreadcrumbItemHelper(attendeeCollaboratorDto.Collaborator.GetFullName(), Url.Action("Details", "Commissions", new { Area = "Cartoon", id }))
             });
 
             #endregion
@@ -273,7 +274,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
         public async Task<ActionResult> ShowTotalCountWidget()
         {
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
-                Constants.CollaboratorType.CommissionInnovation,
+                Constants.CollaboratorType.CommissionCartoon,
                 null,
                 true, 
                 this.EditionDto.Id);
@@ -297,7 +298,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
         public async Task<ActionResult> ShowEditionCountWidget()
         {
             var executivesCount = await this.collaboratorRepo.CountAllByDataTable(
-                Constants.CollaboratorType.CommissionInnovation,
+                Constants.CollaboratorType.CommissionCartoon,
                 null,
                 false, 
                 this.EditionDto.Id);
@@ -318,19 +319,11 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
 
         /// <summary>Shows the create modal.</summary>
         /// <returns></returns>
+
         [HttpGet]
         public async Task<ActionResult> ShowCreateModal()
         {
-            CreateInnovationCollaborator cmd;
-
-            try
-            {
-                cmd = new CreateInnovationCollaborator(null);
-            }
-            catch (DomainException ex)
-            {
-                return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-            }
+            var cmd = new CreateTinyCollaborator();
 
             return Json(new
             {
@@ -345,8 +338,9 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
         /// <summary>Creates the specified collaborator.</summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
+
         [HttpPost]
-        public async Task<ActionResult> Create(CreateInnovationCollaborator cmd)
+        public async Task<ActionResult> Create(CreateTinyCollaborator cmd)
         {
             var result = new AppValidationResult();
 
@@ -358,7 +352,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    Constants.CollaboratorType.CommissionInnovation,
+                    Constants.CollaboratorType.CommissionCartoon,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
@@ -378,15 +372,13 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
                     ModelState.AddModelError(target, error.Message);
                 }
 
-                cmd.UpdateDropdownProperties(null);
-
                 return Json(new
                 {
                     status = "error",
                     message = result.Errors?.FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                     pages = new List<dynamic>
                     {
-                        new { page = this.RenderRazorViewToString("Modals/_Form", cmd), divIdOrClass = "#form-container" },
+                        new { page = this.RenderRazorViewToString("/Views/Collaborators/Forms/_TinyForm.cshtml", cmd), divIdOrClass = "#form-container" },
                     }
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -398,7 +390,6 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
 
             return Json(new { status = "success", message = string.Format(Messages.EntityActionSuccessfull, Labels.Member, Labels.CreatedM) });
         }
-
         #endregion
 
         #region Update
@@ -512,7 +503,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
                 }
 
                 cmd.UpdatePreSendProperties(
-                    Constants.CollaboratorType.CommissionInnovation,
+                    Constants.CollaboratorType.CommissionCartoon,
                     this.AdminAccessControlDto.User.Id,
                     this.AdminAccessControlDto.User.Uid,
                     this.EditionDto.Id,
