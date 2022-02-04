@@ -1109,6 +1109,9 @@
     <value>Foundation date</value>
     <comment>Data de fundação</comment>
   </data>
+  <data name="FoundationYear" xml:space="preserve">
+    <value>Foundation Year</value>
+  </data>
   <data name="Founders" xml:space="preserve">
     <value>Founders</value>
     <comment>Fundadores</comment>
