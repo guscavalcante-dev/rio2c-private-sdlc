@@ -50,7 +50,7 @@ namespace PlataformaRio2C.Application.CQRS.CommandsHandlers
         {
             this.Uow.BeginTransaction();
 
-            var attendeeCollaborator = await this.attendeeCollaboratorRepo.GetAsync(ac => ac.Collaborator.Uid == cmd.CollaboratorUid);
+            var attendeeCollaborator = await this.attendeeCollaboratorRepo.GetAsync(ac => ac.Collaborator.Uid == cmd.CollaboratorUid && ac.EditionId == cmd.EditionId);
             if (attendeeCollaborator == null)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.EntityNotAction, Labels.Executive, Labels.FoundM), new string[] { "CompanyName" }));
