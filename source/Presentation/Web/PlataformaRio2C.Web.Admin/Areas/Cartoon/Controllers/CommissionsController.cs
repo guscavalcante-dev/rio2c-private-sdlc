@@ -323,27 +323,16 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowCreateModal()
         {
+            var cmd = new CreateTinyCollaborator();
+
+            return Json(new
             {
-                CreateInnovationCollaborator cmd;
-
-                try
-                {
-                    cmd = new CreateInnovationCollaborator();
-                }
-                catch (DomainException ex)
-                {
-                    return Json(new { status = "error", message = ex.GetInnerMessage() }, JsonRequestBehavior.AllowGet);
-                }
-
-                return Json(new
-                {
-                    status = "success",
-                    pages = new List<dynamic>
+                status = "success",
+                pages = new List<dynamic>
                 {
                     new { page = this.RenderRazorViewToString("Modals/CreateModal", cmd), divIdOrClass = "#GlobalModalContainer" },
                 }
-                }, JsonRequestBehavior.AllowGet);
-            }
+            }, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>Creates the specified collaborator.</summary>
