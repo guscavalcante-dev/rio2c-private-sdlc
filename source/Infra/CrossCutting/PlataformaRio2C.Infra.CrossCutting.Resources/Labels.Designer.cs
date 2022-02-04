@@ -2428,6 +2428,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ano de fundação.
+        /// </summary>
+        public static string FoundationYear {
+            get {
+                return ResourceManager.GetString("FoundationYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fundadores.
         /// </summary>
         public static string Founders {
