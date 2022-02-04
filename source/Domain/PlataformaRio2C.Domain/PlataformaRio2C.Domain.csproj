@@ -319,6 +319,8 @@
     <Compile Include="Entities\Audiovisual\CommissionAttendeeCollaboratorInterest.cs" />
     <Compile Include="Entities\Base\AggregateRoot.cs" />
     <Compile Include="Entities\Cartoon\AttendeeCartoonProject.cs" />
+    <Compile Include="Entities\Cartoon\AttendeeCartoonProjectCollaborator.cs" />
+    <Compile Include="Entities\Cartoon\AttendeeCartoonProjectEvaluation.cs" />
     <Compile Include="Entities\Cartoon\CartoonProjectCreator.cs" />
     <Compile Include="Entities\Cartoon\CartoonProjectOrganization.cs" />
     <Compile Include="Entities\Cartoon\CartoonProject.cs" />
