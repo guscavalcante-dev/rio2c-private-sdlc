@@ -143,9 +143,9 @@
     <Compile Include="Mapping\Mail\MailMap.cs" />
     <Compile Include="Mapping\Message\MessageMap.cs" />
     <Compile Include="Mapping\MusicalCommission\MusicalCommissionMap.cs" />
-    <Compile Include="Mapping\Music\AttendeeCartoonProjectCollaboratorMap.cs" />
+    <Compile Include="Mapping\Cartoon\AttendeeCartoonProjectCollaboratorMap.cs" />
     <Compile Include="Mapping\Music\AttendeeMusicBandCollaboratorMap.cs" />
-    <Compile Include="Mapping\Music\AttendeeMusicBandEvaluationMap - Copy.cs" />
+    <Compile Include="Mapping\Cartoon\AttendeeCartoonProjectEvaluationMap.cs" />
     <Compile Include="Mapping\Music\AttendeeMusicBandEvaluationMap.cs" />
     <Compile Include="Mapping\Music\AttendeeMusicBandMap.cs" />
     <Compile Include="Mapping\Music\ReleasedMusicProjectMap.cs" />

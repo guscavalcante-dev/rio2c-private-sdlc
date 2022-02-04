@@ -61,6 +61,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<Negotiation> UpdatedNegotiations { get; set; }
         public virtual ICollection<AttendeeInnovationOrganizationEvaluation> AttendeeInnovationOrganizationEvaluations { get; set; }
         public virtual ICollection<AttendeeMusicBandEvaluation> AttendeeMusicBandEvaluations { get; set; }
+        public virtual ICollection<AttendeeCartoonProjectEvaluation> AttendeeCartoonProjectEvaluations { get; set; }
         public virtual ICollection<CommissionEvaluation> CommissionEvaluations { get; set; }
 
         /// <summary>
