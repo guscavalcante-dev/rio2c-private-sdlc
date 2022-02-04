@@ -9927,6 +9927,7 @@
     <Content Include="Views\Collaborators\Modals\UpdateCompanyInfoModal.cshtml" />
     <Content Include="Views\Collaborators\Modals\AssociateCompanyForm.cshtml" />
     <Content Include="Views\Collaborators\Modals\AssociateCompanyModal.cshtml" />
+    <Content Include="Views\AdminMailerService\CartoonCommissionWelcomeEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
