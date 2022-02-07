@@ -826,6 +826,17 @@
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.commission.evaluation.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.interest.widget.js" />
     <Content Include="Assets\js\audiovisual\projects\audiovisual.projects.links.widget.js" />
+    <Content Include="Assets\js\cartoon\projects\cartoon.projects.clipping.widget.js" />
+    <Content Include="Assets\js\cartoon\projects\cartoon.projects.evaluation.list.widget.js" />
+    <Content Include="Assets\js\cartoon\projects\cartoon.projects.evaluation.widget.js" />
+    <Content Include="Assets\js\cartoon\projects\cartoon.projects.evaluators.widget.js" />
+    <Content Include="Assets\js\cartoon\projects\cartoon.projects.maininformation.widget.js" />
+    <Content Include="Assets\js\cartoon\projects\cartoon.projects.members.widget.js" />
+    <Content Include="Assets\js\cartoon\projects\cartoon.projects.releasedprojects.widget.js" />
+    <Content Include="Assets\js\cartoon\projects\cartoon.projects.responsible.widget.js" />
+    <Content Include="Assets\js\cartoon\projects\cartoon.projects.socialnetworks.widget.js" />
+    <Content Include="Assets\js\cartoon\projects\cartoon.projects.teammembers.widget.js" />
+    <Content Include="Assets\js\cartoon\projects\cartoon.projects.videoandmusic.widget.js" />
     <Content Include="Assets\js\companies\companies.executive.widget.js" />
     <Content Include="Assets\js\companies\companies.interest.widget.js" />
     <Content Include="Assets\js\companies\companies.socialnetworks.widget.js" />

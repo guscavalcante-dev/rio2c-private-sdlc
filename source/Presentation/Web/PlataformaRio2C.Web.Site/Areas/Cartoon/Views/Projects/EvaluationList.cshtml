@@ -4,7 +4,6 @@
 @{
     ViewBag.Title = Labels.ProjectsEvaluation;
     var editionDto = ViewBag.EditionDto as EditionDto;
-    var musicGenres = ViewBag.MusicGenres as List<MusicGenre>;
     var projectEvaluationStatuses = ViewBag.ProjectEvaluationStatuses as List<PlataformaRio2C.Domain.Entities.ProjectEvaluationStatus>;
 }
 <div class="kt-portlet">
@@ -20,7 +19,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-sm-6 mt-2">
+            @*<div class="col-12 col-sm-6 mt-2">
                 <select name="MusicGenreUid" id="MusicGenreUid" class="form-control">
                     <option value="">@(string.Format(Labels.SelectAMEntity, Labels.MusicGenre.ToLowerInvariant()))...</option>
                     @foreach (var musicGenre in musicGenres)
@@ -30,7 +29,7 @@
                         </option>
                     }
                 </select>
-            </div>
+            </div>*@
             <div class="col-12 col-sm-6 mt-2">
                 <select name="EvaluationStatusUid" id="EvaluationStatusUid" class="form-control">
                     <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Status.ToLowerInvariant()))...</option>
@@ -45,7 +44,7 @@
         </div>
     </div>
 </div>
-<div id="MusicProjectEvaluationListWidget"></div>
+<div id="CartoonProjectEvaluationListWidget"></div>
 <div class="row">
     <div class="col-xl-12">
         <div class="kt-portlet kt-iconbox kt-iconbox--wave" style="height:100%">
@@ -62,7 +61,7 @@
                     </div>
                     <div class="kt-iconbox__desc">
                         <h3 class="kt-iconbox__title">
-                            <a class="kt-link" href="#">@Labels.Program @Labels.Music</a>
+                            <a class="kt-link" href="#">@Labels.Program @Labels.Cartoonito</a>
                         </h3>
                     </div>
                 </div>
@@ -70,8 +69,8 @@
                     <ul class="pl-0 mb-0">
                         @Html.Raw(string.Format(
                             Texts.MusicCommissionProjectsDates,
-                            editionDto?.MusicCommissionEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(),
-                            editionDto?.MusicCommissionEvaluationEndDate.ToBrazilTimeZone().ToShortDateString()))
+                            editionDto?.CartoonCommissionEvaluationStartDate.ToBrazilTimeZone().ToShortDateString(),
+                            editionDto?.CartoonCommissionEvaluationEndDate.ToBrazilTimeZone().ToShortDateString()))
                     </ul>
                 </div>
             </div>
@@ -83,18 +82,18 @@
 }
 @section Scripts {
     @Scripts.Render("~/bundles/js/select2.js")
-    @Scripts.Render("~/bundles/js/music.projects.evaluation.list.widget.js")
-    @Scripts.Render("~/bundles/js/music.projects.evaluation.widget.js")
+    @Scripts.Render("~/bundles/js/cartoon.projects.evaluation.list.widget.js")
+    @Scripts.Render("~/bundles/js/cartoon.projects.evaluation.widget.js")
     <script>
         // Page translations ----------------------------------------------------------------------
         var translations = {
             selectPlaceholder: '@Labels.SelectAMEntity',
-            genre: '@Html.Raw(Labels.MusicGenre.ToLowerInvariant())',
+            genre: '@Html.Raw(Labels.Cartoonito.ToLowerInvariant())',
             status: '@Labels.Status.ToLowerInvariant()'
         };
 
         jQuery(document).ready(function () {
-            MusicProjectsEvaluationListWidget.init();
+            CartoonProjectsEvaluationListWidget.init();
         });
     </script>
 }

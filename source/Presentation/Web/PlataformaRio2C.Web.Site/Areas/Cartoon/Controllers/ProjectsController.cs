@@ -76,41 +76,38 @@ namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
             return View();
         }
 
-        ///// <summary>Evaluations the list.</summary>
-        ///// <param name="searchKeywords">The search keywords.</param>
-        ///// <param name="musicGenreUid">The music genre uid.</param>
-        ///// <param name="evaluationStatusUid">The evaluation status uid.</param>
-        ///// <param name="page">The page.</param>
-        ///// <param name="pageSize">Size of the page.</param>
-        ///// <returns></returns>
-        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionMusic)]
-        //[HttpGet]
-        //public async Task<ActionResult> EvaluationList(string searchKeywords, Guid? musicGenreUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 12)
-        //{
-        //    if (this.EditionDto?.IsMusicProjectEvaluationStarted() != true)
-        //    {
-        //        return RedirectToAction("Index", "Projects", new { Area = "Music" });
-        //    }
+        /// <summary>Evaluations the list.</summary>
+        /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="evaluationStatusUid">The evaluation status uid.</param>
+        /// <param name="page">The page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionCartoon)]
+        [HttpGet]
+        public async Task<ActionResult> EvaluationList(string searchKeywords, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 12)
+        {
+            if (this.EditionDto?.IsCartoonProjectEvaluationStarted() != true)
+            {
+                return RedirectToAction("Index", "Projects", new { Area = "Cartoon" });
+            }
 
-        //    #region Breadcrumb
+            #region Breadcrumb
 
-        //    ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.MusicProjects, new List<BreadcrumbItemHelper> {
-        //        new BreadcrumbItemHelper(Labels.Music, Url.Action("EvaluationList", "Projects", new { Area = "Music" })),
-        //    });
+            ViewBag.Breadcrumb = new BreadcrumbHelper(Labels.CartoonProjects, new List<BreadcrumbItemHelper> {
+                new BreadcrumbItemHelper(Labels.Cartoonito, Url.Action("EvaluationList", "Projects", new { Area = "Cartoon" })),
+            });
 
-        //    #endregion
+            #endregion
 
-        //    ViewBag.SearchKeywords = searchKeywords;
-        //    ViewBag.MusicGenreUid = musicGenreUid;
-        //    ViewBag.EvaluationStatusUid = evaluationStatusUid;
-        //    ViewBag.Page = page;
-        //    ViewBag.PageSize = pageSize;
+            ViewBag.SearchKeywords = searchKeywords;
+            ViewBag.EvaluationStatusUid = evaluationStatusUid;
+            ViewBag.Page = page;
+            ViewBag.PageSize = pageSize;
 
-        //    ViewBag.MusicGenres = await this.musicGenreRepo.FindAllAsync();
-        //    ViewBag.ProjectEvaluationStatuses = await this.evaluationStatusRepo.FindAllAsync();
+            ViewBag.ProjectEvaluationStatuses = await this.evaluationStatusRepo.FindAllAsync();
 
-        //    return View();
-        //}
+            return View();
+        }
 
         ///// <summary>Shows the evaluation list widget.</summary>
         ///// <param name="searchKeywords">The search keywords.</param>

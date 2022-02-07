@@ -447,6 +447,32 @@ namespace PlataformaRio2C.Web.Site
 
             #endregion
 
+            #region Cartoon Page Bundles
+
+            #region Projects - Commissions
+
+            bundles.Add(new ScriptBundle("~/bundles/js/cartoon.projects.widget.js").Include(
+                "~/Assets/js/cartoon/projects/cartoon.projects.maininformation.widget.js",
+                "~/Assets/js/cartoon/projects/cartoon.projects.members.widget.js",
+                "~/Assets/js/cartoon/projects/cartoon.projects.teammembers.widget.js",
+                "~/Assets/js/cartoon/projects/cartoon.projects.releasedprojects.widget.js",
+                "~/Assets/js/cartoon/projects/cartoon.projects.evaluators.widget.js",
+                "~/Assets/js/cartoon/projects/cartoon.projects.responsible.widget.js",
+                "~/Assets/js/cartoon/projects/cartoon.projects.clipping.widget.js",
+                "~/Assets/js/cartoon/projects/cartoon.projects.videoandmusic.widget.js",
+                "~/Assets/js/cartoon/projects/cartoon.projects.socialnetworks.widget.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/cartoon.projects.evaluation.list.widget.js").Include(
+                "~/Assets/js/cartoon/projects/cartoon.projects.evaluation.list.widget.js",
+                "~/Scripts/jquery.unobtrusive-ajax.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/cartoon.projects.evaluation.widget.js").Include(
+                "~/Assets/js/cartoon/projects/cartoon.projects.evaluation.widget.js"));
+
+            #endregion
+
+            #endregion
+
             #region Innovation Page Bundles
 
             #region Projects - Commissions
