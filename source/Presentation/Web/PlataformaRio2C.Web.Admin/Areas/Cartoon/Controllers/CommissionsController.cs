@@ -219,7 +219,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
 
                     try
                     {
-                        result = await this.CommandBus.Send(new SendInnovationCommissionWelcomeEmailAsync(
+                        result = await this.CommandBus.Send(new SendCartoonCommissionWelcomeEmailAsync(
                             collaboratorDto.Collaborator.Uid,
                             collaboratorDto.User.SecurityStamp,
                             collaboratorDto.User.Id,

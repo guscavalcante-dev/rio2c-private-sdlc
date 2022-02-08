@@ -220,6 +220,16 @@ namespace PlataformaRio2C.Web.Site.Services
             throw new NotImplementedException();
         }
 
+        /// <summary>Sends the cartoon commission welcome email.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <param name="sentEmailUid">The sent email uid.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public MvcMailMessage SendCartoonCommissionWelcomeEmail(SendCartoonCommissionWelcomeEmailAsync cmd, Guid sentEmailUid)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>Sends the music commission welcome email.</summary>
         /// <param name="cmd">The command.</param>
         /// <param name="sentEmailUid">The sent email uid.</param>
