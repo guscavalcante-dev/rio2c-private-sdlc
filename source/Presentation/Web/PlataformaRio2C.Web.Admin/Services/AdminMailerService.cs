@@ -147,6 +147,36 @@ namespace PlataformaRio2C.Web.Admin.Services
             });
         }
 
+        /// <summary>Sends the cartoon commission welcome email.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <param name="sentEmailUid">The sent email uid.</param>
+        /// <returns></returns>
+        /// <summary>Sends the music commission welcome email.</summary>
+        /// <param name="cmd">The command.</param>
+        /// <param name="sentEmailUid">The sent email uid.</param>
+        /// <returns></returns>
+        public MvcMailMessage SendCartoonCommissionWelcomeEmail(SendCartoonCommissionWelcomeEmailAsync cmd, Guid sentEmailUid)
+        {
+            this.SetCulture(cmd.UserInterfaceLanguage);
+
+            this.ViewData = new ViewDataDictionary(cmd);
+
+            return Populate(x =>
+            {
+                x.Subject = this.GetSubject(string.Format("Complete seu cadastro na Comissão de Cartoon do {0} | Complete your registration at {0} Cartoon Commission", cmd.Edition.Name), null);
+                x.ViewName = "CartoonCommissionWelcomeEmail";
+                x.From = new MailAddress(address: x.From.Address, displayName: "MyRio2C");
+                x.To.Add(this.GetToEmailRecipient(cmd.RecipientEmail));
+                ViewBag.SentEmailUid = sentEmailUid;
+                ViewBag.SiteUrl = this.siteUrl;
+
+                if (!string.IsNullOrEmpty(this.GetBccEmailRecipient(true)))
+                {
+                    x.Bcc.Add(this.GetBccEmailRecipient(true));
+                }
+            });
+        }
+
         /// <summary>
         /// Sends the innovation commission welcome email.
         /// </summary>

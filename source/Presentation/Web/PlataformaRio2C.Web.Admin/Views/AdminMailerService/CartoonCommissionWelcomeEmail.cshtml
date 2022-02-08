@@ -1,0 +1,74 @@
+﻿@using System.Globalization
+@model PlataformaRio2C.Application.CQRS.Commands.SendCartoonCommissionWelcomeEmailAsync
+@{
+    var brCulture = new CultureInfo("pt-BR");
+    var usCulture = new CultureInfo("en-US");
+}
+<td valign="top">
+    <!-- content -->
+    <h1>
+        <span>Olá @Model.RecipientFirstName,</span><br />
+        <span style="font-style: italic; color: red;">Hi @Model.RecipientFirstName,</span>
+    </h1>
+    <p>
+        <span>
+            Bem-vindo(a) ao @Model.Edition.Name | Pitching de Cartoon @Model.Edition.UrlCode!
+        </span><br />
+        <span style="font-style: italic; color: red;">
+            Welcome to @Model.Edition.Name | Cartoon Pitching @Model.Edition.UrlCode!
+        </span>
+    </p>
+    <p>
+        <span>
+            Acesse a plataforma MyRio2C até o dia <b>07 de março de 2022</b> para completar a sua inscrição na Comissão da Cartoon. Preencha todos os campos informando seus dados pessoais e da empresa.
+            Clique no botão abaixo e utilize o mesmo endereço deste e-mail para iniciar seu login.
+        </span><br />
+        <span style="font-style: italic; color: red;">
+            It is required that you access MyRio2C’s platform by <b>March 21th, 2022</b>, to register yourself and your company for the Cartoon Commission.
+            Please click on the button below and use this same email address to login.
+        </span>
+    </p>
+    <div style="margin-top: 25px; margin-bottom: 25px;">
+        <!--Button:begin-->
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tr>
+                <td align="center">
+                    <table cellpadding="0" cellspacing="0" width="250" border="0" style="border-collapse: separate !important;">
+                        <tr>
+                            <td style="background-color: #EA202C; color: #FFFFFF; font-family: sans-serif; font-size: 16px; font-weight: bold; padding: 10px 10px; border-radius: 10px; text-align: center;">
+                                <a href="@($"{ViewBag.SiteUrl}/account/onboarding?culture={Model.UserInterfaceLanguage}&edition={Model.Edition.UrlCode}&email={Url.Encode(Model.RecipientEmail)}&uid={Model.RecipientUserUid}&token={Model.UserSecurityToken}")" style="color:#FFFFFF;text-decoration:none;">Clique Aqui / Click here</a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <!--Button:end-->
+    </div>
+    <p>
+        <span>
+            Qualquer dúvida entre em contato através do email: cartoon@rio2c.com
+        </span><br />
+        <span style="font-style: italic; color: red;">
+            If you have any questions do not hesitate to get in touch at: cartoon@rio2c.com
+        </span>
+    </p>
+    <p>
+        <span>
+            Venha fazer parte do Rio2C!
+        </span><br />
+        <span style="font-style: italic; color: red;">
+            Come and join us at Rio2C!
+        </span>
+    </p>
+    <p>
+        <span>
+            Sua oportunidade de viver dias incríveis de aprendizado, negócios, networking e experiências inovadoras.
+        </span><br />
+        <span style="font-style: italic; color: red;">
+            This is your chance to experience days filled with great content, doing business, networking and sharing innovative experiences.
+        </span>
+    </p>
+</td>
+@section Styles {
+}
