@@ -152,7 +152,9 @@ namespace PlataformaRio2C.Domain.Dtos
 
         /// <summary>Initializes a new instance of the <see cref="InnovationOrganizationApiDto"/> class.</summary>
         public InnovationOrganizationApiDto()
-        {}
+        {
+            this.WouldYouLikeParticipateBusinessRound = false;
+        }
 
         #region Validations
 
@@ -246,11 +248,6 @@ namespace PlataformaRio2C.Domain.Dtos
             if (PresentationFile == null || PresentationFile?.Length == 0)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(PresentationFile)), new string[] { nameof(PresentationFile) }));
-            }
-
-            if (!WouldYouLikeParticipateBusinessRound)
-            {
-                this.ValidationResult.Add(new ValidationError(string.Format(Messages.TheFieldIsRequired, nameof(WouldYouLikeParticipateBusinessRound)), new string[] { nameof(WouldYouLikeParticipateBusinessRound) }));
             }
 
             if (this.AttendeeInnovationOrganizationFounderApiDtos.Count == 0)
