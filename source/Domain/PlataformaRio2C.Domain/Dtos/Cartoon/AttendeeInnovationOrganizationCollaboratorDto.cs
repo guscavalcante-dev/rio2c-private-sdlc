@@ -21,8 +21,7 @@ namespace PlataformaRio2C.Domain.Dtos
     {
         public AttendeeCollaborator AttendeeCollaborator { get; set; }
         public Collaborator Collaborator { get; set; }
-        public AttendeeInnovationOrganization AttendeeInnovationOrganization { get; set; }
-        public IEnumerable<AttendeeInnovationOrganizationTrackDto> AttendeeInnovationOrganizationTracksDtos { get; set; }
+        public AttendeeCartoonProject AttendeeCartoonProject { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttendeeInnovationOrganizationCollaboratorDto"/> class.

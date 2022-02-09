@@ -20,7 +20,7 @@ using PlataformaRio2C.Domain.Validation;
 namespace PlataformaRio2C.Domain.Entities
 {
     /// <summary>AttendeeCartoonProject</summary>
-    public class AttendeeCartoonProject : Entity
+    public class AttendeeCartoonProject : Entity 
     {
         public int EditionId { get; private set; }
         public int CartoonProjectId { get; private set; }
@@ -33,7 +33,6 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual CartoonProject CartoonProject { get; private set; }
 
         public virtual ICollection<AttendeeCartoonProjectCollaborator> AttendeeCartoonProjectCollaborators { get; private set; }
-        public virtual ICollection<CartoonProject> CartoonProjects { get; private set; }
         public virtual ICollection<AttendeeCartoonProjectEvaluation> AttendeeCartoonProjectEvaluations { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeCartoonProject"/> class.</summary>
@@ -62,10 +61,6 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="userId">The user identifier.</param>
         public new void Delete(int userId)
         {
-            if (this.FindAllCartoonsProjectsNotDeleted()?.Any() == true)
-            {
-                return;
-            }
 
             this.DeleteAttendeeCartonProjectdCollaborators(userId);
             if (this.FindAllAttendeeCartoonProjectsCollaboratorsNotDeleted()?.Any() == true)
@@ -93,23 +88,7 @@ namespace PlataformaRio2C.Domain.Entities
         private List<AttendeeCartoonProjectCollaborator> FindAllAttendeeCartoonProjectsCollaboratorsNotDeleted()
         {
             return this.AttendeeCartoonProjectCollaborators?.Where(aoc => !aoc.IsDeleted)?.ToList();
-        }
-
-        
-
-        /// <summary>Gets the last created cartoon project.</summary>
-        /// <returns></returns>
-        public CartoonProject GetLastCreatedAttendeCartoonProject()
-        {
-            return this.CartoonProjects?.OrderByDescending(p => p.CreateDate).FirstOrDefault();
-        }
-
-        /// <summary>Finds all cartoons projects not deleted.</summary>
-        /// <returns></returns>
-        private List<CartoonProject> FindAllCartoonsProjectsNotDeleted()
-        {
-            return this.CartoonProjects?.Where(mp => !mp.IsDeleted)?.ToList();
-        }
+        }        
 
         #endregion
 

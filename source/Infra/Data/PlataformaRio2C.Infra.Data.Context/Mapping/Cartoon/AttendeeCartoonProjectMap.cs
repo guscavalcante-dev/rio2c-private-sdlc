@@ -30,8 +30,8 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
                 .HasForeignKey(d => d.EditionId);
 
             this.HasRequired(t => t.CartoonProject)
-                   .WithMany(t => t.AttendeeCartoonProjects)
-                   .HasForeignKey(d => d.CartoonProjectId);
+                  .WithMany(t => t.AttendeeCartoonProjects)
+                  .HasForeignKey(d => d.CartoonProjectId);
         }
     }
 }

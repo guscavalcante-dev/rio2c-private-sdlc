@@ -175,9 +175,9 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         {
             private readonly IEditionRepository editioRepo;
 
-            /// <summary>Initializes a new instance of the <see cref="AttendeeOrganizationRepository"/> class.</summary>
-            /// <param name="context">The context.</param>
-            public AttendeeCartoonProjectRepository(
+        /// <summary>Initializes a new instance of the <see cref="AttendeeCartoonProjectRepository"/> class.</summary>
+        /// <param name="context">The context.</param>
+        public AttendeeCartoonProjectRepository(
                 PlataformaRio2CContext context,
                 IEditionRepository editionRepository
                 )
@@ -364,7 +364,6 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                                AttendeeCollaborator = aioc.AttendeeCollaborator,
                                                                                                Collaborator = aioc.AttendeeCollaborator.Collaborator
                                                                                            }),
-
                                        AttendeeCartoonProjectEvaluationDtos = aio.AttendeeCartoonProjectEvaluations
                                                                                           .Where(aioe => !aioe.IsDeleted)
                                                                                           .Select(aioe => new AttendeeCartoonProjectEvaluationDto

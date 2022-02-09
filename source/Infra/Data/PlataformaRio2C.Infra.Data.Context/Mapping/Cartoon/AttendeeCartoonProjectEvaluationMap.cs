@@ -22,7 +22,8 @@ namespace PlataformaRio2C.Infra.Data.Context.Mapping
         /// <summary>Initializes a new instance of the <see cref="AttendeeCartoonProjectEvaluationMap"/> class.</summary>
         public AttendeeCartoonProjectEvaluationMap()
         {
-            this.ToTable("AttendeeCartoonProjectEvaluationMap");
+            this.ToTable("AttendeeCartoonProjectEvaluations");
+            this.Property(x => x.AttendeeCartoonProjectId).HasColumnName("AttendeeCartoonProjectId");
 
             // Relationships
             this.HasRequired(t => t.AttendeeCartoonProject)

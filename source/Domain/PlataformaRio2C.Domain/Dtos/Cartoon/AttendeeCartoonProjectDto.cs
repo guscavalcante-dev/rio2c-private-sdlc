@@ -24,7 +24,6 @@ namespace PlataformaRio2C.Domain.Dtos
         public CartoonProject CartoonProject { get; set; }
         public AttendeeCartoonProject AttendeeCartoonProject { get; set; }
         public IEnumerable<AttendeeCartoonProjectEvaluationDto> AttendeeCartoonProjectEvaluationDtos { get; set; }
-        //public IEnumerable<AttendeeCollaboratorCartoonEvaluationsWidgetDto> AttendeeCollaboratorCartoonEvaluationsWidgetDtos { get; set; }
         public IEnumerable<AttendeeCartoonProjectCollaboratorDto> AttendeeCartoonProjectCollaboratorDtos { get; set; }
 
         /// <summary>

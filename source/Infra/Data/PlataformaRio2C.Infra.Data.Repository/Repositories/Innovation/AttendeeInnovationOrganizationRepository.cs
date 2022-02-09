@@ -281,7 +281,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <param name="editionId">The edition identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
         /// <param name="innovationOrganizationTrackOptionUid">The innovation organization track option uid.</param>
-        /// <returns></returns>
+        /// <returns></returns> 
         private async Task<List<AttendeeInnovationOrganizationDto>> FindAllAttendeeInnovationOrganizationDtosAsync(
             int editionId,
             string searchKeywords,
