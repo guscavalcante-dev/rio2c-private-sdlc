@@ -129,8 +129,11 @@
     <Compile Include="Dtos\Cartoon\API\CartoonProjectCreatorApiDto.cs" />
     <Compile Include="Dtos\Cartoon\API\CartoonProjectApiDto.cs" />
     <Compile Include="Dtos\Cartoon\API\CartoonProjectFormatApiDto.cs" />
+    <Compile Include="Dtos\Cartoon\AttendeeCartoonProjectDto.cs" />
     <Compile Include="Dtos\Cartoon\AttendeeCollaboratorCartoonEvaluationsWidgetDto.cs" />
     <Compile Include="Dtos\Cartoon\AttendeeCartoonProjectEvaluationDto.cs" />
+    <Compile Include="Dtos\Cartoon\AttendeeInnovationOrganizationCollaboratorDto.cs" />
+    <Compile Include="Dtos\Cartoon\CartoonProjectDto.cs" />
     <Compile Include="Dtos\Innovation\API\InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto.cs" />
     <Compile Include="Dtos\Innovation\AttendeeCollaboratorInnovationEvaluationsWidgetDto.cs" />
     <Compile Include="Dtos\Innovation\AttendeeCollaboratorTracksWidgetDto.cs" />

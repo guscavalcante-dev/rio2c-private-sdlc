@@ -1,12 +1,12 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
-@model MusicProjectDto
+@model AttendeeCartoonProjectDto
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
-    var evaluationsCount = Model.AttendeeMusicBandDto.AttendeeMusicBandEvaluationsDtos?.Count();
-    var currentEvaluation = Model.AttendeeMusicBandDto.AttendeeMusicBandEvaluationDto;
-    var approvedAttendeeMusicBandsIds = ViewBag.ApprovedAttendeeMusicBandsIds as int[];
-    var isThisMusicProjectApproved = approvedAttendeeMusicBandsIds.Contains(Model.AttendeeMusicBandDto.AttendeeMusicBand.Id);
+    var evaluationsCount = Model.AttendeeCartoonProjectEvaluationDtos?.Count();
+    var currentEvaluation = Model.AttendeeCartoonProjectEvaluationDtos;
+    var approvedAttendeeCartoonProjectsIds = ViewBag.ApprovedAttendeeCartoonProjectsIds as int[];
+    var isThisCartoonProjectApproved = approvedAttendeeCartoonProjectsIds.Contains(Model.AttendeeCartoonProject.Id);
 }
 <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
@@ -14,16 +14,17 @@
     </div>
 </div>
 <div class="kt-portlet__body pt-0">
-    @if (editionDto?.IsMusicProjectEvaluationOpen() == true)
+    @if (editionDto?.IsCartoonProjectEvaluationOpen() == true)
     {
         <form class="form-inline justify-content-center mt-85">
             <div class="form-group mb-2 mr-3">
-                @Html.TextBox("AttendeeMusicBandEvaluationGrade", Model.AttendeeMusicBandDto?.AttendeeMusicBandEvaluationDto?.AttendeeMusicBandEvaluation?.Grade, new { @class = "form-control text-center decimal-globalize-mask", placeholder = Labels.Grade, style = "width: 105px;" }) @*, @type = "number", @min = "1", @max = "10", @step = ".10"*@
+                <!--@Html.TextBox("AttendeeCartoonProjectEvaluationGrade", Model.AttendeeCartoonProjectEvaluationDtos?.AttendeeCartoonProjectEvaluation?.Grade, new { @class = "form-control text-center decimal-globalize-mask", placeholder = Labels.Grade, style = "width: 105px;" })--> @*, @type = "number", @min = "1", @max = "10", @step = ".10"*@
+
             </div>
-            <button type="button" class="btn btn-success mb-2" onclick="MusicProjectsEvaluationWidget.submitEvaluationGrade('@Model.MusicProject.AttendeeMusicBand.MusicBandId');">@Labels.Evaluate</button>
+            <button type="button" class="btn btn-success mb-2" onclick="CartoonProjectsEvaluationWidget.submitEvaluationGrade('@Model.CartoonProject.Id');">@Labels.Evaluate</button>
         </form>
     }
-    else if (editionDto?.IsMusicProjectEvaluationStarted() != true)
+    else if (editionDto?.IsCartoonProjectEvaluationStarted() != true)
     {
         <div class="row mt-75">
             <div class="col-12">
@@ -39,7 +40,7 @@
         var color = "warning";
         var status = Labels.UnderEvaluation;
 
-        if (isThisMusicProjectApproved)
+        if (isThisCartoonProjectApproved)
         {
             icon = "fa-thumbs-up";
             color = "success";
@@ -58,7 +59,7 @@
             <div class="form-group mb-2">
                 <div class="myrio2c-evaluation-grade-box-sm form-control">
                     <span class="grade-label mr-2">@Labels.Average</span>
-                    <span class="grade-vote">@(Model.AttendeeMusicBandDto?.AttendeeMusicBand?.Grade?.ToString() ?? "-")</span>
+                    <span class="grade-vote">@(Model.AttendeeCartoonProject?.Grade?.ToString() ?? "-")</span>
                 </div>
             </div>
         </form>

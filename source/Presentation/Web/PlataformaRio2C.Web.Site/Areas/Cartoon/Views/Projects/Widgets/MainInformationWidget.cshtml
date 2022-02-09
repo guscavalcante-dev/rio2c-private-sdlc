@@ -1,57 +1,61 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
-@using Constants = PlataformaRio2C.Domain.Constants;
 @using PlataformaRio2c.Infra.Data.FileRepository.Helpers
+@using PlataformaRio2C.Domain.Entities
 @using PlataformaRio2C.Domain.Statics
-@model MusicProjectDto
+@using Constants = PlataformaRio2C.Domain.Constants;
+@model AttendeeCartoonProjectDto
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
-    var isMusicCommission = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.CommissionMusic) == true;
-    var currentEvaluation = Model.AttendeeMusicBandDto.GetAttendeeMusicBandEvaluationByUserId(userAccessControlDto.User.Id);
-    var approvedAttendeeMusicBandsIds = ViewBag.ApprovedAttendeeMusicBandsIds as int[];
-    var isThisMusicProjectApproved = (approvedAttendeeMusicBandsIds?.Contains(Model.AttendeeMusicBandDto.AttendeeMusicBand.Id) == true);
+    var isCartoonCommission = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.CommissionCartoon) == true;
+    var currentEvaluation = Model.GetAttendeeCartoonProjectEvaluationByUserId(userAccessControlDto.User.Id);
+    var approvedAttendeeCartoonProjectIds = ViewBag.ApprovedAttendeeCartoonProjectsIds as int[];
+    var isThisCartoonProjectApproved = (approvedAttendeeCartoonProjectIds?.Contains(Model.AttendeeCartoonProject.Id) == true);
+    var collaboratorDto = Model.GetAttendeeCartoonProjectCollaboratorDtoCollaboratorByEditionId(editionDto.Id);
 }
 <div class="kt-portlet__body">
     <div class="kt-widget kt-widget--user-profile-3">
         <div class="kt-widget__top">
             <div style="float: right;">
-                <a href="@Url.Action("EvaluationDetails", "Projects", new {Area = "Music", id = Model.MusicProject?.Id})" target="_blank">
-                    @if (Model.AttendeeMusicBandDto?.MusicBand?.HasImage() == true)
+                <a href="@Url.Action("EvaluationDetails", "Projects", new {Area = "Cartoon", id = Model.AttendeeCartoonProject?.Id})" target="_blank">
+                    @*@if (Model.CartoonProject?.HasImage() == true)
                     {
                         <div class="kt-widget__media">
-                            <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.MusicBandImage, Model.AttendeeMusicBandDto.MusicBand.Uid, Model.AttendeeMusicBandDto.MusicBand.ImageUploadDate, true)" alt="image">
+                            <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, Model.CartoonProject.UidgeUploadDate, true)" alt="image">
                         </div>
                     }
                     else
-                    {
+                    {*@
                         <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest" style="width: 110px; height: 110px;">
-                            <span>@(Model.AttendeeMusicBandDto?.MusicBand?.GetNameAbbreviation() ?? "-")</span>
+                            <span>@(Model.CartoonProject?.Title ?? "-")</span> @*voltar aqui*@
                         </div>
-                    }
+                    @*}*@
                 </a>
             </div>
             <div class="kt-widget__content">
                 <div class="kt-widget__head">
                     <span class="kt-widget__username">
-                        @(Model.AttendeeMusicBandDto?.MusicBand?.Name ?? "-")
+                        @(Model.CartoonProject?.Title ?? "-")
                     </span>
                 </div>
-                <div class="kt-widget__info">
-                    <div class="kt-widget__desc">
-                        <div class="kt-widget__subhead pt-0">
-                            @(Model.AttendeeMusicBandDto?.MusicBandType?.Name?.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|') ?? "-")
-                        </div>
-                        <div class="kt-widget__subhead pt-1 pb-0">
-                            @Labels.MusicGenre:
-                            @if (Model.AttendeeMusicBandDto?.MusicBandGenreDtos?.Any() == true)
+                <div class="kt-widget__info col-md-12 mr-0 pr-0 pl-0">
+                    <div class="kt-widget__desc pl-0 col-md-6">
+                        @*<div class="kt-widget__desc">
+                            <div class="kt-widget__subhead pt-0">
+                                @(Model.CartoonProject?.Document ?? "-")
+                            </div>
+                        </div>*@
+                        @*<div class="kt-widget__subhead pb-0">
+                            @Labels.Tracks:
+                            @if (Model.AttendeeInnovationOrganizationTrackDtos?.Any() == true)
                             {
-                                foreach (var musicBandGenreDto in Model.AttendeeMusicBandDto.MusicBandGenreDtos)
+                                foreach (var attendeeInnovationOrganizationTrackDto in Model.AttendeeInnovationOrganizationTrackDtos)
                                 {
                                     <span class="kt-badge kt-badge--inline kt-badge--info">
-                                        @(musicBandGenreDto.MusicGenre.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
-                                        @if (musicBandGenreDto.MusicGenre.HasAdditionalInfo && !string.IsNullOrEmpty(musicBandGenreDto.MusicBandGenre.AdditionalInfo))
+                                        @(attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOption.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
+                                        @if (attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOption.HasAdditionalInfo && !string.IsNullOrEmpty(attendeeInnovationOrganizationTrackDto.AttendeeInnovationOrganizationTrack.AdditionalInfo))
                                         {
-                                            @musicBandGenreDto.MusicBandGenre.AdditionalInfo
+                                            @attendeeInnovationOrganizationTrackDto.AttendeeInnovationOrganizationTrack.AdditionalInfo
                                         }
                                     </span>
                                 }
@@ -60,25 +64,11 @@
                             {
                                 @:-
                             }
-                        </div>
-                        <div class="kt-widget__subhead pt-1 pb-0">
-                            @Labels.TargetAudience:
-                            @if (Model.AttendeeMusicBandDto?.MusicBandTargetAudienceDtos?.Any() == true)
-                            {
-                                foreach (var musicBandTargetAudienceDto in Model.AttendeeMusicBandDto.MusicBandTargetAudienceDtos)
-                                {
-                                    <span class="kt-badge kt-badge--inline kt-badge--primary">@(musicBandTargetAudienceDto.TargetAudience.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))</span>
-                                }
-                            }
-                            else
-                            {
-                                @:-
-                            }
-                        </div>
+                        </div>*@
                     </div>
-                    <div class="myrio2c-evaluation-position">
-                        <div class="kt-widget__text" data-id="EvaluationGradeMain">
-                            @if (editionDto?.IsMusicProjectEvaluationStarted() != true)
+                    <div class="kt-widget__desc myrio2c-evaluation-position col-md-6 pr-0">
+                        <div class="kt-widget__text pull-right" data-id="EvaluationGradeMain">
+                            @if (editionDto?.IsCartoonProjectEvaluationStarted() != true)
                             {
                                 <div class="row">
                                     <div class="col-12">
@@ -88,7 +78,7 @@
                                     </div>
                                 </div>
                             }
-                            else if (editionDto?.IsMusicProjectEvaluationOpen() == true)
+                            else if (editionDto?.IsCartoonProjectEvaluationOpen() == true)
                             {
                                 var hasCurrentEvaluation = currentEvaluation != null;
                                 if (hasCurrentEvaluation)
@@ -98,7 +88,7 @@
                                             <div class="form-group">
                                                 <div class="myrio2c-evaluation-grade-box-lg form-control" data-toggle="tooltip" title="@Labels.ClickHereToEvaluateProject" onclick="MyRio2cCommon.enableFieldEdit({ dataId: 'EvaluationGradeMain' })" style="cursor: pointer;">
                                                     <span class="grade-label mr-2">@Labels.Evaluation</span>
-                                                    <span class="grade-vote">@(currentEvaluation?.AttendeeMusicBandEvaluation?.Grade)</span>
+                                                    <span class="grade-vote">@(currentEvaluation?.AttendeeCartoonProjectEvaluation?.Grade)</span>
                                                 </div>
                                             </div>
                                         </form>
@@ -108,12 +98,12 @@
                                     <form class="form-inline myrio2c-evaluation-grade-box-form justify-content-center">
                                         <div class="form-group font-weight-bold ml-3 mr-3 mt-2 mb-2">@Labels.EvaluateProject</div>
                                         <div class="form-group mt-2 mb-2 mr-3">
-                                            @Html.TextBox("AttendeeMusicBandEvaluationGradeMain", currentEvaluation?.AttendeeMusicBandEvaluation?.Grade, new { @class = "form-control text-center decimal-globalize-mask", placeholder = Labels.Grade, style = "width: 105px;" }) @*, @type = "number", @min = "1", @max = "10", @step = ".10"*@
+                                            @Html.TextBox("AttendeeCartoonProjectEvaluationGradeMain", currentEvaluation?.AttendeeCartoonProjectEvaluation?.Grade, new { @class = "form-control text-center decimal-globalize-mask", placeholder = Labels.Grade, style = "width: 105px;" }) @*, @type = "number", @min = "1", @max = "10", @step = ".10"*@
                                         </div>
-                                        <button type="button" class="btn btn-success mt-2 mb-2 mr-3" onclick="MusicProjectsMainInformationWidget.submitEvaluationGrade('@Model.MusicProject.AttendeeMusicBand.MusicBandId');">@Labels.Evaluate</button>
+                                        <button type="button" class="btn btn-success mt-2 mb-2 mr-3" onclick="CartoonProjectsMainInformationWidget.submitEvaluationGrade('@Model.CartoonProject.Id');">@Labels.Evaluate</button>
                                         @if (hasCurrentEvaluation)
                                         {
-                                            <button type="button" class="btn btn-secondary mt-2 mb-2 mr-3 pl-4" onclick="MyRio2cCommon.disableFieldEdit({ dataId: 'EvaluationGradeMain' })" data-toggle="tooltip" title="@(Labels.Cancel)">
+                                            <button type="button" class="btn btn-secondary mt-2 mb-2 mr-2 pl-4" onclick="MyRio2cCommon.disableFieldEdit({ dataId: 'EvaluationGradeMain' })" data-toggle="tooltip" title="@(Labels.Cancel)">
                                                 <i class="fa fa-times"></i>
                                             </button>
                                         }
@@ -126,7 +116,7 @@
                                     <div class="form-group mb-2">
                                         <div class="myrio2c-evaluation-grade-box-lg form-control">
                                             <span class="grade-label mr-2">@Labels.Average</span>
-                                            <span class="grade-vote">@(Model.AttendeeMusicBandDto?.AttendeeMusicBand?.Grade?.ToString() ?? "-")</span>
+                                            <span class="grade-vote">@(Model.AttendeeCartoonProject?.Grade?.ToString() ?? "-")</span>
                                         </div>
                                     </div>
                                 </form>
@@ -137,26 +127,60 @@
             </div>
         </div>
         <div class="kt-widget__bottom">
-            @if (!string.IsNullOrEmpty(Model.MusicProject?.Release))
-            {
-                <div class="kt-widget__item w-100">
-                    <div class="kt-widget__details">
-                        <span class="kt-widget__title">@Labels.Release</span>
-                        <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Html.Raw(Model.MusicProject?.Release?.Replace("\n", "<br/>") ?? "-"))</span></span>
-                    </div>
-                </div>
-            }
-            <div class="kt-widget__item w-50 w-xs-100">
+            <div class="kt-widget__item w-100">
                 <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.MusicBandFormationYear</span>
-                    <span class="kt-widget__value"><span class="text-break">@(Model.AttendeeMusicBandDto?.MusicBand?.FormationDate ?? "-")</span></span>
+                    <span class="kt-widget__title">@Labels.Description</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Html.Raw(Model.CartoonProject?.Summary?.Replace("\n", "<br/>") ?? "-"))</span></span>
                 </div>
             </div>
-            <div class="kt-widget__item w-50 w-xs-100">
+            <div class="kt-widget__item w-25 w-xs-100">
                 <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.MainMusicInfluences</span>
-                    <span class="kt-widget__value"><span class="text-break">@(Model.AttendeeMusicBandDto?.MusicBand?.MainMusicInfluences ?? "-")</span></span>
+                    <span class="kt-widget__title">@Labels.AgentName</span>
+                    <span class="kt-widget__value"><span class="text-break">@(collaboratorDto?.Collaborator?.GetFullName() ?? "-")</span></span>
                 </div>
+            </div>
+            <div class="kt-widget__item w-25 w-xs-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.Email</span>
+                    <span class="kt-widget__value"><span class="text-break">@(collaboratorDto?.Collaborator?.PublicEmail ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-25 w-xs-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.PhoneNumber</span>
+                    <span class="kt-widget__value"><span class="text-break">@(collaboratorDto?.Collaborator?.PhoneNumber ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-25 w-xs-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.CellPhone</span>
+                    <span class="kt-widget__value"><span class="text-break">@(collaboratorDto?.Collaborator?.CellPhone ?? "-")</span></span>
+                </div>
+            </div>
+
+            @*<div class="kt-widget__item w-25 w-xs-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.FoundationYear</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Model.CartoonProject?.FoundationYear)</span></span>
+                </div>
+            </div>*@
+            @*<div class="kt-widget__item w-25 w-xs-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.ProductOrServiceName</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.CartoonProject.ServiceName ?? "-")</span></span>
+                </div>
+            </div>*@
+            @*<div class="kt-widget__item w-25 w-xs-100">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.AccumulatedRevenueForLast3Months</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.AttendeeCartoonProject?.AccumulatedRevenue ?? 0)</span></span>
+                </div>
+            </div>*@
+            <div class="kt-widget__item w-25 w-xs-100">
+                @*<div class="kt-widget__details">
+                        <span class="kt-widget__title">@Labels.AccumulatedRevenueForLast3Months</span>
+                        <span class="kt-widget__value"><span class="text-break">@(Model.AttendeeInnovationOrganization?.AccumulatedRevenue ?? 0)</span></span>
+                    </div>*@
             </div>
         </div>
     </div>

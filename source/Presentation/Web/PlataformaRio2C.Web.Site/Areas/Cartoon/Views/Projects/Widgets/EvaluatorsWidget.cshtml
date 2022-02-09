@@ -1,10 +1,10 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @using Constants = PlataformaRio2C.Domain.Constants;
-@model MusicProjectDto
+@model AttendeeCartoonProjectDto
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
-    var isMusicCommission = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.CommissionMusic) == true;
+    var isCartoonCommission = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.CommissionCartoon) == true;
 }
 <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
@@ -12,7 +12,7 @@
     </div>
 </div>
 <div class="kt-portlet__body pt-0">
-    @if (editionDto?.IsMusicProjectEvaluationStarted() != true)
+    @if (editionDto?.IsCartoonProjectEvaluationStarted() != true)
     {
         <div class="row mt-75">
             <div class="col-12">
@@ -22,7 +22,7 @@
             </div>
         </div>
     }
-    else if (editionDto?.IsMusicProjectEvaluationOpen() == true)
+    else if (editionDto?.IsCartoonProjectEvaluationOpen() == true)
     {
         <div class="row mt-75">
             <div class="col-12">
@@ -32,7 +32,7 @@
             </div>
         </div>
     }
-    else if (Model.AttendeeMusicBandDto?.AttendeeMusicBandEvaluationsDtos?.Any() == true)
+    else if (Model.AttendeeCartoonProjectEvaluationDtos?.Any() == true)
     {
         <div class="row">
             <div class="col-12">
@@ -44,11 +44,11 @@
                         </tr>
                     </thead>
                     <tbody class="rio2c-scroll" style="max-height: 150px;">
-                        @foreach (var attendeeMusicBandEvaluation in Model.AttendeeMusicBandDto?.AttendeeMusicBandEvaluationsDtos)
+                        @foreach (var attendeeCartoonProjectEvaluationDto in Model.AttendeeCartoonProjectEvaluationDtos)
                         {
                             <tr>
-                                <td>@(attendeeMusicBandEvaluation.EvaluatorUser?.Name)</td>
-                                <td class="text-center">@(attendeeMusicBandEvaluation.AttendeeMusicBandEvaluation?.Grade)</td>
+                                <td>@(attendeeCartoonProjectEvaluationDto.EvaluatorUser?.Name)</td>
+                                <td class="text-center">@(attendeeCartoonProjectEvaluationDto.AttendeeCartoonProjectEvaluation?.Grade)</td>
                             </tr>
                         }
                     </tbody>
@@ -78,7 +78,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="kt-widget4">
-                            @if (Model.AttendeeMusicBandDto?.AttendeeMusicBandEvaluationsDtos?.Any() == true)
+                            @if (Model.AttendeeInnovationBandDto?.AttendeeInnovationBandEvaluationsDtos?.Any() == true)
                             {
                                 <div class="col-12">
                                     <table class="table table-sm table-head-bg-brand table-body-scroll">
@@ -89,11 +89,11 @@
                                             </tr>
                                         </thead>
                                         <tbody class="rio2c-scroll">
-                                            @foreach (var attendeeMusicBandEvaluation in Model.AttendeeMusicBandDto?.AttendeeMusicBandEvaluationsDtos)
+                                            @foreach (var attendeeInnovationBandEvaluation in Model.AttendeeInnovationBandDto?.AttendeeInnovationBandEvaluationsDtos)
                                             {
                                                 <tr>
-                                                    <td>@(attendeeMusicBandEvaluation.EvaluatorUser?.Name)</td>
-                                                    <td class="text-center">@(attendeeMusicBandEvaluation.AttendeeMusicBandEvaluation?.Grade)</td>
+                                                    <td>@(attendeeInnovationBandEvaluation.EvaluatorUser?.Name)</td>
+                                                    <td class="text-center">@(attendeeInnovationBandEvaluation.AttendeeInnovationBandEvaluation?.Grade)</td>
                                                 </tr>
                                             }
                                         </tbody>

@@ -6,29 +6,24 @@
 // Last Modified By : Rafael Franco
 // Last Modified On : 02-08-2022
 // ***********************************************************************
-// <copyright file="AttendeeCartoonProjectEvaluationDto.cs" company="Softo">
+// <copyright file="CartoonProjectDto.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Entities;
-using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
-    /// <summary>AttendeeCartoonProjectEvaluationDto</summary>
-    public class AttendeeCartoonProjectEvaluationDto
+    /// <summary>CartoonProjectDto</summary>
+    public class CartoonProjectDto
     {
         public CartoonProject CartoonProject { get; set; }
-        public AttendeeCartoonProject AttendeeCartoonProject { get; set; }
-        
-        public AttendeeCartoonProjectEvaluation AttendeeCartoonProjectEvaluation { get; set; }
-        public User EvaluatorUser { get; set; }
+        //public MusicBandDto AttendeeMusicBandDto { get; set; }
+        //public MusicProjectEvaluationDto MusicProjectEvaluationDto { get; set; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeeCartoonProjectEvaluationDto"/> class.
-        /// </summary>
-        public AttendeeCartoonProjectEvaluationDto()
+        /// <summary>Initializes a new instance of the <see cref="CartoonProjectDto"/> class.</summary>
+        public CartoonProjectDto()
         {
         }
     }

@@ -1,14 +1,14 @@
 ﻿@using PlataformaRio2C.Domain.Dtos
 @using System.Linq;
-@model MusicProjectDto
+@model AttendeeCartoonProjectDto
 @{
     var editionDto = ViewBag.EditionDto as EditionDto;
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
-    var currentEvaluation = Model.AttendeeMusicBandDto.GetAttendeeMusicBandEvaluationByUserId(userAccessControlDto?.User?.Id ?? 0);
-    var approvedAttendeeMusicBandsIds = ViewBag.ApprovedAttendeeMusicBandsIds as int[];
-    var isThisMusicProjectApproved = approvedAttendeeMusicBandsIds?.Contains(Model.AttendeeMusicBandDto.AttendeeMusicBand.Id) == true;
+    var currentEvaluation = Model.GetAttendeeCartoonProjectEvaluationByUserId(userAccessControlDto?.User?.Id ?? 0);
+    var approvedAttendeeCartoonProjectsIds = ViewBag.ApprovedAttendeeCartoonProjectsIds as int[];
+    var isThisCartoonProjectApproved = approvedAttendeeCartoonProjectsIds?.Contains(Model.AttendeeCartoonProject.Id) == true;
 }
-@if (editionDto?.IsMusicProjectEvaluationOpen() == true)
+@if (editionDto?.IsCartoonProjectEvaluationOpen() == true)
 {
     var hasCurrentEvaluation = currentEvaluation != null;
     if (hasCurrentEvaluation)
@@ -17,7 +17,7 @@
             <div class="form-group mb-2">
                 <div class="myrio2c-evaluation-grade-box-lg form-control">
                     <span class="grade-label mr-2">@Labels.Evaluation</span>
-                    <span class="grade-vote">@(currentEvaluation?.AttendeeMusicBandEvaluation?.Grade)</span>
+                    <span class="grade-vote">@(currentEvaluation?.AttendeeCartoonProjectEvaluation?.Grade ?? 0)</span>
                 </div>
             </div>
         </form>
@@ -33,13 +33,13 @@
         </div>
     }
 }
-else if (editionDto?.IsMusicProjectEvaluationEnded() == true)
+else if (editionDto?.IsCartoonProjectEvaluationEnded() == true)
 {
     var icon = "fa-diagnoses";
     var color = "warning";
     var status = Labels.UnderEvaluation;
 
-    if (isThisMusicProjectApproved)
+    if (isThisCartoonProjectApproved)
     {
         icon = "fa-thumbs-up";
         color = "success";
@@ -58,7 +58,7 @@ else if (editionDto?.IsMusicProjectEvaluationEnded() == true)
         <div class="form-group mb-2">
             <div class="myrio2c-evaluation-grade-box-sm form-control">
                 <span class="grade-label mr-2">@Labels.Average</span>
-                <span class="grade-vote">@(Model.AttendeeMusicBandDto?.AttendeeMusicBand?.Grade?.ToString() ?? "-")</span>
+                <span class="grade-vote">@(Model.AttendeeCartoonProject?.Grade?.ToString() ?? "-")</span>
             </div>
         </div>
     </form>

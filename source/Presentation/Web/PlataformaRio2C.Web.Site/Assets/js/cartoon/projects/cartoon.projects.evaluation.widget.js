@@ -1,12 +1,12 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Site
-// Author           : Rafael Dantas Ruiz
-// Created          : 02-28-2020
+// Author           : Renan Valentim
+// Created          : 07-28-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 02-29-2020
+// Last Modified By : Rafael Franco
+// Last Modified On : 02-08-2021
 // ***********************************************************************
-// <copyright file="cartoon.projects.evaluation.widget.js" company="Softo">
+// <copyright file="Cartoon.projects.evaluation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -40,9 +40,9 @@ var CartoonProjectsEvaluationWidget = function () {
         }
 
         var jsonParameters = new Object();
-        jsonParameters.projectUid = $('#AggregateId').val();
+        //jsonParameters.attendeeCartoonOrganizationUid = $('#AggregateId').val();
+        jsonParameters.attendeeCartoonProjectUid = $('#AggregateId').val();
 
-        //$.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Cartoon/Projects/ShowEvaluationWidget'), jsonParameters, function (data) {
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Cartoon/Projects/ShowEvaluationGradeWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
@@ -65,10 +65,10 @@ var CartoonProjectsEvaluationWidget = function () {
     };
 
     // Evaluation Grade ---------------------------------------------------------------------------
-    var submitEvaluationGrade = function () {
+    var submitEvaluationGrade = function (cartoonProjectId) {
         var jsonParameters = new Object();
-        //jsonParameters.musicBandId = musicBandId;
-        jsonParameters.grade = $('#AttendeeCartoonEvaluationGrade').val();
+        jsonParameters.cartoonProjectId = cartoonProjectId;
+        jsonParameters.grade = $('#AttendeeCartoonProjectEvaluationGrade').val();
 
         $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Cartoon/Projects/Evaluate'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
@@ -97,8 +97,8 @@ var CartoonProjectsEvaluationWidget = function () {
             MyRio2cCommon.block({ idOrClass: widgetElementId });
             show();
         },
-        submitEvaluationGrade: function () {
-            submitEvaluationGrade();
+        submitEvaluationGrade: function (cartoonProjectId) {
+            submitEvaluationGrade(cartoonProjectId);
         }
     };
 }();

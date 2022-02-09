@@ -4,7 +4,8 @@
 @{
     ViewBag.Title = Labels.ProjectsEvaluation;
     var editionDto = ViewBag.EditionDto as EditionDto;
-    var projectEvaluationStatuses = ViewBag.ProjectEvaluationStatuses as List<PlataformaRio2C.Domain.Entities.ProjectEvaluationStatus>;
+    //var CartoonOrganizationTrackOptions = ViewBag.InnovationOrganizationTrackOptions as List<InnovationOrganizationTrackOption>;
+    var projectEvaluationStatuses = ViewBag.ProjectEvaluationStatuses as List<ProjectEvaluationStatus>;
 }
 <div class="kt-portlet">
     <div class="kt-portlet__body">
@@ -20,12 +21,12 @@
         </div>
         <div class="row">
             @*<div class="col-12 col-sm-6 mt-2">
-                <select name="MusicGenreUid" id="MusicGenreUid" class="form-control">
-                    <option value="">@(string.Format(Labels.SelectAMEntity, Labels.MusicGenre.ToLowerInvariant()))...</option>
-                    @foreach (var musicGenre in musicGenres)
+                <select name="InnovationOrganizationTrackOptionUid" id="InnovationOrganizationTrackOptionUid" class="form-control">
+                    <option value="">@(string.Format(Labels.SelectAMEntity, Labels.Track.ToLowerInvariant()))...</option>
+                    @foreach (var innovationOrganizationTrackOption in innovationOrganizationTrackOptions)
                     {
-                        <option value="@musicGenre.Uid" @(musicGenre.Uid == ViewBag.MusicGenreUid ? "selected" : string.Empty)>
-                            @musicGenre.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
+                        <option value="@innovationOrganizationTrackOption.Uid" @(innovationOrganizationTrackOption.Uid == ViewBag.InnovationOrganizationTrackOptionUid ? "selected" : string.Empty)>
+                            @innovationOrganizationTrackOption.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|')
                         </option>
                     }
                 </select>
@@ -88,7 +89,8 @@
         // Page translations ----------------------------------------------------------------------
         var translations = {
             selectPlaceholder: '@Labels.SelectAMEntity',
-            genre: '@Html.Raw(Labels.Cartoonito.ToLowerInvariant())',
+            selectFPlaceholder: '@Labels.SelectAFEntity',
+            track: '@Html.Raw(Labels.Track.ToLowerInvariant())',
             status: '@Labels.Status.ToLowerInvariant()'
         };
 
