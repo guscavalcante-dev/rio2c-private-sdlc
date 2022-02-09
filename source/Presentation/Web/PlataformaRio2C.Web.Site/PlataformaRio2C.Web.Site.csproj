@@ -356,7 +356,6 @@
     <Compile Include="Areas\Cartoon\CartoonAreaRegistration.cs" />
     <Compile Include="Areas\Cartoon\Controllers\CartoonController.cs" />
     <Compile Include="Areas\Cartoon\Controllers\ProjectsController.cs" />
-    <Compile Include="Areas\Cartoon\Controllers\ProjectsControllerd.cs" />
     <Compile Include="Areas\Innovation\Controllers\ProjectsController.cs" />
     <Compile Include="Areas\Innovation\InnovationAreaRegistration.cs" />
     <Compile Include="Areas\Music\Controllers\MusicBandController.cs" />
