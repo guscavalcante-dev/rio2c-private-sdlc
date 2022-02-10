@@ -133,7 +133,6 @@
     <Compile Include="Dtos\Cartoon\AttendeeCollaboratorCartoonEvaluationsWidgetDto.cs" />
     <Compile Include="Dtos\Cartoon\AttendeeCartoonProjectEvaluationDto.cs" />
     <Compile Include="Dtos\Cartoon\AttendeeInnovationOrganizationCollaboratorDto.cs" />
-    <Compile Include="Dtos\Cartoon\AttendeeInnovationOrganizationJsonDto.cs" />
     <Compile Include="Dtos\Cartoon\CartoonProjectDto.cs" />
     <Compile Include="Dtos\Cartoon\AttendeeCartoonProjectJsonDto.cs" />
     <Compile Include="Dtos\Innovation\API\InnovationOrganizationSustainableDevelopmentObjectivesOptionApiDto.cs" />

@@ -950,8 +950,8 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                    AttendeeCartoonProjectUid = aio.Uid,
                                    CartoonProjectId = aio.CartoonProject.Id,
                                    CartoonProjectUid = aio.CartoonProject.Uid,
-                                   CartoonProjectName = aio.CartoonProject.Title,
-                                   CartoonProjectServiceName = aio.CartoonProject.Summary,
+                                   CartoonProjectTitle= aio.CartoonProject.Title,
+                                   CartoonProjectFormatName = aio.CartoonProject.CartoonProjectFormat.Name,
                                    Grade = aio.Grade,
                                    EvaluationsCount = aio.AttendeeCartoonProjectEvaluations.Count(aioe => !aioe.IsDeleted),
                                    
