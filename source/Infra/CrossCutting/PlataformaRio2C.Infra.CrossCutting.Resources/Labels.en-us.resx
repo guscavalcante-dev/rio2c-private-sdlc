@@ -501,13 +501,13 @@
     <value>Cartoon Project</value>
   </data>
   <data name="CartoonProjects" xml:space="preserve">
-    <value>Cartoon Projects</value>
+    <value>Cartoonito Projects</value>
   </data>
   <data name="CartoonProjectSubmitEndDate" xml:space="preserve">
-    <value>Cartoon project submission end date</value>
+    <value>Cartoonito project submission end date</value>
   </data>
   <data name="CartoonProjectSubmitStartDate" xml:space="preserve">
-    <value>Cartoon project submission start date</value>
+    <value>Cartoonito project submission start date</value>
   </data>
   <data name="CellPhone" xml:space="preserve">
     <value>Mobile</value>

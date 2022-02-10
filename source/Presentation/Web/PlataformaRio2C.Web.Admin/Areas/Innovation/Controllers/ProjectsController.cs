@@ -334,7 +334,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Innovation.Controllers
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
-        /// <param name="musicGenreUid">The music genre uid.</param>
+        /// <param name="innovationOrganizationTrackUid">The innovation organization track uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>

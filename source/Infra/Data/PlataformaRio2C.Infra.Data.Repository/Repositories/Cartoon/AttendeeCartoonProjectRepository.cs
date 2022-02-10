@@ -108,25 +108,22 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
         /// <returns></returns>
         internal static IQueryable<AttendeeCartoonProject> FindByKeywords(this IQueryable<AttendeeCartoonProject> query, string keywords)
         {
-            //if (!string.IsNullOrEmpty(keywords))
-            //{
-            //    var outerWhere = PredicateBuilder.New<AttendeeCartoonProject>(false);
-            //    var innerInnovationOrganizationNameWhere = PredicateBuilder.New<AttendeeCartoonProject>(true);
-            //    var innerInnovationOrganizationServiceNameWhere = PredicateBuilder.New<AttendeeCartoonProject>(true);
+            if (!string.IsNullOrEmpty(keywords))
+            {
+                var outerWhere = PredicateBuilder.New<AttendeeCartoonProject>(false);
+                var innerCartoonProjecTitleWhere = PredicateBuilder.New<AttendeeCartoonProject>(true);
 
-            //    foreach (var keyword in keywords.Split(' '))
-            //    {
-            //        if (!string.IsNullOrEmpty(keyword))
-            //        {
-            //            innerInnovationOrganizationNameWhere = innerInnovationOrganizationNameWhere.Or(aio => aio.InnovationOrganization.Name.Contains(keyword));
-            //            innerInnovationOrganizationServiceNameWhere = innerInnovationOrganizationServiceNameWhere.Or(aio => aio.InnovationOrganization.ServiceName.Contains(keyword));
-            //        }
-            //    }
+                foreach (var keyword in keywords.Split(' '))
+                {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        innerCartoonProjecTitleWhere = innerCartoonProjecTitleWhere.Or(acp => acp.CartoonProject.Title.Contains(keyword));
+                    }
+                }
 
-            //    outerWhere = outerWhere.Or(innerInnovationOrganizationNameWhere);
-            //    outerWhere = outerWhere.Or(innerInnovationOrganizationServiceNameWhere);
-            //    query = query.Where(outerWhere);
-            //}
+                outerWhere = outerWhere.Or(innerCartoonProjecTitleWhere);
+                query = query.Where(outerWhere);
+            }
 
             return query;
         }

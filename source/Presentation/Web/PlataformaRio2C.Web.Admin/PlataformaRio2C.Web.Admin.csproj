@@ -857,6 +857,13 @@
     <Content Include="Assets\js\cartoon\commissions\cartoon.commissions.evaluations.widget.js" />
     <Content Include="Assets\js\cartoon\commissions\cartoon.commissions.totalcount.widget.js" />
     <Content Include="Assets\js\cartoon\commissions\cartoon.commissions.update.js" />
+    <Content Include="Assets\js\cartoon\projects\cartoon.projects.datatable.widget.js" />
+    <Content Include="Assets\js\cartoon\projects\cartoon.projects.delete.js" />
+    <Content Include="Assets\js\cartoon\projects\cartoon.projects.editioncount.widget.js" />
+    <Content Include="Assets\js\cartoon\projects\cartoon.projects.evaluation.widget.js" />
+    <Content Include="Assets\js\cartoon\projects\cartoon.projects.evaluators.widget.js" />
+    <Content Include="Assets\js\cartoon\projects\cartoon.projects.maininformation.widget.js" />
+    <Content Include="Assets\js\cartoon\projects\cartoon.projects.totalcount.widget.js" />
     <Content Include="Assets\js\collaborators\collaborators.onboardinginfo.widget.js" />
     <Content Include="Assets\js\collaborators\collaborators.socialnetworks.widget.js" />
     <Content Include="Assets\js\collaborators\collaborators.maininformation.widget.js" />
@@ -8345,6 +8352,14 @@
     <Content Include="Areas\Cartoon\Views\Commissions\Index.cshtml" />
     <Content Include="Areas\Cartoon\Views\web.config" />
     <Content Include="Areas\Cartoon\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Cartoon\Views\Projects\EvaluationDetails.cshtml" />
+    <Content Include="Areas\Cartoon\Views\Projects\Index.cshtml" />
+    <Content Include="Areas\Cartoon\Views\Projects\Widgets\DataTableWidget.cshtml" />
+    <Content Include="Areas\Cartoon\Views\Projects\Widgets\EditionCountWidget.cshtml" />
+    <Content Include="Areas\Cartoon\Views\Projects\Widgets\EvaluationGradeWidget.cshtml" />
+    <Content Include="Areas\Cartoon\Views\Projects\Widgets\EvaluatorsWidget.cshtml" />
+    <Content Include="Areas\Cartoon\Views\Projects\Widgets\MainInformationWidget.cshtml" />
+    <Content Include="Areas\Cartoon\Views\Projects\Widgets\TotalCountWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -9932,6 +9947,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Cartoon\Views\Projects\Modals\" />
+    <Folder Include="Areas\Cartoon\Views\Projects\Shared\" />
     <Folder Include="Areas\Innovation\Views\Projects\Modals\" />
     <Folder Include="Areas\Innovation\Views\Projects\Shared\" />
     <Folder Include="Areas\Music\Views\Shared\" />

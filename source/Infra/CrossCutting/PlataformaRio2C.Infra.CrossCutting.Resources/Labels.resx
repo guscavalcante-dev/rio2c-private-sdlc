@@ -499,13 +499,13 @@
     <value>Projeto de Cartoon</value>
   </data>
   <data name="CartoonProjects" xml:space="preserve">
-    <value>Projetos de Cartoon</value>
+    <value>Projetos de Cartoonito</value>
   </data>
   <data name="CartoonProjectSubmitEndDate" xml:space="preserve">
-    <value>Data de término de envio de projeto de cartoon</value>
+    <value>Data de término de envio de projeto de cartoonito</value>
   </data>
   <data name="CartoonProjectSubmitStartDate" xml:space="preserve">
-    <value>Data de início de envio de projeto de cartoon</value>
+    <value>Data de início de envio de projeto de cartoonito</value>
   </data>
   <data name="CellPhone" xml:space="preserve">
     <value>Celular</value>

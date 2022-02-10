@@ -970,7 +970,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Projetos de Cartoon.
+        ///   Looks up a localized string similar to Projetos de Cartoonito.
         /// </summary>
         public static string CartoonProjects {
             get {
@@ -979,7 +979,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data de término de envio de projeto de cartoon.
+        ///   Looks up a localized string similar to Data de término de envio de projeto de cartoonito.
         /// </summary>
         public static string CartoonProjectSubmitEndDate {
             get {
@@ -988,7 +988,7 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data de início de envio de projeto de cartoon.
+        ///   Looks up a localized string similar to Data de início de envio de projeto de cartoonito.
         /// </summary>
         public static string CartoonProjectSubmitStartDate {
             get {

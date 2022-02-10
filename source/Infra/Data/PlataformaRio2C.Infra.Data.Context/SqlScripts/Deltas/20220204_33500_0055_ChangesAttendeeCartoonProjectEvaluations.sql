@@ -18,7 +18,7 @@ BEGIN TRY
 	 CONSTRAINT [PK_AttendeeCartoonProjectEvaluations] PRIMARY KEY CLUSTERED 
 	(
 		[Id] ASC
-	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 	) ON [PRIMARY]
 
 	ALTER TABLE [dbo].[AttendeeCartoonProjectEvaluations]  WITH CHECK ADD  CONSTRAINT [FK_AttendeeCartoonProjects_AttendeeCartoonProjectEvaluations_AttendeeCartoonProjectId] FOREIGN KEY([AttendeeCartoonProjectId])
@@ -41,9 +41,6 @@ BEGIN TRY
 
 	ALTER TABLE [dbo].[AttendeeCartoonProjectEvaluations] CHECK CONSTRAINT [FK_Users_AttendeeCartoonProjectEvaluations_UpdateUserId]
 
-
-
-	
 	COMMIT TRAN -- Transaction Success!
 END TRY
 
