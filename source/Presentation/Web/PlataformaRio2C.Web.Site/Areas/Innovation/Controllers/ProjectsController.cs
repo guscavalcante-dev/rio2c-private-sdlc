@@ -725,10 +725,10 @@ namespace PlataformaRio2C.Web.Site.Areas.Innovation.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionInnovation)]
         public async Task<ActionResult> Evaluate(int innovationOrganizationId, decimal? grade)
         {
-            if (this.EditionDto?.IsInnovationProjectEvaluationOpen() != true)
-            {
-                return Json(new { status = "error", message = Messages.OutOfEvaluationPeriod }, JsonRequestBehavior.AllowGet);
-            }
+            //if (this.EditionDto?.IsInnovationProjectEvaluationOpen() != true)
+            //{
+            //    return Json(new { status = "error", message = Messages.OutOfEvaluationPeriod }, JsonRequestBehavior.AllowGet);
+            //}
 
             var result = new AppValidationResult();
 
