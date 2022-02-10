@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Entities;
+using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Dtos
 {
@@ -19,8 +20,8 @@ namespace PlataformaRio2C.Domain.Dtos
     public class CartoonProjectDto
     {
         public CartoonProject CartoonProject { get; set; }
-        //public MusicBandDto AttendeeMusicBandDto { get; set; }
-        //public MusicProjectEvaluationDto MusicProjectEvaluationDto { get; set; }
+        public AttendeeCartoonProject AttendeeCartoonProject { get; set; }
+        public IEnumerable<AttendeeCartoonProjectEvaluationDto> AttendeeCartoonProjectEvaluationsDtos { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CartoonProjectDto"/> class.</summary>
         public CartoonProjectDto()
