@@ -3,8 +3,8 @@
 // Author           : Renan Valentim
 // Created          : 07-28-2021
 //
-// Last Modified By : Rafael Franco
-// Last Modified On : 02-08-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 07-28-2021
 // ***********************************************************************
 // <copyright file="cartoon.projects.maininformation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -42,24 +42,24 @@ var CartoonProjectsMainInformationWidget = function () {
                     enableShowPlugins();
                 },
                 // Error
-                onError: function () {
+                onError: function() {
                 }
             });
         })
-            .fail(function () {
-                //showAlert();
-                //MyRio2cCommon.unblock(widgetElementId);
-            })
-            .always(function () {
-                MyRio2cCommon.unblock({ idOrClass: widgetElementId });
-            });
+        .fail(function () {
+            //showAlert();
+            //MyRio2cCommon.unblock(widgetElementId);
+        })
+        .always(function() {
+            MyRio2cCommon.unblock({ idOrClass: widgetElementId });
+        });
     };
 
     // Evaluation Grade ---------------------------------------------------------------------------
     var submitEvaluationGrade = function (cartoonProjectId) {
         var jsonParameters = new Object();
         jsonParameters.cartoonProjectId = cartoonProjectId;
-        jsonParameters.grade = $('#AttendeeCartoonProjectnEvaluationGradeMain').val();
+        jsonParameters.grade = $('#AttendeeCartoonProjectEvaluationGradeMain').val();
 
         $.post(MyRio2cCommon.getUrlWithCultureAndEdition('/Cartoon/Projects/Evaluate'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({

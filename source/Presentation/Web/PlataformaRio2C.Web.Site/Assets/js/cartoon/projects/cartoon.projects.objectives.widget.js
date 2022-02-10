@@ -1,24 +1,24 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Web.Site
-// Author           : Rafael Dantas Ruiz
-// Created          : 03-01-2020
+// Assembly         : PlataformaRio2C.Web.Admin
+// Author           : Renan Valentim
+// Created          : 07-24-2021
 //
-// Last Modified By : Rafael Dantas Ruiz
-// Last Modified On : 03-01-2020
+// Last Modified By : Renan Valentim
+// Last Modified On : 07-24-2021
 // ***********************************************************************
-// <copyright file="cartoon.projects.socialnetworks.widget.js" company="Softo">
+// <copyright file="cartoon.projects.objectives.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var CartoonProjectsSocialNetworksWidget = function () {
+var CartoonProjectsObjectivesWidget = function () {
 
-    var widgetElementId = '#ProjectSocialNetworksWidget';
+    var widgetElementId = '#ProjectObjectivesWidget';
     var widgetElement = $(widgetElementId);
 
-    var updateModalId = '#UpdateSocialNetworksModal';
-    var updateFormId = '#UpdateSocialNetworksForm';
+    var updateModalId = '#UpdateObjectivesModal';
+    var updateFormId = '#UpdateObjectivesForm';
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
@@ -32,9 +32,9 @@ var CartoonProjectsSocialNetworksWidget = function () {
         }
 
         var jsonParameters = new Object();
-        jsonParameters.projectUid = $('#AggregateId').val();
+        jsonParameters.attendeeCartoonProjectUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Cartoon/Projects/ShowSocialNetworksWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Cartoon/Projects/ShowObjectivesWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success
@@ -62,8 +62,8 @@ var CartoonProjectsSocialNetworksWidget = function () {
     //        onSuccess: function (data) {
     //            $(updateModalId).modal('hide');
 
-    //            if (typeof (MusicProjectsMainInformationWidget) !== 'undefined') {
-	   //             MusicProjectsMainInformationWidget.init();
+    //            if (typeof (InnovationProjectsMainInformationWidget) !== 'undefined') {
+	   //             InnovationProjectsMainInformationWidget.init();
     //            }
     //        },
     //        onError: function (data) {
@@ -90,7 +90,7 @@ var CartoonProjectsSocialNetworksWidget = function () {
     //    var jsonParameters = new Object();
     //    jsonParameters.projectUid = $('#AggregateId').val();
 
-    //    $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Music/Projects/ShowUpdateMainInformationModal'), jsonParameters, function (data) {
+    //    $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Innovation/Projects/ShowUpdateMainInformationModal'), jsonParameters, function (data) {
     //        MyRio2cCommon.handleAjaxReturn({
     //        data: data,
     //        // Success

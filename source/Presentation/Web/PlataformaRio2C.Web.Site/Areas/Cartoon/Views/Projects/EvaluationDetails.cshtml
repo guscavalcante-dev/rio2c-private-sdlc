@@ -4,7 +4,7 @@
     var editionDto = ViewBag.EditionDto as EditionDto;
     ViewBag.Title = $"{Labels.Cartoonito} {Model.CartoonProject?.Title}";
     var totalCartoonProjectsCount = ViewBag.CartoonProjectsTotalCount as int?;
-    var currentCartoonProjectIndex = ViewBag.CurrenCartoonProjectIndex as int?;
+    var currentCartoonProjectIndex = ViewBag.CurrentCartoonProjectIndex as int?;
 
     var previousStepEvent = Url.Action("PreviousEvaluationDetails", "Projects", new
     {
@@ -113,15 +113,15 @@
 
         jQuery(document).ready(function () {
             CartoonProjectsMainInformationWidget.init();
-            CartoonProjectsMembersWidget.init();
-            CartoonProjectsTeamMembersWidget.init();
-            CartoonProjectsReleasedWidget.init();
-            CartoonProjectResponsibleWidget.init();
-            CartoonProjectsVideoAndMusicWidget.init();
-            CartoonProjectsClippingWidget.init();
-            CartoonProjectsSocialNetworksWidget.init();
+            CartoonProjectsTracksWidget.init();
+            CartoonProjectsObjectivesWidget.init();
+            CartoonProjectsExperiencesWidget.init();
+            CartoonProjectsTechnologiesWidget.init();
             CartoonProjectsEvaluationWidget.init();
             CartoonProjectsEvaluatorsWidget.init();
+            CartoonProjectsFoundersWidget.init();
+            CartoonProjectsBusinessInformationWidget.init();
+            CartoonProjectsPresentationWidget.init();
         });
     </script>
 }

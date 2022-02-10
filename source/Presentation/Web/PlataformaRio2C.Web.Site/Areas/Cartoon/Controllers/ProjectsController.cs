@@ -49,6 +49,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
+        /// <param name="cartoonProjectRepository">The attendee cartoon organization repository.</param>
         /// <param name="attendeeCartoonProjectRepository">The attendee cartoon organization repository.</param>
         /// <param name="evaluationStatusRepository">The evaluation status repository.</param>
         /// <param name="userRepository">The user repository.</param>
@@ -587,153 +588,129 @@ namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
 
         //#region Evaluation Grade Widget 
 
-        ///// <summary>
-        ///// Shows the evaluation grade widget.
-        ///// </summary>
-        ///// <param name="projectUid">The project uid.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionInnovation)]
-        //public async Task<ActionResult> ShowEvaluationGradeWidget(Guid? attendeeInnovationOrganizationUid)
-        //{
-        //    if (this.EditionDto?.IsInnovationProjectEvaluationStarted() != true)
-        //    {
-        //        return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-        //    }
+        /// <summary>
+        /// Shows the evaluation grade widget.
+        /// </summary>
+        /// <param name="projectUid">The project uid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionCartoon)]
+        public async Task<ActionResult> ShowEvaluationGradeWidget(Guid? attendeeCartoonProjectUid)
+        {
+            if (this.EditionDto?.IsCartoonProjectEvaluationStarted() != true)
+            {
+                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    var evaluationDto = await this.attendeeInnovationOrganizationRepo.FindEvaluationGradeWidgetDtoAsync(attendeeInnovationOrganizationUid ?? Guid.Empty, this.UserAccessControlDto.User.Id);
-        //    if (evaluationDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
+            var evaluationDto = await this.attendeeCartoonProjectRepo.FindEvaluationGradeWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty, this.UserAccessControlDto.User.Id);
+            if (evaluationDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    #region AttendeeCollaborator and AttendeeInnovationOrganization Tracks validation
 
-        //    var attendeeCollaboratorInnovationOrganizationTrackOptionsUids = await this.GetAttendeeCollaboratorInnovationOrganizationTrackOptionsUids();
+            ViewBag.ApprovedAttendeeCartoonProjectsIds = await this.attendeeCartoonProjectRepo.FindAllApprovedAttendeeCartoonProjectsIdsAsync(this.EditionDto.Edition.Id);
 
-        //    if (evaluationDto == null ||
-        //        evaluationDto.AttendeeInnovationOrganizationTrackDtos.Any(aiotDto => attendeeCollaboratorInnovationOrganizationTrackOptionsUids.Contains(aiotDto.InnovationOrganizationTrackOption.Uid)) == false)
-        //    {
-        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("EvaluationList", "Projects", new { Area = "Innovation" });
-        //    }
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EvaluationGradeWidget", evaluationDto), divIdOrClass = "#ProjectEvaluationWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
-        //    #endregion
+        /// <summary>
+        /// Evaluates the specified cartoon project identifier.
+        /// </summary>
+        /// <param name="cartoonProjectId">The cartoon project identifier.</param>
+        /// <param name="grade">The grade.</param>
+        /// <returns></returns>
+        /// <exception cref="DomainException"></exception>
+        [HttpPost]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionCartoon)]
+        public async Task<ActionResult> Evaluate(int cartoonProjectId, decimal? grade)
+        {
+            //if (this.EditionDto?.IsCartoonProjectEvaluationOpen() != true)
+            //{
+            //    return Json(new { status = "error", message = Messages.OutOfEvaluationPeriod }, JsonRequestBehavior.AllowGet);
+            //}
 
-        //    ViewBag.ApprovedAttendeeInnovationOrganizationsIds = await this.attendeeInnovationOrganizationRepo.FindAllApprovedAttendeeInnovationOrganizationsIdsAsync(this.EditionDto.Edition.Id);
+            var result = new AppValidationResult();
 
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Widgets/EvaluationGradeWidget", evaluationDto), divIdOrClass = "#ProjectEvaluationWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
+            try
+            {
+                var cmd = new EvaluateCartoonProject(
+                    await this.cartoonProjectRepo.FindByIdAsync(cartoonProjectId),
+                    grade);
 
-        ///// <summary>
-        ///// Evaluates the specified innovation organization identifier.
-        ///// </summary>
-        ///// <param name="innovationOrganizationId">The innovation organization identifier.</param>
-        ///// <param name="grade">The grade.</param>
-        ///// <returns></returns>
-        ///// <exception cref="DomainException"></exception>
-        //[HttpPost]
-        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionInnovation)]
-        //public async Task<ActionResult> Evaluate(int innovationOrganizationId, decimal? grade)
-        //{
-        //    if (this.EditionDto?.IsInnovationProjectEvaluationOpen() != true)
-        //    {
-        //        return Json(new { status = "error", message = Messages.OutOfEvaluationPeriod }, JsonRequestBehavior.AllowGet);
-        //    }
+                cmd.UpdatePreSendProperties(
+                    this.UserAccessControlDto.User.Id,
+                    this.UserAccessControlDto.User.Uid,
+                    this.EditionDto.Id,
+                    this.EditionDto.Uid,
+                    this.UserInterfaceLanguage);
+                result = await this.CommandBus.Send(cmd);
+            if (!result.IsValid)
+            {
+                throw new DomainException(Messages.CorrectFormValues);
+            }
+        }
+            catch (DomainException ex)
+            {
+                return Json(new
+                {
+                    status = "caraio",
+                    message = result.Errors.Select(e => e = new AppValidationError(e.Message, "ToastrError", e.Code))?
+                                            .FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
+                }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+{
+    Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+    return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+}
 
-        //    var result = new AppValidationResult();
-
-        //    try
-        //    {
-        //        var cmd = new EvaluateInnovationOrganization(
-        //            await this.innovationOrganizationRepo.FindByIdAsync(innovationOrganizationId),
-        //            grade);
-
-        //        cmd.UpdatePreSendProperties(
-        //            this.UserAccessControlDto.User.Id,
-        //            this.UserAccessControlDto.User.Uid,
-        //            this.EditionDto.Id,
-        //            this.EditionDto.Uid,
-        //            this.UserInterfaceLanguage);
-        //        result = await this.CommandBus.Send(cmd);
-        //        if (!result.IsValid)
-        //        {
-        //            throw new DomainException(Messages.CorrectFormValues);
-        //        }
-        //    }
-        //    catch (DomainException ex)
-        //    {
-        //        return Json(new
-        //        {
-        //            status = "error",
-        //            message = result.Errors.Select(e => e = new AppValidationError(e.Message, "ToastrError", e.Code))?
-        //                                    .FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
-        //        }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-        //        return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-        //    }
-
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        //projectUid = cmd.InnovationBandId,
-        //        message = string.Format(Messages.EntityActionSuccessfull, Labels.Startup, Labels.Evaluated.ToLowerInvariant())
-        //    });
-        //}
+return Json(new
+            {
+                status = "success",
+                //projectUid = cmd.cartoonProjectId,
+                message = string.Format(Messages.EntityActionSuccessfull, Labels.Startup, Labels.Evaluated.ToLowerInvariant())
+            });
+        }
 
         //#endregion
 
-        //#region Evaluators Widget
+        #region Evaluators Widget
 
-        //[HttpGet]
-        //[AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionInnovation)]
-        //public async Task<ActionResult> ShowEvaluatorsWidget(Guid? attendeeInnovationOrganizationUid)
-        //{
-        //    if (this.EditionDto?.IsInnovationProjectEvaluationStarted() != true)
-        //    {
-        //        return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
-        //    }
+        [HttpGet]
+        [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionCartoon)]
+        public async Task<ActionResult> ShowEvaluatorsWidget(Guid? attendeeCartoonProjectUid)
+        {
+            if (this.EditionDto?.IsCartoonProjectEvaluationStarted() != true)
+            {
+                return Json(new { status = "error", message = Texts.ForbiddenErrorMessage }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    var evaluationDto = await this.attendeeInnovationOrganizationRepo.FindEvaluatorsWidgetDtoAsync(attendeeInnovationOrganizationUid ?? Guid.Empty);
-        //    if (evaluationDto == null)
-        //    {
-        //        return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
-        //    }
+            var evaluationDto = await this.attendeeCartoonProjectRepo.FindEvaluatorsWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty);
+            if (evaluationDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
 
-        //    #region AttendeeCollaborator and AttendeeInnovationOrganization Tracks validation
 
-        //    var attendeeCollaboratorInnovationOrganizationTrackOptionsUids = await this.GetAttendeeCollaboratorInnovationOrganizationTrackOptionsUids();
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/EvaluatorsWidget", evaluationDto), divIdOrClass = "#ProjectEvaluatorsWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
 
-        //    if (evaluationDto == null ||
-        //        evaluationDto.AttendeeInnovationOrganizationTrackDtos.Any(aiotDto => attendeeCollaboratorInnovationOrganizationTrackOptionsUids.Contains(aiotDto.InnovationOrganizationTrackOption.Uid)) == false)
-        //    {
-        //        this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
-        //        return RedirectToAction("EvaluationList", "Projects", new { Area = "Innovation" });
-        //    }
-
-        //    #endregion
-
-        //    return Json(new
-        //    {
-        //        status = "success",
-        //        pages = new List<dynamic>
-        //        {
-        //            new { page = this.RenderRazorViewToString("Widgets/EvaluatorsWidget", evaluationDto), divIdOrClass = "#ProjectEvaluatorsWidget" },
-        //        }
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
-
-        //#endregion
+        #endregion
 
         //#region Founders Widget
 

@@ -23,6 +23,9 @@ namespace PlataformaRio2C.Domain.Dtos
     {
         public CartoonProject CartoonProject { get; set; }
         public AttendeeCartoonProject AttendeeCartoonProject { get; set; }
+
+        public AttendeeCartoonProjectEvaluationDto AttendeeCartoonProjectEvaluationDto { get; set; }
+
         public IEnumerable<AttendeeCartoonProjectEvaluationDto> AttendeeCartoonProjectEvaluationDtos { get; set; }
         public IEnumerable<AttendeeCartoonProjectCollaboratorDto> AttendeeCartoonProjectCollaboratorDtos { get; set; }
 
@@ -64,6 +67,24 @@ namespace PlataformaRio2C.Domain.Dtos
         }
 
         public AttendeeCartoonProjectCollaboratorDto GetAttendeeCartoonProjectCollaboratorDtoCollaboratorByEditionId(int? editionId)
+        {
+            if (!editionId.HasValue)
+                return null;
+
+            if (this.AttendeeCartoonProjectCollaboratorDtos == null)
+            {
+                this.AttendeeCartoonProjectCollaboratorDtos = new List<AttendeeCartoonProjectCollaboratorDto>();
+            }
+
+            return this.AttendeeCartoonProjectCollaboratorDtos.FirstOrDefault(w => w.AttendeeCollaborator.EditionId == editionId);
+        }
+
+        /// <summary>
+        /// Gets the attendee cartoon project evaluation by user identifier.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public AttendeeCartoonProjectCollaboratorDto GetAttendeeCartoonProjectCollaboratorByEditionId(int? editionId)
         {
             if (!editionId.HasValue)
                 return null;
