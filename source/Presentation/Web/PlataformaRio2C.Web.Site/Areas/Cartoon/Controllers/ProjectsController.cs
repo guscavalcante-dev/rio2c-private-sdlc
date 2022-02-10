@@ -652,11 +652,11 @@ namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
                     this.EditionDto.Uid,
                     this.UserInterfaceLanguage);
                 result = await this.CommandBus.Send(cmd);
-            if (!result.IsValid)
-            {
-                throw new DomainException(Messages.CorrectFormValues);
+                if (!result.IsValid)
+                {
+                    throw new DomainException(Messages.CorrectFormValues);
+                }
             }
-        }
             catch (DomainException ex)
             {
                 return Json(new
@@ -667,12 +667,12 @@ namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
                 }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
-{
-    Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
-    return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
-}
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return Json(new { status = "error", message = Messages.WeFoundAndError, }, JsonRequestBehavior.AllowGet);
+            }
 
-return Json(new
+            return Json(new
             {
                 status = "success",
                 //projectUid = cmd.cartoonProjectId,

@@ -55,6 +55,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeCartoonProject> AttendeeCartoonProjects { get; private set; }
         public virtual ICollection<CartoonProjectCreator> CartoonProjectCreators { get; private set; }
 
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CartoonProject"/> class.
         /// </summary>
@@ -168,6 +169,28 @@ namespace PlataformaRio2C.Domain.Entities
             this.AddCartoonProjectCreators(
                 cartoonProjectCreatorApiDtos,
                 userId);
+        }
+
+        /// <summary>
+        /// Evaluates the specified edition.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="evaluatorUser">The evaluator user.</param>
+        /// <param name="grade">The grade.</param>
+        public void Evaluate(Edition edition, User evaluatorUser, decimal grade)
+        {
+            var attendeeCartoonProject = this.GetAttendeeCartoonProjectByEditionId(edition.Id);
+            attendeeCartoonProject?.Evaluate(evaluatorUser, grade);
+        }
+
+        /// <summary>
+        /// Gets the attendee innovation organization by edition identifier.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public AttendeeCartoonProject GetAttendeeCartoonProjectByEditionId(int editionId)
+        {
+            return this.AttendeeCartoonProjects?.FirstOrDefault(aio => aio.Edition.Id == editionId);
         }
 
         /// <summary>
