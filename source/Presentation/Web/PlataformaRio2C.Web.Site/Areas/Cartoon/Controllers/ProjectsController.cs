@@ -224,10 +224,12 @@ namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
             }
 
             var attendeeCartoonProjectDto = await this.attendeeCartoonProjectRepo.FindDtoToEvaluateAsync(id ?? 0);
-            
 
+            if(attendeeCartoonProjectDto == null)
+            {
                 this.StatusMessageToastr(string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()), Infra.CrossCutting.Tools.Enums.StatusMessageTypeToastr.Error);
                 return RedirectToAction("EvaluationList", "Projects", new { Area = "Cartoon" });
+            }        
             
             #region Breadcrumb
 
