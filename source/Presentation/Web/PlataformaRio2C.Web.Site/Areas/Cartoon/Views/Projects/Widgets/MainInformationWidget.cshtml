@@ -45,26 +45,6 @@
                                 @(Model.CartoonProject?.Summary ?? "-")
                             </div>
                         </div>
-                        @*<div class="kt-widget__subhead pb-0">
-                            @Labels.Tracks:
-                            @if (Model.AttendeeInnovationOrganizationTrackDtos?.Any() == true)
-                            {
-                                foreach (var attendeeInnovationOrganizationTrackDto in Model.AttendeeInnovationOrganizationTrackDtos)
-                                {
-                                    <span class="kt-badge kt-badge--inline kt-badge--info">
-                                        @(attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOption.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
-                                        @if (attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOption.HasAdditionalInfo && !string.IsNullOrEmpty(attendeeInnovationOrganizationTrackDto.AttendeeInnovationOrganizationTrack.AdditionalInfo))
-                                        {
-                                            @attendeeInnovationOrganizationTrackDto.AttendeeInnovationOrganizationTrack.AdditionalInfo
-                                        }
-                                    </span>
-                                }
-                            }
-                            else
-                            {
-                                @:-
-                            }
-                        </div>*@
                     </div>
                     <div class="kt-widget__desc myrio2c-evaluation-position col-md-6 pr-0">
                         <div class="kt-widget__text pull-right" data-id="EvaluationGradeMain">
@@ -158,13 +138,7 @@
                 </div>
             </div>
 
-            
-            <div class="kt-widget__item w-25 w-xs-100">-->
-                @*<div class="kt-widget__details">
-                        <span class="kt-widget__title">@Labels.AccumulatedRevenueForLast3Months</span>
-                        <span class="kt-widget__value"><span class="text-break">@(Model.AttendeeInnovationOrganization?.AccumulatedRevenue ?? 0)</span></span>
-                    </div>*@
-            <!--</div>-->
+    
         </div>
     </div>
 </div>
