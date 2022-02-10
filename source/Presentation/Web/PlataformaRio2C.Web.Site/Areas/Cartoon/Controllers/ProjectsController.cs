@@ -49,6 +49,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
+        /// <param name="cartoonProjectRepository">The cartoon project repository.</param>
         /// <param name="attendeeCartoonProjectRepository">The attendee cartoon organization repository.</param>
         /// <param name="evaluationStatusRepository">The evaluation status repository.</param>
         /// <param name="userRepository">The user repository.</param>
@@ -130,13 +131,14 @@ namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
         /// Shows the evaluation list widget.
         /// </summary>
         /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="projectFormatUid">The project format uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [HttpGet]
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionCartoon)]
-        public async Task<ActionResult> ShowEvaluationListWidget(string searchKeywords, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 12)
+        public async Task<ActionResult> ShowEvaluationListWidget(string searchKeywords, Guid? projectFormatUid, Guid? evaluationStatusUid, int? page = 1, int? pageSize = 12)
         {
             if (this.EditionDto?.IsCartoonProjectEvaluationStarted() != true)
             {
@@ -146,10 +148,10 @@ namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
             var projects = await this.attendeeCartoonProjectRepo.FindAllDtosPagedAsync(
                 this.EditionDto.Id,
                 searchKeywords,
+                new List<Guid?> { projectFormatUid },
                 evaluationStatusUid,
                 page.Value,
                 pageSize.Value);
-
 
             ViewBag.SearchKeywords = searchKeywords;
             ViewBag.EvaluationStatusUid = evaluationStatusUid;
@@ -207,12 +209,13 @@ namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="projectFormatUid">The project format uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [AuthorizeCollaboratorType(Types = Constants.CollaboratorType.CommissionCartoon)]
-        public async Task<ActionResult> EvaluationDetails(int? id, string searchKeywords = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 12)
+        public async Task<ActionResult> EvaluationDetails(int? id, string searchKeywords = null, Guid? projectFormatUid = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 12)
         {
             if (this.EditionDto?.IsCartoonProjectEvaluationStarted() != true)
             {
@@ -238,6 +241,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
             var allCartoonProjectsIds = await this.attendeeCartoonProjectRepo.FindAllCartoonProjectsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
                 searchKeywords,
+                new List<Guid?> { projectFormatUid },
                 evaluationStatusUid,
                 page.Value,
                 pageSize.Value);
@@ -248,7 +252,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
             ViewBag.CurrentProjectIndex = currentCartoonProjectIdIndex;
-            ViewBag.CartoonProjectsTotalCount = await this.attendeeCartoonProjectRepo.CountPagedAsync(this.EditionDto.Edition.Id, searchKeywords, evaluationStatusUid, page.Value, pageSize.Value);
+            ViewBag.CartoonProjectsTotalCount = await this.attendeeCartoonProjectRepo.CountPagedAsync(this.EditionDto.Edition.Id, searchKeywords, new List<Guid?> { projectFormatUid }, evaluationStatusUid, page.Value, pageSize.Value);
             ViewBag.ApprovedAttendeeCartoonProjectsIds = await this.attendeeCartoonProjectRepo.FindAllApprovedAttendeeCartoonProjectsIdsAsync(this.EditionDto.Edition.Id);
 
             return View(attendeeCartoonProjectDto);
@@ -259,16 +263,18 @@ namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="projectFormatUid">The project format uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionCartoon)]
-        public async Task<ActionResult> PreviousEvaluationDetails(int? id, string searchKeywords = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 12)
+        public async Task<ActionResult> PreviousEvaluationDetails(int? id, string searchKeywords = null, Guid? projectFormatUid = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 12)
         {
             var allCartoonProjectsIds = await this.attendeeCartoonProjectRepo.FindAllCartoonProjectsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
                 searchKeywords,
+                new List<Guid?> { projectFormatUid },
                 evaluationStatusUid,
                 page.Value,
                 pageSize.Value);
@@ -294,17 +300,19 @@ namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="searchKeywords">The search keywords.</param>
+        /// <param name="projectFormatUid">The project format uid.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <param name="page">The page.</param>
         /// <param name="pageSize">Size of the page.</param>
         /// <returns></returns>
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionCartoon)]
-        public async Task<ActionResult> NextEvaluationDetails(int? id, string searchKeywords = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 12)
+        public async Task<ActionResult> NextEvaluationDetails(int? id, string searchKeywords = null, Guid? projectFormatUid = null, Guid? evaluationStatusUid = null, int? page = 1, int? pageSize = 12)
         {
            
             var allCartoonProjectsIds = await this.attendeeCartoonProjectRepo.FindAllCartoonProjectsIdsPagedAsync(
                 this.EditionDto.Edition.Id,
                 searchKeywords,
+                new List<Guid?> { projectFormatUid },
                 evaluationStatusUid,
                 page.Value,
                 pageSize.Value);
