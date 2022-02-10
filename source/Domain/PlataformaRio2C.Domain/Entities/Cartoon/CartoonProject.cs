@@ -344,10 +344,9 @@ namespace PlataformaRio2C.Domain.Entities
         ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
         public override bool IsValid()
         {
-            this.ValidationResult = new ValidationResult();
-
+            this.ValidationResult = new ValidationResult();            
             this.ValidateMaxLengths();
-
+            this.ValidateAttendeeCartoonProjects();
             return this.ValidationResult.IsValid;
         }
 
@@ -384,6 +383,22 @@ namespace PlataformaRio2C.Domain.Entities
             if (!string.IsNullOrEmpty(this.TotalValueOfProject) && this.TotalValueOfProject?.Trim().Length > TotalValueOfProjectMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.TotalValueOfProject, TotalValueOfProjectMaxLength, TotalValueOfProjectMinLength), new string[] { "TotalValueOfProject" }));
+            }
+        }
+
+        /// <summary>
+        /// Validates the attendee cartoon projects.
+        /// </summary>
+        private void ValidateAttendeeCartoonProjects()
+        {
+            if (this.AttendeeCartoonProjects?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var attendeeCartoonProject in this.AttendeeCartoonProjects.Where(aiof => !aiof.IsValid()))
+            {
+                this.ValidationResult.Add(attendeeCartoonProject.ValidationResult);
             }
         }
 

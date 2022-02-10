@@ -65,7 +65,6 @@ namespace PlataformaRio2C.Domain.Entities
         public void Update(decimal grade, int userId)
         {
             this.Grade = grade;
-
             this.IsDeleted = false;
             this.UpdateDate = DateTime.UtcNow;
             this.UpdateUserId = userId;

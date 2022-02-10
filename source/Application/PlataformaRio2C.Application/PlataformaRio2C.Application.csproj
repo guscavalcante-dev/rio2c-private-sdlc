@@ -200,6 +200,7 @@
     <Compile Include="CQRS\CommandsHandlers\BaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Cartoon\Projects\BaseCommandHandlers\CartoonProjectBaseCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Cartoon\Projects\CreateCartoonProjectCommandHandler.cs" />
+    <Compile Include="CQRS\CommandsHandlers\Cartoon\Projects\EvaluateCartoonProjectCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\BaseCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\CreateTinyCollaboratorCommandHandler.cs" />
     <Compile Include="CQRS\CommandsHandlers\Collaborators\DeleteCollaboratorOrganizationCommandHandler.cs" />

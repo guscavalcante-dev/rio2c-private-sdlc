@@ -452,10 +452,10 @@ namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
         [AuthorizeCollaboratorType(Order = 3, Types = Constants.CollaboratorType.CommissionCartoon)]
         public async Task<ActionResult> Evaluate(int cartoonProjectId, decimal? grade)
         {
-            //if (this.EditionDto?.IsCartoonProjectEvaluationOpen() != true)
-            //{
-            //    return Json(new { status = "error", message = Messages.OutOfEvaluationPeriod }, JsonRequestBehavior.AllowGet);
-            //}
+            if (this.EditionDto?.IsCartoonProjectEvaluationOpen() != true)
+            {
+                return Json(new { status = "error", message = Messages.OutOfEvaluationPeriod }, JsonRequestBehavior.AllowGet);
+            }
 
             var result = new AppValidationResult();
 
@@ -472,7 +472,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
                     this.EditionDto.Uid,
                     this.UserInterfaceLanguage);
                 result = await this.CommandBus.Send(cmd);
-                if (!result.IsValid)
+                    if (!result.IsValid)
                 {
                     throw new DomainException(Messages.CorrectFormValues);
                 }
@@ -481,7 +481,7 @@ namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
             {
                 return Json(new
                 {
-                    status = "caraio",
+                    status = "error",
                     message = result.Errors.Select(e => e = new AppValidationError(e.Message, "ToastrError", e.Code))?
                                             .FirstOrDefault(e => e.Target == "ToastrError")?.Message ?? ex.GetInnerMessage(),
                 }, JsonRequestBehavior.AllowGet);
@@ -495,8 +495,8 @@ namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
             return Json(new
             {
                 status = "success",
-                //projectUid = cmd.cartoonProjectId,
-                message = string.Format(Messages.EntityActionSuccessfull, Labels.Startup, Labels.Evaluated.ToLowerInvariant())
+                projectUid = cartoonProjectId,
+                message = string.Format(Messages.EntityActionSuccessfull, Labels.CartoonProject, Labels.Evaluated.ToLowerInvariant())
             });
         }
 
