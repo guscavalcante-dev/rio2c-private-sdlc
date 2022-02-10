@@ -31,19 +31,17 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<List<AttendeeCartoonProject>> FindAllByEditionIdAsync(int editionId);
         Task<int[]> FindAllApprovedAttendeeCartoonProjectsIdsAsync(int editionId);
         Task<int> CountAsync(int editionId, bool showAllEditions = false);
-        Task<IPagedList<AttendeeCartoonProjectDto>> FindAllDtosPagedAsync(int editionId, string searchKeywords, Guid? evaluationStatusUid, int page, int pageSize);
-        //
+        Task<IPagedList<AttendeeCartoonProjectDto>> FindAllDtosPagedAsync(int editionId, string searchKeywords, List<Guid?> projectFormatUids, Guid? evaluationStatusUid, int page, int pageSize);
+        Task<IPagedList<AttendeeCartoonProjectJsonDto>> FindAllJsonDtosPagedAsync(int editionId, string searchKeywords, List<Guid?> projectFormatUids, Guid? evaluationStatusUid, int page, int pageSize, List<Tuple<string, string>> sortColumns);
         Task<AttendeeCartoonProjectDto> FindEvaluationGradeWidgetDtoAsync(Guid attendeeCartoonProjectUid, int userId);
         Task<AttendeeCartoonProjectDto> FindEvaluatorsWidgetDtoAsync(Guid attendeeCartoonProjectUid);
         //
         Task<AttendeeCartoonProjectDto> FindDtoToEvaluateAsync(Guid attendeeCartoonProjectUid);
         Task<AttendeeCartoonProjectDto> FindDtoToEvaluateAsync(int attendeeCartoonProjectId);
-        Task<int[]> FindAllCartoonProjectsIdsPagedAsync(int editionId, string searchKeywords, Guid? evaluationStatusUid, int page, int pageSize);
-        Task<int> CountPagedAsync(int editionId, string searchKeywords, Guid? evaluationStatusUid, int page, int pageSize);
+        Task<int[]> FindAllCartoonProjectsIdsPagedAsync(int editionId, string searchKeywords, List<Guid?> projectFormatUids, Guid? evaluationStatusUid, int page, int pageSize);
+        Task<int> CountPagedAsync(int editionId, string searchKeywords, List<Guid?> projectFormatUids, Guid? evaluationStatusUid, int page, int pageSize);
         Task<AttendeeCartoonProjectDto> FindMainInformationWidgetDtoAsync(Guid attendeeCartoonProjectUid);
         Task<AttendeeCartoonProjectDto> FindBusinessInformationWidgetDtoAsync(Guid attendeeCartoonProjectUid);
-
-        Task<IPagedList<AttendeeCartoonProjectJsonDto>> FindAllJsonDtosPagedAsync(int editionId, string searchKeywords, Guid? evaluationStatusUid, int page, int pageSize, List<Tuple<string, string>> sortColumns);
 
 
     }

@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Renan Valentim
-// Created          : 07-24-2021
+// Created          : 02-09-2022
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 08-31-2021
+// Last Modified On : 02-09-2022
 // ***********************************************************************
 // <copyright file="ProjectsController.cs" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
@@ -45,15 +45,16 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
         private readonly ICartoonProjectRepository cartoonProjectRepo;
         private readonly IProjectEvaluationStatusRepository evaluationStatusRepo;
         private readonly IAttendeeCartoonProjectRepository attendeeCartoonProjectRepo;
+        private readonly ICartoonProjectFormatRepository cartoonProjectFormatRepo;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProjectsController"/> class.
+        /// Initializes a new instance of the <see cref="ProjectsController" /> class.
         /// </summary>
         /// <param name="commandBus">The command bus.</param>
         /// <param name="identityController">The identity controller.</param>
-        /// <param name="evaluationStatusRepository">The evaluation status repository.</param>
+        /// <param name="projectEvaluationStatusRepository">The project evaluation status repository.</param>
         /// <param name="attendeeCartoonProjectRepository">The attendee cartoon project repository.</param>
-        /// <param name="userRepository">The user repository.</param>
+        /// <param name="cartoonProjectFormatRepository">The cartoon project format repository.</param>
         public ProjectsController(
             IMediator commandBus,
             IdentityAutenticationService identityController,
@@ -65,16 +66,16 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
         {
             this.cartoonProjectRepo = cartoonProjectRepository;
             this.evaluationStatusRepo = evaluationStatusRepository;
+            this.evaluationStatusRepo = projectEvaluationStatusRepository;
             this.attendeeCartoonProjectRepo = attendeeCartoonProjectRepository;
+            this.cartoonProjectFormatRepo = cartoonProjectFormatRepository;
         }
 
         #region List
 
-
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> Index(Guid? evaluationStatusUid)
         {
             #region Breadcrumb
 
@@ -85,49 +86,59 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
 
             #endregion
 
+            ViewBag.ProjectFormatUid = projectFormatUid;
             ViewBag.EvaluationStatusUid = evaluationStatusUid;
             ViewBag.Page = 1;
             ViewBag.PageSize = 10;
 
+            ViewBag.ProjectFormats = (await this.cartoonProjectFormatRepo.FindAllAsync()).GetSeparatorTranslation(m => m.Name, this.UserInterfaceLanguage, '|');
             ViewBag.ProjectEvaluationStatuses = (await this.evaluationStatusRepo.FindAllAsync()).GetSeparatorTranslation(m => m.Name, this.UserInterfaceLanguage, '|');
 
             return View();
         }
 
-        /// <summary>Shows the list widget.</summary>
+        /// <summary>
+        /// Shows the list widget.
+        /// </summary>
         /// <param name="request">The request.</param>
         /// <param name="evaluationStatusUid">The evaluation status uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowListWidget(IDataTablesRequest request, Guid? evaluationStatusUid)
+        public async Task<ActionResult> ShowListWidget(IDataTablesRequest request, Guid? projectFormatUid, Guid? evaluationStatusUid)
         {
             int page = request.Start / request.Length;
             int pageSize = request.Length;
             page++; //Necessary because DataTable is zero index based.
 
-            var attendeeCartoonProjectJsonDtos = await this.attendeeCartoonProjectRepo.FindAllJsonDtosPagedAsync(
+            var cartoonProjectJsonDtos = await this.attendeeCartoonProjectRepo.FindAllJsonDtosPagedAsync(
                 this.EditionDto.Id,
                 request.Search?.Value,
+                new List<Guid?> { projectFormatUid },
                 evaluationStatusUid,
                 page,
                 pageSize,
                 request.GetSortColumns());
 
-            var approvedAttendeeCartoonProjectIds = await this.attendeeCartoonProjectRepo.FindAllApprovedAttendeeCartoonProjectsIdsAsync(this.EditionDto.Id);
+            var approvedAttendeeCartoonProjectsIds = await this.attendeeCartoonProjectRepo.FindAllApprovedAttendeeCartoonProjectsIdsAsync(this.EditionDto.Id);
 
-            foreach (var attendeeCartoonProjectJsonDto in attendeeCartoonProjectJsonDtos)
+            foreach (var cartoonProjectJsonDto in cartoonProjectJsonDtos)
             {
-                attendeeCartoonProjectJsonDto.IsApproved = approvedAttendeeCartoonProjectIds.Contains(attendeeCartoonProjectJsonDto.AttendeeCartoonProjectId);
+                cartoonProjectJsonDto.IsApproved = approvedAttendeeCartoonProjectsIds.Contains(cartoonProjectJsonDto.AttendeeCartoonProjectId);
 
+                #region Translate CartoonProjectFormatName
+
+                cartoonProjectJsonDto.CartoonProjectFormatName = cartoonProjectJsonDto.CartoonProjectFormatName.GetSeparatorTranslation(this.UserInterfaceLanguage, '|');
+
+                #endregion
             }
 
-            ViewBag.SearchKeywords = request.Search;
+            ViewBag.ProjectFormatUid = projectFormatUid;
             ViewBag.EvaluationStatusUid = evaluationStatusUid;
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
 
             IDictionary<string, object> additionalParameters = new Dictionary<string, object>();
-            if (attendeeCartoonProjectJsonDtos.TotalItemCount <= 0)
+            if (cartoonProjectJsonDtos.TotalItemCount <= 0)
             {
                 if (this.EditionDto.IsCartoonProjectEvaluationOpen() && (
                     evaluationStatusUid == ProjectEvaluationStatus.Accepted.Uid ||
@@ -144,13 +155,14 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
                 }
             }
 
-            var response = DataTablesResponse.Create(request, attendeeCartoonProjectJsonDtos.TotalItemCount, attendeeCartoonProjectJsonDtos.TotalItemCount, attendeeCartoonProjectJsonDtos, additionalParameters);
+            var response = DataTablesResponse.Create(request, cartoonProjectJsonDtos.TotalItemCount, cartoonProjectJsonDtos.TotalItemCount, cartoonProjectJsonDtos, additionalParameters);
 
             return Json(new
             {
                 status = "success",
                 dataTable = response,
                 searchKeywords = request.Search?.Value,
+                projectFormatUid,
                 evaluationStatusUid,
                 page,
                 pageSize
@@ -262,7 +274,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        #endregion
+        #endregion     
 
         //#region Edition Count Pie Widget
 
