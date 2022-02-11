@@ -389,17 +389,17 @@ namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
 
         #endregion 
 
-        #region Business Information Widget
+        #region Organization Widget
 
         /// <summary>
-        /// Shows the main information widget.
+        /// Shows the organization widget.
         /// </summary>
-        /// <param name="attendeeCartoonProjectUid">The attendee cartoon organization uid.</param>
+        /// <param name="attendeeCartoonProjectUid">The attendee cartoon project uid.</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> ShowBusinessInformationWidget(Guid? attendeeCartoonProjectUid)
+        public async Task<ActionResult> ShowOrganizationWidget(Guid? attendeeCartoonProjectUid)
         {
-            var mainInformationWidgetDto = await this.attendeeCartoonProjectRepo.FindBusinessInformationWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty);
+            var mainInformationWidgetDto = await this.attendeeCartoonProjectRepo.FindOrganizationWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty);
             if (mainInformationWidgetDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Startup, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);

@@ -389,7 +389,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowEvaluationGradeWidget(Guid? attendeeCartoonProjectUid)
         {
-            var evaluationDto = new CartoonProjectDto();//await this.attendeeCartoonProjectRepo.FindEvaluationGradeWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty, this.AdminAccessControlDto.User.Id);
+            var evaluationDto = await this.attendeeCartoonProjectRepo.FindEvaluationGradeWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty, this.AdminAccessControlDto.User.Id);
             if (evaluationDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Startup, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
@@ -426,8 +426,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
 
             try
             {
-                var cmd = new EvaluateInnovationOrganization(
-                    null,//await this.innovationOrganizationRepo.FindByIdAsync(cartoonProjectId),
+                var cmd = new EvaluateCartoonProject(
+                    await this.cartoonProjectRepo.FindByIdAsync(cartoonProjectId),
                     grade);
 
                 cmd.UpdatePreSendProperties(
@@ -477,7 +477,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowEvaluatorsWidget(Guid? attendeeCartoonProjectUid)
         {
-            var evaluationDto = new CartoonProjectDto(); //await this.attendeeCartoonProjectRepo.FindEvaluatorsWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty);
+            var evaluationDto = await this.attendeeCartoonProjectRepo.FindEvaluatorsWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty);
             if (evaluationDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
@@ -500,7 +500,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowCreatorsWidget(Guid? attendeeCartoonProjectUid)
         {
-            var creatorsWidgetDto = new List<CartoonProjectOrganizationDto> { }; //await this.attendeeCartoonProjectRepo.FindCreatorsWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty);
+            var creatorsWidgetDto = await this.attendeeCartoonProjectRepo.FindCreatorsWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty);
             if (creatorsWidgetDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
