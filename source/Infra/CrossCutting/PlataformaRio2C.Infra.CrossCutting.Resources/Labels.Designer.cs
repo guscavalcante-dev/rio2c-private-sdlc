@@ -727,6 +727,15 @@ namespace PlataformaRio2C.Infra.CrossCutting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Link para Bíblia do Projeto.
+        /// </summary>
+        public static string BibleUrl {
+            get {
+                return ResourceManager.GetString("BibleUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data de Nascimento.
         /// </summary>
         public static string BirthDate {

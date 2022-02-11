@@ -399,6 +399,9 @@
     <value>Sendo executado</value>
     <comment>Sendo executado</comment>
   </data>
+  <data name="BibleUrl" xml:space="preserve">
+    <value>Link para Bíblia do Projeto</value>
+  </data>
   <data name="BirthDate" xml:space="preserve">
     <value>Data de Nascimento</value>
     <comment>Data de Nascimento</comment>

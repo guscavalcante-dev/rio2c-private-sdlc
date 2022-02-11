@@ -12,6 +12,7 @@
 // <summary></summary>
 // ***********************************************************************
 using PlataformaRio2C.Domain.Entities;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 using System.Collections.Generic;
 
 namespace PlataformaRio2C.Domain.Dtos
@@ -39,6 +40,13 @@ namespace PlataformaRio2C.Domain.Dtos
         /// <summary>Initializes a new instance of the <see cref="CartoonProjectDto"/> class.</summary>
         public CartoonProjectDto()
         {
+        }
+
+        /// <summary>Gets the name abbreviation.</summary>
+        /// <returns></returns>
+        public string GetNameAbbreviation()
+        {
+            return this.Title?.GetTwoLetterCode();
         }
     }
 }

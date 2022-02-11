@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Infra.CrossCutting.Resources;
 using PlataformaRio2C.Domain.Dtos;
+using PlataformaRio2C.Infra.CrossCutting.Tools.Extensions;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -202,6 +203,13 @@ namespace PlataformaRio2C.Domain.Entities
         {
             //this.DeleteProjectBuyerEvaluations(userId);
             base.Delete(userId);
+        }
+
+        /// <summary>Gets the name abbreviation.</summary>
+        /// <returns></returns>
+        public string GetNameAbbreviation()
+        {
+            return this.Title?.GetTwoLetterCode();
         }
 
         #region Attendee Cartoon Projects

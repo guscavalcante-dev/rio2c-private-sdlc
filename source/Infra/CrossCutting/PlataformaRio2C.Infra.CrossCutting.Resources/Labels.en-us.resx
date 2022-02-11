@@ -401,6 +401,9 @@
     <value>Being processed</value>
     <comment>Sendo executado</comment>
   </data>
+  <data name="BibleUrl" xml:space="preserve">
+    <value>Project Bible link</value>
+  </data>
   <data name="BirthDate" xml:space="preserve">
     <value>Birth Date</value>
     <comment>Data de nascimento</comment>
