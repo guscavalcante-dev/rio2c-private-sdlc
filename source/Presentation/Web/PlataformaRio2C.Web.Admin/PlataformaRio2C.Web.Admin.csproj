@@ -857,6 +857,7 @@
     <Content Include="Assets\js\cartoon\commissions\cartoon.commissions.evaluations.widget.js" />
     <Content Include="Assets\js\cartoon\commissions\cartoon.commissions.totalcount.widget.js" />
     <Content Include="Assets\js\cartoon\commissions\cartoon.commissions.update.js" />
+    <Content Include="Assets\js\cartoon\projects\cartoon.projects.organization.widget.js" />
     <Content Include="Assets\js\cartoon\projects\cartoon.projects.datatable.widget.js" />
     <Content Include="Assets\js\cartoon\projects\cartoon.projects.delete.js" />
     <Content Include="Assets\js\cartoon\projects\cartoon.projects.editioncount.widget.js" />
@@ -8362,6 +8363,7 @@
     <Content Include="Areas\Cartoon\Views\Projects\Widgets\MainInformationWidget.cshtml" />
     <Content Include="Areas\Cartoon\Views\Projects\Widgets\TotalCountWidget.cshtml" />
     <Content Include="Areas\Cartoon\Views\Projects\Widgets\CreatorsWidget.cshtml" />
+    <Content Include="Areas\Cartoon\Views\Projects\Widgets\OrganizationWidget.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
