@@ -14,7 +14,7 @@
 
 var CartoonProjectsCreatorsWidget = function () {
 
-    var widgetElementId = '#ProjectsCreatorWidget';
+    var widgetElementId = '#ProjectCreatorsWidget';
     var widgetElement = $(widgetElementId);
 
     // Show ---------------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ var CartoonProjectsCreatorsWidget = function () {
         }
 
         var jsonParameters = new Object();
-        jsonParameters.attendeeInnovationOrganizationUid = $('#AggregateId').val();
+        jsonParameters.attendeeCartoonProjectUid = $('#AggregateId').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Cartoon/Projects/ShowCreatorsWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
