@@ -4,7 +4,7 @@
     var editionDto = ViewBag.EditionDto as EditionDto;
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var evaluationsCount = Model.AttendeeCartoonProjectEvaluationDtos?.Count();
-    var currentEvaluation = Model.AttendeeCartoonProjectEvaluationDtos;
+    var currentEvaluation = Model.AttendeeCartoonProjectEvaluationDto;
     var approvedAttendeeCartoonProjectsIds = ViewBag.ApprovedAttendeeCartoonProjectsIds as int[];
     var isThisCartoonProjectApproved = approvedAttendeeCartoonProjectsIds.Contains(Model.AttendeeCartoonProject.Id);
 }
@@ -18,8 +18,7 @@
     {
         <form class="form-inline justify-content-center mt-85">
             <div class="form-group mb-2 mr-3">
-                <!--@Html.TextBox("AttendeeCartoonProjectEvaluationGrade", Model.AttendeeCartoonProjectEvaluationDtos?.AttendeeCartoonProjectEvaluation?.Grade, new { @class = "form-control text-center decimal-globalize-mask", placeholder = Labels.Grade, style = "width: 105px;" })--> @*, @type = "number", @min = "1", @max = "10", @step = ".10"*@
-
+                @Html.TextBox("AttendeeCartoonProjectEvaluationGrade", Model.AttendeeCartoonProjectEvaluationDto?.AttendeeCartoonProjectEvaluation?.Grade, new { @class = "form-control text-center decimal-globalize-mask", placeholder = Labels.Grade, style = "width: 105px;" }) @*, @type = "number", @min = "1", @max = "10", @step = ".10"*@
             </div>
             <button type="button" class="btn btn-success mb-2" onclick="CartoonProjectsEvaluationWidget.submitEvaluationGrade('@Model.CartoonProject.Id');">@Labels.Evaluate</button>
         </form>

@@ -186,7 +186,7 @@ namespace PlataformaRio2C.Domain.Entities
             }
         }
 
-        #region Evaluation
+        #region Evaluation 
 
         /// <summary>
         /// Evaluates the specified evaluation user.

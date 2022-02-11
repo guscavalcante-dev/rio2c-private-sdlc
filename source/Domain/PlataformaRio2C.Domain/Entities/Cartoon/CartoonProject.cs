@@ -55,6 +55,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual ICollection<AttendeeCartoonProject> AttendeeCartoonProjects { get; private set; }
         public virtual ICollection<CartoonProjectCreator> CartoonProjectCreators { get; private set; }
 
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CartoonProject"/> class.
         /// </summary>
@@ -168,6 +169,28 @@ namespace PlataformaRio2C.Domain.Entities
             this.AddCartoonProjectCreators(
                 cartoonProjectCreatorApiDtos,
                 userId);
+        }
+
+        /// <summary>
+        /// Evaluates the specified edition.
+        /// </summary>
+        /// <param name="edition">The edition.</param>
+        /// <param name="evaluatorUser">The evaluator user.</param>
+        /// <param name="grade">The grade.</param>
+        public void Evaluate(Edition edition, User evaluatorUser, decimal grade)
+        {
+            var attendeeCartoonProject = this.GetAttendeeCartoonProjectByEditionId(edition.Id);
+            attendeeCartoonProject?.Evaluate(evaluatorUser, grade);
+        }
+
+        /// <summary>
+        /// Gets the attendee innovation organization by edition identifier.
+        /// </summary>
+        /// <param name="editionId">The edition identifier.</param>
+        /// <returns></returns>
+        public AttendeeCartoonProject GetAttendeeCartoonProjectByEditionId(int editionId)
+        {
+            return this.AttendeeCartoonProjects?.FirstOrDefault(aio => aio.Edition.Id == editionId);
         }
 
         /// <summary>
@@ -321,10 +344,9 @@ namespace PlataformaRio2C.Domain.Entities
         ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
         public override bool IsValid()
         {
-            this.ValidationResult = new ValidationResult();
-
+            this.ValidationResult = new ValidationResult();            
             this.ValidateMaxLengths();
-
+            this.ValidateAttendeeCartoonProjects();
             return this.ValidationResult.IsValid;
         }
 
@@ -361,6 +383,22 @@ namespace PlataformaRio2C.Domain.Entities
             if (!string.IsNullOrEmpty(this.TotalValueOfProject) && this.TotalValueOfProject?.Trim().Length > TotalValueOfProjectMaxLength)
             {
                 this.ValidationResult.Add(new ValidationError(string.Format(Messages.PropertyBetweenLengths, Labels.TotalValueOfProject, TotalValueOfProjectMaxLength, TotalValueOfProjectMinLength), new string[] { "TotalValueOfProject" }));
+            }
+        }
+
+        /// <summary>
+        /// Validates the attendee cartoon projects.
+        /// </summary>
+        private void ValidateAttendeeCartoonProjects()
+        {
+            if (this.AttendeeCartoonProjects?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var attendeeCartoonProject in this.AttendeeCartoonProjects.Where(aiof => !aiof.IsValid()))
+            {
+                this.ValidationResult.Add(attendeeCartoonProject.ValidationResult);
             }
         }
 

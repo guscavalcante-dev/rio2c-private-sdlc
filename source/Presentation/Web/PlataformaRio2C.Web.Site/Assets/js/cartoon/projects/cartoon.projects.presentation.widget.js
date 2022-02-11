@@ -1,21 +1,24 @@
 ﻿// ***********************************************************************
-// Assembly         : PlataformaRio2C.Web.Site
+// Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Renan Valentim
-// Created          : 07-28-2021
+// Created          : 07-30-2021
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-28-2021
+// Last Modified On : 07-30-2021
 // ***********************************************************************
-// <copyright file="cartoon.projects.evaluators.widget.js" company="Softo">
+// <copyright file="cartoon.projects.presentation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var CartoonProjectsEvaluatorsWidget = function () {
+var CartoonProjectsPresentationWidget = function () {
 
-    var widgetElementId = '#ProjectEvaluatorsWidget';
+    var widgetElementId = '#ProjectsPresentationWidget';
     var widgetElement = $(widgetElementId);
+
+    var updateModalId = '#UpdatePresentationModal';
+    var updateFormId = '#UpdatePresentationForm';
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
@@ -31,7 +34,7 @@ var CartoonProjectsEvaluatorsWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.attendeeCartoonProjectUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Cartoon/Projects/ShowEvaluatorsWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Cartoon/Projects/ShowPresentationWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PlataformaRio2C.Domain.Dtos;
 using PlataformaRio2C.Domain.Validation;
+using PlataformaRio2C.Infra.CrossCutting.Resources;
 
 namespace PlataformaRio2C.Domain.Entities
 {
@@ -37,7 +38,8 @@ namespace PlataformaRio2C.Domain.Entities
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeCartoonProject"/> class.</summary>
         /// <param name="edition">The edition.</param>
-        /// <param name="musicBand">The music band.</param>
+        /// <param name="cartoonProject">The cartoon project.</param>
+        /// <param name="evaluatorUser">The evalutor user.</param>
         /// <param name="userId">The user identifier.</param>
         public AttendeeCartoonProject(
             Edition edition,
@@ -101,6 +103,7 @@ namespace PlataformaRio2C.Domain.Entities
         /// <param name="grade">The grade.</param>
         public void Evaluate(User evaluatorUser, decimal grade)
         {
+            this.Grade = grade;
             if (this.AttendeeCartoonProjectEvaluations == null)
                 this.AttendeeCartoonProjectEvaluations = new List<AttendeeCartoonProjectEvaluation>();
 
@@ -202,8 +205,26 @@ namespace PlataformaRio2C.Domain.Entities
         public override bool IsValid()
         {
             this.ValidationResult = new ValidationResult();
+            this.ValidateAttendeeCartoonProjectsEvaluations();
             return this.ValidationResult.IsValid;
         }
+
+        /// <summary>
+        /// Validates the attendee cartoon projects.
+        /// </summary>
+        private void ValidateAttendeeCartoonProjectsEvaluations()
+        {
+            if (this.AttendeeCartoonProjectEvaluations?.Any() != true)
+            {
+                return;
+            }
+
+            foreach (var attendeeCartoonProject in this.AttendeeCartoonProjectEvaluations.Where(aiof => !aiof.IsValid()))
+            {
+                this.ValidationResult.Add(attendeeCartoonProject.ValidationResult);
+            }
+        }
+
 
         #endregion
     }

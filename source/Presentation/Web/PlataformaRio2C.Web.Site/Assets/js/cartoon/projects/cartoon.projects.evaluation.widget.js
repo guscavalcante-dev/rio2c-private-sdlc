@@ -3,10 +3,10 @@
 // Author           : Renan Valentim
 // Created          : 07-28-2021
 //
-// Last Modified By : Rafael Franco
-// Last Modified On : 02-08-2021
+// Last Modified By : Renan Valentim
+// Last Modified On : 07-28-2021
 // ***********************************************************************
-// <copyright file="Cartoon.projects.evaluation.widget.js" company="Softo">
+// <copyright file="cartoon.projects.evaluation.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
@@ -40,7 +40,6 @@ var CartoonProjectsEvaluationWidget = function () {
         }
 
         var jsonParameters = new Object();
-        //jsonParameters.attendeeCartoonOrganizationUid = $('#AggregateId').val();
         jsonParameters.attendeeCartoonProjectUid = $('#AggregateId').val();
 
         $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Cartoon/Projects/ShowEvaluationGradeWidget'), jsonParameters, function (data) {

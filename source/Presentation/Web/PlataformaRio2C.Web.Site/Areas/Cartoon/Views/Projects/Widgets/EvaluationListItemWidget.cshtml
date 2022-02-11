@@ -9,7 +9,6 @@
         id = Model.AttendeeCartoonProject.Id,
         //step = 0,
         searchKeywords = ViewBag.SearchKeywords,
-        cartoonProjectTrackOptionUid = ViewBag.CartoonProjectTrackOptionUid,
         evaluationStatusUid = ViewBag.EvaluationStatusUid,
         Page = ViewBag.Page,
         pageSize = ViewBag.PageSize
@@ -20,6 +19,22 @@
     <div class="col-sm-6 col-lg-6 col-xl-4">
         <div class="kt-portlet kt-portlet--height-fluid" id="project-@Model.AttendeeCartoonProject.Uid">
             <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="text-center w-100">
+                            @*@if (Model.CartoonProject?.HasImage() == true)
+                            {
+                                <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, Model.CartoonProject.Uid, Model.CartoonProject.ImageUploadDate, false)" class="w-100" alt="" style="height: 125px; border-radius: 4px; object-fit: cover;">
+                            }
+                            else
+                            {
+                                <div class="kt-userpic kt-userpic--lg kt-userpic--brand">
+                                    <span style="width: 100%; height: 125px; font-size: 40px;">@(Model.CartoonProject?.GetNameAbbreviation())</span>
+                                </div>
+                            }*@
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-12 mt-3" style="min-height:41px;">
                         <span style="font-weight: 600; font-size: 17px; line-height: 19px; color: #403D50;">@(Model.CartoonProject?.Title ?? "-")</span>

@@ -9,9 +9,9 @@
     var userAccessControlDto = ViewBag.UserAccessControlDto as UserAccessControlDto;
     var isCartoonCommission = userAccessControlDto?.HasCollaboratorType(Constants.CollaboratorType.CommissionCartoon) == true;
     var currentEvaluation = Model.GetAttendeeCartoonProjectEvaluationByUserId(userAccessControlDto.User.Id);
-    var approvedAttendeeCartoonProjectIds = ViewBag.ApprovedAttendeeCartoonProjectsIds as int[];
-    var isThisCartoonProjectApproved = (approvedAttendeeCartoonProjectIds?.Contains(Model.AttendeeCartoonProject.Id) == true);
-    var collaboratorDto = Model.GetAttendeeCartoonProjectCollaboratorDtoCollaboratorByEditionId(editionDto.Id);
+    var approvedAttendeeCartoonProjectsIds = ViewBag.ApprovedAttendeeCartoonProjectsIds as int[];
+    var isThisCartoonProjectApproved = (approvedAttendeeCartoonProjectsIds?.Contains(Model.AttendeeCartoonProject.Id) == true);
+    var collaboratorDto = Model.GetAttendeeCartoonProjectCollaboratorByEditionId(editionDto.Id);
 }
 <div class="kt-portlet__body">
     <div class="kt-widget kt-widget--user-profile-3">
@@ -21,15 +21,15 @@
                     @*@if (Model.CartoonProject?.HasImage() == true)
                     {
                         <div class="kt-widget__media">
-                            <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, Model.CartoonProject.UidgeUploadDate, true)" alt="image">
+                            <img src="@ImageHelper.GetImageUrl(FileRepositoryPathType.OrganizationImage, Model.InnovationOrganization.Uid, Model.InnovationOrganization.ImageUploadDate, true)" alt="image">
                         </div>
                     }
                     else
-                    {*@
+                    {
                         <div class="kt-widget__pic kt-widget__pic--info kt-font-info kt-font-boldest" style="width: 110px; height: 110px;">
-                            <span>@(Model.CartoonProject?.Title ?? "-")</span> @*voltar aqui*@
+                            <span>@(Model.InnovationOrganization?.GetNameAbbreviation() ?? "-")</span>
                         </div>
-                    @*}*@
+                    }*@
                 </a>
             </div>
             <div class="kt-widget__content">
@@ -40,31 +40,11 @@
                 </div>
                 <div class="kt-widget__info col-md-12 mr-0 pr-0 pl-0">
                     <div class="kt-widget__desc pl-0 col-md-6">
-                        @*<div class="kt-widget__desc">
+                        <div class="kt-widget__desc">
                             <div class="kt-widget__subhead pt-0">
-                                @(Model.CartoonProject?.Document ?? "-")
+                                @(Model.CartoonProject?.Summary ?? "-")
                             </div>
-                        </div>*@
-                        @*<div class="kt-widget__subhead pb-0">
-                            @Labels.Tracks:
-                            @if (Model.AttendeeInnovationOrganizationTrackDtos?.Any() == true)
-                            {
-                                foreach (var attendeeInnovationOrganizationTrackDto in Model.AttendeeInnovationOrganizationTrackDtos)
-                                {
-                                    <span class="kt-badge kt-badge--inline kt-badge--info">
-                                        @(attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOption.Name.GetSeparatorTranslation(ViewBag.UserInterfaceLanguage as string, '|'))
-                                        @if (attendeeInnovationOrganizationTrackDto.InnovationOrganizationTrackOption.HasAdditionalInfo && !string.IsNullOrEmpty(attendeeInnovationOrganizationTrackDto.AttendeeInnovationOrganizationTrack.AdditionalInfo))
-                                        {
-                                            @attendeeInnovationOrganizationTrackDto.AttendeeInnovationOrganizationTrack.AdditionalInfo
-                                        }
-                                    </span>
-                                }
-                            }
-                            else
-                            {
-                                @:-
-                            }
-                        </div>*@
+                        </div>
                     </div>
                     <div class="kt-widget__desc myrio2c-evaluation-position col-md-6 pr-0">
                         <div class="kt-widget__text pull-right" data-id="EvaluationGradeMain">
@@ -158,30 +138,7 @@
                 </div>
             </div>
 
-            @*<div class="kt-widget__item w-25 w-xs-100">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.FoundationYear</span>
-                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Model.CartoonProject?.FoundationYear)</span></span>
-                </div>
-            </div>*@
-            @*<div class="kt-widget__item w-25 w-xs-100">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.ProductOrServiceName</span>
-                    <span class="kt-widget__value"><span class="text-break">@(Model.CartoonProject.ServiceName ?? "-")</span></span>
-                </div>
-            </div>*@
-            @*<div class="kt-widget__item w-25 w-xs-100">
-                <div class="kt-widget__details">
-                    <span class="kt-widget__title">@Labels.AccumulatedRevenueForLast3Months</span>
-                    <span class="kt-widget__value"><span class="text-break">@(Model.AttendeeCartoonProject?.AccumulatedRevenue ?? 0)</span></span>
-                </div>
-            </div>*@
-            <div class="kt-widget__item w-25 w-xs-100">
-                @*<div class="kt-widget__details">
-                        <span class="kt-widget__title">@Labels.AccumulatedRevenueForLast3Months</span>
-                        <span class="kt-widget__value"><span class="text-break">@(Model.AttendeeInnovationOrganization?.AccumulatedRevenue ?? 0)</span></span>
-                    </div>*@
-            </div>
+    
         </div>
     </div>
 </div>
