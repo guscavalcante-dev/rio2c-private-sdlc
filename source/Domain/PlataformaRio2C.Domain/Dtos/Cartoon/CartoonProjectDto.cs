@@ -33,6 +33,8 @@ namespace PlataformaRio2C.Domain.Dtos
         public string ProjectBibleUrl { get; set; }
         public string ProjectTeaserUrl { get; set; }
 
+        public IEnumerable<CartoonProjectCreator> Creators { get; set; }
+
         /// <summary>Initializes a new instance of the <see cref="CartoonProjectDto"/> class.</summary>
         public CartoonProjectDto()
         {

@@ -763,7 +763,7 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                    ProjectBibleUrl = "", //TODO: Implements ProjectBibleUrl at database!
                                    ProjectTeaserUrl = "", //TODO: Implements ProjectTeaserUrl at database!
                                    Summary = acp.CartoonProject.Summary,
-                                   TotalValueOfProject = acp.CartoonProject.TotalValueOfProject.ToString()
+                                   TotalValueOfProject = acp.CartoonProject.TotalValueOfProject.ToString()                                 
                                });
 
             return await query
@@ -811,6 +811,34 @@ namespace PlataformaRio2C.Infra.Data.Repository.Repositories
                                                                                               AttendeeCartoonProject = aioe.AttendeeCartoonProject,
                                                                                               EvaluatorUser = aioe.EvaluatorUser
                                                                                           })
+                              });
+
+            return await query
+                            .FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Finds the evaluators widget dto asynchronous.
+        /// </summary>
+        /// <param name="attendeeCartoonProjectUid">The creators by cartoon project uid.</param>
+        /// <returns></returns>
+        public async Task<AttendeeCartoonProjectDto> FindCreatorsWidgetDtoAsync(Guid attendeeCartoonProjectUid)
+        {
+            var query = this.GetBaseQuery()
+                              .FindByUids(new List<Guid?> { attendeeCartoonProjectUid })
+                              .Select(aio => new AttendeeCartoonProjectDto
+                              {
+                                  CartoonCreatorsDto = aio.CartoonProjectCreators.Where(cpc => !cpc.IsDeleted).Select(x =>
+                                  
+                                      new CartoonProjectCreatorDto()
+                                      {
+                                          CellPhone = x.CellPhone,
+                                          Email = x.Email,
+                                          FirstName = x.FirstName,
+                                          LastName = x.LastName,
+                                          MiniBio = x.MiniBio,
+                                          PhoneNumber = x.PhoneNumber                                  
+                                      })
                               });
 
             return await query

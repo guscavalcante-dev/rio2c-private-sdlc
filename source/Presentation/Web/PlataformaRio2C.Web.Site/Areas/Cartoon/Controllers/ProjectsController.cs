@@ -366,6 +366,29 @@ namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
 
         #endregion
 
+        #region Creators Widget
+
+        [HttpGet]
+        public async Task<ActionResult> ShowCreatorsWidget(Guid? attendeeCartoonProjectUid)
+        {
+            var creatorsWidgetDto =  await this.attendeeCartoonProjectRepo.FindCreatorsWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty);
+            if (creatorsWidgetDto == null)
+            {
+                return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                status = "success",
+                pages = new List<dynamic>
+                {
+                    new { page = this.RenderRazorViewToString("Widgets/CreatorsWidget", creatorsWidgetDto), divIdOrClass = "#ProjectCreatorsWidget" },
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion 
+
         #region Business Information Widget
 
         /// <summary>

@@ -43,6 +43,8 @@ namespace PlataformaRio2C.Domain.Interfaces
         Task<CartoonProjectDto> FindMainInformationWidgetDtoAsync(Guid attendeeCartoonProjectUid);
         Task<AttendeeCartoonProjectDto> FindBusinessInformationWidgetDtoAsync(Guid attendeeCartoonProjectUid);
 
+        Task<AttendeeCartoonProjectDto> FindCreatorsWidgetDtoAsync(Guid attendeeCartoonProjectUid);
+
 
     }
 }

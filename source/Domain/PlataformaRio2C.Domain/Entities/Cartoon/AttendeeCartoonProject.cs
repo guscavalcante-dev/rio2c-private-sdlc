@@ -34,6 +34,7 @@ namespace PlataformaRio2C.Domain.Entities
         public virtual CartoonProject CartoonProject { get; private set; }
 
         public virtual ICollection<AttendeeCartoonProjectCollaborator> AttendeeCartoonProjectCollaborators { get; private set; }
+        public virtual ICollection<CartoonProjectCreator> CartoonProjectCreators { get; private set; }
         public virtual ICollection<AttendeeCartoonProjectEvaluation> AttendeeCartoonProjectEvaluations { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttendeeCartoonProject"/> class.</summary>
@@ -90,7 +91,7 @@ namespace PlataformaRio2C.Domain.Entities
         private List<AttendeeCartoonProjectCollaborator> FindAllAttendeeCartoonProjectsCollaboratorsNotDeleted()
         {
             return this.AttendeeCartoonProjectCollaborators?.Where(aoc => !aoc.IsDeleted)?.ToList();
-        }        
+        }
 
         #endregion
 
