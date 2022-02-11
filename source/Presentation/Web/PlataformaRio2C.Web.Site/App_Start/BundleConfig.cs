@@ -453,7 +453,7 @@ namespace PlataformaRio2C.Web.Site
 
             bundles.Add(new ScriptBundle("~/bundles/js/cartoon.projects.widget.js").Include(
                 "~/Assets/js/cartoon/projects/cartoon.projects.maininformation.widget.js",
-                "~/Assets/js/cartoon/projects/cartoon.projects.members.widget.js",
+                "~/Assets/js/cartoon/projects/cartoon.projects.creators.widget.js",
                 "~/Assets/js/cartoon/projects/cartoon.projects.teammembers.widget.js",
                 "~/Assets/js/cartoon/projects/cartoon.projects.releasedprojects.widget.js",
                 "~/Assets/js/cartoon/projects/cartoon.projects.evaluators.widget.js",

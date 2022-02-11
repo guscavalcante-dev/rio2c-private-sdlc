@@ -834,6 +834,7 @@
     <Content Include="Assets\js\cartoon\projects\cartoon.projects.maininformation.widget.js" />
     <Content Include="Assets\js\cartoon\projects\cartoon.projects.objectives.widget.js" />
     <Content Include="Assets\js\cartoon\projects\cartoon.projects.presentation.widget.js" />
+    <Content Include="Assets\js\cartoon\projects\cartoon.projects.creators.widget.js" />
     <Content Include="Assets\js\companies\companies.executive.widget.js" />
     <Content Include="Assets\js\companies\companies.interest.widget.js" />
     <Content Include="Assets\js\companies\companies.socialnetworks.widget.js" />
