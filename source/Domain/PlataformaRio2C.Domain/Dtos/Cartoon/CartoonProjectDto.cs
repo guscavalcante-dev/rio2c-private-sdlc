@@ -19,9 +19,19 @@ namespace PlataformaRio2C.Domain.Dtos
     /// <summary>CartoonProjectDto</summary>
     public class CartoonProjectDto
     {
-        public CartoonProject CartoonProject { get; set; }
-        public AttendeeCartoonProject AttendeeCartoonProject { get; set; }
-        public IEnumerable<AttendeeCartoonProjectEvaluationDto> AttendeeCartoonProjectEvaluationsDtos { get; set; }
+        public string Title { get; set; }
+        public string LogLine { get; set; }
+        public string Summary { get; set; }
+        public string Motivation { get; set; }
+        public string NumberOfEpisodes { get; set; }
+        public string EachEpisodePlayingTime { get; set; }
+        public string TotalValueOfProject { get; set; }
+        public string CartoonProjectFormatName { get; set; }
+
+        //TODO: Implement this at database! We receive in payload but doesn't saving at database.
+        public string ProductionPlan { get; set; }
+        public string ProjectBibleUrl { get; set; }
+        public string ProjectTeaserUrl { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="CartoonProjectDto"/> class.</summary>
         public CartoonProjectDto()
