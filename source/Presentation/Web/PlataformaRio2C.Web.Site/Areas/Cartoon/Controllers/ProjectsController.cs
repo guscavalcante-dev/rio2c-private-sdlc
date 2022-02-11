@@ -368,10 +368,15 @@ namespace PlataformaRio2C.Web.Site.Areas.Cartoon.Controllers
 
         #region Creators Widget
 
+        /// <summary>
+        /// Shows the creators widget.
+        /// </summary>
+        /// <param name="attendeeCartoonProjectUid">The attendee cartoon project uid.</param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> ShowCreatorsWidget(Guid? attendeeCartoonProjectUid)
         {
-            var creatorsWidgetDto =  await this.attendeeCartoonProjectRepo.FindCreatorsWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty);
+            var creatorsWidgetDto = await this.attendeeCartoonProjectRepo.FindCreatorsWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty);
             if (creatorsWidgetDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
