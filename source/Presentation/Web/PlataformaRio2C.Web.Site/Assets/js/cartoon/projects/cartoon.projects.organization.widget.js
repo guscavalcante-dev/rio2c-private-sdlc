@@ -1,24 +1,21 @@
 ﻿// ***********************************************************************
 // Assembly         : PlataformaRio2C.Web.Admin
 // Author           : Renan Valentim
-// Created          : 07-24-2021
+// Created          : 02-10-2022
 //
 // Last Modified By : Renan Valentim
-// Last Modified On : 07-24-2021
+// Last Modified On : 02-10-2022
 // ***********************************************************************
-// <copyright file="cartoon.projects.maininformation.widget.js" company="Softo">
+// <copyright file="cartoon.projects.organization.widget.js" company="Softo">
 //     Copyright (c) Softo. All rights reserved.
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
 
-var CartoonProjectsBusinessInformationWidget = function () {
+var CartoonProjectsOrganizationWidget = function () {
 
-    var widgetElementId = '#ProjectBusinessInformationWidget';
+    var widgetElementId = '#ProjectOrganizationWidget';
     var widgetElement = $(widgetElementId);
-
-    var updateModalId = '#UpdateMainInformationModal';
-    var updateFormId = '#UpdateMainInformationForm';
 
     // Show ---------------------------------------------------------------------------------------
     var enableShowPlugins = function () {
@@ -34,7 +31,7 @@ var CartoonProjectsBusinessInformationWidget = function () {
         var jsonParameters = new Object();
         jsonParameters.attendeeCartoonProjectUid = $('#AggregateId').val();
 
-        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Cartoon/Projects/ShowBusinessInformationWidget'), jsonParameters, function (data) {
+        $.get(MyRio2cCommon.getUrlWithCultureAndEdition('/Cartoon/Projects/ShowOrganizationWidget'), jsonParameters, function (data) {
             MyRio2cCommon.handleAjaxReturn({
                 data: data,
                 // Success

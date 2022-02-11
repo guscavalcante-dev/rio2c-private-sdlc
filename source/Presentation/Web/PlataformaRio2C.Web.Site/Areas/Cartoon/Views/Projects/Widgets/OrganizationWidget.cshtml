@@ -1,0 +1,60 @@
+﻿@using PlataformaRio2C.Domain.Dtos
+@model CartoonProjectOrganizationDto
+@{
+    var editionDto = ViewBag.EditionDto as EditionDto;
+}
+<div class="kt-portlet__head">
+    <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">@Labels.ProducerDetails</h3>
+    </div>
+</div>
+<div class="kt-portlet__body pt-0">
+    <div class="kt-widget kt-widget--user-profile-3">
+        <div class="kt-widget__bottom mt-0" style="border-top:none;">
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.Name</span>
+                    <span class="kt-widget__value rio2c-scroll" style="max-height: 250px;"><span>@(Model.Name ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.TradeName</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.TradeName ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.Document</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.Document ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.PhoneNumber</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.PhoneNumber ?? "-")</span></span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.ReelUrl</span>
+                    <span class="kt-widget__value">
+                        <span class="text-break">
+                            <a href="@Model.ReelUrl" target="_blank">@(Model.ReelUrl ?? "-")</a>
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div class="kt-widget__item w-50">
+                <div class="kt-widget__details">
+                    <span class="kt-widget__title">@Labels.Address</span>
+                    <span class="kt-widget__value"><span class="text-break">@(Model.Address ?? "-")</span></span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
