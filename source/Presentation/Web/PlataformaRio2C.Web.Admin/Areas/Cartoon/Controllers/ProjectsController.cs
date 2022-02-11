@@ -366,8 +366,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowMainInformationWidget(Guid? attendeeCartoonProjectUid)
         {
-            var mainInformationWidgetDto = await this.attendeeCartoonProjectRepo.FindMainInformationWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty);
-            if (mainInformationWidgetDto == null)
+            var attendeeCartoonProjectDto = await this.attendeeCartoonProjectRepo.FindMainInformationWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty);
+            if (attendeeCartoonProjectDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
@@ -377,7 +377,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", mainInformationWidgetDto), divIdOrClass = "#ProjectMainInformationWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/MainInformationWidget", attendeeCartoonProjectDto), divIdOrClass = "#ProjectMainInformationWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -394,8 +394,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowOrganizationWidget(Guid? attendeeCartoonProjectUid)
         {
-            var organizationWidgetDto = await this.attendeeCartoonProjectRepo.FindOrganizationWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty);
-            if (organizationWidgetDto == null)
+            var cartoonProjectOrganizationDto = await this.attendeeCartoonProjectRepo.FindOrganizationWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty);
+            if (cartoonProjectOrganizationDto == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
@@ -405,7 +405,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/OrganizationWidget", organizationWidgetDto), divIdOrClass = "#ProjectOrganizationWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/OrganizationWidget", cartoonProjectOrganizationDto), divIdOrClass = "#ProjectOrganizationWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -422,8 +422,8 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
         [HttpGet]
         public async Task<ActionResult> ShowCreatorsWidget(Guid? attendeeCartoonProjectUid)
         {
-            var creatorsWidgetDto = await this.attendeeCartoonProjectRepo.FindCreatorsWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty);
-            if (creatorsWidgetDto == null)
+            var cartoonProjectCreatorDtos = await this.attendeeCartoonProjectRepo.FindCreatorsWidgetDtoAsync(attendeeCartoonProjectUid ?? Guid.Empty);
+            if (cartoonProjectCreatorDtos == null)
             {
                 return Json(new { status = "error", message = string.Format(Messages.EntityNotAction, Labels.Project, Labels.FoundM.ToLowerInvariant()) }, JsonRequestBehavior.AllowGet);
             }
@@ -433,7 +433,7 @@ namespace PlataformaRio2C.Web.Admin.Areas.Cartoon.Controllers
                 status = "success",
                 pages = new List<dynamic>
                 {
-                    new { page = this.RenderRazorViewToString("Widgets/CreatorsWidget", creatorsWidgetDto), divIdOrClass = "#ProjectCreatorsWidget" },
+                    new { page = this.RenderRazorViewToString("Widgets/CreatorsWidget", cartoonProjectCreatorDtos), divIdOrClass = "#ProjectCreatorsWidget" },
                 }
             }, JsonRequestBehavior.AllowGet);
         }
